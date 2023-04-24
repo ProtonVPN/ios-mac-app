@@ -349,9 +349,6 @@
 /* API error */
 "_error_api_offline" = "De Proton VPN-API is momenteel offline";
 
-/* (No Comment) */
-"_error_credit_applied" = "Neem contact op met support@protonvpn.com om uw aankoop te voltooien.";
-
 /* Error decoding an object */
 "_error_decode" = "Decoderen van gearchiveerde gegevens mislukt in klasse: %@";
 
@@ -373,9 +370,6 @@
 /* Form validation error */
 "_error_field_required" = "Dit invullen is verplicht";
 
-/* Form validation error */
-"_error_field_unknown" = "Controleer dit veld";
-
 /* Error when generate srp clint */
 "_error_generate_srp" = "SRP generatie mislukt";
 
@@ -395,9 +389,6 @@
 "_error_loads" = "Kan serverloads niet bijwerken";
 
 /* (No Comment) */
-"_error_mitm_description" = "The TLS certificate validation failed when trying to connect to the Proton VPN API. Your current internet connection may be monitored. To keep your data secure, we are preventing the app from accessing the Proton VPN API.\nTo sign in or access your account, switch to a new network and try to connect again.";
-
-/* (No Comment) */
 "_error_mitm_title" = "Onveilige verbinding";
 
 /* (No Comment) */
@@ -406,23 +397,8 @@
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "Modulushandtekening is leeg";
 
-/* In App Purchase error */
-"_error_no_active_username" = "Please sign in with the account you're upgrading the service plan for so we can complete your purchase.";
-
-/* In App Purchase error */
-"_error_no_new_subscription_in_successfull_response" = "Uw abonnementsupgrade is succesvol. Herstart de app om gebruik te maken van uw nieuwe abonnement.";
-
 /* Error when try to parse the partner info */
 "_error_partner_info_parser" = "Kan de partnerinfo niet verwerken";
-
-/* In App Purchase error */
-"_error_purchased_plan_does_not_match_available" = "Wij konden het App Store product niet vergelijken met de producten op onze server. Neem contact op met ons ondersteuningsteam.";
-
-/* In App Purchase error */
-"_error_receipt_lost" = "App Store ontvangstbewijs verloren. Neem contact op met support als uw abonnement niet is geactiveerd.";
-
-/* In App Purchase error */
-"_error_sandbox_receipt" = "Aankopen zijn niet beschikbaar in de bètaversie van de iOS app. Er is niets verrekend.";
 
 /* Error when try to parse the server info */
 "_error_server_info_parser" = "Kan de serverinfo niet verwerken";
@@ -433,9 +409,6 @@
 /* Generic sign in error */
 "_error_sign_in_again" = "Sorry, er ging iets mis. Probeer opnieuw in te loggen.";
 
-/* (No Comment) */
-"_error_signup_using_protonmail_address" = "Your Proton Mail account is already configured for VPN. Please sign in with your existing credentials.";
-
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "Kan de abonnementsinformatie niet verwerken";
 
@@ -445,44 +418,14 @@
 /* Internal error message when there is a problem with server certificate and connection cannot be established. */
 "_error_tls_server_verification" = "Servercertificaat kan niet worden geverifieerd.";
 
-/* In App Purchase error */
-"_error_transaction_failed_by_unknown_reason" = "App Store kon uw aankoop niet verwerken.";
-
-/* In App Purchase error */
-"_error_transaction_of_other_user" = "Een aankoop is gestart met een andere Proton VPN gebruikersnaam.";
-
-/* In App Purchase error */
-"_error_unavailable_product" = "Fout bij het ophalen van lijst met beschikbare producten uit de App Store.";
-
 /* General title for several error alerts */
 "_error_unknown_title" = "Onbekende fout";
-
-/* user cancelled human validation procedure */
-"_error_user_cancelled" = "Handeling geannuleerd";
 
 /* Error when the app fails to create a user */
 "_error_user_creation" = "Account aanmaken is mislukt";
 
-/* VPN credentials can't be loaded error */
-"_error_user_credentials_expired" = "User credentials have expired. Please sign in";
-
-/* VPN credentials can't be loaded error */
-"_error_user_credentials_missing" = "User credentials are missing. Unable to sign in";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "We hebben niet kunnen verifiëren of u menselijk bent. Probeer het opnieuw of koop een premium-abonnement.";
-
-/* VPN credentials can't be loaded error */
-"_error_user_has_no_vpn_access" = "Uw account heeft geen VPN-toegang. Neem contact op met uw accountbeheerder";
-
-/* VPN credentials can't be loaded error */
-"_error_user_has_not_signed_up" = "U heeft zich nog niet aangemeld voor Proton VPN";
-
-/* VPN credentials can't be loaded error */
-"_error_user_is_on_waitlist" = "U staat momenteel op de wachtlijst en uw account is nog niet klaar";
-
-/* Username unavailable error */
-"_error_username_unavailable" = "Gebruikersnaam reeds in gebruik";
 
 /* Error when try to parse verification methods */
 "_error_verification_methods_parser" = "Kan de verificatiemethoden niet verwerken";
@@ -495,15 +438,6 @@
 
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "Proton VPN-sessie is actief";
-
-/* In App Purchase error */
-"_error_wrong_payment_token_status" = "Verkeerde betalingstoken status. Herstart de app. Als de fout zich blijft voordoen, neem contact op met support.";
-
-/* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "ProtonVPN gebruikt een pakket firewall om een IP-beveiliging te implementeren. Door de IP-beveiliging in te schakelen worden de huidige firewallinstellingen van uw apparaat overschreven. Als u uw eigen firewallconfiguratie wil blijven gebruiken, moet u geen gebruik maken van de IP-beveiliging.\n\nOm gebruik te maken van de IP-beveiliging en daarmee uw firewallinstellingen te overschrijven, selecteer DOORGAAN.\n\nom uw huidige firewall te blijven gebruiken, selecteer ANNULEREN.";
-
-/* MacOS: Existing firewall alert */
-"_existing_firewall_popup_title" = "Firewall gedetecteerd";
 
 /* Existing connection alert */
 "_existing_session" = "Server niet beschikbaar";
@@ -650,9 +584,6 @@
 "_initializing_connection" = "Verbinding initialiseren...";
 
 /* (No Comment) */
-"_invalid_refresh_token" = "Sessie verlopen";
-
-/* (No Comment) */
 "_invalid_refresh_token_please_login" = "Het is een tijdje geleden sinds u de Proton VPN-app voor het laatst hebt gebruikt. Log alstublieft opnieuw in.";
 
 /* iOS onboarding texts */
@@ -693,27 +624,6 @@
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Schakel IP-beveiliging uit";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_foot" = "Beëindig deze apps om het probleem te verhelpen.\nKlik op Doorgaan om te blijven surfen zonder IP-beveiliging.";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_head" = "Sommige apps, zoals antivirussen of firewalls, kunnen botsen met de IP-beveiliging, waardoor deze niet goed functioneert.";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "IP-beveiliging werkt met de macOS firewall.\nAls er andere apps zijn gekoppeld aan de firewall, kunnen ze de IP-beveiliging van Proton VPN verstoren. Het beëindigen van deze apps kan de firewall regels die door de IP-beveiliging zijn ingesteld herstellen.";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_title" = "Er is een fout opgetreden bij de IP-beveiliging";
-
-/* MacOS: killswicth install error alert */
-"_kill_switch_helper_install_issue_popup_body" = "Er is een probleem opgetreden bij het installeren of bijwerken van IP-beveiliging.\n\nOm het opnieuw te proberen, klik op OPNIEUW PROBEREN.\n\nom door te gaan zonder IP-beveiliging, klik op UITSCHAKELEN.";
-
-/* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "Om IP-beveiliging in te schakelen, kunt u gevraagd worden om uw wachtwoord van uw computeraccount in te vullen. Als een aanvraag verschijnt, voer dan uw %@ in en accepteer.\n\nU kunt dit verzoek opnieuw krijgen wanneer de Proton VPN-app updates ontvangt.";
-
-/* MacOS: updating helper alert */
-"_kill_switch_helper_update_popup_body" = "De meest recente update die u hebt gedownload vereist dat u uw wachtwoord van uw computeraccount geeft. Zodra het verzoek verschijnt, voer dan uw %@ in en accepteer.\n\nAls u uw Mac-wachtwoord niet invoert, wordt IP-beveiliging uitgeschakeld.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
 "_kill_switch_reconnection" = "Uw internetverbinding wordt hervat zodra Proton VPN opnieuw verbinding maakt met een server.\nOm het internet zonder VPN en bescherming van de IP-beveiliging te gebruiken, moet u het herverbinden met de server verbreken.";
@@ -784,21 +694,6 @@
 /* (No Comment) */
 "_locations_plus" = "Plus Locaties";
 
-/* iOS: Login button in several places */
-"_log_in" = "Sign in";
-
-/* iOS widget: text for not-logged-in user */
-"_log_in_to_use_widget" = "Please sign in to get started";
-
-/* iOS: button in settings screen */
-"_log_out" = "Sign out";
-
-/* iOS: Logout alert */
-"_log_out_warning" = "Signing out will end your VPN session.";
-
-/* MacOS: Logout alert */
-"_log_out_warning_long" = "Signing out of the application will disconnect the active VPN connection. Do you want to continue?";
-
 /* MacOS: Login button */
 "_login" = "Log in";
 
@@ -864,9 +759,6 @@
 
 /* Main mac app menu item */
 "_menu_hide_self" = "Verberg Proton VPN";
-
-/* Main mac app menu item */
-"_menu_logout" = "Sign out";
 
 /* Main mac app menu item */
 "_menu_minimize" = "Minimaliseren";
@@ -1054,9 +946,6 @@
 /* Telemetry label in the onboarding screen for mac next to a toggle */
 "_onboarding_mac_usage_stats" = "Anonieme gebruiksstatistieken delen. Dit helpt ons om VPN-blokkering te omzeilen en de prestaties van de app te verbeteren.";
 
-/* Main mac app menu item */
-"_open_app_to_log_in" = "Show Proton VPN to sign in...";
-
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "OpenVPN logboeken";
 
@@ -1089,9 +978,6 @@
 
 /* MacOS: Used ir trial welcome and trial expired screens */
 "_p2p_servers" = "P2P-server";
-
-/* Plan upgrade required alert */
-"_paid_required" = "Betaald Proton VPN-abonnement vereist";
 
 /* Used in sign-in, sign-up */
 "_password" = "Wachtwoord";
@@ -1140,9 +1026,6 @@
 
 /* Features of account plan */
 "_plus_plan_features" = "Plus servers\nSecure Core\nTor servers";
-
-/* Plan upgrade required alert */
-"_plus_required" = "Plus of Visionary abonnement vereist";
 
 /* iOS: section header in countries list */
 "_plus_servers" = "Plus servers";
@@ -1285,9 +1168,6 @@
 /* iOS: table header section in profiles screen */
 "_recommended" = "Aanbevolen";
 
-/* MacOS: Title of alert shown when user changed VPN protocol and connection has to be re-established */
-"_reconnect_on_protocol_change_title" = "Wijzig protocol";
-
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
 "_reconnect_on_settings_change_body" = "Uw verbinding moet opnieuw worden gestart om deze wijziging toe te passen.";
 
@@ -1305,9 +1185,6 @@
 
 /* MacOS: About window */
 "_release_date" = "Verschijningsdatum:";
-
-/* MacOS: label in login and settings screens */
-"_remember_login" = "Remember sign in";
 
 /* Button in Kill switch error alert */
 "_report" = "Melden";
@@ -1568,13 +1445,7 @@
 "_subscription_will_renew" = "Huidige abonnement wordt automatisch verlengd op %@.";
 
 /* (No Comment) */
-"_subuser_alert_description2" = "This step will take just a few minutes. After that you will be able to sign in and protect all your devices.";
-
-/* (No Comment) */
 "_subuser_alert_enable_connections_button" = "Schakel VPN-verbindingen in";
-
-/* (No Comment) */
-"_subuser_alert_login_button" = "Sign in again";
 
 /* Subuser alert */
 "_subuser_alert_title" = "Bedankt voor de upgrade naar Business/Visionary";
@@ -1769,15 +1640,6 @@
 "_upgrade_now" = "Upgrade Nu";
 
 /* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_country" = "Sorry, er zijn momenteel geen servers beschikbaar voor uw abonnementsklasse in dit land. Als u meer servers wilt gebruiken, kunt u overwegen uw abonnement te upgraden.";
-
-/* (No Comment) */
-"_upgrade_plan_to_access_secure_core_p1" = "Secure Core is een premium functie die Proton VPN Plus of hoger vereist. Secure Core voegt geavanceerde bescherming toe tegen VPN server toezicht.";
-
-/* (No Comment) */
-"_upgrade_plan_to_access_secure_core_p2" = "Om toegang te krijgen tot Secure Core, bekijk onze andere abonnementen die deze functie bevatten.";
-
-/* macOS: plan upgrade required alert */
 "_upgrade_plan_to_access_server" = "Sorry, deze server is niet beschikbaar voor uw abonnementsklasse. Als u toegang wilt hebben tot meer servers, overweeg dan om uw abonnement te upgraden.";
 
 /* iOS & MacOS: text near country or server; MacOS: title of several alerts */
@@ -1873,14 +1735,8 @@
 /* (No Comment) */
 "_vpnauth_too_many_certs_title" = "Authenticatiefout";
 
-/* (No Comment) */
-"_vpnstatus_not_loggedin" = "You are not signed in to Proton VPN. Open the Proton VPN app and sign in.";
-
 /* Used as a title in alerts/modals */
 "_warning" = "Waarschuwing";
-
-/* MacOS: alert shown during login if already connected to VPN */
-"_warning_vpn_session_is_active" = "Another user's Proton VPN session is active on this device. Continuing with the sign in will cause the current session to end. Do you want to continue?";
 
 /* Shown on the Welcome screen as the longer screen text */
 "_welcome_body" = "Zeer snelle Zwitserse VPN die uw privacy bewaakt door uw internetverbinding te versleutelen.";

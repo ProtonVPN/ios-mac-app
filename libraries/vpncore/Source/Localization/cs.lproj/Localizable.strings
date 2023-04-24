@@ -355,9 +355,6 @@
 /* API error */
 "_error_api_offline" = "Proton VPN API je nyní nedostupné";
 
-/* (No Comment) */
-"_error_credit_applied" = "Pro dokončení nákupu kontaktujte support@protonvpn.com.";
-
 /* Error decoding an object */
 "_error_decode" = "Selhání při dešifrování archivovaných dat ve třídě: %@";
 
@@ -379,9 +376,6 @@
 /* Form validation error */
 "_error_field_required" = "Toto pole je povinné";
 
-/* Form validation error */
-"_error_field_unknown" = "Prosím zaškrtněte toto pole";
-
 /* Error when generate srp clint */
 "_error_generate_srp" = "Generování SRP selhalo";
 
@@ -401,7 +395,7 @@
 "_error_loads" = "Nelze aktualizovat vytížení serverů";
 
 /* (No Comment) */
-"_error_mitm_description" = "The TLS certificate validation failed when trying to connect to the Proton VPN API. Your current internet connection may be monitored. To keep your data secure, we are preventing the app from accessing the Proton VPN API.\nTo sign in or access your account, switch to a new network and try to connect again.";
+"_error_mitm_description" = "Při pokusu o připojení k rozhraní Proton VPN API selhalo ověření certifikátu TLS. Vaše aktuální internetové připojení může být monitorováno. Abychom zajistili bezpečnost vašich dat, bráníme aplikaci v přístupu k rozhraní Proton VPN API.\nChcete-li se přihlásit nebo získat přístup ke svému účtu, přepněte na novou síť a zkuste se znovu připojit.";
 
 /* (No Comment) */
 "_error_mitm_title" = "Nezabezpečené připojení";
@@ -412,23 +406,8 @@
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "Podpis Modulusu je prázdný";
 
-/* In App Purchase error */
-"_error_no_active_username" = "Please sign in with the account you're upgrading the service plan for so we can complete your purchase.";
-
-/* In App Purchase error */
-"_error_no_new_subscription_in_successfull_response" = "Vaše předplatné bylo úspěšně navýšeno. Pro zpřístupnění výhod prosím aplikaci ukončete a znovu spusťte.";
-
 /* Error when try to parse the partner info */
 "_error_partner_info_parser" = "Nelze analyzovat informace o partnerovi";
-
-/* In App Purchase error */
-"_error_purchased_plan_does_not_match_available" = "Nepodařilo se nám spárovat produkt na App Store s produkty na našem serveru. Obraťte se prosím na podporu.";
-
-/* In App Purchase error */
-"_error_receipt_lost" = "Účtenka z App Storu byla ztracena. Prosím kontaktujte podporu pokud vaše předplatné nebylo aktivováno.";
-
-/* In App Purchase error */
-"_error_sandbox_receipt" = "Nákupy v beta verzi iOS aplikace nejsou dostupné. Nic jsme vám neúčtovali.";
 
 /* Error when try to parse the server info */
 "_error_server_info_parser" = "Nelze dodat informace serveru";
@@ -439,9 +418,6 @@
 /* Generic sign in error */
 "_error_sign_in_again" = "Je nám líto, ale něco se pokazilo. Přihlaste se prosím znovu.";
 
-/* (No Comment) */
-"_error_signup_using_protonmail_address" = "Your Proton Mail account is already configured for VPN. Please sign in with your existing credentials.";
-
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "Nelze analyzovat informace o předplatném";
 
@@ -451,44 +427,20 @@
 /* Internal error message when there is a problem with server certificate and connection cannot be established. */
 "_error_tls_server_verification" = "Není možné ověřit certifikát serveru.";
 
-/* In App Purchase error */
-"_error_transaction_failed_by_unknown_reason" = "App Store nemohl váš nákup zpracovat.";
-
-/* In App Purchase error */
-"_error_transaction_of_other_user" = "Nákup byl zahájen pod jiným uživatelským jménem Proton VPN.";
-
-/* In App Purchase error */
-"_error_unavailable_product" = "Proces získání seznamu dostupných produktů z AppStore selhal.";
-
 /* General title for several error alerts */
 "_error_unknown_title" = "Neznámá chyba";
-
-/* user cancelled human validation procedure */
-"_error_user_cancelled" = "Operace je zrušena";
 
 /* Error when the app fails to create a user */
 "_error_user_creation" = "Vytvoření účtu selhalo";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_expired" = "User credentials have expired. Please sign in";
+"_error_user_credentials_expired" = "Platnost přihlašovacích údajů uživatele vypršela. Přihlaste se prosím";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_missing" = "User credentials are missing. Unable to sign in";
+"_error_user_credentials_missing" = "Chybí přihlašovací údaje uživatele. Nelze se přihlásit";
 
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Nepodařilo se nám ověřit, zda jste člověk. Zkuste to prosím znovu nebo si zakupte prémiový tarif.";
-
-/* VPN credentials can't be loaded error */
-"_error_user_has_no_vpn_access" = "Váš účet nemá přístup k síti VPN. Obraťte se prosím na správce účtu";
-
-/* VPN credentials can't be loaded error */
-"_error_user_has_not_signed_up" = "Ještě jste se nezaregistrovali pro Proton VPN";
-
-/* VPN credentials can't be loaded error */
-"_error_user_is_on_waitlist" = "V současné době jste na čekací listině a váš účet ještě není připraven";
-
-/* Username unavailable error */
-"_error_username_unavailable" = "Uživatelské jméno je již obsazeno";
 
 /* Error when try to parse verification methods */
 "_error_verification_methods_parser" = "Nelze analyzovat metody ověřování";
@@ -501,15 +453,6 @@
 
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "Relace Proton VPN je aktivní";
-
-/* In App Purchase error */
-"_error_wrong_payment_token_status" = "Chybný stav platebního tokenu. Restartujte aplikaci. Pokud chyba přetrvává, kontaktujte podporu.";
-
-/* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "Proton VPN používá firewall s paketovým filtrem k implementaci přepínače Kill Switch. Povolením funkce Kill Switch přepíšete aktuální nastavení brány firewall vašeho zařízení. Pokud se na tuto konfiguraci brány firewall spoléháte, neměli byste přepínač Kill Switch používat.\n\nChcete-li použít přepínač Kill Switch a přepsat aktuální nastavení brány firewall, vyberte možnost POKRAČOVAT.\n\nChcete-li přepínač Kill Switch vypnout a pokračovat v používání aktuální brány firewall, vyberte možnost ZRUŠIT.";
-
-/* MacOS: Existing firewall alert */
-"_existing_firewall_popup_title" = "Detekován firewall";
 
 /* Existing connection alert */
 "_existing_session" = "Server je nedostupný";
@@ -656,9 +599,6 @@
 "_initializing_connection" = "Navazování spojení...";
 
 /* (No Comment) */
-"_invalid_refresh_token" = "Relace vypršela";
-
-/* (No Comment) */
 "_invalid_refresh_token_please_login" = "Dlouho jste aplikaci Proton VPN nepoužívali. Prosím přihlaste se znovu.";
 
 /* iOS onboarding texts */
@@ -699,27 +639,6 @@
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Vypnout Kill Switch";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_foot" = "Ukončete tyto aplikace, abyste problém vyřešili.\nChcete-li pokračovat v procházení bez přepínače Kill Switch, klikněte na tlačítko Pokračovat.";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_head" = "Některé aplikace, například antiviry nebo brány firewall, mohou být s přepínačem Kill Switch v konfliktu, takže nebude správně fungovat.";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "Přepínač Kill Switch funguje s bránou MacOS Firewall.\nPokud jsou s bránou Firewall spojeny jiné aplikace, mohou s přepínačem Kill Switch Proton VPN interferovat. Ukončení těchto aplikací může obnovit pravidla brány Firewall nastavená přepínačem Kill Switch.";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_title" = "Byla zjištěna chyba Kill Switch";
-
-/* MacOS: killswicth install error alert */
-"_kill_switch_helper_install_issue_popup_body" = "Při instalaci nebo aktualizaci přepínače Kill Switch došlo k problému.\n\nChcete-li to zkusit znovu, klikněte na tlačítko ZNOVU.\n\nChcete-li pokračovat bez funkce Kill Switch, klikněte na tlačítko ZAKÁZAT.";
-
-/* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "Chcete-li zapnout funkci Kill Switch, můžete být požádáni o zadání hesla k počítačovému účtu. Pokud se zobrazí výzva, zadejte své %@ a přijměte ji.\n\nTento požadavek se může občas znovu zobrazit, když aplikace Proton VPN obdrží aktualizace.";
-
-/* MacOS: updating helper alert */
-"_kill_switch_helper_update_popup_body" = "Poslední stažená aktualizace vyžaduje zadání hesla k počítačovému účtu. Když se zobrazí požadavek, zadejte své %@ a přijměte jej.\n\nPokud heslo k počítači Mac nezadáte, bude funkce Kill Switch vypnuta.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
 "_kill_switch_reconnection" = "Vaše připojení k internetu bude obnoveno, jakmile se Proton VPN znovu připojí k serveru.\nChcete-li používat internet bez ochrany VPN a Kill Switch, zrušte opětovné připojení k serveru.";
@@ -794,19 +713,19 @@
 "_locations_plus" = "Plus umístění";
 
 /* iOS: Login button in several places */
-"_log_in" = "Sign in";
+"_log_in" = "Přihlásit se";
 
 /* iOS widget: text for not-logged-in user */
-"_log_in_to_use_widget" = "Please sign in to get started";
+"_log_in_to_use_widget" = "Přihlaste se pro pokračování";
 
 /* iOS: button in settings screen */
-"_log_out" = "Sign out";
+"_log_out" = "Odhlásit se";
 
 /* iOS: Logout alert */
-"_log_out_warning" = "Signing out will end your VPN session.";
+"_log_out_warning" = "Odhlášení ukončí vaši VPN relaci.";
 
 /* MacOS: Logout alert */
-"_log_out_warning_long" = "Signing out of the application will disconnect the active VPN connection. Do you want to continue?";
+"_log_out_warning_long" = "Odhlášením z aplikace se odpojí aktivní připojení VPN. Chcete pokračovat?";
 
 /* MacOS: Login button */
 "_login" = "Přihlásit se";
@@ -875,7 +794,7 @@
 "_menu_hide_self" = "Skrýt Proton VPN";
 
 /* Main mac app menu item */
-"_menu_logout" = "Sign out";
+"_menu_logout" = "Odhlásit se";
 
 /* Main mac app menu item */
 "_menu_minimize" = "Minimalizovat";
@@ -1067,7 +986,7 @@
 "_onboarding_mac_usage_stats" = "Sdílejte anonymní statistiky o používání. To nám pomáhá obejít blokování VPN a vylepšit výkon aplikace.";
 
 /* Main mac app menu item */
-"_open_app_to_log_in" = "Show Proton VPN to sign in...";
+"_open_app_to_log_in" = "Zobrazit Proton VPN pro přihlášení...";
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "OpenVPN logy";
@@ -1101,9 +1020,6 @@
 
 /* MacOS: Used ir trial welcome and trial expired screens */
 "_p2p_servers" = "P2P servery";
-
-/* Plan upgrade required alert */
-"_paid_required" = "Je vyžadováno předplatné Proton VPN";
 
 /* Used in sign-in, sign-up */
 "_password" = "Heslo";
@@ -1152,9 +1068,6 @@
 
 /* Features of account plan */
 "_plus_plan_features" = "Servery Plus\nSecure Core\nServery Tor";
-
-/* Plan upgrade required alert */
-"_plus_required" = "Je vyžadováno předplatné Plus nebo Visionary";
 
 /* iOS: section header in countries list */
 "_plus_servers" = "Servery Plus";
@@ -1297,9 +1210,6 @@
 /* iOS: table header section in profiles screen */
 "_recommended" = "Doporučené";
 
-/* MacOS: Title of alert shown when user changed VPN protocol and connection has to be re-established */
-"_reconnect_on_protocol_change_title" = "Změna protokolu";
-
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
 "_reconnect_on_settings_change_body" = "Pro použití této změny je třeba připojení restartovat.";
 
@@ -1319,7 +1229,7 @@
 "_release_date" = "Datum vydání:";
 
 /* MacOS: label in login and settings screens */
-"_remember_login" = "Remember sign in";
+"_remember_login" = "Zapamatovat přihlašovací údaje";
 
 /* Button in Kill switch error alert */
 "_report" = "Nahlásit";
@@ -1583,7 +1493,7 @@
 "_subuser_alert_description1" = "To continue to Proton VPN, please enable VPN connections. You'll also need to do this for any users in your organization.";
 
 /* (No Comment) */
-"_subuser_alert_description2" = "This step will take just a few minutes. After that you will be able to sign in and protect all your devices.";
+"_subuser_alert_description2" = "Tento krok zabere jen několik minut. Poté se budete moci přihlásit a chránit všechna svá zařízení.";
 
 /* (No Comment) */
 "_subuser_alert_description3" = "V současné době není pro tento účet povoleno žádné připojení VPN. Chcete-li začít používat Proton VPN, kontaktujte prosím svého správce.";
@@ -1592,7 +1502,7 @@
 "_subuser_alert_enable_connections_button" = "Povolit VPN připojení";
 
 /* (No Comment) */
-"_subuser_alert_login_button" = "Sign in again";
+"_subuser_alert_login_button" = "Přihlásit se znovu";
 
 /* Subuser alert */
 "_subuser_alert_title" = "Děkujeme, že jste přešli na tarif Business/Visionary";
@@ -1805,15 +1715,6 @@
 "_upgrade_now" = "Navýšit nyní";
 
 /* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_country" = "Je nám líto, ale v této zemi nejsou pro vaši úroveň předplatného k dispozici žádné servery. Pokud chcete mít přístup k více serverům, zvažte navýšení předplatného.";
-
-/* (No Comment) */
-"_upgrade_plan_to_access_secure_core_p1" = "Secure Core je prémiová funkce, která vyžaduje Proton VPN Plus nebo vyšší. Secure Core přidává pokročilou ochranu proti sledování serverů VPN.";
-
-/* (No Comment) */
-"_upgrade_plan_to_access_secure_core_p2" = "Chcete-li získat přístup k Secure Core, podívejte se na naše další tarify předplatného, které tuto funkci obsahují.";
-
-/* macOS: plan upgrade required alert */
 "_upgrade_plan_to_access_server" = "Je nám líto, tento server není pro vaši úroveň předplatného k dispozici. Pokud chcete získat přístup k více serverům, zvažte navýšení předplatného.";
 
 /* iOS & MacOS: text near country or server; MacOS: title of several alerts */
@@ -1910,13 +1811,13 @@
 "_vpnauth_too_many_certs_title" = "Ověření selhalo";
 
 /* (No Comment) */
-"_vpnstatus_not_loggedin" = "You are not signed in to Proton VPN. Open the Proton VPN app and sign in.";
+"_vpnstatus_not_loggedin" = "Nejste přihlášeni k Proton VPN. Otevřete aplikaci Proton VPN a přihlaste se.";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Upozornění";
 
 /* MacOS: alert shown during login if already connected to VPN */
-"_warning_vpn_session_is_active" = "Another user's Proton VPN session is active on this device. Continuing with the sign in will cause the current session to end. Do you want to continue?";
+"_warning_vpn_session_is_active" = "Na tomto zařízení je aktivní relace Proton VPN jiného uživatele. Přihlášením způsobíte ukončení aktuální relace. Chcete pokračovat?";
 
 /* Shown on the Welcome screen as the longer screen text */
 "_welcome_body" = "Vysokorychlostní švýcarská VPN, která chrání vaše soukromí šifrováním internetového připojení.";

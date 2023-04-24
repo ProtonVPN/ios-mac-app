@@ -355,9 +355,6 @@
 /* API error */
 "_error_api_offline" = "API Proton VPN sedang offline";
 
-/* (No Comment) */
-"_error_credit_applied" = "Hubungi support@protonvpn.com untuk menuntaskan pembayaran Anda.";
-
 /* Error decoding an object */
 "_error_decode" = "Gagal mendekode data yang diarsipkan di kelas: %@";
 
@@ -379,9 +376,6 @@
 /* Form validation error */
 "_error_field_required" = "Kolom ini wajib diisi";
 
-/* Form validation error */
-"_error_field_unknown" = "Harap periksa kolom ini";
-
 /* Error when generate srp clint */
 "_error_generate_srp" = "Gagal menghasilkan SRP";
 
@@ -401,7 +395,7 @@
 "_error_loads" = "Tidak dapat memperbarui muatan server";
 
 /* (No Comment) */
-"_error_mitm_description" = "The TLS certificate validation failed when trying to connect to the Proton VPN API. Your current internet connection may be monitored. To keep your data secure, we are preventing the app from accessing the Proton VPN API.\nTo sign in or access your account, switch to a new network and try to connect again.";
+"_error_mitm_description" = "Sistem kami gagal memvalidasi sertifikat TLS yang ada pada saat Anda mencoba terhubung ke API Proton VPN. Koneksi internet Anda mungkin sedang diawasi. Agar data Anda tetap aman, kami telah mencegah aplikasi yang bersangkutan untuk mengakses API Proton VPN.\nUntuk masuk atau mengakses akun Anda, cobalah untuk menghubungkan ulang akun Anda pada jaringan yang baru.";
 
 /* (No Comment) */
 "_error_mitm_title" = "Koneksi tidak aman";
@@ -412,23 +406,8 @@
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "Modulus tanda tangan kosong";
 
-/* In App Purchase error */
-"_error_no_active_username" = "Please sign in with the account you're upgrading the service plan for so we can complete your purchase.";
-
-/* In App Purchase error */
-"_error_no_new_subscription_in_successfull_response" = "Peningkatan paket langganan Anda berhasil. Silahkan luncurkan ulang aplikasi untuk mendapatkan manfaat dari paket layanan baru Anda.";
-
 /* Error when try to parse the partner info */
 "_error_partner_info_parser" = "Tidak dapat mengurai info mitra";
-
-/* In App Purchase error */
-"_error_purchased_plan_does_not_match_available" = "Kami tidak dapat mencocokkan produk yang ada di App Store dengan produk yang ada di server kami. Silakan hubungi layanan dukungan.";
-
-/* In App Purchase error */
-"_error_receipt_lost" = "Tanda terima App Store hilang. Silakan hubungi layanan dukungan apabila paket Anda belum aktif.";
-
-/* In App Purchase error */
-"_error_sandbox_receipt" = "Pembelian tidak tersedia di versi beta aplikasi iOS. Anda belum dibebani biaya.";
 
 /* Error when try to parse the server info */
 "_error_server_info_parser" = "Tidak dapat mengurai info server";
@@ -439,9 +418,6 @@
 /* Generic sign in error */
 "_error_sign_in_again" = "Maaf, terdapat sesuatu yang salah. Silakan masuk kembali.";
 
-/* (No Comment) */
-"_error_signup_using_protonmail_address" = "Your Proton Mail account is already configured for VPN. Please sign in with your existing credentials.";
-
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "Tidak dapat mengurai info langganan";
 
@@ -451,44 +427,20 @@
 /* Internal error message when there is a problem with server certificate and connection cannot be established. */
 "_error_tls_server_verification" = "Sertifikat server tidak dapat diverifikasi.";
 
-/* In App Purchase error */
-"_error_transaction_failed_by_unknown_reason" = "App Store tidak dapat memproses pembelian Anda.";
-
-/* In App Purchase error */
-"_error_transaction_of_other_user" = "Terdapat pembelian yang dilangsungkan oleh nama pengguna Proton VPN yang berbeda.";
-
-/* In App Purchase error */
-"_error_unavailable_product" = "Gagal memperoleh daftar produk-produk yang tersedia dari App Store.";
-
 /* General title for several error alerts */
 "_error_unknown_title" = "Kesalahan yang tidak diketahui";
-
-/* user cancelled human validation procedure */
-"_error_user_cancelled" = "Operasi dibatalkan";
 
 /* Error when the app fails to create a user */
 "_error_user_creation" = "Pembuatan akun gagal";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_expired" = "User credentials have expired. Please sign in";
+"_error_user_credentials_expired" = "Kredensial pengguna telah kedaluwarsa. Silakan masuk kembali";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_missing" = "User credentials are missing. Unable to sign in";
+"_error_user_credentials_missing" = "Kredensial pengguna hilang. Kami tidak dapat memasukkan Anda";
 
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Kami tidak dapat memverifikasi bahwa Anda manusia. Silahkan coba kembali atau beli paket premium.";
-
-/* VPN credentials can't be loaded error */
-"_error_user_has_no_vpn_access" = "Akun Anda tidak memiliki akses VPN. Silakan hubungi Administrator Akun Anda";
-
-/* VPN credentials can't be loaded error */
-"_error_user_has_not_signed_up" = "Anda belum mendaftar ke Proton VPN";
-
-/* VPN credentials can't be loaded error */
-"_error_user_is_on_waitlist" = "Anda sedang berada di Daftar Tunggu dan akun Anda belum siap";
-
-/* Username unavailable error */
-"_error_username_unavailable" = "Nama pengguna sudah digunakan";
 
 /* Error when try to parse verification methods */
 "_error_verification_methods_parser" = "Tidak dapat mengurai metode verifikasi";
@@ -501,15 +453,6 @@
 
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "Sesi Proton VPN sedang aktif";
-
-/* In App Purchase error */
-"_error_wrong_payment_token_status" = "Status token pembayaran salah. Silakan buka ulang aplikasi. Jika galat masih terjadi, hubungi dukungan.";
-
-/* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "Proton VPN menggunakan filter paket firewall untuk mengimplementasikan kill switch. Dengan mengaktifkan kill switch, Anda akan menimpa setelan firewall milik perangkat Anda saat ini. Apabila Anda bergantung pada konfigurasi firewall yang telah ada, Anda disarankan untuk tidak mengaktifkan kill switch.\n\nUntuk mengaktifkan kill switch dan menimpa setelan firewall Anda saat ini, pilih LANJUT.\n\nUntuk menonaktifkan kill switch dan kembali menggunakan firewall Anda, pilih BATAL.";
-
-/* MacOS: Existing firewall alert */
-"_existing_firewall_popup_title" = "Firewall terdeteksi";
 
 /* Existing connection alert */
 "_existing_session" = "Server Tidak Tersedia";
@@ -656,9 +599,6 @@
 "_initializing_connection" = "Memulai Sambungan...";
 
 /* (No Comment) */
-"_invalid_refresh_token" = "Sesi telah kedaluwarsa";
-
-/* (No Comment) */
 "_invalid_refresh_token_please_login" = "Anda sudah tidak menggunakan aplikasi Proton VPN selama beberapa waktu. Silakan masuk kembali.";
 
 /* iOS onboarding texts */
@@ -699,27 +639,6 @@
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Nonaktifkan kill switch";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_foot" = "Nonaktifkan aplikasi tersebut agar masalah ini dapat teratasi.\nUntuk tetap berselancar tanpa kill switch, klik Lanjutkan.";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_head" = "Aplikasi tertentu seperti antivirus atau firewall dapat berbentrokan dengan kill switch, yang membuat kill switch tidak dapat berfungsi sebagaimana mestinya.";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "Kill switch dapat bekerja di atas Firewall macOS.\nMeskipun demikian, apabila terdapat aplikasi lain yang juga terhubung dengan Firewall, aplikasi tersebut dapat mengganggu kinerja kill switch Proton VPN. Menonaktifkan aplikasi tersebut dapat memulihkan regulasi Firewall yang ditentukan oleh kill switch.";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_title" = "Kesalahan pada kill switch terdeteksi";
-
-/* MacOS: killswicth install error alert */
-"_kill_switch_helper_install_issue_popup_body" = "Terdapat masalah dalam proses instalasi atau pembaruan kill switch.\n\nUntuk mencoba kembali, klik COBA LAGI.\n\nUntuk melanjutkan tanpa kill switch, klik NONAKTIFKAN.";
-
-/* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "Untuk mengaktifkan kill switch, Anda mungkin akan diminta untuk memasukkan kata sandi komputer Anda. Apabila permintaan yang bersangkutan muncul, masukkan %@ Anda dan terima.\n\nAnda akan dapat kembali menerima permintaan ini pada saat aplikasi Proton VPN diperbarui.";
-
-/* MacOS: updating helper alert */
-"_kill_switch_helper_update_popup_body" = "Pembaruan terbaru yang Anda unduh memerlukan Anda untuk memasukkan kata sandi akun komputer Anda. Apabila permintaan yang bersangkutan muncul, mohon masukkan %@ Anda dan terima.\n\nApabila Anda tidak memasukkan kata sandi Mac Anda, kill switch akan dinonaktifkan.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
 "_kill_switch_reconnection" = "Koneksi internet Anda akan kembali pulih segera setelah Proton VPN tersambung ulang ke server yang ada. Untuk menggunakan internet tanpa perlindungan VPN dan kill switch, batalkan proses penyambungan ulang ke server.";
@@ -794,19 +713,19 @@
 "_locations_plus" = "Lokasi Plus";
 
 /* iOS: Login button in several places */
-"_log_in" = "Sign in";
+"_log_in" = "Masuk";
 
 /* iOS widget: text for not-logged-in user */
-"_log_in_to_use_widget" = "Please sign in to get started";
+"_log_in_to_use_widget" = "Silakan masuk untuk memulai";
 
 /* iOS: button in settings screen */
-"_log_out" = "Sign out";
+"_log_out" = "Keluar";
 
 /* iOS: Logout alert */
-"_log_out_warning" = "Signing out will end your VPN session.";
+"_log_out_warning" = "Dengan keluar dari akun, sesi VPN Anda akan berakhir.";
 
 /* MacOS: Logout alert */
-"_log_out_warning_long" = "Signing out of the application will disconnect the active VPN connection. Do you want to continue?";
+"_log_out_warning_long" = "Dengan keluar dari akun, koneksi VPN yang sedang aktif akan terputus. Apakah Anda ingin melanjutkan?";
 
 /* MacOS: Login button */
 "_login" = "Masuk";
@@ -875,7 +794,7 @@
 "_menu_hide_self" = "Sembunyikan Proton VPN";
 
 /* Main mac app menu item */
-"_menu_logout" = "Sign out";
+"_menu_logout" = "Keluar";
 
 /* Main mac app menu item */
 "_menu_minimize" = "Minimalkan";
@@ -1067,7 +986,7 @@
 "_onboarding_mac_usage_stats" = "Bagikan statistik penggunaan anonim. Statistik ini dapat membantu kami untuk menangkal pemblokiran VPN dan meningkatkan performa aplikasi.";
 
 /* Main mac app menu item */
-"_open_app_to_log_in" = "Show Proton VPN to sign in...";
+"_open_app_to_log_in" = "Tampilkan Proton VPN untuk masuk...";
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "Log OpenVPN";
@@ -1101,9 +1020,6 @@
 
 /* MacOS: Used ir trial welcome and trial expired screens */
 "_p2p_servers" = "Server P2P";
-
-/* Plan upgrade required alert */
-"_paid_required" = "Akun Proton VPN berbayar dibutuhkan";
 
 /* Used in sign-in, sign-up */
 "_password" = "Kata Sandi";
@@ -1152,9 +1068,6 @@
 
 /* Features of account plan */
 "_plus_plan_features" = "Server Plus\nSecure Core\nServer Tor";
-
-/* Plan upgrade required alert */
-"_plus_required" = "Dibutuhkan langganan Plus atau Visionary";
 
 /* iOS: section header in countries list */
 "_plus_servers" = "Server Plus";
@@ -1297,9 +1210,6 @@
 /* iOS: table header section in profiles screen */
 "_recommended" = "Direkomendasikan";
 
-/* MacOS: Title of alert shown when user changed VPN protocol and connection has to be re-established */
-"_reconnect_on_protocol_change_title" = "Ubah protokol";
-
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
 "_reconnect_on_settings_change_body" = "Sambungan Anda perlu dimuat ulang untuk menerapkan perubahan ini.";
 
@@ -1319,7 +1229,7 @@
 "_release_date" = "Tanggal rilis:";
 
 /* MacOS: label in login and settings screens */
-"_remember_login" = "Remember sign in";
+"_remember_login" = "Ingat saya";
 
 /* Button in Kill switch error alert */
 "_report" = "Laporkan";
@@ -1385,7 +1295,7 @@
 "_resend_success" = "Kode baru telah diminta";
 
 /* MacOS: button in login screen */
-"_reset_password" = "Setel Ulang Kata Sandi";
+"_reset_password" = "Atur Ulang Kata Sandi";
 
 /* Button in some alerts */
 "_retry" = "Coba Lagi";
@@ -1583,7 +1493,7 @@
 "_subuser_alert_description1" = "To continue to Proton VPN, please enable VPN connections. You'll also need to do this for any users in your organization.";
 
 /* (No Comment) */
-"_subuser_alert_description2" = "This step will take just a few minutes. After that you will be able to sign in and protect all your devices.";
+"_subuser_alert_description2" = "Langkah ini hanya akan memakan waktu beberapa menit. Setelahnya, Anda akan dapat masuk dan melindungi seluruh perangkat Anda.";
 
 /* (No Comment) */
 "_subuser_alert_description3" = "Akun ini sedang tidak memiliki koneksi VPN yang aktif. Untuk mulai menggunakan Proton VPN, silakan hubungi administrator Anda.";
@@ -1592,7 +1502,7 @@
 "_subuser_alert_enable_connections_button" = "Aktifkan koneksi VPN";
 
 /* (No Comment) */
-"_subuser_alert_login_button" = "Sign in again";
+"_subuser_alert_login_button" = "Masuk kembali";
 
 /* Subuser alert */
 "_subuser_alert_title" = "Terima kasih karena telah meningkatkan ke Business/Visionary";
@@ -1805,15 +1715,6 @@
 "_upgrade_now" = "Tingkatkan Sekarang";
 
 /* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_country" = "Maaf, tidak ada server tersedia untuk tingkat paket berlangganan Anda di negara saat ini. Jika Anda ingin mengakses lebih banyak server, pertimbangkan untuk meningkatkan paket berlangganan Anda.";
-
-/* (No Comment) */
-"_upgrade_plan_to_access_secure_core_p1" = "Secure Core merupakan fitur premium yang hanya dapat digunakan oleh para pemilik akun Proton VPN Plus atau lebih tinggi. Secure Core memberikan perlindungan tambahan terhadap pemantauan server VPN.";
-
-/* (No Comment) */
-"_upgrade_plan_to_access_secure_core_p2" = "Untuk mengakses Secure Core, silahkan lihat paket langganan kami yang lain yang menyertakan fitur ini.";
-
-/* macOS: plan upgrade required alert */
 "_upgrade_plan_to_access_server" = "Maaf, server ini tidak tersedia untuk tingkat paket berlangganan Anda. Jika Anda ingin mengakses lebih banyak server, pertimbangkan untuk meningkatkan paket berlangganan Anda.";
 
 /* iOS & MacOS: text near country or server; MacOS: title of several alerts */
@@ -1910,13 +1811,13 @@
 "_vpnauth_too_many_certs_title" = "Kesalahan autentikasi";
 
 /* (No Comment) */
-"_vpnstatus_not_loggedin" = "You are not signed in to Proton VPN. Open the Proton VPN app and sign in.";
+"_vpnstatus_not_loggedin" = "Anda tidak sedang terhubung masuk ke Proton VPN. Buka aplikasi Proton VPN dan masuk ke akun Anda.";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Peringatan";
 
 /* MacOS: alert shown during login if already connected to VPN */
-"_warning_vpn_session_is_active" = "Another user's Proton VPN session is active on this device. Continuing with the sign in will cause the current session to end. Do you want to continue?";
+"_warning_vpn_session_is_active" = "Terdapat sesi Proton VPN milik pengguna lain yang sedang aktif pada perangkat ini. Apabila Anda masuk, sesi ini akan berakhir secara otomatis. Apakah Anda ingin melanjutkan?";
 
 /* Shown on the Welcome screen as the longer screen text */
 "_welcome_body" = "VPN Swiss berkecepatan tinggi yang melindungi privasi Anda dengan mengenkripsi koneksi internet Anda.";
