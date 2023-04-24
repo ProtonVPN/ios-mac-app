@@ -212,14 +212,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         return false
     }    
-    
+
     private func setupLogsForApp() {
-        LoggingSystem.bootstrap {_ in
-            return MultiplexLogHandler([
-                OSLogHandler(formatter: OSLogFormatter()),
-                FileLogHandler(self.container.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename))
-            ])
-        }
+        let logFile = self.container.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename)
+
+        let fileLogHandler = FileLogHandler(logFile)
+        let osLogHandler = OSLogHandler(formatter: OSLogFormatter())
+        let multiplexLogHandler = MultiplexLogHandler([osLogHandler, fileLogHandler])
+
+        LoggingSystem.bootstrap { _ in return multiplexLogHandler }
     }
 }
 
