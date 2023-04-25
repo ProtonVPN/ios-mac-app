@@ -424,6 +424,8 @@
 		E58634B329CA16C200E7C565 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E58634B229CA16C200E7C565 /* Theme */; };
 		E59227C829C8BDD70008A091 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E59227C729C8BDD70008A091 /* Theme */; };
 		E593B97127BA7DC100AFCA8C /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B97027BA7DC100AFCA8C /* UpsellColors.swift */; };
+		E5980FB729F8068400405986 /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = E5980FB629F8068400405986 /* Home */; };
+		E5980FB929F8068800405986 /* Home-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E5980FB829F8068800405986 /* Home-iOS */; };
 		E59C7A9029229A940034E56F /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = D16ECAECC9861A6ED5EDA4F2 /* Modals */; };
 		E59C7A9129229A940034E56F /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 2DC3E67F6A25A4AD4DFCF448 /* NEHelper */; };
 		E59C7A932923B1650034E56F /* ServersInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59C7A922923B1650034E56F /* ServersInformationViewController.swift */; };
@@ -1120,6 +1122,8 @@
 				E198D6B12163B31A00F2F0E0 /* libc++.tbd in Frameworks */,
 				E18006E7218B0B7B009E01E3 /* StoreKit.framework in Frameworks */,
 				F348C9D627D8E54200622584 /* Search in Frameworks */,
+				E5980FB729F8068400405986 /* Home in Frameworks */,
+				E5980FB929F8068800405986 /* Home-iOS in Frameworks */,
 				E547D2F929EE9F98008FB760 /* Modals in Frameworks */,
 				E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */,
 				F3BC534B278598CE009E49B4 /* Onboarding in Frameworks */,
@@ -2543,6 +2547,8 @@
 				E59227C729C8BDD70008A091 /* Theme */,
 				E509509329ED258500C0F935 /* Theme-iOS */,
 				E547D2F829EE9F98008FB760 /* Modals */,
+				E5980FB629F8068400405986 /* Home */,
+				E5980FB829F8068800405986 /* Home-iOS */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -5069,6 +5075,14 @@
 		E59227C729C8BDD70008A091 /* Theme */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Theme;
+		};
+		E5980FB629F8068400405986 /* Home */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Home;
+		};
+		E5980FB829F8068800405986 /* Home-iOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "Home-iOS";
 		};
 		E5CEF62C29E823B200945415 /* Theme-iOS */ = {
 			isa = XCSwiftPackageProductDependency;

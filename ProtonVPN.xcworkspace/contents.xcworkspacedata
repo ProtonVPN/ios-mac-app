@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:libraries/Home">
+   </FileRef>
+   <FileRef
       location = "group:libraries/Theme">
    </FileRef>
    <FileRef
