@@ -122,7 +122,9 @@ class UpdateManager: NSObject {
     }
     
     private var newestAppCastItem: SUAppcastItem? {
-        return appcast?.items.first // We put newest version on top of the file
+        appcast?.items.first {
+            $0.minimumOperatingSystemVersionIsOK && $0.maximumOperatingSystemVersionIsOK
+        }
     }
     
     private let suDateFormatter: DateFormatter = DateFormatter()
@@ -130,6 +132,11 @@ class UpdateManager: NSObject {
 }
 
 extension UpdateManager: SPUUpdaterDelegate {
+    func bestValidUpdate(in appcast: SUAppcast, for updater: SPUUpdater) -> SUAppcastItem? {
+        appcast.items.first {
+            $0.minimumOperatingSystemVersionIsOK && $0.maximumOperatingSystemVersionIsOK
+        }
+    }
     
     func updaterWillRelaunchApplication(_ updater: SPUUpdater) {
         if let sessionManager = appSessionManager, sessionManager.loggedIn {
