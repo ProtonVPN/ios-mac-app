@@ -229,6 +229,8 @@
 		E565986C2820FEDD004F2240 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986B2820FEDD004F2240 /* WarningView.swift */; };
 		E5772AE429B0B9A90076D824 /* SystemExtensionTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5772AE329B0B9A90076D824 /* SystemExtensionTutorialView.swift */; };
 		E57B263229C3188D00533B7C /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E57B263129C3188D00533B7C /* AVKit.framework */; };
+		E5980FBB29F8069300405986 /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = E5980FBA29F8069300405986 /* Home */; };
+		E5980FBD29F8069700405986 /* Home-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E5980FBC29F8069700405986 /* Home-macOS */; };
 		E5C4EF3B29B611C20013ACB2 /* SystemExtensionGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3A29B611C20013ACB2 /* SystemExtensionGuideViewController.swift */; };
 		E5C4EF3D29B882AF0013ACB2 /* LinkButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3C29B882AF0013ACB2 /* LinkButtonStyle.swift */; };
 		E5C4EF3F29B882C10013ACB2 /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3E29B882C10013ACB2 /* PrimaryButtonStyle.swift */; };
@@ -1124,9 +1126,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E509509829ED259600C0F935 /* Theme in Frameworks */,
+				E5980FBD29F8069700405986 /* Home-macOS in Frameworks */,
 				EE8CA7B11F06F94800BA829F /* ServiceManagement.framework in Frameworks */,
 				EEFA87661F6170F200DE880D /* MapKit.framework in Frameworks */,
 				E57B263229C3188D00533B7C /* AVKit.framework in Frameworks */,
+				E5980FBB29F8069300405986 /* Home in Frameworks */,
 				7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */,
 				E53D64C3281169880060C463 /* Modals-macOS in Frameworks */,
 				EE182C561F617C0000F3BA4C /* NetworkExtension.framework in Frameworks */,
@@ -2835,6 +2839,8 @@
 				E93533DA29CAEE2C005E3A59 /* Sparkle */,
 				E509509529ED258F00C0F935 /* Theme-macOS */,
 				E509509729ED259600C0F935 /* Theme */,
+				E5980FBA29F8069300405986 /* Home */,
+				E5980FBC29F8069700405986 /* Home-macOS */,
 			);
 			productName = ProtonVPN;
 			productReference = EED534811EEC112000013607 /* ProtonVPN.app */;
@@ -4879,6 +4885,14 @@
 		E53D64C2281169880060C463 /* Modals-macOS */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Modals-macOS";
+		};
+		E5980FBA29F8069300405986 /* Home */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Home;
+		};
+		E5980FBC29F8069700405986 /* Home-macOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "Home-macOS";
 		};
 		E93533DA29CAEE2C005E3A59 /* Sparkle */ = {
 			isa = XCSwiftPackageProductDependency;
