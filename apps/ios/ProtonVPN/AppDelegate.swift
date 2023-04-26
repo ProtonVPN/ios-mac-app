@@ -43,7 +43,7 @@ import VPNShared
 
 public let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 
-@UIApplicationMain
+// @UIApplicationMain // Replace this and comment out the `SwiftUI Life cycle` to bring back the old app
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private let container = DependencyContainer()
