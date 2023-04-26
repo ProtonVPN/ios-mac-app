@@ -76,9 +76,14 @@ public class RefreshManager {
 
     public func resume(completion: @escaping (() -> Void)) {
         workQueue.async { [weak self] in
-            self?.state = .running
-            self?.startTimer(firstRunAfter: self?.nextRunTime?.timeIntervalSinceNow)
-            log.debug("Timer for \(String(describing: self)) resumed. Next run planned at \(String(describing: self?.nextRunTime?.timeIntervalSinceNow))", category: .connection)
+            guard let self else {
+                completion()
+                return
+            }
+            log.debug("Timer for \(self) resumed. Next run planned in \(self.nextRunTime?.timeIntervalSinceNow ?? self.timerRefreshInterval) seconds", category: .connection)
+
+            self.state = .running
+            self.startTimer(firstRunAfter: self.nextRunTime?.timeIntervalSinceNow)
             completion()
         }
     }

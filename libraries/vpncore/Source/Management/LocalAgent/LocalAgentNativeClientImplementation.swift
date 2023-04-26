@@ -76,8 +76,8 @@ final class LocalAgentNativeClientImplementation: NSObject, LocalAgentNativeClie
     }
 
     private func didReceive(connectionDetails: LocalAgentConnectionDetails) {
-        vpncore.log.info("Local agent shared library received connection details: \(connectionDetails)", category: .localAgent, event: .connect)
         let detailsMessage = ConnectionDetailsMessage(details: connectionDetails)
+        vpncore.log.info("Local agent shared library received connection details: \("\(detailsMessage)".maskIPs)", category: .localAgent, event: .connect)
         delegate?.didReceiveConnectionDetails(detailsMessage)
     }
 
