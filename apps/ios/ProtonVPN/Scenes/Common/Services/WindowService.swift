@@ -72,7 +72,7 @@ class WindowServiceImplementation: WindowService {
             window.layer.speed = 100
         }
         observeRootViewController(window)
-//        setupAppearance() // Remove for the redesign
+        setupAppearance()
     }
 
     private func observeRootViewController(_ window: UIWindow) {
@@ -91,6 +91,7 @@ class WindowServiceImplementation: WindowService {
     }
     
     func setupAppearance() {
+#if !REDESIGN
         window.tintColor = .brandColor()
         
         UINavigationBar.appearance().barTintColor = .backgroundColor()
@@ -117,6 +118,7 @@ class WindowServiceImplementation: WindowService {
         GSMessage.errorBackgroundColor = UIColor.notificationErrorColor()        
         
         UITableView.appearance().sectionHeaderTopPadding = 0.0
+#endif
     }
     
     // MARK: - Presentation
