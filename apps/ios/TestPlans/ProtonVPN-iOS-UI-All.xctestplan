@@ -27,7 +27,6 @@
     {
       "skippedTests" : [
         "ConnectionTests",
-        "SignupTests\/testSignupExistingExternalAccount()",
         "SignupTests\/testSignupExistingInternalAccount()",
         "SignupTests\/testSignupNewInternalAccountUpgradePlans()"
       ],
