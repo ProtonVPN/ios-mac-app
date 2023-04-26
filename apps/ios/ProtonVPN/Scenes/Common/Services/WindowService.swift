@@ -72,7 +72,7 @@ class WindowServiceImplementation: WindowService {
             window.layer.speed = 100
         }
         observeRootViewController(window)
-        setupAppearance()
+//        setupAppearance() // Remove for the redesign
     }
 
     private func observeRootViewController(_ window: UIWindow) {
