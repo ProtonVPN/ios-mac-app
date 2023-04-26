@@ -13,20 +13,15 @@ import ProtonCore_QuarkCommands
 import ProtonCore_TestingToolkit
 
 class SignupTests: ProtonVPNUITests {
+    lazy var environment: Environment = {
+        guard let host = dynamicHost else {
+            return .black
+        }
+
+        return .custom(host)
+    }()
     
-    var doh: DoH & ServerConfig {
-          return CustomServerConfigDoH(
-            signupDomain: ObfuscatedConstants.blackSignupDomain,
-            captchaHost: ObfuscatedConstants.blackCaptchaHost,
-            humanVerificationV3Host: ObfuscatedConstants.blackHumanVerificationV3Host,
-            accountHost: ObfuscatedConstants.blackAccountHost,
-            defaultHost: ObfuscatedConstants.blackDefaultHost,
-            apiHost: ObfuscatedConstants.apiHost,
-            defaultPath: ObfuscatedConstants.blackDefaultPath
-          )
-      }
-    
-    lazy var quarkCommands = QuarkCommands(doh: doh)
+    lazy var quarkCommands = QuarkCommands(doh: environment.doh)
     private let mainRobot = MainRobot()
     private let signupRobot = SignupRobot()
     
@@ -85,7 +80,7 @@ class SignupTests: ProtonVPNUITests {
 
         try? await QuarkCommands.createAsync(
             account: .external(email: email, password: password),
-            currentlyUsedHostUrl: Environment.black.doh.getCurrentlyUsedHostUrl()
+            currentlyUsedHostUrl: environment.doh.getCurrentlyUsedHostUrl()
         )
 
         changeEnvToBlackIfNeeded()
