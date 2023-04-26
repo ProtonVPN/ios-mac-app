@@ -43,17 +43,29 @@ import VPNShared
 
 public let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 
-// @UIApplicationMain // Replace this and comment out the `SwiftUI Life cycle` to bring back the old app
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
+#if !REDESIGN
+@UIApplicationMain
+class AppDelegate: UIResponder {
     private let container = DependencyContainer()
     private lazy var vpnManager: VpnManagerProtocol = container.makeVpnManager()
     private lazy var navigationService: NavigationService = container.makeNavigationService()
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
     private lazy var appStateManager: AppStateManager = container.makeAppStateManager()
     private lazy var planService: PlanService = container.makePlanService()
-    
-    // MARK: - UIApplicationDelegate
+}
+#else
+class AppDelegate: UIResponder {
+    private let container = DependencyContainer()
+    private lazy var vpnManager: VpnManagerProtocol = container.makeVpnManager()
+    private lazy var navigationService: NavigationService = container.makeNavigationService()
+    private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
+    private lazy var appStateManager: AppStateManager = container.makeAppStateManager()
+    private lazy var planService: PlanService = container.makePlanService()
+}
+#endif
+
+// MARK: - UIApplicationDelegate
+extension AppDelegate: UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         setupLogsForApp()

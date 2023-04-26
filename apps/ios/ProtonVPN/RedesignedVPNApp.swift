@@ -23,9 +23,9 @@ import Theme_iOS
 import Home
 import Home_iOS
 
+#if REDESIGN
 @main
 struct RedesignedVPNApp: App {
-
     /// This delegates the app lifecycle events to the old `AppDelegate`. Once we have a working redesign we can start moving away from `AppDelegate`
     /// Until then it's the safest option to keep the functionality intact.
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -77,3 +77,5 @@ struct RedesignedVPNApp: App {
     }
 }
 // MARK: - End SwiftUI Life cycle
+
+#endif
