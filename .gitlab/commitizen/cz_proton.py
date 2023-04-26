@@ -62,6 +62,10 @@ class ProtonCz(BaseCommitizen):
             "name": "release: A manual software release commit that bumps one or more app versions."
         },
         {
+            "value": "revert",
+            "name": "revert: Undo problematic changes in the commit log."
+        },
+        {
             "value": "i18n",
             "name": "i18n: Used by CI when importing translations into the code."
         },

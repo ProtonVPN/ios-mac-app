@@ -61,22 +61,6 @@ class ProtonVPNUITests: CoreTestCase {
         }
     }()
 
-    lazy var dynamicHost: String? = {
-        let url = URL(string: dynamicDomain) ??
-            URL(string: ObfuscatedConstants.blackDefaultHost)!
-
-        if #available(iOS 16, *) {
-            if let host = url.host() {
-                return host
-            }
-        } else {
-            if let host = url.host {
-                return host
-            }
-        }
-        return nil
-    }()
-
     // MARK: - Helper methods
     
     private let loginRobot = LoginRobot()

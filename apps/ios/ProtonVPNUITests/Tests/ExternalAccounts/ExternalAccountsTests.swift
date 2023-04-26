@@ -33,11 +33,19 @@ final class ExternalAccountsTests: ProtonVPNUITests {
     }
 
     lazy var environment: Environment = {
-        guard let host = dynamicHost else {
+        guard let url = URL(string: dynamicDomain) else {
             return .black
         }
-
-        return .custom(host)
+        if #available(iOS 16, *) {
+            if let host = url.host() {
+                return .custom(host)
+            }
+        } else {
+            if let host = url.host {
+                return .custom(host)
+            }
+        }
+        return .black
     }()
 
     let signInTimeout: TimeInterval = 90
