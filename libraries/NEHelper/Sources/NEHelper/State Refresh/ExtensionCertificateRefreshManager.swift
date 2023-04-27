@@ -47,7 +47,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
 
     /// Ensures only one request is processed at a time. Before sending a request, decrement the semaphore. When
     /// the completion is called and the request is processed, increment the semaphore so the next request can be made.
-    fileprivate let semaphore = DispatchSemaphore(value: 1)
+    fileprivate let semaphore = DispatchSemaphore(value: 0)
 
     override public var timerRefreshInterval: TimeInterval {
         Self.intervals.checkInterval
@@ -63,11 +63,22 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
         self.apiService = apiService
 
         operationQueue.maxConcurrentOperationCount = 1
+        semaphore.signal()
+
         operationQueue.qualityOfService = .default
         operationQueue.underlyingQueue = workQueue
 
         super.init(timerFactory: timerFactory,
                    workQueue: workQueue)
+    }
+
+    deinit {
+        guard state == .stopped else {
+            fatalError("Attempted to free refresh manager before stopping it")
+        }
+
+        // Make sure we have our turn on the semaphore (should be ok if we're in the stopped state)
+        semaphore.wait()
     }
 
     /// Check the refresh conditions for certificate refresh, and refresh it if necessary.
@@ -232,6 +243,15 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
         }
     }
 
+    override public func stop(completion: @escaping (() -> Void)) {
+        super.stop { [weak self] in
+            self?.operationQueue.addBarrierBlock {
+                self?.operationQueue.isSuspended = true
+                completion()
+            }
+        }
+    }
+
     override func stopTimer() {
         operationQueue.cancelAllOperations()
         super.stopTimer()
@@ -243,6 +263,8 @@ class CertificateRefreshAsyncOperation: AsyncOperation {
     let isUserInitiated: Bool
     let forceRefreshDueToExpiredSession: Bool
     let completion: CertificateRefreshCompletion
+
+    var observation: NSKeyValueObservation!
     unowned let manager: ExtensionCertificateRefreshManager
 
     init(features: VPNConnectionFeatures?,
@@ -263,11 +285,6 @@ class CertificateRefreshAsyncOperation: AsyncOperation {
     }
 
     override func main() {
-        guard !isCancelled else {
-            finish(.failure(.cancelled))
-            return
-        }
-
         let timeOutInterval = ExtensionCertificateRefreshManager.intervals.refreshWaitTimeout
         guard manager.semaphore.wait(timeout: .now() + timeOutInterval) == .success else {
             assertionFailure("Timed out waiting for semaphore while performing certificate refresh")
@@ -275,17 +292,38 @@ class CertificateRefreshAsyncOperation: AsyncOperation {
             return
         }
 
-        // we could have been blocked for a little while, let's double-check we aren't cancelled
         guard !isCancelled else {
-            manager.semaphore.signal()
             finish(.failure(.cancelled))
+            manager.semaphore.signal()
             return
         }
 
+        var didFire = false
+        observation = observe(\.isCancelled, options: [.initial]) { [weak self] _, _ in
+            guard self?.isCancelled == true else { return }
+            self?.finish(.failure(.cancelled))
+            self?.manager.semaphore.signal()
+            didFire = true
+        }
+
+        guard !isCancelled else { return }
         manager.checkRefreshCertificateNowNoSync(features: features,
                                                  userInitiated: isUserInitiated,
                                                  forceRefreshDueToExpiredSession: forceRefreshDueToExpiredSession,
                                                  asPartOf: self) { result in
+            guard !self.isCancelled else { return }
+            self.observation.invalidate()
+
+            guard !self.isCancelled else {
+                // if on the off chance we were cancelled between when we checked and when we invalidated the
+                // observation, make sure we still manage to signal the semaphore.
+                if !didFire {
+                    self.finish(.failure(.cancelled))
+                    self.manager.semaphore.signal()
+                }
+                return
+            }
+
             self.finish(result)
             self.manager.semaphore.signal()
         }
