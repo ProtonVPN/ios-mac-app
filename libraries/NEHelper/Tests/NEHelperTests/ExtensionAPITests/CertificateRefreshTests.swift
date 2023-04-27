@@ -23,6 +23,7 @@ import TimerMock
 @testable import VPNShared
 @testable import VPNSharedTesting
 
+// swiftlint:disable:file function_body_length
 class CertificateRefreshTests: ExtensionAPIServiceTestCase {
     var manager: ExtensionCertificateRefreshManager!
 
@@ -164,7 +165,6 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         sessionAuthCallback = mockEndpoint(SessionAuthRequest.self,
                                            result: .success([:]),
                                            expectationToFulfill: expectations.sessionAuth)
-
 
         timerFactory.timerWasAdded = {
             self.timerFactory.runRepeatingTimers()
@@ -750,10 +750,9 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             }
             expectations.managerStop.fulfill()
         }
-        wait(for: [expectations.managerStop], timeout: expectationTimeout)
 
         timerFactory.runAllScheduledWork()
-        wait(for: [expectations.certRefreshCancelled], timeout: expectationTimeout)
+        wait(for: [expectations.certRefreshCancelled, expectations.managerStop], timeout: expectationTimeout, enforceOrder: true)
     }
 
     /// The network extension should use the main app's credentials if it can't find any of its own in the keychain.
@@ -948,5 +947,54 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         }
 
         wait(for: [expectations.sessionExpiredResult[2]], timeout: expectationTimeout)
+    }
+
+    // Network operations should be cancelled on manager deinit, because
+    // operations use unowned manager. If this is not done, this text will crash with SIGBART.
+    func testDeinitDuringRequestDoesntCrash() {
+        let willStop = DispatchGroup()
+        let didStop = XCTestExpectation(description: "Wait for certificate refresh request")
+        let didRefresh = XCTestExpectation(description: "Did refresh operation (even though it may have timed out)")
+        let expectationTimeout: TimeInterval = 5
+
+        timerFactory.workWasScheduled = { [weak self] in
+            let second: Double = 1000000
+            usleep(UInt32(0.5 * second))
+
+            self?.timerFactory.runAllScheduledWork()
+        }
+
+        certRefreshCallback = { request, completion in
+            willStop.wait()
+
+            completion(nil, nil, POSIXError(.ETIMEDOUT))
+        }
+
+        willStop.enter()
+        manager.start {
+            self.manager.checkRefreshCertificateNow(features: self.authenticationStorage.features!) { result in
+                guard case let .failure(error) = result else {
+                    XCTFail("Expected error but got \(result)")
+                    return
+                }
+
+                guard case CertificateRefreshError.cancelled = error else {
+                    XCTFail("Expected cancelled error but got \(error)")
+                    return
+                }
+
+                didRefresh.fulfill()
+            }
+
+            self.manager.stop {
+                // Unsetting manager leads to some crashes
+                self.manager = nil
+
+                didStop.fulfill()
+            }
+
+            willStop.leave()
+        }
+        wait(for: [didRefresh, didStop], timeout: expectationTimeout, enforceOrder: true)
     }
 }
