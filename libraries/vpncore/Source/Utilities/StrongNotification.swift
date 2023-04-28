@@ -78,7 +78,7 @@ extension NotificationCenter {
     ) -> NotificationToken where Notification: StrongNotification<T> {
         let token = addObserver(forName: Notification.name, object: object, queue: queue) { notification in
             guard let data = notification.userInfo?[Notification.dataKey] as? T else {
-                Environment._assertionFailure("Expected object of type \(T.self) stored under key: \(Notification.dataKey)", #file, #line)
+                DebugEnvironment._assertionFailure("Expected object of type \(T.self) stored under key: \(Notification.dataKey)", #file, #line)
                 return
             }
 

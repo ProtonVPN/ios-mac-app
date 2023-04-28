@@ -19,7 +19,7 @@
 import Foundation
 
 /// Provides a way to test error paths that crash DEBUG builds by overriding the assertionFailure behaviour in tests.
-public class Environment {
+public class DebugEnvironment {
     public private (set) static var _assertionFailure = assertionFailure
     public private (set) static var _assert = assert
 
