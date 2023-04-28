@@ -86,8 +86,8 @@
         "package": "WireGuardKit",
         "repositoryURL": "https://github.com/ProtonVPN/wireguard-apple.git",
         "state": {
-          "branch": null,
-          "revision": "4deff1844a4aba1dcf54b21725b6d4b22ce2f2eb",
+          "branch": "release/ios",
+          "revision": "026d18ae27fe83b32a661fbfa1ee698f67ba2221",
           "version": null
         }
       },
