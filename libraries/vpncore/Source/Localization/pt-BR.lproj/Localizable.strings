@@ -257,7 +257,7 @@
 "_data_disclaimer_user_details" = "Nome de usuário ou endereço de e-mail";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
+"_default_profile_tooltip" = "O botão \"Conexão rápida\" utiliza o perfil padrão.\n";
 
 /* Common word */
 "_delete" = "Excluir";
@@ -977,7 +977,7 @@
 "_ok" = "OK";
 
 /* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "Under maintenance";
+"_on_maintenance" = "Em manutenção";
 
 /* Telemetry label in the onboarding screen for mac next to a toggle */
 "_onboarding_mac_crash_reports" = "Compartilha relatórios de falhas anônimos. Isso nos ajuda a corrigir erros, detectar firewalls e evitar bloqueios de VPN.";
@@ -1247,7 +1247,7 @@
 "_report_bug" = "Reportar um problema";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Please provide the following details so that our team can help you faster:\n• Proton VPN app logs\n• OpenVPN logs\n• WireGuard logs";
+"_report_description" = "Fornecendo os seguintes detalhes, nossa equipe pode identificar seu problema e uma possível solução com maiores chances e menor tempo:\n• Registros do aplicativo Proton VPN\n• Registros do OpenVPN\n• Registros do WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E-mail:";
@@ -1349,7 +1349,7 @@
 "_select_verification_option" = "Por favor, selecione uma opção de verificação para continuar:";
 
 /* iOS: text in human verification options screen */
-"_select_verification_option_top_message" = "To continue, please verify that you are human.";
+"_select_verification_option_top_message" = "Para evitar abusos, você deve verificar se é humano.";
 
 /* Profile create/change form */
 "_server" = "Servidor";
@@ -1490,7 +1490,7 @@
 "_subscription_will_renew" = "O plano actual será automaticamente renovado em %@.";
 
 /* (No Comment) */
-"_subuser_alert_description1" = "To continue to Proton VPN, please enable VPN connections. You'll also need to do this for any users in your organization.";
+"_subuser_alert_description1" = "Para iniciar sua jornada no Proton VPN, ative conexões VPN à sua conta ou a qualquer outra subconta.";
 
 /* (No Comment) */
 "_subuser_alert_description2" = "Esta etapa levará apenas alguns minutos. Depois disso, você poderá iniciar sessão e proteger todos os seus dispositivos.";
@@ -1520,7 +1520,7 @@
 "_sysex_cannot_enable" = "Não é possível ativar a extensão do sistema";
 
 /* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
-"_sysex_description_1" = "Para usar a VPN Proton, você precisará habilitar **protocolos VPN customizados** no seu Mac.";
+"_sysex_description_1" = "Para usar a VPN Proton, você precisará ativar **protocolos VPN customizados** no seu Mac.";
 
 /* Part 2 of the description of the system extension wizard in mac */
 "_sysex_description_2" = "Protocolos personalizados permitem conexões mais rápidas e seguras, e você precisará ativá-los para se conectar à maioria dos servidores Proton VPN.";
@@ -1583,7 +1583,7 @@
 "_to_server_title" = "Para o servidor:";
 
 /* Description shown together with server info icon */
-"_tor_description" = "Connects to Tor network";
+"_tor_description" = "Conecta-se a rede TOR";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Servidor Tor";
@@ -1670,7 +1670,7 @@
 "_unavailable" = "Indisponível";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Unprotected network notifications";
+"_unprotected_network" = "Notificar redes desprotegidas";
 
 /* MacOS: Settings -> General: description */
 "_unprotected_network_tooltip" = "Receba uma notificação quando o Proton VPN detectar que você está conectado a uma rede desprotegida.";
@@ -1790,7 +1790,7 @@
 "_vpn_protocol_not_supported_text" = "O protocolo VPN não está disponível para a conexão selecionado. Para conectar, tente alterar o protocolo ou servidor.";
 
 /* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
-"_vpn_protocol_not_supported_title" = "VPN protocol not supported";
+"_vpn_protocol_not_supported_title" = "Protocolo VPN não suportado";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Seu dispositivo não conseguiu encerrar a sessão da VPN anterior. Você precisará reiniciar seu dispositivo antes de estabelecer uma nova conexão VPN.";

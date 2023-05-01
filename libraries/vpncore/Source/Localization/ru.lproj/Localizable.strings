@@ -257,7 +257,7 @@
 "_data_disclaimer_user_details" = "Имя пользователя, адрес электронной почты";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
+"_default_profile_tooltip" = "Кнопка «Быстрое подключение» использует профиль по умолчанию.\n";
 
 /* Common word */
 "_delete" = "Удалить";
@@ -977,7 +977,7 @@
 "_ok" = "ОК";
 
 /* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "Under maintenance";
+"_on_maintenance" = "На техобслуживании";
 
 /* Telemetry label in the onboarding screen for mac next to a toggle */
 "_onboarding_mac_crash_reports" = "Делиться анонимными сообщениями о сбоях. Это поможет нам исправить ошибки, обнаружить брандмауэры и избежать блокировки VPN.";
@@ -1247,7 +1247,7 @@
 "_report_bug" = "Сообщить о проблеме";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Please provide the following details so that our team can help you faster:\n• Proton VPN app logs\n• OpenVPN logs\n• WireGuard logs";
+"_report_description" = "Наша команда сможет определить проблему и найти возможное решение с большей вероятностью и за более короткий срок, если вы предоставите следующую информацию:\n• журналы приложения Proton VPN\n• журналы OpenVPN\n• журналы WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Эл. почта:";
@@ -1349,7 +1349,7 @@
 "_select_verification_option" = "Пожалуйста, выберите вариант подтверждения, чтобы продолжить:";
 
 /* iOS: text in human verification options screen */
-"_select_verification_option_top_message" = "To continue, please verify that you are human.";
+"_select_verification_option_top_message" = "Для предотвращения злоупотребления, мы должны убедиться, что вы человек.";
 
 /* Profile create/change form */
 "_server" = "Сервер";
@@ -1490,7 +1490,7 @@
 "_subscription_will_renew" = "Ваш тариф автоматически обновится %@.";
 
 /* (No Comment) */
-"_subuser_alert_description1" = "To continue to Proton VPN, please enable VPN connections. You'll also need to do this for any users in your organization.";
+"_subuser_alert_description1" = "Чтобы продолжить с Proton VPN, разрешите подключения к VPN. Также это нужно сделать для всех пользователей вашей организации.";
 
 /* (No Comment) */
 "_subuser_alert_description2" = "Этот шаг займет всего несколько минут. После этого вы сможете войти в систему и защитить все свои устройства.";
@@ -1583,7 +1583,7 @@
 "_to_server_title" = "На сервер:";
 
 /* Description shown together with server info icon */
-"_tor_description" = "Connects to Tor network";
+"_tor_description" = "Подключает к сети TOR";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Tor сервер";
@@ -1670,7 +1670,7 @@
 "_unavailable" = "Недоступно";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Unprotected network notifications";
+"_unprotected_network" = "Уведомлять о работе в незащищенной сети";
 
 /* MacOS: Settings -> General: description */
 "_unprotected_network_tooltip" = "Получать уведомление, когда Proton VPN обнаруживает, что вы подключены к незащищенной сети.";
@@ -1790,7 +1790,7 @@
 "_vpn_protocol_not_supported_text" = "Протокол VPN недоступен для выбранного вами подключения. Чтобы подключиться, попробуйте изменить протокол или сервер.";
 
 /* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
-"_vpn_protocol_not_supported_title" = "VPN protocol not supported";
+"_vpn_protocol_not_supported_title" = "Протокол VPN не поддерживается";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Вашему устройству не удалось завершить предыдущий сеанс VPN. Вам нужно перезагрузить устройство, прежде чем вы сможете установить новое подключение к VPN.";

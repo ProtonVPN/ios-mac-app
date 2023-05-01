@@ -239,7 +239,7 @@
 "_data_disclaimer_user_details" = "Korisničko ime, adresa e-pošte";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
+"_default_profile_tooltip" = "Dugme za \"Brzo povezivanje\" koristi zadani profil.\n";
 
 /* Common word */
 "_delete" = "Izbriši";
@@ -1148,7 +1148,7 @@
 "_select_verification_option" = "Odaberite metodu potvrde za nastavak:";
 
 /* iOS: text in human verification options screen */
-"_select_verification_option_top_message" = "To continue, please verify that you are human.";
+"_select_verification_option_top_message" = "Za spriječavanje zlouporabe, morate provjeriti da ste čovjek.";
 
 /* Profile create/change form */
 "_server" = "Poslužitelj";
@@ -1295,7 +1295,7 @@
 "_timeout_ks_ike_switch_protocol" = "Prebacite se na OpenVPN i ponovno pokušajte";
 
 /* Description shown together with server info icon */
-"_tor_description" = "Connects to Tor network";
+"_tor_description" = "Povezuje s Tor mrežom";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Tor poslužitelj";
@@ -1379,7 +1379,7 @@
 "_unavailable" = "Nedostupno";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Unprotected network notifications";
+"_unprotected_network" = "Obavijesti o nezaštićenim mrežama";
 
 /* MacOS: Settings -> General: description */
 "_unprotected_network_tooltip" = "Primanje obavijesti kada Proton VPN otkrije da ste povezani s nezaštićenom mrežom.";

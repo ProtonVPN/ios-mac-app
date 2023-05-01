@@ -137,7 +137,7 @@
 "_changelog" = "Registro de cambios";
 
 /* iOS: new profkle can't be created because not all required fields are filled */
-"_check_if_fields_present" = "Por favor verifique si todos los campos están completos";
+"_check_if_fields_present" = "Verifique si todos los campos están completos.";
 
 /* iOS plan selection: header */
 "_choose_plan" = "Elegir suscripción";
@@ -257,7 +257,7 @@
 "_data_disclaimer_user_details" = "Nombre de usuario, dirección de correo";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
+"_default_profile_tooltip" = "El botón \"Conexión rápida\" usa el perfil por defecto.\n";
 
 /* Common word */
 "_delete" = "Eliminar";
@@ -287,7 +287,7 @@
 "_delinquent_title" = "Su cuenta VPN tiene facturas pendientes";
 
 /* Delinquent user alert */
-"_delinquent_user_description" = "Su cuenta actualmente tiene una factura vencida. Por favor, pague todas las facturas pendientes en account.protonvpn.com";
+"_delinquent_user_description" = "Su cuenta actualmente tiene una factura vencida. Pague todas las facturas pendientes en account.protonvpn.com";
 
 /* Delinquent user alert */
 "_delinquent_user_title" = "Factura no pagada";
@@ -401,7 +401,7 @@
 "_error_mitm_title" = "Conexión insegura";
 
 /* (No Comment) */
-"_error_mitm_vpn_description" = "La validación del certificado TLS falló al intentar conectarse al servidor VPN. Su conexión actual a Internet puede ser monitoreada. Para mantener sus datos seguros, estamos impidiendo que la aplicación acceda a este servidor VPN.\nPor favor seleccione otro servidor.";
+"_error_mitm_vpn_description" = "La validación del certificado TLS falló al intentar conectarse al servidor VPN. Su conexión actual a Internet puede ser monitoreada. Para mantener sus datos seguros, estamos impidiendo que la aplicación acceda a este servidor VPN.\nSeleccione otro servidor.";
 
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "La firma del módulo está vacía";
@@ -440,7 +440,7 @@
 "_error_user_credentials_missing" = "Faltan credenciales del usuario. No se puede iniciar sesión.";
 
 /* Human validation failed */
-"_error_user_failed_human_validation" = "No hemos podido verificar que sea humano. Por favor, intente de nuevo o compre un plan premium.";
+"_error_user_failed_human_validation" = "No hemos podido verificar que sea humano. Intente de nuevo o compre un plan premium.";
 
 /* Error when try to parse verification methods */
 "_error_verification_methods_parser" = "No se pueden analizar los métodos de verificación";
@@ -458,7 +458,7 @@
 "_existing_session" = "Servidor no disponible";
 
 /* Existing connection alert */
-"_existing_session_to_server" = "Por favor, seleccione un servidor diferente.";
+"_existing_session_to_server" = "Seleccione un servidor diferente.";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Abre la lista de servidores";
@@ -695,7 +695,7 @@
 "_local_agent_policy_violation_error_title" = "Violación de políticas";
 
 /* (No Comment) */
-"_local_agent_server_error_message" = "Se ha producido un error en el servidor. Por favor, conéctese a otro servidor.";
+"_local_agent_server_error_message" = "Se ha producido un error en el servidor. Conéctese a otro servidor.";
 
 /* Local agent */
 "_local_agent_server_error_title" = "Error de servidor";
@@ -977,7 +977,7 @@
 "_ok" = "OK";
 
 /* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "Under maintenance";
+"_on_maintenance" = "En mantenimiento";
 
 /* Telemetry label in the onboarding screen for mac next to a toggle */
 "_onboarding_mac_crash_reports" = "Compartir reportes de error anónimos. Esto nos ayuda a corregir errores, detectar firewalls y evitar bloqueos de VPN.";
@@ -1247,7 +1247,7 @@
 "_report_bug" = "Reportar un problema";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Please provide the following details so that our team can help you faster:\n• Proton VPN app logs\n• OpenVPN logs\n• WireGuard logs";
+"_report_description" = "Al proporcionar los siguientes datos, nuestro equipo podrá identificar su problema y dar una solución con más probabilidades en menos tiempo:\n• Registros de Proton VPN\n• Registros de OpenVPN\n• Registros de WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Correo:";
@@ -1346,10 +1346,10 @@
 "_select_server" = "Seleccionar servidor";
 
 /* iOS: text in human verification options screen */
-"_select_verification_option" = "Por favor, seleccione una opción de verificación para continuar:";
+"_select_verification_option" = "Seleccione una opción de verificación para continuar:";
 
 /* iOS: text in human verification options screen */
-"_select_verification_option_top_message" = "To continue, please verify that you are human.";
+"_select_verification_option_top_message" = "Para evitar el abuso, debe verificar que es humano.";
 
 /* Profile create/change form */
 "_server" = "Servidor";
@@ -1472,7 +1472,7 @@
 "_subscription_expired_title" = "Su suscripción de VPN ha expirado";
 
 /* (No Comment) */
-"_subscription_extended_success" = "Ha comprado con éxito los créditos para extender su plan actual.";
+"_subscription_extended_success" = "Ha comprado los créditos para extender su plan actual.";
 
 /* iOS Settings -> Connection: name of field. */
 "_subscription_plan" = "Plan de suscripción";
@@ -1490,7 +1490,7 @@
 "_subscription_will_renew" = "El plan actual se renovará automáticamente el %@.";
 
 /* (No Comment) */
-"_subuser_alert_description1" = "To continue to Proton VPN, please enable VPN connections. You'll also need to do this for any users in your organization.";
+"_subuser_alert_description1" = "Para continuar en Proton VPN, habilite las conexiones VPN. También deberá hacer esto para cualquier usuario de su organización.";
 
 /* (No Comment) */
 "_subuser_alert_description2" = "Este paso le llevará sólo unos minutos. Después de eso podrá iniciar sesión y proteger todos sus dispositivos.";
@@ -1508,7 +1508,7 @@
 "_subuser_alert_title" = "Gracias por actualizar a Business/Visionary";
 
 /* MacOS: connecting overlay */
-"_successfully_connected" = "Conectado con éxito";
+"_successfully_connected" = "Conectado";
 
 /* (No Comment) */
 "_switch_side_button_off" = "OFF";
@@ -1583,7 +1583,7 @@
 "_to_server_title" = "Al servidor:";
 
 /* Description shown together with server info icon */
-"_tor_description" = "Connects to Tor network";
+"_tor_description" = "Conecta a la red Tor";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Servidor Tor";
@@ -1670,7 +1670,7 @@
 "_unavailable" = "No disponible";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Unprotected network notifications";
+"_unprotected_network" = "Notificar redes sin protección";
 
 /* MacOS: Settings -> General: description */
 "_unprotected_network_tooltip" = "Reciba una notificación cuando Proton VPN detecte que está conectado a una red sin protección.";
@@ -1790,7 +1790,7 @@
 "_vpn_protocol_not_supported_text" = "El protocolo VPN no está disponible para la conexión que ha seleccionado. Para conectarse, pruebe a cambiar el protocolo o el servidor.";
 
 /* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
-"_vpn_protocol_not_supported_title" = "VPN protocol not supported";
+"_vpn_protocol_not_supported_title" = "Protocolo VPN no soportado";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Su dispositivo no pudo terminar una sesión VPN anterior. Necesitará reiniciar su dispositivo antes de establecer una conexión VPN nueva.";
@@ -1799,7 +1799,7 @@
 "_vpn_stuck_disconnecting_title" = "Error de conexión";
 
 /* (No Comment) */
-"_vpnauth_certfail_description" = "No se pudo actualizar el certificado VPN. Por favor, compruebe su conexión";
+"_vpnauth_certfail_description" = "No se pudo actualizar el certificado VPN. Compruebe su conexión.";
 
 /* Cert based auth */
 "_vpnauth_certfail_title" = "Error de autenticación";
@@ -1853,10 +1853,10 @@
 "authenticate" = "Autenticar";
 
 /* Banner shown after coupon is applied */
-"coupon_applied" = "El cupón ha sido aplicado con éxito.";
+"coupon_applied" = "El cupón ha sido aplicado.";
 
 /* Banner shown after coupon is applied but the plan is not yet upgraded */
-"coupon_applied_plan_not_upgraded_yet" = "El cupón ha sido aplicado con éxito. Su suscripción será actualizada en unos minutos.";
+"coupon_applied_plan_not_upgraded_yet" = "El cupón ha sido aplicado. Su suscripción será actualizada en unos minutos.";
 
 /* Title of the screen to apply a coupon */
 "coupon_code" = "Código de cupón";

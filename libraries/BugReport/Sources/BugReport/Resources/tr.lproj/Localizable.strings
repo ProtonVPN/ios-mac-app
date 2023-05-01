@@ -26,7 +26,7 @@
 "_br_3_email" = "E-posta adresi";
 
 /* ReportBug 3rd step (form) logs description */
-"_br_3_logs_description" = "Bir günlük, soruna neden olan olayları görmemizi sağlayan bir dosya türüdür. Bunları yalnızca mühendislerimizin hataları düzeltmesine yardımcı olmaları için kullanacağız.";
+"_br_3_logs_description" = "Bir günlük, soruna neden olan olayları görmemizi sağlayan bir dosya türüdür. Bunları yalnızca mühendislerimizin hataları gidermesine yardımcı olmaları için kullanacağız.";
 
 /* ReportBug 3rd step (form): message shown if user disabled logs */
 "_br_3_logs_disabled" = "Hata günlükleri, sorununuzun temeline inmemize yardımcı olur. Bunları göndermezseniz, sorunu tam olarak araştıramayabiliriz.";

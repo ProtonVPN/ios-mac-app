@@ -257,7 +257,7 @@
 "_data_disclaimer_user_details" = "Nume utilizator, adresa de e-mail";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
+"_default_profile_tooltip" = "Butonul«Conectare rapidă»utilizează profilul implicit.";
 
 /* Common word */
 "_delete" = "Ștergere";
@@ -977,7 +977,7 @@
 "_ok" = "OK";
 
 /* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "Under maintenance";
+"_on_maintenance" = "În întreținere";
 
 /* Telemetry label in the onboarding screen for mac next to a toggle */
 "_onboarding_mac_crash_reports" = "Partajare anonimă rapoarte de erori. Asta ne ajută să reparăm erorile, să detectăm paravanele de protecție și să evităm blocările VPN-ului.";
@@ -1247,7 +1247,7 @@
 "_report_bug" = "Raportare o problemă";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Please provide the following details so that our team can help you faster:\n• Proton VPN app logs\n• OpenVPN logs\n• WireGuard logs";
+"_report_description" = "Furnizând următoarele detalii, echipa noastră vă poate identifica problema și o posibilă soluție cu șanse mai mari și în timp mai scurt:\n• Jurnale aplicație Proton VPN\n• Jurnale OpenVPN\n• Jurnale WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E-mail:";
@@ -1349,7 +1349,7 @@
 "_select_verification_option" = "Selectați o opțiune de verificare pentru continuare:";
 
 /* iOS: text in human verification options screen */
-"_select_verification_option_top_message" = "To continue, please verify that you are human.";
+"_select_verification_option_top_message" = "Pentru a preveni abuzurile trebuie să dovediți că sunteți o persoană.";
 
 /* Profile create/change form */
 "_server" = "Server";
@@ -1490,7 +1490,7 @@
 "_subscription_will_renew" = "Planul curent se va reînnoi automat la %@.";
 
 /* (No Comment) */
-"_subuser_alert_description1" = "To continue to Proton VPN, please enable VPN connections. You'll also need to do this for any users in your organization.";
+"_subuser_alert_description1" = "Pentru a începe utilizarea Proton VPN activați conexiunile VPN. Același lucru trebuie făcut pentru oricare utilizator din organizație.";
 
 /* (No Comment) */
 "_subuser_alert_description2" = "Acest pas va dura doar câteva minute. După aceea, veți putea să vă conectați și să vă protejați toate dispozitivele.";
@@ -1583,7 +1583,7 @@
 "_to_server_title" = "Către serverul:";
 
 /* Description shown together with server info icon */
-"_tor_description" = "Connects to Tor network";
+"_tor_description" = "Se conectează la rețeaua Tor";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Server Tor";
@@ -1670,7 +1670,7 @@
 "_unavailable" = "Indisponibil";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Unprotected network notifications";
+"_unprotected_network" = "Notificare despre reţele neprotejate";
 
 /* MacOS: Settings -> General: description */
 "_unprotected_network_tooltip" = "Primiți o notificare când Proton VPN detectează că v-ați conectat la o rețea neprotejată.";
@@ -1790,7 +1790,7 @@
 "_vpn_protocol_not_supported_text" = "Protocolul VPN nu este disponibil pentru conexiunea selectată. Pentru conectare, schimbați protocolul sau serverul.";
 
 /* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
-"_vpn_protocol_not_supported_title" = "VPN protocol not supported";
+"_vpn_protocol_not_supported_title" = "Protocol VPN nesuportat";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Dispozitivul a eșuat închiderea sesiunii VPN anterioare. Va trebui să reporniți dispozitivul înainte de a stabili o nouă conexiune VPN.";
