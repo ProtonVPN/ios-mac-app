@@ -257,7 +257,7 @@
 "_data_disclaimer_user_details" = "Nama pengguna, alamat email";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
+"_default_profile_tooltip" = "Tombol \"Quick Connect\" menggunakan profil default.\n";
 
 /* Common word */
 "_delete" = "Hapus";
@@ -977,7 +977,7 @@
 "_ok" = "OK";
 
 /* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "Under maintenance";
+"_on_maintenance" = "Dalam pemeliharaan";
 
 /* Telemetry label in the onboarding screen for mac next to a toggle */
 "_onboarding_mac_crash_reports" = "Bagikan laporan crash anonim. Laporan ini dapat membantu kami untuk memperbaiki bug, mendeteksi firewall, dan menangkal pemblokiran VPN.";
@@ -1247,7 +1247,7 @@
 "_report_bug" = "Laporkan masalah";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Please provide the following details so that our team can help you faster:\n• Proton VPN app logs\n• OpenVPN logs\n• WireGuard logs";
+"_report_description" = "Apabila Anda melampirkan berkas-berkas berikut, tim kami akan dapat mengenali dan menyelesaikan masalah yang Anda hadapi dengan lebih cepat dan akurat:\n• Berkas log Proton VPN\n• Berkas log Open VPN \n• Berkas log WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Email:";
@@ -1349,7 +1349,7 @@
 "_select_verification_option" = "Silakan pilih opsi verifikasi untuk melanjutkan:";
 
 /* iOS: text in human verification options screen */
-"_select_verification_option_top_message" = "To continue, please verify that you are human.";
+"_select_verification_option_top_message" = "Untuk mencegah penyalahgunaan, Anda harus memverifikasi bahwa Anda manusia.";
 
 /* Profile create/change form */
 "_server" = "Server";
@@ -1490,7 +1490,7 @@
 "_subscription_will_renew" = "Paket saat ini akan diperpanjang secara otomatis pada %@.";
 
 /* (No Comment) */
-"_subuser_alert_description1" = "To continue to Proton VPN, please enable VPN connections. You'll also need to do this for any users in your organization.";
+"_subuser_alert_description1" = "Untuk melanjutkan ke Proton VPN, mohon aktifkan koneksi VPN ke akun ini. Anda juga akan perlu untuk melakukan hal yang sama bagi para pengguna lain pada organisasi Anda.";
 
 /* (No Comment) */
 "_subuser_alert_description2" = "Langkah ini hanya akan memakan waktu beberapa menit. Setelahnya, Anda akan dapat masuk dan melindungi seluruh perangkat Anda.";
@@ -1583,7 +1583,7 @@
 "_to_server_title" = "Ke Server:";
 
 /* Description shown together with server info icon */
-"_tor_description" = "Connects to Tor network";
+"_tor_description" = "Mendukung sambungan ke jaringan Tor";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Server Tor";
@@ -1670,7 +1670,7 @@
 "_unavailable" = "Tidak tersedia";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Unprotected network notifications";
+"_unprotected_network" = "Beri tahu jaringan yang tidak dilindungi";
 
 /* MacOS: Settings -> General: description */
 "_unprotected_network_tooltip" = "Terima notifikasi pada saat Proton VPN mendeteksi Anda sedang tersambung ke jaringan yang tidak dilindungi.";
@@ -1790,7 +1790,7 @@
 "_vpn_protocol_not_supported_text" = "Protokol VPN ini tidak tersedia untuk sambungan yang Anda pilih. Untuk dapat tersambung, cobalah untuk mengubah protokol atau server.";
 
 /* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
-"_vpn_protocol_not_supported_title" = "VPN protocol not supported";
+"_vpn_protocol_not_supported_title" = "Protokol VPN Tidak Didukung";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Perangkat Anda gagal mengakhiri sesi VPN sebelumnya. Anda perlu memulai ulang perangkat Anda sebelum membuat sambungan VPN baru.";

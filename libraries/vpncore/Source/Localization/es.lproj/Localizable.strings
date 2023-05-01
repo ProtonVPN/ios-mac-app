@@ -257,7 +257,7 @@
 "_data_disclaimer_user_details" = "Nombre de usuario, dirección de correo electrónico";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
+"_default_profile_tooltip" = "El botón \"Conexión rápida\" utiliza el perfil por defecto.\n";
 
 /* Common word */
 "_delete" = "Borrar";
@@ -977,7 +977,7 @@
 "_ok" = "Aceptar";
 
 /* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "Under maintenance";
+"_on_maintenance" = "En mantenimiento";
 
 /* Telemetry label in the onboarding screen for mac next to a toggle */
 "_onboarding_mac_crash_reports" = "Compartir informes anónimos de errores. Esto nos ayuda a corregir fallos, detectar cortafuegos y evitar bloqueos de VPN.";
@@ -1247,7 +1247,7 @@
 "_report_bug" = "Notificar un problema";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Please provide the following details so that our team can help you faster:\n• Proton VPN app logs\n• OpenVPN logs\n• WireGuard logs";
+"_report_description" = "Proporcionando los siguientes detalles, nuestro equipo puede identificar su problema y una posible solución con mayores posibilidades y menor tiempo:\n- Registros de la aplicación Proton VPN\n- Registros de OpenVPN\n- Registros de WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Correo electrónico:";
@@ -1349,7 +1349,7 @@
 "_select_verification_option" = "Por favor, seleccione una opción de verificación para continuar:";
 
 /* iOS: text in human verification options screen */
-"_select_verification_option_top_message" = "To continue, please verify that you are human.";
+"_select_verification_option_top_message" = "Para prevenir el abuso, debes verificar que eres un humano.";
 
 /* Profile create/change form */
 "_server" = "Servidor";
@@ -1472,7 +1472,7 @@
 "_subscription_expired_title" = "Tu plan de suscripción VPN ha expirado";
 
 /* (No Comment) */
-"_subscription_extended_success" = "Has adquirido con éxito créditos para ampliar tu plan actual.";
+"_subscription_extended_success" = "Has adquirido créditos para ampliar tu plan actual.";
 
 /* iOS Settings -> Connection: name of field. */
 "_subscription_plan" = "Plan de suscripción";
@@ -1490,7 +1490,7 @@
 "_subscription_will_renew" = "El plan actual se renovará automáticamente el %@.";
 
 /* (No Comment) */
-"_subuser_alert_description1" = "To continue to Proton VPN, please enable VPN connections. You'll also need to do this for any users in your organization.";
+"_subuser_alert_description1" = "Para continuar con proton VPN, habilita las conexiones VPN. También tendrás que hacer esto para cualquier usuario de tu organización.";
 
 /* (No Comment) */
 "_subuser_alert_description2" = "Este paso te llevará sólo unos minutos. Después de eso podrás iniciar sesión y proteger todos tus dispositivos.";
@@ -1508,7 +1508,7 @@
 "_subuser_alert_title" = "Gracias por actualizar a Business/Visionary";
 
 /* MacOS: connecting overlay */
-"_successfully_connected" = "Conectado con éxito";
+"_successfully_connected" = "Conectado";
 
 /* (No Comment) */
 "_switch_side_button_off" = "DESACTIVADO";
@@ -1583,7 +1583,7 @@
 "_to_server_title" = "Al servidor:";
 
 /* Description shown together with server info icon */
-"_tor_description" = "Connects to Tor network";
+"_tor_description" = "Conectar a la red TOR";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Servidor Tor";
@@ -1670,7 +1670,7 @@
 "_unavailable" = "No disponible";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Unprotected network notifications";
+"_unprotected_network" = "Notificar redes sin protección";
 
 /* MacOS: Settings -> General: description */
 "_unprotected_network_tooltip" = "Recibir una notificación cuando Proton VPN detecta que está conectado a una red sin protección.";
@@ -1790,7 +1790,7 @@
 "_vpn_protocol_not_supported_text" = "El protocolo VPN no está disponible para la conexión que has seleccionado. Para conectarte, prueba a cambiar el protocolo o servidor.";
 
 /* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
-"_vpn_protocol_not_supported_title" = "VPN protocol not supported";
+"_vpn_protocol_not_supported_title" = "Protocolo VPN no soportado";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Su dispositivo no pudo finalizar una sesión VPN anterior. Necesitarás reiniciar tu dispositivo antes de establecer una nueva conexión VPN.";
@@ -1815,6 +1815,9 @@
 
 /* Used as a title in alerts/modals */
 "_warning" = "Advertencia";
+
+/* MacOS: alert shown during login if already connected to VPN */
+"_warning_vpn_session_is_active" = "La sesión de Proton VPN de otro usuario está activa en este dispositivo. Continuar con el inicio de sesión hará que la sesión actual finalice. ¿Quieres continuar?";
 
 /* Shown on the Welcome screen as the longer screen text */
 "_welcome_body" = "VPN suiza de alta velocidad que salvaguarda tu privacidad encriptando tu conexión a internet.";
@@ -1850,10 +1853,10 @@
 "authenticate" = "Autentificar";
 
 /* Banner shown after coupon is applied */
-"coupon_applied" = "El cupón se ha aplicado con éxito.";
+"coupon_applied" = "El cupón se ha aplicado.";
 
 /* Banner shown after coupon is applied but the plan is not yet upgraded */
-"coupon_applied_plan_not_upgraded_yet" = "El cupón se ha aplicado con éxito. Su suscripción se actualizará en unos minutos.";
+"coupon_applied_plan_not_upgraded_yet" = "El cupón se ha aplicado. Tu suscripción se actualizará en unos minutos.";
 
 /* Title of the screen to apply a coupon */
 "coupon_code" = "Código de descuento";

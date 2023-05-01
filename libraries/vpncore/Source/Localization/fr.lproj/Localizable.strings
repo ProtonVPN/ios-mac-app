@@ -257,7 +257,7 @@
 "_data_disclaimer_user_details" = "Nom d'utilisateur, adresse e-mail";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
+"_default_profile_tooltip" = "Le bouton Connexion rapide utilise le profil par défaut.\n";
 
 /* Common word */
 "_delete" = "Supprimer";
@@ -437,7 +437,7 @@
 "_error_user_credentials_expired" = "Vos identifiants ont expiré. Nous vous invitons à vous connecter.";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_missing" = "Les informations d'identification de l'utilisateur sont manquantes. Il n'est pas possible de se connecter.";
+"_error_user_credentials_missing" = "Les informations d'identification de l'utilisateur sont manquantes. Vous ne pouvez pas vous connecter.";
 
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Nous n'avons pas pu vérifier que vous n'êtes pas un robot. Nous vous invitons à réessayer ou à souscrire un abonnement premium.";
@@ -977,7 +977,7 @@
 "_ok" = "OK";
 
 /* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "Under maintenance";
+"_on_maintenance" = "En maintenance";
 
 /* Telemetry label in the onboarding screen for mac next to a toggle */
 "_onboarding_mac_crash_reports" = "Partagez des rapports de plantage anonymes. Cela nous aide à corriger les bugs, à détecter les pare-feux et à éviter les blocages de VPN.";
@@ -1247,7 +1247,7 @@
 "_report_bug" = "Signaler un bug";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Please provide the following details so that our team can help you faster:\n• Proton VPN app logs\n• OpenVPN logs\n• WireGuard logs";
+"_report_description" = "Indiquez ces informations pour que notre équipe puisse vous aider plus rapidement :\n• Journaux de l'application Proton VPN\n• Journaux OpenVPN\n• Journaux WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Adresse e-mail :";
@@ -1349,7 +1349,7 @@
 "_select_verification_option" = "Sélectionnez une option de vérification pour continuer :";
 
 /* iOS: text in human verification options screen */
-"_select_verification_option_top_message" = "To continue, please verify that you are human.";
+"_select_verification_option_top_message" = "Pour prévenir les abus, nous devons vérifier que vous n'êtes pas un robot.";
 
 /* Profile create/change form */
 "_server" = "Serveur";
@@ -1490,7 +1490,7 @@
 "_subscription_will_renew" = "L'abonnement en cours sera automatiquement renouvelé le %@.";
 
 /* (No Comment) */
-"_subuser_alert_description1" = "To continue to Proton VPN, please enable VPN connections. You'll also need to do this for any users in your organization.";
+"_subuser_alert_description1" = "Pour commencer à utiliser Proton VPN, activez les connexions VPN sur votre compte ou tout autre sous-compte.";
 
 /* (No Comment) */
 "_subuser_alert_description2" = "Cette étape ne prendra que quelques minutes. Vous pourrez ensuite vous connecter et protéger tous vos appareils.";
@@ -1583,7 +1583,7 @@
 "_to_server_title" = "Vers le serveur :";
 
 /* Description shown together with server info icon */
-"_tor_description" = "Connects to Tor network";
+"_tor_description" = "Se connecte au réseau Tor";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Serveur Tor";
@@ -1670,7 +1670,7 @@
 "_unavailable" = "Indisponible";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Unprotected network notifications";
+"_unprotected_network" = "Signaler les réseaux non protégés";
 
 /* MacOS: Settings -> General: description */
 "_unprotected_network_tooltip" = "Recevoir une notification lorsque Proton VPN détecte que vous êtes connecté à un réseau non protégé.";
@@ -1790,7 +1790,7 @@
 "_vpn_protocol_not_supported_text" = "Le protocole VPN n'est pas disponible pour la connexion que vous avez choisie. Pour vous connecter, essayez de changer de protocole ou de serveur.";
 
 /* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
-"_vpn_protocol_not_supported_title" = "VPN protocol not supported";
+"_vpn_protocol_not_supported_title" = "Ce protocole VPN n'est pas pris en charge.";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Votre appareil n'a pas pu terminer la session VPN précédente. Vous devrez redémarrer votre appareil avant de pouvoir établir une nouvelle connexion VPN.";

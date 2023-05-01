@@ -248,7 +248,7 @@
 "_data_disclaimer_user_details" = "نام کاربری، آدرس ایمیل";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
+"_default_profile_tooltip" = "دکمه‌ی «اتصال سریع» از پروفایل پیشفرض استفاده می‌کند.\n";
 
 /* Common word */
 "_delete" = "حذف";
@@ -911,7 +911,7 @@
 "_ok" = "تأیید";
 
 /* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "Under maintenance";
+"_on_maintenance" = "تحت عملیات نگهداری";
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "لاگ‌های OpenVPN";
@@ -1169,7 +1169,7 @@
 "_report_bug" = "گزارش اشکال";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Please provide the following details so that our team can help you faster:\n• Proton VPN app logs\n• OpenVPN logs\n• WireGuard logs";
+"_report_description" = "با ارائه اطلاعات زیر، تیم ما قادر به شناسایی مشکل شما و راه حلی احتمالی بهتر در زمانی کوتاهتر خواهد بود.:\n• ثبت وقایع برنامه Proton VPN\n• ثبت وقایع OpenVPN\n• ثبت وقایع WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "ایمیل:";
@@ -1271,7 +1271,7 @@
 "_select_verification_option" = "لطفاً جهت ادامه یک گزینه تایید را انتخاب کنید:";
 
 /* iOS: text in human verification options screen */
-"_select_verification_option_top_message" = "To continue, please verify that you are human.";
+"_select_verification_option_top_message" = "جهت جلوگیری از سواستفاده، شما باید تایید کنید انسان هستید.";
 
 /* Profile create/change form */
 "_server" = "سرور";
@@ -1448,7 +1448,7 @@
 "_to_server_title" = "به سرور:";
 
 /* Description shown together with server info icon */
-"_tor_description" = "Connects to Tor network";
+"_tor_description" = "به شبکه TOR متصل می‌شود";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "سرور Tor";
@@ -1532,7 +1532,7 @@
 "_unavailable" = "غیرقابل دسترس";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Unprotected network notifications";
+"_unprotected_network" = "اعلام کردن شبکه‌های محافظت نشده";
 
 /* MacOS: Settings -> General: description */
 "_unprotected_network_tooltip" = "دریافت یک اخطار هنگامیکه Proton VPN می‌یابد که شما به یک شبکه محافظت نشده متصل شده اید.";
@@ -1649,7 +1649,7 @@
 "_vpn_protocol_not_supported_text" = "پروتکل VPN برای اتصالی که شما انتخاب کردید در دسترس نیست. برای اتصال، سرور یا پروتکل دیگری را امتحان کنید.";
 
 /* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
-"_vpn_protocol_not_supported_title" = "VPN protocol not supported";
+"_vpn_protocol_not_supported_title" = "پروتکل VPN پشتیبانی نمی‌شود";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "دستگاه شما نتوانست نشست VPN قبلی را خاتمه دهد. پیش از اینکه بتوانید یک اتصال VPN جدید برقرار کنید، باید دستگاه خود را ریست کنید.";

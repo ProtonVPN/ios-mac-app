@@ -251,7 +251,7 @@
 "_data_disclaimer_user_details" = "Gebruikersnaam, e-mailadres";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
+"_default_profile_tooltip" = "De knop \"Snel verbinden\" gebruikt het standaardprofiel.\n";
 
 /* Common word */
 "_delete" = "Verwijder";
@@ -694,6 +694,12 @@
 /* (No Comment) */
 "_locations_plus" = "Plus Locaties";
 
+/* iOS: Login button in several places */
+"_log_in" = "Inloggen";
+
+/* iOS: button in settings screen */
+"_log_out" = "Uitloggen";
+
 /* MacOS: Login button */
 "_login" = "Log in";
 
@@ -938,7 +944,7 @@
 "_ok" = "OK";
 
 /* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "Under maintenance";
+"_on_maintenance" = "In onderhoud";
 
 /* Telemetry label in the onboarding screen for mac next to a toggle */
 "_onboarding_mac_crash_reports" = "Anonieme crashrapporten delen. Dit helpt ons programmafouten op te lossen, firewalls te detecteren en VPN-blokkeringen te vermijden.";
@@ -1202,7 +1208,7 @@
 "_report_bug" = "Een probleem melden";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Please provide the following details so that our team can help you faster:\n• Proton VPN app logs\n• OpenVPN logs\n• WireGuard logs";
+"_report_description" = "Door de volgende details te verstrekken, kan ons team uw probleem identificeren en een mogelijke oplossing met hogere kansen en kortere tijd vinden:\n• Proton VPN app logs\n• OpenVPN logboeken\n• WireGuard logboeken";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E-mailadres:";
@@ -1304,7 +1310,7 @@
 "_select_verification_option" = "Selecteer een verificatie-optie om door te gaan:";
 
 /* iOS: text in human verification options screen */
-"_select_verification_option_top_message" = "To continue, please verify that you are human.";
+"_select_verification_option_top_message" = "Om misbruik te voorkomen, moet u verifiëren dat u een natuurlijk persoon bent.";
 
 /* Profile create/change form */
 "_server" = "Server";
@@ -1508,7 +1514,7 @@
 "_to_server_title" = "Naar Server:";
 
 /* Description shown together with server info icon */
-"_tor_description" = "Connects to Tor network";
+"_tor_description" = "Maakt verbinding met het TOR-netwerk";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Tor-Server";
@@ -1595,7 +1601,7 @@
 "_unavailable" = "Niet beschikbaar";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Unprotected network notifications";
+"_unprotected_network" = "Onbeschermde netwerken informeren";
 
 /* MacOS: Settings -> General: description */
 "_unprotected_network_tooltip" = "Ontvang een melding wanneer Proton VPN detecteert dat u verbonden bent met een onbeveiligd netwerk.";
@@ -1715,7 +1721,7 @@
 "_vpn_protocol_not_supported_text" = "Het VPN-protocol is niet beschikbaar voor de geselecteerde verbinding. Selecteer een andere server of protocol om te verbinden.";
 
 /* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
-"_vpn_protocol_not_supported_title" = "VPN protocol not supported";
+"_vpn_protocol_not_supported_title" = "VPN-protocol Niet Ondersteund";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Uw apparaat kon een eerdere VPN-sessie niet beëindigen. U moet uw apparaat herstarten voordat u een nieuwe VPN-verbinding kunt aanmaken.";

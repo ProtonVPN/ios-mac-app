@@ -257,7 +257,7 @@
 "_data_disclaimer_user_details" = "Імя карыстальніка, адрас электроннай пошты";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
+"_default_profile_tooltip" = "Кнопка \"Хуткае падключэнне\" выкарыстоўвае прадвызначаны профіль.\n";
 
 /* Common word */
 "_delete" = "Выдаліць";
@@ -977,7 +977,7 @@
 "_ok" = "Добра";
 
 /* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "Under maintenance";
+"_on_maintenance" = "На абслугоўванні";
 
 /* Telemetry label in the onboarding screen for mac next to a toggle */
 "_onboarding_mac_crash_reports" = "Абагуляць ананімныя справаздачы аб збоях. Гэта дапамагае нам выпраўляць памылкі, вызначаць міжсеткавыя экраны, а таксама пазбягаць блакіровак VPN.";
@@ -1007,7 +1007,7 @@
 "_p2p_forwarded_popup_body" = "Ваша падключэнне было аўтаматычна перанакіравана праз іншы сервер таму, што некаторыя серверы не падтрымліваюць трафік P2P. Гэта можа запаволіць хуткасць падключэння. Выкарыстоўвайце серверы са значком P2P для таго, каб пазбегнуць перанакіравання трафіку.";
 
 /* (No Comment) */
-"_p2p_forwarded_popup_body_p1" = "Ваша падключэнне было аўтаматычна перанакіравана праз іншы сервер таму, што некаторыя серверы не падтрымліваюць трафік P2P. Гэта можа запаволіць хуткасць вашага падключэння. Выкарыстоўвайце серверы са";
+"_p2p_forwarded_popup_body_p1" = "Ваша падключэнне было аўтаматычна перанакіравана праз іншы сервер таму, што некаторыя серверы не падтрымліваюць трафік P2P. Гэта можа запаволіць хуткасць падключэння. Выкарыстоўвайце серверы з";
 
 /* (No Comment) */
 "_p2p_forwarded_popup_body_p2" = "значком для таго, каб пазбегнуць перанакіравання трафіку.";
@@ -1247,7 +1247,7 @@
 "_report_bug" = "Паведаміць пра праблему";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Please provide the following details so that our team can help you faster:\n• Proton VPN app logs\n• OpenVPN logs\n• WireGuard logs";
+"_report_description" = "Наша каманда зможа хутчэй вызначыць вашу праблему і прапануе магчымае рашэнне за кароткі час, калі вы ўключыце ў справаздачу наступную інфармацыю:\n• Журналы праграмы Proton VPN\n• Журналы OpenVPN\n• Журналы WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Электронная пошта:";
@@ -1349,7 +1349,7 @@
 "_select_verification_option" = "Выберыце варыянт праверкі для працягу:";
 
 /* iOS: text in human verification options screen */
-"_select_verification_option_top_message" = "To continue, please verify that you are human.";
+"_select_verification_option_top_message" = "Для прадухілення злоўжывання сэрвісам нам неабходна пераканацца, што вы чалавек.";
 
 /* Profile create/change form */
 "_server" = "Сервер";
@@ -1490,7 +1490,7 @@
 "_subscription_will_renew" = "Бягучы тарыфны план аўтаматычна будзе падоўжаны %@.";
 
 /* (No Comment) */
-"_subuser_alert_description1" = "To continue to Proton VPN, please enable VPN connections. You'll also need to do this for any users in your organization.";
+"_subuser_alert_description1" = "Пачынаючы знаёмства з Proton VPN, прызначце падключэнні па VPN вашаму ўліковаму запісу або любым іншым падпарадкаваным уліковым запісам.";
 
 /* (No Comment) */
 "_subuser_alert_description2" = "Гэты крок зойме ўсяго некалькі хвілін. Пасля гэтага ў вас будзе магчымасць увайсці і абараніць усе вашы прылады.";
@@ -1583,7 +1583,7 @@
 "_to_server_title" = "На сервер:";
 
 /* Description shown together with server info icon */
-"_tor_description" = "Connects to Tor network";
+"_tor_description" = "Падключэнне да сеткі Tor";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Сервер Tor";
@@ -1670,7 +1670,7 @@
 "_unavailable" = "Недаступна";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Unprotected network notifications";
+"_unprotected_network" = "Паведамляць пра неабароненыя сеткі";
 
 /* MacOS: Settings -> General: description */
 "_unprotected_network_tooltip" = "Атрымліваць апавяшчэнні, калі Proton VPN выяўляе, што вы падключаны да неабароненай сеткі.";
@@ -1790,7 +1790,7 @@
 "_vpn_protocol_not_supported_text" = "Пратакол VPN недаступны на выбраным падключэнні. Для падключэння, паспрабуйце змяніць пратакол або сервер.";
 
 /* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
-"_vpn_protocol_not_supported_title" = "VPN protocol not supported";
+"_vpn_protocol_not_supported_title" = "Пратакол VPN не падтрымліваецца";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Не ўдалося завяршыць папярэдні сеанс з VPN на вашай прыладзе. Неабходна перазапусціць яго, каб усталяваць новае падключэнне па VPN.";

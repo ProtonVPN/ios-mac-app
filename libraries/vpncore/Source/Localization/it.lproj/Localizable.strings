@@ -257,7 +257,7 @@
 "_data_disclaimer_user_details" = "Nome utente, indirizzo email";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
+"_default_profile_tooltip" = "Il pulsante \"Connessione Rapida\" usa il profilo predefinito.\n";
 
 /* Common word */
 "_delete" = "Elimina";
@@ -395,6 +395,9 @@
 "_error_loads" = "Impossibile aggiornare il carico del server";
 
 /* (No Comment) */
+"_error_mitm_description" = "La convalida del certificato TLS non è riuscita nel tentativo di connettersi all'API Proton VPN. La tua connessione internet attuale potrebbe essere monitorata. Per mantenere i tuoi dati al sicuro, stiamo impedendo all'app di accedere all'API Proton VPN.\nPer accedere al tuo account, passa a una nuova rete e prova a connetterti di nuovo.";
+
+/* (No Comment) */
 "_error_mitm_title" = "Connessione non sicura";
 
 /* (No Comment) */
@@ -429,6 +432,12 @@
 
 /* Error when the app fails to create a user */
 "_error_user_creation" = "Creazione account fallita";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_expired" = "Le credenziali utente sono scadute. Effettua il login";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_missing" = "Le credenziali utente sono mancanti. Impossibile accedere";
 
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Non siamo stati in grado di verificare che tu sia un essere umano. Riprova o acquista un piano premium.";
@@ -703,6 +712,21 @@
 /* (No Comment) */
 "_locations_plus" = "Località Plus";
 
+/* iOS: Login button in several places */
+"_log_in" = "Accedi";
+
+/* iOS widget: text for not-logged-in user */
+"_log_in_to_use_widget" = "Accedi per iniziare";
+
+/* iOS: button in settings screen */
+"_log_out" = "Disconnettiti";
+
+/* iOS: Logout alert */
+"_log_out_warning" = "L'uscita terminerà la sessione VPN.";
+
+/* MacOS: Logout alert */
+"_log_out_warning_long" = "Uscendo dall'applicazione, tutte le connessioni VPN attive verranno chiuse. Continuare?";
+
 /* MacOS: Login button */
 "_login" = "Accedi";
 
@@ -768,6 +792,9 @@
 
 /* Main mac app menu item */
 "_menu_hide_self" = "Nascondi VPN Proton";
+
+/* Main mac app menu item */
+"_menu_logout" = "Disconnettiti";
 
 /* Main mac app menu item */
 "_menu_minimize" = "Minimizza";
@@ -950,13 +977,16 @@
 "_ok" = "OK";
 
 /* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "Under maintenance";
+"_on_maintenance" = "In manutenzione";
 
 /* Telemetry label in the onboarding screen for mac next to a toggle */
 "_onboarding_mac_crash_reports" = "Condividi report anonimi sugli arresti anomali. Questo ci aiuta a correggere bug, rilevare firewall ed evitare blocchi VPN.";
 
 /* Telemetry label in the onboarding screen for mac next to a toggle */
 "_onboarding_mac_usage_stats" = "Condividi statistiche di utilizzo anonime. Questo ci aiuta a superare i blocchi VPN e migliorare le prestazioni dell'app.";
+
+/* Main mac app menu item */
+"_open_app_to_log_in" = "Mostra Proton VPN per accedere...";
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "Log OpenVPN";
@@ -1198,6 +1228,9 @@
 /* MacOS: About window */
 "_release_date" = "Data di rilascio:";
 
+/* MacOS: label in login and settings screens */
+"_remember_login" = "Ricorda login";
+
 /* Button in Kill switch error alert */
 "_report" = "Segnala";
 
@@ -1214,7 +1247,7 @@
 "_report_bug" = "Segnala un problema";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Please provide the following details so that our team can help you faster:\n• Proton VPN app logs\n• OpenVPN logs\n• WireGuard logs";
+"_report_description" = "Fornendo i seguenti dettagli, il nostro team può identificare il tuo problema e una possibile soluzione con maggiori possibilità e tempi più brevi:\n• Registri dell'app Proton VPN\n• Registri OpenVPN\n• Registri WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Email:";
@@ -1316,7 +1349,7 @@
 "_select_verification_option" = "Per favore seleziona un'opzione di verifica per procedere:";
 
 /* iOS: text in human verification options screen */
-"_select_verification_option_top_message" = "To continue, please verify that you are human.";
+"_select_verification_option_top_message" = "Per prevenire gli abusi, devi verificare di essere un umano.";
 
 /* Profile create/change form */
 "_server" = "Server";
@@ -1457,13 +1490,19 @@
 "_subscription_will_renew" = "Il piano attuale si rinnoverà automaticamente il %@.";
 
 /* (No Comment) */
-"_subuser_alert_description1" = "To continue to Proton VPN, please enable VPN connections. You'll also need to do this for any users in your organization.";
+"_subuser_alert_description1" = "Per iniziare il tuo viaggio in Proton VPN, abilita le connessioni VPN al tuo account o a qualsiasi altro account secondario.";
+
+/* (No Comment) */
+"_subuser_alert_description2" = "Questo passaggio richiederà solo pochi minuti. Dopodiché sarai in grado di accedere e proteggere tutti i tuoi dispositivi.";
 
 /* (No Comment) */
 "_subuser_alert_description3" = "Al momento non è abilitata alcuna connessione VPN per questo account. Per iniziare il tuo viaggio con Proton VPN, contatta il tuo amministratore.";
 
 /* (No Comment) */
 "_subuser_alert_enable_connections_button" = "Abilita le connessioni VPN";
+
+/* (No Comment) */
+"_subuser_alert_login_button" = "Accedi di nuovo";
 
 /* Subuser alert */
 "_subuser_alert_title" = "Grazie per l'aggiornamento a Business/Visionary";
@@ -1544,7 +1583,7 @@
 "_to_server_title" = "Al Server:";
 
 /* Description shown together with server info icon */
-"_tor_description" = "Connects to Tor network";
+"_tor_description" = "Connetti alla rete TOR";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Server Tor";
@@ -1631,7 +1670,7 @@
 "_unavailable" = "Non disponibile";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Unprotected network notifications";
+"_unprotected_network" = "Notifica reti non protette";
 
 /* MacOS: Settings -> General: description */
 "_unprotected_network_tooltip" = "Ricevi una notifica quando Proton VPN rileva che sei connesso ad una rete non protetta.";
@@ -1751,7 +1790,7 @@
 "_vpn_protocol_not_supported_text" = "Il protocollo VPN non è disponibile per la connessione selezionata. Per connetterti, prova a cambiare il protocollo o il server.";
 
 /* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
-"_vpn_protocol_not_supported_title" = "VPN protocol not supported";
+"_vpn_protocol_not_supported_title" = "Protocollo VPN Non Supportato";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Il dispositivo non è riuscito a terminare una sessione VPN precedente. Sarà necessario riavviare il dispositivo prima di poter stabilire una nuova connessione VPN.";
@@ -1771,8 +1810,14 @@
 /* (No Comment) */
 "_vpnauth_too_many_certs_title" = "Errore di autenticazione";
 
+/* (No Comment) */
+"_vpnstatus_not_loggedin" = "Non hai effettuato l'accesso a Proton VPN. Apri l'app Proton VPN e accedi.";
+
 /* Used as a title in alerts/modals */
 "_warning" = "Attenzione";
+
+/* MacOS: alert shown during login if already connected to VPN */
+"_warning_vpn_session_is_active" = "La sessione Proton VPN di un altro utente è attiva su questo dispositivo. Continuando con l'accesso terminerai la sessione corrente. Vuoi continuare?";
 
 /* Shown on the Welcome screen as the longer screen text */
 "_welcome_body" = "Una VPN svizzera ad Alta Velocità che protegge la vostra privacy criptando la vostra connessione a internet.";

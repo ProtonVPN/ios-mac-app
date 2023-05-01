@@ -248,7 +248,7 @@
 "_data_disclaimer_user_details" = "Utilizador, endereço electrónico";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
+"_default_profile_tooltip" = "O botão \"Ligação rápida\" usa o perfil predefinido.\n";
 
 /* Common word */
 "_delete" = "Eliminar";
@@ -881,7 +881,7 @@
 "_ok" = "ACEITAR";
 
 /* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "Under maintenance";
+"_on_maintenance" = "Em manutenção";
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "Diários OpenVPN";
@@ -1238,7 +1238,7 @@
 "_select_verification_option" = "Seleccione uma opção de verificação para continuar:";
 
 /* iOS: text in human verification options screen */
-"_select_verification_option_top_message" = "To continue, please verify that you are human.";
+"_select_verification_option_top_message" = "Para impedir abusos tem de verificar que é um ser humano.";
 
 /* Profile create/change form */
 "_server" = "Servidor";
@@ -1487,7 +1487,7 @@
 "_unavailable" = "Indisponível";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Unprotected network notifications";
+"_unprotected_network" = "Notificar redes desprotegidas";
 
 /* MacOS: Settings -> General: description */
 "_unprotected_network_tooltip" = "Receber uma notificação quando o Proton VPN detectar que está ligado a uma rede desprotegida.";

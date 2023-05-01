@@ -248,7 +248,7 @@
 "_data_disclaimer_device_details" = "Aygıtınızın modeli ve işletim sistemi sürümü";
 
 /* iOS: data disclaimer screen */
-"_data_disclaimer_text" = "Proton VPN, gizliliğinize saygı duyar ve korumayı amaçlar. Öncelikli ilkemiz uygulamanın kullanımında kişisel ve anonim bir kullanıcı deneyimi sağlamak için olabildiğince az kullanıcı verisi toplamaktır. Özellikle:\n\n%@ – oturumunuzu açmak, parola sıfırlamak ve önemli hizmet güncellemelerini göndermek için.\n\n%@ – yalnızca kilitlenme bildirimleri ve hatalar için.\n\nProton VPN uygulaması, bu veriler dışında herhangi bir kullanıcı bilgisini işlemez. Çevrimiçi etkinliklerinizi veya gerçekte kim olduğunuzu belirleyebilecek bilgilerinizi kaydetmeyiz. Yukarıda belirtilen tüm veriler Proton VPN hizmetinin kendi sisteminde saklanır ve işlenir. Hiçbir üçüncü tarafın bu bilgilere erişimi yoktur.";
+"_data_disclaimer_text" = "Proton VPN, gizliliğinize saygı duyar ve korumayı amaçlar. Öncelikli ilkemiz uygulamanın kullanımında kişisel ve anonim bir kullanıcı deneyimi sağlamak için olabildiğince az kullanıcı verisi toplamaktır. Özellikle:\n\n%@ – oturumunuzu açmak, parola sıfırlamak ve önemli hizmet güncellemelerini göndermek için.\n\n%@ – yalnızca kilitlenme bildirimleri ve sorunlar için.\n\nProton VPN uygulaması, bu veriler dışında herhangi bir kullanıcı bilgisini işlemez. Çevrimiçi etkinliklerinizi veya gerçekte kim olduğunuzu belirleyebilecek bilgilerinizi kaydetmeyiz. Yukarıda belirtilen tüm veriler Proton VPN hizmetinin kendi sisteminde saklanır ve işlenir. Hiçbir üçüncü tarafın bu bilgilere erişimi yoktur.";
 
 /* iOS: data disclaimer screen */
 "_data_disclaimer_title" = "Çevrimiçi ortamda kendinizi koruyun";
@@ -257,7 +257,7 @@
 "_data_disclaimer_user_details" = "Kullanıcı adı, e-posta adresi";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
+"_default_profile_tooltip" = "\"Hızlı bağlan\" düğmesi varsayılan profili kullanır.\n";
 
 /* Common word */
 "_delete" = "Sil";
@@ -383,10 +383,10 @@
 "_error_hash_password" = "Kullanıcı parolası karılamadı";
 
 /* Unknown error that has no better description */
-"_error_internal_error" = "İç API hatası";
+"_error_internal_error" = "İç API sorunu";
 
 /* Keychain error */
-"_error_keychain_fetch" = "Anahtarlık hatası.";
+"_error_keychain_fetch" = "Anahtarlık sorunu.";
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton aygıtınızla iletişim kuramadı. Lütfen bir süre sonra yeniden deneyin.";
@@ -422,13 +422,13 @@
 "_error_subscription_parser" = "Abonelik bilgileri işlenemedi";
 
 /* Internal error message when there is a problem with initializing tls and connection cannot be established. */
-"_error_tls_initialisation" = "TLS başlatma hatası";
+"_error_tls_initialisation" = "TLS başlatma sorunu";
 
 /* Internal error message when there is a problem with server certificate and connection cannot be established. */
 "_error_tls_server_verification" = "Sunucu sertifikası doğrulanamadı.";
 
 /* General title for several error alerts */
-"_error_unknown_title" = "Bilinmeyen hata";
+"_error_unknown_title" = "Bilinmeyen sorun";
 
 /* Error when the app fails to create a user */
 "_error_user_creation" = "Hesap açılamadı";
@@ -977,10 +977,10 @@
 "_ok" = "Tamam";
 
 /* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "Under maintenance";
+"_on_maintenance" = "Bakım yapılıyor";
 
 /* Telemetry label in the onboarding screen for mac next to a toggle */
-"_onboarding_mac_crash_reports" = "Anonim çökme bildirimlerini paylaşın. Bu bildirimler, hataları düzeltmemize, güvenlik duvarlarını algılamamıza ve VPN engellemelerini aşmamıza yardımcı olur.";
+"_onboarding_mac_crash_reports" = "Anonim çökme bildirimlerini paylaşın. Bu bildirimler, hataları gidermemize, güvenlik duvarlarını algılamamıza ve VPN engellemelerini aşmamıza yardımcı olur.";
 
 /* Telemetry label in the onboarding screen for mac next to a toggle */
 "_onboarding_mac_usage_stats" = "Anonim kullanım istatistiklerini paylaşın. Bu istatistikler, VPN engellemelerini aşmamıza ve uygulamayı geliştirmemize yardımcı olur.";
@@ -1247,7 +1247,7 @@
 "_report_bug" = "Bir sorun bildirin";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Please provide the following details so that our team can help you faster:\n• Proton VPN app logs\n• OpenVPN logs\n• WireGuard logs";
+"_report_description" = "Aşağıdaki bilgileri verdiğinizde ekibimiz, sorununuzu ve olası çözümünü daha yüksek olasılıkla ve daha kısa sürede bulabilir:\n• Proton VPN uygulama günlüğü kayıtları\n• OpenVPN günlüğü kayıtları\n• WireGuard günlüğü kayıtları";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E-posta:";
@@ -1349,7 +1349,7 @@
 "_select_verification_option" = "İlerlemek için bir doğrulama yöntemi seçin:";
 
 /* iOS: text in human verification options screen */
-"_select_verification_option_top_message" = "To continue, please verify that you are human.";
+"_select_verification_option_top_message" = "Kötüye kullanımı önlemek için, insan olduğunuzu doğrulamalısınız.";
 
 /* Profile create/change form */
 "_server" = "Sunucu";
@@ -1382,7 +1382,7 @@
 "_settings_mac_crash_reports_title" = "Anonim çökme bildirimleri paylaşılsın";
 
 /* Telemetry tooltip in the settings window for mac */
-"_settings_mac_crash_reports_tooltip" = "Çökme bildirimleri hataları düzeltmemize, güvenlik duvarlarını algılamamıza ve VPN engellemelerini aşmamıza yardımcı olur.";
+"_settings_mac_crash_reports_tooltip" = "Çökme bildirimleri hataları gidermemize, güvenlik duvarlarını algılamamıza ve VPN engellemelerini aşmamıza yardımcı olur.";
 
 /* Clickable label title in the onboarding screen for mac */
 "_settings_mac_telemetry_learn_more" = "Ayrıntılı bilgi alın";
@@ -1490,7 +1490,7 @@
 "_subscription_will_renew" = "Geçerli tarife %@ tarihinde otomatik olarak yenilenecek.";
 
 /* (No Comment) */
-"_subuser_alert_description1" = "To continue to Proton VPN, please enable VPN connections. You'll also need to do this for any users in your organization.";
+"_subuser_alert_description1" = "Proton VPN yolculuğunuza başlamak için lütfen hesabınızda ya da başka bir alt hesapta VPN bağlantılarını etkinleştirin.";
 
 /* (No Comment) */
 "_subuser_alert_description2" = "Bu adım birkaç dakika sürecek. Bundan sonra oturum açabilir ve tüm aygıtlarınızı koruyabilirsiniz.";
@@ -1583,7 +1583,7 @@
 "_to_server_title" = "Şu sunucuya:";
 
 /* Description shown together with server info icon */
-"_tor_description" = "Connects to Tor network";
+"_tor_description" = "Tor ağına bağlanır";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Tor sunucusu";
@@ -1670,7 +1670,7 @@
 "_unavailable" = "Kullanılamıyor";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Unprotected network notifications";
+"_unprotected_network" = "Korunmayan ağlar bildirilsin";
 
 /* MacOS: Settings -> General: description */
 "_unprotected_network_tooltip" = "Proton VPN korunmayan bir ağa bağlı olduğunuzu algıladığında bir bildirim görüntülenir.";
@@ -1790,7 +1790,7 @@
 "_vpn_protocol_not_supported_text" = "VPN iletişim kuralı seçtiğiniz bağlantı için kullanılamıyor. Bağlantı kurmak için iletişim kuralını ya da sunucuyu değiştirmeyi deneyin.";
 
 /* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
-"_vpn_protocol_not_supported_title" = "VPN protocol not supported";
+"_vpn_protocol_not_supported_title" = "VPN iletişim kuralı desteklenmiyor";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Aygıtınız önceki VPN oturumunu sonlandıramadı. Yeni bir VPN bağlantısı kurmadan önce aygıtınız yeniden başlatmalısınız.";
@@ -1802,13 +1802,13 @@
 "_vpnauth_certfail_description" = "VPN sertifikası yenilenemedi. Lütfen bağlantınızı denetleyin";
 
 /* Cert based auth */
-"_vpnauth_certfail_title" = "Kimlik doğrulama hatası";
+"_vpnauth_certfail_title" = "Kimlik doğrulama sorunu";
 
 /* (No Comment) */
 "_vpnauth_too_many_certs_description" = "Belirli bir sürede yapılabilecek en fazla ayar değişikliği sayısı sınırına ulaştınız. Bir kaç dakika sonra yeniden deneyebilirsiniz";
 
 /* (No Comment) */
-"_vpnauth_too_many_certs_title" = "Kimlik doğrulama hatası";
+"_vpnauth_too_many_certs_title" = "Kimlik doğrulama sorunu";
 
 /* (No Comment) */
 "_vpnstatus_not_loggedin" = "Proton VPN oturumu açmamışsınız. Proton VPN uygulamasını açıp oturum açın.";
