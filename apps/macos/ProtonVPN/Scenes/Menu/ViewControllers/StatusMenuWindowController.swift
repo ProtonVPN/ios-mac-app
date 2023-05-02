@@ -21,7 +21,7 @@
 //
 
 import Cocoa
-import Theme_macOS
+import Theme
 
 class StatusWindow: NSPanel {
     
@@ -200,10 +200,10 @@ extension StatusIcon {
     var image: NSImage {
         var result: NSImage
         switch self {
-        case .connected: result = Theme_macOS.Asset.connected.image
-        case .disconnected: result = Theme_macOS.Asset.disconnected.image
-        case .connecting: result = Theme_macOS.Asset.idle.image
-        case .unknown: result = Theme_macOS.Asset.emptyIcon.image
+        case .connected: result = Theme.Asset.connected.image
+        case .disconnected: result = Theme.Asset.disconnected.image
+        case .connecting: result = Theme.Asset.idle.image
+        case .unknown: result = Theme.Asset.emptyIcon.image
         }
 
         result = result
@@ -215,11 +215,11 @@ extension StatusIcon {
 
 extension AppIcon {
 #if STAGING // use Debug icon for staging builds
-    static let appIconConnected = Theme_macOS.Asset.dynamicAppIconDebugConnected.image
-    static let appIconDisconnected = Theme_macOS.Asset.dynamicAppIconDebugDisconnected.image
+    static let appIconConnected = Theme.Asset.dynamicAppIconDebugConnected.image
+    static let appIconDisconnected = Theme.Asset.dynamicAppIconDebugDisconnected.image
 #else
-    static let appIconConnected = Theme_macOS.Asset.dynamicAppIconConnected.image
-    static let appIconDisconnected = Theme_macOS.Asset.dynamicAppIconDisconnected.image
+    static let appIconConnected = Theme.Asset.dynamicAppIconConnected.image
+    static let appIconDisconnected = Theme.Asset.dynamicAppIconDisconnected.image
 #endif
     var image: NSImage {
         switch self {

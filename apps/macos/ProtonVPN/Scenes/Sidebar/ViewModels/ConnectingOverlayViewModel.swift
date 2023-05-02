@@ -25,7 +25,7 @@ import AppKit
 import VPNShared
 import Logging
 import Theme
-import Theme_macOS
+import Theme
 
 protocol OverlayViewModelDelegate: AnyObject {
     func stateChanged()
@@ -252,7 +252,7 @@ class ConnectingOverlayViewModel {
         if timedOut {
             let connectedView = NSImageView(frame: frame)
             connectedView.imageScaling = .scaleProportionallyUpOrDown
-            connectedView.image = Theme_macOS.Asset.vpnResultWarning.image
+            connectedView.image = Theme.Asset.vpnResultWarning.image
             return connectedView
         }
 
@@ -264,13 +264,13 @@ class ConnectingOverlayViewModel {
             loadingView.animate(false)
             let connectedView = NSImageView(frame: frame)
             connectedView.imageScaling = .scaleNone
-            connectedView.image = Theme_macOS.Asset.vpnResultConnected.image
+            connectedView.image = Theme.Asset.vpnResultConnected.image
                 .resize(newWidth: Int(frame.size.width) - margin, newHeight: Int(frame.size.height) - margin)
             return connectedView
         case .error, .disconnected:
             let connectedView = NSImageView(frame: frame)
             connectedView.imageScaling = .scaleNone
-            connectedView.image = Theme_macOS.Asset.vpnResultNotConnected.image
+            connectedView.image = Theme.Asset.vpnResultNotConnected.image
                 .resize(newWidth: Int(frame.size.width) - margin, newHeight: Int(frame.size.height) - margin)
             return connectedView
         default:

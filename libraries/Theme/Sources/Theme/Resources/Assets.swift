@@ -441,6 +441,18 @@ public enum Asset {
   public static let icWindowImage = ImageAsset(name: "ic-window-image")
   public static let icWindowTerminal = ImageAsset(name: "ic-window-terminal")
   public static let icWrench = ImageAsset(name: "ic-wrench")
+  public static let dynamicAppIconConnected = ImageAsset(name: "DynamicAppIconConnected")
+  public static let dynamicAppIconDebugConnected = ImageAsset(name: "DynamicAppIconDebugConnected")
+  public static let dynamicAppIconDebugDisconnected = ImageAsset(name: "DynamicAppIconDebugDisconnected")
+  public static let dynamicAppIconDisconnected = ImageAsset(name: "DynamicAppIconDisconnected")
+  public static let vpnResultConnected = ImageAsset(name: "vpn-result-connected")
+  public static let vpnResultNotConnected = ImageAsset(name: "vpn-result-not-connected")
+  public static let vpnResultWarning = ImageAsset(name: "vpn-result-warning")
+  public static let vpnWordmarkAlwaysDark = ImageAsset(name: "vpn-wordmark-always-dark")
+  public static let connected = ImageAsset(name: "connected")
+  public static let disconnected = ImageAsset(name: "disconnected")
+  public static let emptyIcon = ImageAsset(name: "empty_icon")
+  public static let idle = ImageAsset(name: "idle")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
