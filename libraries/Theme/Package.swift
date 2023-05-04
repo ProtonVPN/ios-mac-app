@@ -37,9 +37,7 @@ let package = Package(
         .target(
             name: "Theme-macOS",
             dependencies: ["Theme"],
-            resources: [
-                .process("Resources/Assets.xcassets")
-            ]
+            resources: []
         ),
         .testTarget(
             name: "ThemeTests",

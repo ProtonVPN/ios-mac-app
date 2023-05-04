@@ -511,6 +511,7 @@
 		E5904FCB2949F8E100BA6D3B /* TelemetryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E510E27D2948CFEA00AC1785 /* TelemetryService.swift */; };
 		E5ADAA8C2930F8BC004F105C /* AppStateManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54474E32930C5980044B592 /* AppStateManagerMock.swift */; };
 		E5ADAA8D2930F8BD004F105C /* AppStateManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54474E32930C5980044B592 /* AppStateManagerMock.swift */; };
+		E5BF7BD32A03A418007234C4 /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = E5BF7BD22A03A418007234C4 /* Home */; };
 		E5CBA02128DB23D200EA1F25 /* OfferPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CBA02028DB23D200EA1F25 /* OfferPanel.swift */; };
 		E5CBA02228DB23D200EA1F25 /* OfferPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CBA02028DB23D200EA1F25 /* OfferPanel.swift */; };
 		E5CBA02428DB23E600EA1F25 /* FullScreenImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CBA02328DB23E600EA1F25 /* FullScreenImage.swift */; };
@@ -1223,6 +1224,7 @@
 				4C4F5F13292BECD200BBD5AF /* LocalFeatureFlags in Frameworks */,
 				E93120F428DB2EE600C1C2FE /* PMLogger in Frameworks */,
 				E99F266027A1A7A5003C4586 /* BugReport in Frameworks */,
+				E5BF7BD32A03A418007234C4 /* Home in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2413,6 +2415,7 @@
 				4C4F5F12292BECD200BBD5AF /* LocalFeatureFlags */,
 				E566D9E1297A796B00C2F857 /* Dependencies */,
 				E5813B5129EE9C7500549AA8 /* Theme */,
+				E5BF7BD22A03A418007234C4 /* Home */,
 			);
 			productName = "vpncore-macos";
 			productReference = E1B5F60C21B6960100B558B0 /* vpncore.framework */;
@@ -4430,6 +4433,10 @@
 		E5813B5129EE9C7500549AA8 /* Theme */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Theme;
+		};
+		E5BF7BD22A03A418007234C4 /* Home */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Home;
 		};
 		E58D06412A0B8B1C002A896C /* Clocks */ = {
 			isa = XCSwiftPackageProductDependency;

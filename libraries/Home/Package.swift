@@ -25,7 +25,7 @@ let package = Package(
     targets: [
         .target(
             name: "Home",
-            dependencies: ["Theme"],
+            dependencies: [],
             resources: [
                 .process("Resources/Assets.xcassets")
             ]
