@@ -76,7 +76,7 @@ struct ContactFormFeature: Reducer {
 
             case .resultViewAction(.retry):
                 state.resultState = nil
-                return .send(.send)
+                return .none
 
             case .resultViewAction:
                 return .none
@@ -199,14 +199,13 @@ extension ContactFormFeature.State {
     }
 }
 
+#if os(iOS)
 public struct ContactFormView: View {
 
     let store: StoreOf<ContactFormFeature>
 
-    #if os(iOS)
-    @StateObject var updateViewModel: IOSUpdateViewModel = CurrentEnv.iOSUpdateViewModel
-    #endif
-    let assetsBundle = CurrentEnv.assetsBundle
+    @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
+
     @Environment(\.colors) var colors: Colors
     @Environment(\.dismiss) private var dismiss
 
@@ -219,9 +218,7 @@ public struct ContactFormView: View {
                     StepProgress(step: 3, steps: 3, colorMain: colors.interactive, colorText: colors.textAccent, colorSecondary: colors.interactiveActive)
                         .padding(.bottom)
 
-                    #if os(iOS)
                     UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
-                    #endif
 
                     ScrollView {
                         VStack(spacing: 20) {
@@ -235,12 +232,10 @@ public struct ContactFormView: View {
                                                                 value: Binding(get: { field.stringValue },
                                                                                set: { viewStore.send(.fieldStringValueChanged(field, $0)) }))
                                     case .textMultiLine:
-    #if os(iOS)
                                         MultiLineTextInputView(field: field.inputField,
                                                                value: Binding(get: { field.stringValue },
                                                                               set: { viewStore.send(.fieldStringValueChanged(field, $0)) }))
                                             .frame(height: 155, alignment: .top)
-    #endif
                                     case .switch:
                                         SwitchInputView(field: field.inputField,
                                                         value: Binding(get: { field.boolValue },
@@ -285,7 +280,6 @@ public struct ContactFormView: View {
                 }
                 .foregroundColor(colors.textPrimary)
 
-    #if os(iOS)
                 // Custom Back button
                 .navigationBarBackButtonHidden(true)
                 .navigationBarItems(leading: Button(action: {
@@ -293,13 +287,77 @@ public struct ContactFormView: View {
                 }, label: {
                     Image(systemName: "chevron.left").foregroundColor(colors.textPrimary)
                 }))
-    #endif
+
                 .environment(\.isLoading, viewStore.isSending)
             }
         })
     }
 
 }
+
+#elseif os(macOS)
+
+public struct ContactFormView: View {
+
+    let store: StoreOf<ContactFormFeature>
+
+    @Environment(\.colors) var colors: Colors
+
+    public var body: some View {
+        WithViewStore(self.store, observe: { $0 }, content: { viewStore in
+            VStack {
+                VStack(spacing: 20) {
+                    ForEach(viewStore.fields) { field in
+                        if !field.hidden {
+                            switch field.inputField.type {
+                            case .textSingleLine:
+                                SingleLineTextInputView(field: field.inputField,
+                                                        value: Binding(get: { field.stringValue },
+                                                                       set: { viewStore.send(.fieldStringValueChanged(field, $0)) }))
+                            case .textMultiLine:
+                                MultiLineTextInputView(field: field.inputField,
+                                                       value: Binding(get: { field.stringValue },
+                                                                      set: { viewStore.send(.fieldStringValueChanged(field, $0)) }))
+                                .frame(height: 155, alignment: .top)
+                            case .switch:
+                                SwitchInputView(field: field.inputField,
+                                                value: Binding(get: { field.boolValue },
+                                                               set: { viewStore.send(.fieldBoolValueChanged(field, $0)) }))
+                            }
+                        }
+                    }
+
+                    if viewStore.showLogsInfo {
+                        HStack(alignment: .top, spacing: 0) {
+                            Image(Asset.icInfoCircle.name, bundle: Bundle.module)
+                                .padding(0)
+
+                            Text(LocalizedString.br3LogsDisabled)
+                                .font(.footnote)
+                                .foregroundColor(colors.textSecondary)
+                                .padding(.leading, 8)
+
+                        }
+                        .padding(.horizontal)
+                    }
+
+                    Button(action: {
+                        viewStore.send(.send, animation: .default)
+
+                    }, label: { Text(viewStore.isSending ? LocalizedString.br3ButtonSending : LocalizedString.br3ButtonSend) })
+                    .disabled(!viewStore.isSending && !viewStore.canBeSent)
+                    .buttonStyle(PrimaryButtonStyle())
+                    .padding(.horizontal)
+                }
+            }
+            .environment(\.isLoading, viewStore.isSending)
+            .background(colors.background)
+        })
+    }
+
+}
+
+#endif
 
 fileprivate extension TaskResult<Bool> {
     var errorOrNil: Error? {
@@ -317,37 +375,22 @@ struct ContactFormView_Previews: PreviewProvider {
 
     static var previews: some View {
         CurrentEnv.bugReportDelegate = bugReport
-        #if os(iOS)
-        CurrentEnv.iOSUpdateViewModel.updateIsAvailable = true
-        #endif
+        CurrentEnv.updateViewModel.updateIsAvailable = true
 
         let formFields = IdentifiedArrayOf(uniqueElements: [FormInputField(inputField: bugReport.model.categories[0].inputFields[0], stringValue: "Entered value")])
 
         return Group {
-            NavigationView {
-                    ContactFormView(store: Store(initialState: ContactFormFeature.State(fields: bugReport.model.categories[0].inputFields, category: "aa"),
-                                                 reducer: ContactFormFeature()))
-            }.previewDisplayName("Empty form")
+            ContactFormView(store: Store(initialState: ContactFormFeature.State(fields: bugReport.model.categories[0].inputFields, category: "aa"),
+                                         reducer: ContactFormFeature()))
+            .previewDisplayName("Empty form")
 
-            NavigationView {
-                ContactFormView(store: Store(initialState: ContactFormFeature.State(fields: formFields, isSending: false),
-                                             reducer: ContactFormFeature()))
-            }.previewDisplayName("Short form")
-
-            NavigationView {
-                ContactFormView(store: Store(initialState: ContactFormFeature.State(fields: formFields, isSending: true),
-                                             reducer: ContactFormFeature()))
-            }.previewDisplayName("Loading")
-
-            NavigationView {
-                ContactFormView(store: Store(initialState: ContactFormFeature.State(fields: formFields, isSending: false, resultState: BugReportResultFeature.State(error: nil)),
-                                             reducer: ContactFormFeature()))
-            }.previewDisplayName("Success")
-
-            NavigationView {
-                ContactFormView(store: Store(initialState: ContactFormFeature.State(fields: formFields, isSending: false, resultState: BugReportResultFeature.State(error: "aaa")),
-                                             reducer: ContactFormFeature()))
-            }.previewDisplayName("Error")
+            ContactFormView(store: Store(initialState: ContactFormFeature.State(fields: formFields, isSending: false),
+                                         reducer: ContactFormFeature()))
+            .previewDisplayName("Short form")
+            
+            ContactFormView(store: Store(initialState: ContactFormFeature.State(fields: formFields, isSending: true),
+                                         reducer: ContactFormFeature()))
+            .previewDisplayName("Loading")
 
         }
     }

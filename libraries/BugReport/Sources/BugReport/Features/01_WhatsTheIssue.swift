@@ -86,16 +86,15 @@ struct WhatsTheIssueFeature: Reducer {
 
 }
 
+#if os(iOS)
 public struct WhatsTheIssueView: View {
 
     let store: StoreOf<WhatsTheIssueFeature>
-    #if os(iOS)
-    @StateObject var updateViewModel: IOSUpdateViewModel = CurrentEnv.iOSUpdateViewModel
-    #endif
+    @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
     @Environment(\.colors) var colors: Colors
 
     public var body: some View {
-        NavigationView {
+
             ZStack {
                 colors.background.ignoresSafeArea()
 
@@ -103,9 +102,9 @@ public struct WhatsTheIssueView: View {
 
                     StepProgress(step: 1, steps: 3, colorMain: colors.interactive, colorText: colors.textAccent, colorSecondary: colors.interactiveActive)
                         .padding(.bottom)
-#if os(iOS)
+
                     UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
-#endif
+
                     Text(LocalizedString.br1Title)
                         .font(.title2)
                         .fontWeight(.bold)
@@ -129,15 +128,8 @@ public struct WhatsTheIssueView: View {
                     })
                 }
                 .navigationTitle(Text(LocalizedString.brWindowTitle))
-                #if os(iOS)
                 .navigationBarTitleDisplayMode(.inline)
-                #endif
             }
-        }
-        #if os(iOS)
-        .navigationViewStyle(.stack)
-        #endif
-        .preferredColorScheme(.dark)
     }
 
     @ViewBuilder private func nextView(_ viewStore: ViewStore<WhatsTheIssueFeature.State, WhatsTheIssueFeature.Action>) -> some View {
@@ -170,6 +162,50 @@ public struct WhatsTheIssueView: View {
 
 }
 
+#elseif os(macOS)
+
+// Mac view is a little bit different. Plus it doesn't have Navigation links and all
+// navigation is handled by root view.
+
+public struct WhatsTheIssueView: View {
+
+    let store: StoreOf<WhatsTheIssueFeature>
+    @Environment(\.colors) var colors: Colors
+
+    public var body: some View {
+
+        VStack(alignment: .center) {
+
+            Text(LocalizedString.br1Title)
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(colors.textPrimary)
+                .padding(.horizontal)
+
+            VStack(alignment: .leading, spacing: 8) {
+                WithViewStore(self.store, observe: { $0 }, content: { viewStore in
+                    ForEach(viewStore.categories) { category in
+                        Button(category.label, action: { viewStore.send(.categorySelected(category), animation: .default) })
+                            .onHover { inside in
+                                if inside {
+                                    NSCursor.pointingHand.push()
+                                } else {
+                                    NSCursor.pop()
+                                }
+                            }
+                    }
+                })
+            }
+            .buttonStyle(CategoryButtonStyle())
+            .listStyle(.plain)
+            .padding(.top, 32)
+        }
+        .background(colors.background)
+
+    }
+}
+#endif
+
 // MARK: - Preview
 
 struct WhatsTheIssueView_Previews: PreviewProvider {
@@ -178,13 +214,14 @@ struct WhatsTheIssueView_Previews: PreviewProvider {
     static var previews: some View {
         CurrentEnv.bugReportDelegate = bugReport
         #if os(iOS)
-        CurrentEnv.iOSUpdateViewModel.updateIsAvailable = true
+        CurrentEnv.updateViewModel.updateIsAvailable = true
         #endif
         return Group {
             WhatsTheIssueView(store: Store(initialState: WhatsTheIssueFeature.State(categories: bugReport.model.categories),
                                            reducer: WhatsTheIssueFeature()
                                           )
             )
+            .frame(width: 400.0)
         }
     }
 }

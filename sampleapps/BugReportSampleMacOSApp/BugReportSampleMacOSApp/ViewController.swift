@@ -34,24 +34,31 @@ class ViewController: NSViewController {
         bugReportDelegate = MockDelegate(
             model: model,
             sendCallback: { form, result in
-                self.statusTextField.stringValue = "Sent"
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    if form.email.starts(with: "success") {
-                        result(.success(Void()))
-                    } else {
-                        result(.failure(NSError(domain: "domain", code: 153, userInfo: [NSLocalizedDescriptionKey: "Just and error"])))
+                DispatchQueue.main.async {
+                    self.statusTextField.stringValue = "Sent"
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        if form.email.starts(with: "success") {
+                            result(.success(Void()))
+                        } else {
+                            result(.failure(NSError(domain: "domain", code: 153, userInfo: [NSLocalizedDescriptionKey: "Just and error"])))
+                        }
                     }
                 }
             }, finishedCallback: {
-                print("finishedCallback")
-                self.statusTextField.stringValue = "Finished"
-                
+                DispatchQueue.main.async {
+                    print("finishedCallback")
+                    self.statusTextField.stringValue = "Finished"
+                }
             }, troubleshootingCallback: {
-                print("troubleshootingCallback")
-                self.statusTextField.stringValue = "Troubleshooting"
+                DispatchQueue.main.async {
+                    print("troubleshootingCallback")
+                    self.statusTextField.stringValue = "Troubleshooting"
+                }
             }, updateAppCallback: {
-                print("updateAppCallback")
-                self.statusTextField.stringValue = "Update"
+                DispatchQueue.main.async {
+                    print("updateAppCallback")
+                    self.statusTextField.stringValue = "Update"
+                }
             })
     }
 

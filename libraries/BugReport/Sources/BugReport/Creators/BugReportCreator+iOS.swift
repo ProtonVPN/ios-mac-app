@@ -34,15 +34,22 @@ public final class iOSBugReportCreator: BugReportCreator { // swiftlint:disable:
 
         delegate.updateAvailabilityChanged = { available in
             withAnimation {
-                CurrentEnv.iOSUpdateViewModel.updateIsAvailable = available
+                CurrentEnv.updateViewModel.updateIsAvailable = available
             }
         }
         delegate.checkUpdateAvailability()
 
+        let reducer = ReportBugFeatureiOS()
+        #if DEBUG
+            ._printChanges() // Only print changes while debugging
+        #endif
+        let state = ReportBugFeatureiOS.State(whatsTheIssueState: WhatsTheIssueFeature.State(categories: delegate.model.categories))
+        let store = Store(initialState: state,
+                          reducer: reducer)
+        let rootView = ReportBugView(store: store)
+
         let controller = UIHostingController(
-            rootView: WhatsTheIssueView(store: Store(initialState: WhatsTheIssueFeature.State(categories: delegate.model.categories),
-                                                     reducer: WhatsTheIssueFeature()._printChanges()
-                                                    )) //BugReportiOSView()
+            rootView: rootView
                 .environment(\.colors, colors)
                 .preferredColorScheme(.dark)
         )

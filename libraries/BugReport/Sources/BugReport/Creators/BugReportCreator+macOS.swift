@@ -20,6 +20,7 @@
 import Foundation
 import AppKit
 import SwiftUI
+import ComposableArchitecture
 
 public protocol BugReportCreator {
     func createBugReportViewController(delegate: BugReportDelegate, colors: Colors) -> NSViewController
@@ -30,16 +31,25 @@ public final class MacOSBugReportCreator: BugReportCreator {
 
     public func createBugReportViewController(delegate: BugReportDelegate, colors: Colors) -> NSViewController {
         CurrentEnv.bugReportDelegate = delegate
-
-        let viewModel = MacBugReportViewModel(model: delegate.model)
+        
         delegate.updateAvailabilityChanged = { available in
             withAnimation {
-                viewModel.updateIsAvailable = available
+                CurrentEnv.updateViewModel.updateIsAvailable = available
             }
         }
         delegate.checkUpdateAvailability()
 
-        let controller = NSHostingController(rootView: BugReportNavigationView(viewModel: viewModel)
+        let reducer = ReportBugFeatureMacOS()
+        #if DEBUG
+            ._printChanges() // Only print changes while debugging
+        #endif
+        let state = ReportBugFeatureMacOS.State(whatsTheIssueState: WhatsTheIssueFeature.State(categories: delegate.model.categories))
+        let store = Store(initialState: state,
+                          reducer: reducer)
+        let rootView = ReportBugView(store: store)
+
+        let controller = NSHostingController(
+            rootView: rootView
                                 .frame(width: 600, height: 650, alignment: .center)
                                 .environment(\.colors, colors)
                                 .preferredColorScheme(.dark)

@@ -60,13 +60,13 @@ struct QuickFixesFeature: Reducer {
 
 }
 
+#if os(iOS)
 public struct QuickFixesView: View {
 
     let store: StoreOf<QuickFixesFeature>
 
-    #if os(iOS)
-    @StateObject var updateViewModel: IOSUpdateViewModel = CurrentEnv.iOSUpdateViewModel
-    #endif
+    @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
+
     let assetsBundle = CurrentEnv.assetsBundle
     @Environment(\.colors) var colors: Colors
     @Environment(\.dismiss) private var dismiss
@@ -81,9 +81,7 @@ public struct QuickFixesView: View {
                     StepProgress(step: 2, steps: 3, colorMain: colors.interactive, colorText: colors.textAccent, colorSecondary: colors.interactiveActive)
                         .padding(.bottom)
 
-                    #if os(iOS)
                     UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
-                    #endif
 
                     VStack(alignment: .leading, spacing: 8) {
                         Text(LocalizedString.br2Title)
@@ -172,7 +170,6 @@ public struct QuickFixesView: View {
                     .padding(.bottom, 32)
                 }
                 .foregroundColor(colors.textPrimary)
-#if os(iOS)
                 // Custom Back button
                 .navigationBarBackButtonHidden(true)
                 .navigationBarItems(leading: Button(action: {
@@ -180,12 +177,105 @@ public struct QuickFixesView: View {
                 }, label: {
                     Image(systemName: "chevron.left").foregroundColor(colors.textPrimary)
                 }))
-#endif
+
             }
         })
     }
 
 }
+#elseif os(macOS)
+
+struct QuickFixesView: View {
+    let store: StoreOf<QuickFixesFeature>
+
+    let assetsBundle = CurrentEnv.assetsBundle
+    @Environment(\.colors) var colors: Colors
+
+    var body: some View {
+        WithViewStore(self.store, observe: { $0 }, content: { viewStore in
+        VStack(alignment: .center) {
+
+            VStack(alignment: .center, spacing: 8) {
+                Text(LocalizedString.br2Title)
+                    .font(.title2)
+                    .fontWeight(.bold)
+                Text(LocalizedString.br2Subtitle)
+                    .font(.subheadline)
+            }
+            .padding(.horizontal)
+
+            VStack {
+                    if let suggestions = viewStore.category.suggestions {
+                        ForEach(suggestions) { suggestion in
+                            VStack(alignment: .leading) {
+                                if let link = suggestion.link, let url = URL(string: link) {
+                                    Link(destination: url) {
+                                        HStack(alignment: .top) {
+                                            Image(Asset.icLightbulb.name, bundle: assetsBundle)
+                                                .renderingMode(.template)
+                                                .foregroundColor(colors.qfIcon)
+                                            Text(suggestion.text)
+                                                .lineSpacing(7)
+                                                .multilineTextAlignment(.leading)
+                                                .frame(minHeight: 24, alignment: .leading)
+                                            Spacer()
+                                            Image(Asset.icArrowOutSquare.name, bundle: assetsBundle)
+                                                .renderingMode(.template)
+                                                .foregroundColor(colors.externalLinkIcon)
+                                        }
+                                        .frame(width: 310) // Magic number that that prevents button to be too wide. Should be changed in case we change the width of ReportBug window.
+                                    }
+                                    .padding(.horizontal)
+                                    .onHover { inside in
+                                        if inside {
+                                            NSCursor.pointingHand.push()
+                                        } else {
+                                            NSCursor.pop()
+                                        }
+                                    }
+                                } else {
+                                    HStack(alignment: .top) {
+                                        Image(Asset.icLightbulb.name, bundle: assetsBundle)
+                                            .renderingMode(.template)
+                                            .foregroundColor(colors.qfIcon)
+                                        Text(suggestion.text)
+                                            .lineSpacing(7)
+                                            .multilineTextAlignment(.leading)
+                                            .frame(minHeight: 24, alignment: .leading)
+                                        Spacer()
+                                    }
+                                    .padding(.horizontal)
+                                }
+                                Divider().hidden() // Makes view fill whole width
+                            }
+                        }
+                    }
+
+            }
+            .padding(.top, 32)
+            .padding(.bottom, 16)
+
+            Text(LocalizedString.br2Footer)
+                .foregroundColor(colors.textSecondary)
+                .font(.footnote)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(.bottom, 32)
+
+            Button(action: {
+                viewStore.send(.next, animation: .default)
+            }, label: {
+                Text(LocalizedString.br2ButtonNext)
+            })
+            .buttonStyle(PrimaryButtonStyle())
+            .padding(.horizontal)
+        }
+        .foregroundColor(colors.textPrimary)
+        .background(colors.background)
+        })
+    }
+}
+
+#endif
 
 // MARK: - Preview
 
@@ -195,15 +285,11 @@ struct QuickFixesView_Previews: PreviewProvider {
     static var previews: some View {
         CurrentEnv.bugReportDelegate = bugReport
         #if os(iOS)
-        CurrentEnv.iOSUpdateViewModel.updateIsAvailable = true
+        CurrentEnv.updateViewModel.updateIsAvailable = true
         #endif
         return Group {
-            NavigationView {
-                QuickFixesView(store: Store(initialState: QuickFixesFeature.State(category: bugReport.model.categories[0]),
-                                            reducer: QuickFixesFeature()
-                                           )
-                )
-            }
+            QuickFixesView(store: Store(initialState: QuickFixesFeature.State(category: bugReport.model.categories[0]), reducer: QuickFixesFeature())
+            )
         }
     }
 }
