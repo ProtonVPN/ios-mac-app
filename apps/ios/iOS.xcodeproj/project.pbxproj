@@ -419,13 +419,10 @@
 		E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C42811698F0060C463 /* Modals-iOS */; };
 		E547D2F529EE9F67008FB760 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E547D2F429EE9F67008FB760 /* Theme */; };
 		E547D2F729EE9F8B008FB760 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E547D2F629EE9F8B008FB760 /* Theme */; };
-		E547D2F929EE9F98008FB760 /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = E547D2F829EE9F98008FB760 /* Modals */; };
 		E551EB0529AF583D00B6612D /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0429AF583D00B6612D /* Assets.swift */; };
 		E5772AE529B0C63F0076D824 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0429AF583D00B6612D /* Assets.swift */; };
 		E58634B329CA16C200E7C565 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E58634B229CA16C200E7C565 /* Theme */; };
-		E59227C829C8BDD70008A091 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E59227C729C8BDD70008A091 /* Theme */; };
 		E593B97127BA7DC100AFCA8C /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B97027BA7DC100AFCA8C /* UpsellColors.swift */; };
-		E5980FB729F8068400405986 /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = E5980FB629F8068400405986 /* Home */; };
 		E5980FB929F8068800405986 /* Home-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E5980FB829F8068800405986 /* Home-iOS */; };
 		E59C7A9029229A940034E56F /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = D16ECAECC9861A6ED5EDA4F2 /* Modals */; };
 		E59C7A9129229A940034E56F /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 2DC3E67F6A25A4AD4DFCF448 /* NEHelper */; };
@@ -1115,7 +1112,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E59227C829C8BDD70008A091 /* Theme in Frameworks */,
 				F34AC17B27F439810007FF93 /* Review in Frameworks */,
 				D555C49F297FB961000593EF /* LocalFeatureFlags in Frameworks */,
 				D5D78E5528CF60A900B2A156 /* vpncore.framework in Frameworks */,
@@ -1123,9 +1119,7 @@
 				E198D6B12163B31A00F2F0E0 /* libc++.tbd in Frameworks */,
 				E18006E7218B0B7B009E01E3 /* StoreKit.framework in Frameworks */,
 				F348C9D627D8E54200622584 /* Search in Frameworks */,
-				E5980FB729F8068400405986 /* Home in Frameworks */,
 				E5980FB929F8068800405986 /* Home-iOS in Frameworks */,
-				E547D2F929EE9F98008FB760 /* Modals in Frameworks */,
 				E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */,
 				F3BC534B278598CE009E49B4 /* Onboarding in Frameworks */,
 				E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */,
@@ -2546,10 +2540,7 @@
 				F34AC17A27F439810007FF93 /* Review */,
 				E53D64C42811698F0060C463 /* Modals-iOS */,
 				D555C49E297FB961000593EF /* LocalFeatureFlags */,
-				E59227C729C8BDD70008A091 /* Theme */,
 				E509509329ED258500C0F935 /* Theme-iOS */,
-				E547D2F829EE9F98008FB760 /* Modals */,
-				E5980FB629F8068400405986 /* Home */,
 				E5980FB829F8068800405986 /* Home-iOS */,
 			);
 			productName = ProtonVPN;
@@ -5073,21 +5064,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Theme;
 		};
-		E547D2F829EE9F98008FB760 /* Modals */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Modals;
-		};
 		E58634B229CA16C200E7C565 /* Theme */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Theme;
-		};
-		E59227C729C8BDD70008A091 /* Theme */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Theme;
-		};
-		E5980FB629F8068400405986 /* Home */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Home;
 		};
 		E5980FB829F8068800405986 /* Home-iOS */ = {
 			isa = XCSwiftPackageProductDependency;

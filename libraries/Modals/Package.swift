@@ -27,7 +27,7 @@ let package = Package(
     targets: [
         .target(
             name: "Modals",
-            dependencies: ["Overture", "Theme"],
+            dependencies: ["Overture"],
             resources: [
                 .process("Resources/Media.xcassets")
             ]
