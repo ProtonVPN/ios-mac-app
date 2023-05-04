@@ -1,7 +1,7 @@
 //
-//  Created on 2022-02-07.
+//  Created on 2023-05-09.
 //
-//  Copyright (c) 2022 Proton AG
+//  Copyright (c) 2023 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 
 import Foundation
 
-public final class IOSUpdateViewModel: ObservableObject {
+public final class UpdateViewModel: ObservableObject {
 
     @Published var updateIsAvailable: Bool
 
