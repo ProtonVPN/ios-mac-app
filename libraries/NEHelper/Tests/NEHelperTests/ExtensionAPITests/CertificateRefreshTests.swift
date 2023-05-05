@@ -997,4 +997,38 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         }
         wait(for: [didRefresh, didStop], timeout: expectationTimeout, enforceOrder: true)
     }
+
+    /// Suspending and resuming a manager (not stopping) should not prevent future certificate refreshes operations from starting
+    func testSuspendingManagerDoesNotBlockFutureOperations() {
+        let expectations = (
+            managerSuspended: XCTestExpectation(description: "Manager should be suspended"),
+            managerStarted: XCTestExpectation(),
+            managerResumed: XCTestExpectation(),
+            certRefreshRequest: XCTestExpectation(description: "Cert refresh request")
+        )
+
+        certRefreshCallback = { (_, _) in
+            XCTFail("Shouldn't try to refresh before refresh is requested")
+        }
+
+        manager.start {
+            expectations.managerStarted.fulfill()
+            self.manager.suspend {
+                expectations.managerSuspended.fulfill()
+                self.manager.start {
+                    expectations.managerResumed.fulfill()
+                }
+            }
+        }
+
+        wait(for: [expectations.managerStarted, expectations.managerSuspended, expectations.managerResumed], timeout: expectationTimeout, enforceOrder: true)
+
+        certRefreshCallback = { (_, _) in
+            expectations.certRefreshRequest.fulfill()
+        }
+
+        manager.checkRefreshCertificateNow(features: authenticationStorage.features!) { _ in }
+
+        wait(for: [expectations.certRefreshRequest], timeout: expectationTimeout)
+    }
 }
