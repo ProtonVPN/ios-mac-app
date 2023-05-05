@@ -137,7 +137,7 @@ class PacketTunnelProvider: OpenVPNTunnelProvider, ExtensionAPIServiceDelegate {
     override func sleep(completionHandler: @escaping () -> Void) {
         super.sleep {
             log.info("sleep()")
-            self.certificateRefreshManager.stop {
+            self.certificateRefreshManager.suspend {
                 completionHandler()
             }
         }

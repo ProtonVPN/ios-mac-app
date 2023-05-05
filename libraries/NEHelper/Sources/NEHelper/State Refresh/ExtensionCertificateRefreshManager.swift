@@ -95,6 +95,9 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
                                            userInitiated: Bool = false,
                                            forceRefreshDueToExpiredSession: Bool = false,
                                            completion: @escaping CertificateRefreshCompletion) {
+        if operationQueue.isSuspended {
+            log.error("Adding certificate refresh operation to stopped refresh manager", category: .userCert)
+        }
         operationQueue.addOperation(CertificateRefreshAsyncOperation(features: features,
                                                                      userInitiated: userInitiated,
                                                                      forceRefreshDueToExpiredSession: forceRefreshDueToExpiredSession,
