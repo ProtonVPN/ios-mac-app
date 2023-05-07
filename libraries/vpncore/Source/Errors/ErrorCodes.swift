@@ -20,6 +20,7 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import ProtonCore_Services
 
 public class ErrorCode {
     
@@ -58,7 +59,10 @@ public class NetworkErrorCode {
     public static let cannotConnectToHost = NSURLErrorCannotConnectToHost
     public static let networkConnectionLost = NSURLErrorNetworkConnectionLost
     public static let notConnectedToInternet = NSURLErrorNotConnectedToInternet
-    public static let DNSLookupFailed = NSURLErrorDNSLookupFailed
+    public static let dnsLookupFailed = NSURLErrorDNSLookupFailed
+    public static let secureConnectionFailed = NSURLErrorSecureConnectionFailed
+    public static let cannotParseResponse = NSURLErrorCannotParseResponse
+    public static let potentiallyBlocked = APIErrorCode.potentiallyBlocked
     
     public static let tls = 3500
 }

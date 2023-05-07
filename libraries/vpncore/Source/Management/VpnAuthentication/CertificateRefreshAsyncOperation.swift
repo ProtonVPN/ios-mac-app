@@ -88,10 +88,10 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
     }
 
     func handleError(_ error: Error) {
-        guard !(error.isNetworkError && shouldRetryDueToNetworkIssue) else {
+        guard !(error.shouldRetry && shouldRetryDueToNetworkIssue) else {
             self.remainingNetworkErrorRetries -= 1
             let delay = networkRetryDelay
-            log.info("Cert refresh failed due to network error. Retrying in \(delay) seconds.")
+            log.info("Cert refresh failed due to network error \(error). Retrying in \(delay) seconds.", category: .userCert)
             sleep(delay)
             self.main()
             return

@@ -56,7 +56,37 @@ public class NetworkError {
 }
 
 extension Error {
-    
+
+    /// Returns true if the request failed due to a network error, and it is reasonably safe to retry.
+    ///
+    /// - Note: In contrast to `isNetworkError`, this returns false when we *really* might be blocked (for example, when
+    /// the underlying error is HTTP 451: Unavailable For Legal Reasons)
+    public var shouldRetry: Bool {
+        let nsError = self as NSError
+        let retriableNSURLDomainErrorCodes = [
+            NetworkErrorCode.timedOut,
+            NetworkErrorCode.cannotConnectToHost,
+            NetworkErrorCode.networkConnectionLost,
+            NetworkErrorCode.notConnectedToInternet,
+            NetworkErrorCode.cannotFindHost,
+            NetworkErrorCode.dnsLookupFailed,
+            NetworkErrorCode.secureConnectionFailed,
+            NetworkErrorCode.cannotParseResponse // Potentially returned when requests are interrupted by network interface changes
+        ]
+
+        if nsError.domain == NSURLErrorDomain && retriableNSURLDomainErrorCodes.contains(nsError.code) {
+            return true
+        }
+
+        // ProtonMailAPIService aggressively wraps network errors as `potentiallyBlocked` errors
+        if nsError.code == NetworkErrorCode.potentiallyBlocked {
+            // Retry the request if the underlying error is retriable
+            return nsError.underlyingErrors.contains(where: { $0.shouldRetry })
+        }
+
+        return false
+    }
+
     public var isNetworkError: Bool {
         let nsError = self as NSError
         switch nsError.code {
@@ -65,8 +95,9 @@ extension Error {
              NetworkErrorCode.networkConnectionLost,
              NetworkErrorCode.notConnectedToInternet,
              NetworkErrorCode.cannotFindHost,
-             NetworkErrorCode.DNSLookupFailed,
-             -1200, 451, 310,
+             NetworkErrorCode.dnsLookupFailed,
+             NetworkErrorCode.secureConnectionFailed,
+             310, 451, // It is possible for ProtonCore-Services to return errors with HTTP error codes
              8 // No internet
              :
             return true
@@ -85,4 +116,13 @@ extension Error {
         }
     }
     
+}
+
+extension NSError {
+    var underlyingErrors: [Error] {
+        guard let underlyingError = userInfo[NSUnderlyingErrorKey] as? NSError else {
+            return []
+        }
+        return [underlyingError] + underlyingError.underlyingErrors
+    }
 }
