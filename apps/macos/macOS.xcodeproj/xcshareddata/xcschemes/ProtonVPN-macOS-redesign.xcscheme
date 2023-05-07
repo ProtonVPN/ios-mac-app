@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E5DB888929FAB82B004D6637"
-               BuildableName = "ProtonVPN.app"
-               BlueprintName = "ProtonVPN"
+               BuildableName = "ProtonVPN-mac-redesign.app"
+               BlueprintName = "ProtonVPN-mac-redesign"
                ReferencedContainer = "container:macOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -44,8 +44,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E5DB888929FAB82B004D6637"
-            BuildableName = "ProtonVPN.app"
-            BlueprintName = "ProtonVPN"
+            BuildableName = "ProtonVPN-mac-redesign.app"
+            BlueprintName = "ProtonVPN-mac-redesign"
             ReferencedContainer = "container:macOS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -61,8 +61,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E5DB888929FAB82B004D6637"
-            BuildableName = "ProtonVPN.app"
-            BlueprintName = "ProtonVPN"
+            BuildableName = "ProtonVPN-mac-redesign.app"
+            BlueprintName = "ProtonVPN-mac-redesign"
             ReferencedContainer = "container:macOS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
