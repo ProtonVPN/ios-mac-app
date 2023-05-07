@@ -1,5 +1,5 @@
 //
-//  Created on 25/04/2023.
+//  Created on 07/05/2023.
 //
 //  Copyright (c) 2023 Proton AG
 //
@@ -17,26 +17,21 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
-import Theme_macOS
+import Theme
 
-public struct HomeView: View {
+public struct CountriesView: View {
+    @Binding var isHomeTabActive: Bool
 
-    @Binding var connectionDetailsVisible: Bool
-
-    public init(connectionDetailsVisible: Binding<Bool>) {
-        _connectionDetailsVisible = connectionDetailsVisible
+    public init(isHomeTabActive: Binding<Bool>) {
+        _isHomeTabActive = isHomeTabActive
     }
 
     public var body: some View {
-        ConnectionStateView(connectionDetailsVisible: $connectionDetailsVisible)
+        Text("Countries view, click me")
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color(.background))
             .onTapGesture {
-                connectionDetailsVisible.toggle()
+                isHomeTabActive = true
             }
-    }
-}
-
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView(connectionDetailsVisible: .init(get: { true }, set: { _ in }))
     }
 }
