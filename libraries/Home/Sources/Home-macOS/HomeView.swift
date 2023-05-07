@@ -19,14 +19,24 @@
 import SwiftUI
 import Theme_macOS
 
-struct HomeView: View {
-    var body: some View {
-        Text("Hello")
+public struct HomeView: View {
+
+    @Binding var connectionDetailsVisible: Bool
+
+    public init(connectionDetailsVisible: Binding<Bool>) {
+        _connectionDetailsVisible = connectionDetailsVisible
+    }
+
+    public var body: some View {
+        ConnectionStateView(connectionDetailsVisible: $connectionDetailsVisible)
+            .onTapGesture {
+                connectionDetailsVisible.toggle()
+            }
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        HomeView(connectionDetailsVisible: .init(get: { true }, set: { _ in }))
     }
 }

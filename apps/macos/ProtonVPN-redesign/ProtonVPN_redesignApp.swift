@@ -34,21 +34,13 @@ struct ProtonVPNApp: App {
 
     @State private var window: NSWindow?
 
-    enum Tab {
-        case home
-        case countries
-        case settings
-    }
-
-    @State private var selectedTab: Tab = .home
-
     init() {
 //        UITabBar.appearance().backgroundColor = .color(.background, .weak)
     }
 
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            SideBarView()
                 .background(WindowAccessor(window: $window)) // get access to the underlying NSWindow
                 .onAppear {
                     NSWindow.allowsAutomaticWindowTabbing = false
@@ -56,6 +48,8 @@ struct ProtonVPNApp: App {
                 .navigationTitle("")
 
         }
+        .windowToolbarStyle(UnifiedWindowToolbarStyle())
+        .windowStyle(HiddenTitleBarWindowStyle())
         .onChange(of: scenePhase) { newScenePhase in // The SwiftUI lifecycle events
             switch newScenePhase {
             case .active:
@@ -90,6 +84,8 @@ struct WindowAccessor: NSViewRepresentable {
         let view = NSView()
         DispatchQueue.main.async {
             self.window = view.window
+            self.window?.isOpaque = false
+            self.window?.backgroundColor = .clear
         }
         return view
     }

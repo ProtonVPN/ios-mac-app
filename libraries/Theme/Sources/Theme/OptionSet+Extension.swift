@@ -16,8 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 public extension OptionSet where RawValue == Int {
     init(bitPosition: Int) {
         assert(0 <= bitPosition && bitPosition < Int.bitWidth)

@@ -487,6 +487,9 @@
 /* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
 "_server_load_percentage" = "%@%% Load";
 
+/* iOS: Home screen title, tab bar item title; MacOS: TabBar tab title; */
+"_home" = "Home";
+
 /* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
 "_countries" = "Countries";
 "_no_servers_to_show" = "There are currently no servers to show here.";
