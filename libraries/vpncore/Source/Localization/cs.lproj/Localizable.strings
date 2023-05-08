@@ -395,7 +395,7 @@
 "_error_loads" = "Nelze aktualizovat vytížení serverů";
 
 /* (No Comment) */
-"_error_mitm_description" = "Při pokusu o připojení k rozhraní Proton VPN API selhalo ověření certifikátu TLS. Vaše aktuální internetové připojení může být monitorováno. Abychom zajistili bezpečnost vašich dat, bráníme aplikaci v přístupu k rozhraní Proton VPN API.\nChcete-li se přihlásit nebo získat přístup ke svému účtu, přepněte na novou síť a zkuste se znovu připojit.";
+"_error_mitm_description" = "Při pokusu o připojení k Proton VPN API selhalo ověření certifikátu TLS. Vaše aktuální internetové připojení může být monitorováno. Abychom zajistili bezpečnost vašich dat, bráníme aplikaci v přístupu k Proton VPN API.\nChcete-li se přihlásit nebo získat přístup ke svému účtu, použijte jinou síť a zkuste se znovu připojit.";
 
 /* (No Comment) */
 "_error_mitm_title" = "Nezabezpečené připojení";

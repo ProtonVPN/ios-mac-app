@@ -905,10 +905,10 @@
 "_netshield_feature_description_alt_link" = "En savoir plus";
 
 /* Settings -> Netshield: Block malware */
-"_netshield_level1" = "Bloquer les programmes malveillants";
+"_netshield_level1" = "Bloquer les logiciels malveillants";
 
 /* Settings -> Netshield: Block malware, ads, trackers */
-"_netshield_level2" = "Bloquer les programmes malveillants, publicités et traqueurs";
+"_netshield_level2" = "Bloquer les logiciels malveillants, publicités et traqueurs";
 
 /* Settings -> Netshield, Status -> NetShield: Off */
 "_netshield_off" = "Désactivé";
@@ -1166,7 +1166,7 @@
 "_quick_settings_netshield_option_level1" = "Bloquer uniquement les logiciels malveillants";
 
 /* (No Comment) */
-"_quick_settings_netshield_option_level2" = "Bloquer les programmes malveillants, publicités et traqueurs";
+"_quick_settings_netshield_option_level2" = "Bloquer les logiciels malveillants, publicités et traqueurs";
 
 /* (No Comment) */
 "_quick_settings_netshield_option_off" = "Ne pas bloquer";

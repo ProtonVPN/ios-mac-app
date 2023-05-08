@@ -15,7 +15,7 @@
 			<key>few</key>
 			<string>%d țări</string>
 			<key>one</key>
-			<string>O țară</string>
+			<string>%d țară</string>
 			<key>other</key>
 			<string>%d de țări</string>
 		</dict>
@@ -31,11 +31,11 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>few</key>
-			<string>peste %d țări</string>
+			<string>Peste %d țări</string>
 			<key>one</key>
-			<string>Mai mult de o țară</string>
+			<string>Peste %d țară</string>
 			<key>other</key>
-			<string>peste %d de țări</string>
+			<string>Peste %d de țări</string>
 		</dict>
 	</dict>
 	<key>_netshield_stats_ads_blocked</key>
@@ -93,7 +93,7 @@ opriți</string>
 			<key>few</key>
 			<string>%d conexiuni</string>
 			<key>one</key>
-			<string>O conexiune</string>
+			<string>%d conexiune</string>
 			<key>other</key>
 			<string>%d de conexiuni</string>
 		</dict>
@@ -111,7 +111,7 @@ opriți</string>
 			<key>few</key>
 			<string>Sute de servere în %d țări</string>
 			<key>one</key>
-			<string>Sute de servere într-o țară</string>
+			<string>Sute de servere în %d țară</string>
 			<key>other</key>
 			<string>Sute de servere în %d de țări</string>
 		</dict>
@@ -127,11 +127,11 @@ opriți</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>few</key>
-			<string>Conectați până la %d dispozitive simultan</string>
+			<string>Conectați maxim %d dispozitive simultan</string>
 			<key>one</key>
-			<string>Conectați maxim un dispozitiv</string>
+			<string>Conectați maxim %d dispozitiv</string>
 			<key>other</key>
-			<string>Conectați până la %d de dispozitive simultan</string>
+			<string>Conectați maxim %d de dispozitive simultan</string>
 		</dict>
 	</dict>
 	<key>_vpnauth_too_many_certs_retry_after</key>
@@ -147,7 +147,7 @@ opriți</string>
 			<key>few</key>
 			<string>Ați atins numărul maxim de modificări a setărilor. Reîncercați peste %d minute.</string>
 			<key>one</key>
-			<string>Ați atins numărul maxim de modificări a setărilor. Reîncercați peste un minut.</string>
+			<string>Ați atins numărul maxim de modificări a setărilor. Reîncercați peste %d minut.</string>
 			<key>other</key>
 			<string>Ați atins numărul maxim de modificări a setărilor. Reîncercați peste %d de minute.</string>
 		</dict>
@@ -165,7 +165,7 @@ opriți</string>
 			<key>few</key>
 			<string>%d dispozitive</string>
 			<key>one</key>
-			<string>Un dispozitiv</string>
+			<string>%d dispozitiv</string>
 			<key>other</key>
 			<string>%d de dispozitive</string>
 		</dict>
