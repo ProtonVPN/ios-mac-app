@@ -165,7 +165,7 @@ zatrzymanych</string>
 			<key>many</key>
 			<string>Wykorzystano limit liczby zmian ustawień. Spróbuj ponownie za %d minut.</string>
 			<key>one</key>
-			<string>Wykorzystano limit liczby zmian ustawień. Spróbuj ponownie za minutę.</string>
+			<string>Wykorzystano limit liczby zmian ustawień. Spróbuj ponownie za %d minutę.</string>
 			<key>other</key>
 			<string>Wykorzystano limit liczby zmian ustawień. Spróbuj ponownie za %d minuty.</string>
 		</dict>

@@ -1487,7 +1487,7 @@
 "_subscription_will_expire" = "Obecny plan wygaśnie w dniu %@.";
 
 /* (No Comment) */
-"_subscription_will_renew" = "Obecny plan zostanie automatycznie odnowiony w dniu %@.";
+"_subscription_will_renew" = "Obecny plan zostanie automatycznie odnowiony %@.";
 
 /* (No Comment) */
 "_subuser_alert_description1" = "Włącz połączenia VPN, aby rozpocząć korzystanie z Proton VPN. Musisz to zrobić dla wszystkich użytkowników organizacji.";
@@ -1505,7 +1505,7 @@
 "_subuser_alert_login_button" = "Zaloguj się ponownie";
 
 /* Subuser alert */
-"_subuser_alert_title" = "Dziękujemy za ulepszenie planu do wersji Business/Visionary";
+"_subuser_alert_title" = "Dziękujemy za ulepszenie planu do wersji Business / Visionary";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Połączono";
@@ -1646,7 +1646,7 @@
 "_troubleshoot_item_proxy_description" = "Wyłącz zaporę oraz proxy lub skontaktuj się z administratorem sieci.";
 
 /* (No Comment) */
-"_troubleshoot_item_proxy_title" = "Konflikt z zaporą sieciową/serwerem proxy";
+"_troubleshoot_item_proxy_title" = "Konflikt z zaporą sieciową / serwerem proxy";
 
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "Rozwiązywanie problemów";

@@ -1133,7 +1133,7 @@
 "_protocol" = "Protokol";
 
 /* %@ is an IP address e.g. Public IP: 123.45.67.890 */
-"_public_ip" = "IP Publik";
+"_public_ip" = "IP Publik: %@";
 
 /* Several places in both iOS and Mac apps */
 "_quick_connect" = "Quick Connect";

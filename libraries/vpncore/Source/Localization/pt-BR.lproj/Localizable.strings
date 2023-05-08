@@ -437,7 +437,7 @@
 "_error_user_credentials_expired" = "Credenciais de usuário expiradas. Por favor, inicie a sessão";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_missing" = "Faltam as credenciais do usuário. Não foi possível fazer o login";
+"_error_user_credentials_missing" = "Faltam as credenciais do usuário. Não foi possível iniciar sessão";
 
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Não foi possível verificar se você é humano. Por favor, tente novamente ou compre um plano premium.";
@@ -1868,7 +1868,7 @@
 "login_summary_button" = "Iniciar usando o Proton VPN";
 
 /* Error message shown when tryng to log in with an unsupported method */
-"login_unsupported_state" = "Método de início de sessão inválido. Favor entrar em contato com o suporte.";
+"login_unsupported_state" = "Método de início de sessão inválido Entrar em contato com o suporte.";
 
 /* Description of user account update screen part 1 */
 "maximum_device_plan_limit_part_1" = "Desconecte outro dispositivo para se conectar a este ou atualize para %@";

@@ -1892,7 +1892,7 @@
 "use_recovery_code" = "Utilizar código de recuperación";
 
 /* Title for the button to switch to entering two-factor code */
-"use_two_factor_code" = "Utilizar código de dos factores";
+"use_two_factor_code" = "Utilizar código de doble factor";
 
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "%@ No se ha podido cambiar la configuración. Por favor, inténtelo de nuevo más tarde o conéctese a un servidor diferente";
