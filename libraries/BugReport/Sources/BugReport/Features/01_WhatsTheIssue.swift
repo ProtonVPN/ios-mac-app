@@ -25,7 +25,6 @@ struct WhatsTheIssueFeature: Reducer {
 
     struct State: Equatable {
         var categories: [Category]
-        var category: Category?
 
         var quickFixesState: QuickFixesFeature.State?
         var contactFormState: ContactFormFeature.State?
@@ -45,8 +44,6 @@ struct WhatsTheIssueFeature: Reducer {
         Reduce { state, action in
             switch action {
             case .categorySelected(let category):
-                state.category = category
-
                 if let suggestions = category.suggestions, !suggestions.isEmpty {
                     state.quickFixesState = QuickFixesFeature.State(category: category)
                 } else {

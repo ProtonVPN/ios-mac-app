@@ -27,7 +27,7 @@ struct FormInputField: Equatable {
 }
 
 extension FormInputField: Identifiable {
-    var id: UUID {
+    var id: String {
         return inputField.id
     }
 }

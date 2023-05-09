@@ -19,7 +19,9 @@
 import Foundation
 
 struct InputField: Codable, Identifiable, Equatable {
-    public let id = UUID()
+    public var id: String {
+        label
+    }
 
     let label: String
     let submitLabel: String

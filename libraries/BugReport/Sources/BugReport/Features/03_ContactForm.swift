@@ -35,7 +35,6 @@ struct ContactFormFeature: Reducer {
         case send
         case sendResponseReceived(TaskResult<Bool>)
         case resultViewClosed
-        case cancel
         case resultViewAction(BugReportResultFeature.Action)
     }
 
@@ -67,9 +66,6 @@ struct ContactFormFeature: Reducer {
 
             case .resultViewClosed:
                 state.resultState = nil
-                return .none
-
-            case .cancel:
                 return .none
 
             // 04. Results
