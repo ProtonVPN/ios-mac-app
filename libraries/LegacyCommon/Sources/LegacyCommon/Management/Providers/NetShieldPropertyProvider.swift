@@ -28,7 +28,7 @@ public protocol NetShieldPropertyProvider: PaidFeaturePropertyProvider {
     /// Current NetShield type
     var netShieldType: NetShieldType { get set }
 
-    /// Last active NetShield type
+    /// Used to store last non-off NS level when toggling NS off <-> on in NS V1 UI
     var lastActiveNetShieldType: NetShieldType { get }
 
     /// Check if current user can use NetShield
@@ -47,8 +47,11 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
     public static let netShieldNotification: Notification.Name = Notification.Name("NetShieldChangedNotification")
 
     private let storage: Storage
-    private let key = "NetShield"
-    private let lastActiveKey = "LastActiveNetShield"
+
+    private enum StorageKey: String {
+        case netShield = "NetShield"
+        case lastActive = "LastActiveNetShield"
+    }
 
     public required init(_ factory: Factory) {
         self.factory = factory
@@ -56,22 +59,35 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
     }
 
     public var lastActiveNetShieldType: NetShieldType {
-        getNetShieldValue(key: lastActiveKey)
+        guard let lastActiveType = getStoredNetShieldValue(key: .lastActive) else {
+            log.warning("Last active NetShield type is nil, defaulting to \(netShieldType)")
+            return netShieldType
+        }
+
+        return lastActiveType
     }
     
     public var netShieldType: NetShieldType {
         get {
-            getNetShieldValue(key: key)
+            guard let value = getStoredNetShieldValue(key: .netShield) else {
+                log.info("NetShield setting not found, setting to default (\(defaultNetShieldType))", category: .settings)
+                self.netShieldType = defaultNetShieldType
+                return defaultNetShieldType
+            }
+            return value
         }
         set {
             guard let username = username else {
+                log.error("Unable to update stored NetShield level, username is nil", category: .settings)
                 return
             }
 
-            storage.setValue(newValue.rawValue, forKey: key + username)
+            storage.setValue(newValue.rawValue, forKey: StorageKey.netShield.rawValue + username)
             if newValue != .off {
-                storage.setValue(newValue.rawValue, forKey: lastActiveKey + username)
+                // Duplicate active NS level, so that we can remember it to toggle it between off/on (V1 UI)
+                storage.setValue(newValue.rawValue, forKey: StorageKey.lastActive.rawValue + username)
             }
+
             executeOnUIThread {
                 NotificationCenter.default.post(name: type(of: self).netShieldNotification, object: newValue, userInfo: nil)
             }
@@ -101,17 +117,25 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
         }
     }
 
-    private func getNetShieldValue(key: String) -> NetShieldType {
+    private func getStoredNetShieldValue(key: StorageKey) -> NetShieldType? {
         guard let username = username else {
-            return defaultNetShieldType
+            log.error("Failed to retrieve stored NetShield level, username is nil", category: .settings)
+            return nil
         }
 
-        guard let current = storage.defaults.value(forKey: key + username) as? Int,
-                let type = NetShieldType.init(rawValue: current) else {
-            return defaultNetShieldType
+        let rawValue = storage.defaults.value(forKey: key.rawValue + username)
+        guard let intValue = rawValue as? Int else {
+            log.info("Failed to retrieve stored NetShield level, stored value is either nil or not an Int: \(String(describing: rawValue))", category: .settings)
+            return nil
+        }
+
+        guard let type = NetShieldType.init(rawValue: intValue) else {
+            log.error("Failed to retrieve stored NetShield level, \(intValue) is not a valid NetShield type", category: .settings)
+            return nil
         }
 
         if type.isUserTierTooLow(currentUserTier) {
+            log.info("User tier \(currentUserTier) is not high enough for stored NS level \(type), returning default (\(defaultNetShieldType))", category: .settings)
             return defaultNetShieldType
         }
 
