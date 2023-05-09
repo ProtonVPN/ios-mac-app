@@ -18,13 +18,13 @@ variables:
 workflow:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event" || 
-          $CI_PIPELINE_SOURCE == "schedule"
+          $CI_PIPELINE_SOURCE == "schedule" ||
+          $CI_COMMIT_BRANCH == "develop"
       variables:
         # also deploy on MRs and schedules
         ATLAS_DEPLOY_ENV: "true"
-    - if: $CI_COMMIT_BRANCH == "develop" || 
-          $CI_COMMIT_TAG
-      # run tests only, no deployment
+    # run tests without env deployment
+    - if: $CI_COMMIT_TAG
 
 include:
   - project: 'proton/devops/atlas-deploy'
