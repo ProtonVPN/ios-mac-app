@@ -62,25 +62,27 @@ class LoginTests: ProtonVPNUITests {
         loginAsTwoPassUser()
     }
 
-    func testLoginAsTwoFa() {
+    @MainActor
+    func testLoginAsTwoFa() async {
         let twofausercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twofausercredentials", withExtension: "plist")!)
 
         loginRobot
             .loginAsUser(twofausercredentials[0])
             .signIn(robot: TwoFaRobot.self)
-            .fillTwoFACode(code: generateCodeFor2FAUser(ObfuscatedConstants.twoFASecurityKey))
+            .fillTwoFACode(code: await generateCodeFor2FAUser(ObfuscatedConstants.twoFASecurityKey))
             .confirm2FA(robot: MainRobot.self)
         correctUserIsLoggedIn(twofausercredentials[0])
     }
 
-    func testLoginWithTwoPassAnd2FAUser() {
+    @MainActor
+    func testLoginWithTwoPassAnd2FAUser() async {
 
         let twopasstwofausercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twopasstwofausercredentials", withExtension: "plist")!)
 
         loginRobot
             .loginAsUser(twopasstwofausercredentials[0])
             .signIn(robot: TwoFaRobot.self)
-            .fillTwoFACode(code: generateCodeFor2FAUser(ObfuscatedConstants.twoFAandTwoPassSecurityKey))
+            .fillTwoFACode(code: await generateCodeFor2FAUser(ObfuscatedConstants.twoFAandTwoPassSecurityKey))
             .confirm2FA(robot: MainRobot.self)
         correctUserIsLoggedIn(twopasstwofausercredentials[0])
     }
