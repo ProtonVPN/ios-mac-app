@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "A37B331B-3887-4C5E-BA99-3E351A1AB6E1",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testExecutionOrdering" : "random"
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "BugReportTests",
+        "name" : "BugReportTests"
+      }
+    }
+  ],
+  "version" : 1
+}
