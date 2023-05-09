@@ -86,8 +86,9 @@ class LoginTests: ProtonVPNUITests {
     func testLoginWithTwoPassUser() {
         loginAsTwoPassUser()
     }
-        
-    func testLoginAsTwoFa() {
+
+    @MainActor
+    func testLoginAsTwoFa() async {
         
         let twofausercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twofausercredentials", withExtension: "plist")!)
             
@@ -95,12 +96,13 @@ class LoginTests: ProtonVPNUITests {
             .loginUser(credentials: twofausercredentials[0])
         twoFaRobot
             .verify.twoFaAuthenticationIsShown()
-            .fillTwoFACode(code: generateCodeFor2FAUser(ObfuscatedConstants.twoFASecurityKey))
+            .fillTwoFACode(code: await generateCodeFor2FAUser(ObfuscatedConstants.twoFASecurityKey))
         mainRobot
             .verify.checkUserIsLoggedIn()
     }
-        
-    func testLoginWithTwoPassAnd2FAUser() {
+
+    @MainActor
+    func testLoginWithTwoPassAnd2FAUser() async {
             
         let twopasstwofausercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twopasstwofausercredentials", withExtension: "plist")!)
             
@@ -108,7 +110,7 @@ class LoginTests: ProtonVPNUITests {
             .loginUser(credentials: twopasstwofausercredentials[0])
         twoFaRobot
             .verify.twoFaAuthenticationIsShown()
-            .fillTwoFACode(code: generateCodeFor2FAUser(ObfuscatedConstants.twoFAandTwoPassSecurityKey))
+            .fillTwoFACode(code: await generateCodeFor2FAUser(ObfuscatedConstants.twoFAandTwoPassSecurityKey))
         mainRobot
             .verify.checkUserIsLoggedIn()
     }
