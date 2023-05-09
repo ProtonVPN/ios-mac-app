@@ -61,9 +61,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         setupCoreIntegration()
         setupLogsForApp()
+
         log.info("Starting app version \(appInfo.bundleShortVersion) (\(appInfo.bundleVersion))", category: .app, event: .processStart)
+
         Storage.setSpecificDefaults(nil, largeDataStorage: FileStorage.cached)
         
+        // Ignore SIGPIPE errors, which can happen when receiving mach messages or writing to sockets.
+        signal(SIGPIPE, SIG_IGN)
+
         self.checkMigration()
         migrateIfNeeded {
             self.setNSCodingModuleName()
