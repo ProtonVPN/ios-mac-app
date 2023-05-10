@@ -32,7 +32,7 @@ public struct HomeView: View {
     public init() {}
     public var body: some View {
         ZStack(alignment: .top) {
-            Asset.mainMap.swiftUIImage
+            HomeAsset.mainMap.swiftUIImage
                 .resizable(resizingMode: .stretch)
                 .ignoresSafeArea()
                 .aspectRatio(contentMode: .fill)
@@ -81,7 +81,7 @@ public extension View {
         return self
             .tabItem {
                 Label {
-                    Text("Settings")
+                    Text(LocalizedString.settingsTabBarTitle)
                 } icon: {
                     Theme.Asset.icCogWheel.swiftUIImage
                 }
@@ -92,7 +92,7 @@ public extension View {
         return self
             .tabItem {
                 Label {
-                    Text("Countries")
+                    Text(LocalizedString.countriesTabBarTitle)
                 } icon: {
                     Theme.Asset.icEarth.swiftUIImage
                 }
@@ -103,7 +103,7 @@ public extension View {
         return self
             .tabItem {
                 Label {
-                    Text("Home")
+                    Text(LocalizedString.homeTabBarTitle)
                 } icon: {
                     Theme.Asset.icHouseFilled.swiftUIImage
                 }

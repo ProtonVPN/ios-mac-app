@@ -19,15 +19,13 @@ let package = Package(
             name: "Theme-iOS",
             targets: ["Theme-iOS"])
     ],
-    dependencies: [.package(url: "https://github.com/SwiftGen/SwiftGenPlugin", from: "6.6.0")],
+    dependencies: [],
     targets: [
         .target(
             name: "Theme",
             dependencies: [],
             resources: [],
-            plugins: [
-              .plugin(name: "SwiftGenPlugin", package: "SwiftGenPlugin")
-            ]
+            plugins: []
         ),
         .target(
             name: "Theme-iOS",

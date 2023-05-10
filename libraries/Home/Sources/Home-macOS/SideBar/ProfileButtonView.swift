@@ -1,5 +1,5 @@
 //
-//  Created on 07/05/2023.
+//  Created on 15/05/2023.
 //
 //  Copyright (c) 2023 Proton AG
 //
@@ -17,18 +17,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+import Theme
 
-struct SideBarItemView: View {
-    let category: SideBarTab
-
+struct ProfileButtonView: View {
     var body: some View {
-        Label {
-            Text(category.title)
-        } icon: {
-            category.image
-                .resizable()
-                .frame(maxWidth: 16, maxHeight: 16)
-                .tint(Color(.text))
-        }
+        Asset.icUserCircle.swiftUIImage
+            .resizable()
+            .frame(width: 16, height: 16)
+            .tint(Color(.text))
+            .padding(.themeSpacing24)
     }
 }

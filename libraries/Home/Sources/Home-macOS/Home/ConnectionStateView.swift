@@ -16,34 +16,20 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import vpncore
 import SwiftUI
 import Theme
 
-enum SideBarTab: Hashable, CaseIterable {
-    case home
-    case countries
-    case settings
+struct ConnectionStateView: View {
 
-    var title: String {
-        switch self {
-        case .home:
-            return LocalizedString.home
-        case .countries:
-            return LocalizedString.countries
-        case .settings:
-            return LocalizedString.settings
-        }
+    @Binding var connectionDetailsVisible: Bool
+
+    public init(connectionDetailsVisible: Binding<Bool>) {
+        _connectionDetailsVisible = connectionDetailsVisible
     }
-
-    var image: SwiftUI.Image {
-        switch self {
-        case .home:
-            return Asset.icHouse.swiftUIImage
-        case .countries:
-            return Asset.icEarth.swiftUIImage
-        case .settings:
-            return Asset.icCogWheel.swiftUIImage
-        }
+    
+    var body: some View {
+        Text("Home view, click me")
+            .frame(minWidth: 360, maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color(.background))
     }
 }
