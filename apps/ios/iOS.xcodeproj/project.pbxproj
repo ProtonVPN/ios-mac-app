@@ -43,6 +43,7 @@
 		42C37AFF2434E62C00366B79 /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
 		42C37B002434E62C00366B79 /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
 		47A5FDF82BE7BAF5F74AA67E /* Pods-ProtonVPNUITests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0621B577842515BF2198993 /* Pods-ProtonVPNUITests-metadata.plist */; };
+		4C74D3292A0B9D67004F8528 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 4C74D3282A0B9D67004F8528 /* PMLogger */; };
 		572DD1FF28EAD6E60051DB1A /* credentials_bf22.plist in Resources */ = {isa = PBXBuildFile; fileRef = 572DD1FE28EAD6E60051DB1A /* credentials_bf22.plist */; };
 		57E3438E28E573D60012B2DF /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438D28E573D60012B2DF /* PlanTests.swift */; };
 		57E3439028E576A70012B2DF /* SubscriptionsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438F28E576A70012B2DF /* SubscriptionsRobot.swift */; };
@@ -1159,6 +1160,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				87376621AD32F8C898B4D0A8 /* Pods_ProtonVPN_ProtonVPNUITests.framework in Frameworks */,
+				4C74D3292A0B9D67004F8528 /* PMLogger in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2617,6 +2619,9 @@
 				D5811D83229BBD870087B63A /* PBXTargetDependency */,
 			);
 			name = ProtonVPNUITests;
+			packageProductDependencies = (
+				4C74D3282A0B9D67004F8528 /* PMLogger */,
+			);
 			productName = ProtonVPNUITests;
 			productReference = D5811D7D229BBD870087B63A /* ProtonVPNUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -5007,6 +5012,10 @@
 		2DC3E67F6A25A4AD4DFCF448 /* NEHelper */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NEHelper;
+		};
+		4C74D3282A0B9D67004F8528 /* PMLogger */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PMLogger;
 		};
 		D16ECAECC9861A6ED5EDA4F2 /* Modals */ = {
 			isa = XCSwiftPackageProductDependency;

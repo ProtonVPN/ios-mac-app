@@ -29,15 +29,29 @@ public protocol LogFileManager {
 }
 
 public class LogFileManagerImplementation: LogFileManager {
+    public static let logDirLaunchArgument = "-LogDirectory"
     
     public init() {
     }
     
     /// Returns full log files URL given its name
     public func getFileUrl(named filename: String) -> URL {
-        return FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!
-            .appendingPathComponent("Logs", isDirectory: true)
-            .appendingPathComponent(filename, isDirectory: false)
+        let arguments = ProcessInfo.processInfo.arguments
+        let logDirectory: URL
+
+        if let index = arguments.firstIndex(of: Self.logDirLaunchArgument),
+           case let next = arguments.index(after: index),
+           next < arguments.count,
+           case let dir = arguments[next],
+           FileManager.default.fileExists(atPath: dir),
+           let url = URL(string: dir) {
+            logDirectory = url
+        } else {
+            logDirectory = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!
+                .appendingPathComponent("Logs", isDirectory: true)
+        }
+
+        return logDirectory.appendingPathComponent(filename, isDirectory: false)
     }
     
     /// Dumps given string into a log file.

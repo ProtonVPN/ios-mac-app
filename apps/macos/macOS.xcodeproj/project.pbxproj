@@ -51,6 +51,8 @@
 		42EF09E6257A713F00E2EDCA /* ch.protonvpn.mac.OpenVPN-Extension.systemextension in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 42EF09DB257A713F00E2EDCA /* ch.protonvpn.mac.OpenVPN-Extension.systemextension */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		42F63FE92566B66000DE60B2 /* ReconnectingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */; };
 		4C54383327C3DC0600D7A88D /* ModelIDChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54383227C3DC0600D7A88D /* ModelIDChecker.swift */; };
+		4C7CADE2280056090008778E /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		4C74D32B2A0B9D7F004F8528 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 4C74D32A2A0B9D7F004F8528 /* PMLogger */; };
 		4C7CADE2280056090008778E /* (null) in Sources */ = {isa = PBXBuildFile; };
 		4C7CADE4280060C90008778E /* CGMutablePath+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CADE3280060C90008778E /* CGMutablePath+Extension.swift */; };
 		4C7CAEC128006E5C0008778E /* LoadingAnimationFrames in Resources */ = {isa = PBXBuildFile; fileRef = 4C7CAEC028006E5C0008778E /* LoadingAnimationFrames */; };
@@ -1085,6 +1087,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				12BAB402E2A7F17CFE08B076 /* libPods-ProtonVPNmacOSUITests.a in Frameworks */,
+				4C74D32B2A0B9D7F004F8528 /* PMLogger in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2730,6 +2733,9 @@
 				D591170C229F9574005829DA /* PBXTargetDependency */,
 			);
 			name = ProtonVPNmacOSUITests;
+			packageProductDependencies = (
+				4C74D32A2A0B9D7F004F8528 /* PMLogger */,
+			);
 			productName = ProtonVPNUITests;
 			productReference = D5911706229F9574005829DA /* ProtonVPNmacOSUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -4845,6 +4851,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4C74D32A2A0B9D7F004F8528 /* PMLogger */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PMLogger;
+		};
 		D50B8020295DC3F900D85D29 /* NEHelper */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NEHelper;

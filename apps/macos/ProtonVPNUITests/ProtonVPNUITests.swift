@@ -21,25 +21,64 @@
 //
 
 import XCTest
+import PMLogger
 
 class ProtonVPNUITests: XCTestCase {
 
     let app = XCUIApplication()
-    
+    var testCaseStart = Date()
+
+    lazy var logFileUrl = LogFileManagerImplementation().getFileUrl(named: "ProtonVPN.log")
+
     override func setUp() {
         super.setUp()
+        testCaseStart = Date()
 
         // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
 
         app.launchArguments += ["-BlockOneTimeAnnouncement", "YES"]
         app.launchArguments += ["-BlockUpdatePrompt", "YES"]
+        app.launchArguments += [LogFileManagerImplementation.logDirLaunchArgument,
+                                logFileUrl.absoluteString]
 
         // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
         app.launch()
 
         window = XCUIApplication().windows["Proton VPN"]
         
+    }
+
+    override open func tearDownWithError() throws {
+        try super.tearDownWithError()
+
+        if FileManager.default.fileExists(atPath: logFileUrl.absoluteString) {
+            let pmLogAttachment = XCTAttachment(contentsOfFile: logFileUrl)
+            pmLogAttachment.lifetime = .deleteOnSuccess
+            add(pmLogAttachment)
+        }
+
+        let group = DispatchGroup()
+        group.enter()
+
+        guard #available(macOS 12, *) else { return }
+
+        let osLogContent = OSLogContent(scope: .system, since: testCaseStart)
+        osLogContent.loadContent { [weak self] logContent in
+            defer { group.leave() }
+
+            guard let data = logContent.data(using: .utf8) as? NSData,
+                  let compressed = try? data.compressed(using: .lz4) else {
+                return
+            }
+
+            let osLogAttachment = XCTAttachment(data: compressed as Data)
+            osLogAttachment.lifetime = .deleteOnSuccess
+            osLogAttachment.name = "os_log_\(self?.name ?? "(nil)").txt.lz4"
+            self?.add(osLogAttachment)
+        }
+
+        group.wait()
     }
 
     // MARK: - Helper methods
