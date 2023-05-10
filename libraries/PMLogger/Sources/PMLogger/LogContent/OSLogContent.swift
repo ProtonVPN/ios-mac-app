@@ -21,8 +21,23 @@ import OSLog
 
 /// Reads all available logs from OSLog subsystem
 public class OSLogContent: LogContent {
+    private let scope: OSLogStore.Scope
+    private let since: Date?
+    private var filter: ((OSLogEntryLog) -> Bool) = {
+        $0.process == "ProtonVPN"
+    }
     
-    public init(){
+    public init(
+        scope: OSLogStore.Scope = .currentProcessIdentifier,
+        since: Date? = nil,
+        filter: ((OSLogEntryLog) -> Bool)? = nil
+    ) {
+        self.scope = scope
+        self.since = since
+
+        if let filter {
+            self.filter = filter
+        }
     }
     
     private let dateFormatter = ISO8601DateFormatter()
@@ -32,17 +47,29 @@ public class OSLogContent: LogContent {
             do {
                 let dateFormatter = ISO8601DateFormatter()
                 dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-                let store = try OSLogStore(scope: .currentProcessIdentifier)
-                let position = store.position(timeIntervalSinceLatestBoot: 1)
+                let store = try OSLogStore(scope: self.scope)
+                let position: OSLogPosition
+
+                if let since = self.since {
+                    position = store.position(date: since)
+                } else {
+                    position = store.position(timeIntervalSinceLatestBoot: 1)
+                }
+
                 let entries = try store.getEntries(at: position)
                     .compactMap { $0 as? OSLogEntryLog }
-                    .filter { $0.subsystem == "PROTON-APP" }
-                    .map { "\(dateFormatter.string(from: $0.date)) | \($0.level.stringValue.uppercased()) | \($0.composedMessage)" }
+                    .filter(self.filter)
+                    .map {
+                        "\($0.process) | " +
+                        "\($0.subsystem) | " +
+                        "\(dateFormatter.string(from: $0.date)) | " +
+                        "\($0.level.stringValue.uppercased()) | " +
+                        "\($0.composedMessage)"
+                    }
                 let result = entries.joined(separator: "\n")
                 callback(result)
-
             } catch {
-                callback("")
+                callback("Error collecting logs: \(error)")
             }
         }
     }

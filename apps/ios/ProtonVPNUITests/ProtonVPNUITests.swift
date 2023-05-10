@@ -22,11 +22,13 @@
 
 import fusion
 import XCTest
+import PMLogger
 
 class ProtonVPNUITests: CoreTestCase {
 
     let app = XCUIApplication()
     var launchEnvironment: String?
+    lazy var logFileUrl = LogFileManagerImplementation().getFileUrl(named: "ProtonVPN.log")
 
     override func setUp() {
         super.setUp()
@@ -36,6 +38,8 @@ class ProtonVPNUITests: CoreTestCase {
         app.launchArguments += ["-AppleLanguages", "(en)"]
         // Put setup code here. This method is called before the invocation of each test method in the class.
         app.launchArguments += ["enforceUnauthSessionStrictVerificationOnBackend"]
+        app.launchArguments += [LogFileManagerImplementation.logDirLaunchArgument,
+                                logFileUrl.absoluteString]
 
         setupSnapshot(app)
         
@@ -51,6 +55,32 @@ class ProtonVPNUITests: CoreTestCase {
         app.launch()
 
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+    }
+
+    override open func tearDownWithError() throws {
+        try super.tearDownWithError()
+        
+        if FileManager.default.fileExists(atPath: logFileUrl.absoluteString) {
+            let pmLogAttachment = XCTAttachment(contentsOfFile: logFileUrl)
+            pmLogAttachment.lifetime = .deleteOnSuccess
+            add(pmLogAttachment)
+        }
+
+        guard #available(iOS 15, *) else { return }
+
+        let group = DispatchGroup()
+        group.enter()
+
+        let osLogContent = OSLogContent()
+        osLogContent.loadContent { [weak self] logContent in
+            let osLogAttachment = XCTAttachment(string: logContent)
+            osLogAttachment.lifetime = .deleteOnSuccess
+            self?.add(osLogAttachment)
+
+            group.leave()
+        }
+
+        group.wait()
     }
 
     let dynamicDomain: String = {
