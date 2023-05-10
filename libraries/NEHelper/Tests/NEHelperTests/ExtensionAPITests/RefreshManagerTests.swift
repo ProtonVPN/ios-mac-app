@@ -46,7 +46,7 @@ final class RefreshManagerTests: XCTestCase {
 
         // Base for timeouts: make sure that we set proper wait times, that are
         // either longer or shorter than refresh interval.
-        let waitIntervalBase = 0.01
+        let waitIntervalBase: TimeInterval = 1
 
         let timerFactory = TimerFactoryImplementation()
         let manager = TestRefreshManager(timerFactory: timerFactory, workQueue: DispatchQueue.main, interval: waitIntervalBase) {
