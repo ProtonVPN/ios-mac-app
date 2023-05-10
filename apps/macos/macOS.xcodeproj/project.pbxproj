@@ -25,8 +25,6 @@
 		424C14D125596E0F00E1D988 /* QuickSettingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424C14CF25596E0F00E1D988 /* QuickSettingDetailViewController.swift */; };
 		424C14D225596E0F00E1D988 /* QuickSettingDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 424C14D025596E0F00E1D988 /* QuickSettingDetailViewController.xib */; };
 		42710D9C264929A000D70B92 /* StreamOptionCVItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42710D9B264929A000D70B92 /* StreamOptionCVItemViewModel.swift */; };
-		42742F972478205E00E389C8 /* KillSwitchSwift5Popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42742F952478205E00E389C8 /* KillSwitchSwift5Popup.swift */; };
-		42742F982478205E00E389C8 /* KillSwitchSwift5Popup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42742F962478205E00E389C8 /* KillSwitchSwift5Popup.xib */; };
 		427A1F1024F5398900E95912 /* NotificationManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */; };
 		428B63C425558B5F00C90D40 /* QuickSettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428B63C325558B5F00C90D40 /* QuickSettingButton.swift */; };
 		42918CF2263836410065992E /* CountriesSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42918CF1263836410065992E /* CountriesSectionHeaderView.swift */; };
@@ -138,7 +136,6 @@
 		D5D298AC25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D298AB25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift */; };
 		D5D298B825B5BD27000FBD74 /* UpdateFileSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D298B725B5BD27000FBD74 /* UpdateFileSelector.swift */; };
 		D5D6A94A230D296400A432D1 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D6A949230D296400A432D1 /* DependencyContainer.swift */; };
-		D5DE76AB257635F70077C610 /* SwiftChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DE76AA257635F70077C610 /* SwiftChecker.swift */; };
 		D5E02A7E2996378700362621 /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = D5E02A7D2996378700362621 /* NEHelper */; };
 		D5F45D7C262EC16A00FB13E4 /* NSStackView+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F45D7B262EC16A00FB13E4 /* NSStackView+Children.swift */; };
 		D5F65F9E28A14E190062CF85 /* Timer in Frameworks */ = {isa = PBXBuildFile; productRef = D5F65F9D28A14E190062CF85 /* Timer */; };
@@ -568,8 +565,6 @@
 		424C14CF25596E0F00E1D988 /* QuickSettingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailViewController.swift; sourceTree = "<group>"; };
 		424C14D025596E0F00E1D988 /* QuickSettingDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuickSettingDetailViewController.xib; sourceTree = "<group>"; };
 		42710D9B264929A000D70B92 /* StreamOptionCVItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamOptionCVItemViewModel.swift; sourceTree = "<group>"; };
-		42742F952478205E00E389C8 /* KillSwitchSwift5Popup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillSwitchSwift5Popup.swift; sourceTree = "<group>"; };
-		42742F962478205E00E389C8 /* KillSwitchSwift5Popup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KillSwitchSwift5Popup.xib; sourceTree = "<group>"; };
 		427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManagerProtocol.swift; sourceTree = "<group>"; };
 		428B63C325558B5F00C90D40 /* QuickSettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingButton.swift; sourceTree = "<group>"; };
 		42918CF1263836410065992E /* CountriesSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesSectionHeaderView.swift; sourceTree = "<group>"; };
@@ -744,7 +739,6 @@
 		D5D298AB25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFileSelectorImplementationTests.swift; sourceTree = "<group>"; };
 		D5D298B725B5BD27000FBD74 /* UpdateFileSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFileSelector.swift; sourceTree = "<group>"; };
 		D5D6A949230D296400A432D1 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
-		D5DE76AA257635F70077C610 /* SwiftChecker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftChecker.swift; sourceTree = "<group>"; };
 		D5E38D772732A2B20015F0AF /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D5E38D792732A2E30015F0AF /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = hr; path = hr.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		D5E38D7A2732A2F40015F0AF /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/Intents.strings; sourceTree = "<group>"; };
@@ -2508,8 +2502,6 @@
 			children = (
 				42498A502518E96B00ACB7EC /* ExpandableContentPopup.xib */,
 				42498A4F2518E96B00ACB7EC /* ExpandableContentPopupViewController.swift */,
-				42742F952478205E00E389C8 /* KillSwitchSwift5Popup.swift */,
-				42742F962478205E00E389C8 /* KillSwitchSwift5Popup.xib */,
 				EE74FCB11F5DD9E500E266BC /* PopUp.xib */,
 				EE74FCAD1F5DD6E200E266BC /* PopUpViewController.swift */,
 				F3021D6125E9332A00EF73A1 /* TroubleshootingPopup.swift */,
@@ -2666,7 +2658,6 @@
 		F36ECE532611E3590089B898 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				D5DE76AA257635F70077C610 /* SwiftChecker.swift */,
 				D26CBA3A24696A89005E51B8 /* WiFiSecurityMonitor.swift */,
 				4C54383227C3DC0600D7A88D /* ModelIDChecker.swift */,
 			);
@@ -3030,7 +3021,6 @@
 				F320E03226F08D7A00336F7A /* Welcome.xib in Resources */,
 				EEBB82F31F1E0BCF0041432A /* OverviewItem.xib in Resources */,
 				EECEF3DB1F169A0500A16606 /* ServerItemCellView.xib in Resources */,
-				42742F982478205E00E389C8 /* KillSwitchSwift5Popup.xib in Resources */,
 				F320E03C26F08FAB00336F7A /* Tour.xib in Resources */,
 				EEBB82DB1F1DE8890041432A /* ProfilesContainer.xib in Resources */,
 				EEE113261F2CF19800C8221C /* Client.plist in Resources */,
@@ -3658,7 +3648,6 @@
 				EE876E0C1F137D0C00C9B9C2 /* SidebarViewController.swift in Sources */,
 				E15A8691202738A1009B9C83 /* ZoomButton.swift in Sources */,
 				E1454CF0206FD37300E6D396 /* HelpPopoverViewModel.swift in Sources */,
-				42742F972478205E00E389C8 /* KillSwitchSwift5Popup.swift in Sources */,
 				F320E03826F08DED00336F7A /* TourDescriptionView.swift in Sources */,
 				E1420A77209C78CE00697461 /* ConnectionSettingsViewModel.swift in Sources */,
 				42BDA8B0251A40A4009A0C96 /* NSTextField+RealSizing.swift in Sources */,
@@ -3739,7 +3728,6 @@
 				E5CCA11829B2057700BDE32B /* VideoTourModel.swift in Sources */,
 				E17C1CDF20E61D7F00DCC687 /* QuitApplicationButton.swift in Sources */,
 				EE8EF1F01F1FC4D00057CD94 /* OverviewViewModel.swift in Sources */,
-				D5DE76AB257635F70077C610 /* SwiftChecker.swift in Sources */,
 				EECF30711F17A188006F819F /* ServerItemViewModel.swift in Sources */,
 				E1B9A7D0203EBD30009677BC /* ConnectingOverlayButton.swift in Sources */,
 				423467C7261CEAAF00A73773 /* UserAccountUpdateViewController.swift in Sources */,
