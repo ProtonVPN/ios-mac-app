@@ -128,11 +128,8 @@ extension MacAlertService: CoreAlertService {
             showDefaultSystemAlert(alert)
 
         case is MITMAlert:
-            showDefaultSystemAlert(alert)            
-            
-        case let killSwitchRequiresSwift5Alert as KillSwitchRequiresSwift5Alert:
-            show(killSwitchRequiresSwift5Alert)           
-            
+            showDefaultSystemAlert(alert)
+
         case is ClearApplicationDataAlert:
             showDefaultSystemAlert(alert)
             
@@ -290,12 +287,6 @@ extension MacAlertService: CoreAlertService {
         appSessionManager.logOut(force: true, reason: LocalizedString.invalidRefreshTokenPleaseLogin)
     }
 
-    private func show( _ alert: KillSwitchRequiresSwift5Alert ) {
-        let killSwitch5ViewController = KillSwitchSwift5Popup()
-        killSwitch5ViewController.alert = alert
-        windowService.presentKeyModal(viewController: killSwitch5ViewController)
-    }
-    
     private func show(_ alert: VpnServerOnMaintenanceAlert) {
         guard self.lastTimeCheckMaintenance.timeIntervalSinceNow < -AppConstants.Time.maintenanceMessageTimeThreshold else {
             return

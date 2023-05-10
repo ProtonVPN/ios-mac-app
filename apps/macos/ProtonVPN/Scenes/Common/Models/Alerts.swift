@@ -23,32 +23,6 @@
 import Foundation
 import vpncore
 
-public class KillSwitchRequiresSwift5Alert: SystemAlert {
-    public var title: String? = LocalizedString.killSwitchBlockingTitle
-    public var message: String? = LocalizedString.ksRequiresSwift5PopupMsg(LocalizedString.ksSwift5LibName)
-    public var actions = [AlertAction]()
-    public var doneActionIndex = 0
-    public var cancelActionIndex = 1
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
-    public var dontShowCheckbox: Bool = false
-    public var confirmHandler: ((Bool) -> Void)
-    
-    public init( _ retries: Int, swiftChecker: SwiftChecker, confirmHandler: @escaping (Bool) -> Void) {
-        if retries > 0 {
-            self.message = LocalizedString.ksRequiresSwift5PopupMsg2(LocalizedString.ksSwift5LibName)
-            if swiftChecker.isSwiftAvailable() {
-                dontShowCheckbox = true
-            }
-        }
-        
-        self.confirmHandler = confirmHandler
-        
-        actions.append(AlertAction(title: LocalizedString.done, style: .destructive, handler: nil))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
-    }
-}
-
 public class ClearApplicationDataAlert: SystemAlert {
     public var title: String? = LocalizedString.deleteApplicationDataPopupTitle
     public var message: String? = LocalizedString.deleteApplicationDataPopupBody

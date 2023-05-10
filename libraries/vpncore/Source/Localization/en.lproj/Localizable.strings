@@ -825,10 +825,6 @@
 "_unsecure_wifi" = "Insecure WiFi connection detected";
 "_unsecure_wifi_learn_more" = "Learn More";
 "_unsecure_wifi_title" = "Insecure WiFi Detected";
-"_ks_requires_swift5_popup_msg" = "To enable kill switch, you need to download and install the %@.\nPlease install it before enabling kill switch.";
-"_ks_requires_swift5_popup_msg2" = "Proton VPN couldn't detect the %@. To enable kill switch, please install software first.";
-"_ks_swift5_lib_name" = "Swift 5 Runtime Support library";
-"_ks_dont_ask" = "Don't ask me again";
 "_maintenance_on_server_detected_title" = "The VPN server is on maintenance";
 "_maintenance_on_server_detected_subtitle" = "The server you were connected to is on maintenance";
 "_maintenance_on_server_detected_description" = "Reconnecting you to the fastest available server.";
@@ -865,8 +861,6 @@
 /* Primary button title in the App update required alert  */
 "_update_required_update" = "Update";
 "_invalid_refresh_token_please_login" = "It's been a while since you last used the Proton VPN app. Please log back in.";
-
-"_protonvpn_macos" = "Proton VPN macOS";
 
 "_error_mitm_title" = "Insecure connection";
 "_error_mitm_description" = "The TLS certificate validation failed when trying to connect to the Proton VPN API. Your current internet connection may be monitored. To keep your data secure, we are preventing the app from accessing the Proton VPN API.\nTo sign in or access your account, switch to a new network and try to connect again.";
@@ -922,13 +916,6 @@
 
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_body" = "All Proton VPN data will be deleted and the application will quit. Do you wish to continue?";
-
-
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Kill switch";
-
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill switch is protecting your IP\n\nYour internet connection will resume as soon as Proton VPN reconnects to a server. To resume without VPN protection, disable the kill switch.";
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Disable Kill switch";
