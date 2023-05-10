@@ -1,0 +1,13 @@
+/* Tab bar item title */
+"home_tab_bar_title" = "Home";
+/* Tab bar item title */
+"countries_tab_bar_title" = "Countries";
+/* Tab bar item title */
+"settings_tab_bar_title" = "Settings";
+
+/* Connection status title when user is not connected to a VPN */
+"connection_status_unprotected" = "You are unprotected";
+/* Connection status title when user is initiating connection to a VPN */
+"connection_status_protecting" = "Protecting your digital identity";
+/* Connection status title when user is connected to a VPN */
+"connection_status_protected" = "Protected";

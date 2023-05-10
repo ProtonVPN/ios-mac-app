@@ -16,22 +16,34 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Home
 import SwiftUI
 import Theme
 
-public struct CountriesView: View {
-    @Binding var isHomeTabActive: Bool
+enum SideBarTab: Hashable, CaseIterable {
+    case home
+    case countries
+    case settings
 
-    public init(isHomeTabActive: Binding<Bool>) {
-        _isHomeTabActive = isHomeTabActive
+    var title: String {
+        switch self {
+        case .home:
+            return LocalizedString.homeTabBarTitle
+        case .countries:
+            return LocalizedString.countriesTabBarTitle
+        case .settings:
+            return LocalizedString.settingsTabBarTitle
+        }
     }
 
-    public var body: some View {
-        Text("Countries view, click me")
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color(.background))
-            .onTapGesture {
-                isHomeTabActive = true
-            }
+    var image: SwiftUI.Image {
+        switch self {
+        case .home:
+            return Asset.icHouse.swiftUIImage
+        case .countries:
+            return Asset.icEarth.swiftUIImage
+        case .settings:
+            return Asset.icCogWheel.swiftUIImage
+        }
     }
 }

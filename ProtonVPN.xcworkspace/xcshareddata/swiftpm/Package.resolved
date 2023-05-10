@@ -83,15 +83,6 @@
         }
       },
       {
-        "package": "SwiftGenPlugin",
-        "repositoryURL": "https://github.com/SwiftGen/SwiftGenPlugin",
-        "state": {
-          "branch": null,
-          "revision": "879b85a470cacd70c19e22eb7e11a3aed66f4068",
-          "version": "6.6.2"
-        }
-      },
-      {
         "package": "WireGuardKit",
         "repositoryURL": "https://github.com/ProtonVPN/wireguard-apple.git",
         "state": {

@@ -34,10 +34,6 @@ struct ProtonVPNApp: App {
 
     @State private var window: NSWindow?
 
-    init() {
-//        UITabBar.appearance().backgroundColor = .color(.background, .weak)
-    }
-
     var body: some Scene {
         WindowGroup {
             SideBarView()
@@ -63,7 +59,6 @@ struct ProtonVPNApp: App {
             }
         }
         .commands {
-            SidebarCommands() // show/hide sidebar
             CommandGroup(replacing: .newItem, addition: { }) // block user from opening multiple windows
             CommandMenu("Custom Menu") {
                 Button("Say Hello") {

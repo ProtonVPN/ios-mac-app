@@ -17,55 +17,58 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+import Theme
 
 struct StackNavigationView<RootContent>: View where RootContent: View {
-    @Binding var currentSubview: AnyView
-    @Binding var showingSubview: Bool
+    @Binding var currentSubview: AnyView?
+    @Binding var subviewTitle: String
+    var title: String
 
     let rootView: () -> RootContent
 
-    init(currentSubview: Binding<AnyView>,
-         showingSubview: Binding<Bool>,
+    init(currentSubview: Binding<AnyView?>,
+         subviewTitle: Binding<String>,
+         title: String,
          @ViewBuilder rootView: @escaping () -> RootContent) {
         self._currentSubview = currentSubview
-        self._showingSubview = showingSubview
+        self._subviewTitle = subviewTitle
+        self.title = title
         self.rootView = rootView
     }
 
     var body: some View {
         VStack {
-            if !showingSubview {
-                rootView()
-            } else {
-                StackNavigationSubview(isVisible: $showingSubview) {
-                    currentSubview
-                }
-                .transition(.move(edge: .trailing))
-            }
-        }
-    }
-
-    private struct StackNavigationSubview<Content>: View where Content: View {
-        @Binding var isVisible: Bool
-        let contentView: () -> Content
-
-        var body: some View {
-            VStack {
-                contentView()
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigation) {
+            HStack {
+                Spacer()
+                    .frame(width: 20)
+                if currentSubview != nil {
                     Button(action: {
                         withAnimation(.easeOut(duration: 0.3)) {
-                            isVisible = false
+                            currentSubview = nil
                         }
                     }, label: {
-                        Image(systemName: "chevron.left")
+                        Asset.icChevronLeft.swiftUIImage
+                            .resizable()
+                            .foregroundColor(Color(.text))
+                            .frame(width: 16, height: 16)
                     })
+                    .buttonStyle(PlainButtonStyle())
                 }
+                Spacer()
+                    .frame(width: 12)
+                Text(currentSubview != nil ? subviewTitle : title)
+                    .font(.themeFont(.title1(emphasised: true)))
+                    .foregroundColor(Color(.text))
+                Spacer()
             }
+            Spacer()
+            if currentSubview == nil {
+                rootView()
+            } else {
+                currentSubview
+                .transition(.move(edge: .trailing))
+            }
+            Spacer()
         }
     }
-
-
 }
