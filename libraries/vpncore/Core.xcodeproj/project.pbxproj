@@ -503,6 +503,7 @@
 		E5768642297822F90014F944 /* TelemetryConnectionNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5768640297822F90014F944 /* TelemetryConnectionNotifier.swift */; };
 		E5813B5029EE9C6C00549AA8 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E5813B4F29EE9C6C00549AA8 /* Theme */; };
 		E5813B5229EE9C7500549AA8 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E5813B5129EE9C7500549AA8 /* Theme */; };
+		E58D06422A0B8B1C002A896C /* Clocks in Frameworks */ = {isa = PBXBuildFile; productRef = E58D06412A0B8B1C002A896C /* Clocks */; };
 		E58EE0A42907DEBF003006F5 /* PlanSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58EE0A32907DEBF003006F5 /* PlanSession.swift */; };
 		E58EE0A52907DEBF003006F5 /* PlanSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58EE0A32907DEBF003006F5 /* PlanSession.swift */; };
 		E58EE0A92907DF8F003006F5 /* PlanSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58EE0A62907DF8C003006F5 /* PlanSessionTests.swift */; };
@@ -1188,6 +1189,7 @@
 				D578439028FE6A95007E3FC6 /* VPNSharedTesting in Frameworks */,
 				D578438F28FE6A95007E3FC6 /* VPNShared in Frameworks */,
 				E939EEF3279561EE006E4305 /* BugReport in Frameworks */,
+				E58D06422A0B8B1C002A896C /* Clocks in Frameworks */,
 				4C4F5F11292BECCE00BBD5AF /* LocalFeatureFlags in Frameworks */,
 				E566D9E029796B2400C2F857 /* Dependencies in Frameworks */,
 				E53D64BF2811694F0060C463 /* Modals in Frameworks */,
@@ -2353,6 +2355,7 @@
 				4C4F5F10292BECCE00BBD5AF /* LocalFeatureFlags */,
 				E566D9DF29796B2400C2F857 /* Dependencies */,
 				E5813B4F29EE9C6C00549AA8 /* Theme */,
+				E58D06412A0B8B1C002A896C /* Clocks */,
 			);
 			productName = "vpncore-ios";
 			productReference = E1B5F5D821B68ABD00B558B0 /* vpncore.framework */;
@@ -2501,6 +2504,7 @@
 			mainGroup = E1B5F5CE21B68ABD00B558B0;
 			packageReferences = (
 				E566D9DE29796B2400C2F857 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
+				E58D06402A0B8B1C002A896C /* XCRemoteSwiftPackageReference "swift-clocks" */,
 			);
 			productRefGroup = E1B5F5D921B68ABD00B558B0 /* Products */;
 			projectDirPath = "";
@@ -4347,7 +4351,15 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-dependencies.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.1;
+				minimumVersion = 0.4.2;
+			};
+		};
+		E58D06402A0B8B1C002A896C /* XCRemoteSwiftPackageReference "swift-clocks" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-clocks.git";
+			requirement = {
+				kind = exactVersion;
+				version = 0.3.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -4418,6 +4430,11 @@
 		E5813B5129EE9C7500549AA8 /* Theme */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Theme;
+		};
+		E58D06412A0B8B1C002A896C /* Clocks */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E58D06402A0B8B1C002A896C /* XCRemoteSwiftPackageReference "swift-clocks" */;
+			productName = Clocks;
 		};
 		E93120F328DB2EE600C1C2FE /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;
