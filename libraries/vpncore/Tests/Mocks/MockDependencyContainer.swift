@@ -84,6 +84,7 @@ class MockDependencyContainer {
                                      wireguardProtocolFactory: wireguardFactory,
                                      appGroup: Self.appGroup,
                                      vpnAuthentication: vpnAuthentication,
+                                     vpnAuthenticationStorage: vpnAuthenticationStorage,
                                      vpnKeychain: vpnKeychain,
                                      propertiesManager: propertiesManager,
                                      vpnStateConfiguration: stateConfiguration,
