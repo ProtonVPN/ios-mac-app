@@ -1,5 +1,5 @@
 //
-//  Created on 2023-05-03.
+//  Created on 2023-05-11.
 //
 //  Copyright (c) 2023 Proton AG
 //
@@ -20,43 +20,6 @@ import Foundation
 import ComposableArchitecture
 import SwiftUI
 import SwiftUINavigation
-import Dependencies
-
-struct BugReportResultFeature: Reducer {
-
-    struct State: Equatable {
-        var error: String?
-    }
-
-    enum Action: Equatable {
-        case finish
-        case retry
-        case troubleshoot
-    }
-
-    var body: some ReducerOf<Self> {
-        Reduce { state, action in
-            switch action {
-            case .finish:
-                return .fireAndForget {
-                    @Dependency(\.finishBugReport) var finish
-                    finish()
-                }
-                
-            case .retry:
-                // Retry is done on the parent view
-                return .none
-
-            case .troubleshoot:
-                return .fireAndForget {
-                    @Dependency(\.troubleshoot) var troubleshoot
-                    troubleshoot()
-                }
-            }
-        }
-    }
-
-}
 
 public struct BugReportResultView: View {
 
@@ -135,7 +98,8 @@ public struct BugReportResultView: View {
                     .padding(.bottom, 32)
 
                 }
-            })
+            }
+        )
     }
 
 }

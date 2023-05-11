@@ -1,5 +1,5 @@
 //
-//  Created on 2023-04-17.
+//  Created on 2023-05-11.
 //
 //  Copyright (c) 2023 Proton AG
 //
@@ -16,74 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+#if os(iOS)
 import Foundation
-import ComposableArchitecture
 import SwiftUI
 import SwiftUINavigation
+import ComposableArchitecture
 
-struct WhatsTheIssueFeature: Reducer {
-
-    struct State: Equatable {
-        var categories: [Category]
-
-        var quickFixesState: QuickFixesFeature.State?
-        var contactFormState: ContactFormFeature.State?
-    }
-
-    enum Action: Equatable {
-        case categorySelected(Category)
-
-        case quickFixesAction(QuickFixesFeature.Action)
-        case quickFixesDeselected
-
-        case contactFormAction(ContactFormFeature.Action)
-        case contactFormDeselected
-    }
-
-    var body: some ReducerOf<Self> {
-        Reduce { state, action in
-            switch action {
-            case .categorySelected(let category):
-                if let suggestions = category.suggestions, !suggestions.isEmpty {
-                    state.quickFixesState = QuickFixesFeature.State(category: category)
-                } else {
-                    state.contactFormState = ContactFormFeature.State(fields: category.inputFields, category: category.label)
-                }
-
-                return .none
-
-            // 02. Quick fixes
-
-            case .quickFixesDeselected:
-                state.quickFixesState = nil
-                return .none
-
-            case .quickFixesAction:
-                return .none
-
-            // 03. Contact form
-
-            case .contactFormAction:
-                return .none
-
-            case .contactFormDeselected:
-                state.contactFormState = nil
-                return .none
-
-            }
-        }
-        .ifLet(\.quickFixesState, action: /Action.quickFixesAction) {
-            QuickFixesFeature()
-        }
-        .ifLet(\.contactFormState, action: /Action.contactFormAction) {
-            ContactFormFeature()
-        }
-
-    }
-
-}
-
-#if os(iOS)
 public struct WhatsTheIssueView: View {
 
     let store: StoreOf<WhatsTheIssueFeature>
@@ -120,7 +58,7 @@ public struct WhatsTheIssueView: View {
                         }
                         .listStyle(.plain)
                         .foregroundColor(colors.textPrimary)
-                        // NavigationLink inside the list 
+                        // NavigationLink inside the list
                         .background(nextView(viewStore))
                     })
                 }
@@ -159,50 +97,6 @@ public struct WhatsTheIssueView: View {
 
 }
 
-#elseif os(macOS)
-
-// Mac view is a little bit different. Plus it doesn't have Navigation links and all
-// navigation is handled by root view.
-
-public struct WhatsTheIssueView: View {
-
-    let store: StoreOf<WhatsTheIssueFeature>
-    @Environment(\.colors) var colors: Colors
-
-    public var body: some View {
-
-        VStack(alignment: .center) {
-
-            Text(LocalizedString.br1Title)
-                .font(.title2)
-                .fontWeight(.bold)
-                .foregroundColor(colors.textPrimary)
-                .padding(.horizontal)
-
-            VStack(alignment: .leading, spacing: 8) {
-                WithViewStore(self.store, observe: { $0 }, content: { viewStore in
-                    ForEach(viewStore.categories) { category in
-                        Button(category.label, action: { viewStore.send(.categorySelected(category), animation: .default) })
-                            .onHover { inside in
-                                if inside {
-                                    NSCursor.pointingHand.push()
-                                } else {
-                                    NSCursor.pop()
-                                }
-                            }
-                    }
-                })
-            }
-            .buttonStyle(CategoryButtonStyle())
-            .listStyle(.plain)
-            .padding(.top, 32)
-        }
-        .background(colors.background)
-
-    }
-}
-#endif
-
 // MARK: - Preview
 
 struct WhatsTheIssueView_Previews: PreviewProvider {
@@ -210,15 +104,15 @@ struct WhatsTheIssueView_Previews: PreviewProvider {
 
     static var previews: some View {
         CurrentEnv.bugReportDelegate = bugReport
-        #if os(iOS)
         CurrentEnv.updateViewModel.updateIsAvailable = true
-        #endif
+
         return Group {
             WhatsTheIssueView(store: Store(initialState: WhatsTheIssueFeature.State(categories: bugReport.model.categories),
                                            reducer: WhatsTheIssueFeature()
                                           )
             )
-            .frame(width: 400.0)
         }
     }
 }
+
+#endif
