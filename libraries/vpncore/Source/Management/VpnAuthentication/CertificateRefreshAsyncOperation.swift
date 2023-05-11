@@ -52,13 +52,7 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
         self.networking = networking
         self.safeModePropertyProvider = safeModePropertyProvider
         self.completion = completion
-        
-        // On macOS this will effectively disable creation of new certificates on each feature change because those are set in LocalAgent
-        #if os(iOS)
         self.features = features
-        #else
-        self.features = nil
-        #endif
     }
 
     private func finish(_ result: Result<(VpnAuthenticationData), Error>) {
@@ -124,10 +118,12 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
         let currentFeatures = storage.getStoredCertificateFeatures()
 
         var needsRefresh: Bool = false
+        #if os(iOS)
         if features != nil, features?.equals(other: currentFeatures, safeModeEnabled: safeModePropertyProvider.safeModeFeatureEnabled) != true {
             log.debug("Stored certificate has different set of features. New certificate is needed.", category: .userCert, metadata: ["current": "\(String(describing: currentFeatures))", "new": "\(String(describing: features))"])
             needsRefresh = true
         }
+        #endif
         if let certificate = existingCertificate {
             // check if we are past the refresh time recommended by the backend or expired
             needsRefresh = needsRefresh || certificate.isExpired || certificate.shouldBeRefreshed
