@@ -349,7 +349,12 @@ extension VpnManager: LocalAgentDelegate {
         didReceiveFeature(natType: features.natType)
         didReceiveFeature(safeMode: features.safeMode)
 
-        // Try refreshing certificate in case features are different from the ones we have in current certificate
+        let storedFeatures = vpnAuthenticationStorage.getStoredCertificateFeatures()
+        guard !features.equals(other: storedFeatures, safeModeEnabled: safeModePropertyProvider.safeModeFeatureEnabled) else {
+            return
+        }
+
+        // If features are different from the ones we have in current certificate, refresh it
         vpnAuthentication.refreshCertificates(features: features, completion: { [weak self] result in
             switch result {
             case .failure(let error):

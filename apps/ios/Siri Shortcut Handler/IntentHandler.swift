@@ -60,13 +60,19 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         let wireguardVpnFactory = WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager, vpnManagerFactory: vpnWrapperFactory)
         let vpnStateConfiguration = VpnStateConfigurationManager(ikeProtocolFactory: ikeFactory, openVpnProtocolFactory: openVpnFactory, wireguardProtocolFactory: wireguardVpnFactory, propertiesManager: propertiesManager, appGroup: appGroup)
         let sessionService = SessionServiceImplementation(appInfoFactory: dependencyFactory, networking: networking, doh: doh)
+
+        let remoteClient = VpnAuthenticationRemoteClient(
+            sessionService: sessionService,
+            authenticationStorage: vpnAuthKeychain,
+            safeModePropertyProvider: safeModePropertyProvider
+        )
+
         let vpnManager = VpnManager(ikeFactory: ikeFactory,
                                     openVpnFactory: openVpnFactory,
                                     wireguardProtocolFactory: wireguardVpnFactory,
                                     appGroup: appGroup,
-                                    vpnAuthentication: VpnAuthenticationRemoteClient(sessionService: sessionService,
-                                                                                     authenticationStorage: vpnAuthKeychain,
-                                                                                     safeModePropertyProvider: safeModePropertyProvider),
+                                    vpnAuthentication: remoteClient,
+                                    vpnAuthenticationStorage: vpnAuthKeychain,
                                     vpnKeychain: vpnKeychain,
                                     propertiesManager: propertiesManager,
                                     vpnStateConfiguration: vpnStateConfiguration,
