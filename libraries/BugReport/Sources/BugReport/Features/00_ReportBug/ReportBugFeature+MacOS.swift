@@ -1,5 +1,5 @@
 //
-//  Created on 2023-05-04.
+//  Created on 2023-05-11.
 //
 //  Copyright (c) 2023 Proton AG
 //
@@ -16,48 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+#if os(macOS)
 import Foundation
 import ComposableArchitecture
 import SwiftUI
 import SwiftUINavigation
-
-#if os(iOS)
-struct ReportBugFeatureiOS: Reducer {
-
-    struct State: Equatable {
-        var whatsTheIssueState: WhatsTheIssueFeature.State
-    }
-
-    enum Action: Equatable {
-        case whatsTheIssueAction(WhatsTheIssueFeature.Action)
-    }
-
-    var body: some ReducerOf<Self> {
-        Scope(state: \.whatsTheIssueState, action: /Action.whatsTheIssueAction) {
-            WhatsTheIssueFeature()
-        }
-    }
-
-}
-
-public struct ReportBugView: View {
-
-    let store: StoreOf<ReportBugFeatureiOS>
-
-    @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
-    @Environment(\.colors) var colors: Colors
-
-    public var body: some View {
-        WithViewStore(self.store, observe: { $0 }, content: { viewStore in
-            NavigationView {
-                WhatsTheIssueView(store: self.store.scope(state: \.whatsTheIssueState, action: ReportBugFeatureiOS.Action.whatsTheIssueAction))
-            }
-            .navigationViewStyle(.stack)
-        })
-    }
-}
-
-#elseif os(macOS)
 
 struct ReportBugFeatureMacOS: Reducer {
 
@@ -167,11 +130,11 @@ public struct ReportBugView: View {
 
                 } else {
                     VStack(alignment: .leading, spacing: 0) {
-                        
+
                         Button("", action: { viewStore.send(.backPressed, animation: .default) })
                             .buttonStyle(BackButtonStyle())
                             .opacity(viewStore.step > 1 ? 1 : 0)
-                        
+
                         StepProgress(step: viewStore.step, steps: viewStore.steps, colorMain: colors.primary, colorText: colors.textAccent, colorSecondary: colors.backgroundStrong ?? colors.backgroundWeak)
                             .padding(.bottom)
                             .transition(.opacity)
@@ -180,17 +143,17 @@ public struct ReportBugView: View {
                     }
                     .transition(.opacity)
                     .padding(.horizontal, horizontalPadding)
-                    
+
                     ScrollView {
                         switch viewStore.currentPage {
                         case .whatsTheIssue(let state):
                             WhatsTheIssueView(store: self.store.scope(state: { _ in state },
                                                                       action: ReportBugFeatureMacOS.Action.whatsTheIssueAction))
-                            
+
                         case .quickFixes(let state):
                             QuickFixesView(store: self.store.scope(state: { _ in state },
                                                                    action: { ReportBugFeatureMacOS.Action.whatsTheIssueAction(.quickFixesAction($0)) }))
-                            
+
                         case .contactForm(let state, let parent):
                             ContactFormView(store: self.store.scope(state: { _ in state },
                                                                     action: {
@@ -201,14 +164,14 @@ public struct ReportBugView: View {
                                     return ReportBugFeatureMacOS.Action.whatsTheIssueAction(.quickFixesAction(.contactFormAction($0)))
                                 }
                             }))
-                            
+
                         default:
                             EmptyView()
                         }
                     }
                     .padding(.horizontal, horizontalPadding)
                     .padding(.bottom, verticalPadding)
-                    
+
                 }
             }
             .padding(.top, verticalPadding)
@@ -218,10 +181,6 @@ public struct ReportBugView: View {
     }
 }
 
-#endif
-
-// MARK: - Preview
-
 struct ReportBugView_Previews: PreviewProvider {
     private static let bugReport = MockBugReportDelegate(model: .mock)
 
@@ -229,17 +188,14 @@ struct ReportBugView_Previews: PreviewProvider {
         CurrentEnv.bugReportDelegate = bugReport
         CurrentEnv.updateViewModel.updateIsAvailable = true
 
-        #if os(iOS)
-        let state = ReportBugFeatureiOS.State(whatsTheIssueState: WhatsTheIssueFeature.State(categories: bugReport.model.categories))
-        let reducer = ReportBugFeatureiOS()
-
-        #elseif os(macOS)
         let state = ReportBugFeatureMacOS.State(whatsTheIssueState: WhatsTheIssueFeature.State(categories: bugReport.model.categories))
         let reducer = ReportBugFeatureMacOS()
-        #endif
 
         return Group {
             ReportBugView(store: Store(initialState: state, reducer: reducer))
+                .frame(width: 600, height: 600)
         }
     }
 }
+
+#endif
