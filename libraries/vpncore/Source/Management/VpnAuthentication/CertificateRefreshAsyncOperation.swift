@@ -22,6 +22,7 @@
 
 import Foundation
 import VPNShared
+import Logging
 
 public enum CertificateRefreshError: Error {
     case canceled
@@ -114,39 +115,23 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
         log.debug("Checking if vpn authentication certificate refresh is needed", category: .userCert)
 
         let keys = storage.getKeys()
-        let existingCertificate = storage.getStoredCertificate()
-        let currentFeatures = storage.getStoredCertificateFeatures()
+        let storedCertificate = storage.getStoredCertificate()
 
-        var needsRefresh: Bool = false
-        #if os(iOS)
-        if features != nil, features?.equals(other: currentFeatures, safeModeEnabled: safeModePropertyProvider.safeModeFeatureEnabled) != true {
-            log.debug("Stored certificate has different set of features. New certificate is needed.", category: .userCert, metadata: ["current": "\(String(describing: currentFeatures))", "new": "\(String(describing: features))"])
-            needsRefresh = true
-        }
-        #endif
-        if let certificate = existingCertificate {
-            // check if we are past the refresh time recommended by the backend or expired
-            needsRefresh = needsRefresh || certificate.isExpired || certificate.shouldBeRefreshed
-        } else {
-            log.debug("No stored vpn authentication certificate found", category: .userCert)
-            // no certificate exists, refresh is definitely needed
-            needsRefresh = true
-        }
-
-        guard needsRefresh else {
-            log.debug("Stored vpn authentication certificate does not need refreshing (valid until \(existingCertificate!.validUntil))", category: .userCert)
-            finish(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: existingCertificate!.certificate)))
+        if let certificate = storedCertificate, !isRefreshNeeded(for: certificate) {
+            let metadata: Logger.Metadata = ["validUntil": "\(certificate.validUntil)", "refreshTime": "\(certificate.refreshTime)"]
+            log.debug("Stored vpn authentication certificate does not need refreshing", category: .userCert, metadata: metadata)
+            finish(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: certificate.certificate)))
             return
         }
 
-        guard !isCancelled else {
+        if isCancelled {
             finish(.failure(CertificateRefreshError.canceled))
             return
         }
 
         // fetch new certificate from backend
         getCertificate(keys: keys) { [unowned self] result in
-            guard !self.isCancelled else {
+            if self.isCancelled {
                 self.finish(.failure(CertificateRefreshError.canceled))
                 return
             }
@@ -160,5 +145,36 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
                 self.finish(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: certificateWithFeatures.certificate.certificate)))
             }
         }
+    }
+
+    private func isRefreshNeeded(for certificate: VpnCertificate) -> Bool {
+        if certificate.isExpired || certificate.shouldBeRefreshed {
+            let metadata: Logger.Metadata = ["validUntil": "\(certificate.validUntil)", "refreshTime": "\(certificate.refreshTime)"]
+            log.info("Certificate has expired or should be refreshed", category: .userCert, metadata: metadata)
+            return true
+        }
+
+#if os(iOS)
+        // On iOS, the certificate needs to be refreshed if features have been changed since it was stored. This is
+        // required due to the possibility of the NE being launched by the OS without the app/LA running.
+        return isRefreshNeeded(storedFeatures: storage.getStoredCertificateFeatures())
+#else
+        // On MacOS, certificate features can be ignored since LA is guaranteed to be available to manage features
+        return false
+#endif
+    }
+
+    private func isRefreshNeeded(storedFeatures: VPNConnectionFeatures?) -> Bool {
+        guard let currentFeatures = self.features else {
+            log.warning("Not comparing certificate features, because current features are nil", category: .userCert)
+            return false
+        }
+
+        if !currentFeatures.equals(other: storedFeatures, safeModeEnabled: safeModePropertyProvider.safeModeFeatureEnabled) {
+            let metadata: Logger.Metadata = ["current": "\(currentFeatures)", "stored": "\(String(describing: storedFeatures))"]
+            log.info("Certificate refresh required due to mismatched features", category: .userCert, metadata: metadata)
+            return true
+        }
+        return false
     }
 }
