@@ -694,10 +694,18 @@ public class VpnManager: VpnManagerProtocol {
         self.stateChanged?()
     }
 
+    /// Point our `VpnAuthentication` instance to the NE provider, so that we can communicate with the extension to
+    /// fetch certificates.
+    ///
+    /// - note: This does nothing on MacOS, since we rely on the host app to manage certificates.
     private func setRemoteAuthenticationEndpoint(provider: ProviderMessageSender?) {
-        if let remoteVpnAuthentication = vpnAuthentication as? VpnAuthenticationRemoteClient {
-            remoteVpnAuthentication.setConnectionProvider(provider: provider)
+        #if os(iOS)
+        guard let remoteVpnAuthentication = vpnAuthentication as? VpnAuthenticationRemoteClient else {
+            log.error("Failed to set connection provider", category: .connection, metadata: ["authenticationManagerType": "\(type(of: vpnAuthentication))"])
+            return
         }
+        remoteVpnAuthentication.setConnectionProvider(provider: provider)
+        #endif
     }
 
     /*

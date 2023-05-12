@@ -19,7 +19,8 @@
 import Foundation
 import VPNShared
 
-public final class VpnAuthenticationManager {
+/// MacOS implementation of Certificate Refresh management
+public final class VpnAuthenticationManager: VpnAuthentication {
     private let operationDispatchQueue = DispatchQueue(label: "ch.protonvpn.mac.async_cert_refresh",
                                                        qos: .userInitiated)
     private let queue = OperationQueue()
@@ -73,12 +74,7 @@ public final class VpnAuthenticationManager {
         }
     }
 
-    /// Created for the purposes of sharing refresh logic between VpnAuthenticationManager and VpnAuthenticationRemoteClient. When VpnAuthenticationManager
-    /// is fully replaced by VpnAuthenticationRemoteClient on macOS, this function will be absorbed into VpnAuthenticationRemoteClient.
-    fileprivate static func loadAuthenticationDataBase(storage: VpnAuthenticationStorage,
-                                                       safeModePropertyProvider: SafeModePropertyProvider,
-                                                       features: VPNConnectionFeatures? = nil,
-                                                       completion: @escaping AuthenticationDataCompletion) {
+    public func loadAuthenticationData(features: VPNConnectionFeatures? = nil, completion: @escaping AuthenticationDataCompletion) {
         // keys are generated, certificate is stored, use it
         if let keys = storage.getStoredKeys(), let existingCertificate = storage.getStoredCertificate(), features == nil || features?.equals(other: storage.getStoredCertificateFeatures(), safeModeEnabled: safeModePropertyProvider.safeModeFeatureEnabled) == true {
             log.debug("Loading stored vpn authentication data", category: .userCert)
@@ -90,11 +86,10 @@ public final class VpnAuthenticationManager {
             return
         }
 
-        completion(.failure(ProtonVpnError.vpnCredentialsMissing))
+        // certificate is missing or no longer valid, refresh it and use
+        self.refreshCertificates(features: features, completion: completion)
     }
-}
 
-extension VpnAuthenticationManager: VpnAuthentication {
     public func clearEverything(completion: @escaping (() -> Void)) {
         // First cancel all pending certificate refreshes so a certificate is not fetched from the backend and stored after deleting keychain in this call
         queue.cancelAllOperations()
@@ -116,18 +111,6 @@ extension VpnAuthenticationManager: VpnAuthentication {
         queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, features: newFeatures, networking: networking, safeModePropertyProvider: safeModePropertyProvider, completion: { result in
             executeOnUIThread { completion(result) }
         }))
-    }
-
-    public func loadAuthenticationData(features: VPNConnectionFeatures? = nil, completion: @escaping AuthenticationDataCompletion) {
-        Self.loadAuthenticationDataBase(storage: storage, safeModePropertyProvider: safeModePropertyProvider, features: features) { result in
-            guard case .failure(ProtonVpnError.vpnCredentialsMissing) = result else {
-                completion(result)
-                return
-            }
-
-            // certificate is missing or no longer valid, refresh it and use
-            self.refreshCertificates(features: features, completion: completion)
-        }
     }
 
     public func loadClientPrivateKey() -> PrivateKey {
