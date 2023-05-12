@@ -52,8 +52,6 @@ class ServerTierChecker {
             switch reason {
             case .upgrade:
                 self?.alertService?.push(alert: AllCountriesUpsellAlert())
-            case .existingConnection:
-                self?.alertService?.push(alert: ExistingConnectionAlert())
             case .maintenance:
                 self?.alertService?.push(alert: MaintenanceAlert(forSpecificCountry: forSpecificCountry))
             case .protocolNotSupported:

@@ -47,7 +47,6 @@ public enum ResolutionUnavailableReason {
     
     case upgrade(Int)
     case maintenance
-    case existingConnection
     case protocolNotSupported
 }
 
