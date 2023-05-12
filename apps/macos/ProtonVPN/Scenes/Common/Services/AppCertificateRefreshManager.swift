@@ -94,7 +94,7 @@ extension AppCertificateRefreshManager: VpnAuthenticationStorageDelegate {
         stopTimer()
     }
 
-    func certificateStored(_ certificate: VpnCertificateWithFeatures) {
+    func certificateStored(_ certificate: VpnCertificate) {
         planNextRefresh()
     }
 
