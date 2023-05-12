@@ -167,14 +167,6 @@ public class CannotAccessVpnCredentialsAlert: SystemAlert {
     public init() { }
 }
 
-public class ExistingConnectionAlert: SystemAlert {
-    public var title: String? = LocalizedString.existingSession
-    public var message: String? = LocalizedString.existingSessionToServer
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-}
-
 public class P2pBlockedAlert: SystemAlert {
     public var title: String? = LocalizedString.p2pDetectedPopupTitle
     public var message: String? = LocalizedString.p2pDetectedPopupBody

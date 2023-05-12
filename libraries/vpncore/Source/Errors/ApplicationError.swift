@@ -22,24 +22,17 @@
 import Foundation
 
 public enum ApplicationError: Error {
-    
     case userCreation
-    case existingSession
     case emailVerificationUnavailable
-    
 }
 
 extension ApplicationError: LocalizedError {
-    
     public var errorDescription: String? {
         switch self {
         case .userCreation:
             return LocalizedString.errorUserCreation
-        case .existingSession:
-            return LocalizedString.errorExistingSessionToServer
         case .emailVerificationUnavailable:
             return LocalizedString.errorEmailVerificationDisabled
         }
     }
-    
 }

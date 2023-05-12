@@ -72,9 +72,6 @@ extension MacAlertService: CoreAlertService {
             
         case let cannotAccessVpnCredentialsAlert as CannotAccessVpnCredentialsAlert:
             show(cannotAccessVpnCredentialsAlert)
-            
-        case is ExistingConnectionAlert:
-            showDefaultSystemAlert(alert)
 
         case is P2pBlockedAlert:
             showDefaultSystemAlert(alert)

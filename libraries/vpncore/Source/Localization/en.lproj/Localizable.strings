@@ -767,9 +767,6 @@
 /* Parsing error */
 "_error_session_count_parser" = "Can't parse session count";
 
-/* Application error */
-"_error_existing_session_to_server" = "Can't connect to server because it already has an active session from user";
-
 /* Parsing error */
 "_error_loads" = "Can't update server loads";
 
@@ -800,12 +797,6 @@
 
 /* Delinquent user alert */
 "_delinquent_user_description" = "Your account currently has an overdue invoice. Please pay all unpaid invoices at account.protonvpn.com";
-
-/* Existing connection alert */
-"_existing_session" = "Server Unavailable";
-
-/* Existing connection alert */
-"_existing_session_to_server" = "Please select a different server.";
 
 /* Generic sign in error */
 "_error_sign_in_again" = "Sorry, something went wrong. Please sign in again.";
