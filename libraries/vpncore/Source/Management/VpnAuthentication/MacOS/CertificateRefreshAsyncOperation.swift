@@ -24,10 +24,6 @@ import Foundation
 import VPNShared
 import Logging
 
-public enum CertificateRefreshError: Error {
-    case canceled
-}
-
 final class CertificateRefreshAsyncOperation: AsyncOperation {
     private let storage: VpnAuthenticationStorage
     private let networking: Networking
