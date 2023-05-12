@@ -47,6 +47,15 @@
         }
       },
       {
+        "package": "swift-atomics",
+        "repositoryURL": "https://github.com/apple/swift-atomics.git",
+        "state": {
+          "branch": null,
+          "revision": "6c89474e62719ddcc1e9614989fff2f68208fe10",
+          "version": "1.1.0"
+        }
+      },
+      {
         "package": "swift-clocks",
         "repositoryURL": "https://github.com/pointfreeco/swift-clocks",
         "state": {
@@ -86,7 +95,7 @@
         "package": "WireGuardKit",
         "repositoryURL": "https://github.com/ProtonVPN/wireguard-apple.git",
         "state": {
-          "branch": "release/ios",
+          "branch": null,
           "revision": "026d18ae27fe83b32a661fbfa1ee698f67ba2221",
           "version": null
         }
