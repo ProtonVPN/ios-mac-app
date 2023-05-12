@@ -36,7 +36,7 @@ struct BugReportResultFeature: Reducer {
         Reduce { state, action in
             switch action {
             case .finish:
-                return .fireAndForget {
+                return .fireAndForget(priority: .userInitiated) {
                     @Dependency(\.finishBugReport) var finish
                     finish()
                 }
@@ -46,7 +46,7 @@ struct BugReportResultFeature: Reducer {
                 return .none
 
             case .troubleshoot:
-                return .fireAndForget {
+                return .fireAndForget(priority: .userInitiated) {
                     @Dependency(\.troubleshoot) var troubleshoot
                     troubleshoot()
                 }

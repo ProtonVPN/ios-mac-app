@@ -38,13 +38,18 @@ struct ReportBugFeatureMacOS: Reducer {
         }
 
         var currentPage: Page {
-            if let contactFormState = whatsTheIssueState.contactFormState {
+            guard let route = whatsTheIssueState.route else {
+                return .whatsTheIssue(whatsTheIssueState)
+            }
+
+            switch route {
+            case .contactForm(let contactFormState):
                 if let resultState = contactFormState.resultState {
                     return .result(resultState, .whatsTheIssue)
                 }
                 return .contactForm(contactFormState, .whatsTheIssue)
-            }
-            if let quickFixesState = whatsTheIssueState.quickFixesState {
+
+            case .quickFixes(let quickFixesState):
                 if let contactFormState = quickFixesState.contactFormState {
                     if let resultState = contactFormState.resultState {
                         return .result(resultState, .quickFixes)
@@ -53,7 +58,6 @@ struct ReportBugFeatureMacOS: Reducer {
                 }
                 return .quickFixes(quickFixesState)
             }
-            return .whatsTheIssue(whatsTheIssueState)
         }
 
     }
@@ -79,6 +83,24 @@ struct ReportBugFeatureMacOS: Reducer {
         Reduce { state, action in
             switch action {
             case .backPressed:
+                guard let route = state.whatsTheIssueState.route else {
+                    return .none
+                }
+
+                switch route {
+                case .quickFixes(let quickFixesState):
+                    if quickFixesState.contactFormState != nil {
+//                        state.whatsTheIssueState.route = .quickFixes(<#T##QuickFixesFeature.State#>)
+//                        quickFixesState.contactFormState = nil
+                    } else {
+                        state.whatsTheIssueState.route = nil
+                    }
+
+                case .contactForm:
+                    state.whatsTheIssueState.route = nil
+                }
+                return .none
+/*
                 if nil != state.whatsTheIssueState.quickFixesState {
                     if nil != state.whatsTheIssueState.quickFixesState?.contactFormState {
                         state.whatsTheIssueState.quickFixesState?.contactFormState = nil
@@ -88,7 +110,7 @@ struct ReportBugFeatureMacOS: Reducer {
                 } else if nil != state.whatsTheIssueState.contactFormState {
                     state.whatsTheIssueState.contactFormState = nil
                 }
-                return .none
+                return .none*/
 
             default:
                 return .none
