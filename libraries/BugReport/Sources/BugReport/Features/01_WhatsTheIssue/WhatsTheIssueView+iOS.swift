@@ -67,32 +67,38 @@ public struct WhatsTheIssueView: View {
             }
     }
 
-    @ViewBuilder private func nextView(_ viewStore: ViewStore<WhatsTheIssueFeature.State, WhatsTheIssueFeature.Action>) -> some View {
+    private func nextView(_ viewStore: ViewStore<WhatsTheIssueFeature.State, WhatsTheIssueFeature.Action>) -> some View {
+        IfLetStore(store.scope(state: \.route,
+                               action: WhatsTheIssueFeature.Action.route)) { routeStore in // route? -> route
 
-        NavigationLink(unwrapping: viewStore.binding(get: \.quickFixesState,
-                                                     send: WhatsTheIssueFeature.Action.quickFixesDeselected),
-                       onNavigate: { _ in },
-                       destination: { _ in destinationWhatsNext() },
-                       label: { EmptyView() })
+            SwitchStore(routeStore) { state in
+                switch state {
+                case .quickFixes:
+                    CaseLet(state: /WhatsTheIssueFeature.Route.State.quickFixes,
+                            action: WhatsTheIssueFeature.Route.Action.quickFixes,
+                            then: { store in
 
-        NavigationLink(unwrapping: viewStore.binding(get: \.contactFormState,
-                                                     send: WhatsTheIssueFeature.Action.contactFormDeselected),
-                       onNavigate: { _ in },
-                       destination: { _ in destinationForm() },
-                       label: { EmptyView() })
+                        NavigationLink(unwrapping: viewStore.binding(get: { _ in store.scope(state: { $0 }) },
+                                                                     send: WhatsTheIssueFeature.Action.quickFixesDeselected),
+                                       onNavigate: { _ in },
+                                       destination: { _ in QuickFixesView(store: store) },
+                                       label: { EmptyView() })
+                    })
 
-    }
+                case .contactForm:
+                    CaseLet(state: /WhatsTheIssueFeature.Route.State.contactForm,
+                            action: WhatsTheIssueFeature.Route.Action.contactForm,
+                            then: { store in
 
-    @ViewBuilder private func destinationWhatsNext() -> some View {
-        IfLetStore(self.store.scope(state: \.quickFixesState,
-                                    action: { .quickFixesAction($0) }),
-                   then: { store in QuickFixesView(store: store) })
-    }
-
-    @ViewBuilder private func destinationForm() -> some View {
-        IfLetStore(self.store.scope(state: \.contactFormState,
-                                    action: { .contactFormAction($0) }),
-                   then: { store in ContactFormView(store: store) })
+                        NavigationLink(unwrapping: viewStore.binding(get: { _ in store.scope(state: { $0 }) },
+                                                                     send: WhatsTheIssueFeature.Action.contactFormDeselected),
+                                       onNavigate: { _ in },
+                                       destination: { _ in ContactFormView(store: store) },
+                                       label: { EmptyView() })
+                    })
+                }
+            }
+        }
     }
 
 }

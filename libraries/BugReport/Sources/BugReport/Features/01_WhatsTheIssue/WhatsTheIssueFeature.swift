@@ -23,13 +23,12 @@ struct WhatsTheIssueFeature: Reducer {
 
     struct State: Equatable {
         var categories: [Category]
-
-        var quickFixesState: QuickFixesFeature.State?
-        var contactFormState: ContactFormFeature.State?
+        var route: Route.State?
     }
 
     enum Action: Equatable {
         case categorySelected(Category)
+        case route(Route.Action)
 
         case quickFixesAction(QuickFixesFeature.Action)
         case quickFixesDeselected
@@ -38,22 +37,37 @@ struct WhatsTheIssueFeature: Reducer {
         case contactFormDeselected
     }
 
+    struct Route: Equatable {
+
+        enum State: Equatable {
+            case quickFixes(QuickFixesFeature.State)
+            case contactForm(ContactFormFeature.State)
+        }
+
+        enum Action: Equatable {
+            case quickFixes(QuickFixesFeature.Action)
+            case contactForm(ContactFormFeature.Action)
+        }
+    }
+
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .categorySelected(let category):
                 if let suggestions = category.suggestions, !suggestions.isEmpty {
-                    state.quickFixesState = QuickFixesFeature.State(category: category)
+                    state.route = .quickFixes(QuickFixesFeature.State(category: category))
                 } else {
-                    state.contactFormState = ContactFormFeature.State(fields: category.inputFields, category: category.label)
+                    state.route = .contactForm(ContactFormFeature.State(fields: category.inputFields, category: category.label))
                 }
+                return .none
 
+            case .route:
                 return .none
 
             // 02. Quick fixes
 
             case .quickFixesDeselected:
-                state.quickFixesState = nil
+                state.route = nil
                 return .none
 
             case .quickFixesAction:
@@ -65,17 +79,19 @@ struct WhatsTheIssueFeature: Reducer {
                 return .none
 
             case .contactFormDeselected:
-                state.contactFormState = nil
+                state.route = nil
                 return .none
 
             }
         }
-        .ifLet(\.quickFixesState, action: /Action.quickFixesAction) {
-            QuickFixesFeature()
-        }
-        .ifLet(\.contactFormState, action: /Action.contactFormAction) {
-            ContactFormFeature()
-        }
+        .ifLet(\.route, action: /Action.route, then: {
+            Scope(state: /Route.State.quickFixes, action: /Route.Action.quickFixes, child: {
+                QuickFixesFeature()
+            })
+            Scope(state: /Route.State.contactForm, action: /Route.Action.contactForm, child: {
+                ContactFormFeature()
+            })
+        })
     }
 
 }
