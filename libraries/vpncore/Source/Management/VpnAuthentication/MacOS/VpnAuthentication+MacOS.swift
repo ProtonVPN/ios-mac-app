@@ -57,9 +57,6 @@ public final class VpnAuthenticationManager: VpnAuthentication {
         // certificate refresh requests might be in progress so first cancel all fo them
         queue.cancelAllOperations()
 
-        // Save last used features before cleanup
-        let features = storage.getStoredCertificateFeatures()
-
         // then delete evertyhing
         clearEverything { [weak self] in
             guard let self = self else {
@@ -67,10 +64,7 @@ public final class VpnAuthenticationManager: VpnAuthentication {
             }
 
             // and get new certificates
-            self.queue.addOperation(CertificateRefreshAsyncOperation(storage: self.storage,
-                                                                     features: features,
-                                                                     networking: self.networking,
-                                                                     safeModePropertyProvider: self.safeModePropertyProvider))
+            self.queue.addOperation(CertificateRefreshAsyncOperation(storage: self.storage, networking: self.networking))
         }
     }
 
@@ -101,14 +95,13 @@ public final class VpnAuthenticationManager: VpnAuthentication {
         completion()
     }
 
-    /// - Parameter features: The features used for the current connection.
+    /// - Parameter features: The features used for the current connection. Ignored on MacOS
     /// - Parameter completion: A function which will be invoked on the UI thread with the refreshed
     ///                         certificate, or an error if the refresh failed.
+    ///
+    /// - note: features
     public func refreshCertificates(features: VPNConnectionFeatures?, completion: @escaping CertificateRefreshCompletion) {
-        // If new feature set is given, use it, otherwise try to get certificate with the same features as previous
-        let newFeatures = features ?? storage.getStoredCertificateFeatures()
-
-        queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, features: newFeatures, networking: networking, safeModePropertyProvider: safeModePropertyProvider, completion: { result in
+        queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, networking: networking, completion: { result in
             executeOnUIThread { completion(result) }
         }))
     }

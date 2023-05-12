@@ -210,7 +210,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
             switch result {
             case .success(let cert):
                 let certAndFeatures = VpnCertificateWithFeatures(certificate: cert, features: features)
-                self?.vpnAuthenticationStorage.store(certificate: certAndFeatures)
+                self?.vpnAuthenticationStorage.store(certAndFeatures)
                 completion(.success(()))
             case .failure(let error):
                 guard let certError = error as? CertificateRefreshError else {

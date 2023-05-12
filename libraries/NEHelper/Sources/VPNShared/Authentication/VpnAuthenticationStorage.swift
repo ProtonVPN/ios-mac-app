@@ -34,13 +34,15 @@ public protocol VpnAuthenticationStorage: AnyObject {
     func getStoredCertificateFeatures() -> VPNConnectionFeatures?
     func getStoredKeys() -> VpnKeys?
     func store(keys: VpnKeys)
-    func store(certificate: VpnCertificateWithFeatures)
+    func store(_ certificate: VpnCertificate)
+    func store(_ certificate: VpnCertificateWithFeatures)
+
     var delegate: VpnAuthenticationStorageDelegate? { get set }
 }
 
 public protocol VpnAuthenticationStorageDelegate: AnyObject {
     func certificateDeleted()
-    func certificateStored(_ certificate: VpnCertificateWithFeatures)
+    func certificateStored(_ certificate: VpnCertificate)
 }
 
 public protocol VpnAuthenticationStorageUserDefaults {

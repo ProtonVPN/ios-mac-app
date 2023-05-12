@@ -28,9 +28,7 @@ import Logging
 final class CertificateRefreshAsyncOperation: AsyncOperation {
     private let storage: VpnAuthenticationStorage
     private let networking: Networking
-    private let safeModePropertyProvider: SafeModePropertyProvider
     private let completion: CertificateRefreshCompletion?
-    private let features: VPNConnectionFeatures?
 
     private var isConflictRetry = false
     private var remainingNetworkErrorRetries = 5
@@ -45,12 +43,10 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
         return minNetworkErrorRetryDelay + jitter
     }
 
-    init(storage: VpnAuthenticationStorage, features: VPNConnectionFeatures?, networking: Networking, safeModePropertyProvider: SafeModePropertyProvider, completion: CertificateRefreshCompletion? = nil) {
+    init(storage: VpnAuthenticationStorage, networking: Networking, completion: CertificateRefreshCompletion? = nil) {
         self.storage = storage
         self.networking = networking
-        self.safeModePropertyProvider = safeModePropertyProvider
         self.completion = completion
-        self.features = features
     }
 
     private func finish(_ result: Result<(VpnAuthenticationData), Error>) {
@@ -137,8 +133,7 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
             case let .failure(error):
                 self.handleError(error)
             case let .success(certificate):
-                // Store it along with current features for peace of mind (despite not including features in the certificate request)
-                self.storage.store(certificate: VpnCertificateWithFeatures(certificate: certificate, features: features))
+                self.storage.store(certificate)
                 self.finish(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: certificate.certificate)))
             }
         }
