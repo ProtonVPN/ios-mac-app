@@ -76,7 +76,7 @@ public final class VpnAuthenticationManager: VpnAuthentication {
 
     public func loadAuthenticationData(features: VPNConnectionFeatures? = nil, completion: @escaping AuthenticationDataCompletion) {
         // keys are generated, certificate is stored, use it
-        if let keys = storage.getStoredKeys(), let existingCertificate = storage.getStoredCertificate(), features == nil || features?.equals(other: storage.getStoredCertificateFeatures(), safeModeEnabled: safeModePropertyProvider.safeModeFeatureEnabled) == true {
+        if let keys = storage.getStoredKeys(), let existingCertificate = storage.getStoredCertificate() {
             log.debug("Loading stored vpn authentication data", category: .userCert)
             if existingCertificate.isExpired {
                 log.info("Stored vpn authentication certificate is expired (\(existingCertificate.validUntil)), the local agent will connect but certificate refresh will be needed", category: .userCert, event: .newCertificate)

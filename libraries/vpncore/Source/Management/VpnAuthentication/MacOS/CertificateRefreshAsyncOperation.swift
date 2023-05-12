@@ -58,7 +58,7 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
         finish()
     }
 
-    private func getCertificate(keys: VpnKeys, completion: @escaping (Result<VpnCertificateWithFeatures, Error>) -> Void) {
+    private func getCertificate(keys: VpnKeys, completion: @escaping (Result<VpnCertificate, Error>) -> Void) {
         log.debug("Asking backend API for new vpn authentication certificate", category: .userCert, event: .newCertificate)
         // Features should not be specified when requesting certificates on MacOS, as LA is always available to manage features
         let request = CertificateRequest(publicKey: keys.publicKey, features: nil)
@@ -68,7 +68,7 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
                 do {
                     let certificate = try VpnCertificate(dict: dict)
                     log.debug("Got new vpn authentication certificate valid until \(certificate.validUntil)", category: .userCert, event: .newCertificate)
-                    completion(.success(VpnCertificateWithFeatures(certificate: certificate, features: self.features)))
+                    completion(.success(certificate))
                 } catch {
                     log.error("Failed to decode vpn authentication certificate from backend: \(error)", category: .userCert, event: .refreshError)
                     completion(.failure(error))
@@ -136,10 +136,10 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
             switch result {
             case let .failure(error):
                 self.handleError(error)
-            case let .success(certificateWithFeatures):
-                // store it
-                self.storage.store(certificate: certificateWithFeatures)
-                self.finish(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: certificateWithFeatures.certificate.certificate)))
+            case let .success(certificate):
+                // Store it along with current features for peace of mind (despite not including features in the certificate request)
+                self.storage.store(certificate: VpnCertificateWithFeatures(certificate: certificate, features: features))
+                self.finish(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: certificate.certificate)))
             }
         }
     }
