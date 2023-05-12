@@ -18,6 +18,7 @@
 
 import XCTest
 @testable import Timer
+import Atomics
 
 final class TimerTests: XCTestCase {
     
@@ -80,7 +81,7 @@ final class TimerTests: XCTestCase {
         expectation.assertForOverFulfill = true
         expectation.expectedFulfillmentCount = 1
         
-        factory.scheduleAfter(.milliseconds(1), on: DispatchQueue.global()) {
+        factory.scheduleAfter(.milliseconds(1), on: .global()) {
             expectation.fulfill()
         }
         
@@ -88,11 +89,18 @@ final class TimerTests: XCTestCase {
     }
     
     func testRepeatingTimer() throws {
-        let expectation = XCTestExpectation(description: "Timer closure was called")
-        expectation.expectedFulfillmentCount = 3
-        
-        timer = factory.scheduledTimer(runAt: Date(), repeating: 0.01, queue: DispatchQueue.global()) {
-            expectation.fulfill()
+        let repeats = 3
+        let expectation = XCTestExpectation(description: "Timer closure was called \(repeats) times")
+        let counter = ManagedAtomic<Int>(0)
+
+        timer = factory.scheduledTimer(runAt: Date(), repeating: 0.1, queue: DispatchQueue.global()) {
+            let value = counter.loadThenWrappingIncrement(ordering: .sequentiallyConsistent)
+            guard value < repeats else {
+                if value == repeats {
+                    expectation.fulfill()
+                }
+                return
+            }
         }
         
         wait(for: [expectation], timeout: 10)
@@ -100,12 +108,18 @@ final class TimerTests: XCTestCase {
     }
     
     func testRepeatingTimeIntervalTimer() throws {
-        let expectation = XCTestExpectation(description: "Timer closure was called")
-        expectation.assertForOverFulfill = true
-        expectation.expectedFulfillmentCount = 3
-        
-        timer = factory.scheduledTimer(timeInterval: 0.01, repeats: true, queue: DispatchQueue.global()) {
-            expectation.fulfill()
+        let repeats = 3
+        let expectation = XCTestExpectation(description: "Timer closure was called \(repeats) times")
+        let counter = ManagedAtomic<Int>(0)
+
+        timer = factory.scheduledTimer(timeInterval: 0.01, repeats: true, queue: .global()) {
+            let value = counter.loadThenWrappingIncrement(ordering: .sequentiallyConsistent)
+            guard value < repeats else {
+                if value == repeats {
+                    expectation.fulfill()
+                }
+                return
+            }
         }
         
         wait(for: [expectation], timeout: 1)
