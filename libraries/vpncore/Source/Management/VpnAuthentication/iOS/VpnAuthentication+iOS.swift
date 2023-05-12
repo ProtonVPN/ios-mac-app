@@ -19,7 +19,7 @@
 import Foundation
 import VPNShared
 
-public final class VpnAuthenticationRemoteClient {
+public final class VpnAuthenticationRemoteClient: VpnAuthentication {
     private var connectionProvider: ProviderMessageSender?
     private let sessionService: SessionService
     private let authenticationStorage: VpnAuthenticationStorage
@@ -52,7 +52,7 @@ public final class VpnAuthenticationRemoteClient {
         connectionProvider = provider
     }
 
-    fileprivate func loadAuthenticationDataBase(features: VPNConnectionFeatures? = nil, completion: @escaping AuthenticationDataCompletion) {
+    public func loadAuthenticationData(features: VPNConnectionFeatures? = nil, completion: @escaping AuthenticationDataCompletion) {
         // keys are generated, certificate is stored, use it
         if let keys = authenticationStorage.getStoredKeys(), let existingCertificate = authenticationStorage.getStoredCertificate(), features == nil || features?.equals(other: authenticationStorage.getStoredCertificateFeatures(), safeModeEnabled: safeModePropertyProvider.safeModeFeatureEnabled) == true {
             log.debug("Loading stored vpn authentication data", category: .userCert)
@@ -64,7 +64,10 @@ public final class VpnAuthenticationRemoteClient {
             return
         }
 
-        completion(.failure(ProtonVpnError.vpnCredentialsMissing))
+        // certificate is missing or no longer valid, refresh it and use
+        self.refreshCertificates(features: features, completion: { result in
+            executeOnUIThread { completion(result) }
+        })
     }
 
     /// Ask the WireGuard network extension to refresh the certificate, and save the result to the keychain.
@@ -229,22 +232,6 @@ public final class VpnAuthenticationRemoteClient {
         } finished: { [weak self] in
             _ = self?.authenticationStorage.getKeys() // generate new keys
             self?.refreshCertificates(features: features) { _ in }
-        }
-    }
-}
-
-extension VpnAuthenticationRemoteClient: VpnAuthentication {
-    public func loadAuthenticationData(features: VPNConnectionFeatures?, completion: @escaping AuthenticationDataCompletion) {
-        loadAuthenticationDataBase(features: features) { result in
-            guard case .failure(ProtonVpnError.vpnCredentialsMissing) = result else {
-                completion(result)
-                return
-            }
-
-            // certificate is missing or no longer valid, refresh it and use
-            self.refreshCertificates(features: features, completion: { result in
-                executeOnUIThread { completion(result) }
-            })
         }
     }
 
