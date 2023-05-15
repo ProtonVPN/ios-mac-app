@@ -82,7 +82,7 @@ final class ProtonNotificationTests: XCTestCase {
         let handlerInvocation = XCTestExpectation(description: "Assertion failure should be triggered missing data or type mistmatches")
         handlerInvocation.expectedFulfillmentCount = 2
 
-        Environment.execute({
+        DebugEnvironment.execute({
             let token = NotificationCenter.default.addObserver(for: TestNotification.self, object: self) { data in
                 XCTFail("Handlers should not be invoked with missing or mismatched data: \(data)")
             }

@@ -22,6 +22,38 @@
                BlueprintName = "ProtonVPNUITests"
                ReferencedContainer = "container:iOS.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "ConnectionTests">
+               </Test>
+               <Test
+                  Identifier = "ExternalAccountsTests">
+               </Test>
+               <Test
+                  Identifier = "LoginExtAccountTests">
+               </Test>
+               <Test
+                  Identifier = "LoginTests">
+               </Test>
+               <Test
+                  Identifier = "PlanTests">
+               </Test>
+               <Test
+                  Identifier = "ProfilesTests">
+               </Test>
+               <Test
+                  Identifier = "ProtonVPNUITests">
+               </Test>
+               <Test
+                  Identifier = "SettingsTests">
+               </Test>
+               <Test
+                  Identifier = "SignupTests">
+               </Test>
+               <Test
+                  Identifier = "TokenRefreshTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>

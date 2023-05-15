@@ -418,10 +418,10 @@
 		E532A8B12925663B00096D2D /* InformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */; };
 		E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C42811698F0060C463 /* Modals-iOS */; };
 		E547D2F529EE9F67008FB760 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E547D2F429EE9F67008FB760 /* Theme */; };
-		E547D2F729EE9F8B008FB760 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E547D2F629EE9F8B008FB760 /* Theme */; };
 		E551EB0529AF583D00B6612D /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0429AF583D00B6612D /* Assets.swift */; };
 		E5772AE529B0C63F0076D824 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0429AF583D00B6612D /* Assets.swift */; };
-		E58634B329CA16C200E7C565 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E58634B229CA16C200E7C565 /* Theme */; };
+		E582CC122A1372B500C91B64 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E582CC112A1372B500C91B64 /* Theme */; };
+		E582CC1A2A13999000C91B64 /* Theme-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E582CC192A13999000C91B64 /* Theme-iOS */; };
 		E593B97127BA7DC100AFCA8C /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B97027BA7DC100AFCA8C /* UpsellColors.swift */; };
 		E5980FB929F8068800405986 /* Home-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E5980FB829F8068800405986 /* Home-iOS */; };
 		E59C7A9029229A940034E56F /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = D16ECAECC9861A6ED5EDA4F2 /* Modals */; };
@@ -1132,7 +1132,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E58634B329CA16C200E7C565 /* Theme in Frameworks */,
+				E582CC1A2A13999000C91B64 /* Theme-iOS in Frameworks */,
 				80392CA76D20B620739FAA5D /* Pods_ProtonVPNTests.framework in Frameworks */,
 				D55F10F0297FD1DF00EAF2AB /* LocalFeatureFlags in Frameworks */,
 			);
@@ -1153,6 +1153,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E582CC122A1372B500C91B64 /* Theme in Frameworks */,
 				87376621AD32F8C898B4D0A8 /* Pods_ProtonVPN_ProtonVPNUITests.framework in Frameworks */,
 				4C74D3292A0B9D67004F8528 /* PMLogger in Frameworks */,
 			);
@@ -1188,7 +1189,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E547D2F729EE9F8B008FB760 /* Theme in Frameworks */,
 				E59C7A9129229A940034E56F /* NEHelper in Frameworks */,
 				E59C7A9029229A940034E56F /* Modals in Frameworks */,
 				D5057D2B28EEF212003CF725 /* WireGuardKit in Frameworks */,
@@ -2565,7 +2565,7 @@
 			name = ProtonVPNTests;
 			packageProductDependencies = (
 				D55F10EF297FD1DF00EAF2AB /* LocalFeatureFlags */,
-				E58634B229CA16C200E7C565 /* Theme */,
+				E582CC192A13999000C91B64 /* Theme-iOS */,
 			);
 			productName = ProtonVPNTests;
 			productReference = 791DE5EF208DDA3200A29EA5 /* ProtonVPNTests.xctest */;
@@ -2612,6 +2612,7 @@
 			name = ProtonVPNUITests;
 			packageProductDependencies = (
 				4C74D3282A0B9D67004F8528 /* PMLogger */,
+				E582CC112A1372B500C91B64 /* Theme */,
 			);
 			productName = ProtonVPNUITests;
 			productReference = D5811D7D229BBD870087B63A /* ProtonVPNUITests.xctest */;
@@ -2692,7 +2693,6 @@
 				D5A3C34728D376CB00D69CD5 /* PMLogger */,
 				D16ECAECC9861A6ED5EDA4F2 /* Modals */,
 				2DC3E67F6A25A4AD4DFCF448 /* NEHelper */,
-				E547D2F629EE9F8B008FB760 /* Theme */,
 			);
 			productName = "WireGuardiOS Extension";
 			productReference = E9445D5E26528A790075FD31 /* WireGuardiOS Extension.appex */;
@@ -5060,13 +5060,13 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Theme;
 		};
-		E547D2F629EE9F8B008FB760 /* Theme */ = {
+		E582CC112A1372B500C91B64 /* Theme */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Theme;
 		};
-		E58634B229CA16C200E7C565 /* Theme */ = {
+		E582CC192A13999000C91B64 /* Theme-iOS */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Theme;
+			productName = "Theme-iOS";
 		};
 		E5980FB829F8068800405986 /* Home-iOS */ = {
 			isa = XCSwiftPackageProductDependency;
