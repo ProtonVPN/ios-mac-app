@@ -26,24 +26,17 @@ public final class VpnAuthenticationManager: VpnAuthentication {
     private let queue = OperationQueue()
     private let storage: VpnAuthenticationStorage
     private let networking: Networking
-    private let safeModePropertyProvider: SafeModePropertyProvider
 
     public typealias Factory = NetworkingFactory &
-        VpnAuthenticationStorageFactory &
-        SafeModePropertyProviderFactory
+        VpnAuthenticationStorageFactory
 
     public convenience init(_ factory: Factory) {
-        self.init(networking: factory.makeNetworking(),
-                  storage: factory.makeVpnAuthenticationStorage(),
-                  safeModePropertyProvider: factory.makeSafeModePropertyProvider())
+        self.init(networking: factory.makeNetworking(), storage: factory.makeVpnAuthenticationStorage())
     }
 
-    public init(networking: Networking,
-                storage: VpnAuthenticationStorage,
-                safeModePropertyProvider: SafeModePropertyProvider) {
+    public init(networking: Networking, storage: VpnAuthenticationStorage) {
         self.networking = networking
         self.storage = storage
-        self.safeModePropertyProvider = safeModePropertyProvider
         queue.maxConcurrentOperationCount = 1
         queue.underlyingQueue = operationDispatchQueue
 
@@ -98,8 +91,6 @@ public final class VpnAuthenticationManager: VpnAuthentication {
     /// - Parameter features: The features used for the current connection. Ignored on MacOS
     /// - Parameter completion: A function which will be invoked on the UI thread with the refreshed
     ///                         certificate, or an error if the refresh failed.
-    ///
-    /// - note: features
     public func refreshCertificates(features: VPNConnectionFeatures?, completion: @escaping CertificateRefreshCompletion) {
         queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, networking: networking, completion: { result in
             executeOnUIThread { completion(result) }

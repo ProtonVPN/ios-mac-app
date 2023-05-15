@@ -63,6 +63,7 @@ class BaseConnectionTestCase: XCTestCase {
         container = MockDependencyContainer()
         container.propertiesManager.featureFlags = testData.defaultClientConfig.featureFlags
 
+        container.networkingDelegate.didHitRoute = didHitRoute
         container.networkingDelegate.apiServerList = [testData.server1]
         container.networkingDelegate.apiVpnLocation = testData.vpnLocation
         container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
@@ -110,7 +111,7 @@ class BaseConnectionTestCase: XCTestCase {
         case NEVPNConnectionMock.connectionCreatedNotification:
             if let tunnelConnection = notification.object as? NETunnelProviderSessionMock {
                 if let config = tunnelConnection.vpnManager.protocolConfiguration as? NETunnelProviderProtocol,
-                   config.providerBundleIdentifier == MockDependencyContainer.wireguardProviderBundleId {
+                   config.providerBundleIdentifier == MockDependencyContainer.wireguardProviderBundleId || config.providerBundleIdentifier == MockDependencyContainer.openvpnProviderBundleId {
                     tunnelConnection.providerMessageSent = self.handleProviderMessage(messageData:)
                 }
 
@@ -153,9 +154,8 @@ class BaseConnectionTestCase: XCTestCase {
                 break
             }
 
-            let certAndFeatures = VpnCertificateWithFeatures(certificate: makeNewCertificate(),
-                                                             features: features)
-            container.vpnAuthenticationStorage.store(certificate: certAndFeatures)
+            let certAndFeatures = VpnCertificateWithFeatures(certificate: makeNewCertificate(), features: features)
+            container.vpnAuthenticationStorage.store(certAndFeatures)
 
             mockProviderState.shouldRefresh = false
             didRequestCertRefresh?(features)
@@ -173,6 +173,12 @@ class BaseConnectionTestCase: XCTestCase {
         }
 
         return WireguardProviderRequest.Response.ok(data: nil).asData
+    }
+
+    func didHitRoute(endpoint: FullNetworkingMockDelegate.MockEndpoint) {
+        if case .certificate = endpoint {
+            didRequestCertRefresh?(nil)
+        }
     }
 
     func makeNewCertificate() -> VpnCertificate {

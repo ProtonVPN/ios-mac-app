@@ -157,6 +157,7 @@ public class FullNetworkingMockDelegate: NetworkingMockDelegate {
         case partners = "/vpn/v1/partners"
         case clientConfig = "/vpn/v2/clientconfig"
         case loads = "/vpn/loads"
+        case certificate = "/vpn/v1/certificate"
     }
 
     struct UnexpectedError: Error {
@@ -248,6 +249,14 @@ public class FullNetworkingMockDelegate: NetworkingMockDelegate {
             let data = try JSONSerialization.data(withJSONObject: [
                 "LogicalServers": servers
             ])
+            return .success(data)
+        case .certificate:
+            let refreshTime = Date().addingTimeInterval(.hours(6))
+            let expiryTime = refreshTime.addingTimeInterval(.hours(6))
+            let certDict: [String: Any] = ["Certificate": "abcd1234",
+                                           "ExpirationTime": Int(expiryTime.timeIntervalSince1970),
+                                           "RefreshTime": Int(refreshTime.timeIntervalSince1970)]
+            let data = try JSONSerialization.data(withJSONObject: certDict)
             return .success(data)
         }
     }
