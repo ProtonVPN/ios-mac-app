@@ -361,9 +361,6 @@
 /* Internal application error */
 "_error_email_verification_disabled" = "Verificación de correo electrónico temporalmente desactivada";
 
-/* Application error */
-"_error_existing_session_to_server" = "No se puede conectar al servidor porque ya tiene una sesión activa del usuario";
-
 /* Error try to restore user from the session */
 "_error_fetch_session" = "No se puede encontrar el usuario desde la sesión";
 
@@ -453,12 +450,6 @@
 
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "La sesión de Proton VPN está activa";
-
-/* Existing connection alert */
-"_existing_session" = "Servidor no disponible";
-
-/* Existing connection alert */
-"_existing_session_to_server" = "Seleccione un servidor diferente.";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Abre la lista de servidores";
@@ -628,14 +619,8 @@
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Interruptor de apagado";
 
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "El interruptor de apagado está protegiendo su IP\n\nSu conexión a Internet se reanudará tan pronto como Proton VPN se reconecte a un servidor. Para continuar sin protección VPN, desactive el interruptor.";
-
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "El interruptor de apagado bloquea todas las conexiones";
-
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Interruptor de apagado";
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Deshabilitar el interruptor de apagado";
@@ -657,18 +642,6 @@
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Bloquea todo el tráfico de red cuando el túnel VPN se pierde.";
-
-/* (No Comment) */
-"_ks_dont_ask" = "No volver a preguntarme";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg" = "Para habilitar el interruptor de apagado, necesita descargar e instalar la %@.\nInstálelo antes de habilitar el interruptor.";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "ProtonVPN no pudo detectar la %@. Para habilitar el interruptor de apagado, instale primero el software.";
-
-/* (No Comment) */
-"_ks_swift5_lib_name" = "Biblioteca de soporte de Swift 5 Runtime";
 
 /* MacOS: link in login screen */
 "_learn_more" = "Más información";

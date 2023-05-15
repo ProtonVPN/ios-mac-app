@@ -349,9 +349,6 @@
 /* Internal application error */
 "_error_email_verification_disabled" = "Verificação por correio electrónico temporariamente desativada";
 
-/* Application error */
-"_error_existing_session_to_server" = "Impossível ligar ao servidor. Já há uma sessão ativa do utilizador.";
-
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Impossível encontrar utilizador da sessão";
 
@@ -426,12 +423,6 @@
 
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "Sessão Proton VPN ativa";
-
-/* Existing connection alert */
-"_existing_session" = "Servidor indisponível";
-
-/* Existing connection alert */
-"_existing_session_to_server" = "Seleccione um servidor diferente.";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Expandir lista de servidores";
@@ -592,9 +583,6 @@
 /* (No Comment) */
 "_ip_will_not_be_exposed" = "O seu IP não será exposto.";
 
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "O Kill switch está a proteger o seu IP\n\nA sua ligação à internet será retomada assim que o ProtonVPN se ligar a um servidor. Para retomar sem a protecção da VPN, desative o Kill switch.";
-
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Kill switch a bloquear todas as ligações";
 
@@ -615,18 +603,6 @@
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
 "_kill_switch_reconnection_header" = "O kill switch está a proteger o seu IP";
-
-/* (No Comment) */
-"_ks_dont_ask" = "Não perguntar novamente";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg" = "Para ativar o kill switch, tem de transferir e instalar %@.\nFaça-o antes de ativar o kill switch.";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "O Proton VPN não conseguiu detetar o %@. Para ativar o kill swicth, instale o programa primeiro.";
-
-/* (No Comment) */
-"_ks_swift5_lib_name" = "Biblioteca de suporte Swift 5 Runtime";
 
 /* MacOS: link in login screen */
 "_learn_more" = "Saiba mais";

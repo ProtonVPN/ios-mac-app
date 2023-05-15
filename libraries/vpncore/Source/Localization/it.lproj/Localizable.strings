@@ -361,9 +361,6 @@
 /* Internal application error */
 "_error_email_verification_disabled" = "Verifica tramite email temporaneamente disattivata";
 
-/* Application error */
-"_error_existing_session_to_server" = "Impossibile connettersi al server perché ha già una sessione attiva dall'utente";
-
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Impossibile trovare l'utente dalla sessione";
 
@@ -453,12 +450,6 @@
 
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "La sessione di Proton VPN è attiva";
-
-/* Existing connection alert */
-"_existing_session" = "Server non disponibile";
-
-/* Existing connection alert */
-"_existing_session_to_server" = "Per favore seleziona un altro server.";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Espandi l'elenco dei server";
@@ -628,14 +619,8 @@
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Kill switch";
 
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill switch sta proteggendo il tuo IP\n\nLa tua connessione ad internet riprenderà non appena Proton VPN si riconnetterà ad un server. Per riprendere senza protezione VPN, disabilita Kill switch.";
-
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Kill switch sta bloccando tutte le connessioni";
-
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Kill switch";
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Disabilita Kill switch";
@@ -657,18 +642,6 @@
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Blocca tutto il traffico di rete in caso di perdita del tunnel VPN.";
-
-/* (No Comment) */
-"_ks_dont_ask" = "Non chiedermelo più";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg" = "Per abilitare kill switch, è necessario scaricare e installare %@.\nSi prega di installarlo prima di abilitare kill switch.";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "ProtonVPN non è riuscito a rilevare %@. Per abilitare kill swicth, prima installa il software.";
-
-/* (No Comment) */
-"_ks_swift5_lib_name" = "Libreria di supporto Runtime Swift 5";
 
 /* MacOS: link in login screen */
 "_learn_more" = "Per saperne di più";

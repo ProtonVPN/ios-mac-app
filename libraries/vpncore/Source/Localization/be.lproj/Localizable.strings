@@ -101,7 +101,7 @@
 "_application_logs" = "Журналы праграмы";
 
 /* (No Comment) */
-"_applying_settings_" = "Ужыванне наладаў";
+"_applying_settings_" = "Ужыванне налад";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_auto_assigned" = "Прызначаецца аўтаматычна";
@@ -361,9 +361,6 @@
 /* Internal application error */
 "_error_email_verification_disabled" = "Праверка з дапамогай электроннай пошты часова адключана";
 
-/* Application error */
-"_error_existing_session_to_server" = "Немагчыма падключыцца да сервера таму, што ў яго ўжо ёсць актыўны сеанс ад карыстальніка";
-
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Немагчыма знайсці карыстальніка з сеансу";
 
@@ -453,12 +450,6 @@
 
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "Сеанс Proton VPN актыўны";
-
-/* Existing connection alert */
-"_existing_session" = "Сервер недаступны";
-
-/* Existing connection alert */
-"_existing_session_to_server" = "Выберыце іншы сервер.";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Разгарнуць спіс сервераў";
@@ -628,14 +619,8 @@
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Kill Switch";
 
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill Switch абараняе ваш IP\n\nВаша падключэнне да інтэрнэту будзе адноўлена, як толькі Proton VPN зноў падключыцца да сервера. Для працягу без абароны VPN, адключыце Kill Switch.";
-
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Kill Switch блакіруе ўсе падключэнні";
-
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Адключыць Kill Switch";
@@ -657,18 +642,6 @@
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Блакіруе ўвесь сеткавы трафік, калі падключэнне да тунэлю VPN згублена.";
-
-/* (No Comment) */
-"_ks_dont_ask" = "Больш не пытаць";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg" = "Для ўключэння Kill Switch вам неабходна спампаваць і ўсталяваць %@.\nУсталюйце яго перад уключэннем Kill Switch.";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "Proton VPN не змог выявіць %@. Для ўключэння Kill Switch, папярэдне неабходна ўсталяваць іншую праграму.";
-
-/* (No Comment) */
-"_ks_swift5_lib_name" = "Падтрымка бібліятэкі Swift 5 Runtime";
 
 /* MacOS: link in login screen */
 "_learn_more" = "Даведацца больш";
@@ -920,7 +893,7 @@
 "_netshield_section_title" = "Шкодныя праграмы і блакіроўка рэкламы";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
-"_netshield_stats_data_saved" = "Даныя \nзахаваны";
+"_netshield_stats_data_saved" = "даных захавана";
 
 /* (No Comment) */
 "_netshield_title_tooltip" = "Блакіраваць рэкламу, праграмы сачэння і шкодныя праграмы";

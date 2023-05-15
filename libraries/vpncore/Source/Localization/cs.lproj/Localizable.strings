@@ -361,9 +361,6 @@
 /* Internal application error */
 "_error_email_verification_disabled" = "Ověřování emailů dočasně vypnuté";
 
-/* Application error */
-"_error_existing_session_to_server" = "Nelze se připojit k serveru, protože na něm již existuje aktivní relace uživatele";
-
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Nelze nalézt uživatele z relace";
 
@@ -453,12 +450,6 @@
 
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "Relace Proton VPN je aktivní";
-
-/* Existing connection alert */
-"_existing_session" = "Server je nedostupný";
-
-/* Existing connection alert */
-"_existing_session_to_server" = "Prosím vyberte jiný server.";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Rozbalit seznam serverů";
@@ -628,14 +619,8 @@
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Kill Switch";
 
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill Switch chrání vaši IP adresu\n\nVaše internetové připojení bude obnoveno, jakmile se Proton VPN znovu připojí k serveru. Chcete-li obnovit připojení bez ochrany VPN, vypněte funkci Kill Switch.";
-
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Kill Switch blokuje všechna spojení";
-
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Vypnout Kill Switch";
@@ -657,18 +642,6 @@
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Zablokuje veškerý síťový provoz při uzavření VPN tunelu.";
-
-/* (No Comment) */
-"_ks_dont_ask" = "Příště se nedotazovat";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg" = "Chcete-li zapnout funkci Kill Switch, musíte si stáhnout a nainstalovat %@.\nProsím proveďte tuto instalaci před zapnutím Kill Switch.";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "Proton VPN nerozpoznala %@. Chcete-li zapnout funkci Kill Switch, nainstalujte nejprve software.";
-
-/* (No Comment) */
-"_ks_swift5_lib_name" = "Knihovna podpory běhu Swift 5";
 
 /* MacOS: link in login screen */
 "_learn_more" = "Více informací";

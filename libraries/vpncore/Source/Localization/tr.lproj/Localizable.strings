@@ -361,9 +361,6 @@
 /* Internal application error */
 "_error_email_verification_disabled" = "E-posta doğrulaması geçici olarak devre dışı bırakıldı";
 
-/* Application error */
-"_error_existing_session_to_server" = "Kullanıcının zaten etkin bir oturumu olduğundan sunucu bağlantısı kurulamadı";
-
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Oturum kullanıcı bulunamadı";
 
@@ -454,12 +451,6 @@
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "Proton VPN oturumu etkin";
 
-/* Existing connection alert */
-"_existing_session" = "Sunucu kullanılamıyor";
-
-/* Existing connection alert */
-"_existing_session_to_server" = "Lütfen başka bir sunucu seçin.";
-
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Sunucu listesini genişlet";
 
@@ -515,7 +506,7 @@
 "_feature_speed" = "Hız";
 
 /* (No Comment) */
-"_feature_streaming_description" = "Plus sunucuları, dünyanın her yerinden yayın akışlarını (Netflix, Disney + vb.) destekler.";
+"_feature_streaming_description" = "Plus sunucuları, dünyanın her yerindeki yayın akışı hizmetlerini (Netflix, Disney + vb.) destekler.";
 
 /* iOS plan feature */
 "_feature_tor" = "VPN üzerinden Tor";
@@ -628,14 +619,8 @@
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Bağlantı kesici";
 
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Bağlantı kesici IP adresinizi koruyor\n\nProton VPN bir sunucuya yeniden bağlandığında internet bağlantınız açılacak. VPN koruması olmadan ilerlemek için bağlantı kesici özelliğini devre dışı bırakın.";
-
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Bağlantı kesici tüm bağlantıları engelliyor";
-
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Bağlantı kesici";
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Bağlantı kesiciyi devre dışı bırak";
@@ -657,18 +642,6 @@
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "VPN tüneli kesildiğinde tüm ağ trafiğini engeller.";
-
-/* (No Comment) */
-"_ks_dont_ask" = "Bana bir daha sorma";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg" = "Bağlantı kesiciyi etkinleştirmek için, %@ indirip kurmanız gerekiyor.\nLütfen bağlantı kesiciyi etkinleştirmeden önce kurun.";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "Proton VPN %@ algılayamadı. Bağlantı kesiciyi etkinleştirin. Lütfen önce uygulamayı kurun.";
-
-/* (No Comment) */
-"_ks_swift5_lib_name" = "Swift 5 çalıştırma ortamı desteği kitaplığı";
 
 /* MacOS: link in login screen */
 "_learn_more" = "Ayrıntılı bilgi alın";
@@ -692,7 +665,7 @@
 "_local_agent_policy_violation_error_message" = "Sunucuya bağlanmanıza izin verilmiyor. Başka bir sunucu seçin ya da tarifenizi yükseltin.";
 
 /* (No Comment) */
-"_local_agent_policy_violation_error_title" = "İlke ihlali";
+"_local_agent_policy_violation_error_title" = "İlkeye aykırı kullanım";
 
 /* (No Comment) */
 "_local_agent_server_error_message" = "Sunucuda bir sorun çıktı. Lütfen başka bir sunucuya bağlanın.";

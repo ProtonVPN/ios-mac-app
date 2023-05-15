@@ -355,9 +355,6 @@
 /* Internal application error */
 "_error_email_verification_disabled" = "E-mailverificatie tijdelijk uitgeschakeld";
 
-/* Application error */
-"_error_existing_session_to_server" = "Kan geen verbinding maken met de server omdat het al een actieve sessie van gebruiker heeft";
-
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Kan gebruiker niet vinden uit de sessie";
 
@@ -438,12 +435,6 @@
 
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "Proton VPN-sessie is actief";
-
-/* Existing connection alert */
-"_existing_session" = "Server niet beschikbaar";
-
-/* Existing connection alert */
-"_existing_session_to_server" = "Selecteer een andere server.";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Lijst met servers uitklappen";
@@ -613,14 +604,8 @@
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Kill switch";
 
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill switch beschermt uw IP\n\nUw internetverbinding wordt hervat zodra Proton VPN opnieuw verbinding maakt met een server. Om te hervatten zonder VPN-bescherming, schakelt u kill switch uit.";
-
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "IP-beveiliging blokkeert alle verbindingen";
-
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "IP-beveiliging";
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Schakel IP-beveiliging uit";
@@ -642,15 +627,6 @@
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Blokkeert al het netwerkverkeer als de VPN-tunnel is weggevallen.";
-
-/* (No Comment) */
-"_ks_dont_ask" = "Niet opnieuw vragen";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg" = "Om de IP-beveiliging in te schakelen, moet u de %@downloaden en installeren.\nInstalleer eerst de software om IP-beveiliging in te schakelen.";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "Proton VPN kon de %@ niet detecteren. Om de IP-beveiliging in te schakelen, installeer eerst de software.";
 
 /* MacOS: link in login screen */
 "_learn_more" = "Meer informatie";
@@ -1192,6 +1168,9 @@
 /* MacOS: About window */
 "_release_date" = "Verschijningsdatum:";
 
+/* MacOS: label in login and settings screens */
+"_remember_login" = "Aangemeld blijven";
+
 /* Button in Kill switch error alert */
 "_report" = "Melden";
 
@@ -1451,7 +1430,13 @@
 "_subscription_will_renew" = "Huidige abonnement wordt automatisch verlengd op %@.";
 
 /* (No Comment) */
+"_subuser_alert_description2" = "Deze stap duurt slechts een paar minuten. Daarna kunt u zich inloggen en al uw apparaten beveiligen.";
+
+/* (No Comment) */
 "_subuser_alert_enable_connections_button" = "Schakel VPN-verbindingen in";
+
+/* (No Comment) */
+"_subuser_alert_login_button" = "Opnieuw inloggen";
 
 /* Subuser alert */
 "_subuser_alert_title" = "Bedankt voor de upgrade naar Business/Visionary";
@@ -1741,8 +1726,14 @@
 /* (No Comment) */
 "_vpnauth_too_many_certs_title" = "Authenticatiefout";
 
+/* (No Comment) */
+"_vpnstatus_not_loggedin" = "U bent niet ingelogd bij Proton VPN. Open de Proton VPN-app en log in.";
+
 /* Used as a title in alerts/modals */
 "_warning" = "Waarschuwing";
+
+/* MacOS: alert shown during login if already connected to VPN */
+"_warning_vpn_session_is_active" = "Een Proton VPN-sessie van een andere gebruiker is actief op dit apparaat. Door in te loggen zal de huidige sessie beëindigd worden. Wilt u doorgaan?";
 
 /* Shown on the Welcome screen as the longer screen text */
 "_welcome_body" = "Zeer snelle Zwitserse VPN die uw privacy bewaakt door uw internetverbinding te versleutelen.";
