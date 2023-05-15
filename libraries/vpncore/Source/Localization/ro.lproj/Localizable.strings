@@ -361,9 +361,6 @@
 /* Internal application error */
 "_error_email_verification_disabled" = "Verificarea prin e-mail a fost temporar dezactivată";
 
-/* Application error */
-"_error_existing_session_to_server" = "Nu se poate conecta la server deoarece are deja o sesiune activă de la utilizator";
-
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Nu se poate găsi utilizatorul din sesiune";
 
@@ -453,12 +450,6 @@
 
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "Sesiunea Proton VPN este activă";
-
-/* Existing connection alert */
-"_existing_session" = "Server indisponibil";
-
-/* Existing connection alert */
-"_existing_session_to_server" = "Selectați un alt server.";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Extindere listă servere";
@@ -628,14 +619,8 @@
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Blocare conexiune";
 
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Blocarea conexiunii vă protejează adresa IP\n\nConexiunea la internet se va relua imediat ce Proton VPN se reconectează la un server. Pentru a continua fără protecția VPN, dezactivați blocarea conexiunii.";
-
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Blocarea conexiunii blochează toate conexiunile";
-
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Blocare conexiune";
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Dezactivare blocare conexiune";
@@ -657,18 +642,6 @@
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Blochează tot traficul din rețea când tunelul VPN este pierdut.";
-
-/* (No Comment) */
-"_ks_dont_ask" = "Nu mă mai întreba";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg" = "Pentru a activa blocarea conexiunii, trebuie să descărcați și să instalați %@.\nInstalați-l înainte de a activa blocarea conexiunii.";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "Proton VPN nu a putut detecta %@. Pentru a activa blocarea conexiunii, reinstalați mai întâi programul.";
-
-/* (No Comment) */
-"_ks_swift5_lib_name" = "Librărie de suport rulare Swift 5";
 
 /* MacOS: link in login screen */
 "_learn_more" = "Detalii";

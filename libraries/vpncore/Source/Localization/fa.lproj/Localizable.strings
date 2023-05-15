@@ -349,9 +349,6 @@
 /* Internal application error */
 "_error_email_verification_disabled" = "تایید ایمیلی به صورت موقت غیرفعال است";
 
-/* Application error */
-"_error_existing_session_to_server" = "اتصال ناموفق بود چرا که در حال حاضر حساب کاربری شما جایی دیگر در حال استفاده است";
-
 /* Error try to restore user from the session */
 "_error_fetch_session" = "حساب کاربری از طریق نشست مربوطه پیدا نشد";
 
@@ -432,12 +429,6 @@
 
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "نشست Proton VPN فعال است";
-
-/* Existing connection alert */
-"_existing_session" = "سرور در دسترس نیست";
-
-/* Existing connection alert */
-"_existing_session_to_server" = "لطفا یک سرور دیگر انتخاب کنید.";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "باز کردن لیست سرورها";
@@ -604,9 +595,6 @@
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Kill Switch";
 
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill Switch از IP شما حفاظت می‌کند\n\nاتصال اینترنت شما به محض اتصال مجدد ProtonVPN به یک سرور ادامه خواهد یافت. برای اینکه بدون حفاظت VPN ادامه دهید، Kill Switch را غیرفعّال کنید.";
-
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Kill Switch همه ارتباطات را مسدود کرده است";
 
@@ -630,18 +618,6 @@
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "تمام ترافیک شبکه را به هنگام قطع تونل VPN مسدود میکند.";
-
-/* (No Comment) */
-"_ks_dont_ask" = "دوباره از من نپرس";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg" = "برای فعال کردن Kill Switch، شما لازم است که %@ را دانلود و نصب کنید.\nلطفاً قبل از فعال کردن Kill Switch آن را نصب کنید.";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "ProtonVPN نتوانست %@ را بیابد. برای فعال کردن Kill Switch، لطفاً ابتدا نرم‌افزار را نصب کنید.";
-
-/* (No Comment) */
-"_ks_swift5_lib_name" = "کتابخانه پشتیبانی Swift 5 Runtime";
 
 /* MacOS: link in login screen */
 "_learn_more" = "بیشتر بدانید";

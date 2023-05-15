@@ -337,9 +337,6 @@
 /* Internal application error */
 "_error_email_verification_disabled" = "Provjera valjanosti emailom je privremeno onemogućena";
 
-/* Application error */
-"_error_existing_session_to_server" = "Neuspješno povezivanje s poslužiteljem jer korisnik već ima aktivnu sesiju";
-
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Nije moguće pronaći korisnika iz sesije";
 
@@ -414,12 +411,6 @@
 
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "Proton VPN sesija je aktivna";
-
-/* Existing connection alert */
-"_existing_session" = "Poslužitelj nije dostupan";
-
-/* Existing connection alert */
-"_existing_session_to_server" = "Odaberite drugi poslužitelj.";
 
 /* MAC: is inserted into _free_trial_expired_title insteadof %@ */
 "_expired" = "ISTEKAO";
@@ -558,18 +549,6 @@
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
 "_kill_switch_reconnection_header" = "Kill switch štiti vašu IP adresu";
-
-/* (No Comment) */
-"_ks_dont_ask" = "Ne pitaj ponovno";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg" = "Da biste omogućili kill switch, morate preuzeti i instalirati %@.\nMolimo instalirajte ga prije nego što omogućite kill switch.";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "Proton VPN nije mogao otkriti %@. Da biste omogućili kill switch, prvo instalirajte program.";
-
-/* (No Comment) */
-"_ks_swift5_lib_name" = "Swift 5 Runtime Support biblioteka";
 
 /* MacOS: link in login screen */
 "_learn_more" = "Saznajte više";

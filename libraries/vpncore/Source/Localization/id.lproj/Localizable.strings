@@ -361,9 +361,6 @@
 /* Internal application error */
 "_error_email_verification_disabled" = "Verifikasi email dinonaktifkan sementara";
 
-/* Application error */
-"_error_existing_session_to_server" = "Tidak dapat terhubung ke server karena pengguna telah memiliki sesi yang aktif";
-
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Tidak dapat menemukan pengguna sesi";
 
@@ -453,12 +450,6 @@
 
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "Sesi Proton VPN sedang aktif";
-
-/* Existing connection alert */
-"_existing_session" = "Server Tidak Tersedia";
-
-/* Existing connection alert */
-"_existing_session_to_server" = "Silakan pilih server lain.";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Perbesar daftar server";
@@ -628,14 +619,8 @@
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Kill switch";
 
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill switch melindungi IP Anda\n\nKoneksi internet Anda akan kembali pulih segera setelah Proton VPN tersambung ulang ke server. Untuk lanjut tanpa perlindungan VPN, nonaktifkan kill switch.";
-
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Kill switch memblokir seluruh koneksi";
-
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Kill switch";
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Nonaktifkan kill switch";
@@ -657,18 +642,6 @@
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Memblokir seluruh lalu lintas jaringan yang ada ketika koneksi ke VPN terputus.";
-
-/* (No Comment) */
-"_ks_dont_ask" = "Jangan tanyakan lagi";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg" = "Untuk mengaktifkan kill switch, Anda harus terlebih dahulu mengunduh dan menginstal %@.\nSilakan instal aplikasi tersebut sebelum mengaktifkan kill switch.";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "Proton VPN tidak dapat mendeteksi keberadaan %@. Untuk dapat mengaktifkan kill switch, silakan instal aplikasi yang bersangkutan terlebih dahulu.";
-
-/* (No Comment) */
-"_ks_swift5_lib_name" = "Pustaka Swift 5 Runtime Support";
 
 /* MacOS: link in login screen */
 "_learn_more" = "Pelajari lebih lanjut";

@@ -182,7 +182,7 @@
 "_connecting_vpn" = "Connexion %@";
 
 /* (No Comment) */
-"_connectingDotDotDot" = "Connexion en cours...";
+"_connectingDotDotDot" = "Connexion en cours";
 
 /* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
 "_connection" = "Connexion";
@@ -361,9 +361,6 @@
 /* Internal application error */
 "_error_email_verification_disabled" = "La vérification d’adresse e-mail est temporairement désactivée.";
 
-/* Application error */
-"_error_existing_session_to_server" = "La connexion au serveur n'est pas possible, il y a déjà une session active de l'utilisateur.";
-
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Impossible de trouver l'utilisateur de la session";
 
@@ -437,7 +434,7 @@
 "_error_user_credentials_expired" = "Vos identifiants ont expiré. Nous vous invitons à vous connecter.";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_missing" = "Les informations d'identification de l'utilisateur sont manquantes. Vous ne pouvez pas vous connecter.";
+"_error_user_credentials_missing" = "Il manque les informations d'identification de l'utilisateur. La connexion n'est pas possible.";
 
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Nous n'avons pas pu vérifier que vous n'êtes pas un robot. Nous vous invitons à réessayer ou à souscrire un abonnement premium.";
@@ -453,12 +450,6 @@
 
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "La session Proton VPN est active.";
-
-/* Existing connection alert */
-"_existing_session" = "Le serveur n'est pas disponible.";
-
-/* Existing connection alert */
-"_existing_session_to_server" = "Sélectionnez un autre serveur.";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Développer la liste des serveurs";
@@ -515,7 +506,7 @@
 "_feature_speed" = "Vitesse";
 
 /* (No Comment) */
-"_feature_streaming_description" = "Les serveurs Plus prennent en charge le streaming (Netflix, Disney+...) depuis n'importe où dans le monde.";
+"_feature_streaming_description" = "Les serveurs « Plus » prennent en charge le streaming (Netflix, Disney+…) depuis n'importe où dans le monde.";
 
 /* iOS plan feature */
 "_feature_tor" = "Tor via VPN";
@@ -596,7 +587,7 @@
 "_information_title" = "Informations";
 
 /* MacOS: connecting overlay */
-"_initializing_connection" = "Établissement de la connexion...";
+"_initializing_connection" = "Établissement de la connexion en cours";
 
 /* (No Comment) */
 "_invalid_refresh_token_please_login" = "Cela fait un moment que vous n'avez pas utilisé l'application Proton VPN. Nous vous invitons à vous reconnecter.";
@@ -628,14 +619,8 @@
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Arrêt d'urgence (kill switch)";
 
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "La fonctionnalité Arrêt d'urgence (kill switch) protège votre adresse IP\n\nVotre connexion internet sera rétablie dès que Proton VPN se reconnectera à un serveur. Pour relancer sans protection VPN, désactivez Arrêt d'urgence (kill switch).";
-
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Arrêt d'urgence (kill switch) bloque toutes les connexions";
-
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Arrêt d'urgence (kill switch)";
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Désactiver Arrêt d'urgence (kill switch)";
@@ -657,18 +642,6 @@
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Bloque tout le trafic réseau lorsque le tunnel VPN est perdu.";
-
-/* (No Comment) */
-"_ks_dont_ask" = "Ne plus me demander";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg" = "Pour activer la fonctionnalité Arrêt d'urgence (kill switch), vous devez télécharger et installer le %@.\nVeuillez l'installer avant d'activer Arrêt d'urgence (kill switch).";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "Proton VPN n'a pas pu détecter le %@. Pour activer la fonctionnalité Arrêt d'urgence (kill switch), veuillez d'abord installer le logiciel.";
-
-/* (No Comment) */
-"_ks_swift5_lib_name" = "Bibliothèque de prise en charge de Swift 5 RunTime";
 
 /* MacOS: link in login screen */
 "_learn_more" = "En savoir plus";
@@ -785,7 +758,7 @@
 "_menu_about" = "À propos de Proton VPN";
 
 /* Main mac app menu item */
-"_menu_check_updates" = "Vérifier les mises à jour...";
+"_menu_check_updates" = "Vérifier les mises à jour…";
 
 /* Main mac app menu item */
 "_menu_hide_others" = "Masquer les autres";
@@ -920,7 +893,7 @@
 "_netshield_section_title" = "Logiciels malveillants & Bloqueur de publicités";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
-"_netshield_stats_data_saved" = "Données\nenregistrées";
+"_netshield_stats_data_saved" = "Données\nbloquées";
 
 /* (No Comment) */
 "_netshield_title_tooltip" = "Bloquer les publicités, les traqueurs et les logiciels malveillants";
@@ -986,7 +959,7 @@
 "_onboarding_mac_usage_stats" = "Partagez des statistiques d'utilisation anonymes. Cela nous aide à contourner les blocages VPN et à améliorer les performances de l'application.";
 
 /* Main mac app menu item */
-"_open_app_to_log_in" = "Afficher Proton VPN pour vous connecter...";
+"_open_app_to_log_in" = "Afficher Proton VPN pour vous connecter…";
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "Journaux OpenVPN";
@@ -1235,7 +1208,7 @@
 "_report" = "Signaler";
 
 /* Main mac app menu item */
-"_report_an_issue" = "Signaler un problème...";
+"_report_an_issue" = "Signaler un problème…";
 
 /* Bug report attachments */
 "_report_attachments" = "Pièces jointes";
@@ -1256,7 +1229,7 @@
 "_report_field_feedback" = "Qu'est-ce qui s'est mal passé ?";
 
 /* Mag bug report: textfields placeholder */
-"_report_field_placeholder" = "Commencer à écrire...";
+"_report_field_placeholder" = "Commencer à écrire…";
 
 /* Mac bug report: steps field label */
 "_report_field_steps" = "Pouvez-vous nous décrire précisément les étapes que vous avez suivies ?";
@@ -1271,7 +1244,7 @@
 "_report_placeholder_email" = "Adresse e-mail de contact";
 
 /* Bug report: Placeholder for text form field */
-"_report_placeholder_message" = "Votre message...";
+"_report_placeholder_message" = "Votre message…";
 
 /* iOS bug report: Title before report bug form */
 "_report_report" = "Message du rapport";
@@ -1442,7 +1415,7 @@
 "_status" = "Statut";
 
 /* (No Comment) */
-"_streaming_servers_description" = "Connectez-vous à un serveur Plus dans ce pays pour commencer à streamer.";
+"_streaming_servers_description" = "Connectez-vous à un serveur « Plus » dans ce pays pour commencer à streamer.";
 
 /* (No Comment) */
 "_streaming_servers_extra" = "et plus";

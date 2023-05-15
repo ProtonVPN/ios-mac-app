@@ -361,9 +361,6 @@
 /* Internal application error */
 "_error_email_verification_disabled" = "Weryfikacja e-mail tymczasowo wyłączona";
 
-/* Application error */
-"_error_existing_session_to_server" = "Nie można połączyć się z serwerem, ponieważ istnieje już aktywna sesja użytkownika";
-
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Nie można odnaleźć użytkownika sesji";
 
@@ -453,12 +450,6 @@
 
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "Sesja Proton VPN jest aktywna";
-
-/* Existing connection alert */
-"_existing_session" = "Serwer jest niedostępny";
-
-/* Existing connection alert */
-"_existing_session_to_server" = "Wybierz inny serwer.";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Rozwiń listę serwerów";
@@ -628,14 +619,8 @@
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Kill Switch";
 
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Funkcja Kill Switch chroni Twój adres IP\n\nPołączenie internetowe zostanie wznowione po przywróceniu łączności z serwerem. Aby wznowić połączenie bez ochrony VPN, wyłącz funkcję Kill Switch.";
-
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Funkcja Kill Switch blokuje wszystkie połączenia";
-
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Wyłącz Kill Switch";
@@ -657,18 +642,6 @@
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Blokuje cały ruch sieciowy, gdy połączenie VPN zostanie przerwane.";
-
-/* (No Comment) */
-"_ks_dont_ask" = "Nie pytaj ponownie";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg" = "Aby włączyć funkcję Kill Switch, musisz najpierw pobrać i zainstalować bibliotekę %@.";
-
-/* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "Aplikacja Proton VPN nie może wykryć biblioteki %@. Musisz ją zainstalować, aby włączyć funkcję Kill Switch.";
-
-/* (No Comment) */
-"_ks_swift5_lib_name" = "środowiska Swift 5";
 
 /* MacOS: link in login screen */
 "_learn_more" = "Dowiedz się więcej";
