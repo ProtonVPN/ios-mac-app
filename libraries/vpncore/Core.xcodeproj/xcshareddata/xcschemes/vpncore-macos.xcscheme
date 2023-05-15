@@ -68,6 +68,9 @@
                   Identifier = "IKEv2AvailabilityTests">
                </Test>
                <Test
+                  Identifier = "LocalAgentConnectionTests">
+               </Test>
+               <Test
                   Identifier = "OpenVPNTCPAvailabilityCheckerTests">
                </Test>
                <Test

@@ -91,7 +91,6 @@
 		4C14523D292D11A100DE9AC0 /* ProtocolOverrideConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14523C292D11A100DE9AC0 /* ProtocolOverrideConnectionTests.swift */; };
 		4C14523E292D11A100DE9AC0 /* ProtocolOverrideConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14523C292D11A100DE9AC0 /* ProtocolOverrideConnectionTests.swift */; };
 		4C1C2F2F28805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1C2F2E28805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift */; };
-		4C1C2F3028805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1C2F2E28805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift */; };
 		4C1ECBAE28912EAD00820068 /* ExtensionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ECBAC28912E6D00820068 /* ExtensionInfo.swift */; };
 		4C1ECBB428912FA000820068 /* SystemExtensionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ECBB128912F8500820068 /* SystemExtensionManagerTests.swift */; };
 		4C1ECBB828912FC200820068 /* SystemExtensionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ECBB628912FBE00820068 /* SystemExtensionManager.swift */; };
@@ -3490,6 +3489,7 @@
 				D5967245253D8CBE0061A75F /* SafariServiceMock.swift in Sources */,
 				4CAAEC3E286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift in Sources */,
 				4C1C2F3028805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift in Sources */,
+				E56249F629D3285C00F58942 /* NetShieldStatsNumberFormatterTests.swift in Sources */,
 				4CFDF0B8287EE37500386626 /* MockDependencyContainer.swift in Sources */,
 				D59671CF253D5D440061A75F /* AnnouncementManagerImplementationTests.swift in Sources */,
 				D59671EB253D70D40061A75F /* AnnouncementRefresherImplementationTests.swift in Sources */,

@@ -202,6 +202,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         let expectations = (
             initialConnection: XCTestExpectation(description: "initial connection"),
+            openVPNCertificate: XCTestExpectation(description: "should refresh certificate with OpenVPN protocol"),
             connectedDate: XCTestExpectation(description: "connected date"),
             reconnection: XCTestExpectation(description: "reconnection"),
             reconnectionAppStateChange: XCTestExpectation(description: "reconnect app state change"),
@@ -240,13 +241,21 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         }
 
         didRequestCertRefresh = { _ in
+            #if os(iOS)
+            expectations.openVPNCertificate.fulfill()
+            #else
             XCTFail("Should not request to refresh certificate for non-certificate-authenticated protocol")
+            #endif
         }
 
         container.propertiesManager.hasConnected = true // check that we don't display FirstTimeConnectingAlert
         container.vpnGateway.connect(with: request)
+        var connectionExpectations = [tunnelProviderExpectation]
+        #if os(iOS)
+            .appending(expectations.openVPNCertificate) // on iOS, we should connect with IKE, so no cert refresh required
+        #endif
 
-        wait(for: [tunnelProviderExpectation], timeout: expectationTimeout)
+        wait(for: connectionExpectations, timeout: expectationTimeout)
 
         XCTAssert(container.appStateManager.state.isConnected)
 
@@ -271,6 +280,14 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
             expectations.connectedDate.fulfill()
         }
         wait(for: [expectations.connectedDate], timeout: expectationTimeout)
+
+        didRequestCertRefresh = { _ in
+            #if os(iOS)
+            XCTFail("Should not request to refresh certificate for non-certificate-authenticated protocol")
+            #else
+            expectations.openVPNCertificate.fulfill()
+            #endif
+        }
 
         let unavailableCallback = container.availabilityCheckerResolverFactory.checkers[.wireGuard(.udp)]!.availabilityCallback
         container.availabilityCheckerResolverFactory.checkers[.wireGuard(.tcp)]?.availabilityCallback = unavailableCallback
@@ -314,7 +331,11 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         // reconnect with netshield settings change
         container.vpnGateway.reconnect(with: NATType.strictNAT)
 
-        wait(for: [expectations.reconnection, expectations.reconnectionAppStateChange], timeout: expectationTimeout)
+        connectionExpectations = [expectations.reconnection, expectations.reconnectionAppStateChange]
+        #if os(macOS)
+            .appending(expectations.openVPNCertificate) // on iOS, we connect with IKE, so no cert refresh required
+        #endif
+        wait(for: connectionExpectations, timeout: expectationTimeout)
 
         #if os(iOS)
         // on ios, protocol should fallback to IKEv2
@@ -376,9 +397,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         tunnelProviderExpectation = expectations.reconnectionAfterServerInfoFetch
         container.vpnGateway.connect(with: request)
 
-        wait(for: [tunnelProviderExpectation,
-                   expectations.wireguardCertRefresh,
-                   expectations.finalConnection], timeout: expectationTimeout)
+        wait(for: [tunnelProviderExpectation, expectations.finalConnection], timeout: expectationTimeout)
 
         // wireguard protocol now available for smart protocol to pick
         XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.udp))

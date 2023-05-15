@@ -28,7 +28,8 @@ private let localAgentQueue = DispatchQueue(label: "ch.protonvpn.apple.local-age
 
 extension VpnManager {
     func connectLocalAgent(data: VpnAuthenticationData? = nil) {
-        guard self.currentVpnProtocol?.authenticationType == .certificate else {
+        guard let vpnProtocol = self.currentVpnProtocol, vpnProtocol.authenticationType == .certificate else {
+            log.info("Skipping local agent connection for protocol \(String(describing: self.currentVpnProtocol))", category: .localAgent)
             return
         }
 

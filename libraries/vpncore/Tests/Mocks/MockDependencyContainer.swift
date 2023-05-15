@@ -65,9 +65,15 @@ class MockDependencyContainer {
     let sessionService = SessionServiceMock()
     public let vpnAuthenticationStorage = MockVpnAuthenticationStorage()
 
-    lazy var vpnAuthentication = VpnAuthenticationRemoteClient(sessionService: sessionService,
-                                                               authenticationStorage: vpnAuthenticationStorage,
-                                                               safeModePropertyProvider: safeModeProvider)
+    #if os(iOS)
+    lazy var vpnAuthentication: VpnAuthentication = VpnAuthenticationRemoteClient(
+        sessionService: sessionService,
+        authenticationStorage: vpnAuthenticationStorage,
+        safeModePropertyProvider: safeModeProvider
+    )
+    #else
+    lazy var vpnAuthentication: VpnAuthentication = VpnAuthenticationManager(networking: networking, storage: vpnAuthenticationStorage)
+    #endif
 
     lazy var stateConfiguration = VpnStateConfigurationManager(ikeProtocolFactory: ikeFactory,
                                                                openVpnProtocolFactory: openVpnFactory,
