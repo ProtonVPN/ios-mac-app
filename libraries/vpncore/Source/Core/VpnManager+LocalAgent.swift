@@ -350,6 +350,10 @@ extension VpnManager: LocalAgentDelegate {
         didReceiveFeature(natType: features.natType)
         didReceiveFeature(safeMode: features.safeMode)
 
+        if vpnAuthentication.shouldIgnoreFeatureChanges {
+            return // Don't try (and fail) to retrieve stored features if we don't have to
+        }
+
         let storedFeatures = vpnAuthenticationStorage.getStoredCertificateFeatures()
         guard !features.equals(other: storedFeatures, safeModeEnabled: safeModePropertyProvider.safeModeFeatureEnabled) else {
             return

@@ -250,4 +250,11 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
     public func loadClientPrivateKey() -> PrivateKey {
         return authenticationStorage.getKeys().privateKey
     }
+
+    public var shouldIgnoreFeatureChanges: Bool {
+        // Allow new certificate to be fetched on feature changes. On iOS, the NE can be launched by the system without
+        // the app being present. Due to this edge case, the saved certificate must specify features, so that they can
+        // be applied on connection without relying on LocalAgent.
+        false
+    }
 }

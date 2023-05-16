@@ -43,6 +43,8 @@ public final class VpnAuthenticationMock: VpnAuthentication {
     public func loadClientPrivateKey() -> PrivateKey {
         VpnKeys.mock().privateKey
     }
+
+    public var shouldIgnoreFeatureChanges: Bool { false }
 }
 
 fileprivate extension VpnAuthenticationData {

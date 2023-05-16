@@ -59,6 +59,14 @@ public protocol VpnAuthentication {
 
     /// Deletes all the generated and stored data, so keys and certificate
     func clearEverything(completion: @escaping (() -> Void))
+
+    /// Returns true if certificates managed by this object should be feature-agnostic
+    ///
+    /// VPN authentication certificates can be embedded with a feature-set. When connecting to a server with such a
+    /// certificate, this feature set is applied, without having to rely on Local Agent to manage features separately.
+    /// The implementation should only return `true` if Local Agent is guaranteed to always be present to directly
+    /// manage features.
+    var shouldIgnoreFeatureChanges: Bool { get }
 }
 
 public extension VpnAuthentication {
