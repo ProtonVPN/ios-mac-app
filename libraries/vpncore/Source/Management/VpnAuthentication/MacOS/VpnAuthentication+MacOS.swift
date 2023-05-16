@@ -100,4 +100,8 @@ public final class VpnAuthenticationManager: VpnAuthentication {
     public func loadClientPrivateKey() -> PrivateKey {
         return storage.getKeys().privateKey
     }
+
+    public var shouldIgnoreFeatureChanges: Bool {
+        true // Ignore feature changes. LA is guaranteed to be present on MacOS,
+    }
 }
