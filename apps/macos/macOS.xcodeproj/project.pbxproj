@@ -51,7 +51,6 @@
 		42EF09E6257A713F00E2EDCA /* ch.protonvpn.mac.OpenVPN-Extension.systemextension in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 42EF09DB257A713F00E2EDCA /* ch.protonvpn.mac.OpenVPN-Extension.systemextension */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		42F63FE92566B66000DE60B2 /* ReconnectingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */; };
 		4C54383327C3DC0600D7A88D /* ModelIDChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54383227C3DC0600D7A88D /* ModelIDChecker.swift */; };
-		4C7CADE2280056090008778E /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		4C74D32B2A0B9D7F004F8528 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 4C74D32A2A0B9D7F004F8528 /* PMLogger */; };
 		4C7CADE2280056090008778E /* (null) in Sources */ = {isa = PBXBuildFile; };
 		4C7CADE4280060C90008778E /* CGMutablePath+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CADE3280060C90008778E /* CGMutablePath+Extension.swift */; };
@@ -238,6 +237,9 @@
 		E565986C2820FEDD004F2240 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986B2820FEDD004F2240 /* WarningView.swift */; };
 		E5772AE429B0B9A90076D824 /* SystemExtensionTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5772AE329B0B9A90076D824 /* SystemExtensionTutorialView.swift */; };
 		E57B263229C3188D00533B7C /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E57B263129C3188D00533B7C /* AVKit.framework */; };
+		E5C00F0B2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F0A2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift */; };
+		E5C00F0D2A15FC6E0030076F /* ProtonVPNmac_redesign_UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F0C2A15FC6E0030076F /* ProtonVPNmac_redesign_UITestsLaunchTests.swift */; };
+		E5C00F152A1612950030076F /* NavigationRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F142A1612950030076F /* NavigationRobot.swift */; };
 		E5C3416029FBBADE00A26614 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5C3415A29FBBADE00A26614 /* Assets.xcassets */; };
 		E5C3416129FBBADE00A26614 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5C3415C29FBBADE00A26614 /* Preview Assets.xcassets */; };
 		E5C3416229FBBADE00A26614 /* ProtonVPN_redesignApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C3415D29FBBADE00A26614 /* ProtonVPN_redesignApp.swift */; };
@@ -495,6 +497,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = E93C4F1526A1C1F30006680C;
 			remoteInfo = "ProtonVPN WireGuard";
+		};
+		E5C00F0E2A15FC6E0030076F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EED534791EEC112000013607 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E5DB888929FAB82B004D6637;
+			remoteInfo = "ProtonVPN-mac-redesign";
 		};
 		E93D022C26A1C7D40098520D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -897,6 +906,11 @@
 		E565986B2820FEDD004F2240 /* WarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WarningView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/WarningView.swift; sourceTree = "<group>"; };
 		E5772AE329B0B9A90076D824 /* SystemExtensionTutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionTutorialView.swift; sourceTree = "<group>"; };
 		E57B263129C3188D00533B7C /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		E5C00F002A15FB680030076F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "ProtonVPNmac-redesign-UITests/Info.plist"; sourceTree = SOURCE_ROOT; };
+		E5C00F082A15FC6E0030076F /* ProtonVPNmac-redesign-UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ProtonVPNmac-redesign-UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5C00F0A2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNmac_redesign_UITests.swift; sourceTree = "<group>"; };
+		E5C00F0C2A15FC6E0030076F /* ProtonVPNmac_redesign_UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNmac_redesign_UITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E5C00F142A1612950030076F /* NavigationRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRobot.swift; sourceTree = "<group>"; };
 		E5C3415A29FBBADE00A26614 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E5C3415C29FBBADE00A26614 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E5C3415D29FBBADE00A26614 /* ProtonVPN_redesignApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtonVPN_redesignApp.swift; sourceTree = "<group>"; };
@@ -1158,6 +1172,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				E111808B7080739DC417E264 /* Pods_ProtonVPNmacOSTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5C00F052A15FC6E0030076F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1647,6 +1668,17 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		E5C00F092A15FC6E0030076F /* ProtonVPNmac-redesign-UITests */ = {
+			isa = PBXGroup;
+			children = (
+				E5C00F002A15FB680030076F /* Info.plist */,
+				E5C00F0A2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift */,
+				E5C00F142A1612950030076F /* NavigationRobot.swift */,
+				E5C00F0C2A15FC6E0030076F /* ProtonVPNmac_redesign_UITestsLaunchTests.swift */,
+			);
+			path = "ProtonVPNmac-redesign-UITests";
+			sourceTree = "<group>";
+		};
 		E5C3415929FBBADE00A26614 /* ProtonVPN-redesign */ = {
 			isa = PBXGroup;
 			children = (
@@ -1877,6 +1909,7 @@
 				B2E466D42980550B0026ED26 /* TestPlans */,
 				E15B754E20FA83CB0022C406 /* ProtonVPNTests */,
 				D5911707229F9574005829DA /* ProtonVPNUITests */,
+				E5C00F092A15FC6E0030076F /* ProtonVPNmac-redesign-UITests */,
 				EED534821EEC112000013607 /* Products */,
 				7461E535C10E886FBC226611 /* Frameworks */,
 				CF4CBD52B87483E7CE0F1406 /* Pods */,
@@ -1893,6 +1926,7 @@
 				42EF09DB257A713F00E2EDCA /* ch.protonvpn.mac.OpenVPN-Extension.systemextension */,
 				E93C4F2526A1C1F30006680C /* ch.protonvpn.mac.WireGuard-Extension.systemextension */,
 				E5DB888A29FAB82B004D6637 /* ProtonVPN-mac-redesign.app */,
+				E5C00F082A15FC6E0030076F /* ProtonVPNmac-redesign-UITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2861,6 +2895,24 @@
 			productReference = E15B754D20FA83CB0022C406 /* ProtonVPNmacOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		E5C00F072A15FC6E0030076F /* ProtonVPNmac-redesign-UITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E5C00F102A15FC6E0030076F /* Build configuration list for PBXNativeTarget "ProtonVPNmac-redesign-UITests" */;
+			buildPhases = (
+				E5C00F042A15FC6E0030076F /* Sources */,
+				E5C00F052A15FC6E0030076F /* Frameworks */,
+				E5C00F062A15FC6E0030076F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E5C00F0F2A15FC6E0030076F /* PBXTargetDependency */,
+			);
+			name = "ProtonVPNmac-redesign-UITests";
+			productName = "ProtonVPNmac-redesign-UITests";
+			productReference = E5C00F082A15FC6E0030076F /* ProtonVPNmac-redesign-UITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		E5DB888929FAB82B004D6637 /* ProtonVPN-mac-redesign */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5DB889629FAB82D004D6637 /* Build configuration list for PBXNativeTarget "ProtonVPN-mac-redesign" */;
@@ -2990,6 +3042,10 @@
 						CreatedOnToolsVersion = 9.4.1;
 						TestTargetID = EED534801EEC112000013607;
 					};
+					E5C00F072A15FC6E0030076F = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = E5DB888929FAB82B004D6637;
+					};
 					E5DB888929FAB82B004D6637 = {
 						CreatedOnToolsVersion = 14.3;
 					};
@@ -3088,6 +3144,7 @@
 				E93C4F1026A1C1450006680C /* WireGuardGoBridgemacOS */,
 				E15B754C20FA83CB0022C406 /* ProtonVPNmacOSTests */,
 				D5911705229F9574005829DA /* ProtonVPNmacOSUITests */,
+				E5C00F072A15FC6E0030076F /* ProtonVPNmac-redesign-UITests */,
 			);
 		};
 /* End PBXProject section */
@@ -3120,6 +3177,13 @@
 			files = (
 				E13F4CFE20FCC98800D985C2 /* ServerManagerTestServers.json in Resources */,
 				844917000A1F005A8397AB8E /* Pods-ProtonVPNmacOSTests-metadata.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5C00F062A15FC6E0030076F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3649,6 +3713,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E5C00F042A15FC6E0030076F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E5C00F0D2A15FC6E0030076F /* ProtonVPNmac_redesign_UITestsLaunchTests.swift in Sources */,
+				E5C00F0B2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift in Sources */,
+				E5C00F152A1612950030076F /* NavigationRobot.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E5DB888629FAB82B004D6637 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -3990,6 +4064,11 @@
 			isa = PBXTargetDependency;
 			target = E93C4F1526A1C1F30006680C /* ProtonVPN WireGuard */;
 			targetProxy = E52B8BB629FBB84B00517FFC /* PBXContainerItemProxy */;
+		};
+		E5C00F0F2A15FC6E0030076F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E5DB888929FAB82B004D6637 /* ProtonVPN-mac-redesign */;
+			targetProxy = E5C00F0E2A15FC6E0030076F /* PBXContainerItemProxy */;
 		};
 		E93D022D26A1C7D40098520D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -4516,6 +4595,79 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProtonVPN.app/Contents/MacOS/ProtonVPN";
 			};
 			name = Release;
+		};
+		E5C00F112A15FC6E0030076F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2SB5Z68H26;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "ProtonVPNmac-redesign-UITests/Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.ProtonVPNmac-redesign-UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "ProtonVPN-mac-redesign";
+			};
+			name = Debug;
+		};
+		E5C00F122A15FC6E0030076F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2SB5Z68H26;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "ProtonVPNmac-redesign-UITests/Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.ProtonVPNmac-redesign-UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "ProtonVPN-mac-redesign";
+			};
+			name = Release;
+		};
+		E5C00F132A15FC6E0030076F /* Staging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2SB5Z68H26;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "ProtonVPNmac-redesign-UITests/Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.ProtonVPNmac-redesign-UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "ProtonVPN-mac-redesign";
+			};
+			name = Staging;
 		};
 		E5DB889729FAB82D004D6637 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -5089,6 +5241,16 @@
 				E15B755420FA83CB0022C406 /* Debug */,
 				E15B755620FA83CB0022C406 /* Release */,
 				E1034B3F22EB18E40022A43B /* Staging */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E5C00F102A15FC6E0030076F /* Build configuration list for PBXNativeTarget "ProtonVPNmac-redesign-UITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E5C00F112A15FC6E0030076F /* Debug */,
+				E5C00F122A15FC6E0030076F /* Release */,
+				E5C00F132A15FC6E0030076F /* Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
