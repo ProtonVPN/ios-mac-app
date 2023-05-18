@@ -36,6 +36,17 @@ enum SideBarTab: Hashable, CaseIterable {
         }
     }
 
+    var accessibilityIdentifier: String {
+        switch self {
+        case .home:
+            return "Home tab"
+        case .countries:
+            return "Countries tab"
+        case .settings:
+            return "Settings tab"
+        }
+    }
+
     var image: SwiftUI.Image {
         switch self {
         case .home:

@@ -42,6 +42,9 @@ struct SideBarItemView: View {
         }
         .frame(minWidth: 160)
         .buttonStyle(SideBarButtonStyle(isActive: selectedTab == category))
+        .accessibilityAddTraits(.isLink)
+        .accessibilityHint(category.accessibilityIdentifier)
+        .accessibilityIdentifier(category.accessibilityIdentifier)
     }
 }
 
