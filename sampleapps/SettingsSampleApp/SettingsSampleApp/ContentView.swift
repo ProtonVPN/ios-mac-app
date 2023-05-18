@@ -1,5 +1,5 @@
 //
-//  Created on 16/05/2023.
+//  Created on 18/05/2023.
 //
 //  Copyright (c) 2023 Proton AG
 //
@@ -18,9 +18,20 @@
 
 import SwiftUI
 
-public struct SettingsView: View {
-    public init() {}
-    public var body: some View {
-        Text("Settings")
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            Image(systemName: "globe")
+                .imageScale(.large)
+                .foregroundColor(.accentColor)
+            Text("Hello, world!")
+        }
+        .padding()
+    }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
     }
 }

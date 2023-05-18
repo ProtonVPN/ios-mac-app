@@ -89,6 +89,7 @@ internal extension GeometryProxy {
         frame(in: .global).minY
     }
 }
+
 extension FlagAppearance {
     static let iOS: Self = .init(
         secureCoreFlagShadowColor: .black.opacity(0.4),

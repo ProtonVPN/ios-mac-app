@@ -20,6 +20,12 @@ import Foundation
 import Ergonomics
 import SwiftUI
 
+public enum ColorScheme {
+    case light
+    case dark
+    case auto
+}
+
 public enum AppTheme {
     public enum Context: String {
         case background
@@ -65,6 +71,7 @@ public enum AppTheme {
         case radius8 = 8
         case radius12 = 12
         case radius16 = 16
+        case radius24 = 24
     }
 
     public enum Spacing: CGFloat {

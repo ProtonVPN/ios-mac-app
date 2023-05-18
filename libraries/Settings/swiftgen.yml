@@ -1,0 +1,5 @@
+xcassets:
+  inputs: Sources/Settings/Resources/Media.xcassets
+  outputs:
+    templateName: swift5
+    output: Sources/Settings/Assets/Assets.swift
