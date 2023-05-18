@@ -38,6 +38,9 @@
          location = "group:sampleapps/UIExampleApp/UIExampleApp.xcodeproj">
       </FileRef>
       <FileRef
+         location = "group:sampleapps/SettingsSampleApp/SettingsSampleApp.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:sampleapps/BugReportSampleiOSApp/BugReportSampleiOSApp.xcodeproj">
       </FileRef>
       <FileRef
@@ -70,6 +73,9 @@
    </FileRef>
    <FileRef
       location = "group:libraries/Review">
+   </FileRef>
+   <FileRef
+      location = "group:libraries/Settings">
    </FileRef>
    <FileRef
       location = "group:libraries/vpncore/Core.xcodeproj">
