@@ -156,6 +156,19 @@ public extension CGColor {
     }
 }
 
+public extension Text {
+    func styled(_ style: AppTheme.Style = .normal) -> Text {
+        foregroundColor(.init(.text, style))
+    }
+}
+
+public extension Image {
+    func styled(_ style: AppTheme.Style = .normal) -> some View {
+        renderingMode(.template)
+            .foregroundColor(.init(.icon, style))
+    }
+}
+
 public extension CustomStyleContext {
     func color(_ context: AppTheme.Context) -> UIColor {
         return .color(context, self.customStyle(context: context))

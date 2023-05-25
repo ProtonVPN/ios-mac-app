@@ -21,28 +21,53 @@ let package = Package(
             targets: ["Home-iOS"])
     ],
     dependencies: [
-        .package(path: "../Theme")
+        .package(path: "../Theme"),
+        .package(path: "../NEHelper"),
+        .package(path: "../Ergonomics"),
+        .package(
+            url: "https://github.com/pointfreeco/swift-composable-architecture",
+            branch: "prerelease/1.0"
+        ),
+        .package(
+            url: "https://github.com/pointfreeco/swift-dependencies.git",
+            exact: "0.5.0"
+        ),
+        .package(
+          url: "https://github.com/pointfreeco/swift-snapshot-testing",
+          from: "1.10.0"
+        ),
     ],
     targets: [
         .target(
             name: "Home",
-            dependencies: [],
+            dependencies: [
+                "Theme",
+                "Ergonomics",
+                .product(name: "VPNShared", package: "NEHelper"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ],
             resources: [
                 .process("Resources/Assets.xcassets")
             ]
         ),
         .target(
             name: "Home-iOS",
-            dependencies: ["Home", .product(name: "Theme-iOS", package: "Theme")],
+            dependencies: [
+                "Home",
+                .product(name: "Theme-iOS", package: "Theme"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ],
             resources: []
         ),
         .target(
             name: "Home-macOS",
-            dependencies: ["Home", .product(name: "Theme-macOS", package: "Theme")],
+            dependencies: [
+                "Home",
+                .product(name: "Theme-macOS", package: "Theme"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ],
             resources: []
-        ),
-        .testTarget(
-            name: "HomeTests",
-            dependencies: ["Home"]),
+        )
     ]
 )

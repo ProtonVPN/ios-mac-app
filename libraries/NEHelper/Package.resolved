@@ -10,6 +10,24 @@
       }
     },
     {
+      "identity" : "plistutil",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/protonjohn/plistutil",
+      "state" : {
+        "revision" : "9b085081f65a8b03c08d1a59f8afd500265de3a6",
+        "version" : "0.0.2"
+      }
+    },
+    {
+      "identity" : "swift-argument-parser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-argument-parser",
+      "state" : {
+        "revision" : "fee6933f37fde9a5e12a1e4aeaa93fe60116ff2a",
+        "version" : "1.2.2"
+      }
+    },
+    {
       "identity" : "swift-log",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log.git",

@@ -18,6 +18,7 @@ let package = Package(
         .package(path: "../Timer"),
         .package(path: "../PMLogger"),
         .package(path: "../LocalFeatureFlags"),
+        .package(url: "https://github.com/apple/swift-log.git", exact: "1.4.4"),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", exact: "3.2.1"),
     ],
     targets: [
@@ -25,6 +26,7 @@ let package = Package(
             name: "VPNShared",
             dependencies: [
                 .product(name: "Timer", package: "Timer"),
+                .product(name: "Logging", package: "swift-log"),
                 .product(name: "PMLogger", package: "PMLogger"),
                 .product(name: "KeychainAccess", package: "KeychainAccess"),
                 .product(name: "LocalFeatureFlags", package: "LocalFeatureFlags"),
@@ -44,6 +46,7 @@ let package = Package(
             name: "NEHelper",
             dependencies: [
                 .product(name: "Timer", package: "Timer"),
+                .product(name: "Logging", package: "swift-log"),
                 .product(name: "LocalFeatureFlags", package: "LocalFeatureFlags"),
                 "VPNShared",
             ]
