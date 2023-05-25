@@ -23,7 +23,84 @@ import Theme_iOS
 import Home
 import Home_iOS
 
+import ComposableArchitecture
+
 #if REDESIGN
+struct InitialStateProvider {
+    public let initialState: AppReducer.State
+}
+
+extension InitialStateProvider: DependencyKey {
+    static let liveValue = InitialStateProvider(
+        initialState: .init(home: .init(connections: [
+            .init(
+                pinned: true,
+                underMaintenance: false,
+                connectionDate: .now,
+                connection: .init(
+                    location: .exact(
+                        .free,
+                        number: 42,
+                        subregion: nil,
+                        regionCode: "CH"
+                    ),
+                    features: []
+                )
+            ),
+            .init(
+                pinned: false,
+                underMaintenance: false,
+                connectionDate: .now.addingTimeInterval(-5 * 60.0),
+                connection: .init(
+                    location: .fastest,
+                    features: []
+                )
+            ),
+            .init(
+                pinned: false,
+                underMaintenance: false,
+                connectionDate: .now,
+                connection: .init(
+                    location: .secureCore(.fastestHop(to: "RO")),
+                    features: []
+                )
+            ),
+            .init(
+                pinned: false,
+                underMaintenance: false,
+                connectionDate: .now,
+                connection: .init(
+                    location: .region(code: "UA"),
+                    features: []
+                )
+            ),
+        ]))
+    )
+}
+
+extension DependencyValues {
+    var initialStateProvider: InitialStateProvider {
+        get { self[InitialStateProvider.self] }
+        set { self[InitialStateProvider.self] = newValue }
+    }
+}
+
+struct AppReducer: Reducer {
+    struct State {
+        public var home: HomeFeature.State
+    }
+
+    enum Action: Equatable {
+        case home(HomeFeature.Action)
+    }
+
+    var body: some ReducerOf<Self> {
+        Scope(state: \.home, action: /Action.home) {
+            HomeFeature()
+        }
+    }
+}
+
 @main
 struct RedesignedVPNApp: App {
     /// This delegates the app lifecycle events to the old `AppDelegate`. Once we have a working redesign we can start moving away from `AppDelegate`
@@ -40,14 +117,23 @@ struct RedesignedVPNApp: App {
 
     @State private var selectedTab: Tab = .home
 
+    let store: StoreOf<AppReducer>
+
     init() {
+        @Dependency(\.initialStateProvider) var initialStateProvider
+
         UITabBar.appearance().backgroundColor = .color(.background, .weak)
+
+        self.store = .init(
+            initialState: initialStateProvider.initialState,
+            reducer: AppReducer()
+        )
     }
 
     var body: some Scene {
         WindowGroup {
             TabView(selection: $selectedTab) {
-                HomeView()
+                HomeView(store: store.scope(state: \.home, action: AppReducer.Action.home))
                     .homeTabItem()
                     .tag(Tab.home)
                 CountriesView()

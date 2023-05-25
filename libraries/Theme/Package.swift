@@ -11,13 +11,16 @@ let package = Package(
     products: [
         .library(
             name: "Theme",
-            targets: ["Theme"]),
+            targets: ["Theme"]
+        ),
         .library(
             name: "Theme-macOS",
-            targets: ["Theme-macOS"]),
+            targets: ["Theme-macOS"]
+        ),
         .library(
             name: "Theme-iOS",
-            targets: ["Theme-iOS"])
+            targets: ["Theme-iOS"]
+        )
     ],
     dependencies: [],
     targets: [

@@ -1,11 +1,46 @@
-import XCTest
-@testable import Home
+import Home
 
-final class HomeTests: XCTestCase {
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
-        XCTAssertEqual(Home().text, "Hello, World!")
-    }
+// Todo: Snapshot testing for both macOS and iOS, for the Home view
+// and all other child views defined in the Home package.
+
+extension Home.RecentConnection {
+    static let pinnedActiveExactCHRegular: Self = .init(
+        pinned: true,
+        underMaintenance: false,
+        connectionDate: .now,
+        connection: .init(
+            location: .exact(
+                .paid,
+                number: 42,
+                subregion: nil,
+                regionCode: "CH"
+            ),
+            features: []
+        )
+    )
+
+    static let recentActiveExactSEStreaming: Self = .init(
+        pinned: false,
+        underMaintenance: false,
+        connectionDate: .now,
+        connection: .init(
+            location: .exact(
+                .paid,
+                number: 420,
+                subregion: nil,
+                regionCode: "SE"
+            ),
+            features: [.streaming]
+        )
+    )
+
+    static let recentRegionUSP2P: Self = .init(
+        pinned: false,
+        underMaintenance: false,
+        connectionDate: .now,
+        connection: .init(
+            location: .region(code: "US"),
+            features: [.p2p]
+        )
+    )
 }

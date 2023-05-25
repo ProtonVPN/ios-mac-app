@@ -19,6 +19,7 @@
 import Foundation
 
 public extension CGFloat {
+    static let themeRadius2½ = AppTheme.CornerRadius.radius2½.rawValue
     static let themeRadius4 = AppTheme.CornerRadius.radius4.rawValue
     static let themeRadius8 = AppTheme.CornerRadius.radius8.rawValue
     static let themeRadius12 = AppTheme.CornerRadius.radius12.rawValue

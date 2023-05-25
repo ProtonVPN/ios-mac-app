@@ -155,13 +155,13 @@ class VpnServerSelector {
             })))
             return []
         }
-        
+
         let serversWithoutMaintenance = serversWithoutUpgrades.filter { !$0.underMaintenance }
         guard !serversWithoutMaintenance.isEmpty else {
             notifyResolutionUnavailable?(forSpecificCountry, type, .maintenance)
             return []
         }
-        
+
         return serversWithoutMaintenance
     }
     

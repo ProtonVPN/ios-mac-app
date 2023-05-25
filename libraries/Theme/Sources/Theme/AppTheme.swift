@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import SwiftUI
 
 public enum AppTheme {
     public enum Context: String {
@@ -57,6 +58,7 @@ public enum AppTheme {
     }
 
     public enum CornerRadius: CGFloat {
+        case radius2½ = 2.5
         case radius4 = 4
         case radius8 = 8
         case radius12 = 12
@@ -94,10 +96,34 @@ public enum AppTheme {
 
     public enum IconSize {
         case `default`
-        case square(Int)
-        case rect(width: Int, height: Int)
+        case square(CGFloat)
+        case rect(width: CGFloat, height: CGFloat)
 
         public static let profileIconSize: Self = .square(18)
+        public static let flagIconSize: Self = .rect(width: 32, height: 21.33)
+        public static let secureCoreFlagIconSize: Self = .rect(width: 18, height: 12)
+
+        var width: CGFloat? {
+            switch self {
+            case .default:
+                return nil
+            case let .square(width):
+                return width
+            case let .rect(width, _):
+                return width
+            }
+        }
+
+        var height: CGFloat? {
+            switch self {
+            case .default:
+                return nil
+            case let .square(width):
+                return width
+            case let .rect(_, height):
+                return height
+            }
+        }
     }
 
     public enum FlagStyle: String {

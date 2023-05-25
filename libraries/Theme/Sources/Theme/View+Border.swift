@@ -27,4 +27,8 @@ extension View {
                 .stroke(color, lineWidth: lineWidth)
         )
     }
+
+    public func frame(_ size: AppTheme.IconSize) -> some View {
+        return frame(width: size.width, height: size.height)
+    }
 }

@@ -17,9 +17,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+
+import ComposableArchitecture
+
 import Home
 import Theme
 import Theme_iOS
+import Ergonomics
 
 public struct HomeTabView: View {
     public init() {}
@@ -29,36 +33,77 @@ public struct HomeTabView: View {
 }
 
 public struct HomeView: View {
-    public init() {}
+    typealias ActionSender = (HomeFeature.Action) -> ViewStoreTask
+    let store: StoreOf<HomeFeature>
+
+    static let mapHeight: CGFloat = 300
+
+    @State var notchOffset: CGFloat = 0
+
+    /// Used for determining the offset for the safe area (notch, etc) at the top of the screen
+    var notchReader: some View {
+        Rectangle()
+            .fill(Color.clear)
+            .background(
+                GeometryReader { proxy in
+                    Color.clear.onAppear {
+                        notchOffset = proxy.frame(in: .global).minY
+                    }
+                }
+            )
+    }
+
     public var body: some View {
-        ZStack(alignment: .top) {
-            HomeAsset.mainMap.swiftUIImage
-                .resizable(resizingMode: .stretch)
-                .ignoresSafeArea()
-                .aspectRatio(contentMode: .fill)
-            ZStack(alignment: .top) {
-                LinearGradient(colors: [Color(.background, .danger).opacity(0.5), .clear],
-                               startPoint: .top,
-                               endPoint: .bottom)
-                .ignoresSafeArea()
-                VStack {
-                    Spacer()
-                        .frame(height: 20)
-                    Theme.Asset.icLockOpenFilled2
-                        .swiftUIImage
-                        .foregroundColor(Color(.background, .danger))
-                    Text("You are unprotected")
-                    Text("Lithuania * 158.6.140.191")
+        WithViewStore(store, observe: { $0 }) { viewStore in
+            let item = viewStore.state.mostRecent ?? .defaultFastest
+            ScrollView {
+                ZStack(alignment: .top) {
+                    HomeMapView()
+                        .frame(minHeight: Self.mapHeight)
+
+                    notchReader
+
+                    HomeHeaderView(
+                        connected: false,
+                        location: .region(code: "LT"),
+                        notchOffset: notchOffset,
+                        mapHeight: Self.mapHeight
+                    )
+                }
+                HomeConnectionCardView(
+                    item: item,
+                    connected: false,
+                    sendAction: { _ = viewStore.send($0) }
+                )
+                VStack(spacing: 0) {
+                    if !viewStore.remainingPinnedConnections.isEmpty {
+                        HomeRecentsSectionView(
+                            items: viewStore.state.remainingPinnedConnections,
+                            pinnedSection: true,
+                            sendAction: { _ = viewStore.send($0) }
+                        )
+                    }
+                    if !viewStore.remainingRecentConnections.isEmpty {
+                        HomeRecentsSectionView(
+                            items: viewStore.state.remainingRecentConnections,
+                            pinnedSection: false,
+                            sendAction: { _ = viewStore.send($0) }
+                        )
+                    }
                 }
             }
-            .frame(height: 200)
+            .background(Color(.background))
         }
+    }
+
+    public init(store: StoreOf<HomeFeature>) {
+        self.store = store
     }
 }
 
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView()
+internal extension GeometryProxy {
+    var scrollOffset: CGFloat {
+        frame(in: .global).minY
     }
 }
 
@@ -110,3 +155,20 @@ public extension View {
             }
     }
 }
+
+extension FlagAppearance {
+    static let iOS: Self = .init(
+        secureCoreFlagShadowColor: .black.opacity(0.4),
+        secureCoreFlagCurveColor: .init(.icon, .hint),
+        fastestAccentColor: FastestFlagView.boltColor,
+        fastestBackgroundColor: Theme.Asset.sharedPineBase.swiftUIColor.opacity(0.3)
+    )
+}
+
+#if DEBUG
+struct HomeView_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeView(store: .init(initialState: .preview, reducer: HomeFeature()))
+    }
+}
+#endif

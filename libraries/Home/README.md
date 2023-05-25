@@ -1,3 +1,3 @@
 # Home
 
-A description of this package.
+The main home view of the ProtonVPN app, and its subcomponents.
