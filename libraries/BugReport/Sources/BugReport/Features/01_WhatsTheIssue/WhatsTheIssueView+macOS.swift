@@ -19,7 +19,6 @@
 #if os(macOS)
 import Foundation
 import SwiftUI
-import SwiftUINavigation
 import ComposableArchitecture
 
 // Mac view is a little bit different. Plus it doesn't have Navigation links and all

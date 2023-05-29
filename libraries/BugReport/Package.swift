@@ -18,12 +18,16 @@ let package = Package(
         .package(name: "swift-composable-architecture",
                  url: "https://github.com/pointfreeco/swift-composable-architecture",
                  branch: "prerelease/1.0"
-                )
+                ),
+        .package(url: "https://github.com/pointfreeco/swiftui-navigation", from: "0.7.1"),
     ],
     targets: [
         .target(
             name: "BugReport",
-            dependencies: [.product(name: "ComposableArchitecture", package: "swift-composable-architecture")],
+            dependencies: [
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "SwiftUINavigation", package: "swiftui-navigation")
+            ],
             resources: [
                 .process("Resources")
             ]

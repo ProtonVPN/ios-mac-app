@@ -19,7 +19,6 @@
 import Foundation
 import ComposableArchitecture
 import SwiftUI
-import SwiftUINavigation
 
 struct QuickFixesFeature: Reducer {
 
