@@ -45,11 +45,11 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Ad
-blocked</string>
+			<string>Advertentie
+geblokkeerd</string>
 			<key>other</key>
-			<string>Ads
-blocked</string>
+			<string>Advertenties
+geblokkeerd</string>
 		</dict>
 	</dict>
 	<key>_netshield_stats_trackers_stopped</key>
@@ -64,10 +64,10 @@ blocked</string>
 			<string>d</string>
 			<key>one</key>
 			<string>Tracker
-stopped</string>
+gestopt</string>
 			<key>other</key>
 			<string>Trackers
-stopped</string>
+gestopt</string>
 		</dict>
 	</dict>
 	<key>_plans_connections</key>

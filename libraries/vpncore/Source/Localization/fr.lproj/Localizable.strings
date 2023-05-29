@@ -941,7 +941,7 @@
 "_not_connected" = "Non connecté";
 
 /* Title in no internet alert */
-"_not_connected_to_the_internet" = "Impossible d'établir une connexion au VPN. Vous n'êtes pas connecté à internet.";
+"_not_connected_to_the_internet" = "La connexion VPN ne peut pas être établie. Vous n'êtes pas connecté à internet.";
 
 /* (No Comment) */
 "_not_now" = "Pas maintenant";
@@ -1490,7 +1490,7 @@
 "_switch_side_button_on" = "activé";
 
 /* (No Comment) */
-"_sysex_cannot_enable" = "Impossible d'activer l'extension système";
+"_sysex_cannot_enable" = "L'extension système ne peut pas être activée.";
 
 /* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
 "_sysex_description_1" = "Pour utiliser Proton VPN, vous devrez activer les **protocoles VPN personnalisés** sur votre Mac.";
