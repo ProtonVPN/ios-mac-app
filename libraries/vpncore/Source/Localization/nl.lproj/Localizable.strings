@@ -193,6 +193,12 @@
 /* Profile create/change form */
 "_connection_settings" = "Verbindingsinstellingen";
 
+/* macOS: Text on connection overlay shown after connection timed out */
+"_connection_timed_out" = "Connectie time-out";
+
+/* Text that should be bold in _connection_timed_out string */
+"_connection_timed_out_bold" = "verlopen";
+
 /* Text addressing to contact costumer support on several sites of the app */
 "_contact_our_support" = "Contacteer onze support";
 
@@ -386,6 +392,9 @@
 "_error_loads" = "Kan serverloads niet bijwerken";
 
 /* (No Comment) */
+"_error_mitm_description" = "De validatie van het TLS-certificaat is mislukt bij het maken van een verbinding met de Proton VPN-API. Uw huidige internetverbinding kan worden gecontroleerd. Om uw gegevens veilig te houden, voorkomen wij dat de app toegang krijgt tot de Proton VPN-API.\nOm in te loggen of toegang te krijgen tot uw account, schakelt u over naar een nieuw netwerk en probeert u opnieuw verbinding te maken.";
+
+/* (No Comment) */
 "_error_mitm_title" = "Onveilige verbinding";
 
 /* (No Comment) */
@@ -420,6 +429,12 @@
 
 /* Error when the app fails to create a user */
 "_error_user_creation" = "Account aanmaken is mislukt";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_expired" = "Gebruikersgegevens zijn verlopen. Log in";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_missing" = "Gebruikersgegevens ontbreken. Kan niet inloggen";
 
 /* Human validation failed */
 "_error_user_failed_human_validation" = "We hebben niet kunnen verifiëren of u menselijk bent. Probeer het opnieuw of koop een premium-abonnement.";
@@ -673,8 +688,17 @@
 /* iOS: Login button in several places */
 "_log_in" = "Inloggen";
 
+/* iOS widget: text for not-logged-in user */
+"_log_in_to_use_widget" = "Meld aan om te beginnen";
+
 /* iOS: button in settings screen */
 "_log_out" = "Uitloggen";
+
+/* iOS: Logout alert */
+"_log_out_warning" = "Afmelden zal uw VPN-sessie beëindigen.";
+
+/* MacOS: Logout alert */
+"_log_out_warning_long" = "Uitloggen van de applicatie zal de actieve VPN-verbinding verbreken. Wilt u doorgaan?";
 
 /* MacOS: Login button */
 "_login" = "Log in";
@@ -741,6 +765,9 @@
 
 /* Main mac app menu item */
 "_menu_hide_self" = "Verberg Proton VPN";
+
+/* Main mac app menu item */
+"_menu_logout" = "Afmelden";
 
 /* Main mac app menu item */
 "_menu_minimize" = "Minimaliseren";
@@ -865,6 +892,9 @@
 /* Netshield section title in iOS connection screen */
 "_netshield_section_title" = "Malware & Adblocker";
 
+/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
+"_netshield_stats_data_saved" = "Data bespaard";
+
 /* (No Comment) */
 "_netshield_title_tooltip" = "Blokkeer advertenties, trackers en malware";
 
@@ -927,6 +957,9 @@
 
 /* Telemetry label in the onboarding screen for mac next to a toggle */
 "_onboarding_mac_usage_stats" = "Anonieme gebruiksstatistieken delen. Dit helpt ons om VPN-blokkering te omzeilen en de prestaties van de app te verbeteren.";
+
+/* Main mac app menu item */
+"_open_app_to_log_in" = "Toon Proton VPN om in te loggen...";
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "OpenVPN logboeken";
@@ -1430,7 +1463,13 @@
 "_subscription_will_renew" = "Huidige abonnement wordt automatisch verlengd op %@.";
 
 /* (No Comment) */
+"_subuser_alert_description1" = "Om uw reis met Proton VPN te beginnen wijst u VPN-verbindingen toe aan uw account of een ander subaccount.";
+
+/* (No Comment) */
 "_subuser_alert_description2" = "Deze stap duurt slechts een paar minuten. Daarna kunt u zich inloggen en al uw apparaten beveiligen.";
+
+/* (No Comment) */
+"_subuser_alert_description3" = "Er is momenteel geen VPN-verbinding ingeschakeld voor deze account. Om uw reis met Proton VPN te starten, gelieve uw beheerder te contacteren.";
 
 /* (No Comment) */
 "_subuser_alert_enable_connections_button" = "Schakel VPN-verbindingen in";
@@ -1453,6 +1492,18 @@
 /* (No Comment) */
 "_sysex_cannot_enable" = "Kan systeemuitbreiding niet inschakelen";
 
+/* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
+"_sysex_description_1" = "Om Proton VPN te gebruiken, moet je **aangepaste VPN-protocollen** inschakelen op je Mac.";
+
+/* Part 2 of the description of the system extension wizard in mac */
+"_sysex_description_2" = "Aangepaste protocollen zorgen voor snellere en veiligere verbindingen, en je moet ze ingeschakeld hebben om verbinding te maken met de meeste Proton VPN-servers.";
+
+/* Part 3 of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
+"_sysex_description_3" = "Om verder te gaan, klik op **Open Systeem Instellingen** en volg de video-instructies op dit scherm.";
+
+/* Alternative for Part 3 for pre-ventura of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
+"_sysex_description_4" = "Om verder te gaan, klik op **Beveiligingsvoorkeuren openen** en volg de video-instructies op dit scherm.";
+
 /* (No Comment) */
 "_sysex_enabled_description" = "Configuratie voltooid. Nu kunt u sneller op het internet surfen met de beste VPN-technologieën.";
 
@@ -1468,8 +1519,14 @@
 /* Default action in the system extension wizard in mac. Pre-macOS Ventura */
 "_sysex_open_system_settings" = "Open Systeeminstellingen";
 
+/* Title of the system extension wizard in mac */
+"_sysex_set_up_proton_vpn" = "Configureer Proton VPN";
+
 /* (No Comment) */
 "_sysex_settings_description" = "Proton VPN vereist het laden van een Systeem Extensie om gebruik te maken van Smart Protocol, OpenVPN en WireGuard.";
+
+/* Main mac app menu item */
+"_system_extension_tutorial_menu_item" = "Systeem Extensie Zelfstudie";
 
 /* MacOS: Settings -> General: name of field. */
 "_system_notifications" = "Systeemnotificaties";

@@ -128,7 +128,7 @@
 "_cancel_reconnection" = "Dadurch wird jeder erneute Verbindungsversuch unterbunden und deine Verbindung wird getrennt.";
 
 /* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
-"_change_protocol_disconnect_warning" = "Das Ändern von Protokollen wird deine aktuelle VPN-Sitzung beenden.";
+"_change_protocol_disconnect_warning" = "Das Ändern des Protokolls wird deine aktuelle VPN-Sitzung beenden.";
 
 /* Changing settings title */
 "_change_settings" = "Einstellungen ändern";
@@ -1037,7 +1037,7 @@
 "_plan_speed_medium" = "Mittlere Geschwindigkeit";
 
 /* Text description in plan selection screen */
-"_plans_footer" = "Nachdem der Kauf eines kostenpflichtigen Pakets bestätigt wurde, wird dein iTunes-Konto mit dem angezeigten Betrag belastet, der Steuern und zusätzliche Plattformgebühren enthält (die nicht direkt von Proton erhoben werden). Nach dem Kauf wirst du automatisch für 1 Jahr auf das ausgewählte Paket umgestellt, danach kannst du es verlängern oder kündigen, entweder online oder über unsere iOS-App.";
+"_plans_footer" = "Nachdem der Kauf eines kostenpflichtigen Abonnements bestätigt wurde, wird dein iTunes-Konto mit dem angezeigten Betrag belastet, der Steuern und zusätzliche Plattformgebühren enthält (die nicht direkt von Proton erhoben werden). Nach dem Kauf wirst du automatisch für 1 Jahr auf das ausgewählte Abonnement umgestellt, danach kannst du es verlängern oder kündigen, entweder online oder über unsere iOS-App.";
 
 /* Features of account plan */
 "_plus_plan_features" = "Plus‐Server\nSecure Core\nTor‐Server";
@@ -1151,7 +1151,7 @@
 "_quick_settings_secureCore_note" = "„Secure Core” kann die VPN-Geschwindigkeit reduzieren";
 
 /* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "Erhöhe deine Sicherheit mit nur einem Mausklick:";
+"_quick_settings_tour_description" = "Erhöhe deine Sicherheit mit nur einem Klick:";
 
 /* MacOS app tour: quick settings secure core */
 "_quick_settings_tour_feature_1" = "Füge mit „Secure Core“ eine zusätzliche Sicherheitsebene hinzu.";

@@ -383,7 +383,7 @@
 "_error_internal_error" = "Error interno de la API";
 
 /* Keychain error */
-"_error_keychain_fetch" = "Error del llavero.";
+"_error_keychain_fetch" = "Error de la cadena de claves.";
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton no pudo comunicarse con su dispositivo. Intente de nuevo más tarde.";
@@ -413,7 +413,7 @@
 "_error_session_count_parser" = "No se puede analizar el número de sesiones";
 
 /* Generic sign in error */
-"_error_sign_in_again" = "Lo sentimos, algo salió mal. Inicie sesión de nuevo.";
+"_error_sign_in_again" = "Hubo un problema. Inicie sesión de nuevo.";
 
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "No se puede analizar la información de suscripción";
@@ -443,7 +443,7 @@
 "_error_verification_methods_parser" = "No se pueden analizar los métodos de verificación";
 
 /* VPN credentials can't be loaded error */
-"_error_vpn_credentials_missing" = "Faltan las credenciales VPN del llavero";
+"_error_vpn_credentials_missing" = "Faltan las credenciales VPN de la cadena de claves.";
 
 /* Default error when vpn properties fetch failed */
 "_error_vpn_properties" = "¡No se pueden recuperar las propiedades de VPN!";
