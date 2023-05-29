@@ -91,7 +91,4 @@
          location = "group:scripts">
       </FileRef>
    </Group>
-   <FileRef
-      location = "group:libraries/BugReport/Tests/BugReportTests/BugReport.xctestplan">
-   </FileRef>
 </Workspace>

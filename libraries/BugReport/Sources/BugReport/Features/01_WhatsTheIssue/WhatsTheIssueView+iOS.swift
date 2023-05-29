@@ -19,7 +19,6 @@
 #if os(iOS)
 import Foundation
 import SwiftUI
-import SwiftUINavigation
 import ComposableArchitecture
 
 public struct WhatsTheIssueView: View {
