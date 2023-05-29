@@ -37,7 +37,15 @@ struct ReportBugFeatureMacOS: Reducer {
             }
         }
 
-        var currentPage: Page {
+        init(whatsTheIssueState: WhatsTheIssueFeature.State) {
+            self.whatsTheIssueState = whatsTheIssueState
+            self.currentPage = .whatsTheIssue(whatsTheIssueState)
+        }
+
+        var currentPage: Page
+
+        /// Map state to the page that should be displayed
+        fileprivate func currentPageNow() -> Page {
             guard let route = whatsTheIssueState.route else {
                 return .whatsTheIssue(whatsTheIssueState)
             }
@@ -67,7 +75,7 @@ struct ReportBugFeatureMacOS: Reducer {
         case whatsTheIssueAction(WhatsTheIssueFeature.Action)
     }
 
-    enum Page {
+    enum Page: Equatable {
         case whatsTheIssue(WhatsTheIssueFeature.State)
         case quickFixes(QuickFixesFeature.State)
         case contactForm(ContactFormFeature.State, ContactFormParent)
@@ -80,6 +88,9 @@ struct ReportBugFeatureMacOS: Reducer {
     }
 
     var body: some ReducerOf<Self> {
+        Scope(state: \.whatsTheIssueState, action: /Action.whatsTheIssueAction) {
+            WhatsTheIssueFeature()
+        }
         Reduce { state, action in
             switch action {
             case .backPressed:
@@ -90,34 +101,19 @@ struct ReportBugFeatureMacOS: Reducer {
                 switch route {
                 case .quickFixes(let quickFixesState):
                     if quickFixesState.contactFormState != nil {
-//                        state.whatsTheIssueState.route = .quickFixes(<#T##QuickFixesFeature.State#>)
-//                        quickFixesState.contactFormState = nil
+                        return .send(.whatsTheIssueAction(.route(.quickFixes(.contactFormDeselected))))
                     } else {
-                        state.whatsTheIssueState.route = nil
+                        return .send(.whatsTheIssueAction(.quickFixesDeselected))
                     }
 
                 case .contactForm:
-                    state.whatsTheIssueState.route = nil
+                    return .send(.whatsTheIssueAction(.contactFormDeselected))
                 }
-                return .none
-/*
-                if nil != state.whatsTheIssueState.quickFixesState {
-                    if nil != state.whatsTheIssueState.quickFixesState?.contactFormState {
-                        state.whatsTheIssueState.quickFixesState?.contactFormState = nil
-                    } else {
-                        state.whatsTheIssueState.quickFixesState = nil
-                    }
-                } else if nil != state.whatsTheIssueState.contactFormState {
-                    state.whatsTheIssueState.contactFormState = nil
-                }
-                return .none*/
 
             default:
+                state.currentPage = state.currentPageNow()
                 return .none
             }
-        }
-        Scope(state: \.whatsTheIssueState, action: /Action.whatsTheIssueAction) {
-            WhatsTheIssueFeature()
         }
     }
 
@@ -142,9 +138,9 @@ public struct ReportBugView: View {
                                                                 action: {
                         switch parent {
                         case .whatsTheIssue:
-                            return ReportBugFeatureMacOS.Action.whatsTheIssueAction(.contactFormAction(.resultViewAction($0)))
+                            return ReportBugFeatureMacOS.Action.whatsTheIssueAction(.route(.contactForm(.resultViewAction($0))))
                         case .quickFixes:
-                            return ReportBugFeatureMacOS.Action.whatsTheIssueAction(.quickFixesAction(.contactFormAction(.resultViewAction($0))))
+                            return ReportBugFeatureMacOS.Action.whatsTheIssueAction(.route(.quickFixes(.contactFormAction(.resultViewAction($0)))))
                         }
                     }))
                         .padding(.horizontal, horizontalPadding)
@@ -174,16 +170,16 @@ public struct ReportBugView: View {
 
                         case .quickFixes(let state):
                             QuickFixesView(store: self.store.scope(state: { _ in state },
-                                                                   action: { ReportBugFeatureMacOS.Action.whatsTheIssueAction(.quickFixesAction($0)) }))
+                                                                   action: { ReportBugFeatureMacOS.Action.whatsTheIssueAction(.route(.quickFixes($0))) }))
 
                         case .contactForm(let state, let parent):
                             ContactFormView(store: self.store.scope(state: { _ in state },
                                                                     action: {
                                 switch parent {
                                 case .whatsTheIssue:
-                                    return ReportBugFeatureMacOS.Action.whatsTheIssueAction(.contactFormAction($0))
+                                    return ReportBugFeatureMacOS.Action.whatsTheIssueAction(.route(.contactForm($0)))
                                 case .quickFixes:
-                                    return ReportBugFeatureMacOS.Action.whatsTheIssueAction(.quickFixesAction(.contactFormAction($0)))
+                                    return ReportBugFeatureMacOS.Action.whatsTheIssueAction(.route(.quickFixes(.contactFormAction($0))))
                                 }
                             }))
 
