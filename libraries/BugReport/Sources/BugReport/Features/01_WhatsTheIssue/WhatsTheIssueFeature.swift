@@ -30,10 +30,7 @@ struct WhatsTheIssueFeature: Reducer {
         case categorySelected(Category)
         case route(Route.Action)
 
-        case quickFixesAction(QuickFixesFeature.Action)
         case quickFixesDeselected
-
-        case contactFormAction(ContactFormFeature.Action)
         case contactFormDeselected
     }
 
@@ -70,13 +67,7 @@ struct WhatsTheIssueFeature: Reducer {
                 state.route = nil
                 return .none
 
-            case .quickFixesAction:
-                return .none
-
             // 03. Contact form
-
-            case .contactFormAction:
-                return .none
 
             case .contactFormDeselected:
                 state.route = nil

@@ -42,11 +42,11 @@ final class WhatsTheIssueFeatureTests: XCTestCase {
 
         let category = categoryWithQuickFixes
         await store.send(.categorySelected(category), assert: { resultState in
-            resultState.quickFixesState = QuickFixesFeature.State(category: category)
+            resultState.route = .quickFixes(QuickFixesFeature.State(category: category))
         })
 
         await store.send(.quickFixesDeselected, assert: { resultState in
-            resultState.quickFixesState = nil
+            resultState.route = nil
         })
     }
 
@@ -59,10 +59,10 @@ final class WhatsTheIssueFeatureTests: XCTestCase {
 
         let category = categoryWithoutQuickFixes
         await store.send(.categorySelected(category), assert: { resultState in
-            resultState.contactFormState = ContactFormFeature.State(fields: category.inputFields, category: category.label)
+            resultState.route = .contactForm(ContactFormFeature.State(fields: category.inputFields, category: category.label))
         })
         await store.send(.contactFormDeselected, assert: { resultState in
-            resultState.contactFormState = nil
+            resultState.route = nil
         })
     }
 }
