@@ -7,60 +7,61 @@
 */
 
 /* Home tab in bottom menu */
+/* Home tab in bottom menu [Redesign_2023] */
 "_home_tab" = "Home";
 
-/* Countries tab in bottom menu */
+/* Countries tab in bottom menu [Redesign_2023] */
 "_countries_tab" = "Countries";
 
-/* Settings tab in bottom menu */
+/* Settings tab in bottom menu [Redesign_2023] */
 "_settings_tab" = "Settings";
 
-/* The header shown at the top of the application in the home tab when the VPN is not connected to any server. */
+/* The header shown at the top of the application in the home tab when the VPN is not connected to any server. [Redesign_2023] */
 "_home_unprotected_header" = "You are unprotected";
 
-/* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. */
+/* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023] */
 "_home_unprotected_accessibility_label" = "You are browsing unprotected from %@.";
 
-/* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. */
+/* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
 "_home_unprotected_accessibility_hint" = "The VPN is disconnected. Connect to a server to securely browse the internet.";
 
-/* Connection card in home tab: "Safely browsing from... <country name>" */
+/* Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023] */
 "_connection_card_safely_browsing_from" = "Safely browsing from";
 
-/* Connection card in home tab: "Last connected to... <country name>" */
+/* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
 "_connection_card_last_connected_to" = "Last connected to";
 
-/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. */
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_last_connected_to" = "You were last connected to %@.";
 
-/* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. */
+/* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_browsing_from" = "You are safely browsing from %@.";
 
-/* The section of pinned recent connections in the Home tab. */
+/* The section of pinned recent connections in the Home tab. [Redesign_2023] */
 "_home_recents_pinned_section" = "Pinned";
 
-/* The section of recent connections in the Home tab. */
+/* The section of recent connections in the Home tab. [Redesign_2023] */
 "_home_recents_recent_section" = "Recent";
 
-/* For buttons / navigation links which open a help menu or tooltip. */
+/* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
 "_action_help" = "Help";
 
-/* For buttons which have an action that connects to a server. */
+/* For buttons which have an action that connects to a server. [Redesign_2023] */
 "_action_connect" = "Connect";
 
-/* For buttons which have an action that removes an item. */
+/* For buttons which have an action that removes an item. [Redesign_2023] */
 "_action_remove" = "Remove";
 
-/* For buttons which have an action that disconnects from a server. */
+/* For buttons which have an action that disconnects from a server. [Redesign_2023] */
 "_action_disconnect" = "Disconnect";
 
-/* Home screen: pin this connection in the recents view. */
+/* Home screen: pin this connection in the recents view. [Redesign_2023] */
 "_action_home_pin" = "Pin";
 
-/* Home screen: unpin this connection from the recents view. */
+/* Home screen: unpin this connection from the recents view. [Redesign_2023] */
 "_action_home_unpin" = "Unpin";
 
-/* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. */
+/* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
 "_secure_core_via_country" = "via %@";
 
 /* Connection status title when user is not connected to a VPN */

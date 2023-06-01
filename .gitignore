@@ -15,19 +15,13 @@ swiftlint.xml
 
 libraries/vpncore/Source/LocalizedString.swift
 
-sampleapps/OnboardingSampleApp/OnboardingSampleApp.xcodeproj/xcuserdata
-sampleapps/ModalsSampleApp/ModalsSampleApp.xcodeproj/xcuserdata
-sampleapps/ModalsSampleMacOSApp/ModalsSampleApp.xcodeproj/xcuserdata
+sampleapps/**/xcuserdata
 
 # Dynamic bug report lib and examples
 libraries/BugReport/BugReport.xcodeproj/xcuserdata
-sampleapps/BugReportSampleMacOSApp/BugReportSampleMacOSApp.xcodeproj/xcuserdata
-sampleapps/BugReportSampleiOSApp/BugReportSampleiOSApp.xcodeproj/xcuserdata
 
 # Directory created by gitlab-runner
 builds
-sampleapps/ModalsSampleMacOSApp/ModalsSampleMacOSApp.xcodeproj/xcuserdata
-sampleapps/SearchSampleApp/SearchSampleApp.xcodeproj/xcuserdata
 libraries/Review/Tests/ReviewTests/ExtensionsTests.swift.plist
 libraries/Review/Tests/ReviewTests/UserDefaultsReviewDataStorageTests.swift.plist
 swiftlint.json
