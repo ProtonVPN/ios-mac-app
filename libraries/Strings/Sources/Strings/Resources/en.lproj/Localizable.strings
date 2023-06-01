@@ -5,3 +5,13 @@
   Created by John Biggs on 01.06.23.
   
 */
+
+/* Home tab in bottom menu */
+"_home_tab" = "Home";
+
+/* Countries tab in bottom menu */
+"_countries_tab" = "Countries";
+
+/* Settings tab in bottom menu */
+"_settings_tab" = "Settings";
+
