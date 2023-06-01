@@ -8,6 +8,9 @@
       location = "group:libraries/Ergonomics">
    </FileRef>
    <FileRef
+      location = "group:libraries/ConnectionDetails">
+   </FileRef>
+   <FileRef
       location = "group:libraries/Home">
    </FileRef>
    <FileRef
@@ -28,6 +31,12 @@
    <Group
       location = "container:"
       name = "SampleApps">
+      <FileRef
+         location = "group:sampleapps/UIExampleMacApp/UIExampleMacApp.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:sampleapps/UIExampleApp/UIExampleApp.xcodeproj">
+      </FileRef>
       <FileRef
          location = "group:sampleapps/BugReportSampleiOSApp/BugReportSampleiOSApp.xcodeproj">
       </FileRef>

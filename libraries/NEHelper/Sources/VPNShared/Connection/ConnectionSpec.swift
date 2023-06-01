@@ -37,14 +37,16 @@ public struct ConnectionSpec: Equatable, Hashable {
         case secureCore(SecureCoreSpec)
     }
 
-    public enum Feature: Equatable, Hashable, CustomStringConvertible {
+    public enum Feature: Equatable, Hashable, CustomStringConvertible, Identifiable {
+        public var id: Self { self } // Identifiable
+
         case smart
         case streaming
         case p2p
         case tor
         case partner(name: String)
 
-        // TODO: Localized strings
+        // todo: Localized strings
         public var description: String {
             switch self {
             case .smart:
