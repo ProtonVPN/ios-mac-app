@@ -15,3 +15,50 @@
 /* Settings tab in bottom menu */
 "_settings_tab" = "Settings";
 
+/* The header shown at the top of the application in the home tab when the VPN is not connected to any server. */
+"_home_unprotected_header" = "You are unprotected";
+
+/* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. */
+"_home_unprotected_accessibility_label" = "You are browsing unprotected from %@.";
+
+/* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. */
+"_home_unprotected_accessibility_hint" = "The VPN is disconnected. Connect to a server to securely browse the internet.";
+
+/* Connection card in home tab: "Safely browsing from... <country name>" */
+"_connection_card_safely_browsing_from" = "Safely browsing from";
+
+/* Connection card in home tab: "Last connected to... <country name>" */
+"_connection_card_last_connected_to" = "Last connected to";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. */
+"_connection_card_accessibility_last_connected_to" = "You were last connected to %@.";
+
+/* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. */
+"_connection_card_accessibility_browsing_from" = "You are safely browsing from %@.";
+
+/* The section of pinned recent connections in the Home tab. */
+"_home_recents_pinned_section" = "Pinned";
+
+/* The section of recent connections in the Home tab. */
+"_home_recents_recent_section" = "Recent";
+
+/* For buttons / navigation links which open a help menu or tooltip. */
+"_action_help" = "Help";
+
+/* For buttons which have an action that connects to a server. */
+"_action_connect" = "Connect";
+
+/* For buttons which have an action that removes an item. */
+"_action_remove" = "Remove";
+
+/* For buttons which have an action that disconnects from a server. */
+"_action_disconnect" = "Disconnect";
+
+/* Home screen: pin this connection in the recents view. */
+"_action_home_pin" = "Pin";
+
+/* Home screen: unpin this connection from the recents view. */
+"_action_home_unpin" = "Unpin";
+
+/* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. */
+"_secure_core_via_country" = "via %@";

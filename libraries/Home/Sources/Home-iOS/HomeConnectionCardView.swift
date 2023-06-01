@@ -18,8 +18,10 @@
 
 import Foundation
 import SwiftUI
+
 import ComposableArchitecture
 import Dependencies
+
 import Home
 import Theme
 import Strings
@@ -36,29 +38,29 @@ struct HomeConnectionCardView: View {
     let sendAction: HomeFeature.ActionSender
 
     var headerText: String {
-        connected ? "Safely browsing from" : "Last connected to"
+        connected ?
+            Localizable.connectionCardSafelyBrowsingFrom :
+            Localizable.connectionCardLastConnectedTo
     }
 
     var accessibilityText: String {
-        let you = connected ? "You are" : "You were"
-        let connectedTo = headerText.lowercased()
         let countryName = item.connection.location.text(locale: locale)
-        return "\(you) \(connectedTo) \(countryName)"
-    }
 
-    var accessibilityHint: String {
-        let connect = connected ? "disconnect from" : "connect to"
-        return "Select this element to \(connect) this server."
+        let accessibilityText = connected ?
+            Localizable.connectionCardAccessibilityBrowsingFrom :
+            Localizable.connectionCardAccessibilityLastConnectedTo
+
+        return accessibilityText(countryName)
     }
 
     var header: some View {
         HStack {
-            Text(connected ? "Safely browsing from" : "Last connected to")
+            Text(headerText)
                 .themeFont(.body1())
                 .styled()
                 .textCase(nil)
             Spacer()
-            Text("Help")
+            Text(Localizable.actionHelp)
                 .themeFont(.body1())
                 .styled(.weak)
                 .textCase(nil)
@@ -93,7 +95,7 @@ struct HomeConnectionCardView: View {
                     sendAction(.connect(item.connection))
                 }
             } label: {
-                Text("Connect")
+                Text(Localizable.actionConnect)
             }
             .frame(maxWidth: .infinity, minHeight: 48)
             .foregroundColor(Color(.text, .primary))
