@@ -23,6 +23,7 @@ let package = Package(
     dependencies: [
         .package(path: "../Theme"),
         .package(path: "../NEHelper"),
+        .package(path: "../Strings"),
         .package(path: "../Ergonomics"),
         .package(
             url: "https://github.com/pointfreeco/swift-composable-architecture",
@@ -42,6 +43,7 @@ let package = Package(
             name: "Home",
             dependencies: [
                 "Theme",
+                "Strings",
                 "Ergonomics",
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
@@ -55,6 +57,7 @@ let package = Package(
             name: "Home-iOS",
             dependencies: [
                 "Home",
+                "Strings",
                 .product(name: "Theme-iOS", package: "Theme"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ],

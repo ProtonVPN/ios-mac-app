@@ -1,14 +1,3 @@
-strings:
-  inputs:
-    - Resources/en.lproj/Localizable.strings
-    - Resources/en.lproj/Localizable.stringsdict
-  outputs:
-    params:
-      publicAccess: true
-      enumName: LocalizedString
-    templateName: structured-swift5
-    output: Resources/LocalizedString.swift
-
 xcassets:
   inputs: Resources/Assets.xcassets
   outputs:

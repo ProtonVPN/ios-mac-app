@@ -22,6 +22,7 @@ import SwiftUI
 import Dependencies
 
 import Home
+import Strings
 import VPNShared
 import Theme
 
@@ -52,13 +53,11 @@ struct HomeHeaderView: View {
                     .swiftUIImage
                     .styled(.danger)
                     .accessibilityHidden(true)
-                Text("You are unprotected")
+                Text(Localizable.homeUnprotectedHeader)
                     .themeFont(.body1(.semibold))
                     .styled()
                     .padding(.themeSpacing4)
-                    .accessibilityHint(
-                        "The VPN is disconnected. Connect to securely browse the internet."
-                    )
+                    .accessibilityHint(Localizable.homeUnprotectedAccessibilityHint)
                 HStack(spacing: 0) {
                     Text(countryName)
                         .themeFont(.body2())
@@ -71,7 +70,7 @@ struct HomeHeaderView: View {
                         .styled(.weak)
                 }
                 .accessibilityElement()
-                .accessibilityLabel("You are browsing unprotected from \(countryName).")
+                .accessibilityLabel(Localizable.homeUnprotectedAccessibilityLabel(countryName))
                 .padding(.themeSpacing4)
                 .background(Color(.background).opacity(0.5))
                 .cornerRadius(.themeRadius4)

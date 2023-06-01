@@ -22,6 +22,7 @@ import SwiftUI
 import ComposableArchitecture
 
 import Home
+import Strings
 import Theme
 import Theme_iOS
 import VPNShared
@@ -33,7 +34,9 @@ public struct HomeRecentsSectionView: View {
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(pinnedSection ? "Pinned" : "Recent")
+            Text(pinnedSection ?
+                    Localizable.homeRecentsPinnedSection :
+                    Localizable.homeRecentsRecentSection)
                 .themeFont(.body2())
                 .styled(.weak)
                 .padding()
@@ -129,10 +132,10 @@ struct RecentRowItemView: View {
         }
         .accessibilityElement()
         .accessibilityLabel(item.connection.location.accessibilityText(locale: locale))
-        .accessibilityAction(named: Text("Connect")) {
+        .accessibilityAction(named: Localizable.actionConnect) {
             _ = sendAction(.connect(item.connection))
         }
-        .accessibilityAction(named: Text("Remove")) {
+        .accessibilityAction(named: Localizable.actionRemove) {
             _ = sendAction(.remove(item.connection))
         }
         .accessibilityAction(
@@ -243,13 +246,13 @@ extension HomeFeature.Action {
         let words: String
         switch self {
         case .connect:
-            words = "Connect"
+            words = Localizable.actionConnect
         case .pin:
-            words = "Pin"
+            words = Localizable.actionHomePin
         case .unpin:
-            words = "Unpin"
+            words = Localizable.actionHomeUnpin
         case .remove:
-            words = "Remove"
+            words = Localizable.actionRemove
         }
 
         return Text(words)

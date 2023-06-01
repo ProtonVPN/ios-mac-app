@@ -17,3 +17,17 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+
+func localizeStringAndFallbackToEn(_ key: String, _ table: String, _ value: String) -> String {
+    let format = NSLocalizedString(key, tableName: table, bundle: Bundle.module, comment: "")
+    if format != key || NSLocale.preferredLanguages.first == "en" {
+        return format
+    }
+
+    // Fall back to en
+    guard let path = Bundle.module.path(forResource: "en", ofType: "lproj"), let bundle = Bundle(path: path) else {
+        return value
+    }
+
+    return NSLocalizedString(key, bundle: bundle, comment: "")
+}

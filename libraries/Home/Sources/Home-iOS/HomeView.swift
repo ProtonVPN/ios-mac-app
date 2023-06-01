@@ -21,6 +21,7 @@ import SwiftUI
 import ComposableArchitecture
 
 import Home
+import Strings
 import Theme
 import Theme_iOS
 import Ergonomics
@@ -126,7 +127,7 @@ public extension View {
         return self
             .tabItem {
                 Label {
-                    Text(LocalizedString.settingsTabBarTitle)
+                    Text(Localizable.settingsTab)
                 } icon: {
                     Theme.Asset.icCogWheel.swiftUIImage
                 }
@@ -137,7 +138,7 @@ public extension View {
         return self
             .tabItem {
                 Label {
-                    Text(LocalizedString.countriesTabBarTitle)
+                    Text(Localizable.countriesTab)
                 } icon: {
                     Theme.Asset.icEarth.swiftUIImage
                 }
@@ -148,7 +149,7 @@ public extension View {
         return self
             .tabItem {
                 Label {
-                    Text(LocalizedString.homeTabBarTitle)
+                    Text(Localizable.homeTab)
                 } icon: {
                     Theme.Asset.icHouseFilled.swiftUIImage
                 }
