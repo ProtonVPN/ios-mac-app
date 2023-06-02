@@ -45,9 +45,9 @@ public extension NSImage {
     func resize(_ newSize: AppTheme.IconSize) -> NSImage {
         switch newSize {
         case .square(let size):
-            return self.resize(newWidth: size, newHeight: size)
+            return self.resize(newWidth: Int(size), newHeight: Int(size))
         case let .rect(width, height):
-            return self.resize(newWidth: width, newHeight: height)
+            return self.resize(newWidth: Int(width), newHeight: Int(height))
         case .default:
             return self
         }
