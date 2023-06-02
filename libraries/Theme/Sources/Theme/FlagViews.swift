@@ -198,7 +198,7 @@ public struct FastestFlagView: FlagView {
 extension FlagAppearance {
     static let previews: Self = .init(
         secureCoreFlagShadowColor: .black.opacity(0.4),
-        secureCoreFlagCurveColor: .init(.separator),
+        secureCoreFlagCurveColor: .gray,
         fastestAccentColor: FastestFlagView.boltColor,
         fastestBackgroundColor: .init(cgColor: .init(
             red: 0.1094,

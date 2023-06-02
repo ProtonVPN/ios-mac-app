@@ -18,8 +18,6 @@
 
 import Foundation
 
-import Theme
-
 public struct ConnectionSpec: Equatable, Hashable {
     public enum Server: Equatable, Hashable {
         case free

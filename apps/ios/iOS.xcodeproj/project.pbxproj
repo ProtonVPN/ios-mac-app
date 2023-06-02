@@ -48,6 +48,8 @@
 		4CB776D02A1F603B004CA127 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 4CB776CF2A1F603B004CA127 /* Dependencies */; };
 		4CB776D22A1F6250004CA127 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 4CB776D12A1F6250004CA127 /* PMLogger */; };
 		4CB776D52A1F62DF004CA127 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 4CB776D42A1F62DF004CA127 /* Logging */; };
+		4CD1107F2A2A09410062AE13 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1107E2A2A09410062AE13 /* Logging */; };
+		4CD110812A2A095D0062AE13 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD110802A2A095D0062AE13 /* PMLogger */; };
 		572DD1FF28EAD6E60051DB1A /* credentials_bf22.plist in Resources */ = {isa = PBXBuildFile; fileRef = 572DD1FE28EAD6E60051DB1A /* credentials_bf22.plist */; };
 		57E3438E28E573D60012B2DF /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438D28E573D60012B2DF /* PlanTests.swift */; };
 		57E3439028E576A70012B2DF /* SubscriptionsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438F28E576A70012B2DF /* SubscriptionsRobot.swift */; };
@@ -1142,6 +1144,8 @@
 			files = (
 				E582CC1A2A13999000C91B64 /* Theme-iOS in Frameworks */,
 				80392CA76D20B620739FAA5D /* Pods_ProtonVPNTests.framework in Frameworks */,
+				4CD1107F2A2A09410062AE13 /* Logging in Frameworks */,
+				4CD110812A2A095D0062AE13 /* PMLogger in Frameworks */,
 				D55F10F0297FD1DF00EAF2AB /* LocalFeatureFlags in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2578,6 +2582,8 @@
 			packageProductDependencies = (
 				D55F10EF297FD1DF00EAF2AB /* LocalFeatureFlags */,
 				E582CC192A13999000C91B64 /* Theme-iOS */,
+				4CD1107E2A2A09410062AE13 /* Logging */,
+				4CD110802A2A095D0062AE13 /* PMLogger */,
 			);
 			productName = ProtonVPNTests;
 			productReference = 791DE5EF208DDA3200A29EA5 /* ProtonVPNTests.xctest */;
@@ -5065,6 +5071,15 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4CB776D32A1F62DF004CA127 /* XCRemoteSwiftPackageReference "swift-log" */;
 			productName = Logging;
+		};
+		4CD1107E2A2A09410062AE13 /* Logging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4CB776D32A1F62DF004CA127 /* XCRemoteSwiftPackageReference "swift-log" */;
+			productName = Logging;
+		};
+		4CD110802A2A095D0062AE13 /* PMLogger */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PMLogger;
 		};
 		D16ECAECC9861A6ED5EDA4F2 /* Modals */ = {
 			isa = XCSwiftPackageProductDependency;
