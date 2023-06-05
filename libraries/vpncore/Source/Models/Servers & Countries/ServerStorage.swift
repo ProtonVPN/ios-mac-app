@@ -48,6 +48,9 @@ public class ServerStorageConcrete: ServerStorage {
     
     private static var servers = [ServerModel]()
     private static var age: TimeInterval?
+
+    // Used for saving servers always on the same queue
+    private static let queue = DispatchQueue(label: "ch.protonvpn.ServerStorageConcrete")
     
     public var contentChanged = Notification.Name("ServerStorageContentChanged")
 
@@ -91,7 +94,7 @@ public class ServerStorageConcrete: ServerStorage {
     }
     
     public func store(_ newServers: [ServerModel]) {
-        DispatchQueue.global(qos: .default).async { [versionKey, ageKey, storageKey, storageVersion] in
+        ServerStorageConcrete.queue.async { [versionKey, ageKey, storageKey, storageVersion] in
             do {
                 let age = Date().timeIntervalSince1970
                 let serversData = try JSONEncoder().encode(newServers)
