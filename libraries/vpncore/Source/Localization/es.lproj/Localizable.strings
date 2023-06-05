@@ -53,7 +53,7 @@
 "_advanced_features" = "+ Características avanzadas";
 
 /* API error */
-"_ae_vpn_info_not_received" = "No se puede obtener información de la VPN";
+"_ae_vpn_info_not_received" = "No se puede obtener información de la VPN.";
 
 /* API error */
 "_ae_wrong_login_credentials" = "Nombre de usuario o contraseña incorrectos";
@@ -74,7 +74,7 @@
 "_allow" = "Permitir";
 
 /* (No Comment) */
-"_allow_lan_description" = "Para permitir acceso LAN, Kill switch debe estar desactivado.\n\n¿Deseas continuar?";
+"_allow_lan_description" = "Para permitir el acceso LAN, Kill switch debe estar desactivado.\n\n¿Deseas continuar?";
 
 /* (No Comment) */
 "_allow_lan_info" = "Permite omitir la VPN y conectarse a dispositivos de su red local, como la impresora.";
@@ -101,7 +101,7 @@
 "_application_logs" = "Registro de la aplicación";
 
 /* (No Comment) */
-"_applying_settings_" = "Aplicando la configuración";
+"_applying_settings_" = "Aplicando los ajustes";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_auto_assigned" = "Asignado automáticamente";
@@ -368,10 +368,10 @@
 "_error_field_email_wrong_format" = "La dirección de correo electrónico no es válida.";
 
 /* (No Comment) */
-"_error_field_passwords_dont_match" = "Las contraseñas no coinciden";
+"_error_field_passwords_dont_match" = "Las contraseñas no coinciden.";
 
 /* Form validation error */
-"_error_field_required" = "Este campo es obligatorio";
+"_error_field_required" = "Este campo es obligatorio.";
 
 /* Error when generate srp clint */
 "_error_generate_srp" = "La generación de SRP ha fallado";
@@ -580,6 +580,9 @@
 /* Value of speed in _speed */
 "_highest" = "Máxima";
 
+/* iOS: Home screen title, tab bar item title; MacOS: TabBar tab title; */
+"_home" = "Inicio";
+
 /* Button in Kill switch error alert */
 "_ignore" = "Ignorar";
 
@@ -620,7 +623,7 @@
 "_kill_switch" = "Kill Switch";
 
 /* Disconnect notification */
-"_kill_switch_blocking_connection" = "Kill Switch está bloqueando todas las conexiones";
+"_kill_switch_blocking_connection" = "Kill Switch bloquea todas las conexiones.";
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Deshabilitar Kill Switch";
@@ -872,7 +875,7 @@
 "_netshield_alert_upgrade_description" = "NetShield aumenta tu privacidad bloqueando anuncios y rastreadores.";
 
 /* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
-"_netshield_feature_description" = "Protégete contra anuncios, malware y rastreadores en sitios web y applicaciones. Si los sitios web no cargan, intenta deshabilitar NetShield.\nMás información";
+"_netshield_feature_description" = "Protégete contra anuncios, malware y rastreadores en sitios web y aplicaciones. Si los sitios web no cargan, intenta deshabilitar NetShield.\nMás información";
 
 /* Link with more info in the NetShield Feature description */
 "_netshield_feature_description_alt_link" = "Más información";
@@ -893,7 +896,7 @@
 "_netshield_section_title" = "Malware & Bloqueador de anuncios";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
-"_netshield_stats_data_saved" = "Datos\nguardados";
+"_netshield_stats_data_saved" = "Datos\nahorrados";
 
 /* (No Comment) */
 "_netshield_title_tooltip" = "Bloquear anuncios, rastreadores y malware";
@@ -1514,7 +1517,7 @@
 "_sysex_error_description" = "Se ha producido un error al instalar la extensión del sistema.\nVuelva a instalar Proton VPN, asegurándose de que se encuentra en la carpeta de aplicaciones, para solucionar este problema. Alternativamente, póngase en contacto con nuestro soporte.";
 
 /* Default action in the system extension wizard in mac. macOS Ventura */
-"_sysex_open_security_preferences" = "Abrir las preferencias de seguridad";
+"_sysex_open_security_preferences" = "Abrir los ajustes de seguridad";
 
 /* Default action in the system extension wizard in mac. Pre-macOS Ventura */
 "_sysex_open_system_settings" = "Abrir los ajustes del sistema";
@@ -1562,7 +1565,7 @@
 "_tor_server" = "Servidor Tor";
 
 /* (No Comment) */
-"_troubleshoot_item_alt_description" = "En caso de que los sitios de Proton estén bloqueados, esta configuración permite a la aplicación probar rutas alternativas de red para llegar a Proton, que puede ser útil para evitar problemas de red o de cortafuegos. Recomendamos mantener esta configuración encendida para mayor fiabilidad. \nMás información";
+"_troubleshoot_item_alt_description" = "En caso de que los sitios de Proton estén bloqueados, esta opción permite a la aplicación probar rutas alternativas de red para llegar a Proton, que puede ser útil para evitar problemas de red o de cortafuegos. Recomendamos mantener esta opción encendida para mayor fiabilidad. \nMás información";
 
 /* (No Comment) */
 "_troubleshoot_item_alt_link1" = "Más información";
@@ -1607,7 +1610,7 @@
 "_troubleshoot_item_other_title" = "Todavía no se puede encontrar una solución";
 
 /* (No Comment) */
-"_troubleshoot_item_proton_description" = "Consulta el estado de Proton para conocer el estado de nuestro sistema.";
+"_troubleshoot_item_proton_description" = "Consulta Proton Status para conocer el estado de nuestro sistema.";
 
 /* (No Comment) */
 "_troubleshoot_item_proton_link1" = "Estado de Proton";
@@ -1784,7 +1787,7 @@
 "_vpnauth_too_many_certs_title" = "Error de autenticación";
 
 /* (No Comment) */
-"_vpnstatus_not_loggedin" = "No has iniciado sesión en Proton VPN. Abra la aplicación Proton VPN e inicie sesión.";
+"_vpnstatus_not_loggedin" = "No has iniciado sesión en Proton VPN. Abre la aplicación Proton VPN e inicia sesión.";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Advertencia";
@@ -1805,7 +1808,7 @@
 "_welcome_headline" = "Protégete en línea";
 
 /* MacOS welcome screen: title */
-"_welcome_title" = "¡TE DAMOS LA BIENVENIDAD!";
+"_welcome_title" = "¡TE DAMOS LA BIENVENIDA!";
 
 /* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Deshabilitar Kill Switch";
@@ -1826,10 +1829,10 @@
 "authenticate" = "Autentificar";
 
 /* Banner shown after coupon is applied */
-"coupon_applied" = "El cupón se ha aplicado.";
+"coupon_applied" = "El cupón se ha canjeado correctamente.";
 
 /* Banner shown after coupon is applied but the plan is not yet upgraded */
-"coupon_applied_plan_not_upgraded_yet" = "El cupón se ha aplicado. Tu suscripción se actualizará en unos minutos.";
+"coupon_applied_plan_not_upgraded_yet" = "El cupón se ha canjeado correctamente. Tu suscripción se actualizará en unos minutos.";
 
 /* Title of the screen to apply a coupon */
 "coupon_code" = "Código de descuento";

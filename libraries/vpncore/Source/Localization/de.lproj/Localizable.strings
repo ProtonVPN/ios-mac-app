@@ -580,6 +580,9 @@
 /* Value of speed in _speed */
 "_highest" = "Höchste";
 
+/* iOS: Home screen title, tab bar item title; MacOS: TabBar tab title; */
+"_home" = "Startseite";
+
 /* Button in Kill switch error alert */
 "_ignore" = "Ignorieren";
 

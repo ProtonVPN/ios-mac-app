@@ -580,6 +580,9 @@
 /* Value of speed in _speed */
 "_highest" = "Máxima";
 
+/* iOS: Home screen title, tab bar item title; MacOS: TabBar tab title; */
+"_home" = "Inicio";
+
 /* Button in Kill switch error alert */
 "_ignore" = "Ignorar";
 
@@ -893,7 +896,7 @@
 "_netshield_section_title" = "Malware y bloqueador de anuncios";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
-"_netshield_stats_data_saved" = "Datos\nguardados";
+"_netshield_stats_data_saved" = "Datos\nahorrados";
 
 /* (No Comment) */
 "_netshield_title_tooltip" = "Bloquea anuncios, rastreadores y malware";
