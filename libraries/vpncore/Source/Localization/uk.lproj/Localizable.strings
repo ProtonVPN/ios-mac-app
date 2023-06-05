@@ -580,6 +580,9 @@
 /* Value of speed in _speed */
 "_highest" = "Найвища";
 
+/* iOS: Home screen title, tab bar item title; MacOS: TabBar tab title; */
+"_home" = "Домівка";
+
 /* Button in Kill switch error alert */
 "_ignore" = "Ігнорувати";
 

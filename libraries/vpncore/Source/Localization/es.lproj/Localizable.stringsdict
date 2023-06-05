@@ -45,10 +45,10 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>anuncio
+			<string>Anuncio
 bloqueado</string>
 			<key>other</key>
-			<string>anuncios
+			<string>Anuncios
 bloqueados</string>
 		</dict>
 	</dict>
@@ -63,10 +63,10 @@ bloqueados</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>rastreador
+			<string>Rastreador
 detenido</string>
 			<key>other</key>
-			<string>rastreadores
+			<string>Rastreadores
 detenidos</string>
 		</dict>
 	</dict>
