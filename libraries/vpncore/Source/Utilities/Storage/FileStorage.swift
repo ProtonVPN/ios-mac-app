@@ -42,7 +42,7 @@ public class FileStorage: DataStorage {
 }
 
 extension FileManager {
-    static var cachesDirectoryURL: URL {
+    public static var cachesDirectoryURL: URL {
         get throws {
             try FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
         }

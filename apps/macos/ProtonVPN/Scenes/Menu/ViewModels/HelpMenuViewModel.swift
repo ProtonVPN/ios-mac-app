@@ -128,12 +128,23 @@ class HelpMenuViewModel {
                 Storage.userDefaults().synchronize()
             }
 
+            // Delete Caches folder
+            do {
+                try FileManager.default.removeItem(at: FileManager.cachesDirectoryURL)
+            } catch {
+                log.error("Error deleting caches", category: .app)
+            }
+
             do {
                 try FileManager.default.removeItem(atPath: AppConstants.FilePaths.sandbox) // legacy
-            } catch {}
+            } catch {
+                log.error("Error deleting sandbox files", category: .app)
+            }
             do {
                 try FileManager.default.removeItem(atPath: AppConstants.FilePaths.starterSandbox) // legacy
-            } catch {}
+            } catch {
+                log.error("Error deleting starter sandbox files", category: .app)
+            }
 
             // vpn profile
             self.vpnManager.removeConfigurations { _ in
