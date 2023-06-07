@@ -64,21 +64,21 @@ public extension Font {
     static func themeFont(_ typography: AppTheme.Typography = .body3()) -> Font {
         switch typography {
         case .hero:
-            return .system(size: 28, weight: .bold)
+            return .custom("", size: 28, relativeTo: .body).weight(.bold)
         case .headline:
-            return .system(size: 22, weight: .bold)
+            return .custom("", size: 22, relativeTo: .body).weight(.bold)
         case .subHeadline:
-            return .system(size: 22, weight: .regular)
+            return .custom("", size: 22, relativeTo: .body).weight(.regular)
         case .body1(let weight):
-            return .system(size: 17, weight: weight.rawValue)
+            return .custom("", size: 17, relativeTo: .body).weight(weight.rawValue)
         case .body2(let emphasised):
-            return .system(size: 15, weight: emphasised ? .semibold : .regular)
+            return .custom("", size: 15, relativeTo: .body).weight(emphasised ? .semibold : .regular)
         case .body3(let emphasised):
-            return .system(size: 14, weight: emphasised ? .semibold : .regular)
+            return .custom("", size: 14, relativeTo: .body).weight(emphasised ? .semibold : .regular)
         case .caption(let emphasised):
-            return .system(size: 13, weight: emphasised ? .semibold : .regular)
+            return .custom("", size: 13, relativeTo: .body).weight(emphasised ? .semibold : .regular)
         case .overline(let emphasised):
-            return .system(size: 11, weight: emphasised ? .semibold : .regular)
+            return .custom("", size: 11, relativeTo: .body).weight(emphasised ? .semibold : .regular)
         }
     }
 }
