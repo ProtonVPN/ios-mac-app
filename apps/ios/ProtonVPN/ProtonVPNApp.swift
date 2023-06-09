@@ -26,68 +26,12 @@ import Home_iOS
 import ComposableArchitecture
 
 #if REDESIGN
-struct InitialStateProvider {
-    public let initialState: AppReducer.State
-}
-
-extension InitialStateProvider: DependencyKey {
-    static let liveValue = InitialStateProvider(
-        initialState: .init(home: .init(connections: [
-            .init(
-                pinned: true,
-                underMaintenance: false,
-                connectionDate: .now,
-                connection: .init(
-                    location: .exact(
-                        .free,
-                        number: 42,
-                        subregion: nil,
-                        regionCode: "CH"
-                    ),
-                    features: []
-                )
-            ),
-            .init(
-                pinned: false,
-                underMaintenance: false,
-                connectionDate: .now.addingTimeInterval(-5 * 60.0),
-                connection: .init(
-                    location: .fastest,
-                    features: []
-                )
-            ),
-            .init(
-                pinned: false,
-                underMaintenance: false,
-                connectionDate: .now,
-                connection: .init(
-                    location: .secureCore(.fastestHop(to: "RO")),
-                    features: []
-                )
-            ),
-            .init(
-                pinned: false,
-                underMaintenance: false,
-                connectionDate: .now,
-                connection: .init(
-                    location: .region(code: "UA"),
-                    features: []
-                )
-            ),
-        ]))
-    )
-}
-
-extension DependencyValues {
-    var initialStateProvider: InitialStateProvider {
-        get { self[InitialStateProvider.self] }
-        set { self[InitialStateProvider.self] = newValue }
-    }
-}
 
 struct AppReducer: Reducer {
     struct State {
         public var home: HomeFeature.State
+//        public var countries: CountriesFeature.State
+//        public var settings: SettingsFeature.State
     }
 
     enum Action: Equatable {
@@ -102,7 +46,7 @@ struct AppReducer: Reducer {
 }
 
 @main
-struct RedesignedVPNApp: App {
+struct ProtonVPNApp: App {
     /// This delegates the app lifecycle events to the old `AppDelegate`. Once we have a working redesign we can start moving away from `AppDelegate`
     /// Until then it's the safest option to keep the functionality intact.
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate

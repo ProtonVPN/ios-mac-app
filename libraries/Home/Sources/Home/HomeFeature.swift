@@ -34,13 +34,16 @@ public struct HomeFeature: Reducer {
 
         public var connections: [RecentConnection]
 
-        public init(connections: [RecentConnection]) {
+        public var connectionStatus: ConnectionStatusFeature.State
+
+        public init(connections: [RecentConnection], connectionStatus: ConnectionStatusFeature.State) {
             self.connections = connections
+            self.connectionStatus = connectionStatus
         }
 
         mutating func trimConnections() {
             while connections.count > Self.maxConnections,
-               let index = connections.lastIndex(where: \.notPinned) {
+                  let index = connections.lastIndex(where: \.notPinned) {
                 connections.remove(at: index)
             }
         }
@@ -50,20 +53,19 @@ public struct HomeFeature: Reducer {
         /// Connect to a given connection specification. Bump it to the top of the
         /// list, if it isn't already pinned.
         case connect(ConnectionSpec)
+        case disconnect
         /// Pin a recent connection to the top of the list, and remove it from the recent connections.
         case pin(ConnectionSpec)
         /// Remove a connection from the pins, and add it to the top of the recent connections.
         case unpin(ConnectionSpec)
         /// Remove a connection.
         case remove(ConnectionSpec)
+        case trimConnections
+        case connectionStatus(ConnectionStatusFeature.Action)
     }
 
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
-            defer {
-                state.trimConnections()
-            }
-
             switch action {
             case let .connect(spec):
                 var pinned = false
@@ -82,104 +84,64 @@ public struct HomeFeature: Reducer {
                     connection: spec
                 )
                 state.connections.insert(recent, at: 0)
-                return .none
+                return .run { send in
+                    await send.send(.trimConnections)
+                    await send.send(.connectionStatus(.update(ProtectionState.protecting(country: "Poland", ip: "192.168.1.0"))))
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // mimic connection
+                    await send.send(.connectionStatus(.update(ProtectionState.protected(netShield: .random))))
+                }
             case let .pin(spec):
                 guard let index = state.connections.firstIndex(where: {
                     $0.connection == spec
                 }) else {
-                    return .none
+                    return .run { send in
+                        await send.send(.trimConnections)
+                    }
                 }
 
                 state.connections[index].pinned = true
-                return .none
+                return .send(.trimConnections)
             case let .unpin(spec):
                 guard let index = state.connections.firstIndex(where: {
                     $0.connection == spec
                 }) else {
-                    return .none
+                    return .run { send in
+                        await send.send(.trimConnections)
+                    }
                 }
 
                 state.connections[index].pinned = false
-                return .none
+                return .run { send in
+                    await send.send(.trimConnections)
+                }
             case let .remove(spec):
                 state.connections.removeAll {
                     $0.connection == spec
                 }
+                return .run { send in
+                    await send.send(.trimConnections)
+                }
+            case .trimConnections:
+                while state.connections.count > State.maxConnections,
+                      let index = state.connections.lastIndex(where: \.notPinned) {
+                    state.connections.remove(at: index)
+                }
+                return .run { send in
+                    await send.send(.trimConnections)
+                }
+            case .disconnect:
+                state.connectionStatus.protectionState = .unprotected(country: "Poland", ip: "192.168.1.0")
+                return .none
+            case .connectionStatus:
                 return .none
             }
+        }
+        Scope(state: \.connectionStatus, action: /Action.connectionStatus) {
+            ConnectionStatusFeature()
         }
     }
 
     public init() {}
-}
-
-extension ConnectionSpec.Location {
-    private func regionName(locale: Locale, code: String) -> String {
-        locale.localizedString(forRegionCode: code) ?? code
-    }
-
-    public func accessibilityText(locale: Locale) -> String {
-        switch self {
-        case .fastest:
-            return "The fastest country available"
-        case .secureCore(.fastest):
-            return "The fastest secure core country available"
-        default:
-            // todo: .exact and .region should specify number and ideally features as well
-            return text(locale: locale)
-        }
-    }
-
-    public func text(locale: Locale) -> String {
-        switch self {
-        case .fastest,
-                .secureCore(.fastest):
-            return "Fastest"
-        case .region(let code),
-                .exact(_, _, _, let code),
-                .secureCore(.fastestHop(let code)),
-                .secureCore(.hop(let code, _)):
-            return regionName(locale: locale, code: code)
-        }
-    }
-
-    public func subtext(locale: Locale) -> String? {
-        switch self {
-        case .fastest, .region, .secureCore(.fastest), .secureCore(.fastestHop):
-            return nil
-        case let .exact(server, number, subregion, _):
-            if server == .free {
-                return "FREE#\(number)"
-            } else if let subregion {
-                return "\(subregion) #\(number)"
-            } else {
-                return nil
-            }
-        case .secureCore(.hop(_, let via)):
-            return "via \(regionName(locale: locale, code: via))"
-        }
-    }
-
-
-    public var flag: any FlagView {
-        switch self {
-        case .fastest:
-            return FastestFlagView(secureCore: false)
-        case .region(let code):
-            return SimpleFlagView(regionCode: code)
-        case .exact(_, _, _, let code):
-            return SimpleFlagView(regionCode: code)
-        case .secureCore(let secureCoreSpec):
-            switch secureCoreSpec {
-            case .fastest:
-                return FastestFlagView(secureCore: true)
-            case let .fastestHop(code):
-                return SecureCoreFlagView(regionCode: code, viaRegionCode: nil)
-            case let .hop(code, via):
-                return SecureCoreFlagView(regionCode: code, viaRegionCode: via)
-            }
-        }
-    }
 }
 
 extension RecentConnection {
@@ -192,80 +154,14 @@ extension RecentConnection {
     }
 }
 
-extension HomeFeature.State {
-    public var mostRecent: RecentConnection? {
-        connections.first
-    }
-
-    var remainingConnections: [RecentConnection] {
-        guard connections.count > 1 else {
-            return []
-        }
-        return Array(connections[1...])
-    }
-
-    public var remainingPinnedConnections: [RecentConnection] {
-        remainingConnections.filter(\.pinned)
-    }
-
-    public var remainingRecentConnections: [RecentConnection] {
-        remainingConnections.filter(\.notPinned)
-    }
-}
-
 #if DEBUG
 extension HomeFeature.State {
-    public static let preview: Self = .init(connections: [
-        .init(
-            pinned: true,
-            underMaintenance: false,
-            connectionDate: .now,
-            connection: .init(
-                location: .fastest,
-                features: []
-            )
-        ),
-        .init(
-            pinned: false,
-            underMaintenance: false,
-            connectionDate: .now.addingTimeInterval(-2 * 60.0),
-            connection: .init(
-                location: .exact(
-                    .free,
-                    number: 42,
-                    subregion: nil,
-                    regionCode: "FR"
-                ),
-                features: []
-            )
-        ),
-        .init(
-            pinned: false,
-            underMaintenance: true,
-            connectionDate: .now.addingTimeInterval(-6 * 60.0),
-            connection: .init(
-                location: .secureCore(.hop(to: "US", via: "CH")),
-                features: []
-            )
-        ),
-        .init(
-            pinned: true,
-            underMaintenance: true,
-            connectionDate: .now.addingTimeInterval(-8 * 60.0),
-            connection: .init(
-                location: .region(code: "UA"),
-                features: [.streaming]
-            )
-        ),
-        .init(
-            pinned: false,
-            underMaintenance: false,
-            connectionDate: .now.addingTimeInterval(-6 * 60 * 60.0),
-            connection: .init(
-                location: .secureCore(.fastestHop(to: "AR")),
-                features: []
-            )
-        )
-    ])
+    public static let preview: Self = .init(connections: [.pinnedFastest,
+                                                          .previousFreeConnection,
+                                                          .connectionSecureCore,
+                                                          .connectionRegion,
+                                                          .connectionSecureCoreFastest],
+                                            connectionStatus: .init(protectionState: .random))
 }
+
 #endif

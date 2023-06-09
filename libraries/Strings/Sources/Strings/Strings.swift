@@ -50,16 +50,28 @@ public enum Localizable {
   }
   /// The header shown at the top of the application in the home tab when the VPN is not connected to any server.
   public static var homeUnprotectedHeader: String { return Localizable.tr("Localizable", "_home_unprotected_header", fallback: "You are unprotected") }
+  /// Plural format key: "%#@VARIABLE@"
+  public static func netshieldStatsAdsBlocked(_ p1: Int) -> String {
+    return Localizable.tr("Localizable", "_netshield_stats_ads_blocked", p1, fallback: "Plural format key: \"%#@VARIABLE@\"")
+  }
+  /// data saved
+  public static var netshieldStatsDataSaved: String { return Localizable.tr("Localizable", "_netshield_stats_data_saved", fallback: "data saved") }
+  /// Plural format key: "%#@VARIABLE@"
+  public static func netshieldStatsTrackersStopped(_ p1: Int) -> String {
+    return Localizable.tr("Localizable", "_netshield_stats_trackers_stopped", p1, fallback: "Plural format key: \"%#@VARIABLE@\"")
+  }
   /// Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination.
   public static func secureCoreViaCountry(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_secure_core_via_country", String(describing: p1), fallback: "via %@")
   }
   /// Settings tab in bottom menu
   public static var settingsTab: String { return Localizable.tr("Localizable", "_settings_tab", fallback: "Settings") }
-  /// Plural format key: "%#@STEP@ %#@STEPS@"
-  public static func stepOf(_ p1: Int, _ p2: Int) -> String {
-    return Localizable.tr("Localizable", "_step_of", p1, p2, fallback: "Plural format key: \"%#@STEP@ %#@STEPS@\"")
-  }
+  /// Connection status title when user is connected to a VPN
+  public static var connectionStatusProtected: String { return Localizable.tr("Localizable", "connection_status_protected", fallback: "Protected") }
+  /// Connection status title when user is initiating connection to a VPN
+  public static var connectionStatusProtecting: String { return Localizable.tr("Localizable", "connection_status_protecting", fallback: "Protecting your digital identity") }
+  /// Connection status title when user is not connected to a VPN
+  public static var connectionStatusUnprotected: String { return Localizable.tr("Localizable", "connection_status_unprotected", fallback: "You are unprotected") }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces

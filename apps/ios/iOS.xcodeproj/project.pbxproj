@@ -425,6 +425,7 @@
 		E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C42811698F0060C463 /* Modals-iOS */; };
 		E547D2F529EE9F67008FB760 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E547D2F429EE9F67008FB760 /* Theme */; };
 		E551EB0529AF583D00B6612D /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0429AF583D00B6612D /* Assets.swift */; };
+		E55BF77B2A330BF00023E92D /* InitialStateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55BF77A2A330BF00023E92D /* InitialStateProvider.swift */; };
 		E5772AE529B0C63F0076D824 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0429AF583D00B6612D /* Assets.swift */; };
 		E582CC122A1372B500C91B64 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E582CC112A1372B500C91B64 /* Theme */; };
 		E582CC1A2A13999000C91B64 /* Theme-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E582CC192A13999000C91B64 /* Theme-iOS */; };
@@ -444,7 +445,7 @@
 		E5E7EFF028B8EDEC005249D3 /* AnnouncementImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5E7EFEF28B8EDEC005249D3 /* AnnouncementImageViewController.xib */; };
 		E5F90B7229C9B5AB000509DF /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C5597B20A5672A00E6D3F6 /* UIColor+Extension.swift */; };
 		E5FA6F2827C7E12200E781FC /* SubuserAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5FA6F2727C7E12200E781FC /* SubuserAlertViewController.storyboard */; };
-		E5FFB24429F80185000C65A9 /* RedesignedVPNApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFB24329F80185000C65A9 /* RedesignedVPNApp.swift */; };
+		E5FFB24429F80185000C65A9 /* ProtonVPNApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFB24329F80185000C65A9 /* ProtonVPNApp.swift */; };
 		E90AAE2527A0407400FDAEC6 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */; };
 		E9200ED72660CC0F00BBAB9C /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9200ED62660CC0F00BBAB9C /* vpncore.framework */; };
 		E93F769327C788740033B88F /* WGLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93F769227C788740033B88F /* WGLogFormatter.swift */; };
@@ -971,6 +972,7 @@
 		E534EA452806B36B00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-419"; path = "es-419.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		E551EB0329AF570E00B6612D /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		E551EB0429AF583D00B6612D /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
+		E55BF77A2A330BF00023E92D /* InitialStateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialStateProvider.swift; sourceTree = "<group>"; };
 		E57597552943256E00E5F823 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Intents.strings; sourceTree = "<group>"; };
 		E5759756294325BF00E5F823 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Intents.strings; sourceTree = "<group>"; };
 		E5791B8929A4BA29001535B3 /* be-BY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "be-BY"; path = "be-BY.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -987,7 +989,7 @@
 		E5E7EFED28B8EDA4005249D3 /* AnnouncementImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementImageViewController.swift; sourceTree = "<group>"; };
 		E5E7EFEF28B8EDEC005249D3 /* AnnouncementImageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementImageViewController.xib; sourceTree = "<group>"; };
 		E5FA6F2727C7E12200E781FC /* SubuserAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = SubuserAlertViewController.storyboard; path = "../../../../../ios/ProtonVPN/Scenes/Misc/Subuser alert/SubuserAlertViewController.storyboard"; sourceTree = "<group>"; };
-		E5FFB24329F80185000C65A9 /* RedesignedVPNApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedesignedVPNApp.swift; sourceTree = "<group>"; };
+		E5FFB24329F80185000C65A9 /* ProtonVPNApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNApp.swift; sourceTree = "<group>"; };
 		E86A799CCEC040F563446F6F /* Pods-WireGuardNetworkExtensionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuardNetworkExtensionTests.debug.xcconfig"; path = "Target Support Files/Pods-WireGuardNetworkExtensionTests/Pods-WireGuardNetworkExtensionTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = subusercredentials.plist; sourceTree = "<group>"; };
 		E9200ED62660CC0F00BBAB9C /* vpncore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = vpncore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1376,7 +1378,8 @@
 				D580AB8F2452CA08003C34B9 /* Scenes */,
 				79F17EBB20A30AB2004D2696 /* SupportingFiles */,
 				791DE5DC208DDA3000A29EA5 /* AppDelegate.swift */,
-				E5FFB24329F80185000C65A9 /* RedesignedVPNApp.swift */,
+				E5FFB24329F80185000C65A9 /* ProtonVPNApp.swift */,
+				E55BF77A2A330BF00023E92D /* InitialStateProvider.swift */,
 				E154A0C822E0A9A000283CF9 /* ObfuscatedConstants.swift */,
 				E10DFB6C22E1D0040026CAE5 /* ObfuscatedConstants.example.swift */,
 			);
@@ -3446,7 +3449,7 @@
 				D5A8CD782456D8AE00F9B0C9 /* TroubleshootingSwitchCell.swift in Sources */,
 				7905995F212AE0A400C0E401 /* DefaultProfileTableViewCell.swift in Sources */,
 				F3747C0F26D4F25700EF2F00 /* EnvironmentsViewController.swift in Sources */,
-				E5FFB24429F80185000C65A9 /* RedesignedVPNApp.swift in Sources */,
+				E5FFB24429F80185000C65A9 /* ProtonVPNApp.swift in Sources */,
 				E593B97127BA7DC100AFCA8C /* UpsellColors.swift in Sources */,
 				F3BC534D278598E4009E49B4 /* OnboardingService.swift in Sources */,
 				79312B782118823B00E79D09 /* SwitchTableViewCell.swift in Sources */,
@@ -3552,6 +3555,7 @@
 				79DEE9092111A5E100C354EF /* TabBar.swift in Sources */,
 				792B58C02150DEA3000BB3A3 /* StatusViewController.swift in Sources */,
 				66E34BAF27ABCD2C002FC827 /* SettingsAccountViewModel.swift in Sources */,
+				E55BF77B2A330BF00023E92D /* InitialStateProvider.swift in Sources */,
 				E1D187E92301A20700C5F492 /* VpnProtocolViewController.swift in Sources */,
 				D5F56899232620C600795953 /* DependencyContainer.swift in Sources */,
 				A01D7C58C3C1AEBA17A6C5AF /* AnnouncementDetailViewController.swift in Sources */,
