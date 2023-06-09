@@ -253,6 +253,12 @@ extension HomeFeature.Action {
             words = Localizable.actionHomeUnpin
         case .remove:
             words = Localizable.actionRemove
+        case .trimConnections:
+            words = "trimConnections" // ??
+        case .disconnect:
+            words = "disconnect" // ??
+        case .connectionStatus:
+            words = "connectionStatus" // ??
         }
 
         return Text(words)
@@ -348,7 +354,8 @@ struct Recents_Previews: PreviewProvider {
                     connectionDate: .now,
                     connection: .init(location: .secureCore(.fastestHop(to: "AR")), features: [])
                 ),
-            ]),
+            ],
+                  connectionStatus: .init(protectionState: .random)),
             reducer: HomeFeature()
         )
         WithViewStore(store, observe: { $0 }) { store in

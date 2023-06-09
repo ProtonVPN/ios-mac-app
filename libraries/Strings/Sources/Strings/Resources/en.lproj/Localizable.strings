@@ -62,3 +62,12 @@
 
 /* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. */
 "_secure_core_via_country" = "via %@";
+
+/* Connection status title when user is not connected to a VPN */
+"connection_status_unprotected" = "You are unprotected";
+/* Connection status title when user is initiating connection to a VPN */
+"connection_status_protecting" = "Protecting your digital identity";
+/* Connection status title when user is connected to a VPN */
+"connection_status_protected" = "Protected";
+
+"_netshield_stats_data_saved" = "Data\nsaved";

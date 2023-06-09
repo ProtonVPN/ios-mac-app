@@ -34,7 +34,7 @@ struct HomeConnectionCardView: View {
     @Dependency(\.locale) private var locale
 
     let item: RecentConnection
-    let connected: Bool
+    @State var connected: Bool
     let sendAction: HomeFeature.ActionSender
 
     var headerText: String {
@@ -92,10 +92,19 @@ struct HomeConnectionCardView: View {
 
             Button {
                 withAnimation(.easeInOut) {
-                    sendAction(.connect(item.connection))
+                    if connected {
+                        sendAction(.disconnect)
+                    } else {
+                        sendAction(.connect(item.connection))
+                    }
+                    connected.toggle()
                 }
             } label: {
-                Text(Localizable.actionConnect)
+                if connected {
+                    Text(Localizable.actionDisconnect)
+                } else {
+                    Text(Localizable.actionConnect)
+                }
             }
             .frame(maxWidth: .infinity, minHeight: 48)
             .foregroundColor(Color(.text, .primary))
@@ -138,7 +147,8 @@ struct ConnectionCard_Previews: PreviewProvider {
                     connectionDate: .now,
                     connection: .init(location: .fastest, features: [])
                 )
-            ]),
+            ],
+                  connectionStatus: .init(protectionState: .random)),
             reducer: HomeFeature()
         )
         WithViewStore(store, observe: { $0 }) { store in

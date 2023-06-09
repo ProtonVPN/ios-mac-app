@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Combine
 import SwiftUI
 
 import ComposableArchitecture
@@ -39,61 +40,40 @@ public struct HomeView: View {
 
     static let mapHeight: CGFloat = 300
 
-    @State var notchOffset: CGFloat = 0
-
-    /// Used for determining the offset for the safe area (notch, etc) at the top of the screen
-    var notchReader: some View {
-        Rectangle()
-            .fill(Color.clear)
-            .background(
-                GeometryReader { proxy in
-                    Color.clear.onAppear {
-                        notchOffset = proxy.frame(in: .global).minY
-                    }
-                }
-            )
-    }
-
     public var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             let item = viewStore.state.mostRecent ?? .defaultFastest
-            ScrollView {
-                ZStack(alignment: .top) {
+            ZStack(alignment: .top) {
+                ScrollView {
                     HomeMapView()
                         .frame(minHeight: Self.mapHeight)
-
-                    notchReader
-
-                    HomeHeaderView(
+                    HomeConnectionCardView(
+                        item: item,
                         connected: false,
-                        location: .region(code: "LT"),
-                        notchOffset: notchOffset,
-                        mapHeight: Self.mapHeight
+                        sendAction: { _ = viewStore.send($0) }
                     )
-                }
-                HomeConnectionCardView(
-                    item: item,
-                    connected: false,
-                    sendAction: { _ = viewStore.send($0) }
-                )
-                VStack(spacing: 0) {
-                    if !viewStore.remainingPinnedConnections.isEmpty {
-                        HomeRecentsSectionView(
-                            items: viewStore.state.remainingPinnedConnections,
-                            pinnedSection: true,
-                            sendAction: { _ = viewStore.send($0) }
-                        )
-                    }
-                    if !viewStore.remainingRecentConnections.isEmpty {
-                        HomeRecentsSectionView(
-                            items: viewStore.state.remainingRecentConnections,
-                            pinnedSection: false,
-                            sendAction: { _ = viewStore.send($0) }
-                        )
+                    VStack(spacing: 0) {
+                        if !viewStore.remainingPinnedConnections.isEmpty {
+                            HomeRecentsSectionView(
+                                items: viewStore.state.remainingPinnedConnections,
+                                pinnedSection: true,
+                                sendAction: { _ = viewStore.send($0) }
+                            )
+                        }
+                        if !viewStore.remainingRecentConnections.isEmpty {
+                            HomeRecentsSectionView(
+                                items: viewStore.state.remainingRecentConnections,
+                                pinnedSection: false,
+                                sendAction: { _ = viewStore.send($0) }
+                            )
+                        }
                     }
                 }
+                .background(Color(.background))
+                
+                ConnectionStatusView(store: store.scope(state: \.connectionStatus, action: { .connectionStatus($0) }))
+                .allowsHitTesting(false)
             }
-            .background(Color(.background))
         }
     }
 
@@ -107,56 +87,6 @@ internal extension GeometryProxy {
         frame(in: .global).minY
     }
 }
-
-public struct CountriesView: View {
-    public init() {}
-    public var body: some View {
-        Text("Countries")
-    }
-}
-
-public struct SettingsView: View {
-    public init() {}
-    public var body: some View {
-        Text("Settings")
-    }
-}
-
-public extension View {
-    func settingsTabItem() -> some View {
-        return self
-            .tabItem {
-                Label {
-                    Text(Localizable.settingsTab)
-                } icon: {
-                    Theme.Asset.icCogWheel.swiftUIImage
-                }
-            }
-    }
-
-    func countriesTabItem() -> some View {
-        return self
-            .tabItem {
-                Label {
-                    Text(Localizable.countriesTab)
-                } icon: {
-                    Theme.Asset.icEarth.swiftUIImage
-                }
-            }
-    }
-
-    func homeTabItem() -> some View {
-        return self
-            .tabItem {
-                Label {
-                    Text(Localizable.homeTab)
-                } icon: {
-                    Theme.Asset.icHouseFilled.swiftUIImage
-                }
-            }
-    }
-}
-
 extension FlagAppearance {
     static let iOS: Self = .init(
         secureCoreFlagShadowColor: .black.opacity(0.4),
