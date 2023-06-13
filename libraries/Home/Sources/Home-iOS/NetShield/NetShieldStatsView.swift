@@ -19,7 +19,6 @@
 import Home
 import SwiftUI
 import Theme
-import Theme_iOS
 
 public struct NetShieldStatsView: View {
 

@@ -99,7 +99,6 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     }
 
     private func contentChanged() {
-        viewController?.updateNetshieldStats()
     }
     
     // MARK: - Private
