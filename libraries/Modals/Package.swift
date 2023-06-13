@@ -34,12 +34,12 @@ let package = Package(
         ),
         .target(
             name: "Modals-iOS",
-            dependencies: ["Modals", .product(name: "Theme-iOS", package: "Theme")],
+            dependencies: ["Modals", "Theme"],
             resources: []
         ),
         .target(
             name: "Modals-macOS",
-            dependencies: ["Modals", .product(name: "Theme-macOS", package: "Theme")],
+            dependencies: ["Modals", "Theme"],
             resources: []
         ),
         .testTarget(

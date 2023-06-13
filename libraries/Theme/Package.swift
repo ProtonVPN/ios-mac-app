@@ -12,33 +12,19 @@ let package = Package(
         .library(
             name: "Theme",
             targets: ["Theme"]
-        ),
-        .library(
-            name: "Theme-macOS",
-            targets: ["Theme-macOS"]
-        ),
-        .library(
-            name: "Theme-iOS",
-            targets: ["Theme-iOS"]
         )
     ],
-    dependencies: [],
+    dependencies: [
+        .package(path: "../Ergonomics")
+    ],
     targets: [
         .target(
             name: "Theme",
-            dependencies: [],
+            dependencies: [
+                "Ergonomics",
+            ],
             resources: [],
             plugins: []
-        ),
-        .target(
-            name: "Theme-iOS",
-            dependencies: ["Theme"],
-            resources: []
-        ),
-        .target(
-            name: "Theme-macOS",
-            dependencies: ["Theme"],
-            resources: []
         ),
         .testTarget(
             name: "ThemeTests",

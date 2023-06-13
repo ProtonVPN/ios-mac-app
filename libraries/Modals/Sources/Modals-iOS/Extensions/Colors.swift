@@ -18,7 +18,6 @@
 
 import UIKit
 import Theme
-import Theme_iOS
 
 var colors = Colors()
 

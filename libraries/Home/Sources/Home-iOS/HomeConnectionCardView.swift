@@ -26,7 +26,6 @@ import Home
 import Theme
 import Strings
 import VPNShared
-import Theme_iOS
 
 struct HomeConnectionCardView: View {
     static let gradientHeight: CGFloat = 100
@@ -165,7 +164,6 @@ struct HomeConnectionCardView: View {
     }
 }
 
-#if DEBUG
 struct ConnectionCard_Previews: PreviewProvider {
     static var previews: some View {
         let store: StoreOf<HomeFeature> = .init(initialState:
@@ -192,4 +190,3 @@ struct ConnectionCard_Previews: PreviewProvider {
         }
     }
 }
-#endif

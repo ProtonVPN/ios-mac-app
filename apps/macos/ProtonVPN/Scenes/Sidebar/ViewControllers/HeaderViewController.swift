@@ -24,7 +24,6 @@ import Cocoa
 import SDWebImage
 import vpncore
 import Theme
-import Theme_macOS
 
 final class HeaderViewController: NSViewController {
 

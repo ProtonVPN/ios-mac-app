@@ -23,7 +23,6 @@
 import Cocoa
 import vpncore
 import Theme
-import Theme_macOS
 
 class ExpandableContentPopupViewController: NSViewController {
     

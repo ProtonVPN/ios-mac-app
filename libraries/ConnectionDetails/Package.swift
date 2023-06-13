@@ -43,7 +43,7 @@ let package = Package(
             dependencies: [
                 "Strings",
                 "ConnectionDetails",
-                .product(name: "Theme-iOS", package: "Theme"),
+                .product(name: "Theme", package: "Theme"),
                 .product(name: "VPNShared", package: "NEHelper"),
                 // 3rd party
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
@@ -55,7 +55,7 @@ let package = Package(
             dependencies: [
                 "ConnectionDetails",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "Theme-macOS", package: "Theme"),
+                .product(name: "Theme", package: "Theme"),
             ],
             resources: []
         ),

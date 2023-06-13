@@ -19,7 +19,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
 
-import Theme
+
+#if canImport(Cocoa)
 
 public struct ProtonColorPalettemacOS {
     public static let instance = ProtonColorPalettemacOS()
@@ -126,3 +127,5 @@ public struct ProtonColorPalettemacOS {
     public let White = Theme.Asset.white.color
     public let Black = Theme.Asset.black.color
 }
+
+#endif

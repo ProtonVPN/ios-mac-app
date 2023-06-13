@@ -23,7 +23,7 @@
 import Cocoa
 import vpncore
 import Theme
-import Theme_macOS
+import Ergonomics
 
 class ConnectingOverlayButton: HoverDetectionButton {
     enum Style {

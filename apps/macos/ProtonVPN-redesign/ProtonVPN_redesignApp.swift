@@ -19,7 +19,6 @@
 // MARK: - Start SwiftUI Life cycle
 import SwiftUI
 import Theme
-import Theme_macOS
 import Home
 import Home_macOS
 import vpncore

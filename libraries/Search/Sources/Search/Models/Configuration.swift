@@ -19,7 +19,6 @@
 import Foundation
 import UIKit
 import Theme
-import Theme_iOS
 
 public struct Constants {
     let numberOfCountries: Int

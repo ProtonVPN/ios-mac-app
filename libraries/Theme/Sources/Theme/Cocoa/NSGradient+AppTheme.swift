@@ -17,8 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+
+#if canImport(Cocoa)
 import Cocoa
-import Theme
 
 public extension NSGradient {
     convenience init?(context: AppTheme.Context = .background, starting startingStyle: AppTheme.Style, ending endingStyle: AppTheme.Style) {
@@ -26,3 +27,4 @@ public extension NSGradient {
     }
 }
 
+#endif

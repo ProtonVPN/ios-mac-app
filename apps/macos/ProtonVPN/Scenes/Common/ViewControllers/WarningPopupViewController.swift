@@ -22,7 +22,6 @@
 
 import Cocoa
 import vpncore
-import Theme_macOS
 
 class WarningPopupViewController: NSViewController {
 

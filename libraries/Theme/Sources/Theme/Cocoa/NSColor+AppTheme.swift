@@ -18,8 +18,9 @@
 
 import Foundation
 import SwiftUI
+
+#if canImport(Cocoa)
 import Cocoa
-import Theme
 
 private let CP = ProtonColorPalettemacOS.instance
 
@@ -240,3 +241,5 @@ public extension Image {
             .foregroundColor(.init(.icon, style))
     }
 }
+
+#endif

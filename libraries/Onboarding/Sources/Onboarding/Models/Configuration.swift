@@ -20,7 +20,6 @@ import Foundation
 import UIKit
 import SwiftUI
 import Theme
-import Theme_iOS
 
 public struct Colors {
     public let background: UIColor

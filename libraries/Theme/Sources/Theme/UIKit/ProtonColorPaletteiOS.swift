@@ -19,7 +19,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
 
-import Theme
+#if canImport(UIKit)
 
 public struct ColorPaletteiOS {
     public static let instance = ColorPaletteiOS()
@@ -294,3 +294,5 @@ extension ColorPaletteiOS {
     private var sidebarIconNormVpn: Int { shade100Vpn }
     private var sidebarIconWeakVpn: Int { cadetBlue }
 }
+
+#endif

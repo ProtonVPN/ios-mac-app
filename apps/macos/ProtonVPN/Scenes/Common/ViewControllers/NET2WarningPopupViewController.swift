@@ -19,7 +19,6 @@
 import Cocoa
 import vpncore
 import Theme
-import Theme_macOS
 
 final class NET2WarningPopupViewController: WarningPopupViewController {
     override func viewDidLoad() {
