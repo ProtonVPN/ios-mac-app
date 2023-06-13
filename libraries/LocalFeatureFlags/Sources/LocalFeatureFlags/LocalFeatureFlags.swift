@@ -7,6 +7,38 @@ public protocol FeatureFlag {
     var feature: String { get }
 }
 
+private enum FeatureFlagsData {
+    static let featureFlagsURL: URL? = {
+        #if DEBUG
+        ([Bundle.main] + Bundle.allBundles + Bundle.allFrameworks).compactMap {
+            $0.url(forResource: "FeatureFlags", withExtension: "plist")
+        }.first
+        #else
+        Bundle.module.url(forResource: "FeatureFlags", withExtension: "plist")
+        #endif
+    }()
+
+    static let featureFlags: [String: Any] = {
+        guard let featureFlagsURL else {
+            #if DEBUG
+            return [:]
+            #else
+            fatalError("Couldn't find feature flags plist")
+            #endif
+        }
+
+        guard let data = try? Data(contentsOf: featureFlagsURL) else {
+            fatalError("Couldn't read feature flag resource")
+        }
+
+        guard let dict = try? PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any] else {
+            fatalError("Feature flags have unknown format")
+        }
+
+        return dict
+    }()
+}
+
 /// Handy for enums.
 public extension FeatureFlag where Self: RawRepresentable, RawValue == String {
     var feature: String { rawValue }
@@ -23,7 +55,7 @@ public func setLocalFeatureFlagOverrides(_ dict: [String: Any]?) {
 /// - Note: `FeatureFlags` is generated from `FeatureFlags.plist` using the `plutil` tool.
 public func isEnabled(_ flag: FeatureFlag) -> Bool {
     isOverridden(category: flag.category, feature: flag.feature) ??
-        isEnabled(dict: featureFlags, category: flag.category, feature: flag.feature) ??
+        isEnabled(dict: FeatureFlagsData.featureFlags, category: flag.category, feature: flag.feature) ??
         false
 }
 
