@@ -1,6 +1,6 @@
 # Theme
 
-This package is divided in three parts: Theme-iOS, Theme-macOS and Theme, the last being a common part of the other two. You can import the common part and one of the platform part to your module.
+This package is divided in three parts: common code, UIKit code, and Cocoa code. You should only have to import the Theme package to get everything you need for your platform.
 
 The colors are stored in the common part, but to retrieve them you must use the platform specific target.
 

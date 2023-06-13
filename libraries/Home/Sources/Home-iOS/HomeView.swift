@@ -24,7 +24,6 @@ import ComposableArchitecture
 import Home
 import Strings
 import Theme
-import Theme_iOS
 import Ergonomics
 
 public struct HomeTabView: View {

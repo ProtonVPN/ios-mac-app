@@ -63,7 +63,7 @@ let package = Package(
             dependencies: [
                 "Home",
                 "Strings",
-                .product(name: "Theme-iOS", package: "Theme"),
+                "Theme",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ],
             resources: []
@@ -72,8 +72,8 @@ let package = Package(
             name: "Home-macOS",
             dependencies: [
                 "Home",
+                "Theme",
                 "Strings",
-                .product(name: "Theme-macOS", package: "Theme"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ],

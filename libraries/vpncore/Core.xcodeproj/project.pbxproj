@@ -216,9 +216,6 @@
 		D563B26C2345DA4300F98797 /* FormValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563B26A2345DA4300F98797 /* FormValidationError.swift */; };
 		D56B68E32507CBBD00796E0C /* ClientConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56B68E22507CBBD00796E0C /* ClientConfig.swift */; };
 		D56B68E42507CBBD00796E0C /* ClientConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56B68E22507CBBD00796E0C /* ClientConfig.swift */; };
-		D578438F28FE6A95007E3FC6 /* VPNShared in Frameworks */ = {isa = PBXBuildFile; productRef = D416C411CC859B3D18ABBE36 /* VPNShared */; };
-		D578439028FE6A95007E3FC6 /* VPNSharedTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 1F280C980AA7BC027A6B4FF8 /* VPNSharedTesting */; };
-		D578439128FE6A95007E3FC6 /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = D0AAC5A8DEABE73F456752F4 /* NEHelper */; };
 		D578439228FE6A95007E3FC6 /* VPNShared in Frameworks */ = {isa = PBXBuildFile; productRef = A59B9FD3BC643C0B2BCFFB04 /* VPNShared */; };
 		D578439328FE6A95007E3FC6 /* VPNSharedTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 4F037C4B0FA455B80D281721 /* VPNSharedTesting */; };
 		D578439528FFC779007E3FC6 /* VpnKeys+Generation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D578439428FFC779007E3FC6 /* VpnKeys+Generation.swift */; };
@@ -227,10 +224,16 @@
 		D578439B29001BA0007E3FC6 /* CoreVPNKeysGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D578439929001BA0007E3FC6 /* CoreVPNKeysGeneratorTests.swift */; };
 		D57A656F2485330700079E82 /* VpnServerSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57A656E2485330700079E82 /* VpnServerSelector.swift */; };
 		D57A65702485330700079E82 /* VpnServerSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57A656E2485330700079E82 /* VpnServerSelector.swift */; };
+		D582731A2A4F00C60021CA41 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = D58273192A4F00C60021CA41 /* PMLogger */; };
+		D582731C2A4F00CC0021CA41 /* VPNShared in Frameworks */ = {isa = PBXBuildFile; productRef = D582731B2A4F00CC0021CA41 /* VPNShared */; };
+		D582731E2A4F00E90021CA41 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = D582731D2A4F00E90021CA41 /* Theme */; };
+		D58273202A4F01080021CA41 /* VPNSharedTesting in Frameworks */ = {isa = PBXBuildFile; productRef = D582731F2A4F01080021CA41 /* VPNSharedTesting */; };
+		D58273222A4F01840021CA41 /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = D58273212A4F01840021CA41 /* Ergonomics */; };
 		D585B5112447074200E901F3 /* Date+Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E853DD2428F863002EBF05 /* Date+Misc.swift */; };
 		D585B5122447074300E901F3 /* Date+Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E853DD2428F863002EBF05 /* Date+Misc.swift */; };
 		D58874B524FE69260022E438 /* AppSessionRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58874B424FE69260022E438 /* AppSessionRefresher.swift */; };
 		D58874B624FE69260022E438 /* AppSessionRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58874B424FE69260022E438 /* AppSessionRefresher.swift */; };
+		D58897172A4EEC0B004C1092 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = 63DB5741E2C92FBC88AF1503 /* Theme */; };
 		D5966F3B2538396B0061A75F /* AnnouncementsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5966F3A2538396B0061A75F /* AnnouncementsViewModel.swift */; };
 		D5966F3D2538396B0061A75F /* AnnouncementsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5966F3A2538396B0061A75F /* AnnouncementsViewModel.swift */; };
 		D59671CE253D5D440061A75F /* AnnouncementManagerImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59671CD253D5D440061A75F /* AnnouncementManagerImplementationTests.swift */; };
@@ -247,7 +250,6 @@
 		D5967210253D84260061A75F /* AnnouncementsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D596720E253D84260061A75F /* AnnouncementsViewModelTests.swift */; };
 		D5967244253D8CBE0061A75F /* SafariServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5967243253D8CBE0061A75F /* SafariServiceMock.swift */; };
 		D5967245253D8CBE0061A75F /* SafariServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5967243253D8CBE0061A75F /* SafariServiceMock.swift */; };
-		D5A3C34628D3768C00D69CD5 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = D5A3C34528D3768C00D69CD5 /* PMLogger */; };
 		D5A8811D22CCE400009B63D1 /* ReportBugViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8811C22CCE400009B63D1 /* ReportBugViewModel.swift */; };
 		D5A8811E22CCE400009B63D1 /* ReportBugViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8811C22CCE400009B63D1 /* ReportBugViewModel.swift */; };
 		D5A8812A22CE06EB009B63D1 /* test_log_1.log in Resources */ = {isa = PBXBuildFile; fileRef = D5A8812922CE06EB009B63D1 /* test_log_1.log */; };
@@ -307,7 +309,6 @@
 		D5EA845B28C8F7BD00C8EB7D /* LogSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EA845928C8F7BD00C8EB7D /* LogSource.swift */; };
 		D5EF8FA32293E9B100B713BD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1C99F4D21C3C56600C54333 /* Localizable.strings */; };
 		D5EF8FA42293EB0700B713BD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1C99F4D21C3C56600C54333 /* Localizable.strings */; };
-		D5F65F9A28A14C7C0062CF85 /* Timer in Frameworks */ = {isa = PBXBuildFile; productRef = D5F65F9928A14C7C0062CF85 /* Timer */; };
 		D5F65F9C28A14DE00062CF85 /* Timer in Frameworks */ = {isa = PBXBuildFile; productRef = D5F65F9B28A14DE00062CF85 /* Timer */; };
 		DD0969B7000F4DC02C628AE6 /* NetShieldType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D30B2B54E22870DA56088C /* NetShieldType+Extensions.swift */; };
 		E0CB011583BEA889AC7F8553 /* Pods-Core-vpncore-iosTests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9560629DD2CD7F58A2CAC85 /* Pods-Core-vpncore-iosTests-metadata.plist */; };
@@ -503,8 +504,8 @@
 		E5768641297822F90014F944 /* TelemetryConnectionNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5768640297822F90014F944 /* TelemetryConnectionNotifier.swift */; };
 		E5768642297822F90014F944 /* TelemetryConnectionNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5768640297822F90014F944 /* TelemetryConnectionNotifier.swift */; };
 		E5813B5229EE9C7500549AA8 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E5813B5129EE9C7500549AA8 /* Theme */; };
-		E582CC162A13949900C91B64 /* Theme-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E582CC152A13949900C91B64 /* Theme-iOS */; };
-		E582CC182A1394A100C91B64 /* Theme-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E582CC172A1394A100C91B64 /* Theme-iOS */; };
+		E582CC162A13949900C91B64 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		E582CC182A1394A100C91B64 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		E58D06422A0B8B1C002A896C /* Clocks in Frameworks */ = {isa = PBXBuildFile; productRef = E58D06412A0B8B1C002A896C /* Clocks */; };
 		E58EE0A42907DEBF003006F5 /* PlanSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58EE0A32907DEBF003006F5 /* PlanSession.swift */; };
 		E58EE0A52907DEBF003006F5 /* PlanSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58EE0A32907DEBF003006F5 /* PlanSession.swift */; };
@@ -917,6 +918,7 @@
 		D582A7E023F2D7A100B5FD77 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "pt-BR"; path = "pt-BR.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		D582A7E123F2D7B200B5FD77 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = es; path = es.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		D58874B424FE69260022E438 /* AppSessionRefresher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionRefresher.swift; sourceTree = "<group>"; };
+		D58897182A4EFDA4004C1092 /* PMLogger */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = PMLogger; path = ../PMLogger; sourceTree = "<group>"; };
 		D5966F3A2538396B0061A75F /* AnnouncementsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementsViewModel.swift; sourceTree = "<group>"; };
 		D59671CD253D5D440061A75F /* AnnouncementManagerImplementationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementManagerImplementationTests.swift; sourceTree = "<group>"; };
 		D59671DD253D5E3A0061A75F /* AnnouncementStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementStorageMock.swift; sourceTree = "<group>"; };
@@ -1194,19 +1196,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E582CC162A13949900C91B64 /* Theme-iOS in Frameworks */,
-				D578439128FE6A95007E3FC6 /* NEHelper in Frameworks */,
-				D578439028FE6A95007E3FC6 /* VPNSharedTesting in Frameworks */,
+				D582731E2A4F00E90021CA41 /* Theme in Frameworks */,
+				E582CC162A13949900C91B64 /* (null) in Frameworks */,
 				E5C8A2642A3C4C5500290723 /* Dependencies in Frameworks */,
-				D578438F28FE6A95007E3FC6 /* VPNShared in Frameworks */,
 				E939EEF3279561EE006E4305 /* BugReport in Frameworks */,
+				D582731A2A4F00C60021CA41 /* PMLogger in Frameworks */,
 				E58D06422A0B8B1C002A896C /* Clocks in Frameworks */,
+				D58273222A4F01840021CA41 /* Ergonomics in Frameworks */,
 				4C4F5F11292BECCE00BBD5AF /* LocalFeatureFlags in Frameworks */,
+				D582731C2A4F00CC0021CA41 /* VPNShared in Frameworks */,
 				E53D64BF2811694F0060C463 /* Modals in Frameworks */,
-				D5F65F9A28A14C7C0062CF85 /* Timer in Frameworks */,
-				D5A3C34628D3768C00D69CD5 /* PMLogger in Frameworks */,
 				E5C8A2662A3C4C6800290723 /* IdentifiedCollections in Frameworks */,
 				D5391F172A4D4ABE0089D2F7 /* OrderedCollections in Frameworks */,
+				D58273202A4F01080021CA41 /* VPNSharedTesting in Frameworks */,
 				179F144D89241E7160EFD846 /* Pods_Core_vpncore_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1215,7 +1217,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E582CC182A1394A100C91B64 /* Theme-iOS in Frameworks */,
+				D58897172A4EEC0B004C1092 /* Theme in Frameworks */,
+				E582CC182A1394A100C91B64 /* (null) in Frameworks */,
 				E9CB3B0228A676820086F22F /* TimerMock in Frameworks */,
 				E1B5F5E221B68ABD00B558B0 /* vpncore.framework in Frameworks */,
 				507B74FDE03E5AFB9ED0A082 /* Pods_Core_vpncore_iosTests.framework in Frameworks */,
@@ -1683,6 +1686,7 @@
 			children = (
 				E939EEF1279561B1006E4305 /* BugReport */,
 				D5D78E4B28CF43CB00B2A156 /* PMLogger */,
+				D58897182A4EFDA4004C1092 /* PMLogger */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -2365,17 +2369,16 @@
 			packageProductDependencies = (
 				E939EEF2279561EE006E4305 /* BugReport */,
 				E53D64BE2811694F0060C463 /* Modals */,
-				D5F65F9928A14C7C0062CF85 /* Timer */,
-				D5A3C34528D3768C00D69CD5 /* PMLogger */,
-				D416C411CC859B3D18ABBE36 /* VPNShared */,
-				1F280C980AA7BC027A6B4FF8 /* VPNSharedTesting */,
-				D0AAC5A8DEABE73F456752F4 /* NEHelper */,
 				4C4F5F10292BECCE00BBD5AF /* LocalFeatureFlags */,
 				E58D06412A0B8B1C002A896C /* Clocks */,
-				E582CC152A13949900C91B64 /* Theme-iOS */,
 				E5C8A2632A3C4C5500290723 /* Dependencies */,
 				E5C8A2652A3C4C6800290723 /* IdentifiedCollections */,
 				D5391F162A4D4ABE0089D2F7 /* OrderedCollections */,
+				D58273192A4F00C60021CA41 /* PMLogger */,
+				D582731B2A4F00CC0021CA41 /* VPNShared */,
+				D582731D2A4F00E90021CA41 /* Theme */,
+				D582731F2A4F01080021CA41 /* VPNSharedTesting */,
+				D58273212A4F01840021CA41 /* Ergonomics */,
 			);
 			productName = "vpncore-ios";
 			productReference = E1B5F5D821B68ABD00B558B0 /* vpncore.framework */;
@@ -2399,7 +2402,7 @@
 			name = "vpncore-iosTests";
 			packageProductDependencies = (
 				E9CB3B0128A676820086F22F /* TimerMock */,
-				E582CC172A1394A100C91B64 /* Theme-iOS */,
+				63DB5741E2C92FBC88AF1503 /* Theme */,
 			);
 			productName = "vpncore-iosTests";
 			productReference = E1B5F5E121B68ABD00B558B0 /* vpncore-iosTests.xctest */;
@@ -4428,10 +4431,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		1F280C980AA7BC027A6B4FF8 /* VPNSharedTesting */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = VPNSharedTesting;
-		};
 		4C4F5F10292BECCE00BBD5AF /* LocalFeatureFlags */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LocalFeatureFlags;
@@ -4444,15 +4443,11 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = VPNSharedTesting;
 		};
+		63DB5741E2C92FBC88AF1503 /* Theme */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Theme;
+		};
 		A59B9FD3BC643C0B2BCFFB04 /* VPNShared */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = VPNShared;
-		};
-		D0AAC5A8DEABE73F456752F4 /* NEHelper */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = NEHelper;
-		};
-		D416C411CC859B3D18ABBE36 /* VPNShared */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = VPNShared;
 		};
@@ -4461,13 +4456,25 @@
 			package = D5391F152A4D4ABE0089D2F7 /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = OrderedCollections;
 		};
-		D5A3C34528D3768C00D69CD5 /* PMLogger */ = {
+		D58273192A4F00C60021CA41 /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PMLogger;
 		};
-		D5F65F9928A14C7C0062CF85 /* Timer */ = {
+		D582731B2A4F00CC0021CA41 /* VPNShared */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Timer;
+			productName = VPNShared;
+		};
+		D582731D2A4F00E90021CA41 /* Theme */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Theme;
+		};
+		D582731F2A4F01080021CA41 /* VPNSharedTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = VPNSharedTesting;
+		};
+		D58273212A4F01840021CA41 /* Ergonomics */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Ergonomics;
 		};
 		D5F65F9B28A14DE00062CF85 /* Timer */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -4484,14 +4491,6 @@
 		E5813B5129EE9C7500549AA8 /* Theme */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Theme;
-		};
-		E582CC152A13949900C91B64 /* Theme-iOS */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "Theme-iOS";
-		};
-		E582CC172A1394A100C91B64 /* Theme-iOS */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "Theme-iOS";
 		};
 		E58D06412A0B8B1C002A896C /* Clocks */ = {
 			isa = XCSwiftPackageProductDependency;

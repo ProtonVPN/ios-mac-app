@@ -20,8 +20,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+#if canImport(Cocoa)
 import Cocoa
-import Theme
 
 extension NSFont {
     func with(_ traits: NSFontDescriptor.SymbolicTraits...) -> NSFont {
@@ -38,3 +38,5 @@ extension NSFont {
         return NSFont(descriptor: descriptor, size: 0) ?? self
     }
 }
+
+#endif

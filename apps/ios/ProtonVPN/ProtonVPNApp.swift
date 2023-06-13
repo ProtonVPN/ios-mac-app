@@ -19,7 +19,6 @@
 // MARK: - Start SwiftUI Life cycle
 import SwiftUI
 import Theme
-import Theme_iOS
 import Home
 import Home_iOS
 import ConnectionDetails

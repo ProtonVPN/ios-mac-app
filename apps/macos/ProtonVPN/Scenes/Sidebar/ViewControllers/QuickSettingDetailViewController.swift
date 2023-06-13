@@ -26,7 +26,6 @@ import Modals_macOS
 import SwiftUI
 import LocalFeatureFlags
 import Theme
-import Theme_macOS
 
 protocol QuickSettingsDetailViewControllerProtocol: class {
     var arrowIV: NSImageView! { get }

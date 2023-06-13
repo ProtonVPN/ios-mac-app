@@ -17,8 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Cocoa
 import Theme
+
+#if canImport(Cocoa)
+import Cocoa
 
 public extension NSTextField {
     func style(placeholder: String? = nil, font: NSFont = .themeFont(), alignment: NSTextAlignment = .left) {
@@ -50,3 +52,5 @@ extension NSTextField: CustomStyleContext {
         return .normal
     }
 }
+
+#endif

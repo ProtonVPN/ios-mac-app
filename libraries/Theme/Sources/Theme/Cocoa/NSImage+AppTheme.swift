@@ -17,8 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+
+#if canImport(Cocoa)
 import Cocoa
-import Theme
 
 public extension NSImage {
     func colored(context: AppTheme.Context = .icon, _ style: AppTheme.Style = .normal) -> NSImage {
@@ -59,3 +60,5 @@ public extension CustomStyleContext {
         image.colored(context: context, self.customStyle(context: context))
     }
 }
+
+#endif

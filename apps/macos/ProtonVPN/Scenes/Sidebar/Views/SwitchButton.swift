@@ -23,7 +23,6 @@
 import Cocoa
 import vpncore
 import Theme
-import Theme_macOS
 
 enum ButtonState: Int {
     case off, on

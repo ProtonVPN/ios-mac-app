@@ -18,8 +18,9 @@
 
 import Foundation
 import SwiftUI
+
+#if canImport(UIKit)
 import UIKit
-import Theme
 
 private extension AppTheme.Style {
     static var notificationStyles: Self {
@@ -178,3 +179,4 @@ public extension CustomStyleContext {
         return .cgColor(context, self.customStyle(context: context))
     }
 }
+#endif

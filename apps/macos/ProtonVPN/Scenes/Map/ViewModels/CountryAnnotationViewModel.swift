@@ -25,7 +25,6 @@ import CoreLocation
 import vpncore
 import Cocoa
 import Theme
-import Theme_macOS
 
 class CountryAnnotationViewModel: CustomStyleContext {
     

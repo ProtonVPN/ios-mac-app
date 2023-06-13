@@ -18,7 +18,6 @@
 
 import ProtonCore_UIFoundations
 import Theme
-import Theme_macOS
 
 extension AppTheme {
     @dynamicMemberLookup

@@ -18,7 +18,6 @@
 
 import SwiftUI
 import Theme
-import Theme_macOS
 
 struct SideBarItemView: View {
     let category: SideBarTab

@@ -20,7 +20,6 @@ import Foundation
 import AppKit
 import vpncore
 import Theme
-import Theme_macOS
 
 protocol WarningViewDelegate: class {
     func keychainHelpAction()

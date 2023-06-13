@@ -23,7 +23,7 @@
 import Cocoa
 import vpncore
 import LocalFeatureFlags
-import Theme_macOS
+import Theme
 
 class WelcomeViewController: NSViewController {
 
