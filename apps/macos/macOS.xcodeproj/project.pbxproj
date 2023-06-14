@@ -50,6 +50,7 @@
 		42EF09E1257A713F00E2EDCA /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EF09E0257A713F00E2EDCA /* main.swift */; };
 		42EF09E6257A713F00E2EDCA /* ch.protonvpn.mac.OpenVPN-Extension.systemextension in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 42EF09DB257A713F00E2EDCA /* ch.protonvpn.mac.OpenVPN-Extension.systemextension */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		42F63FE92566B66000DE60B2 /* ReconnectingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */; };
+		4C1C07AB2A39C937009DE875 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 4C1C07AA2A39C937009DE875 /* ComposableArchitecture */; };
 		4C54383327C3DC0600D7A88D /* ModelIDChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54383227C3DC0600D7A88D /* ModelIDChecker.swift */; };
 		4C74D32B2A0B9D7F004F8528 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 4C74D32A2A0B9D7F004F8528 /* PMLogger */; };
 		4C7CADE2280056090008778E /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -1188,6 +1189,7 @@
 			files = (
 				E52B8BA829FBB7CC00517FFC /* Theme-macOS in Frameworks */,
 				E5CF79CD29FBBA720072E7EC /* AVKit.framework in Frameworks */,
+				4C1C07AB2A39C937009DE875 /* ComposableArchitecture in Frameworks */,
 				E52B8BAF29FBB7F200517FFC /* vpncore.framework in Frameworks */,
 				E52B8BBC29FBB85F00517FFC /* Modals-macOS in Frameworks */,
 				E52B8BAC29FBB7D200517FFC /* Home-macOS in Frameworks */,
@@ -2936,6 +2938,7 @@
 				E52B8BA729FBB7CC00517FFC /* Theme-macOS */,
 				E52B8BAB29FBB7D200517FFC /* Home-macOS */,
 				E52B8BBB29FBB85F00517FFC /* Modals-macOS */,
+				4C1C07AA2A39C937009DE875 /* ComposableArchitecture */,
 			);
 			productName = "ProtonVPN-mac-redesign";
 			productReference = E5DB888A29FAB82B004D6637 /* ProtonVPN-mac-redesign.app */;
@@ -3131,6 +3134,7 @@
 			packageReferences = (
 				D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */,
 				E93533D929CAEE2C005E3A59 /* XCRemoteSwiftPackageReference "Sparkle" */,
+				4C1C07A92A39C937009DE875 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			productRefGroup = EED534821EEC112000013607 /* Products */;
 			projectDirPath = "";
@@ -5318,6 +5322,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		4C1C07A92A39C937009DE875 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				branch = prerelease/1.0;
+				kind = branch;
+			};
+		};
 		D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ProtonVPN/wireguard-apple.git";
@@ -5337,6 +5349,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4C1C07AA2A39C937009DE875 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4C1C07A92A39C937009DE875 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
 		4C74D32A2A0B9D7F004F8528 /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PMLogger;
