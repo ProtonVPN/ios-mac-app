@@ -17,9 +17,26 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Strings
+import VPNShared
 
 public enum ProtectionState: Equatable {
     case protected(netShield: NetShieldModel)
     case unprotected(country: String, ip: String)
     case protecting(country: String, ip: String)
+}
+
+extension VPNConnectionStatus {
+    var protectionState: ProtectionState {
+        switch self {
+        case .disconnected:
+            return .unprotected(country: "Country", ip: "127.0.0.1") // todo: get real values
+        case .connected:
+            return .protected(netShield: .random) // todo:
+        case .connecting, .loadingConnectionInfo:
+            return .protecting(country: "Country", ip: "127.0.0.2") // todo:
+        case .disconnecting:
+            return .unprotected(country: "Country", ip: "127.0.0.1") // todo:
+        }
+    }
 }

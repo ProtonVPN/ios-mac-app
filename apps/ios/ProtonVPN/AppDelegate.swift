@@ -46,7 +46,7 @@ public let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 #if !REDESIGN
 @UIApplicationMain
 class AppDelegate: UIResponder {
-    private let container = DependencyContainer()
+    private let container = DependencyContainer.shared
     private lazy var vpnManager: VpnManagerProtocol = container.makeVpnManager()
     private lazy var navigationService: NavigationService = container.makeNavigationService()
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
@@ -55,7 +55,7 @@ class AppDelegate: UIResponder {
 }
 #else
 class AppDelegate: UIResponder {
-    private let container = DependencyContainer()
+    private let container = DependencyContainer.shared
     private lazy var vpnManager: VpnManagerProtocol = container.makeVpnManager()
     private lazy var navigationService: NavigationService = container.makeNavigationService()
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()

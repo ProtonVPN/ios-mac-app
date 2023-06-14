@@ -253,12 +253,8 @@ extension HomeFeature.Action {
             words = Localizable.actionHomeUnpin
         case .remove:
             words = Localizable.actionRemove
-        case .disconnect:
-            words = "disconnect" // ??
-        case .connectionStatus:
-            words = "connectionStatus" // ??
-        case .connected:
-            words = "connected" // ??
+        default:
+            words = ""
         }
 
         return Text(words)
@@ -355,7 +351,7 @@ struct Recents_Previews: PreviewProvider {
                     connection: .init(location: .secureCore(.fastestHop(to: "AR")), features: [])
                 ),
             ],
-                  connectionStatus: .init(protectionState: .protected(netShield: .random))),
+                  connectionStatus: .init(protectionState: .protected(netShield: .random)), vpnConnectionStatus: .disconnected),
             reducer: HomeFeature()
         )
         WithViewStore(store, observe: { $0 }) { store in

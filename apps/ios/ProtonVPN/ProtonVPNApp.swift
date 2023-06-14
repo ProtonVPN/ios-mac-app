@@ -22,23 +22,50 @@ import Theme
 import Theme_iOS
 import Home
 import Home_iOS
+import ConnectionDetails
+import ConnectionDetails_iOS
+import vpncore
+import VPNShared
 
 import ComposableArchitecture
 
 #if REDESIGN
 
 struct AppReducer: ReducerProtocol {
-    struct State {
+    struct State: Equatable {
         public var home: HomeFeature.State
+        public var connectionScreenState: ConnectionScreenFeature.State?
 //        public var countries: CountriesFeature.State
 //        public var settings: SettingsFeature.State
     }
 
     enum Action: Equatable {
         case home(HomeFeature.Action)
+        case connectionScreenAction(ConnectionScreenFeature.Action)
+        case connectionScreenDismissed
     }
 
     var body: some ReducerProtocolOf<Self> {
+        Reduce { state, action in
+            switch action {
+            case .connectionScreenAction(.close):
+                state.connectionScreenState = nil
+                return .none
+
+            case .home(.connect(let specs)):
+                @Dependency(\.connectToVPN) var connectToVPN
+                connectToVPN(specs)
+                return .none
+
+            case .home(.disconnect):
+                @Dependency(\.disconnectVPN) var disconnectVPN
+                disconnectVPN()
+                return .none
+
+            default:
+                return .none
+            }
+        }
         Scope(state: \.home, action: /Action.home) {
             HomeFeature()
         }
@@ -65,32 +92,48 @@ struct ProtonVPNApp: App {
 
     init() {
         @Dependency(\.initialStateProvider) var initialStateProvider
+        _ = DependencyContainer.shared.makeAppStateManager()
 
         UITabBar.appearance().backgroundColor = .color(.background, .weak)
 
         self.store = .init(
             initialState: initialStateProvider.initialState,
             reducer: AppReducer()
+                .dependency(\.watchVPNConnectionStatus, WatchAppStateChangesKey.watchAppDisplayStateChanges)
+            #if targetEnvironment(simulator)
+                .dependency(\.connectToVPN, SimulatorHelper.shared.connect)
+                .dependency(\.disconnectVPN, SimulatorHelper.shared.disconnect)
+            #endif
+                ._printChanges()
         )
     }
 
     var body: some Scene {
         WindowGroup {
-            TabView(selection: $selectedTab) {
-                HomeView(store: store.scope(state: \.home, action: AppReducer.Action.home))
-                    .homeTabItem()
-                    .tag(Tab.home)
-                CountriesView()
-                    .countriesTabItem()
-                    .tag(Tab.countries)
-                SettingsView()
-                    .settingsTabItem()
-                    .tag(Tab.settings)
-            }
-            .tint(Color(.text, .interactive))
-            .onOpenURL { url in // deeplinks
-                log.debug("Received URL: \(url)")
-            }
+            WithViewStore(self.store, observe: { $0 }, content: { viewStore in
+
+                TabView(selection: $selectedTab) {
+                    HomeView(store: store.scope(state: \.home, action: AppReducer.Action.home))
+                        .homeTabItem()
+                        .tag(Tab.home)
+                    CountriesView()
+                        .countriesTabItem()
+                        .tag(Tab.countries)
+                    SettingsView()
+                        .settingsTabItem()
+                        .tag(Tab.settings)
+                }
+                .tint(Color(.text, .interactive))
+                .onOpenURL { url in // deeplinks
+                    log.debug("Received URL: \(url)")
+                }
+
+                .sheet(unwrapping: viewStore.binding(get: \.connectionScreenState, send: .connectionScreenDismissed),
+                       content: { binding in
+                    ConnectionScreenView(store: store.scope(state: { _ in binding.wrappedValue }, action: AppReducer.Action.connectionScreenAction ))
+                })
+
+            })
         }
         .onChange(of: scenePhase) { newScenePhase in // The SwiftUI lifecycle events
             switch newScenePhase {

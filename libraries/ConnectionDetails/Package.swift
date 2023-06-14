@@ -26,10 +26,10 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../Theme"),
-        .package(path: "../Home"),
         .package(path: "../Strings"),
+        .package(path: "../NEHelper"),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture",
-                 branch: "prerelease/1.0")
+                 branch: "prerelease/1.0"),
     ],
     targets: [
         .target(
@@ -44,9 +44,10 @@ let package = Package(
             dependencies: [
                 "Strings",
                 "ConnectionDetails",
-                "Home",
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Theme-iOS", package: "Theme"),
+                .product(name: "VPNShared", package: "NEHelper"),
+                // 3rd party
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ],
             resources: []
         ),

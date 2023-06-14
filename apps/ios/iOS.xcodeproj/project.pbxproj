@@ -322,11 +322,16 @@
 		D5BF95082354A07400C7D1E7 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C137692334A54D00D20514 /* Coordinator.swift */; };
 		D5BF951023559AAF00C7D1E7 /* XCTestExpectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BF950F23559AAF00C7D1E7 /* XCTestExpectation.swift */; };
 		D5C1376A2334A54D00D20514 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C137692334A54D00D20514 /* Coordinator.swift */; };
+		D5C1FE482A39D69B0049AF18 /* ConnectToVPN.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1FE472A39D69B0049AF18 /* ConnectToVPN.swift */; };
+		D5C1FE4C2A3B040C0049AF18 /* WatchVPNConnectionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1FE4B2A3B040C0049AF18 /* WatchVPNConnectionStatus.swift */; };
+		D5C1FE512A3C4A080049AF18 /* DisconnectVPN.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1FE502A3C4A080049AF18 /* DisconnectVPN.swift */; };
+		D5C1FE542A3C4D8C0049AF18 /* SimulatorVPN.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1FE532A3C4D8C0049AF18 /* SimulatorVPN.swift */; };
 		D5C8901429360230009177E4 /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C8901229360230009177E4 /* ObfuscatedConstants.swift */; };
 		D5D4D05422E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05322E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift */; };
 		D5D4D05622E1DAE30034389A /* ProfileServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05522E1DAE30034389A /* ProfileServiceMock.swift */; };
 		D5D4D05822E1E3E40034389A /* ServerStorageArrayMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05722E1E3E40034389A /* ServerStorageArrayMock.swift */; };
 		D5D78E5528CF60A900B2A156 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5D78E5428CF60A900B2A156 /* vpncore.framework */; };
+		D5E00CB82A3899180049904D /* ConnectionDetails-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = D5E00CB72A3899180049904D /* ConnectionDetails-iOS */; };
 		D5F37635254010EF008C7207 /* UIViewController+Announcements.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F37634254010EF008C7207 /* UIViewController+Announcements.swift */; };
 		D5F3763C254028E5008C7207 /* AnnouncementButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F3763B254028E5008C7207 /* AnnouncementButtonViewModel.swift */; };
 		D5F3765825402DF6008C7207 /* UIViewController+Announcements.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F37634254010EF008C7207 /* UIViewController+Announcements.swift */; };
@@ -890,6 +895,10 @@
 		D5BCDD2825307681004BAEE8 /* CountryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryViewController.swift; sourceTree = "<group>"; };
 		D5BF950F23559AAF00C7D1E7 /* XCTestExpectation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestExpectation.swift; sourceTree = "<group>"; };
 		D5C137692334A54D00D20514 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		D5C1FE472A39D69B0049AF18 /* ConnectToVPN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectToVPN.swift; sourceTree = "<group>"; };
+		D5C1FE4B2A3B040C0049AF18 /* WatchVPNConnectionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchVPNConnectionStatus.swift; sourceTree = "<group>"; };
+		D5C1FE502A3C4A080049AF18 /* DisconnectVPN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectVPN.swift; sourceTree = "<group>"; };
+		D5C1FE532A3C4D8C0049AF18 /* SimulatorVPN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulatorVPN.swift; sourceTree = "<group>"; };
 		D5C8901129360230009177E4 /* ObfuscatedConstants.example.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.example.swift; sourceTree = "<group>"; };
 		D5C8901229360230009177E4 /* ObfuscatedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.swift; sourceTree = "<group>"; };
 		D5D4D05322E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrEditProfileViewModelTests.swift; sourceTree = "<group>"; };
@@ -1128,6 +1137,7 @@
 				4CB776CD2A1F5E61004CA127 /* ComposableArchitecture in Frameworks */,
 				D5D78E5528CF60A900B2A156 /* vpncore.framework in Frameworks */,
 				E5C8A2692A3C515300290723 /* CasePaths in Frameworks */,
+				D5E00CB82A3899180049904D /* ConnectionDetails-iOS in Frameworks */,
 				4CB776D22A1F6250004CA127 /* PMLogger in Frameworks */,
 				D573D114264A70980033CE19 /* UIKit.framework in Frameworks */,
 				E198D6B12163B31A00F2F0E0 /* libc++.tbd in Frameworks */,
@@ -1378,7 +1388,9 @@
 				791DE5EA208DDA3200A29EA5 /* Info.plist */,
 				7995FCE1209092F30030E1EB /* Extensions */,
 				79C5598120AAC51100E6D3F6 /* Resources */,
+				D5C1FE452A39D66F0049AF18 /* NewToOldAppBridge */,
 				D580AB8F2452CA08003C34B9 /* Scenes */,
+				D5C1FE442A39D6000049AF18 /* Scenes_new */,
 				79F17EBB20A30AB2004D2696 /* SupportingFiles */,
 				791DE5DC208DDA3000A29EA5 /* AppDelegate.swift */,
 				E5FFB24329F80185000C65A9 /* ProtonVPNApp.swift */,
@@ -1841,6 +1853,40 @@
 				D5BF950F23559AAF00C7D1E7 /* XCTestExpectation.swift */,
 			);
 			path = TestExtensions;
+			sourceTree = "<group>";
+		};
+		D5C1FE442A39D6000049AF18 /* Scenes_new */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Scenes_new;
+			sourceTree = "<group>";
+		};
+		D5C1FE452A39D66F0049AF18 /* NewToOldAppBridge */ = {
+			isa = PBXGroup;
+			children = (
+				D5C1FE462A39D6820049AF18 /* VPN */,
+			);
+			path = NewToOldAppBridge;
+			sourceTree = "<group>";
+		};
+		D5C1FE462A39D6820049AF18 /* VPN */ = {
+			isa = PBXGroup;
+			children = (
+				D5C1FE522A3C4D740049AF18 /* Simulator */,
+				D5C1FE4B2A3B040C0049AF18 /* WatchVPNConnectionStatus.swift */,
+				D5C1FE472A39D69B0049AF18 /* ConnectToVPN.swift */,
+				D5C1FE502A3C4A080049AF18 /* DisconnectVPN.swift */,
+			);
+			path = VPN;
+			sourceTree = "<group>";
+		};
+		D5C1FE522A3C4D740049AF18 /* Simulator */ = {
+			isa = PBXGroup;
+			children = (
+				D5C1FE532A3C4D8C0049AF18 /* SimulatorVPN.swift */,
+			);
+			path = Simulator;
 			sourceTree = "<group>";
 		};
 		D5F37633254010C7008C7207 /* Extensions */ = {
@@ -2566,6 +2612,7 @@
 				4CB776D42A1F62DF004CA127 /* Logging */,
 				E5A4AD2B2A3C48B400CC91D7 /* Dependencies */,
 				E5C8A2682A3C515300290723 /* CasePaths */,
+				D5E00CB72A3899180049904D /* ConnectionDetails-iOS */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -3423,6 +3470,7 @@
 				42C37AFF2434E62C00366B79 /* UILabel+realSize.swift in Sources */,
 				7980ECD620F70C0800D5432B /* TabBarViewModel.swift in Sources */,
 				79848BB220D2012B00EF6F9F /* MapViewModel.swift in Sources */,
+				D5C1FE512A3C4A080049AF18 /* DisconnectVPN.swift in Sources */,
 				792B58C22150E278000BB3A3 /* StatusViewModel.swift in Sources */,
 				E14EE2DB217E18E2004AF568 /* SecureCoreEntryAnnotation.swift in Sources */,
 				F3607BEE25D582BF0076AE32 /* ConfirmationToggleSwitch.swift in Sources */,
@@ -3463,6 +3511,7 @@
 				79AFDA9820DC31ED002F8751 /* NSAttributedString+Extension.swift in Sources */,
 				F316A07526DFBCB600669386 /* PlanService.swift in Sources */,
 				422395822446E9E00089002F /* URLConstants.swift in Sources */,
+				D5C1FE482A39D69B0049AF18 /* ConnectToVPN.swift in Sources */,
 				E1D21AAD21830E72000C389B /* SecureCoreEntryCountryModel.swift in Sources */,
 				79F986F320D838D90064C1C7 /* SettingsViewModel.swift in Sources */,
 				79FD80E521108049003B16E2 /* LaunchViewController.swift in Sources */,
@@ -3530,6 +3579,7 @@
 				79AFDA9220DB370E002F8751 /* ProfilesViewModel.swift in Sources */,
 				E178078121AB4C6F00C2B506 /* GenericTableViewDataSource.swift in Sources */,
 				793ECF462149045400C186A7 /* AppVersionView.swift in Sources */,
+				D5C1FE4C2A3B040C0049AF18 /* WatchVPNConnectionStatus.swift in Sources */,
 				79848BB020D2011500EF6F9F /* CountryAnnotationViewModel.swift in Sources */,
 				D5ADA9C9228AE04A004B0891 /* UIAlertService.swift in Sources */,
 				791C54F2214A75DB00C6F337 /* ConnectionBarViewController.swift in Sources */,
@@ -3554,6 +3604,7 @@
 				791DE5DD208DDA3000A29EA5 /* AppDelegate.swift in Sources */,
 				42066E8F2630240F001F86DB /* ServersFeaturesInformationVC.swift in Sources */,
 				F316A07026DFB05E00669386 /* UserCachedStatus.swift in Sources */,
+				D5C1FE542A3C4D8C0049AF18 /* SimulatorVPN.swift in Sources */,
 				AD6099FB299B2343007E46BC /* ImageSubtitleTableViewCell.swift in Sources */,
 				E551EB0529AF583D00B6612D /* Assets.swift in Sources */,
 				79C5598620AB181000E6D3F6 /* NavigationService.swift in Sources */,
@@ -5129,6 +5180,10 @@
 		D5A3C34728D376CB00D69CD5 /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PMLogger;
+		};
+		D5E00CB72A3899180049904D /* ConnectionDetails-iOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "ConnectionDetails-iOS";
 		};
 		D5F65F9728A149BC0062CF85 /* Timer */ = {
 			isa = XCSwiftPackageProductDependency;

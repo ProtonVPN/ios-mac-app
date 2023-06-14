@@ -124,6 +124,7 @@ public struct ConnectionStatusView: View {
                 }
             }
             .frame(height: 200)
+            .task { await viewStore.send(.watchConnectionStatus).finish() }
         }
     }
 }

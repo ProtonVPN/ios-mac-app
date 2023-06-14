@@ -18,6 +18,7 @@
 
 import Foundation
 
+/// Defines users intent as to where (s)he wanted to connect
 public struct ConnectionSpec: Equatable, Hashable {
     public enum Server: Equatable, Hashable {
         case free

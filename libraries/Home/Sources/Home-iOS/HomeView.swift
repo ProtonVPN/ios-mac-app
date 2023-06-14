@@ -49,7 +49,7 @@ public struct HomeView: View {
                         .frame(minHeight: Self.mapHeight)
                     HomeConnectionCardView(
                         item: item,
-                        connected: false,
+                        vpnConnectionStatus: viewStore.vpnConnectionStatus,
                         sendAction: { _ = viewStore.send($0) }
                     )
                     VStack(spacing: 0) {
@@ -72,9 +72,11 @@ public struct HomeView: View {
                 .background(Color(.background))
                 
                 ConnectionStatusView(store: store.scope(state: \.connectionStatus,
-                                                        action: { .connectionStatus($0) }))
+                                                        action: { .connectionStatusViewAction($0) }))
                 .allowsHitTesting(false)
             }
+
+            .task { await viewStore.send(.watchConnectionStatus).finish() }
         }
     }
 

@@ -34,23 +34,44 @@ struct HomeConnectionCardView: View {
     @Dependency(\.locale) private var locale
 
     let item: RecentConnection
-    @State var connected: Bool
+    var vpnConnectionStatus: VPNConnectionStatus
     let sendAction: HomeFeature.ActionSender
 
     var headerText: String {
-        connected ?
-            Localizable.connectionCardSafelyBrowsingFrom :
-            Localizable.connectionCardLastConnectedTo
+        switch vpnConnectionStatus {
+        case .disconnected, .disconnecting:
+            return Localizable.connectionCardLastConnectedTo
+        case .connected:
+            return Localizable.connectionCardSafelyBrowsingFrom
+        case .connecting, .loadingConnectionInfo:
+            return Localizable.connectionCardConnectingTo
+        }
     }
 
     var accessibilityText: String {
         let countryName = item.connection.location.text(locale: locale)
 
-        let accessibilityText = connected ?
-            Localizable.connectionCardAccessibilityBrowsingFrom :
-            Localizable.connectionCardAccessibilityLastConnectedTo
+        switch vpnConnectionStatus {
+        case .disconnected, .disconnecting:
+            return Localizable.connectionCardAccessibilityLastConnectedTo(countryName)
+        case .connected:
+            return Localizable.connectionCardAccessibilityBrowsingFrom(countryName)
+        case .connecting, .loadingConnectionInfo:
+            return Localizable.connectionCardAccessibilityConnectingTo(countryName)
+        }
+    }
 
-        return accessibilityText(countryName)
+    var buttonText: String {
+        switch vpnConnectionStatus {
+        case .disconnected:
+            return Localizable.actionConnect
+        case .connected:
+            return Localizable.actionDisconnect
+        case .connecting, .loadingConnectionInfo:
+            return Localizable.connectionCardActionCancel
+        case .disconnecting:
+            return Localizable.connectionCardActionCancel // ? not sure
+        }
     }
 
     var header: some View {
@@ -87,24 +108,32 @@ struct HomeConnectionCardView: View {
                     }
                 }
                 Spacer()
+                Button(action: {
+//                    sendAction(.showConnectionDetails)
+                }, label: {
+                    Asset.icChevronUp.swiftUIImage
+                })
+                .foregroundColor(Color(.icon, .weak))
             }
             .padding()
 
             Button {
                 withAnimation(.easeInOut) {
-                    if connected {
-                        sendAction(.disconnect)
-                    } else {
+                    switch vpnConnectionStatus {
+                    case .disconnected:
                         sendAction(.connect(item.connection))
+                    case .connected:
+                        sendAction(.disconnect)
+                    case .connecting:
+                        sendAction(.disconnect)
+                    case .loadingConnectionInfo:
+                        sendAction(.disconnect)
+                    case .disconnecting:
+                        break
                     }
-                    connected.toggle()
                 }
             } label: {
-                if connected {
-                    Text(Localizable.actionDisconnect)
-                } else {
-                    Text(Localizable.actionConnect)
-                }
+                Text(buttonText)
             }
             .frame(maxWidth: .infinity, minHeight: 48)
             .foregroundColor(Color(.text, .primary))
@@ -148,14 +177,15 @@ struct ConnectionCard_Previews: PreviewProvider {
                     connection: .init(location: .fastest, features: [])
                 )
             ],
-                  connectionStatus: .init(protectionState: .protected(netShield: .random))),
+                  connectionStatus: .init(protectionState: .protected(netShield: .random)),
+                  vpnConnectionStatus: .disconnected),
             reducer: HomeFeature()
         )
         WithViewStore(store, observe: { $0 }) { store in
             List {
                 HomeConnectionCardView(
                     item: store.state.connections.first!,
-                    connected: false,
+                    vpnConnectionStatus: store.state.vpnConnectionStatus,
                     sendAction: { _ = store.send($0) }
                 )
             }

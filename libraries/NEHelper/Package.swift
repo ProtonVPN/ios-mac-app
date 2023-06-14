@@ -20,6 +20,7 @@ let package = Package(
         .package(path: "../LocalFeatureFlags"),
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.4.4"),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", exact: "3.2.1"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies.git", exact: "0.5.0"),
     ],
     targets: [
         .target(
@@ -30,6 +31,7 @@ let package = Package(
                 .product(name: "PMLogger", package: "PMLogger"),
                 .product(name: "KeychainAccess", package: "KeychainAccess"),
                 .product(name: "LocalFeatureFlags", package: "LocalFeatureFlags"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
             ]
         ),
         .testTarget(
