@@ -259,6 +259,8 @@ extension HomeFeature.Action {
             words = "disconnect" // ??
         case .connectionStatus:
             words = "connectionStatus" // ??
+        case .connected:
+            words = "connected" // ??
         }
 
         return Text(words)
