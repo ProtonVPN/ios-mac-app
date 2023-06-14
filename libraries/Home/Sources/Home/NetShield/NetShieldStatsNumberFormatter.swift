@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Strings
 
 public class NetShieldStatsNumberFormatter: NumberFormatter {
 
@@ -31,7 +32,31 @@ public class NetShieldStatsNumberFormatter: NumberFormatter {
         fatalError("init(coder:) has not been implemented")
     }
 
-    let suffixes = ["", " K", " M", " G", " T", " P", " E"]
+    enum Suffix: Int {
+        case kilo = 1
+        case mega = 2
+        case giga = 3
+        case tera = 4
+        case peta = 5
+        case exa = 6
+
+        func localized(amount: String) -> String {
+            switch self {
+            case .kilo:
+                return Localizable.netshieldStatsBlockedK(amount)
+            case .mega:
+                return Localizable.netshieldStatsBlockedM(amount)
+            case .giga:
+                return Localizable.netshieldStatsBlockedG(amount)
+            case .tera:
+                return Localizable.netshieldStatsBlockedT(amount)
+            case .peta:
+                return Localizable.netshieldStatsBlockedP(amount)
+            case .exa:
+                return Localizable.netshieldStatsBlockedE(amount)
+            }
+        }
+    }
 
     public func string(from number: Int) -> String {
         var reduced = CGFloat(abs(number))
@@ -40,9 +65,8 @@ public class NetShieldStatsNumberFormatter: NumberFormatter {
             reduced /= 1_000
             multiplier += 1
         }
-        multiplier = min(multiplier, suffixes.count - 1)
-        let multiplierString = suffixes[multiplier]
-        let reducedNumber = NSNumber(value: reduced)
-        return (string(from: reducedNumber) ?? "0") + multiplierString
+        let suffix = Suffix(rawValue: multiplier)
+        let amount = string(from: NSNumber(value: reduced)) ?? "0"
+        return suffix?.localized(amount: amount) ?? "\(amount)"
     }
 }

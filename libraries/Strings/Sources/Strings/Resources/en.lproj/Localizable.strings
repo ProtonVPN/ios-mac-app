@@ -80,3 +80,15 @@
 "netshield_stats_hint_data" = "Estimated size of ads, trackers, and malware that NetShield has blocked.";
 
 "_netshield_stats_data_saved" = "Data\nsaved";
+/* The count of trackers/ads blocked in thousands */
+"_netshield_stats_blocked_K" = "%@ K";
+/* The count of trackers/ads blocked in millions */
+"_netshield_stats_blocked_M" = "%@ M";
+/* The count of trackers/ads blocked in billions */
+"_netshield_stats_blocked_G" = "%@ G";
+/* The count of trackers/ads blocked in trillions */
+"_netshield_stats_blocked_T" = "%@ T";
+/* The count of trackers/ads blocked in quadrillions */
+"_netshield_stats_blocked_P" = "%@ P";
+/* The count of trackers/ads blocked in sextillions */
+"_netshield_stats_blocked_E" = "%@ E";

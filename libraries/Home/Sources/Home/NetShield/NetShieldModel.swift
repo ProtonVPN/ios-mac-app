@@ -75,8 +75,8 @@ public struct NetShieldModel: Equatable {
 public extension NetShieldModel {
     static var random: NetShieldModel {
         let trackers = Int.random(in: 0...1000)
-        let ads = Int.random(in: 0...1000)
-        let data = Int.random(in: 0...1000)
+        let ads = Int.random(in: 0...1000000000)
+        let data = Int.random(in: 0...100000000000000)
         return NetShieldModel(trackers: trackers, ads: ads, data: data, enabled: true)
     }
 }

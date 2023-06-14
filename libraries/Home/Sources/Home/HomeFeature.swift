@@ -53,6 +53,7 @@ public struct HomeFeature: Reducer {
         /// Connect to a given connection specification. Bump it to the top of the
         /// list, if it isn't already pinned.
         case connect(ConnectionSpec)
+        case connected
         case disconnect
         /// Pin a recent connection to the top of the list, and remove it from the recent connections.
         case pin(ConnectionSpec)
@@ -60,7 +61,6 @@ public struct HomeFeature: Reducer {
         case unpin(ConnectionSpec)
         /// Remove a connection.
         case remove(ConnectionSpec)
-        case trimConnections
         case connectionStatus(ConnectionStatusFeature.Action)
     }
 
@@ -88,47 +88,44 @@ public struct HomeFeature: Reducer {
                     connection: spec
                 )
                 state.connections.insert(recent, at: 0)
+                state.trimConnections()
                 return .run { send in
-                    await send.send(.trimConnections)
+                    // Simple state change won't do here because we need to start updating the UI with asterisks so we need to trigger the reducer
                     await send.send(.connectionStatus(.update(ProtectionState.protecting(country: "Poland", ip: "192.168.1.0"))))
                     try await Task.sleep(nanoseconds: 1_000_000_000) // mimic connection
-                    await send.send(.connectionStatus(.update(ProtectionState.protected(netShield: .random))))
+                    // This would normally come somewhere from outside
+                    await send.send(.connected)
                 }
                 .cancellable(id: HomeCancellable.connect)
+            case .connected:
+                return .send(.connectionStatus(.update(ProtectionState.protected(netShield: .random))))
             case let .pin(spec):
                 guard let index = state.connections.firstIndex(where: {
                     $0.connection == spec
                 }) else {
-                    return .send(.trimConnections)
+                    state.trimConnections()
+                    return .none
                 }
 
                 state.connections[index].pinned = true
-                return .send(.trimConnections)
+                state.trimConnections()
+                return .none
             case let .unpin(spec):
                 guard let index = state.connections.firstIndex(where: {
                     $0.connection == spec
                 }) else {
-                    return .run { send in
-                        await send.send(.trimConnections)
-                    }
+                    state.trimConnections()
+                    return .none
                 }
 
                 state.connections[index].pinned = false
-                return .run { send in
-                    await send.send(.trimConnections)
-                }
+                state.trimConnections()
+                return .none
             case let .remove(spec):
                 state.connections.removeAll {
                     $0.connection == spec
                 }
-                return .run { send in
-                    await send.send(.trimConnections)
-                }
-            case .trimConnections:
-                while state.connections.count > State.maxConnections,
-                      let index = state.connections.lastIndex(where: \.notPinned) {
-                    state.connections.remove(at: index)
-                }
+                state.trimConnections()
                 return .none
             case .disconnect:
                 state.connectionStatus.protectionState = .unprotected(country: "Poland", ip: "192.168.1.0")
@@ -162,7 +159,7 @@ extension HomeFeature.State {
                                                           .connectionSecureCore,
                                                           .connectionRegion,
                                                           .connectionSecureCoreFastest],
-                                            connectionStatus: .init(protectionState: .random))
+                                            connectionStatus: .init(protectionState: .protected(netShield: .random)))
 }
 
 #endif

@@ -148,7 +148,7 @@ struct ConnectionCard_Previews: PreviewProvider {
                     connection: .init(location: .fastest, features: [])
                 )
             ],
-                  connectionStatus: .init(protectionState: .random)),
+                  connectionStatus: .init(protectionState: .protected(netShield: .random))),
             reducer: HomeFeature()
         )
         WithViewStore(store, observe: { $0 }) { store in

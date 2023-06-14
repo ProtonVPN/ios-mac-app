@@ -142,7 +142,7 @@ public enum LocalizedString {
 
 extension LocalizedString {
   private static func tr(_ table: String, _ key: String, _ args: CVarArg..., fallback value: String) -> String {
-    let format = localizeStringAndFallbackToEn(key, table) // , value)
+    let format = localizeStringAndFallbackToEn(key, table, value)
     return String(format: format, locale: Locale.current, arguments: args)
   }
 }

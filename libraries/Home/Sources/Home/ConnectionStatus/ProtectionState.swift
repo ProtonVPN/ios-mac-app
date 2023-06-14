@@ -24,17 +24,3 @@ public enum ProtectionState: Equatable {
     case unprotected(country: String, ip: String)
     case protecting(country: String, ip: String)
 }
-
-
-public extension ProtectionState {
-    static var random: ProtectionState {
-        switch Int.random(in: 0...2) {
-        case 0:
-            return .protected(netShield: .random)
-        case 1:
-            return .unprotected(country: "Poland", ip: "192.168.1.0")
-        default:
-            return .protecting(country: "Poland", ip: "192.168.1.0")
-        }
-    }
-}

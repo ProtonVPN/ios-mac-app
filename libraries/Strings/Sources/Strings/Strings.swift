@@ -54,6 +54,30 @@ public enum Localizable {
   public static func netshieldStatsAdsBlocked(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "_netshield_stats_ads_blocked", p1, fallback: "Plural format key: \"%#@VARIABLE@\"")
   }
+  /// The count of trackers/ads blocked in sextillions
+  public static func netshieldStatsBlockedE(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_netshield_stats_blocked_E", String(describing: p1), fallback: "%@ E")
+  }
+  /// The count of trackers/ads blocked in billions
+  public static func netshieldStatsBlockedG(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_netshield_stats_blocked_G", String(describing: p1), fallback: "%@ G")
+  }
+  /// The count of trackers/ads blocked in thousands
+  public static func netshieldStatsBlockedK(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_netshield_stats_blocked_K", String(describing: p1), fallback: "%@ K")
+  }
+  /// The count of trackers/ads blocked in millions
+  public static func netshieldStatsBlockedM(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_netshield_stats_blocked_M", String(describing: p1), fallback: "%@ M")
+  }
+  /// The count of trackers/ads blocked in quadrillions
+  public static func netshieldStatsBlockedP(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_netshield_stats_blocked_P", String(describing: p1), fallback: "%@ P")
+  }
+  /// The count of trackers/ads blocked in trillions
+  public static func netshieldStatsBlockedT(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_netshield_stats_blocked_T", String(describing: p1), fallback: "%@ T")
+  }
   /// Data
   /// saved
   public static var netshieldStatsDataSaved: String { return Localizable.tr("Localizable", "_netshield_stats_data_saved", fallback: "Data\nsaved") }

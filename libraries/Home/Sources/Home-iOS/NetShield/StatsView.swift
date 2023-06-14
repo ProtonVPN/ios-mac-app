@@ -28,7 +28,7 @@ struct StatsView: View {
 
     public var body: some View {
         VStack(alignment: .center) {
-            Text("\(model.value)")
+            Text(model.value)
                 .themeFont(.body2(emphasised: true))
                 .foregroundColor(valueForegroundColor())
                 .lineLimit(1)
