@@ -143,12 +143,3 @@
 "maximum_device_plan_limit_part_1" = "Please disconnect another device to connect to this one or upgrade to %@";
 /* Description of user account update screen */
 "maximum_device_limit" = "Please disconnect another device to connect to this one.";
-
-/* Netshield stats */
-
-/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
-"netshield_stats_hint_ads" = "Advertisement websites use cookies and trackers to target you.";
-/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
-"netshield_stats_hint_trackers" = "Trackers are third-party websites that collect, store, and sell information about your web activity.";
-/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
-"netshield_stats_hint_data" = "Estimated size of ads, trackers, and malware that NetShield has blocked.";

@@ -54,8 +54,9 @@ public enum Localizable {
   public static func netshieldStatsAdsBlocked(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "_netshield_stats_ads_blocked", p1, fallback: "Plural format key: \"%#@VARIABLE@\"")
   }
-  /// data saved
-  public static var netshieldStatsDataSaved: String { return Localizable.tr("Localizable", "_netshield_stats_data_saved", fallback: "data saved") }
+  /// Data
+  /// saved
+  public static var netshieldStatsDataSaved: String { return Localizable.tr("Localizable", "_netshield_stats_data_saved", fallback: "Data\nsaved") }
   /// Plural format key: "%#@VARIABLE@"
   public static func netshieldStatsTrackersStopped(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "_netshield_stats_trackers_stopped", p1, fallback: "Plural format key: \"%#@VARIABLE@\"")
@@ -72,6 +73,12 @@ public enum Localizable {
   public static var connectionStatusProtecting: String { return Localizable.tr("Localizable", "connection_status_protecting", fallback: "Protecting your digital identity") }
   /// Connection status title when user is not connected to a VPN
   public static var connectionStatusUnprotected: String { return Localizable.tr("Localizable", "connection_status_unprotected", fallback: "You are unprotected") }
+  /// The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked
+  public static var netshieldStatsHintAds: String { return Localizable.tr("Localizable", "netshield_stats_hint_ads", fallback: "Advertisement websites use cookies and trackers to target you.") }
+  /// The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved
+  public static var netshieldStatsHintData: String { return Localizable.tr("Localizable", "netshield_stats_hint_data", fallback: "Estimated size of ads, trackers, and malware that NetShield has blocked.") }
+  /// The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped
+  public static var netshieldStatsHintTrackers: String { return Localizable.tr("Localizable", "netshield_stats_hint_trackers", fallback: "Trackers are third-party websites that collect, store, and sell information about your web activity.") }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces

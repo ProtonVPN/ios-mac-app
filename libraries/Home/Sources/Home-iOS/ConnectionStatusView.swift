@@ -117,7 +117,6 @@ public struct ConnectionStatusView: View {
                             NetShieldStatsView(viewModel: netShield)
                         }
                     }
-                    .background(Color(.background).opacity(0.4))
                     .background(.translucentLight,
                                 in: RoundedRectangle(cornerRadius: .themeRadius8,
                                                      style: .continuous))

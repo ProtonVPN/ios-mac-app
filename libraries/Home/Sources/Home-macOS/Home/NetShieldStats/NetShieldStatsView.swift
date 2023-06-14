@@ -23,19 +23,19 @@ import Theme_macOS
 
 public struct NetShieldStatsView: View {
 
-    @ObservedObject public var viewModel: NetShieldStatsViewModel
+    public var viewModel: NetShieldModel
 
     public var body: some View {
         HStack(spacing: 0) {
-            StatsView(model: viewModel.adsStats)
-            StatsView(model: viewModel.trackersStats)
-            StatsView(model: viewModel.dataStats)
+            StatsView(model: viewModel.ads)
+            StatsView(model: viewModel.trackers)
+            StatsView(model: viewModel.data)
         }
         .padding(8)
         .background(RoundedRectangle(cornerRadius: .themeRadius8)
             .fill(Color(.background, .weak)))
     }
-    public init(viewModel: NetShieldStatsViewModel) {
+    public init(viewModel: NetShieldModel) {
         self.viewModel = viewModel
     }
 }
@@ -46,7 +46,7 @@ struct StatsView: View {
     var statsViewHeight: CGFloat = 56
     var statsViewWidth: CGFloat = 80
 
-    let model: NetShieldStatsViewModel.NetShieldStat
+    let model: NetShieldModel.Stat
 
     public var body: some View {
         VStack(alignment: .center) {
@@ -73,12 +73,12 @@ struct StatsView: View {
 
     func valueForegroundColor() -> Color {
         Color(.text,
-              model.isDisabled ? .hint : .normal)
+              model.isEnabled ? .normal : .hint)
     }
 
     func titleForegroundColor() -> Color {
         Color(.text,
-              model.isDisabled ? .hint : .weak)
+              model.isEnabled ? .weak : .hint)
     }
 
     func backgroundColor() -> Color {
@@ -91,25 +91,8 @@ struct StatsView: View {
 
 struct NetShieldStatsView_Previews: PreviewProvider {
     static var previews: some View {
-        NetShieldStatsView(viewModel: .previewModel)
+        NetShieldStatsView(viewModel: .random)
             .background(Color(.background))
             .previewLayout(.sizeThatFits)
     }
-}
-
-private extension NetShieldStatsViewModel {
-    static var previewModel: NetShieldStatsViewModel = {
-        .init(adsStats: .init(value: "12",
-                              title: "Ads\nblocked",
-                              help: "Some help",
-                              isDisabled: true),
-              trackersStats: .init(value: "23",
-                                   title: "Trackers\nstopped",
-                                   help: "Some help",
-                                   isDisabled: false),
-              dataStats: .init(value: "45.5 MB",
-                               title: "Data\nsaved",
-                               help: "Some help",
-                               isDisabled: false))
-    }()
 }
