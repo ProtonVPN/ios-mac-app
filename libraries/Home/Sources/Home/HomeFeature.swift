@@ -64,6 +64,10 @@ public struct HomeFeature: Reducer {
         case connectionStatus(ConnectionStatusFeature.Action)
     }
 
+    enum HomeCancellable {
+        case connect
+    }
+
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
@@ -90,13 +94,12 @@ public struct HomeFeature: Reducer {
                     try await Task.sleep(nanoseconds: 1_000_000_000) // mimic connection
                     await send.send(.connectionStatus(.update(ProtectionState.protected(netShield: .random))))
                 }
+                .cancellable(id: HomeCancellable.connect)
             case let .pin(spec):
                 guard let index = state.connections.firstIndex(where: {
                     $0.connection == spec
                 }) else {
-                    return .run { send in
-                        await send.send(.trimConnections)
-                    }
+                    return .send(.trimConnections)
                 }
 
                 state.connections[index].pinned = true
@@ -126,12 +129,10 @@ public struct HomeFeature: Reducer {
                       let index = state.connections.lastIndex(where: \.notPinned) {
                     state.connections.remove(at: index)
                 }
-                return .run { send in
-                    await send.send(.trimConnections)
-                }
+                return .none
             case .disconnect:
                 state.connectionStatus.protectionState = .unprotected(country: "Poland", ip: "192.168.1.0")
-                return .none
+                return .cancel(id: HomeCancellable.connect)
             case .connectionStatus:
                 return .none
             }

@@ -132,7 +132,7 @@ struct ConnectionStatusView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             VStack {
-                ConnectionStatusView(store: Store(initialState: ConnectionStatusFeature.State(protectionState: .random)) {
+                ConnectionStatusView(store: Store(initialState: ConnectionStatusFeature.State(protectionState: .protected(netShield: .random))) {
                     ConnectionStatusFeature()
                 })
                 Spacer()

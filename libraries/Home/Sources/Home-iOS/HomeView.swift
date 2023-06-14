@@ -71,7 +71,8 @@ public struct HomeView: View {
                 }
                 .background(Color(.background))
                 
-                ConnectionStatusView(store: store.scope(state: \.connectionStatus, action: { .connectionStatus($0) }))
+                ConnectionStatusView(store: store.scope(state: \.connectionStatus,
+                                                        action: { .connectionStatus($0) }))
                 .allowsHitTesting(false)
             }
         }

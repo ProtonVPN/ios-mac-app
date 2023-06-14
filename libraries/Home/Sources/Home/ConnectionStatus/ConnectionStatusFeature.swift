@@ -29,6 +29,7 @@ public struct ConnectionStatusFeature: Reducer {
 
     public enum Action: Equatable {
         case update(ProtectionState)
+        case maskLocationTick
     }
 
     public init() { }
@@ -38,17 +39,20 @@ public struct ConnectionStatusFeature: Reducer {
             switch action {
             case let .update(protectionState):
                 state.protectionState = protectionState
-                if case .protected = protectionState {
+                guard case .protecting = protectionState else {
                     return .cancel(id: MaskLocation.task)
+                }
+                return .send(.maskLocationTick)
+            case .maskLocationTick:
+                if case let .protecting(country, ip) = state.protectionState {
+                    if let masked = partiallyMaskedLocation(country: country, ip: ip) {
+                        state.protectionState = masked
+                    }
                 }
                 return .run { action in
                     try await Task.sleep(nanoseconds: 50_000_000)
-                    if case let .protecting(country, ip) = protectionState {
-                        if let masked = partiallyMaskedLocation(country: country, ip: ip) {
-                            await action.send(.update(masked))
-                        }
-                    }
-                }.cancellable(id: MaskLocation.task)
+                    await action.send(.maskLocationTick)
+                }.cancellable(id: MaskLocation.task, cancelInFlight: true)
             }
         }
     }
