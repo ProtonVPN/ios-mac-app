@@ -41,13 +41,16 @@ public struct NetShieldModel: Equatable {
     public init(trackers: Int, ads: Int, data: Int, enabled: Bool) {
         let adsStat = Stat(value: Self.formatter.string(from: ads),
                            title: Localizable.netshieldStatsAdsBlocked(ads),
+                           help: Localizable.netshieldStatsHintAds,
                            isEnabled: enabled)
         let trackersStat = Stat(value: Self.formatter.string(from: trackers),
-                           title: Localizable.netshieldStatsTrackersStopped(trackers),
-                           isEnabled: enabled)
+                                title: Localizable.netshieldStatsTrackersStopped(trackers),
+                                help: Localizable.netshieldStatsHintTrackers,
+                                isEnabled: enabled)
         let dataStat = Stat(value: Self.byteCountFormatter.string(fromByteCount: Int64(data)),
-                           title: Localizable.netshieldStatsDataSaved,
-                           isEnabled: enabled)
+                            title: Localizable.netshieldStatsDataSaved,
+                            help: Localizable.netshieldStatsHintData,
+                            isEnabled: enabled)
 
         self.init(trackers: trackersStat,
                   ads: adsStat,
@@ -57,18 +60,20 @@ public struct NetShieldModel: Equatable {
     public struct Stat: Equatable {
         public let value: String
         public let title: String
+        public let help: String
         public let isEnabled: Bool
 
-        public init(value: String, title: String, isEnabled: Bool) {
+        public init(value: String, title: String, help: String, isEnabled: Bool) {
             self.value = value
             self.title = title
+            self.help = help
             self.isEnabled = isEnabled
         }
     }
 }
 
-extension NetShieldModel {
-    public static var random: NetShieldModel {
+public extension NetShieldModel {
+    static var random: NetShieldModel {
         let trackers = Int.random(in: 0...1000)
         let ads = Int.random(in: 0...1000)
         let data = Int.random(in: 0...1000)

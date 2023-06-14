@@ -20,11 +20,12 @@ import Home
 import SwiftUI
 import Theme
 import Theme_macOS
+import Strings
 
 public struct SettingsView: View {
 
     @State private var currentSubview: AnyView?
-    @State private var title = LocalizedString.settingsTabBarTitle
+    @State private var title = Localizable.settingsTab
     @State private var subviewTitle: String = ""
 
     private func showSubview(view: AnyView?, title: String) {

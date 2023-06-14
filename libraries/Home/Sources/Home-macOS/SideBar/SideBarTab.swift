@@ -18,6 +18,7 @@
 
 import Home
 import SwiftUI
+import Strings
 import Theme
 
 enum SideBarTab: Hashable, CaseIterable {
@@ -28,11 +29,11 @@ enum SideBarTab: Hashable, CaseIterable {
     var title: String {
         switch self {
         case .home:
-            return LocalizedString.homeTabBarTitle
+            return Localizable.homeTab
         case .countries:
-            return LocalizedString.countriesTabBarTitle
+            return Localizable.countriesTab
         case .settings:
-            return LocalizedString.settingsTabBarTitle
+            return Localizable.settingsTab
         }
     }
 

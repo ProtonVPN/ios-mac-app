@@ -81,6 +81,7 @@ private extension NetShieldModel.Stat {
     static var random: NetShieldModel.Stat {
         .init(value: "\(Int.random(in: 1...1000))",
               title: "Trackers\nstopped",
+              help: "",
               isEnabled: .random())
     }
 }

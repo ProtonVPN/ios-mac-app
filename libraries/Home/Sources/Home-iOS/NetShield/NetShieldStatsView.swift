@@ -39,27 +39,9 @@ public struct NetShieldStatsView: View {
 
 struct NetShieldStatsView_Previews: PreviewProvider {
     static var previews: some View {
-        NetShieldStatsView(viewModel: .previewModel)
+        NetShieldStatsView(viewModel: .random)
             .background(RoundedRectangle(cornerRadius: .themeRadius8)
                 .fill(Color(.background, .weak)))
-            .background(Color(.background))
             .previewLayout(.sizeThatFits)
     }
-}
-
-private extension NetShieldModel {
-    static var previewModel: NetShieldModel = {
-        .init(trackers: .init(value: "23",
-                              title: "Trackers\nstopped",
-                              // help: "Some help",
-                              isEnabled: false),
-              ads: .init(value: "12",
-                         title: "Ads\nblocked",
-                         // help: "Some help",
-                         isEnabled: true),
-              data: .init(value: "45.5 MB",
-                          title: "Data\nsaved",
-//                          help: "Some help",
-                          isEnabled: false))
-    }()
 }

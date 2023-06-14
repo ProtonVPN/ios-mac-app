@@ -70,4 +70,13 @@
 /* Connection status title when user is connected to a VPN */
 "connection_status_protected" = "Protected";
 
+/* Netshield stats */
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
+"netshield_stats_hint_ads" = "Advertisement websites use cookies and trackers to target you.";
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
+"netshield_stats_hint_trackers" = "Trackers are third-party websites that collect, store, and sell information about your web activity.";
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
+"netshield_stats_hint_data" = "Estimated size of ads, trackers, and malware that NetShield has blocked.";
+
 "_netshield_stats_data_saved" = "Data\nsaved";
