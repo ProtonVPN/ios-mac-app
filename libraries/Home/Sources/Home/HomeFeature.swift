@@ -29,7 +29,7 @@ import CasePaths
 
 public struct HomeFeature: ReducerProtocol {
     /// - Note: might want this as a property of all Reducer types
-    public typealias ActionSender = (Action) -> ()
+    public typealias ActionSender = (Action) -> Void
 
     public struct State: Equatable {
         static let maxConnections = 8
@@ -37,10 +37,12 @@ public struct HomeFeature: ReducerProtocol {
         public var connections: [RecentConnection]
 
         public var connectionStatus: ConnectionStatusFeature.State
+        public var vpnConnectionStatus: VPNConnectionStatus
 
-        public init(connections: [RecentConnection], connectionStatus: ConnectionStatusFeature.State) {
+        public init(connections: [RecentConnection], connectionStatus: ConnectionStatusFeature.State, vpnConnectionStatus: VPNConnectionStatus) {
             self.connections = connections
             self.connectionStatus = connectionStatus
+            self.vpnConnectionStatus = vpnConnectionStatus
         }
 
         mutating func trimConnections() {
@@ -55,7 +57,6 @@ public struct HomeFeature: ReducerProtocol {
         /// Connect to a given connection specification. Bump it to the top of the
         /// list, if it isn't already pinned.
         case connect(ConnectionSpec)
-        case connected
         case disconnect
         /// Pin a recent connection to the top of the list, and remove it from the recent connections.
         case pin(ConnectionSpec)
@@ -63,7 +64,11 @@ public struct HomeFeature: ReducerProtocol {
         case unpin(ConnectionSpec)
         /// Remove a connection.
         case remove(ConnectionSpec)
-        case connectionStatus(ConnectionStatusFeature.Action)
+
+        case connectionStatusViewAction(ConnectionStatusFeature.Action)
+
+        case watchConnectionStatus
+        case newConnectionStatus(VPNConnectionStatus)
     }
 
     enum HomeCancellable {
@@ -74,33 +79,8 @@ public struct HomeFeature: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case let .connect(spec):
-                var pinned = false
+                return .none // Handled in the app
 
-                if let index = state.connections.firstIndex(where: {
-                    $0.connection == spec
-                }) {
-                    pinned = state.connections[index].pinned
-                    state.connections.remove(at: index)
-                }
-
-                let recent = RecentConnection(
-                    pinned: pinned,
-                    underMaintenance: false,
-                    connectionDate: .now,
-                    connection: spec
-                )
-                state.connections.insert(recent, at: 0)
-                state.trimConnections()
-                return .run { send in
-                    // Simple state change won't do here because we need to start updating the UI with asterisks so we need to trigger the reducer
-                    await send(.connectionStatus(.update(ProtectionState.protecting(country: "Poland", ip: "192.168.1.0"))))
-                    try await Task.sleep(nanoseconds: 1_000_000_000) // mimic connection
-                    // This would normally come somewhere from outside
-                    await send(.connected)
-                }
-                .cancellable(id: HomeCancellable.connect)
-            case .connected:
-                return .send(.connectionStatus(.update(ProtectionState.protected(netShield: .random))))
             case let .pin(spec):
                 guard let index = state.connections.firstIndex(where: {
                     $0.connection == spec
@@ -112,6 +92,7 @@ public struct HomeFeature: ReducerProtocol {
                 state.connections[index].pinned = true
                 state.trimConnections()
                 return .none
+
             case let .unpin(spec):
                 guard let index = state.connections.firstIndex(where: {
                     $0.connection == spec
@@ -123,20 +104,36 @@ public struct HomeFeature: ReducerProtocol {
                 state.connections[index].pinned = false
                 state.trimConnections()
                 return .none
+
             case let .remove(spec):
                 state.connections.removeAll {
                     $0.connection == spec
                 }
                 state.trimConnections()
                 return .none
+
             case .disconnect:
                 state.connectionStatus.protectionState = .unprotected(country: "Poland", ip: "192.168.1.0")
                 return .cancel(id: HomeCancellable.connect)
-            case .connectionStatus:
+
+            case .connectionStatusViewAction:
                 return .none
+
+            case .watchConnectionStatus:
+                return .run { send in
+                    @Dependency(\.watchVPNConnectionStatus) var watchVPNConnectionStatus
+                    for await vpnStatus in await watchVPNConnectionStatus() {
+                        await send(.newConnectionStatus(vpnStatus), animation: .default)
+                    }
+                }
+
+            case .newConnectionStatus(let connectionStatus):
+                state.vpnConnectionStatus = connectionStatus
+                return .none
+                
             }
         }
-        Scope(state: \.connectionStatus, action: /Action.connectionStatus) {
+        Scope(state: \.connectionStatus, action: /Action.connectionStatusViewAction) {
             ConnectionStatusFeature()
         }
     }
@@ -161,7 +158,8 @@ extension HomeFeature.State {
                                                           .connectionSecureCore,
                                                           .connectionRegion,
                                                           .connectionSecureCoreFastest],
-                                            connectionStatus: .init(protectionState: .protected(netShield: .random)))
+                                            connectionStatus: .init(protectionState: .protected(netShield: .random)),
+                                            vpnConnectionStatus: .disconnected)
 }
 
 #endif

@@ -21,6 +21,7 @@ import ComposableArchitecture
 import Strings
 import ConnectionDetails
 import VPNShared
+import Theme
 
 public struct ConnectionScreenFeature: Reducer {
 
@@ -39,6 +40,7 @@ public struct ConnectionScreenFeature: Reducer {
     }
 
     public enum Action: Equatable {
+        case close
         case ipViewAction(IPViewFeature.Action)
         case connectionDetailsAction(ConnectionDetailsFeature.Action)
     }
@@ -57,55 +59,75 @@ public struct ConnectionScreenView: View {
 
     let store: StoreOf<ConnectionScreenFeature>
 
+    @ScaledMetric var closeButtonSize: CGFloat = 24
+
     public init(store: StoreOf<ConnectionScreenFeature>) {
         self.store = store
     }
 
     public var body: some View {
-        ScrollView(.vertical) {
+        VStack(alignment: .leading) {
             WithViewStore(self.store, observe: { $0 }, content: { viewStore in
-                VStack(alignment: .leading) {
-                    IPView(store: self.store.scope(
-                        state: \.ipViewState,
-                        action: ConnectionScreenFeature.Action.ipViewAction)
-                    )
+                HStack {
 
-                    ConnectionDetailsView(store: self.store.scope(
-                        state: \.connectionDetailsState,
-                        action: ConnectionScreenFeature.Action.connectionDetailsAction)
-                    )
+                    Spacer()
 
-                    if !viewStore.connectionFeatures.isEmpty || viewStore.isSecureCore {
+                    Button(action: {
+                        viewStore.send(.close)
+                    }, label: {
+                        Asset.icCross.swiftUIImage
+                            .resizable().frame(width: closeButtonSize, height: closeButtonSize)
+                            .foregroundColor(Color(.icon, .weak))
+                    })
+                    .padding(.themeRadius16)
+                }
+            })
 
-                        Text(Localizable.connectionDetailsFeaturesTitle)
-                            .font(.themeFont(.body2()))
-                            .foregroundColor(Color(.text, .weak))
-                            .padding(.top, .themeSpacing24)
-                            .padding(.bottom, .themeSpacing8)
+            ScrollView(.vertical) {
+                WithViewStore(self.store, observe: { $0 }, content: { viewStore in
+                    VStack(alignment: .leading) {
+                        IPView(store: self.store.scope(
+                            state: \.ipViewState,
+                            action: ConnectionScreenFeature.Action.ipViewAction)
+                        )
 
-                        if viewStore.isSecureCore {
-                            Button(action: {
-                                // todo: action
-                            }, label: {
-                                FeatureInfoView(secureCore: true)
+                        ConnectionDetailsView(store: self.store.scope(
+                            state: \.connectionDetailsState,
+                            action: ConnectionScreenFeature.Action.connectionDetailsAction)
+                        )
+
+                        if !viewStore.connectionFeatures.isEmpty || viewStore.isSecureCore {
+
+                            Text(Localizable.connectionDetailsFeaturesTitle)
+                                .font(.themeFont(.body2()))
+                                .foregroundColor(Color(.text, .weak))
+                                .padding(.top, .themeSpacing24)
+                                .padding(.bottom, .themeSpacing8)
+
+                            if viewStore.isSecureCore {
+                                Button(action: {
+                                    // todo: action
+                                }, label: {
+                                    FeatureInfoView(secureCore: true)
+                                })
+                                .padding(.bottom, .themeRadius8)
+                            }
+
+                            ForEach(viewStore.connectionFeatures, content: { feature in
+                                Button(action: {
+                                    // todo: action
+                                }, label: {
+                                    FeatureInfoView(for: feature)
+                                })
                             })
                             .padding(.bottom, .themeRadius8)
+
                         }
 
-                        ForEach(viewStore.connectionFeatures, content: { feature in
-                            Button(action: {
-                                // todo: action
-                            }, label: {
-                                FeatureInfoView(for: feature)
-                            })
-                        })
-                        .padding(.bottom, .themeRadius8)
-
                     }
-
-                }
-                .padding([.leading, .trailing], .themeSpacing16)
-            })
+                    .padding([.leading, .trailing], .themeSpacing16)
+                })
+            }
         }
     }
 }

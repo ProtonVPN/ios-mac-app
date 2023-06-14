@@ -31,6 +31,12 @@
 /* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
 "_connection_card_last_connected_to" = "Last connected to";
 
+/* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
+"_connection_card_connecting_to" = "Connecting to";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_connecting_to" = "Connecting to %@.";
+
 /* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_last_connected_to" = "You were last connected to %@.";
 
@@ -55,6 +61,9 @@
 /* For buttons which have an action that disconnects from a server. [Redesign_2023] */
 "_action_disconnect" = "Disconnect";
 
+/* For buttons which have an action that cancels connecting to a server. [Redesign_2023] */
+"_connection_card_action_cancel" = "Cancel";
+
 /* Home screen: pin this connection in the recents view. [Redesign_2023] */
 "_action_home_pin" = "Pin";
 
@@ -71,7 +80,7 @@
 /* Connection status title when user is connected to a VPN */
 "connection_status_protected" = "Protected";
 
-/* Netshield stats */
+/* MARK: Netshield stats */
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
 "netshield_stats_hint_ads" = "Advertisement websites use cookies and trackers to target you.";
@@ -93,3 +102,75 @@
 "_netshield_stats_blocked_P" = "%@ P";
 /* The count of trackers/ads blocked in sextillions */
 "_netshield_stats_blocked_E" = "%@ E";
+
+
+/* MARK: Connection details */
+
+/* Connection details screen: Title before connection details table (macOS and iOS) [Redesign_2023] */
+"_connection_details_title" = "Connection details";
+
+/* Connection details screen: Connected for (macOS and iOS) [Redesign_2023] */
+"_connection_details_connected_for" = "Connected for";
+
+/* Connection details screen: Country (macOS and iOS) [Redesign_2023] */
+"_connection_details_country" = "Country";
+
+/* Connection details screen: City (macOS and iOS) [Redesign_2023] */
+"_connection_details_city" = "City";
+
+/* Connection details screen: Server (macOS and iOS) [Redesign_2023] */
+"_connection_details_server" = "Server";
+
+/* Connection details screen: Server load (macOS and iOS) [Redesign_2023] */
+"_connection_details_server_load" = "Server load";
+
+/* Connection details screen: Protocol (macOS and iOS) [Redesign_2023] */
+"_connection_details_protocol" = "Protocol";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_my" = "My IP";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_vpn" = "VPN IP";
+
+/* Connection details screen: IP view - text shown instead of IP when app can't determine the IP address (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_unavailable" = "Unavailable";
+
+/* Connection details screen: Tor feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_tor" = "Tor";
+
+/* Connection details screen: Tor feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_tor" = "Connect to the Tor anonymity network using any browser";
+
+/* Connection details screen: P2P feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_p2p" = "P2P";
+
+/* Connection details screen: P2P feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_p2p" = "Download files through BitTorrent and other file sharing protocols";
+
+/* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_smart_routing" = "Smart Routing";
+
+/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_smart_routing" = "Servers are physically located in Singapore, but you’ll appear to be browsing from Thailand.";
+
+/* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_secure_core" = "Secure Core";
+
+/* Connection details screen: Secure core description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_secure_core" = "Download files through BitTorrent and other file sharing protocols";
+
+/* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_streaming" = "Streaming";
+
+/* Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_streaming" = "Watch your favorite movies and TV shows.";
+
+/* Connection details screen: Title of the section that lists VPN connection features (like P2P, Tor, etc.) (macOS and iOS) [Redesign_2023] */
+"_connection_details_features_title" = "Features";
+
+/* Connection details screen: Info button text, that show more info about given VPN feature (macOS and iOS) [Redesign_2023] */
+"_connection_details_info_button" = "Info";
+
+///* Connection details screen:  (macOS and iOS) [Redesign_2023] */
+//"_connection_details_" = "";

@@ -27,9 +27,17 @@ public enum Localizable {
     return Localizable.tr("Localizable", "_connection_card_accessibility_browsing_from", String(describing: p1), fallback: "You are safely browsing from %@.")
   }
   /// Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023]
+  public static func connectionCardAccessibilityConnectingTo(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_connection_card_accessibility_connecting_to", String(describing: p1), fallback: "Connecting to %@.")
+  }
+  /// Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023]
   public static func connectionCardAccessibilityLastConnectedTo(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_connection_card_accessibility_last_connected_to", String(describing: p1), fallback: "You were last connected to %@.")
   }
+  /// For buttons which have an action that cancels connecting to a server. [Redesign_2023]
+  public static var connectionCardActionCancel: String { return Localizable.tr("Localizable", "_connection_card_action_cancel", fallback: "Cancel") }
+  /// Connection card in home tab: "Connecting to <country name>" [Redesign_2023]
+  public static var connectionCardConnectingTo: String { return Localizable.tr("Localizable", "_connection_card_connecting_to", fallback: "Connecting to") }
   /// Connection card in home tab: "Last connected to... <country name>" [Redesign_2023]
   public static var connectionCardLastConnectedTo: String { return Localizable.tr("Localizable", "_connection_card_last_connected_to", fallback: "Last connected to") }
   /// Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023]

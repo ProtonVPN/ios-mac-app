@@ -19,6 +19,7 @@ disabled_rules: # rule identifiers to exclude from running
   - nesting # https://realm.github.io/SwiftLint/nesting.html
   - redundant_string_enum_value # https://realm.github.io/SwiftLint/redundant_string_enum_value.html
   - void_function_in_ternary # https://realm.github.io/SwiftLint/void_function_in_ternary.html
+  - multiple_closures_with_trailing_closure # Disabled to make SwiftUI code look better: https://realm.github.io/SwiftLint/multiple_closures_with_trailing_closure.html
 
 opt_in_rules: # some rules are only opt-in
   - empty_count # https://github.com/realm/SwiftLint/blob/master/Rules.md#empty-count

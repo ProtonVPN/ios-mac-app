@@ -32,6 +32,9 @@ import Timer
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 
 final class DependencyContainer: Container {
+    
+    public static var shared: DependencyContainer = DependencyContainer()
+
     // Singletons
     private lazy var navigationService = NavigationService(self)
     private lazy var wireguardFactory = WireguardProtocolFactory(self, config: config)

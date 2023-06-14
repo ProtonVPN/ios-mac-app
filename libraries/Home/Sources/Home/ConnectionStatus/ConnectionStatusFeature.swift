@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import VPNShared
 
 public struct ConnectionStatusFeature: ReducerProtocol {
     public struct State: Equatable {
@@ -28,8 +29,10 @@ public struct ConnectionStatusFeature: ReducerProtocol {
     }
 
     public enum Action: Equatable {
-        case update(ProtectionState)
         case maskLocationTick
+
+        case watchConnectionStatus
+        case newConnectionStatus(VPNConnectionStatus)
     }
 
     public init() { }
@@ -37,12 +40,7 @@ public struct ConnectionStatusFeature: ReducerProtocol {
     public var body: some ReducerProtocolOf<Self> {
         Reduce { state, action in
             switch action {
-            case let .update(protectionState):
-                state.protectionState = protectionState
-                guard case .protecting = protectionState else {
-                    return .cancel(id: MaskLocation.task)
-                }
-                return .send(.maskLocationTick)
+
             case .maskLocationTick:
                 if case let .protecting(country, ip) = state.protectionState {
                     if let masked = partiallyMaskedLocation(country: country, ip: ip) {
@@ -53,6 +51,21 @@ public struct ConnectionStatusFeature: ReducerProtocol {
                     try await Task.sleep(nanoseconds: 50_000_000)
                     await action(.maskLocationTick)
                 }.cancellable(id: MaskLocation.task, cancelInFlight: true)
+
+            case .watchConnectionStatus:
+                return .run { send in
+                    @Dependency(\.watchVPNConnectionStatus) var watchVPNConnectionStatus
+                    for await vpnStatus in await watchVPNConnectionStatus() {
+                        await send(.newConnectionStatus(vpnStatus), animation: .default)
+                    }
+                }
+
+            case .newConnectionStatus(let status):
+                state.protectionState = status.protectionState
+                guard case .protecting = status.protectionState else {
+                    return .cancel(id: MaskLocation.task)
+                }
+                return .send(.maskLocationTick)
             }
         }
     }
