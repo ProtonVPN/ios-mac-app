@@ -30,7 +30,7 @@ extension InitialStateProvider: DependencyKey {
                                                        .previousConnection,
                                                        .connectionSecureCoreFastest,
                                                        .connectionRegion],
-                                        connectionStatus: .init(protectionState: .random)))
+                                        connectionStatus: .init(protectionState: .unprotected(country: "Poland", ip: "192.168.1.0"))))
     )
 }
 

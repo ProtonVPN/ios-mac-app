@@ -20,7 +20,7 @@ import Foundation
 
 public enum NetShieldStatsViewModel {
 
-    static let formatter = NetShieldStatsNumberFormatter()
+//    static let formatter = NetShieldStatsNumberFormatter()
     static let byteCountFormatter = {
         let formatter = ByteCountFormatter()
         formatter.allowsNonnumericFormatting = false
@@ -35,8 +35,8 @@ public enum NetShieldStatsViewModel {
             return .disabled(title: LocalizedString.netshieldStatsAdsBlocked(0))
         }
         let title: String = LocalizedString.netshieldStatsAdsBlocked(adsBlocked)
-        let value = Self.formatter.string(from: adsBlocked)
-        return NetShieldStatsItemModel(title: title, value: value, isEnabled: !paused)
+//        let value = Self.formatter.string(from: adsBlocked)
+        return NetShieldStatsItemModel(title: title, value: "value", isEnabled: !paused)
     }
 
     public var trackersModel: NetShieldStatsItemModel {
@@ -44,8 +44,8 @@ public enum NetShieldStatsViewModel {
             return .disabled(title: LocalizedString.netshieldStatsTrackersStopped(0))
         }
         let title: String = LocalizedString.netshieldStatsTrackersStopped(trackersStopped)
-        let value = Self.formatter.string(from: trackersStopped)
-        return NetShieldStatsItemModel(title: title, value: value, isEnabled: !paused)
+//        let value = Self.formatter.string(from: trackersStopped)
+        return NetShieldStatsItemModel(title: title, value: "value", isEnabled: !paused)
     }
 
     public var dataModel: NetShieldStatsItemModel {
