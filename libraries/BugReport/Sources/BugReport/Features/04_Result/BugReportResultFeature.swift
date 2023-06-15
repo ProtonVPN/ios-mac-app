@@ -20,7 +20,7 @@ import Foundation
 import ComposableArchitecture
 import Dependencies
 
-struct BugReportResultFeature: Reducer {
+struct BugReportResultFeature: ReducerProtocol {
 
     struct State: Equatable {
         var error: String?
@@ -32,7 +32,7 @@ struct BugReportResultFeature: Reducer {
         case troubleshoot
     }
 
-    var body: some ReducerOf<Self> {
+    var body: some ReducerProtocolOf<Self> {
         Reduce { state, action in
             switch action {
             case .finish:

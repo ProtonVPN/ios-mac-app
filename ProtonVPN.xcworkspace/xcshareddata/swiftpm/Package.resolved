@@ -86,9 +86,9 @@
         "package": "swift-composable-architecture",
         "repositoryURL": "https://github.com/pointfreeco/swift-composable-architecture",
         "state": {
-          "branch": "prerelease/1.0",
-          "revision": "9c640d072e4aff1370d441f6a5847676886efa2c",
-          "version": null
+          "branch": null,
+          "revision": "3fa456c04636978288ca6aa5acbe7b642bee3328",
+          "version": "0.54.1"
         }
       },
       {
@@ -105,8 +105,8 @@
         "repositoryURL": "https://github.com/pointfreeco/swift-dependencies.git",
         "state": {
           "branch": null,
-          "revision": "25c9b6789b4b7ada649a3808e6d8de1489082a33",
-          "version": "0.5.0"
+          "revision": "de1a984a71e51f6e488e98ce3652035563eb8acb",
+          "version": "0.5.1"
         }
       },
       {
@@ -150,8 +150,8 @@
         "repositoryURL": "https://github.com/pointfreeco/swiftui-navigation",
         "state": {
           "branch": null,
-          "revision": "47dd574b900ba5ba679f56ea00d4d282fc7305a6",
-          "version": "0.7.1"
+          "revision": "db81007362f998654239021ca9308a264e59d3e2",
+          "version": "0.7.2"
         }
       },
       {

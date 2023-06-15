@@ -45,7 +45,6 @@
 		47A5FDF82BE7BAF5F74AA67E /* Pods-ProtonVPNUITests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0621B577842515BF2198993 /* Pods-ProtonVPNUITests-metadata.plist */; };
 		4C74D3292A0B9D67004F8528 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 4C74D3282A0B9D67004F8528 /* PMLogger */; };
 		4CB776CD2A1F5E61004CA127 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 4CB776CC2A1F5E61004CA127 /* ComposableArchitecture */; };
-		4CB776D02A1F603B004CA127 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 4CB776CF2A1F603B004CA127 /* Dependencies */; };
 		4CB776D22A1F6250004CA127 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 4CB776D12A1F6250004CA127 /* PMLogger */; };
 		4CB776D52A1F62DF004CA127 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 4CB776D42A1F62DF004CA127 /* Logging */; };
 		4CD1107F2A2A09410062AE13 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1107E2A2A09410062AE13 /* Logging */; };
@@ -435,10 +434,12 @@
 		E59C7A9129229A940034E56F /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 2DC3E67F6A25A4AD4DFCF448 /* NEHelper */; };
 		E59C7A932923B1650034E56F /* ServersInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59C7A922923B1650034E56F /* ServersInformationViewController.swift */; };
 		E59C7A972923B1BB0034E56F /* ServersInformationViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E59C7A962923B1BB0034E56F /* ServersInformationViewController.storyboard */; };
+		E5A4AD2C2A3C48B400CC91D7 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = E5A4AD2B2A3C48B400CC91D7 /* Dependencies */; };
 		E5B3049D28BF628E0093517A /* AnnouncementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B3049C28BF628E0093517A /* AnnouncementViewController.swift */; };
 		E5B3049E28BF7C4A0093517A /* AnnouncementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B3049C28BF628E0093517A /* AnnouncementViewController.swift */; };
 		E5B3049F28BF7C720093517A /* AnnouncementImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E7EFED28B8EDA4005249D3 /* AnnouncementImageViewController.swift */; };
 		E5C035B327BAA8EF003196F5 /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B97027BA7DC100AFCA8C /* UpsellColors.swift */; };
+		E5C8A2692A3C515300290723 /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = E5C8A2682A3C515300290723 /* CasePaths */; };
 		E5CEF62D29E823B200945415 /* Theme-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E5CEF62C29E823B200945415 /* Theme-iOS */; };
 		E5CF14862949E68700AF6912 /* QuarkCommands+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CF14852949E68700AF6912 /* QuarkCommands+Async.swift */; };
 		E5E7EFEE28B8EDA4005249D3 /* AnnouncementImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E7EFED28B8EDA4005249D3 /* AnnouncementImageViewController.swift */; };
@@ -1120,11 +1121,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CB776D02A1F603B004CA127 /* Dependencies in Frameworks */,
 				F34AC17B27F439810007FF93 /* Review in Frameworks */,
+				E5A4AD2C2A3C48B400CC91D7 /* Dependencies in Frameworks */,
 				D555C49F297FB961000593EF /* LocalFeatureFlags in Frameworks */,
 				4CB776CD2A1F5E61004CA127 /* ComposableArchitecture in Frameworks */,
 				D5D78E5528CF60A900B2A156 /* vpncore.framework in Frameworks */,
+				E5C8A2692A3C515300290723 /* CasePaths in Frameworks */,
 				4CB776D22A1F6250004CA127 /* PMLogger in Frameworks */,
 				D573D114264A70980033CE19 /* UIKit.framework in Frameworks */,
 				E198D6B12163B31A00F2F0E0 /* libc++.tbd in Frameworks */,
@@ -2558,9 +2560,10 @@
 				E509509329ED258500C0F935 /* Theme-iOS */,
 				E5980FB829F8068800405986 /* Home-iOS */,
 				4CB776CC2A1F5E61004CA127 /* ComposableArchitecture */,
-				4CB776CF2A1F603B004CA127 /* Dependencies */,
 				4CB776D12A1F6250004CA127 /* PMLogger */,
 				4CB776D42A1F62DF004CA127 /* Logging */,
+				E5A4AD2B2A3C48B400CC91D7 /* Dependencies */,
+				E5C8A2682A3C515300290723 /* CasePaths */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -2848,8 +2851,9 @@
 			packageReferences = (
 				E98EE34A2671EC2400B86BA0 /* XCRemoteSwiftPackageReference "wireguard-apple" */,
 				4CB776CB2A1F5E61004CA127 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
-				4CB776CE2A1F603B004CA127 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
 				4CB776D32A1F62DF004CA127 /* XCRemoteSwiftPackageReference "swift-log" */,
+				E5A4AD2A2A3C48B400CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
+				E5C8A2672A3C515300290723 /* XCRemoteSwiftPackageReference "swift-case-paths" */,
 			);
 			productRefGroup = 791DE5DA208DDA3000A29EA5 /* Products */;
 			projectDirPath = "";
@@ -5018,16 +5022,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
-				branch = prerelease/1.0;
-				kind = branch;
-			};
-		};
-		4CB776CE2A1F603B004CA127 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-dependencies.git";
-			requirement = {
-				kind = exactVersion;
-				version = 0.5.0;
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.54.1;
 			};
 		};
 		4CB776D32A1F62DF004CA127 /* XCRemoteSwiftPackageReference "swift-log" */ = {
@@ -5036,6 +5032,22 @@
 			requirement = {
 				kind = exactVersion;
 				version = 1.4.4;
+			};
+		};
+		E5A4AD2A2A3C48B400CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-dependencies.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.1;
+			};
+		};
+		E5C8A2672A3C515300290723 /* XCRemoteSwiftPackageReference "swift-case-paths" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-case-paths.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.14.1;
 			};
 		};
 		E98EE34A2671EC2400B86BA0 /* XCRemoteSwiftPackageReference "wireguard-apple" */ = {
@@ -5061,11 +5073,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4CB776CB2A1F5E61004CA127 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
-		};
-		4CB776CF2A1F603B004CA127 /* Dependencies */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4CB776CE2A1F603B004CA127 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
-			productName = Dependencies;
 		};
 		4CB776D12A1F6250004CA127 /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -5148,6 +5155,16 @@
 		E5980FB829F8068800405986 /* Home-iOS */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Home-iOS";
+		};
+		E5A4AD2B2A3C48B400CC91D7 /* Dependencies */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E5A4AD2A2A3C48B400CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
+			productName = Dependencies;
+		};
+		E5C8A2682A3C515300290723 /* CasePaths */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E5C8A2672A3C515300290723 /* XCRemoteSwiftPackageReference "swift-case-paths" */;
+			productName = CasePaths;
 		};
 		E5CEF62C29E823B200945415 /* Theme-iOS */ = {
 			isa = XCSwiftPackageProductDependency;

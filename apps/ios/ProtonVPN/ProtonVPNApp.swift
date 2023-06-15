@@ -27,7 +27,7 @@ import ComposableArchitecture
 
 #if REDESIGN
 
-struct AppReducer: Reducer {
+struct AppReducer: ReducerProtocol {
     struct State {
         public var home: HomeFeature.State
 //        public var countries: CountriesFeature.State
@@ -38,7 +38,7 @@ struct AppReducer: Reducer {
         case home(HomeFeature.Action)
     }
 
-    var body: some ReducerOf<Self> {
+    var body: some ReducerProtocolOf<Self> {
         Scope(state: \.home, action: /Action.home) {
             HomeFeature()
         }

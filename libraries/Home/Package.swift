@@ -27,11 +27,11 @@ let package = Package(
         .package(path: "../Ergonomics"),
         .package(
             url: "https://github.com/pointfreeco/swift-composable-architecture",
-            branch: "prerelease/1.0"
+            from: "0.54.1"
         ),
         .package(
-            url: "https://github.com/pointfreeco/swift-dependencies.git",
-            exact: "0.5.0"
+            url: "https://github.com/pointfreeco/swift-case-paths",
+            from: "0.14.1"
         ),
         .package(
           url: "https://github.com/pointfreeco/swift-snapshot-testing",
@@ -46,7 +46,7 @@ let package = Package(
                 "Strings",
                 "Ergonomics",
                 .product(name: "VPNShared", package: "NEHelper"),
-                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "CasePaths", package: "swift-case-paths"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ],
             resources: [
@@ -67,6 +67,7 @@ let package = Package(
             name: "Home-macOS",
             dependencies: [
                 "Home",
+                "Strings",
                 .product(name: "Theme-macOS", package: "Theme"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ],

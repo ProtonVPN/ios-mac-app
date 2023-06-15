@@ -18,7 +18,7 @@
 
 import ComposableArchitecture
 
-public struct ConnectionStatusFeature: Reducer {
+public struct ConnectionStatusFeature: ReducerProtocol {
     public struct State: Equatable {
         public var protectionState: ProtectionState
 
@@ -34,7 +34,7 @@ public struct ConnectionStatusFeature: Reducer {
 
     public init() { }
 
-    public var body: some ReducerOf<Self> {
+    public var body: some ReducerProtocolOf<Self> {
         Reduce { state, action in
             switch action {
             case let .update(protectionState):
@@ -51,7 +51,7 @@ public struct ConnectionStatusFeature: Reducer {
                 }
                 return .run { action in
                     try await Task.sleep(nanoseconds: 50_000_000)
-                    await action.send(.maskLocationTick)
+                    await action(.maskLocationTick)
                 }.cancellable(id: MaskLocation.task, cancelInFlight: true)
             }
         }

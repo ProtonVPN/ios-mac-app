@@ -25,7 +25,9 @@ import ComposableArchitecture
 import Theme
 import VPNShared
 
-public struct HomeFeature: Reducer {
+import CasePaths
+
+public struct HomeFeature: ReducerProtocol {
     /// - Note: might want this as a property of all Reducer types
     public typealias ActionSender = (Action) -> ()
 
@@ -68,7 +70,7 @@ public struct HomeFeature: Reducer {
         case connect
     }
 
-    public var body: some ReducerOf<Self> {
+    public var body: some ReducerProtocolOf<Self> {
         Reduce { state, action in
             switch action {
             case let .connect(spec):
@@ -91,10 +93,10 @@ public struct HomeFeature: Reducer {
                 state.trimConnections()
                 return .run { send in
                     // Simple state change won't do here because we need to start updating the UI with asterisks so we need to trigger the reducer
-                    await send.send(.connectionStatus(.update(ProtectionState.protecting(country: "Poland", ip: "192.168.1.0"))))
+                    await send(.connectionStatus(.update(ProtectionState.protecting(country: "Poland", ip: "192.168.1.0"))))
                     try await Task.sleep(nanoseconds: 1_000_000_000) // mimic connection
                     // This would normally come somewhere from outside
-                    await send.send(.connected)
+                    await send(.connected)
                 }
                 .cancellable(id: HomeCancellable.connect)
             case .connected:
