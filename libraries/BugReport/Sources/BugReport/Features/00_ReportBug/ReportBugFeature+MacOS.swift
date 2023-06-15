@@ -21,7 +21,7 @@ import Foundation
 import ComposableArchitecture
 import SwiftUI
 
-struct ReportBugFeatureMacOS: Reducer {
+struct ReportBugFeatureMacOS: ReducerProtocol {
 
     struct State: Equatable {
         var whatsTheIssueState: WhatsTheIssueFeature.State
@@ -86,7 +86,7 @@ struct ReportBugFeatureMacOS: Reducer {
         }
     }
 
-    var body: some ReducerOf<Self> {
+    var body: some ReducerProtocolOf<Self> {
         Scope(state: \.whatsTheIssueState, action: /Action.whatsTheIssueAction) {
             WhatsTheIssueFeature()
         }

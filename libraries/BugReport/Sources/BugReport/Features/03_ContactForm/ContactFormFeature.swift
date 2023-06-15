@@ -20,7 +20,7 @@ import Foundation
 import ComposableArchitecture
 import SwiftUI
 
-struct ContactFormFeature: Reducer {
+struct ContactFormFeature: ReducerProtocol {
 
     struct State: Equatable {
         var fields: IdentifiedArrayOf<FormInputField>
@@ -37,7 +37,7 @@ struct ContactFormFeature: Reducer {
         case resultViewAction(BugReportResultFeature.Action)
     }
 
-    var body: some ReducerOf<Self> {
+    var body: some ReducerProtocolOf<Self> {
         Reduce { state, action in
             switch action {
             case .fieldStringValueChanged(let field, let newValue):

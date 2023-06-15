@@ -33,3 +33,9 @@ struct ConnectionStateView: View {
             .background(Color(.background))
     }
 }
+
+struct ConnectionStateView_Previews: PreviewProvider {
+    static var previews: some View {
+        ConnectionStateView(connectionDetailsVisible: .init(get: { true }, set: { _ in }))
+    }
+}

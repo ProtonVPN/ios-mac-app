@@ -487,8 +487,6 @@
 		E56249F729D328A100F58942 /* NetShieldStatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37181129CB353F006615E2 /* NetShieldStatsViewModel.swift */; };
 		E566D9DC29796A2F00C2F857 /* TelemetryBufferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E566D9DB29796A2F00C2F857 /* TelemetryBufferTests.swift */; };
 		E566D9DD29796A2F00C2F857 /* TelemetryBufferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E566D9DB29796A2F00C2F857 /* TelemetryBufferTests.swift */; };
-		E566D9E029796B2400C2F857 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = E566D9DF29796B2400C2F857 /* Dependencies */; };
-		E566D9E2297A796B00C2F857 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = E566D9E1297A796B00C2F857 /* Dependencies */; };
 		E566D9EC297E7B0700C2F857 /* TelemetryRequestMultiple.swift in Sources */ = {isa = PBXBuildFile; fileRef = E566D9EB297E7B0700C2F857 /* TelemetryRequestMultiple.swift */; };
 		E566D9ED297E7B0700C2F857 /* TelemetryRequestMultiple.swift in Sources */ = {isa = PBXBuildFile; fileRef = E566D9EB297E7B0700C2F857 /* TelemetryRequestMultiple.swift */; };
 		E5728D3A27E1EF5000DF5DCE /* ImageAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */; };
@@ -506,9 +504,15 @@
 		E58EE0A92907DF8F003006F5 /* PlanSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58EE0A62907DF8C003006F5 /* PlanSessionTests.swift */; };
 		E58EE0AA2907DF90003006F5 /* PlanSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58EE0A62907DF8C003006F5 /* PlanSessionTests.swift */; };
 		E5904FCB2949F8E100BA6D3B /* TelemetryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E510E27D2948CFEA00AC1785 /* TelemetryService.swift */; };
+		E5A4AD172A3B251500CC91D7 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = E5A4AD162A3B251500CC91D7 /* Dependencies */; };
+		E5A4AD1C2A3B299300CC91D7 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = E5A4AD1B2A3B299300CC91D7 /* ComposableArchitecture */; };
+		E5A4AD1F2A3B353D00CC91D7 /* SwiftUINavigation in Frameworks */ = {isa = PBXBuildFile; productRef = E5A4AD1E2A3B353D00CC91D7 /* SwiftUINavigation */; };
+		E5A4AD292A3B470900CC91D7 /* IdentifiedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = E5A4AD282A3B470900CC91D7 /* IdentifiedCollections */; };
 		E5ADAA8C2930F8BC004F105C /* AppStateManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54474E32930C5980044B592 /* AppStateManagerMock.swift */; };
 		E5ADAA8D2930F8BD004F105C /* AppStateManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54474E32930C5980044B592 /* AppStateManagerMock.swift */; };
 		E5BF7BD32A03A418007234C4 /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = E5BF7BD22A03A418007234C4 /* Home */; };
+		E5C8A2642A3C4C5500290723 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = E5C8A2632A3C4C5500290723 /* Dependencies */; };
+		E5C8A2662A3C4C6800290723 /* IdentifiedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = E5C8A2652A3C4C6800290723 /* IdentifiedCollections */; };
 		E5CBA02128DB23D200EA1F25 /* OfferPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CBA02028DB23D200EA1F25 /* OfferPanel.swift */; };
 		E5CBA02228DB23D200EA1F25 /* OfferPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CBA02028DB23D200EA1F25 /* OfferPanel.swift */; };
 		E5CBA02428DB23E600EA1F25 /* FullScreenImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CBA02328DB23E600EA1F25 /* FullScreenImage.swift */; };
@@ -1183,14 +1187,15 @@
 				E582CC162A13949900C91B64 /* Theme-iOS in Frameworks */,
 				D578439128FE6A95007E3FC6 /* NEHelper in Frameworks */,
 				D578439028FE6A95007E3FC6 /* VPNSharedTesting in Frameworks */,
+				E5C8A2642A3C4C5500290723 /* Dependencies in Frameworks */,
 				D578438F28FE6A95007E3FC6 /* VPNShared in Frameworks */,
 				E939EEF3279561EE006E4305 /* BugReport in Frameworks */,
 				E58D06422A0B8B1C002A896C /* Clocks in Frameworks */,
 				4C4F5F11292BECCE00BBD5AF /* LocalFeatureFlags in Frameworks */,
-				E566D9E029796B2400C2F857 /* Dependencies in Frameworks */,
 				E53D64BF2811694F0060C463 /* Modals in Frameworks */,
 				D5F65F9A28A14C7C0062CF85 /* Timer in Frameworks */,
 				D5A3C34628D3768C00D69CD5 /* PMLogger in Frameworks */,
+				E5C8A2662A3C4C6800290723 /* IdentifiedCollections in Frameworks */,
 				179F144D89241E7160EFD846 /* Pods_Core_vpncore_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1212,14 +1217,17 @@
 			files = (
 				D578439328FE6A95007E3FC6 /* VPNSharedTesting in Frameworks */,
 				D578439228FE6A95007E3FC6 /* VPNShared in Frameworks */,
+				E5A4AD1C2A3B299300CC91D7 /* ComposableArchitecture in Frameworks */,
 				E5813B5229EE9C7500549AA8 /* Theme in Frameworks */,
 				C7503BAFB9FD939891700C7F /* Pods_Core_vpncore_macos.framework in Frameworks */,
-				E566D9E2297A796B00C2F857 /* Dependencies in Frameworks */,
 				E53D64C1281169550060C463 /* Modals in Frameworks */,
 				D5F65F9C28A14DE00062CF85 /* Timer in Frameworks */,
 				4C4F5F13292BECD200BBD5AF /* LocalFeatureFlags in Frameworks */,
 				E93120F428DB2EE600C1C2FE /* PMLogger in Frameworks */,
+				E5A4AD172A3B251500CC91D7 /* Dependencies in Frameworks */,
 				E99F266027A1A7A5003C4586 /* BugReport in Frameworks */,
+				E5A4AD292A3B470900CC91D7 /* IdentifiedCollections in Frameworks */,
+				E5A4AD1F2A3B353D00CC91D7 /* SwiftUINavigation in Frameworks */,
 				E5BF7BD32A03A418007234C4 /* Home in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2341,9 +2349,10 @@
 				1F280C980AA7BC027A6B4FF8 /* VPNSharedTesting */,
 				D0AAC5A8DEABE73F456752F4 /* NEHelper */,
 				4C4F5F10292BECCE00BBD5AF /* LocalFeatureFlags */,
-				E566D9DF29796B2400C2F857 /* Dependencies */,
 				E58D06412A0B8B1C002A896C /* Clocks */,
 				E582CC152A13949900C91B64 /* Theme-iOS */,
+				E5C8A2632A3C4C5500290723 /* Dependencies */,
+				E5C8A2652A3C4C6800290723 /* IdentifiedCollections */,
 			);
 			productName = "vpncore-ios";
 			productReference = E1B5F5D821B68ABD00B558B0 /* vpncore.framework */;
@@ -2400,9 +2409,12 @@
 				A59B9FD3BC643C0B2BCFFB04 /* VPNShared */,
 				4F037C4B0FA455B80D281721 /* VPNSharedTesting */,
 				4C4F5F12292BECD200BBD5AF /* LocalFeatureFlags */,
-				E566D9E1297A796B00C2F857 /* Dependencies */,
 				E5813B5129EE9C7500549AA8 /* Theme */,
 				E5BF7BD22A03A418007234C4 /* Home */,
+				E5A4AD162A3B251500CC91D7 /* Dependencies */,
+				E5A4AD1B2A3B299300CC91D7 /* ComposableArchitecture */,
+				E5A4AD1E2A3B353D00CC91D7 /* SwiftUINavigation */,
+				E5A4AD282A3B470900CC91D7 /* IdentifiedCollections */,
 			);
 			productName = "vpncore-macos";
 			productReference = E1B5F60C21B6960100B558B0 /* vpncore.framework */;
@@ -2493,8 +2505,11 @@
 			);
 			mainGroup = E1B5F5CE21B68ABD00B558B0;
 			packageReferences = (
-				E566D9DE29796B2400C2F857 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
 				E58D06402A0B8B1C002A896C /* XCRemoteSwiftPackageReference "swift-clocks" */,
+				E5A4AD152A3B251500CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
+				E5A4AD1A2A3B299300CC91D7 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				E5A4AD1D2A3B353D00CC91D7 /* XCRemoteSwiftPackageReference "swiftui-navigation" */,
+				E5A4AD272A3B470900CC91D7 /* XCRemoteSwiftPackageReference "swift-identified-collections" */,
 			);
 			productRefGroup = E1B5F5D921B68ABD00B558B0 /* Products */;
 			projectDirPath = "";
@@ -4332,20 +4347,44 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		E566D9DE29796B2400C2F857 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-dependencies.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.4.2;
-			};
-		};
 		E58D06402A0B8B1C002A896C /* XCRemoteSwiftPackageReference "swift-clocks" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-clocks.git";
 			requirement = {
 				kind = exactVersion;
 				version = 0.3.0;
+			};
+		};
+		E5A4AD152A3B251500CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-dependencies.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.1;
+			};
+		};
+		E5A4AD1A2A3B299300CC91D7 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.54.1;
+			};
+		};
+		E5A4AD1D2A3B353D00CC91D7 /* XCRemoteSwiftPackageReference "swiftui-navigation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swiftui-navigation.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.5;
+			};
+		};
+		E5A4AD272A3B470900CC91D7 /* XCRemoteSwiftPackageReference "swift-identified-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-identified-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.7.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -4399,16 +4438,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Modals;
 		};
-		E566D9DF29796B2400C2F857 /* Dependencies */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E566D9DE29796B2400C2F857 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
-			productName = Dependencies;
-		};
-		E566D9E1297A796B00C2F857 /* Dependencies */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E566D9DE29796B2400C2F857 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
-			productName = Dependencies;
-		};
 		E5813B5129EE9C7500549AA8 /* Theme */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Theme;
@@ -4426,9 +4455,39 @@
 			package = E58D06402A0B8B1C002A896C /* XCRemoteSwiftPackageReference "swift-clocks" */;
 			productName = Clocks;
 		};
+		E5A4AD162A3B251500CC91D7 /* Dependencies */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E5A4AD152A3B251500CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
+			productName = Dependencies;
+		};
+		E5A4AD1B2A3B299300CC91D7 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E5A4AD1A2A3B299300CC91D7 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+		E5A4AD1E2A3B353D00CC91D7 /* SwiftUINavigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E5A4AD1D2A3B353D00CC91D7 /* XCRemoteSwiftPackageReference "swiftui-navigation" */;
+			productName = SwiftUINavigation;
+		};
+		E5A4AD282A3B470900CC91D7 /* IdentifiedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E5A4AD272A3B470900CC91D7 /* XCRemoteSwiftPackageReference "swift-identified-collections" */;
+			productName = IdentifiedCollections;
+		};
 		E5BF7BD22A03A418007234C4 /* Home */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Home;
+		};
+		E5C8A2632A3C4C5500290723 /* Dependencies */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E5A4AD152A3B251500CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
+			productName = Dependencies;
+		};
+		E5C8A2652A3C4C6800290723 /* IdentifiedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E5A4AD272A3B470900CC91D7 /* XCRemoteSwiftPackageReference "swift-identified-collections" */;
+			productName = IdentifiedCollections;
 		};
 		E93120F328DB2EE600C1C2FE /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;

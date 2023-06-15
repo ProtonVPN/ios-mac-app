@@ -19,7 +19,7 @@
 import Foundation
 import ComposableArchitecture
 
-struct WhatsTheIssueFeature: Reducer {
+struct WhatsTheIssueFeature: ReducerProtocol {
 
     struct State: Equatable {
         var categories: [Category]
@@ -47,7 +47,7 @@ struct WhatsTheIssueFeature: Reducer {
         }
     }
 
-    var body: some ReducerOf<Self> {
+    var body: some ReducerProtocolOf<Self> {
         Reduce { state, action in
             switch action {
             case .categorySelected(let category):
