@@ -484,8 +484,6 @@
 		E55046442849F45A00E4BFC2 /* Image+Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55046422849F45A00E4BFC2 /* Image+Flag.swift */; };
 		E5608CC02994D94D00D11333 /* TelemetrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5608CBF2994D94C00D11333 /* TelemetrySettings.swift */; };
 		E5608CC12994D94D00D11333 /* TelemetrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5608CBF2994D94C00D11333 /* TelemetrySettings.swift */; };
-		E56249F529D3285C00F58942 /* NetShieldStatsNumberFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56249F429D3285C00F58942 /* NetShieldStatsNumberFormatterTests.swift */; };
-		E56249F629D3285C00F58942 /* NetShieldStatsNumberFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56249F429D3285C00F58942 /* NetShieldStatsNumberFormatterTests.swift */; };
 		E56249F729D328A100F58942 /* NetShieldStatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37181129CB353F006615E2 /* NetShieldStatsViewModel.swift */; };
 		E566D9DC29796A2F00C2F857 /* TelemetryBufferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E566D9DB29796A2F00C2F857 /* TelemetryBufferTests.swift */; };
 		E566D9DD29796A2F00C2F857 /* TelemetryBufferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E566D9DB29796A2F00C2F857 /* TelemetryBufferTests.swift */; };
@@ -1074,7 +1072,6 @@
 		E54474E32930C5980044B592 /* AppStateManagerMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStateManagerMock.swift; sourceTree = "<group>"; };
 		E55046422849F45A00E4BFC2 /* Image+Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Flag.swift"; sourceTree = "<group>"; };
 		E5608CBF2994D94C00D11333 /* TelemetrySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetrySettings.swift; sourceTree = "<group>"; };
-		E56249F429D3285C00F58942 /* NetShieldStatsNumberFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldStatsNumberFormatterTests.swift; sourceTree = "<group>"; };
 		E564CD4929A8FAF9009DDD1C /* be-BY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "be-BY"; path = "Localization/be-BY.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E564CD5029A90B3C009DDD1C /* be-BY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "be-BY"; path = "be-BY.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		E566D9DB29796A2F00C2F857 /* TelemetryBufferTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryBufferTests.swift; sourceTree = "<group>"; };
@@ -1477,7 +1474,6 @@
 				D5D2946125A45BB1000FBD74 /* SemanticVersionTests.swift */,
 				AD0397BD29B8A1D4000E1533 /* StrongNotificationTests.swift */,
 				4C83C4632869ACB5000A3FB4 /* LocalizationUtilityTests.swift */,
-				E56249F429D3285C00F58942 /* NetShieldStatsNumberFormatterTests.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1605,7 +1601,6 @@
 				4241A8D724C9EE86005412FB /* Migration */,
 				D5CC008D256C0C4B003FA161 /* Mocks */,
 				D578439729001B7E007E3FC6 /* Models */,
-				E935183D2617535600AB4C7C /* Protocols */,
 				D5A8812822CE06C4009B63D1 /* Resources */,
 				D5D2946025A45B8F000FBD74 /* Utilities */,
 				D5A8811F22CDD560009B63D1 /* ViewModel */,
@@ -1640,13 +1635,6 @@
 				E9037D2F284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift */,
 			);
 			path = BugReport;
-			sourceTree = "<group>";
-		};
-		E935183D2617535600AB4C7C /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Protocols;
 			sourceTree = "<group>";
 		};
 		E939EEE627954D4D006E4305 /* BugReport */ = {
@@ -3130,7 +3118,6 @@
 				D59671DE253D5E3A0061A75F /* AnnouncementStorageMock.swift in Sources */,
 				E5E4657C2951B43800A4DE80 /* TelemetryTests.swift in Sources */,
 				D5D2946225A45BB1000FBD74 /* SemanticVersionTests.swift in Sources */,
-				E56249F529D3285C00F58942 /* NetShieldStatsNumberFormatterTests.swift in Sources */,
 				E5E465792951B1F500A4DE80 /* TelemetryMock.swift in Sources */,
 				E9DC7A2B262DC032001A0FC0 /* ServerIpMock.swift in Sources */,
 				4C83C4642869ACB5000A3FB4 /* LocalizationUtilityTests.swift in Sources */,
@@ -3444,7 +3431,6 @@
 				D523F11724B759A5007DB086 /* StringUrl.swift in Sources */,
 				D5967245253D8CBE0061A75F /* SafariServiceMock.swift in Sources */,
 				4CAAEC3E286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift in Sources */,
-				E56249F629D3285C00F58942 /* NetShieldStatsNumberFormatterTests.swift in Sources */,
 				4C1C2F3028805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift in Sources */,
 				4CFDF0B8287EE37500386626 /* MockDependencyContainer.swift in Sources */,
 				D59671CF253D5D440061A75F /* AnnouncementManagerImplementationTests.swift in Sources */,

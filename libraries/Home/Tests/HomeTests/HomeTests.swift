@@ -1,9 +1,10 @@
 import Home
+import VPNShared
 
 // Todo: Snapshot testing for both macOS and iOS, for the Home view
 // and all other child views defined in the Home package.
 
-extension Home.RecentConnection {
+extension RecentConnection {
     static let pinnedActiveExactCHRegular: Self = .init(
         pinned: true,
         underMaintenance: false,

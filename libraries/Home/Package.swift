@@ -71,6 +71,10 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ],
             resources: []
-        )
+        ),
+        .testTarget(
+            name: "HomeTests",
+            dependencies: ["Home", "Theme"]
+            )
     ]
 )
