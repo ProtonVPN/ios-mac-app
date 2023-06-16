@@ -24,7 +24,7 @@ private var appStateManager: AppStateManager! = DependencyContainer.shared.makeA
 
 extension WatchAppStateChangesKey {
 
-    static let watchAppDisplayStateChanges: @Sendable () async -> AsyncStream<VPNConnectionStatus> = {
+    static let watchVPNConnectionStatusChanges: @Sendable () async -> AsyncStream<VPNConnectionStatus> = {
         return NotificationCenter.default.notifications(named: .AppStateManager.displayStateChange).map({
             ($0.object as! AppDisplayState).vpnConnectionStatus
         }).eraseToStream()
