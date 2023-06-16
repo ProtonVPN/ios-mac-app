@@ -22,7 +22,7 @@ import ComposableArchitecture
 import Strings
 import ConnectionDetails
 
-public struct ConnectionDetailsFeature: Reducer {
+public struct ConnectionDetailsFeature: ReducerProtocol {
 
     public struct State: Equatable {
         public var connectedSince: Date
@@ -50,7 +50,7 @@ public struct ConnectionDetailsFeature: Reducer {
     public init() {
     }
 
-    public var body: some ReducerOf<Self> {
+    public var body: some ReducerProtocolOf<Self> {
         Reduce { state, action in
             return .none
         }
