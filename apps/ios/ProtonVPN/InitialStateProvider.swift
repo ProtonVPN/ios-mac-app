@@ -24,13 +24,15 @@ struct InitialStateProvider {
 
 extension InitialStateProvider: DependencyKey {
     static let liveValue = InitialStateProvider(
-        initialState: .init(home: .init(connections: [.pinnedConnection,
-                                                      .previousConnection,
-                                                      .connectionSecureCoreFastest,
-                                                      .connectionRegion],
-//                                        connectionStatus: .init(protectionState: .unprotected(country: "Poland", ip: "192.168.1.0")),
-                                        connectionStatus: .init(protectionState: .protected(netShield: .random)),
-                                        vpnConnectionStatus: .disconnected))
+        initialState: .init(
+            home: .init(
+                connections: [.pinnedConnection, .previousConnection, .connectionSecureCoreFastest, .connectionRegion],
+                // connectionStatus: .init(protectionState: .unprotected(country: "Poland", ip: "192.168.1.0")),
+                connectionStatus: .init(protectionState: .protected(netShield: .random)),
+                vpnConnectionStatus: .disconnected
+            ),
+            settings: .init(destination: .none, netShield: .on, killSwitch: .off, theme: .auto)
+        )
     )
 }
 

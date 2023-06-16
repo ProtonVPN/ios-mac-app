@@ -72,6 +72,8 @@ public enum AppTheme {
         case radius12 = 12
         case radius16 = 16
         case radius24 = 24
+        case radius32 = 32
+        case radius36 = 36
     }
 
     public enum Spacing: CGFloat {

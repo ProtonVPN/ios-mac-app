@@ -20,6 +20,9 @@ import SwiftUI
 
 import ComposableArchitecture
 
+import Strings
+
+// TODO: Nice UI according to designs
 struct KillSwitchSettingsView: View {
     let store: StoreOf<KillSwitchSettingsFeature>
 
@@ -33,7 +36,7 @@ struct KillSwitchSettingsView: View {
                 )
             )
         }
-        .navigationTitle("Kill Switch")
+        .navigationTitle(Localizable.settingsTitleKillSwitch)
         .navigationBarTitleDisplayMode(.inline)
     }
 }

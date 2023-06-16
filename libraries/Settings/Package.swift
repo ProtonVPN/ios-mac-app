@@ -9,6 +9,7 @@ let package = Package(
     products: [.library(name: "Settings", targets: ["Settings"])],
     dependencies: [
         .package(path: "../Theme"),
+        .package(path: "../Strings"),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.54.1")
     ],
     targets: [
@@ -16,6 +17,7 @@ let package = Package(
             name: "Settings",
             dependencies: [
                 "Theme",
+                "Strings",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),

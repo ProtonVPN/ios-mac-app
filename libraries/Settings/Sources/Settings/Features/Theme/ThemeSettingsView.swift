@@ -20,8 +20,10 @@ import SwiftUI
 
 import ComposableArchitecture
 
+import Strings
 import Theme
 
+// TODO: Nice UI according to designs
 struct ThemeSettingsView: View {
     let store: StoreOf<ThemeSettingsFeature>
 
@@ -49,7 +51,7 @@ struct ThemeSettingsView: View {
                 }
             }
         }
-        .navigationTitle("Theme") // TODO: Localize
+        .navigationTitle(Localizable.settingsTitleTheme)
         .navigationBarTitleDisplayMode(.inline)
     }
 
@@ -59,7 +61,7 @@ struct ThemeSettingsView: View {
                 Image(asset: model.asset)
                     .renderingMode(.original)
                     .frame(.rect(width: 72, height: 130))
-                Text(String(describing: model.colorScheme)) // TODO: Localize
+                Text(String(describing: model.colorScheme))
                     .themeFont(.body2())
                     .foregroundColor(Color(.text, .normal))
                 Image(asset: currentValue.wrappedValue == model.colorScheme ? Asset.icCircleCheckFilled : Asset.icCircleEmpty)

@@ -22,6 +22,7 @@ internal typealias AssetImageTypeAlias = ImageAsset.Image
 
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 internal enum Asset {
+  internal static let avatar = ImageAsset(name: "avatar")
   internal static let icArrowInToRectangle = ImageAsset(name: "ic-arrow-in-to-rectangle")
   internal static let icArrowOutSquare = ImageAsset(name: "ic-arrow-out-square")
   internal static let icArrowRotateRight = ImageAsset(name: "ic-arrow-rotate-right")

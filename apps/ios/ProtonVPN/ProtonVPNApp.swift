@@ -25,6 +25,7 @@ import ConnectionDetails
 import ConnectionDetails_iOS
 import vpncore
 import VPNShared
+import Settings
 
 import ComposableArchitecture
 
@@ -33,13 +34,14 @@ struct AppReducer: ReducerProtocol {
         public var home: HomeFeature.State
         public var connectionScreenState: ConnectionScreenFeature.State?
 //        public var countries: CountriesFeature.State
-//        public var settings: SettingsFeature.State
+        public var settings: SettingsFeature.State
     }
 
     enum Action: Equatable {
         case home(HomeFeature.Action)
         case connectionScreenAction(ConnectionScreenFeature.Action)
         case connectionScreenDismissed
+        case settings(SettingsFeature.Action)
     }
 
     var body: some ReducerProtocolOf<Self> {
@@ -84,6 +86,9 @@ struct AppReducer: ReducerProtocol {
         }
         Scope(state: \.home, action: /Action.home) {
             HomeFeature()
+        }
+        Scope(state: \.settings, action: /Action.settings) { 
+            SettingsFeature() 
         }
     }
 }
@@ -136,7 +141,7 @@ struct ProtonVPNApp: App {
                     CountriesView()
                         .countriesTabItem()
                         .tag(Tab.countries)
-                    SettingsView()
+                    SettingsView(store: store.scope(state: \.settings, action: AppReducer.Action.settings))
                         .settingsTabItem()
                         .tag(Tab.settings)
                 }

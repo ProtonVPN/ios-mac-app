@@ -20,6 +20,7 @@ import SwiftUI
 
 import ComposableArchitecture
 
+import Strings
 import Theme
 import Theme_iOS
 
@@ -46,29 +47,27 @@ public struct SettingsView: View {
     }
 
     let features = (
-        account: ChildFeature(icon: Asset.icCircleEmpty, title: "Account", accessory: .disclosure),
+        netShield: ChildFeature(icon: Asset.icNetShield, title: Localizable.settingsTitleNetshield, accessory: .disclosure),
+        killSwitch: ChildFeature(icon: Asset.icKillswitch, title: Localizable.settingsTitleKillSwitch, accessory: .disclosure),
 
-        netShield: ChildFeature(icon: Asset.icNetShield, title: "NetShield", accessory: .disclosure),
-        killSwitch: ChildFeature(icon: Asset.icKillswitch, title: "Kill switch", accessory: .disclosure),
+        vpnProtocol: ChildFeature(icon: Asset.icServers, title: Localizable.settingsTitleProtocol, accessory: .disclosure),
+        vpnAccelerator: ChildFeature(icon: Asset.icRocket, title: Localizable.settingsTitleVpnAccelerator, accessory: .disclosure),
+        advanced: ChildFeature(icon: Asset.icSliders, title: Localizable.settingsTitleAdvanced, accessory: .disclosure),
 
-        vpnProtocol: ChildFeature(icon: Asset.icServers, title: "Protocol", accessory: .disclosure),
-        vpnAccelerator: ChildFeature(icon: Asset.icRocket, title: "VPN Accelerator", accessory: .disclosure),
-        advanced: ChildFeature(icon: Asset.icSliders, title: "Advanced Settings", accessory: .disclosure),
+        theme: ChildFeature(icon: Asset.icCircleHalfFilled, title: Localizable.settingsTitleTheme, accessory: .disclosure),
+        betaAccess: ChildFeature(icon: Asset.icKeySkeleton, title: Localizable.settingsTitleBetaAccess, accessory: .disclosure),
+        widget: ChildFeature(icon: Asset.icGrid, title: Localizable.settingsTitleWidget, accessory: .disclosure),
 
-        theme: ChildFeature(icon: Asset.icCircleHalfFilled, title: "Theme", accessory: .disclosure),
-        betaAccess: ChildFeature(icon: Asset.icKeySkeleton, title: "Beta access", accessory: .disclosure),
-        widget: ChildFeature(icon: Asset.icGrid, title: "Widget", accessory: .disclosure),
+        supportCenter: ChildFeature(icon: Asset.icLifeRing, title: Localizable.settingsTitleSupportCenter, accessory: .externalLink),
+        reportAnIssue: ChildFeature(icon: Asset.icBug, title: Localizable.settingsTitleReportIssue, accessory: .disclosure),
+        debugLogs: ChildFeature(icon: Asset.icCode, title: Localizable.settingsTitleDebugLogs, accessory: .disclosure),
 
-        supportCenter: ChildFeature(icon: Asset.icLifeRing, title: "Support center", accessory: .externalLink),
-        reportAnIssue: ChildFeature(icon: Asset.icBug, title: "Report an issue", accessory: .disclosure),
-        debugLogs: ChildFeature(icon: Asset.icCode, title: "Debug logs", accessory: .disclosure),
+        censorship: ChildFeature(icon: Asset.icUsers, title: Localizable.settingsTitleCensorship, accessory: .externalLink),
+        rateProtonVPN: ChildFeature(icon: Asset.icStar, title: Localizable.settingsTitleRate, accessory: .disclosure),
 
-        censorship: ChildFeature(icon: Asset.icCircleHalfFilled, title: "Help us fight censorship", accessory: .externalLink),
-        rateProtonVPN: ChildFeature(icon: Asset.icStar, title: "Rate Proton VPN", accessory: .disclosure),
+        restoreDefault: ChildFeature(icon: Asset.icArrowRotateRight, title: Localizable.settingsTitleRestoreDefaultSettings, accessory: .none),
 
-        restoreDefault: ChildFeature(icon: Asset.icArrowRotateRight, title: "Restore default settings", accessory: .none),
-
-        signOut: ChildFeature(icon: Asset.icArrowInToRectangle, title: "Sign out", accessory: .none)
+        signOut: ChildFeature(icon: Asset.icArrowInToRectangle, title: Localizable.settingsTitleSignOut, accessory: .none)
     )
 
     private var destinationStore: NavigationStore {
@@ -76,13 +75,17 @@ public struct SettingsView: View {
     }
 
     private var accountSection: some View {
-        section(named: "Account") {
-
+        section(named: Localizable.settingsSectionTitleAccount) {
+            SettingsCell(
+                icon: Asset.avatar,
+                content: .multiline(title: "Eric Norbert", subtitle: "eric.norbert@proton.me"),
+                accessory: .disclosure
+            )
         }
     }
 
     private var featuresSection: some View {
-        section(named: "Features") {
+        section(named: Localizable.settingsSectionTitleFeatures) {
             WithViewStore(store, observe: { $0.netShield }) { viewStore in
                 CustomNavigationLinkStore(
                     self.destinationStore,
@@ -107,7 +110,7 @@ public struct SettingsView: View {
     }
 
     private var connectionSection: some View {
-        section(named: "Connection") {
+        section(named: Localizable.settingsSectionTitleConnection) {
             SettingsCell(feature: features.vpnProtocol, value: nil)
             SettingsCell(feature: features.vpnAccelerator, value: nil)
             SettingsCell(feature: features.advanced, value: nil)
@@ -115,7 +118,7 @@ public struct SettingsView: View {
     }
 
     private var generalSection: some View {
-        section(named: "General") {
+        section(named: Localizable.settingsSectionTitleGeneral) {
             WithViewStore(store, observe: { $0.theme }) { viewStore in
                 CustomNavigationLinkStore(
                     self.destinationStore,
@@ -130,7 +133,7 @@ public struct SettingsView: View {
     }
 
     private var supportSection: some View {
-        section(named: "Support") {
+        section(named: Localizable.settingsSectionTitleSupport) {
             SettingsCell(feature: features.supportCenter, value: nil)
             SettingsCell(feature: features.reportAnIssue, value: nil)
             SettingsCell(feature: features.debugLogs, value: nil)
@@ -138,7 +141,7 @@ public struct SettingsView: View {
     }
 
     private var improveProtonSection: some View {
-        section(named: "Improve Proton") {
+        section(named: Localizable.settingsSectionTitleImproveProton) {
             SettingsCell(feature: features.censorship, value: nil)
             SettingsCell(feature: features.rateProtonVPN, value: nil)
         }
@@ -158,22 +161,23 @@ public struct SettingsView: View {
 
     public var body: some View {
         NavigationView {
-            List {
-                accountSection
-                featuresSection
-                connectionSection
-                generalSection
-                supportSection
-                improveProtonSection
-                restoreDefaultsSection
-                signOutSection
+            VStack {
+                List {
+                    accountSection
+                    featuresSection
+                    connectionSection
+                    generalSection
+                    supportSection
+                    improveProtonSection
+                    restoreDefaultsSection
+                    signOutSection
+                    Section(footer: footerView) { EmptyView() }
+                }
+                .listStyle(InsetGroupedListStyle())
             }
-            .listStyle(InsetGroupedListStyle())
-            .preferredColorScheme(.dark)
             .navigationBarTitleDisplayMode(.large)
-            .navigationTitle("Settings")
+            .navigationTitle(Localizable.settingsTitle)
         }
-        .background(Color(.background)) // TODO: Why isn't this working? Background should be #0C0C14, not #000000
         .navigationViewStyle(.stack)
     }
 
@@ -193,14 +197,32 @@ public struct SettingsView: View {
             .textCase(nil) // Disable upper-casing section titles (on by default)
             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: .themeSpacing8, trailing: 0)) // Unindent section title
     }
+
+    @ViewBuilder
+    private var footerView: some View {
+        WithViewStore(store, observe: { $0.appVersion }) { viewStore in
+            HStack {
+                Spacer()
+                Text(Localizable.settingsAppVersion(viewStore.state))
+                    .themeFont(.caption())
+                    .foregroundColor(Color(.text, .weak))
+                    .multilineTextAlignment(.center)
+                Spacer()
+            }
+            .padding(EdgeInsets(top: 0, leading: 0, bottom: .themeSpacing32, trailing: 0))
+        }
+    }
+
+    private var footerSection: some View {
+        Section(footer: footerView) { EmptyView() }
+    }
 }
 
 extension SettingsCell {
     init(feature: SettingsView.ChildFeature, value: LocalizedStringConvertible?) {
         self.init(
             icon: feature.icon,
-            title: feature.title,
-            value: value?.localizedDescription,
+            content: .standard(title: feature.title, value: value?.localizedDescription),
             accessory: feature.accessory
         )
     }

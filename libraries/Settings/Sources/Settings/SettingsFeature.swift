@@ -30,6 +30,8 @@ public struct SettingsFeature: ReducerProtocol {
         var killSwitch: KillSwitchSettingsFeature.State
         var theme: ThemeSettingsFeature.State
 
+        var appVersion: String = "5.0.0 (1234)"
+
         public init(
             destination: Destination.State?,
             netShield: NetShieldSettingsFeature.State,

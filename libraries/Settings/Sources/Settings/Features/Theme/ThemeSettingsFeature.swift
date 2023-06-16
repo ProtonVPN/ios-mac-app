@@ -20,15 +20,15 @@ import Foundation
 
 import ComposableArchitecture
 
+import Strings
 import Theme
 
 extension ColorScheme: LocalizedStringConvertible {
-    // TODO: localize
     var localizedDescription: String {
         switch self {
-        case .auto: return "Auto"
-        case .light: return "Light"
-        case .dark: return "Dark"
+        case .auto: return Localizable.settingsThemeAuto
+        case .light: return Localizable.settingsThemeLight
+        case .dark: return Localizable.settingsThemeDark
         }
     }
 }
