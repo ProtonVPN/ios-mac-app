@@ -23,7 +23,7 @@ import ConnectionDetails
 import VPNShared
 import Theme
 
-public struct ConnectionScreenFeature: Reducer {
+public struct ConnectionScreenFeature: ReducerProtocol {
 
     public struct State: Equatable {
         public var ipViewState: IPViewFeature.State
@@ -48,7 +48,7 @@ public struct ConnectionScreenFeature: Reducer {
     public init() {
     }
 
-    public var body: some ReducerOf<Self> {
+    public var body: some ReducerProtocolOf<Self> {
         Reduce { state, action in
             return .none
         }

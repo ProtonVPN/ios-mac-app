@@ -19,7 +19,7 @@
 import Foundation
 import ComposableArchitecture
 
-public struct IPViewFeature: Reducer {
+public struct IPViewFeature: ReducerProtocol {
 
     public struct State: Equatable {
         public var localIP: String?
@@ -42,7 +42,7 @@ public struct IPViewFeature: Reducer {
     public init() {
     }
 
-    public var body: some ReducerOf<Self> {
+    public var body: some ReducerProtocolOf<Self> {
         Reduce { state, action in
             switch action {
             case .changeIPVisibility:
