@@ -20,15 +20,16 @@ import Foundation
 
 import ComposableArchitecture
 
+import Strings
+
 public enum NetShieldType: LocalizedStringConvertible {
     case on
     case off
 
-    // TODO: localize
     var localizedDescription: String {
         switch self {
-        case .on: return "On"
-        case .off: return "Off"
+        case .on: return Localizable.settingsNetshieldOn
+        case .off: return Localizable.settingsNetshieldOff
         }
     }
 }

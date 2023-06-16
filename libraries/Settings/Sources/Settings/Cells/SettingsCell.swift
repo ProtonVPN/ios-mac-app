@@ -24,36 +24,25 @@ protocol LocalizedStringConvertible {
     var localizedDescription: String { get }
 }
 
-
 struct SettingsCell: View {
     let icon: ImageAsset
-    let title: String
-    let value: String?
     let accessory: ImageAsset?
+    let content: Content
 
-    init(icon: ImageAsset, title: String, value: String?, accessory: ImageAsset?) {
+    init(icon: ImageAsset, content: Content, accessory: ImageAsset?) {
         self.icon = icon
-        self.title = title
-        self.value = value
+        self.content = content
         self.accessory = accessory
     }
 
-    init(icon: ImageAsset, title: String, value: String?, accessory: Accessory) {
-        self.init(icon: icon, title: title, value: value, accessory: accessory.imageAsset)
+    init(icon: ImageAsset, content: Content, accessory: Accessory) {
+        self.init(icon: icon, content: content, accessory: accessory.imageAsset)
     }
 
     var body: some View {
         HStack(alignment: .center, spacing: .themeSpacing8) {
-            Image(asset: icon)
-                .foregroundColor(Color(.icon, .normal))
-                .frame(width: .themeRadius24, height: .themeRadius24)
-                .padding(EdgeInsets(top: 0, leading: -.themeSpacing8, bottom: 0, trailing: 0))
-            Text(title)
-                .foregroundColor(Color(.text, .normal))
-            Spacer()
-            if let value {
-                Text(value).foregroundColor(Color(.text, .weak))
-            }
+            iconView
+            contentView
             if let accessory {
                 Image(asset: accessory)
                     .foregroundColor(Color(.icon, .weak))
@@ -63,6 +52,51 @@ struct SettingsCell: View {
         .font(.body2())
         .background(Color(.background, .normal))
         .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: -.themeSpacing8)) // remove list padding
+    }
+
+    @ViewBuilder private var iconView: some View {
+        Image(asset: icon)
+            .foregroundColor(Color(.icon, .normal))
+            .frame(.square(content.iconRadius))
+            .padding(EdgeInsets(top: 0, leading: -.themeSpacing8, bottom: 0, trailing: .themeSpacing4))
+    }
+
+    @ViewBuilder
+    private var contentView: some View {
+        HStack(alignment: .center) {
+            switch content {
+            case .standard(let title, let value):
+                Text(title)
+                    .foregroundColor(Color(.text, .normal))
+                Spacer()
+                if let value {
+                    Text(value).foregroundColor(Color(.text, .weak))
+                }
+
+            case .multiline(let title, let subtitle):
+                VStack(alignment: .leading, spacing: .themeSpacing4) {
+                    Text(title)
+                        .foregroundColor(Color(.text, .normal))
+                    Text(subtitle)
+                        .font(.caption)
+                        .foregroundColor(Color(.text, .weak))
+                }
+                .padding(EdgeInsets(top: .themeSpacing4, leading: 0, bottom: .themeSpacing4, trailing: 0))
+                Spacer()
+            }
+        }
+    }
+
+    enum Content {
+        case standard(title: String, value: String?)
+        case multiline(title: String, subtitle: String)
+
+        var iconRadius: CGFloat {
+            switch self {
+            case .standard: return .themeRadius24
+            case .multiline: return .themeRadius36
+            }
+        }
     }
 
     enum Accessory {
@@ -84,24 +118,30 @@ struct SettingsCell_Previews: PreviewProvider {
 
     static var previews: some View {
         List {
-            SettingsCell(
-                icon: Asset.icNetShield,
-                title: "NetShield",
-                value: NetShieldType.on.localizedDescription,
-                accessory: .disclosure
-            )
-            SettingsCell(
-                icon: Asset.icNetShield,
-                title: "Support Center",
-                value: NetShieldType.on.localizedDescription,
-                accessory: .externalLink
-            )
-            SettingsCell(
-                icon: Asset.icNetShield,
-                title: "Sign Out",
-                value: nil,
-                accessory: nil
-            )
+            Section {
+                SettingsCell(
+                    icon: Asset.avatar,
+                    content: .multiline(title: "Eric Norbert", subtitle: "eric.norbert@proton.me"),
+                    accessory: .disclosure
+                )
+            }
+            Section {
+                SettingsCell(
+                    icon: Asset.icNetShield,
+                    content: .standard(title: "NetShield", value: NetShieldType.on.localizedDescription),
+                    accessory: .disclosure
+                )
+                SettingsCell(
+                    icon: Asset.icLifeRing,
+                    content: .standard(title: "Support Center", value: NetShieldType.on.localizedDescription),
+                    accessory: .externalLink
+                )
+                SettingsCell(
+                    icon: Asset.icArrowInToRectangle,
+                    content: .standard(title: "Sign Out", value: nil),
+                    accessory: nil
+                )
+            }
         }
     }
 }

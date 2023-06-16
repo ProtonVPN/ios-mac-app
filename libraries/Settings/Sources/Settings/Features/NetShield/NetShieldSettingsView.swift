@@ -20,6 +20,9 @@ import SwiftUI
 
 import ComposableArchitecture
 
+import Strings
+
+// TODO: Nice UI according to designs
 struct NetShieldSettingsView: View {
     let store: StoreOf<NetShieldSettingsFeature>
 
@@ -33,7 +36,7 @@ struct NetShieldSettingsView: View {
                 )
             )
         }
-        .navigationTitle("NetShield")
+        .navigationTitle(Localizable.settingsTitleNetshield)
         .navigationBarTitleDisplayMode(.inline)
     }
 }

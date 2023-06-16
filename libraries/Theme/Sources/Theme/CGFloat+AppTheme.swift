@@ -26,6 +26,8 @@ public extension CGFloat {
     static let themeRadius12 = AppTheme.CornerRadius.radius12.rawValue
     static let themeRadius16 = AppTheme.CornerRadius.radius16.rawValue
     static let themeRadius24 = AppTheme.CornerRadius.radius24.rawValue
+    static let themeRadius32 = AppTheme.CornerRadius.radius32.rawValue
+    static let themeRadius36 = AppTheme.CornerRadius.radius36.rawValue
 }
 
 public extension CGFloat {

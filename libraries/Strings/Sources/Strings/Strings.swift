@@ -175,6 +175,70 @@ public enum Localizable {
   public static func stepOf(_ p1: Int, _ p2: Int) -> String {
     return Localizable.tr("Localizable", "_step_of", p1, p2, fallback: "Plural format key: \"%#@STEP@ %#@STEPS@\"")
   }
+  /// Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890)
+  public static func settingsAppVersion(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_settings_app_version", String(describing: p1), fallback: "App Version: %@")
+  }
+  /// Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view
+  public static var settingsKillswitchOff: String { return Localizable.tr("Localizable", "_settings_killswitch_off", fallback: "Off") }
+  /// Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view
+  public static var settingsKillswitchOn: String { return Localizable.tr("Localizable", "_settings_killswitch_on", fallback: "On") }
+  /// Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view
+  public static var settingsNetshieldOff: String { return Localizable.tr("Localizable", "_settings_netshield_off", fallback: "Off") }
+  /// Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view
+  public static var settingsNetshieldOn: String { return Localizable.tr("Localizable", "_settings_netshield_on", fallback: "On") }
+  /// Title of the 'Account' section in the Settings tab
+  public static var settingsSectionTitleAccount: String { return Localizable.tr("Localizable", "_settings_section_title_account", fallback: "Account") }
+  /// Title of the 'Connection' section in the Settings tab
+  public static var settingsSectionTitleConnection: String { return Localizable.tr("Localizable", "_settings_section_title_connection", fallback: "Connection") }
+  /// Title of the 'Features' section in the Settings tab
+  public static var settingsSectionTitleFeatures: String { return Localizable.tr("Localizable", "_settings_section_title_features", fallback: "Features") }
+  /// Title of the 'General' section in the Settings tab
+  public static var settingsSectionTitleGeneral: String { return Localizable.tr("Localizable", "_settings_section_title_general", fallback: "General") }
+  /// Title of the 'Improve Proton' section in the Settings tab
+  public static var settingsSectionTitleImproveProton: String { return Localizable.tr("Localizable", "_settings_section_title_improve_proton", fallback: "Improve Proton") }
+  /// Title of the 'Support' section in the Settings tab
+  public static var settingsSectionTitleSupport: String { return Localizable.tr("Localizable", "_settings_section_title_support", fallback: "Support") }
+  /// Settings tab in bottom menu
+  public static var settingsTab: String { return Localizable.tr("Localizable", "_settings_tab", fallback: "Settings") }
+  /// Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab, and underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme
+  public static var settingsThemeAuto: String { return Localizable.tr("Localizable", "_settings_theme_auto", fallback: "Auto*") }
+  /// Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab, and underneath the corresponding option when drilled into the Theme settings view
+  public static var settingsThemeDark: String { return Localizable.tr("Localizable", "_settings_theme_dark", fallback: "Dark") }
+  /// Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab, and underneath the corresponding option when drilled into the Theme settings view
+  public static var settingsThemeLight: String { return Localizable.tr("Localizable", "_settings_theme_light", fallback: "Light") }
+  /// Title at the top of the Settings tab
+  public static var settingsTitle: String { return Localizable.tr("Localizable", "_settings_title", fallback: "Settings") }
+  /// Title of the NetShield cell in the Settings tab
+  public static var settingsTitleAdvanced: String { return Localizable.tr("Localizable", "_settings_title_advanced", fallback: "Advanced settings") }
+  /// Title of the NetShield cell in the Settings tab
+  public static var settingsTitleBetaAccess: String { return Localizable.tr("Localizable", "_settings_title_beta_access", fallback: "Beta access") }
+  /// Title of the NetShield cell in the Settings tab
+  public static var settingsTitleCensorship: String { return Localizable.tr("Localizable", "_settings_title_censorship", fallback: "Help us fight censorship") }
+  /// Title of the NetShield cell in the Settings tab
+  public static var settingsTitleDebugLogs: String { return Localizable.tr("Localizable", "_settings_title_debug_logs", fallback: "Debug logs") }
+  /// Title of the NetShield cell in the Settings tab
+  public static var settingsTitleKillSwitch: String { return Localizable.tr("Localizable", "_settings_title_kill_switch", fallback: "Kill Switch") }
+  /// Title of the NetShield cell in the Settings tab
+  public static var settingsTitleNetshield: String { return Localizable.tr("Localizable", "_settings_title_netshield", fallback: "NetShield") }
+  /// Title of the NetShield cell in the Settings tab
+  public static var settingsTitleProtocol: String { return Localizable.tr("Localizable", "_settings_title_protocol", fallback: "Protocol") }
+  /// Title of the NetShield cell in the Settings tab
+  public static var settingsTitleRate: String { return Localizable.tr("Localizable", "_settings_title_rate", fallback: "Rate Proton VPN") }
+  /// Title of the NetShield cell in the Settings tab
+  public static var settingsTitleReportIssue: String { return Localizable.tr("Localizable", "_settings_title_report_issue", fallback: "Report an issue") }
+  /// Title of the NetShield cell in the Settings tab
+  public static var settingsTitleRestoreDefaultSettings: String { return Localizable.tr("Localizable", "_settings_title_restore_default_settings", fallback: "Restore default settings") }
+  /// Title of the NetShield cell in the Settings tab
+  public static var settingsTitleSignOut: String { return Localizable.tr("Localizable", "_settings_title_sign_out", fallback: "Sign out") }
+  /// Title of the NetShield cell in the Settings tab
+  public static var settingsTitleSupportCenter: String { return Localizable.tr("Localizable", "_settings_title_support_center", fallback: "Support center") }
+  /// Title of the NetShield cell in the Settings tab
+  public static var settingsTitleTheme: String { return Localizable.tr("Localizable", "_settings_title_theme", fallback: "Theme") }
+  /// Title of the NetShield cell in the Settings tab
+  public static var settingsTitleVpnAccelerator: String { return Localizable.tr("Localizable", "_settings_title_vpn_accelerator", fallback: "VPN Accelerator") }
+  /// Title of the NetShield cell in the Settings tab
+  public static var settingsTitleWidget: String { return Localizable.tr("Localizable", "_settings_title_widget", fallback: "Widget") }
   /// Connection status title when user is connected to a VPN
   public static var connectionStatusProtected: String { return Localizable.tr("Localizable", "connection_status_protected", fallback: "Protected") }
   /// Connection status title when user is initiating connection to a VPN
