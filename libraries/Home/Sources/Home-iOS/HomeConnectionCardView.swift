@@ -109,7 +109,7 @@ struct HomeConnectionCardView: View {
                 }
                 Spacer()
                 Button(action: {
-//                    sendAction(.showConnectionDetails)
+                    sendAction(.showConnectionDetails)
                 }, label: {
                     Asset.icChevronUp.swiftUIImage
                 })

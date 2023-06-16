@@ -67,7 +67,12 @@ public struct HomeFeature: ReducerProtocol {
 
         case connectionStatusViewAction(ConnectionStatusFeature.Action)
 
+        /// Show details screen with info about current connection
+        case showConnectionDetails
+
+        /// Watch for changes of VPN connection
         case watchConnectionStatus
+        /// Process new VPN connection state
         case newConnectionStatus(VPNConnectionStatus)
     }
 
@@ -131,6 +136,8 @@ public struct HomeFeature: ReducerProtocol {
                 state.vpnConnectionStatus = connectionStatus
                 return .none
                 
+            case .showConnectionDetails:
+                return .none // Will be handled up the tree of reducers
             }
         }
         Scope(state: \.connectionStatus, action: /Action.connectionStatusViewAction) {
