@@ -48,6 +48,22 @@ struct AppReducer: ReducerProtocol {
     var body: some ReducerProtocolOf<Self> {
         Reduce { state, action in
             switch action {
+
+            case .home(.showConnectionDetails):
+                state.connectionScreenState = ConnectionScreenFeature.State(
+                    ipViewState: IPViewFeature.State(localIP: "127.0.0.1",
+                                                     vpnIp: "102.107.197.6"),
+                    connectionDetailsState: ConnectionDetailsFeature.State(connectedSince: Date.init(timeIntervalSinceNow: -12345),
+                                                                           country: "Lithuania",
+                                                                           city: "Siauliai",
+                                                                           server: "LT#5",
+                                                                           serverLoad: 23,
+                                                                           protocolName: "WireGuard"),
+                    connectionFeatures: [.p2p, .tor, .smart, .streaming],
+                    isSecureCore: true
+                )
+                return .none
+
             case .connectionScreenAction(.close):
                 state.connectionScreenState = nil
                 return .none
