@@ -115,7 +115,7 @@ struct ProtonVPNApp: App {
         self.store = .init(
             initialState: initialStateProvider.initialState,
             reducer: AppReducer()
-                .dependency(\.watchVPNConnectionStatus, WatchAppStateChangesKey.watchAppDisplayStateChanges)
+                .dependency(\.watchVPNConnectionStatus, WatchAppStateChangesKey.watchVPNConnectionStatusChanges)
             #if targetEnvironment(simulator)
                 .dependency(\.connectToVPN, SimulatorHelper.shared.connect)
                 .dependency(\.disconnectVPN, SimulatorHelper.shared.disconnect)
