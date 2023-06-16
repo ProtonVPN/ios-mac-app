@@ -38,6 +38,10 @@ class SimulatorHelper {
         }
     }
 
+    private var targetStatus: VPNConnectionStatus?
+
+    private let queue: DispatchQueue = DispatchQueue.main
+
     // MARK: - Connect
 
     var connect: @Sendable (ConnectionSpec) -> Void {
@@ -53,11 +57,12 @@ class SimulatorHelper {
     }
 
     private func switchToConnected(_ specs: ConnectionSpec) {
-        DispatchQueue.main.async {
+        targetStatus = .connected(specs)
+        queue.async {
             self.status = .connecting(specs)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {
-            self.status = .connected(specs)
+        queue.asyncAfter(deadline: .now() + .seconds(2), execute: {
+            self.status = self.targetStatus!
         })
     }
 
@@ -69,18 +74,22 @@ class SimulatorHelper {
             case .connected(let specs):
                 self.switchToDisconnected(specs)
 
+            case .connecting(let specs):
+                self.switchToDisconnected(specs, delay: 0)
+
             default:
                 assert(false, "Called connect on wrong state: \(self.status)")
             }
         }
     }
 
-    private func switchToDisconnected(_ specs: ConnectionSpec) {
-        DispatchQueue.main.async {
+    private func switchToDisconnected(_ specs: ConnectionSpec, delay: Int = 1) {
+        targetStatus = .disconnected
+        queue.async {
             self.status = .disconnecting(specs)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
-            self.status = .disconnected
+        queue.asyncAfter(deadline: .now() + .seconds(delay), execute: {
+            self.status = self.targetStatus!
         })
     }
 

@@ -171,6 +171,3 @@
 
 /* Connection details screen: Info button text, that show more info about given VPN feature (macOS and iOS) [Redesign_2023] */
 "_connection_details_info_button" = "Info";
-
-///* Connection details screen:  (macOS and iOS) [Redesign_2023] */
-//"_connection_details_" = "";
