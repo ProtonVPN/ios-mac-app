@@ -64,7 +64,7 @@ struct AppReducer: ReducerProtocol {
                 )
                 return .none
 
-            case .connectionScreenAction(.close):
+            case .connectionScreenAction(.close), .connectionScreenDismissed:
                 state.connectionScreenState = nil
                 return .none
 
@@ -78,7 +78,10 @@ struct AppReducer: ReducerProtocol {
                 disconnectVPN()
                 return .none
 
-            default:
+            case .home:
+                return .none
+
+            case .connectionScreenAction:
                 return .none
             }
         }
