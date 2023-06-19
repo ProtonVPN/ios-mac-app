@@ -25,9 +25,11 @@ protocol LocalizedStringConvertible {
 }
 
 struct SettingsCell: View {
-    let icon: ImageAsset
-    let accessory: ImageAsset?
-    let content: Content
+    private let icon: ImageAsset
+    private let accessory: ImageAsset?
+    private let content: Content
+
+    @ScaledMetric private var iconRadius: CGFloat = 24
 
     init(icon: ImageAsset, content: Content, accessory: ImageAsset?) {
         self.icon = icon
@@ -45,8 +47,8 @@ struct SettingsCell: View {
             contentView
             if let accessory {
                 Image(asset: accessory)
+                    .resizable().frame(.square(iconRadius))
                     .foregroundColor(Color(.icon, .weak))
-                    .frame(width: .themeRadius24, height: .themeRadius24)
             }
         }
         .font(.body2())
@@ -56,9 +58,9 @@ struct SettingsCell: View {
 
     @ViewBuilder private var iconView: some View {
         Image(asset: icon)
+            .resizable().frame(.square(iconRadius * content.iconRadiusMultiplier))
             .foregroundColor(Color(.icon, .normal))
-            .frame(.square(content.iconRadius))
-            .padding(EdgeInsets(top: 0, leading: -.themeSpacing8, bottom: 0, trailing: .themeSpacing4))
+            .padding(EdgeInsets(top: .themeSpacing4, leading: -.themeSpacing8, bottom: .themeSpacing4, trailing: .themeSpacing4))
     }
 
     @ViewBuilder
@@ -91,10 +93,10 @@ struct SettingsCell: View {
         case standard(title: String, value: String?)
         case multiline(title: String, subtitle: String)
 
-        var iconRadius: CGFloat {
+        var iconRadiusMultiplier: CGFloat {
             switch self {
-            case .standard: return .themeRadius24
-            case .multiline: return .themeRadius36
+            case .standard: return 1.0
+            case .multiline: return 1.5
             }
         }
     }
