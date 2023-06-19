@@ -34,6 +34,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D54539BC2A406C80008B4259 /* MoveBackToLibrary */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MoveBackToLibrary;
+			sourceTree = "<group>";
+		};
 		E992C69E2A29C48D00EFB73E = {
 			isa = PBXGroup;
 			children = (
@@ -54,6 +61,7 @@
 		E992C6A92A29C48D00EFB73E /* UIExampleMacApp */ = {
 			isa = PBXGroup;
 			children = (
+				D54539BC2A406C80008B4259 /* MoveBackToLibrary */,
 				E992C6AA2A29C48D00EFB73E /* UIExampleMacAppApp.swift */,
 				E992C6AC2A29C48D00EFB73E /* ContentView.swift */,
 				E992C6AE2A29C48F00EFB73E /* Assets.xcassets */,
