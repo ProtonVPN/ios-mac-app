@@ -114,6 +114,9 @@
 		D516EB9D2315775E0095B735 /* MacAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516EB9C2315775E0095B735 /* MacAlertService.swift */; };
 		D5204E6A22A11B8400FFAB99 /* XCUIElement+clearText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */; };
 		D5204E6D22A138C900FFAB99 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5204E6C22A138C900FFAB99 /* Credentials.swift */; };
+		D54539C02A408A92008B4259 /* ConnectionDetails-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = D54539BF2A408A92008B4259 /* ConnectionDetails-macOS */; };
+		D54539C22A408AB9008B4259 /* ConnectionDetails in Frameworks */ = {isa = PBXBuildFile; productRef = D54539C12A408AB9008B4259 /* ConnectionDetails */; };
+		D54539C72A408E22008B4259 /* Timer in Frameworks */ = {isa = PBXBuildFile; productRef = D54539C62A408E22008B4259 /* Timer */; };
 		D54B1E12262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54B1E11262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift */; };
 		D54BB5DF2990ECEB00733E45 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D54BB5DD2990ECEB00733E45 /* credentials.plist */; };
 		D54BB5E02990ECEB00733E45 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D54BB5DE2990ECEB00733E45 /* subusercredentials.plist */; };
@@ -1194,12 +1197,15 @@
 				E52B8BA829FBB7CC00517FFC /* Theme-macOS in Frameworks */,
 				E5CF49542A3C653100ACE1CB /* CasePaths in Frameworks */,
 				E5CF79CD29FBBA720072E7EC /* AVKit.framework in Frameworks */,
+				D54539C72A408E22008B4259 /* Timer in Frameworks */,
 				E5A4AD122A3B239500CC91D7 /* ComposableArchitecture in Frameworks */,
 				E52B8BAF29FBB7F200517FFC /* vpncore.framework in Frameworks */,
+				D54539C22A408AB9008B4259 /* ConnectionDetails in Frameworks */,
 				E5CF49512A3C603200ACE1CB /* Logging in Frameworks */,
 				E5A4AD192A3B255D00CC91D7 /* PMLogger in Frameworks */,
 				E5A4AD102A3B238A00CC91D7 /* Home-macOS in Frameworks */,
 				E5A4AD142A3B239F00CC91D7 /* Home in Frameworks */,
+				D54539C02A408A92008B4259 /* ConnectionDetails-macOS in Frameworks */,
 				E52B8BBC29FBB85F00517FFC /* Modals-macOS in Frameworks */,
 				9B4BACE98AEA4534B5C6E151 /* Pods_ProtonVPN_mac_redesign.framework in Frameworks */,
 			);
@@ -2951,6 +2957,9 @@
 				E5A4AD182A3B255D00CC91D7 /* PMLogger */,
 				E5CF49502A3C603200ACE1CB /* Logging */,
 				E5CF49532A3C653100ACE1CB /* CasePaths */,
+				D54539BF2A408A92008B4259 /* ConnectionDetails-macOS */,
+				D54539C12A408AB9008B4259 /* ConnectionDetails */,
+				D54539C62A408E22008B4259 /* Timer */,
 			);
 			productName = "ProtonVPN-mac-redesign";
 			productReference = E5DB888A29FAB82B004D6637 /* ProtonVPN-mac-redesign.app */;
@@ -5395,6 +5404,18 @@
 		D50B8020295DC3F900D85D29 /* NEHelper */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NEHelper;
+		};
+		D54539BF2A408A92008B4259 /* ConnectionDetails-macOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "ConnectionDetails-macOS";
+		};
+		D54539C12A408AB9008B4259 /* ConnectionDetails */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ConnectionDetails;
+		};
+		D54539C62A408E22008B4259 /* Timer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Timer;
 		};
 		D5CA559526A59A9A001E9284 /* WireGuardKit */ = {
 			isa = XCSwiftPackageProductDependency;

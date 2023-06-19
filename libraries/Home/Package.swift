@@ -37,6 +37,10 @@ let package = Package(
           url: "https://github.com/pointfreeco/swift-snapshot-testing",
           from: "1.10.0"
         ),
+        .package(
+          url: "https://github.com/pointfreeco/swift-dependencies.git",
+          from: "0.5.1"
+        ),
     ],
     targets: [
         .target(
@@ -48,6 +52,7 @@ let package = Package(
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "CasePaths", package: "swift-case-paths"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
             ],
             resources: [
                 .process("Resources/Assets.xcassets")
@@ -70,6 +75,7 @@ let package = Package(
                 "Strings",
                 .product(name: "Theme-macOS", package: "Theme"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
             ],
             resources: []
         ),
