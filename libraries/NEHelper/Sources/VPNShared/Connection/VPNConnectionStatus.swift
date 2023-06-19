@@ -35,10 +35,10 @@ public enum VPNConnectionStatus: Equatable {
 }
 
 public extension DependencyValues {
-  var watchVPNConnectionStatus: @Sendable () async -> AsyncStream<VPNConnectionStatus> {
-    get { self[WatchAppStateChangesKey.self] }
-    set { self[WatchAppStateChangesKey.self] = newValue }
-  }
+    var watchVPNConnectionStatus: @Sendable () async -> AsyncStream<VPNConnectionStatus> {
+        get { self[WatchAppStateChangesKey.self] }
+        set { self[WatchAppStateChangesKey.self] = newValue }
+    }
 }
 
 public enum WatchAppStateChangesKey: DependencyKey {
