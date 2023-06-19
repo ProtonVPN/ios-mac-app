@@ -27,7 +27,9 @@ public struct IPView: View {
 
     let store: StoreOf<IPViewFeature>
 
-    let topRowHeight: CGFloat = 24
+    @ScaledMetric var buttonSize: CGFloat = 16
+    @ScaledMetric var buttonSpacing: CGFloat = 4
+    private var verticalSpacing: CGFloat = .themeSpacing4
 
     public init(store: StoreOf<IPViewFeature>) {
         self.store = store
@@ -36,8 +38,8 @@ public struct IPView: View {
     public var body: some View {
         HStack {
             WithViewStore(self.store, observe: { $0 }, content: { viewStore in
-                VStack {
-                    HStack(alignment: .center) {
+                VStack(spacing: verticalSpacing) {
+                    HStack(alignment: .center, spacing: buttonSpacing) {
                         Text(Localizable.connectionDetailsIpviewIpMy)
                             .foregroundColor(Color(.text, .weak))
 
@@ -47,12 +49,12 @@ public struct IPView: View {
                             Image(asset: viewStore.localIpHidden
                                   ? Asset.icEye
                                   : Asset.icEyeSlash)
+                            .resizable().frame(width: buttonSize, height: buttonSize)
                             .foregroundColor(Color(.text, .weak))
                         })
                         .buttonStyle(PlainButtonStyle())
 
                     }
-                    .frame(minHeight: topRowHeight)
 
                     Text(viewStore.localIpHidden ? "***************" : (viewStore.localIP ?? Localizable.connectionDetailsIpviewIpUnavailable ))
                         .foregroundColor(Color(.text, .normal))
@@ -63,9 +65,8 @@ public struct IPView: View {
             Image(asset: Asset.icArrowRight)
                 .foregroundColor(Color(.text, .weak))
 
-            VStack {
+            VStack(spacing: verticalSpacing) {
                 Text(Localizable.connectionDetailsIpviewIpVpn)
-                    .frame(minHeight: topRowHeight)
                     .foregroundColor(Color(.text, .weak))
                 WithViewStore(self.store, observe: { $0.vpnIp }, content: { viewStore in
                     Text(viewStore.state)

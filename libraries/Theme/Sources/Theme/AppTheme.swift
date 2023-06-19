@@ -68,6 +68,7 @@ public enum AppTheme {
 
     public enum Spacing: CGFloat {
         case spacing4 = 4
+        case spacing6 = 6
         case spacing8 = 8
         case spacing12 = 12
         case spacing16 = 16
