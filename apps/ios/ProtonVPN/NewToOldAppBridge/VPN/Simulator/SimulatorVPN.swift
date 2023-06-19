@@ -51,7 +51,7 @@ class SimulatorHelper {
                 self.switchToConnected(specs)
 
             default:
-                assert(false, "Called connect on wrong state: \(self.status)")
+                assertionFailure("Called connect on wrong state: \(self.status)")
             }
         }
     }
@@ -78,7 +78,7 @@ class SimulatorHelper {
                 self.switchToDisconnected(specs, delay: 0)
 
             default:
-                assert(false, "Called connect on wrong state: \(self.status)")
+                assertionFailure("Called connect on wrong state: \(self.status)")
             }
         }
     }
