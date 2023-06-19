@@ -19,6 +19,7 @@
 import SwiftUI
 
 import Theme
+import Theme_iOS
 
 protocol LocalizedStringConvertible {
     var localizedDescription: String { get }
@@ -26,30 +27,22 @@ protocol LocalizedStringConvertible {
 
 struct SettingsCell: View {
     private let icon: ImageAsset
-    private let accessory: ImageAsset?
+    private let accessory: Accessory
     private let content: Content
 
     @ScaledMetric private var iconRadius: CGFloat = 24
 
-    init(icon: ImageAsset, content: Content, accessory: ImageAsset?) {
+    init(icon: ImageAsset, content: Content, accessory: Accessory) {
         self.icon = icon
         self.content = content
         self.accessory = accessory
-    }
-
-    init(icon: ImageAsset, content: Content, accessory: Accessory) {
-        self.init(icon: icon, content: content, accessory: accessory.imageAsset)
     }
 
     var body: some View {
         HStack(alignment: .center, spacing: .themeSpacing8) {
             iconView
             contentView
-            if let accessory {
-                Image(asset: accessory)
-                    .resizable().frame(.square(iconRadius))
-                    .foregroundColor(Color(.icon, .weak))
-            }
+            accessory
         }
         .font(.body2())
         .background(Color(.background, .normal))
@@ -100,20 +93,6 @@ struct SettingsCell: View {
             }
         }
     }
-
-    enum Accessory {
-        case disclosure
-        case externalLink
-        case none
-
-        var imageAsset: ImageAsset? {
-            switch self {
-            case .disclosure: return Asset.icChevronRight
-            case .externalLink: return Asset.icArrowOutSquare
-            case .none: return nil
-            }
-        }
-    }
 }
 
 struct SettingsCell_Previews: PreviewProvider {
@@ -141,7 +120,7 @@ struct SettingsCell_Previews: PreviewProvider {
                 SettingsCell(
                     icon: Asset.icArrowInToRectangle,
                     content: .standard(title: "Sign Out", value: nil),
-                    accessory: nil
+                    accessory: .none
                 )
             }
         }

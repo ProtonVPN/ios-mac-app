@@ -24,10 +24,8 @@ internal typealias AssetImageTypeAlias = ImageAsset.Image
 internal enum Asset {
   internal static let avatar = ImageAsset(name: "avatar")
   internal static let icArrowInToRectangle = ImageAsset(name: "ic-arrow-in-to-rectangle")
-  internal static let icArrowOutSquare = ImageAsset(name: "ic-arrow-out-square")
   internal static let icArrowRotateRight = ImageAsset(name: "ic-arrow-rotate-right")
   internal static let icBug = ImageAsset(name: "ic-bug")
-  internal static let icChevronRight = ImageAsset(name: "ic-chevron-right")
   internal static let icCircleCheckFilled = ImageAsset(name: "ic-circle-check-filled")
   internal static let icCircleEmpty = ImageAsset(name: "ic-circle-empty")
   internal static let icCircleHalfFilled = ImageAsset(name: "ic-circle-half-filled")

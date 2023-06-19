@@ -43,7 +43,7 @@ public struct SettingsView: View {
     struct ChildFeature {
         let icon: ImageAsset
         let title: String
-        let accessory: SettingsCell.Accessory
+        let accessory: Accessory.Style
     }
 
     let features = (
@@ -223,7 +223,7 @@ extension SettingsCell {
         self.init(
             icon: feature.icon,
             content: .standard(title: feature.title, value: value?.localizedDescription),
-            accessory: feature.accessory
+            accessory: Accessory(style: feature.accessory)
         )
     }
 }
