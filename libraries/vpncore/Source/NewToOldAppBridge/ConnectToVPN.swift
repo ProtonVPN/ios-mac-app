@@ -1,6 +1,4 @@
 //
-//  Created on 2023-06-16.
-//
 //  Copyright (c) 2023 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
@@ -19,19 +17,18 @@
 import Foundation
 import ComposableArchitecture
 import VPNShared
-import vpncore
 
 extension DependencyValues {
-  var disconnectVPN: @Sendable () -> Void {
-    get { self[DisconnectVPNKey.self] }
-    set { self[DisconnectVPNKey.self] = newValue }
+  public var connectToVPN: @Sendable (ConnectionSpec) -> Void {
+    get { self[ConnectToVPNKey.self] }
+    set { self[ConnectToVPNKey.self] = newValue }
   }
 }
 
-private var vpnGateway = DependencyContainer.shared.makeVpnGateway()
+private var vpnGateway = Container.sharedContainer.makeVpnGateway()
 
-private enum DisconnectVPNKey: DependencyKey {
-    static let liveValue: @Sendable () -> Void = {
-        vpnGateway.disconnect()
+private enum ConnectToVPNKey: DependencyKey {
+    static let liveValue: @Sendable (ConnectionSpec) -> Void = { specs in
+        vpnGateway.autoConnect() // todo: connect to a proper server
     }
 }

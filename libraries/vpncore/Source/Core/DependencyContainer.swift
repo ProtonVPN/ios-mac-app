@@ -109,6 +109,9 @@ open class Container: PropertiesToOverride {
 
     private var telemetryService: TelemetryService?
 
+    // Should be set in apps to the Container object
+    public static var sharedContainer: Container!
+
     public init(_ config: Config) {
         self.config = config
     }

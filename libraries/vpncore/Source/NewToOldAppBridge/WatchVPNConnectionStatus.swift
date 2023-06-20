@@ -17,14 +17,13 @@
 import Foundation
 import ComposableArchitecture
 import VPNShared
-import vpncore
 import PMLogger
 
-private var appStateManager: AppStateManager! = DependencyContainer.shared.makeAppStateManager()
+private var appStateManager: AppStateManager! = Container.sharedContainer.makeAppStateManager()
 
 extension WatchAppStateChangesKey {
 
-    static let watchVPNConnectionStatusChanges: @Sendable () async -> AsyncStream<VPNConnectionStatus> = {
+    public static let watchVPNConnectionStatusChanges: @Sendable () async -> AsyncStream<VPNConnectionStatus> = {
         return NotificationCenter.default.notifications(named: .AppStateManager.displayStateChange).map({
             ($0.object as! AppDisplayState).vpnConnectionStatus
         }).eraseToStream()
