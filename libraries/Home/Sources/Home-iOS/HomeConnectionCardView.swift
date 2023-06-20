@@ -134,11 +134,11 @@ struct HomeConnectionCardView: View {
                 }
             } label: {
                 Text(buttonText)
+                    .frame(maxWidth: .infinity, minHeight: 48)
+                    .foregroundColor(Color(.text, .primary))
+                    .background(Color(.background, .interactive))
+                    .cornerRadius(.themeRadius8)
             }
-            .frame(maxWidth: .infinity, minHeight: 48)
-            .foregroundColor(Color(.text, .primary))
-            .background(Color(.background, .interactive))
-            .cornerRadius(.themeRadius8)
             .padding([.horizontal, .bottom])
         }
         .background(Color(.background, .weak))
