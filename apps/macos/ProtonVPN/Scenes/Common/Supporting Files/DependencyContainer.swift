@@ -92,10 +92,6 @@ final class DependencyContainer: Container {
         makeModelIdChecker().modelId
     }
 
-    override var vpnConnectionInterceptPolicies: [VpnConnectionInterceptPolicyItem] {
-        ConnectionIntercepts(factory: self).intercepts
-    }
-
     // MARK: - Overridden factory methods
     // MARK: DoHVPNFactory
     override func makeDoHVPN() -> DoHVPN {
