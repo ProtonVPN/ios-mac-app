@@ -25,31 +25,22 @@ import VPNAppCore
 
 class VpnConnectionPreparer {
     private let appStateManager: AppStateManager
-    private let vpnApiService: VpnApiService
-    private let serverStorage: ServerStorage
     private let serverTierChecker: ServerTierChecker
-    private let vpnKeychain: VpnKeychainProtocol
     private let smartProtocolConfig: SmartProtocolConfig
     private let openVpnConfig: OpenVpnConfig
     private let wireguardConfig: WireguardConfig
     private let availabilityCheckerResolver: AvailabilityCheckerResolver
-    
-    public weak var alertService: CoreAlertService?
-    
+
     private var smartProtocol: SmartProtocol?
     private var smartPortSelector: SmartPortSelector?
     
-    init(appStateManager: AppStateManager, vpnApiService: VpnApiService, alertService: CoreAlertService?, serverTierChecker: ServerTierChecker, vpnKeychain: VpnKeychainProtocol, serverStorage: ServerStorage, availabilityCheckerResolver: AvailabilityCheckerResolver, smartProtocolConfig: SmartProtocolConfig, openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig) {
+    init(appStateManager: AppStateManager, serverTierChecker: ServerTierChecker, availabilityCheckerResolver: AvailabilityCheckerResolver, smartProtocolConfig: SmartProtocolConfig, openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig) {
         self.appStateManager = appStateManager
-        self.vpnApiService = vpnApiService
-        self.alertService = alertService
         self.serverTierChecker = serverTierChecker
-        self.vpnKeychain = vpnKeychain
         self.availabilityCheckerResolver = availabilityCheckerResolver
         self.smartProtocolConfig = smartProtocolConfig
         self.openVpnConfig = openVpnConfig
         self.wireguardConfig = wireguardConfig
-        self.serverStorage = serverStorage
     }
     
     func determineServerParametersAndConnect(with connectionProtocol: ConnectionProtocol,
@@ -63,7 +54,7 @@ class VpnConnectionPreparer {
         
         selectVpnProtocol(for: connectionProtocol, toIP: serverIp) { (vpnProtocol, ports) in
             let entryIp = serverIp.entryIp(using: vpnProtocol) ?? serverIp.entryIp
-            log.info("Connecting with \(vpnProtocol) to \(server.name) via \(entryIp):\(ports)",
+            log.info("Connecting with \(vpnProtocol) to \(server.name) via \(entryIp ?? "-"):\(ports)",
                      category: .connectionConnect)
             self.formConfigurationWithParametersAndConnect(withProtocol: vpnProtocol,
                                                            server: server,
