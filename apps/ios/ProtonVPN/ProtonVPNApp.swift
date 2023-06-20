@@ -82,6 +82,8 @@ struct AppReducer: ReducerProtocol {
 
             case .connectionScreenAction:
                 return .none
+            case .settings:
+                return .none
             }
         }
         Scope(state: \.home, action: /Action.home) {
