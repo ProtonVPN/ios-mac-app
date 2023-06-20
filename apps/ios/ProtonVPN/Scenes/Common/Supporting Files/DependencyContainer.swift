@@ -81,6 +81,9 @@ final class DependencyContainer: Container {
                    openVpnExtensionBundleIdentifier: AppConstants.NetworkExtensions.openVpn,
                    wireguardVpnExtensionBundleIdentifier: AppConstants.NetworkExtensions.wireguard)
         )
+
+        // Some classes depend on shared container from vpncore directly
+        Container.sharedContainer = self
     }
 
     // MARK: - Overridden factory methods

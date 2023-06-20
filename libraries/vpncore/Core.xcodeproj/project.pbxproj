@@ -199,6 +199,12 @@
 		D523F11724B759A5007DB086 /* StringUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523F11524B759A5007DB086 /* StringUrl.swift */; };
 		D52585272507D4DD00657B80 /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52585262507D4DD00657B80 /* FeatureFlags.swift */; };
 		D52585282507D4DD00657B80 /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52585262507D4DD00657B80 /* FeatureFlags.swift */; };
+		D54539DC2A41F1D5008B4259 /* DisconnectVPN.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54539D92A41F1D4008B4259 /* DisconnectVPN.swift */; };
+		D54539DD2A41F1D5008B4259 /* DisconnectVPN.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54539D92A41F1D4008B4259 /* DisconnectVPN.swift */; };
+		D54539DE2A41F1D5008B4259 /* WatchVPNConnectionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54539DA2A41F1D5008B4259 /* WatchVPNConnectionStatus.swift */; };
+		D54539DF2A41F1D5008B4259 /* WatchVPNConnectionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54539DA2A41F1D5008B4259 /* WatchVPNConnectionStatus.swift */; };
+		D54539E02A41F1D5008B4259 /* ConnectToVPN.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54539DB2A41F1D5008B4259 /* ConnectToVPN.swift */; };
+		D54539E12A41F1D5008B4259 /* ConnectToVPN.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54539DB2A41F1D5008B4259 /* ConnectToVPN.swift */; };
 		D5566E0F28DAFF10007CB88F /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5566E0E28DAFF10007CB88F /* Log.swift */; };
 		D5566E1028DAFF10007CB88F /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5566E0E28DAFF10007CB88F /* Log.swift */; };
 		D55D79142498F63C009669E0 /* String+Cleanup.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55D79132498F63C009669E0 /* String+Cleanup.swift */; };
@@ -893,6 +899,9 @@
 		D523F11024B7543C007DB086 /* String+Url.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Url.swift"; sourceTree = "<group>"; };
 		D523F11524B759A5007DB086 /* StringUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUrl.swift; sourceTree = "<group>"; };
 		D52585262507D4DD00657B80 /* FeatureFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlags.swift; sourceTree = "<group>"; };
+		D54539D92A41F1D4008B4259 /* DisconnectVPN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisconnectVPN.swift; sourceTree = "<group>"; };
+		D54539DA2A41F1D5008B4259 /* WatchVPNConnectionStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchVPNConnectionStatus.swift; sourceTree = "<group>"; };
+		D54539DB2A41F1D5008B4259 /* ConnectToVPN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectToVPN.swift; sourceTree = "<group>"; };
 		D5566E0E28DAFF10007CB88F /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		D55D79132498F63C009669E0 /* String+Cleanup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Cleanup.swift"; sourceTree = "<group>"; };
 		D55D79182498F65B009669E0 /* StringCleanup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringCleanup.swift; sourceTree = "<group>"; };
@@ -1365,6 +1374,16 @@
 			path = Reports;
 			sourceTree = "<group>";
 		};
+		D54539CF2A41F19A008B4259 /* NewToOldAppBridge */ = {
+			isa = PBXGroup;
+			children = (
+				D54539DA2A41F1D5008B4259 /* WatchVPNConnectionStatus.swift */,
+				D54539DB2A41F1D5008B4259 /* ConnectToVPN.swift */,
+				D54539D92A41F1D4008B4259 /* DisconnectVPN.swift */,
+			);
+			path = NewToOldAppBridge;
+			sourceTree = "<group>";
+		};
 		D578439729001B7E007E3FC6 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -1580,6 +1599,7 @@
 		E1B5F5DA21B68ABD00B558B0 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				D54539CF2A41F19A008B4259 /* NewToOldAppBridge */,
 				F36ECB382610A7760089B898 /* API */,
 				F36ECB632610A8540089B898 /* Constants */,
 				F36ECB722610A96A0089B898 /* Core */,
@@ -2888,6 +2908,7 @@
 				E1616C0621C95DD200F42D79 /* ProfileUtility.swift in Sources */,
 				E992F27E26675C3200169C6B /* VpnKeychainMock.swift in Sources */,
 				AD1DDFC629BF465C00D14BE9 /* FileStorage.swift in Sources */,
+				D54539DC2A41F1D5008B4259 /* DisconnectVPN.swift in Sources */,
 				E1B5F66521B81EE100B558B0 /* ServerIp.swift in Sources */,
 				D57A656F2485330700079E82 /* VpnServerSelector.swift in Sources */,
 				E977A78C268206B30013495A /* AuthCredentials+vpncore.swift in Sources */,
@@ -3041,6 +3062,7 @@
 				E1616B8121C7AA9E00F42D79 /* AppStateManager.swift in Sources */,
 				E1B5F67621B8247000B558B0 /* ContinuousServerProperties.swift in Sources */,
 				E148AE6521C29A20007AB65A /* ProtonApiError.swift in Sources */,
+				D54539DE2A41F1D5008B4259 /* WatchVPNConnectionStatus.swift in Sources */,
 				D5ADF5192281975E0062367C /* SiriHelperProtocol.swift in Sources */,
 				E5CBA02728DB23FB00EA1F25 /* OfferPanel+Mode.swift in Sources */,
 				F30B9EA72629B1A30094C65E /* CertificateRefreshAsyncOperation.swift in Sources */,
@@ -3062,6 +3084,7 @@
 				E148AE6B21C2A263007AB65A /* LocalizedString.swift in Sources */,
 				ADBFE45129CDAAE0001A5446 /* Timer+Dependencies.swift in Sources */,
 				E148AE6221C29818007AB65A /* ErrorCodes.swift in Sources */,
+				D54539E02A41F1D5008B4259 /* ConnectToVPN.swift in Sources */,
 				E1B5F64121B6B86200B558B0 /* CoreAppConstants.swift in Sources */,
 				E53406B128E1BCD20078A7A3 /* FullScreenImagePrefetcher.swift in Sources */,
 				F38BB44C265B893F00329619 /* LocalAgentError.swift in Sources */,
@@ -3186,6 +3209,7 @@
 				E5904FCB2949F8E100BA6D3B /* TelemetryService.swift in Sources */,
 				E1616BD221C7DAA500F42D79 /* ServiceChecker.swift in Sources */,
 				D5D2945125A45B4D000FBD74 /* SemanticVersion.swift in Sources */,
+				D54539DD2A41F1D5008B4259 /* DisconnectVPN.swift in Sources */,
 				E5E4658029548D2200A4DE80 /* TelemetryAPI.swift in Sources */,
 				F3A3D6C927C015BE00B474D7 /* NATTypePropertyProviderMock.swift in Sources */,
 				E5CBA02E28DB243900EA1F25 /* OfferButton.swift in Sources */,
@@ -3193,6 +3217,7 @@
 				E151126F22F07D6800C9A41F /* OpenVpnProtocolFactory.swift in Sources */,
 				E976FB292791B111001EC8F3 /* DynamicBugReportConfigRequest.swift in Sources */,
 				D5966F3D2538396B0061A75F /* AnnouncementsViewModel.swift in Sources */,
+				D54539DF2A41F1D5008B4259 /* WatchVPNConnectionStatus.swift in Sources */,
 				D55D79162498F63C009669E0 /* String+Cleanup.swift in Sources */,
 				E15367E722663FA7009BB1D2 /* ServerTierChecker.swift in Sources */,
 				E129C6CC22A9205700D8437E /* VpnManagerMock.swift in Sources */,
@@ -3406,6 +3431,7 @@
 				6B98DC90360CC2606595D272 /* URLArray+Extension.swift in Sources */,
 				D5AC963B288038A500398A83 /* WireguardTCPAvailabilityChecker.swift in Sources */,
 				E5768642297822F90014F944 /* TelemetryConnectionNotifier.swift in Sources */,
+				D54539E12A41F1D5008B4259 /* ConnectToVPN.swift in Sources */,
 				4C1ECBB828912FC200820068 /* SystemExtensionManager.swift in Sources */,
 				F3E5787227CCCE91000E48E3 /* AvailableDomainResponse.swift in Sources */,
 				F397EA5F280561400072D511 /* CouponViewModel.swift in Sources */,

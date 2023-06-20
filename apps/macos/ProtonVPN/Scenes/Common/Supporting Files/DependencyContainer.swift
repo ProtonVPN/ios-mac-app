@@ -82,6 +82,9 @@ final class DependencyContainer: Container {
                           accessGroup: "\(prefix)ch.protonvpn.macos",
                           openVpnExtensionBundleIdentifier: "ch.protonvpn.mac.OpenVPN-Extension",
                           wireguardVpnExtensionBundleIdentifier: "ch.protonvpn.mac.WireGuard-Extension"))
+
+        // Some classes depend on shared container from vpncore directly
+        Container.sharedContainer = self
     }
 
     // MARK: - Overridden config methods
