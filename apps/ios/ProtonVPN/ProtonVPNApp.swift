@@ -82,14 +82,16 @@ struct AppReducer: ReducerProtocol {
                 return .none
 
             case .home(.connect(let specs)):
-                @Dependency(\.connectToVPN) var connectToVPN
-                connectToVPN(specs)
-                return .none
+                return .run { _ in 
+                    @Dependency(\.connectToVPN) var connectToVPN
+                    try? await connectToVPN(specs)
+                }
 
             case .home(.disconnect):
-                @Dependency(\.disconnectVPN) var disconnectVPN
-                disconnectVPN()
-                return .none
+                return .run { _ in
+                    @Dependency(\.disconnectVPN) var disconnectVPN
+                    try? await disconnectVPN()
+                }
 
             case .home:
                 return .none

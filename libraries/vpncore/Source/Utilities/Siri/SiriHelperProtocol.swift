@@ -21,6 +21,7 @@
 
 import Foundation
 import Intents
+import Dependencies
 
 public protocol SiriHelperFactory {
     func makeSiriHelper() -> SiriHelperProtocol
@@ -29,6 +30,20 @@ public protocol SiriHelperFactory {
 public protocol SiriHelperProtocol {
     func donateQuickConnect()
     func donateDisconnect()
+}
+
+extension DependencyValues {
+    public var siriHelper: @Sendable () -> SiriHelperProtocol {
+        get { self[SiriHelperKey.self] }
+        set { self[SiriHelperKey.self] = newValue }
+    }
+}
+
+private enum SiriHelperKey: DependencyKey {
+    static let liveValue: @Sendable () -> SiriHelperProtocol = {
+        // Can be changed to `return SiriHelper()` when getting rid of current Dependency container
+        return Container.sharedContainer.makeSiriHelper()
+    }
 }
 
 public class SiriHelper: SiriHelperProtocol {

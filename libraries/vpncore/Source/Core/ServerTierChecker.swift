@@ -21,6 +21,10 @@
 
 import Foundation
 
+protocol ServerTierCheckerFactory {
+    func makeServerTierChecker() -> ServerTierChecker
+}
+
 class ServerTierChecker {
     
     public weak var alertService: CoreAlertService?
