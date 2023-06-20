@@ -120,8 +120,6 @@
 		4C9486B728CA327B008AD889 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9486B528CA327B008AD889 /* DependencyContainer.swift */; };
 		4CAAEC3D286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAEC3C286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift */; };
 		4CAAEC3E286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAEC3C286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift */; };
-		4CAD2FC827F2FDC100C78905 /* VpnConnectionIntercept.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAD2FC727F2FDC100C78905 /* VpnConnectionIntercept.swift */; };
-		4CAD2FC927F2FDC100C78905 /* VpnConnectionIntercept.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAD2FC727F2FDC100C78905 /* VpnConnectionIntercept.swift */; };
 		4CB2A3D7289131F5002E839E /* ExtensionInfo+Comparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2A3D5289131F5002E839E /* ExtensionInfo+Comparable.swift */; };
 		4CC20AD12869A6410051BC80 /* LocaleWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC20AD02869A6410051BC80 /* LocaleWrapper.swift */; };
 		4CC20AD22869A6410051BC80 /* LocaleWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC20AD02869A6410051BC80 /* LocaleWrapper.swift */; };
@@ -804,7 +802,6 @@
 		4C83C46F2869FC9D000A3FB4 /* AvailabilityCheckerResolverMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityCheckerResolverMock.swift; sourceTree = "<group>"; };
 		4C9486B528CA327B008AD889 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		4CAAEC3C286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NEVPNStatus+CustomStringConvertible.swift"; sourceTree = "<group>"; };
-		4CAD2FC727F2FDC100C78905 /* VpnConnectionIntercept.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnConnectionIntercept.swift; sourceTree = "<group>"; };
 		4CB2A3D5289131F5002E839E /* ExtensionInfo+Comparable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExtensionInfo+Comparable.swift"; sourceTree = "<group>"; };
 		4CC20AD02869A6410051BC80 /* LocaleWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleWrapper.swift; sourceTree = "<group>"; };
 		4CE300C6285877B100FBD249 /* NEVPNWrappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEVPNWrappers.swift; sourceTree = "<group>"; };
@@ -2073,7 +2070,6 @@
 				E15367E522663FA7009BB1D2 /* ServerTierChecker.swift */,
 				E15367DF22662E65009BB1D2 /* VpnConnectionPreparer.swift */,
 				E1616BE421C9392600F42D79 /* VpnGateway.swift */,
-				4CAD2FC727F2FDC100C78905 /* VpnConnectionIntercept.swift */,
 				E1B5F63D21B6B5E000B558B0 /* VpnManager.swift */,
 				E9AF94BF26B7F4D800AA1A5F /* VpnCredentials */,
 				F387A26B267B550D00F0C3D8 /* VpnStateConfiguration.swift */,
@@ -3113,7 +3109,6 @@
 				F365355126383DDC001B7E88 /* LocalAgent.swift in Sources */,
 				F30B9CD62626F5D10094C65E /* VpnAuthentication.swift in Sources */,
 				D5BCDEAA25359F68004BAEE8 /* Offer.swift in Sources */,
-				4CAD2FC827F2FDC100C78905 /* VpnConnectionIntercept.swift in Sources */,
 				E129C6C722A9101B00D8437E /* ServerStorageMock.swift in Sources */,
 				E148AE6821C29A67007AB65A /* NetworkError.swift in Sources */,
 				E54474DE292FC2600044B592 /* ServerItemViewModelCore.swift in Sources */,
@@ -3377,7 +3372,6 @@
 				AD37FAC829B89FF900D4DE4E /* StrongNotification.swift in Sources */,
 				E1616B8921C7AC9B00F42D79 /* VpnCredentials.swift in Sources */,
 				E5608CC12994D94D00D11333 /* TelemetrySettings.swift in Sources */,
-				4CAD2FC927F2FDC100C78905 /* VpnConnectionIntercept.swift in Sources */,
 				E196BE4D23742116003E5832 /* Collection+Extension.swift in Sources */,
 				E1B5F63F21B6B5E000B558B0 /* VpnManager.swift in Sources */,
 				E160845A21DE1E9100E34D04 /* SafariService.swift in Sources */,

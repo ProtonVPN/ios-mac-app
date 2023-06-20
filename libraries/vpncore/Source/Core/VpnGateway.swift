@@ -171,8 +171,6 @@ public class VpnGateway: VpnGatewayProtocol {
         return safeModePropertyProvider.safeMode
     }
 
-    let interceptPolicies: [VpnConnectionInterceptPolicyItem]
-
     public typealias Factory = VpnApiServiceFactory &
         AppStateManagerFactory &
         CoreAlertServiceFactory &
@@ -185,8 +183,7 @@ public class VpnGateway: VpnGatewayProtocol {
         PropertiesManagerFactory &
         ProfileManagerFactory &
         AvailabilityCheckerResolverFactory &
-        ServerStorageFactory &
-        VpnConnectionInterceptDelegate
+        ServerStorageFactory
 
     public convenience init(_ factory: Factory) {
         self.init(vpnApiService: factory.makeVpnApiService(),
@@ -201,11 +198,10 @@ public class VpnGateway: VpnGatewayProtocol {
                   propertiesManager: factory.makePropertiesManager(),
                   profileManager: factory.makeProfileManager(),
                   availabilityCheckerResolverFactory: factory,
-                  vpnInterceptPolicies: factory.vpnConnectionInterceptPolicies,
                   serverStorage: factory.makeServerStorage())
     }
 
-    public init(vpnApiService: VpnApiService, appStateManager: AppStateManager, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, authKeychain: AuthKeychainHandle, siriHelper: SiriHelperProtocol? = nil, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, propertiesManager: PropertiesManagerProtocol, profileManager: ProfileManager, availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory, vpnInterceptPolicies: [VpnConnectionInterceptPolicyItem] = [], serverStorage: ServerStorage) {
+    public init(vpnApiService: VpnApiService, appStateManager: AppStateManager, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, authKeychain: AuthKeychainHandle, siriHelper: SiriHelperProtocol? = nil, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, propertiesManager: PropertiesManagerProtocol, profileManager: ProfileManager, availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory, serverStorage: ServerStorage) {
         self.vpnApiService = vpnApiService
         self.appStateManager = appStateManager
         self.alertService = alertService
@@ -222,7 +218,6 @@ public class VpnGateway: VpnGatewayProtocol {
 
         let state = appStateManager.state
         self.connection = ConnectionStatus.forAppState(state)
-        self.interceptPolicies = vpnInterceptPolicies
         self.serverStorage = serverStorage
         /// Sometimes when launching the app, the `AppStateManager` will post `.AppStateManager.stateChange` notification
         /// before `VPNGateway` has a chance of registering for that notification. For this event we're posting it here.
@@ -464,15 +459,6 @@ public class VpnGateway: VpnGatewayProtocol {
         }
 
         DispatchQueue.global(qos: .userInitiated).async {
-            for policy in self.interceptPolicies {
-                guard !self.applyInterceptPolicy(policy: policy,
-                                                 connectionProtocol: &connectionProtocol,
-                                                 smartProtocolConfig: &smartProtocolConfig,
-                                                 killSwitch: killSwitch) else {
-                    break
-                }
-            }
-
             self.propertiesManager.lastPreparedServer = server
             let availabilityCheckerResolver = self.availabilityCheckerResolverFactory
                 .makeAvailabilityCheckerResolver(openVpnConfig: self.propertiesManager.openVpnConfig,
@@ -490,39 +476,6 @@ public class VpnGateway: VpnGatewayProtocol {
                 self.connectionPreparer?.determineServerParametersAndConnect(with: connectionProtocol, to: server, netShieldType: netShieldType, natType: natType, safeMode: safeMode)
             }
         }
-    }
-
-    /// - Returns: Whether or not the given policy changed connection settings.
-    private func applyInterceptPolicy(policy: VpnConnectionInterceptPolicyItem,
-                                      connectionProtocol: inout ConnectionProtocol,
-                                      smartProtocolConfig: inout SmartProtocolConfig,
-                                      killSwitch: Bool) -> Bool {
-        let group = DispatchGroup()
-        group.enter()
-
-        var result: VpnConnectionInterceptResult = .allow
-        policy.shouldIntercept(connectionProtocol, isKillSwitchOn: killSwitch) { interceptResult in
-            result = interceptResult
-            group.leave()
-        }
-        group.wait()
-
-        guard case .intercept(let parameters) = result else {
-            return false
-        }
-
-        if parameters.smartProtocolWithoutWireGuard {
-            smartProtocolConfig = smartProtocolConfig
-                .configWithWireGuard(udpEnabled: false, tcpEnabled: false, tlsEnabled: false)
-        }
-        if parameters.disableKillSwitch {
-            self.propertiesManager.killSwitch = false
-        }
-        if connectionProtocol != parameters.newProtocol {
-            connectionProtocol = parameters.newProtocol
-        }
-
-        return true
     }
 
     public func postConnectionInformation() {

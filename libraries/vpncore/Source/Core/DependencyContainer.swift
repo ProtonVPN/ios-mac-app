@@ -31,8 +31,7 @@ typealias PropertiesToOverride = DoHVPNFactory &
                                 VpnCredentialsConfiguratorFactoryCreator &
                                 VpnAuthenticationFactory &
                                 LogContentProviderFactory &
-                                UpdateCheckerFactory &
-                                VpnConnectionInterceptDelegate
+                                UpdateCheckerFactory
 
 open class Container: PropertiesToOverride {
     public struct Config {
@@ -136,10 +135,6 @@ open class Container: PropertiesToOverride {
         shouldHaveOverridden()
     }
     #endif
-
-    open var vpnConnectionInterceptPolicies: [VpnConnectionInterceptPolicyItem] {
-        []
-    }
 
     // MARK: - Factories to override
     // MARK: DoHVPNFactory
