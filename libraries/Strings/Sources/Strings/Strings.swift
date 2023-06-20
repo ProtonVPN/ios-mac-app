@@ -169,12 +169,6 @@ public enum Localizable {
   public static func sessionLengthSeconds(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "_session_length_seconds", p1, fallback: "Plural format key: \"%#@SECONDS@\"")
   }
-  /// Settings tab in bottom menu [Redesign_2023]
-  public static var settingsTab: String { return Localizable.tr("Localizable", "_settings_tab", fallback: "Settings") }
-  /// Plural format key: "%#@STEP@ %#@STEPS@"
-  public static func stepOf(_ p1: Int, _ p2: Int) -> String {
-    return Localizable.tr("Localizable", "_step_of", p1, p2, fallback: "Plural format key: \"%#@STEP@ %#@STEPS@\"")
-  }
   /// Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890)
   public static func settingsAppVersion(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_settings_app_version", String(describing: p1), fallback: "App Version: %@")
@@ -199,7 +193,7 @@ public enum Localizable {
   public static var settingsSectionTitleImproveProton: String { return Localizable.tr("Localizable", "_settings_section_title_improve_proton", fallback: "Improve Proton") }
   /// Title of the 'Support' section in the Settings tab
   public static var settingsSectionTitleSupport: String { return Localizable.tr("Localizable", "_settings_section_title_support", fallback: "Support") }
-  /// Settings tab in bottom menu
+  /// Settings tab in bottom menu [Redesign_2023]
   public static var settingsTab: String { return Localizable.tr("Localizable", "_settings_tab", fallback: "Settings") }
   /// Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab, and underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme
   public static var settingsThemeAuto: String { return Localizable.tr("Localizable", "_settings_theme_auto", fallback: "Auto*") }
@@ -239,6 +233,10 @@ public enum Localizable {
   public static var settingsTitleVpnAccelerator: String { return Localizable.tr("Localizable", "_settings_title_vpn_accelerator", fallback: "VPN Accelerator") }
   /// Title of the NetShield cell in the Settings tab
   public static var settingsTitleWidget: String { return Localizable.tr("Localizable", "_settings_title_widget", fallback: "Widget") }
+  /// Plural format key: "%#@STEP@ %#@STEPS@"
+  public static func stepOf(_ p1: Int, _ p2: Int) -> String {
+    return Localizable.tr("Localizable", "_step_of", p1, p2, fallback: "Plural format key: \"%#@STEP@ %#@STEPS@\"")
+  }
   /// Connection status title when user is connected to a VPN
   public static var connectionStatusProtected: String { return Localizable.tr("Localizable", "connection_status_protected", fallback: "Protected") }
   /// Connection status title when user is initiating connection to a VPN
