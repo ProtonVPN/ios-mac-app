@@ -20,10 +20,26 @@ import Foundation
 import ComposableArchitecture
 import VPNAppCore
 
-private var vpnGateway = Container.sharedContainer.makeVpnGateway()
+extension DependencyValues {
 
-extension DisconnectVPNKey {
-    public static var bridged: @Sendable () -> Void = {
-        vpnGateway.disconnect()
+    /// Atm it's neither async nor throws, but the plan is to return only after connection is closed and also to throw exceptions
+    /// so user can be presented with an error from UI, and not from the depths of VPN connection related code.
+    public var disconnectVPN: @Sendable () async throws -> Void {
+    get { self[DisconnectVPNKey.self] }
+    set { self[DisconnectVPNKey.self] = newValue }
+  }
+}
+
+private enum DisconnectVPNKey: DependencyKey {
+    static let liveValue: @Sendable () async throws -> Void = {
+        @Dependency(\.siriHelper) var siriHelper
+        siriHelper().donateDisconnect()
+
+        let gateway = Container.sharedContainer.makeVpnGateway2()
+        try await gateway.disconnect()
+
+        // todo: old VpnGateway was reloading server info after disconnect. New one does not.
+        // Decide where to put this functionality and implement it!
+
     }
 }

@@ -340,6 +340,20 @@ extension Container: VpnGatewayFactory {
     }
 }
 
+// MARK: VpnGateway2Factory
+extension Container: VpnGateway2Factory {
+    public func makeVpnGateway2() -> VpnGatewayProtocol2 {
+        VpnGateway2(self)
+    }
+}
+
+// MARK: ServerTierCheckerFactory
+extension Container: ServerTierCheckerFactory {
+    func makeServerTierChecker() -> ServerTierChecker {
+        ServerTierChecker(alertService: makeCoreAlertService(), vpnKeychain: makeVpnKeychain())
+    }
+}
+
 // MARK: SessionServiceFactory
 extension Container: SessionServiceFactory {
     public func makeSessionService() -> SessionService {

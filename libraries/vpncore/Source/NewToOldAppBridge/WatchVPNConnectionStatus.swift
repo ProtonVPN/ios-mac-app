@@ -24,27 +24,14 @@ private var appStateManager: AppStateManager! = Container.sharedContainer.makeAp
 extension WatchAppStateChangesKey {
 
     public static let watchVPNConnectionStatusChanges: @Sendable () async -> AsyncStream<VPNConnectionStatus> = {
-        return NotificationCenter.default.notifications(named: .AppStateManager.displayStateChange).map({
-            ($0.object as! AppDisplayState).vpnConnectionStatus
-        }).eraseToStream()
+        return NotificationCenter.default
+            .notifications(named: .AppStateManager.displayStateChange)
+            .map({
+                ($0.object as! AppDisplayState).vpnConnectionStatus
+            })
+            .eraseToStream()
     }
 
-}
-
-extension AsyncStream {
-    init<Sequence: AsyncSequence>(_ sequence: Sequence) where Sequence.Element == Element {
-        self.init {
-            var iterator: Sequence.AsyncIterator?
-            if iterator == nil {
-                iterator = sequence.makeAsyncIterator()
-            }
-            return try? await iterator?.next()
-        }
-    }
-
-    func eraseToStream() -> AsyncStream<Element> {
-        AsyncStream(self)
-    }
 }
 
 // MARK: - AppDisplayState -> VPNConnectionStatus
