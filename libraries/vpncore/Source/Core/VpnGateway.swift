@@ -479,11 +479,7 @@ public class VpnGateway: VpnGatewayProtocol {
                                                  wireguardConfig: self.propertiesManager.wireguardConfig)
 
             self.connectionPreparer = VpnConnectionPreparer(appStateManager: self.appStateManager,
-                                                            vpnApiService: self.vpnApiService,
-                                                            alertService: self.alertService,
                                                             serverTierChecker: self.serverTierChecker,
-                                                            vpnKeychain: self.vpnKeychain,
-                                                            serverStorage: self.serverStorage,
                                                             availabilityCheckerResolver: availabilityCheckerResolver,
                                                             smartProtocolConfig: smartProtocolConfig,
                                                             openVpnConfig: self.propertiesManager.openVpnConfig,
