@@ -234,6 +234,11 @@
 		E53D64C3281169880060C463 /* Modals-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C2281169880060C463 /* Modals-macOS */; };
 		E53D7457291925380006E499 /* FeatureRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E53D7456291925380006E499 /* FeatureRowView.xib */; };
 		E551EB0829AF7C1300B6612D /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0729AF7C1300B6612D /* Assets.swift */; };
+		E552FC772A430A720058B3D9 /* SideBarButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC722A430A720058B3D9 /* SideBarButtonStyle.swift */; };
+		E552FC782A430A720058B3D9 /* ProfileButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC732A430A720058B3D9 /* ProfileButtonView.swift */; };
+		E552FC792A430A720058B3D9 /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC742A430A720058B3D9 /* SideBarView.swift */; };
+		E552FC7A2A430A720058B3D9 /* SideBarTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC752A430A720058B3D9 /* SideBarTab.swift */; };
+		E552FC7B2A430A720058B3D9 /* SideBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC762A430A720058B3D9 /* SideBarItemView.swift */; };
 		E565986828200ADA004F2240 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986728200ADA004F2240 /* LoadingView.swift */; };
 		E565986A2820FECE004F2240 /* WarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E56598692820FECE004F2240 /* WarningView.xib */; };
 		E565986C2820FEDD004F2240 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986B2820FEDD004F2240 /* WarningView.swift */; };
@@ -903,6 +908,11 @@
 		E53D7456291925380006E499 /* FeatureRowView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeatureRowView.xib; sourceTree = "<group>"; };
 		E551EB0629AF7B7B00B6612D /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		E551EB0729AF7C1300B6612D /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
+		E552FC722A430A720058B3D9 /* SideBarButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarButtonStyle.swift; sourceTree = "<group>"; };
+		E552FC732A430A720058B3D9 /* ProfileButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileButtonView.swift; sourceTree = "<group>"; };
+		E552FC742A430A720058B3D9 /* SideBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarView.swift; sourceTree = "<group>"; };
+		E552FC752A430A720058B3D9 /* SideBarTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarTab.swift; sourceTree = "<group>"; };
+		E552FC762A430A720058B3D9 /* SideBarItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarItemView.swift; sourceTree = "<group>"; };
 		E564CD4A29A8FB07009DDD1C /* be-BY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "be-BY"; path = "be-BY.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E564CD4B29A8FB0E009DDD1C /* be */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = be; path = be.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E564CD4C29A8FB1A009DDD1C /* be-BY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "be-BY"; path = "be-BY.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
@@ -1674,6 +1684,18 @@
 			path = ProtonVPNTests;
 			sourceTree = "<group>";
 		};
+		E552FC712A430A720058B3D9 /* SideBar */ = {
+			isa = PBXGroup;
+			children = (
+				E552FC722A430A720058B3D9 /* SideBarButtonStyle.swift */,
+				E552FC732A430A720058B3D9 /* ProfileButtonView.swift */,
+				E552FC742A430A720058B3D9 /* SideBarView.swift */,
+				E552FC752A430A720058B3D9 /* SideBarTab.swift */,
+				E552FC762A430A720058B3D9 /* SideBarItemView.swift */,
+			);
+			path = SideBar;
+			sourceTree = "<group>";
+		};
 		E5772AE229B0B9970076D824 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1701,6 +1723,7 @@
 				E5C3415A29FBBADE00A26614 /* Assets.xcassets */,
 				E5C3415B29FBBADE00A26614 /* Preview Content */,
 				E5C3415D29FBBADE00A26614 /* ProtonVPN_redesignApp.swift */,
+				E552FC712A430A720058B3D9 /* SideBar */,
 				E5C3415E29FBBADE00A26614 /* ProtonVPN_redesign.entitlements */,
 			);
 			path = "ProtonVPN-redesign";
@@ -3755,6 +3778,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E552FC772A430A720058B3D9 /* SideBarButtonStyle.swift in Sources */,
+				E552FC792A430A720058B3D9 /* SideBarView.swift in Sources */,
+				E552FC7B2A430A720058B3D9 /* SideBarItemView.swift in Sources */,
+				E552FC782A430A720058B3D9 /* ProfileButtonView.swift in Sources */,
+				E552FC7A2A430A720058B3D9 /* SideBarTab.swift in Sources */,
 				E5C3416229FBBADE00A26614 /* ProtonVPN_redesignApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -18,6 +18,8 @@
 
 import SwiftUI
 import Theme
+import Home_macOS
+import ConnectionDetails_macOS
 
 public struct SideBarView: View {
 

@@ -26,7 +26,13 @@ public struct SettingsView: View {
 
     @State private var currentSubview: AnyView?
     @State private var title = Localizable.settingsTab
-    @State private var subviewTitle: String = ""
+    @State private var subviewTitle: String
+
+    public init(currentSubview: AnyView? = nil, title: String = Localizable.settingsTab, subviewTitle: String = "") {
+        self.currentSubview = currentSubview
+        self.title = title
+        self.subviewTitle = subviewTitle
+    }
 
     private func showSubview(view: AnyView?, title: String) {
         withAnimation(.easeOut(duration: 0.3)) {

@@ -1384,7 +1384,6 @@
 				79C5598120AAC51100E6D3F6 /* Resources */,
 				D5C1FE452A39D66F0049AF18 /* NewToOldAppBridge */,
 				D580AB8F2452CA08003C34B9 /* Scenes */,
-				D5C1FE442A39D6000049AF18 /* Scenes_new */,
 				79F17EBB20A30AB2004D2696 /* SupportingFiles */,
 				791DE5DC208DDA3000A29EA5 /* AppDelegate.swift */,
 				E5FFB24329F80185000C65A9 /* ProtonVPNApp.swift */,
@@ -1847,13 +1846,6 @@
 				D5BF950F23559AAF00C7D1E7 /* XCTestExpectation.swift */,
 			);
 			path = TestExtensions;
-			sourceTree = "<group>";
-		};
-		D5C1FE442A39D6000049AF18 /* Scenes_new */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Scenes_new;
 			sourceTree = "<group>";
 		};
 		D5C1FE452A39D66F0049AF18 /* NewToOldAppBridge */ = {
