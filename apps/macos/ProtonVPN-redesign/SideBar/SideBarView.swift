@@ -17,9 +17,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+import Home
 import Theme
 import Home_macOS
 import ConnectionDetails_macOS
+import ConnectionDetails
+import ComposableArchitecture
 
 public struct SideBarView: View {
 
@@ -29,7 +32,11 @@ public struct SideBarView: View {
     @State private var backgroundActive: Bool = false
     @State private var selectedTab: SideBarTab = .home
 
-    public init() {}
+    let store: StoreOf<AppReducer>
+
+    init(store: StoreOf<AppReducer>) {
+        self.store = store
+    }
 
     public var body: some View {
         ZStack {
@@ -50,9 +57,29 @@ public struct SideBarView: View {
                 }
                 switch selectedTab {
                 case .home:
-                    HomeView(connectionDetailsVisible: $connectionDetailsVisible)
-                    if connectionDetailsVisible {
-                        ConnectionDetailsView()
+                    VStack(spacing: 0) {
+                        HomeView(store: store.scope(state: \.home, action: AppReducer.Action.home))
+                        WithViewStore(store, observe: { $0.home }) { store in
+                            switch store.state.vpnConnectionStatus {
+                            case .disconnected:
+                                Button("Connect") {
+                                    store.send(.home(.connect(.init(location: .fastest, features: []))))
+                                }
+                            default:
+                                Button("Disconnect") {
+                                    store.send(.home(.disconnect))
+                                }
+                            }
+
+                        }
+                        Text("Connection card")
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
+                    .background(Color(.background))
+                    WithViewStore(store, observe: { $0.connectionDetailsVisible }) { store in
+                        if store.state {
+                            ConnectionDetailsView()
+                        }
                     }
                 case .countries:
                     CountriesView {
@@ -92,7 +119,9 @@ public struct SideBarView: View {
 }
 
 struct SideBarView_Previews: PreviewProvider {
+    @Dependency(\.initialStateProvider) static var initialStateProvider
     static var previews: some View {
-        SideBarView()
+        SideBarView(store: .init(initialState: initialStateProvider.initialState,
+                                 reducer: AppReducer()))
     }
 }

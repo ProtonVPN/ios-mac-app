@@ -233,3 +233,10 @@ public extension CustomStyleContext {
         return .cgColor(context, self.customStyle(context: context))
     }
 }
+
+public extension Image {
+    func styled(_ style: AppTheme.Style = .normal) -> some View {
+        renderingMode(.template)
+            .foregroundColor(.init(.icon, style))
+    }
+}
