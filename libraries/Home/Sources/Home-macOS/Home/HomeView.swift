@@ -17,26 +17,36 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+import Home
 import Theme_macOS
+import VPNShared
+import ComposableArchitecture
 
 public struct HomeView: View {
 
-    @Binding var connectionDetailsVisible: Bool
+    let store: StoreOf<HomeFeature>
 
-    public init(connectionDetailsVisible: Binding<Bool>) {
-        _connectionDetailsVisible = connectionDetailsVisible
+    public init(store: StoreOf<HomeFeature>) {
+        self.store = store
     }
 
     public var body: some View {
-        ConnectionStateView(connectionDetailsVisible: $connectionDetailsVisible)
-            .onTapGesture {
-                connectionDetailsVisible.toggle()
+        WithViewStore(store, observe: { $0 }) { viewStore in
+            VStack {
+                ConnectionStatusView(store: store.scope(state: \.connectionStatus,
+                                                        action: { .connectionStatusViewAction($0) }))
             }
+            .background(Color(.background))
+        }
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(connectionDetailsVisible: .init(get: { true }, set: { _ in }))
+        HomeView(store: .init(initialState: .init(connections: [],
+                                                  connectionStatus: .init(protectionState: .protected(netShield: .random)),
+                                                  vpnConnectionStatus: .connected(.init(location: .fastest,
+                                                                                        features: []))),
+                              reducer: HomeFeature()))
     }
 }

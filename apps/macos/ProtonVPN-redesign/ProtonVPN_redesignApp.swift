@@ -24,6 +24,8 @@ import Home
 import Home_macOS
 import vpncore
 import Logging
+import ComposableArchitecture
+import VPNShared
 
 let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 
@@ -34,9 +36,26 @@ struct ProtonVPNApp: App {
 
     @State private var window: NSWindow?
 
+    let store: StoreOf<AppReducer>
+
+    init() {
+        @Dependency(\.initialStateProvider) var initialStateProvider
+
+        self.store = .init(
+            initialState: initialStateProvider.initialState,
+            reducer: AppReducer()
+                .dependency(\.watchVPNConnectionStatus, WatchAppStateChangesKey.watchVPNConnectionStatusChanges)
+            #if targetEnvironment(simulator)
+                .dependency(\.connectToVPN, SimulatorHelper.shared.connect)
+                .dependency(\.disconnectVPN, SimulatorHelper.shared.disconnect)
+            #endif
+                ._printChanges()
+        )
+    }
+
     var body: some Scene {
         WindowGroup {
-            SideBarView()
+            SideBarView(store: store)
                 .background(WindowAccessor(window: $window)) // get access to the underlying NSWindow
                 .onAppear {
                     NSWindow.allowsAutomaticWindowTabbing = false
@@ -59,6 +78,13 @@ struct ProtonVPNApp: App {
             }
         }
         .commands {
+            CommandGroup(before: .toolbar) {
+                WithViewStore(store, observe: { $0.connectionDetailsVisible }) { store in
+                    Button("Toggle Connection Details") {
+                        store.send(.toggleConnectionDetails)
+                    }
+                }
+                        }
             CommandGroup(replacing: .newItem, addition: { }) // block user from opening multiple windows
             CommandMenu("Custom Menu") {
                 Button("Say Hello") {

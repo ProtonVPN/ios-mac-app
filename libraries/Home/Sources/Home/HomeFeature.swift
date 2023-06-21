@@ -83,7 +83,7 @@ public struct HomeFeature: ReducerProtocol {
     public var body: some ReducerProtocolOf<Self> {
         Reduce { state, action in
             switch action {
-            case let .connect(spec):
+            case .connect(_):
                 return .none // Handled in the app
 
             case let .pin(spec):

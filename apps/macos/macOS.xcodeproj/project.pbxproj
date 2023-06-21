@@ -231,9 +231,11 @@
 		E52B8BB229FBB84B00517FFC /* ch.protonvpn.mac.OpenVPN-Extension.systemextension in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 42EF09DB257A713F00E2EDCA /* ch.protonvpn.mac.OpenVPN-Extension.systemextension */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E52B8BB529FBB84B00517FFC /* ch.protonvpn.mac.WireGuard-Extension.systemextension in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = E93C4F2526A1C1F30006680C /* ch.protonvpn.mac.WireGuard-Extension.systemextension */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E52B8BBC29FBB85F00517FFC /* Modals-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E52B8BBB29FBB85F00517FFC /* Modals-macOS */; };
+		E53CB3AA2A43275E00D58D20 /* InitialStateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53CB3A92A43275E00D58D20 /* InitialStateProvider.swift */; };
 		E53D64C3281169880060C463 /* Modals-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C2281169880060C463 /* Modals-macOS */; };
 		E53D7457291925380006E499 /* FeatureRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E53D7456291925380006E499 /* FeatureRowView.xib */; };
 		E551EB0829AF7C1300B6612D /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0729AF7C1300B6612D /* Assets.swift */; };
+		E552FC652A42F5350058B3D9 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC642A42F5350058B3D9 /* AppReducer.swift */; };
 		E552FC772A430A720058B3D9 /* SideBarButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC722A430A720058B3D9 /* SideBarButtonStyle.swift */; };
 		E552FC782A430A720058B3D9 /* ProfileButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC732A430A720058B3D9 /* ProfileButtonView.swift */; };
 		E552FC792A430A720058B3D9 /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC742A430A720058B3D9 /* SideBarView.swift */; };
@@ -905,9 +907,11 @@
 		E534EA4D2806B6DB00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E534EA4E2806B6DE00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-419"; path = "es-419.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		E534EA4F2806B6E200BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Intents.strings"; sourceTree = "<group>"; };
+		E53CB3A92A43275E00D58D20 /* InitialStateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialStateProvider.swift; sourceTree = "<group>"; };
 		E53D7456291925380006E499 /* FeatureRowView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeatureRowView.xib; sourceTree = "<group>"; };
 		E551EB0629AF7B7B00B6612D /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		E551EB0729AF7C1300B6612D /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
+		E552FC642A42F5350058B3D9 /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
 		E552FC722A430A720058B3D9 /* SideBarButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarButtonStyle.swift; sourceTree = "<group>"; };
 		E552FC732A430A720058B3D9 /* ProfileButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileButtonView.swift; sourceTree = "<group>"; };
 		E552FC742A430A720058B3D9 /* SideBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarView.swift; sourceTree = "<group>"; };
@@ -1723,7 +1727,9 @@
 				E5C3415A29FBBADE00A26614 /* Assets.xcassets */,
 				E5C3415B29FBBADE00A26614 /* Preview Content */,
 				E5C3415D29FBBADE00A26614 /* ProtonVPN_redesignApp.swift */,
+				E53CB3A92A43275E00D58D20 /* InitialStateProvider.swift */,
 				E552FC712A430A720058B3D9 /* SideBar */,
+				E552FC642A42F5350058B3D9 /* AppReducer.swift */,
 				E5C3415E29FBBADE00A26614 /* ProtonVPN_redesign.entitlements */,
 			);
 			path = "ProtonVPN-redesign";
@@ -3781,8 +3787,10 @@
 				E552FC772A430A720058B3D9 /* SideBarButtonStyle.swift in Sources */,
 				E552FC792A430A720058B3D9 /* SideBarView.swift in Sources */,
 				E552FC7B2A430A720058B3D9 /* SideBarItemView.swift in Sources */,
+				E53CB3AA2A43275E00D58D20 /* InitialStateProvider.swift in Sources */,
 				E552FC782A430A720058B3D9 /* ProfileButtonView.swift in Sources */,
 				E552FC7A2A430A720058B3D9 /* SideBarTab.swift in Sources */,
+				E552FC652A42F5350058B3D9 /* AppReducer.swift in Sources */,
 				E5C3416229FBBADE00A26614 /* ProtonVPN_redesignApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
