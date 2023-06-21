@@ -23,7 +23,30 @@ import Theme_macOS
 public struct ConnectionDetailsView: View {
     public init() {}
     public var body: some View {
-        Text("ConnectionDetailsView")
+        HStack(spacing: 0) {
+            Divider()
+                .ignoresSafeArea()
+                .frame(minWidth: 1, maxWidth: 1, maxHeight: .infinity) // the drawn size of the draggable line
+                .background(Color(.border))
+                .padding([.horizontal], 6) // the width of the draggable space, it extends over the drawn view
+                .background(Color(.background))
+                .onHover(perform: { hovering in
+                    if (hovering) {
+                        NSCursor.resizeLeftRight.push()
+                    } else {
+                        NSCursor.pop()
+                    }
+                })
+                .gesture(
+                    DragGesture().onChanged({ value in
+                        print(value) // not implemented, just print it out
+                    })
+                )
+
+            Text("Connection details view")
+                .frame(minWidth: 260, maxHeight: .infinity)
+                .background(Color(.background))
+        }
     }
 }
 
