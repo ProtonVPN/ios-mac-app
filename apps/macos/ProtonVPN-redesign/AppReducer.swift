@@ -40,11 +40,16 @@ struct AppReducer: ReducerProtocol {
             case .home(.connect(let specs)):
                 @Dependency(\.connectToVPN) var connectToVPN
                 connectToVPN(specs)
+//                state.home.vpnConnectionStatus = .connected(specs)
+//                state.home.vpnConnectionStatus = .connecting(specs)
+//                state.home.connectionStatus = .init(protectionState: .protecting(country: "Poland", ip: "192.168.1.0"))
                 return .none
 
             case .home(.disconnect):
                 @Dependency(\.disconnectVPN) var disconnectVPN
                 disconnectVPN()
+//                state.home.vpnConnectionStatus = .disconnected
+//                state.home.connectionStatus = .init(protectionState: .unprotected(country: "Poland", ip: "192.168.1.0"))
                 return .none
 
             case .home:

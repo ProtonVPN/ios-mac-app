@@ -244,6 +244,7 @@
 		E565986828200ADA004F2240 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986728200ADA004F2240 /* LoadingView.swift */; };
 		E565986A2820FECE004F2240 /* WarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E56598692820FECE004F2240 /* WarningView.xib */; };
 		E565986C2820FEDD004F2240 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986B2820FEDD004F2240 /* WarningView.swift */; };
+		E56790E62A45D4A20089CA79 /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = E56790E52A45D4A20089CA79 /* Strings */; };
 		E5772AE429B0B9A90076D824 /* SystemExtensionTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5772AE329B0B9A90076D824 /* SystemExtensionTutorialView.swift */; };
 		E57B263229C3188D00533B7C /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E57B263129C3188D00533B7C /* AVKit.framework */; };
 		E5A4AD102A3B238A00CC91D7 /* Home-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E5A4AD0F2A3B238A00CC91D7 /* Home-macOS */; };
@@ -261,7 +262,6 @@
 		E5C4EF3F29B882C10013ACB2 /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3E29B882C10013ACB2 /* PrimaryButtonStyle.swift */; };
 		E5CCA11829B2057700BDE32B /* VideoTourModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CCA11729B2057700BDE32B /* VideoTourModel.swift */; };
 		E5CF49512A3C603200ACE1CB /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = E5CF49502A3C603200ACE1CB /* Logging */; };
-		E5CF49542A3C653100ACE1CB /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = E5CF49532A3C653100ACE1CB /* CasePaths */; };
 		E5CF79CD29FBBA720072E7EC /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E57B263129C3188D00533B7C /* AVKit.framework */; };
 		E5CFAACE29E92E8300C36735 /* AppTheme+Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CFAACD29E92E8300C36735 /* AppTheme+Icons.swift */; };
 		E5EB08C4281FC4A700F29B20 /* TwoFactorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5EB08C3281FC4A700F29B20 /* TwoFactorView.xib */; };
@@ -1209,13 +1209,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				E52B8BA829FBB7CC00517FFC /* Theme-macOS in Frameworks */,
-				E5CF49542A3C653100ACE1CB /* CasePaths in Frameworks */,
 				E5CF79CD29FBBA720072E7EC /* AVKit.framework in Frameworks */,
 				D54539C72A408E22008B4259 /* Timer in Frameworks */,
 				E5A4AD122A3B239500CC91D7 /* ComposableArchitecture in Frameworks */,
 				E52B8BAF29FBB7F200517FFC /* vpncore.framework in Frameworks */,
 				D54539C22A408AB9008B4259 /* ConnectionDetails in Frameworks */,
 				E5CF49512A3C603200ACE1CB /* Logging in Frameworks */,
+				E56790E62A45D4A20089CA79 /* Strings in Frameworks */,
 				E5A4AD192A3B255D00CC91D7 /* PMLogger in Frameworks */,
 				E5A4AD102A3B238A00CC91D7 /* Home-macOS in Frameworks */,
 				E5A4AD142A3B239F00CC91D7 /* Home in Frameworks */,
@@ -1726,10 +1726,10 @@
 			children = (
 				E5C3415A29FBBADE00A26614 /* Assets.xcassets */,
 				E5C3415B29FBBADE00A26614 /* Preview Content */,
+				E552FC642A42F5350058B3D9 /* AppReducer.swift */,
 				E5C3415D29FBBADE00A26614 /* ProtonVPN_redesignApp.swift */,
 				E53CB3A92A43275E00D58D20 /* InitialStateProvider.swift */,
 				E552FC712A430A720058B3D9 /* SideBar */,
-				E552FC642A42F5350058B3D9 /* AppReducer.swift */,
 				E5C3415E29FBBADE00A26614 /* ProtonVPN_redesign.entitlements */,
 			);
 			path = "ProtonVPN-redesign";
@@ -2985,10 +2985,10 @@
 				E5A4AD132A3B239F00CC91D7 /* Home */,
 				E5A4AD182A3B255D00CC91D7 /* PMLogger */,
 				E5CF49502A3C603200ACE1CB /* Logging */,
-				E5CF49532A3C653100ACE1CB /* CasePaths */,
 				D54539BF2A408A92008B4259 /* ConnectionDetails-macOS */,
 				D54539C12A408AB9008B4259 /* ConnectionDetails */,
 				D54539C62A408E22008B4259 /* Timer */,
+				E56790E52A45D4A20089CA79 /* Strings */,
 			);
 			productName = "ProtonVPN-mac-redesign";
 			productReference = E5DB888A29FAB82B004D6637 /* ProtonVPN-mac-redesign.app */;
@@ -3187,7 +3187,6 @@
 				4C1C07A92A39C937009DE875 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				E5A4AD222A3B369E00CC91D7 /* XCRemoteSwiftPackageReference "swiftui-navigation" */,
 				E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log" */,
-				E5CF49522A3C653100ACE1CB /* XCRemoteSwiftPackageReference "swift-case-paths" */,
 			);
 			productRefGroup = EED534821EEC112000013607 /* Products */;
 			projectDirPath = "";
@@ -5414,14 +5413,6 @@
 				minimumVersion = 1.4.4;
 			};
 		};
-		E5CF49522A3C653100ACE1CB /* XCRemoteSwiftPackageReference "swift-case-paths" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-case-paths.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.14.1;
-			};
-		};
 		E93533D929CAEE2C005E3A59 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sparkle-project/Sparkle";
@@ -5482,6 +5473,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = "Modals-macOS";
 		};
+		E56790E52A45D4A20089CA79 /* Strings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Strings;
+		};
 		E5A4AD0F2A3B238A00CC91D7 /* Home-macOS */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Home-macOS";
@@ -5503,11 +5498,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log" */;
 			productName = Logging;
-		};
-		E5CF49532A3C653100ACE1CB /* CasePaths */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E5CF49522A3C653100ACE1CB /* XCRemoteSwiftPackageReference "swift-case-paths" */;
-			productName = CasePaths;
 		};
 		E93533DA29CAEE2C005E3A59 /* Sparkle */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -29,8 +29,6 @@ import VPNShared
 
 import ComposableArchitecture
 
-#if REDESIGN
-
 struct AppReducer: ReducerProtocol {
     struct State: Equatable {
         public var home: HomeFeature.State
@@ -169,5 +167,3 @@ struct ProtonVPNApp: App {
     }
 }
 // MARK: - End SwiftUI Life cycle
-
-#endif

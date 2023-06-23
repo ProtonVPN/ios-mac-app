@@ -59,21 +59,6 @@ public struct SideBarView: View {
                 case .home:
                     VStack(spacing: 0) {
                         HomeView(store: store.scope(state: \.home, action: AppReducer.Action.home))
-                        WithViewStore(store, observe: { $0.home }) { store in
-                            switch store.state.vpnConnectionStatus {
-                            case .disconnected:
-                                Button("Connect") {
-                                    store.send(.home(.connect(.init(location: .fastest, features: []))))
-                                }
-                            default:
-                                Button("Disconnect") {
-                                    store.send(.home(.disconnect))
-                                }
-                            }
-
-                        }
-                        Text("Connection card")
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
                     .background(Color(.background))
                     WithViewStore(store, observe: { $0.connectionDetailsVisible }) { store in
