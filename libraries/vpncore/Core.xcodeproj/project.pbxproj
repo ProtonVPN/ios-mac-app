@@ -4377,8 +4377,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-clocks.git";
 			requirement = {
-				kind = exactVersion;
-				version = 0.3.0;
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.3.0;
 			};
 		};
 		E5A4AD152A3B251500CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {

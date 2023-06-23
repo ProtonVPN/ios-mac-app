@@ -35,8 +35,32 @@ public struct HomeView: View {
             VStack {
                 ConnectionStatusView(store: store.scope(state: \.connectionStatus,
                                                         action: { .connectionStatusViewAction($0) }))
+                connectButton(viewStore: viewStore)
+
+                Text("Connection card")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .background(Color(.background))
+        }
+    }
+
+    // For development only
+    func connectButton(viewStore: ViewStore<HomeFeature.State, HomeFeature.Action>) -> some View {
+        switch viewStore.vpnConnectionStatus {
+        case .disconnected:
+            return Button("Connect") {
+                viewStore.send(.connect(.init(location: .fastest, features: [])))
+            }
+        case .connected:
+            return Button("Disconnect") {
+                viewStore.send(.disconnect)
+            }
+        case .connecting:
+            return Button("Cancel") {
+                viewStore.send(.disconnect)
+            }
+        default:
+            return Button("Upsupported") { }
         }
     }
 }
