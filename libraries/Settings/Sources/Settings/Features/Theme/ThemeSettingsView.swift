@@ -60,8 +60,7 @@ struct ThemeSettingsView: View {
             VStack(alignment: .center, spacing: .themeSpacing16) {
                 Image(asset: model.asset)
                     .renderingMode(.original)
-                    .frame(.rect(width: 72, height: 130))
-                Text(String(describing: model.colorScheme))
+                Text(model.colorScheme.localizedDescription)
                     .themeFont(.body2())
                     .foregroundColor(Color(.text, .normal))
                 Image(asset: currentValue.wrappedValue == model.colorScheme ? Asset.icCircleCheckFilled : Asset.icCircleEmpty)

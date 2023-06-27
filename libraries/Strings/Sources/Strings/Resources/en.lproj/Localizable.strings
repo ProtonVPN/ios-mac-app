@@ -171,77 +171,78 @@
 
 /* Connection details screen: Info button text, that show more info about given VPN feature (macOS and iOS) [Redesign_2023] */
 "_connection_details_info_button" = "Info";
+
 // MARK: Settings
 
-/* Title at the top of the Settings tab */
+/* Title at the top of the Settings tab [Redesign_2023] */
 "_settings_title" = "Settings";
 
 /* Section Titles */
 
-/* Title of the 'Account' section in the Settings tab */
+/* Title of the 'Account' section in the Settings tab [Redesign_2023] */
 "_settings_section_title_account" = "Account";
-/* Title of the 'Features' section in the Settings tab */
+/* Title of the 'Features' section in the Settings tab [Redesign_2023] */
 "_settings_section_title_features" = "Features";
-/* Title of the 'Connection' section in the Settings tab */
+/* Title of the 'Connection' section in the Settings tab [Redesign_2023] */
 "_settings_section_title_connection" = "Connection";
-/* Title of the 'General' section in the Settings tab */
+/* Title of the 'General' section in the Settings tab [Redesign_2023] */
 "_settings_section_title_general" = "General";
-/* Title of the 'Support' section in the Settings tab */
+/* Title of the 'Support' section in the Settings tab [Redesign_2023] */
 "_settings_section_title_support" = "Support";
-/* Title of the 'Improve Proton' section in the Settings tab */
+/* Title of the 'Improve Proton' section in the Settings tab [Redesign_2023] */
 "_settings_section_title_improve_proton" = "Improve Proton";
 
 /* Cell Titles */
 
-/* Title of the NetShield cell in the Settings tab */
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
 "_settings_title_netshield" = "NetShield";
-/* Title of the NetShield cell in the Settings tab */
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
 "_settings_title_kill_switch" = "Kill Switch";
-/* Title of the NetShield cell in the Settings tab */
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
 "_settings_title_protocol" = "Protocol";
-/* Title of the NetShield cell in the Settings tab */
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
 "_settings_title_vpn_accelerator" = "VPN Accelerator";
-/* Title of the NetShield cell in the Settings tab */
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
 "_settings_title_advanced" = "Advanced settings";
-/* Title of the NetShield cell in the Settings tab */
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
 "_settings_title_theme" = "Theme";
-/* Title of the NetShield cell in the Settings tab */
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
 "_settings_title_beta_access" = "Beta access";
-/* Title of the NetShield cell in the Settings tab */
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
 "_settings_title_widget" = "Widget";
-/* Title of the NetShield cell in the Settings tab */
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
 "_settings_title_support_center" = "Support center";
-/* Title of the NetShield cell in the Settings tab */
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
 "_settings_title_report_issue" = "Report an issue";
-/* Title of the NetShield cell in the Settings tab */
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
 "_settings_title_debug_logs" = "Debug logs";
-/* Title of the NetShield cell in the Settings tab */
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
 "_settings_title_censorship" = "Help us fight censorship";
-/* Title of the NetShield cell in the Settings tab */
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
 "_settings_title_rate" = "Rate Proton VPN";
-/* Title of the NetShield cell in the Settings tab */
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
 "_settings_title_restore_default_settings" = "Restore default settings";
-/* Title of the NetShield cell in the Settings tab */
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
 "_settings_title_sign_out" = "Sign out";
 
-/* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) */
+/* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) [Redesign_2023] */
 "_settings_app_version" = "App Version: %@";
 
 // MARK: Settings Child Features
 
-/* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view */
+/* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
 "_settings_netshield_on" = "On";
-/* Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view */
+/* Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
 "_settings_netshield_off" = "Off";
 
-/* Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view */
+/* Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
 "_settings_killswitch_on" = "On";
-/* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view */
+/* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
 "_settings_killswitch_off" = "Off";
 
-/* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab, and underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme */
+/* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab, and underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme [Redesign_2023] */
 "_settings_theme_auto" = "Auto*";
-/* Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab, and underneath the corresponding option when drilled into the Theme settings view */
+/* Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab, and underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
 "_settings_theme_dark" = "Dark";
-/* Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab, and underneath the corresponding option when drilled into the Theme settings view */
+/* Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab, and underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
 "_settings_theme_light" = "Light";

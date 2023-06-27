@@ -26,16 +26,20 @@ protocol LocalizedStringConvertible {
 }
 
 struct SettingsCell: View {
-    private let icon: ImageAsset
+    private let icon: Image
     private let accessory: Accessory
     private let content: Content
 
     @ScaledMetric private var iconRadius: CGFloat = 24
 
-    init(icon: ImageAsset, content: Content, accessory: Accessory) {
+    init(icon: Image, content: Content, accessory: Accessory) {
         self.icon = icon
         self.content = content
         self.accessory = accessory
+    }
+
+    init(icon: Theme.ImageAsset, content: Content, accessory: Accessory) {
+        self.init(icon: icon.swiftUIImage, content: content, accessory: accessory)
     }
 
     var body: some View {
@@ -44,13 +48,11 @@ struct SettingsCell: View {
             contentView
             accessory
         }
-        .font(.body2())
         .background(Color(.background, .normal))
-        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: -.themeSpacing8)) // remove list padding
     }
 
     @ViewBuilder private var iconView: some View {
-        Image(asset: icon)
+        icon
             .resizable().frame(.square(iconRadius * content.iconRadiusMultiplier))
             .foregroundColor(Color(.icon, .normal))
             .padding(EdgeInsets(top: .themeSpacing4, leading: -.themeSpacing8, bottom: .themeSpacing4, trailing: .themeSpacing4))
@@ -62,10 +64,13 @@ struct SettingsCell: View {
             switch content {
             case .standard(let title, let value):
                 Text(title)
+                    .themeFont(.body2())
                     .foregroundColor(Color(.text, .normal))
                 Spacer()
                 if let value {
-                    Text(value).foregroundColor(Color(.text, .weak))
+                    Text(value)
+                        .themeFont(.body2())
+                        .foregroundColor(Color(.text, .weak))
                 }
 
             case .multiline(let title, let subtitle):
@@ -73,10 +78,10 @@ struct SettingsCell: View {
                     Text(title)
                         .foregroundColor(Color(.text, .normal))
                     Text(subtitle)
-                        .font(.caption)
+                        .themeFont(.caption())
                         .foregroundColor(Color(.text, .weak))
                 }
-                .padding(EdgeInsets(top: .themeSpacing4, leading: 0, bottom: .themeSpacing4, trailing: 0))
+                .padding([.top, .bottom], .themeSpacing4)
                 Spacer()
             }
         }
@@ -101,24 +106,24 @@ struct SettingsCell_Previews: PreviewProvider {
         List {
             Section {
                 SettingsCell(
-                    icon: Asset.avatar,
+                    icon: Asset.avatar.swiftUIImage,
                     content: .multiline(title: "Eric Norbert", subtitle: "eric.norbert@proton.me"),
                     accessory: .disclosure
                 )
             }
             Section {
                 SettingsCell(
-                    icon: Asset.icNetShield,
+                    icon: Theme.Asset.icGift,
                     content: .standard(title: "NetShield", value: NetShieldType.on.localizedDescription),
                     accessory: .disclosure
                 )
                 SettingsCell(
-                    icon: Asset.icLifeRing,
+                    icon: Theme.Asset.icLifeRing,
                     content: .standard(title: "Support Center", value: NetShieldType.on.localizedDescription),
                     accessory: .externalLink
                 )
                 SettingsCell(
-                    icon: Asset.icArrowInToRectangle,
+                    icon: Theme.Asset.icArrowInToRectangle,
                     content: .standard(title: "Sign Out", value: nil),
                     accessory: .none
                 )
