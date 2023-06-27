@@ -24,10 +24,6 @@ import Strings
 import Theme
 import Theme_iOS
 
-extension EdgeInsets {
-    static var zero = EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
-}
-
 public struct SettingsView: View {
     typealias NavigationStore = Store<
         PresentationState<SettingsFeature.Destination.State>,
@@ -41,33 +37,33 @@ public struct SettingsView: View {
     }
 
     struct ChildFeature {
-        let icon: ImageAsset
+        let icon: Theme.ImageAsset
         let title: String
         let accessory: Accessory.Style
     }
 
     let features = (
-        netShield: ChildFeature(icon: Asset.icNetShield, title: Localizable.settingsTitleNetshield, accessory: .disclosure),
-        killSwitch: ChildFeature(icon: Asset.icKillswitch, title: Localizable.settingsTitleKillSwitch, accessory: .disclosure),
+        netShield: ChildFeature(icon: Theme.Asset.icNetshield, title: Localizable.settingsTitleNetshield, accessory: .disclosure),
+        killSwitch: ChildFeature(icon: Theme.Asset.icKillswitch, title: Localizable.settingsTitleKillSwitch, accessory: .disclosure),
 
-        vpnProtocol: ChildFeature(icon: Asset.icServers, title: Localizable.settingsTitleProtocol, accessory: .disclosure),
-        vpnAccelerator: ChildFeature(icon: Asset.icRocket, title: Localizable.settingsTitleVpnAccelerator, accessory: .disclosure),
-        advanced: ChildFeature(icon: Asset.icSliders, title: Localizable.settingsTitleAdvanced, accessory: .disclosure),
+        vpnProtocol: ChildFeature(icon: Theme.Asset.icServers, title: Localizable.settingsTitleProtocol, accessory: .disclosure),
+        vpnAccelerator: ChildFeature(icon: Theme.Asset.icRocket, title: Localizable.settingsTitleVpnAccelerator, accessory: .disclosure),
+        advanced: ChildFeature(icon: Theme.Asset.icSliders, title: Localizable.settingsTitleAdvanced, accessory: .disclosure),
 
-        theme: ChildFeature(icon: Asset.icCircleHalfFilled, title: Localizable.settingsTitleTheme, accessory: .disclosure),
-        betaAccess: ChildFeature(icon: Asset.icKeySkeleton, title: Localizable.settingsTitleBetaAccess, accessory: .disclosure),
-        widget: ChildFeature(icon: Asset.icGrid, title: Localizable.settingsTitleWidget, accessory: .disclosure),
+        theme: ChildFeature(icon: Theme.Asset.icCircleHalfFilled, title: Localizable.settingsTitleTheme, accessory: .disclosure),
+        betaAccess: ChildFeature(icon: Theme.Asset.icKeySkeleton, title: Localizable.settingsTitleBetaAccess, accessory: .disclosure),
+        widget: ChildFeature(icon: Theme.Asset.icGrid2, title: Localizable.settingsTitleWidget, accessory: .disclosure),
 
-        supportCenter: ChildFeature(icon: Asset.icLifeRing, title: Localizable.settingsTitleSupportCenter, accessory: .externalLink),
-        reportAnIssue: ChildFeature(icon: Asset.icBug, title: Localizable.settingsTitleReportIssue, accessory: .disclosure),
-        debugLogs: ChildFeature(icon: Asset.icCode, title: Localizable.settingsTitleDebugLogs, accessory: .disclosure),
+        supportCenter: ChildFeature(icon: Theme.Asset.icLifeRing, title: Localizable.settingsTitleSupportCenter, accessory: .externalLink),
+        reportAnIssue: ChildFeature(icon: Theme.Asset.icBug, title: Localizable.settingsTitleReportIssue, accessory: .disclosure),
+        debugLogs: ChildFeature(icon: Theme.Asset.icCode, title: Localizable.settingsTitleDebugLogs, accessory: .disclosure),
 
-        censorship: ChildFeature(icon: Asset.icUsers, title: Localizable.settingsTitleCensorship, accessory: .externalLink),
-        rateProtonVPN: ChildFeature(icon: Asset.icStar, title: Localizable.settingsTitleRate, accessory: .disclosure),
+        censorship: ChildFeature(icon: Theme.Asset.icUsers, title: Localizable.settingsTitleCensorship, accessory: .externalLink),
+        rateProtonVPN: ChildFeature(icon: Theme.Asset.icStar, title: Localizable.settingsTitleRate, accessory: .disclosure),
 
-        restoreDefault: ChildFeature(icon: Asset.icArrowRotateRight, title: Localizable.settingsTitleRestoreDefaultSettings, accessory: .none),
+        restoreDefault: ChildFeature(icon: Theme.Asset.icArrowRotateRight, title: Localizable.settingsTitleRestoreDefaultSettings, accessory: .none),
 
-        signOut: ChildFeature(icon: Asset.icArrowInToRectangle, title: Localizable.settingsTitleSignOut, accessory: .none)
+        signOut: ChildFeature(icon: Theme.Asset.icArrowInToRectangle, title: Localizable.settingsTitleSignOut, accessory: .none)
     )
 
     private var destinationStore: NavigationStore {
@@ -77,7 +73,7 @@ public struct SettingsView: View {
     private var accountSection: some View {
         section(named: Localizable.settingsSectionTitleAccount) {
             SettingsCell(
-                icon: Asset.avatar,
+                icon: Asset.avatar.swiftUIImage,
                 content: .multiline(title: "Eric Norbert", subtitle: "eric.norbert@proton.me"),
                 accessory: .disclosure
             )
@@ -96,7 +92,7 @@ public struct SettingsView: View {
                     label: { SettingsCell(feature: features.netShield, value: viewStore.state) }
                 )
             }
-            WithViewStore(store, observe: { $0.killSwitch}) { viewStore in
+            WithViewStore(store, observe: { $0.killSwitch }) { viewStore in
                 CustomNavigationLinkStore(
                     self.destinationStore,
                     state: /SettingsFeature.Destination.State.killSwitch,
@@ -192,7 +188,7 @@ public struct SettingsView: View {
 
     private func sectionHeader(named name: String) -> some View {
         Text(name)
-            .font(.body2())
+            .themeFont(.body2())
             .foregroundColor(Color(.text, .weak))
             .textCase(nil) // Disable upper-casing section titles (on by default)
             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: .themeSpacing8, trailing: 0)) // Unindent section title
@@ -209,7 +205,7 @@ public struct SettingsView: View {
                     .multilineTextAlignment(.center)
                 Spacer()
             }
-            .padding(EdgeInsets(top: 0, leading: 0, bottom: .themeSpacing32, trailing: 0))
+            .padding(.bottom, .themeSpacing32)
         }
     }
 

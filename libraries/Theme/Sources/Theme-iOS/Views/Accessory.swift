@@ -22,7 +22,7 @@ import Theme
 
 public struct Accessory: View {
     private let style: Style
-    @ScaledMetric private var radius: CGFloat = 16
+    @ScaledMetric private var radius: CGFloat = 24
 
     public init(style: Style) {
         self.style = style
