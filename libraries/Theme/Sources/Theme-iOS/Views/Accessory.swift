@@ -22,43 +22,91 @@ import Theme
 
 public struct Accessory: View {
     private let style: Style
-    @ScaledMetric private var radius: CGFloat = 24
+    @ScaledMetric private var radius: CGFloat = .themeRadius24
 
     public init(style: Style) {
         self.style = style
     }
 
     public var body: some View {
-        if let asset = style.imageAsset {
-            Image(asset: asset)
-                .resizable().frame(.square(radius))
-                .foregroundColor(Color(.icon, .weak))
-        }
+        style.image?
+            .resizable().frame(.square(radius))
+            .foregroundColor(style.color)
     }
 
     public enum Style {
         case disclosure
         case externalLink
+        case checkmark(isActive: Bool)
         case none
 
-        var imageAsset: ImageAsset? {
+        var image: Image? {
             switch self {
-            case .disclosure: return Asset.icChevronRight
-            case .externalLink: return Asset.icArrowOutSquare
-            case .none: return nil
+            case .disclosure:
+                return Image(asset: Asset.icChevronRight)
+            case .externalLink:
+                return Image(asset: Asset.icArrowOutSquare)
+            case .checkmark(let isActive):
+                return Image(asset: isActive ? Asset.icCheckmarkCircleFilled : Asset.icCheckmarkCircle)
+            case .none:
+                return nil
+            }
+        }
+
+        var color: Color? {
+            switch self {
+            case .checkmark(let isActive):
+                return .init(.icon, isActive ? .interactive : .weak)
+            default:
+                return .init(.icon, .weak)
             }
         }
     }
 
-    public static var none: Self {
-        Self.init(style: .none)
+    public static var none: Accessory {
+        Accessory(style: .none)
     }
 
-    public static var disclosure: Self {
-        Self.init(style: .disclosure)
+    public static func checkmark(isActive: Bool) -> Accessory {
+        Accessory(style: .checkmark(isActive: isActive))
     }
 
-    public static var externalLink: Self {
-        Self.init(style: .externalLink)
+    public static var disclosure: Accessory {
+        Accessory(style: .disclosure)
+    }
+
+    public static var externalLink: Accessory {
+        Accessory(style: .externalLink)
+    }
+}
+
+struct Accessory_Previews: PreviewProvider {
+
+    struct Cell: View {
+        let title: String
+        let accessoryStyle: Accessory.Style
+
+        var body: some View {
+            HStack {
+                Text(title)
+                Spacer()
+                Accessory(style: accessoryStyle)
+            }
+        }
+    }
+
+    static var previews: some View {
+        List {
+            Section("Static Accessories") {
+                Cell(title: "Drillable Item", accessoryStyle: .disclosure)
+                Cell(title: "Link", accessoryStyle: .externalLink)
+                Cell(title: "Other", accessoryStyle: .none)
+            }
+            Section("Checkmarks") {
+                Cell(title: "Not Checked", accessoryStyle: .checkmark(isActive: false))
+                Cell(title: "Checked", accessoryStyle: .checkmark(isActive: true))
+                Cell(title: "Another Not Checked", accessoryStyle: .checkmark(isActive: false))
+            }
+        }
     }
 }

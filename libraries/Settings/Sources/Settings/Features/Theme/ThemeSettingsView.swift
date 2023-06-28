@@ -22,6 +22,7 @@ import ComposableArchitecture
 
 import Strings
 import Theme
+import Theme_iOS
 
 // TODO: Nice UI according to designs
 struct ThemeSettingsView: View {
@@ -63,8 +64,8 @@ struct ThemeSettingsView: View {
                 Text(model.colorScheme.localizedDescription)
                     .themeFont(.body2())
                     .foregroundColor(Color(.text, .normal))
-                // Image(asset: currentValue.wrappedValue == model.colorScheme ? Asset.icCircleCheckFilled : Asset.icCircleEmpty)
-                    //.renderingMode(.original)
+                Accessory(style: .checkmark(isActive: currentValue.wrappedValue == model.colorScheme))
+
             }
         }.onTapGesture { currentValue.wrappedValue = model.colorScheme }
     }

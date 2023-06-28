@@ -30,7 +30,7 @@ struct SettingsCell: View {
     private let accessory: Accessory
     private let content: Content
 
-    @ScaledMetric private var iconRadius: CGFloat = 24
+    @ScaledMetric private var iconRadius: CGFloat = .themeRadius24
 
     init(icon: Image, content: Content, accessory: Accessory) {
         self.icon = icon
