@@ -63,8 +63,8 @@ struct ThemeSettingsView: View {
                 Text(model.colorScheme.localizedDescription)
                     .themeFont(.body2())
                     .foregroundColor(Color(.text, .normal))
-                Image(asset: currentValue.wrappedValue == model.colorScheme ? Asset.icCircleCheckFilled : Asset.icCircleEmpty)
-                    .renderingMode(.original)
+                // Image(asset: currentValue.wrappedValue == model.colorScheme ? Asset.icCircleCheckFilled : Asset.icCircleEmpty)
+                    //.renderingMode(.original)
             }
         }.onTapGesture { currentValue.wrappedValue = model.colorScheme }
     }
