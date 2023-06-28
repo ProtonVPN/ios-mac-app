@@ -51,11 +51,11 @@ enum SideBarTab: Hashable, CaseIterable {
     var image: SwiftUI.Image {
         switch self {
         case .home:
-            return Asset.icHouse.swiftUIImage
+            return Theme.Asset.icHouse.swiftUIImage
         case .countries:
-            return Asset.icEarth.swiftUIImage
+            return Theme.Asset.icEarth.swiftUIImage
         case .settings:
-            return Asset.icCogWheel.swiftUIImage
+            return Theme.Asset.icCogWheel.swiftUIImage
         }
     }
 }

@@ -41,15 +41,15 @@ import Logging
 import PMLogger
 import VPNShared
 
-let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
+// public let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 
-@NSApplicationMain
+// @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
-    @IBOutlet weak var protonVpnMenu: ProtonVpnMenuController!
-    @IBOutlet weak var profilesMenu: ProfilesMenuController!
-    @IBOutlet weak var helpMenu: HelpMenuController!
-    @IBOutlet weak var statusMenu: StatusMenuWindowController!
+//    @IBOutlet weak var protonVpnMenu: ProtonVpnMenuController!
+//    @IBOutlet weak var profilesMenu: ProfilesMenuController!
+//    @IBOutlet weak var helpMenu: HelpMenuController!
+//    @IBOutlet weak var statusMenu: StatusMenuWindowController!
     
     fileprivate let container = DependencyContainer()
     lazy var navigationService = container.makeNavigationService()
@@ -78,11 +78,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             AppLaunchRoutine.execute(propertiesManager: self.propertiesManager)
 
-            self.protonVpnMenu.update(with: self.container.makeProtonVpnMenuViewModel())
-            self.profilesMenu.update(with: self.container.makeProfilesMenuViewModel())
-            self.helpMenu.update(with: self.container.makeHelpMenuViewModel())
-            self.statusMenu.update(with: self.container.makeStatusMenuWindowModel())
-            self.container.makeWindowService().setStatusMenuWindowController(self.statusMenu)
+//            self.protonVpnMenu.update(with: self.container.makeProtonVpnMenuViewModel())
+//            self.profilesMenu.update(with: self.container.makeProfilesMenuViewModel())
+//            self.helpMenu.update(with: self.container.makeHelpMenuViewModel())
+//            self.statusMenu.update(with: self.container.makeStatusMenuWindowModel())
+//            self.container.makeWindowService().setStatusMenuWindowController(self.statusMenu)
             self.notificationManager = self.container.makeNotificationManager()
             self.container.makeMaintenanceManagerHelper().startMaintenanceManager()
             _ = self.container.makeUpdateManager() // Load update manager so it has a chance to update xml url

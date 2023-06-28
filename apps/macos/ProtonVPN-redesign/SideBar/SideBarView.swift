@@ -80,7 +80,7 @@ public struct SideBarView: View {
                 Button(action: {
                     toggleSidebar()
                 }, label: {
-                    Asset.icSidePanelLeft.swiftUIImage
+                    Theme.Asset.icSidePanelLeft.swiftUIImage
                         .resizable()
                         .foregroundColor(Color(.text, .weak))
                         .frame(width: 16, height: 16)
