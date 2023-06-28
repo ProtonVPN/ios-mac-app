@@ -33,6 +33,8 @@ struct ProtonVPNApp: App {
 
     @Environment(\.scenePhase) var scenePhase
 
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     @State private var window: NSWindow?
 
     let store: StoreOf<AppReducer>

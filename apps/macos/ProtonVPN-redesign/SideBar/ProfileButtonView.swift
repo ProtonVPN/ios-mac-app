@@ -21,7 +21,7 @@ import Theme
 
 struct ProfileButtonView: View {
     var body: some View {
-        Asset.icUserCircle.swiftUIImage
+        Theme.Asset.icUserCircle.swiftUIImage
             .resizable()
             .frame(width: 16, height: 16)
             .tint(Color(.text))
