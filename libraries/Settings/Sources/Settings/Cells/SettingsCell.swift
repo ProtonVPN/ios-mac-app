@@ -48,14 +48,13 @@ struct SettingsCell: View {
             contentView
             accessory
         }
-        .background(Color(.background, .normal))
     }
 
     @ViewBuilder private var iconView: some View {
         icon
             .resizable().frame(.square(iconRadius * content.iconRadiusMultiplier))
             .foregroundColor(Color(.icon, .normal))
-            .padding(EdgeInsets(top: .themeSpacing4, leading: -.themeSpacing8, bottom: .themeSpacing4, trailing: .themeSpacing4))
+            .padding([.all], .themeSpacing4)
     }
 
     @ViewBuilder
