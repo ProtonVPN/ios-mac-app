@@ -46,15 +46,21 @@ struct SettingsCell: View {
         HStack(alignment: .center, spacing: .themeSpacing8) {
             iconView
             contentView
-            accessory
+            accessoryView
         }
+        //.listRowBackground(Color(.background, .warning))
     }
 
-    @ViewBuilder private var iconView: some View {
+    private var accessoryView: some View {
+        accessory
+            .padding(.trailing, -.themeSpacing4)
+    }
+
+    private var iconView: some View {
         icon
             .resizable().frame(.square(iconRadius * content.iconRadiusMultiplier))
             .foregroundColor(Color(.icon, .normal))
-            .padding([.all], .themeSpacing4)
+            .padding([.top, .bottom, .trailing], .themeSpacing4)
     }
 
     @ViewBuilder
