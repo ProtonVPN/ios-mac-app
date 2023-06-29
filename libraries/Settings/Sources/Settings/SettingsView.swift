@@ -155,21 +155,25 @@ public struct SettingsView: View {
         }
     }
 
+    private var content: some View {
+        List {
+            accountSection
+            featuresSection
+            connectionSection
+            generalSection
+            supportSection
+            improveProtonSection
+            restoreDefaultsSection
+            signOutSection
+            Section(footer: footerView) { EmptyView() }
+        }
+    }
+
     public var body: some View {
         NavigationView {
-            VStack {
-                List {
-                    accountSection
-                    featuresSection
-                    connectionSection
-                    generalSection
-                    supportSection
-                    improveProtonSection
-                    restoreDefaultsSection
-                    signOutSection
-                    Section(footer: footerView) { EmptyView() }
-                }
-                .listStyle(InsetGroupedListStyle())
+            ZStack {
+                Color(.background, .strong).ignoresSafeArea()
+                content.hidingScrollBackground
             }
             .navigationBarTitleDisplayMode(.large)
             .navigationTitle(Localizable.settingsTitle)

@@ -1,3 +1,3 @@
 # Settings
 
-A description of this package.
+The settings view of the ProtonVPN app, and its sub-setting views.
