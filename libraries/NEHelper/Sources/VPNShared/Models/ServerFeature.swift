@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Ergonomics
 
 public struct ServerFeature: OptionSet {
 
@@ -43,17 +44,5 @@ public struct ServerFeature: OptionSet {
 
     public init(rawValue: Int) {
         self.rawValue = rawValue
-    }
-}
-
-// todo: Think where to move this code. Atm it's a duplicate from Theme module.
-private extension OptionSet where RawValue == Int {
-    init(bitPosition: Int) {
-        assert(0 <= bitPosition && bitPosition < Int.bitWidth)
-        self = Self(rawValue: 1 << bitPosition)
-    }
-
-    static func + (left: Self, right: Self) -> Self {
-        return left.union(right)
     }
 }

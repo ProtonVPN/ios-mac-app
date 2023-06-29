@@ -19,6 +19,7 @@
 import Foundation
 import Ergonomics
 import SwiftUI
+import Ergonomics
 
 public enum ColorScheme {
     case light
