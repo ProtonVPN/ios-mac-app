@@ -16,6 +16,7 @@ let package = Package(
         .library(name: "VPNSharedTesting", targets: ["VPNSharedTesting"]),
     ],
     dependencies: [
+        .package(path: "../Ergonomics"),
         .package(path: "../Timer"),
         .package(path: "../PMLogger"),
         .package(path: "../LocalFeatureFlags"),
@@ -27,6 +28,7 @@ let package = Package(
         .target(
             name: "VPNShared",
             dependencies: [
+                .product(name: "Ergonomics", package: "Ergonomics"),
                 .product(name: "Timer", package: "Timer"),
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "PMLogger", package: "PMLogger"),
