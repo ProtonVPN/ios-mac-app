@@ -144,11 +144,15 @@ class NavigationService {
             showLogIn(initialError: loginError)
         }
     }
+
+    func loginViewModel() -> LoginViewModel {
+        LoginViewModel(factory: factory)
+    }
     
     private func showLogIn(initialError: String? = nil) {
         appHasPresented = true
         
-        let viewModel = LoginViewModel(factory: factory)
+        let viewModel = loginViewModel()
         viewModel.initialError = initialError
         windowService.showLogin(viewModel: viewModel)
         NSApp.activate(ignoringOtherApps: true)

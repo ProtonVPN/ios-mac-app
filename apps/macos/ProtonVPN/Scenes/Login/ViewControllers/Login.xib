@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -55,6 +55,9 @@
                         </secureTextField>
                         <textField verticalHuggingPriority="750" contentType="username" translatesAutoresizingMaskIntoConstraints="NO" id="L0d-AC-N2e" customClass="TextFieldWithFocus" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="30" y="426" width="280" height="22"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="280" id="vEC-Lg-Xhb"/>
+                            </constraints>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Z83-RI-Nnd">
                                 <font key="font" metaFont="menu" size="14"/>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -141,6 +144,7 @@
                         </customView>
                     </subviews>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="Mvc-5H-vVI" secondAttribute="bottom" constant="62" id="4sD-1a-fPc"/>
                         <constraint firstItem="rxN-J0-rur" firstAttribute="centerY" secondItem="AUK-pM-3uL" secondAttribute="centerY" id="6iO-Qv-TjH"/>
                         <constraint firstAttribute="bottom" secondItem="doA-fK-3JY" secondAttribute="bottom" constant="136" id="7Qq-te-s4f"/>
                         <constraint firstItem="FhT-rA-7Im" firstAttribute="leading" secondItem="1Vt-py-EJy" secondAttribute="trailing" constant="5" id="7mw-aU-jiO"/>
@@ -164,6 +168,7 @@
                         <constraint firstItem="aw7-qm-KCg" firstAttribute="trailing" secondItem="L0d-AC-N2e" secondAttribute="trailing" id="pU1-s6-Zq9"/>
                         <constraint firstItem="d4i-Va-ju2" firstAttribute="leading" secondItem="sIO-81-jPa" secondAttribute="trailing" constant="4" id="pcI-mb-dqa"/>
                         <constraint firstItem="rxN-J0-rur" firstAttribute="leading" secondItem="dhf-WW-VSQ" secondAttribute="leading" id="qDY-6g-qgs"/>
+                        <constraint firstItem="doA-fK-3JY" firstAttribute="top" secondItem="Oat-9Y-92S" secondAttribute="bottom" constant="216" id="quI-lh-U7r"/>
                         <constraint firstItem="FhT-rA-7Im" firstAttribute="centerY" secondItem="Oat-9Y-92S" secondAttribute="centerY" id="rE6-pk-GEh"/>
                         <constraint firstItem="dhf-WW-VSQ" firstAttribute="trailing" secondItem="FhT-rA-7Im" secondAttribute="trailing" id="sfn-b2-xtR"/>
                         <constraint firstItem="sIO-81-jPa" firstAttribute="top" secondItem="doA-fK-3JY" secondAttribute="bottom" constant="24" id="w49-BC-M9Z"/>
@@ -194,6 +199,6 @@
         </customView>
     </objects>
     <resources>
-        <image name="VPNWordmarkNoBackground" width="1676" height="356"/>
+        <image name="VPNWordmarkNoBackground" width="220" height="58"/>
     </resources>
 </document>
