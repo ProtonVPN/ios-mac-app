@@ -30,6 +30,9 @@ public struct SettingsView: View {
         PresentationAction<SettingsFeature.Destination.Action>
     >
 
+    // Remove default leading indentation and add padding above and below the header
+    private let sectionHeaderInsets = EdgeInsets(top: .themeSpacing12, leading: 0, bottom: .themeSpacing12, trailing: 0)
+
     let store: StoreOf<SettingsFeature>
 
     public init(store: StoreOf<SettingsFeature>) {
@@ -108,7 +111,7 @@ public struct SettingsView: View {
     private var connectionSection: some View {
         section(named: Localizable.settingsSectionTitleConnection) {
             SettingsCell(feature: features.vpnProtocol, value: nil)
-            SettingsCell(feature: features.vpnAccelerator, value: nil)
+            SettingsCell(feature: features.vpnAccelerator, value: NetShieldSettingsFeature.State.on)
             SettingsCell(feature: features.advanced, value: nil)
         }
     }
@@ -125,6 +128,8 @@ public struct SettingsView: View {
                     label: { SettingsCell(feature: features.theme, value: viewStore.state) }
                 )
             }
+            SettingsCell(feature: features.betaAccess, value: nil)
+            SettingsCell(feature: features.widget, value: nil)
         }
     }
 
@@ -166,7 +171,7 @@ public struct SettingsView: View {
             restoreDefaultsSection
             signOutSection
             Section(footer: footerView) { EmptyView() }
-        }
+        }.padding(.top, .themeSpacing16)
     }
 
     public var body: some View {
@@ -185,9 +190,12 @@ public struct SettingsView: View {
     private func section(named name: String? = nil, @ViewBuilder content: @escaping () -> some View) -> some View {
         if let name {
             Section(content: content, header: { sectionHeader(named: name) })
+                .listRowBackground(Color(.background, .normal))
         } else {
             Section(content: content)
+                .listRowBackground(Color(.background, .normal))
         }
+        // List row background must be applied to sections instead of at the cell level because navigationlinks wrap the cell in a Z/HStack
     }
 
     private func sectionHeader(named name: String) -> some View {
@@ -195,7 +203,7 @@ public struct SettingsView: View {
             .themeFont(.body2())
             .foregroundColor(Color(.text, .weak))
             .textCase(nil) // Disable upper-casing section titles (on by default)
-            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: .themeSpacing8, trailing: 0)) // Unindent section title
+            .listRowInsets(sectionHeaderInsets)
     }
 
     @ViewBuilder

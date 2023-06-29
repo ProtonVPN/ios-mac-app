@@ -54,21 +54,18 @@ public struct CustomNavigationLinkStore<
     }
 
     public var body: some View {
-        Button(action: onTap) {
-            ZStack {
-                label()
-                NavigationLinkStore(
-                    store,
-                    state: toDestinationState,
-                    action: fromDestinationAction,
-                    onTap: { },
-                    destination: destination,
-                    label: { EmptyView() }
-                )
-                .frame(.square(0))
-                .opacity(0)
-            }
-        }
-        .buttonStyle(.plain)
+        ZStack {
+            label()
+            NavigationLinkStore(
+                store,
+                state: toDestinationState,
+                action: fromDestinationAction,
+                onTap: { },
+                destination: destination,
+                label: { EmptyView() }
+            )
+            .frame(.square(0))
+            .opacity(0)
+        }.onTapGesture { onTap() }
     }
 }
