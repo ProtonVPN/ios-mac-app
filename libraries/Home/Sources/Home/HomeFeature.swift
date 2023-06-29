@@ -87,8 +87,25 @@ public struct HomeFeature: ReducerProtocol {
     public var body: some ReducerProtocolOf<Self> {
         Reduce { state, action in
             switch action {
-            case .connect(_):
-                return .none // Handled in the app
+            case let .connect(spec):
+                var pinned = false
+
+                if let index = state.connections.firstIndex(where: {
+                    $0.connection == spec
+                }) {
+                    pinned = state.connections[index].pinned
+                    state.connections.remove(at: index)
+                }
+                let recent = RecentConnection(
+                    pinned: pinned,
+                    underMaintenance: false,
+                    connectionDate: .now,
+                    connection: spec
+                )
+                state.connections.insert(recent, at: 0)
+                state.trimConnections()
+
+                return .none // Actual connection is handled in the app
 
             case let .pin(spec):
                 guard let index = state.connections.firstIndex(where: {
