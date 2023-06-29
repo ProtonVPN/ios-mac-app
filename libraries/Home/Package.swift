@@ -27,7 +27,7 @@ let package = Package(
         .package(path: "../Ergonomics"),
         .package(
             url: "https://github.com/pointfreeco/swift-composable-architecture",
-            from: "0.54.1"
+            from: "0.55.0"
         ),
         .package(
             url: "https://github.com/pointfreeco/swift-case-paths",

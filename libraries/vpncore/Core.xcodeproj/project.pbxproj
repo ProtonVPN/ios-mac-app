@@ -199,6 +199,7 @@
 		D523F11724B759A5007DB086 /* StringUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523F11524B759A5007DB086 /* StringUrl.swift */; };
 		D52585272507D4DD00657B80 /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52585262507D4DD00657B80 /* FeatureFlags.swift */; };
 		D52585282507D4DD00657B80 /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52585262507D4DD00657B80 /* FeatureFlags.swift */; };
+		D5391F172A4D4ABE0089D2F7 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = D5391F162A4D4ABE0089D2F7 /* OrderedCollections */; };
 		D54539DC2A41F1D5008B4259 /* DisconnectVPN.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54539D92A41F1D4008B4259 /* DisconnectVPN.swift */; };
 		D54539DD2A41F1D5008B4259 /* DisconnectVPN.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54539D92A41F1D4008B4259 /* DisconnectVPN.swift */; };
 		D54539DE2A41F1D5008B4259 /* WatchVPNConnectionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54539DA2A41F1D5008B4259 /* WatchVPNConnectionStatus.swift */; };
@@ -1205,6 +1206,7 @@
 				D5F65F9A28A14C7C0062CF85 /* Timer in Frameworks */,
 				D5A3C34628D3768C00D69CD5 /* PMLogger in Frameworks */,
 				E5C8A2662A3C4C6800290723 /* IdentifiedCollections in Frameworks */,
+				D5391F172A4D4ABE0089D2F7 /* OrderedCollections in Frameworks */,
 				179F144D89241E7160EFD846 /* Pods_Core_vpncore_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2373,6 +2375,7 @@
 				E582CC152A13949900C91B64 /* Theme-iOS */,
 				E5C8A2632A3C4C5500290723 /* Dependencies */,
 				E5C8A2652A3C4C6800290723 /* IdentifiedCollections */,
+				D5391F162A4D4ABE0089D2F7 /* OrderedCollections */,
 			);
 			productName = "vpncore-ios";
 			productReference = E1B5F5D821B68ABD00B558B0 /* vpncore.framework */;
@@ -2530,6 +2533,7 @@
 				E5A4AD1A2A3B299300CC91D7 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				E5A4AD1D2A3B353D00CC91D7 /* XCRemoteSwiftPackageReference "swiftui-navigation" */,
 				E5A4AD272A3B470900CC91D7 /* XCRemoteSwiftPackageReference "swift-identified-collections" */,
+				D5391F152A4D4ABE0089D2F7 /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			productRefGroup = E1B5F5D921B68ABD00B558B0 /* Products */;
 			projectDirPath = "";
@@ -4373,6 +4377,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		D5391F152A4D4ABE0089D2F7 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.4;
+			};
+		};
 		E58D06402A0B8B1C002A896C /* XCRemoteSwiftPackageReference "swift-clocks" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-clocks.git";
@@ -4443,6 +4455,11 @@
 		D416C411CC859B3D18ABBE36 /* VPNShared */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = VPNShared;
+		};
+		D5391F162A4D4ABE0089D2F7 /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D5391F152A4D4ABE0089D2F7 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
 		};
 		D5A3C34528D3768C00D69CD5 /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;

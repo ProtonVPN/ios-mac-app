@@ -89,6 +89,7 @@ struct AppReducer: ReducerProtocol {
     }
 }
 
+#if REDESIGN
 @main
 struct ProtonVPNApp: App {
     /// This delegates the app lifecycle events to the old `AppDelegate`. Once we have a working redesign we can start moving away from `AppDelegate`
@@ -166,4 +167,5 @@ struct ProtonVPNApp: App {
         }
     }
 }
+#endif
 // MARK: - End SwiftUI Life cycle
