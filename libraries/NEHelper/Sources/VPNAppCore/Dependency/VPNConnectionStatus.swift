@@ -23,15 +23,35 @@ import Foundation
 public enum VPNConnectionStatus: Equatable {
 
     case disconnected
+    
+    case connected(ConnectionSpec, VPNConnectionActual?)
 
-    case connected(ConnectionSpec)
+    case connecting(ConnectionSpec, VPNConnectionActual?)
 
-    case connecting(ConnectionSpec)
+    case loadingConnectionInfo(ConnectionSpec, VPNConnectionActual?)
 
-    case loadingConnectionInfo(ConnectionSpec)
+    case disconnecting(ConnectionSpec, VPNConnectionActual?)
 
-    case disconnecting(ConnectionSpec)
+}
 
+public struct VPNConnectionActual: Equatable {
+    public let serverModelId: String
+    public let serverIPId: String
+    public let vpnProtocol: VpnProtocol
+    public let natType: NATType
+    public let safeMode: Bool?
+    public let feature: ServerFeature
+    public let city: String?
+
+    public init(serverModelId: String, serverIPId: String, vpnProtocol: VpnProtocol, natType: NATType, safeMode: Bool?, feature: ServerFeature, city: String?) {
+        self.serverModelId = serverModelId
+        self.serverIPId = serverIPId
+        self.vpnProtocol = vpnProtocol
+        self.natType = natType
+        self.safeMode = safeMode
+        self.feature = feature
+        self.city = city
+    }
 }
 
 public extension DependencyValues {
@@ -43,7 +63,10 @@ public extension DependencyValues {
 
 public enum WatchAppStateChangesKey: DependencyKey {
     public static let liveValue: @Sendable () async -> AsyncStream<VPNConnectionStatus> = {
+#if !targetEnvironment(simulator)
+        // Without `#if targetEnvironment(simulator)` SwiftUI previews crash
         assert(false, "Override this dependency!")
+#endif
         // Actual implementation sits in the app, to reduce the scope of thing this library depends on
         return AsyncStream<VPNConnectionStatus> { _ in }
     }

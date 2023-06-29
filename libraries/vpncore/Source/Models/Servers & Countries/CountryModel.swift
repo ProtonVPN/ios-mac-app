@@ -21,6 +21,7 @@
 
 import Foundation
 import CoreLocation
+import VPNShared
 
 public class CountryModel: Comparable, Hashable {
     

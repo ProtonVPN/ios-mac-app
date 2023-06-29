@@ -47,7 +47,7 @@ class SimulatorHelper {
     var connect: @Sendable (ConnectionSpec) -> Void {
         return { specs in
             switch self.status {
-            case .disconnected:
+            case .disconnected, .connected:
                 self.switchToConnected(specs)
 
             default:
@@ -57,9 +57,9 @@ class SimulatorHelper {
     }
 
     private func switchToConnected(_ specs: ConnectionSpec) {
-        targetStatus = .connected(specs)
+        targetStatus = .connected(specs, specs.actualConnection)
         queue.async {
-            self.status = .connecting(specs)
+            self.status = .connecting(specs, nil)
         }
         queue.asyncAfter(deadline: .now() + .seconds(2), execute: {
             self.status = self.targetStatus!
@@ -71,10 +71,10 @@ class SimulatorHelper {
     var disconnect: @Sendable () -> Void {
         return {
             switch self.status {
-            case .connected(let specs):
+            case .connected(let specs, _):
                 self.switchToDisconnected(specs)
 
-            case .connecting(let specs):
+            case .connecting(let specs, _):
                 self.switchToDisconnected(specs, delay: 0)
 
             default:
@@ -86,7 +86,7 @@ class SimulatorHelper {
     private func switchToDisconnected(_ specs: ConnectionSpec, delay: Int = 1) {
         targetStatus = .disconnected
         queue.async {
-            self.status = .disconnecting(specs)
+            self.status = .disconnecting(specs, specs.actualConnection)
         }
         queue.asyncAfter(deadline: .now() + .seconds(delay), execute: {
             self.status = self.targetStatus!
@@ -111,6 +111,22 @@ extension VPNConnectionStatus {
         case .disconnecting:
             return .disconnecting
         }
+    }
+}
+
+// MARK: - VPNConnectionActual -> ConnectionSpec
+
+extension ConnectionSpec {
+    var actualConnection: VPNConnectionActual {
+        VPNConnectionActual(
+            serverModelId: "1",
+            serverIPId: "2",
+            vpnProtocol: .ike,
+            natType: .moderateNAT,
+            safeMode: nil,
+            feature: .zero,
+            city: "City"
+        )
     }
 }
 
