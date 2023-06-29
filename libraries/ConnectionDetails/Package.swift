@@ -28,7 +28,7 @@ let package = Package(
         .package(path: "../Theme"),
         .package(path: "../Strings"),
         .package(path: "../NEHelper"),
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "0.54.1"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "0.55.0"),
     ],
     targets: [
         .target(

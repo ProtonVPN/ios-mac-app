@@ -17,9 +17,9 @@ let package = Package(
     dependencies: [
         .package(name: "swift-composable-architecture",
                  url: "https://github.com/pointfreeco/swift-composable-architecture",
-                 from: "0.54.1"
+                 from: "0.55.0"
                 ),
-        .package(url: "https://github.com/pointfreeco/swiftui-navigation", from: "0.7.2"),
+        .package(url: "https://github.com/pointfreeco/swiftui-navigation", from: "0.8.0"),
     ],
     targets: [
         .target(
