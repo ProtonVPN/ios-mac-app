@@ -21,34 +21,7 @@
 
 import Foundation
 import Theme
-
-public struct ServerFeature: OptionSet {
-    
-    public let rawValue: Int
-    
-    public static let secureCore = ServerFeature(bitPosition: 0)
-    public static let tor = ServerFeature(bitPosition: 1) // 2
-    public static let p2p = ServerFeature(bitPosition: 2) // 4
-    public static let streaming = ServerFeature(bitPosition: 3) // 8
-    public static let ipv6 = ServerFeature(bitPosition: 4) // 16
-    public static let restricted = ServerFeature(bitPosition: 5) // 32
-    public static let partner = ServerFeature(bitPosition: 6) // 64
-    
-    public static let zero = ServerFeature([])
-    
-    public static var description: String {
-        return
-            "SecureCore = \(secureCore.rawValue)\n" +
-            "TOR        = \(tor.rawValue)\n" +
-            "P2P        = \(p2p.rawValue)\n" +
-            "Streaming  = \(streaming.rawValue)\n" +
-            "IPv6       = \(ipv6.rawValue)\n"
-    }
-    
-    public init(rawValue: Int) {
-        self.rawValue = rawValue
-    }
-}
+import VPNShared
 
 extension ServerFeature {
     private var featureName: String {

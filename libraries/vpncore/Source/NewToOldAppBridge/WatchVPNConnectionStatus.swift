@@ -18,6 +18,7 @@ import Foundation
 import ComposableArchitecture
 import VPNAppCore
 import PMLogger
+import Dependencies
 
 private var appStateManager: AppStateManager! = Container.sharedContainer.makeAppStateManager()
 
@@ -27,8 +28,9 @@ extension WatchAppStateChangesKey {
         return NotificationCenter.default
             .notifications(named: .AppStateManager.displayStateChange)
             .map({
-                ($0.object as! AppDisplayState).vpnConnectionStatus
-            })
+                let appStageManager = Container.sharedContainer.makeAppStateManager()
+                 return ($0.object as! AppDisplayState).vpnConnectionStatus(appStageManager.activeConnection())
+              })
             .eraseToStream()
     }
 
@@ -38,23 +40,37 @@ extension WatchAppStateChangesKey {
 
 extension AppDisplayState {
 
-    var vpnConnectionStatus: VPNConnectionStatus {
+    func vpnConnectionStatus(_ connectionConfiguration: ConnectionConfiguration?) -> VPNConnectionStatus {
         let fakeSpecs = ConnectionSpec(location: .fastest, features: [])
         switch self {
         case .connected:
-            return .connected(fakeSpecs)
+            return .connected(fakeSpecs, connectionConfiguration?.vpnConnectionActual)
 
         case .connecting:
-            return .connecting(fakeSpecs)
+            return .connecting(fakeSpecs, connectionConfiguration?.vpnConnectionActual)
 
         case .loadingConnectionInfo:
-            return .loadingConnectionInfo(fakeSpecs)
+            return .loadingConnectionInfo(fakeSpecs, connectionConfiguration?.vpnConnectionActual)
 
         case .disconnecting:
-            return .disconnecting(fakeSpecs)
+            return .disconnecting(fakeSpecs, connectionConfiguration?.vpnConnectionActual)
 
         case .disconnected:
             return .disconnected
         }
+    }
+}
+
+extension ConnectionConfiguration {
+    var vpnConnectionActual: VPNConnectionActual {
+        VPNConnectionActual(
+            serverModelId: self.server.id,
+            serverIPId: self.serverIp.id,
+            vpnProtocol: self.vpnProtocol,
+            natType: self.natType,
+            safeMode: self.safeMode,
+            feature: self.server.feature,
+            city: self.server.city
+        )
     }
 }
