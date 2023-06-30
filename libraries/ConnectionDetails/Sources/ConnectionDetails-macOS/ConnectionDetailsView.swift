@@ -18,7 +18,6 @@
 
 import SwiftUI
 import Theme
-import Theme_macOS
 
 public struct ConnectionDetailsView: View {
     public init() {}
@@ -31,7 +30,7 @@ public struct ConnectionDetailsView: View {
                 .padding([.horizontal], 6) // the width of the draggable space, it extends over the drawn view
                 .background(Color(.background))
                 .onHover(perform: { hovering in
-                    if (hovering) {
+                    if hovering {
                         NSCursor.resizeLeftRight.push()
                     } else {
                         NSCursor.pop()
@@ -39,7 +38,7 @@ public struct ConnectionDetailsView: View {
                 })
                 .gesture(
                     DragGesture().onChanged({ value in
-                        print(value) // not implemented, just print it out
+//                        print(value) // not implemented, just print it out
                     })
                 )
 

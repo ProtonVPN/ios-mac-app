@@ -229,6 +229,7 @@
 		D582731E2A4F00E90021CA41 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = D582731D2A4F00E90021CA41 /* Theme */; };
 		D58273202A4F01080021CA41 /* VPNSharedTesting in Frameworks */ = {isa = PBXBuildFile; productRef = D582731F2A4F01080021CA41 /* VPNSharedTesting */; };
 		D58273222A4F01840021CA41 /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = D58273212A4F01840021CA41 /* Ergonomics */; };
+		D58273262A4F05A40021CA41 /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = D58273252A4F05A40021CA41 /* Ergonomics */; };
 		D585B5112447074200E901F3 /* Date+Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E853DD2428F863002EBF05 /* Date+Misc.swift */; };
 		D585B5122447074300E901F3 /* Date+Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E853DD2428F863002EBF05 /* Date+Misc.swift */; };
 		D58874B524FE69260022E438 /* AppSessionRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58874B424FE69260022E438 /* AppSessionRefresher.swift */; };
@@ -1238,6 +1239,7 @@
 				D5F65F9C28A14DE00062CF85 /* Timer in Frameworks */,
 				4C4F5F13292BECD200BBD5AF /* LocalFeatureFlags in Frameworks */,
 				E93120F428DB2EE600C1C2FE /* PMLogger in Frameworks */,
+				D58273262A4F05A40021CA41 /* Ergonomics in Frameworks */,
 				E5A4AD172A3B251500CC91D7 /* Dependencies in Frameworks */,
 				E99F266027A1A7A5003C4586 /* BugReport in Frameworks */,
 				E5A4AD292A3B470900CC91D7 /* IdentifiedCollections in Frameworks */,
@@ -2441,6 +2443,7 @@
 				E5A4AD1B2A3B299300CC91D7 /* ComposableArchitecture */,
 				E5A4AD1E2A3B353D00CC91D7 /* SwiftUINavigation */,
 				E5A4AD282A3B470900CC91D7 /* IdentifiedCollections */,
+				D58273252A4F05A40021CA41 /* Ergonomics */,
 			);
 			productName = "vpncore-macos";
 			productReference = E1B5F60C21B6960100B558B0 /* vpncore.framework */;
@@ -4473,6 +4476,10 @@
 			productName = VPNSharedTesting;
 		};
 		D58273212A4F01840021CA41 /* Ergonomics */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Ergonomics;
+		};
+		D58273252A4F05A40021CA41 /* Ergonomics */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Ergonomics;
 		};
