@@ -19,16 +19,14 @@
 import SwiftUI
 
 import ComposableArchitecture
+import SwiftUINavigation
 
 import Strings
 import Theme
 import Theme_iOS
 
 public struct SettingsView: View {
-    typealias NavigationStore = Store<
-        PresentationState<SettingsFeature.Destination.State>,
-        PresentationAction<SettingsFeature.Destination.Action>
-    >
+    typealias DestinationViewStore = ViewStore<SettingsFeature.Destination?, SettingsFeature.Action>
 
     // Remove default leading indentation and add padding above and below the header
     private let sectionHeaderInsets = EdgeInsets(top: .themeSpacing12, leading: 0, bottom: .themeSpacing12, trailing: 0)
@@ -69,97 +67,6 @@ public struct SettingsView: View {
         signOut: ChildFeature(icon: Theme.Asset.icArrowInToRectangle, title: Localizable.settingsTitleSignOut, accessory: .none)
     )
 
-    private var destinationStore: NavigationStore {
-        return store.scope(state: \.$destination, action: SettingsFeature.Action.destination)
-    }
-
-    private var accountSection: some View {
-        section(named: Localizable.settingsSectionTitleAccount) {
-            SettingsCell(
-                icon: Asset.avatar.swiftUIImage,
-                content: .multiline(title: "Eric Norbert", subtitle: "eric.norbert@proton.me"),
-                accessory: .disclosure
-            )
-        }
-    }
-
-    private var featuresSection: some View {
-        section(named: Localizable.settingsSectionTitleFeatures) {
-            WithViewStore(store, observe: { $0.netShield }) { viewStore in
-                CustomNavigationLinkStore(
-                    self.destinationStore,
-                    state: /SettingsFeature.Destination.State.netShield,
-                    action: SettingsFeature.Destination.Action.netShield,
-                    onTap: { viewStore.send(.netShieldTapped) },
-                    destination: { store in NetShieldSettingsView(store: store) },
-                    label: { SettingsCell(feature: features.netShield, value: viewStore.state) }
-                )
-            }
-            WithViewStore(store, observe: { $0.killSwitch }) { viewStore in
-                CustomNavigationLinkStore(
-                    self.destinationStore,
-                    state: /SettingsFeature.Destination.State.killSwitch,
-                    action: SettingsFeature.Destination.Action.killSwitch,
-                    onTap: { viewStore.send(.killSwitchTapped) },
-                    destination: { store in KillSwitchSettingsView(store: store) },
-                    label: { SettingsCell(feature: features.killSwitch, value: viewStore.state) }
-                )
-            }
-        }
-    }
-
-    private var connectionSection: some View {
-        section(named: Localizable.settingsSectionTitleConnection) {
-            SettingsCell(feature: features.vpnProtocol, value: nil)
-            SettingsCell(feature: features.vpnAccelerator, value: NetShieldSettingsFeature.State.on)
-            SettingsCell(feature: features.advanced, value: nil)
-        }
-    }
-
-    private var generalSection: some View {
-        section(named: Localizable.settingsSectionTitleGeneral) {
-            WithViewStore(store, observe: { $0.theme }) { viewStore in
-                CustomNavigationLinkStore(
-                    self.destinationStore,
-                    state: /SettingsFeature.Destination.State.theme,
-                    action: SettingsFeature.Destination.Action.theme,
-                    onTap: { viewStore.send(.themeTapped) },
-                    destination: { store in ThemeSettingsView(store: store) },
-                    label: { SettingsCell(feature: features.theme, value: viewStore.state) }
-                )
-            }
-            SettingsCell(feature: features.betaAccess, value: nil)
-            SettingsCell(feature: features.widget, value: nil)
-        }
-    }
-
-    private var supportSection: some View {
-        section(named: Localizable.settingsSectionTitleSupport) {
-            SettingsCell(feature: features.supportCenter, value: nil)
-            SettingsCell(feature: features.reportAnIssue, value: nil)
-            SettingsCell(feature: features.debugLogs, value: nil)
-        }
-    }
-
-    private var improveProtonSection: some View {
-        section(named: Localizable.settingsSectionTitleImproveProton) {
-            SettingsCell(feature: features.censorship, value: nil)
-            SettingsCell(feature: features.rateProtonVPN, value: nil)
-        }
-    }
-
-    private var restoreDefaultsSection: some View {
-        section {
-            SettingsCell(feature: features.restoreDefault, value: nil)
-        }
-    }
-
-    private var signOutSection: some View {
-        section {
-            SettingsCell(feature: features.signOut, value: nil)
-        }
-    }
-
     private var content: some View {
         List {
             accountSection
@@ -171,7 +78,9 @@ public struct SettingsView: View {
             restoreDefaultsSection
             signOutSection
             Section(footer: footerView) { EmptyView() }
-        }.padding(.top, .themeSpacing16)
+        }
+        .padding(.top, .themeSpacing16)
+        .background(navigationDestinations)
     }
 
     public var body: some View {
@@ -221,8 +130,140 @@ public struct SettingsView: View {
         }
     }
 
+    // MARK: Section Views
+
+    private var accountSection: some View {
+        section(named: Localizable.settingsSectionTitleAccount) {
+            SettingsCell(
+                icon: Asset.avatar.swiftUIImage,
+                content: .multiline(title: "Eric Norbert", subtitle: "eric.norbert@proton.me"),
+                accessory: .disclosure
+            )
+        }
+    }
+
+    private var featuresSection: some View {
+        section(named: Localizable.settingsSectionTitleFeatures) {
+            WithViewStore(store, observe: { $0.netShield }) { viewStore in
+                SettingsCell(feature: features.netShield, value: viewStore.state)
+                    .onTapGesture { store.send(.netShieldTapped) }
+            }
+            WithViewStore(store, observe: { $0.killSwitch }) { viewStore in
+                SettingsCell(feature: features.killSwitch, value: viewStore.state)
+                    .onTapGesture { store.send(.killSwitchTapped) }
+            }
+        }
+    }
+
+    private var connectionSection: some View {
+        section(named: Localizable.settingsSectionTitleConnection) {
+            SettingsCell(feature: features.vpnProtocol, value: nil)
+            SettingsCell(feature: features.vpnAccelerator, value: NetShieldSettingsFeature.State.on)
+            SettingsCell(feature: features.advanced, value: nil)
+        }
+    }
+
+    private var generalSection: some View {
+        section(named: Localizable.settingsSectionTitleGeneral) {
+            WithViewStore(store, observe: { $0.theme }) { viewStore in
+                SettingsCell(feature: features.theme, value: viewStore.state)
+                    .onTapGesture { store.send(.themeTapped) }
+            }
+
+            SettingsCell(feature: features.betaAccess, value: nil)
+            SettingsCell(feature: features.widget, value: nil)
+        }
+    }
+
+    private var supportSection: some View {
+        section(named: Localizable.settingsSectionTitleSupport) {
+            SettingsCell(feature: features.supportCenter, value: nil)
+            SettingsCell(feature: features.reportAnIssue, value: nil)
+            SettingsCell(feature: features.debugLogs, value: nil)
+        }
+    }
+
+    private var improveProtonSection: some View {
+        section(named: Localizable.settingsSectionTitleImproveProton) {
+            SettingsCell(feature: features.censorship, value: nil)
+            SettingsCell(feature: features.rateProtonVPN, value: nil)
+        }
+    }
+
+    private var restoreDefaultsSection: some View {
+        section {
+            SettingsCell(feature: features.restoreDefault, value: nil)
+        }
+    }
+
+    private var signOutSection: some View {
+        section {
+            SettingsCell(feature: features.signOut, value: nil)
+        }
+    }
+
     private var footerSection: some View {
         Section(footer: footerView) { EmptyView() }
+    }
+
+    // MARK: Navigation Destinations
+
+    /// In the absence of `.navigationDestination`, this is builds a collection of empty and inert NavigationLinks,
+    /// which which activate when the destination state matches their case.
+    ///
+    /// - Note: iOS 16 waiting room 😑
+    private var navigationDestinations: some View {
+        WithViewStore(store, observe: { $0.destination }) { destinationStore in
+            featureDestinations(viewStore: destinationStore)
+            generalDestinations(viewStore: destinationStore)
+        }
+    }
+
+    @ViewBuilder private func featureDestinations(viewStore: DestinationViewStore) -> some View {
+        NavigationLink(
+            unwrapping: viewStore.binding(get: { $0 }, send: .dismissDestination),
+            case: /SettingsFeature.Destination.netShield,
+            onNavigate: { _ in },
+            destination: { _ in
+                NetShieldSettingsView(
+                    store: store.scope(
+                        state: \.netShield,
+                        action: SettingsFeature.Action.netShield
+                    )
+                )
+            },
+            label: { EmptyView() }
+        )
+        NavigationLink(
+            unwrapping: viewStore.binding(get: { $0 }, send: .dismissDestination),
+            case: /SettingsFeature.Destination.killSwitch,
+            onNavigate: { _ in },
+            destination: { _ in
+                KillSwitchSettingsView(
+                    store: store.scope(
+                        state: \.killSwitch,
+                        action: SettingsFeature.Action.killSwitch
+                    )
+                )
+            },
+            label: { EmptyView() }
+        )
+    }
+
+    @ViewBuilder private func generalDestinations(viewStore: DestinationViewStore) -> some View {
+        WithViewStore(store, observe: { $0.destination }) { viewStore in
+            NavigationLink(
+                unwrapping: viewStore.binding(get: { $0 }, send: .dismissDestination),
+                case: /SettingsFeature.Destination.theme,
+                onNavigate: { _ in },
+                destination: { _ in
+                    ThemeSettingsView(
+                        store: store.scope(state: \.theme, action: SettingsFeature.Action.theme)
+                    )
+                },
+                label: { EmptyView() }
+            )
+        }
     }
 }
 

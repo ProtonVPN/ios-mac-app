@@ -24,8 +24,14 @@ public struct SettingsFeature: ReducerProtocol {
 
     public init() { }
 
+    public enum Destination: Equatable {
+        case netShield
+        case killSwitch
+        case theme
+    }
+
     public struct State: Equatable {
-        @PresentationState var destination: Destination.State?
+        var destination: Destination?
         var netShield: NetShieldSettingsFeature.State
         var killSwitch: KillSwitchSettingsFeature.State
         var theme: ThemeSettingsFeature.State
@@ -33,7 +39,7 @@ public struct SettingsFeature: ReducerProtocol {
         var appVersion: String = "5.0.0 (1234)"
 
         public init(
-            destination: Destination.State?,
+            destination: Destination?,
             netShield: NetShieldSettingsFeature.State,
             killSwitch: KillSwitchSettingsFeature.State,
             theme: ThemeSettingsFeature.State
@@ -46,7 +52,11 @@ public struct SettingsFeature: ReducerProtocol {
     }
 
     public enum Action: Equatable {
-        case destination(PresentationAction<Destination.Action>)
+        case dismissDestination
+
+        case netShield(NetShieldSettingsFeature.Action)
+        case killSwitch(KillSwitchSettingsFeature.Action)
+        case theme(ThemeSettingsFeature.Action)
 
         // case accountTapped
         case netShieldTapped
@@ -68,47 +78,26 @@ public struct SettingsFeature: ReducerProtocol {
     }
 
     public var body: some ReducerProtocolOf<Self> {
+        Scope(state: \.netShield, action: /Action.netShield) { NetShieldSettingsFeature() }
+        Scope(state: \.killSwitch, action: /Action.killSwitch) { KillSwitchSettingsFeature() }
+        Scope(state: \.theme, action: /Action.theme) { ThemeSettingsFeature() }
+
         Reduce { state, action in
             switch action {
-            case .netShieldTapped:
-                state.destination = .netShield(state.netShield)
-            case .killSwitchTapped:
-                state.destination = .killSwitch(state.killSwitch)
-            case .themeTapped:
-                state.destination = .theme(state.theme)
+            case .netShieldTapped: state.destination = .netShield
 
-            case let .destination(.presented(.netShield(.set(active)))):
-                state.netShield = active
-            case let .destination(.presented(.killSwitch(.set(active)))):
-                state.killSwitch = active
-            case let .destination(.presented(.theme(.set(theme)))):
-                state.theme = theme
+            case .killSwitchTapped: state.destination = .killSwitch
 
-            case .destination(.dismiss):
-                break
+            case .themeTapped: state.destination = .theme
+
+
+            case .dismissDestination:
+                state.destination = nil
+
+            case .netShield, .killSwitch, .theme:
+                break // Child actions have already been handled by the scoped child reducers
             }
             return .none
-        }
-        .ifLet(\.$destination, action: /Action.destination) { Destination() } // child presentation reducer
-    }
-}
-
-extension SettingsFeature {
-    public struct Destination: ReducerProtocol {
-        public enum State: Equatable {
-            case netShield(NetShieldSettingsFeature.State)
-            case killSwitch(KillSwitchSettingsFeature.State)
-            case theme(ThemeSettingsFeature.State)
-        }
-        public enum Action: Equatable {
-            case netShield(NetShieldSettingsFeature.Action)
-            case killSwitch(KillSwitchSettingsFeature.Action)
-            case theme(ThemeSettingsFeature.Action)
-        }
-        public var body: some ReducerProtocolOf<Self> {
-            Scope(state:  /State.netShield, action: /Action.netShield) { NetShieldSettingsFeature() }
-            Scope(state:  /State.killSwitch, action: /Action.killSwitch) { KillSwitchSettingsFeature() }
-            Scope(state: /State.theme, action: /Action.theme) { ThemeSettingsFeature() }
         }
     }
 }
