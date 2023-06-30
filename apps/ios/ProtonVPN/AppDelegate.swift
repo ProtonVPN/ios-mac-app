@@ -34,12 +34,14 @@ import ProtonCoreUIFoundations
 import ProtonCoreEnvironment
 import ProtonCoreFeatureSwitch
 import ProtonCoreObservability
+import ProtonCoreNetworking
 
 // Local dependencies
 import LegacyCommon
 import Logging
 import PMLogger
 import VPNShared
+import ProtonCoreCryptoVPNPatchedGoImplementation
 
 public let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 
@@ -68,6 +70,7 @@ class AppDelegate: UIResponder {
 extension AppDelegate: UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        setupCoreIntegration()
         setupLogsForApp()
         setupDebugHelpers()
 
@@ -80,8 +83,6 @@ extension AppDelegate: UIApplicationDelegate {
         let sharedDefaults = UserDefaults(suiteName: AppConstants.AppGroups.main)!
         Storage.setSpecificDefaults(sharedDefaults, largeDataStorage: FileStorage.cached)
 
-        setupCoreIntegration()
-        
 //        Waiting for https://github.com/getsentry/sentry-cocoa/issues/1892 to be fixed
 //        SentryHelper.setupSentry(dsn: ObfuscatedConstants.sentryDsniOS)
         
@@ -264,6 +265,13 @@ fileprivate extension AppDelegate {
 
 extension AppDelegate {
     private func setupCoreIntegration() {
+        NSKeyedUnarchiver.setClass(
+            ProtonCoreNetworking.AuthCredential.self,
+            forClassName: "ProtonCore_Networking.AuthCredential"
+        )
+
+        injectDefaultCryptoImplementation()
+
         ProtonCoreLog.PMLog.callback = { (message, level) in
             switch level {
             case .debug, .info, .trace, .warn:
@@ -290,3 +298,4 @@ extension AppDelegate {
         ObservabilityEnv.current.setupWorld(requestPerformer: apiService)
     }
 }
+

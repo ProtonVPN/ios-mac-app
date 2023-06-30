@@ -69,6 +69,7 @@ class AppDelegate: NSObject {
 
 extension AppDelegate: NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        injectDefaultCryptoImplementation()
         setupCoreIntegration()
         setupLogsForApp()
 
