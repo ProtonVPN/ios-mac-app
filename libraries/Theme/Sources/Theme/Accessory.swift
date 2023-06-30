@@ -18,8 +18,6 @@
 
 import SwiftUI
 
-import Theme
-
 public struct Accessory: View {
     private let style: Style
     @ScaledMetric private var radius: CGFloat = .themeRadius16

@@ -165,6 +165,7 @@
 		AD37181329CB3BD5006615E2 /* NetShieldStatsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37180F29CB3404006615E2 /* NetShieldStatsModel.swift */; };
 		AD37FAC729B89FF900D4DE4E /* StrongNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC629B89FF900D4DE4E /* StrongNotification.swift */; };
 		AD37FAC829B89FF900D4DE4E /* StrongNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC629B89FF900D4DE4E /* StrongNotification.swift */; };
+		AD3AE5332A4F11EB000FDBA6 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = AD3AE5322A4F11EB000FDBA6 /* Settings */; };
 		AD3C485729D2FBCC00A768D4 /* LocalAgentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3C485629D2FBCC00A768D4 /* LocalAgentTests.swift */; };
 		AD3C485829D2FBCC00A768D4 /* LocalAgentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3C485629D2FBCC00A768D4 /* LocalAgentTests.swift */; };
 		AD41A854298A83590003393D /* SystemExtensionManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ECBAF28912F3800820068 /* SystemExtensionManagerMock.swift */; };
@@ -1199,6 +1200,7 @@
 				E5C8A2642A3C4C5500290723 /* Dependencies in Frameworks */,
 				E939EEF3279561EE006E4305 /* BugReport in Frameworks */,
 				D582731A2A4F00C60021CA41 /* PMLogger in Frameworks */,
+				AD3AE5332A4F11EB000FDBA6 /* Settings in Frameworks */,
 				E58D06422A0B8B1C002A896C /* Clocks in Frameworks */,
 				D58273222A4F01840021CA41 /* Ergonomics in Frameworks */,
 				4C4F5F11292BECCE00BBD5AF /* LocalFeatureFlags in Frameworks */,
@@ -2377,6 +2379,7 @@
 				D582731D2A4F00E90021CA41 /* Theme */,
 				D582731F2A4F01080021CA41 /* VPNSharedTesting */,
 				D58273212A4F01840021CA41 /* Ergonomics */,
+				AD3AE5322A4F11EB000FDBA6 /* Settings */,
 			);
 			productName = "vpncore-ios";
 			productReference = E1B5F5D821B68ABD00B558B0 /* vpncore.framework */;
@@ -4447,6 +4450,18 @@
 			productName = Theme;
 		};
 		A59B9FD3BC643C0B2BCFFB04 /* VPNShared */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = VPNShared;
+		};
+		AD3AE5322A4F11EB000FDBA6 /* Settings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Settings;
+		};
+		D0AAC5A8DEABE73F456752F4 /* NEHelper */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NEHelper;
+		};
+		D416C411CC859B3D18ABBE36 /* VPNShared */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = VPNShared;
 		};

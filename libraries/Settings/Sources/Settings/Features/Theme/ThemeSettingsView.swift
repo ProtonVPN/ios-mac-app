@@ -22,7 +22,6 @@ import ComposableArchitecture
 
 import Strings
 import Theme
-import Theme_iOS
 
 // TODO: Nice UI according to designs
 struct ThemeSettingsView: View {

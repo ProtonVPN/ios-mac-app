@@ -19,7 +19,6 @@
 import SwiftUI
 
 import Theme
-import Theme_iOS
 
 protocol LocalizedStringConvertible {
     var localizedDescription: String { get }

@@ -1,4 +1,4 @@
-// swift-tools-version:5.5
+// swift-tools-version: 5.7
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -15,11 +15,8 @@ let package = Package(
             targets: ["BugReport"]),
     ],
     dependencies: [
-        .package(name: "swift-composable-architecture",
-                 url: "https://github.com/pointfreeco/swift-composable-architecture",
-                 from: "0.55.0"
-                ),
-        .package(url: "https://github.com/pointfreeco/swiftui-navigation", from: "0.8.0"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "0.55.0"),
+        .package(url: "https://github.com/pointfreeco/swiftui-navigation", exact: "0.8.0"),
     ],
     targets: [
         .target(
@@ -38,6 +35,5 @@ let package = Package(
             resources: [
                 .process("example1.json"),
             ]),
-        
     ]
 )
