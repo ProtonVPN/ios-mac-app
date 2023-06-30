@@ -22,7 +22,7 @@ import Theme
 
 public struct Accessory: View {
     private let style: Style
-    @ScaledMetric private var radius: CGFloat = .themeRadius24
+    @ScaledMetric private var radius: CGFloat = .themeRadius16
 
     public init(style: Style) {
         self.style = style
@@ -47,7 +47,8 @@ public struct Accessory: View {
             case .externalLink:
                 return Image(asset: Asset.icArrowOutSquare)
             case .checkmark(let isActive):
-                return Image(asset: isActive ? Asset.icCheckmarkCircleFilled : Asset.icCheckmarkCircle)
+                return Image(asset: isActive ? Asset.icCheckmarkCircleFilled : Asset.icEmptyCircle
+)
             case .none:
                 return nil
             }

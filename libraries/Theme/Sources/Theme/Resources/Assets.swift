@@ -396,8 +396,6 @@ public enum Asset {
     public static let zm = ImageAsset(name: "Flags/ZM")
     public static let zw = ImageAsset(name: "Flags/ZW")
   }
-  public static let icCircleCheckFilled = ImageAsset(name: "ic-circle-check-filled")
-  public static let icCircleEmpty = ImageAsset(name: "ic-circle-empty")
   public static let icKillswitch = ImageAsset(name: "ic-killswitch")
   public static let icNetshield = ImageAsset(name: "ic-netshield")
   public static let icAlias = ImageAsset(name: "ic-alias")
@@ -555,7 +553,6 @@ public enum Asset {
   public static let icGlobe = ImageAsset(name: "ic-globe")
   public static let icGrid2 = ImageAsset(name: "ic-grid-2")
   public static let icGrid3 = ImageAsset(name: "ic-grid-3")
-  public static let icGrid = ImageAsset(name: "ic-grid")
   public static let icHamburger = ImageAsset(name: "ic-hamburger")
   public static let icHeart = ImageAsset(name: "ic-heart")
   public static let icHook = ImageAsset(name: "ic-hook")
