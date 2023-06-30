@@ -32,19 +32,18 @@ final class SettingsTests: XCTestCase {
         )
 
         await store.send(.netShieldTapped, assert: { resultState in
-            resultState.destination = .netShield(.off)
+            resultState.destination = .netShield
         })
     }
 
     func testChildFeatureModificationReflectedInParent() async throws {
         let store = TestStore(
-            initialState: SettingsFeature.State(destination: .netShield(.off), netShield: .on, killSwitch: .on, theme: .auto),
+            initialState: SettingsFeature.State(destination: .netShield, netShield: .on, killSwitch: .on, theme: .auto),
             reducer: SettingsFeature()
         )
 
-        await store.send(.destination(.presented(.netShield(.set(value: .on)))), assert: { resultState in
-            resultState.destination = .netShield(.on)
-            resultState.netShield = .on
+        await store.send(.netShield(.set(value: .off)), assert: { resultState in
+            resultState.netShield = .off
         })
     }
 }
