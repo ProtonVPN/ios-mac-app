@@ -41,17 +41,14 @@ import Logging
 import PMLogger
 import VPNShared
 
-// public let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
-
-// @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
 //    @IBOutlet weak var protonVpnMenu: ProtonVpnMenuController!
 //    @IBOutlet weak var profilesMenu: ProfilesMenuController!
 //    @IBOutlet weak var helpMenu: HelpMenuController!
 //    @IBOutlet weak var statusMenu: StatusMenuWindowController!
-    
-    fileprivate let container = DependencyContainer()
+
+    let container = DependencyContainer()
     lazy var navigationService = container.makeNavigationService()
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
     private lazy var appInfo: AppInfo = container.makeAppInfo()

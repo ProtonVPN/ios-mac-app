@@ -46,22 +46,23 @@ struct ProtonVPNApp: App {
             initialState: initialStateProvider.initialState,
             reducer: AppReducer()
                 .dependency(\.watchVPNConnectionStatus, WatchAppStateChangesKey.watchVPNConnectionStatusChanges)
-            #if targetEnvironment(simulator)
-                .dependency(\.connectToVPN, SimulatorHelper.shared.connect)
-                .dependency(\.disconnectVPN, SimulatorHelper.shared.disconnect)
-            #endif
                 ._printChanges()
         )
     }
 
+//    @ObservedObject var isUserLoggedIn: Bool
+
     var isLoggedIn: Bool {
         appDelegate.navigationService.appSessionManager.loggedIn
     }
-    
+
+    var initialError: String?
+
     var body: some Scene {
         WindowGroup {
             if !isLoggedIn {
-                LoginViewControllerRepresentable(navigationService: appDelegate.navigationService)
+                LoginViewControllerRepresentable(loginViewModel: LoginViewModel(factory: appDelegate.container,
+                                                                                initialError: initialError))
                     .preferredColorScheme(.dark)
                     .background(WindowAccessor(window: $window, windowType: .login)) // get access to the underlying NSWindow
                     .onAppear {

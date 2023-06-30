@@ -60,8 +60,9 @@ final class LoginViewModel {
 
     private(set) var isTwoFactorStep: Bool = false
 
-    init (factory: Factory) {
+    init (factory: Factory, initialError: String? = nil) {
         self.factory = factory
+        self.initialError = initialError
     }
     
     var startOnBoot: Bool {

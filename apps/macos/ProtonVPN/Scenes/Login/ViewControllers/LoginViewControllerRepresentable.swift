@@ -23,11 +23,10 @@ struct LoginViewControllerRepresentable: NSViewControllerRepresentable {
 
     typealias NSViewControllerType = LoginViewController
 
-    let navigationService: NavigationService
+    let loginViewModel: LoginViewModel
 
     func makeNSViewController(context: Context) -> LoginViewController {
-        let viewModel = navigationService.loginViewModel()
-        return LoginViewController(viewModel: viewModel)
+        return LoginViewController(viewModel: loginViewModel)
     }
 
     func updateNSViewController(_ nsViewController: LoginViewController, context: Context) {

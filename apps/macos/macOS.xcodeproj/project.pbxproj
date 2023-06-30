@@ -242,6 +242,7 @@
 		E552FC792A430A720058B3D9 /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC742A430A720058B3D9 /* SideBarView.swift */; };
 		E552FC7A2A430A720058B3D9 /* SideBarTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC752A430A720058B3D9 /* SideBarTab.swift */; };
 		E552FC7B2A430A720058B3D9 /* SideBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC762A430A720058B3D9 /* SideBarItemView.swift */; };
+		E555DF772A4F194B00FD15C8 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = E555DF762A4F194B00FD15C8 /* Dependencies */; };
 		E565986828200ADA004F2240 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986728200ADA004F2240 /* LoadingView.swift */; };
 		E565986A2820FECE004F2240 /* WarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E56598692820FECE004F2240 /* WarningView.xib */; };
 		E565986C2820FEDD004F2240 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986B2820FEDD004F2240 /* WarningView.swift */; };
@@ -1213,6 +1214,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E111808B7080739DC417E264 /* Pods_ProtonVPNmacOSTests.framework in Frameworks */,
+				E555DF772A4F194B00FD15C8 /* Dependencies in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1287,7 +1289,6 @@
 				E5E48D032A4C3D7100B09111 /* Logging in Frameworks */,
 				E5E48CFD2A4C36A900B09111 /* Home in Frameworks */,
 				E5E48CF72A4C363700B09111 /* ComposableArchitecture in Frameworks */,
-				E509509629ED258F00C0F935 /* Theme-macOS in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2966,6 +2967,9 @@
 				E15B755320FA83CB0022C406 /* PBXTargetDependency */,
 			);
 			name = ProtonVPNmacOSTests;
+			packageProductDependencies = (
+				E555DF762A4F194B00FD15C8 /* Dependencies */,
+			);
 			productName = ProtonVPNTests;
 			productReference = E15B754D20FA83CB0022C406 /* ProtonVPNmacOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -3098,7 +3102,6 @@
 				E53D64C2281169880060C463 /* Modals-macOS */,
 				D5F65F9D28A14E190062CF85 /* Timer */,
 				E93533DA29CAEE2C005E3A59 /* Sparkle */,
-				E509509529ED258F00C0F935 /* Theme-macOS */,
 				E5E48CF42A4C362300B09111 /* Home-macOS */,
 				E5E48CF62A4C363700B09111 /* ComposableArchitecture */,
 				E5E48CF82A4C365000B09111 /* ConnectionDetails */,
@@ -3225,6 +3228,7 @@
 				4C1C07A92A39C937009DE875 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				E5A4AD222A3B369E00CC91D7 /* XCRemoteSwiftPackageReference "swiftui-navigation" */,
 				E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log" */,
+				E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
 			);
 			productRefGroup = EED534821EEC112000013607 /* Products */;
 			projectDirPath = "";
@@ -5447,6 +5451,14 @@
 				revision = 026d18ae27fe83b32a661fbfa1ee698f67ba2221;
 			};
 		};
+		E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-dependencies.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.1;
+			};
+		};
 		E5A4AD222A3B369E00CC91D7 /* XCRemoteSwiftPackageReference "swiftui-navigation" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swiftui-navigation.git";
@@ -5526,6 +5538,11 @@
 		E53D64C2281169880060C463 /* Modals-macOS */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Modals-macOS";
+		};
+		E555DF762A4F194B00FD15C8 /* Dependencies */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
+			productName = Dependencies;
 		};
 		E56790E52A45D4A20089CA79 /* Strings */ = {
 			isa = XCSwiftPackageProductDependency;
