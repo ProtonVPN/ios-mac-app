@@ -1,6 +1,13 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M32 5.33002H0V26.66H32V5.33002Z" fill="#ED2939"/>
-<path d="M8.53 5.33002H0V13.86H8.53V5.33002Z" fill="white"/>
-<path d="M4.27 5.33002H0V13.86H4.27V5.33002Z" fill="#002395"/>
-<path d="M23.25 16L25.81 13.44V18.56L23.25 16ZM22.4 16.85L19.84 19.41H25L22.4 16.85ZM21.55 16L19 13.44V18.56L21.55 16ZM22.4 15.14L19.84 12.58H25L22.4 15.14ZM0 14.33H13V5.33002H12V13.33H0V14.33Z" fill="white"/>
+<svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="WF" clip-path="url(#clip0_2253_3762)">
+<path id="Vector" d="M24 -0.00250244H0V15.995H24V-0.00250244Z" fill="#ED2939"/>
+<path id="Vector_2" d="M6.3975 -0.00250244H0V6.395H6.3975V-0.00250244Z" fill="#F0F0F0"/>
+<path id="Vector_3" d="M3.2025 -0.00250244H0V6.395H3.2025V-0.00250244Z" fill="#002395"/>
+<path id="Vector_4" d="M17.4375 8L19.3575 6.08V9.92L17.4375 8ZM16.8 8.6375L14.88 10.5575H18.75L16.8 8.6375ZM16.1625 8L14.25 6.08V9.92L16.1625 8V8ZM16.8 7.355L14.88 5.435H18.75L16.8 7.355ZM0 6.7475H9.75V-0.00250244H9V5.9975H0V6.7475Z" fill="#F0F0F0"/>
+</g>
+<defs>
+<clipPath id="clip0_2253_3762">
+<rect width="24" height="16" fill="white"/>
+</clipPath>
+</defs>
 </svg>

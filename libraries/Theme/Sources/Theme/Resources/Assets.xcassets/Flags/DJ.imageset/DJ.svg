@@ -1,6 +1,13 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M32 5.32996H0V26.66H32V5.32996Z" fill="#6DA544"/>
-<path d="M32 5.32996V15.75L0 16.01V5.32996H32Z" fill="#338AF3"/>
-<path d="M16 16L0 26.67V5.32996L16 16Z" fill="#F0F0F0"/>
-<path d="M5.90999 13.22L6.59999 15.34H8.83999L7.02999 16.66L7.71999 18.78L5.90999 17.47L4.10999 18.78L4.79999 16.66L2.98999 15.34H5.21999L5.90999 13.22Z" fill="#D80027"/>
+<svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="DJ" clip-path="url(#clip0_2253_2729)">
+<path id="Vector" d="M24 -0.00256348H0V15.9949H24V-0.00256348Z" fill="#6DA544"/>
+<path id="Vector_2" d="M24 -0.00256348V7.81244L0 8.00744V-0.00256348H24Z" fill="#338AF3"/>
+<path id="Vector_3" d="M12 7.99994L0 16.0024V-0.00256348L12 7.99994Z" fill="#F0F0F0"/>
+<path id="Vector_4" d="M4.43219 5.91504L4.94969 7.50504H6.62969L5.27219 8.49504L5.78969 10.085L4.43219 9.10254L3.08219 10.085L3.59969 8.49504L2.24219 7.50504H3.91469L4.43219 5.91504V5.91504Z" fill="#D80027"/>
+</g>
+<defs>
+<clipPath id="clip0_2253_2729">
+<rect width="24" height="16" fill="white"/>
+</clipPath>
+</defs>
 </svg>

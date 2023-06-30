@@ -1,7 +1,14 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M32 5.33002H0V26.66H32V5.33002Z" fill="#F0F0F0"/>
-<path d="M32 5.33002H0V8.00002H32V5.33002ZM32 10.67H0V13.34H32V10.67ZM32 16H0V18.67H32V16ZM32 21.33H0V24H32V21.33Z" fill="#338AF3"/>
-<path d="M11.83 5.33002H0V16H11.83V5.33002Z" fill="#338AF3"/>
-<path d="M11.83 9.47998H0V11.85H11.83V9.47998Z" fill="#F0F0F0"/>
-<path d="M7.09998 5.33002H4.72998V16H7.09998V5.33002Z" fill="#F0F0F0"/>
+<svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="GR" clip-path="url(#clip0_2253_2914)">
+<path id="Vector" d="M24 -0.00250244H0V15.995H24V-0.00250244Z" fill="#F0F0F0"/>
+<path id="Vector_2" d="M24 -0.00250244H0V2H24V-0.00250244ZM24 4.0025H0V6.005H24V4.0025ZM24 8H0V10.0025H24V8ZM24 11.9975H0V14H24V11.9975Z" fill="#338AF3"/>
+<path id="Vector_3" d="M8.8725 -0.00250244H0V8H8.8725V-0.00250244Z" fill="#338AF3"/>
+<path id="Vector_4" d="M8.8725 3.10999H0V4.88749H8.8725V3.10999Z" fill="#F0F0F0"/>
+<path id="Vector_5" d="M5.32486 -0.00250244H3.54736V8H5.32486V-0.00250244Z" fill="#F0F0F0"/>
+</g>
+<defs>
+<clipPath id="clip0_2253_2914">
+<rect width="24" height="16" fill="white"/>
+</clipPath>
+</defs>
 </svg>
