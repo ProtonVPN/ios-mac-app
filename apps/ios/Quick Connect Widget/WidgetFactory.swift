@@ -24,6 +24,7 @@ import Foundation
 import LegacyCommon
 import NetworkExtension
 import VPNShared
+import ProtonCoreCryptoVPNPatchedGoImplementation
 
 final class WidgetFactory {
     private let openVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.openVpn
@@ -34,6 +35,7 @@ final class WidgetFactory {
     private let propertiesManager = PropertiesManager(storage: Storage())
     
     init() {
+        injectDefaultCryptoImplementation()
         setUpNSCoding(withModuleName: "ProtonVPN")
         let sharedDefaults = UserDefaults(suiteName: AppConstants.AppGroups.main)!
         Storage.setSpecificDefaults(sharedDefaults, largeDataStorage: FileStorage.cached)

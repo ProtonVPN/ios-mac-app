@@ -25,12 +25,14 @@ import Intents
 import LegacyCommon
 import NetworkExtension
 import VPNShared
+import ProtonCoreCryptoVPNPatchedGoImplementation
 
 class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHandling /*, GetConnectionStatusIntentHandling */ {
     
     let siriHandlerViewModel: SiriHandlerViewModel
     
     override init() { // swiftlint:disable:this function_body_length
+        injectDefaultCryptoImplementation()
         let dependencyFactory = SiriIntentHandlerDependencyFactory()
         let doh = DoHVPN(apiHost: "", verifyHost: "", alternativeRouting: false, appState: .disconnected)
         let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()),
