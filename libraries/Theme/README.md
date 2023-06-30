@@ -22,3 +22,7 @@ Style attributed strings:
 ```
 "text to sytle".styled(.hint, font: .themeFont(.small), alignment: .natural)
 ```
+
+## Changing assets
+
+If you do any changes in `Assets` cd to `protonvpn/libraries/Theme/Sources/Theme` and run `swiftgen`.
