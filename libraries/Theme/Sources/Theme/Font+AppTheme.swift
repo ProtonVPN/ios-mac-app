@@ -20,6 +20,7 @@ import SwiftUI
 
 public extension AppTheme {
     enum Typography {
+
 #if canImport(Cocoa)
 
         case largeTitle(emphasised: Bool = false)
@@ -33,6 +34,7 @@ public extension AppTheme {
         case footnote(emphasised: Bool = false)
 
         public static let `default`: Self = .title3()
+
 #elseif canImport(UIKit)
 
         case hero
@@ -69,6 +71,7 @@ public extension AppTheme {
 public extension Font {
     static func themeFont(_ typography: AppTheme.Typography = .default) -> Font {
         switch typography {
+
         #if canImport(Cocoa)
         case .largeTitle(let emphasised):
             return .system(size: 26, weight: emphasised ? .bold : .regular)
@@ -88,13 +91,14 @@ public extension Font {
             return .system(size: 12, weight: emphasised ? .semibold : .regular)
         case .footnote(let emphasised):
             return .system(size: 10, weight: emphasised ? .semibold : .regular)
+
         #elseif canImport(UIKit)
         case .hero:
-            return .custom("", size: 28, relativeTo: .body).weight(.bold)
+            return .custom("", size: 28, relativeTo: .largeTitle).weight(.bold)
         case .headline:
-            return .custom("", size: 22, relativeTo: .body).weight(.bold)
+            return .custom("", size: 22, relativeTo: .headline).weight(.bold)
         case .subHeadline:
-            return .custom("", size: 22, relativeTo: .body).weight(.regular)
+            return .custom("", size: 22, relativeTo: .subheadline).weight(.regular)
         case .body1(let weight):
             return .custom("", size: 17, relativeTo: .body).weight(weight.rawValue)
         case .body2(let emphasised):
@@ -109,7 +113,6 @@ public extension Font {
         }
     }
 }
-
 
 public extension Text {
     func themeFont(_ typography: AppTheme.Typography = .default) -> Text {

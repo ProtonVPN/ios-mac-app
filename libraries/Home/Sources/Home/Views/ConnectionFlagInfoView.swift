@@ -52,18 +52,29 @@ public struct ConnectionFlagInfoView: View {
     }
 
     public var body: some View {
-        HStack {
-            flag
-                .padding(0)
+        @ScaledMetric(relativeTo: .body) var topLineHeight: CGFloat = 16
+
+        HStack(alignment: .top) {
+            flag.padding(0)
 
             VStack(alignment: .leading) {
                 Text(location.text(locale: locale))
-//                    .themeFont(.body1()) // todo: fixme
-//                    .styled()
+                    .styled()
+#if canImport(Cocoa)
+                    .themeFont(.body())
+#elseif canImport(UIKit)
+                    .themeFont(.body1(.semibold))
+#endif
+                    .frame(minHeight: topLineHeight)
+
                 if let subtext = location.subtext(locale: locale) {
                     Text(subtext)
-//                        .themeFont(.caption()) // todo: fixme
-//                        .styled(.weak)
+                        .styled(.weak)
+#if canImport(Cocoa)
+                        .themeFont(.body())
+#elseif canImport(UIKit)
+                        .themeFont(.caption())
+                    #endif
                 }
             }.padding(.leading, 8)
         }
@@ -73,13 +84,22 @@ public struct ConnectionFlagInfoView: View {
 struct ConnectionFlagView_Previews: PreviewProvider {
     static var previews: some View {
         VStack(alignment: .leading, spacing: 10) {
-            ConnectionFlagInfoView(location: .fastest)
-            ConnectionFlagInfoView(location: .region(code: "US"))
-            ConnectionFlagInfoView(location: .exact(.free, number: 1, subregion: nil, regionCode: "US"))
-            ConnectionFlagInfoView(location: .exact(.paid, number: 1, subregion: nil, regionCode: "US"))
+            Group {
+                ConnectionFlagInfoView(location: .fastest)
+                Divider()
+                ConnectionFlagInfoView(location: .region(code: "US"))
+                Divider()
+                ConnectionFlagInfoView(location: .exact(.free, number: 1, subregion: nil, regionCode: "US"))
+                Divider()
+                ConnectionFlagInfoView(location: .exact(.paid, number: 1, subregion: nil, regionCode: "US"))
+                Divider()
+            }
             ConnectionFlagInfoView(location: .exact(.paid, number: 1, subregion: "AR", regionCode: "US"))
+            Divider()
             ConnectionFlagInfoView(location: .secureCore(.fastest))
+            Divider()
             ConnectionFlagInfoView(location: .secureCore(.fastestHop(to: "SE")))
+            Divider()
             ConnectionFlagInfoView(location: .secureCore(.hop(to: "JP", via: "CH")))
 
         }
