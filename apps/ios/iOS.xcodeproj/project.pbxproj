@@ -155,7 +155,6 @@
 		ADAC052A29D33D0500BB69EA /* StatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792B58C12150E278000BB3A3 /* StatusViewModel.swift */; };
 		ADAC052B29D33D1500BB69EA /* NetShieldStatsItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */; };
 		ADAC052C29D33D1500BB69EA /* NetShieldStatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA7343829B1896300CF8F77 /* NetShieldStatsTableViewCell.swift */; };
-		ADE83C662A2E82290037ABCD /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = ADE83C652A2E82290037ABCD /* Settings */; };
 		B20C28F52799947A00157BD1 /* OnboardingRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20C28F42799947A00157BD1 /* OnboardingRobot.swift */; };
 		B22F331827906E9100DBB8CA /* RecoveryRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F331727906E9100DBB8CA /* RecoveryRobot.swift */; };
 		B29CD6AF2654109600978637 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CD6AE2654109600978637 /* StringUtils.swift */; };
@@ -1140,7 +1139,6 @@
 				F3BC534B278598CE009E49B4 /* Onboarding in Frameworks */,
 				E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */,
 				257C90332E8EB77D46C645E6 /* Pods_ProtonVPN.framework in Frameworks */,
-				ADE83C662A2E82290037ABCD /* Settings in Frameworks */,
 				4CB776D52A1F62DF004CA127 /* Logging in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2592,7 +2590,6 @@
 				D5E00CB72A3899180049904D /* ConnectionDetails-iOS */,
 				E56790E32A45D48F0089CA79 /* Strings */,
 				0F37F582FD946FEFFFACCDE6 /* Theme */,
-				ADE83C652A2E82290037ABCD /* Settings */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -5115,10 +5112,6 @@
 		4CD110802A2A095D0062AE13 /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PMLogger;
-		};
-		ADE83C652A2E82290037ABCD /* Settings */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Settings;
 		};
 		D16ECAECC9861A6ED5EDA4F2 /* Modals */ = {
 			isa = XCSwiftPackageProductDependency;

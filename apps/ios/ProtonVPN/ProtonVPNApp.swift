@@ -119,6 +119,7 @@ struct ProtonVPNApp: App {
         _ = DependencyContainer.shared.makeAppStateManager()
 
         UITabBar.appearance().backgroundColor = .color(.background, .weak)
+        UITableView.appearance().backgroundColor = .color(.background, .strong)
 
         self.store = .init(
             initialState: initialStateProvider.initialState,

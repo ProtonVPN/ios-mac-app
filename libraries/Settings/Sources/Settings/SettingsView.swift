@@ -23,7 +23,6 @@ import SwiftUINavigation
 
 import Strings
 import Theme
-import Theme_iOS
 
 public struct SettingsView: View {
     typealias DestinationViewStore = ViewStore<SettingsFeature.Destination?, SettingsFeature.Action>
@@ -85,14 +84,25 @@ public struct SettingsView: View {
 
     public var body: some View {
         NavigationView {
-            ZStack {
-                Color(.background, .strong).ignoresSafeArea()
-                content.hidingScrollBackground
+            List {
+                accountSection
+                featuresSection
+                connectionSection
+                generalSection
+                supportSection
+                improveProtonSection
+                restoreDefaultsSection
+                signOutSection
+                Section(footer: footerView) { EmptyView() }
             }
+            .padding(.top, .themeSpacing16)
+            .background(Color(.background, .strong).ignoresSafeArea())
+            .background(navigationDestinations) // append invisible navigation destinations to the hierarchy
             .navigationBarTitleDisplayMode(.large)
             .navigationTitle(Localizable.settingsTitle)
         }
         .navigationViewStyle(.stack)
+        .hidingScrollBackground
     }
 
     @ViewBuilder
@@ -130,7 +140,7 @@ public struct SettingsView: View {
         }
     }
 
-    // MARK: Section Views
+// MARK: Section Views
 
     private var accountSection: some View {
         section(named: Localizable.settingsSectionTitleAccount) {

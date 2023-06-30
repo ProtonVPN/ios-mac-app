@@ -90,7 +90,6 @@ public struct SettingsFeature: ReducerProtocol {
 
             case .themeTapped: state.destination = .theme
 
-
             case .dismissDestination:
                 state.destination = nil
 
