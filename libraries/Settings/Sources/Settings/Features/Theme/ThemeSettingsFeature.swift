@@ -26,9 +26,9 @@ import Theme
 extension ColorScheme: LocalizedStringConvertible {
     var localizedDescription: String {
         switch self {
-        case .auto: return Localizable.settingsThemeAuto
-        case .light: return Localizable.settingsThemeLight
-        case .dark: return Localizable.settingsThemeDark
+        case .auto: return Localizable.settingsThemeValueAuto
+        case .light: return Localizable.settingsThemeValueLight
+        case .dark: return Localizable.settingsThemeValueDark
         }
     }
 }

@@ -196,33 +196,33 @@
 
 /* Title of the NetShield cell in the Settings tab [Redesign_2023] */
 "_settings_title_netshield" = "NetShield";
-/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+/* Title of the KillSwitch cell in the Settings tab [Redesign_2023] */
 "_settings_title_kill_switch" = "Kill Switch";
-/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+/* Title of the Protocol cell in the Settings tab [Redesign_2023] */
 "_settings_title_protocol" = "Protocol";
-/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+/* Title of the VPN Accelerator cell in the Settings tab [Redesign_2023] */
 "_settings_title_vpn_accelerator" = "VPN Accelerator";
-/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+/* Title of the Advanced Settings cell in the Settings tab [Redesign_2023] */
 "_settings_title_advanced" = "Advanced settings";
-/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+/* Title of the Theme cell in the Settings tab [Redesign_2023] */
 "_settings_title_theme" = "Theme";
-/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+/* Title of the Beta Access cell in the Settings tab [Redesign_2023] */
 "_settings_title_beta_access" = "Beta access";
-/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+/* Title of the Widget cell in the Settings tab [Redesign_2023] */
 "_settings_title_widget" = "Widget";
-/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+/* Title of the Support Center cell in the Settings tab [Redesign_2023] */
 "_settings_title_support_center" = "Support center";
-/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+/* Title of the Report an Issue cell in the Settings tab [Redesign_2023] */
 "_settings_title_report_issue" = "Report an issue";
-/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+/* Title of the Debug Logs cell in the Settings tab [Redesign_2023] */
 "_settings_title_debug_logs" = "Debug logs";
-/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+/* Title of the Help us fight censorship cell in the Settings tab [Redesign_2023] */
 "_settings_title_censorship" = "Help us fight censorship";
-/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+/* Title of the Rate Proton VPN cell in the Settings tab [Redesign_2023] */
 "_settings_title_rate" = "Rate Proton VPN";
-/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+/* Title of the Restore default settings cell in the Settings tab [Redesign_2023] */
 "_settings_title_restore_default_settings" = "Restore default settings";
-/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+/* Title of the Sign Out cell in the Settings tab [Redesign_2023] */
 "_settings_title_sign_out" = "Sign out";
 
 /* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) [Redesign_2023] */
@@ -240,9 +240,16 @@
 /* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
 "_settings_killswitch_off" = "Off";
 
-/* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab, and underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme [Redesign_2023] */
-"_settings_theme_auto" = "Auto*";
-/* Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab, and underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
-"_settings_theme_dark" = "Dark";
-/* Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab, and underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
-"_settings_theme_light" = "Light";
+/* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_auto" = "Auto";
+/* Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_dark" = "Dark";
+/* Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_light" = "Light";
+
+/* Represents a value of Auto for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme [Redesign_2023] */
+"_settings_theme_label_auto" = "Auto*";
+/* Represents a value of dark mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_dark" = "Dark";
+/* Represents a value of light mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_light" = "Light";
