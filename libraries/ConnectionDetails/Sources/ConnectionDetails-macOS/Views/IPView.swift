@@ -18,7 +18,6 @@
 
 import SwiftUI
 import Theme
-import Theme_macOS
 import ConnectionDetails
 import ComposableArchitecture
 import Strings

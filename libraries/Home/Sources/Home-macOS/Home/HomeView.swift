@@ -18,7 +18,6 @@
 
 import SwiftUI
 import Home
-import Theme_macOS
 import VPNShared
 import ComposableArchitecture
 
