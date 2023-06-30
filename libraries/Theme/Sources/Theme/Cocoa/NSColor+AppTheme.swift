@@ -244,4 +244,10 @@ public extension Image {
     }
 }
 
+public extension Text {
+    func styled(_ style: AppTheme.Style = .normal) -> Text {
+        foregroundColor(.init(.text, style))
+    }
+}
+
 #endif
