@@ -62,18 +62,7 @@ struct HomeConnectionCardView: View {
     var card: some View {
         VStack {
             HStack {
-                let location = item.connection.location
-                AnyView(location.flag.appearance(.iOS))
-                VStack {
-                    Text(location.text(locale: locale))
-                        .themeFont(.body1())
-                        .styled()
-                    if let subtext = location.subtext(locale: locale) {
-                        Text(subtext)
-                            .themeFont(.caption())
-                            .styled(.weak)
-                    }
-                }
+                ConnectionFlagInfoView(location: item.connection.location)
                 Spacer()
                 Button(action: {
                     sendAction(.showConnectionDetails)

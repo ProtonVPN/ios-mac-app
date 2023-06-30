@@ -67,24 +67,4 @@ extension ConnectionSpec.Location {
         }
     }
 
-
-    public var flag: any FlagView {
-        switch self {
-        case .fastest:
-            return FastestFlagView(secureCore: false)
-        case .region(let code):
-            return SimpleFlagView(regionCode: code)
-        case .exact(_, _, _, let code):
-            return SimpleFlagView(regionCode: code)
-        case .secureCore(let secureCoreSpec):
-            switch secureCoreSpec {
-            case .fastest:
-                return FastestFlagView(secureCore: true)
-            case let .fastestHop(code):
-                return SecureCoreFlagView(regionCode: code, viaRegionCode: nil)
-            case let .hop(code, via):
-                return SecureCoreFlagView(regionCode: code, viaRegionCode: via)
-            }
-        }
-    }
 }
