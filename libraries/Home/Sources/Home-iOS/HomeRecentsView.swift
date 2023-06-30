@@ -49,7 +49,7 @@ public struct HomeRecentsSectionView: View {
 }
 
 struct RecentRowItemView: View {
-    static let iconSize: AppTheme.IconSize = .square(16)
+    @ScaledMetric var iconSize: CGFloat = 16
 
     @Dependency(\.locale) private var locale
 
@@ -65,30 +65,17 @@ struct RecentRowItemView: View {
     @State var buttonLabelSize: CGSize = .zero
 
     private var swipeableRow: some View {
-        HStack(alignment: .top) {
-            let location = item.connection.location
-            HStack(alignment: .center) {
-                item.icon
-                    .renderingMode(.template)
-                    .foregroundColor(.init(.icon, .weak))
-                    .frame(Self.iconSize)
-                    .padding(.leading)
-                    .padding(.trailing, .themeSpacing12)
-                AnyView(location.flag.appearance(.iOS))
-                    .frame(.flagIconSize)
-                    .padding(.trailing, .themeSpacing12)
-            }
-            VStack(alignment: .leading) {
-                Text(location.text(locale: locale))
-                    .foregroundColor(Color(.text))
-                    .themeFont(.body1())
-                    .padding(.top, -2)
-                if let subtext = location.subtext(locale: locale) {
-                    Text(subtext)
-                        .foregroundColor(Color(.text, .weak))
-                        .themeFont(.caption())
-                }
-            }
+        HStack(alignment: .center) {
+            item.icon
+                .resizable()
+                .renderingMode(.template)
+                .foregroundColor(.init(.icon, .weak))
+                .frame(width: iconSize, height: iconSize)
+                .padding(.leading)
+                .padding(.trailing, .themeSpacing12)
+
+            ConnectionFlagInfoView(location: item.connection.location)
+
             Spacer()
         }
         .frame(maxWidth: .infinity, minHeight: Self.itemCellHeight)
@@ -307,8 +294,9 @@ extension HomeFeature.Action {
             text
         } icon: {
             icon
+                .resizable()
                 .styled(.inverted)
-                .frame(RecentRowItemView.iconSize)
+                .frame(width: 16, height: 16) // todo: this doesn't change size with dynamic type
         }
         .labelStyle(VerticalLabelStyle())
     }

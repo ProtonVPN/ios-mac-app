@@ -90,15 +90,6 @@ internal extension GeometryProxy {
     }
 }
 
-extension FlagAppearance {
-    static let iOS: Self = .init(
-        secureCoreFlagShadowColor: .black.opacity(0.4),
-        secureCoreFlagCurveColor: .init(.icon, .hint),
-        fastestAccentColor: FastestFlagView.boltColor,
-        fastestBackgroundColor: Theme.Asset.sharedPineBase.swiftUIColor.opacity(0.3)
-    )
-}
-
 #if DEBUG
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
