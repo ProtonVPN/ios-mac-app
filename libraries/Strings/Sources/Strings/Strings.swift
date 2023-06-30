@@ -195,43 +195,49 @@ public enum Localizable {
   public static var settingsSectionTitleSupport: String { return Localizable.tr("Localizable", "_settings_section_title_support", fallback: "Support") }
   /// Settings tab in bottom menu [Redesign_2023]
   public static var settingsTab: String { return Localizable.tr("Localizable", "_settings_tab", fallback: "Settings") }
-  /// Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab, and underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme [Redesign_2023]
-  public static var settingsThemeAuto: String { return Localizable.tr("Localizable", "_settings_theme_auto", fallback: "Auto*") }
-  /// Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab, and underneath the corresponding option when drilled into the Theme settings view [Redesign_2023]
-  public static var settingsThemeDark: String { return Localizable.tr("Localizable", "_settings_theme_dark", fallback: "Dark") }
-  /// Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab, and underneath the corresponding option when drilled into the Theme settings view [Redesign_2023]
-  public static var settingsThemeLight: String { return Localizable.tr("Localizable", "_settings_theme_light", fallback: "Light") }
+  /// Represents a value of Auto for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme [Redesign_2023]
+  public static var settingsThemeLabelAuto: String { return Localizable.tr("Localizable", "_settings_theme_label_auto", fallback: "Auto*") }
+  /// Represents a value of dark mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023]
+  public static var settingsThemeLabelDark: String { return Localizable.tr("Localizable", "_settings_theme_label_dark", fallback: "Dark") }
+  /// Represents a value of light mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023]
+  public static var settingsThemeLabelLight: String { return Localizable.tr("Localizable", "_settings_theme_label_light", fallback: "Light") }
+  /// Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023]
+  public static var settingsThemeValueAuto: String { return Localizable.tr("Localizable", "_settings_theme_value_auto", fallback: "Auto") }
+  /// Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023]
+  public static var settingsThemeValueDark: String { return Localizable.tr("Localizable", "_settings_theme_value_dark", fallback: "Dark") }
+  /// Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023]
+  public static var settingsThemeValueLight: String { return Localizable.tr("Localizable", "_settings_theme_value_light", fallback: "Light") }
   /// Title at the top of the Settings tab [Redesign_2023]
   public static var settingsTitle: String { return Localizable.tr("Localizable", "_settings_title", fallback: "Settings") }
-  /// Title of the NetShield cell in the Settings tab [Redesign_2023]
+  /// Title of the Advanced Settings cell in the Settings tab [Redesign_2023]
   public static var settingsTitleAdvanced: String { return Localizable.tr("Localizable", "_settings_title_advanced", fallback: "Advanced settings") }
-  /// Title of the NetShield cell in the Settings tab [Redesign_2023]
+  /// Title of the Beta Access cell in the Settings tab [Redesign_2023]
   public static var settingsTitleBetaAccess: String { return Localizable.tr("Localizable", "_settings_title_beta_access", fallback: "Beta access") }
-  /// Title of the NetShield cell in the Settings tab [Redesign_2023]
+  /// Title of the Help us fight censorship cell in the Settings tab [Redesign_2023]
   public static var settingsTitleCensorship: String { return Localizable.tr("Localizable", "_settings_title_censorship", fallback: "Help us fight censorship") }
-  /// Title of the NetShield cell in the Settings tab [Redesign_2023]
+  /// Title of the Debug Logs cell in the Settings tab [Redesign_2023]
   public static var settingsTitleDebugLogs: String { return Localizable.tr("Localizable", "_settings_title_debug_logs", fallback: "Debug logs") }
-  /// Title of the NetShield cell in the Settings tab [Redesign_2023]
+  /// Title of the KillSwitch cell in the Settings tab [Redesign_2023]
   public static var settingsTitleKillSwitch: String { return Localizable.tr("Localizable", "_settings_title_kill_switch", fallback: "Kill Switch") }
   /// Title of the NetShield cell in the Settings tab [Redesign_2023]
   public static var settingsTitleNetshield: String { return Localizable.tr("Localizable", "_settings_title_netshield", fallback: "NetShield") }
-  /// Title of the NetShield cell in the Settings tab [Redesign_2023]
+  /// Title of the Protocol cell in the Settings tab [Redesign_2023]
   public static var settingsTitleProtocol: String { return Localizable.tr("Localizable", "_settings_title_protocol", fallback: "Protocol") }
-  /// Title of the NetShield cell in the Settings tab [Redesign_2023]
+  /// Title of the Rate Proton VPN cell in the Settings tab [Redesign_2023]
   public static var settingsTitleRate: String { return Localizable.tr("Localizable", "_settings_title_rate", fallback: "Rate Proton VPN") }
-  /// Title of the NetShield cell in the Settings tab [Redesign_2023]
+  /// Title of the Report an Issue cell in the Settings tab [Redesign_2023]
   public static var settingsTitleReportIssue: String { return Localizable.tr("Localizable", "_settings_title_report_issue", fallback: "Report an issue") }
-  /// Title of the NetShield cell in the Settings tab [Redesign_2023]
+  /// Title of the Restore default settings cell in the Settings tab [Redesign_2023]
   public static var settingsTitleRestoreDefaultSettings: String { return Localizable.tr("Localizable", "_settings_title_restore_default_settings", fallback: "Restore default settings") }
-  /// Title of the NetShield cell in the Settings tab [Redesign_2023]
+  /// Title of the Sign Out cell in the Settings tab [Redesign_2023]
   public static var settingsTitleSignOut: String { return Localizable.tr("Localizable", "_settings_title_sign_out", fallback: "Sign out") }
-  /// Title of the NetShield cell in the Settings tab [Redesign_2023]
+  /// Title of the Support Center cell in the Settings tab [Redesign_2023]
   public static var settingsTitleSupportCenter: String { return Localizable.tr("Localizable", "_settings_title_support_center", fallback: "Support center") }
-  /// Title of the NetShield cell in the Settings tab [Redesign_2023]
+  /// Title of the Theme cell in the Settings tab [Redesign_2023]
   public static var settingsTitleTheme: String { return Localizable.tr("Localizable", "_settings_title_theme", fallback: "Theme") }
-  /// Title of the NetShield cell in the Settings tab [Redesign_2023]
+  /// Title of the VPN Accelerator cell in the Settings tab [Redesign_2023]
   public static var settingsTitleVpnAccelerator: String { return Localizable.tr("Localizable", "_settings_title_vpn_accelerator", fallback: "VPN Accelerator") }
-  /// Title of the NetShield cell in the Settings tab [Redesign_2023]
+  /// Title of the Widget cell in the Settings tab [Redesign_2023]
   public static var settingsTitleWidget: String { return Localizable.tr("Localizable", "_settings_title_widget", fallback: "Widget") }
   /// Plural format key: "%#@STEP@ %#@STEPS@"
   public static func stepOf(_ p1: Int, _ p2: Int) -> String {
