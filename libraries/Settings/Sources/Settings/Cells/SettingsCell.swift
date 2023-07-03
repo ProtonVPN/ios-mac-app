@@ -28,17 +28,29 @@ struct SettingsCell: View {
     private let icon: Image
     private let accessory: Accessory
     private let content: Content
+    private let onTap: () -> Void
 
     @ScaledMetric private var iconRadius: CGFloat = .themeRadius24
 
-    init(icon: Image, content: Content, accessory: Accessory) {
+    init(
+        icon: Image,
+        content: Content,
+        accessory: Accessory,
+        onTap: @escaping () -> Void = { }
+    ) {
         self.icon = icon
         self.content = content
         self.accessory = accessory
+        self.onTap = onTap
     }
 
-    init(icon: Theme.ImageAsset, content: Content, accessory: Accessory) {
-        self.init(icon: icon.swiftUIImage, content: content, accessory: accessory)
+    init(
+        icon: Theme.ImageAsset,
+        content: Content,
+        accessory: Accessory,
+        onTap: @escaping () -> Void = { }
+    ) {
+        self.init(icon: icon.swiftUIImage, content: content, accessory: accessory, onTap: onTap)
     }
 
     var body: some View {
@@ -47,7 +59,9 @@ struct SettingsCell: View {
             contentView
             accessoryView
         }
-        //.listRowBackground(Color(.background, .warning))
+        .contentShape(Rectangle()) // make the entire cell tappable
+        .onTapGesture { onTap() }
+        .listRowBackground(Color(.background, .normal))
     }
 
     private var accessoryView: some View {
