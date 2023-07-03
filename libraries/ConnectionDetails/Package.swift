@@ -25,9 +25,13 @@ let package = Package(
             targets: ["ConnectionDetails-macOS"]),
     ],
     dependencies: [
+        // Local
         .package(path: "../Theme"),
+        .package(path: "../SharedViews"),
         .package(path: "../Strings"),
         .package(path: "../NEHelper"),
+
+        // 3rd party
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "0.55.0"),
     ],
     targets: [
@@ -43,6 +47,7 @@ let package = Package(
             dependencies: [
                 "Strings",
                 "ConnectionDetails",
+                "SharedViews",
                 .product(name: "Theme", package: "Theme"),
                 .product(name: "VPNShared", package: "NEHelper"),
                 // 3rd party

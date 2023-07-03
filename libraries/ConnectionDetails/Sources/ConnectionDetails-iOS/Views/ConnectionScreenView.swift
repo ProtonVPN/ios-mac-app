@@ -22,6 +22,7 @@ import Strings
 import ConnectionDetails
 import VPNAppCore
 import Theme
+import SharedViews
 
 public struct ConnectionScreenFeature: ReducerProtocol {
 
@@ -30,12 +31,16 @@ public struct ConnectionScreenFeature: ReducerProtocol {
         public var connectionDetailsState: ConnectionDetailsFeature.State
         public var connectionFeatures: [ConnectionSpec.Feature]
         public var isSecureCore: Bool
+        public var connectionSpec: ConnectionSpec
+        public var vpnConnectionActual: VPNConnectionActual?
 
-        public init(ipViewState: IPViewFeature.State, connectionDetailsState: ConnectionDetailsFeature.State, connectionFeatures: [ConnectionSpec.Feature], isSecureCore: Bool) {
+        public init(ipViewState: IPViewFeature.State, connectionDetailsState: ConnectionDetailsFeature.State, connectionFeatures: [ConnectionSpec.Feature], isSecureCore: Bool, connectionSpec: ConnectionSpec, vpnConnectionActual: VPNConnectionActual?) {
             self.ipViewState = ipViewState
             self.connectionDetailsState = connectionDetailsState
             self.connectionFeatures = connectionFeatures
             self.isSecureCore = isSecureCore
+            self.connectionSpec = connectionSpec
+            self.vpnConnectionActual = vpnConnectionActual
         }
     }
 
@@ -43,6 +48,11 @@ public struct ConnectionScreenFeature: ReducerProtocol {
         case close
         case ipViewAction(IPViewFeature.Action)
         case connectionDetailsAction(ConnectionDetailsFeature.Action)
+
+        /// Watch for changes of VPN connection
+        case watchConnectionStatus
+        /// Process new VPN connection state
+        case newConnectionStatus(VPNConnectionStatus)
     }
 
     public init() {
@@ -50,7 +60,30 @@ public struct ConnectionScreenFeature: ReducerProtocol {
 
     public var body: some ReducerProtocolOf<Self> {
         Reduce { state, action in
-            return .none
+            switch action {
+
+            case .watchConnectionStatus:
+                return .run { send in
+                    @Dependency(\.watchVPNConnectionStatus) var watchVPNConnectionStatus
+                    for await vpnStatus in await watchVPNConnectionStatus() {
+                        await send(.newConnectionStatus(vpnStatus), animation: .default)
+                    }
+                }
+
+            case .newConnectionStatus(let connectionStatus):
+                switch connectionStatus {
+                case .connected(let intent, let actual), .connecting(let intent, let actual), .loadingConnectionInfo(let intent, let actual), .disconnecting(let intent, let actual):
+                    state.connectionSpec = intent
+                    state.vpnConnectionActual = actual
+
+                case .disconnected:
+                    break // todo: close this view?
+                }
+                return .none
+
+            default:
+                return .none
+            }
         }
     }
 }
@@ -68,7 +101,8 @@ public struct ConnectionScreenView: View {
     public var body: some View {
         VStack(alignment: .leading) {
             WithViewStore(self.store, observe: { $0 }, content: { viewStore in
-                HStack {
+                HStack(alignment: .top) {
+                    ConnectionFlagInfoView(location: viewStore.connectionSpec.location)
 
                     Spacer()
 
@@ -79,8 +113,12 @@ public struct ConnectionScreenView: View {
                             .resizable().frame(width: closeButtonSize, height: closeButtonSize)
                             .foregroundColor(Color(.icon, .weak))
                     })
-                    .padding(.themeRadius16)
+                    .padding([.leading], .themeRadius16)
+                    .padding([.trailing], .themeRadius8)
                 }
+                .padding(.themeSpacing16)
+
+                .task { await viewStore.send(.watchConnectionStatus).finish() }
             })
 
             ScrollView(.vertical) {
@@ -129,6 +167,7 @@ public struct ConnectionScreenView: View {
                 })
             }
         }
+        .background(Color(.background, .strong))
     }
 }
 
@@ -137,16 +176,31 @@ public struct ConnectionScreenView: View {
 struct ConnectionScreenView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ConnectionScreenView(store: Store(initialState: ConnectionScreenFeature.State(
-                ipViewState: IPViewFeature.State(localIP: "127.0.0.1", vpnIp: "102.107.197.6"),
-                connectionDetailsState: ConnectionDetailsFeature.State(connectedSince: Date.init(timeIntervalSinceNow: -12345),
-                                                                       country: "Lithuania",
-                                                                       city: "Siauliai",
-                                                                       server: "LT#5",
-                                                                       serverLoad: 23,
-                                                                       protocolName: "WireGuard"), connectionFeatures: [.p2p, .tor, .smart, .streaming],
-                isSecureCore: true),
-                                              reducer: ConnectionScreenFeature()))
+            ConnectionScreenView(
+                store: Store(
+                    initialState: ConnectionScreenFeature.State(
+                        ipViewState: IPViewFeature.State(
+                            localIP: "127.0.0.1",
+                            vpnIp: "102.107.197.6"
+                        ),
+                        connectionDetailsState: ConnectionDetailsFeature.State(
+                            connectedSince: Date.init(timeIntervalSinceNow: -12345),
+                            country: "Lithuania",
+                            city: "Siauliai",
+                            server: "LT#5",
+                            serverLoad: 23,
+                            protocolName: "WireGuard"
+                        ),
+                        connectionFeatures: [.p2p, .tor, .smart, .streaming],
+                        isSecureCore: true,
+                        connectionSpec: ConnectionSpec(
+                            location: .secureCore(.hop(to: "US", via: "CH")),
+                            features: []),
+                        vpnConnectionActual: nil
+                       ),
+                    reducer: ConnectionScreenFeature()
+                )
+            )
         }
         .background(Color(.background, .strong))
     }
