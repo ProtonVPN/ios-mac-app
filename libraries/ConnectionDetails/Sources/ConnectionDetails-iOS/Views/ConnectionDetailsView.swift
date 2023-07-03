@@ -136,20 +136,29 @@ struct ConnectionDetailsView: View {
 //            let layout = standardTypeSize // todo: this only works on ios 16 :(
 //                ? AnyLayout(HStackLayout())
 //                : AnyLayout(VStackLayout(alignment: .leading))
-//
-//            layout {
-            VStack(alignment: .leading) {
-                self.titleView
-                if standardTypeSize {
+//            layout { }
+
+            AnyView(rowView) // Without AnyView next lines won't compile
+                .accessibilityLabel(title) // todo: test how this works
+                .accessibilityLabel(value)
+                .padding([.top, .bottom], .themeSpacing12)
+                .padding([.leading, .trailing], .themeSpacing16)
+        }
+
+        @ViewBuilder
+        var rowView: any View {
+            if standardTypeSize {
+                HStack(alignment: .top) {
+                    self.titleView
                     Spacer()
+                    self.valueView
                 }
-                self.valueView
-                    .foregroundColor(Color(.text, .normal))
+            } else {
+                VStack(alignment: .leading) {
+                    self.titleView
+                    self.valueView
+                }
             }
-            .accessibilityLabel(title) // todo: test how this works
-            .accessibilityLabel(value)
-            .padding([.top, .bottom], .themeSpacing12)
-            .padding([.leading, .trailing], .themeSpacing16)
         }
 
         var titleView: some View {
@@ -193,5 +202,6 @@ struct ConnectionDetailsView_Previews: PreviewProvider {
                 serverLoad: 23,
                 protocolName: "WireGuard"),
             reducer: ConnectionDetailsFeature()))
+        .previewLayout(.sizeThatFits)
     }
 }
