@@ -25,6 +25,7 @@ import Home
 import Strings
 import Theme
 import VPNAppCore
+import SharedViews
 
 public struct HomeRecentsSectionView: View {
     let items: [RecentConnection]
@@ -65,7 +66,7 @@ struct RecentRowItemView: View {
     @State var buttonLabelSize: CGSize = .zero
 
     private var swipeableRow: some View {
-        HStack(alignment: .center) {
+        HStack(alignment: .top) {
             item.icon
                 .resizable()
                 .renderingMode(.template)
@@ -73,6 +74,7 @@ struct RecentRowItemView: View {
                 .frame(width: iconSize, height: iconSize)
                 .padding(.leading)
                 .padding(.trailing, .themeSpacing12)
+                .padding(.top, .themeSpacing2)
 
             ConnectionFlagInfoView(location: item.connection.location)
 
@@ -336,6 +338,12 @@ struct Recents_Previews: PreviewProvider {
                     underMaintenance: false,
                     connectionDate: .now,
                     connection: .init(location: .secureCore(.fastestHop(to: "AR")), features: [])
+                ),
+                .init(
+                    pinned: false,
+                    underMaintenance: false,
+                    connectionDate: .now,
+                    connection: .init(location: .secureCore(.hop(to: "FR", via: "CH")), features: [])
                 ),
             ],
                   connectionStatus: .init(protectionState: .protected(netShield: .random)), vpnConnectionStatus: .disconnected),
