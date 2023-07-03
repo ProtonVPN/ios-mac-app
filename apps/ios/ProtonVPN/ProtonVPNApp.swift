@@ -31,13 +31,23 @@ import ComposableArchitecture
 
 struct AppReducer: ReducerProtocol {
     struct State: Equatable {
-        public var home: HomeFeature.State
-        public var connectionScreenState: ConnectionScreenFeature.State?
-//        public var countries: CountriesFeature.State
-        public var settings: SettingsFeature.State
+        var selectedTab: Tab
+
+        var home: HomeFeature.State
+        var connectionScreenState: ConnectionScreenFeature.State?
+        // var countries: CountriesFeature.State
+        var settings: SettingsFeature.State
+
+    }
+
+    enum Tab {
+        case home
+        case countries
+        case settings
     }
 
     enum Action: Equatable {
+        case selectedTabChanged(Tab)
         case home(HomeFeature.Action)
         case connectionScreenAction(ConnectionScreenFeature.Action)
         case connectionScreenDismissed
@@ -47,6 +57,9 @@ struct AppReducer: ReducerProtocol {
     var body: some ReducerProtocolOf<Self> {
         Reduce { state, action in
             switch action {
+            case .selectedTabChanged(let tab):
+                state.selectedTab = tab
+                return .none
 
             case .home(.showConnectionDetails):
                 state.connectionScreenState = ConnectionScreenFeature.State(
@@ -104,14 +117,6 @@ struct ProtonVPNApp: App {
 
     @Environment(\.scenePhase) var scenePhase
 
-    enum Tab {
-        case home
-        case countries
-        case settings
-    }
-
-    @State private var selectedTab: Tab = .home
-
     let store: StoreOf<AppReducer>
 
     init() {
@@ -135,18 +140,22 @@ struct ProtonVPNApp: App {
 
     var body: some Scene {
         WindowGroup {
-            WithViewStore(self.store, observe: { $0 }, content: { viewStore in
-
-                TabView(selection: $selectedTab) {
+            WithViewStore(self.store, observe: { $0 }) { viewStore in
+                TabView(
+                    selection: viewStore.binding(
+                        get: \.selectedTab,
+                        send: AppReducer.Action.selectedTabChanged
+                    )
+                ) {
                     HomeView(store: store.scope(state: \.home, action: AppReducer.Action.home))
                         .homeTabItem()
-                        .tag(Tab.home)
+                        .tag(AppReducer.Tab.home)
                     CountriesView()
                         .countriesTabItem()
-                        .tag(Tab.countries)
+                        .tag(AppReducer.Tab.countries)
                     SettingsView(store: store.scope(state: \.settings, action: AppReducer.Action.settings))
                         .settingsTabItem()
-                        .tag(Tab.settings)
+                        .tag(AppReducer.Tab.settings)
                 }
                 .tint(Color(.text, .interactive))
                 .onOpenURL { url in // deeplinks
@@ -158,7 +167,7 @@ struct ProtonVPNApp: App {
                     ConnectionScreenView(store: store.scope(state: { _ in binding.wrappedValue }, action: AppReducer.Action.connectionScreenAction ))
                 })
 
-            })
+            }
         }
         .onChange(of: scenePhase) { newScenePhase in // The SwiftUI lifecycle events
             switch newScenePhase {

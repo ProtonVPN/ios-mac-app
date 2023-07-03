@@ -25,6 +25,7 @@ struct InitialStateProvider {
 extension InitialStateProvider: DependencyKey {
     static let liveValue = InitialStateProvider(
         initialState: .init(
+            selectedTab: .home,
             home: .init(
                 connections: [.pinnedConnection, .previousConnection, .connectionSecureCoreFastest, .connectionRegion],
                 // connectionStatus: .init(protectionState: .unprotected(country: "Poland", ip: "192.168.1.0")),
