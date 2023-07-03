@@ -221,7 +221,9 @@ public struct SettingsView: View {
     /// In the absence of `.navigationDestination`, this is builds a collection of empty and inert NavigationLinks,
     /// which which activate when the destination state matches their case.
     ///
-    /// - Note: iOS 16 waiting room 😑
+    /// - Note: Links/navigation destinations are implemented separately from the cells that correspond to these
+    /// destinations, because wrapping a list element with a `NavigationLink` appends an uncustomisable disclosure
+    /// indicator to the trailing edge of each row
     private var navigationDestinations: some View {
         WithViewStore(store, observe: { $0.destination }) { destinationStore in
             featureDestinations(viewStore: destinationStore)
@@ -229,50 +231,33 @@ public struct SettingsView: View {
         }
     }
 
+    private func destination(
+        case: CasePath<SettingsFeature.Destination, Void>,
+        view destination: @escaping () -> some View
+    ) -> some View {
+        return WithViewStore(store, observe: { $0.destination }) { viewStore in
+            NavigationLink(
+                unwrapping: viewStore.binding(get: { $0 }, send: .dismissDestination),
+                case: `case`,
+                onNavigate: { _ in },
+                destination: { _ in destination() },
+                label: { EmptyView() }
+            )
+        }
+    }
+
     @ViewBuilder private func featureDestinations(viewStore: DestinationViewStore) -> some View {
-        NavigationLink(
-            unwrapping: viewStore.binding(get: { $0 }, send: .dismissDestination),
-            case: /SettingsFeature.Destination.netShield,
-            onNavigate: { _ in },
-            destination: { _ in
-                NetShieldSettingsView(
-                    store: store.scope(
-                        state: \.netShield,
-                        action: SettingsFeature.Action.netShield
-                    )
-                )
-            },
-            label: { EmptyView() }
-        )
-        NavigationLink(
-            unwrapping: viewStore.binding(get: { $0 }, send: .dismissDestination),
-            case: /SettingsFeature.Destination.killSwitch,
-            onNavigate: { _ in },
-            destination: { _ in
-                KillSwitchSettingsView(
-                    store: store.scope(
-                        state: \.killSwitch,
-                        action: SettingsFeature.Action.killSwitch
-                    )
-                )
-            },
-            label: { EmptyView() }
-        )
+        destination(case: /.netShield) {
+            NetShieldSettingsView(store: store.scope(state: \.netShield, action: SettingsFeature.Action.netShield))
+        }
+        destination(case: /.killSwitch) {
+            KillSwitchSettingsView(store: store.scope(state: \.killSwitch, action: SettingsFeature.Action.killSwitch))
+        }
     }
 
     @ViewBuilder private func generalDestinations(viewStore: DestinationViewStore) -> some View {
-        WithViewStore(store, observe: { $0.destination }) { viewStore in
-            NavigationLink(
-                unwrapping: viewStore.binding(get: { $0 }, send: .dismissDestination),
-                case: /SettingsFeature.Destination.theme,
-                onNavigate: { _ in },
-                destination: { _ in
-                    ThemeSettingsView(
-                        store: store.scope(state: \.theme, action: SettingsFeature.Action.theme)
-                    )
-                },
-                label: { EmptyView() }
-            )
+        destination(case: /.theme) {
+            ThemeSettingsView(store: store.scope(state: \.theme, action: SettingsFeature.Action.theme))
         }
     }
 }
