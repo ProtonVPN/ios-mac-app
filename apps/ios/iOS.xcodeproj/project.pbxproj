@@ -419,7 +419,6 @@
 		E1FB5482230C2DD000153F4D /* ColorPickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FB547F230C2DD000153F4D /* ColorPickerTableViewCell.swift */; };
 		E1FB5483230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
 		E1FB5484230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
-		E509509429ED258500C0F935 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		E532A8A7292520FC00096D2D /* ServersInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59C7A922923B1650034E56F /* ServersInformationViewController.swift */; };
 		E532A8AD29252FFD00096D2D /* InformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */; };
 		E532A8B12925663B00096D2D /* InformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */; };
@@ -429,7 +428,6 @@
 		E56790E42A45D48F0089CA79 /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = E56790E32A45D48F0089CA79 /* Strings */; };
 		E5772AE529B0C63F0076D824 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0429AF583D00B6612D /* Assets.swift */; };
 		E582CC122A1372B500C91B64 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E582CC112A1372B500C91B64 /* Theme */; };
-		E582CC1A2A13999000C91B64 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		E58E5AB42A4AD33000891B77 /* InitialStateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58E5AB32A4AD33000891B77 /* InitialStateProvider.swift */; };
 		E593B97127BA7DC100AFCA8C /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B97027BA7DC100AFCA8C /* UpsellColors.swift */; };
 		E5980FB929F8068800405986 /* Home-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E5980FB829F8068800405986 /* Home-iOS */; };
@@ -442,7 +440,6 @@
 		E5B3049E28BF7C4A0093517A /* AnnouncementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B3049C28BF628E0093517A /* AnnouncementViewController.swift */; };
 		E5B3049F28BF7C720093517A /* AnnouncementImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E7EFED28B8EDA4005249D3 /* AnnouncementImageViewController.swift */; };
 		E5C035B327BAA8EF003196F5 /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B97027BA7DC100AFCA8C /* UpsellColors.swift */; };
-		E5CEF62D29E823B200945415 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		E5CF14862949E68700AF6912 /* QuarkCommands+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CF14852949E68700AF6912 /* QuarkCommands+Async.swift */; };
 		E5E7EFEE28B8EDA4005249D3 /* AnnouncementImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E7EFED28B8EDA4005249D3 /* AnnouncementImageViewController.swift */; };
 		E5E7EFF028B8EDEC005249D3 /* AnnouncementImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5E7EFEF28B8EDEC005249D3 /* AnnouncementImageViewController.xib */; };
@@ -1143,7 +1140,6 @@
 				E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */,
 				257C90332E8EB77D46C645E6 /* Pods_ProtonVPN.framework in Frameworks */,
 				4CB776D52A1F62DF004CA127 /* Logging in Frameworks */,
-				E509509429ED258500C0F935 /* BuildFile in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1151,7 +1147,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E582CC1A2A13999000C91B64 /* BuildFile in Frameworks */,
 				80392CA76D20B620739FAA5D /* Pods_ProtonVPNTests.framework in Frameworks */,
 				4CD1107F2A2A09410062AE13 /* Logging in Frameworks */,
 				4CD110812A2A095D0062AE13 /* PMLogger in Frameworks */,
@@ -1202,7 +1197,6 @@
 				E148AE5421C1684F007AB65A /* NetworkExtension.framework in Frameworks */,
 				F3521E13264A9D340070F177 /* vpncore.framework in Frameworks */,
 				921E3680E612A1D8F1A969F2 /* Pods_Quick_Connect_Widget.framework in Frameworks */,
-				E5CEF62D29E823B200945415 /* BuildFile in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

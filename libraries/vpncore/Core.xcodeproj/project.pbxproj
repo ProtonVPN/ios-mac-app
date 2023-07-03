@@ -505,8 +505,6 @@
 		E5768641297822F90014F944 /* TelemetryConnectionNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5768640297822F90014F944 /* TelemetryConnectionNotifier.swift */; };
 		E5768642297822F90014F944 /* TelemetryConnectionNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5768640297822F90014F944 /* TelemetryConnectionNotifier.swift */; };
 		E5813B5229EE9C7500549AA8 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E5813B5129EE9C7500549AA8 /* Theme */; };
-		E582CC162A13949900C91B64 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
-		E582CC182A1394A100C91B64 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		E58D06422A0B8B1C002A896C /* Clocks in Frameworks */ = {isa = PBXBuildFile; productRef = E58D06412A0B8B1C002A896C /* Clocks */; };
 		E58EE0A42907DEBF003006F5 /* PlanSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58EE0A32907DEBF003006F5 /* PlanSession.swift */; };
 		E58EE0A52907DEBF003006F5 /* PlanSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58EE0A32907DEBF003006F5 /* PlanSession.swift */; };
@@ -1198,7 +1196,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D582731E2A4F00E90021CA41 /* Theme in Frameworks */,
-				E582CC162A13949900C91B64 /* (null) in Frameworks */,
 				E5C8A2642A3C4C5500290723 /* Dependencies in Frameworks */,
 				E939EEF3279561EE006E4305 /* BugReport in Frameworks */,
 				D582731A2A4F00C60021CA41 /* PMLogger in Frameworks */,
@@ -1219,7 +1216,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D58897172A4EEC0B004C1092 /* Theme in Frameworks */,
-				E582CC182A1394A100C91B64 /* (null) in Frameworks */,
 				E9CB3B0228A676820086F22F /* TimerMock in Frameworks */,
 				E1B5F5E221B68ABD00B558B0 /* vpncore.framework in Frameworks */,
 				507B74FDE03E5AFB9ED0A082 /* Pods_Core_vpncore_iosTests.framework in Frameworks */,
