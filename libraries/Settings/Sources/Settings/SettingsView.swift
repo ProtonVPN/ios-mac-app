@@ -42,6 +42,19 @@ public struct SettingsView: View {
         let accessory: Accessory.Style
     }
 
+    private func makeCell(
+        for feature: SettingsView.ChildFeature,
+        value: LocalizedStringConvertible?,
+        action: SettingsFeature.Action? = nil
+    ) -> SettingsCell {
+        SettingsCell(
+            icon: feature.icon,
+            content: .standard(title: feature.title, value: value?.localizedDescription),
+            accessory: Accessory(style: feature.accessory),
+            onTap: { if let action { store.send(action) } }
+        )
+    }
+
     let features = (
         netShield: ChildFeature(icon: Theme.Asset.icNetshield, title: Localizable.settingsTitleNetshield, accessory: .disclosure),
         killSwitch: ChildFeature(icon: Theme.Asset.icKillswitch, title: Localizable.settingsTitleKillSwitch, accessory: .disclosure),
@@ -66,25 +79,10 @@ public struct SettingsView: View {
         signOut: ChildFeature(icon: Theme.Asset.icArrowInToRectangle, title: Localizable.settingsTitleSignOut, accessory: .none)
     )
 
-    private var content: some View {
-        List {
-            accountSection
-            featuresSection
-            connectionSection
-            generalSection
-            supportSection
-            improveProtonSection
-            restoreDefaultsSection
-            signOutSection
-            Section(footer: footerView) { EmptyView() }
-        }
-        .padding(.top, .themeSpacing16)
-        .background(navigationDestinations)
-    }
-
     public var body: some View {
         NavigationView {
             List {
+                listOffsetView // Adding top padding to the List itself breaks navigation title animations
                 accountSection
                 featuresSection
                 connectionSection
@@ -93,28 +91,24 @@ public struct SettingsView: View {
                 improveProtonSection
                 restoreDefaultsSection
                 signOutSection
-                Section(footer: footerView) { EmptyView() }
+                Section(footer: footerView, content: { EmptyView() })
             }
-            .padding(.top, .themeSpacing16)
+            .hidingScrollBackground
             .background(Color(.background, .strong).ignoresSafeArea())
             .background(navigationDestinations) // append invisible navigation destinations to the hierarchy
             .navigationBarTitleDisplayMode(.large)
             .navigationTitle(Localizable.settingsTitle)
         }
         .navigationViewStyle(.stack)
-        .hidingScrollBackground
     }
 
     @ViewBuilder
     private func section(named name: String? = nil, @ViewBuilder content: @escaping () -> some View) -> some View {
         if let name {
             Section(content: content, header: { sectionHeader(named: name) })
-                .listRowBackground(Color(.background, .normal))
         } else {
             Section(content: content)
-                .listRowBackground(Color(.background, .normal))
         }
-        // List row background must be applied to sections instead of at the cell level because navigationlinks wrap the cell in a Z/HStack
     }
 
     private func sectionHeader(named name: String) -> some View {
@@ -123,6 +117,10 @@ public struct SettingsView: View {
             .foregroundColor(Color(.text, .weak))
             .textCase(nil) // Disable upper-casing section titles (on by default)
             .listRowInsets(sectionHeaderInsets)
+    }
+
+    private var listOffsetView: some View {
+        Section(footer: Spacer(), content: { EmptyView() })
     }
 
     @ViewBuilder
@@ -155,60 +153,56 @@ public struct SettingsView: View {
     private var featuresSection: some View {
         section(named: Localizable.settingsSectionTitleFeatures) {
             WithViewStore(store, observe: { $0.netShield }) { viewStore in
-                SettingsCell(feature: features.netShield, value: viewStore.state)
-                    .onTapGesture { store.send(.netShieldTapped) }
+                makeCell(for: features.netShield, value: viewStore.state, action: .netShieldTapped)
             }
             WithViewStore(store, observe: { $0.killSwitch }) { viewStore in
-                SettingsCell(feature: features.killSwitch, value: viewStore.state)
-                    .onTapGesture { store.send(.killSwitchTapped) }
+                makeCell(for: features.killSwitch, value: viewStore.state, action: .killSwitchTapped)
             }
         }
     }
 
     private var connectionSection: some View {
         section(named: Localizable.settingsSectionTitleConnection) {
-            SettingsCell(feature: features.vpnProtocol, value: nil)
-            SettingsCell(feature: features.vpnAccelerator, value: NetShieldSettingsFeature.State.on)
-            SettingsCell(feature: features.advanced, value: nil)
+            makeCell(for: features.vpnProtocol, value: nil)
+            makeCell(for: features.vpnAccelerator, value: NetShieldSettingsFeature.State.on)
+            makeCell(for: features.advanced, value: nil)
         }
     }
 
     private var generalSection: some View {
         section(named: Localizable.settingsSectionTitleGeneral) {
             WithViewStore(store, observe: { $0.theme }) { viewStore in
-                SettingsCell(feature: features.theme, value: viewStore.state)
-                    .onTapGesture { store.send(.themeTapped) }
+                makeCell(for: features.theme, value: viewStore.state, action: .themeTapped)
             }
-
-            SettingsCell(feature: features.betaAccess, value: nil)
-            SettingsCell(feature: features.widget, value: nil)
+            makeCell(for: features.betaAccess, value: nil)
+            makeCell(for: features.widget, value: nil)
         }
     }
 
     private var supportSection: some View {
         section(named: Localizable.settingsSectionTitleSupport) {
-            SettingsCell(feature: features.supportCenter, value: nil)
-            SettingsCell(feature: features.reportAnIssue, value: nil)
-            SettingsCell(feature: features.debugLogs, value: nil)
+            makeCell(for: features.supportCenter, value: nil)
+            makeCell(for: features.reportAnIssue, value: nil)
+            makeCell(for: features.debugLogs, value: nil)
         }
     }
 
     private var improveProtonSection: some View {
         section(named: Localizable.settingsSectionTitleImproveProton) {
-            SettingsCell(feature: features.censorship, value: nil)
-            SettingsCell(feature: features.rateProtonVPN, value: nil)
+            makeCell(for: features.censorship, value: nil)
+            makeCell(for: features.rateProtonVPN, value: nil)
         }
     }
 
     private var restoreDefaultsSection: some View {
         section {
-            SettingsCell(feature: features.restoreDefault, value: nil)
+            makeCell(for: features.restoreDefault, value: nil)
         }
     }
 
     private var signOutSection: some View {
         section {
-            SettingsCell(feature: features.signOut, value: nil)
+            makeCell(for: features.signOut, value: nil)
         }
     }
 
@@ -259,16 +253,6 @@ public struct SettingsView: View {
         destination(case: /.theme) {
             ThemeSettingsView(store: store.scope(state: \.theme, action: SettingsFeature.Action.theme))
         }
-    }
-}
-
-extension SettingsCell {
-    init(feature: SettingsView.ChildFeature, value: LocalizedStringConvertible?) {
-        self.init(
-            icon: feature.icon,
-            content: .standard(title: feature.title, value: value?.localizedDescription),
-            accessory: Accessory(style: feature.accessory)
-        )
     }
 }
 

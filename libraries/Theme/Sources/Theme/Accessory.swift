@@ -45,8 +45,7 @@ public struct Accessory: View {
             case .externalLink:
                 return Image(asset: Asset.icArrowOutSquare)
             case .checkmark(let isActive):
-                return Image(asset: isActive ? Asset.icCheckmarkCircleFilled : Asset.icEmptyCircle
-)
+                return Image(asset: isActive ? Asset.icCheckmarkCircleFilled : Asset.icEmptyCircle)
             case .none:
                 return nil
             }
