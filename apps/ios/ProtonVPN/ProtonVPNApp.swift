@@ -73,7 +73,11 @@ struct AppReducer: ReducerProtocol {
                                                                            serverLoad: 23,
                                                                            protocolName: "WireGuard"),
                     connectionFeatures: [.p2p, .tor, .smart, .streaming],
-                    isSecureCore: true
+                    isSecureCore: true,
+                    connectionSpec: ConnectionSpec(
+                        location: .secureCore(.hop(to: "US", via: "CH")),
+                        features: []),
+                    vpnConnectionActual: nil
                 )
                 return .none
 
