@@ -22,6 +22,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../Theme"),
+        .package(path: "../SharedViews"),
         .package(path: "../NEHelper"),
         .package(path: "../Strings"),
         .package(path: "../Ergonomics"),
@@ -62,6 +63,7 @@ let package = Package(
             name: "Home-iOS",
             dependencies: [
                 "Home",
+                "SharedViews",
                 "Strings",
                 "Theme",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),

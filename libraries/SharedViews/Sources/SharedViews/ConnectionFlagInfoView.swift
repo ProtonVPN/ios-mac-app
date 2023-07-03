@@ -26,6 +26,8 @@ public struct ConnectionFlagInfoView: View {
     public let location: ConnectionSpec.Location
     @Dependency(\.locale) private var locale
 
+    @ScaledMetric(relativeTo: .body) var topLineHeight: CGFloat = 16
+
     public init(location: ConnectionSpec.Location) {
         self.location = location
     }
@@ -52,8 +54,6 @@ public struct ConnectionFlagInfoView: View {
     }
 
     public var body: some View {
-        @ScaledMetric(relativeTo: .body) var topLineHeight: CGFloat = 16
-
         HStack(alignment: .top) {
             flag.padding(0)
 
@@ -105,5 +105,56 @@ struct ConnectionFlagView_Previews: PreviewProvider {
         }
         .previewLayout(.sizeThatFits)
         .padding()
+    }
+}
+
+// MARK: - Model extensions
+
+public extension ConnectionSpec.Location {
+
+    private func regionName(locale: Locale, code: String) -> String {
+        locale.localizedString(forRegionCode: code) ?? code
+    }
+
+    func accessibilityText(locale: Locale) -> String {
+        switch self {
+        case .fastest:
+            return "The fastest country available"
+        case .secureCore(.fastest):
+            return "The fastest secure core country available"
+        default:
+            // todo: .exact and .region should specify number and ideally features as well
+            return text(locale: locale)
+        }
+    }
+
+    func text(locale: Locale) -> String {
+        switch self {
+        case .fastest,
+                .secureCore(.fastest):
+            return "Fastest"
+        case .region(let code),
+                .exact(_, _, _, let code),
+                .secureCore(.fastestHop(let code)),
+                .secureCore(.hop(let code, _)):
+            return regionName(locale: locale, code: code)
+        }
+    }
+
+    func subtext(locale: Locale) -> String? {
+        switch self {
+        case .fastest, .region, .secureCore(.fastest), .secureCore(.fastestHop):
+            return nil
+        case let .exact(server, number, subregion, _):
+            if server == .free {
+                return "FREE#\(number)"
+            } else if let subregion {
+                return "\(subregion) #\(number)"
+            } else {
+                return nil
+            }
+        case .secureCore(.hop(_, let via)):
+            return "via \(regionName(locale: locale, code: via))"
+        }
     }
 }

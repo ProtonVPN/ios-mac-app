@@ -26,6 +26,7 @@ import Home
 import Theme
 import Strings
 import VPNAppCore
+import SharedViews
 
 struct HomeConnectionCardView: View {
     @Dependency(\.locale) private var locale

@@ -31,6 +31,7 @@ public extension CGFloat {
 }
 
 public extension CGFloat {
+    static let themeSpacing2 = AppTheme.Spacing.spacing2.rawValue
     static let themeSpacing4 = AppTheme.Spacing.spacing4.rawValue
     static let themeSpacing6 = AppTheme.Spacing.spacing6.rawValue
     static let themeSpacing8 = AppTheme.Spacing.spacing8.rawValue

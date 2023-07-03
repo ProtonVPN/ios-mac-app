@@ -26,6 +26,9 @@
             location = "group:libraries/Theme">
          </FileRef>
          <FileRef
+             location = "group:libraries/SharedViews">
+         </FileRef>
+         <FileRef
             location = "group:libraries/Timer">
          </FileRef>
       </Group>

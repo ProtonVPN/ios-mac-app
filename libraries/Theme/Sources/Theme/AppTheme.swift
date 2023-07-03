@@ -19,7 +19,6 @@
 import Foundation
 import Ergonomics
 import SwiftUI
-import Ergonomics
 
 public enum ColorScheme {
     case light
@@ -92,6 +91,7 @@ public enum AppTheme {
     }
 
     public enum Spacing: CGFloat {
+        case spacing2 = 2
         case spacing4 = 4
         case spacing6 = 6
         case spacing8 = 8
