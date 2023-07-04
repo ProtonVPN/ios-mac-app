@@ -74,7 +74,7 @@ public struct ConnectionFlagInfoView: View {
                         .themeFont(.body())
 #elseif canImport(UIKit)
                         .themeFont(.caption())
-                    #endif
+#endif
                 }
             }.padding(.leading, 8)
         }
