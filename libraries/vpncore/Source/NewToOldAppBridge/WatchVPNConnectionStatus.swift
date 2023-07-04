@@ -27,10 +27,15 @@ extension WatchAppStateChangesKey {
     public static let watchVPNConnectionStatusChanges: @Sendable () async -> AsyncStream<VPNConnectionStatus> = {
         return NotificationCenter.default
             .notifications(named: .AppStateManager.displayStateChange)
-            .map({
+            .map {
                 let appStageManager = Container.sharedContainer.makeAppStateManager()
-                 return ($0.object as! AppDisplayState).vpnConnectionStatus(appStageManager.activeConnection())
-              })
+
+                // todo: when VPN connection will be refactored, please try saving lastConnectionIntent
+                // inside NETunnelProviderProtocol.providerConfiguration for WG and OpenVPN.
+                let propertyManager = Container.sharedContainer.makePropertiesManager()
+
+                return ($0.object as! AppDisplayState).vpnConnectionStatus(appStageManager.activeConnection(), intent: propertyManager.lastConnectionIntent)
+            }
             .eraseToStream()
     }
 
@@ -40,20 +45,19 @@ extension WatchAppStateChangesKey {
 
 extension AppDisplayState {
 
-    func vpnConnectionStatus(_ connectionConfiguration: ConnectionConfiguration?) -> VPNConnectionStatus {
-        let fakeSpecs = ConnectionSpec(location: .fastest, features: [])
+    func vpnConnectionStatus(_ connectionConfiguration: ConnectionConfiguration?, intent: ConnectionSpec) -> VPNConnectionStatus {
         switch self {
         case .connected:
-            return .connected(fakeSpecs, connectionConfiguration?.vpnConnectionActual)
+            return .connected(intent, connectionConfiguration?.vpnConnectionActual)
 
         case .connecting:
-            return .connecting(fakeSpecs, connectionConfiguration?.vpnConnectionActual)
+            return .connecting(intent, connectionConfiguration?.vpnConnectionActual)
 
         case .loadingConnectionInfo:
-            return .loadingConnectionInfo(fakeSpecs, connectionConfiguration?.vpnConnectionActual)
+            return .loadingConnectionInfo(intent, connectionConfiguration?.vpnConnectionActual)
 
         case .disconnecting:
-            return .disconnecting(fakeSpecs, connectionConfiguration?.vpnConnectionActual)
+            return .disconnecting(intent, connectionConfiguration?.vpnConnectionActual)
 
         case .disconnected:
             return .disconnected

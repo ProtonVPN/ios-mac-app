@@ -103,6 +103,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var wireguardConfig: WireguardConfig = WireguardConfig()
     public var smartProtocolConfig: SmartProtocolConfig = SmartProtocolConfig()
     public var ratingSettings: RatingSettings = RatingSettings()
+    public var lastConnectionIntent: VPNShared.ConnectionSpec = ConnectionSpec()
 
     #if os(macOS)
     public var forceExtensionUpgrade: Bool = false

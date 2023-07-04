@@ -113,6 +113,8 @@ public protocol PropertiesManagerProtocol: AnyObject {
 
     var ratingSettings: RatingSettings { get set }
 
+    var lastConnectionIntent: ConnectionSpec { get set }
+
     #if os(macOS)
     var forceExtensionUpgrade: Bool { get set }
     var connectedServerNameDoNotUse: String? { get set }
@@ -352,6 +354,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     @InitializedProperty(.wireguardConfig) public var wireguardConfig: WireguardConfig
     @InitializedProperty(.smartProtocolConfig) public var smartProtocolConfig: SmartProtocolConfig
     @InitializedProperty(.ratingSettings) public var ratingSettings: RatingSettings
+    @InitializedProperty(.ratingSettings) public var lastConnectionIntent: ConnectionSpec
 
     #if os(macOS)
     @BoolProperty(.forceExtensionUpgrade) public var forceExtensionUpgrade: Bool
@@ -651,4 +654,7 @@ public class StringProperty: DefaultsWrapper {
         self.key = key
         self.notification = notification
     }
+}
+
+extension ConnectionSpec: DefaultableProperty {
 }
