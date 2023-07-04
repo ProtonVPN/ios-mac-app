@@ -167,6 +167,7 @@ public struct ConnectionScreenView: View {
                 })
             }
         }
+        .padding(.top, .themeSpacing16)
         .background(Color(.background, .strong))
     }
 }

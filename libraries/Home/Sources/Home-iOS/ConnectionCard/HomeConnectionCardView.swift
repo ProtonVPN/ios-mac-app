@@ -65,12 +65,15 @@ struct HomeConnectionCardView: View {
             HStack {
                 ConnectionFlagInfoView(location: item.connection.location)
                 Spacer()
-                Button(action: {
-                    sendAction(.showConnectionDetails)
-                }, label: {
-                    Asset.icChevronUp.swiftUIImage
-                })
-                .foregroundColor(Color(.icon, .weak))
+
+                if vpnConnectionStatus.connectionStatusAvailable {
+                    Button(action: {
+                        sendAction(.showConnectionDetails)
+                    }, label: {
+                        Asset.icChevronUp.swiftUIImage
+                    })
+                    .foregroundColor(Color(.icon, .weak))
+                }
             }
             .padding()
 
@@ -118,6 +121,18 @@ struct HomeConnectionCardView: View {
         .accessibilityLabel(accessibilityText)
         .accessibilityAction(named: Text(Localizable.actionConnect)) {
             sendAction(.connect(item.connection))
+        }
+    }
+}
+
+extension VPNConnectionStatus {
+    fileprivate var connectionStatusAvailable: Bool {
+        switch self {
+        case .disconnected, .connecting, .loadingConnectionInfo, .disconnecting:
+            return false
+
+        case .connected:
+            return true
         }
     }
 }
