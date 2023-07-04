@@ -48,36 +48,38 @@ struct ProtonVPNApp: App {
                 .dependency(\.watchVPNConnectionStatus, WatchAppStateChangesKey.watchVPNConnectionStatusChanges)
                 ._printChanges()
         )
+        appDelegate.navigationService.store = store
     }
-
-//    @ObservedObject var isUserLoggedIn: Bool
-
-    var isLoggedIn: Bool {
-        appDelegate.navigationService.appSessionManager.loggedIn
-    }
-
-    var initialError: String?
 
     var body: some Scene {
         WindowGroup {
-            if !isLoggedIn {
-                LoginViewControllerRepresentable(loginViewModel: LoginViewModel(factory: appDelegate.container,
-                                                                                initialError: initialError))
-                    .preferredColorScheme(.dark)
-                    .background(WindowAccessor(window: $window, windowType: .login)) // get access to the underlying NSWindow
-                    .onAppear {
-                        NSWindow.allowsAutomaticWindowTabbing = false
-                    }
-                    .task {
-                        NSApp.activate(ignoringOtherApps: true)
-                    }
-            } else {
-                SideBarView(store: store)
-                    .background(WindowAccessor(window: $window, windowType: .app)) // get access to the underlying NSWindow
-                    .onAppear {
-                        NSWindow.allowsAutomaticWindowTabbing = false
-                    }
-                    .navigationTitle("")
+            WithViewStore(store, observe: { $0 }) { viewStore in
+                if viewStore.login.isLoggedIn {
+                    SideBarView(store: store)
+                        .preferredColorScheme(.light)
+                        .onAppear {
+                            NSWindow.allowsAutomaticWindowTabbing = false
+                        }
+                        .navigationTitle("")
+                        .background(WindowAccessor(window: $window, windowType: .app)) // get access to the underlying NSWindow
+                        .task {
+                            NSApp.activate(ignoringOtherApps: true)
+                        }
+                } else {
+                    LoginViewControllerRepresentable(store: store.scope(state: \.login,
+                                                                        action: AppReducer.Action.login),
+                                                     loginViewModel: LoginViewModel(factory: appDelegate.container,
+                                                                                    initialError: viewStore.login.initialError))
+                        .preferredColorScheme(.dark)
+                        .onAppear {
+                            NSWindow.allowsAutomaticWindowTabbing = false
+                        }
+                        .background(WindowAccessor(window: $window, windowType: .login)) // get access to the underlying NSWindow
+                        .task {
+                            NSApp.activate(ignoringOtherApps: true)
+                        }
+                }
+
             }
         }
         .windowToolbarStyle(UnifiedWindowToolbarStyle())
@@ -151,7 +153,11 @@ struct WindowAccessor: NSViewRepresentable {
         case login
     }
 
-    let windowType: WindowType
+    var windowType: WindowType {
+        didSet {
+            configureForWindowType()
+        }
+    }
 
     func makeNSView(context: Context) -> NSView {
         let view = NSView()

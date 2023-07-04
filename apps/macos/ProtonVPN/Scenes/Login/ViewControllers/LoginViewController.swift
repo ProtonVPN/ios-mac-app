@@ -89,7 +89,9 @@ final class LoginViewController: NSViewController {
     @IBOutlet private weak var loginButton: LoginButton!
     @IBOutlet weak var createAccountButton: InteractiveActionButton!
     @IBOutlet weak var needHelpButton: InteractiveActionButton!
-    
+
+    var coordinator: LoginViewControllerRepresentable.Coordinator?
+
     // MARK: - Loading view
     private lazy var loadingView: LoadingView = {
         var nibObjects: NSArray?
@@ -121,7 +123,8 @@ final class LoginViewController: NSViewController {
         fatalError("Unsupported initializer")
     }
     
-    required init(viewModel: LoginViewModel) {
+    required init(viewModel: LoginViewModel, coordinator: LoginViewControllerRepresentable.Coordinator? = nil) {
+        self.coordinator = coordinator
         super.init(nibName: NSNib.Name("Login"), bundle: nil)
         self.viewModel = viewModel
     }
