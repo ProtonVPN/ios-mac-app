@@ -29,20 +29,23 @@ extension DependencyValues {
 }
 
 private enum ConnectToVPNKey: DependencyKey {
-    static let liveValue: @Sendable (ConnectionSpec) async throws -> Void = { specs in
+    static let liveValue: @Sendable (ConnectionSpec) async throws -> Void = { intent in
         @Dependency(\.siriHelper) var siriHelper
         siriHelper().donateQuickConnect() // Change to more concrete donation when refactoring Siri stuff
 
         do {
             let gateway = Container.sharedContainer.makeVpnGateway2()
-            try await gateway.connect(withIntent: specs)
+            try await gateway.connect(withIntent: intent)
+
+            let propertyManager = Container.sharedContainer.makePropertiesManager()
+            propertyManager.lastConnectionIntent = intent
 
         } catch VpnGateway2.GatewayError.noServerFound {
-            log.error("No server found")
+            log.error("No server found", metadata: ["intent": "\(intent)"])
             throw VpnGateway2.GatewayError.noServerFound // Not sure
 
         } catch VpnGateway2.GatewayError.resolutionUnavailable(let forSpecificCountry, let type, let reason) {
-            log.warning("Server resolution unavailable", category: .connectionConnect, metadata: ["forSpecificCountry": "\(forSpecificCountry)", "type": "\(type)", "reason": "\(reason)"])
+            log.warning("Server resolution unavailable", category: .connectionConnect, metadata: ["forSpecificCountry": "\(forSpecificCountry)", "type": "\(type)", "reason": "\(reason)", "intent": "\(intent)"])
 
 //            Code from serverTierChecker.notifyResolutionUnavailable(forSpecificCountry: forSpecificCountry, type: type, reason: reason)
             @Dependency(\.pushAlert) var alert

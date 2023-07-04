@@ -38,7 +38,7 @@ struct AppReducer: ReducerProtocol {
         var connectionScreenState: ConnectionScreenFeature.State?
         // var countries: CountriesFeature.State
         var settings: SettingsFeature.State
-
+        public var vpnConnectionStatus: VPNConnectionStatus
     }
 
     enum Tab {
@@ -53,6 +53,11 @@ struct AppReducer: ReducerProtocol {
         case connectionScreenAction(ConnectionScreenFeature.Action)
         case connectionScreenDismissed
         case settings(SettingsFeature.Action)
+
+        /// Watch for changes of VPN connection
+        case watchConnectionStatus
+        /// Process new VPN connection state
+        case newConnectionStatus(VPNConnectionStatus)
     }
 
     var body: some ReducerProtocolOf<Self> {
@@ -63,6 +68,8 @@ struct AppReducer: ReducerProtocol {
                 return .none
 
             case .home(.showConnectionDetails):
+                guard let status = state.vpnConnectionStatusInfo else { return .none }
+
                 state.connectionScreenState = ConnectionScreenFeature.State(
                     ipViewState: IPViewFeature.State(localIP: "127.0.0.1",
                                                      vpnIp: "102.107.197.6"),
@@ -74,10 +81,8 @@ struct AppReducer: ReducerProtocol {
                                                                            protocolName: "WireGuard"),
                     connectionFeatures: [.p2p, .tor, .smart, .streaming],
                     isSecureCore: true,
-                    connectionSpec: ConnectionSpec(
-                        location: .secureCore(.hop(to: "US", via: "CH")),
-                        features: []),
-                    vpnConnectionActual: nil
+                    connectionSpec: status.0,
+                    vpnConnectionActual: status.1
                 )
                 return .none
 
@@ -104,6 +109,19 @@ struct AppReducer: ReducerProtocol {
                 return .none
             case .settings:
                 return .none
+
+            case .watchConnectionStatus:
+                return .run { send in
+                    @Dependency(\.watchVPNConnectionStatus) var watchVPNConnectionStatus
+                    for await vpnStatus in await watchVPNConnectionStatus() {
+                        await send(.newConnectionStatus(vpnStatus), animation: .default)
+                    }
+                }
+
+            case .newConnectionStatus(let connectionStatus):
+                state.vpnConnectionStatus = connectionStatus
+                return .none
+
             }
         }
         Scope(state: \.home, action: /Action.home) {
@@ -111,6 +129,17 @@ struct AppReducer: ReducerProtocol {
         }
         Scope(state: \.settings, action: /Action.settings) { 
             SettingsFeature() 
+        }
+    }
+}
+
+extension AppReducer.State {
+    var vpnConnectionStatusInfo: (ConnectionSpec, VPNConnectionActual?)? {
+        switch vpnConnectionStatus {
+        case .disconnected:
+            return nil
+        case .connected(let intent, let actual), .connecting(let intent, let actual), .loadingConnectionInfo(let intent, let actual), .disconnecting(let intent, let actual):
+            return (intent, actual)
         }
     }
 }
@@ -171,6 +200,7 @@ struct ProtonVPNApp: App {
                 .onOpenURL { url in // deeplinks
                     log.debug("Received URL: \(url)")
                 }
+                .task { await viewStore.send(.watchConnectionStatus).finish() }
 
                 .sheet(unwrapping: viewStore.binding(get: \.connectionScreenState, send: .connectionScreenDismissed),
                        content: { binding in

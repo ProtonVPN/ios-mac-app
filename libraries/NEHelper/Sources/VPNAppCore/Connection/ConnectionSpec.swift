@@ -19,26 +19,27 @@
 import Foundation
 
 /// Defines users intent as to where (s)he wanted to connect
-public struct ConnectionSpec: Equatable, Hashable {
-    public enum Server: Equatable, Hashable {
+public struct ConnectionSpec: Equatable, Hashable, Codable {
+
+    public enum Server: Equatable, Hashable, Codable {
         case free
         case paid
     }
 
-    public enum SecureCoreSpec: Equatable, Hashable {
+    public enum SecureCoreSpec: Equatable, Hashable, Codable {
         case fastest
         case fastestHop(to: String)
         case hop(to: String, via: String)
     }
 
-    public enum Location: Equatable, Hashable {
+    public enum Location: Equatable, Hashable, Codable {
         case fastest
         case region(code: String)
         case exact(Server, number: Int, subregion: String?, regionCode: String)
         case secureCore(SecureCoreSpec)
     }
 
-    public enum Feature: Equatable, Hashable, CustomStringConvertible, Identifiable {
+    public enum Feature: Equatable, Hashable, CustomStringConvertible, Identifiable, Codable {
         public var id: Self { self } // Identifiable
 
         case smart
@@ -70,5 +71,10 @@ public struct ConnectionSpec: Equatable, Hashable {
     public init(location: Location, features: Set<Feature>) {
         self.location = location
         self.features = features
+    }
+
+    /// Default intent that is set before user asks for any
+    public init() {
+        self.init(location: .fastest, features: [])
     }
 }
