@@ -25,6 +25,7 @@ import os
 import vpncore
 import PMLogger
 import VPNShared
+import ComposableArchitecture
 
 protocol NavigationServiceFactory {
     func makeNavigationService() -> NavigationService
@@ -118,7 +119,9 @@ class NavigationService {
 
         vpnGateway.autoConnect()
     }
-    
+
+    var store: StoreOf<AppReducer>?
+
     private func sessionChanged(data: SessionChanged.T) {
         windowService.closeActiveWindows(except: [SysexGuideWindowController.self])
 
@@ -150,12 +153,14 @@ class NavigationService {
     }
     
     private func showLogIn(initialError: String? = nil) {
+        store?.send(.showLogin(initialError: initialError))
         appHasPresented = true
-        
-        let viewModel = loginViewModel()
-        viewModel.initialError = initialError
-        windowService.showLogin(viewModel: viewModel)
-        NSApp.activate(ignoringOtherApps: true)
+
+        // uncomment if you want to see the old login flow
+//        let viewModel = loginViewModel()
+//        viewModel.initialError = initialError
+//        windowService.showLogin(viewModel: viewModel)
+//        NSApp.activate(ignoringOtherApps: true)
     }
     
     private func attemptSilentLogIn() {
@@ -164,6 +169,7 @@ class NavigationService {
     }
     
     private func showSidebar() {
+        store?.send(.showSideBar)
         appHasPresented = true
 
         windowService.showSidebar(appStateManager: appStateManager, vpnGateway: vpnGateway)

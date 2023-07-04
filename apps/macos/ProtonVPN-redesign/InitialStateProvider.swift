@@ -24,7 +24,8 @@ struct InitialStateProvider {
 
 extension InitialStateProvider: DependencyKey {
     static let liveValue = InitialStateProvider(
-        initialState: .init(home: .init(connections: [.pinnedConnection,
+        initialState: .init(login: .init(isLoggedIn: false),
+                            home: .init(connections: [.pinnedConnection,
                                                       .previousConnection,
                                                       .connectionSecureCoreFastest,
                                                       .connectionRegion],

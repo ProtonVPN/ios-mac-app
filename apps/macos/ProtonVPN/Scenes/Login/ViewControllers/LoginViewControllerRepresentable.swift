@@ -18,6 +18,7 @@
 
 import SwiftUI
 import AppKit
+import ComposableArchitecture
 
 struct LoginViewControllerRepresentable: NSViewControllerRepresentable {
 
@@ -25,8 +26,15 @@ struct LoginViewControllerRepresentable: NSViewControllerRepresentable {
 
     let loginViewModel: LoginViewModel
 
+    let store: StoreOf<LoginFeature>
+
+    init(store: StoreOf<LoginFeature>, loginViewModel: LoginViewModel) {
+        self.store = store
+        self.loginViewModel = loginViewModel
+    }
+
     func makeNSViewController(context: Context) -> LoginViewController {
-        return LoginViewController(viewModel: loginViewModel)
+        return LoginViewController(viewModel: loginViewModel, coordinator: makeCoordinator())
     }
 
     func updateNSViewController(_ nsViewController: LoginViewController, context: Context) {
@@ -34,16 +42,16 @@ struct LoginViewControllerRepresentable: NSViewControllerRepresentable {
     }
 
     func makeCoordinator() -> Coordinator {
-        return Coordinator()
+        return Coordinator(store: store)
     }
 
     class Coordinator: NSObject {
-
+        let store: StoreOf<LoginFeature>
+        init(store: StoreOf<LoginFeature>) {
+            self.store = store
+        }
+        func login() {
+            store.send(.loginButtonPressed(username: "", password: ""))
+        }
     }
 }
-
-//struct LoginViewControllerRepresentable_Previews : PreviewProvider {
-//    static var previews: some View {
-//        LoginViewControllerRepresentable()
-//    }
-//}
