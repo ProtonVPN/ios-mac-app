@@ -31,7 +31,7 @@ public struct SmallProgressView: View {
     @ScaledMetric var height: CGFloat = 4
 
     public init(percentage: Int) {
-        self.percentage = min(0, percentage)
+        self.percentage = max(0, percentage)
     }
 
     private var color: Color {
@@ -54,7 +54,7 @@ public struct SmallProgressView: View {
             GeometryReader { geo in
                 RoundedRectangle(cornerRadius: .themeRadius7)
                     .fill(color)
-                    .frame(maxWidth: geo.size.width * CGFloat(percentage) / CGFloat(100))
+                    .frame(width: geo.size.width * Double(percentage) / CGFloat(100))
             }
         }
         .frame(width: width, height: height)
@@ -65,13 +65,13 @@ public struct SmallProgressView: View {
 
 struct SmallProgressView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            SmallProgressView(percentage: 10)
+        VStack(spacing: 20) {
+            SmallProgressView(percentage: 20)
                 .previewDisplayName("Green")
             SmallProgressView(percentage: 88)
                 .previewDisplayName("Yellow")
             SmallProgressView(percentage: 100)
                 .previewDisplayName("Red")
-        }
+        }.previewLayout(.sizeThatFits)
     }
 }
