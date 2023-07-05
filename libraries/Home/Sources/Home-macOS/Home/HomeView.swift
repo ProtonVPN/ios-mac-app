@@ -40,6 +40,7 @@ public struct HomeView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .background(Color(.background))
+            .frame(minWidth: 360, minHeight: 480)
         }
     }
 
@@ -47,7 +48,7 @@ public struct HomeView: View {
     func connectButton(viewStore: ViewStore<HomeFeature.State, HomeFeature.Action>) -> some View {
         switch viewStore.vpnConnectionStatus {
         case .disconnected:
-            return Button("Connect") {
+            return Button("Quick Connect") {
                 viewStore.send(.connect(.init(location: .fastest, features: [])))
             }
         case .connected:

@@ -42,6 +42,9 @@ public struct LoginFeature: ReducerProtocol {
 }
 
 struct AppReducer: ReducerProtocol {
+
+    public typealias ActionSender = (Action) -> Void
+    
     struct State: Equatable {
         public var login: LoginFeature.State
         public var home: HomeFeature.State

@@ -62,7 +62,7 @@ extension NavigationRobot {
             case .settings:
                 XCTAssert(app.buttons["Killswitch"].exists)
             case .home:
-                XCTAssert(app.staticTexts["Home view, click me"].exists)
+                XCTAssert(app.staticTexts["You are unprotected"].exists)
             case .countries:
                 XCTAssert(app.staticTexts["Countries view, click me"].exists)
             }

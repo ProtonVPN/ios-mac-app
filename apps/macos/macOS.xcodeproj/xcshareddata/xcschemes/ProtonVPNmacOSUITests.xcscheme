@@ -23,6 +23,27 @@
                ReferencedContainer = "container:macOS.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "AD211E372A1673BF00F98CAB"
+               BuildableName = "SettingsSampleAppUITests.xctest"
+               BlueprintName = "SettingsSampleAppUITests"
+               ReferencedContainer = "container:../../sampleapps/SettingsSampleApp/SettingsSampleApp.xcodeproj">
+            </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "SettingsSampleAppUITests">
+               </Test>
+               <Test
+                  Identifier = "SettingsSampleAppUITestsLaunchTests">
+               </Test>
+               <Test
+                  Identifier = "SettingsSampleAppUITestsLaunchTests/testLaunch()">
+               </Test>
+            </SkippedTests>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

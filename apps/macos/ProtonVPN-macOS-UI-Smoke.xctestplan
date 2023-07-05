@@ -22,10 +22,13 @@
         "LoginTests\/testLoginAsTwoFa()",
         "LoginTests\/testLoginWithTwoPassUser()",
         "MapTests",
+        "ProfileTests",
         "ProfileTests\/testCancelProfile()",
         "ProfileTests\/testCreateEmptyProfile()",
         "ProfileTests\/testCreateProfileWithTheSameName()",
         "ProfileTests\/testNewProfileAppearsInTheSettings()",
+        "ProtonVPNUITests",
+        "QuickSettingsTests",
         "QuickSettingsTests\/testOpenQuickSettingsDropdown()",
         "SearchTests",
         "SettingsTests"

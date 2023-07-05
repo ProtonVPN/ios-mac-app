@@ -23,7 +23,7 @@ fileprivate let qcButton = "Quick Connect"
 fileprivate let preferencesTitle = "Preferences"
 fileprivate let menuItemReportAnIssue = "Report an Issue..."
 fileprivate let menuItemProfiles = "Overview"
-fileprivate let statusTitle = "You are not connected"
+fileprivate let statusTitle = "You are unprotected"
 
 class MainRobot {
 

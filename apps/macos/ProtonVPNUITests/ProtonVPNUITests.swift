@@ -121,7 +121,7 @@ class ProtonVPNUITests: XCTestCase {
         dismissPopups()
              
         if waitForElementToAppear(app.dialogs["Enabling custom protocols"]) {
-                dismissDialogs()
+            dismissDialogs()
         }
 
         window.typeKey(",", modifierFlags: [.command]) // Settings…
