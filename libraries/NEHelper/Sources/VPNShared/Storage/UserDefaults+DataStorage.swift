@@ -28,13 +28,13 @@ extension UserDefaults: DataStorage {
     private var warningDataSizeBytes: Int { 32 * 1024 } // 32 KiB
 
     public func store(_ data: Data, forKey key: String) throws {
-        if data.count > warningDataSizeBytes {
-            log.warning("Storing suspiciously large amount of data in User Defaults \(data.count)", category: .persistence)
-            assertionFailure("User Defaults writes surpassing \(data.count) bytes should be investigated")
-        }
-        if data.count > maximumDataSizeBytes {
-            throw StorageError.dataTooLarge
-        }
+//        if data.count > warningDataSizeBytes {
+//            log.warning("Storing suspiciously large amount of data in User Defaults \(data.count)", category: .persistence)
+//            assertionFailure("User Defaults writes surpassing \(data.count) bytes should be investigated")
+//        }
+//        if data.count > maximumDataSizeBytes {
+//            throw StorageError.dataTooLarge
+//        }
         set(data, forKey: key)
     }
 

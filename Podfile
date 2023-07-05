@@ -183,18 +183,6 @@ target 'ProtonVPN-mac' do
 
 end
 
-target 'ProtonVPN-mac-redesign' do
-  platform :osx, '12.0'
-  project 'apps/macos/macOS.xcodeproj'
-
-  vpn_core
-
-  pod 'ProtonCore-UIFoundations', :git => proton_core_path, :tag => proton_core_version
-  pod "ProtonCore-Login/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
-  pod "ProtonCore-GoLibs/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
-
-end
-
 target 'ProtonVPN OpenVPN' do
   platform :osx, '12.0'
   project 'apps/macos/macOS.xcodeproj'
