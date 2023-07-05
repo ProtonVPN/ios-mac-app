@@ -257,7 +257,6 @@
 		E5F1112E27CE3A1D007DEC0D /* SettingsDropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1112D27CE3A1D007DEC0D /* SettingsDropDownView.swift */; };
 		E5F8F0002A555C0000E9F090 /* ProtonVPNmac_redesign_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F0A2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift */; };
 		E5F8F0012A555C0000E9F090 /* NavigationRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F142A1612950030076F /* NavigationRobot.swift */; };
-		E5F8F0022A555C0000E9F090 /* ProtonVPNmac_redesign_UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F0C2A15FC6E0030076F /* ProtonVPNmac_redesign_UITestsLaunchTests.swift */; };
 		E5FFC89A2816AEFC00E355DA /* PlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC8992816AEFC00E355DA /* PlanService.swift */; };
 		E9036B3F26C1044700EDFDA4 /* IPCOvpnService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9036B3E26C1044700EDFDA4 /* IPCOvpnService.swift */; };
 		E9036B4126C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9036B4026C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift */; };
@@ -874,7 +873,6 @@
 		E5772AE329B0B9A90076D824 /* SystemExtensionTutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionTutorialView.swift; sourceTree = "<group>"; };
 		E57B263129C3188D00533B7C /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		E5C00F0A2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNmac_redesign_UITests.swift; sourceTree = "<group>"; };
-		E5C00F0C2A15FC6E0030076F /* ProtonVPNmac_redesign_UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNmac_redesign_UITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E5C00F142A1612950030076F /* NavigationRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRobot.swift; sourceTree = "<group>"; };
 		E5C3415A29FBBADE00A26614 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E5C3415C29FBBADE00A26614 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -1641,7 +1639,6 @@
 			children = (
 				E5C00F0A2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift */,
 				E5C00F142A1612950030076F /* NavigationRobot.swift */,
-				E5C00F0C2A15FC6E0030076F /* ProtonVPNmac_redesign_UITestsLaunchTests.swift */,
 			);
 			path = "ProtonVPNmac-redesign-UITests";
 			sourceTree = "<group>";
@@ -3536,7 +3533,6 @@
 				B22F330A278DC8BA00DBB8CA /* ManageProfilesRobot.swift in Sources */,
 				B270C2CC27BBAC7900EC7B53 /* QuickSettingsTests.swift in Sources */,
 				B270C2DA27BE9AD100EC7B53 /* SearchTests.swift in Sources */,
-				E5F8F0022A555C0000E9F090 /* ProtonVPNmac_redesign_UITestsLaunchTests.swift in Sources */,
 				D5204E6D22A138C900FFAB99 /* Credentials.swift in Sources */,
 				B2C6CF78298D3F370039BC90 /* GenerateTwoFaCode.swift in Sources */,
 				B2C6CF7F298D42A10039BC90 /* ObfuscatedConstants.swift in Sources */,

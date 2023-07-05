@@ -18,13 +18,9 @@
 
 import XCTest
 
-final class ProtonVPNmac_redesign_UITests: XCTestCase {
+final class ProtonVPNmac_redesign_UITests: ProtonVPNUITests {
 
-    override func setUpWithError() throws {
-        continueAfterFailure = false
-    }
-
-    override func tearDownWithError() throws { }
+    private let loginRobot = LoginRobot()
 
     func testFirstLevelNavigation() throws {
         // UI tests must launch the application that they test.
@@ -32,6 +28,9 @@ final class ProtonVPNmac_redesign_UITests: XCTestCase {
         app.launch()
 
         let navigationRobot = NavigationRobot(app: app)
+
+        logoutIfNeeded()
+        loginAsPlusUser()
 
         navigationRobot
             .navigate(to: .settingsTab)

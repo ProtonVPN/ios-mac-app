@@ -120,7 +120,7 @@ class NavigationService {
         vpnGateway.autoConnect()
     }
 
-    var store: StoreOf<AppReducer>?
+    var sendAction: AppReducer.ActionSender?
 
     private func sessionChanged(data: SessionChanged.T) {
         windowService.closeActiveWindows(except: [SysexGuideWindowController.self])
@@ -153,7 +153,7 @@ class NavigationService {
     }
     
     private func showLogIn(initialError: String? = nil) {
-        store?.send(.showLogin(initialError: initialError))
+        sendAction?(.showLogin(initialError: initialError))
         appHasPresented = true
 
         // uncomment if you want to see the old login flow
@@ -169,10 +169,11 @@ class NavigationService {
     }
     
     private func showSidebar() {
-        store?.send(.showSideBar)
+        sendAction?(.showSideBar)
         appHasPresented = true
 
-        windowService.showSidebar(appStateManager: appStateManager, vpnGateway: vpnGateway)
+        // uncomment if you want to see the old sidebar
+//        windowService.showSidebar(appStateManager: appStateManager, vpnGateway: vpnGateway)
     }
     
     func handleSilentLoginFailure() {

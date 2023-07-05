@@ -48,7 +48,9 @@ struct ProtonVPNApp: App {
                 .dependency(\.watchVPNConnectionStatus, WatchAppStateChangesKey.watchVPNConnectionStatusChanges)
                 ._printChanges()
         )
-        appDelegate.navigationService.store = store
+        appDelegate.navigationService.sendAction = { [store] action in
+            store.send(action)
+        }
     }
 
     var body: some Scene {
@@ -123,7 +125,7 @@ extension Scene {
                 }.keyboardShortcut(",", modifiers: [.command])
             }
             CommandGroup(before: .appTermination) {
-                Button("Log out") {
+                Button("Sign out") {
                     appDelegate.navigationService.logOutRequested()
                 }.keyboardShortcut("w", modifiers: [.command, .shift])
             }
@@ -169,13 +171,15 @@ struct WindowAccessor: NSViewRepresentable {
     }
 
     func configureForWindowType() {
+        self.window?.title = "Proton VPN"
+        self.window?.centerWindowOnScreen()
         switch windowType {
         case .app:
             self.window?.isOpaque = false
+            self.window?.setContentSize(.init(width: 780, height: 580)) // default size for the app window
             self.window?.backgroundColor = .clear
         case .login:
-            self.window?.centerWindowOnScreen()
-            self.window?.styleMask.remove(NSWindow.StyleMask.resizable)
+            self.window?.setContentSize(.init(width: 1, height: 1)) // content size managed by autolayout, we just want to force the minimal size
             self.window?.backgroundColor = .color(.background)
         }
     }
