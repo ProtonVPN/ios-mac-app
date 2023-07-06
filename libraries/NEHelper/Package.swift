@@ -11,6 +11,7 @@ let package = Package(
     ],
     products: [
         .library(name: "NEHelper", targets: ["NEHelper"]),
+        .library(name: "VPNAppCore", targets: ["VPNAppCore"]),
         .library(name: "VPNShared", targets: ["VPNShared"]),
         .library(name: "VPNSharedTesting", targets: ["VPNSharedTesting"]),
     ],
@@ -34,16 +35,6 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ]
         ),
-        .testTarget(
-            name: "VPNSharedTests",
-            dependencies: ["VPNShared"]
-        ),
-        
-        .target(
-            name: "VPNSharedTesting",
-            dependencies: ["VPNShared", .product(name: "TimerMock", package: "Timer")]
-        ),
-        
         .target(
             name: "NEHelper",
             dependencies: [
@@ -53,9 +44,15 @@ let package = Package(
                 "VPNShared",
             ]
         ),
-        .testTarget(
-            name: "NEHelperTests",
-            dependencies: ["NEHelper", "VPNSharedTesting"]
+        .target(
+            name: "VPNAppCore",
+            dependencies: ["VPNShared"]
         ),
+        .target(
+            name: "VPNSharedTesting",
+            dependencies: ["VPNShared", .product(name: "TimerMock", package: "Timer")]
+        ),
+        .testTarget(name: "VPNSharedTests", dependencies: ["VPNShared"]),
+        .testTarget(name: "NEHelperTests", dependencies: ["NEHelper", "VPNSharedTesting"]),
     ]
 )
