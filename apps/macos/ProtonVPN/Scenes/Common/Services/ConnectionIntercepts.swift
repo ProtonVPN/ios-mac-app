@@ -18,6 +18,7 @@
 
 import Foundation
 import vpncore
+import VPNAppCore
 
 private extension VpnConnectionInterceptResult.InterceptParameters {
     static func withoutUsingKillSwitch(with connectionProtocol: ConnectionProtocol) -> Self {

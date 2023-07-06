@@ -22,6 +22,7 @@
 import Foundation
 import ProtonCore_DataModel
 import VPNShared
+import VPNAppCore
 
 public protocol PropertiesManagerFactory {
     func makePropertiesManager() -> PropertiesManagerProtocol

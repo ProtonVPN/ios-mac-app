@@ -21,60 +21,9 @@
 
 import Foundation
 import VPNShared
+import VPNAppCore
 
-public enum ConnectionProtocol: Codable, Equatable, Hashable, CaseIterable, CustomStringConvertible {
-    case vpnProtocol(VpnProtocol)
-    case smartProtocol
-
-    private enum Keys: CodingKey {
-        case smartProtocol
-        case vpnProtocol
-    }
-
-    public var vpnProtocol: VpnProtocol? {
-        guard case let .vpnProtocol(vpnProtocol) = self else {
-            return nil
-        }
-        return vpnProtocol
-    }
-
-    public var shouldBeEnabledByDefault: Bool {
-        guard self == .smartProtocol else { return false }
-        #if os(macOS)
-            // On MacOS, the user must approve system extensions before Smart Protocol can be used
-            return false
-        #else
-            return true
-        #endif
-    }
-
-    #if os(macOS)
-    public var requiresSystemExtension: Bool {
-        guard self != .smartProtocol else {
-            return true
-        }
-        return vpnProtocol?.requiresSystemExtension == true
-    }
-    #endif
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: Keys.self)
-        if let vpnProtocol = try container.decodeIfPresent(VpnProtocol.self, forKey: .vpnProtocol) {
-            self = .vpnProtocol(vpnProtocol)
-        } else {
-            self = .smartProtocol
-        }
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: Keys.self)
-        switch self {
-        case .smartProtocol:
-            try container.encode(true, forKey: .smartProtocol)
-        case let .vpnProtocol(vpnProtocol):
-            try container.encode(vpnProtocol, forKey: .vpnProtocol)
-        }
-    }
+extension ConnectionProtocol: CustomStringConvertible {
 
     public var description: String {
         return localizedString
@@ -88,9 +37,6 @@ public enum ConnectionProtocol: Codable, Equatable, Hashable, CaseIterable, Cust
             return LocalizedString.smartTitle
         }
     }
-
-    public static let allCases: [ConnectionProtocol] = [.smartProtocol] +
-        VpnProtocol.allCases.map(Self.vpnProtocol)
 
     public static func uiSort(lhs: Self, rhs: Self) -> Bool {
         guard let lhsProtocol = lhs.vpnProtocol, let rhsProtocol = rhs.vpnProtocol else {
@@ -194,6 +140,33 @@ public enum CountryConnectionRequestType {
 }
 
 // MARK: Codable conformance
+
+extension ConnectionProtocol: Codable {
+
+    private enum Keys: CodingKey {
+        case smartProtocol
+        case vpnProtocol
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Keys.self)
+        if let vpnProtocol = try container.decodeIfPresent(VpnProtocol.self, forKey: .vpnProtocol) {
+            self = .vpnProtocol(vpnProtocol)
+        } else {
+            self = .smartProtocol
+        }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: Keys.self)
+        switch self {
+        case .smartProtocol:
+            try container.encode(true, forKey: .smartProtocol)
+        case let .vpnProtocol(vpnProtocol):
+            try container.encode(vpnProtocol, forKey: .vpnProtocol)
+        }
+    }
+}
 
 extension ConnectionRequestType: Codable {
     

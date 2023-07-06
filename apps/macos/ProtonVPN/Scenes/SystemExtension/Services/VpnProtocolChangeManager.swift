@@ -23,6 +23,7 @@
 import Foundation
 import vpncore
 import VPNShared
+import VPNAppCore
 
 protocol VpnProtocolChangeManagerFactory {
     func makeVpnProtocolChangeManager() -> VpnProtocolChangeManager

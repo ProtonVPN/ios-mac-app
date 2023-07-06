@@ -20,6 +20,7 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import VPNAppCore
 
 // This is needed to maintain compatibility with how profiles are stored on disk
 // whilst improving them with dynamic server models

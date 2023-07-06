@@ -21,6 +21,7 @@
 
 import Foundation
 import VPNShared
+import VPNAppCore
 
 public class ServerIp: NSObject, NSCoding, Codable {
     public let id: String // "ID": "l8vWAXHBQNSQjPrxAr-D_BCxj1X0nW70HQRmAa-rIvzmKUA=="

@@ -22,6 +22,7 @@
 
 import XCTest
 @testable import vpncore
+import VPNAppCore
 
 class VpnServerSelectorTests: XCTestCase {
     static let connectionProtocol: ConnectionProtocol = .vpnProtocol(.ike)

@@ -25,6 +25,7 @@ import UIKit
 import Cocoa
 #endif
 import ProtonCore_UIFoundations
+import VPNAppCore
 
 public class ProfileConstants {
     // WARNING: consuming client must contain "fastest" and "random" image assets

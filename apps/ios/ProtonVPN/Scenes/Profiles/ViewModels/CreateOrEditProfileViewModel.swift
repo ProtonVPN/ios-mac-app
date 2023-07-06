@@ -23,6 +23,7 @@
 import GSMessages
 import UIKit
 import vpncore
+import VPNAppCore
 
 class CreateOrEditProfileViewModel: NSObject {
     

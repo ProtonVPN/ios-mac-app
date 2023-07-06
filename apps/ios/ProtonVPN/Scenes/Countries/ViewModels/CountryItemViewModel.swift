@@ -25,6 +25,7 @@ import vpncore
 import Search
 import ProtonCore_UIFoundations
 import VPNShared
+import VPNAppCore
 
 class CountryItemViewModel {
     /// Contains information about the region such as the country code, the tier the

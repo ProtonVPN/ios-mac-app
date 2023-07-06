@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import VPNAppCore
 
 /// Selects the most suitable server to connect to
 class VpnServerSelector {

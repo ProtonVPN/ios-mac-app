@@ -17,4 +17,51 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import VPNShared
 
+public enum ConnectionProtocol: Equatable, Hashable, CaseIterable {
+    case vpnProtocol(VpnProtocol)
+    case smartProtocol
+
+    public var vpnProtocol: VpnProtocol? {
+        guard case let .vpnProtocol(vpnProtocol) = self else {
+            return nil
+        }
+        return vpnProtocol
+    }
+
+    public var shouldBeEnabledByDefault: Bool {
+        guard self == .smartProtocol else { return false }
+#if os(macOS)
+        // On MacOS, the user must approve system extensions before Smart Protocol can be used
+        return false
+#else
+        return true
+#endif
+    }
+
+#if os(macOS)
+    public var requiresSystemExtension: Bool {
+        guard self != .smartProtocol else {
+            return true
+        }
+        return vpnProtocol?.requiresSystemExtension == true
+    }
+#endif
+
+    public static let allCases: [ConnectionProtocol] = [.smartProtocol] +
+    VpnProtocol.allCases.map(Self.vpnProtocol)
+}
+
+#if os(macOS)
+extension VpnProtocol {
+    public var requiresSystemExtension: Bool {
+        switch self {
+        case .openVpn, .wireGuard:
+            return true
+        default:
+            return false
+        }
+    }
+}
+#endif
