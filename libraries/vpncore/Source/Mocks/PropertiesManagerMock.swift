@@ -22,6 +22,7 @@
 import Foundation
 import ProtonCore_DataModel
 import VPNShared
+import VPNAppCore
 
 public class PropertiesManagerMock: PropertiesManagerProtocol {
     public static var activeConnectionChangedNotification: Notification.Name = Notification.Name("activeConnectionChanged")

@@ -21,10 +21,10 @@
 //
 
 import vpncore
-import AppKit
 import VPNShared
+import VPNAppCore
+import AppKit
 import Logging
-import Theme
 import Theme
 
 protocol OverlayViewModelDelegate: AnyObject {

@@ -239,18 +239,3 @@ extension WireGuardTransport {
         aCoder.encode(data, forKey: CoderKey.transportProtocol)
     }
 }
-
-// MARK: - MacOS
-
-#if os(macOS)
-extension VpnProtocol {
-    public var requiresSystemExtension: Bool {
-        switch self {
-        case .openVpn, .wireGuard:
-            return true
-        default:
-            return false
-        }
-    }
-}
-#endif

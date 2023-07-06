@@ -9,6 +9,7 @@
 
 import Foundation
 import vpncore
+import VPNAppCore
 
 final class VpnProtocolViewModel {
 

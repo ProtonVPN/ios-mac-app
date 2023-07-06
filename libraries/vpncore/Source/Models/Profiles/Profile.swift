@@ -21,6 +21,7 @@
 
 import Foundation
 import VPNShared
+import VPNAppCore
 
 public class Profile: NSObject, NSCoding {
 

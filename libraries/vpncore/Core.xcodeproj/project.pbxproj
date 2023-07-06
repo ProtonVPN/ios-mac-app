@@ -174,6 +174,8 @@
 		AD41A85C298AD26C0003393D /* MockTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFDF0B9287EE44100386626 /* MockTestData.swift */; };
 		AD41A85D298AD26D0003393D /* MockTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFDF0B9287EE44100386626 /* MockTestData.swift */; };
 		AD582AE529CDCFD000168D70 /* DebugEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD582AE429CDCFD000168D70 /* DebugEnvironment.swift */; };
+		AD880CE62A56C755007086AB /* VPNAppCore in Frameworks */ = {isa = PBXBuildFile; productRef = AD880CE52A56C755007086AB /* VPNAppCore */; };
+		AD880CE82A56C75B007086AB /* VPNAppCore in Frameworks */ = {isa = PBXBuildFile; productRef = AD880CE72A56C75B007086AB /* VPNAppCore */; };
 		ADB9E24529CDD3CE00D8452A /* DebugEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD582AE429CDCFD000168D70 /* DebugEnvironment.swift */; };
 		ADBFE44E29CDA14D001A5446 /* LocalAgentMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBFE44D29CDA14D001A5446 /* LocalAgentMessages.swift */; };
 		ADBFE44F29CDA14D001A5446 /* LocalAgentMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBFE44D29CDA14D001A5446 /* LocalAgentMessages.swift */; };
@@ -1208,6 +1210,7 @@
 				E53D64BF2811694F0060C463 /* Modals in Frameworks */,
 				E5C8A2662A3C4C6800290723 /* IdentifiedCollections in Frameworks */,
 				D5391F172A4D4ABE0089D2F7 /* OrderedCollections in Frameworks */,
+				AD880CE62A56C755007086AB /* VPNAppCore in Frameworks */,
 				D58273202A4F01080021CA41 /* VPNSharedTesting in Frameworks */,
 				179F144D89241E7160EFD846 /* Pods_Core_vpncore_ios.framework in Frameworks */,
 			);
@@ -1236,6 +1239,7 @@
 				E53D64C1281169550060C463 /* Modals in Frameworks */,
 				D5F65F9C28A14DE00062CF85 /* Timer in Frameworks */,
 				4C4F5F13292BECD200BBD5AF /* LocalFeatureFlags in Frameworks */,
+				AD880CE82A56C75B007086AB /* VPNAppCore in Frameworks */,
 				E93120F428DB2EE600C1C2FE /* PMLogger in Frameworks */,
 				D58273262A4F05A40021CA41 /* Ergonomics in Frameworks */,
 				E5A4AD172A3B251500CC91D7 /* Dependencies in Frameworks */,
@@ -2380,6 +2384,7 @@
 				D582731F2A4F01080021CA41 /* VPNSharedTesting */,
 				D58273212A4F01840021CA41 /* Ergonomics */,
 				AD3AE5322A4F11EB000FDBA6 /* Settings */,
+				AD880CE52A56C755007086AB /* VPNAppCore */,
 			);
 			productName = "vpncore-ios";
 			productReference = E1B5F5D821B68ABD00B558B0 /* vpncore.framework */;
@@ -2443,6 +2448,7 @@
 				E5A4AD1E2A3B353D00CC91D7 /* SwiftUINavigation */,
 				E5A4AD282A3B470900CC91D7 /* IdentifiedCollections */,
 				D58273252A4F05A40021CA41 /* Ergonomics */,
+				AD880CE72A56C75B007086AB /* VPNAppCore */,
 			);
 			productName = "vpncore-macos";
 			productReference = E1B5F60C21B6960100B558B0 /* vpncore.framework */;
@@ -4457,13 +4463,13 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Settings;
 		};
-		D0AAC5A8DEABE73F456752F4 /* NEHelper */ = {
+		AD880CE52A56C755007086AB /* VPNAppCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = NEHelper;
+			productName = VPNAppCore;
 		};
-		D416C411CC859B3D18ABBE36 /* VPNShared */ = {
+		AD880CE72A56C75B007086AB /* VPNAppCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = VPNShared;
+			productName = VPNAppCore;
 		};
 		D5391F162A4D4ABE0089D2F7 /* OrderedCollections */ = {
 			isa = XCSwiftPackageProductDependency;
