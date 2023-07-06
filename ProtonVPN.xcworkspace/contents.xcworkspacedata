@@ -1,33 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workspace
    version = "1.0">
-   <FileRef
-      location = "group:libraries/Strings">
-   </FileRef>
-   <FileRef
-      location = "group:libraries/Ergonomics">
-   </FileRef>
-   <FileRef
-      location = "group:libraries/ConnectionDetails">
-   </FileRef>
-   <FileRef
-      location = "group:libraries/Home">
-   </FileRef>
-   <FileRef
-      location = "group:libraries/Theme">
-   </FileRef>
-   <FileRef
-      location = "group:libraries/LocalFeatureFlags">
-   </FileRef>
-   <FileRef
-      location = "group:libraries/NEHelper">
-   </FileRef>
-   <FileRef
-      location = "group:libraries/PMLogger">
-   </FileRef>
-   <FileRef
-      location = "group:libraries/Timer">
-   </FileRef>
+   <Group
+      location = "container:"
+      name = "Libraries">
+      <Group
+         location = "container:"
+         name = "Core">
+         <FileRef
+            location = "group:libraries/Ergonomics">
+         </FileRef>
+         <FileRef
+            location = "group:libraries/LocalFeatureFlags">
+         </FileRef>
+         <FileRef
+            location = "group:libraries/NEHelper">
+         </FileRef>
+         <FileRef
+            location = "group:libraries/PMLogger">
+         </FileRef>
+         <FileRef
+            location = "group:libraries/Strings">
+         </FileRef>
+         <FileRef
+            location = "group:libraries/Theme">
+         </FileRef>
+         <FileRef
+            location = "group:libraries/Timer">
+         </FileRef>
+      </Group>
+      <Group
+         location = "container:"
+         name = "Features">
+         <FileRef
+            location = "group:libraries/BugReport">
+         </FileRef>
+         <FileRef
+            location = "group:libraries/ConnectionDetails">
+         </FileRef>
+         <FileRef
+            location = "group:libraries/Home">
+         </FileRef>
+         <FileRef
+            location = "group:libraries/Modals">
+         </FileRef>
+         <FileRef
+            location = "group:libraries/Onboarding">
+         </FileRef>
+         <FileRef
+            location = "group:libraries/Review">
+         </FileRef>
+         <FileRef
+            location = "group:libraries/Search">
+         </FileRef>
+         <FileRef
+            location = "group:libraries/Settings">
+         </FileRef>
+      </Group>
+   </Group>
    <Group
       location = "container:"
       name = "SampleApps">
@@ -59,24 +89,6 @@
          location = "group:sampleapps/SearchSampleApp/SearchSampleApp.xcodeproj">
       </FileRef>
    </Group>
-   <FileRef
-      location = "group:libraries/Search">
-   </FileRef>
-   <FileRef
-      location = "group:libraries/Onboarding">
-   </FileRef>
-   <FileRef
-      location = "group:libraries/BugReport">
-   </FileRef>
-   <FileRef
-      location = "group:libraries/Modals">
-   </FileRef>
-   <FileRef
-      location = "group:libraries/Review">
-   </FileRef>
-   <FileRef
-      location = "group:libraries/Settings">
-   </FileRef>
    <FileRef
       location = "group:libraries/vpncore/Core.xcodeproj">
    </FileRef>
