@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD14547F2A582F0900935F86 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = AD14547E2A582F0900935F86 /* Theme */; };
 		D55D1E9F2A30B2610070A9B7 /* VPNShared in Frameworks */ = {isa = PBXBuildFile; productRef = D55D1E9E2A30B2610070A9B7 /* VPNShared */; };
 		D5AD8E692A288BAF003F599B /* UIExampleAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AD8E682A288BAF003F599B /* UIExampleAppApp.swift */; };
 		D5AD8E6B2A288BAF003F599B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AD8E6A2A288BAF003F599B /* ContentView.swift */; };
 		D5AD8E6D2A288BB0003F599B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5AD8E6C2A288BB0003F599B /* Assets.xcassets */; };
 		D5AD8E712A288BB0003F599B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5AD8E702A288BB0003F599B /* Preview Assets.xcassets */; };
 		D5AD8E792A288BC3003F599B /* ConnectionDetails-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = D5AD8E782A288BC3003F599B /* ConnectionDetails-iOS */; };
-		D5AD8E7B2A28B07D003F599B /* Theme-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = D5AD8E7A2A28B07D003F599B /* Theme-iOS */; };
 		D5AF53072A3749C5002DD09C /* Home-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = D5AF53062A3749C5002DD09C /* Home-iOS */; };
 /* End PBXBuildFile section */
 
@@ -31,9 +31,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD14547F2A582F0900935F86 /* Theme in Frameworks */,
 				D55D1E9F2A30B2610070A9B7 /* VPNShared in Frameworks */,
 				D5AF53072A3749C5002DD09C /* Home-iOS in Frameworks */,
-				D5AD8E7B2A28B07D003F599B /* Theme-iOS in Frameworks */,
 				D5AD8E792A288BC3003F599B /* ConnectionDetails-iOS in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -111,9 +111,9 @@
 			name = UIExampleApp;
 			packageProductDependencies = (
 				D5AD8E782A288BC3003F599B /* ConnectionDetails-iOS */,
-				D5AD8E7A2A28B07D003F599B /* Theme-iOS */,
 				D55D1E9E2A30B2610070A9B7 /* VPNShared */,
 				D5AF53062A3749C5002DD09C /* Home-iOS */,
+				AD14547E2A582F0900935F86 /* Theme */,
 			);
 			productName = UIExampleApp;
 			productReference = D5AD8E652A288BAF003F599B /* UIExampleApp.app */;
@@ -386,6 +386,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		AD14547E2A582F0900935F86 /* Theme */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Theme;
+		};
 		D55D1E9E2A30B2610070A9B7 /* VPNShared */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = VPNShared;
@@ -393,10 +397,6 @@
 		D5AD8E782A288BC3003F599B /* ConnectionDetails-iOS */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "ConnectionDetails-iOS";
-		};
-		D5AD8E7A2A28B07D003F599B /* Theme-iOS */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "Theme-iOS";
 		};
 		D5AF53062A3749C5002DD09C /* Home-iOS */ = {
 			isa = XCSwiftPackageProductDependency;
