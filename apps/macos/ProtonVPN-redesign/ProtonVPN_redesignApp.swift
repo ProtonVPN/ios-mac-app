@@ -24,7 +24,7 @@ import Home_macOS
 import vpncore
 import Logging
 import ComposableArchitecture
-import VPNShared
+import VPNAppCore
 
 let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 

@@ -34,12 +34,12 @@ let package = Package(
             exact: "0.14.1"
         ),
         .package(
-          url: "https://github.com/pointfreeco/swift-snapshot-testing",
-          exact: "1.10.0"
+            url: "https://github.com/pointfreeco/swift-snapshot-testing",
+            exact: "1.10.0"
         ),
         .package(
-          url: "https://github.com/pointfreeco/swift-dependencies.git",
-          exact: "0.5.1"
+            url: "https://github.com/pointfreeco/swift-dependencies.git",
+            exact: "0.5.1"
         ),
     ],
     targets: [
@@ -49,7 +49,7 @@ let package = Package(
                 "Theme",
                 "Strings",
                 "Ergonomics",
-                .product(name: "VPNShared", package: "NEHelper"),
+                .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "CasePaths", package: "swift-case-paths"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
@@ -82,6 +82,6 @@ let package = Package(
         .testTarget(
             name: "HomeTests",
             dependencies: ["Home", "Theme"]
-            )
+        )
     ]
 )
