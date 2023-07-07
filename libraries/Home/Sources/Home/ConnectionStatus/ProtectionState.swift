@@ -18,7 +18,7 @@
 
 import Foundation
 import Strings
-import VPNShared
+import VPNAppCore
 
 public enum ProtectionState: Equatable {
     case protected(netShield: NetShieldModel)

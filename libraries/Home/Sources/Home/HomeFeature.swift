@@ -24,6 +24,7 @@ import ComposableArchitecture
 
 import Theme
 import VPNShared
+import VPNAppCore
 
 import CasePaths
 

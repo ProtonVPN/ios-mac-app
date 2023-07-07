@@ -24,7 +24,7 @@ import ComposableArchitecture
 import Home
 import Strings
 import Theme
-import VPNShared
+import VPNAppCore
 
 public struct HomeRecentsSectionView: View {
     let items: [RecentConnection]

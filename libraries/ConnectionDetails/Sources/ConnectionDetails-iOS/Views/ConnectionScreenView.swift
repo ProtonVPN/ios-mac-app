@@ -20,7 +20,7 @@ import SwiftUI
 import ComposableArchitecture
 import Strings
 import ConnectionDetails
-import VPNShared
+import VPNAppCore
 import Theme
 
 public struct ConnectionScreenFeature: ReducerProtocol {

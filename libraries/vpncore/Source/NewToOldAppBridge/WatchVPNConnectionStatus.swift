@@ -16,7 +16,7 @@
 
 import Foundation
 import ComposableArchitecture
-import VPNShared
+import VPNAppCore
 import PMLogger
 
 private var appStateManager: AppStateManager! = Container.sharedContainer.makeAppStateManager()

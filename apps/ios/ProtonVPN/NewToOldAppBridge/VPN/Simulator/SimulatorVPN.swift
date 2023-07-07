@@ -19,7 +19,7 @@
 #if targetEnvironment(simulator)
 
 import Foundation
-import VPNShared
+import VPNAppCore
 import vpncore
 
 /// Allows "connecting" to VPN on a simulator by faking VPN connection status

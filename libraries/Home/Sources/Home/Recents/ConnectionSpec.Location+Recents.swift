@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import VPNShared
+import VPNAppCore
 import Theme
 
 extension ConnectionSpec.Location {

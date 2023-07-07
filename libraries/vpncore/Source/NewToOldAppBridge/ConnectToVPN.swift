@@ -16,19 +16,12 @@
 
 import Foundation
 import ComposableArchitecture
-import VPNShared
-
-extension DependencyValues {
-  public var connectToVPN: @Sendable (ConnectionSpec) -> Void {
-    get { self[ConnectToVPNKey.self] }
-    set { self[ConnectToVPNKey.self] = newValue }
-  }
-}
+import VPNAppCore
 
 private var vpnGateway = Container.sharedContainer.makeVpnGateway()
 
-private enum ConnectToVPNKey: DependencyKey {
-    static let liveValue: @Sendable (ConnectionSpec) -> Void = { specs in
+extension ConnectToVPNKey {
+    public static var bridgedAutoConnect: @Sendable (ConnectionSpec) -> Void = { specs in
         vpnGateway.autoConnect() // todo: connect to a proper server
     }
 }

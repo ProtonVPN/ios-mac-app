@@ -18,7 +18,7 @@
 
 import SwiftUI
 import Theme
-import VPNShared
+import VPNAppCore
 import Strings
 
 struct FeatureInfoView: View {
