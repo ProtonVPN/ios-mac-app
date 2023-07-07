@@ -22,10 +22,10 @@ extension View {
     public func themeBorder(color: Color,
                             lineWidth: CGFloat,
                             cornerRadius: AppTheme.CornerRadius) -> some View {
-        return self.overlay(
-            RoundedRectangle(cornerRadius: cornerRadius.rawValue)
-                .stroke(color, lineWidth: lineWidth)
-        )
+        let rectangle = RoundedRectangle(cornerRadius: cornerRadius.rawValue)
+        return self
+            .clipShape(rectangle)
+            .overlay(rectangle.stroke(color, lineWidth: lineWidth))
     }
 
     public func frame(_ size: AppTheme.IconSize) -> some View {

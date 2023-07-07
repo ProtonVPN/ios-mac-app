@@ -239,6 +239,8 @@ public enum Localizable {
   public static var settingsTitleVpnAccelerator: String { return Localizable.tr("Localizable", "_settings_title_vpn_accelerator", fallback: "VPN Accelerator") }
   /// Title of the Widget cell in the Settings tab [Redesign_2023]
   public static var settingsTitleWidget: String { return Localizable.tr("Localizable", "_settings_title_widget", fallback: "Widget") }
+  /// Home screen: Connection card hint on hover (macOS) [Redesign_2023]
+  public static var showConnectionDetailsButtonHint: String { return Localizable.tr("Localizable", "_show_connection_details_button_hint", fallback: "Show connection details") }
   /// Plural format key: "%#@STEP@ %#@STEPS@"
   public static func stepOf(_ p1: Int, _ p2: Int) -> String {
     return Localizable.tr("Localizable", "_step_of", p1, p2, fallback: "Plural format key: \"%#@STEP@ %#@STEPS@\"")

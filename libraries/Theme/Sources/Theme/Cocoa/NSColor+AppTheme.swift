@@ -144,7 +144,9 @@ private extension AppTheme.Style {
     }
 
     var textColor: NSColor {
-        if contains(.weak) {
+        if contains(.primary) {
+            return Asset.white.color
+        } else if contains(.weak) {
             return CP.TextWeak
         } else if contains(.hint) {
             return CP.TextHint
