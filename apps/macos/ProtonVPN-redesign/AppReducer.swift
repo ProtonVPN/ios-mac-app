@@ -58,7 +58,6 @@ struct AppReducer: ReducerProtocol {
         case showSideBar
         case login(LoginFeature.Action)
         case home(HomeFeature.Action)
-        case toggleConnectionDetails
     }
 
     var body: some ReducerProtocolOf<Self> {
@@ -78,11 +77,10 @@ struct AppReducer: ReducerProtocol {
 //                state.home.vpnConnectionStatus = .disconnected
 //                state.home.connectionStatus = .init(protectionState: .unprotected(country: "Poland", ip: "192.168.1.0"))
                 return .none
-
-            case .home:
-                return .none
-            case .toggleConnectionDetails:
+            case .home(.showConnectionDetails):
                 state.connectionDetailsVisible.toggle()
+                return .none
+            case .home:
                 return .none
             case .showLogin(let initialError):
                 state.login.initialError = initialError

@@ -28,54 +28,22 @@ import Strings
 import VPNAppCore
 
 struct HomeConnectionCardView: View {
-    static let gradientHeight: CGFloat = 100
-
     @Dependency(\.locale) private var locale
+
+    let model = ConnectionCardModel()
 
     let item: RecentConnection
     var vpnConnectionStatus: VPNConnectionStatus
     let sendAction: HomeFeature.ActionSender
 
-    var headerText: String {
-        switch vpnConnectionStatus {
-        case .disconnected, .disconnecting:
-            return Localizable.connectionCardLastConnectedTo
-        case .connected:
-            return Localizable.connectionCardSafelyBrowsingFrom
-        case .connecting, .loadingConnectionInfo:
-            return Localizable.connectionCardConnectingTo
-        }
-    }
-
     var accessibilityText: String {
         let countryName = item.connection.location.text(locale: locale)
-
-        switch vpnConnectionStatus {
-        case .disconnected, .disconnecting:
-            return Localizable.connectionCardAccessibilityLastConnectedTo(countryName)
-        case .connected:
-            return Localizable.connectionCardAccessibilityBrowsingFrom(countryName)
-        case .connecting, .loadingConnectionInfo:
-            return Localizable.connectionCardAccessibilityConnectingTo(countryName)
-        }
-    }
-
-    var buttonText: String {
-        switch vpnConnectionStatus {
-        case .disconnected:
-            return Localizable.actionConnect
-        case .connected:
-            return Localizable.actionDisconnect
-        case .connecting, .loadingConnectionInfo:
-            return Localizable.connectionCardActionCancel
-        case .disconnecting:
-            return Localizable.connectionCardActionCancel // ? not sure
-        }
+        return model.accessibilityText(for: vpnConnectionStatus, countryName: countryName)
     }
 
     var header: some View {
         HStack {
-            Text(headerText)
+            Text(model.headerText(for: vpnConnectionStatus))
                 .themeFont(.body1())
                 .styled()
                 .textCase(nil)
@@ -132,7 +100,7 @@ struct HomeConnectionCardView: View {
                     }
                 }
             } label: {
-                Text(buttonText)
+                Text(model.buttonText(for: vpnConnectionStatus))
                     .frame(maxWidth: .infinity, minHeight: 48)
                     .foregroundColor(Color(.text, .primary))
                     .background(Color(.background, .interactive))

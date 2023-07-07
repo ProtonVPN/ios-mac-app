@@ -58,7 +58,6 @@ struct ProtonVPNApp: App {
             WithViewStore(store, observe: { $0 }) { viewStore in
                 if viewStore.login.isLoggedIn {
                     SideBarView(store: store)
-                        .preferredColorScheme(.light)
                         .onAppear {
                             NSWindow.allowsAutomaticWindowTabbing = false
                         }
@@ -132,7 +131,7 @@ extension Scene {
             CommandGroup(before: .toolbar) {
                 WithViewStore(store, observe: { $0.connectionDetailsVisible }) { store in
                     Button("Toggle Connection Details") {
-                        store.send(.toggleConnectionDetails)
+                        store.send(.home(.showConnectionDetails))
                     }
                 }
             }

@@ -32,12 +32,20 @@ public struct HomeView: View {
     public var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             VStack {
+                let item = viewStore.state.mostRecent ?? .defaultFastest
                 ConnectionStatusView(store: store.scope(state: \.connectionStatus,
                                                         action: { .connectionStatusViewAction($0) }))
                 connectButton(viewStore: viewStore)
-
-                Text("Connection card")
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                Spacer()
+                    .frame(maxHeight: .infinity)
+                HomeConnectionCardView(
+                    item: item,
+                    vpnConnectionStatus: viewStore.vpnConnectionStatus,
+                    sendAction: { _ = viewStore.send($0) }
+                )
+                .padding(.vertical, .themeSpacing16)
+                Spacer()
+                    .frame(maxHeight: .infinity)
             }
             .background(Color(.background))
             .frame(minWidth: 360, minHeight: 480)

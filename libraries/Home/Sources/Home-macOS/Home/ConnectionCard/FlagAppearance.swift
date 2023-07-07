@@ -1,5 +1,5 @@
 //
-//  Created on 20/04/2023.
+//  Created on 10/07/2023.
 //
 //  Copyright (c) 2023 Proton AG
 //
@@ -16,19 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
+import Theme
 
-extension View {
-    public func themeBorder(color: Color,
-                            lineWidth: CGFloat,
-                            cornerRadius: AppTheme.CornerRadius) -> some View {
-        let rectangle = RoundedRectangle(cornerRadius: cornerRadius.rawValue)
-        return self
-            .clipShape(rectangle)
-            .overlay(rectangle.stroke(color, lineWidth: lineWidth))
-    }
-
-    public func frame(_ size: AppTheme.IconSize) -> some View {
-        return frame(width: size.width, height: size.height)
-    }
+extension FlagAppearance {
+    static let macOS: Self = .init(
+        secureCoreFlagShadowColor: .black.opacity(0.4),
+        secureCoreFlagCurveColor: .init(.icon, .hint),
+        fastestAccentColor: FastestFlagView.boltColor,
+        fastestBackgroundColor: Theme.Asset.sharedPineBase.swiftUIColor.opacity(0.3)
+    )
 }
