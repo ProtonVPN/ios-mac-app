@@ -49,6 +49,7 @@ let package = Package(
                 "ConnectionDetails",
                 "SharedViews",
                 .product(name: "Theme", package: "Theme"),
+                .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
                 // 3rd party
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),

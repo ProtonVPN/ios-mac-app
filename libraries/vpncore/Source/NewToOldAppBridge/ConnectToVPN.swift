@@ -18,18 +18,8 @@ import Foundation
 import ComposableArchitecture
 import VPNAppCore
 
-extension DependencyValues {
-
-    /// ATM it's neither async nor throws, but the plan is to return only after connection is made and also to throw exceptions
-    /// so user can be presented with an error from UI, and not from the depths of VPN connection related code.
-    public var connectToVPN: @Sendable (ConnectionSpec) async throws -> Void {
-        get { self[ConnectToVPNKey.self] }
-        set { self[ConnectToVPNKey.self] = newValue }
-    }
-}
-
-private enum ConnectToVPNKey: DependencyKey {
-    static let liveValue: @Sendable (ConnectionSpec) async throws -> Void = { intent in
+extension ConnectToVPNKey {
+    public static let bridgedConnect: @Sendable (ConnectionSpec) async throws -> Void = { intent in
         @Dependency(\.siriHelper) var siriHelper
         siriHelper().donateQuickConnect() // Change to more concrete donation when refactoring Siri stuff
 

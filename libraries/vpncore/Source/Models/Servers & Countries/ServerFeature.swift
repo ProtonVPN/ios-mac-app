@@ -21,7 +21,7 @@
 
 import Foundation
 import Theme
-import VPNShared
+import VPNAppCore
 
 extension ServerFeature {
     private var featureName: String {
