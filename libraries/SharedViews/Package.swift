@@ -31,7 +31,7 @@ let package = Package(
             name: "SharedViews",
             dependencies: [
                 "Theme",
-                .product(name: "VPNShared", package: "NEHelper"),
+                .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ]),
         .testTarget(

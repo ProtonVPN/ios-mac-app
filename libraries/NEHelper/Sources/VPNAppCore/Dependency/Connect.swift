@@ -20,19 +20,22 @@ import Foundation
 import Dependencies
 
 extension DependencyValues {
-  public var connectToVPN: @Sendable (ConnectionSpec) -> Void {    get { self[ConnectToVPNKey.self] }
-    set { self[ConnectToVPNKey.self] = newValue }
-  }
+    /// ATM it's neither async nor throws, but the plan is to return only after connection is made and also to throw exceptions
+    /// so user can be presented with an error from UI, and not from the depths of VPN connection related code.
+    public var connectToVPN: @Sendable (ConnectionSpec) async throws -> Void {
+        get { self[ConnectToVPNKey.self] }
+        set { self[ConnectToVPNKey.self] = newValue }
+    }
 }
 
 
 public enum ConnectToVPNKey: DependencyKey {
-    public static let liveValue: @Sendable (ConnectionSpec) -> Void = { specs in
+    public static let liveValue: @Sendable (ConnectionSpec) async throws -> Void = { specs in
         // After Accounts SPM migration, real implementation should live here
         assertionFailure("Use real implementation from VPNCore")
     }
 
-    public static let testValue: @Sendable (ConnectionSpec) -> Void = { specs in
+    public static let testValue: @Sendable (ConnectionSpec) async throws -> Void = { specs in
 
     }
 }

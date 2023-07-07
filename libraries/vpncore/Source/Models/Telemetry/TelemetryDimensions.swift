@@ -18,6 +18,7 @@
 
 import Foundation
 import VPNShared
+import VPNAppCore
 
 public struct TelemetryDimensions: Encodable {
     let outcome: Outcome

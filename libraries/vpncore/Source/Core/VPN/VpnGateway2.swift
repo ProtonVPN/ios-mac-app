@@ -19,6 +19,7 @@
 import Foundation
 import VPNShared
 import Dependencies
+import VPNAppCore
 
 public protocol VpnGatewayProtocol2 {
     func connect(withIntent: ConnectionSpec) async throws
@@ -62,7 +63,7 @@ public class VpnGateway2: VpnGatewayProtocol2 {
         self.safeModePropertyProvider = factory.makeSafeModePropertyProvider()
     }
     
-    public func connect(withIntent intent: VPNShared.ConnectionSpec) async throws {
+    public func connect(withIntent intent: ConnectionSpec) async throws {
         let openVpnConfig = self.propertiesManager.openVpnConfig
         let wireguardConfig = self.propertiesManager.wireguardConfig
         let availabilityCheckerResolver = availabilityCheckerResolverFactory.makeAvailabilityCheckerResolver(
@@ -128,7 +129,7 @@ public class VpnGateway2: VpnGatewayProtocol2 {
 
     // todo: Whole server selection should probably be refactored, because now `ConnectionSpec` is not
     // exactly the same as old `ConnectionRequest`
-    private func selectServer(intent: VPNShared.ConnectionSpec, connectionProtocol: ConnectionProtocol) throws -> ServerModel {
+    private func selectServer(intent: ConnectionSpec, connectionProtocol: ConnectionProtocol) throws -> ServerModel {
 
         @Dependency(\.getCurrentUserTier) var getCurrentUserTier
         let currentUserTier = (try? getCurrentUserTier()) ?? CoreAppConstants.VpnTiers.free

@@ -170,8 +170,8 @@ struct ProtonVPNApp: App {
                 .dependency(\.connectToVPN, SimulatorHelper.shared.connect)
                 .dependency(\.disconnectVPN, SimulatorHelper.shared.disconnect)
             #else
-                .dependency(\.connectToVPN, ConnectToVPNKey.bridgedAutoConnect)
-                .dependency(\.disconnectVPN, DisconnectVPNKey.bridged)
+                .dependency(\.connectToVPN, ConnectToVPNKey.bridgedConnect)
+                .dependency(\.disconnectVPN, DisconnectVPNKey.bridgedDisconnect)
             #endif
                 ._printChanges()
         )
