@@ -18,19 +18,12 @@
 
 import Foundation
 import ComposableArchitecture
-import VPNShared
-
-extension DependencyValues {
-    public var disconnectVPN: @Sendable () -> Void {
-    get { self[DisconnectVPNKey.self] }
-    set { self[DisconnectVPNKey.self] = newValue }
-  }
-}
+import VPNAppCore
 
 private var vpnGateway = Container.sharedContainer.makeVpnGateway()
 
-private enum DisconnectVPNKey: DependencyKey {
-    static let liveValue: @Sendable () -> Void = {
+extension DisconnectVPNKey {
+    public static var bridged: @Sendable () -> Void = {
         vpnGateway.disconnect()
     }
 }

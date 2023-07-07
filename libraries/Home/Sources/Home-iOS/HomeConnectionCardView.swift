@@ -25,7 +25,7 @@ import Dependencies
 import Home
 import Theme
 import Strings
-import VPNShared
+import VPNAppCore
 
 struct HomeConnectionCardView: View {
     static let gradientHeight: CGFloat = 100

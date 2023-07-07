@@ -1,5 +1,5 @@
 //
-//  Created on 09/06/2023.
+//  Created on 07/07/2023.
 //
 //  Copyright (c) 2023 Proton AG
 //
@@ -17,25 +17,20 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import VPNAppCore
+import Dependencies
 
-extension HomeFeature.State {
-    public var mostRecent: RecentConnection? {
-        connections.first
-    }
 
-    var remainingConnections: [RecentConnection] {
-        guard connections.count > 1 else {
-            return []
-        }
-        return Array(connections[1...])
-    }
 
-    public var remainingPinnedConnections: [RecentConnection] {
-        remainingConnections.filter(\.pinned)
-    }
+extension DependencyValues {
+    public var disconnectVPN: @Sendable () -> Void {
+    get { self[DisconnectVPNKey.self] }
+    set { self[DisconnectVPNKey.self] = newValue }
+  }
+}
 
-    public var remainingRecentConnections: [RecentConnection] {
-        remainingConnections.filter(\.notPinned)
+public enum DisconnectVPNKey: DependencyKey {
+    public static let liveValue: @Sendable () -> Void = {
+        // After Accounts SPM migration, real implementation should live here
+        assertionFailure("Use real implementation from VPNCore")
     }
 }

@@ -25,6 +25,7 @@ import ConnectionDetails
 import ConnectionDetails_iOS
 import vpncore
 import VPNShared
+import VPNAppCore
 import Settings
 
 import ComposableArchitecture
@@ -133,6 +134,9 @@ struct ProtonVPNApp: App {
             #if targetEnvironment(simulator)
                 .dependency(\.connectToVPN, SimulatorHelper.shared.connect)
                 .dependency(\.disconnectVPN, SimulatorHelper.shared.disconnect)
+            #else
+                .dependency(\.connectToVPN, ConnectToVPNKey.bridgedAutoConnect)
+                .dependency(\.disconnectVPN, DisconnectVPNKey.bridged)
             #endif
                 ._printChanges()
         )

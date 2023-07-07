@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import VPNShared
+import VPNAppCore
 
 public struct ConnectionStatusFeature: ReducerProtocol {
     public struct State: Equatable {
