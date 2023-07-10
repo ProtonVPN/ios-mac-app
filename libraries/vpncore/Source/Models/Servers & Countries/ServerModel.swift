@@ -22,6 +22,7 @@
 import Foundation
 import VPNShared
 import VPNAppCore
+import Strings
 
 public class ServerModel: NSObject, NSCoding, Codable {
     

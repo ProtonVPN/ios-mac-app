@@ -25,6 +25,7 @@ import vpncore
 import Search
 import ProtonCore_UIFoundations
 import AlamofireImage
+import Strings
 
 class ServerItemViewModel: ServerItemViewModelCore {
 

@@ -22,6 +22,7 @@
 import Foundation
 import CoreLocation
 import VPNAppCore
+import Strings
 
 public class CountryModel: Comparable, Hashable {
     

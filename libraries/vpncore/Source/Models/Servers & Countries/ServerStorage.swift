@@ -21,6 +21,7 @@
 
 import Foundation
 import VPNShared
+import Combine
 
 public protocol ServerStorage {
     
@@ -31,6 +32,8 @@ public protocol ServerStorage {
 
     func store(_ newServers: [ServerModel])
     func update(continuousServerProperties: ContinuousServerPropertiesDictionary)
+
+    var allServersPublisher: CurrentValueSubject<[ServerModel], Never> { get } // Published<[ServerModel]>.Publisher { get }
 }
 
 public protocol ServerStorageFactory {
@@ -38,7 +41,6 @@ public protocol ServerStorageFactory {
 }
 
 public class ServerStorageConcrete: ServerStorage {
-    
     private let storageVersion = 2
     private let versionKey     = "serverCacheVersion"
     private let storageKey     = "servers"
@@ -49,7 +51,11 @@ public class ServerStorageConcrete: ServerStorage {
     
     public var contentChanged = Notification.Name("ServerStorageContentChanged")
 
-    public init() {}
+    public init() {
+        allServersPublisher.send(fetch())
+    }
+
+    public var allServersPublisher = CurrentValueSubject<[ServerModel], Never>([])
 
     public func fetch() -> [ServerModel] {
         // Check if stored servers have been updated since last access,
@@ -97,6 +103,8 @@ public class ServerStorageConcrete: ServerStorage {
                 Storage.userDefaults().set(storageVersion, forKey: versionKey)
                 Storage.userDefaults().set(age, forKey: ageKey)
                 Storage.userDefaults().synchronize()
+
+                self.allServersPublisher.send(newServers)
 
                 log.debug("Server list saved (count: \(newServers.count))", category: .app)
 

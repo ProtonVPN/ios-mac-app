@@ -23,6 +23,7 @@
 import CoreLocation
 import UIKit
 import vpncore
+import Strings
 
 class CountryAnnotationViewModel: AnnotationViewModel {
     

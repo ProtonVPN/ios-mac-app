@@ -23,25 +23,88 @@ import ConnectionDetails
 import VPNAppCore
 import Theme
 import SharedViews
+import VPNShared
 
 public struct ConnectionScreenFeature: ReducerProtocol {
 
     public struct State: Equatable {
         public var ipViewState: IPViewFeature.State
-        public var connectionDetailsState: ConnectionDetailsFeature.State
-        public var connectionFeatures: [ConnectionSpec.Feature]
-        public var isSecureCore: Bool
         public var connectionSpec: ConnectionSpec
         public var vpnConnectionActual: VPNConnectionActual?
+        public var vpnServer: VpnServer?
 
-        public init(ipViewState: IPViewFeature.State, connectionDetailsState: ConnectionDetailsFeature.State, connectionFeatures: [ConnectionSpec.Feature], isSecureCore: Bool, connectionSpec: ConnectionSpec, vpnConnectionActual: VPNConnectionActual?) {
+        public init(ipViewState: IPViewFeature.State, connectionSpec: ConnectionSpec, vpnConnectionActual: VPNConnectionActual?) {
             self.ipViewState = ipViewState
-            self.connectionDetailsState = connectionDetailsState
-            self.connectionFeatures = connectionFeatures
-            self.isSecureCore = isSecureCore
             self.connectionSpec = connectionSpec
             self.vpnConnectionActual = vpnConnectionActual
         }
+
+        var connectionDetailsState: ConnectionDetailsFeature.State {
+            // Info about current server from ServerStorage
+            if let vpnServer {
+                return ConnectionDetailsFeature.State(
+                    connectedSince: Date(timeIntervalSinceNow: -180), // todo:
+                    country: "\(LocalizationUtility().countryName(forCode: vpnServer.exitCountryCode) ?? vpnServer.exitCountryCode)",
+                    city: "\(vpnServer.translatedCity ?? "-")",
+                    server: vpnServer.name,
+                    serverLoad: vpnServer.load,
+                    protocolName: "\(vpnConnectionActual?.vpnProtocol.description ?? "")"
+                )
+            }
+
+            guard let vpnConnectionActual else {
+                return ConnectionDetailsFeature.State(
+                    connectedSince: Date(),
+                    country: "-",
+                    city: "-",
+                    server: "-",
+                    serverLoad: 0,
+                    protocolName: "-"
+                )
+            }
+
+            // Info about current connection in case server info was not received from ServerStorage yet
+            return ConnectionDetailsFeature.State(
+                connectedSince: Date(timeIntervalSinceNow: -180), // todo:
+                country: LocalizationUtility.default.countryName(forCode: vpnConnectionActual.country) ?? vpnConnectionActual.country,
+                city: vpnConnectionActual.city ?? "",
+                server: vpnConnectionActual.serverName,
+                serverLoad: 0,
+                protocolName: vpnConnectionActual.vpnProtocol.description
+            )
+        }
+
+        var isSecureCore: Bool {
+            guard let vpnConnectionActual else {
+                return false
+            }
+            return vpnConnectionActual.feature.contains(.secureCore)
+        }
+
+        var connectionFeatures: [ConnectionSpec.Feature] {
+            guard let vpnConnectionActual else {
+                return []
+            }
+            var features = [ConnectionSpec.Feature]()
+
+            let table: [(ServerFeature, ConnectionSpec.Feature)] = [
+                (ServerFeature.tor, ConnectionSpec.Feature.tor),
+                (ServerFeature.p2p, ConnectionSpec.Feature.p2p),
+                (ServerFeature.streaming, ConnectionSpec.Feature.streaming),
+            ]
+            for feature in table {
+                if vpnConnectionActual.feature.contains(feature.0) {
+                    features.append(feature.1)
+                }
+            }
+
+            if vpnServer?.isVirtual == true {
+                features.append(.smart)
+            }
+
+            return features
+        }
+
     }
 
     public enum Action: Equatable {
@@ -53,6 +116,10 @@ public struct ConnectionScreenFeature: ReducerProtocol {
         case watchConnectionStatus
         /// Process new VPN connection state
         case newConnectionStatus(VPNConnectionStatus)
+        /// Watch changes in the connected server
+        case watchServerChanges(String?)
+        /// Fill in new server info
+        case newServer(VpnServer)
     }
 
     public init() {
@@ -61,11 +128,11 @@ public struct ConnectionScreenFeature: ReducerProtocol {
     public var body: some ReducerProtocolOf<Self> {
         Reduce { state, action in
             switch action {
-
             case .watchConnectionStatus:
                 return .run { send in
-                    @Dependency(\.watchVPNConnectionStatus) var watchVPNConnectionStatus
-                    for await vpnStatus in await watchVPNConnectionStatus() {
+                    @Dependency(\.vpnConnectionStatusPublisher) var vpnConnectionStatusPublisher
+
+                    for await vpnStatus in vpnConnectionStatusPublisher().values {
                         await send(.newConnectionStatus(vpnStatus), animation: .default)
                     }
                 }
@@ -76,9 +143,28 @@ public struct ConnectionScreenFeature: ReducerProtocol {
                     state.connectionSpec = intent
                     state.vpnConnectionActual = actual
 
+                    if let actual {
+                        return .send(.watchServerChanges(actual.serverModelId))
+                    }
+
                 case .disconnected:
                     break // todo: close this view?
                 }
+                return .none
+
+            case .watchServerChanges(let serverId):
+                guard let serverId else {
+                    return .none // todo: cancel previous task
+                }
+                return .run { send in
+                    @Dependency(\.getServerById) var getServerByIdPublisher
+                    for await vpnServer in getServerByIdPublisher(serverId).values {
+                        await send(.newServer(vpnServer), animation: .default)
+                    }
+                }
+
+            case .newServer(let vpnServer):
+                state.vpnServer = vpnServer
                 return .none
 
             default:
@@ -119,6 +205,7 @@ public struct ConnectionScreenView: View {
                 .padding(.themeSpacing16)
 
                 .task { await viewStore.send(.watchConnectionStatus).finish() }
+                .task { await viewStore.send(.watchServerChanges(viewStore.vpnConnectionActual?.serverModelId)).finish() }
             })
 
             ScrollView(.vertical) {
@@ -172,6 +259,19 @@ public struct ConnectionScreenView: View {
     }
 }
 
+extension VpnProtocol {
+    public var description: String {
+        switch self {
+        case .ike:
+            return "IKEv2"
+        case .openVpn(let transport):
+            return "OpenVPN (\(transport.rawValue.uppercased()))"
+        case .wireGuard(let transport):
+            return "WireGuard (\(transport.rawValue.uppercased()))"
+        }
+    }
+}
+
 // MARK: - Previews
 
 struct ConnectionScreenView_Previews: PreviewProvider {
@@ -184,21 +284,21 @@ struct ConnectionScreenView_Previews: PreviewProvider {
                             localIP: "127.0.0.1",
                             vpnIp: "102.107.197.6"
                         ),
-                        connectionDetailsState: ConnectionDetailsFeature.State(
-                            connectedSince: Date.init(timeIntervalSinceNow: -12345),
-                            country: "Lithuania",
-                            city: "Siauliai",
-                            server: "LT#5",
-                            serverLoad: 23,
-                            protocolName: "WireGuard"
-                        ),
-                        connectionFeatures: [.p2p, .tor, .smart, .streaming],
-                        isSecureCore: true,
                         connectionSpec: ConnectionSpec(
                             location: .secureCore(.hop(to: "US", via: "CH")),
                             features: []),
-                        vpnConnectionActual: nil
-                       ),
+                        vpnConnectionActual: VPNConnectionActual(
+                            serverModelId: "server-id",
+                            serverIPId: "server-ip-id",
+                            vpnProtocol: .wireGuard(.udp),
+                            natType: .moderateNAT,
+                            safeMode: false,
+                            feature: .p2p,
+                            serverName: "SER#123",
+                            country: "US",
+                            city: "City"
+                        )
+                    ),
                     reducer: ConnectionScreenFeature()
                 )
             )
