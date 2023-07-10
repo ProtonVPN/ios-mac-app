@@ -21,6 +21,7 @@
 
 import Foundation
 import VPNShared
+import Combine
 
 public class ServerStorageMock: ServerStorage {
     public var didStoreNewServers: (([ServerModel]) -> Void)?
@@ -51,6 +52,7 @@ public class ServerStorageMock: ServerStorage {
     /// Different from `store`, as it doesn't call the spy function `didStoreNewServers`.
     /// Should be used for test setup.
     public func populateServers(_ serverModels: [ServerModel]) {
+        allServersPublisher.send(serverModels)
         servers = serverModels.reduce(into: [:], { result, server in
             result[server.id] = server
         })
@@ -107,4 +109,7 @@ public class ServerStorageMock: ServerStorage {
 
         populateServers(serverModels)
     }
+
+    public var allServersPublisher = CurrentValueSubject<[ServerModel], Never>([])
+
 }

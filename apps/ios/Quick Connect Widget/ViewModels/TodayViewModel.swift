@@ -22,6 +22,7 @@
 
 import Reachability
 import vpncore
+import Strings
 
 enum TodayViewModelState {
     case blank

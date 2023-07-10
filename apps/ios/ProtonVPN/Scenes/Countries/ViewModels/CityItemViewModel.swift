@@ -21,6 +21,7 @@ import UIKit
 import Search
 import vpncore
 import ProtonCore_UIFoundations
+import Strings
 
 final class CityItemViewModel: CityViewModel {
 

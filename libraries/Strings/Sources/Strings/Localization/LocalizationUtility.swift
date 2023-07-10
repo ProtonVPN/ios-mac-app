@@ -32,7 +32,7 @@ public class LocalizationUtility {
     public init() {
         loadShortNames()
     }
-    
+
     public func shortenIfNeeded(_ name: String) -> String {
         return namesToShorten[name] ?? name
     }
@@ -73,11 +73,11 @@ public class LocalizationUtility {
         countryNameCache[countryCode] = shortened
         return shortened
     }
-    
+
     // MARK: - Name shortening
-    
+
     private var namesToShorten = [String: String]()
-    
+
     private func loadShortNames() {
         do {
             guard let resource = Bundle.main.url(forResource: "country-names", withExtension: "plist") else {
@@ -91,5 +91,5 @@ public class LocalizationUtility {
             namesToShorten = [String: String]()
         }
     }
-    
+
 }

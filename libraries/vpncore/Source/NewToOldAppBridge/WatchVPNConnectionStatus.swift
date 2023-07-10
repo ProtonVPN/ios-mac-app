@@ -19,6 +19,7 @@ import ComposableArchitecture
 import VPNAppCore
 import PMLogger
 import Dependencies
+import Combine
 
 private var appStateManager: AppStateManager! = Container.sharedContainer.makeAppStateManager()
 
@@ -39,6 +40,41 @@ extension WatchAppStateChangesKey {
             .eraseToStream()
     }
 
+}
+
+extension VPNConnectionStatusPublisherKey {
+
+    public static let watchVPNConnectionStatusChanges: @Sendable () -> AnyPublisher<VPNConnectionStatus, Never> = {
+        return NotificationCenter.default
+            .publisher(for: .AppStateManager.displayStateChange)
+            .map {
+                let appStageManager = Container.sharedContainer.makeAppStateManager()
+
+                // todo: when VPN connection will be refactored, please try saving lastConnectionIntent
+                // inside NETunnelProviderProtocol.providerConfiguration for WG and OpenVPN.
+                let propertyManager = Container.sharedContainer.makePropertiesManager()
+
+                return ($0.object as! AppDisplayState).vpnConnectionStatus(appStageManager.activeConnection(), intent: propertyManager.lastConnectionIntent)
+            }
+            .eraseToAnyPublisher()
+    }
+
+//    public static let watchVPNConnectionStatusChanges2: @Sendable () -> AnyPublisher<VPNConnectionStatus, Never> = {
+//        return NotificationCenter.default
+//            .publisher(for: .AppStateManager.displayStateChange)
+//            .compactMap { $0.object as? AppDisplayState }
+//            .map { appDisplayState in
+//                let appStageManager = Container.sharedContainer.makeAppStateManager()
+//
+//                // todo: when VPN connection will be refactored, please try saving lastConnectionIntent
+//                // inside NETunnelProviderProtocol.providerConfiguration for WG and OpenVPN.
+//                let propertyManager = Container.sharedContainer.makePropertiesManager()
+//
+//                return appDisplayState.vpnConnectionStatus(appStageManager.activeConnection(), intent: propertyManager.lastConnectionIntent)
+//            }
+//
+//            .eraseToAnyPublisher()
+//    }
 }
 
 // MARK: - AppDisplayState -> VPNConnectionStatus
@@ -67,13 +103,15 @@ extension AppDisplayState {
 
 extension ConnectionConfiguration {
     var vpnConnectionActual: VPNConnectionActual {
-        VPNConnectionActual(
+        return VPNConnectionActual(
             serverModelId: self.server.id,
             serverIPId: self.serverIp.id,
             vpnProtocol: self.vpnProtocol,
             natType: self.natType,
             safeMode: self.safeMode,
             feature: self.server.feature,
+            serverName: self.server.name,
+            country: self.server.exitCountryCode,
             city: self.server.city
         )
     }

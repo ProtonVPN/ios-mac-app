@@ -73,14 +73,6 @@ struct AppReducer: ReducerProtocol {
                 state.connectionScreenState = ConnectionScreenFeature.State(
                     ipViewState: IPViewFeature.State(localIP: "127.0.0.1",
                                                      vpnIp: "102.107.197.6"),
-                    connectionDetailsState: ConnectionDetailsFeature.State(connectedSince: Date.init(timeIntervalSinceNow: -12345),
-                                                                           country: "Lithuania",
-                                                                           city: "Siauliai",
-                                                                           server: "LT#5",
-                                                                           serverLoad: 23,
-                                                                           protocolName: "WireGuard"),
-                    connectionFeatures: [.p2p, .tor, .smart, .streaming],
-                    isSecureCore: true,
                     connectionSpec: status.0,
                     vpnConnectionActual: status.1
                 )
@@ -130,6 +122,10 @@ struct AppReducer: ReducerProtocol {
         Scope(state: \.settings, action: /Action.settings) { 
             SettingsFeature() 
         }
+        .ifLet(\.connectionScreenState, action: /Action.connectionScreenAction) {
+            ConnectionScreenFeature()
+        }
+
     }
 }
 
@@ -166,6 +162,8 @@ struct ProtonVPNApp: App {
             initialState: initialStateProvider.initialState,
             reducer: AppReducer()
                 .dependency(\.watchVPNConnectionStatus, WatchAppStateChangesKey.watchVPNConnectionStatusChanges)
+                .dependency(\.vpnConnectionStatusPublisher, VPNConnectionStatusPublisherKey.watchVPNConnectionStatusChanges)
+                .dependency(\.getServerById, VpnServerGetter.getServerById)
             #if targetEnvironment(simulator)
                 .dependency(\.connectToVPN, SimulatorHelper.shared.connect)
                 .dependency(\.disconnectVPN, SimulatorHelper.shared.disconnect)

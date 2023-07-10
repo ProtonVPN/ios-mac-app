@@ -125,6 +125,8 @@ extension ConnectionSpec {
             natType: .moderateNAT,
             safeMode: nil,
             feature: .zero,
+            serverName: "Server#123",
+            country: "Country",
             city: "City"
         )
     }

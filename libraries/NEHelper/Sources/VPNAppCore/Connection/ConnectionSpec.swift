@@ -21,6 +21,11 @@ import Foundation
 /// Defines users intent as to where (s)he wanted to connect
 public struct ConnectionSpec: Equatable, Hashable, Codable {
 
+    public let location: Location
+    public let features: Set<Feature>
+
+    // MARK: -
+
     public enum Server: Equatable, Hashable, Codable {
         case free
         case paid
@@ -65,8 +70,7 @@ public struct ConnectionSpec: Equatable, Hashable, Codable {
         }
     }
 
-    public let location: Location
-    public let features: Set<Feature>
+    // MARK: - Initialisers
 
     public init(location: Location, features: Set<Feature>) {
         self.location = location

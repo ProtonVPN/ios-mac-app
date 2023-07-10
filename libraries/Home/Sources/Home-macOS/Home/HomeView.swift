@@ -61,7 +61,7 @@ struct HomeView_Previews: PreviewProvider {
         HomeView(store: .init(initialState: .init(connections: [],
                                                   connectionStatus: .init(protectionState: .protected(netShield: .random)),
                                                   vpnConnectionStatus: .connected(.init(location: .fastest,
-                                                                                        features: []))),
+                                                                                        features: []), nil)),
                               reducer: HomeFeature()))
     }
 }

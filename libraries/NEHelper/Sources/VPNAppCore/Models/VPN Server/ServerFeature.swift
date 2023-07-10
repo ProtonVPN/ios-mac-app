@@ -19,7 +19,7 @@
 import Foundation
 import Ergonomics
 
-public struct ServerFeature: OptionSet {
+public struct ServerFeature: OptionSet, Codable {
 
     public let rawValue: Int
 

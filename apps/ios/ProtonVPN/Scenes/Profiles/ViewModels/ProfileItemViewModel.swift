@@ -24,6 +24,7 @@ import Foundation
 import UIKit
 import vpncore
 import ProtonCore_UIFoundations
+import Strings
 
 final class ProfileItemViewModel {
     

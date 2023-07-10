@@ -121,8 +121,6 @@
 		4CAAEC3D286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAEC3C286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift */; };
 		4CAAEC3E286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAEC3C286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift */; };
 		4CB2A3D7289131F5002E839E /* ExtensionInfo+Comparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2A3D5289131F5002E839E /* ExtensionInfo+Comparable.swift */; };
-		4CC20AD12869A6410051BC80 /* LocaleWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC20AD02869A6410051BC80 /* LocaleWrapper.swift */; };
-		4CC20AD22869A6410051BC80 /* LocaleWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC20AD02869A6410051BC80 /* LocaleWrapper.swift */; };
 		4CE300C7285877B100FBD249 /* NEVPNWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE300C6285877B100FBD249 /* NEVPNWrappers.swift */; };
 		4CE300C8285877B100FBD249 /* NEVPNWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE300C6285877B100FBD249 /* NEVPNWrappers.swift */; };
 		4CF40B9A2833B29900C3C501 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B225B7281FCFE9008404E4 /* SessionService.swift */; };
@@ -223,6 +221,7 @@
 		D55D79162498F63C009669E0 /* String+Cleanup.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55D79132498F63C009669E0 /* String+Cleanup.swift */; };
 		D55D791A2498F65B009669E0 /* StringCleanup.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55D79182498F65B009669E0 /* StringCleanup.swift */; };
 		D55D791C2498F65B009669E0 /* StringCleanup.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55D79182498F65B009669E0 /* StringCleanup.swift */; };
+		D563A74E2A5C0F9000908254 /* ConnectionDetails-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = D563A74D2A5C0F9000908254 /* ConnectionDetails-iOS */; };
 		D563B26B2345DA4300F98797 /* FormValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563B26A2345DA4300F98797 /* FormValidationError.swift */; };
 		D563B26C2345DA4300F98797 /* FormValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563B26A2345DA4300F98797 /* FormValidationError.swift */; };
 		D56B68E32507CBBD00796E0C /* ClientConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56B68E22507CBBD00796E0C /* ClientConfig.swift */; };
@@ -284,6 +283,8 @@
 		D5BCDEAC25359F68004BAEE8 /* Offer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDEA925359F68004BAEE8 /* Offer.swift */; };
 		D5C204242486646F004FB58B /* VpnServerSelectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C204232486646F004FB58B /* VpnServerSelectorTests.swift */; };
 		D5C204252486646F004FB58B /* VpnServerSelectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C204232486646F004FB58B /* VpnServerSelectorTests.swift */; };
+		D5C9E0962A55562500A84B6C /* GetServerById.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C9E0952A55562500A84B6C /* GetServerById.swift */; };
+		D5C9E0972A55562500A84B6C /* GetServerById.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C9E0952A55562500A84B6C /* GetServerById.swift */; };
 		D5CD4B07236720010006AAF7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1C99F4D21C3C56600C54333 /* Localizable.strings */; };
 		D5D2944F25A45B4D000FBD74 /* SemanticVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2944E25A45B4D000FBD74 /* SemanticVersion.swift */; };
 		D5D2945125A45B4D000FBD74 /* SemanticVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2944E25A45B4D000FBD74 /* SemanticVersion.swift */; };
@@ -439,8 +440,6 @@
 		E1B5F65821B81E4000B558B0 /* ServerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B5F65621B81E4000B558B0 /* ServerModel.swift */; };
 		E1B5F65A21B81E4800B558B0 /* CountryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B5F65921B81E4800B558B0 /* CountryModel.swift */; };
 		E1B5F65B21B81E4800B558B0 /* CountryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B5F65921B81E4800B558B0 /* CountryModel.swift */; };
-		E1B5F65D21B81E5800B558B0 /* LocalizationUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B5F65C21B81E5800B558B0 /* LocalizationUtility.swift */; };
-		E1B5F65E21B81E5800B558B0 /* LocalizationUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B5F65C21B81E5800B558B0 /* LocalizationUtility.swift */; };
 		E1B5F66021B81E7800B558B0 /* LocationUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B5F65F21B81E7700B558B0 /* LocationUtility.swift */; };
 		E1B5F66121B81E7800B558B0 /* LocationUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B5F65F21B81E7700B558B0 /* LocationUtility.swift */; };
 		E1B5F66521B81EE100B558B0 /* ServerIp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B5F66421B81EE100B558B0 /* ServerIp.swift */; };
@@ -811,7 +810,6 @@
 		4C9486B528CA327B008AD889 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		4CAAEC3C286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NEVPNStatus+CustomStringConvertible.swift"; sourceTree = "<group>"; };
 		4CB2A3D5289131F5002E839E /* ExtensionInfo+Comparable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExtensionInfo+Comparable.swift"; sourceTree = "<group>"; };
-		4CC20AD02869A6410051BC80 /* LocaleWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleWrapper.swift; sourceTree = "<group>"; };
 		4CE300C6285877B100FBD249 /* NEVPNWrappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEVPNWrappers.swift; sourceTree = "<group>"; };
 		4CFDF0B6287EE37500386626 /* MockDependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDependencyContainer.swift; sourceTree = "<group>"; };
 		4CFDF0B9287EE44100386626 /* MockTestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTestData.swift; sourceTree = "<group>"; };
@@ -957,6 +955,7 @@
 		D5BCDC9425303E56004BAEE8 /* AnnouncementManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementManager.swift; sourceTree = "<group>"; };
 		D5BCDEA925359F68004BAEE8 /* Offer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Offer.swift; sourceTree = "<group>"; };
 		D5C204232486646F004FB58B /* VpnServerSelectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnServerSelectorTests.swift; sourceTree = "<group>"; };
+		D5C9E0952A55562500A84B6C /* GetServerById.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetServerById.swift; sourceTree = "<group>"; };
 		D5CD4B03236709820006AAF7 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = Localization/pl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D5CD4B09236724A90006AAF7 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = Localization/nl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D5CD4B0B236724D00006AAF7 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = Localization/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1065,7 +1064,6 @@
 		E1B5F65321B81E3A00B558B0 /* ServerFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerFeature.swift; sourceTree = "<group>"; };
 		E1B5F65621B81E4000B558B0 /* ServerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerModel.swift; sourceTree = "<group>"; };
 		E1B5F65921B81E4800B558B0 /* CountryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryModel.swift; sourceTree = "<group>"; };
-		E1B5F65C21B81E5800B558B0 /* LocalizationUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationUtility.swift; sourceTree = "<group>"; };
 		E1B5F65F21B81E7700B558B0 /* LocationUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationUtility.swift; sourceTree = "<group>"; };
 		E1B5F66421B81EE100B558B0 /* ServerIp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerIp.swift; sourceTree = "<group>"; };
 		E1B5F66B21B8203200B558B0 /* ServerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerType.swift; sourceTree = "<group>"; };
@@ -1214,6 +1212,7 @@
 				E939EEF3279561EE006E4305 /* BugReport in Frameworks */,
 				D582731A2A4F00C60021CA41 /* PMLogger in Frameworks */,
 				AD3AE5332A4F11EB000FDBA6 /* Settings in Frameworks */,
+				D563A74E2A5C0F9000908254 /* ConnectionDetails-iOS in Frameworks */,
 				E58D06422A0B8B1C002A896C /* Clocks in Frameworks */,
 				D58273222A4F01840021CA41 /* Ergonomics in Frameworks */,
 				4C4F5F11292BECCE00BBD5AF /* LocalFeatureFlags in Frameworks */,
@@ -1355,7 +1354,6 @@
 		4CE300C52858777E00FBD249 /* DependencyWrappers */ = {
 			isa = PBXGroup;
 			children = (
-				4CC20AD02869A6410051BC80 /* LocaleWrapper.swift */,
 				4CE300C6285877B100FBD249 /* NEVPNWrappers.swift */,
 				4C145239292CF9BF00DE9AC0 /* CountryCodeProvider.swift */,
 			);
@@ -1411,6 +1409,7 @@
 				D54539DB2A41F1D5008B4259 /* ConnectToVPN.swift */,
 				D54539D92A41F1D4008B4259 /* DisconnectVPN.swift */,
 				D54539E52A4309AD008B4259 /* PushAlert.swift */,
+				D5C9E0952A55562500A84B6C /* GetServerById.swift */,
 			);
 			path = NewToOldAppBridge;
 			sourceTree = "<group>";
@@ -2038,7 +2037,6 @@
 				AD37FAC629B89FF900D4DE4E /* StrongNotification.swift */,
 				E1B5F67821B824A500B558B0 /* Arithmetic.swift */,
 				E1616BEE21C951DB00F42D79 /* HexColor.swift */,
-				E1B5F65C21B81E5800B558B0 /* LocalizationUtility.swift */,
 				E1B5F65F21B81E7700B558B0 /* LocationUtility.swift */,
 				E160845821DE1E9100E34D04 /* SafariService.swift */,
 				E1616BFB21C95C5C00F42D79 /* Weak.swift */,
@@ -2411,6 +2409,7 @@
 				AD880CE52A56C755007086AB /* VPNAppCore */,
 				AD58527E2A58B7E10005D8EC /* Home */,
 				AD5852822A58B8160005D8EC /* Home-iOS */,
+				D563A74D2A5C0F9000908254 /* ConnectionDetails-iOS */,
 			);
 			productName = "vpncore-ios";
 			productReference = E1B5F5D821B68ABD00B558B0 /* vpncore.framework */;
@@ -2980,7 +2979,6 @@
 				E5CF14822948E83B00AF6912 /* TelemetryRequest.swift in Sources */,
 				E1B5F65A21B81E4800B558B0 /* CountryModel.swift in Sources */,
 				D54539CD2A41C200008B4259 /* GetCurrentUserTier.swift in Sources */,
-				4CC20AD12869A6410051BC80 /* LocaleWrapper.swift in Sources */,
 				4C83C46D2869F956000A3FB4 /* AvailabilityCheckerFactory.swift in Sources */,
 				D52585272507D4DD00657B80 /* FeatureFlags.swift in Sources */,
 				E1616B8B21C7ACC300F42D79 /* AccountPlan.swift in Sources */,
@@ -2994,6 +2992,7 @@
 				660EABBA29B2498700B4D815 /* UnauthKeychainMock.swift in Sources */,
 				42878E4024EE6B09001B35BE /* MaintenanceManager.swift in Sources */,
 				D56B68E32507CBBD00796E0C /* ClientConfig.swift in Sources */,
+				D5C9E0962A55562500A84B6C /* GetServerById.swift in Sources */,
 				D5B53AD825188D7C00625CEC /* MaintenanceManagerHelper.swift in Sources */,
 				E576863E2976F31E0014F944 /* TelemetryBuffer.swift in Sources */,
 				F3FBB101267360F6004490AF /* LocalAgentConfiguration.swift in Sources */,
@@ -3147,7 +3146,6 @@
 				F38F7BE92795657B005B9EA2 /* CoreApiFeatureRequest.swift in Sources */,
 				E1B5F66C21B8203200B558B0 /* ServerType.swift in Sources */,
 				F3021D6925E93DE300EF73A1 /* TroubleshootViewModel.swift in Sources */,
-				E1B5F65D21B81E5800B558B0 /* LocalizationUtility.swift in Sources */,
 				D10A05E6CE8FBF1B16CF5BB8 /* SmartPortSelector.swift in Sources */,
 				4B18B8079BA7396191EE374C /* Result+Extensions.swift in Sources */,
 				5DD568B553917B3DDB7A6F7F /* ReportsBugResponse.swift in Sources */,
@@ -3392,6 +3390,7 @@
 				AD37181329CB3BD5006615E2 /* NetShieldStatsModel.swift in Sources */,
 				E1616BE621C9392600F42D79 /* VpnGateway.swift in Sources */,
 				D5EA845128C8F59500C8EB7D /* SentryHelper.swift in Sources */,
+				D5C9E0972A55562500A84B6C /* GetServerById.swift in Sources */,
 				E1B5F65821B81E4000B558B0 /* ServerModel.swift in Sources */,
 				E1B5F66121B81E7800B558B0 /* LocationUtility.swift in Sources */,
 				E1616BF021C951DB00F42D79 /* HexColor.swift in Sources */,
@@ -3462,11 +3461,9 @@
 				E129C6C822A9101B00D8437E /* ServerStorageMock.swift in Sources */,
 				E148AE6921C29A67007AB65A /* NetworkError.swift in Sources */,
 				F38432F6281ACE1600850EAA /* UserTierProviderMock.swift in Sources */,
-				4CC20AD22869A6410051BC80 /* LocaleWrapper.swift in Sources */,
 				E1B5F66D21B8203200B558B0 /* ServerType.swift in Sources */,
 				E939EEE927954E47006E4305 /* DynamicBugReportStorage.swift in Sources */,
 				F3C1413227BBF6C9009B881E /* SafeModePropertyProvider.swift in Sources */,
-				E1B5F65E21B81E5800B558B0 /* LocalizationUtility.swift in Sources */,
 				1BA8184C047AD8822A642AED /* SmartPortSelector.swift in Sources */,
 				FEDA0212F8DF7B00D9D4B9ED /* Result+Extensions.swift in Sources */,
 				90400A48BBED6C2C09C2A90D /* ReportsBugResponse.swift in Sources */,
@@ -4515,6 +4512,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D5391F152A4D4ABE0089D2F7 /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = OrderedCollections;
+		};
+		D563A74D2A5C0F9000908254 /* ConnectionDetails-iOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "ConnectionDetails-iOS";
 		};
 		D58273192A4F00C60021CA41 /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;

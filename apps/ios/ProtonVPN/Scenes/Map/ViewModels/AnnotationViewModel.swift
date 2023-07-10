@@ -23,6 +23,7 @@
 import UIKit
 import CoreLocation
 import vpncore
+import Strings
 
 enum AnnotationViewState {
     case idle

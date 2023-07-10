@@ -289,6 +289,7 @@
 		D55F10F1297FD31600EAF2AB /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F56898232620C600795953 /* DependencyContainer.swift */; };
 		D55F10F2297FD31D00EAF2AB /* IOSVpnCredentialsConfiguratorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5209C6F26CBBCF900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift */; };
 		D55F10F3297FD32200EAF2AB /* OVPNiOSCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5209C7326CBC87E00AD14EA /* OVPNiOSCredentialsConfigurator.swift */; };
+		D563A7502A5C279B00908254 /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = D563A74F2A5C279B00908254 /* Strings */; };
 		D56B68DB250617F000796E0C /* BatteryUsageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A6ACB3250273CE00FB381F /* BatteryUsageViewController.swift */; };
 		D573D114264A70980033CE19 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D573D113264A70980033CE19 /* UIKit.framework */; };
 		D580AB8224518567003C34B9 /* TroubleshootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB8024518567003C34B9 /* TroubleshootViewController.swift */; };
@@ -1193,6 +1194,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D563A7502A5C279B00908254 /* Strings in Frameworks */,
 				E547D2F529EE9F67008FB760 /* Theme in Frameworks */,
 				E148AE4021C141B0007AB65A /* NotificationCenter.framework in Frameworks */,
 				D555C49D297EE245000593EF /* LocalFeatureFlags in Frameworks */,
@@ -2714,6 +2716,7 @@
 			packageProductDependencies = (
 				D555C49C297EE245000593EF /* LocalFeatureFlags */,
 				E547D2F429EE9F67008FB760 /* Theme */,
+				D563A74F2A5C279B00908254 /* Strings */,
 			);
 			productName = "Quick Connect Widget";
 			productReference = E148AE3E21C141B0007AB65A /* Quick Connect Widget.appex */;
@@ -5159,6 +5162,10 @@
 		D55F10EF297FD1DF00EAF2AB /* LocalFeatureFlags */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LocalFeatureFlags;
+		};
+		D563A74F2A5C279B00908254 /* Strings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Strings;
 		};
 		D5A3C34728D376CB00D69CD5 /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;

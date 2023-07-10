@@ -18,6 +18,8 @@
 
 import Dependencies
 import Foundation
+import Combine
+import VPNShared
 
 // This struct is still WIP
 public enum VPNConnectionStatus: Equatable {
@@ -41,15 +43,19 @@ public struct VPNConnectionActual: Equatable {
     public let natType: NATType
     public let safeMode: Bool?
     public let feature: ServerFeature
+    public let serverName: String
+    public let country: String
     public let city: String?
 
-    public init(serverModelId: String, serverIPId: String, vpnProtocol: VpnProtocol, natType: NATType, safeMode: Bool?, feature: ServerFeature, city: String?) {
+    public init(serverModelId: String, serverIPId: String, vpnProtocol: VpnProtocol, natType: NATType, safeMode: Bool?, feature: ServerFeature, serverName: String, country: String, city: String?) {
         self.serverModelId = serverModelId
         self.serverIPId = serverIPId
         self.vpnProtocol = vpnProtocol
         self.natType = natType
         self.safeMode = safeMode
         self.feature = feature
+        self.serverName = serverName
+        self.country = country
         self.city = city
     }
 }
@@ -69,5 +75,25 @@ public enum WatchAppStateChangesKey: DependencyKey {
 #endif
         // Actual implementation sits in the app, to reduce the scope of thing this library depends on
         return AsyncStream<VPNConnectionStatus> { _ in }
+    }
+}
+
+// MARK: - Combine version
+
+public extension DependencyValues {
+    var vpnConnectionStatusPublisher: @Sendable () -> AnyPublisher<VPNConnectionStatus, Never> {
+        get { self[VPNConnectionStatusPublisherKey.self] }
+        set { self[VPNConnectionStatusPublisherKey.self] = newValue }
+    }
+}
+
+public enum VPNConnectionStatusPublisherKey: DependencyKey {
+    public static let liveValue: @Sendable () -> AnyPublisher<VPNConnectionStatus, Never> = {
+#if !targetEnvironment(simulator)
+        // Without `#if targetEnvironment(simulator)` SwiftUI previews crash
+        assert(false, "Override this dependency!")
+#endif
+        // Actual implementation sits in the app, to reduce the scope of thing this library depends on
+        return Empty<VPNConnectionStatus, Never>().eraseToAnyPublisher()
     }
 }
