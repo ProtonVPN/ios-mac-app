@@ -1,4 +1,5 @@
 import Foundation
+import System
 import os.log
 
 /// A `FeatureFlag` has a category that the feature falls into, as well as a short string key describing that feature.
@@ -8,27 +9,83 @@ public protocol FeatureFlag {
 }
 
 private enum FeatureFlagsData {
+    private class BundleFinder {}
+
     static let featureFlagsURL: URL? = {
+        let findPlist = { (bundle: Bundle) -> URL? in
+            bundle.url(forResource: "LocalFeatureFlags", withExtension: "plist")
+        }
+
         #if DEBUG
-        ([Bundle.main] + Bundle.allBundles + Bundle.allFrameworks).compactMap {
-            $0.url(forResource: "FeatureFlags", withExtension: "plist")
-        }.first
+        let candidates = Set([Bundle.main, Bundle(for: BundleFinder.self)])
+            .union(Bundle.allBundles)
+            .union(Bundle.allFrameworks)
+            .union( // Env vars set by Xcode or Swift build system
+                ["PACKAGE_RESOURCE_BUNDLE_URL", "XCTestBundlePath"]
+                    .compactMap { key -> Bundle? in
+                        guard let path = ProcessInfo.processInfo.environment[key] else { return nil }
+                        guard let bundle = Bundle(path: path) else { return nil }
+                        return bundle
+                    }
+            )
+
+        // First look in the bundles themselves
+        if let url = candidates.compactMap(findPlist).first {
+            return url
+        }
+
+        if let url = candidates.flatMap({ (bundle: Bundle) -> [URL] in
+            guard let contents = try? FileManager.default.contentsOfDirectory(
+                    at: bundle.bundleURL,
+                    includingPropertiesForKeys: nil
+                  ) else {
+                return []
+            }
+            return contents.compactMap {
+                if let bundle = Bundle(url: $0),
+                   let url = findPlist(bundle) {
+                    return url
+                }
+                return nil
+            }
+        }).first {
+            return url
+        }
+
+        // If they aren't in the bundles, check every bundle in each bundle's Resources/ directory.
+        if let url = candidates.flatMap({ (bundle: Bundle) -> [URL] in
+            guard let resourceUrl = bundle.resourceURL,
+                  let contents = try? FileManager.default.contentsOfDirectory(
+                    at: resourceUrl,
+                    includingPropertiesForKeys: nil
+                  ) else {
+                return []
+            }
+            return contents.compactMap {
+                if let bundle = Bundle(url: $0),
+                   let url = findPlist(bundle) {
+                    return url
+                }
+                return nil
+            }
+        }).first {
+            return url
+        }
+
+        return findPlist(Bundle.module)
         #else
-        Bundle.module.url(forResource: "FeatureFlags", withExtension: "plist")
+        return findPlist(Bundle.module)
         #endif
     }()
 
     static let featureFlags: [String: Any] = {
         guard let featureFlagsURL else {
-            #if DEBUG
+            assertionFailure("Couldn't find feature flags plist")
             return [:]
-            #else
-            fatalError("Couldn't find feature flags plist")
-            #endif
         }
 
         guard let data = try? Data(contentsOf: featureFlagsURL) else {
-            fatalError("Couldn't read feature flag resource")
+            fatalError("Couldn't read feature flag resource at \(featureFlagsURL.absoluteString)")
         }
 
         guard let dict = try? PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any] else {
