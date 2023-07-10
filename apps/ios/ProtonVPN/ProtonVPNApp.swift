@@ -104,8 +104,9 @@ struct AppReducer: ReducerProtocol {
 
             case .watchConnectionStatus:
                 return .run { send in
-                    @Dependency(\.watchVPNConnectionStatus) var watchVPNConnectionStatus
-                    for await vpnStatus in await watchVPNConnectionStatus() {
+                    @Dependency(\.vpnConnectionStatusPublisher) var vpnConnectionStatusPublisher
+                    
+                    for await vpnStatus in vpnConnectionStatusPublisher().values {
                         await send(.newConnectionStatus(vpnStatus), animation: .default)
                     }
                 }
@@ -161,7 +162,6 @@ struct ProtonVPNApp: App {
         self.store = .init(
             initialState: initialStateProvider.initialState,
             reducer: AppReducer()
-                .dependency(\.watchVPNConnectionStatus, WatchAppStateChangesKey.watchVPNConnectionStatusChanges)
                 .dependency(\.vpnConnectionStatusPublisher, VPNConnectionStatusPublisherKey.watchVPNConnectionStatusChanges)
                 .dependency(\.getServerById, VpnServerGetter.getServerById)
             #if targetEnvironment(simulator)

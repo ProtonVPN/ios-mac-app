@@ -147,8 +147,9 @@ public struct HomeFeature: ReducerProtocol {
 
             case .watchConnectionStatus:
                 return .run { send in
-                    @Dependency(\.watchVPNConnectionStatus) var watchVPNConnectionStatus
-                    for await vpnStatus in await watchVPNConnectionStatus() {
+                    @Dependency(\.vpnConnectionStatusPublisher) var vpnConnectionStatusPublisher
+                    
+                    for await vpnStatus in vpnConnectionStatusPublisher().values {
                         await send(.newConnectionStatus(vpnStatus), animation: .default)
                     }
                 }

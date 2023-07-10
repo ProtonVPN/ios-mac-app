@@ -60,25 +60,7 @@ public struct VPNConnectionActual: Equatable {
     }
 }
 
-public extension DependencyValues {
-    var watchVPNConnectionStatus: @Sendable () async -> AsyncStream<VPNConnectionStatus> {
-        get { self[WatchAppStateChangesKey.self] }
-        set { self[WatchAppStateChangesKey.self] = newValue }
-    }
-}
-
-public enum WatchAppStateChangesKey: DependencyKey {
-    public static let liveValue: @Sendable () async -> AsyncStream<VPNConnectionStatus> = {
-#if !targetEnvironment(simulator)
-        // Without `#if targetEnvironment(simulator)` SwiftUI previews crash
-        assert(false, "Override this dependency!")
-#endif
-        // Actual implementation sits in the app, to reduce the scope of thing this library depends on
-        return AsyncStream<VPNConnectionStatus> { _ in }
-    }
-}
-
-// MARK: - Combine version
+// MARK: - Watch for changes
 
 public extension DependencyValues {
     var vpnConnectionStatusPublisher: @Sendable () -> AnyPublisher<VPNConnectionStatus, Never> {
