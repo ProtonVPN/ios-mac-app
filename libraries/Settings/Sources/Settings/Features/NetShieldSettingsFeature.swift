@@ -21,31 +21,32 @@ import Foundation
 import ComposableArchitecture
 
 import Strings
-import Theme
 
-extension ColorScheme: LocalizedStringConvertible {
-    var localizedDescription: String {
+public enum NetShieldType: LocalizedStringConvertible {
+    case on
+    case off
+
+    public var localizedDescription: String {
         switch self {
-        case .auto: return Localizable.settingsThemeValueAuto
-        case .light: return Localizable.settingsThemeValueLight
-        case .dark: return Localizable.settingsThemeValueDark
+        case .on: return Localizable.settingsNetshieldOn
+        case .off: return Localizable.settingsNetshieldOff
         }
     }
 }
 
-public struct ThemeSettingsFeature: ReducerProtocol {
-    public typealias State = ColorScheme
+public struct NetShieldSettingsFeature: ReducerProtocol {
+    public typealias State = NetShieldType
 
     public init() { }
 
     public enum Action: Equatable {
-        case set(colorScheme: State)
+        case set(value: NetShieldType)
     }
 
     public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
         switch action {
-        case .set(let colorScheme):
-            state = colorScheme
+        case let .set(value):
+            state = value
             return .none
         }
     }

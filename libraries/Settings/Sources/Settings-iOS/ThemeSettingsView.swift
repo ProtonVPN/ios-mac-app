@@ -20,6 +20,7 @@ import SwiftUI
 
 import ComposableArchitecture
 
+import Settings
 import Strings
 import Theme
 
@@ -52,7 +53,7 @@ struct ThemeSettingsView: View {
             }
         }
         .navigationTitle(Localizable.settingsTitleTheme)
-        .navigationBarTitleDisplayMode(.inline)
+        //.navigationBarTitleDisplayMode(.inline)
     }
 
     private func colorSchemeOptionControl(model: OptionModel, currentValue: Binding<Theme.ColorScheme>) -> some View {
@@ -61,7 +62,7 @@ struct ThemeSettingsView: View {
                 Image(asset: model.asset)
                     .renderingMode(.original)
                 Text(model.colorScheme.localizedDescription)
-                    .themeFont(.body2())
+                    //.themeFont(.body2())
                     .foregroundColor(Color(.text, .normal))
                 Accessory(style: .checkmark(isActive: currentValue.wrappedValue == model.colorScheme))
 

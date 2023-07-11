@@ -14,6 +14,7 @@
 		AD211E332A1673BF00F98CAB /* SettingsSampleAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD211E322A1673BF00F98CAB /* SettingsSampleAppTests.swift */; };
 		AD211E3D2A1673BF00F98CAB /* SettingsSampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD211E3C2A1673BF00F98CAB /* SettingsSampleAppUITests.swift */; };
 		AD211E3F2A1673BF00F98CAB /* SettingsSampleAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD211E3E2A1673BF00F98CAB /* SettingsSampleAppUITestsLaunchTests.swift */; };
+		AD7F714C2A5DD658004FC8D2 /* Settings-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = AD7F714B2A5DD658004FC8D2 /* Settings-iOS */; };
 		AD880CE22A56BFFB007086AB /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = AD880CE12A56BFFB007086AB /* Settings */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +54,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD880CE22A56BFFB007086AB /* Settings in Frameworks */,
+				AD7F714C2A5DD658004FC8D2 /* Settings-iOS in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,6 +157,7 @@
 			name = SettingsSampleApp;
 			packageProductDependencies = (
 				AD880CE12A56BFFB007086AB /* Settings */,
+				AD7F714B2A5DD658004FC8D2 /* Settings-iOS */,
 			);
 			productName = SettingsSampleApp;
 			productReference = AD211E1E2A1673BE00F98CAB /* SettingsSampleApp.app */;
@@ -600,6 +603,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		AD7F714B2A5DD658004FC8D2 /* Settings-iOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "Settings-iOS";
+		};
 		AD880CE12A56BFFB007086AB /* Settings */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Settings;

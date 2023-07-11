@@ -157,7 +157,6 @@
 		AD1DDFC629BF465C00D14BE9 /* FileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1DDFC429BF465C00D14BE9 /* FileStorage.swift */; };
 		AD37FAC729B89FF900D4DE4E /* StrongNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC629B89FF900D4DE4E /* StrongNotification.swift */; };
 		AD37FAC829B89FF900D4DE4E /* StrongNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC629B89FF900D4DE4E /* StrongNotification.swift */; };
-		AD3AE5332A4F11EB000FDBA6 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = AD3AE5322A4F11EB000FDBA6 /* Settings */; };
 		AD3C485729D2FBCC00A768D4 /* LocalAgentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3C485629D2FBCC00A768D4 /* LocalAgentTests.swift */; };
 		AD3C485829D2FBCC00A768D4 /* LocalAgentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3C485629D2FBCC00A768D4 /* LocalAgentTests.swift */; };
 		AD41A854298A83590003393D /* SystemExtensionManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ECBAF28912F3800820068 /* SystemExtensionManagerMock.swift */; };
@@ -168,6 +167,8 @@
 		AD582AE529CDCFD000168D70 /* DebugEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD582AE429CDCFD000168D70 /* DebugEnvironment.swift */; };
 		AD58527F2A58B7E10005D8EC /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = AD58527E2A58B7E10005D8EC /* Home */; };
 		AD5852832A58B8160005D8EC /* Home-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = AD5852822A58B8160005D8EC /* Home-iOS */; };
+		AD7F71482A5DC626004FC8D2 /* Settings-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = AD7F71472A5DC626004FC8D2 /* Settings-iOS */; };
+		AD7F714A2A5DC62A004FC8D2 /* Settings-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = AD7F71492A5DC62A004FC8D2 /* Settings-macOS */; };
 		AD880CE62A56C755007086AB /* VPNAppCore in Frameworks */ = {isa = PBXBuildFile; productRef = AD880CE52A56C755007086AB /* VPNAppCore */; };
 		AD880CE82A56C75B007086AB /* VPNAppCore in Frameworks */ = {isa = PBXBuildFile; productRef = AD880CE72A56C75B007086AB /* VPNAppCore */; };
 		AD9B8BE72A0E4D77006986B0 /* VpnAuthentication+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9B8BE62A0E4D77006986B0 /* VpnAuthentication+iOS.swift */; };
@@ -178,6 +179,8 @@
 		ADBFE44F29CDA14D001A5446 /* LocalAgentMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBFE44D29CDA14D001A5446 /* LocalAgentMessages.swift */; };
 		ADBFE45129CDAAE0001A5446 /* Timer+Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBFE45029CDAAE0001A5446 /* Timer+Dependencies.swift */; };
 		ADBFE45229CDAAE0001A5446 /* Timer+Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBFE45029CDAAE0001A5446 /* Timer+Dependencies.swift */; };
+		ADC607F62A5C029A009D8078 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = ADC607F52A5C029A009D8078 /* Settings */; };
+		ADD0C9EA2A5DBA6100AF7C23 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = ADD0C9E92A5DBA6100AF7C23 /* Settings */; };
 		B462E62171534FB8B0E39654 /* NetShieldType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D30B2B54E22870DA56088C /* NetShieldType+Extensions.swift */; };
 		B5A5BE6A7BE692D89848FC78 /* PropertiesManager+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = D274E05ECAA25CC9D061FC43 /* PropertiesManager+Log.swift */; };
 		B814D7396AC688F7877D3490 /* URL+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F973511943D701511CC59CC4 /* URL+String.swift */; };
@@ -1211,6 +1214,8 @@
 				D563A75C2A5D767500908254 /* SharedViews in Frameworks */,
 				AD58527F2A58B7E10005D8EC /* Home in Frameworks */,
 				D58273202A4F01080021CA41 /* VPNSharedTesting in Frameworks */,
+				AD7F71482A5DC626004FC8D2 /* Settings-iOS in Frameworks */,
+				ADC607F62A5C029A009D8078 /* Settings in Frameworks */,
 				179F144D89241E7160EFD846 /* Pods_Core_vpncore_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1247,7 +1252,9 @@
 				E99F266027A1A7A5003C4586 /* BugReport in Frameworks */,
 				E5A4AD292A3B470900CC91D7 /* IdentifiedCollections in Frameworks */,
 				E5A4AD1F2A3B353D00CC91D7 /* SwiftUINavigation in Frameworks */,
+				ADD0C9EA2A5DBA6100AF7C23 /* Settings in Frameworks */,
 				E5BF7BD32A03A418007234C4 /* Home in Frameworks */,
+				AD7F714A2A5DC62A004FC8D2 /* Settings-macOS in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2408,13 +2415,14 @@
 				D582731D2A4F00E90021CA41 /* Theme */,
 				D582731F2A4F01080021CA41 /* VPNSharedTesting */,
 				D58273212A4F01840021CA41 /* Ergonomics */,
-				AD3AE5322A4F11EB000FDBA6 /* Settings */,
 				AD880CE52A56C755007086AB /* VPNAppCore */,
 				AD58527E2A58B7E10005D8EC /* Home */,
 				AD5852822A58B8160005D8EC /* Home-iOS */,
 				D563A74D2A5C0F9000908254 /* ConnectionDetails-iOS */,
 				D563A7532A5D255A00908254 /* Strings */,
 				D563A75B2A5D767500908254 /* SharedViews */,
+				ADC607F52A5C029A009D8078 /* Settings */,
+				AD7F71472A5DC626004FC8D2 /* Settings-iOS */,
 			);
 			productName = "vpncore-ios";
 			productReference = E1B5F5D821B68ABD00B558B0 /* vpncore.framework */;
@@ -2480,6 +2488,8 @@
 				D58273252A4F05A40021CA41 /* Ergonomics */,
 				AD880CE72A56C75B007086AB /* VPNAppCore */,
 				D563A7512A5C539F00908254 /* Strings */,
+				ADD0C9E92A5DBA6100AF7C23 /* Settings */,
+				AD7F71492A5DC62A004FC8D2 /* Settings-macOS */,
 			);
 			productName = "vpncore-macos";
 			productReference = E1B5F60C21B6960100B558B0 /* vpncore.framework */;
@@ -4449,10 +4459,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = VPNShared;
 		};
-		AD3AE5322A4F11EB000FDBA6 /* Settings */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Settings;
-		};
 		AD58527E2A58B7E10005D8EC /* Home */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Home;
@@ -4461,6 +4467,14 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = "Home-iOS";
 		};
+		AD7F71472A5DC626004FC8D2 /* Settings-iOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "Settings-iOS";
+		};
+		AD7F71492A5DC62A004FC8D2 /* Settings-macOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "Settings-macOS";
+		};
 		AD880CE52A56C755007086AB /* VPNAppCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = VPNAppCore;
@@ -4468,6 +4482,14 @@
 		AD880CE72A56C75B007086AB /* VPNAppCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = VPNAppCore;
+		};
+		ADC607F52A5C029A009D8078 /* Settings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Settings;
+		};
+		ADD0C9E92A5DBA6100AF7C23 /* Settings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Settings;
 		};
 		D5391F162A4D4ABE0089D2F7 /* OrderedCollections */ = {
 			isa = XCSwiftPackageProductDependency;

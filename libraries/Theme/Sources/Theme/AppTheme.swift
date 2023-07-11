@@ -79,6 +79,7 @@ public enum AppTheme {
     }
 
     public enum CornerRadius: CGFloat {
+        case radius2 = 2
         case radius2½ = 2.5
         case radius4 = 4
         case radius7 = 7
