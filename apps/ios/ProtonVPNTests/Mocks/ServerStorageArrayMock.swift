@@ -21,9 +21,10 @@
 //
 
 import vpncore
+import Combine
 
 class ServerStorageArrayMock: ServerStorage {
-    
+
     var contentChanged: Notification.Name = Notification.Name(rawValue: "ServerStorageArrayMock.contentChanged")
     
     private var servers: [ServerModel]
@@ -47,4 +48,6 @@ class ServerStorageArrayMock: ServerStorage {
     func fetchAge() -> TimeInterval {
         1
     }
+
+    var allServersPublisher = CurrentValueSubject<[vpncore.ServerModel], Never>([])
 }

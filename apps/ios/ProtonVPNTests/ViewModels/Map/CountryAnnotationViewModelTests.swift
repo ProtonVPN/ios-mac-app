@@ -25,6 +25,7 @@ import vpncore
 import TimerMock
 import VPNShared
 import VPNSharedTesting
+import VPNAppCore
 
 class CountryAnnotationViewModelTests: XCTestCase {
 

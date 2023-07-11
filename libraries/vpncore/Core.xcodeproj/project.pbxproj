@@ -222,6 +222,9 @@
 		D55D791A2498F65B009669E0 /* StringCleanup.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55D79182498F65B009669E0 /* StringCleanup.swift */; };
 		D55D791C2498F65B009669E0 /* StringCleanup.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55D79182498F65B009669E0 /* StringCleanup.swift */; };
 		D563A74E2A5C0F9000908254 /* ConnectionDetails-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = D563A74D2A5C0F9000908254 /* ConnectionDetails-iOS */; };
+		D563A7522A5C539F00908254 /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = D563A7512A5C539F00908254 /* Strings */; };
+		D563A7542A5D255A00908254 /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = D563A7532A5D255A00908254 /* Strings */; };
+		D563A75A2A5D36E700908254 /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = D563A7592A5D36E700908254 /* Strings */; };
 		D563B26B2345DA4300F98797 /* FormValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563B26A2345DA4300F98797 /* FormValidationError.swift */; };
 		D563B26C2345DA4300F98797 /* FormValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563B26A2345DA4300F98797 /* FormValidationError.swift */; };
 		D56B68E32507CBBD00796E0C /* ClientConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56B68E22507CBBD00796E0C /* ClientConfig.swift */; };
@@ -1215,6 +1218,7 @@
 				D563A74E2A5C0F9000908254 /* ConnectionDetails-iOS in Frameworks */,
 				E58D06422A0B8B1C002A896C /* Clocks in Frameworks */,
 				D58273222A4F01840021CA41 /* Ergonomics in Frameworks */,
+				D563A7542A5D255A00908254 /* Strings in Frameworks */,
 				4C4F5F11292BECCE00BBD5AF /* LocalFeatureFlags in Frameworks */,
 				D582731C2A4F00CC0021CA41 /* VPNShared in Frameworks */,
 				E53D64BF2811694F0060C463 /* Modals in Frameworks */,
@@ -1233,6 +1237,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D58897172A4EEC0B004C1092 /* Theme in Frameworks */,
+				D563A75A2A5D36E700908254 /* Strings in Frameworks */,
 				E9CB3B0228A676820086F22F /* TimerMock in Frameworks */,
 				E1B5F5E221B68ABD00B558B0 /* vpncore.framework in Frameworks */,
 				507B74FDE03E5AFB9ED0A082 /* Pods_Core_vpncore_iosTests.framework in Frameworks */,
@@ -1244,6 +1249,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D578439328FE6A95007E3FC6 /* VPNSharedTesting in Frameworks */,
+				D563A7522A5C539F00908254 /* Strings in Frameworks */,
 				D578439228FE6A95007E3FC6 /* VPNShared in Frameworks */,
 				E5A4AD1C2A3B299300CC91D7 /* ComposableArchitecture in Frameworks */,
 				E5813B5229EE9C7500549AA8 /* Theme in Frameworks */,
@@ -2410,6 +2416,7 @@
 				AD58527E2A58B7E10005D8EC /* Home */,
 				AD5852822A58B8160005D8EC /* Home-iOS */,
 				D563A74D2A5C0F9000908254 /* ConnectionDetails-iOS */,
+				D563A7532A5D255A00908254 /* Strings */,
 			);
 			productName = "vpncore-ios";
 			productReference = E1B5F5D821B68ABD00B558B0 /* vpncore.framework */;
@@ -2434,6 +2441,7 @@
 			packageProductDependencies = (
 				E9CB3B0128A676820086F22F /* TimerMock */,
 				63DB5741E2C92FBC88AF1503 /* Theme */,
+				D563A7592A5D36E700908254 /* Strings */,
 			);
 			productName = "vpncore-iosTests";
 			productReference = E1B5F5E121B68ABD00B558B0 /* vpncore-iosTests.xctest */;
@@ -2474,6 +2482,7 @@
 				E5A4AD282A3B470900CC91D7 /* IdentifiedCollections */,
 				D58273252A4F05A40021CA41 /* Ergonomics */,
 				AD880CE72A56C75B007086AB /* VPNAppCore */,
+				D563A7512A5C539F00908254 /* Strings */,
 			);
 			productName = "vpncore-macos";
 			productReference = E1B5F60C21B6960100B558B0 /* vpncore.framework */;
@@ -4516,6 +4525,18 @@
 		D563A74D2A5C0F9000908254 /* ConnectionDetails-iOS */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "ConnectionDetails-iOS";
+		};
+		D563A7512A5C539F00908254 /* Strings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Strings;
+		};
+		D563A7532A5D255A00908254 /* Strings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Strings;
+		};
+		D563A7592A5D36E700908254 /* Strings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Strings;
 		};
 		D58273192A4F00C60021CA41 /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;

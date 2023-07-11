@@ -23,6 +23,7 @@
 import Cocoa
 import vpncore
 import Theme
+import Strings
 
 extension OverviewItemViewModel {
     

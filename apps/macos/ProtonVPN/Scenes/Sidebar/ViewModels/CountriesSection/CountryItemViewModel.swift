@@ -24,6 +24,7 @@ import Cocoa
 import vpncore
 import VPNShared
 import VPNAppCore
+import Strings
 
 class CountryItemViewModel {
     /// Contains information about the region such as the country code, the tier the

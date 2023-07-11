@@ -18,6 +18,7 @@
 
 import Foundation
 import vpncore
+import Strings
 
 fileprivate let locales: [String: LocaleWrapperMock] = [
     "en-US": LocaleWrapperMock(

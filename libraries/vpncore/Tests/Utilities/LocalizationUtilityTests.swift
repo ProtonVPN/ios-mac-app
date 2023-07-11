@@ -19,6 +19,7 @@
 import Foundation
 import XCTest
 @testable import vpncore
+import Strings
 
 class LocalizationUtilityTests: XCTestCase {
     let mockResolver = LocaleResolverMock()
@@ -30,7 +31,7 @@ class LocalizationUtilityTests: XCTestCase {
 
     override func tearDown() {
         super.tearDown()
-        LocalizationUtility.localeResolver = LocaleResolverImplementation()
+        LocalizationUtility.localeResolver = LocaleResolverImplementation.default
     }
 
     func testLocalizationUtility() {
