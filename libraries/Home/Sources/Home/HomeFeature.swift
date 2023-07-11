@@ -75,6 +75,9 @@ public struct HomeFeature: ReducerProtocol {
         case watchConnectionStatus
         /// Process new VPN connection state
         case newConnectionStatus(VPNConnectionStatus)
+
+        /// Start bug report flow
+        case helpButtonPressed
     }
 
     enum HomeCancellable {
@@ -139,6 +142,8 @@ public struct HomeFeature: ReducerProtocol {
                 
             case .showConnectionDetails:
                 return .none // Will be handled up the tree of reducers
+            case .helpButtonPressed:
+                return .none
             }
         }
         Scope(state: \.connectionStatus, action: /Action.connectionStatusViewAction) {
