@@ -27,7 +27,7 @@ public struct SettingsFeature: ReducerProtocol {
     public enum Destination: Equatable {
         case netShield
         case killSwitch
-        case vpnProtocol
+        case `protocol`
         case theme
     }
 
@@ -35,6 +35,7 @@ public struct SettingsFeature: ReducerProtocol {
         public var destination: Destination?
         public var netShield: NetShieldSettingsFeature.State
         public var killSwitch: KillSwitchSettingsFeature.State
+        public var `protocol`: ProtocolSettingsFeature.State
         public var theme: ThemeSettingsFeature.State
 
         public var appVersion: String = "5.0.0 (1234)"
@@ -43,11 +44,13 @@ public struct SettingsFeature: ReducerProtocol {
             destination: Destination?,
             netShield: NetShieldSettingsFeature.State,
             killSwitch: KillSwitchSettingsFeature.State,
+            protocol: ProtocolSettingsFeature.State,
             theme: ThemeSettingsFeature.State
         ) {
             self.destination = destination
             self.netShield = netShield
             self.killSwitch = killSwitch
+            self.protocol = `protocol`
             self.theme = theme
         }
     }
@@ -57,11 +60,13 @@ public struct SettingsFeature: ReducerProtocol {
 
         case netShield(NetShieldSettingsFeature.Action)
         case killSwitch(KillSwitchSettingsFeature.Action)
+        case `protocol`(ProtocolSettingsFeature.Action)
         case theme(ThemeSettingsFeature.Action)
 
         // case accountTapped
         case netShieldTapped
         case killSwitchTapped
+        case protocolTapped
         // case vpnAcceleratorTapped
         // case advancedTapped
         case themeTapped
@@ -80,18 +85,20 @@ public struct SettingsFeature: ReducerProtocol {
     public var body: some ReducerProtocolOf<Self> {
         Scope(state: \.netShield, action: /Action.netShield) { NetShieldSettingsFeature() }
         Scope(state: \.killSwitch, action: /Action.killSwitch) { KillSwitchSettingsFeature() }
+        Scope(state: \.protocol, action: /Action.protocol) { ProtocolSettingsFeature() }
         Scope(state: \.theme, action: /Action.theme) { ThemeSettingsFeature() }
 
         Reduce { state, action in
             switch action {
             case .netShieldTapped: state.destination = .netShield
             case .killSwitchTapped: state.destination = .killSwitch
+            case .protocolTapped: state.destination = .protocol
             case .themeTapped: state.destination = .theme
 
             case .dismissDestination:
                 state.destination = nil
 
-            case .netShield, .killSwitch, .theme:
+            case .netShield, .killSwitch, .protocol, .theme:
                 break // Child actions have already been handled by the scoped child reducers
             }
             return .none
