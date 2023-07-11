@@ -68,8 +68,7 @@ struct ProtocolTag: View {
     var body: some View {
         Text(attribute.localizedTitle)
             // TODO: use themeFont after dynamic style
-            // .themeFont(.overline(emphasised: true))
-            .font(.system(size: 11, weight: .semibold))
+            .themeFont(.overline(emphasised: true))
             .foregroundColor(attribute.textColor)
             .textCase(.uppercase)
             .padding([.leading, .trailing], 5)
@@ -120,7 +119,7 @@ extension ConnectionProtocol: LocalizedStringConvertible {
     public var localizedDescription: String {
         switch self {
         case let .vpnProtocol(vpnProtocol):
-            return vpnProtocol.apiDescription
+            return vpnProtocol.localizedDescription
         case .smartProtocol:
             return "Smart"
         }
@@ -134,12 +133,7 @@ struct ProtocolSettingsView: View {
     // Remove default leading indentation and add padding above and below the header
     private let sectionHeaderInsets = EdgeInsets(top: .themeSpacing12, leading: 0, bottom: .themeSpacing12, trailing: 0)
 
-    struct ProtocolCellModel {
-        let title: String
-        // let tag: Tag
-        let description: String
-        let connectionProtocol: ConnectionProtocol
-    }
+    private let protocolArticleAddress = "https://protonvpn.com/blog/whats-the-best-vpn-protocol/"
 
     func cell(
         for connectionProtocol: ConnectionProtocol,
@@ -169,12 +163,12 @@ struct ProtocolSettingsView: View {
                     cell(for: .vpnProtocol(.openVpn(.tcp)), viewStore: viewStore)
                     cell(for: .vpnProtocol(.wireGuard(.tls)), viewStore: viewStore)
                 }
-
+                footerSection
             }
             .hidingScrollBackground
             .background(Color(.background, .strong).ignoresSafeArea())
             .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle("Protocol")
+            .navigationTitle(Localizable.settingsTitleProtocol)
             .alert(
                 self.store.scope(state: \.reconnectionAlert, action: { $0 }),
                 dismiss: .reconnectionAlertDismissed
@@ -205,14 +199,12 @@ struct ProtocolSettingsView: View {
 
     @ViewBuilder
     private var footerView: some View {
-        HStack {
-            Spacer()
-            Text(Localizable.settingsProtocolFooter)
-                .themeFont(.caption())
-                .foregroundColor(Color(.text, .weak))
-            Spacer()
-        }
-        .padding(.bottom, .themeSpacing32)
+        Text(LocalizedStringKey(Localizable.settingsProtocolFooter))
+            .themeFont(.caption())
+            .foregroundColor(Color(.text, .weak))
+            .tint(Color(.text, [.interactive, .active])) // hyperlink color
+            .padding(.bottom, .themeSpacing16)
+            .listRowInsets(sectionHeaderInsets)
     }
 }
 

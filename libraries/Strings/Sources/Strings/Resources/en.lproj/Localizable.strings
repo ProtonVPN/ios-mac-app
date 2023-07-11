@@ -293,5 +293,5 @@
 /* Text displayed next to the titles of cells of any new protocols in Protocol Settings. Displayed in uppercase, with a border around it.  [Redesign_2023] */
 "_settings_protocol_tag_new" = "NEW";
 
-/* Footer at the bottom of the Protocol Settings screen. Contains a link to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign 2023] */
-"_settings_protocol_footer" = "A VPN protocol determines how data moves between a VPN server and your device. Learn more";
+/* Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign 2023] */
+"_settings_protocol_footer" = "A VPN protocol determines how data moves between a VPN server and your device. **[Learn more](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
