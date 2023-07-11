@@ -28,7 +28,6 @@ extension DependencyValues {
     }
 }
 
-
 public enum ConnectToVPNKey: DependencyKey {
     public static let liveValue: @Sendable (ConnectionSpec) async throws -> Void = { specs in
         // After Accounts SPM migration, real implementation should live here

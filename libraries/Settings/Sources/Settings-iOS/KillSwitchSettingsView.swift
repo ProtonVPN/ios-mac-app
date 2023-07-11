@@ -1,5 +1,5 @@
 //
-//  Created on 13/06/2023.
+//  Created on 18/06/2023.
 //
 //  Copyright (c) 2023 Proton AG
 //
@@ -20,32 +20,33 @@ import SwiftUI
 
 import ComposableArchitecture
 
+import Settings
 import Strings
 
 // TODO: Nice UI according to designs
-struct NetShieldSettingsView: View {
-    let store: StoreOf<NetShieldSettingsFeature>
+struct KillSwitchSettingsView: View {
+    let store: StoreOf<KillSwitchSettingsFeature>
 
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             Toggle(
-                "NetShield",
+                "Kill Switch",
                 isOn: viewStore.binding(
                     get: { $0 == .on },
-                    send: { NetShieldSettingsFeature.Action.set(value: $0 ? .on : .off) }
+                    send: { KillSwitchSettingsFeature.Action.set(value: $0 ? .on : .off) }
                 )
             )
         }
-        .navigationTitle(Localizable.settingsTitleNetshield)
+        .navigationTitle(Localizable.settingsTitleKillSwitch)
         .navigationBarTitleDisplayMode(.inline)
     }
 }
 
-struct NetShieldSettingsView_Previews: PreviewProvider {
+struct KillSwitchSettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        NetShieldSettingsView(store: Store(
+        KillSwitchSettingsView(store: Store(
             initialState: .on,
-            reducer: NetShieldSettingsFeature()
+            reducer: KillSwitchSettingsFeature()
         ))
     }
 }

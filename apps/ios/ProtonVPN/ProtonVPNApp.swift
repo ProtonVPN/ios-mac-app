@@ -27,6 +27,7 @@ import vpncore
 import VPNShared
 import VPNAppCore
 import Settings
+import Settings_iOS
 
 import ComposableArchitecture
 

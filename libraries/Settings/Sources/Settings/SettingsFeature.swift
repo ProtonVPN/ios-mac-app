@@ -27,16 +27,17 @@ public struct SettingsFeature: ReducerProtocol {
     public enum Destination: Equatable {
         case netShield
         case killSwitch
+        case vpnProtocol
         case theme
     }
 
     public struct State: Equatable {
-        var destination: Destination?
-        var netShield: NetShieldSettingsFeature.State
-        var killSwitch: KillSwitchSettingsFeature.State
-        var theme: ThemeSettingsFeature.State
+        public var destination: Destination?
+        public var netShield: NetShieldSettingsFeature.State
+        public var killSwitch: KillSwitchSettingsFeature.State
+        public var theme: ThemeSettingsFeature.State
 
-        var appVersion: String = "5.0.0 (1234)"
+        public var appVersion: String = "5.0.0 (1234)"
 
         public init(
             destination: Destination?,
@@ -61,7 +62,6 @@ public struct SettingsFeature: ReducerProtocol {
         // case accountTapped
         case netShieldTapped
         case killSwitchTapped
-        // case vpnProtocolTapped
         // case vpnAcceleratorTapped
         // case advancedTapped
         case themeTapped
@@ -85,9 +85,7 @@ public struct SettingsFeature: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case .netShieldTapped: state.destination = .netShield
-
             case .killSwitchTapped: state.destination = .killSwitch
-
             case .themeTapped: state.destination = .theme
 
             case .dismissDestination:

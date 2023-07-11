@@ -21,6 +21,7 @@ import SwiftUI
 import ComposableArchitecture
 import SwiftUINavigation
 
+import Settings
 import Strings
 import Theme
 
@@ -259,7 +260,12 @@ public struct SettingsView: View {
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView(store: Store(
-            initialState: SettingsFeature.State(destination: .none, netShield: .on, killSwitch: .off, theme: .light),
+            initialState: SettingsFeature.State(
+                destination: .none,
+                netShield: .on,
+                killSwitch: .off,
+                theme: .light
+            ),
             reducer: SettingsFeature()
         ))
     }

@@ -27,7 +27,12 @@ final class SettingsTests: XCTestCase {
 
     func testChildFeaturePresentedWhenTapped() async throws {
         let store = TestStore(
-            initialState: SettingsFeature.State(destination: .none, netShield: .off, killSwitch: .on, theme: .auto),
+            initialState: SettingsFeature.State(
+                destination: .none,
+                netShield: .off,
+                killSwitch: .on,
+                theme: .auto
+            ),
             reducer: SettingsFeature()
         )
 
@@ -38,7 +43,11 @@ final class SettingsTests: XCTestCase {
 
     func testChildFeatureModificationReflectedInParent() async throws {
         let store = TestStore(
-            initialState: SettingsFeature.State(destination: .netShield, netShield: .on, killSwitch: .on, theme: .auto),
+            initialState: SettingsFeature.State(
+                destination: .netShield,
+                netShield: .on,
+                killSwitch: .on,
+                theme: .auto),
             reducer: SettingsFeature()
         )
 

@@ -1,5 +1,5 @@
 //
-//  Created on 13/06/2023.
+//  Created on 18/06/2023.
 //
 //  Copyright (c) 2023 Proton AG
 //
@@ -22,26 +22,29 @@ import ComposableArchitecture
 
 import Strings
 
-public enum NetShieldType: LocalizedStringConvertible {
+public enum KillSwitchState: LocalizedStringConvertible {
     case on
     case off
 
-    var localizedDescription: String {
+    public var localizedDescription: String {
         switch self {
-        case .on: return Localizable.settingsNetshieldOn
-        case .off: return Localizable.settingsNetshieldOff
+        case .on: return Localizable.settingsKillswitchOn
+        case .off: return Localizable.settingsKillswitchOff
         }
     }
 }
 
-public struct NetShieldSettingsFeature: ReducerProtocol {
-    public typealias State = NetShieldType
+public struct KillSwitchSettingsFeature: ReducerProtocol {
+
+    public typealias State = KillSwitchState
+
+    public init() { }
 
     public enum Action: Equatable {
-        case set(value: NetShieldType)
+        case set(value: KillSwitchState)
     }
 
-    public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+    public func reduce(into state: inout KillSwitchState, action: Action) -> EffectTask<Action> {
         switch action {
         case let .set(value):
             state = value

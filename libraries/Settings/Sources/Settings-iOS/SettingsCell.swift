@@ -18,11 +18,8 @@
 
 import SwiftUI
 
+import Settings
 import Theme
-
-protocol LocalizedStringConvertible {
-    var localizedDescription: String { get }
-}
 
 struct SettingsCell: View {
     private let icon: Image
@@ -124,7 +121,7 @@ struct SettingsCell_Previews: PreviewProvider {
         List {
             Section {
                 SettingsCell(
-                    icon: Asset.avatar.swiftUIImage,
+                    icon: Theme.Asset.icUser,
                     content: .multiline(title: "Eric Norbert", subtitle: "eric.norbert@proton.me"),
                     accessory: .disclosure
                 )

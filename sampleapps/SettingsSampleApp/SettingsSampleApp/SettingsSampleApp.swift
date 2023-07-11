@@ -18,17 +18,27 @@
 
 import SwiftUI
 
-import Settings
-
 import ComposableArchitecture
+
+import Settings
+import Settings_iOS
+import VPNAppCore
 
 @main
 struct SettingsSampleApp: App {
+    @State var vpnConnectionStatus: VPNConnectionStatus = .connected(.init(location: .fastest, features: Set()), .mock())
+
     var body: some Scene {
         WindowGroup {
             SettingsView(store: Store(
-                initialState: SettingsFeature.State(destination: .none, netShield: .on, killSwitch: .off, theme: .light),
-                reducer: SettingsFeature()._printChanges()
+                initialState: SettingsFeature.State(
+                    destination: .vpnProtocol,
+                    netShield: .on,
+                    killSwitch: .off,
+                    theme: .light
+                ),
+                reducer: SettingsFeature()
+                    ._printChanges()
             ))
         }
     }

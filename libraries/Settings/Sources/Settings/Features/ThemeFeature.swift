@@ -1,5 +1,5 @@
 //
-//  Created on 18/06/2023.
+//  Created on 13/06/2023.
 //
 //  Copyright (c) 2023 Proton AG
 //
@@ -21,31 +21,31 @@ import Foundation
 import ComposableArchitecture
 
 import Strings
+import Theme
 
-public enum KillSwitchState: LocalizedStringConvertible {
-    case on
-    case off
-
-    var localizedDescription: String {
+extension ColorScheme: LocalizedStringConvertible {
+    public var localizedDescription: String {
         switch self {
-        case .on: return Localizable.settingsKillswitchOn
-        case .off: return Localizable.settingsKillswitchOff
+        case .auto: return Localizable.settingsThemeValueAuto
+        case .light: return Localizable.settingsThemeValueLight
+        case .dark: return Localizable.settingsThemeValueDark
         }
     }
 }
 
-public struct KillSwitchSettingsFeature: ReducerProtocol {
+public struct ThemeSettingsFeature: ReducerProtocol {
+    public typealias State = ColorScheme
 
-    public typealias State = KillSwitchState
+    public init() { }
 
     public enum Action: Equatable {
-        case set(value: KillSwitchState)
+        case set(colorScheme: State)
     }
 
-    public func reduce(into state: inout KillSwitchState, action: Action) -> EffectTask<Action> {
+    public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
         switch action {
-        case let .set(value):
-            state = value
+        case .set(let colorScheme):
+            state = colorScheme
             return .none
         }
     }

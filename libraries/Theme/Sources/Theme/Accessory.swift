@@ -20,16 +20,30 @@ import SwiftUI
 
 public struct Accessory: View {
     private let style: Style
+    private let size: Size
     @ScaledMetric private var radius: CGFloat = .themeRadius16
 
-    public init(style: Style) {
+    public init(style: Style, size: Size = .regular) {
         self.style = style
+        self.size = size
     }
 
     public var body: some View {
         style.image?
-            .resizable().frame(.square(radius))
+            .resizable().frame(.square(radius * size.modifier))
             .foregroundColor(style.color)
+    }
+
+    public enum Size {
+        case regular
+        case large
+
+        var modifier: CGFloat {
+            switch self {
+            case .regular: return 1.0
+            case .large: return 1.5
+            }
+        }
     }
 
     public enum Style {
@@ -54,7 +68,7 @@ public struct Accessory: View {
         var color: Color? {
             switch self {
             case .checkmark(let isActive):
-                return .init(.icon, isActive ? .interactive : .weak)
+                return .init(.icon, isActive ? [.interactive, .active] : .weak)
             default:
                 return .init(.icon, .weak)
             }
@@ -66,7 +80,7 @@ public struct Accessory: View {
     }
 
     public static func checkmark(isActive: Bool) -> Accessory {
-        Accessory(style: .checkmark(isActive: isActive))
+        Accessory(style: .checkmark(isActive: isActive), size: .large)
     }
 
     public static var disclosure: Accessory {
@@ -83,13 +97,13 @@ struct Accessory_Previews: PreviewProvider {
 
     struct Cell: View {
         let title: String
-        let accessoryStyle: Accessory.Style
+        let accessory: Accessory
 
         var body: some View {
             HStack {
                 Text(title)
                 Spacer()
-                Accessory(style: accessoryStyle)
+                accessory
             }
         }
     }
@@ -97,14 +111,14 @@ struct Accessory_Previews: PreviewProvider {
     static var previews: some View {
         List {
             Section("Static Accessories") {
-                Cell(title: "Drillable Item", accessoryStyle: .disclosure)
-                Cell(title: "Link", accessoryStyle: .externalLink)
-                Cell(title: "Other", accessoryStyle: .none)
+                Cell(title: "Drillable Item", accessory: .disclosure)
+                Cell(title: "Link", accessory: .externalLink)
+                Cell(title: "Other", accessory: .none)
             }
             Section("Checkmarks") {
-                Cell(title: "Not Checked", accessoryStyle: .checkmark(isActive: false))
-                Cell(title: "Checked", accessoryStyle: .checkmark(isActive: true))
-                Cell(title: "Another Not Checked", accessoryStyle: .checkmark(isActive: false))
+                Cell(title: "Not Checked", accessory: .checkmark(isActive: false))
+                Cell(title: "Checked", accessory: .checkmark(isActive: true))
+                Cell(title: "Another Not Checked", accessory: .checkmark(isActive: false))
             }
         }
     }

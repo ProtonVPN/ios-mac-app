@@ -23,6 +23,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.4.4"),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", exact: "3.2.1"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies.git", exact: "0.5.1"),
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", exact: "0.8.5"),
     ],
     targets: [
         .target(
@@ -48,7 +49,10 @@ let package = Package(
         ),
         .target(
             name: "VPNAppCore",
-            dependencies: ["VPNShared"]
+            dependencies: [
+                "VPNShared",
+                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay")
+            ]
         ),
         .target(
             name: "VPNSharedTesting",
