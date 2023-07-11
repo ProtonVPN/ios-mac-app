@@ -35,6 +35,7 @@ public class Profile: NSObject, NSCoding {
     public let serverOffering: ServerOffering
     public let name: String
     public let connectionProtocol: ConnectionProtocol
+    public let lastConnectedDate: Date?
     
     override public var description: String {
         return
@@ -45,7 +46,8 @@ public class Profile: NSObject, NSCoding {
             "Server type: \(serverType.description)\n" +
             "Server offering: \(serverOffering.description)\n" +
             "Name: \(name)\n" +
-            "Protocol: \(connectionProtocol)\n"
+            "Protocol: \(connectionProtocol)\n" +
+            "Last connected date: \(lastConnectedDate?.description ?? "None")"
     }
     
     public var logDescription: String {
@@ -57,7 +59,8 @@ public class Profile: NSObject, NSCoding {
             "Server type: \(serverType.description) " +
             "Server offering: \(serverOffering.description) " +
             "Name: \(name) " +
-            "Protocol: \(connectionProtocol) "
+            "Protocol: \(connectionProtocol) " +
+            "Last connected date: \(lastConnectedDate?.description ?? "None")"
     }
     
     public func connectionRequest(withDefaultNetshield netShield: NetShieldType, withDefaultNATType natType: NATType, withDefaultSafeMode safeMode: Bool?, trigger: TelemetryDimensions.VPNTrigger?) -> ConnectionRequest {
@@ -73,7 +76,17 @@ public class Profile: NSObject, NSCoding {
         }
     }
     
-    public init(id: String, accessTier: Int, profileIcon: ProfileIcon, profileType: ProfileType, serverType: ServerType, serverOffering: ServerOffering, name: String, connectionProtocol: ConnectionProtocol) {
+    public init(
+        id: String,
+        accessTier: Int,
+        profileIcon: ProfileIcon,
+        profileType: ProfileType,
+        serverType: ServerType,
+        serverOffering: ServerOffering,
+        name: String,
+        connectionProtocol: ConnectionProtocol,
+        lastConnectedDate: Date? = nil
+    ) {
         self.id = id
         self.accessTier = accessTier
         self.profileIcon = profileIcon
@@ -82,12 +95,31 @@ public class Profile: NSObject, NSCoding {
         self.serverOffering = serverOffering
         self.name = name
         self.connectionProtocol = connectionProtocol
+        self.lastConnectedDate = lastConnectedDate
     }
     
-    public convenience init(accessTier: Int, profileIcon: ProfileIcon, profileType: ProfileType, serverType: ServerType, serverOffering: ServerOffering, name: String, connectionProtocol: ConnectionProtocol) {
+    public convenience init(
+        accessTier: Int,
+        profileIcon: ProfileIcon,
+        profileType: ProfileType,
+        serverType: ServerType,
+        serverOffering: ServerOffering,
+        name: String,
+        connectionProtocol: ConnectionProtocol,
+        lastConnectedDate: Date? = nil
+    ) {
         let id = String.randomString(length: Profile.idLength)
-        self.init(id: id, accessTier: accessTier, profileIcon: profileIcon, profileType: profileType,
-                  serverType: serverType, serverOffering: serverOffering, name: name, connectionProtocol: connectionProtocol)
+        self.init(
+            id: id,
+            accessTier: accessTier,
+            profileIcon: profileIcon,
+            profileType: profileType,
+            serverType: serverType,
+            serverOffering: serverOffering,
+            name: name,
+            connectionProtocol: connectionProtocol,
+            lastConnectedDate: lastConnectedDate
+        )
     }
 
     // MARK: - NSCoding
@@ -96,6 +128,7 @@ public class Profile: NSObject, NSCoding {
         static let accessTier = "accessTier"
         static let name = "name"
         static let connectionProtocol = "connectionProtocol"
+        static let lastConnectedDate = "lastConnectedDate"
     }
     
     public required convenience init?(coder aDecoder: NSCoder) {
@@ -106,15 +139,41 @@ public class Profile: NSObject, NSCoding {
         let serverType = ServerType(coder: aDecoder)
         let serverOffering = ServerOffering(coder: aDecoder)
         let name = aDecoder.decodeObject(forKey: CoderKey.name) as! String
+        let timestamp = aDecoder.decodeObject(forKey: CoderKey.lastConnectedDate) as? Double
+
+        var date: Date?
+        if let timestamp {
+            date = Date(timeIntervalSince1970: timestamp)
+        }
 
         // old version data
         if let vpnProtocol = VpnProtocol(coder: aDecoder) {
-            self.init(id: id, accessTier: accessTier, profileIcon: profileIcon, profileType: profileType, serverType: serverType, serverOffering: serverOffering, name: name, connectionProtocol: .vpnProtocol(vpnProtocol))
+            self.init(
+                id: id,
+                accessTier: accessTier,
+                profileIcon: profileIcon,
+                profileType: profileType,
+                serverType: serverType,
+                serverOffering: serverOffering,
+                name: name,
+                connectionProtocol: .vpnProtocol(vpnProtocol),
+                lastConnectedDate: date
+            )
             return
         }
 
         let connectionProtocolCodingValue = aDecoder.decodeInteger(forKey: CoderKey.connectionProtocol)
-        self.init(id: id, accessTier: accessTier, profileIcon: profileIcon, profileType: profileType, serverType: serverType, serverOffering: serverOffering, name: name, connectionProtocol: ConnectionProtocol.from(codingValue: connectionProtocolCodingValue) ?? .vpnProtocol(.defaultValue))
+        self.init(
+            id: id,
+            accessTier: accessTier,
+            profileIcon: profileIcon,
+            profileType: profileType,
+            serverType: serverType,
+            serverOffering: serverOffering,
+            name: name,
+            connectionProtocol: ConnectionProtocol.from(codingValue: connectionProtocolCodingValue) ?? .vpnProtocol(.defaultValue),
+            lastConnectedDate: date
+        )
     }
     
     public func encode(with aCoder: NSCoder) {
@@ -126,18 +185,35 @@ public class Profile: NSObject, NSCoding {
         serverOffering.encode(with: aCoder)
         aCoder.encode(name, forKey: CoderKey.name)
         aCoder.encode(connectionProtocol.codingValue, forKey: CoderKey.connectionProtocol)
+        aCoder.encode(lastConnectedDate?.timeIntervalSince1970, forKey: CoderKey.lastConnectedDate)
     }
     
     public func copyWith(newNetShieldType type: NetShieldType) -> Profile {
-        return Profile(id: self.id,
-                       accessTier: self.accessTier,
-                       profileIcon: self.profileIcon,
-                       profileType: self.profileType,
-                       serverType: self.serverType,
-                       serverOffering: self.serverOffering,
-                       name: self.name,
-                       connectionProtocol: self.connectionProtocol
-                       )
+        Profile(
+            id: id,
+            accessTier: accessTier,
+            profileIcon: profileIcon,
+            profileType: profileType,
+            serverType: serverType,
+            serverOffering: serverOffering,
+            name: name,
+            connectionProtocol: connectionProtocol,
+            lastConnectedDate: lastConnectedDate
+        )
+    }
+
+    public func withUpdatedConnectionDate() -> Profile {
+        Profile(
+            id: id,
+            accessTier: accessTier,
+            profileIcon: profileIcon,
+            profileType: profileType,
+            serverType: serverType,
+            serverOffering: serverOffering,
+            name: name,
+            connectionProtocol: connectionProtocol,
+            lastConnectedDate: Date()
+        )
     }
 
     public func withProtocol(_ `protocol`: ConnectionProtocol) -> Profile {
