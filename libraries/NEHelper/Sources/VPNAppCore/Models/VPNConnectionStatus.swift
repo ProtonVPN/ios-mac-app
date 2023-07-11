@@ -60,6 +60,33 @@ public struct VPNConnectionActual: Equatable {
     }
 }
 
+// MARK: - Mock for previews
+
+extension VPNConnectionActual {
+    public static func mock(serverModelId: String = "server-model-id-1",
+                            serverIPId: String = "188.12.32.12",
+                            vpnProtocol: VpnProtocol = .wireGuard(.tcp),
+                            natType: NATType = .moderateNAT,
+                            safeMode: Bool? = nil,
+                            feature: ServerFeature = .zero,
+                            serverName: String = "SRV#12",
+                            country: String = "CH",
+                            city: String? = "Bern"
+    ) -> VPNConnectionActual {
+        VPNConnectionActual(
+            serverModelId: serverModelId,
+            serverIPId: serverIPId,
+            vpnProtocol: vpnProtocol,
+            natType: natType,
+            safeMode: safeMode,
+            feature: feature,
+            serverName: serverName,
+            country: country,
+            city: city
+        )
+    }
+}
+
 // MARK: - Watch for changes
 
 public extension DependencyValues {

@@ -188,7 +188,7 @@ public struct ConnectionScreenView: View {
         VStack(alignment: .leading) {
             WithViewStore(self.store, observe: { $0 }, content: { viewStore in
                 HStack(alignment: .top) {
-                    ConnectionFlagInfoView(location: viewStore.connectionSpec.location)
+                    ConnectionFlagInfoView(intent: viewStore.connectionSpec, vpnConnectionActual: viewStore.vpnConnectionActual)
 
                     Spacer()
 
