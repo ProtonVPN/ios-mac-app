@@ -75,6 +75,7 @@ let package = Package(
             dependencies: [
                 "Home",
                 "Theme",
+                "SharedViews",
                 "Strings",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),

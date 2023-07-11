@@ -26,6 +26,7 @@ import Home
 import Theme
 import Strings
 import VPNAppCore
+import SharedViews
 
 struct HomeConnectionCardView: View {
     @Dependency(\.locale) private var locale
@@ -66,7 +67,7 @@ struct HomeConnectionCardView: View {
         HStack(spacing: .themeSpacing12) {
             let location = item.connection.location
             VStack(spacing: 0) {
-                AnyView(location.flag.appearance(.macOS))
+                ConnectionFlagInfoView(intent: item.connection, vpnConnectionActual: nil) // todo: fill in vpnConnectionActual
                 Spacer().frame(maxHeight: .infinity)
             }
             VStack(alignment: .leading) {
@@ -317,19 +318,19 @@ private extension ConnectionSpec {
 
 private extension VPNConnectionStatus {
     static var  connected: Self {
-        .connected(.dibba)
+        .connected(.dibba, nil)
     }
 
     static var connecting: Self {
-        .connecting(.dibba)
+        .connecting(.dibba, nil)
     }
 
     static var loadingConnectionInfo: Self {
-        .loadingConnectionInfo(.chrząszczyrzewoszczyce)
+        .loadingConnectionInfo(.chrząszczyrzewoszczyce, nil)
     }
 
     static var disconnecting: Self {
-        .disconnecting(.chrząszczyrzewoszczyce)
+        .disconnecting(.chrząszczyrzewoszczyce, nil)
     }
 }
 
@@ -342,5 +343,56 @@ private extension ConnectionStatusFeature.State {
     }
     static func protected() -> Self {
         .init(protectionState: .protected(netShield: .random))
+    }
+}
+
+// MARK: - Model extensions
+
+public extension ConnectionSpec.Location {
+
+    private func regionName(locale: Locale, code: String) -> String {
+        locale.localizedString(forRegionCode: code) ?? code
+    }
+
+    func accessibilityText(locale: Locale) -> String {
+        switch self {
+        case .fastest:
+            return "The fastest country available"
+        case .secureCore(.fastest):
+            return "The fastest secure core country available"
+        default:
+            // todo: .exact and .region should specify number and ideally features as well
+            return text(locale: locale)
+        }
+    }
+
+    func text(locale: Locale) -> String {
+        switch self {
+        case .fastest,
+                .secureCore(.fastest):
+            return "Fastest"
+        case .region(let code),
+                .exact(_, _, _, let code),
+                .secureCore(.fastestHop(let code)),
+                .secureCore(.hop(let code, _)):
+            return regionName(locale: locale, code: code)
+        }
+    }
+
+    func subtext(locale: Locale) -> String? {
+        switch self {
+        case .fastest, .region, .secureCore(.fastest), .secureCore(.fastestHop):
+            return nil
+        case let .exact(server, number, subregion, _):
+            if server == .free {
+                return "FREE#\(number)"
+            } else if let subregion {
+                return "\(subregion) #\(number)"
+            } else {
+                return nil
+            }
+        case .secureCore(.hop(_, let via)):
+            return "via \(regionName(locale: locale, code: via))"
+        }
     }
 }

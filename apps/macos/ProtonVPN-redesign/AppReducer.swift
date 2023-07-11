@@ -75,20 +75,22 @@ struct AppReducer: ReducerProtocol {
                     try? await disconnectVPN()
                 }
 
-            case .home:
-                return .none
-            case .toggleConnectionDetails:
+            case .home(.showConnectionDetails):
                 state.connectionDetailsVisible.toggle()
                 return .none
+                
             case .home:
                 return .none
+
             case .showLogin(let initialError):
                 state.login.initialError = initialError
                 state.login.isLoggedIn = false
                 return .none
+
             case .showSideBar:
                 state.login.isLoggedIn = true
                 return .none
+
             case .login:
                 return .none
             }
