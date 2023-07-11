@@ -135,6 +135,27 @@ extension Scene {
                     }
                 }
             }
+            CommandGroup(before: .help) {
+                Button("Report an Issue...") {
+                    appDelegate.navigationService.showReportBug()
+                }
+
+                Button("View Logs") {
+
+                }
+                Button("OpenVPN Logs") {
+
+                }
+                Button("WireGuard Logs") {
+
+                }
+                Button("Clear Application Data") {
+
+                }
+                Button("System Extension Tutorial") {
+
+                }
+            }
             CommandGroup(replacing: .newItem, addition: { }) // block user from opening multiple windows
             CommandMenu("Custom Menu") {
                 Button("Say Hello") {

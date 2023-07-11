@@ -65,3 +65,21 @@ struct ShowConnectionDetailsButtonStyle: ButtonStyle {
         return Color(.background, style)
     }
 }
+
+struct HelpButtonStyle: ButtonStyle {
+
+    @State var isHovered = false
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration
+            .label
+            .background(backgroundColor())
+            .onHover { isHovered = $0 }
+    }
+
+    func backgroundColor() -> Color {
+        var style: AppTheme.Style = []
+        style.insert(isHovered ? .hovered : [.transparent])
+        return Color(.background, style)
+    }
+}

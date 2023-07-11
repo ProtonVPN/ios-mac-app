@@ -48,13 +48,20 @@ struct HomeConnectionCardView: View {
                 .themeFont(.callout())
                 .foregroundColor(Color(.text, .weak))
             Spacer()
-            Text(Localizable.actionHelp)
-                .themeFont(.callout(emphasised: true))
-                .foregroundColor(Color(.text, .weak))
-            Theme.Asset.icQuestionCircle.swiftUIImage
-                .resizable()
-                .styled(.weak)
-                .frame(.square(16))
+            Button {
+                sendAction(.helpButtonPressed)
+            } label: {
+                HStack(spacing: 4) {
+                    Text(Localizable.actionHelp)
+                        .themeFont(.callout(emphasised: true))
+                        .foregroundColor(Color(.text, .weak))
+                    Theme.Asset.icQuestionCircle.swiftUIImage
+                        .resizable()
+                        .styled(.weak)
+                        .frame(.square(16))
+                }
+            }
+            .buttonStyle(HelpButtonStyle())
         }
     }
 
