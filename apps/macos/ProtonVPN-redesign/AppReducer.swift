@@ -64,20 +64,20 @@ struct AppReducer: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case .home(.connect(let specs)):
-                @Dependency(\.connectToVPN) var connectToVPN
-                connectToVPN(specs)
-//                state.home.vpnConnectionStatus = .connected(specs)
-//                state.home.vpnConnectionStatus = .connecting(specs)
-//                state.home.connectionStatus = .init(protectionState: .protecting(country: "Poland", ip: "192.168.1.0"))
-                return .none
+                return .run { _ in
+                    @Dependency(\.connectToVPN) var connectToVPN
+                    try? await connectToVPN(specs)
+                }
 
             case .home(.disconnect):
-                @Dependency(\.disconnectVPN) var disconnectVPN
-                disconnectVPN()
-//                state.home.vpnConnectionStatus = .disconnected
-//                state.home.connectionStatus = .init(protectionState: .unprotected(country: "Poland", ip: "192.168.1.0"))
+                return .run { _ in
+                    @Dependency(\.disconnectVPN) var disconnectVPN
+                    try? await disconnectVPN()
+                }
+
+            case .home:
                 return .none
-            case .home(.showConnectionDetails):
+            case .toggleConnectionDetails:
                 state.connectionDetailsVisible.toggle()
                 return .none
             case .home:

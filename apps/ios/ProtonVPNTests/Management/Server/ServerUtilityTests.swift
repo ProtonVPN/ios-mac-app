@@ -22,6 +22,7 @@
 
 import XCTest
 import vpncore
+import VPNAppCore
 
 class ServerUtilityTests: XCTestCase {
 
