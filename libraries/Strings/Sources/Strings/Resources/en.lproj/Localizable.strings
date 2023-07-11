@@ -265,3 +265,33 @@
 "_settings_theme_label_dark" = "Dark";
 /* Represents a value of light mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
 "_settings_theme_label_light" = "Light";
+
+// MARK: Protocol Settings
+
+/* UDP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_udp" = "Speed (UDP)";
+/* TCP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_tcp" = "Reliability (TCP)";
+
+/* Description of the smart protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_smart" = "Auto-selects the best protocol for your connection.";
+/* Description of the WireGuard (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_udp" = "Fast, secure, and efficient. WireGuard is more battery-efficient than other protocols.";
+/* Description of the WireGuard (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tcp" = "Fast, secure, and efficient. WireGuard is difficult to detect and block.";
+/* Description of the Stealth (WireGuard TLS) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tls" = "Overcomes VPN blocks by hiding your VPN connection from censors. This protocol is DPI (deep packet inspection) resistant, but may not be as fast as other protocols. Stealth is exclusive to Proton VPN.";
+/* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_udp" = "Established, well-tested, and secure. OpenVPN is less battery-efficient than some other protocols.";
+/* Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_tcp" = "Established, well-tested, and secure. OpenVPN is reliable in poor network conditions, but may not be as fast as other protocols.";
+/* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_ikev2" = "Fast, secure, and stable—but easier for censors to detect and block.";
+
+/* Text displayed next to the title of the cell of the recommended protocol in Protocol Settings. Displayed in uppercase, with a border around it. [Redesign_2023] */
+"_settings_protocol_tag_recommended" = "RECOMMENDED";
+/* Text displayed next to the titles of cells of any new protocols in Protocol Settings. Displayed in uppercase, with a border around it.  [Redesign_2023] */
+"_settings_protocol_tag_new" = "NEW";
+
+/* Footer at the bottom of the Protocol Settings screen. Contains a link to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign 2023] */
+"_settings_protocol_footer" = "A VPN protocol determines how data moves between a VPN server and your device. Learn more";

@@ -32,13 +32,15 @@ struct SettingsSampleApp: App {
         WindowGroup {
             SettingsView(store: Store(
                 initialState: SettingsFeature.State(
-                    destination: .vpnProtocol,
+                    destination: .protocol,
                     netShield: .on,
                     killSwitch: .off,
+                    protocol: .init(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil),
                     theme: .light
                 ),
                 reducer: SettingsFeature()
                     ._printChanges()
+                    .dependency(\.settingsStorage, SettingsStorage(setConnectionProtocol: { _ in }))
             ))
         }
     }

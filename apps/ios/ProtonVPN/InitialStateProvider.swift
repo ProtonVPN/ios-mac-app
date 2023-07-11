@@ -18,6 +18,8 @@
 
 import ComposableArchitecture
 
+import Settings // Imported for syntax highlighting and compiler auto-complete
+
 struct InitialStateProvider {
     public let initialState: AppReducer.State
 }
@@ -31,7 +33,13 @@ extension InitialStateProvider: DependencyKey {
                 connectionStatus: .init(protectionState: .unprotected(country: "Poland", ip: "192.168.1.0")),
                 vpnConnectionStatus: .disconnected
             ),
-            settings: .init(destination: .none, netShield: .on, killSwitch: .off, theme: .auto),
+            settings: .init(
+                destination: .protocol,
+                netShield: .on,
+                killSwitch: .off,
+                protocol: .init(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil),
+                theme: .auto
+            ),
             vpnConnectionStatus: .disconnected
         )
     )

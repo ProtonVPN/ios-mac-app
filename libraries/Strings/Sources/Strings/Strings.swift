@@ -185,6 +185,30 @@ public enum Localizable {
   public static var settingsNetshieldOff: String { return Localizable.tr("Localizable", "_settings_netshield_off", fallback: "Off") }
   /// Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023]
   public static var settingsNetshieldOn: String { return Localizable.tr("Localizable", "_settings_netshield_on", fallback: "On") }
+  /// Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023]
+  public static var settingsProtocolDescriptionIkev2: String { return Localizable.tr("Localizable", "_settings_protocol_description_ikev2", fallback: "Fast, secure, and stable—but easier for censors to detect and block.") }
+  /// Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023]
+  public static var settingsProtocolDescriptionOpenvpnTcp: String { return Localizable.tr("Localizable", "_settings_protocol_description_openvpn_tcp", fallback: "Established, well-tested, and secure. OpenVPN is reliable in poor network conditions, but may not be as fast as other protocols.") }
+  /// Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023]
+  public static var settingsProtocolDescriptionOpenvpnUdp: String { return Localizable.tr("Localizable", "_settings_protocol_description_openvpn_udp", fallback: "Established, well-tested, and secure. OpenVPN is less battery-efficient than some other protocols.") }
+  /// Description of the smart protocol in the protocol settings screen [Redesign_2023]
+  public static var settingsProtocolDescriptionSmart: String { return Localizable.tr("Localizable", "_settings_protocol_description_smart", fallback: "Auto-selects the best protocol for your connection.") }
+  /// Description of the WireGuard (TCP) protocol in the protocol settings screen [Redesign_2023]
+  public static var settingsProtocolDescriptionWireguardTcp: String { return Localizable.tr("Localizable", "_settings_protocol_description_wireguard_tcp", fallback: "Fast, secure, and efficient. WireGuard is difficult to detect and block.") }
+  /// Description of the Stealth (WireGuard TLS) protocol in the protocol settings screen [Redesign_2023]
+  public static var settingsProtocolDescriptionWireguardTls: String { return Localizable.tr("Localizable", "_settings_protocol_description_wireguard_tls", fallback: "Overcomes VPN blocks by hiding your VPN connection from censors. This protocol is DPI (deep packet inspection) resistant, but may not be as fast as other protocols. Stealth is exclusive to Proton VPN.") }
+  /// Description of the WireGuard (UDP) protocol in the protocol settings screen [Redesign_2023]
+  public static var settingsProtocolDescriptionWireguardUdp: String { return Localizable.tr("Localizable", "_settings_protocol_description_wireguard_udp", fallback: "Fast, secure, and efficient. WireGuard is more battery-efficient than other protocols.") }
+  /// Footer at the bottom of the Protocol Settings screen. Contains a link to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign 2023]
+  public static var settingsProtocolFooter: String { return Localizable.tr("Localizable", "_settings_protocol_footer", fallback: "A VPN protocol determines how data moves between a VPN server and your device. Learn more") }
+  /// TCP protocols section header in the protocol settings screen [Redesign_2023]
+  public static var settingsProtocolSectionTitleTcp: String { return Localizable.tr("Localizable", "_settings_protocol_section_title_tcp", fallback: "Reliability (TCP)") }
+  /// UDP protocols section header in the protocol settings screen [Redesign_2023]
+  public static var settingsProtocolSectionTitleUdp: String { return Localizable.tr("Localizable", "_settings_protocol_section_title_udp", fallback: "Speed (UDP)") }
+  /// Text displayed next to the titles of cells of any new protocols in Protocol Settings. Displayed in uppercase, with a border around it.  [Redesign_2023]
+  public static var settingsProtocolTagNew: String { return Localizable.tr("Localizable", "_settings_protocol_tag_new", fallback: "NEW") }
+  /// Text displayed next to the title of the cell of the recommended protocol in Protocol Settings. Displayed in uppercase, with a border around it. [Redesign_2023]
+  public static var settingsProtocolTagRecommended: String { return Localizable.tr("Localizable", "_settings_protocol_tag_recommended", fallback: "RECOMMENDED") }
   /// Title of the 'Account' section in the Settings tab [Redesign_2023]
   public static var settingsSectionTitleAccount: String { return Localizable.tr("Localizable", "_settings_section_title_account", fallback: "Account") }
   /// Title of the 'Connection' section in the Settings tab [Redesign_2023]

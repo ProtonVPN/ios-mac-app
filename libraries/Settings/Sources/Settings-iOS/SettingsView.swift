@@ -222,6 +222,7 @@ public struct SettingsView: View {
     private var navigationDestinations: some View {
         WithViewStore(store, observe: { $0.destination }) { destinationStore in
             featureDestinations(viewStore: destinationStore)
+            connectionDestinations(viewStore: destinationStore)
             generalDestinations(viewStore: destinationStore)
         }
     }
@@ -250,6 +251,12 @@ public struct SettingsView: View {
         }
     }
 
+    @ViewBuilder private func connectionDestinations(viewStore: DestinationViewStore) -> some View {
+        destination(case: /.protocol) {
+            ProtocolSettingsView(store: store.scope(state: \.protocol, action: SettingsFeature.Action.protocol))
+        }
+    }
+
     @ViewBuilder private func generalDestinations(viewStore: DestinationViewStore) -> some View {
         destination(case: /.theme) {
             ThemeSettingsView(store: store.scope(state: \.theme, action: SettingsFeature.Action.theme))
@@ -264,6 +271,7 @@ struct SettingsView_Previews: PreviewProvider {
                 destination: .none,
                 netShield: .on,
                 killSwitch: .off,
+                protocol: .init(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil),
                 theme: .light
             ),
             reducer: SettingsFeature()
