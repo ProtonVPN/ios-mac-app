@@ -76,7 +76,7 @@ struct RecentRowItemView: View {
                 .padding(.trailing, .themeSpacing12)
                 .padding(.top, .themeSpacing2)
 
-            ConnectionFlagInfoView(location: item.connection.location)
+            ConnectionFlagInfoView(intent: item.connection)
 
             Spacer()
         }

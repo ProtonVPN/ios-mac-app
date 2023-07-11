@@ -60,10 +60,22 @@ struct HomeConnectionCardView: View {
         .padding()
     }
 
+    var vpnConnectionActual: VPNConnectionActual? {
+        switch vpnConnectionStatus {
+        case .disconnected:
+            return nil
+        case .connected(_, let vpnConnectionActual),
+             .connecting(_, let vpnConnectionActual),
+             .loadingConnectionInfo(_, let vpnConnectionActual),
+             .disconnecting(_, let vpnConnectionActual):
+            return vpnConnectionActual
+        }
+    }
+
     var card: some View {
         VStack {
             HStack {
-                ConnectionFlagInfoView(location: item.connection.location)
+                ConnectionFlagInfoView(intent: item.connection, vpnConnectionActual: vpnConnectionActual)
                 Spacer()
 
                 if vpnConnectionStatus.connectionStatusAvailable {

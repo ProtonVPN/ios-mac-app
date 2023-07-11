@@ -225,6 +225,7 @@
 		D563A7522A5C539F00908254 /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = D563A7512A5C539F00908254 /* Strings */; };
 		D563A7542A5D255A00908254 /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = D563A7532A5D255A00908254 /* Strings */; };
 		D563A75A2A5D36E700908254 /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = D563A7592A5D36E700908254 /* Strings */; };
+		D563A75C2A5D767500908254 /* SharedViews in Frameworks */ = {isa = PBXBuildFile; productRef = D563A75B2A5D767500908254 /* SharedViews */; };
 		D563B26B2345DA4300F98797 /* FormValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563B26A2345DA4300F98797 /* FormValidationError.swift */; };
 		D563B26C2345DA4300F98797 /* FormValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563B26A2345DA4300F98797 /* FormValidationError.swift */; };
 		D56B68E32507CBBD00796E0C /* ClientConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56B68E22507CBBD00796E0C /* ClientConfig.swift */; };
@@ -1226,6 +1227,7 @@
 				D5391F172A4D4ABE0089D2F7 /* OrderedCollections in Frameworks */,
 				AD880CE62A56C755007086AB /* VPNAppCore in Frameworks */,
 				AD5852832A58B8160005D8EC /* Home-iOS in Frameworks */,
+				D563A75C2A5D767500908254 /* SharedViews in Frameworks */,
 				AD58527F2A58B7E10005D8EC /* Home in Frameworks */,
 				D58273202A4F01080021CA41 /* VPNSharedTesting in Frameworks */,
 				179F144D89241E7160EFD846 /* Pods_Core_vpncore_ios.framework in Frameworks */,
@@ -2417,6 +2419,7 @@
 				AD5852822A58B8160005D8EC /* Home-iOS */,
 				D563A74D2A5C0F9000908254 /* ConnectionDetails-iOS */,
 				D563A7532A5D255A00908254 /* Strings */,
+				D563A75B2A5D767500908254 /* SharedViews */,
 			);
 			productName = "vpncore-ios";
 			productReference = E1B5F5D821B68ABD00B558B0 /* vpncore.framework */;
@@ -4537,6 +4540,10 @@
 		D563A7592A5D36E700908254 /* Strings */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Strings;
+		};
+		D563A75B2A5D767500908254 /* SharedViews */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SharedViews;
 		};
 		D58273192A4F00C60021CA41 /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;

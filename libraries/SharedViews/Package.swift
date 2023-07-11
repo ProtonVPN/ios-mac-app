@@ -19,6 +19,7 @@ let package = Package(
         // Local
         .package(path: "../Theme"),
         .package(path: "../NEHelper"),
+        .package(path: "../Strings"),
         
         // 3rd party
         .package(
@@ -31,6 +32,7 @@ let package = Package(
             name: "SharedViews",
             dependencies: [
                 "Theme",
+                "Strings",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ]),
