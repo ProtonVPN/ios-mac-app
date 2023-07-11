@@ -73,13 +73,17 @@ struct HelpButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration
             .label
-            .background(backgroundColor())
+            .foregroundColor(Color(.text, isHovered ? [] : .weak))
+            .font(.callout(emphasised: false))
+            .padding(.themeSpacing4)
+            .background(backgroundColor(isPressed: configuration.isPressed))
+            .cornerRadius(.themeRadius8)
             .onHover { isHovered = $0 }
     }
 
-    func backgroundColor() -> Color {
-        var style: AppTheme.Style = []
-        style.insert(isHovered ? .hovered : [.transparent])
+    func backgroundColor(isPressed: Bool) -> Color {
+        var style: AppTheme.Style = [.transparent]
+        style.insert(isHovered ? .hovered : [])
         return Color(.background, style)
     }
 }

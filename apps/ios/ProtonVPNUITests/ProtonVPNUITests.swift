@@ -143,7 +143,7 @@ class ProtonVPNUITests: CoreTestCase {
         if app.buttons["Not Now"].waitForExistence(timeout: 60) { // keychain sheet
             app.buttons["Not Now"].tap()
         }
-        guard app.buttons["Quick Connect"].waitForExistence(timeout: 5) else {
+        guard app.buttons["Connect"].waitForExistence(timeout: 5) else {
             XCTFail("Quick connect button never appeared.")
             return MainRobot()
         }
