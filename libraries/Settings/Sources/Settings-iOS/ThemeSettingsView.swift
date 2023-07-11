@@ -53,7 +53,7 @@ struct ThemeSettingsView: View {
             }
         }
         .navigationTitle(Localizable.settingsTitleTheme)
-        //.navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.inline)
     }
 
     private func colorSchemeOptionControl(model: OptionModel, currentValue: Binding<Theme.ColorScheme>) -> some View {

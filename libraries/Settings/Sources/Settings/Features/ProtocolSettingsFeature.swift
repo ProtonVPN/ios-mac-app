@@ -20,6 +20,7 @@ import ComposableArchitecture
 import Dependencies
 
 import VPNAppCore
+import VPNShared
 
 public struct ProtocolSettingsFeature: ReducerProtocol {
     @Dependency(\.disconnectVPN) var disconnectVPN
@@ -98,5 +99,22 @@ public struct ProtocolSettingsFeature: ReducerProtocol {
             return .none
         }
     }
+}
 
+extension VpnProtocol: LocalizedStringConvertible {
+
+    public var localizedDescription: String {
+        switch self {
+        case .ike: return "IKEv2"
+        case .openVpn(let transport):
+            return "OpenVPN (\(transport.rawValue.uppercased()))"
+        case .wireGuard(let transport):
+            switch transport {
+            case .udp, .tcp:
+                return "WireGuard (\(transport.rawValue.uppercased()))"
+            case .tls:
+                return "Stealth"
+            }
+        }
+    }
 }

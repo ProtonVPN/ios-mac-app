@@ -164,7 +164,9 @@ public struct SettingsView: View {
 
     private var connectionSection: some View {
         section(named: Localizable.settingsSectionTitleConnection) {
-            makeCell(for: features.vpnProtocol, value: nil)
+            WithViewStore(store, observe: \.protocol) { viewStore in
+                makeCell(for: features.vpnProtocol, value: viewStore.protocol, action: .protocolTapped)
+            }
             makeCell(for: features.vpnAccelerator, value: NetShieldSettingsFeature.State.on)
             makeCell(for: features.advanced, value: nil)
         }
