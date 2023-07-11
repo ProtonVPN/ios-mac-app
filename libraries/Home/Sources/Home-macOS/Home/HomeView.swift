@@ -20,6 +20,7 @@ import SwiftUI
 import Home
 import VPNShared
 import ComposableArchitecture
+import Theme
 
 public struct HomeView: View {
 
@@ -35,40 +36,22 @@ public struct HomeView: View {
                 let item = viewStore.state.mostRecent ?? .defaultFastest
                 ConnectionStatusView(store: store.scope(state: \.connectionStatus,
                                                         action: { .connectionStatusViewAction($0) }))
-                connectButton(viewStore: viewStore)
+
                 Spacer()
                     .frame(maxHeight: .infinity)
+                
                 HomeConnectionCardView(
                     item: item,
                     vpnConnectionStatus: viewStore.vpnConnectionStatus,
                     sendAction: { _ = viewStore.send($0) }
                 )
-                .padding(.vertical, .themeSpacing16)
+
                 Spacer()
                     .frame(maxHeight: .infinity)
             }
             .background(Color(.background))
-            .frame(minWidth: 360, minHeight: 480)
-        }
-    }
-
-    // For development only
-    func connectButton(viewStore: ViewStore<HomeFeature.State, HomeFeature.Action>) -> some View {
-        switch viewStore.vpnConnectionStatus {
-        case .disconnected:
-            return Button("Quick Connect") {
-                viewStore.send(.connect(.init(location: .fastest, features: [])))
-            }
-        case .connected:
-            return Button("Disconnect") {
-                viewStore.send(.disconnect)
-            }
-        case .connecting:
-            return Button("Cancel") {
-                viewStore.send(.disconnect)
-            }
-        default:
-            return Button("Upsupported") { }
+            .themeFrame(minWidth: .mainContainerMinWidth,
+                        minHeight: .mainContainerMinHeight)
         }
     }
 }

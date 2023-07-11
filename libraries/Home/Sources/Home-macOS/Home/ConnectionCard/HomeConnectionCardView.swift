@@ -43,7 +43,7 @@ struct HomeConnectionCardView: View {
     }
 
     var header: some View {
-        HStack(spacing: 4) {
+        HStack(spacing: .themeSpacing4) {
             Text(model.headerText(for: vpnConnectionStatus))
                 .themeFont(.callout())
                 .foregroundColor(Color(.text, .weak))
@@ -51,13 +51,10 @@ struct HomeConnectionCardView: View {
             Button {
                 sendAction(.helpButtonPressed)
             } label: {
-                HStack(spacing: 4) {
+                HStack(spacing: .themeSpacing4) {
                     Text(Localizable.actionHelp)
-                        .themeFont(.callout(emphasised: true))
-                        .foregroundColor(Color(.text, .weak))
                     Theme.Asset.icQuestionCircle.swiftUIImage
                         .resizable()
-                        .styled(.weak)
                         .frame(.square(16))
                 }
             }
@@ -102,7 +99,7 @@ struct HomeConnectionCardView: View {
     }
 
     var card: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: .themeSpacing8) {
             Button {
                 sendAction(.showConnectionDetails)
             } label: {
@@ -142,13 +139,14 @@ struct HomeConnectionCardView: View {
             header
             card
         }
-        .frame(minWidth: 360)
+        .themeFrame(maxWidth: .connectionCardMaxWidth)
         .padding(.themeSpacing16)
-        .accessibilityElement()
-        .accessibilityLabel(accessibilityText)
-        .accessibilityAction(named: Text(Localizable.actionConnect)) {
-            sendAction(.connect(item.connection))
-        }
+        // the accessibility set here currently prevents automation to click on the connect button directly
+//        .accessibilityElement()
+//        .accessibilityLabel(accessibilityText)
+//        .accessibilityAction(named: Text(Localizable.actionConnect)) {
+//            sendAction(.connect(item.connection))
+//        }
     }
 }
 

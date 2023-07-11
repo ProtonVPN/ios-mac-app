@@ -19,7 +19,7 @@
 import Foundation
 import XCTest
 
-fileprivate let qcButton = "Quick Connect"
+fileprivate let qcButton = "Connect"
 fileprivate let preferencesTitle = "Preferences"
 fileprivate let menuItemReportAnIssue = "Report an Issue..."
 fileprivate let menuItemProfiles = "Overview"
