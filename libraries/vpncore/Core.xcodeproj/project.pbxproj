@@ -169,6 +169,8 @@
 		AD5852832A58B8160005D8EC /* Home-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = AD5852822A58B8160005D8EC /* Home-iOS */; };
 		AD7F71482A5DC626004FC8D2 /* Settings-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = AD7F71472A5DC626004FC8D2 /* Settings-iOS */; };
 		AD7F714A2A5DC62A004FC8D2 /* Settings-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = AD7F71492A5DC62A004FC8D2 /* Settings-macOS */; };
+		AD7F71512A5DDB74004FC8D2 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7F71502A5DDB74004FC8D2 /* Storage.swift */; };
+		AD7F71522A5DDB74004FC8D2 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7F71502A5DDB74004FC8D2 /* Storage.swift */; };
 		AD880CE62A56C755007086AB /* VPNAppCore in Frameworks */ = {isa = PBXBuildFile; productRef = AD880CE52A56C755007086AB /* VPNAppCore */; };
 		AD880CE82A56C75B007086AB /* VPNAppCore in Frameworks */ = {isa = PBXBuildFile; productRef = AD880CE72A56C75B007086AB /* VPNAppCore */; };
 		AD9B8BE72A0E4D77006986B0 /* VpnAuthentication+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9B8BE62A0E4D77006986B0 /* VpnAuthentication+iOS.swift */; };
@@ -857,6 +859,7 @@
 		AD582AE429CDCFD000168D70 /* DebugEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugEnvironment.swift; sourceTree = "<group>"; };
 		AD9B8BE62A0E4D77006986B0 /* VpnAuthentication+iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VpnAuthentication+iOS.swift"; sourceTree = "<group>"; };
 		AD9B8BE92A0E4D80006986B0 /* VpnAuthentication+MacOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VpnAuthentication+MacOS.swift"; sourceTree = "<group>"; };
+		AD7F71502A5DDB74004FC8D2 /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		ADBFE44D29CDA14D001A5446 /* LocalAgentMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAgentMessages.swift; sourceTree = "<group>"; };
 		ADBFE45029CDAAE0001A5446 /* Timer+Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timer+Dependencies.swift"; sourceTree = "<group>"; };
 		AE26A503B6B1753094CB6F2E /* Pods-Core-vpncore-iosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-iosTests.release.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-iosTests/Pods-Core-vpncore-iosTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -1423,6 +1426,7 @@
 				D54539D92A41F1D4008B4259 /* DisconnectVPN.swift */,
 				D54539E52A4309AD008B4259 /* PushAlert.swift */,
 				D5C9E0952A55562500A84B6C /* GetServerById.swift */,
+				AD7F71502A5DDB74004FC8D2 /* Storage.swift */,
 			);
 			path = NewToOldAppBridge;
 			sourceTree = "<group>";
@@ -3098,6 +3102,7 @@
 				F3A05A3426C14223004D9E18 /* AppDisplayState.swift in Sources */,
 				4242B02C2465A41A0042145A /* VPNLocationRequest.swift in Sources */,
 				D54539E62A4309AD008B4259 /* PushAlert.swift in Sources */,
+				AD7F71512A5DDB74004FC8D2 /* Storage.swift in Sources */,
 				E123909E227C4E5A004B607A /* ApplicationError.swift in Sources */,
 				E148AE6B21C2A263007AB65A /* LocalizedString.swift in Sources */,
 				ADBFE45129CDAAE0001A5446 /* Timer+Dependencies.swift in Sources */,
@@ -3334,6 +3339,7 @@
 				4CB2A3D7289131F5002E839E /* ExtensionInfo+Comparable.swift in Sources */,
 				E52E8138296C5F45002AF127 /* ConnectionTimer.swift in Sources */,
 				E151126C22F07D3100C9A41F /* VpnManagerConfiguration.swift in Sources */,
+				AD7F71522A5DDB74004FC8D2 /* Storage.swift in Sources */,
 				E1B5F63421B6B19200B558B0 /* VpnState.swift in Sources */,
 				E129C6C422A90E6600D8437E /* PropertiesManagerMock.swift in Sources */,
 				D5B53ADA25188D7C00625CEC /* MaintenanceManagerHelper.swift in Sources */,

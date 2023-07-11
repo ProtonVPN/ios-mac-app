@@ -165,6 +165,7 @@ struct ProtonVPNApp: App {
             reducer: AppReducer()
                 .dependency(\.vpnConnectionStatusPublisher, VPNConnectionStatusPublisherKey.watchVPNConnectionStatusChanges)
                 .dependency(\.getServerById, VpnServerGetter.getServerById)
+                .dependency(\.settingsStorage, SettingsStorageKey.userDefaults)
             #if targetEnvironment(simulator)
                 .dependency(\.connectToVPN, SimulatorHelper.shared.connect)
                 .dependency(\.disconnectVPN, SimulatorHelper.shared.disconnect)
