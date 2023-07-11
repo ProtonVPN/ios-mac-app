@@ -18,14 +18,14 @@
 
 import Foundation
 
-public enum OpenVpnTransport: String, Codable, CaseIterable {
+public enum OpenVpnTransport: String, Codable, CaseIterable, Sendable {
     case tcp = "tcp"
     case udp = "udp"
 
     public static let defaultValue: Self = .tcp
 }
 
-public enum WireGuardTransport: String, Codable, Equatable, CaseIterable {
+public enum WireGuardTransport: String, Codable, Equatable, CaseIterable, Sendable {
     case udp = "udp"
     case tcp = "tcp"
     case tls = "tls"
@@ -33,7 +33,7 @@ public enum WireGuardTransport: String, Codable, Equatable, CaseIterable {
     public static let defaultValue: Self = .udp
 }
 
-public enum VpnProtocol: Equatable, Hashable, CaseIterable {
+public enum VpnProtocol: Equatable, Hashable, CaseIterable, Sendable {
     public static let allCases: [VpnProtocol] = [.ike]
         + OpenVpnTransport.allCases.map(Self.openVpn)
         + WireGuardTransport.allCases.map(Self.wireGuard)
