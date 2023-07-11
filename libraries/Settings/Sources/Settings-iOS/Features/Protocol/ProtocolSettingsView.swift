@@ -26,94 +26,6 @@ import Theme
 import VPNShared
 import VPNAppCore
 
-enum ProtocolAttribute {
-    case new
-    case recommended
-
-    var localizedTitle: String {
-        switch self {
-        case .new:
-            return Localizable.settingsProtocolTagNew
-        case .recommended:
-            return Localizable.settingsProtocolTagRecommended
-        }
-    }
-
-    var textColor: Color {
-        switch self {
-        case .new:
-            return tintColor
-        case .recommended:
-            return Color(.text, .normal)
-        }
-    }
-
-    var tintColor: Color {
-        switch self {
-        case .new:
-            return Color(.border, .warning)
-        case .recommended:
-            return Color(.border, .normal)
-        }
-    }
-}
-
-struct ProtocolTag: View {
-    let attribute: ProtocolAttribute
-
-    init(attribute: ProtocolAttribute) {
-        self.attribute = attribute
-    }
-
-    var body: some View {
-        Text(attribute.localizedTitle)
-            // TODO: use themeFont after dynamic style
-            .themeFont(.overline(emphasised: true))
-            .foregroundColor(attribute.textColor)
-            .textCase(.uppercase)
-            .padding([.leading, .trailing], 5)
-            .padding([.top, .bottom], 2)
-            .background(Color(.background, .weak))
-            .overlay(
-                RoundedRectangle(cornerRadius: .themeRadius4)
-                    .stroke(attribute.tintColor, lineWidth: 1)
-            )
-    }
-}
-
-struct ProtocolCell: View {
-    let title: String
-    let attribute: ProtocolAttribute?
-    let description: String
-    let connectionProtocol: ConnectionProtocol
-    let onTap: () -> Void
-    let isSelected: Bool
-
-    var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: .themeSpacing6) {
-                HStack{
-                    Text(title)
-                        .themeFont(.body1())
-                        .foregroundColor(.init(.text, .normal))
-                    if let attribute {
-                        ProtocolTag(attribute: attribute)
-                    }
-                    Spacer()
-                }
-                Text(description)
-                    .themeFont(.caption())
-                    .foregroundColor(.init(.text, .weak))
-            }
-            Spacer()
-            Accessory(style: .checkmark(isActive: isSelected), size: .large)
-        }
-        .contentShape(Rectangle())
-        .listRowBackground(Color(.background, .normal).ignoresSafeArea())
-        .onTapGesture { onTap() }
-    }
-}
-
 extension ConnectionProtocol: LocalizedStringConvertible {
 
     public var localizedDescription: String {
@@ -274,29 +186,6 @@ extension VpnProtocol {
             return .new
         default:
             return nil
-        }
-    }
-}
-
-struct ProtocolCell_Previews: PreviewProvider {
-    static var previews: some View {
-        List {
-            ProtocolCell(
-                title: "Smart",
-                attribute: .recommended,
-                description: "Auto-selects the best protocol for your connection.",
-                connectionProtocol: .smartProtocol,
-                onTap: { },
-                isSelected: false
-            )
-            ProtocolCell(
-                title: "IKEv2",
-                attribute: .new,
-                description: "Totally a great protocol, and definitely not unsecure or anything.",
-                connectionProtocol: .vpnProtocol(.ike),
-                onTap: { },
-                isSelected: true
-            )
         }
     }
 }
