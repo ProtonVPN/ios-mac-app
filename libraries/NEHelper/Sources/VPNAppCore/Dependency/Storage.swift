@@ -20,7 +20,6 @@ import Dependencies
 import XCTestDynamicOverlay
 
 import VPNShared
-import VPNAppCore
 
 public struct SettingsStorage: Sendable {
     public var getConnectionProtocol: @Sendable () async throws -> ConnectionProtocol

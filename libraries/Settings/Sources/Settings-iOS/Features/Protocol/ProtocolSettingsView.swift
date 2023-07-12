@@ -67,12 +67,12 @@ struct ProtocolSettingsView: View {
                 cell(for: .smartProtocol, viewStore: viewStore)
                 section(named: Localizable.settingsProtocolSectionTitleUdp) {
                     cell(for: .vpnProtocol(.wireGuard(.udp)), viewStore: viewStore)
-                    cell(for: .vpnProtocol(.openVpn(.udp)), viewStore: viewStore)
-                    cell(for: .vpnProtocol(.ike), viewStore: viewStore)
+                    // cell(for: .vpnProtocol(.openVpn(.udp)), viewStore: viewStore)
+                    // cell(for: .vpnProtocol(.ike), viewStore: viewStore)
                 }
                 section(named: Localizable.settingsProtocolSectionTitleTcp) {
                     cell(for: .vpnProtocol(.wireGuard(.tcp)), viewStore: viewStore)
-                    cell(for: .vpnProtocol(.openVpn(.tcp)), viewStore: viewStore)
+                    // cell(for: .vpnProtocol(.openVpn(.tcp)), viewStore: viewStore)
                     cell(for: .vpnProtocol(.wireGuard(.tls)), viewStore: viewStore)
                 }
                 footerSection
