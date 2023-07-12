@@ -55,6 +55,9 @@ public struct ProtocolSettingsFeature: ReducerProtocol {
     public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
         switch action {
         case let .protocolTapped(`protocol`):
+            if state.protocol == `protocol` {
+                return .none // Do nothing when the user taps on the currently selected protocol
+            }
             if state.vpnConnectionStatus == .disconnected {
                 return .run { send in
                     return await send(.setProtocol(TaskResult {

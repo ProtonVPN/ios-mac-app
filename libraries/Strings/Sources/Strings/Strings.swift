@@ -185,6 +185,14 @@ public enum Localizable {
   public static var settingsNetshieldOff: String { return Localizable.tr("Localizable", "_settings_netshield_off", fallback: "Off") }
   /// Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023]
   public static var settingsNetshieldOn: String { return Localizable.tr("Localizable", "_settings_netshield_on", fallback: "On") }
+  /// Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign 2023]
+  public static var settingsProtocolAlertBody: String { return Localizable.tr("Localizable", "_settings_protocol_alert_body", fallback: "Changing protocols will end your current VPN session.") }
+  /// Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign 2023]
+  public static var settingsProtocolAlertButtonCancel: String { return Localizable.tr("Localizable", "_settings_protocol_alert_button_cancel", fallback: "Cancel") }
+  /// Confirmation button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign 2023]
+  public static var settingsProtocolAlertButtonContinue: String { return Localizable.tr("Localizable", "_settings_protocol_alert_button_continue", fallback: "Continue") }
+  /// Title of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign 2023]
+  public static var settingsProtocolAlertTitle: String { return Localizable.tr("Localizable", "_settings_protocol_alert_title", fallback: "VPN Connection Active") }
   /// Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023]
   public static var settingsProtocolDescriptionIkev2: String { return Localizable.tr("Localizable", "_settings_protocol_description_ikev2", fallback: "Fast, secure, and stable—but easier for censors to detect and block.") }
   /// Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023]
@@ -199,8 +207,8 @@ public enum Localizable {
   public static var settingsProtocolDescriptionWireguardTls: String { return Localizable.tr("Localizable", "_settings_protocol_description_wireguard_tls", fallback: "Overcomes VPN blocks by hiding your VPN connection from censors. This protocol is DPI (deep packet inspection) resistant, but may not be as fast as other protocols. Stealth is exclusive to Proton VPN.") }
   /// Description of the WireGuard (UDP) protocol in the protocol settings screen [Redesign_2023]
   public static var settingsProtocolDescriptionWireguardUdp: String { return Localizable.tr("Localizable", "_settings_protocol_description_wireguard_udp", fallback: "Fast, secure, and efficient. WireGuard is more battery-efficient than other protocols.") }
-  /// Footer at the bottom of the Protocol Settings screen. Contains a link to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign 2023]
-  public static var settingsProtocolFooter: String { return Localizable.tr("Localizable", "_settings_protocol_footer", fallback: "A VPN protocol determines how data moves between a VPN server and your device. Learn more") }
+  /// Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign 2023]
+  public static var settingsProtocolFooter: String { return Localizable.tr("Localizable", "_settings_protocol_footer", fallback: "A VPN protocol determines how data moves between a VPN server and your device. **[Learn more](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**") }
   /// TCP protocols section header in the protocol settings screen [Redesign_2023]
   public static var settingsProtocolSectionTitleTcp: String { return Localizable.tr("Localizable", "_settings_protocol_section_title_tcp", fallback: "Reliability (TCP)") }
   /// UDP protocols section header in the protocol settings screen [Redesign_2023]
