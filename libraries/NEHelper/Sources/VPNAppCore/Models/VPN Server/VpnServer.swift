@@ -23,7 +23,7 @@ import Foundation
 ///
 /// There is also one difference: it doesn't contain the list of ServerIP's.
 ///
-/// The plan is to get rid of `ServerModel` whenever possible and move to sing this struct only.
+/// The plan is to get rid of `ServerModel` whenever possible and move to using this struct only.
 public struct VpnServer: Codable, Equatable {
     public let id: String
     public let name: String

@@ -31,7 +31,7 @@ public struct SmallProgressView: View {
     @ScaledMetric var height: CGFloat = 4
 
     public init(percentage: Int) {
-        self.percentage = max(0, percentage)
+        self.percentage = min(100, max(0, percentage))
     }
 
     private var color: Color {
