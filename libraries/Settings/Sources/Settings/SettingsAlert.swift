@@ -18,21 +18,22 @@
 
 import ComposableArchitecture
 
+import Strings
 import VPNAppCore
 
 public enum SettingsAlert {
     public static func reconnectionAlertState(for protocol: ConnectionProtocol) -> AlertState<ProtocolSettingsFeature.Action> {
         AlertState {
-            TextState("VPN Connection Active")
+            TextState(Localizable.settingsProtocolAlertTitle)
         } actions: {
             ButtonState(role: .cancel) {
-                TextState("Cancel")
+                TextState(Localizable.settingsProtocolAlertButtonCancel)
             }
             ButtonState(action: .reconnectWith(`protocol`)) {
-                TextState("Continue")
+                TextState(Localizable.settingsProtocolAlertButtonContinue)
             }
         } message: {
-            TextState("Changing protocols will end your current VPN session.")
+            TextState(Localizable.settingsProtocolAlertBody)
         }
     }
 }

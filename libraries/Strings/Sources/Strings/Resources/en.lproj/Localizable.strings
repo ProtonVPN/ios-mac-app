@@ -295,3 +295,15 @@
 
 /* Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign 2023] */
 "_settings_protocol_footer" = "A VPN protocol determines how data moves between a VPN server and your device. **[Learn more](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
+
+/* Title of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign 2023] */
+"_settings_protocol_alert_title" = "VPN Connection Active";
+
+/* Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign 2023] */
+"_settings_protocol_alert_body" = "Changing protocols will end your current VPN session.";
+
+/* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign 2023] */
+"_settings_protocol_alert_button_cancel" = "Cancel";
+
+/* Confirmation button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign 2023] */
+"_settings_protocol_alert_button_continue" = "Continue";
