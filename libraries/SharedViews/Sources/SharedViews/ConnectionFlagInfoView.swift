@@ -97,8 +97,7 @@ public struct ConnectionFlagInfoView: View {
                     .resizable()
                     .frame(width: featureIconSize, height: featureIconSize)
                 Text("P2P").styled(.weak)
-            } else
-            if showFeatureTor {
+            } else if showFeatureTor {
                 Asset.icBrandTor.swiftUIImage
                     .resizable()
                     .frame(width: featureIconSize, height: featureIconSize)
