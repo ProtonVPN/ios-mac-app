@@ -88,22 +88,38 @@ public struct ConnectionFlagInfoView: View {
 
     @ViewBuilder
     var textFeatures: some View {
-        HStack(spacing: 8) {
-            if showFeatureBullet {
-                Text("• ")
-            }
-            if showFeatureP2P {
-                Asset.icArrowRightArrowLeft.swiftUIImage
-                    .resizable()
-                    .frame(width: featureIconSize, height: featureIconSize)
-                Text("P2P").styled(.weak)
-            } else if showFeatureTor {
-                Asset.icBrandTor.swiftUIImage
-                    .resizable()
-                    .frame(width: featureIconSize, height: featureIconSize)
-                Text("Tor").styled(.weak)
-            }
-        }
+        // Format looks weird, but it lets us merge several Texts and images
+        // into one, so whole behaves like a text: it can wrap lines, resize
+        // icons inside, etc. For this to work, images have to be either
+        // created with `Image(systemName:)` or be imported as a `Symbol Image`.
+        (
+            Text("") // In case nothing is returned in next lines, we still have at least empty text
+            + (textSubHeader != nil
+                ? Text("\(textSubHeader!)")
+                : Text("")
+            )
+            + (showFeatureP2P
+                ? (showFeatureBullet ? Text(" • ") : Text(""))
+                    + Text(Image(systemName: "arrow.left.arrow.right"))
+                    + Text(" \(Localizable.connectionDetailsFeatureTitleP2p)")
+               : Text("")
+            )
+            + (showFeatureTor
+               ? (showFeatureBullet || showFeatureP2P ? Text(" • ") : Text(""))
+                    + Text("\(Asset.icsBrandTor.swiftUIImage)")
+                    + Text(" \(Localizable.connectionDetailsFeatureTitleTor)")
+               : Text("")
+            )
+        )
+        .lineLimit(2)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .fixedSize(horizontal: false, vertical: true)
+        .foregroundColor(Color(.text, .weak))
+#if canImport(Cocoa)
+                            .font(.body())
+#elseif canImport(UIKit)
+                            .font(.caption())
+#endif
     }
 
     /// In case of not an actual connection, show feature only if present in both intent and actual connection.
@@ -139,112 +155,84 @@ public struct ConnectionFlagInfoView: View {
 
     public var body: some View {
         HStack(alignment: .top) {
-            flag.padding(0)
+            flag
 
             VStack(alignment: .leading) {
                 Text(textHeader)
                     .styled()
 #if canImport(Cocoa)
-                    .themeFont(.body())
+                    .themeFont(.body(emphasised: true))
 #elseif canImport(UIKit)
                     .themeFont(.body1(.semibold))
 #endif
                     .frame(minHeight: topLineHeight)
 
-                HStack(spacing: 8) {
-                    if let subtext = textSubHeader {
-                        Text(subtext)
-                            .styled(.weak)
-                    }
-
                     textFeatures
-                }
-#if canImport(Cocoa)
-                            .font(.body())
-#elseif canImport(UIKit)
-                            .font(.caption())
-#endif
+
             }.padding(.leading, 8)
         }
     }
 }
 
 struct ConnectionFlagView_Previews: PreviewProvider {
+
+    static let cellHeight = 40.0
+    static let cellWidth = 140.0
+    static let spacing = 20.0
+
+    static func sideBySide(intent: ConnectionSpec, actual: VPNConnectionActual) -> some View {
+        VStack {
+            HStack(alignment: .top, spacing: spacing) {
+                ConnectionFlagInfoView(intent: intent ).frame(width: cellWidth)
+                Divider()
+                ConnectionFlagInfoView(intent: intent, vpnConnectionActual: actual).frame(width: cellWidth)
+            }
+            Divider().frame(width: (cellWidth + spacing) * 2)
+        }
+        .frame(height: cellHeight)
+    }
+
     static var previews: some View {
-        HStack(spacing: 10) {
+        VStack(alignment: .leading, spacing: spacing) {
+            HStack(alignment: .bottom, spacing: spacing) {
+                Text("Not connected").frame(width: cellWidth)
+                Divider()
+                Text("Connected").frame(width: cellWidth)
+            }.frame(height: cellHeight)
+            Divider().frame(width: (cellWidth + spacing) * 2)
 
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Not connected:")
-                Group {
-                    ConnectionFlagInfoView(intent: ConnectionSpec(location: .fastest, features: []) )
-                    Divider()
-                    ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"), features: []))
-                    Divider()
-                    ConnectionFlagInfoView(intent: ConnectionSpec(location: .exact(.free, number: 1, subregion: nil, regionCode: "US"), features: []))
-                    Divider()
-                    ConnectionFlagInfoView(intent: ConnectionSpec(location: .exact(.paid, number: 1, subregion: nil, regionCode: "US"), features: [.p2p]))
-                    Divider()
-                }
-                ConnectionFlagInfoView(intent: ConnectionSpec(location: .exact(.paid, number: 1, subregion: "AR", regionCode: "US"), features: []))
-                Divider()
-                ConnectionFlagInfoView(intent: ConnectionSpec(location: .secureCore(.fastest), features: []))
-                Divider()
-                ConnectionFlagInfoView(intent: ConnectionSpec(location: .secureCore(.fastestHop(to: "SE")), features: []))
-                Divider()
-                ConnectionFlagInfoView(intent: ConnectionSpec(location: .secureCore(.hop(to: "JP", via: "CH")), features: []))
-
-            }
-
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Connected:")
-                Group {
-                    ConnectionFlagInfoView(
-                        intent: ConnectionSpec(location: .fastest, features: []),
-                        vpnConnectionActual: .mock()
-                        )
-                    Divider()
-                    ConnectionFlagInfoView(
-                        intent: ConnectionSpec(location: .region(code: "US"), features: []),
-                        vpnConnectionActual: .mock()
-                    )
-                    Divider()
-                    ConnectionFlagInfoView(
-                        intent: ConnectionSpec(location: .region(code: "US"), features: [.tor]),
-                        vpnConnectionActual: .mock(feature: .tor)
-                    )
-                    Divider()
-                    ConnectionFlagInfoView(
-                        intent: ConnectionSpec(location: .exact(.free, number: 1, subregion: nil, regionCode: "US"), features: []),
-                        vpnConnectionActual: .mock()
-                    )
-                    Divider()
-                    ConnectionFlagInfoView(
-                        intent: ConnectionSpec(location: .exact(.paid, number: 1, subregion: nil, regionCode: "US"), features: [.p2p]),
-                        vpnConnectionActual: .mock(feature: .p2p)
-                    )
-                    Divider()
-                }
-                ConnectionFlagInfoView(
-                    intent: ConnectionSpec(location: .exact(.paid, number: 1, subregion: "NY", regionCode: "US"), features: []),
-                    vpnConnectionActual: .mock()
-                )
-                Divider()
-                ConnectionFlagInfoView(
-                    intent: ConnectionSpec(location: .secureCore(.fastest), features: []),
-                    vpnConnectionActual: .mock()
-                )
-                Divider()
-                ConnectionFlagInfoView(
-                    intent: ConnectionSpec(location: .secureCore(.fastestHop(to: "SE")), features: []),
-                    vpnConnectionActual: .mock(country: "SE")
-                )
-                Divider()
-                ConnectionFlagInfoView(
-                    intent: ConnectionSpec(location: .secureCore(.hop(to: "JP", via: "CH")), features: []),
-                    vpnConnectionActual: .mock()
-                )
-
-            }
+            sideBySide(
+                intent: ConnectionSpec(location: .fastest, features: []),
+                actual: .mock()
+            )
+            sideBySide(
+                intent: ConnectionSpec(location: .region(code: "US"), features: []),
+                actual: .mock()
+            )
+            sideBySide(
+                intent: ConnectionSpec(location: .region(code: "US"), features: [.tor]),
+                actual: .mock(feature: .tor)
+            )
+            sideBySide(
+                intent: ConnectionSpec(location: .exact(.free, number: 1, subregion: nil, regionCode: "US"), features: []),
+                actual: .mock(serverName: "FREE#1")
+            )
+            sideBySide(
+                intent: ConnectionSpec(location: .exact(.paid, number: 1, subregion: nil, regionCode: "US"), features: [.p2p, .tor]),
+                actual: .mock(feature: ServerFeature(arrayLiteral: .p2p, .tor))
+            )
+            sideBySide(
+                intent: ConnectionSpec(location: .exact(.paid, number: 1, subregion: "AR", regionCode: "US"), features: []),
+                actual: .mock()
+            )
+            sideBySide(
+                intent: ConnectionSpec(location: .secureCore(.fastest), features: []),
+                actual: .mock(country: "SE")
+            )
+            sideBySide(
+                intent: ConnectionSpec(location: .secureCore(.hop(to: "JP", via: "CH")), features: []),
+                actual: .mock()
+            )
         }
         .previewLayout(.sizeThatFits)
         .padding()

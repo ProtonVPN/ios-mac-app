@@ -65,20 +65,9 @@ struct HomeConnectionCardView: View {
 
     var connectionLocation: some View {
         HStack(spacing: .themeSpacing12) {
-            let location = item.connection.location
             VStack(spacing: 0) {
                 ConnectionFlagInfoView(intent: item.connection, vpnConnectionActual: nil) // todo: fill in vpnConnectionActual
                 Spacer().frame(maxHeight: .infinity)
-            }
-            VStack(alignment: .leading) {
-                Text(location.text(locale: locale))
-                    .themeFont(.body(emphasised: true))
-                    .foregroundColor(Color(.text))
-                if let subtext = location.subtext(locale: locale) {
-                    Text(subtext)
-                        .themeFont(.callout())
-                        .foregroundColor(Color(.text, .weak))
-                }
             }
             Spacer(minLength: 0)
             if showConnectionDetailsEnabled {
@@ -150,6 +139,8 @@ struct HomeConnectionCardView: View {
 //        }
     }
 }
+
+// MARK: - Previews
 
 struct ConnectionCard_Previews: PreviewProvider {
     static func card(_ store: ViewStore<HomeFeature.State, HomeFeature.Action>) -> HomeConnectionCardView {

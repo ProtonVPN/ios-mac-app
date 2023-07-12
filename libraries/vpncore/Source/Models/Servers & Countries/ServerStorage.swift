@@ -33,7 +33,7 @@ public protocol ServerStorage {
     func store(_ newServers: [ServerModel])
     func update(continuousServerProperties: ContinuousServerPropertiesDictionary)
 
-    var allServersPublisher: CurrentValueSubject<[ServerModel], Never> { get } // Published<[ServerModel]>.Publisher { get }
+    var allServersPublisher: CurrentValueSubject<[ServerModel], Never> { get }
 }
 
 public protocol ServerStorageFactory {
