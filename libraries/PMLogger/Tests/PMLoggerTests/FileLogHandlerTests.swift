@@ -110,7 +110,7 @@ class FileLogHandlerTests: XCTestCase {
             if files.count == 2 { // maxArchivedFilesCount + current logfile
                 expectationFileCount.fulfill()
             } else if files.count > 2 {
-                XCTFail("More than 2 files present")
+                XCTFail("More than 2 files present: \(files)")
             }
         }
         delegate.rotationCallback = {

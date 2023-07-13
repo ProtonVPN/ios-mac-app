@@ -137,6 +137,7 @@ public final class FileLogHandler: ParentLogHandler {
     private func moveToNextFile() throws {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYMMddHHmmssSSS"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // Force 24 hour time format
         let nextFileURL = fileUrl.deletingPathExtension().appendingPathExtension(dateFormatter.string(from: Date()) + "_\(UUID().uuidString).log")
 
         do {
@@ -147,7 +148,7 @@ public final class FileLogHandler: ParentLogHandler {
             throw error
         }
     }
-    
+
     private func removeOldFiles() throws {
         let filenameWithoutExtension = fileUrl.deletingPathExtension().pathComponents.last ?? "ProtonVPN"
         do {
