@@ -19,13 +19,12 @@
 import ComposableArchitecture
 
 struct InitialStateProvider {
-    public let initialState: AppReducer.State
+    public let initialState: SidebarReducer.State
 }
 
 extension InitialStateProvider: DependencyKey {
     static let liveValue = InitialStateProvider(
-        initialState: .init(login: .init(isLoggedIn: false),
-                            home: .init(connections: [.pinnedConnection,
+        initialState: .init(home: .init(connections: [.pinnedConnection,
                                                       .previousConnection,
                                                       .connectionSecureCoreFastest,
                                                       .connectionRegion],
