@@ -32,9 +32,9 @@ public struct SideBarView: View {
     @State private var backgroundActive: Bool = false
     @State private var selectedTab: SideBarTab = .home
 
-    let store: StoreOf<AppReducer>
+    let store: StoreOf<SidebarReducer>
 
-    init(store: StoreOf<AppReducer>) {
+    init(store: StoreOf<SidebarReducer>) {
         self.store = store
     }
 
@@ -58,7 +58,7 @@ public struct SideBarView: View {
                 switch selectedTab {
                 case .home:
                     VStack(spacing: 0) {
-                        HomeView(store: store.scope(state: \.home, action: AppReducer.Action.home))
+                        HomeView(store: store.scope(state: \.home, action: SidebarReducer.Action.home))
                     }
                     .background(Color(.background))
                     WithViewStore(store, observe: { $0.connectionDetailsVisible }) { store in
@@ -107,6 +107,6 @@ struct SideBarView_Previews: PreviewProvider {
     @Dependency(\.initialStateProvider) static var initialStateProvider
     static var previews: some View {
         SideBarView(store: .init(initialState: initialStateProvider.initialState,
-                                 reducer: AppReducer()))
+                                 reducer: SidebarReducer()))
     }
 }

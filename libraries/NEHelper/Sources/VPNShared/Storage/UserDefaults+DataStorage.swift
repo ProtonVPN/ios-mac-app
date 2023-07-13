@@ -35,7 +35,7 @@ extension UserDefaults: DataStorage {
 //        if data.count > maximumDataSizeBytes {
 //            throw StorageError.dataTooLarge
 //        }
-        set(data, forKey: key)
+//        set(data, forKey: key)
     }
 
     public func getData(forKey key: String) throws -> Data {

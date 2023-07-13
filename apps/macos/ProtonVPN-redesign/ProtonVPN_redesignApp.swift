@@ -37,55 +37,57 @@ struct ProtonVPNApp: App {
 
     @State private var window: NSWindow?
 
-    let store: StoreOf<AppReducer>
+    let appReducer: StoreOf<AppReducer>
 
     init() {
-        @Dependency(\.initialStateProvider) var initialStateProvider
-
-        self.store = .init(
-            initialState: initialStateProvider.initialState,
-            reducer: AppReducer()
+        self.appReducer = .init(initialState: .loading, reducer: {
+            AppReducer()
                 .dependency(\.vpnConnectionStatusPublisher, VPNConnectionStatusPublisherKey.watchVPNConnectionStatusChanges)
                 ._printChanges()
-        )
-        appDelegate.navigationService.sendAction = { [store] action in
-            store.send(action)
+        })
+        appDelegate.navigationService.sendAction = { [appReducer] action in
+            appReducer.send(action)
         }
     }
 
     var body: some Scene {
         WindowGroup {
-            WithViewStore(store, observe: { $0 }) { viewStore in
-                if viewStore.login.isLoggedIn {
-                    SideBarView(store: store)
-                        .onAppear {
-                            NSWindow.allowsAutomaticWindowTabbing = false
-                        }
-                        .navigationTitle("")
-                        .background(WindowAccessor(window: $window, windowType: .app)) // get access to the underlying NSWindow
-                        .task {
-                            NSApp.activate(ignoringOtherApps: true)
-                        }
-                } else {
-                    LoginViewControllerRepresentable(store: store.scope(state: \.login,
-                                                                        action: AppReducer.Action.login),
-                                                     loginViewModel: LoginViewModel(factory: appDelegate.container,
-                                                                                    initialError: viewStore.login.initialError))
-                        .preferredColorScheme(.dark)
-                        .onAppear {
-                            NSWindow.allowsAutomaticWindowTabbing = false
-                        }
-                        .background(WindowAccessor(window: $window, windowType: .login)) // get access to the underlying NSWindow
-                        .task {
-                            NSApp.activate(ignoringOtherApps: true)
-                        }
+            SwitchStore(appReducer) { state in
+                switch state {
+                case .loggedIn:
+                    CaseLet(state: /AppReducer.State.loggedIn, action: AppReducer.Action.app) { appStore in
+                        SideBarView(store: appStore)
+                    }
+                    .onAppear {
+                        NSWindow.allowsAutomaticWindowTabbing = false
+                    }
+                    .navigationTitle("")
+                    .background(WindowAccessor(window: $window, windowType: .app)) // get access to the underlying NSWindow
+                    .task {
+                        NSApp.activate(ignoringOtherApps: true)
+                    }
+                case .notLoggedIn:
+                    CaseLet(state: /AppReducer.State.notLoggedIn, action: AppReducer.Action.showLogin) { appStore in
+                        LoginViewControllerRepresentable(store: appStore,
+                                                         loginViewModel: LoginViewModel(factory: appDelegate.container,
+                                                                                        initialError: nil))
+                    }
+                    .preferredColorScheme(.dark)
+                    .onAppear {
+                        NSWindow.allowsAutomaticWindowTabbing = false
+                    }
+                    .background(WindowAccessor(window: $window, windowType: .login)) // get access to the underlying NSWindow
+                    .task {
+                        NSApp.activate(ignoringOtherApps: true)
+                    }
+                case .loading:
+                    EmptyView()
                 }
-
             }
         }
         .windowToolbarStyle(UnifiedWindowToolbarStyle())
         .windowStyle(HiddenTitleBarWindowStyle())
-        .appCommands(appDelegate: appDelegate, store: store)
+        .appCommands(appDelegate: appDelegate, store: appReducer)
         .onChange(of: scenePhase, perform: scenePhaseChanged) // The SwiftUI lifecycle events
         // .defaultPosition(.center) // macOS 13
         if #available(macOS 13.0, *) {
@@ -129,10 +131,8 @@ extension Scene {
                 }.keyboardShortcut("w", modifiers: [.command, .shift])
             }
             CommandGroup(before: .toolbar) {
-                WithViewStore(store, observe: { $0.connectionDetailsVisible }) { store in
-                    Button("Toggle Connection Details") {
-                        store.send(.home(.showConnectionDetails))
-                    }
+                Button("Toggle Connection Details") {
+                    store.send(.app(.home(.showConnectionDetails)))
                 }
             }
             CommandGroup(before: .help) {

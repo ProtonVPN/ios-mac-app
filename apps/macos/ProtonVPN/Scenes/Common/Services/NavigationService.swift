@@ -153,7 +153,7 @@ class NavigationService {
     }
     
     private func showLogIn(initialError: String? = nil) {
-        sendAction?(.showLogin(initialError: initialError))
+        sendAction?(.showLogin(.showError(initialError: initialError)))
         appHasPresented = true
 
         // uncomment if you want to see the old login flow
@@ -169,7 +169,7 @@ class NavigationService {
     }
     
     private func showSidebar() {
-        sendAction?(.showSideBar)
+        sendAction?(.logIn(.init()))
         appHasPresented = true
 
         // uncomment if you want to see the old sidebar

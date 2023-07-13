@@ -1,5 +1,5 @@
 //
-//  Created on 21/06/2023.
+//  Created on 13/07/2023.
 //
 //  Copyright (c) 2023 Proton AG
 //
@@ -20,86 +20,46 @@ import Foundation
 import ComposableArchitecture
 import Home
 import Home_macOS
-
-public struct LoginFeature: ReducerProtocol {
-    public struct State: Equatable {
-        var isLoggedIn = false
-        var initialError: String?
-    }
-
-    public enum Action: Equatable {
-        case loginButtonPressed(username: String, password: String)
-    }
-
-    public var body: some ReducerProtocolOf<LoginFeature> {
-        Reduce { state, action in
-            switch action {
-            case .loginButtonPressed:
-                return .none
-            }
-        }
-    }
-}
+import VPNAppCore
 
 struct AppReducer: ReducerProtocol {
 
     public typealias ActionSender = (Action) -> Void
-    
-    struct State: Equatable {
-        public var login: LoginFeature.State
-        public var home: HomeFeature.State
-        public var connectionDetailsVisible: Bool
-//        public var countries: CountriesFeature.State
-//        public var settings: SettingsFeature.State
+
+    @Dependency(\.initialStateProvider) var initialStateProvider
+
+    enum State: Equatable {
+        case loading
+        case notLoggedIn(LoginFeature.State)
+        case loggedIn(SidebarReducer.State)
     }
 
     enum Action: Equatable {
-        case showLogin(initialError: String?)
-        case showSideBar
-        case login(LoginFeature.Action)
-        case home(HomeFeature.Action)
+        case showLogin(LoginFeature.Action)
+        case logIn(LoginFeature.State)
+        case loggedIn(SidebarReducer.State)
+        case app(SidebarReducer.Action)
     }
 
     var body: some ReducerProtocolOf<Self> {
         Reduce { state, action in
             switch action {
-            case .home(.connect(let specs)):
-                return .run { _ in
-                    @Dependency(\.connectToVPN) var connectToVPN
-                    try? await connectToVPN(specs)
-                }
-
-            case .home(.disconnect):
-                return .run { _ in
-                    @Dependency(\.disconnectVPN) var disconnectVPN
-                    try? await disconnectVPN()
-                }
-
-            case .home(.showConnectionDetails):
-                state.connectionDetailsVisible.toggle()
+            case .showLogin:
+                state = .notLoggedIn(.init())
                 return .none
-                
-            case .home:
+            case .logIn:
+                guard case .notLoggedIn = state else { return .none }
+                return .run { send in await send(.loggedIn(initialStateProvider.initialState)) }
+            case let .loggedIn(appState):
+                state = .loggedIn(appState)
                 return .none
-
-            case .showLogin(let initialError):
-                state.login.initialError = initialError
-                state.login.isLoggedIn = false
-                return .none
-
-            case .showSideBar:
-                state.login.isLoggedIn = true
-                return .none
-
-            case .login:
-                return .none
+            case .app: return .none // App actions are handled by the SidebarReducer
             }
         }
-        Scope(state: \.home, action: /Action.home) {
-            HomeFeature()
-        }
-        Scope(state: \.login, action: /Action.login) {
-            LoginFeature()
+        .ifCaseLet(/State.loggedIn, action: /Action.app) {
+            SidebarReducer()
+                .dependency(\.vpnConnectionStatusPublisher, VPNConnectionStatusPublisherKey.watchVPNConnectionStatusChanges)
+                ._printChanges()
         }
     }
 }
