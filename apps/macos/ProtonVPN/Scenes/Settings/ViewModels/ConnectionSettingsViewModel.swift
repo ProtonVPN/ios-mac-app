@@ -99,11 +99,7 @@ final class ConnectionSettingsViewModel {
     // MARK: - Available protocols
 
     var availableConnectionProtocols: [ConnectionProtocol] {
-        let wireGuardTlsProtocols: [ConnectionProtocol] = [.tls, .tcp].map { .vpnProtocol(.wireGuard($0)) }
-        let wireGuardTlsDisabled = !propertiesManager.featureFlags.wireGuardTls
-
-        return ConnectionProtocol.allCases
-            .removing(wireGuardTlsProtocols, if: wireGuardTlsDisabled)
+        ConnectionProtocol.availableProtocols(wireguardTLSEnabled: propertiesManager.featureFlags.wireGuardTls)
             .sorted(by: ConnectionProtocol.uiSort)
     }
 
