@@ -85,30 +85,11 @@ class VpnConnectionPreparer {
         }
     }
 
-    private func canUse(serverIp: ServerIp,
-                        withConnectionProtocol connectionProtocol: ConnectionProtocol) -> Bool {
-        guard !serverIp.underMaintenance else {
-            return false
-        }
-
-        if let vpnProtocol = connectionProtocol.vpnProtocol {
-            return serverIp.entryIp(using: vpnProtocol) != nil
-        }
-
-        // Smart protocol
-        for vpnProtocol in smartProtocolConfig.supportedProtocols {
-            if serverIp.entryIp(using: vpnProtocol) != nil {
-                return true
-            }
-        }
-
-        return false
-    }
-
     private func selectServerIp(server: ServerModel, connectionProtocol: ConnectionProtocol) -> ServerIp? {
         let availableServerIps = server.ips.filter {
-            $0.supports(connectionProtocol: connectionProtocol,
-                        smartProtocolConfig: smartProtocolConfig)
+            return $0.supports(connectionProtocol: connectionProtocol,
+                               smartProtocolConfig: smartProtocolConfig)
+                && !$0.underMaintenance
         }
 
         guard let serverIp = availableServerIps.randomElement() else {
