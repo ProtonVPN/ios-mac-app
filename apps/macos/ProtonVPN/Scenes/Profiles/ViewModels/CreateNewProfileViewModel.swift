@@ -165,26 +165,21 @@ class CreateNewProfileViewModel {
     /// the protocol list will not show it. If the selected protocol requires a system extension, and that
     /// extension is not installed or unavailable, it will be switched to one that doesn't require one.
     var protocolMenuItems: [PopUpButtonItemViewModel] {
-        ConnectionProtocol.uiSortedCases.compactMap { (item) -> PopUpButtonItemViewModel? in
-            if !propertiesManager.featureFlags.wireGuardTls {
-                switch item.vpnProtocol {
-                case .wireGuard(.tcp), .wireGuard(.tls):
-                    return nil
-                default:
-                    break
-                }
+        ConnectionProtocol.availableProtocols(wireguardTLSEnabled: propertiesManager.featureFlags.wireGuardTls)
+            .sorted(by: ConnectionProtocol.uiSort)
+            .filter { `protocol` in
+                state.serverOffering?.supports(
+                    connectionProtocol: `protocol`,
+                    withCountryGroup: selectedCountryGroup,
+                    smartProtocolConfig: propertiesManager.smartProtocolConfig
+                ) != false
+            }.map { `protocol` in
+                PopUpButtonItemViewModel(
+                    title: menuStyle(`protocol`.localizedString),
+                    checked: `protocol` == state.connectionProtocol,
+                    handler: { [weak self] in self?.update(connectionProtocol: `protocol`) }
+                )
             }
-
-            guard state.serverOffering?.supports(connectionProtocol: item,
-                                                 withCountryGroup: selectedCountryGroup,
-                                                 smartProtocolConfig: propertiesManager.smartProtocolConfig) != false else {
-                return nil
-            }
-
-            return .init(title: menuStyle(item.localizedString),
-                         checked: item == state.connectionProtocol,
-                         handler: { [weak self] in self?.update(connectionProtocol: item) })
-        }
     }
 
     // MARK: Helper functions and initialization
@@ -418,10 +413,6 @@ extension CreateNewProfileViewModel: CustomStyleContext {
             return .weak
         }
     }
-}
-
-extension ConnectionProtocol {
-    static let uiSortedCases = allCases.sorted(by: uiSort)
 }
 
 fileprivate struct ModelState {

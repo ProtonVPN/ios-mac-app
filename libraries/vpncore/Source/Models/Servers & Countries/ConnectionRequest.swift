@@ -25,6 +25,17 @@ import VPNAppCore
 
 extension ConnectionProtocol: CustomStringConvertible {
 
+    public static let deprecatedProtocols: [Self] = VpnProtocol.deprecatedProtocols.map(vpnProtocol)
+
+    /// Returns an array of all supported protocols on the current platform.
+    /// - Parameter wireguardTLS: Whether WireGuard TLS feature flag enabled. If false, the protocol list will not
+    /// include WireGuard TCP and TLS.
+    public static func availableProtocols(wireguardTLSEnabled: Bool) -> [Self] {
+        return allCases
+            .removing([.vpnProtocol(.wireGuard(.tcp)), .vpnProtocol(.wireGuard(.tls))], if: !wireguardTLSEnabled)
+            .removing(deprecatedProtocols)
+    }
+
     public var description: String {
         return localizedString
     }
