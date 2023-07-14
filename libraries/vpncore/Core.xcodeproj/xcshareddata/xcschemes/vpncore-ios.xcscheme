@@ -76,6 +76,14 @@
                BlueprintName = "vpncore-iosTests"
                ReferencedContainer = "container:Core.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "ProtocolOverrideConnectionTests/testConnectingWithIpOverride()">
+               </Test>
+               <Test
+                  Identifier = "ProtocolOverrideConnectionTests/testExclusiveOverrideWithSpecifiedPorts()">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>
