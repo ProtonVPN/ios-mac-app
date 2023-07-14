@@ -189,6 +189,9 @@ extension IosAlertService: CoreAlertService {
 
         case is ProtocolNotAvailableForServerAlert:
             showDefaultSystemAlert(alert)
+
+        case is ProtocolDeprecatedAlert:
+            showDefaultSystemAlert(alert)
             
         default:
             #if DEBUG

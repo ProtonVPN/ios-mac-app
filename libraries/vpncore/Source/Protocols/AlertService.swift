@@ -328,6 +328,49 @@ public class ProtocolNotAvailableForServerAlert: SystemAlert {
     }
 }
 
+public class ProtocolDeprecatedAlert: SystemAlert {
+    public var title: String? = LocalizedString.alertProtocolDeprecatedTitle
+    public let linkText: String = LocalizedString.alertProtocolDeprecatedLinkText
+
+    #if os(iOS)
+    public var message: String? = LocalizedString.alertProtocolDeprecatedBodyIos
+    #elseif os(macOS)
+    public var message: String? = LocalizedString.alertProtocolDeprecatedBodyMacos
+    #endif
+
+    public let confirmTitle: String = LocalizedString.alertProtocolDeprecatedEnableSmart
+    public let dismissTitle: String = LocalizedString.alertProtocolDeprecatedClose
+
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public let enableSmartProtocol: () -> Void
+    public var dismiss: (() -> Void)?
+
+    public static let kbURLString = "https://protonvpn.com/support/macos-t2-chip-kill-switch/"
+
+    public init(enableSmartProtocolHandler: @escaping (() -> Void)) {
+        self.enableSmartProtocol = enableSmartProtocolHandler
+
+        actions.append(AlertAction(
+            title: LocalizedString.alertProtocolDeprecatedEnableSmart,
+            style: .confirmative,
+            handler: enableSmartProtocolHandler
+        ))
+        #if os(iOS)
+        actions.append(AlertAction(
+            title: LocalizedString.alertProtocolDeprecatedLearnMore,
+            style: .secondary,
+            handler: { SafariService.openLink(url: URL(string: Self.kbURLString)!) }
+        ))
+        #endif
+        actions.append(AlertAction(
+            title: LocalizedString.alertProtocolDeprecatedClose,
+            style: .cancel,
+            handler: { }
+        ))
+    }
+}
+
 public class ReconnectOnSettingsChangeAlert: SystemAlert {
     public struct UserCancelledReconnect: Error, CustomStringConvertible {
         public let description = "User was changing settings, but cancelled reconnecting."

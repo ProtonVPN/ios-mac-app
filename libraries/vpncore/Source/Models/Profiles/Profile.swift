@@ -139,6 +139,19 @@ public class Profile: NSObject, NSCoding {
                        connectionProtocol: self.connectionProtocol
                        )
     }
+
+    public func withProtocol(_ `protocol`: ConnectionProtocol) -> Profile {
+        Profile(
+            id: id,
+            accessTier: accessTier,
+            profileIcon: profileIcon,
+            profileType: profileType,
+            serverType: serverType,
+            serverOffering: serverOffering,
+            name: name,
+            connectionProtocol: `protocol`
+        )
+    }
 }
 
 fileprivate extension ConnectionProtocol {
