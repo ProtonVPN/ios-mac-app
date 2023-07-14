@@ -54,7 +54,7 @@ class CreateOrEditProfileViewModel: NSObject {
     private var isDefaultProfile = false
     
     internal var userTier: Int = 0 // used by class extension
-    
+
     var saveButtonEnabled = false {
         didSet {
             saveButtonUpdated?()
@@ -418,7 +418,7 @@ class CreateOrEditProfileViewModel: NSObject {
     
     private func pushProtocolViewController() {
         let supportedProtocols = ConnectionProtocol.allCases
-            .filter(selectedServerOfferingSupports(connectionProtocol:))
+            .filter { !$0.isDeprecated && selectedServerOfferingSupports(connectionProtocol: $0)}
 
         let vpnProtocolViewModel = VpnProtocolViewModel(connectionProtocol: selectedProtocol,
                                                         smartProtocolConfig: propertiesManager.smartProtocolConfig,
