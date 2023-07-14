@@ -77,6 +77,9 @@
                   Identifier = "OpenVPNUDPAvailabilityCheckerTests">
                </Test>
                <Test
+                  Identifier = "ProtocolOverrideConnectionTests/testExclusiveOverrideWithSpecifiedPorts()">
+               </Test>
+               <Test
                   Identifier = "SmartProtocolImplementationTests">
                </Test>
             </SkippedTests>

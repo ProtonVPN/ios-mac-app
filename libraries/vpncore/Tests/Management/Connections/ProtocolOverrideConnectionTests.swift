@@ -35,6 +35,7 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
         ]
     }
 
+    // Disabled because IKEv2 is not supported on iOS
     func testConnectingWithIpOverride() {
         container.propertiesManager.vpnProtocol = .ike
 
@@ -129,6 +130,7 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
         XCTAssertEqual(managerConfig.entryServerAddress, serverAddress)
     }
 
+    // Test disabled due to OpenVPN being deprecated (VPNAPPL-1843)
     func testExclusiveOverrideWithSpecifiedPorts() {
         var managerConfig: VpnManagerConfiguration?
 
