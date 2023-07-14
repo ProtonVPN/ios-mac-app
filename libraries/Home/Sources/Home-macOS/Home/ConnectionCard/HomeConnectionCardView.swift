@@ -97,6 +97,7 @@ struct HomeConnectionCardView: View {
             }
             .help(showConnectionDetailsEnabled ? Localizable.showConnectionDetailsButtonHint : "")
             .buttonStyle(ShowConnectionDetailsButtonStyle(enabled: showConnectionDetailsEnabled))
+            .disabled(!showConnectionDetailsEnabled)
 
             Button(model.buttonText(for: vpnConnectionStatus)) {
                 withAnimation(.easeInOut) {

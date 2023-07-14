@@ -27,16 +27,13 @@ import Theme
 import VPNAppCore
 import SharedViews
 
-public struct HomeRecentsSectionView: View {
+public struct RecentsSectionView: View {
     let items: [RecentConnection]
-    let pinnedSection: Bool
     let sendAction: HomeFeature.ActionSender
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(pinnedSection ?
-                    Localizable.homeRecentsPinnedSection :
-                    Localizable.homeRecentsRecentSection)
+            Text(Localizable.homeRecentsRecentSection)
                 .themeFont(.body2())
                 .styled(.weak)
                 .padding()
@@ -304,12 +301,6 @@ extension HomeFeature.Action {
     }
 }
 
-extension RecentConnection: Identifiable {
-    public var id: String {
-        "\(connection)"
-    }
-}
-
 #if DEBUG
 struct Recents_Previews: PreviewProvider {
     static var previews: some View {
@@ -351,20 +342,10 @@ struct Recents_Previews: PreviewProvider {
         )
         WithViewStore(store, observe: { $0 }) { store in
             ScrollView {
-                if !store.remainingPinnedConnections.isEmpty {
-                    HomeRecentsSectionView(
-                        items: store.remainingPinnedConnections,
-                        pinnedSection: true,
-                        sendAction: { _ = store.send($0) }
-                    )
-                }
-                if !store.remainingRecentConnections.isEmpty {
-                    HomeRecentsSectionView(
-                        items: store.remainingRecentConnections,
-                        pinnedSection: false,
-                        sendAction: { _ = store.send($0) }
-                    )
-                }
+                RecentsSectionView(
+                    items: store.remainingConnections,
+                    sendAction: { _ = store.send($0) }
+                )
             }
             .background(Color(.background, .normal))
         }

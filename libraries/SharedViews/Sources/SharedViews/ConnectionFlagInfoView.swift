@@ -24,141 +24,25 @@ import Strings
 
 public struct ConnectionFlagInfoView: View {
 
-    public let intent: ConnectionSpec
-    public let vpnConnectionActual: VPNConnectionActual?
-
-    public var location: ConnectionSpec.Location { intent.location }
-    @Dependency(\.locale) private var locale
-
     @ScaledMetric(relativeTo: .body) var topLineHeight: CGFloat = 16
     @ScaledMetric var featureIconSize: CGFloat = 16
 
+    let connectionInfoBuilder: ConnectionInfoBuilder
+
+    let intent: ConnectionSpec
+
     public init(intent: ConnectionSpec, vpnConnectionActual: VPNConnectionActual? = nil) {
         self.intent = intent
-        self.vpnConnectionActual = vpnConnectionActual
-    }
-
-    @ViewBuilder
-    var flag: some View {
-        switch location {
-        case .fastest:
-            SimpleFlagView(regionCode: "Fastest", flagSize: .defaultSize)
-        case .region(let code):
-            SimpleFlagView(regionCode: code, flagSize: .defaultSize)
-        case .exact(_, _, _, let code):
-            SimpleFlagView(regionCode: code, flagSize: .defaultSize)
-        case .secureCore(let secureCoreSpec):
-            switch secureCoreSpec {
-            case .fastest:
-                SecureCoreFlagView(regionCode: "Fastest", viaRegionCode: nil, flagSize: .defaultSize)
-            case let .fastestHop(code):
-                SecureCoreFlagView(regionCode: code, viaRegionCode: nil, flagSize: .defaultSize)
-            case let .hop(code, via):
-                SecureCoreFlagView(regionCode: code, viaRegionCode: via, flagSize: .defaultSize)
-            }
-        }
-    }
-
-    var textHeader: String {
-        return location.text(locale: locale)
-    }
-
-    var textSubHeader: String? {
-        if let vpnConnectionActual {
-            switch location {
-            case .fastest:
-                return LocalizationUtility.default.countryName(forCode: vpnConnectionActual.country)
-            case .region:
-                return nil
-            case .exact:
-                return vpnConnectionActual.serverName
-            case .secureCore(let secureCoreSpec):
-                switch secureCoreSpec {
-                case .fastest:
-                    return LocalizationUtility.default.countryName(forCode: vpnConnectionActual.country)
-                case .fastestHop:
-                    return nil
-                case .hop:
-                    return Localizable.secureCoreViaCountry(LocalizationUtility.default.countryName(forCode: vpnConnectionActual.country) ?? "")
-                }
-            }
-        }
-        return location.subtext(locale: locale)
-    }
-
-    @ViewBuilder
-    var textFeatures: some View {
-        // Format looks weird, but it lets us merge several Texts and images
-        // into one, so whole behaves like a text: it can wrap lines, resize
-        // icons inside, etc. For this to work, images have to be either
-        // created with `Image(systemName:)` or be imported as a `Symbol Image`.
-        (
-            Text("") // In case nothing is returned in next lines, we still have at least empty text
-            + (textSubHeader != nil
-                ? Text("\(textSubHeader!)")
-                : Text("")
-            )
-            + (showFeatureP2P
-                ? (showFeatureBullet ? Text(" • ") : Text(""))
-                    + Text(Image(systemName: "arrow.left.arrow.right"))
-                    + Text(" \(Localizable.connectionDetailsFeatureTitleP2p)")
-               : Text("")
-            )
-            + (showFeatureTor
-               ? (showFeatureBullet || showFeatureP2P ? Text(" • ") : Text(""))
-                    + Text("\(Asset.icsBrandTor.swiftUIImage)")
-                    + Text(" \(Localizable.connectionDetailsFeatureTitleTor)")
-               : Text("")
-            )
-        )
-        .lineLimit(2)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .fixedSize(horizontal: false, vertical: true)
-        .foregroundColor(Color(.text, .weak))
-#if canImport(Cocoa)
-                            .font(.body())
-#elseif canImport(UIKit)
-                            .font(.caption())
-#endif
-    }
-
-    /// In case of not an actual connection, show feature only if present in both intent and actual connection.
-    /// In case of intent, check only if feature was intended.
-    private var showFeatureP2P: Bool {
-        if intent.features.contains(.p2p) {
-            if let vpnConnectionActual {
-                return vpnConnectionActual.feature.contains(.p2p)
-            } else {
-                return true
-            }
-        }
-        return false
-    }
-
-    /// In case of not an actual connection, show feature only if present in both intent and actual connection.
-    /// In case of intent, check only if feature was intended.
-    private var showFeatureTor: Bool {
-        if intent.features.contains(.tor) {
-            if let vpnConnectionActual {
-                return vpnConnectionActual.feature.contains(.tor)
-            } else {
-                return true
-            }
-        }
-        return false
-    }
-
-    /// Bullet is shown between any sub-header text and feature view
-    private var showFeatureBullet: Bool {
-        return textSubHeader != nil && (showFeatureP2P || showFeatureTor)
+        self.connectionInfoBuilder = .init(intent: intent,
+                                           vpnConnectionActual: vpnConnectionActual)
     }
 
     public var body: some View {
         HStack(alignment: .top) {
-            flag
+            FlagView(location: intent.location, flagSize: .defaultSize)
 
             VStack(alignment: .leading) {
-                Text(textHeader)
+                Text(connectionInfoBuilder.textHeader)
                     .styled()
 #if canImport(Cocoa)
                     .themeFont(.body(emphasised: true))
@@ -167,7 +51,9 @@ public struct ConnectionFlagInfoView: View {
 #endif
                     .frame(minHeight: topLineHeight)
 
-                    textFeatures
+                connectionInfoBuilder
+                    .textFeatures
+                    .lineLimit(2)
 
             }.padding(.leading, 8)
         }

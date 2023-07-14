@@ -45,3 +45,9 @@ public struct RecentConnection: Equatable {
         !pinned
     }
 }
+
+extension RecentConnection: Identifiable {
+    public var id: String {
+        "\(connection)"
+    }
+}
