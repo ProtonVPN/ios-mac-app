@@ -345,13 +345,20 @@ public class VpnGateway: VpnGatewayProtocol {
     public func connect(with request: ConnectionRequest?) {
         siriHelper?.donateQuickConnect() // Change to another donation when appropriate
         propertiesManager.lastConnectionRequest = request
-        
-        guard let request else {
-            gatherParametersAndConnect(with: globalConnectionProtocol, server: appStateManager.activeConnection()?.server, netShieldType: netShieldType, natType: natType, safeMode: safeMode)
+
+        let `protocol` = request?.connectionProtocol ?? globalConnectionProtocol
+
+        if `protocol`.isDeprecated {
+            showProtocolDeprecatedAlert(request: request)
             return
         }
         
-        gatherParametersAndConnect(with: request.connectionProtocol, server: selectServer(connectionRequest: request), netShieldType: request.netShieldType, natType: natType, safeMode: safeMode)
+        guard let request else {
+            gatherParametersAndConnect(with: `protocol`, server: appStateManager.activeConnection()?.server, netShieldType: netShieldType, natType: natType, safeMode: safeMode)
+            return
+        }
+        
+        gatherParametersAndConnect(with: `protocol`, server: selectServer(connectionRequest: request), netShieldType: request.netShieldType, natType: natType, safeMode: safeMode)
     }
     
     private func selectServer(connectionRequest: ConnectionRequest) -> ServerModel? {
@@ -588,5 +595,21 @@ fileprivate extension VpnGateway {
                                                image: .flag(countryCode: previousServer.countryCode) ?? Image()),
                              toServer: .init(name: toServer.name,
                                              image: .flag(countryCode: toServer.countryCode) ?? Image()))
+    }
+
+    private func showProtocolDeprecatedAlert(request: ConnectionRequest?) {
+        let alert = ProtocolDeprecatedAlert(enableSmartProtocolHandler: {
+            if self.globalConnectionProtocol.isDeprecated {
+                log.info("Global protocol (\(self.globalConnectionProtocol)) is deprecated, updating to smart")
+                self.propertiesManager.smartProtocol = true
+            }
+            guard let profileID = request?.profileId else { return }
+            if let profile = self.profileManager.profile(withId: profileID), profile.connectionProtocol.isDeprecated {
+                assert(profile.profileType == .user, "System profiles should never use a deprecated protocol")
+                log.info("Selected profile (\(profile.id)) uses (\(profile.connectionProtocol), updating to smart")
+                self.profileManager.updateProfile(profile.withProtocol(.smartProtocol))
+            }
+        })
+        alertService?.push(alert: alert)
     }
 }
