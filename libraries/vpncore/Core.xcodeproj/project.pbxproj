@@ -741,19 +741,6 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		D515C23926089D6100940195 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		02FBA70177FC11A4749DBDD3 /* CoreAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = CoreAssets.xcassets; sourceTree = "<group>"; };
 		0F13A722882A004DC3D0509A /* Pods-Core-vpncore-ios-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Core-vpncore-ios-metadata.plist"; sourceTree = "<group>"; };
@@ -2387,8 +2374,6 @@
 				E1B5F5D521B68ABD00B558B0 /* Frameworks */,
 				E1B5F5D621B68ABD00B558B0 /* Resources */,
 				D5479536228EC7E700639216 /* Swiftlint */,
-				D515C23926089D6100940195 /* Embed Frameworks */,
-				4C07DA4A28D893D600B5EB1D /* Embed Revision Info */,
 			);
 			buildRules = (
 			);
@@ -2457,7 +2442,6 @@
 				E1B5F60921B6960100B558B0 /* Frameworks */,
 				E1B5F60A21B6960100B558B0 /* Resources */,
 				D5479537228EC81100639216 /* Run Swiftlint */,
-				4C07DA4B28D893FC00B5EB1D /* Embed Revision Info */,
 			);
 			buildRules = (
 			);
@@ -2685,46 +2669,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Core-vpncore-iosTests/Pods-Core-vpncore-iosTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		4C07DA4A28D893D600B5EB1D /* Embed Revision Info */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			name = "Embed Revision Info";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${SRCROOT}/../../scripts/describe-revision.sh ios \"$SCRIPT_INPUT_FILE_0\"\n";
-		};
-		4C07DA4B28D893FC00B5EB1D /* Embed Revision Info */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			name = "Embed Revision Info";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${SRCROOT}/../../scripts/describe-revision.sh mac \"$SCRIPT_INPUT_FILE_0\"\n";
 		};
 		4C4BB72C294CB45D004D5A77 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
