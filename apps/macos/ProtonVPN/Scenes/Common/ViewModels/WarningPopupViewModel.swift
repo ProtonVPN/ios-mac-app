@@ -37,7 +37,7 @@ class WarningPopupViewModel {
     let onCancel: (() -> Void)?
     let cancelTitle: String
     
-    init(image: NSImage?,
+    init(image: NSImage? = AppTheme.Icon.vpnMainTransparent,
          title: String,
          description: String,
          linkDescription: String?,

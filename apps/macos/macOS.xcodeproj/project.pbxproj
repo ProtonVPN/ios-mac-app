@@ -84,6 +84,7 @@
 		8A4FE4B98151786663E8E688 /* Pods_ProtonVPN_mac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 029BF4990963CC3DFA0E3CEE /* Pods_ProtonVPN_mac.framework */; };
 		9B4BACE98AEA4534B5C6E151 /* Pods_ProtonVPN_mac_redesign.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BEE2628F2EC02D908C19020 /* Pods_ProtonVPN_mac_redesign.framework */; };
 		AD8C78AE29898403008AC0B5 /* AppSessionManagerImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8C78AD29898403008AC0B5 /* AppSessionManagerImplementationTests.swift */; };
+		ADE590CC2A616E4B00089165 /* ProtocolDeprecatedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE590CB2A616E4B00089165 /* ProtocolDeprecatedViewController.swift */; };
 		AEB34226A8F57095D108B88E /* Pods_ProtonVPN_WireGuard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1331D833674A744FD9A2A250 /* Pods_ProtonVPN_WireGuard.framework */; };
 		B22F32F8278DC07800DBB8CA /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F32F7278DC07800DBB8CA /* StringUtils.swift */; };
 		B22F32FA278DC19E00DBB8CA /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F32F9278DC19E00DBB8CA /* LoginTests.swift */; };
@@ -987,6 +988,7 @@
 		AD09EA452943470800D4F6F2 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Intents.strings; sourceTree = "<group>"; };
 		AD09EA462943470A00D4F6F2 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Intents.strings; sourceTree = "<group>"; };
 		AD8C78AD29898403008AC0B5 /* AppSessionManagerImplementationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionManagerImplementationTests.swift; sourceTree = "<group>"; };
+		ADE590CB2A616E4B00089165 /* ProtocolDeprecatedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolDeprecatedViewController.swift; sourceTree = "<group>"; };
 		B22F32F7278DC07800DBB8CA /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StringUtils.swift; path = "../../../macos/ProtonVPNUITests/Other classes/StringUtils.swift"; sourceTree = "<group>"; };
 		B22F32F9278DC19E00DBB8CA /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
 		B22F32FB278DC1C000DBB8CA /* LoginRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRobot.swift; sourceTree = "<group>"; };
@@ -2983,6 +2985,7 @@
 				EE7874A41F3B6569001E261E /* WarningPopupViewController.swift */,
 				D26CBA3C2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift */,
 				4CB7E00327F1DB2200657A99 /* NET2WarningPopupViewController.swift */,
+				ADE590CB2A616E4B00089165 /* ProtocolDeprecatedViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -4543,6 +4546,7 @@
 				D5F45D7C262EC16A00FB13E4 /* NSStackView+Children.swift in Sources */,
 				4C8641B527D22A6900EEFB1D /* IPCClientConnection.swift in Sources */,
 				EE3FDC2B1F44853300E5C1CE /* ServerUtility.swift in Sources */,
+				ADE590CC2A616E4B00089165 /* ProtocolDeprecatedViewController.swift in Sources */,
 				EE98CFD51F14F7C1000D6688 /* GeneralSettingsViewController.swift in Sources */,
 				E1346F7D203B16B800F511FD /* LoadingAnimationView.swift in Sources */,
 				42BEF9802631AB1A009180A7 /* StreamOptionCVItem.swift in Sources */,

@@ -210,6 +210,9 @@ extension MacAlertService: CoreAlertService {
         case is ProtocolNotAvailableForServerAlert:
             showDefaultSystemAlert(alert)
 
+        case let alert as ProtocolDeprecatedAlert:
+            show(alert)
+
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")
@@ -337,6 +340,11 @@ extension MacAlertService: CoreAlertService {
 
     private func show(_ alert: NEKSOnT2Alert) {
         let vc = NET2WarningPopupViewController(viewModel: WarningPopupViewModel(alert: alert))
+        windowService.presentKeyModal(viewController: vc)
+    }
+
+    private func show(_ alert: ProtocolDeprecatedAlert) {
+        let vc = ProtocolDeprecatedViewController(viewModel: WarningPopupViewModel(alert: alert))
         windowService.presentKeyModal(viewController: vc)
     }
 }

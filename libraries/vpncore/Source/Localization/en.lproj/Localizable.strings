@@ -793,7 +793,37 @@
 /* General title for several error alerts */
 "_error_unknown_title" = "Unknown error";
 
-// Alerts
+// IAP errors
+
+/* In App Purchase error */
+"_error_unavailable_product" = "Failed to get list of available products from App Store.";
+
+/* In App Purchase error */
+"_error_receipt_lost" = "App Store receipt lost. Please contact support if your plan was not activated.";
+
+/* In App Purchase error */
+"_error_transaction_of_other_user" = "A purchase was started with a different Proton VPN username.";
+
+/* In App Purchase error */
+"_error_purchased_plan_does_not_match_available" = "We were not available to match App Store product with products on our server. Please contact support.";
+
+/* In App Purchase error */
+"_error_sandbox_receipt" = "Purchases are not available in the beta version of the iOS app. You have not been charged.";
+"_error_credit_applied" = "Contact support@protonvpn.com to complete your purchase.";
+
+/* In App Purchase error */
+"_error_transaction_failed_by_unknown_reason" = "App Store could not process your purchase.";
+
+/* In App Purchase error */
+"_error_no_active_username" = "Please login with the account you're upgrading the service plan for so we can complete your purchase.";
+
+/* In App Purchase error */
+"_error_no_new_subscription_in_successfull_response" = "Your subscription upgrade was successful. Please relaunch the app to benefit from your new service plan.";
+
+/* In App Purchase error */
+"_error_wrong_payment_token_status" = "Wrong payment token status. Please relaunch the app. If error persists, contact support.";
+
+// MARK: Alerts
 
 /* Delinquent user alert */
 "_delinquent_user_title" = "Unpaid invoice";
@@ -915,6 +945,46 @@
 "_kill_switch_disable" = "Disable Kill switch";
 
 // Settings
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_title" = "A kill switch error has been detected";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_head" = "Some apps, like anti-viruses or firewalls, might conflict with kill switch, making it not functioning properly.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_info" = "Kill switch works with the macOS Firewall.\nIf there are other apps associated with the Firewall, they may interfere with Proton VPN's kill switch. Terminating those apps can restore the Firewall rules set by kill switch.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_foot" = "Terminate those apps to fix the problem.\nTo keep browsing without kill switch, click Continue.";
+
+/* %@ is 'Mac password' */
+
+/* MacOS: killswitch alert */
+"_kill_switch_helper_install_popup_body" = "To enable kill switch, you may be asked to provide your computer account password. If a request appears, enter your %@ and accept.\n\nYou may see this request again occasionally when the Proton VPN app receives updates.";
+
+/* MacOS: updating helper alert */
+"_kill_switch_helper_update_popup_body" = "The most recent update you downloaded requires you to provide your computer account password. When the request appears, please enter your %@ and accept.\n\nIf you do not enter your Mac password, kill switch will be turned off.";
+
+/* MacOS: killswicth install error alert */
+"_kill_switch_helper_install_issue_popup_body" = "There was a problem installing or updating kill switch.\n\nTo try again, click RETRY.\n\nTo continue without kill switch, click DISABLE.";
+
+/* MacOS: Existing firewall alert */
+"_existing_firewall_popup_title" = "Firewall detected";
+
+/* MacOS: Existing firewall alert */
+"_existing_firewall_popup_body" = "Proton VPN uses a packet filter firewall to implement a kill switch. By enabling kill switch, you will overwrite your device's current firewall settings. If you rely on this firewall configuration, you should not use kill switch.\n\nTo use kill switch and overwrite your current firewall settings, select CONTINUE.\n\nTo turn off kill switch and continue using your current firewall, select CANCEL.";
+
+/* Title of the deprecated protocol alert. Shown when the user attemps to connect to a profile with OpenVPN */
+"_alert_protocol_deprecated_title" = "Protocol Unavailable";
+"_alert_protocol_deprecated_body_macos" = "We found a security issue that affects OpenVPN on macOS. To ensure a secure browsing experience for the Proton community, we removed this protocols. To connect, switch to Smart protocol or select another protocol in Manage profiles. Learn more";
+"_alert_protocol_deprecated_link_text" = "Learn more";
+"_alert_protocol_deprecated_body_ios" = "We found a security issue that affects IKEv2 and OpenVPN on iOS devices. To ensure a secure browsing experience for the Proton community, we removed these protocols. To connect, switch to Smart protocol or select another protocol in Manage profiles.";
+"_alert_protocol_deprecated_enable_smart" = "Enable Smart protocol";
+"_alert_protocol_deprecated_learn_more" = "Learn More";
+"_alert_protocol_deprecated_close" = "Close";
+
+// MARK: Settings
 
 /* MacOS: Settings screen title */
 "_preferences" = "Preferences";
