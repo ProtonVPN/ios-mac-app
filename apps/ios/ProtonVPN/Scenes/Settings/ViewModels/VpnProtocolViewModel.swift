@@ -38,14 +38,10 @@ final class VpnProtocolViewModel {
         self.selectedProtocol = connectionProtocol
         self.smartProtocolConfig = smartProtocolConfig
 
-        self.availableProtocols = supportedProtocols.filter {
-            switch $0.vpnProtocol {
-            case .wireGuard(.tcp), .wireGuard(.tls):
-                return featureFlags.wireGuardTls || connectionProtocol == $0
-            default:
-                return true
-            }
-        }
+        let wireguardTLSProtocols = [.tcp, .udp].map { ConnectionProtocol.vpnProtocol(.wireGuard($0)) }
+        self.availableProtocols = supportedProtocols
+            .removing(wireguardTLSProtocols, if: !featureFlags.wireGuardTls)
+            .filter { !$0.isDeprecated }
     }
 
     var tableViewData: [TableViewSection] {
