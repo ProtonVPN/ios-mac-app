@@ -80,9 +80,12 @@ final class ConnectionSettingsViewModel {
         self.factory = factory
         self.sysexPending = true
         self.selectedProtocol = .smartProtocol
-        self.selectedProtocol = propertiesManager.smartProtocol
+
+        let initialProtocol: ConnectionProtocol = propertiesManager.smartProtocol
             ? .smartProtocol
             : .vpnProtocol(propertiesManager.vpnProtocol)
+
+        selectedProtocol = initialProtocol.isDeprecated ? .smartProtocol : initialProtocol
 
         NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).excludeLocalNetworksNotification, object: nil)
