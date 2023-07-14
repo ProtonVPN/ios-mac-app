@@ -28,12 +28,12 @@ public extension RecentConnection {
             connectionDate: .now,
             connection: .init(
                 location: .exact(
-                    .free,
+                    .paid,
                     number: 42,
                     subregion: nil,
                     regionCode: "CH"
                 ),
-                features: []
+                features: [.p2p]
             )
         )
     }
@@ -55,7 +55,7 @@ public extension RecentConnection {
             connectionDate: .now,
             connection: .init(
                 location: .region(code: "UA"),
-                features: []
+                features: [.tor]
             )
         )
     }
@@ -93,7 +93,7 @@ public extension RecentConnection {
             connectionDate: .now.addingTimeInterval(-6 * 60.0),
             connection: .init(
                 location: .secureCore(.hop(to: "US", via: "CH")),
-                features: []
+                features: [.streaming]
             )
         )
     }

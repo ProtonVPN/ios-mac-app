@@ -24,18 +24,10 @@ extension HomeFeature.State {
         connections.first
     }
 
-    var remainingConnections: [RecentConnection] {
+    public var remainingConnections: [RecentConnection] {
         guard connections.count > 1 else {
             return []
         }
-        return Array(connections[1...])
-    }
-
-    public var remainingPinnedConnections: [RecentConnection] {
-        remainingConnections.filter(\.pinned)
-    }
-
-    public var remainingRecentConnections: [RecentConnection] {
-        remainingConnections.filter(\.notPinned)
+        return Array(connections.dropFirst())
     }
 }

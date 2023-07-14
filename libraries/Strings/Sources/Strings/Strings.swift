@@ -37,11 +37,11 @@ public enum Localizable {
   /// For buttons which have an action that cancels connecting to a server. [Redesign_2023]
   public static var connectionCardActionCancel: String { return Localizable.tr("Localizable", "_connection_card_action_cancel", fallback: "Cancel") }
   /// Connection card in home tab: "Connecting to <country name>" [Redesign_2023]
-  public static var connectionCardConnectingTo: String { return Localizable.tr("Localizable", "_connection_card_connecting_to", fallback: "Connecting to") }
+  public static var connectionCardConnectingTo: String { return Localizable.tr("Localizable", "_connection_card_connecting_to", fallback: "Connecting to...") }
   /// Connection card in home tab: "Last connected to... <country name>" [Redesign_2023]
   public static var connectionCardLastConnectedTo: String { return Localizable.tr("Localizable", "_connection_card_last_connected_to", fallback: "Last connected to") }
   /// Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023]
-  public static var connectionCardSafelyBrowsingFrom: String { return Localizable.tr("Localizable", "_connection_card_safely_browsing_from", fallback: "Safely browsing from") }
+  public static var connectionCardSafelyBrowsingFrom: String { return Localizable.tr("Localizable", "_connection_card_safely_browsing_from", fallback: "Browsing safely from") }
   /// Connection details screen: City (macOS and iOS) [Redesign_2023]
   public static var connectionDetailsCity: String { return Localizable.tr("Localizable", "_connection_details_city", fallback: "City") }
   /// Connection details screen: Connected for (macOS and iOS) [Redesign_2023]
@@ -88,10 +88,14 @@ public enum Localizable {
   public static var connectionDetailsTitle: String { return Localizable.tr("Localizable", "_connection_details_title", fallback: "Connection details") }
   /// Countries tab in bottom menu [Redesign_2023]
   public static var countriesTab: String { return Localizable.tr("Localizable", "_countries_tab", fallback: "Countries") }
-  /// The section of pinned recent connections in the Home tab. [Redesign_2023]
-  public static var homeRecentsPinnedSection: String { return Localizable.tr("Localizable", "_home_recents_pinned_section", fallback: "Pinned") }
+  /// Tooltip text for the pin/unpin/remove actions in the recents list. [Redesign_2023]
+  public static var homeRecentsOptionsButtonHelp: String { return Localizable.tr("Localizable", "_home_recents_options_button_help", fallback: "Actions") }
+  /// Tooltip text presented on hover over one of the recent connections items. [Redesign_2023]
+  public static var homeRecentsPlusServer: String { return Localizable.tr("Localizable", "_home_recents_plus_server", fallback: "Server available with VPN Plus") }
   /// The section of recent connections in the Home tab. [Redesign_2023]
-  public static var homeRecentsRecentSection: String { return Localizable.tr("Localizable", "_home_recents_recent_section", fallback: "Recent") }
+  public static var homeRecentsRecentSection: String { return Localizable.tr("Localizable", "_home_recents_recent_section", fallback: "Recents") }
+  /// Tooltip text presented on hover over one of the recent connections items. [Redesign_2023]
+  public static var homeRecentsServerUnderMaintenance: String { return Localizable.tr("Localizable", "_home_recents_server_under_maintenance", fallback: "Server under maintenance") }
   /// Home tab in bottom menu [Redesign_2023]
   public static var homeTab: String { return Localizable.tr("Localizable", "_home_tab", fallback: "Home") }
   /// The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023]
@@ -245,11 +249,11 @@ public enum Localizable {
   public static func stepOf(_ p1: Int, _ p2: Int) -> String {
     return Localizable.tr("Localizable", "_step_of", p1, p2, fallback: "Plural format key: \"%#@STEP@ %#@STEPS@\"")
   }
-  /// Connection status title when user is connected to a VPN
+  /// Connection status title when user is connected to a VPN [Redesign_2023]
   public static var connectionStatusProtected: String { return Localizable.tr("Localizable", "connection_status_protected", fallback: "Protected") }
-  /// Connection status title when user is initiating connection to a VPN
+  /// Connection status title when user is initiating connection to a VPN [Redesign_2023]
   public static var connectionStatusProtecting: String { return Localizable.tr("Localizable", "connection_status_protecting", fallback: "Protecting your digital identity") }
-  /// Connection status title when user is not connected to a VPN
+  /// Connection status title when user is not connected to a VPN [Redesign_2023]
   public static var connectionStatusUnprotected: String { return Localizable.tr("Localizable", "connection_status_unprotected", fallback: "You are unprotected") }
   /// The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked
   public static var netshieldStatsHintAds: String { return Localizable.tr("Localizable", "netshield_stats_hint_ads", fallback: "Advertisement websites use cookies and trackers to target you.") }
@@ -257,6 +261,8 @@ public enum Localizable {
   public static var netshieldStatsHintData: String { return Localizable.tr("Localizable", "netshield_stats_hint_data", fallback: "Estimated size of ads, trackers, and malware that NetShield has blocked.") }
   /// The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped
   public static var netshieldStatsHintTrackers: String { return Localizable.tr("Localizable", "netshield_stats_hint_trackers", fallback: "Trackers are third-party websites that collect, store, and sell information about your web activity.") }
+  /// Button title when user is on lower tier than the server requires [Redesign_2023]
+  public static var upsellGetPlus: String { return Localizable.tr("Localizable", "upsell_get_plus", fallback: "Get Plus") }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces

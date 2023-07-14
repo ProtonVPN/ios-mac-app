@@ -22,6 +22,8 @@ import VPNShared
 import ComposableArchitecture
 import Theme
 
+import Strings
+
 public struct HomeView: View {
 
     let store: StoreOf<HomeFeature>
@@ -36,18 +38,18 @@ public struct HomeView: View {
                 let item = viewStore.state.mostRecent ?? .defaultFastest
                 ConnectionStatusView(store: store.scope(state: \.connectionStatus,
                                                         action: { .connectionStatusViewAction($0) }))
-
                 Spacer()
-                    .frame(maxHeight: .infinity)
-                
-                HomeConnectionCardView(
-                    item: item,
-                    vpnConnectionStatus: viewStore.vpnConnectionStatus,
-                    sendAction: { _ = viewStore.send($0) }
-                )
+                    .layoutPriority(0.2) // should prioritise stretching this spacer
+                VStack {
+                    HomeConnectionCardView(
+                        item: item,
+                        vpnConnectionStatus: viewStore.vpnConnectionStatus,
+                        sendAction: { _ = viewStore.send($0) }
+                    )
 
-                Spacer()
-                    .frame(maxHeight: .infinity)
+                    RecentsSectionView(items: viewStore.connections) { _ = viewStore.send($0) }
+                }
+                .layoutPriority(0.1) // works in tandem with the layoutPriority outside of this VStack to prevent the connection card from stretching
             }
             .background(Color(.background))
             .themeFrame(minWidth: .mainContainerMinWidth,

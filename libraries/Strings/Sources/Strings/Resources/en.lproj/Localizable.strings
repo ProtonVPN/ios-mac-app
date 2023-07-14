@@ -43,11 +43,17 @@
 /* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_browsing_from" = "You are safely browsing from %@.";
 
-/* The section of pinned recent connections in the Home tab. [Redesign_2023] */
-"_home_recents_pinned_section" = "Pinned";
-
 /* The section of recent connections in the Home tab. [Redesign_2023] */
-"_home_recents_recent_section" = "Recent";
+"_home_recents_recent_section" = "Recents";
+
+/* Tooltip text for the pin/unpin/remove actions in the recents list. [Redesign_2023] */
+"_home_recents_options_button_help" = "Actions";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_plus_server" = "Server available with VPN Plus";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_server_under_maintenance" = "Server under maintenance";
 
 /* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
 "_action_help" = "Help";
@@ -76,12 +82,15 @@
 /* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
 "_secure_core_via_country" = "via %@";
 
-/* Connection status title when user is not connected to a VPN */
+/* Connection status title when user is not connected to a VPN [Redesign_2023] */
 "connection_status_unprotected" = "You are unprotected";
-/* Connection status title when user is initiating connection to a VPN */
+/* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
 "connection_status_protecting" = "Protecting your digital identity";
-/* Connection status title when user is connected to a VPN */
+/* Connection status title when user is connected to a VPN [Redesign_2023] */
 "connection_status_protected" = "Protected";
+
+/* Button title when user is on lower tier than the server requires [Redesign_2023] */
+"upsell_get_plus" = "Get Plus";
 
 /* MARK: Netshield stats */
 
