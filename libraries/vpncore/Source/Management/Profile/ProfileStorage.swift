@@ -30,7 +30,7 @@ public class ProfileStorage {
     private static let storageVersion = 1
     private static let versionKey     = "profileCacheVersion"
     
-    static let contentChanged = Notification.Name("ProfileStorageContentChanged")
+    public static let contentChanged = Notification.Name("ProfileStorageContentChanged")
 
     private let authKeychain: AuthKeychainHandle
 

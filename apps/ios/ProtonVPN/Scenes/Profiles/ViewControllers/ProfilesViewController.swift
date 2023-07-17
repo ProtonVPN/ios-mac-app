@@ -102,11 +102,13 @@ class ProfilesViewController: UIViewController {
     }
     
     private func addObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(vpnKeychainCredentialsChanged),
+        NotificationCenter.default.addObserver(self, selector: #selector(contentChanged),
                                                name: VpnKeychain.vpnCredentialsChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(contentChanged),
+                                               name: ProfileStorage.contentChanged, object: nil)
     }
     
-    @objc private func vpnKeychainCredentialsChanged() {
+    @objc private func contentChanged() {
         reloadProfiles()
     }
     

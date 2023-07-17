@@ -147,6 +147,8 @@ final class SettingsViewModel {
                                                name: type(of: safeModePropertyProvider).safeModeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reload),
                                                name: type(of: vpnKeychain).vpnCredentialsChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reload),
+                                               name: PropertiesManager.smartProtocolNotification, object: nil)
     }
     
     @objc private func sessionChanged(_ notification: Notification) {
