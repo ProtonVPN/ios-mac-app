@@ -346,7 +346,7 @@ public class ProtocolDeprecatedAlert: SystemAlert {
     public let enableSmartProtocol: () -> Void
     public var dismiss: (() -> Void)?
 
-    public static let kbURLString = "https://protonvpn.com/support/macos-t2-chip-kill-switch/"
+    public static let kbURLString = "https://protonvpn.com/blog/remove-vpn-protocols-apple"
 
     public init(enableSmartProtocolHandler: @escaping (() -> Void)) {
         self.enableSmartProtocol = enableSmartProtocolHandler
