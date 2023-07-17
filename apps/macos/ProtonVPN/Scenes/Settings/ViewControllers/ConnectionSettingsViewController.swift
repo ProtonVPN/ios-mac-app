@@ -101,6 +101,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         let menuItems: [NSMenuItem] = (0..<count).map { index in
             let menuItem = NSMenuItem()
             menuItem.attributedTitle = viewModel.protocolString(for: viewModel.protocolItem(for: index) ?? .vpnProtocol(.ike))
+            menuItem.isHidden = viewModel.protocolItem(for: index)?.isDeprecated == true
             return menuItem
         }
 

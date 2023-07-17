@@ -35,7 +35,7 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
         ]
     }
 
-    // Disabled because IKEv2 is not supported on iOS
+    // Disabled because IKEv2 is not supported on iOS (VPNAPPL-1843)
     func testConnectingWithIpOverride() {
         container.propertiesManager.vpnProtocol = .ike
 
