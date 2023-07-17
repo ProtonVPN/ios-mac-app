@@ -24,7 +24,9 @@ import CommonCrypto
 import Foundation
 import Network
 import VPNShared
+import XCTestDynamicOverlay
 
+@available(*, deprecated, message: "OpenVPN has been deprecated (VPNAPPL-1843)")
 final class OpenVPNTCPAvailabilityChecker: SmartProtocolAvailabilityChecker {
     let vpnProtocol: VpnProtocol = .openVpn(.tcp)
 
@@ -40,6 +42,7 @@ final class OpenVPNTCPAvailabilityChecker: SmartProtocolAvailabilityChecker {
     }
 
     func checkAvailability(server: ServerIp, completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
+        XCTFail("OpenVPN has been deprecated and shouldn't be used (VPNAPPL-1843)")
         checkAvailability(server: server, ports: config.defaultTcpPorts, completion: completion)
     }
 

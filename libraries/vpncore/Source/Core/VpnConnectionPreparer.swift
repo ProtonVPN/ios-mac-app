@@ -105,7 +105,11 @@ class VpnConnectionPreparer {
     private func selectVpnProtocol(for connectionProtocol: ConnectionProtocol, toIP serverIp: ServerIp, completion: @escaping (VpnProtocol, [Int]) -> Void) {
         switch connectionProtocol {
         case .smartProtocol:
-            smartProtocol = SmartProtocolImplementation(availabilityCheckerResolver: availabilityCheckerResolver, smartProtocolConfig: smartProtocolConfig, openVpnConfig: openVpnConfig, wireguardConfig: wireguardConfig)
+            smartProtocol = SmartProtocolImplementation(
+                availabilityCheckerResolver: availabilityCheckerResolver,
+                smartProtocolConfig: smartProtocolConfig,
+                wireguardConfig: wireguardConfig
+            )
             smartProtocol?.determineBestProtocol(server: serverIp) { (vpnProtocol, ports) in
                 completion(vpnProtocol, ports)
             }

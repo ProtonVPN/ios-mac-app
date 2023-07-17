@@ -22,6 +22,7 @@
 
 import Foundation
 import VPNShared
+import XCTestDynamicOverlay
 
 typealias SmartProtocolCompletion = (VpnProtocol, [Int]) -> Void
 
@@ -36,28 +37,20 @@ final class SmartProtocolImplementation: SmartProtocol {
 
     init(availabilityCheckerResolver: AvailabilityCheckerResolver,
          smartProtocolConfig: SmartProtocolConfig,
-         openVpnConfig: OpenVpnConfig,
          wireguardConfig: WireguardConfig) {
         self.availabilityCheckerResolver = availabilityCheckerResolver
 
         var checkers: [SmartProtocolProtocol: SmartProtocolAvailabilityChecker] = [:]
         var fallbackCandidates: [(SmartProtocolProtocol, [Int])] = []
 
+        #if os(macOS)
         if smartProtocolConfig.iKEv2 {
             log.debug("IKEv2 will be used for Smart Protocol checks", category: .connectionConnect, event: .scan)
             checkers[.ikev2] = availabilityCheckerResolver.availabilityChecker(for: .ike)
 
             fallbackCandidates.append((SmartProtocolProtocol.ikev2, DefaultConstants.ikeV2Ports))
         }
-
-        if smartProtocolConfig.openVPN {
-            log.debug("OpenVPN will be used for Smart Protocol checks", category: .connectionConnect, event: .scan)
-            checkers[.openVpnUdp] = availabilityCheckerResolver.availabilityChecker(for: .openVpn(.udp))
-            checkers[.openVpnTcp] = availabilityCheckerResolver.availabilityChecker(for: .openVpn(.tcp))
-
-            fallbackCandidates.append((SmartProtocolProtocol.openVpnUdp, openVpnConfig.defaultUdpPorts))
-            fallbackCandidates.append((SmartProtocolProtocol.openVpnTcp, openVpnConfig.defaultTcpPorts))
-        }
+        #endif
 
         if smartProtocolConfig.wireGuardUdp {
             log.debug("Wireguard will be used for Smart Protocol checks", category: .connectionConnect, event: .scan)
@@ -79,10 +72,10 @@ final class SmartProtocolImplementation: SmartProtocol {
         if let fallback = fallbackCandidates.min(by: { lhs, rhs in lhs.0.priority < rhs.0.priority }) {
             self.fallback = fallback
         } else {
-            #if os(iOS)
-            self.fallback = (SmartProtocolProtocol.openVpnUdp, openVpnConfig.defaultUdpPorts)
-            #else
+            #if os(macOS)
             self.fallback = (SmartProtocolProtocol.ikev2, DefaultConstants.ikeV2Ports)
+            #else
+            self.fallback = (SmartProtocolProtocol.wireguardUdp, wireguardConfig.defaultUdpPorts)
             #endif
         }
 
@@ -127,6 +120,10 @@ final class SmartProtocolImplementation: SmartProtocol {
             }
 
             log.debug("Best protocol for \(server.entryIp) is \(best.vpnProtocol) with ports \(ports)", category: .connectionConnect, event: .scan)
+
+            if ConnectionProtocol.vpnProtocol(best.vpnProtocol).isDeprecated {
+                XCTFail("We should never choose a deprecated protocol (\(best.vpnProtocol)) (VPNAPPL-1843)")
+            }
             completion(best.vpnProtocol, ports)
         }
     }

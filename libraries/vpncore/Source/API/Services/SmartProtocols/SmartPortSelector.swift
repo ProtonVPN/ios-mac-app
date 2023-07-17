@@ -8,6 +8,7 @@
 
 import Foundation
 import VPNShared
+import XCTestDynamicOverlay
 
 typealias SmartPortSelectorCompletion = ([Int]) -> Void
 
@@ -73,6 +74,7 @@ final class SmartPortSelectorImplementation: SmartPortSelector {
             completion(ports.shuffled())
             
         case .openVpn(let transport): // TunnelKit accepts array of ports and select appropriate port by itself
+            XCTFail("OpenVPN has been deprecated and shouldn't be used (VPNAPPL-1843)")
             switch transport {
             case .tcp:
                 let ports = portOverrides ?? openVpnTcpChecker.defaultPorts
