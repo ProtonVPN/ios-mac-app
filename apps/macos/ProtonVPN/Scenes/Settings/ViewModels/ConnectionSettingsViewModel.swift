@@ -79,13 +79,8 @@ final class ConnectionSettingsViewModel {
     init(factory: Factory) {
         self.factory = factory
         self.sysexPending = true
-        self.selectedProtocol = .smartProtocol
-
-        let initialProtocol: ConnectionProtocol = propertiesManager.smartProtocol
-            ? .smartProtocol
-            : .vpnProtocol(propertiesManager.vpnProtocol)
-
-        selectedProtocol = initialProtocol.isDeprecated ? .smartProtocol : initialProtocol
+        self.selectedProtocol = .smartProtocol // dummy value must be assigned before we can access `propertiesManager`
+        selectedProtocol = propertiesManager.connectionProtocol
 
         NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).excludeLocalNetworksNotification, object: nil)
@@ -101,10 +96,12 @@ final class ConnectionSettingsViewModel {
 
     // MARK: - Available protocols
 
-    var availableConnectionProtocols: [ConnectionProtocol] {
+    lazy var availableConnectionProtocols: [ConnectionProtocol] = {
         ConnectionProtocol.availableProtocols(wireguardTLSEnabled: propertiesManager.featureFlags.wireGuardTls)
+            .appending(selectedProtocol) // Edge case - user's protocol has been deprecated. Show it as disabled
+            .uniqued
             .sorted(by: ConnectionProtocol.uiSort)
-    }
+    }()
 
     // MARK: - Quick and auto connect for current user
     var username: String? {

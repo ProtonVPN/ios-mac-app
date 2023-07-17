@@ -357,6 +357,7 @@ public class ProtocolDeprecatedAlert: SystemAlert {
             handler: enableSmartProtocolHandler
         ))
         #if os(iOS)
+        // On MacOS, a hyperlink is placed in the alert body instead
         actions.append(AlertAction(
             title: LocalizedString.alertProtocolDeprecatedLearnMore,
             style: .secondary,
