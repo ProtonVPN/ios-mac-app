@@ -890,7 +890,6 @@
 "_error_mitm_description" = "The TLS certificate validation failed when trying to connect to the Proton VPN API. Your current internet connection may be monitored. To keep your data secure, we are preventing the app from accessing the Proton VPN API.\nTo sign in or access your account, switch to a new network and try to connect again.";
 "_error_mitm_vpn_description" = "The TLS certificate validation failed when trying to connect to the VPN server. Your current internet connection may be monitored. To keep your data secure, we are preventing the app from accessing this VPN server.\nPlease select other server.";
 
-
 /* Internal error message when there is a problem with initializing tls and connection cannot be established. */
 "_error_tls_initialisation" = "TLS initialisation error";
 
@@ -977,11 +976,17 @@
 
 /* Title of the deprecated protocol alert. Shown when the user attemps to connect to a profile with OpenVPN */
 "_alert_protocol_deprecated_title" = "Protocol Unavailable";
-"_alert_protocol_deprecated_body_macos" = "We found a security issue that affects OpenVPN on macOS. To ensure a secure browsing experience for the Proton community, we removed this protocols. To connect, switch to Smart protocol or select another protocol in Manage profiles. Learn more";
+/* Body of the deprecated protocol alert on MacOS. Shown when the user attemps to connect to a profile with OpenVPN. Manage profiles is emphasized with quotation marks, which must be escaped with the backslash (\). The 'Learn more' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
+"_alert_protocol_deprecated_body_macos" = "We found a security issue that affects OpenVPN on macOS. To ensure a secure browsing experience for the Proton community, we removed this protocol.\nTo connect, enable Smart Protocol or go to \"Manage profiles\" to select another protocol. Learn more";
+/* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
 "_alert_protocol_deprecated_link_text" = "Learn more";
-"_alert_protocol_deprecated_body_ios" = "We found a security issue that affects IKEv2 and OpenVPN on iOS devices. To ensure a secure browsing experience for the Proton community, we removed these protocols. To connect, switch to Smart protocol or select another protocol in Manage profiles.";
+/* Body of the deprecated protocol alert on iOS. Shown when the user attemps to connect to a profile with OpenVPN or IKEv2. Edit profiles is emphasized with quotation marks, which must be escaped with the backslash (\).  */
+"_alert_protocol_deprecated_body_ios" = "We found a security issue that affects IKEv2 and OpenVPN on iOS devices. To ensure a secure browsing experience for the Proton community, we removed these protocols.\n\nTo connect, enable Smart Protocol or go to \"Edit Profiles\" to select another protocol.";
+/* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attemps to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
 "_alert_protocol_deprecated_enable_smart" = "Enable Smart protocol";
+/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser*/
 "_alert_protocol_deprecated_learn_more" = "Learn More";
+/* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Close";
 
 // MARK: Settings
