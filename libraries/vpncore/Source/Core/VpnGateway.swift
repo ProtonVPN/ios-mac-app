@@ -598,6 +598,7 @@ fileprivate extension VpnGateway {
     }
 
     private func showProtocolDeprecatedAlert(request: ConnectionRequest?) {
+        stopConnecting(userInitiated: false)
         let alert = ProtocolDeprecatedAlert(enableSmartProtocolHandler: {
             if self.globalConnectionProtocol.isDeprecated {
                 log.info("Global protocol (\(self.globalConnectionProtocol)) is deprecated, updating to smart")
