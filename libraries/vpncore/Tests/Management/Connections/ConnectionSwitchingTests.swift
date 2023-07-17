@@ -181,14 +181,18 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
     /// This test uses two servers and manipulates their properties and protocol availabilities to see how vpncore reacts.
     ///
     /// With two servers in the server storage, the app should pick the one with the lower score. Then, using a mocked
-    /// availability checker which fakes the wireguard protocol being unavailable for that server, we should see the code
-    /// decide to fall back on openvpn instead. Then we make openvpn unavailable and reconnect, at which point the code
-    /// should fall back onto IKEv2. Finally, we disconnect, which should exercise the API to fetch the server list and user
-    /// IP. This updated server list has placed the server we just connected to under maintenance. On the next reconnect,
-    /// we go ahead and make all protocols available again, and check to see that the server chosen is not the one we were
-    /// just connected to (i.e., the one with the higher score).
+    /// availability checker which fakes the wireguard protocol being unavailable for that server, we should see the
+    /// code decide to fall back to IKEv2 on MacOS and Stealth on iOS.
+    ///
+    /// Then we make the previously chosen protocol unavailable and reconnect, at which point the code should fall back
+    /// onto Stealth on MacOS, and WireGuard TCP on iOS.
+    ///
+    /// Finally, we disconnect, which should exercise the API to fetch the server list and user IP. This updated server
+    /// list has placed the server we just connected to under maintenance. On the next reconnect, we go ahead and make
+    /// all protocols available again, and check to see that the server chosen is not the one we were just connected to
+    /// (i.e., the one with the higher score).
     func testFastestConnectionAndSmartProtocolFallbackAndDisconnectApiUsage() { // swiftlint:disable:this function_body_length
-        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.udp)]?.availabilityCallback = { serverIp in
+        let unavailableCallback: AvailabilityCheckerMock.AvailabilityCallback = { serverIp in
             // Force server2 wireguard server to be unavailable
             if serverIp == self.testData.server2.ips.first {
                 return .unavailable
@@ -197,6 +201,8 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
             XCTFail("Shouldn't be checking availability for server1")
             return .available(ports: [15213, 15410])
         }
+
+        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.udp)]?.availabilityCallback = unavailableCallback
 
         container.serverStorage.populateServers(container.serverStorage.servers.values + [testData.server2])
 
@@ -256,7 +262,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         let platformManager: NEVPNManagerMock?
         #if os(iOS)
         // wireguard was made unavailable above. protocol should fallback to openvpn
-        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .openVpn(.udp))
+        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tls))
         platformManager = currentManager
         #elseif os(macOS)
         // on macos, protocol should fallback to IKEv2
@@ -275,17 +281,19 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         }
         wait(for: [expectations.connectedDate], timeout: expectationTimeout)
 
-        didRequestCertRefresh = { _ in }
+        didRequestCertRefresh = { _ in
+            #if os(iOS)
+            XCTFail("Should not request to refresh certificate for non-certificate-authenticated protocol")
+            #else
+            expectations.openVPNCertificate.fulfill()
+            #endif
+        }
 
-        let unavailableCallback = container.availabilityCheckerResolverFactory.checkers[.wireGuard(.udp)]!.availabilityCallback
-        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.tcp)]?.availabilityCallback = unavailableCallback
-        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.tls)]?.availabilityCallback = unavailableCallback
         #if os(iOS)
-        // on iOS, force openvpn to be unavailable to force it to fallback to ike
-        container.availabilityCheckerResolverFactory.checkers[.openVpn(.tcp)]?.availabilityCallback = unavailableCallback
-        container.availabilityCheckerResolverFactory.checkers[.openVpn(.udp)]?.availabilityCallback = unavailableCallback
+        // on iOS, force TLS to be unavailable to force it to fallback to TCP
+        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.tls)]?.availabilityCallback = unavailableCallback
         #elseif os(macOS)
-        // on macOS, force ike to be unavailable to force it to fallback to openvpn
+        // on macOS, force ike to be unavailable to force it to fallback to wireguard TLS
         container.availabilityCheckerResolverFactory.checkers[.ike]?.availabilityCallback = unavailableCallback
         #endif
 
@@ -323,11 +331,11 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         wait(for: connectionExpectations, timeout: expectationTimeout)
 
         #if os(iOS)
-        // on ios, protocol should fallback to IKEv2
-        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .ike)
+        // on ios, protocol should fallback to WireGuard TCP
+        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tcp))
         #elseif os(macOS)
-        // on macos, protocol should fallback to OpenVPN
-        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .openVpn(.udp))
+        // on macos, protocol should fallback to WireGuard TLS
+        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tls))
         #endif
 
         XCTAssertEqual(currentManager?.protocolConfiguration?.serverAddress, testData.server2.ips.first?.entryIp)
