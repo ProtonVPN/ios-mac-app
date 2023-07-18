@@ -63,7 +63,10 @@ public struct HomeView: View {
                 .allowsHitTesting(false)
             }
 
-            .task { await viewStore.send(.watchConnectionStatus).finish() }
+            .task {
+                viewStore.send(.loadConnections) // todo: it's late to load the connections because at this point the view is already visible
+                await viewStore.send(.watchConnectionStatus).finish()
+            }
         }
     }
 

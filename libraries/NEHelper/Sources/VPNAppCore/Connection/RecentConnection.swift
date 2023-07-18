@@ -51,3 +51,6 @@ extension RecentConnection: Identifiable {
         "\(connection)"
     }
 }
+
+extension RecentConnection: Codable {
+}
