@@ -26,18 +26,6 @@ import Theme
 import VPNShared
 import VPNAppCore
 
-extension ConnectionProtocol: LocalizedStringConvertible {
-
-    public var localizedDescription: String {
-        switch self {
-        case let .vpnProtocol(vpnProtocol):
-            return vpnProtocol.localizedDescription
-        case .smartProtocol:
-            return "Smart"
-        }
-    }
-}
-
 struct ProtocolSettingsView: View {
 
     let store: StoreOf<ProtocolSettingsFeature>
@@ -53,7 +41,7 @@ struct ProtocolSettingsView: View {
     ) -> ProtocolCell {
         ProtocolCell(
             title: connectionProtocol.title,
-            attribute: connectionProtocol.attribute,
+            attributes: connectionProtocol.attributes,
             description: connectionProtocol.localizedProtocolDescription,
             connectionProtocol: connectionProtocol,
             onTap: { store.send(.protocolTapped(connectionProtocol)) },
@@ -139,12 +127,12 @@ extension ConnectionProtocol {
         }
     }
 
-    var attribute: ProtocolAttribute? {
+    var attributes: [ProtocolAttribute] {
         switch self {
         case .smartProtocol:
-            return .recommended
+            return [.recommended]
         case let .vpnProtocol(`protocol`):
-            return `protocol`.attribute
+            return `protocol`.attributes
         }
     }
 }
@@ -180,12 +168,12 @@ extension VpnProtocol {
         }
     }
 
-    var attribute: ProtocolAttribute? {
+    var attributes: [ProtocolAttribute] {
         switch self {
         case .wireGuard(.tls):
-            return .new
+            return [.new]
         default:
-            return nil
+            return []
         }
     }
 }

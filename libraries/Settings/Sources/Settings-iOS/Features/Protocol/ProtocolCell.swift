@@ -24,7 +24,7 @@ import VPNAppCore
 
 struct ProtocolCell: View {
     let title: String
-    let attribute: ProtocolAttribute?
+    let attributes: [ProtocolAttribute]
     let description: String
     let connectionProtocol: ConnectionProtocol
     let onTap: () -> Void
@@ -76,8 +76,10 @@ struct ProtocolCell: View {
     }
 
     @ViewBuilder private var tagView: some View {
-        if let attribute {
-            ProtocolTag(attribute: attribute)
+        HStack {
+            ForEach(attributes) { attribute in
+                ProtocolTag(attribute: attribute)
+            }
         }
     }
 
@@ -92,7 +94,9 @@ struct ProtocolCell: View {
     }
 }
 
-enum ProtocolAttribute {
+enum ProtocolAttribute: Identifiable {
+    var id: UUID { UUID() }
+
     case new
     case recommended
 
@@ -127,13 +131,8 @@ enum ProtocolAttribute {
 struct ProtocolTag: View {
     let attribute: ProtocolAttribute
 
-    init(attribute: ProtocolAttribute) {
-        self.attribute = attribute
-    }
-
     var body: some View {
         Text(attribute.localizedTitle)
-            // TODO: use themeFont after dynamic style
             .themeFont(.overline(emphasised: true))
             .foregroundColor(attribute.textColor)
             .textCase(.uppercase)
@@ -152,7 +151,7 @@ struct ProtocolCell_Previews: PreviewProvider {
         List {
             ProtocolCell(
                 title: "Smart",
-                attribute: .recommended,
+                attributes: [.new, .recommended],
                 description: "Auto-selects the best protocol for your connection.",
                 connectionProtocol: .smartProtocol,
                 onTap: { },
@@ -160,9 +159,17 @@ struct ProtocolCell_Previews: PreviewProvider {
             )
             ProtocolCell(
                 title: "IKEv2",
-                attribute: .new,
+                attributes: [.new],
                 description: "Totally a great protocol, and definitely not unsecure or anything.",
                 connectionProtocol: .vpnProtocol(.ike),
+                onTap: { },
+                isSelected: true
+            )
+            ProtocolCell(
+                title: "OpenVPN",
+                attributes: [],
+                description: "Boring protocol with no tags.",
+                connectionProtocol: .vpnProtocol(.openVpn(.udp)),
                 onTap: { },
                 isSelected: true
             )
