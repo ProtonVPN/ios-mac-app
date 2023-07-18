@@ -45,19 +45,20 @@ struct HomeConnectionCardView: View {
     var header: some View {
         HStack {
             Text(model.headerText(for: vpnConnectionStatus))
-                .themeFont(.body1())
+                .themeFont(.caption())
                 .styled()
-                .textCase(nil)
             Spacer()
             Text(Localizable.actionHelp)
-                .themeFont(.body1())
+                .themeFont(.caption(emphasised: true))
                 .styled(.weak)
-                .textCase(nil)
-            Theme.Asset.icQuestionCircle.swiftUIImage
+            Theme.Asset.icQuestionCircle
+                .swiftUIImage
+                .resizable()
                 .styled(.weak)
                 .frame(.square(16))
         }
-        .padding()
+        .padding(.bottom, .themeSpacing8)
+        .padding(.top, .themeSpacing24)
     }
 
     var vpnConnectionActual: VPNConnectionActual? {
@@ -114,20 +115,15 @@ struct HomeConnectionCardView: View {
             .padding([.horizontal, .bottom])
         }
         .background(Color(.background, .weak))
-        .border(Color(.border, .strong))
-        .cornerRadius(.themeRadius16)
-        .padding()
+        .themeBorder(color: Color(.border, .strong),
+                     lineWidth: 1,
+                     cornerRadius: .radius16)
     }
 
     public var body: some View {
-        VStack(spacing: 0) {
+        VStack(spacing: .themeSpacing8) {
             header
-            ZStack {
-                Rectangle()
-                    .fill(Color(.background))
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                card
-            }
+            card
         }
         .accessibilityElement()
         .accessibilityLabel(accessibilityText)

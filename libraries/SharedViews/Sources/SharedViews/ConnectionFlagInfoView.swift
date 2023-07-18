@@ -38,10 +38,11 @@ public struct ConnectionFlagInfoView: View {
     }
 
     public var body: some View {
-        HStack(alignment: .top) {
+        HStack(spacing: .themeSpacing12) {
             FlagView(location: intent.location, flagSize: .defaultSize)
 
             VStack(alignment: .leading) {
+                Spacer()
                 Text(connectionInfoBuilder.textHeader)
                     .styled()
 #if canImport(Cocoa)
@@ -54,8 +55,11 @@ public struct ConnectionFlagInfoView: View {
                 connectionInfoBuilder
                     .textFeatures
                     .lineLimit(2)
+                Spacer()
+                Divider()
+                    .foregroundColor(.init(.border))
 
-            }.padding(.leading, 8)
+            }
         }
     }
 }
@@ -79,6 +83,13 @@ struct ConnectionFlagView_Previews: PreviewProvider {
     }
 
     static var previews: some View {
+        ConnectionFlagInfoView(intent: ConnectionSpec(location: .fastest,
+                                                      features: []),
+                               vpnConnectionActual: .mock())
+        .previewLayout(.fixed(width: 300, height: 200))
+        .background(.yellow)
+        .previewDisplayName("single")
+
         VStack(alignment: .leading, spacing: spacing) {
             HStack(alignment: .bottom, spacing: spacing) {
                 Text("Not connected").frame(width: cellWidth)
@@ -121,7 +132,7 @@ struct ConnectionFlagView_Previews: PreviewProvider {
             )
         }
         .previewLayout(.sizeThatFits)
-        .padding()
+        .previewDisplayName("sideBySide")
     }
 }
 
