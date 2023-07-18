@@ -52,7 +52,10 @@ class SimulatorHelper {
                 propertyManager.lastConnectionIntent = specs
 
                 self.switchToConnected(specs)
-
+            case .connecting:
+                self.switchToDisconnected(specs, delay: 0, completed: {
+                    self.switchToConnected(specs)
+                })
             default:
                 assertionFailure("Called connect on wrong state: \(self.status)")
             }
@@ -86,13 +89,14 @@ class SimulatorHelper {
         }
     }
 
-    private func switchToDisconnected(_ specs: ConnectionSpec, delay: Int = 1) {
+    private func switchToDisconnected(_ specs: ConnectionSpec, delay: Int = 1, completed: (() -> Void)? = nil) {
         targetStatus = .disconnected
         queue.async {
             self.status = .disconnecting(specs, specs.actualConnection)
         }
         queue.asyncAfter(deadline: .now() + .seconds(delay), execute: {
             self.status = self.targetStatus!
+            completed?()
         })
     }
 
