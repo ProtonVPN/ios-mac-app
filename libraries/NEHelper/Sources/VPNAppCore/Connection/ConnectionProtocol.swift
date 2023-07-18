@@ -17,6 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+
+import Strings
 import VPNShared
 
 public enum ConnectionProtocol: Equatable, Hashable, CaseIterable, Sendable {
@@ -65,3 +67,33 @@ extension VpnProtocol {
     }
 }
 #endif
+
+extension ConnectionProtocol: LocalizedStringConvertible {
+
+    public var localizedDescription: String {
+        switch self {
+        case let .vpnProtocol(vpnProtocol):
+            return vpnProtocol.localizedDescription
+        case .smartProtocol:
+            return "Smart"
+        }
+    }
+}
+
+extension VpnProtocol: LocalizedStringConvertible {
+
+    public var localizedDescription: String {
+        switch self {
+        case .ike: return "IKEv2"
+        case .openVpn(let transport):
+            return "OpenVPN (\(transport.rawValue.uppercased()))"
+        case .wireGuard(let transport):
+            switch transport {
+            case .udp, .tcp:
+                return "WireGuard (\(transport.rawValue.uppercased()))"
+            case .tls:
+                return "Stealth"
+            }
+        }
+    }
+}

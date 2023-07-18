@@ -62,7 +62,7 @@ struct ThemeSettingsView: View {
                 Image(asset: model.asset)
                     .renderingMode(.original)
                 Text(model.colorScheme.localizedDescription)
-                    //.themeFont(.body2())
+                    .themeFont(.body2())
                     .foregroundColor(Color(.text, .normal))
                 Accessory(style: .checkmark(isActive: currentValue.wrappedValue == model.colorScheme))
 

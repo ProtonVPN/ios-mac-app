@@ -1,5 +1,5 @@
 //
-//  Created on 11/07/2023.
+//  Created on 18/07/2023.
 //
 //  Copyright (c) 2023 Proton AG
 //
@@ -18,6 +18,9 @@
 
 import Foundation
 
+/// Types which have values visible to the user can conform to this protocol to supply a localized value, appropriate
+/// for display, such as Theme: Light/Dark/Auto.
 public protocol LocalizedStringConvertible {
+    /// A localized string corresponding to this value, appropriate for display to the user
     var localizedDescription: String { get }
 }
