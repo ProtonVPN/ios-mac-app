@@ -29,11 +29,13 @@ extension InitialStateProvider: DependencyKey {
         initialState: .init(
             selectedTab: .home,
             home: .init(
-                connections: [.pinnedConnection,
-                              .previousConnection,
-                              .connectionSecureCoreFastest,
-                              .connectionRegion,
-                              .connectionSecureCore],
+                connections: [
+                    .pinnedConnection,
+                    .connectionSecureCore,
+                    .connectionRegionPinned,
+                    .previousConnection,
+                    .connectionSecureCoreFastest,
+                    .connectionRegion],
                 connectionStatus: .init(protectionState: .unprotected(country: "Poland", ip: "192.168.1.0")),
                 vpnConnectionStatus: .disconnected
             ),

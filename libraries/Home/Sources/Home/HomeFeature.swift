@@ -102,7 +102,26 @@ public struct HomeFeature: Reducer {
                     connectionDate: Date(),
                     connection: spec
                 )
+
+                let popped = state.connections.first
+                state.connections.removeFirst()
+
+                let unpinnedIndex = state.connections.firstIndex { element in
+                    !element.pinned
+                }
+
                 state.connections.insert(recent, at: 0)
+
+                if let popped {
+                    if popped.pinned {
+                        state.connections.insert(popped, at: 1)
+                    } else if let unpinnedIndex {
+                        state.connections.insert(popped, at: unpinnedIndex + 1)
+                    } else {
+                        state.connections.insert(popped, at: 1)
+                    }
+                }
+
                 state.trimConnections()
 
                 return .none // Actual connection is handled in the app
