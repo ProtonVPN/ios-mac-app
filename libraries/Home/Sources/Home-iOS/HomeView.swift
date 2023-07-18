@@ -50,6 +50,7 @@ public struct HomeView: View {
                         vpnConnectionStatus: viewStore.vpnConnectionStatus,
                         sendAction: { _ = viewStore.send($0) }
                     )
+                    .padding(.horizontal, .themeSpacing16)
                     RecentsSectionView(
                         items: viewStore.state.remainingConnections,
                         sendAction: { _ = viewStore.send($0) }

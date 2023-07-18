@@ -34,12 +34,11 @@ public struct RecentsSectionView: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text(Localizable.homeRecentsRecentSection)
-                .themeFont(.body2())
+                .themeFont(.caption())
                 .styled(.weak)
-                .padding()
+                .padding([.top, .leading, .trailing], .themeSpacing16)
+                .padding(.bottom, .themeSpacing8)
             ForEach(items) { item in
-                Divider()
-                    .foregroundColor(.init(.border))
                 RecentRowItemView(item: item, sendAction: sendAction)
             }
         }
@@ -63,19 +62,14 @@ struct RecentRowItemView: View {
     @State var buttonLabelSize: CGSize = .zero
 
     private var swipeableRow: some View {
-        HStack(alignment: .top) {
+        HStack(alignment: .center, spacing: 0) {
             item.icon
                 .resizable()
-                .renderingMode(.template)
                 .foregroundColor(.init(.icon, .weak))
-                .frame(width: iconSize, height: iconSize)
-                .padding(.leading)
+                .frame(.square(iconSize))
+                .padding(.leading, .themeSpacing16)
                 .padding(.trailing, .themeSpacing12)
-                .padding(.top, .themeSpacing2)
-
             ConnectionFlagInfoView(intent: item.connection)
-
-            Spacer()
         }
         .frame(maxWidth: .infinity, minHeight: Self.itemCellHeight)
         .saveSize(in: $viewSize)
@@ -111,7 +105,7 @@ struct RecentRowItemView: View {
     }
 
     public var body: some View {
-        ZStack {
+        ZStack(alignment: .bottom) {
             AnyView(underlyingButton)
             swipeableRow
         }
