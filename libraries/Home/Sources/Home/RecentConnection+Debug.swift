@@ -88,7 +88,7 @@ public extension RecentConnection {
     }
     static var connectionSecureCore: RecentConnection {
         .init(
-            pinned: false,
+            pinned: true,
             underMaintenance: true,
             connectionDate: Date().addingTimeInterval(-6 * 60.0),
             connection: .init(
