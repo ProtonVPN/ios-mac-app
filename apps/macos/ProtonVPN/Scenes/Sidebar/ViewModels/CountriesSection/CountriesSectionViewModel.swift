@@ -55,8 +55,8 @@ extension DependencyContainer: CountriesSectionViewModelFactory {
     }
 }
 
-protocol CountriesSettingsDelegate: class {
-    func updateQuickSettings( secureCore: Bool, netshield: NetShieldType, killSwitch: Bool )
+protocol CountriesSettingsDelegate: AnyObject {
+    func updateQuickSettings(secureCore: Bool, netshield: NetShieldType, killSwitch: Bool)
 }
 
 class CountriesSectionViewModel {
@@ -187,25 +187,26 @@ class CountriesSectionViewModel {
         alertService.push(alert: AllCountriesUpsellAlert())
     }
     
-    func toggleCell(for countryCode: String) {
-        guard let country = countries.first( where: { $0.0.countryCode == countryCode }) else { return }
+    func toggleCountryCell(for countryViewModel: CountryItemViewModel) {
         guard let index = data.firstIndex(where: {
-            if case .country( let countryVM ) = $0, countryVM.countryCode == countryCode { return true }
+            if case .country(let countryVM) = $0, countryVM.id == countryViewModel.id { return true }
             return false
         }) else {
             return
         }
-        
-        if !expandedCountries.contains(countryCode) {
-            expandedCountries.insert(countryCode)
-            let offset = insertServers(index + 1, countryGroup: country)
+
+        if !expandedCountries.contains(countryViewModel.id) {
+            expandedCountries.insert(countryViewModel.id)
+            let offset = insertServers(index + 1, countryCode: countryViewModel.id, serversFilter: countryViewModel.serversFilter)
             let contentChange = ContentChange(insertedRows: IndexSet(integersIn: index + 1 ..< index + offset + 1))
             contentChanged?(contentChange)
         } else {
-            expandedCountries.remove(countryCode)
-            let offset = removeServers(index, servers: country.1)
-            let contentChange = ContentChange(removedRows: IndexSet(integersIn: index + 1 ... index + offset))
-            contentChanged?(contentChange)
+            expandedCountries.remove(countryViewModel.id)
+            let offset = removeServers(index)
+            if offset > 0 {
+                let contentChange = ContentChange(removedRows: IndexSet(integersIn: index + 1 ... index + offset))
+                contentChanged?(contentChange)
+            }
         }
     }
     
@@ -247,16 +248,21 @@ class CountriesSectionViewModel {
         }
     }
     
-    private func setupServers () {
+    private func setupServers(containsGateways: Bool) {
         servers = [:]
         self.countries.forEach { country, servers in
-            let servers = servers.filter {
+            let allCountryServers = servers.filter {
                 $0.supports(connectionProtocol: propertiesManager.connectionProtocol,
                             smartProtocolConfig: propertiesManager.smartProtocolConfig)
             }
 
-            let freeServers: [CellModel] = servers.filter { $0.tier == 0 }.map { .server(self.serverViewModel($0)) }
-            let plusServers: [CellModel] = servers.filter { $0.tier > 1 }.map { .server(self.serverViewModel($0)) }
+            // Simple servers
+            let simpleServers = containsGateways
+                ? allCountryServers.filter { !$0.feature.contains(.restricted) }
+                : allCountryServers
+
+            let freeServers: [CellModel] = simpleServers.filter { $0.tier == 0 }.map { .server(self.serverViewModel($0)) }
+            let plusServers: [CellModel] = simpleServers.filter { $0.tier > 1 }.map { .server(self.serverViewModel($0)) }
             let freeHeaderVM = ServerHeaderViewModel(LocalizedString.freeServers, totalServers: freeServers.count, country: country, tier: 0, propertiesManager: propertiesManager, countriesViewModel: self)
             let plusHeaderVM = ServerHeaderViewModel(LocalizedString.plusServers, totalServers: plusServers.count, country: country, tier: 2, propertiesManager: propertiesManager, countriesViewModel: self)
             
@@ -284,6 +290,13 @@ class CountriesSectionViewModel {
             }
             
             self.servers[country.countryCode] = cells
+
+            // Gateway servers
+            if containsGateways {
+                let gateways = allCountryServers.filter { $0.feature.contains(.restricted) }
+                let cells: [CellModel] = gateways.map { .server(self.serverViewModel($0)) }
+                self.servers[idForGateway(countryCode: country.countryCode)] = cells
+            }
         }
     }
 
@@ -349,17 +362,18 @@ class CountriesSectionViewModel {
         setTier()
         let serverType: ServerType = isSecureCoreEnabled ? .secureCore : .standard
         self.countries = serverManager.grouping(for: serverType, query: currentQuery)
-        data = groupServersIntoSections(self.countries, serverType: serverType)
-        setupServers()
+        let groupResult = groupServersIntoSections(self.countries, serverType: serverType)
+        data = groupResult.0
+        setupServers(containsGateways: groupResult.1)
     }
     
-    private func insertServers( _ index: Int, countryGroup: CountryGroup ) -> Int {
-        guard let cells = self.servers[countryGroup.country.countryCode] else { return 0 }
+    private func insertServers(_ index: Int, countryCode: String, serversFilter: ((ServerModel) -> Bool)?) -> Int {
+        guard let cells = self.servers[countryCode] else { return 0 }
         data.insert(contentsOf: cells, at: index)
         return cells.count
     }
     
-    private func removeServers( _ index: Int, servers: [ServerModel] ) -> Int {
+    private func removeServers(_ index: Int) -> Int {
         let secondIndex = data[(index + 1)...].firstIndex(where: {
             if case .country = $0 { return true }
             if case .header(let vm) = $0, vm is CountryHeaderViewModel { return true }
@@ -371,13 +385,32 @@ class CountriesSectionViewModel {
         return range.count
     }
     
-    private func groupServersIntoSections(_ countries: [CountryGroup], serverType: ServerType ) -> [CellModel] {
+    private func groupServersIntoSections(_ countries: [CountryGroup], serverType: ServerType ) -> ([CellModel], Bool) {
+        var gatewaysSection = [CellModel]()
+        var defaultServersFilter: ((ServerModel) -> Bool)?
+        var containsGateways = false
+
+        let gatewayContent = countries.filter { $0.servers.contains(where: { $0.feature.contains(.restricted) }) }
+        if !gatewayContent.isEmpty {
+            containsGateways = true
+            gatewaysSection = [ .header(CountryHeaderViewModel(LocalizedString.locationsGateways, totalCountries: nil, isPremium: false, countriesViewModel: self)) ]
+            gatewaysSection += gatewayContent.enumerated().map { index, country -> CellModel in
+                return .country(self.countryViewModel(country, id: idForGateway(countryCode: country.country.countryCode), displaySeparator: index != 0, serversFilter: { $0.feature.contains(.restricted) }, showCountryConnectButton: false))
+            }
+
+            // In case we found restricted servers, we should not only add them to the front of
+            // the list, but also remove them from the bottom part
+            defaultServersFilter = { !$0.feature.contains(.restricted) }
+        }
+
         if userTier > 1 {
             // PLUS VISIONARY
             let headerVM = CountryHeaderViewModel(LocalizedString.locationsAll, totalCountries: countries.count, isPremium: true, countriesViewModel: self)
-            return [ .header(headerVM) ] + countries.enumerated().map { index, country -> CellModel in
-                return .country(self.countryViewModel(country, displaySeparator: index != 0))
-            }
+            return (gatewaysSection
+                + [ .header(headerVM) ]
+                + countries.enumerated().map { index, country -> CellModel in
+                    return .country(self.countryViewModel(country, id: country.country.countryCode, displaySeparator: index != 0, serversFilter: defaultServersFilter, showCountryConnectButton: true))
+                }, containsGateways)
         }
         
         if userTier == 1 {
@@ -385,9 +418,11 @@ class CountriesSectionViewModel {
             let plusLocations = countries.filter { $0.0.lowestTier > 1 }
             let headerPlusVM = CountryHeaderViewModel(LocalizedString.locationsPlus, totalCountries: plusLocations.count, isPremium: true, countriesViewModel: self)
 
-            return [ .header(headerPlusVM) ] + plusLocations.enumerated().map { index, country -> CellModel in
-                return .country(self.countryViewModel(country, displaySeparator: index != 0))
-            }
+            return (gatewaysSection
+                + [ .header(headerPlusVM) ]
+                + plusLocations.enumerated().map { index, country -> CellModel in
+                    return .country(self.countryViewModel(country, id: country.country.countryCode, displaySeparator: index != 0, serversFilter: defaultServersFilter, showCountryConnectButton: true))
+                }, containsGateways)
         }
         
         // Free
@@ -397,23 +432,35 @@ class CountriesSectionViewModel {
         let headerFreeVM = CountryHeaderViewModel(LocalizedString.locationsFree, totalCountries: freeLocations.count, isPremium: false, countriesViewModel: self)
         let headerPlusVM = CountryHeaderViewModel(LocalizedString.locationsPlus, totalCountries: plusLocations.count, isPremium: true, countriesViewModel: self)
 
-        return [ .header(headerFreeVM) ] + freeLocations.enumerated().map { index, country -> CellModel in
-            return .country(self.countryViewModel(country, displaySeparator: index != 0))
-        } + [ .header(headerPlusVM) ] + plusLocations.enumerated().map { index, country -> CellModel in
-            return .country(self.countryViewModel(country, displaySeparator: index != 0))
-        }
+        return (gatewaysSection
+            + [ .header(headerFreeVM) ]
+            + freeLocations.enumerated().map { index, country -> CellModel in
+                return .country(self.countryViewModel(country, id: country.country.countryCode, displaySeparator: index != 0, serversFilter: defaultServersFilter, showCountryConnectButton: true))
+            }
+            + [ .header(headerPlusVM) ]
+            + plusLocations.enumerated().map { index, country -> CellModel in
+                return .country(self.countryViewModel(country, id: country.country.countryCode, displaySeparator: index != 0, serversFilter: defaultServersFilter, showCountryConnectButton: true))
+            }, containsGateways)
+    }
+
+    private func idForGateway(countryCode: String) -> String {
+        return "\(countryCode)-gateways"
     }
     
-    private func countryViewModel( _ country: CountryGroup, displaySeparator: Bool ) -> CountryItemViewModel {
+    private func countryViewModel(_ country: CountryGroup, id: String, displaySeparator: Bool, serversFilter: ((ServerModel) -> Bool)?, showCountryConnectButton: Bool) -> CountryItemViewModel {
         return CountryItemViewModel(
-                            country: country,
-                            vpnGateway: self.vpnGateway,
-                            appStateManager: self.appStateManager,
-                            countriesSectionViewModel: self,
-                            propertiesManager: self.propertiesManager,
-                            userTier: self.userTier,
-                            isOpened: false,
-                            displaySeparator: displaySeparator)
+            id: id,
+            country: country,
+            vpnGateway: self.vpnGateway,
+            appStateManager: self.appStateManager,
+            countriesSectionViewModel: self,
+            propertiesManager: self.propertiesManager,
+            userTier: self.userTier,
+            isOpened: false,
+            displaySeparator: displaySeparator,
+            serversFilter: serversFilter,
+            showCountryConnectButton: showCountryConnectButton
+        )
     }
     
     private func serverViewModel( _ server: ServerModel ) -> ServerItemViewModel {

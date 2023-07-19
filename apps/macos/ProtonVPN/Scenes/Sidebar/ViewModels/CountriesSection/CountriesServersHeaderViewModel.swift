@@ -34,8 +34,12 @@ class CountryHeaderViewModel: CountriesServersHeaderViewModelProtocol {
     let backgroundColor: CGColor = .cgColor(.background, .weak)
     var didTapInfoBtn: (() -> Void)?
     
-    init( _ sectionHeader: String, totalCountries: Int, isPremium: Bool, countriesViewModel: CountriesSectionViewModel ) {
-        title = sectionHeader + " (\(totalCountries))"
+    init(_ sectionHeader: String, totalCountries: Int?, isPremium: Bool, countriesViewModel: CountriesSectionViewModel) {
+        var title = sectionHeader
+        if let totalCountries {
+            title += " (\(totalCountries))"
+        }
+        self.title = title
         guard isPremium else { return }
         didTapInfoBtn = {
             countriesViewModel.displayPremiumServices?()

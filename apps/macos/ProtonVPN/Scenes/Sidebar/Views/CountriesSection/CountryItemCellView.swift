@@ -84,16 +84,18 @@ final class CountryItemCellView: NSView {
             mouseExited(with: event)
             return
         }
-        connectButton.isHidden = viewModel.isTierTooLow
-        torIV.isHidden = (viewModel.isTorAvailable && !viewModel.isTierTooLow) || !viewModel.isTorAvailable
-        p2pIV.isHidden = (viewModel.isP2PAvailable && !viewModel.isTierTooLow) || !viewModel.isP2PAvailable
-        smartIV.isHidden = (viewModel.isSmartAvailable && !viewModel.isTierTooLow) || !viewModel.isSmartAvailable
+        connectButton.isHidden = isConnectButtonHidden(mouseHover: true)
+        if !connectButton.isHidden {
+            torIV.isHidden = (viewModel.isTorAvailable && !viewModel.isTierTooLow) || !viewModel.isTorAvailable
+            p2pIV.isHidden = (viewModel.isP2PAvailable && !viewModel.isTierTooLow) || !viewModel.isP2PAvailable
+            smartIV.isHidden = (viewModel.isSmartAvailable && !viewModel.isTierTooLow) || !viewModel.isSmartAvailable
+        }
         addCursorRect(frame, cursor: .pointingHand)
     }
     
     override func mouseExited(with event: NSEvent) {
         expandButton.isEnabled = !disabled
-        connectButton.isHidden = !viewModel.isConnected || viewModel.isTierTooLow
+        connectButton.isHidden = isConnectButtonHidden(mouseHover: false)
         configureFeatures()
         removeCursorRect(frame, cursor: .pointingHand)
     }
@@ -112,7 +114,7 @@ final class CountryItemCellView: NSView {
         countryLbl.stringValue = viewModel.countryName
         flagIV.image = AppTheme.Icon.flag(countryCode: viewModel.countryCode)
         connectButton.isConnected = viewModel.isConnected
-        connectButton.isHidden = !connectButton.isConnected
+        connectButton.isHidden = isConnectButtonHidden(mouseHover: false)
         upgradeBtn.isHidden = !viewModel.isTierTooLow || viewModel.underMaintenance
         expandButton.isHidden = viewModel.isTierTooLow || viewModel.underMaintenance
         maintenanceBtn.isHidden = !viewModel.underMaintenance
@@ -121,6 +123,16 @@ final class CountryItemCellView: NSView {
         configureFeatures()
         setupAccessibilityCustomActions()
     }
+
+    private func isConnectButtonHidden(mouseHover: Bool) -> Bool {
+        // Hide if hidden or tier too low to connect
+        guard viewModel.showCountryConnectButton && !viewModel.isTierTooLow else { return true }
+        // Show on mouse hover
+        guard !mouseHover else { return false }
+        // Show if connected to this country
+        return !viewModel.isConnected
+    }
+
     // MARK: - Actions
     
     @IBAction private func didTapExpandBtn(_ sender: Any) {

@@ -33,6 +33,12 @@ class CountryItemViewModel {
     /// The grouping of servers for the given country.
     /// - Note: It's likely you want to access `supportedServerModels` instead.
     private let serverModels: [ServerModel]
+    /// If not nil, will filter servers to only the ones that contain given feature
+    public let serversFilter: ((ServerModel) -> Bool)?
+    /// Country may be present more than once in the list, hence we need a better ID
+    public let id: String
+    /// In gateways countries there is no connect button
+    public let showCountryConnectButton: Bool
 
     fileprivate let vpnGateway: VpnGatewayProtocol
     fileprivate let appStateManager: AppStateManager
@@ -76,19 +82,24 @@ class CountryItemViewModel {
         return !isTierTooLow && vpnGateway.connection == .connected
             && connectedServer.isSecureCore == false
             && connectedServer.countryCode == countryModel.countryCode
+            && supportedServerModels.contains(where: { $0 == connectedServer })
     }
     
     let displaySeparator: Bool
     
-    init(country: CountryGroup,
+    init(id: String,
+         country: CountryGroup,
          vpnGateway: VpnGatewayProtocol,
          appStateManager: AppStateManager,
          countriesSectionViewModel: CountriesSectionViewModel,
          propertiesManager: PropertiesManagerProtocol,
          userTier: Int,
          isOpened: Bool,
-         displaySeparator: Bool) {
-        
+         displaySeparator: Bool,
+         serversFilter: ((ServerModel) -> Bool)?,
+         showCountryConnectButton: Bool) {
+
+        self.id = id
         self.countryModel = country.0
         self.serverModels = country.1
         self.vpnGateway = vpnGateway
@@ -100,6 +111,8 @@ class CountryItemViewModel {
         self.isServerUnderMaintenance = false
         self.displaySeparator = displaySeparator
         self.appStateManager = appStateManager
+        self.serversFilter = serversFilter
+        self.showCountryConnectButton = showCountryConnectButton
 
         populateSupportedServerModels(supporting: propertiesManager.connectionProtocol)
         startObserving()
@@ -123,7 +136,7 @@ class CountryItemViewModel {
     }
     
     func changeCellState() {
-        countriesSectionViewModel.toggleCell(for: countryCode)
+        countriesSectionViewModel.toggleCountryCell(for: self)
         isOpened = !isOpened
     }
 
@@ -160,6 +173,7 @@ class CountryItemViewModel {
         supportedServerModels = serverModels.filter {
             $0.supports(connectionProtocol: connectionProtocol,
                         smartProtocolConfig: propertiesManager.smartProtocolConfig)
+            && serversFilter?($0) ?? true
         }
     }
 }
