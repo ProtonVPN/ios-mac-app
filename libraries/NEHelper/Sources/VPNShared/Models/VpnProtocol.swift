@@ -46,6 +46,8 @@ public enum VpnProtocol: Equatable, Hashable, CaseIterable {
     public static let deprecatedProtocols: [VpnProtocol] = OpenVpnTransport.allCases.map(Self.openVpn)
     #endif
 
+    public var isDeprecated: Bool { Self.deprecatedProtocols.contains(self) }
+
     case ike
     case openVpn(OpenVpnTransport)
     case wireGuard(WireGuardTransport)

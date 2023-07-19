@@ -22,6 +22,7 @@
 
 import Foundation
 import VPNShared
+import VPNAppCore
 import XCTestDynamicOverlay
 
 typealias SmartProtocolCompletion = (VpnProtocol, [Int]) -> Void

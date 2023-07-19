@@ -247,6 +247,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         didRequestCertRefresh = { _ in
             #if os(macOS)
+            // MasOS should connect with IKE
             XCTFail("Should not request to refresh certificate for non-certificate-authenticated protocol")
             #endif
         }
@@ -261,7 +262,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         let platformManager: NEVPNManagerMock?
         #if os(iOS)
-        // wireguard was made unavailable above. protocol should fallback to openvpn
+        // wireguard was made unavailable above. protocol should fallback to wireguard TLS
         XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tls))
         platformManager = currentManager
         #elseif os(macOS)
@@ -281,13 +282,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         }
         wait(for: [expectations.connectedDate], timeout: expectationTimeout)
 
-        didRequestCertRefresh = { _ in
-            #if os(iOS)
-            XCTFail("Should not request to refresh certificate for non-certificate-authenticated protocol")
-            #else
-            expectations.openVPNCertificate.fulfill()
-            #endif
-        }
+        didRequestCertRefresh = { _ in }
 
         #if os(iOS)
         // on iOS, force TLS to be unavailable to force it to fallback to TCP
