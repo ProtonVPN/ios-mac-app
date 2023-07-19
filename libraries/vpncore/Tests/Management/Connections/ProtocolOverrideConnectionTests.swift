@@ -132,8 +132,7 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
     func testExclusiveOverrideWithSpecifiedPorts() {
         var managerConfig: VpnManagerConfiguration?
 
-        populateExpectations(description: "Should connect to openvpn, with overridden ports",
-                             [.certificateRefresh, .localAgentConnection, .vpnConnection])
+        populateExpectations(description: "Should connect to openvpn, with overridden ports", [.vpnConnection])
 
         container.didConfigure = { vmc, _ in
             managerConfig = vmc
