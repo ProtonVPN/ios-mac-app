@@ -1,7 +1,7 @@
 //
-//  Created on 03.03.2022.
+//  Created on 2023-07-19.
 //
-//  Copyright (c) 2022 Proton AG
+//  Copyright (c) 2023 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,19 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
 
-public protocol CountryViewModel: AnyObject, ConnectViewModel {
-    var description: String { get }
-    var isSmartAvailable: Bool { get }
-    var torAvailable: Bool { get }
-    var p2pAvailable: Bool { get }
-    var connectionChanged: (() -> Void)? { get set }
-    var alphaOfMainElements: CGFloat { get }
-    var flag: UIImage? { get }
-    var isSecureCoreCountry: Bool { get }
-    var showCountryConnectButton: Bool { get }
-
-    func getServers() -> [ServerTier: [ServerViewModel]]
-    func getCities() -> [CityViewModel]
+extension Array {
+    /// Accepts optional closure for filtering. If `nil` is given, return the same array unfiltered.
+    public func filter(_ isIncluded: ((Element) throws -> Bool)?) rethrows -> [Element] {
+        guard let isIncluded else { return self }
+        return try self.filter { try isIncluded($0) }
+    }
 }

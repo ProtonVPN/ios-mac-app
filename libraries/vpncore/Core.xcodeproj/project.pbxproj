@@ -179,6 +179,7 @@
 		ADBFE44F29CDA14D001A5446 /* LocalAgentMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBFE44D29CDA14D001A5446 /* LocalAgentMessages.swift */; };
 		ADBFE45129CDAAE0001A5446 /* Timer+Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBFE45029CDAAE0001A5446 /* Timer+Dependencies.swift */; };
 		ADBFE45229CDAAE0001A5446 /* Timer+Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBFE45029CDAAE0001A5446 /* Timer+Dependencies.swift */; };
+		B036E2349AB3F28AE20E4AD6 /* Array+OptionalFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684357373454EC5B5F650BD1 /* Array+OptionalFilter.swift */; };
 		B462E62171534FB8B0E39654 /* NetShieldType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D30B2B54E22870DA56088C /* NetShieldType+Extensions.swift */; };
 		B5A5BE6A7BE692D89848FC78 /* PropertiesManager+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = D274E05ECAA25CC9D061FC43 /* PropertiesManager+Log.swift */; };
 		B814D7396AC688F7877D3490 /* URL+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F973511943D701511CC59CC4 /* URL+String.swift */; };
@@ -707,6 +708,7 @@
 		F3EF4ECE2670C22300109CA3 /* Threading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EF4ECB2670C22300109CA3 /* Threading.swift */; };
 		F3FBB101267360F6004490AF /* LocalAgentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FBB100267360F6004490AF /* LocalAgentConfiguration.swift */; };
 		F3FBB103267360F6004490AF /* LocalAgentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FBB100267360F6004490AF /* LocalAgentConfiguration.swift */; };
+		F9B94795A92ED5EF682D4475 /* Array+OptionalFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684357373454EC5B5F650BD1 /* Array+OptionalFilter.swift */; };
 		FEDA0212F8DF7B00D9D4B9ED /* Result+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251C64F2C8666DA65CC54F46 /* Result+Extensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -842,6 +844,7 @@
 		66E61904240CFC26005E9950 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		66E61905240CFC26005E9950 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Localization/ru.lproj/Intents.strings; sourceTree = "<group>"; };
 		66E61906240CFC26005E9950 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Localization/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		684357373454EC5B5F650BD1 /* Array+OptionalFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+OptionalFilter.swift"; sourceTree = "<group>"; };
 		7478731ADFC58899985DB1C0 /* LocalAgentFeatures+VpnConnectionFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalAgentFeatures+VpnConnectionFeatures.swift"; sourceTree = "<group>"; };
 		75B99C5205690D58E23659F4 /* Pods-Core-vpncore-macos-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Core-vpncore-macos-metadata.plist"; sourceTree = "<group>"; };
 		86C5C3DFC45D967302ACFBB2 /* Pods-Core-vpncore-macosTests-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Core-vpncore-macosTests-metadata.plist"; sourceTree = "<group>"; };
@@ -1991,6 +1994,7 @@
 				4CB2A3D5289131F5002E839E /* ExtensionInfo+Comparable.swift */,
 				E53C798C292E1A8200A59A1F /* CGFloat+Margin.swift */,
 				ADBFE45029CDAAE0001A5446 /* Timer+Dependencies.swift */,
+				684357373454EC5B5F650BD1 /* Array+OptionalFilter.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2556,12 +2560,12 @@
 			);
 			mainGroup = E1B5F5CE21B68ABD00B558B0;
 			packageReferences = (
-				E58D06402A0B8B1C002A896C /* XCRemoteSwiftPackageReference "swift-clocks" */,
-				E5A4AD152A3B251500CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
-				E5A4AD1A2A3B299300CC91D7 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
-				E5A4AD1D2A3B353D00CC91D7 /* XCRemoteSwiftPackageReference "swiftui-navigation" */,
-				E5A4AD272A3B470900CC91D7 /* XCRemoteSwiftPackageReference "swift-identified-collections" */,
-				D5391F152A4D4ABE0089D2F7 /* XCRemoteSwiftPackageReference "swift-collections" */,
+				E58D06402A0B8B1C002A896C /* XCRemoteSwiftPackageReference "swift-clocks.git" */,
+				E5A4AD152A3B251500CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */,
+				E5A4AD1A2A3B299300CC91D7 /* XCRemoteSwiftPackageReference "swift-composable-architecture.git" */,
+				E5A4AD1D2A3B353D00CC91D7 /* XCRemoteSwiftPackageReference "swiftui-navigation.git" */,
+				E5A4AD272A3B470900CC91D7 /* XCRemoteSwiftPackageReference "swift-identified-collections.git" */,
+				D5391F152A4D4ABE0089D2F7 /* XCRemoteSwiftPackageReference "swift-collections.git" */,
 			);
 			productRefGroup = E1B5F5D921B68ABD00B558B0 /* Products */;
 			projectDirPath = "";
@@ -3115,6 +3119,7 @@
 				DD0969B7000F4DC02C628AE6 /* NetShieldType+Extensions.swift in Sources */,
 				403D438B4B6E524D1808DD5D /* LocalAgentFeatures+VpnConnectionFeatures.swift in Sources */,
 				E53D7461291CF0CB0006E499 /* VPNPartnersRequest.swift in Sources */,
+				F9B94795A92ED5EF682D4475 /* Array+OptionalFilter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3436,6 +3441,7 @@
 				B462E62171534FB8B0E39654 /* NetShieldType+Extensions.swift in Sources */,
 				D578439628FFC779007E3FC6 /* VpnKeys+Generation.swift in Sources */,
 				38BE49A63633B4C7539CB9BC /* LocalAgentFeatures+VpnConnectionFeatures.swift in Sources */,
+				B036E2349AB3F28AE20E4AD6 /* Array+OptionalFilter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4367,7 +4373,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D5391F152A4D4ABE0089D2F7 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+		D5391F152A4D4ABE0089D2F7 /* XCRemoteSwiftPackageReference "swift-collections.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-collections.git";
 			requirement = {
@@ -4375,7 +4381,7 @@
 				version = 1.0.4;
 			};
 		};
-		E58D06402A0B8B1C002A896C /* XCRemoteSwiftPackageReference "swift-clocks" */ = {
+		E58D06402A0B8B1C002A896C /* XCRemoteSwiftPackageReference "swift-clocks.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-clocks.git";
 			requirement = {
@@ -4383,7 +4389,7 @@
 				minimumVersion = 0.3.0;
 			};
 		};
-		E5A4AD152A3B251500CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
+		E5A4AD152A3B251500CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-dependencies.git";
 			requirement = {
@@ -4391,7 +4397,7 @@
 				minimumVersion = 0.1.1;
 			};
 		};
-		E5A4AD1A2A3B299300CC91D7 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+		E5A4AD1A2A3B299300CC91D7 /* XCRemoteSwiftPackageReference "swift-composable-architecture.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
 			requirement = {
@@ -4399,7 +4405,7 @@
 				minimumVersion = 0.54.1;
 			};
 		};
-		E5A4AD1D2A3B353D00CC91D7 /* XCRemoteSwiftPackageReference "swiftui-navigation" */ = {
+		E5A4AD1D2A3B353D00CC91D7 /* XCRemoteSwiftPackageReference "swiftui-navigation.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swiftui-navigation.git";
 			requirement = {
@@ -4407,7 +4413,7 @@
 				minimumVersion = 0.4.5;
 			};
 		};
-		E5A4AD272A3B470900CC91D7 /* XCRemoteSwiftPackageReference "swift-identified-collections" */ = {
+		E5A4AD272A3B470900CC91D7 /* XCRemoteSwiftPackageReference "swift-identified-collections.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-identified-collections.git";
 			requirement = {
@@ -4460,7 +4466,7 @@
 		};
 		D5391F162A4D4ABE0089D2F7 /* OrderedCollections */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D5391F152A4D4ABE0089D2F7 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			package = D5391F152A4D4ABE0089D2F7 /* XCRemoteSwiftPackageReference "swift-collections.git" */;
 			productName = OrderedCollections;
 		};
 		D563A74D2A5C0F9000908254 /* ConnectionDetails-iOS */ = {
@@ -4525,27 +4531,27 @@
 		};
 		E58D06412A0B8B1C002A896C /* Clocks */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E58D06402A0B8B1C002A896C /* XCRemoteSwiftPackageReference "swift-clocks" */;
+			package = E58D06402A0B8B1C002A896C /* XCRemoteSwiftPackageReference "swift-clocks.git" */;
 			productName = Clocks;
 		};
 		E5A4AD162A3B251500CC91D7 /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E5A4AD152A3B251500CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
+			package = E5A4AD152A3B251500CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */;
 			productName = Dependencies;
 		};
 		E5A4AD1B2A3B299300CC91D7 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E5A4AD1A2A3B299300CC91D7 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			package = E5A4AD1A2A3B299300CC91D7 /* XCRemoteSwiftPackageReference "swift-composable-architecture.git" */;
 			productName = ComposableArchitecture;
 		};
 		E5A4AD1E2A3B353D00CC91D7 /* SwiftUINavigation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E5A4AD1D2A3B353D00CC91D7 /* XCRemoteSwiftPackageReference "swiftui-navigation" */;
+			package = E5A4AD1D2A3B353D00CC91D7 /* XCRemoteSwiftPackageReference "swiftui-navigation.git" */;
 			productName = SwiftUINavigation;
 		};
 		E5A4AD282A3B470900CC91D7 /* IdentifiedCollections */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E5A4AD272A3B470900CC91D7 /* XCRemoteSwiftPackageReference "swift-identified-collections" */;
+			package = E5A4AD272A3B470900CC91D7 /* XCRemoteSwiftPackageReference "swift-identified-collections.git" */;
 			productName = IdentifiedCollections;
 		};
 		E5BF7BD22A03A418007234C4 /* Home */ = {
@@ -4554,12 +4560,12 @@
 		};
 		E5C8A2632A3C4C5500290723 /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E5A4AD152A3B251500CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
+			package = E5A4AD152A3B251500CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */;
 			productName = Dependencies;
 		};
 		E5C8A2652A3C4C6800290723 /* IdentifiedCollections */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E5A4AD272A3B470900CC91D7 /* XCRemoteSwiftPackageReference "swift-identified-collections" */;
+			package = E5A4AD272A3B470900CC91D7 /* XCRemoteSwiftPackageReference "swift-identified-collections.git" */;
 			productName = IdentifiedCollections;
 		};
 		E93120F328DB2EE600C1C2FE /* PMLogger */ = {

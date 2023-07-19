@@ -31,8 +31,8 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
         return UINib(nibName: identifier, bundle: Bundle.module)
     }
 
-    static let chevronRight = UIImage(named: "ic-chevron-right", in: .module, compatibleWith: nil)
-    static let chevronsRight = UIImage(named: "ic-chevrons-right", in: .module, compatibleWith: nil)
+    static let chevronRight = UIImage(named: "ic-chevron-right", in: .module, compatibleWith: nil) // swiftlint:disable:this hardcoded_assets
+    static let chevronsRight = UIImage(named: "ic-chevrons-right", in: .module, compatibleWith: nil) // swiftlint:disable:this hardcoded_assets
 
     // MARK: Outlets
 
@@ -81,6 +81,8 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
             entrySeparator.isHidden = !viewModel.isSecureCoreCountry
             flagsStackView.spacing = viewModel.isSecureCoreCountry ? 8 : 16
 
+            connectButton.isHidden = !viewModel.showCountryConnectButton
+
             stateChanged()
         }
     }
@@ -120,7 +122,7 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
 
 extension CountryCell: UIPointerInteractionDelegate {
     public func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {
-        var pointerStyle: UIPointerStyle? = nil
+        var pointerStyle: UIPointerStyle?
         if let interactionView = interaction.view {
             let targetedPreview = UITargetedPreview(view: interactionView)
             pointerStyle = UIPointerStyle(effect: UIPointerEffect.lift(targetedPreview))
