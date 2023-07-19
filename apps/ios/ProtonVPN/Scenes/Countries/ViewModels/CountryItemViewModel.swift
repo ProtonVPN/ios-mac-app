@@ -35,6 +35,10 @@ class CountryItemViewModel {
     /// All of the server models available for a given country.
     /// - Note: It's likely you want to access `supportedServerModels` instead.
     private let serverModels: [ServerModel]
+    /// If not nil, will filter servers to only the ones that contain given feature
+    private let serversFilter: ((ServerModel) -> Bool)?
+    /// In gateways countries there is no connect button
+    public let showCountryConnectButton: Bool
 
     // MARK: Dependencies
     private let appStateManager: AppStateManager
@@ -68,7 +72,7 @@ class CountryItemViewModel {
     
     private var isConnected: Bool {
         if vpnGateway.connection == .connected, let activeServer = appStateManager.activeConnection()?.server, activeServer.countryCode == countryCode {
-            return serverModels.contains(where: { $0 == activeServer })
+            return serverModels.filter(serversFilter).contains(where: { $0 == activeServer })
         }
 
         return false
@@ -215,7 +219,7 @@ class CountryItemViewModel {
     }()
 
     // MARK: Init routine
-    init(countryGroup: CountryGroup, serverType: ServerType, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, alertService: AlertService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol, planService: PlanService) {
+    init(countryGroup: CountryGroup, serverType: ServerType, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, alertService: AlertService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol, planService: PlanService, serversFilter: ((ServerModel) -> Bool)?, showCountryConnectButton: Bool) {
         self.countryModel = countryGroup.country
         self.serverModels = countryGroup.servers
         self.appStateManager = appStateManager
@@ -225,6 +229,8 @@ class CountryItemViewModel {
         self.connectionStatusService = connectionStatusService
         self.propertiesManager = propertiesManager
         self.planService = planService
+        self.serversFilter = serversFilter
+        self.showCountryConnectButton = showCountryConnectButton
         self.populateSupportedServerModels(supporting: propertiesManager.connectionProtocol)
         startObserving()
     }
@@ -324,8 +330,9 @@ class CountryItemViewModel {
 
     private func populateSupportedServerModels(supporting connectionProtocol: ConnectionProtocol) {
         supportedServerModels = serverModels.filter {
-            $0.supports(connectionProtocol: connectionProtocol,
+            return $0.supports(connectionProtocol: connectionProtocol,
                         smartProtocolConfig: propertiesManager.smartProtocolConfig)
+            && (serversFilter?($0) ?? true)
         }
     }
 }

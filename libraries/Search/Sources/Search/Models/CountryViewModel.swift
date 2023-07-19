@@ -28,6 +28,7 @@ public protocol CountryViewModel: AnyObject, ConnectViewModel {
     var alphaOfMainElements: CGFloat { get }
     var flag: UIImage? { get }
     var isSecureCoreCountry: Bool { get }
+    var showCountryConnectButton: Bool { get }
 
     func getServers() -> [ServerTier: [ServerViewModel]]
     func getCities() -> [CityViewModel]

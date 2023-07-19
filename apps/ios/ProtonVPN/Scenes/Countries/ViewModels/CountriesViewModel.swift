@@ -30,7 +30,18 @@ enum ServerItemModel {
     case secureCoreServer(SecureCoreServerItemViewModel)
 }
 
+typealias Row = CountryGroup
+
+private struct Section {
+    let title: String
+    let rows: [Row]
+    let serversFilter: ((ServerModel) -> Bool)?
+    let showCountryConnectButton: Bool
+}
+
 class CountriesViewModel: SecureCoreToggleHandler {
+
+    private var tableData = [Section]()
     
     // MARK: vars and init
     private enum ModelState {
@@ -96,7 +107,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         
         setTier()
         setStateOf(type: propertiesManager.serverTypeToggle) // if last showing SC, then launch into SC
-        
+        fillTableData()
         addObservers()
     }
 
@@ -127,10 +138,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     
     func numberOfSections() -> Int {
         setTier() // good place to update because generally an infrequent call that should be called every table reload
-        return CoreAppConstants.VpnTiers.allCases
-            .map { self.content(for: $0) }
-            .filter { !$0.isEmpty }
-            .count
+        return tableData.count
     }
     
     func numberOfRows(in section: Int) -> Int {
@@ -141,22 +149,25 @@ class CountriesViewModel: SecureCoreToggleHandler {
         if numberOfRows(in: section) == 0 {
             return nil
         }
-
-        let totalCountries = " (\(numberOfRows(in: section)))"
-        switch userTier {
-        case 0:
-            return [LocalizedString.locationsFree, LocalizedString.locationsPlus][section] + totalCountries
-        default:
-            return LocalizedString.locationsAll + totalCountries
+        guard section < tableData.endIndex else {
+            return nil
         }
+        return tableData[section].title
     }
     
-    func cellModel(for row: Int, in section: Int) -> CountryItemViewModel {
-        let countryGroup = content(for: section)[row]
-        return cellModel(countryGroup: countryGroup)
+    func cellModel(for row: Int, in sectionIndex: Int) -> CountryItemViewModel {
+        guard let section = section(sectionIndex) else {
+            fatalError("Wrong row requested: (\(row):\(sectionIndex)")
+        }
+        let countryGroup = section.rows[row]
+        return cellModel(
+            countryGroup: countryGroup,
+            serversFilter: section.serversFilter,
+            showCountryConnectButton: section.showCountryConnectButton
+        )
     }
 
-    func cellModel(countryGroup: CountryGroup) -> CountryItemViewModel {
+    private func cellModel(countryGroup: CountryGroup, serversFilter: ((ServerModel) -> Bool)?, showCountryConnectButton: Bool) -> CountryItemViewModel {
         return CountryItemViewModel(countryGroup: countryGroup,
                                     serverType: state.serverType,
                                     appStateManager: appStateManager,
@@ -164,7 +175,9 @@ class CountriesViewModel: SecureCoreToggleHandler {
                                     alertService: alertService,
                                     connectionStatusService: connectionStatusService,
                                     propertiesManager: propertiesManager,
-                                    planService: planService
+                                    planService: planService,
+                                    serversFilter: serversFilter,
+                                    showCountryConnectButton: showCountryConnectButton
         )
     }
     
@@ -184,31 +197,19 @@ class CountriesViewModel: SecureCoreToggleHandler {
             userTier = CoreAppConstants.VpnTiers.free
         }
     }
-    
-    private func content(for section: Int) -> [CountryGroup] {
-        switch userTier {
-        case 0:
-            if section == 0 {
-                return state.currentContent.filter({ $0.0.lowestTier == 0 })
-            }
 
-            if section == 1 {
-                return state.currentContent.filter({ $0.0.lowestTier > 0 })
-            }
-        case 1:
-            if section == 0 {
-                return state.currentContent.filter({ $0.0.lowestTier < 2 })
-            }
-
-            if section == 1 {
-                return state.currentContent.filter({ $0.0.lowestTier == 2 })
-            }
-        default:
-            if section == 0 {
-                return state.currentContent
-            }
+    private func content(for index: Int) -> [Row] {
+        guard let section = section(index) else {
+            return []
         }
-        return []
+        return section.rows
+    }
+
+    private func section(_ index: Int) -> Section? {
+        guard index < tableData.endIndex else {
+            return nil
+        }
+        return tableData[index]
     }
     
     private func addObservers() {
@@ -238,7 +239,66 @@ class CountriesViewModel: SecureCoreToggleHandler {
     @objc private func reloadContent() {
         setTier()
         setStateOf(type: propertiesManager.serverTypeToggle)
+        fillTableData()
         contentChanged?()
+    }
+
+    private func fillTableData() { // swiftlint:disable:this function_body_length
+        var newTableData = [Section]()
+        var defaultServersFilter: ((ServerModel) -> Bool)?
+        let currentContent = state.currentContent
+        
+        let gatewayContent = state.currentContent.filter { $0.servers.contains(where: { $0.feature.contains(.restricted) }) }
+        if !gatewayContent.isEmpty {
+            newTableData.append(Section(
+                title: "\(LocalizedString.locationsGateways)",
+                rows: gatewayContent,
+                serversFilter: { $0.feature.contains(.restricted) },
+                showCountryConnectButton: false
+            ))
+            // In case we found restricted servers, we should not only add them to the front of
+            // the list, but also remove them from the bottom part
+            defaultServersFilter = { !$0.feature.contains(.restricted) }
+        }
+
+        switch userTier {
+        case 0: // Free
+            do { // First section
+                let rows = currentContent.filter { $0.0.lowestTier == 0 }
+                newTableData.append(Section(
+                    title: "\(LocalizedString.locationsFree) (\(rows.count))",
+                    rows: rows,
+                    serversFilter: defaultServersFilter,
+                    showCountryConnectButton: true
+                ))
+            }
+            do { // Second section
+                let rows = currentContent.filter { $0.0.lowestTier > 0 }
+                newTableData.append(Section(
+                    title: "\(LocalizedString.locationsPlus) (\(rows.count))",
+                    rows: rows,
+                    serversFilter: defaultServersFilter,
+                    showCountryConnectButton: true
+                ))
+            }
+        case 1: // Basic
+            let rows = currentContent.filter { $0.0.lowestTier < 2 }
+            newTableData.append(Section(
+                title: "\(LocalizedString.locationsAll) (\(rows.count))",
+                rows: rows,
+                serversFilter: defaultServersFilter,
+                showCountryConnectButton: true
+            ))
+        default: // Plus and up
+            let rows = currentContent
+            newTableData.append(Section(
+                title: "\(LocalizedString.locationsAll) (\(rows.count))",
+                rows: rows,
+                serversFilter: defaultServersFilter,
+                showCountryConnectButton: true
+            ))
+        }
+        tableData = newTableData
     }
 }
 
@@ -246,9 +306,9 @@ extension CountriesViewModel {
     var searchData: [CountryViewModel] {
         switch state {
         case let .standard(data):
-            return data.map({ cellModel(countryGroup: $0) })
+            return data.map({ cellModel(countryGroup: $0, serversFilter: nil, showCountryConnectButton: true) })
         case let .secureCore(data):
-            return data.map({ cellModel(countryGroup: $0) })
+            return data.map({ cellModel(countryGroup: $0, serversFilter: nil, showCountryConnectButton: true) })
         }
     }
 }
