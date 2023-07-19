@@ -39,8 +39,10 @@ protocol WindowService: WindowControllerDelegate {
     func closeIfPresent<T: NSWindowController>(windowController: T.Type)
     
     func showLogin(viewModel: LoginViewModel)
+#if !REDESIGN
     func showSidebar(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol)
     func showTour()
+#endif
     
     func openAbout(factory: AboutViewController.Factory)
     func openAcknowledgements()
@@ -145,7 +147,8 @@ class WindowServiceImplementation: WindowService {
         
         mainWindowController = windowController
     }
-    
+
+#if !REDESIGN
     func showSidebar(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol) {
         NSApp.setActivationPolicy(.regular)
         
@@ -175,6 +178,7 @@ class WindowServiceImplementation: WindowService {
         }
         tourController = TourController(mainWindow: window, sidebarViewController: sidebarController)
     }
+#endif
     
     func openAbout(factory: AboutViewController.Factory) {
         let controller = AboutViewController()

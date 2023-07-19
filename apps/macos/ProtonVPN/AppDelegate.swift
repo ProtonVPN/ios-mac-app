@@ -41,20 +41,33 @@ import Logging
 import PMLogger
 import VPNShared
 
-class AppDelegate: NSObject, NSApplicationDelegate {
-    
-//    @IBOutlet weak var protonVpnMenu: ProtonVpnMenuController!
-//    @IBOutlet weak var profilesMenu: ProfilesMenuController!
-//    @IBOutlet weak var helpMenu: HelpMenuController!
-//    @IBOutlet weak var statusMenu: StatusMenuWindowController!
+#if !REDESIGN
 
+let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
+
+@main
+class AppDelegate: NSObject {
+    @IBOutlet weak var protonVpnMenu: ProtonVpnMenuController!
+    @IBOutlet weak var profilesMenu: ProfilesMenuController!
+    @IBOutlet weak var helpMenu: HelpMenuController!
+    @IBOutlet weak var statusMenu: StatusMenuWindowController!
     let container = DependencyContainer()
     lazy var navigationService = container.makeNavigationService()
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
     private lazy var appInfo: AppInfo = container.makeAppInfo()
-    
     private var notificationManager: NotificationManagerProtocol!
-    
+}
+#else
+class AppDelegate: NSObject {
+    let container = DependencyContainer()
+    lazy var navigationService = container.makeNavigationService()
+    private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
+    private lazy var appInfo: AppInfo = container.makeAppInfo()
+    private var notificationManager: NotificationManagerProtocol!
+}
+#endif
+
+extension AppDelegate: NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         setupCoreIntegration()
         setupLogsForApp()
@@ -74,12 +87,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             SentryHelper.setupSentry(dsn: ObfuscatedConstants.sentryDsnmacOS)
             
             AppLaunchRoutine.execute(propertiesManager: self.propertiesManager)
-
-//            self.protonVpnMenu.update(with: self.container.makeProtonVpnMenuViewModel())
-//            self.profilesMenu.update(with: self.container.makeProfilesMenuViewModel())
-//            self.helpMenu.update(with: self.container.makeHelpMenuViewModel())
-//            self.statusMenu.update(with: self.container.makeStatusMenuWindowModel())
-//            self.container.makeWindowService().setStatusMenuWindowController(self.statusMenu)
+#if !REDESIGN
+            self.protonVpnMenu.update(with: self.container.makeProtonVpnMenuViewModel())
+            self.profilesMenu.update(with: self.container.makeProfilesMenuViewModel())
+            self.helpMenu.update(with: self.container.makeHelpMenuViewModel())
+            self.statusMenu.update(with: self.container.makeStatusMenuWindowModel())
+            self.container.makeWindowService().setStatusMenuWindowController(self.statusMenu)
+#endif
             self.notificationManager = self.container.makeNotificationManager()
             self.container.makeMaintenanceManagerHelper().startMaintenanceManager()
             _ = self.container.makeUpdateManager() // Load update manager so it has a chance to update xml url

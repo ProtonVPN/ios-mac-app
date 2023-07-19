@@ -82,7 +82,11 @@ public class MacOSLogContentProvider: LogContentProvider {
             return AppLogContent(folder: folder)
 
         case .osLog:
-            return OSLogContent()
+            if #available(macOS 12.0, *) {
+                return OSLogContent()
+            } else {
+                return MockLogContent()
+            }
 
         case .openvpn:
             return NELogContent(neLogProvider: openVpnProtocolFactory)
@@ -95,3 +99,9 @@ public class MacOSLogContentProvider: LogContentProvider {
 
 }
 #endif
+
+struct MockLogContent: LogContent {
+    func loadContent(callback: @escaping (String) -> Void) {
+        callback("Unavailable for macOS < 12")
+    }
+}

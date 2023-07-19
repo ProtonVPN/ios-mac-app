@@ -183,10 +183,10 @@ class MapSectionViewModel {
     private func standardAnnotations(_ userTier: Int) -> [CountryAnnotationViewModel] {
         return serverManager.grouping(for: .standard).map {
             let annotation = StandardCountryAnnotationViewModel(appStateManager: appStateManager,
-                                                                      vpnGateway: vpnGateway,
-                                                                     country: $0.0,
-                                                                     userTier: userTier,
-                                                                   coordinate: $0.0.location)
+                                                                vpnGateway: vpnGateway,
+                                                                country: $0.0,
+                                                                userTier: userTier,
+                                                                coordinate: $0.0.location)
             return annotation
         }
     }

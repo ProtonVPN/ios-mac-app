@@ -119,9 +119,9 @@ class NavigationService {
 
         vpnGateway.autoConnect()
     }
-
+#if REDESIGN
     var sendAction: AppReducer.ActionSender?
-
+#endif
     private func sessionChanged(data: SessionChanged.T) {
         windowService.closeActiveWindows(except: [SysexGuideWindowController.self])
 
@@ -153,14 +153,16 @@ class NavigationService {
     }
     
     private func showLogIn(initialError: String? = nil) {
+#if REDESIGN
         sendAction?(.showLogin(.showError(initialError: initialError)))
+#endif
         appHasPresented = true
-
-        // uncomment if you want to see the old login flow
-//        let viewModel = loginViewModel()
-//        viewModel.initialError = initialError
-//        windowService.showLogin(viewModel: viewModel)
-//        NSApp.activate(ignoringOtherApps: true)
+#if !REDESIGN
+        let viewModel = loginViewModel()
+        viewModel.initialError = initialError
+        windowService.showLogin(viewModel: viewModel)
+        NSApp.activate(ignoringOtherApps: true)
+#endif
     }
     
     private func attemptSilentLogIn() {
@@ -169,11 +171,14 @@ class NavigationService {
     }
     
     private func showSidebar() {
+#if REDESIGN
         sendAction?(.logIn(.init()))
+#endif
         appHasPresented = true
 
-        // uncomment if you want to see the old sidebar
-//        windowService.showSidebar(appStateManager: appStateManager, vpnGateway: vpnGateway)
+#if !REDESIGN
+        windowService.showSidebar(appStateManager: appStateManager, vpnGateway: vpnGateway)
+#endif
     }
     
     func handleSilentLoginFailure() {

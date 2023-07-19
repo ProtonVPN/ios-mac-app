@@ -82,6 +82,7 @@
 		844917000A1F005A8397AB8E /* Pods-ProtonVPNmacOSTests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 07F7C64DBBB069F876B146B0 /* Pods-ProtonVPNmacOSTests-metadata.plist */; };
 		851D919753C4F14262FF249E /* Pods-ProtonVPN-mac-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0CB9D7894ABA03D2148D44D2 /* Pods-ProtonVPN-mac-metadata.plist */; };
 		8A4FE4B98151786663E8E688 /* Pods_ProtonVPN_mac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 029BF4990963CC3DFA0E3CEE /* Pods_ProtonVPN_mac.framework */; };
+		9B4BACE98AEA4534B5C6E151 /* Pods_ProtonVPN_mac_redesign.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BEE2628F2EC02D908C19020 /* Pods_ProtonVPN_mac_redesign.framework */; };
 		AD8C78AE29898403008AC0B5 /* AppSessionManagerImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8C78AD29898403008AC0B5 /* AppSessionManagerImplementationTests.swift */; };
 		AEB34226A8F57095D108B88E /* Pods_ProtonVPN_WireGuard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1331D833674A744FD9A2A250 /* Pods_ProtonVPN_WireGuard.framework */; };
 		B22F32F8278DC07800DBB8CA /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F32F7278DC07800DBB8CA /* StringUtils.swift */; };
@@ -114,6 +115,9 @@
 		D516EB9D2315775E0095B735 /* MacAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516EB9C2315775E0095B735 /* MacAlertService.swift */; };
 		D5204E6A22A11B8400FFAB99 /* XCUIElement+clearText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */; };
 		D5204E6D22A138C900FFAB99 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5204E6C22A138C900FFAB99 /* Credentials.swift */; };
+		D54539C02A408A92008B4259 /* ConnectionDetails-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = D54539BF2A408A92008B4259 /* ConnectionDetails-macOS */; };
+		D54539C22A408AB9008B4259 /* ConnectionDetails in Frameworks */ = {isa = PBXBuildFile; productRef = D54539C12A408AB9008B4259 /* ConnectionDetails */; };
+		D54539C72A408E22008B4259 /* Timer in Frameworks */ = {isa = PBXBuildFile; productRef = D54539C62A408E22008B4259 /* Timer */; };
 		D54B1E12262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54B1E11262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift */; };
 		D54BB5DF2990ECEB00733E45 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D54BB5DD2990ECEB00733E45 /* credentials.plist */; };
 		D54BB5E02990ECEB00733E45 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D54BB5DE2990ECEB00733E45 /* subusercredentials.plist */; };
@@ -126,6 +130,7 @@
 		D557D58A264AC352007E4396 /* country-names.plist in Resources */ = {isa = PBXBuildFile; fileRef = D557D589264AC352007E4396 /* country-names.plist */; };
 		D563319E23212A0800CE2EE3 /* AbstractProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563319D23212A0800CE2EE3 /* AbstractProfileViewModel.swift */; };
 		D57597C123B10C2E002D6631 /* WindowMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57597C023B10C2E002D6631 /* WindowMenuController.swift */; };
+		D58273242A4F03DE0021CA41 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = D58273232A4F03DE0021CA41 /* Theme */; };
 		D5906F1222D36035001BC074 /* AccountPlan+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5906F1122D36035001BC074 /* AccountPlan+Extension.swift */; };
 		D5911709229F9574005829DA /* ProtonVPNUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5911708229F9574005829DA /* ProtonVPNUITests.swift */; };
 		D5A8813722CF282E009B63D1 /* ReportBugWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8813522CF282E009B63D1 /* ReportBugWindowController.swift */; };
@@ -218,30 +223,313 @@
 		E50B623D28B4D2FE004D533B /* AnnouncementImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50B623C28B4D2FE004D533B /* AnnouncementImageViewController.swift */; };
 		E50B623F28B4D30F004D533B /* AnnouncementImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E50B623E28B4D30F004D533B /* AnnouncementImageViewController.xib */; };
 		E51122DC27D0B6780088FCAC /* XCUIElement+forceClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51122DB27D0B6780088FCAC /* XCUIElement+forceClick.swift */; };
-		E524A0F92A60015A003DB5D8 /* LoginFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E524A0F82A60015A003DB5D8 /* LoginFeature.swift */; };
-		E524A0FB2A60119D003DB5D8 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E524A0FA2A60119D003DB5D8 /* AppReducer.swift */; };
+		E5117C392A67B515007DBB63 /* Modals-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E52B8BBB29FBB85F00517FFC /* Modals-macOS */; };
+		E5117C3A2A67BA82007DBB63 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E524A0FA2A60119D003DB5D8 /* AppReducer.swift */; };
+		E5117C3B2A67BAB2007DBB63 /* LoginFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E524A0F82A60015A003DB5D8 /* LoginFeature.swift */; };
+		E5117C3C2A67BAB7007DBB63 /* InitialStateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53CB3A92A43275E00D58D20 /* InitialStateProvider.swift */; };
+		E5117C3D2A67C28E007DBB63 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED534841EEC112000013607 /* AppDelegate.swift */; };
+		E5117C3E2A67C2DA007DBB63 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D6A949230D296400A432D1 /* DependencyContainer.swift */; };
+		E5117C3F2A67C2E5007DBB63 /* NotificationManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */; };
+		E5117C402A67C306007DBB63 /* NavigationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFE81DA1F3F6D150052A7A6 /* NavigationService.swift */; };
+		E5117C412A67C30C007DBB63 /* WindowService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4E7DF41F6276C9000F7D5E /* WindowService.swift */; };
+		E5117C422A67C310007DBB63 /* WireguardMacProtocolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9284811B4C31B0BCAC0918BC /* WireguardMacProtocolFactory.swift */; };
+		E5117C432A67C314007DBB63 /* OpenVpnMacProtocolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9380F62283F75DA008065C8 /* OpenVpnMacProtocolFactory.swift */; };
+		E5117C442A67C318007DBB63 /* AppSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE27DB571F4759A600D2FF2B /* AppSessionManager.swift */; };
+		E5117C452A67C320007DBB63 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98CFCE1F14E096000D6688 /* AppConstants.swift */; };
+		E5117C462A67C330007DBB63 /* FirstLaunchRoutine.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5CF7711F4DE7E80002BBF3 /* FirstLaunchRoutine.swift */; };
+		E5117C472A67C462007DBB63 /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1144E3D22E8D4770087A685 /* ObfuscatedConstants.swift */; };
+		E5117C482A67C469007DBB63 /* HelpMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E148457F20CAB64900DFDAA4 /* HelpMenuViewModel.swift */; };
+		E5117C492A67C46F007DBB63 /* UpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E142F24C20A9B45800029163 /* UpdateManager.swift */; };
+		E5117C4B2A67C479007DBB63 /* SysexGuideWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E54F86CCDE59E21DC60F9A /* SysexGuideWindowController.swift */; };
+		E5117C4C2A67C47D007DBB63 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE72754F1F29E7D4002748C6 /* LoginViewModel.swift */; };
+		E5117C4D2A67C4FE007DBB63 /* VpnProtocolChangeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */; };
+		E5117C4E2A67C507007DBB63 /* ReportBugWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8813522CF282E009B63D1 /* ReportBugWindowController.swift */; };
+		E5117C4F2A67C52D007DBB63 /* AboutWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE69C8D21F5D89FF00C3065C /* AboutWindowController.swift */; };
+		E5117C502A67C533007DBB63 /* AcknowledgementsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AC137B23795B8100244066 /* AcknowledgementsWindowController.swift */; };
+		E5117C512A67C538007DBB63 /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE69C8CE1F5D7FBD00C3065C /* SettingsWindowController.swift */; };
+		E5117C522A67C53C007DBB63 /* SettingsContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4E7E021F62B197000F7D5E /* SettingsContainerViewModel.swift */; };
+		E5117C532A67C542007DBB63 /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE27DB4A1F470EF700D2FF2B /* AccountViewModel.swift */; };
+		E5117C542A67C553007DBB63 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98CFDD1F150FEE000D6688 /* AboutViewController.swift */; };
 		E53D64C3281169880060C463 /* Modals-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C2281169880060C463 /* Modals-macOS */; };
 		E53D7457291925380006E499 /* FeatureRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E53D7456291925380006E499 /* FeatureRowView.xib */; };
 		E551EB0829AF7C1300B6612D /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0729AF7C1300B6612D /* Assets.swift */; };
+		E552FC652A42F5350058B3D9 /* SidebarReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC642A42F5350058B3D9 /* SidebarReducer.swift */; };
+		E552FC772A430A720058B3D9 /* SideBarButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC722A430A720058B3D9 /* SideBarButtonStyle.swift */; };
+		E552FC782A430A720058B3D9 /* ProfileButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC732A430A720058B3D9 /* ProfileButtonView.swift */; };
+		E552FC792A430A720058B3D9 /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC742A430A720058B3D9 /* SideBarView.swift */; };
+		E552FC7A2A430A720058B3D9 /* SideBarTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC752A430A720058B3D9 /* SideBarTab.swift */; };
+		E552FC7B2A430A720058B3D9 /* SideBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC762A430A720058B3D9 /* SideBarItemView.swift */; };
 		E555DF772A4F194B00FD15C8 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = E555DF762A4F194B00FD15C8 /* Dependencies */; };
 		E565986828200ADA004F2240 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986728200ADA004F2240 /* LoadingView.swift */; };
 		E565986A2820FECE004F2240 /* WarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E56598692820FECE004F2240 /* WarningView.xib */; };
 		E565986C2820FEDD004F2240 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986B2820FEDD004F2240 /* WarningView.swift */; };
+		E56790E62A45D4A20089CA79 /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = E56790E52A45D4A20089CA79 /* Strings */; };
 		E5772AE429B0B9A90076D824 /* SystemExtensionTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5772AE329B0B9A90076D824 /* SystemExtensionTutorialView.swift */; };
 		E57B263229C3188D00533B7C /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E57B263129C3188D00533B7C /* AVKit.framework */; };
+		E5A4AD102A3B238A00CC91D7 /* Home-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E5A4AD0F2A3B238A00CC91D7 /* Home-macOS */; };
+		E5A4AD122A3B239500CC91D7 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = E5A4AD112A3B239500CC91D7 /* ComposableArchitecture */; };
+		E5A4AD142A3B239F00CC91D7 /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = E5A4AD132A3B239F00CC91D7 /* Home */; };
+		E5A4AD192A3B255D00CC91D7 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = E5A4AD182A3B255D00CC91D7 /* PMLogger */; };
+		E5BDD7052A67DF5500F3BB7C /* LoginViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E48D042A4D729B00B09111 /* LoginViewControllerRepresentable.swift */; };
+		E5BDD7062A67DF6500F3BB7C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4943ED1F29C20200CF980F /* LoginViewController.swift */; };
+		E5BDD7072A67EC3E00F3BB7C /* AdvancedSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F315847827C795A100D1F6CC /* AdvancedSettingsViewModel.swift */; };
+		E5BDD7082A67EC4100F3BB7C /* ConnectionSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1420A76209C78CE00697461 /* ConnectionSettingsViewModel.swift */; };
+		E5BDD7092A67EC4500F3BB7C /* GeneralSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9BFBC91F30DD5200EDA295 /* GeneralSettingsViewModel.swift */; };
+		E5BDD70A2A67EC5D00F3BB7C /* XPCConnectionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BB7FC660BD3A61E44211E /* XPCConnectionsRepository.swift */; };
+		E5BDD70B2A67EC6A00F3BB7C /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4E7DF81F629195000F7D5E /* WindowController.swift */; };
+		E5BDD70C2A67EC7000F3BB7C /* StatusMenuWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E156C19E20BE901A0054E935 /* StatusMenuWindowController.swift */; };
+		E5BDD70D2A67EC7500F3BB7C /* SettingsTabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B31816224D2D77004D8171 /* SettingsTabBarViewModel.swift */; };
+		E5BDD70E2A67EC7900F3BB7C /* ProfilesContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4E7E041F62B27A000F7D5E /* ProfilesContainerViewModel.swift */; };
+		E5BDD70F2A67EC7E00F3BB7C /* CreateNewProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB493D21F2145CE00A979DC /* CreateNewProfileViewModel.swift */; };
+		E5BDD7102A67EC8F00F3BB7C /* TourController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E02926F08D7A00336F7A /* TourController.swift */; };
+		E5BDD7112A67ECA100F3BB7C /* MacAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516EB9C2315775E0095B735 /* MacAlertService.swift */; };
+		E5BDD7122A67ECA600F3BB7C /* AppCertificateRefreshManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E5F98327C667170068309F /* AppCertificateRefreshManager.swift */; };
+		E5BDD7132A67ECAA00F3BB7C /* macOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C0326D4E45100EF2F00 /* macOSNetworkingDelegate.swift */; };
+		E5BDD7142A67ECAE00F3BB7C /* PlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC8992816AEFC00E355DA /* PlanService.swift */; };
+		E5BDD7152A67ECCF00F3BB7C /* MacVpnCredentialsConfiguratorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94C626B7F82D00AA1A5F /* MacVpnCredentialsConfiguratorFactory.swift */; };
+		E5BDD7162A67ECD300F3BB7C /* PVPNTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9589E31F596DFC005E7495 /* PVPNTextField.swift */; };
+		E5BDD7172A67ECD800F3BB7C /* InteractiveActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8EF1EA1F1FB8380057CD94 /* InteractiveActionButton.swift */; };
+		E5BDD7182A67ECDD00F3BB7C /* AcknowledgementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AC137D23795BD100244066 /* AcknowledgementsViewController.swift */; };
+		E5BDD7192A67ECE400F3BB7C /* PopUpButtonItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA7BA4E2965788B0001C7E7 /* PopUpButtonItemViewModel.swift */; };
+		E5BDD71A2A67ECF100F3BB7C /* HoverDetectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8EF1EC1F1FB8800057CD94 /* HoverDetectionButton.swift */; };
+		E5BDD71B2A67ED0200F3BB7C /* ColorPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA5563F1F1F777A0061F43F /* ColorPickerViewModel.swift */; };
+		E5BDD71C2A67ED0600F3BB7C /* SecureCoreWarningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA7BA502965E0040001C7E7 /* SecureCoreWarningViewModel.swift */; };
+		E5BDD71D2A67ED0A00F3BB7C /* HeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5B17441F39CDF700879BE0 /* HeaderViewModel.swift */; };
+		E5BDD71E2A67ED1500F3BB7C /* UpdateFileSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D298B725B5BD27000FBD74 /* UpdateFileSelector.swift */; };
+		E5BDD71F2A67ED1D00F3BB7C /* ModelIDChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54383227C3DC0600D7A88D /* ModelIDChecker.swift */; };
+		E5BDD7202A67ED2200F3BB7C /* ProtonReachabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34AC17627F33E350007FF93 /* ProtonReachabilityChecker.swift */; };
+		E5BDD7212A67ED2700F3BB7C /* StatusMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE46A08D1F2E1BD5008B435C /* StatusMenuViewModel.swift */; };
+		E5BDD7222A67ED3700F3BB7C /* NetworkStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13464DB2035BA5C00C0DB7D /* NetworkStatistics.swift */; };
+		E5BDD7232A67ED4C00F3BB7C /* TwoFactorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EB08C5281FD2B900F29B20 /* TwoFactorView.swift */; };
+		E5BDD7242A67ED5100F3BB7C /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986B2820FEDD004F2240 /* WarningView.swift */; };
+		E5BDD7252A67ED5500F3BB7C /* TextFieldWithFocus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4FCF611F21FA2800B04EF8 /* TextFieldWithFocus.swift */; };
+		E5BDD7262A67ED6000F3BB7C /* SecureTextFieldWithFocus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4FCF631F21FA5300B04EF8 /* SecureTextFieldWithFocus.swift */; };
+		E5BDD7272A67ED6700F3BB7C /* SwitchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C1399B2114399700B88658 /* SwitchButton.swift */; };
+		E5BDD7282A67ED7000F3BB7C /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECEF3C91F164AEC00A16606 /* LoginButton.swift */; };
+		E5BDD7292A67EDA000F3BB7C /* TextFieldFocusDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF781421F1A4ED000E77B59 /* TextFieldFocusDelegate.swift */; };
+		E5BDD72A2A67EDA400F3BB7C /* CountriesSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA1C8DF1F27BD7200B2036E /* CountriesSectionViewModel.swift */; };
+		E5BDD72B2A67EDAB00F3BB7C /* ButtonMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E195C0D8204301900002021B /* ButtonMask.swift */; };
+		E5BDD72C2A67EDB000F3BB7C /* SettingsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE27DB3A1F4706E400D2FF2B /* SettingsContainerViewController.swift */; };
+		E5BDD72D2A67EDBD00F3BB7C /* HelpPopoverViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1454CEF206FD37300E6D396 /* HelpPopoverViewModel.swift */; };
+		E5BDD72E2A67EE6900F3BB7C /* MapSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE13E4361F543F4000E50B06 /* MapSectionViewModel.swift */; };
+		E5BDD72F2A67EE6E00F3BB7C /* ProfilesTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3B37FE1F436E14008DF9E7 /* ProfilesTabBarViewController.swift */; };
+		E5BDD7302A67EE7800F3BB7C /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986728200ADA004F2240 /* LoadingView.swift */; };
+		E5BDD7312A67EE8E00F3BB7C /* LoadingAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1346F7C203B16B800F511FD /* LoadingAnimationView.swift */; };
+		E5BDD7322A67EEA100F3BB7C /* GIFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2F42127ECA7B000B21A00 /* GIFView.swift */; };
+		E5BDD7342A67EED800F3BB7C /* ProfilesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4E7DF61F62909A000F7D5E /* ProfilesWindowController.swift */; };
+		E5BDD7352A67EEDF00F3BB7C /* CountriesServersHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421E42612639788000AE6AF9 /* CountriesServersHeaderViewModel.swift */; };
+		E5BDD7362A67EEE300F3BB7C /* CountryItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECF306A1F179A54006F819F /* CountryItemViewModel.swift */; };
+		E5BDD7372A67EEE800F3BB7C /* ServerItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECF30701F17A188006F819F /* ServerItemViewModel.swift */; };
+		E5BDD7382A67EEEF00F3BB7C /* FeaturesOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BEF96226318875009180A7 /* FeaturesOverlayViewModel.swift */; };
+		E5BDD7392A67EEF300F3BB7C /* QuickSettingDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1F29A255306EE00793A49 /* QuickSettingDropdownPresenter.swift */; };
+		E5BDD73A2A67EF1B00F3BB7C /* ProfilesContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBB82DD1F1DEB800041432A /* ProfilesContainerViewController.swift */; };
+		E5BDD73B2A67EF2300F3BB7C /* HelpPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1454CEB206FC6A900E6D396 /* HelpPopoverViewController.swift */; };
+		E5BDD73C2A67EF2700F3BB7C /* CountryAnnotationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE3B5F21F53F44100E86CFA /* CountryAnnotationViewModel.swift */; };
+		E5BDD73D2A67EF2E00F3BB7C /* ConnectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18AF44A20223DD10067799A /* ConnectionViewModel.swift */; };
+		E5BDD73E2A67EF9800F3BB7C /* ConnectingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B9A7D1203ECE9E009677BC /* ConnectingOverlayViewModel.swift */; };
+		E5BDD73F2A67EFB200F3BB7C /* IPCClientConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641B427D22A6900EEFB1D /* IPCClientConnection.swift */; };
+		E5BDD7402A67EFB800F3BB7C /* StatusMenuWindowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17C1CDC20E5297400DCC687 /* StatusMenuWindowModel.swift */; };
+		E5BDD7412A67EFCB00F3BB7C /* ConnectingOverlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B9A7CF203EBD30009677BC /* ConnectingOverlayButton.swift */; };
+		E5BDD7422A67EFD000F3BB7C /* IPCBaseConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928092A26B147E0008C9F2C /* IPCBaseConnection.swift */; };
+		E5BDD7432A67EFD500F3BB7C /* OverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBB82EB1F1DF6120041432A /* OverviewViewController.swift */; };
+		E5BDD7442A67EFDC00F3BB7C /* CreateNewProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBB82ED1F1DF6230041432A /* CreateNewProfileViewController.swift */; };
+		E5BDD7452A67EFE000F3BB7C /* OverviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8EF1EF1F1FC4D00057CD94 /* OverviewViewModel.swift */; };
+		E5BDD7462A67EFE400F3BB7C /* ProfilesTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBB82E31F1DEF1B0041432A /* ProfilesTabBarView.swift */; };
+		E5BDD7472A67EFE900F3BB7C /* TabBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE35FC441F1CD70700CFE26F /* TabBarButton.swift */; };
+		E5BDD7482A67F01500F3BB7C /* HoverDetectionPopUpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE491A531F5B25FB0008C1DC /* HoverDetectionPopUpButton.swift */; };
+		E5BDD7492A67F01B00F3BB7C /* PrimaryActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8EF1E61F1FB37C0057CD94 /* PrimaryActionButton.swift */; };
+		E5BDD74A2A67F02000F3BB7C /* CancellationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFFC94327E0C0AE0035969B /* CancellationButton.swift */; };
+		E5BDD74B2A67F02500F3BB7C /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE52EA261F1E9693009DFF1D /* ColorPickerViewController.swift */; };
+		E5BDD74C2A67F02B00F3BB7C /* OverviewItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8EF1F11F1FC71F0057CD94 /* OverviewItemViewModel.swift */; };
+		E5BDD74D2A67F03100F3BB7C /* WarningPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB93251F4893CC003814BB /* WarningPopupViewModel.swift */; };
+		E5BDD74E2A67F04100F3BB7C /* AbstractProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563319D23212A0800CE2EE3 /* AbstractProfileViewModel.swift */; };
+		E5BDD74F2A67F04600F3BB7C /* QuickSettingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424C14CF25596E0F00E1D988 /* QuickSettingDetailViewController.swift */; };
+		E5BDD7502A67F04C00F3BB7C /* QuickSettingsDropdownOptionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42314C69255AC2FD00B7BDCC /* QuickSettingsDropdownOptionPresenter.swift */; };
+		E5BDD7512A67F05500F3BB7C /* SettingsTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE27DB4C1F47187600D2FF2B /* SettingsTabBarViewController.swift */; };
+		E5BDD7522A67F67300F3BB7C /* LoginWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE69C8D81F5D9EB300C3065C /* LoginWindowController.swift */; };
+		E5BDD7532A67F6A300F3BB7C /* StatusMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E156C19920BDA5920054E935 /* StatusMenuViewController.swift */; };
+		E5BDD7542A67F6C000F3BB7C /* TourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E02626F08D7A00336F7A /* TourViewController.swift */; };
+		E5BDD7552A67F6D700F3BB7C /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE876E0B1F137D0C00C9B9C2 /* SidebarViewController.swift */; };
+		E5BDD7562A67F6F000F3BB7C /* TourWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E02A26F08D7A00336F7A /* TourWindowController.swift */; };
+		E5BDD7572A67F6F500F3BB7C /* TourNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E02726F08D7A00336F7A /* TourNumberViewController.swift */; };
+		E5BDD7582A67F71400F3BB7C /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE68DD501F49F4BE00F218B8 /* TabBarView.swift */; };
+		E5BDD7592A67F71900F3BB7C /* TourNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E03926F08E1400336F7A /* TourNumberView.swift */; };
+		E5BDD75A2A67F71E00F3BB7C /* SidebarTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE35FC321F1CB82B00CFE26F /* SidebarTabBarViewController.swift */; };
+		E5BDD75B2A67F72B00F3BB7C /* SidebarTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE35FC421F1CD2DA00CFE26F /* SidebarTabBarView.swift */; };
+		E5BDD75C2A67F73200F3BB7C /* TourPreviousButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D1692126FCE500F4D1C7 /* TourPreviousButton.swift */; };
+		E5BDD75D2A67F73800F3BB7C /* TourNextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D16B2126FCF700F4D1C7 /* TourNextButton.swift */; };
+		E5BDD75E2A67F74C00F3BB7C /* WiFiSecurityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26CBA3A24696A89005E51B8 /* WiFiSecurityMonitor.swift */; };
+		E5BDD75F2A67F75100F3BB7C /* StatusMenuCountryItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17C1CE420EA2C6500DCC687 /* StatusMenuCountryItemViewModel.swift */; };
+		E5BDD7602A67F75500F3BB7C /* StatusMenuProfilesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E187022120E27801000521AC /* StatusMenuProfilesListViewModel.swift */; };
+		E5BDD7612A67F76700F3BB7C /* StatusMenuProfilesListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E187021720E23815000521AC /* StatusMenuProfilesListController.swift */; };
+		E5BDD7622A67F76E00F3BB7C /* StatusBarAppConnectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F59B5820E11B7600798435 /* StatusBarAppConnectButton.swift */; };
+		E5BDD7632A67F77800F3BB7C /* StatusMenuProfileItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E187021F20E268FE000521AC /* StatusMenuProfileItemViewModel.swift */; };
+		E5BDD7642A67F79F00F3BB7C /* MapHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFE81D61F3F41B10052A7A6 /* MapHeaderViewModel.swift */; };
+		E5BDD7652A67F7A500F3BB7C /* ProfilesSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE24A3AA1F1BDDEF00B70949 /* ProfilesSectionViewController.swift */; };
+		E5BDD7662A67F7AC00F3BB7C /* CountriesSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF7814E1F1A78B800E77B59 /* CountriesSectionViewController.swift */; };
+		E5BDD7672A67F7B000F3BB7C /* ConnectingWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B80FE4203E109E00F1D76C /* ConnectingWindowController.swift */; };
+		E5BDD7682A67F7B500F3BB7C /* HeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE11F92B1F39B7D8006C389C /* HeaderViewController.swift */; };
+		E5BDD7692A67F7B900F3BB7C /* ExpandMapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13C63F92038A08400D9E40C /* ExpandMapButton.swift */; };
+		E5BDD76A2A67F7BD00F3BB7C /* ConnectionOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2FE5921F5ECD6B00ABA7DE /* ConnectionOverlay.swift */; };
+		E5BDD76B2A67F7C200F3BB7C /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE27DB461F47095300D2FF2B /* AccountViewController.swift */; };
+		E5BDD76C2A67F7C900F3BB7C /* AdvancedSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F315847427C7939400D1F6CC /* AdvancedSettingsViewController.swift */; };
+		E5BDD76D2A67F7CE00F3BB7C /* ConnectionSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1420A70209B56A600697461 /* ConnectionSettingsViewController.swift */; };
+		E5BDD76E2A67F7D300F3BB7C /* GeneralSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98CFD41F14F7C1000D6688 /* GeneralSettingsViewController.swift */; };
+		E5BDD76F2A67F7E400F3BB7C /* SettingsTickboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1112B27CE184A007DEC0D /* SettingsTickboxView.swift */; };
+		E5BDD7702A67F7E700F3BB7C /* CouponViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F397EA60280564980072D511 /* CouponViewController.swift */; };
+		E5BDD7712A67F7EB00F3BB7C /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F48B1C2806D76500E0B814 /* BannerView.swift */; };
+		E5BDD7722A67F7FA00F3BB7C /* ConnectingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B80FE0203E000100F1D76C /* ConnectingViewController.swift */; };
+		E5BDD7732A67F7FE00F3BB7C /* SettingsDropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1112D27CE3A1D007DEC0D /* SettingsDropDownView.swift */; };
+		E5BDD7742A67F81000F3BB7C /* BlockableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42082670256BC3B900A621EC /* BlockableScrollView.swift */; };
+		E5BDD7752A67F81500F3BB7C /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13464D22035774200C0DB7D /* ShadowView.swift */; };
+		E5BDD7762A67F81B00F3BB7C /* QuickSettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428B63C325558B5F00C90D40 /* QuickSettingButton.swift */; };
+		E5BDD7772A67F82000F3BB7C /* ServerItemCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECEF3DF1F169EC300A16606 /* ServerItemCellView.swift */; };
+		E5BDD7782A67F82400F3BB7C /* FlagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7874A61F3B8F6F001E261E /* FlagView.swift */; };
+		E5BDD7792A67F82800F3BB7C /* LoadCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13464AA2033780300C0DB7D /* LoadCircle.swift */; };
+		E5BDD77A2A67F82D00F3BB7C /* LargeConnectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5B174E1F39E4E100879BE0 /* LargeConnectButton.swift */; };
+		E5BDD77B2A67F83100F3BB7C /* ProfilesSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE068DC11F23E7E30006C2D0 /* ProfilesSectionViewModel.swift */; };
+		E5BDD77C2A67F84300F3BB7C /* MapSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFE81D11F3F3AE30052A7A6 /* MapSectionViewController.swift */; };
+		E5BDD77D2A67F84800F3BB7C /* ConnectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE24A39E1F1BCF6000B70949 /* ConnectButton.swift */; };
+		E5BDD77E2A67F84E00F3BB7C /* ColoredLoadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1261FB8202CA45C005E9880 /* ColoredLoadButton.swift */; };
+		E5BDD77F2A67F85200F3BB7C /* ProfileItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE068DC31F23E8A90006C2D0 /* ProfileItemViewModel.swift */; };
+		E5BDD7802A67F85E00F3BB7C /* NetshieldDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1F2A12553083300793A49 /* NetshieldDropdownPresenter.swift */; };
+		E5BDD7812A67F86300F3BB7C /* ResizingTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15DE7D7202B4FF700BFA78D /* ResizingTextButton.swift */; };
+		E5BDD7822A67F87600F3BB7C /* ZoomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15A8690202738A1009B9C83 /* ZoomButton.swift */; };
+		E5BDD7832A67F87A00F3BB7C /* MapHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFE81CA1F3F361A0052A7A6 /* MapHeaderViewController.swift */; };
+		E5BDD7842A67F87E00F3BB7C /* ZoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C203292027191100F4D375 /* ZoomView.swift */; };
+		E5BDD7852A67F88200F3BB7C /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2FE5961F5EF41E00ABA7DE /* MapView.swift */; };
+		E5BDD7862A67F88700F3BB7C /* PassThroughView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15DE7D12029EA6F00BFA78D /* PassThroughView.swift */; };
+		E5BDD7872A67F89500F3BB7C /* ButtonImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B3B63F2024FEF00093A8FF /* ButtonImageView.swift */; };
+		E5BDD7882A67F89B00F3BB7C /* MapHeaderBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFE81CF1F3F36740052A7A6 /* MapHeaderBackground.swift */; };
+		E5BDD7982A67F8F700F3BB7C /* AppTheme+Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CFAACD29E92E8300C36735 /* AppTheme+Icons.swift */; };
+		E5BDD7992A67F8F700F3BB7C /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDC30B51EFB18DC00279A3A /* Bundle+Extension.swift */; };
+		E5BDD79A2A67F8F700F3BB7C /* NSString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBE350D1EFAC508000ACCD1 /* NSString+Extension.swift */; };
+		E5BDD79B2A67F8F700F3BB7C /* NSView+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42082650256BB78600A621EC /* NSView+Children.swift */; };
+		E5BDD79C2A67F8F700F3BB7C /* ProfileIcon+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1616C0E21CA67CB00F42D79 /* ProfileIcon+Extension.swift */; };
+		E5BDD79D2A67F8F700F3BB7C /* NSProgressIndicator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34AC17827F345BB0007FF93 /* NSProgressIndicator+Extensions.swift */; };
+		E5BDD79E2A67F8F700F3BB7C /* CGMutablePath+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CADE3280060C90008778E /* CGMutablePath+Extension.swift */; };
+		E5BDD79F2A67F8F700F3BB7C /* PropertiesManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1616BDF21C91B9700F42D79 /* PropertiesManager+Extension.swift */; };
+		E5BDD7A02A67F8F700F3BB7C /* NSWindow+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98CFE21F15167D000D6688 /* NSWindow+Extension.swift */; };
+		E5BDD7A12A67F8F700F3BB7C /* NSStackView+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F45D7B262EC16A00FB13E4 /* NSStackView+Children.swift */; };
+		E5BDD7A22A67F8F700F3BB7C /* AccountPlan+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5906F1122D36035001BC074 /* AccountPlan+Extension.swift */; };
+		E5BDD7A32A67F8F700F3BB7C /* NSAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4FCF651F22102200B04EF8 /* NSAttributedString+Extension.swift */; };
+		E5BDD7A42A67F8F700F3BB7C /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBE350F1EFAC582000ACCD1 /* TimeInterval+Extension.swift */; };
+		E5BDD7A52A67F8F700F3BB7C /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAF7FF01EF30169006771DA /* Dictionary+Extension.swift */; };
+		E5BDD7A62A67F8F700F3BB7C /* NSTextField+RealSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BDA8AF251A40A4009A0C96 /* NSTextField+RealSizing.swift */; };
+		E5BDD7A72A67F8F700F3BB7C /* NSView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98CFC81F14D62F000D6688 /* NSView+Extension.swift */; };
+		E5BDD7A82A67F8F700F3BB7C /* NSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98CFCA1F14D697000D6688 /* NSColor+Extension.swift */; };
+		E5BDD7A92A67F90100F3BB7C /* StreamOptionCVItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42710D9B264929A000D70B92 /* StreamOptionCVItemViewModel.swift */; };
+		E5BDD7AA2A67F90100F3BB7C /* StreamOptionCVItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BEF97E2631AB1A009180A7 /* StreamOptionCVItem.swift */; };
+		E5BDD7AB2A67F90100F3BB7C /* FeaturesOverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BEF94626317670009180A7 /* FeaturesOverlayViewController.swift */; };
+		E5BDD7AC2A67F90100F3BB7C /* FeatureRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BEF95526317F29009180A7 /* FeatureRowView.swift */; };
+		E5BDD7AD2A67F90100F3BB7C /* StreamingServicesOverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BEF96E26319ADC009180A7 /* StreamingServicesOverlayViewController.swift */; };
+		E5BDD7AE2A67F90100F3BB7C /* UserAccountUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423467C5261CEAAF00A73773 /* UserAccountUpdateViewController.swift */; };
+		E5BDD7AF2A67F90100F3BB7C /* StreamingServicesOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BEF97726319E39009180A7 /* StreamingServicesOverlayViewModel.swift */; };
+		E5BDD7B02A67F9A800F3BB7C /* ColorPickerItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA556331F1F48F20061F43F /* ColorPickerItemView.swift */; };
+		E5BDD7B12A67F9A800F3BB7C /* StatusMenuProfileViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E187021B20E2616C000521AC /* StatusMenuProfileViewItem.swift */; };
+		E5BDD7B22A67F9A800F3BB7C /* WarningPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7874A41F3B6569001E261E /* WarningPopupViewController.swift */; };
+		E5BDD7B32A67F9A800F3BB7C /* AnnouncementFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDB93D66CF4A7DB23EE7AA8 /* AnnouncementFeatureView.swift */; };
+		E5BDD7B42A67F9A800F3BB7C /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE74FCAD1F5DD6E200E266BC /* PopUpViewController.swift */; };
+		E5BDD7B52A67F9A800F3BB7C /* TransparentBackedScroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13BDF482062912300CF5383 /* TransparentBackedScroller.swift */; };
+		E5BDD7B62A67F9A800F3BB7C /* PVPNTextViewLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = D202EF19246C02E500617BD2 /* PVPNTextViewLink.swift */; };
+		E5BDD7B72A67F9A800F3BB7C /* TroubleshootingPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021D6125E9332A00EF73A1 /* TroubleshootingPopup.swift */; };
+		E5BDD7B82A67F9A800F3BB7C /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5B175C1F3A0BDA00879BE0 /* NotificationManager.swift */; };
+		E5BDD7B92A67F9A800F3BB7C /* CellSurfaceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2C46311F5570A700BA34B8 /* CellSurfaceButton.swift */; };
+		E5BDD7BA2A67F9A800F3BB7C /* OverviewItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBB82F51F1E0F8C0041432A /* OverviewItemView.swift */; };
+		E5BDD7BB2A67F9A800F3BB7C /* DisablingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2FE5941F5ED5BF00ABA7DE /* DisablingView.swift */; };
+		E5BDD7BC2A67F9A800F3BB7C /* QuickSettingsDropdownOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1F28B2553017D00793A49 /* QuickSettingsDropdownOption.swift */; };
+		E5BDD7BD2A67F9A800F3BB7C /* InAppLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B31814224D23A6004D8171 /* InAppLinkManager.swift */; };
+		E5BDD7BE2A67F9A800F3BB7C /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E02526F08D7A00336F7A /* WelcomeViewController.swift */; };
+		E5BDD7BF2A67F9A800F3BB7C /* CountriesSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42918CF1263836410065992E /* CountriesSectionHeaderView.swift */; };
+		E5BDD7C02A67F9A800F3BB7C /* NET2WarningPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7E00327F1DB2200657A99 /* NET2WarningPopupViewController.swift */; };
+		E5BDD7C12A67F9A800F3BB7C /* WGVpnCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94CB26BD6E6800AA1A5F /* WGVpnCredentialsConfigurator.swift */; };
+		E5BDD7C22A67F9A800F3BB7C /* ExpandablePopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42498A532518EE3C00ACB7EC /* ExpandablePopupViewModel.swift */; };
+		E5BDD7C32A67F9A800F3BB7C /* TroubleshootingRowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021DAF25E950A300EF73A1 /* TroubleshootingRowItem.swift */; };
+		E5BDD7C42A67F9A800F3BB7C /* SecureCoreWarningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE343B7A1F33B03D0052C6C4 /* SecureCoreWarningViewController.swift */; };
+		E5BDD7C52A67F9A800F3BB7C /* CABasicAnimation+Pulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FE72EA26FC995A00966404 /* CABasicAnimation+Pulse.swift */; };
+		E5BDD7C62A67F9A800F3BB7C /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0729AF7C1300B6612D /* Assets.swift */; };
+		E5BDD7C72A67F9A800F3BB7C /* MapCoordinateTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1661BA421B92A36005DB438 /* MapCoordinateTranslator.swift */; };
+		E5BDD7C82A67F9A800F3BB7C /* OverviewItemViewModel+Descriptors.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78749E1F3B4993001E261E /* OverviewItemViewModel+Descriptors.swift */; };
+		E5BDD7C92A67F9A800F3BB7C /* HoverDetectionButtonAdvanced.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17C1D0620EB6DF000DCC687 /* HoverDetectionButtonAdvanced.swift */; };
+		E5BDD7CA2A67F9A800F3BB7C /* ReconnectingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */; };
+		E5BDD7CB2A67F9A800F3BB7C /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65229530CD3C602EE8E33CB0 /* AnnouncementDetailViewController.swift */; };
+		E5BDD7CC2A67F9A800F3BB7C /* StatusMenuItemBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17C1CE220EA18CD00DCC687 /* StatusMenuItemBackground.swift */; };
+		E5BDD7CD2A67F9A800F3BB7C /* PopUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE74FCAF1F5DD71400E266BC /* PopUpViewModel.swift */; };
+		E5BDD7CE2A67F9A800F3BB7C /* WiFiWarningPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26CBA3C2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift */; };
+		E5BDD7CF2A67F9A900F3BB7C /* QuitApplicationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17C1CDE20E61D7F00DCC687 /* QuitApplicationButton.swift */; };
+		E5BDD7D02A67F9A900F3BB7C /* HelpPopoverBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1454CF1206FE2C300E6D396 /* HelpPopoverBackgroundView.swift */; };
+		E5BDD7D12A67F9A900F3BB7C /* CreateNewProfileViewModel+Descriptors.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA1C8DC1F27B13B00B2036E /* CreateNewProfileViewModel+Descriptors.swift */; };
+		E5BDD7D22A67F9A900F3BB7C /* KillSwitchDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1F2AF2553086000793A49 /* KillSwitchDropdownPresenter.swift */; };
+		E5BDD7D32A67F9A900F3BB7C /* ExpandCellButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6E61D71F4C4F5300638F9B /* ExpandCellButton.swift */; };
+		E5BDD7D42A67F9A900F3BB7C /* SidebarWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE69C8DA1F5D9F8500C3065C /* SidebarWindowController.swift */; };
+		E5BDD7D52A67F9A900F3BB7C /* TourDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E03626F08DEC00336F7A /* TourDescriptionView.swift */; };
+		E5BDD7D62A67F9A900F3BB7C /* OVPNCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9036B4026C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift */; };
+		E5BDD7D72A67F9A900F3BB7C /* ColorPickerCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA556311F1F48780061F43F /* ColorPickerCircle.swift */; };
+		E5BDD7D82A67F9A900F3BB7C /* AnnouncementImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50B623C28B4D2FE004D533B /* AnnouncementImageViewController.swift */; };
+		E5BDD7D92A67F9A900F3BB7C /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3E29B882C10013ACB2 /* PrimaryButtonStyle.swift */; };
+		E5BDD7DA2A67F9A900F3BB7C /* TourNumberRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E03526F08DEC00336F7A /* TourNumberRingView.swift */; };
+		E5BDD7DB2A67F9A900F3BB7C /* WhiteHoverLinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98CFE41F15199C000D6688 /* WhiteHoverLinkButton.swift */; };
+		E5BDD7DC2A67F9A900F3BB7C /* SystemExtensionTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5772AE329B0B9A90076D824 /* SystemExtensionTutorialView.swift */; };
+		E5BDD7DD2A67F9A900F3BB7C /* StatusMenuSurfaceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E187022520E3A567000521AC /* StatusMenuSurfaceButton.swift */; };
+		E5BDD7DE2A67F9A900F3BB7C /* UpsellGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B3BEB6279EBD5200F85BDF /* UpsellGradientView.swift */; };
+		E5BDD7DF2A67F9A900F3BB7C /* ClickDetectingVisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E192239E20EBABA0007ED5B0 /* ClickDetectingVisualEffectView.swift */; };
+		E5BDD7E02A67F9A900F3BB7C /* VideoTourModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CCA11729B2057700BDE32B /* VideoTourModel.swift */; };
+		E5BDD7E12A67F9A900F3BB7C /* SCCoreCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01DD001F5C2658003D62ED /* SCCoreCircleButton.swift */; };
+		E5BDD7E22A67F9A900F3BB7C /* WindowMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57597C023B10C2E002D6631 /* WindowMenuController.swift */; };
+		E5BDD7E32A67F9A900F3BB7C /* OsxUiAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADA9CB228C4325004B0891 /* OsxUiAlertService.swift */; };
+		E5BDD7E42A67F9A900F3BB7C /* ProtonVpnMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFE81DC1F3F785A0052A7A6 /* ProtonVpnMenuViewModel.swift */; };
+		E5BDD7E52A67F9A900F3BB7C /* LinkButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3C29B882AF0013ACB2 /* LinkButtonStyle.swift */; };
+		E5BDD7E62A67F9A900F3BB7C /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE876E111F13859600C9B9C2 /* OverlayView.swift */; };
+		E5BDD7E72A67F9A900F3BB7C /* CountryAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE3B5F41F53F8EC00E86CFA /* CountryAnnotationView.swift */; };
+		E5BDD7E82A67F9A900F3BB7C /* ClearCancellationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D149212497CC00F4D1C7 /* ClearCancellationButton.swift */; };
+		E5BDD7E92A67F9A900F3BB7C /* SCExitCountryAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9589DD1F5938B2005E7495 /* SCExitCountryAnnotationView.swift */; };
+		E5BDD7EA2A67F9A900F3BB7C /* FeatureIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13464AC20342D2A00C0DB7D /* FeatureIcon.swift */; };
+		E5BDD7EB2A67F9A900F3BB7C /* ShowApplicationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17C1CE020E6217E00DCC687 /* ShowApplicationButton.swift */; };
+		E5BDD7EC2A67F9A900F3BB7C /* HelpMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9BFBCB1F30F9CA00EDA295 /* HelpMenuController.swift */; };
+		E5BDD7ED2A67F9A900F3BB7C /* SecureCoreDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1F2A82553084900793A49 /* SecureCoreDropdownPresenter.swift */; };
+		E5BDD7EE2A67F9A900F3BB7C /* SystemExtensionGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3A29B611C20013ACB2 /* SystemExtensionGuideViewController.swift */; };
+		E5BDD7EF2A67F9A900F3BB7C /* ExpandableContentPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42498A4F2518E96B00ACB7EC /* ExpandableContentPopupViewController.swift */; };
+		E5BDD7F02A67F9A900F3BB7C /* ServerUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3FDC2A1F44853300E5C1CE /* ServerUtility.swift */; };
+		E5BDD7F22A67F9A900F3BB7C /* SubuserAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C9A83FB783483559C8FE68 /* SubuserAlertWindowController.swift */; };
+		E5BDD7F32A67F9A900F3BB7C /* StatusMenuCountryViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F59B5420DCF26A00798435 /* StatusMenuCountryViewItem.swift */; };
+		E5BDD7F42A67F9A900F3BB7C /* DisabledScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA556391F1F59690061F43F /* DisabledScrollView.swift */; };
+		E5BDD7F52A67F9A900F3BB7C /* CountryItemCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECEF3DD1F169B4800A16606 /* CountryItemCellView.swift */; };
+		E5BDD7F62A67F9A900F3BB7C /* SubuserMacAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD48FBC3A054F5D91A15F1E /* SubuserMacAlertViewController.swift */; };
+		E5BDD7F72A67F9A900F3BB7C /* WrenchIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25B5CBA24583E7C00A3AFB5 /* WrenchIcon.swift */; };
+		E5BDD7F82A67F9A900F3BB7C /* UpsellPrimaryActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D1472124955B00F4D1C7 /* UpsellPrimaryActionButton.swift */; };
+		E5BDD7F92A67F9A900F3BB7C /* ProfilesMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5CF76F1F4DDCDF0002BBF3 /* ProfilesMenuViewModel.swift */; };
+		E5BDD7FA2A67F9A900F3BB7C /* Colors+BugReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F88DE627B544E0003E5179 /* Colors+BugReport.swift */; };
+		E5BDD7FB2A67F9A900F3BB7C /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EA77FA2294366A007B9C2F /* Alerts.swift */; };
+		E5BDD7FC2A67F9A900F3BB7C /* SCEntryCountryAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01DCFE1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift */; };
+		E5BDD7FD2A67F9A900F3BB7C /* FooterItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE24A39C1F1BCA1A00B70949 /* FooterItemView.swift */; };
+		E5BDD7FE2A67F9A900F3BB7C /* ProfileItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE24A39A1F1BCA0D00B70949 /* ProfileItemView.swift */; };
+		E5BDD7FF2A67F9A900F3BB7C /* CustomOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AEE614202E44D1003DDD84 /* CustomOverlayView.swift */; };
+		E5BDD8002A67F9A900F3BB7C /* ProfilesMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5CF76D1F4DDB750002BBF3 /* ProfilesMenuController.swift */; };
+		E5BDD8012A67F9A900F3BB7C /* ProfileCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE24A3A01F1BD75900B70949 /* ProfileCircle.swift */; };
+		E5BDD8022A67F9A900F3BB7C /* ProtonVpnMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3435681F2F620400DE0806 /* ProtonVpnMenuController.swift */; };
+		E5BDD8032A67F9A900F3BB7C /* VerticalScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB493CE1F20EA3400A979DC /* VerticalScrollView.swift */; };
+		E5BDD8052A67FADE00F3BB7C /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = E5BDD8042A67FADE00F3BB7C /* Sparkle */; };
+		E5BDD8062A67FB8200F3BB7C /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FD4C1C264C1B30001F26CE /* vpncore.framework */; };
+		E5BDD8072A67FB8200F3BB7C /* vpncore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D5FD4C1C264C1B30001F26CE /* vpncore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E5BDD8092A67FCE900F3BB7C /* LocalFeatureFlags in Frameworks */ = {isa = PBXBuildFile; productRef = E5BDD8082A67FCE900F3BB7C /* LocalFeatureFlags */; };
+		E5BDD80B2A67FDD800F3BB7C /* Login.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE4943EB1F29BE3600CF980F /* Login.xib */; };
+		E5BDD80C2A67FDE600F3BB7C /* TwoFactorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5EB08C3281FC4A700F29B20 /* TwoFactorView.xib */; };
+		E5BDD80D2A67FDE900F3BB7C /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5EB08C8281FDF4800F29B20 /* LoadingView.xib */; };
+		E5BDD80E2A67FDEC00F3BB7C /* WarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E56598692820FECE004F2240 /* WarningView.xib */; };
+		E5BDD80F2A67FE9C00F3BB7C /* LoadingAnimationFrames in Resources */ = {isa = PBXBuildFile; fileRef = 4C7CAEC028006E5C0008778E /* LoadingAnimationFrames */; };
+		E5C00F0B2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F0A2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift */; };
+		E5C00F0D2A15FC6E0030076F /* (null) in Sources */ = {isa = PBXBuildFile; };
+		E5C00F152A1612950030076F /* NavigationRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F142A1612950030076F /* NavigationRobot.swift */; };
+		E5C3416029FBBADE00A26614 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5C3415A29FBBADE00A26614 /* Assets.xcassets */; };
+		E5C3416129FBBADE00A26614 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5C3415C29FBBADE00A26614 /* Preview Assets.xcassets */; };
+		E5C3416229FBBADE00A26614 /* ProtonVPN_redesignApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C3415D29FBBADE00A26614 /* ProtonVPN_redesignApp.swift */; };
 		E5C4EF3B29B611C20013ACB2 /* SystemExtensionGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3A29B611C20013ACB2 /* SystemExtensionGuideViewController.swift */; };
 		E5C4EF3D29B882AF0013ACB2 /* LinkButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3C29B882AF0013ACB2 /* LinkButtonStyle.swift */; };
 		E5C4EF3F29B882C10013ACB2 /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3E29B882C10013ACB2 /* PrimaryButtonStyle.swift */; };
 		E5CCA11829B2057700BDE32B /* VideoTourModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CCA11729B2057700BDE32B /* VideoTourModel.swift */; };
+		E5CF49512A3C603200ACE1CB /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = E5CF49502A3C603200ACE1CB /* Logging */; };
+		E5CF79CD29FBBA720072E7EC /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E57B263129C3188D00533B7C /* AVKit.framework */; };
 		E5CFAACE29E92E8300C36735 /* AppTheme+Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CFAACD29E92E8300C36735 /* AppTheme+Icons.swift */; };
-		E5E48CEA2A4C353300B09111 /* SidebarReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC642A42F5350058B3D9 /* SidebarReducer.swift */; };
-		E5E48CEB2A4C353600B09111 /* ProtonVPN_redesignApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C3415D29FBBADE00A26614 /* ProtonVPN_redesignApp.swift */; };
-		E5E48CEC2A4C353900B09111 /* InitialStateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53CB3A92A43275E00D58D20 /* InitialStateProvider.swift */; };
-		E5E48CED2A4C353C00B09111 /* ProfileButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC732A430A720058B3D9 /* ProfileButtonView.swift */; };
-		E5E48CEE2A4C353C00B09111 /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC742A430A720058B3D9 /* SideBarView.swift */; };
-		E5E48CEF2A4C353C00B09111 /* SideBarTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC752A430A720058B3D9 /* SideBarTab.swift */; };
-		E5E48CF02A4C353C00B09111 /* SideBarButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC722A430A720058B3D9 /* SideBarButtonStyle.swift */; };
-		E5E48CF12A4C353C00B09111 /* SideBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC762A430A720058B3D9 /* SideBarItemView.swift */; };
 		E5E48CF52A4C362300B09111 /* Home-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48CF42A4C362300B09111 /* Home-macOS */; };
 		E5E48CF72A4C363700B09111 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48CF62A4C363700B09111 /* ComposableArchitecture */; };
 		E5E48CF92A4C365000B09111 /* ConnectionDetails in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48CF82A4C365000B09111 /* ConnectionDetails */; };
@@ -250,14 +538,11 @@
 		E5E48CFF2A4C37A900B09111 /* LocalFeatureFlags in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48CFE2A4C37A900B09111 /* LocalFeatureFlags */; };
 		E5E48D012A4C37F000B09111 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48D002A4C37F000B09111 /* PMLogger */; };
 		E5E48D032A4C3D7100B09111 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48D022A4C3D7100B09111 /* Logging */; };
-		E5E48D052A4D729B00B09111 /* LoginViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E48D042A4D729B00B09111 /* LoginViewControllerRepresentable.swift */; };
 		E5EB08C4281FC4A700F29B20 /* TwoFactorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5EB08C3281FC4A700F29B20 /* TwoFactorView.xib */; };
 		E5EB08C6281FD2B900F29B20 /* TwoFactorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EB08C5281FD2B900F29B20 /* TwoFactorView.swift */; };
 		E5EB08CA281FDF4800F29B20 /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5EB08C8281FDF4800F29B20 /* LoadingView.xib */; };
 		E5F1112C27CE184A007DEC0D /* SettingsTickboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1112B27CE184A007DEC0D /* SettingsTickboxView.swift */; };
 		E5F1112E27CE3A1D007DEC0D /* SettingsDropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1112D27CE3A1D007DEC0D /* SettingsDropDownView.swift */; };
-		E5F8F0002A555C0000E9F090 /* ProtonVPNmac_redesign_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F0A2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift */; };
-		E5F8F0012A555C0000E9F090 /* NavigationRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F142A1612950030076F /* NavigationRobot.swift */; };
 		E5FFC89A2816AEFC00E355DA /* PlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC8992816AEFC00E355DA /* PlanService.swift */; };
 		E9036B3F26C1044700EDFDA4 /* IPCOvpnService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9036B3E26C1044700EDFDA4 /* IPCOvpnService.swift */; };
 		E9036B4126C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9036B4026C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift */; };
@@ -488,6 +773,27 @@
 			remoteGlobalIDString = EED534801EEC112000013607;
 			remoteInfo = ProtonVPN;
 		};
+		E52B8BB329FBB84B00517FFC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EED534791EEC112000013607 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 42EF09DA257A713F00E2EDCA;
+			remoteInfo = "ProtonVPN OpenVPN";
+		};
+		E52B8BB629FBB84B00517FFC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EED534791EEC112000013607 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E93C4F1526A1C1F30006680C;
+			remoteInfo = "ProtonVPN WireGuard";
+		};
+		E5C00F0E2A15FC6E0030076F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EED534791EEC112000013607 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E5DB888929FAB82B004D6637;
+			remoteInfo = "ProtonVPN-mac-redesign";
+		};
 		E93D022C26A1C7D40098520D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EED534791EEC112000013607 /* Project object */;
@@ -536,6 +842,27 @@
 			files = (
 			);
 			name = "Copy Network Helper";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E52B8BB129FBB7F200517FFC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E5BDD8072A67FB8200F3BB7C /* vpncore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E52B8BB829FBB84B00517FFC /* Embed System Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(SYSTEM_EXTENSIONS_FOLDER_PATH)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			name = "Embed System Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E94EFFF52653D2010024DBFB /* Copy Sparkle XPC */ = {
@@ -874,6 +1201,9 @@
 		E565986B2820FEDD004F2240 /* WarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WarningView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/WarningView.swift; sourceTree = "<group>"; };
 		E5772AE329B0B9A90076D824 /* SystemExtensionTutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionTutorialView.swift; sourceTree = "<group>"; };
 		E57B263129C3188D00533B7C /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		E5BDD80A2A67FD3700F3BB7C /* ProtonVPN-mac-redesign-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "ProtonVPN-mac-redesign-Info.plist"; sourceTree = "<group>"; };
+		E5C00F002A15FB680030076F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "ProtonVPNmac-redesign-UITests/Info.plist"; sourceTree = SOURCE_ROOT; };
+		E5C00F082A15FC6E0030076F /* ProtonVPNmac-redesign-UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ProtonVPNmac-redesign-UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5C00F0A2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNmac_redesign_UITests.swift; sourceTree = "<group>"; };
 		E5C00F142A1612950030076F /* NavigationRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRobot.swift; sourceTree = "<group>"; };
 		E5C3415A29FBBADE00A26614 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -885,6 +1215,7 @@
 		E5C4EF3E29B882C10013ACB2 /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
 		E5CCA11729B2057700BDE32B /* VideoTourModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTourModel.swift; sourceTree = "<group>"; };
 		E5CFAACD29E92E8300C36735 /* AppTheme+Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppTheme+Icons.swift"; sourceTree = "<group>"; };
+		E5DB888A29FAB82B004D6637 /* ProtonVPN-mac-redesign.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ProtonVPN-mac-redesign.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5E48D042A4D729B00B09111 /* LoginViewControllerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerRepresentable.swift; sourceTree = "<group>"; };
 		E5EB08C3281FC4A700F29B20 /* TwoFactorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TwoFactorView.xib; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/TwoFactorView.xib; sourceTree = "<group>"; };
 		E5EB08C5281FD2B900F29B20 /* TwoFactorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TwoFactorView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/TwoFactorView.swift; sourceTree = "<group>"; };
@@ -1138,6 +1469,36 @@
 			files = (
 				E111808B7080739DC417E264 /* Pods_ProtonVPNmacOSTests.framework in Frameworks */,
 				E555DF772A4F194B00FD15C8 /* Dependencies in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5C00F052A15FC6E0030076F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5DB888729FAB82B004D6637 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E5117C392A67B515007DBB63 /* Modals-macOS in Frameworks */,
+				D58273242A4F03DE0021CA41 /* Theme in Frameworks */,
+				E5CF79CD29FBBA720072E7EC /* AVKit.framework in Frameworks */,
+				D54539C72A408E22008B4259 /* Timer in Frameworks */,
+				E5A4AD122A3B239500CC91D7 /* ComposableArchitecture in Frameworks */,
+				E5BDD8092A67FCE900F3BB7C /* LocalFeatureFlags in Frameworks */,
+				D54539C22A408AB9008B4259 /* ConnectionDetails in Frameworks */,
+				E5CF49512A3C603200ACE1CB /* Logging in Frameworks */,
+				E5BDD8052A67FADE00F3BB7C /* Sparkle in Frameworks */,
+				E56790E62A45D4A20089CA79 /* Strings in Frameworks */,
+				E5A4AD192A3B255D00CC91D7 /* PMLogger in Frameworks */,
+				E5A4AD102A3B238A00CC91D7 /* Home-macOS in Frameworks */,
+				E5A4AD142A3B239F00CC91D7 /* Home in Frameworks */,
+				D54539C02A408A92008B4259 /* ConnectionDetails-macOS in Frameworks */,
+				9B4BACE98AEA4534B5C6E151 /* Pods_ProtonVPN_mac_redesign.framework in Frameworks */,
+				E5BDD8062A67FB8200F3BB7C /* vpncore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1549,7 +1910,6 @@
 		D5911707229F9574005829DA /* ProtonVPNUITests */ = {
 			isa = PBXGroup;
 			children = (
-				E5C00F092A15FC6E0030076F /* ProtonVPNmac-redesign-UITests */,
 				B22F32FE278DC44D00DBB8CA /* Tests */,
 				B22F32FD278DC40E00DBB8CA /* Robots */,
 				D5204E6B22A138AB00FFAB99 /* Other classes */,
@@ -1639,6 +1999,7 @@
 		E5C00F092A15FC6E0030076F /* ProtonVPNmac-redesign-UITests */ = {
 			isa = PBXGroup;
 			children = (
+				E5C00F002A15FB680030076F /* Info.plist */,
 				E5C00F0A2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift */,
 				E5C00F142A1612950030076F /* NavigationRobot.swift */,
 			);
@@ -1869,6 +2230,7 @@
 		EED534781EEC112000013607 = {
 			isa = PBXGroup;
 			children = (
+				E5BDD80A2A67FD3700F3BB7C /* ProtonVPN-mac-redesign-Info.plist */,
 				E551EB0629AF7B7B00B6612D /* swiftgen.yml */,
 				F38BB451265C0D8F00329619 /* Config.xcconfig */,
 				EED534831EEC112000013607 /* ProtonVPN */,
@@ -1880,6 +2242,7 @@
 				B2E466D42980550B0026ED26 /* TestPlans */,
 				E15B754E20FA83CB0022C406 /* ProtonVPNTests */,
 				D5911707229F9574005829DA /* ProtonVPNUITests */,
+				E5C00F092A15FC6E0030076F /* ProtonVPNmac-redesign-UITests */,
 				EED534821EEC112000013607 /* Products */,
 				7461E535C10E886FBC226611 /* Frameworks */,
 				CF4CBD52B87483E7CE0F1406 /* Pods */,
@@ -1895,6 +2258,8 @@
 				D5911706229F9574005829DA /* ProtonVPNmacOSUITests.xctest */,
 				42EF09DB257A713F00E2EDCA /* ch.protonvpn.mac.OpenVPN-Extension.systemextension */,
 				E93C4F2526A1C1F30006680C /* ch.protonvpn.mac.WireGuard-Extension.systemextension */,
+				E5DB888A29FAB82B004D6637 /* ProtonVPN-mac-redesign.app */,
+				E5C00F082A15FC6E0030076F /* ProtonVPNmac-redesign-UITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2866,6 +3231,62 @@
 			productReference = E15B754D20FA83CB0022C406 /* ProtonVPNmacOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		E5C00F072A15FC6E0030076F /* ProtonVPNmac-redesign-UITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E5C00F102A15FC6E0030076F /* Build configuration list for PBXNativeTarget "ProtonVPNmac-redesign-UITests" */;
+			buildPhases = (
+				E5C00F042A15FC6E0030076F /* Sources */,
+				E5C00F052A15FC6E0030076F /* Frameworks */,
+				E5C00F062A15FC6E0030076F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E5C00F0F2A15FC6E0030076F /* PBXTargetDependency */,
+			);
+			name = "ProtonVPNmac-redesign-UITests";
+			productName = "ProtonVPNmac-redesign-UITests";
+			productReference = E5C00F082A15FC6E0030076F /* ProtonVPNmac-redesign-UITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		E5DB888929FAB82B004D6637 /* ProtonVPN-mac-redesign */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E5DB889629FAB82D004D6637 /* Build configuration list for PBXNativeTarget "ProtonVPN-mac-redesign" */;
+			buildPhases = (
+				890729E89254D58347712640 /* [CP] Check Pods Manifest.lock */,
+				E5DB888629FAB82B004D6637 /* Sources */,
+				E5DB888729FAB82B004D6637 /* Frameworks */,
+				E5DB888829FAB82B004D6637 /* Resources */,
+				E52B8BB129FBB7F200517FFC /* Embed Frameworks */,
+				E52B8BB829FBB84B00517FFC /* Embed System Extensions */,
+				9BC82C59F3D65DF7BB09AAC1 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E52B8BB429FBB84B00517FFC /* PBXTargetDependency */,
+				E52B8BB729FBB84B00517FFC /* PBXTargetDependency */,
+			);
+			name = "ProtonVPN-mac-redesign";
+			packageProductDependencies = (
+				E52B8BBB29FBB85F00517FFC /* Modals-macOS */,
+				E5A4AD0F2A3B238A00CC91D7 /* Home-macOS */,
+				E5A4AD112A3B239500CC91D7 /* ComposableArchitecture */,
+				E5A4AD132A3B239F00CC91D7 /* Home */,
+				E5A4AD182A3B255D00CC91D7 /* PMLogger */,
+				E5CF49502A3C603200ACE1CB /* Logging */,
+				D54539BF2A408A92008B4259 /* ConnectionDetails-macOS */,
+				D54539C12A408AB9008B4259 /* ConnectionDetails */,
+				D54539C62A408E22008B4259 /* Timer */,
+				E56790E52A45D4A20089CA79 /* Strings */,
+				D58273232A4F03DE0021CA41 /* Theme */,
+				E5BDD8042A67FADE00F3BB7C /* Sparkle */,
+				E5BDD8082A67FCE900F3BB7C /* LocalFeatureFlags */,
+			);
+			productName = "ProtonVPN-mac-redesign";
+			productReference = E5DB888A29FAB82B004D6637 /* ProtonVPN-mac-redesign.app */;
+			productType = "com.apple.product-type.application";
+		};
 		E93C4F1526A1C1F30006680C /* ProtonVPN WireGuard */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E93C4F2126A1C1F30006680C /* Build configuration list for PBXNativeTarget "ProtonVPN WireGuard" */;
@@ -2972,6 +3393,13 @@
 						CreatedOnToolsVersion = 9.4.1;
 						TestTargetID = EED534801EEC112000013607;
 					};
+					E5C00F072A15FC6E0030076F = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = E5DB888929FAB82B004D6637;
+					};
+					E5DB888929FAB82B004D6637 = {
+						CreatedOnToolsVersion = 14.3;
+					};
 					E93C4F1026A1C1450006680C = {
 						CreatedOnToolsVersion = 12.5.1;
 					};
@@ -3064,12 +3492,14 @@
 			projectRoot = "";
 			targets = (
 				EED534801EEC112000013607 /* ProtonVPN-mac */,
+				E5DB888929FAB82B004D6637 /* ProtonVPN-mac-redesign */,
 				EEB404C61F77F639006CF513 /* ProtonVPNStarter */,
 				42EF09DA257A713F00E2EDCA /* ProtonVPN OpenVPN */,
 				E93C4F1526A1C1F30006680C /* ProtonVPN WireGuard */,
 				E93C4F1026A1C1450006680C /* WireGuardGoBridgemacOS */,
 				E15B754C20FA83CB0022C406 /* ProtonVPNmacOSTests */,
 				D5911705229F9574005829DA /* ProtonVPNmacOSUITests */,
+				E5C00F072A15FC6E0030076F /* ProtonVPNmac-redesign-UITests */,
 			);
 		};
 /* End PBXProject section */
@@ -3102,6 +3532,27 @@
 			files = (
 				E13F4CFE20FCC98800D985C2 /* ServerManagerTestServers.json in Resources */,
 				844917000A1F005A8397AB8E /* Pods-ProtonVPNmacOSTests-metadata.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5C00F062A15FC6E0030076F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5DB888829FAB82B004D6637 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E5C3416129FBBADE00A26614 /* Preview Assets.xcassets in Resources */,
+				E5C3416029FBBADE00A26614 /* Assets.xcassets in Resources */,
+				E5BDD80F2A67FE9C00F3BB7C /* LoadingAnimationFrames in Resources */,
+				E5BDD80C2A67FDE600F3BB7C /* TwoFactorView.xib in Resources */,
+				E5BDD80E2A67FDEC00F3BB7C /* WarningView.xib in Resources */,
+				E5BDD80B2A67FDD800F3BB7C /* Login.xib in Resources */,
+				E5BDD80D2A67FDE900F3BB7C /* LoadingView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3278,6 +3729,45 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ProtonVPNmacOSUITests/Pods-ProtonVPNmacOSUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		890729E89254D58347712640 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ProtonVPN-mac-redesign-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9BC82C59F3D65DF7BB09AAC1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ProtonVPN-mac-redesign/Pods-ProtonVPN-mac-redesign-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ProtonVPN-mac-redesign/Pods-ProtonVPN-mac-redesign-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ProtonVPN-mac-redesign/Pods-ProtonVPN-mac-redesign-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B33F276558A5DA22AEB268BF /* [CP] Check Pods Manifest.lock */ = {
@@ -3502,7 +3992,6 @@
 				B22F3312278EC8B700DBB8CA /* SettingsRobot.swift in Sources */,
 				B2AA47D027CE6FE40021E632 /* MapTests.swift in Sources */,
 				B22F3304278DC76C00DBB8CA /* MainRobot.swift in Sources */,
-				E5F8F0012A555C0000E9F090 /* NavigationRobot.swift in Sources */,
 				B22F3300278DC6E400DBB8CA /* ProfileTests.swift in Sources */,
 				E51122DC27D0B6780088FCAC /* XCUIElement+forceClick.swift in Sources */,
 				B22F3316278EF38600DBB8CA /* SettingsTests.swift in Sources */,
@@ -3511,7 +4000,6 @@
 				D5911709229F9574005829DA /* ProtonVPNUITests.swift in Sources */,
 				B270C2D927BE984400EC7B53 /* SearchRobot.swift in Sources */,
 				B22F3307278DC83500DBB8CA /* CreateProfileRobot.swift in Sources */,
-				E5F8F0002A555C0000E9F090 /* ProtonVPNmac_redesign_UITests.swift in Sources */,
 				B22F330A278DC8BA00DBB8CA /* ManageProfilesRobot.swift in Sources */,
 				B270C2CC27BBAC7900EC7B53 /* QuickSettingsTests.swift in Sources */,
 				B270C2DA27BE9AD100EC7B53 /* SearchTests.swift in Sources */,
@@ -3539,6 +4027,294 @@
 				E9AB88E7262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift in Sources */,
 				AD8C78AE29898403008AC0B5 /* AppSessionManagerImplementationTests.swift in Sources */,
 				E13F4CF920FC9E0F00D985C2 /* Dictionary+Extension.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5C00F042A15FC6E0030076F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E5C00F0D2A15FC6E0030076F /* (null) in Sources */,
+				E5C00F0B2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift in Sources */,
+				E5C00F152A1612950030076F /* NavigationRobot.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5DB888629FAB82B004D6637 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E5BDD72B2A67EDAB00F3BB7C /* ButtonMask.swift in Sources */,
+				E5BDD7EA2A67F9A900F3BB7C /* FeatureIcon.swift in Sources */,
+				E5BDD7602A67F75500F3BB7C /* StatusMenuProfilesListViewModel.swift in Sources */,
+				E5BDD7D02A67F9A900F3BB7C /* HelpPopoverBackgroundView.swift in Sources */,
+				E5BDD7D62A67F9A900F3BB7C /* OVPNCredentialsConfigurator.swift in Sources */,
+				E5BDD7212A67ED2700F3BB7C /* StatusMenuViewModel.swift in Sources */,
+				E5BDD7992A67F8F700F3BB7C /* Bundle+Extension.swift in Sources */,
+				E5BDD79A2A67F8F700F3BB7C /* NSString+Extension.swift in Sources */,
+				E5BDD7DE2A67F9A900F3BB7C /* UpsellGradientView.swift in Sources */,
+				E5BDD7E72A67F9A900F3BB7C /* CountryAnnotationView.swift in Sources */,
+				E5BDD7062A67DF6500F3BB7C /* LoginViewController.swift in Sources */,
+				E5BDD77A2A67F82D00F3BB7C /* LargeConnectButton.swift in Sources */,
+				E5BDD7F52A67F9A900F3BB7C /* CountryItemCellView.swift in Sources */,
+				E5BDD75D2A67F73800F3BB7C /* TourNextButton.swift in Sources */,
+				E5BDD72C2A67EDB000F3BB7C /* SettingsContainerViewController.swift in Sources */,
+				E5117C462A67C330007DBB63 /* FirstLaunchRoutine.swift in Sources */,
+				E5BDD7B32A67F9A800F3BB7C /* AnnouncementFeatureView.swift in Sources */,
+				E5BDD7882A67F89B00F3BB7C /* MapHeaderBackground.swift in Sources */,
+				E5BDD7D32A67F9A900F3BB7C /* ExpandCellButton.swift in Sources */,
+				E5BDD7982A67F8F700F3BB7C /* AppTheme+Icons.swift in Sources */,
+				E5BDD7D92A67F9A900F3BB7C /* PrimaryButtonStyle.swift in Sources */,
+				E5BDD7BE2A67F9A800F3BB7C /* WelcomeViewController.swift in Sources */,
+				E5BDD70F2A67EC7E00F3BB7C /* CreateNewProfileViewModel.swift in Sources */,
+				E5BDD8032A67F9A900F3BB7C /* VerticalScrollView.swift in Sources */,
+				E5BDD7592A67F71900F3BB7C /* TourNumberView.swift in Sources */,
+				E5BDD71B2A67ED0200F3BB7C /* ColorPickerViewModel.swift in Sources */,
+				E5BDD73C2A67EF2700F3BB7C /* CountryAnnotationViewModel.swift in Sources */,
+				E5117C452A67C320007DBB63 /* AppConstants.swift in Sources */,
+				E5BDD7832A67F87A00F3BB7C /* MapHeaderViewController.swift in Sources */,
+				E5117C412A67C30C007DBB63 /* WindowService.swift in Sources */,
+				E5BDD7CD2A67F9A800F3BB7C /* PopUpViewModel.swift in Sources */,
+				E5BDD7672A67F7B000F3BB7C /* ConnectingWindowController.swift in Sources */,
+				E5BDD7CB2A67F9A800F3BB7C /* AnnouncementDetailViewController.swift in Sources */,
+				E5BDD7DB2A67F9A900F3BB7C /* WhiteHoverLinkButton.swift in Sources */,
+				E5BDD7CC2A67F9A800F3BB7C /* StatusMenuItemBackground.swift in Sources */,
+				E5BDD7DC2A67F9A900F3BB7C /* SystemExtensionTutorialView.swift in Sources */,
+				E5BDD7CF2A67F9A900F3BB7C /* QuitApplicationButton.swift in Sources */,
+				E5BDD7222A67ED3700F3BB7C /* NetworkStatistics.swift in Sources */,
+				E5BDD73B2A67EF2300F3BB7C /* HelpPopoverViewController.swift in Sources */,
+				E5BDD7182A67ECDD00F3BB7C /* AcknowledgementsViewController.swift in Sources */,
+				E5BDD8012A67F9A900F3BB7C /* ProfileCircle.swift in Sources */,
+				E5BDD7FC2A67F9A900F3BB7C /* SCEntryCountryAnnotationView.swift in Sources */,
+				E5BDD7302A67EE7800F3BB7C /* LoadingView.swift in Sources */,
+				E5BDD7292A67EDA000F3BB7C /* TextFieldFocusDelegate.swift in Sources */,
+				E5BDD7BA2A67F9A800F3BB7C /* OverviewItemView.swift in Sources */,
+				E5BDD7C72A67F9A800F3BB7C /* MapCoordinateTranslator.swift in Sources */,
+				E5117C3F2A67C2E5007DBB63 /* NotificationManagerProtocol.swift in Sources */,
+				E5BDD7B92A67F9A800F3BB7C /* CellSurfaceButton.swift in Sources */,
+				E5117C4B2A67C479007DBB63 /* SysexGuideWindowController.swift in Sources */,
+				E5BDD7162A67ECD300F3BB7C /* PVPNTextField.swift in Sources */,
+				E5BDD75F2A67F75100F3BB7C /* StatusMenuCountryItemViewModel.swift in Sources */,
+				E5BDD7EB2A67F9A900F3BB7C /* ShowApplicationButton.swift in Sources */,
+				E5BDD7122A67ECA600F3BB7C /* AppCertificateRefreshManager.swift in Sources */,
+				E5BDD73F2A67EFB200F3BB7C /* IPCClientConnection.swift in Sources */,
+				E5BDD72D2A67EDBD00F3BB7C /* HelpPopoverViewModel.swift in Sources */,
+				E5BDD7EF2A67F9A900F3BB7C /* ExpandableContentPopupViewController.swift in Sources */,
+				E5BDD7542A67F6C000F3BB7C /* TourViewController.swift in Sources */,
+				E5BDD7092A67EC4500F3BB7C /* GeneralSettingsViewModel.swift in Sources */,
+				E5BDD70D2A67EC7500F3BB7C /* SettingsTabBarViewModel.swift in Sources */,
+				E5BDD7E22A67F9A900F3BB7C /* WindowMenuController.swift in Sources */,
+				E5BDD7FA2A67F9A900F3BB7C /* Colors+BugReport.swift in Sources */,
+				E5BDD70A2A67EC5D00F3BB7C /* XPCConnectionsRepository.swift in Sources */,
+				E5BDD79F2A67F8F700F3BB7C /* PropertiesManager+Extension.swift in Sources */,
+				E5117C442A67C318007DBB63 /* AppSessionManager.swift in Sources */,
+				E5BDD7732A67F7FE00F3BB7C /* SettingsDropDownView.swift in Sources */,
+				E5BDD7082A67EC4100F3BB7C /* ConnectionSettingsViewModel.swift in Sources */,
+				E5BDD8002A67F9A900F3BB7C /* ProfilesMenuController.swift in Sources */,
+				E5BDD7762A67F81B00F3BB7C /* QuickSettingButton.swift in Sources */,
+				E5BDD7522A67F67300F3BB7C /* LoginWindowController.swift in Sources */,
+				E5117C432A67C314007DBB63 /* OpenVpnMacProtocolFactory.swift in Sources */,
+				E5BDD70E2A67EC7900F3BB7C /* ProfilesContainerViewModel.swift in Sources */,
+				E5BDD7052A67DF5500F3BB7C /* LoginViewControllerRepresentable.swift in Sources */,
+				E5117C472A67C462007DBB63 /* ObfuscatedConstants.swift in Sources */,
+				E5BDD7A62A67F8F700F3BB7C /* NSTextField+RealSizing.swift in Sources */,
+				E5BDD7152A67ECCF00F3BB7C /* MacVpnCredentialsConfiguratorFactory.swift in Sources */,
+				E5BDD72F2A67EE6E00F3BB7C /* ProfilesTabBarViewController.swift in Sources */,
+				E5BDD7442A67EFDC00F3BB7C /* CreateNewProfileViewController.swift in Sources */,
+				E5BDD7472A67EFE900F3BB7C /* TabBarButton.swift in Sources */,
+				E5117C4C2A67C47D007DBB63 /* LoginViewModel.swift in Sources */,
+				E5BDD7F62A67F9A900F3BB7C /* SubuserMacAlertViewController.swift in Sources */,
+				E5BDD7DF2A67F9A900F3BB7C /* ClickDetectingVisualEffectView.swift in Sources */,
+				E5BDD7BF2A67F9A800F3BB7C /* CountriesSectionHeaderView.swift in Sources */,
+				E5BDD7E12A67F9A900F3BB7C /* SCCoreCircleButton.swift in Sources */,
+				E5BDD71C2A67ED0600F3BB7C /* SecureCoreWarningViewModel.swift in Sources */,
+				E5BDD76A2A67F7BD00F3BB7C /* ConnectionOverlay.swift in Sources */,
+				E5117C3D2A67C28E007DBB63 /* AppDelegate.swift in Sources */,
+				E5BDD7C02A67F9A800F3BB7C /* NET2WarningPopupViewController.swift in Sources */,
+				E5BDD7B22A67F9A800F3BB7C /* WarningPopupViewController.swift in Sources */,
+				E5BDD7702A67F7E700F3BB7C /* CouponViewController.swift in Sources */,
+				E5BDD7752A67F81500F3BB7C /* ShadowView.swift in Sources */,
+				E5117C422A67C310007DBB63 /* WireguardMacProtocolFactory.swift in Sources */,
+				E5BDD7A32A67F8F700F3BB7C /* NSAttributedString+Extension.swift in Sources */,
+				E5BDD75C2A67F73200F3BB7C /* TourPreviousButton.swift in Sources */,
+				E552FC772A430A720058B3D9 /* SideBarButtonStyle.swift in Sources */,
+				E5BDD7E32A67F9A900F3BB7C /* OsxUiAlertService.swift in Sources */,
+				E5BDD7B02A67F9A800F3BB7C /* ColorPickerItemView.swift in Sources */,
+				E5117C4E2A67C507007DBB63 /* ReportBugWindowController.swift in Sources */,
+				E5BDD7F92A67F9A900F3BB7C /* ProfilesMenuViewModel.swift in Sources */,
+				E5BDD7C32A67F9A800F3BB7C /* TroubleshootingRowItem.swift in Sources */,
+				E5BDD7EC2A67F9A900F3BB7C /* HelpMenuController.swift in Sources */,
+				E5BDD71E2A67ED1500F3BB7C /* UpdateFileSelector.swift in Sources */,
+				E5BDD7CA2A67F9A800F3BB7C /* ReconnectingOverlayViewModel.swift in Sources */,
+				E5BDD7742A67F81000F3BB7C /* BlockableScrollView.swift in Sources */,
+				E5BDD7192A67ECE400F3BB7C /* PopUpButtonItemViewModel.swift in Sources */,
+				E5BDD7E92A67F9A900F3BB7C /* SCExitCountryAnnotationView.swift in Sources */,
+				E5BDD7462A67EFE400F3BB7C /* ProfilesTabBarView.swift in Sources */,
+				E5BDD74C2A67F02B00F3BB7C /* OverviewItemViewModel.swift in Sources */,
+				E5BDD7132A67ECAA00F3BB7C /* macOSNetworkingDelegate.swift in Sources */,
+				E5117C3C2A67BAB7007DBB63 /* InitialStateProvider.swift in Sources */,
+				E5BDD7B42A67F9A800F3BB7C /* PopUpViewController.swift in Sources */,
+				E5BDD76F2A67F7E400F3BB7C /* SettingsTickboxView.swift in Sources */,
+				E5BDD7B62A67F9A800F3BB7C /* PVPNTextViewLink.swift in Sources */,
+				E5BDD73E2A67EF9800F3BB7C /* ConnectingOverlayViewModel.swift in Sources */,
+				E5BDD7352A67EEDF00F3BB7C /* CountriesServersHeaderViewModel.swift in Sources */,
+				E5BDD7F42A67F9A900F3BB7C /* DisabledScrollView.swift in Sources */,
+				E5BDD7B72A67F9A800F3BB7C /* TroubleshootingPopup.swift in Sources */,
+				E5BDD7412A67EFCB00F3BB7C /* ConnectingOverlayButton.swift in Sources */,
+				E5BDD7172A67ECD800F3BB7C /* InteractiveActionButton.swift in Sources */,
+				E5BDD7FD2A67F9A900F3BB7C /* FooterItemView.swift in Sources */,
+				E5BDD7E52A67F9A900F3BB7C /* LinkButtonStyle.swift in Sources */,
+				E5BDD7642A67F79F00F3BB7C /* MapHeaderViewModel.swift in Sources */,
+				E5BDD7712A67F7EB00F3BB7C /* BannerView.swift in Sources */,
+				E5BDD7F22A67F9A900F3BB7C /* SubuserAlertWindowController.swift in Sources */,
+				E5BDD74D2A67F03100F3BB7C /* WarningPopupViewModel.swift in Sources */,
+				E5BDD7A72A67F8F700F3BB7C /* NSView+Extension.swift in Sources */,
+				E5BDD7142A67ECAE00F3BB7C /* PlanService.swift in Sources */,
+				E5BDD7772A67F82000F3BB7C /* ServerItemCellView.swift in Sources */,
+				E5BDD7562A67F6F000F3BB7C /* TourWindowController.swift in Sources */,
+				E5BDD7322A67EEA100F3BB7C /* GIFView.swift in Sources */,
+				E5117C4F2A67C52D007DBB63 /* AboutWindowController.swift in Sources */,
+				E5BDD7D52A67F9A900F3BB7C /* TourDescriptionView.swift in Sources */,
+				E5BDD7632A67F77800F3BB7C /* StatusMenuProfileItemViewModel.swift in Sources */,
+				E5BDD7DA2A67F9A900F3BB7C /* TourNumberRingView.swift in Sources */,
+				E5BDD7392A67EEF300F3BB7C /* QuickSettingDropdownPresenter.swift in Sources */,
+				E5BDD7FB2A67F9A900F3BB7C /* Alerts.swift in Sources */,
+				E5BDD7A92A67F90100F3BB7C /* StreamOptionCVItemViewModel.swift in Sources */,
+				E5BDD7782A67F82400F3BB7C /* FlagView.swift in Sources */,
+				E5BDD7102A67EC8F00F3BB7C /* TourController.swift in Sources */,
+				E5BDD7612A67F76700F3BB7C /* StatusMenuProfilesListController.swift in Sources */,
+				E5BDD7452A67EFE000F3BB7C /* OverviewViewModel.swift in Sources */,
+				E5BDD7312A67EE8E00F3BB7C /* LoadingAnimationView.swift in Sources */,
+				E5BDD7792A67F82800F3BB7C /* LoadCircle.swift in Sources */,
+				E5BDD7C22A67F9A800F3BB7C /* ExpandablePopupViewModel.swift in Sources */,
+				E5BDD7682A67F7B500F3BB7C /* HeaderViewController.swift in Sources */,
+				E5BDD7E62A67F9A900F3BB7C /* OverlayView.swift in Sources */,
+				E5BDD7C12A67F9A800F3BB7C /* WGVpnCredentialsConfigurator.swift in Sources */,
+				E5BDD7872A67F89500F3BB7C /* ButtonImageView.swift in Sources */,
+				E5BDD7BB2A67F9A800F3BB7C /* DisablingView.swift in Sources */,
+				E552FC792A430A720058B3D9 /* SideBarView.swift in Sources */,
+				E5117C532A67C542007DBB63 /* AccountViewModel.swift in Sources */,
+				E5BDD7AA2A67F90100F3BB7C /* StreamOptionCVItem.swift in Sources */,
+				E5BDD7A52A67F8F700F3BB7C /* Dictionary+Extension.swift in Sources */,
+				E5BDD7C52A67F9A800F3BB7C /* CABasicAnimation+Pulse.swift in Sources */,
+				E5BDD76D2A67F7CE00F3BB7C /* ConnectionSettingsViewController.swift in Sources */,
+				E5BDD7C92A67F9A800F3BB7C /* HoverDetectionButtonAdvanced.swift in Sources */,
+				E5BDD7252A67ED5500F3BB7C /* TextFieldWithFocus.swift in Sources */,
+				E5BDD7272A67ED6700F3BB7C /* SwitchButton.swift in Sources */,
+				E5BDD7422A67EFD000F3BB7C /* IPCBaseConnection.swift in Sources */,
+				E5BDD7232A67ED4C00F3BB7C /* TwoFactorView.swift in Sources */,
+				E5BDD7072A67EC3E00F3BB7C /* AdvancedSettingsViewModel.swift in Sources */,
+				E5BDD73A2A67EF1B00F3BB7C /* ProfilesContainerViewController.swift in Sources */,
+				E5BDD7202A67ED2200F3BB7C /* ProtonReachabilityChecker.swift in Sources */,
+				E5BDD76B2A67F7C200F3BB7C /* AccountViewController.swift in Sources */,
+				E5BDD7492A67F01B00F3BB7C /* PrimaryActionButton.swift in Sources */,
+				E5BDD7652A67F7A500F3BB7C /* ProfilesSectionViewController.swift in Sources */,
+				E5BDD7A02A67F8F700F3BB7C /* NSWindow+Extension.swift in Sources */,
+				E5BDD7402A67EFB800F3BB7C /* StatusMenuWindowModel.swift in Sources */,
+				E5117C4D2A67C4FE007DBB63 /* VpnProtocolChangeManager.swift in Sources */,
+				E5BDD7D12A67F9A900F3BB7C /* CreateNewProfileViewModel+Descriptors.swift in Sources */,
+				E5BDD75A2A67F71E00F3BB7C /* SidebarTabBarViewController.swift in Sources */,
+				E5BDD71A2A67ECF100F3BB7C /* HoverDetectionButton.swift in Sources */,
+				E552FC7B2A430A720058B3D9 /* SideBarItemView.swift in Sources */,
+				E5BDD7AC2A67F90100F3BB7C /* FeatureRowView.swift in Sources */,
+				E5BDD7862A67F88700F3BB7C /* PassThroughView.swift in Sources */,
+				E5BDD7BD2A67F9A800F3BB7C /* InAppLinkManager.swift in Sources */,
+				E5BDD7502A67F04C00F3BB7C /* QuickSettingsDropdownOptionPresenter.swift in Sources */,
+				E5BDD7AD2A67F90100F3BB7C /* StreamingServicesOverlayViewController.swift in Sources */,
+				E5BDD75B2A67F72B00F3BB7C /* SidebarTabBarView.swift in Sources */,
+				E5BDD7AB2A67F90100F3BB7C /* FeaturesOverlayViewController.swift in Sources */,
+				E5BDD7AE2A67F90100F3BB7C /* UserAccountUpdateViewController.swift in Sources */,
+				E5BDD7852A67F88200F3BB7C /* MapView.swift in Sources */,
+				E5BDD7E02A67F9A900F3BB7C /* VideoTourModel.swift in Sources */,
+				E5BDD72E2A67EE6900F3BB7C /* MapSectionViewModel.swift in Sources */,
+				E5BDD74E2A67F04100F3BB7C /* AbstractProfileViewModel.swift in Sources */,
+				E5BDD7B12A67F9A800F3BB7C /* StatusMenuProfileViewItem.swift in Sources */,
+				E5BDD79D2A67F8F700F3BB7C /* NSProgressIndicator+Extensions.swift in Sources */,
+				E5BDD7382A67EEEF00F3BB7C /* FeaturesOverlayViewModel.swift in Sources */,
+				E5BDD7F32A67F9A900F3BB7C /* StatusMenuCountryViewItem.swift in Sources */,
+				E552FC782A430A720058B3D9 /* ProfileButtonView.swift in Sources */,
+				E5BDD7822A67F87600F3BB7C /* ZoomButton.swift in Sources */,
+				E5117C512A67C538007DBB63 /* SettingsWindowController.swift in Sources */,
+				E5BDD7F02A67F9A900F3BB7C /* ServerUtility.swift in Sources */,
+				E5BDD77F2A67F85200F3BB7C /* ProfileItemViewModel.swift in Sources */,
+				E5BDD7692A67F7B900F3BB7C /* ExpandMapButton.swift in Sources */,
+				E5BDD74F2A67F04600F3BB7C /* QuickSettingDetailViewController.swift in Sources */,
+				E5BDD79B2A67F8F700F3BB7C /* NSView+Children.swift in Sources */,
+				E5BDD7FF2A67F9A900F3BB7C /* CustomOverlayView.swift in Sources */,
+				E5BDD7A42A67F8F700F3BB7C /* TimeInterval+Extension.swift in Sources */,
+				E552FC7A2A430A720058B3D9 /* SideBarTab.swift in Sources */,
+				E5BDD7FE2A67F9A900F3BB7C /* ProfileItemView.swift in Sources */,
+				E5BDD7BC2A67F9A800F3BB7C /* QuickSettingsDropdownOption.swift in Sources */,
+				E5BDD7B82A67F9A800F3BB7C /* NotificationManager.swift in Sources */,
+				E5BDD79E2A67F8F700F3BB7C /* CGMutablePath+Extension.swift in Sources */,
+				E5BDD74A2A67F02000F3BB7C /* CancellationButton.swift in Sources */,
+				E5BDD7AF2A67F90100F3BB7C /* StreamingServicesOverlayViewModel.swift in Sources */,
+				E5BDD7E82A67F9A900F3BB7C /* ClearCancellationButton.swift in Sources */,
+				E5BDD7482A67F01500F3BB7C /* HoverDetectionPopUpButton.swift in Sources */,
+				E5BDD7CE2A67F9A800F3BB7C /* WiFiWarningPopupViewController.swift in Sources */,
+				E5BDD75E2A67F74C00F3BB7C /* WiFiSecurityMonitor.swift in Sources */,
+				E5BDD7DD2A67F9A900F3BB7C /* StatusMenuSurfaceButton.swift in Sources */,
+				E5BDD7B52A67F9A800F3BB7C /* TransparentBackedScroller.swift in Sources */,
+				E5BDD7262A67ED6000F3BB7C /* SecureTextFieldWithFocus.swift in Sources */,
+				E552FC652A42F5350058B3D9 /* SidebarReducer.swift in Sources */,
+				E5BDD7512A67F05500F3BB7C /* SettingsTabBarViewController.swift in Sources */,
+				E5BDD74B2A67F02500F3BB7C /* ColorPickerViewController.swift in Sources */,
+				E5BDD7D22A67F9A900F3BB7C /* KillSwitchDropdownPresenter.swift in Sources */,
+				E5BDD76E2A67F7D300F3BB7C /* GeneralSettingsViewController.swift in Sources */,
+				E5BDD7D82A67F9A900F3BB7C /* AnnouncementImageViewController.swift in Sources */,
+				E5BDD77D2A67F84800F3BB7C /* ConnectButton.swift in Sources */,
+				E5BDD7802A67F85E00F3BB7C /* NetshieldDropdownPresenter.swift in Sources */,
+				E5117C522A67C53C007DBB63 /* SettingsContainerViewModel.swift in Sources */,
+				E5117C3A2A67BA82007DBB63 /* AppReducer.swift in Sources */,
+				E5C3416229FBBADE00A26614 /* ProtonVPN_redesignApp.swift in Sources */,
+				E5BDD77C2A67F84300F3BB7C /* MapSectionViewController.swift in Sources */,
+				E5BDD7F72A67F9A900F3BB7C /* WrenchIcon.swift in Sources */,
+				E5BDD70C2A67EC7000F3BB7C /* StatusMenuWindowController.swift in Sources */,
+				E5117C542A67C553007DBB63 /* AboutViewController.swift in Sources */,
+				E5117C3E2A67C2DA007DBB63 /* DependencyContainer.swift in Sources */,
+				E5BDD7A82A67F8F700F3BB7C /* NSColor+Extension.swift in Sources */,
+				E5BDD7372A67EEE800F3BB7C /* ServerItemViewModel.swift in Sources */,
+				E5117C502A67C533007DBB63 /* AcknowledgementsWindowController.swift in Sources */,
+				E5BDD7C62A67F9A800F3BB7C /* Assets.swift in Sources */,
+				E5BDD7D42A67F9A900F3BB7C /* SidebarWindowController.swift in Sources */,
+				E5117C492A67C46F007DBB63 /* UpdateManager.swift in Sources */,
+				E5BDD7362A67EEE300F3BB7C /* CountryItemViewModel.swift in Sources */,
+				E5BDD7D72A67F9A900F3BB7C /* ColorPickerCircle.swift in Sources */,
+				E5BDD7572A67F6F500F3BB7C /* TourNumberViewController.swift in Sources */,
+				E5BDD71D2A67ED0A00F3BB7C /* HeaderViewModel.swift in Sources */,
+				E5BDD7C42A67F9A800F3BB7C /* SecureCoreWarningViewController.swift in Sources */,
+				E5BDD7812A67F86300F3BB7C /* ResizingTextButton.swift in Sources */,
+				E5BDD7242A67ED5100F3BB7C /* WarningView.swift in Sources */,
+				E5BDD73D2A67EF2E00F3BB7C /* ConnectionViewModel.swift in Sources */,
+				E5BDD7F82A67F9A900F3BB7C /* UpsellPrimaryActionButton.swift in Sources */,
+				E5BDD7112A67ECA100F3BB7C /* MacAlertService.swift in Sources */,
+				E5BDD7EE2A67F9A900F3BB7C /* SystemExtensionGuideViewController.swift in Sources */,
+				E5BDD79C2A67F8F700F3BB7C /* ProfileIcon+Extension.swift in Sources */,
+				E5BDD7722A67F7FA00F3BB7C /* ConnectingViewController.swift in Sources */,
+				E5117C3B2A67BAB2007DBB63 /* LoginFeature.swift in Sources */,
+				E5BDD7842A67F87E00F3BB7C /* ZoomView.swift in Sources */,
+				E5BDD7662A67F7AC00F3BB7C /* CountriesSectionViewController.swift in Sources */,
+				E5BDD77B2A67F83100F3BB7C /* ProfilesSectionViewModel.swift in Sources */,
+				E5BDD77E2A67F84E00F3BB7C /* ColoredLoadButton.swift in Sources */,
+				E5BDD7342A67EED800F3BB7C /* ProfilesWindowController.swift in Sources */,
+				E5BDD7282A67ED7000F3BB7C /* LoginButton.swift in Sources */,
+				E5BDD7432A67EFD500F3BB7C /* OverviewViewController.swift in Sources */,
+				E5117C482A67C469007DBB63 /* HelpMenuViewModel.swift in Sources */,
+				E5BDD76C2A67F7C900F3BB7C /* AdvancedSettingsViewController.swift in Sources */,
+				E5BDD7ED2A67F9A900F3BB7C /* SecureCoreDropdownPresenter.swift in Sources */,
+				E5BDD7A22A67F8F700F3BB7C /* AccountPlan+Extension.swift in Sources */,
+				E5117C402A67C306007DBB63 /* NavigationService.swift in Sources */,
+				E5BDD7C82A67F9A800F3BB7C /* OverviewItemViewModel+Descriptors.swift in Sources */,
+				E5BDD7552A67F6D700F3BB7C /* SidebarViewController.swift in Sources */,
+				E5BDD7A12A67F8F700F3BB7C /* NSStackView+Children.swift in Sources */,
+				E5BDD7622A67F76E00F3BB7C /* StatusBarAppConnectButton.swift in Sources */,
+				E5BDD7532A67F6A300F3BB7C /* StatusMenuViewController.swift in Sources */,
+				E5BDD7582A67F71400F3BB7C /* TabBarView.swift in Sources */,
+				E5BDD70B2A67EC6A00F3BB7C /* WindowController.swift in Sources */,
+				E5BDD8022A67F9A900F3BB7C /* ProtonVpnMenuController.swift in Sources */,
+				E5BDD71F2A67ED1D00F3BB7C /* ModelIDChecker.swift in Sources */,
+				E5BDD7E42A67F9A900F3BB7C /* ProtonVpnMenuViewModel.swift in Sources */,
+				E5BDD72A2A67EDA400F3BB7C /* CountriesSectionViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3601,11 +4377,9 @@
 				EE4E7E031F62B197000F7D5E /* SettingsContainerViewModel.swift in Sources */,
 				EE6E61D81F4C4F5300638F9B /* ExpandCellButton.swift in Sources */,
 				EE4FCF641F21FA5300B04EF8 /* SecureTextFieldWithFocus.swift in Sources */,
-				E5E48CEA2A4C353300B09111 /* SidebarReducer.swift in Sources */,
 				EE9589DE1F5938B2005E7495 /* SCExitCountryAnnotationView.swift in Sources */,
 				F320E03026F08D7A00336F7A /* TourController.swift in Sources */,
 				E156C19F20BE901A0054E935 /* StatusMenuWindowController.swift in Sources */,
-				E5E48CED2A4C353C00B09111 /* ProfileButtonView.swift in Sources */,
 				F3021DB025E950A300EF73A1 /* TroubleshootingRowItem.swift in Sources */,
 				EE78749F1F3B4993001E261E /* OverviewItemViewModel+Descriptors.swift in Sources */,
 				E148458020CAB64900DFDAA4 /* HelpMenuViewModel.swift in Sources */,
@@ -3629,11 +4403,9 @@
 				E180D16C2126FCF700F4D1C7 /* TourNextButton.swift in Sources */,
 				E5CFAACE29E92E8300C36735 /* AppTheme+Icons.swift in Sources */,
 				E187022020E268FE000521AC /* StatusMenuProfileItemViewModel.swift in Sources */,
-				E5E48CF02A4C353C00B09111 /* SideBarButtonStyle.swift in Sources */,
 				EE5CF76E1F4DDB750002BBF3 /* ProfilesMenuController.swift in Sources */,
 				E17C1CE520EA2C6500DCC687 /* StatusMenuCountryItemViewModel.swift in Sources */,
 				EE4E7E051F62B27A000F7D5E /* ProfilesContainerViewModel.swift in Sources */,
-				E5E48CF12A4C353C00B09111 /* SideBarItemView.swift in Sources */,
 				E195C0D9204301900002021B /* ButtonMask.swift in Sources */,
 				E18AF44B20223DD10067799A /* ConnectionViewModel.swift in Sources */,
 				E50B623D28B4D2FE004D533B /* AnnouncementImageViewController.swift in Sources */,
@@ -3653,7 +4425,6 @@
 				EE5CF7721F4DE7E80002BBF3 /* FirstLaunchRoutine.swift in Sources */,
 				D5A8813722CF282E009B63D1 /* ReportBugWindowController.swift in Sources */,
 				EE2FE5951F5ED5BF00ABA7DE /* DisablingView.swift in Sources */,
-				E524A0FB2A60119D003DB5D8 /* AppReducer.swift in Sources */,
 				4CA7BA4F2965788B0001C7E7 /* PopUpButtonItemViewModel.swift in Sources */,
 				E9E5F98427C667170068309F /* AppCertificateRefreshManager.swift in Sources */,
 				EEDC30B61EFB18DC00279A3A /* Bundle+Extension.swift in Sources */,
@@ -3662,7 +4433,6 @@
 				E551EB0829AF7C1300B6612D /* Assets.swift in Sources */,
 				EECEF3E01F169EC300A16606 /* ServerItemCellView.swift in Sources */,
 				E192239F20EBABA0007ED5B0 /* ClickDetectingVisualEffectView.swift in Sources */,
-				E5E48CEC2A4C353900B09111 /* InitialStateProvider.swift in Sources */,
 				EE876E121F13859600C9B9C2 /* OverlayView.swift in Sources */,
 				EEBE35101EFAC582000ACCD1 /* TimeInterval+Extension.swift in Sources */,
 				EE24A39B1F1BCA0D00B70949 /* ProfileItemView.swift in Sources */,
@@ -3688,7 +4458,6 @@
 				4CA7BA512965E0040001C7E7 /* SecureCoreWarningViewModel.swift in Sources */,
 				EEFE81DB1F3F6D150052A7A6 /* NavigationService.swift in Sources */,
 				42082671256BC3B900A621EC /* BlockableScrollView.swift in Sources */,
-				E5E48D052A4D729B00B09111 /* LoginViewControllerRepresentable.swift in Sources */,
 				E1B9A7D2203ECE9E009677BC /* ConnectingOverlayViewModel.swift in Sources */,
 				E13BDF492062912300CF5383 /* TransparentBackedScroller.swift in Sources */,
 				EEFE81D01F3F36740052A7A6 /* MapHeaderBackground.swift in Sources */,
@@ -3718,7 +4487,6 @@
 				E1C1399C2114399700B88658 /* SwitchButton.swift in Sources */,
 				EEE3B5F31F53F44100E86CFA /* CountryAnnotationViewModel.swift in Sources */,
 				EE98CFE31F15167D000D6688 /* NSWindow+Extension.swift in Sources */,
-				E5E48CEE2A4C353C00B09111 /* SideBarView.swift in Sources */,
 				EEB493CF1F20EA3400A979DC /* VerticalScrollView.swift in Sources */,
 				EE69C8DB1F5D9F8500C3065C /* SidebarWindowController.swift in Sources */,
 				EE24A3A11F1BD75900B70949 /* ProfileCircle.swift in Sources */,
@@ -3778,7 +4546,6 @@
 				EEA1C8E01F27BD7200B2036E /* CountriesSectionViewModel.swift in Sources */,
 				4CE2F42227ECA7B000B21A00 /* GIFView.swift in Sources */,
 				EE27DB4E1F47187600D2FF2B /* SettingsTabBarViewController.swift in Sources */,
-				E5E48CEB2A4C353600B09111 /* ProtonVPN_redesignApp.swift in Sources */,
 				E9F8B6CF26206DE900B72549 /* VpnProtocolChangeManager.swift in Sources */,
 				EE24A39F1F1BCF6000B70949 /* ConnectButton.swift in Sources */,
 				EEFE81D21F3F3AE30052A7A6 /* MapSectionViewController.swift in Sources */,
@@ -3826,7 +4593,6 @@
 				E13464DC2035BA5C00C0DB7D /* NetworkStatistics.swift in Sources */,
 				EE27DB581F4759A600D2FF2B /* AppSessionManager.swift in Sources */,
 				EE35FC431F1CD2DA00CFE26F /* SidebarTabBarView.swift in Sources */,
-				E524A0F92A60015A003DB5D8 /* LoginFeature.swift in Sources */,
 				E180D16A2126FCE500F4D1C7 /* TourPreviousButton.swift in Sources */,
 				42710D9C264929A000D70B92 /* StreamOptionCVItemViewModel.swift in Sources */,
 				E15DE7D22029EA6F00BFA78D /* PassThroughView.swift in Sources */,
@@ -3843,7 +4609,6 @@
 				F320E02F26F08D7A00336F7A /* TourNumberViewController.swift in Sources */,
 				EEF7814F1F1A78B800E77B59 /* CountriesSectionViewController.swift in Sources */,
 				42C1F28C2553017D00793A49 /* QuickSettingsDropdownOption.swift in Sources */,
-				E5E48CEF2A4C353C00B09111 /* SideBarTab.swift in Sources */,
 				F315847927C795A100D1F6CC /* AdvancedSettingsViewModel.swift in Sources */,
 				E1EA77FB2294366A007B9C2F /* Alerts.swift in Sources */,
 				EEA556341F1F48F20061F43F /* ColorPickerItemView.swift in Sources */,
@@ -3875,6 +4640,21 @@
 			isa = PBXTargetDependency;
 			target = EED534801EEC112000013607 /* ProtonVPN-mac */;
 			targetProxy = E15B755220FA83CB0022C406 /* PBXContainerItemProxy */;
+		};
+		E52B8BB429FBB84B00517FFC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 42EF09DA257A713F00E2EDCA /* ProtonVPN OpenVPN */;
+			targetProxy = E52B8BB329FBB84B00517FFC /* PBXContainerItemProxy */;
+		};
+		E52B8BB729FBB84B00517FFC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E93C4F1526A1C1F30006680C /* ProtonVPN WireGuard */;
+			targetProxy = E52B8BB629FBB84B00517FFC /* PBXContainerItemProxy */;
+		};
+		E5C00F0F2A15FC6E0030076F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E5DB888929FAB82B004D6637 /* ProtonVPN-mac-redesign */;
+			targetProxy = E5C00F0E2A15FC6E0030076F /* PBXContainerItemProxy */;
 		};
 		E93D022D26A1C7D40098520D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -4242,7 +5022,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DSTAGING";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
@@ -4402,6 +5182,199 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProtonVPN.app/Contents/MacOS/ProtonVPN";
 			};
 			name = Release;
+		};
+		E5C00F112A15FC6E0030076F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2SB5Z68H26;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "ProtonVPNmac-redesign-UITests/Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.ProtonVPNmac-redesign-UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "ProtonVPN-mac-redesign";
+			};
+			name = Debug;
+		};
+		E5C00F122A15FC6E0030076F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2SB5Z68H26;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "ProtonVPNmac-redesign-UITests/Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.ProtonVPNmac-redesign-UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "ProtonVPN-mac-redesign";
+			};
+			name = Release;
+		};
+		E5C00F132A15FC6E0030076F /* Staging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2SB5Z68H26;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "ProtonVPNmac-redesign-UITests/Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.ProtonVPNmac-redesign-UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "ProtonVPN-mac-redesign";
+			};
+			name = Staging;
+		};
+		E5DB889729FAB82D004D6637 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4ECD1808FE46B2894DF6FFCB /* Pods-ProtonVPN-mac-redesign.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDebug;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "ProtonVPN-redesign/ProtonVPN_redesign.entitlements";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ProtonVPN-redesign/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = J6S6Q257EK;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ProtonVPN-mac-redesign-Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Proton Technologies AG. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 5.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "ProtonVPN Mac Development PP";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG REDESIGN";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		E5DB889829FAB82D004D6637 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AC61390E5761B0E1E5368299 /* Pods-ProtonVPN-mac-redesign.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "ProtonVPN-redesign/ProtonVPN_redesign.entitlements";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ProtonVPN-redesign/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = J6S6Q257EK;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ProtonVPN-mac-redesign-Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Proton Technologies AG. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 5.0.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "ProtonVPN Mac Development PP";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		E5DB889929FAB82D004D6637 /* Staging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 807D210B92BA0270B3FC4B83 /* Pods-ProtonVPN-mac-redesign.staging.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDebug;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "ProtonVPN-redesign/ProtonVPN_redesign.entitlements";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ProtonVPN-redesign/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = J6S6Q257EK;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ProtonVPN-mac-redesign-Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Proton Technologies AG. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 5.0.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "ProtonVPN Mac Development PP";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG REDESIGN";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Staging;
 		};
 		E93C4F1226A1C1450006680C /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -4778,7 +5751,7 @@
 					"@executable_path/../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
 				PRODUCT_NAME = ProtonVPN;
@@ -4820,7 +5793,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
@@ -4862,6 +5835,26 @@
 				E15B755420FA83CB0022C406 /* Debug */,
 				E15B755620FA83CB0022C406 /* Release */,
 				E1034B3F22EB18E40022A43B /* Staging */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E5C00F102A15FC6E0030076F /* Build configuration list for PBXNativeTarget "ProtonVPNmac-redesign-UITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E5C00F112A15FC6E0030076F /* Debug */,
+				E5C00F122A15FC6E0030076F /* Release */,
+				E5C00F132A15FC6E0030076F /* Staging */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E5DB889629FAB82D004D6637 /* Build configuration list for PBXNativeTarget "ProtonVPN-mac-redesign" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E5DB889729FAB82D004D6637 /* Debug */,
+				E5DB889829FAB82D004D6637 /* Release */,
+				E5DB889929FAB82D004D6637 /* Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -4986,6 +5979,22 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = NEHelper;
 		};
+		D54539BF2A408A92008B4259 /* ConnectionDetails-macOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "ConnectionDetails-macOS";
+		};
+		D54539C12A408AB9008B4259 /* ConnectionDetails */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ConnectionDetails;
+		};
+		D54539C62A408E22008B4259 /* Timer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Timer;
+		};
+		D58273232A4F03DE0021CA41 /* Theme */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Theme;
+		};
 		D5CA559526A59A9A001E9284 /* WireGuardKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */;
@@ -4999,6 +6008,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Timer;
 		};
+		E52B8BBB29FBB85F00517FFC /* Modals-macOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "Modals-macOS";
+		};
 		E53D64C2281169880060C463 /* Modals-macOS */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Modals-macOS";
@@ -5007,6 +6020,41 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
 			productName = Dependencies;
+		};
+		E56790E52A45D4A20089CA79 /* Strings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Strings;
+		};
+		E5A4AD0F2A3B238A00CC91D7 /* Home-macOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "Home-macOS";
+		};
+		E5A4AD112A3B239500CC91D7 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4C1C07A92A39C937009DE875 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+		E5A4AD132A3B239F00CC91D7 /* Home */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Home;
+		};
+		E5A4AD182A3B255D00CC91D7 /* PMLogger */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PMLogger;
+		};
+		E5BDD8042A67FADE00F3BB7C /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E93533D929CAEE2C005E3A59 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
+		E5BDD8082A67FCE900F3BB7C /* LocalFeatureFlags */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LocalFeatureFlags;
+		};
+		E5CF49502A3C603200ACE1CB /* Logging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log" */;
+			productName = Logging;
 		};
 		E5E48CF42A4C362300B09111 /* Home-macOS */ = {
 			isa = XCSwiftPackageProductDependency;

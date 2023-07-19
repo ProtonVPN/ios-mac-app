@@ -36,7 +36,7 @@ public struct RecentConnection: Equatable {
         .init(
             pinned: false,
             underMaintenance: false,
-            connectionDate: .now,
+            connectionDate: Date(),
             connection: .init(location: .fastest, features: [])
         )
     }

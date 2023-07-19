@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1500"
+   LastUpgradeVersion = "1430"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -17,9 +17,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D5911705229F9574005829DA"
-               BuildableName = "ProtonVPNmacOSUITests.xctest"
-               BlueprintName = "ProtonVPNmacOSUITests"
+               BlueprintIdentifier = "E5C00F072A15FC6E0030076F"
+               BuildableName = "ProtonVPNmac-redesign-UITests.xctest"
+               BlueprintName = "ProtonVPNmac-redesign-UITests"
                ReferencedContainer = "container:macOS.xcodeproj">
             </BuildableReference>
          </TestableReference>
