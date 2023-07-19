@@ -8,7 +8,7 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [
         .iOS(.v15),
-        .macOS(.v12)],
+        .macOS(.v11)],
     products: [
         .library(
             name: "Modals",

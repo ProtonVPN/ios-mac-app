@@ -126,7 +126,9 @@ class WelcomeViewController: NSViewController {
     
     @IBAction func takeTour(_ sender: Any) {
         dismiss(nil)
+#if !REDESIGN
         windowService.showTour()
+#endif
     }
 }
 extension WelcomeViewController: SwitchButtonDelegate {

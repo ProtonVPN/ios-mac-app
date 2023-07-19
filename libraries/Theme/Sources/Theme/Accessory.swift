@@ -78,6 +78,7 @@ public struct Accessory: View {
     }
 }
 
+@available(macOS 12.0, *)
 struct Accessory_Previews: PreviewProvider {
 
     struct Cell: View {

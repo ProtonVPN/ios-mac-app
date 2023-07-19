@@ -79,14 +79,14 @@ abstract_target 'Core' do
         pod 'ProtonCore-Challenge', :git => proton_core_path, :tag => proton_core_version
     end
     target 'vpncore-macos' do        
-        platform :osx, '12.0'
+        platform :osx, '11.0'
     end
     target 'vpncore-iosTests' do
         platform :ios, '15.0'
         pod 'ProtonCore-TestingToolkit/UnitTests/Core', :git => proton_core_path, :tag => proton_core_version
     end
     target 'vpncore-macosTests' do
-        platform :osx, '12.0'
+        platform :osx, '11.0'
         pod 'ProtonCore-TestingToolkit/UnitTests/Core', :git => proton_core_path, :tag => proton_core_version
     end
 end
@@ -172,7 +172,19 @@ end
 # macOS
 
 target 'ProtonVPN-mac' do
-  platform :osx, '12.0'
+  platform :osx, '11.0'
+  project 'apps/macos/macOS.xcodeproj'
+
+  vpn_core
+
+  pod 'ProtonCore-UIFoundations', :git => proton_core_path, :tag => proton_core_version
+  pod "ProtonCore-Login/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
+  pod "ProtonCore-GoLibs/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
+
+end
+
+target 'ProtonVPN-mac-redesign' do
+  platform :osx, '11.0'
   project 'apps/macos/macOS.xcodeproj'
 
   vpn_core
@@ -184,28 +196,28 @@ target 'ProtonVPN-mac' do
 end
 
 target 'ProtonVPN OpenVPN' do
-  platform :osx, '12.0'
+  platform :osx, '11.0'
   project 'apps/macos/macOS.xcodeproj'
   use_frameworks!
   openvpn
 end
 
 target 'ProtonVPN WireGuard' do
-  platform :osx, '12.0'
+  platform :osx, '11.0'
   project 'apps/macos/macOS.xcodeproj'
   use_frameworks!
   keychain_access
 end
 
 target 'ProtonVPNmacOSTests' do
-  platform :osx, '12.0'
+  platform :osx, '11.0'
   project 'apps/macos/macOS.xcodeproj'
   inherit! :search_paths
   vpn_core
 end
 
 target 'ProtonVPNmacOSUITests' do
-  platform :osx, '12.0'
+  platform :osx, '11.0'
   project 'apps/macos/macOS.xcodeproj'
   inherit! :search_paths
   pod 'ProtonCore-QuarkCommands', :git => proton_core_path, :tag => proton_core_version

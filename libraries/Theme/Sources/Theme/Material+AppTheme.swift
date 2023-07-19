@@ -18,6 +18,7 @@
 
 import SwiftUI
 
+@available(macOS 12.0, *)
 extension ShapeStyle where Self == Material {
 
     public static var translucentStrong: Material {

@@ -7,7 +7,7 @@ let package = Package(
     name: "Theme",
     platforms: [
         .iOS(.v15),
-        .macOS(.v12)],
+        .macOS(.v11)],
     products: [
         .library(
             name: "Theme",

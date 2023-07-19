@@ -20,6 +20,7 @@ import Foundation
 import OSLog
 
 /// Reads all available logs from OSLog subsystem
+@available(macOS 12.0, *)
 public class OSLogContent: LogContent {
     private let scope: OSLogStore.Scope
     private let since: Date?
