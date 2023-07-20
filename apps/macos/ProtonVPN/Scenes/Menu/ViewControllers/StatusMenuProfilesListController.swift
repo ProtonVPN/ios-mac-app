@@ -60,6 +60,7 @@ class StatusMenuProfilesListController: WindowController {
         
         window.contentView?.wantsLayer = true
         window.contentView?.layer?.backgroundColor = .clear
+        window.appearance = NSAppearance(named: .darkAqua)
         
         topView.wantsLayer = true
         topView.layer?.backgroundColor = .cgColor(.background, .weak)

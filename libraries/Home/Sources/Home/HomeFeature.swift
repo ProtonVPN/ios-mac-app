@@ -99,7 +99,7 @@ public struct HomeFeature: ReducerProtocol {
                 let recent = RecentConnection(
                     pinned: pinned,
                     underMaintenance: false,
-                    connectionDate: .now,
+                    connectionDate: Date(),
                     connection: spec
                 )
                 state.connections.insert(recent, at: 0)
@@ -148,9 +148,13 @@ public struct HomeFeature: ReducerProtocol {
             case .watchConnectionStatus:
                 return .run { send in
                     @Dependency(\.vpnConnectionStatusPublisher) var vpnConnectionStatusPublisher
-                    
-                    for await vpnStatus in vpnConnectionStatusPublisher().values {
-                        await send(.newConnectionStatus(vpnStatus), animation: .default)
+
+                    if #available(macOS 12.0, *) {
+                        for await vpnStatus in vpnConnectionStatusPublisher().values {
+                            await send(.newConnectionStatus(vpnStatus), animation: .default)
+                        }
+                    } else {
+                        assertionFailure("Use target at least macOS 12.0")
                     }
                 }
 

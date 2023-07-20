@@ -25,6 +25,7 @@ import Modals_macOS
 import vpncore
 import AppKit
 import VPNShared
+import Home
 
 class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     
@@ -37,7 +38,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
 
     public private (set) lazy var isNetShieldStatsEnabled = { factory.makePropertiesManager().featureFlags.netShieldStats }()
-    var netShieldStats: NetShieldStats = .disabled
+    var netShieldStats: NetShieldModel = .init(trackers: 0, ads: 0, data: 0, enabled: false)
     private var notificationTokens: [NotificationToken] = []
     
     override var title: String! {
@@ -76,15 +77,11 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         })
     }
 
-    var netShieldViewModel: vpncore.NetShieldStatsViewModel {
+    var netShieldViewModel: NetShieldModel {
         // Show grayed out stats if disconnected, or netshield is turned off
         let isActive = appStateManager.displayState == .connected && netShieldPropertyProvider.netShieldType == .level2
-
-        guard case .enabled(let ads, let trackers, let bytes) = netShieldStats else {
-            return .disabled
-        }
-
-        return .enabled(adsBlocked: ads, trackersStopped: trackers, bytesSaved: bytes, paused: !isActive)
+        netShieldStats.enabled = isActive
+        return netShieldStats
     }
     
     override var options: [QuickSettingsDropdownOptionPresenter] {
@@ -99,6 +96,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     }
 
     private func contentChanged() {
+        viewController?.updateNetshieldStats()
     }
     
     // MARK: - Private

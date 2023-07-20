@@ -155,9 +155,6 @@
 		AD1DDFC329BF462500D14BE9 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1DDFC129BF462500D14BE9 /* DataManager.swift */; };
 		AD1DDFC529BF465C00D14BE9 /* FileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1DDFC429BF465C00D14BE9 /* FileStorage.swift */; };
 		AD1DDFC629BF465C00D14BE9 /* FileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1DDFC429BF465C00D14BE9 /* FileStorage.swift */; };
-		AD37181029CB3404006615E2 /* NetShieldStatsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37180F29CB3404006615E2 /* NetShieldStatsModel.swift */; };
-		AD37181229CB353F006615E2 /* NetShieldStatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37181129CB353F006615E2 /* NetShieldStatsViewModel.swift */; };
-		AD37181329CB3BD5006615E2 /* NetShieldStatsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37180F29CB3404006615E2 /* NetShieldStatsModel.swift */; };
 		AD37FAC729B89FF900D4DE4E /* StrongNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC629B89FF900D4DE4E /* StrongNotification.swift */; };
 		AD37FAC829B89FF900D4DE4E /* StrongNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC629B89FF900D4DE4E /* StrongNotification.swift */; };
 		AD3AE5332A4F11EB000FDBA6 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = AD3AE5322A4F11EB000FDBA6 /* Settings */; };
@@ -168,16 +165,15 @@
 		AD41A85A298ACED50003393D /* NetworkingMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C1826D63CCD00EF2F00 /* NetworkingMock.swift */; };
 		AD41A85C298AD26C0003393D /* MockTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFDF0B9287EE44100386626 /* MockTestData.swift */; };
 		AD41A85D298AD26D0003393D /* MockTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFDF0B9287EE44100386626 /* MockTestData.swift */; };
-
 		AD582AE529CDCFD000168D70 /* DebugEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD582AE429CDCFD000168D70 /* DebugEnvironment.swift */; };
 		AD58527F2A58B7E10005D8EC /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = AD58527E2A58B7E10005D8EC /* Home */; };
 		AD5852832A58B8160005D8EC /* Home-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = AD5852822A58B8160005D8EC /* Home-iOS */; };
 		AD880CE62A56C755007086AB /* VPNAppCore in Frameworks */ = {isa = PBXBuildFile; productRef = AD880CE52A56C755007086AB /* VPNAppCore */; };
 		AD880CE82A56C75B007086AB /* VPNAppCore in Frameworks */ = {isa = PBXBuildFile; productRef = AD880CE72A56C75B007086AB /* VPNAppCore */; };
-		ADB9E24529CDD3CE00D8452A /* DebugEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD582AE429CDCFD000168D70 /* DebugEnvironment.swift */; };
 		AD9B8BE72A0E4D77006986B0 /* VpnAuthentication+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9B8BE62A0E4D77006986B0 /* VpnAuthentication+iOS.swift */; };
 		AD9B8BEB2A0E4D80006986B0 /* VpnAuthentication+MacOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9B8BE92A0E4D80006986B0 /* VpnAuthentication+MacOS.swift */; };
 		AD9B8BED2A0E4F2F006986B0 /* CertificateRefreshAsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30B9EA62629B1A30094C65E /* CertificateRefreshAsyncOperation.swift */; };
+		ADB9E24529CDD3CE00D8452A /* DebugEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD582AE429CDCFD000168D70 /* DebugEnvironment.swift */; };
 		ADBFE44E29CDA14D001A5446 /* LocalAgentMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBFE44D29CDA14D001A5446 /* LocalAgentMessages.swift */; };
 		ADBFE44F29CDA14D001A5446 /* LocalAgentMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBFE44D29CDA14D001A5446 /* LocalAgentMessages.swift */; };
 		ADBFE45129CDAAE0001A5446 /* Timer+Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBFE45029CDAAE0001A5446 /* Timer+Dependencies.swift */; };
@@ -508,7 +504,6 @@
 		E55046442849F45A00E4BFC2 /* Image+Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55046422849F45A00E4BFC2 /* Image+Flag.swift */; };
 		E5608CC02994D94D00D11333 /* TelemetrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5608CBF2994D94C00D11333 /* TelemetrySettings.swift */; };
 		E5608CC12994D94D00D11333 /* TelemetrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5608CBF2994D94C00D11333 /* TelemetrySettings.swift */; };
-		E56249F729D328A100F58942 /* NetShieldStatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37181129CB353F006615E2 /* NetShieldStatsViewModel.swift */; };
 		E566D9DC29796A2F00C2F857 /* TelemetryBufferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E566D9DB29796A2F00C2F857 /* TelemetryBufferTests.swift */; };
 		E566D9DD29796A2F00C2F857 /* TelemetryBufferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E566D9DB29796A2F00C2F857 /* TelemetryBufferTests.swift */; };
 		E566D9EC297E7B0700C2F857 /* TelemetryRequestMultiple.swift in Sources */ = {isa = PBXBuildFile; fileRef = E566D9EB297E7B0700C2F857 /* TelemetryRequestMultiple.swift */; };
@@ -561,6 +556,7 @@
 		E5E4658029548D2200A4DE80 /* TelemetryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4657E29548D2200A4DE80 /* TelemetryAPI.swift */; };
 		E5E4658229548D3400A4DE80 /* TelemetryFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4658129548D3400A4DE80 /* TelemetryFeature.swift */; };
 		E5E4658329548D3400A4DE80 /* TelemetryFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4658129548D3400A4DE80 /* TelemetryFeature.swift */; };
+		E5EA4D6E2A6E8CC6005B4324 /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = E5EA4D6D2A6E8CC6005B4324 /* Strings */; };
 		E5FFC89C2816C61500E355DA /* Countries+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC89B2816C61500E355DA /* Countries+Extension.swift */; };
 		E5FFC89D2816C61500E355DA /* Countries+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC89B2816C61500E355DA /* Countries+Extension.swift */; };
 		E9037D30284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9037D2F284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift */; };
@@ -853,8 +849,6 @@
 		AD0397BD29B8A1D4000E1533 /* StrongNotificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrongNotificationTests.swift; sourceTree = "<group>"; };
 		AD1DDFC129BF462500D14BE9 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		AD1DDFC429BF465C00D14BE9 /* FileStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStorage.swift; sourceTree = "<group>"; };
-		AD37180F29CB3404006615E2 /* NetShieldStatsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldStatsModel.swift; sourceTree = "<group>"; };
-		AD37181129CB353F006615E2 /* NetShieldStatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldStatsViewModel.swift; sourceTree = "<group>"; };
 		AD37FAC629B89FF900D4DE4E /* StrongNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrongNotification.swift; sourceTree = "<group>"; };
 		AD3C485629D2FBCC00A768D4 /* LocalAgentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalAgentTests.swift; sourceTree = "<group>"; };
 		AD582AE429CDCFD000168D70 /* DebugEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugEnvironment.swift; sourceTree = "<group>"; };
@@ -1262,6 +1256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9FDFBF228DB3AE30019B097 /* vpncore.framework in Frameworks */,
+				E5EA4D6E2A6E8CC6005B4324 /* Strings in Frameworks */,
 				E9CB3B0428A676DE0086F22F /* TimerMock in Frameworks */,
 				02F7A6D217873B23BFE512F1 /* Pods_Core_vpncore_macosTests.framework in Frameworks */,
 			);
@@ -1367,7 +1362,6 @@
 		AD37180E29CB33E9006615E2 /* NetShield */ = {
 			isa = PBXGroup;
 			children = (
-				AD37180F29CB3404006615E2 /* NetShieldStatsModel.swift */,
 			);
 			path = NetShield;
 			sourceTree = "<group>";
@@ -2159,7 +2153,6 @@
 				D5966F3A2538396B0061A75F /* AnnouncementsViewModel.swift */,
 				F3021D6825E93DE300EF73A1 /* TroubleshootViewModel.swift */,
 				42066EF8263040E0001F86DB /* FeatureCellViewModel.swift */,
-				AD37181129CB353F006615E2 /* NetShieldStatsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -2510,6 +2503,7 @@
 			name = "vpncore-macosTests";
 			packageProductDependencies = (
 				E9CB3B0328A676DE0086F22F /* TimerMock */,
+				E5EA4D6D2A6E8CC6005B4324 /* Strings */,
 			);
 			productName = "vpncore-macosTests";
 			productReference = E1B5F61421B6960100B558B0 /* vpncore-macosTests.xctest */;
@@ -2945,7 +2939,6 @@
 				E1616BD721C7DF8800F42D79 /* VpnKeychain.swift in Sources */,
 				E15367E022662E65009BB1D2 /* VpnConnectionPreparer.swift in Sources */,
 				AD41A85D298AD26D0003393D /* MockTestData.swift in Sources */,
-				AD37181229CB353F006615E2 /* NetShieldStatsViewModel.swift in Sources */,
 				F3653568263856BB001B7E88 /* LocalAgent+Certs.swift in Sources */,
 				D563B26B2345DA4300F98797 /* FormValidationError.swift in Sources */,
 				E1616BF521C95BC400F42D79 /* ServerOffering.swift in Sources */,
@@ -2982,7 +2975,6 @@
 				D5566E0F28DAFF10007CB88F /* Log.swift in Sources */,
 				F397EA5E280561400072D511 /* CouponViewModel.swift in Sources */,
 				42370606262DA22300A920CF /* VPNStreamingResponse.swift in Sources */,
-				AD37181029CB3404006615E2 /* NetShieldStatsModel.swift in Sources */,
 				F389188C26C3D673006214A8 /* WireguardConfig.swift in Sources */,
 				E1B5F63221B6B19200B558B0 /* VpnState.swift in Sources */,
 				F3EF4ECC2670C22300109CA3 /* Threading.swift in Sources */,
@@ -3355,12 +3347,10 @@
 				E1616C0121C95D1E00F42D79 /* ProfileManager.swift in Sources */,
 				F31A46FB26A56BB2002224CB /* LocalizedString+Fallback.swift in Sources */,
 				E992F27F26675C3300169C6B /* VpnKeychainMock.swift in Sources */,
-				E56249F729D328A100F58942 /* NetShieldStatsViewModel.swift in Sources */,
 				4242B0312465A41A0042145A /* VPNClientCredentialsRequest.swift in Sources */,
 				E58EE0A52907DEBF003006F5 /* PlanSession.swift in Sources */,
 				E12485962243D62F0049B57D /* ConnectionRequest.swift in Sources */,
 				4242B0862465A4D10042145A /* VpnProperties.swift in Sources */,
-				AD37181329CB3BD5006615E2 /* NetShieldStatsModel.swift in Sources */,
 				E1616BE621C9392600F42D79 /* VpnGateway.swift in Sources */,
 				D5EA845128C8F59500C8EB7D /* SentryHelper.swift in Sources */,
 				D5C9E0972A55562500A84B6C /* GetServerById.swift in Sources */,
@@ -3488,8 +3478,6 @@
 				D523F11724B759A5007DB086 /* StringUrl.swift in Sources */,
 				D5967245253D8CBE0061A75F /* SafariServiceMock.swift in Sources */,
 				4CAAEC3E286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift in Sources */,
-				4C1C2F3028805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift in Sources */,
-				E56249F629D3285C00F58942 /* NetShieldStatsNumberFormatterTests.swift in Sources */,
 				4CFDF0B8287EE37500386626 /* MockDependencyContainer.swift in Sources */,
 				D59671CF253D5D440061A75F /* AnnouncementManagerImplementationTests.swift in Sources */,
 				D59671EB253D70D40061A75F /* AnnouncementRefresherImplementationTests.swift in Sources */,
@@ -4584,6 +4572,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E5A4AD272A3B470900CC91D7 /* XCRemoteSwiftPackageReference "swift-identified-collections" */;
 			productName = IdentifiedCollections;
+		};
+		E5EA4D6D2A6E8CC6005B4324 /* Strings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Strings;
 		};
 		E93120F328DB2EE600C1C2FE /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -25,13 +25,11 @@ import vpncore
 
 protocol CountriesServersHeaderViewModelProtocol {
     var title: String { get }
-    var backgroundColor: CGColor { get }
     var didTapInfoBtn: ( () -> Void )? { get }
 }
 
 class CountryHeaderViewModel: CountriesServersHeaderViewModelProtocol {
     let title: String
-    let backgroundColor: CGColor = .cgColor(.background, .weak)
     var didTapInfoBtn: (() -> Void)?
     
     init(_ sectionHeader: String, totalCountries: Int?, buttonType: InfoButtonType?, countriesViewModel: CountriesSectionViewModel) {
@@ -63,7 +61,6 @@ class CountryHeaderViewModel: CountriesServersHeaderViewModelProtocol {
 
 class ServerHeaderViewModel: CountriesServersHeaderViewModelProtocol {
     let title: String
-    let backgroundColor: CGColor = .cgColor(.background, .weak)
     var didTapInfoBtn: (() -> Void)?
     
     init( _ sectionHeader: String, totalServers: Int, country: CountryModel, tier: Int, propertiesManager: PropertiesManagerProtocol, countriesViewModel: CountriesSectionViewModel) {

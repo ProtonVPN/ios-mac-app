@@ -58,7 +58,9 @@ class QuickSettingButton: NSButton {
     override func updateLayer() {
         layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
         layer?.masksToBounds = false
-        layer?.backgroundColor = self.cgColor(.background)
+        DarkAppearance {
+            layer?.backgroundColor = self.cgColor(.background)
+        }
     }
     
     override func mouseDown(with event: NSEvent) {
@@ -103,13 +105,17 @@ class QuickSettingButton: NSButton {
     override func mouseMoved(with event: NSEvent) {
         hovered = true
         addCursorRect(bounds, cursor: .pointingHand)
-        layer?.backgroundColor = self.cgColor(.background)
+        DarkAppearance {
+            layer?.backgroundColor = self.cgColor(.background)
+        }
     }
     
     override func mouseExited(with event: NSEvent) {
         hovered = false
         removeCursorRect(bounds, cursor: .pointingHand)
-        layer?.backgroundColor = self.cgColor(.background)
+        DarkAppearance {
+            layer?.backgroundColor = self.cgColor(.background)
+        }
     }
 }
 

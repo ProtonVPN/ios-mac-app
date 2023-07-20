@@ -24,6 +24,7 @@ import Cocoa
 import vpncore
 import LocalFeatureFlags
 import Theme
+import Ergonomics
 
 class WelcomeViewController: NSViewController {
 
@@ -105,10 +106,12 @@ class WelcomeViewController: NSViewController {
 
         usageStatisticsButton.buttonView?.tag = Switch.usageData.rawValue
         usageStatisticsButton.setState(.off)
-        usageStatisticsButton.maskColor = .cgColor(.background, .weak)
         crashReportsButton.buttonView?.tag = Switch.crashReports.rawValue
         crashReportsButton.setState(.on)
-        crashReportsButton.maskColor = .cgColor(.background, .weak)
+        DarkAppearance {
+            usageStatisticsButton.maskColor = .cgColor(.background, .weak)
+            crashReportsButton.maskColor = .cgColor(.background, .weak)
+        }
     }
 
     @objc func learnMoreClicked() {

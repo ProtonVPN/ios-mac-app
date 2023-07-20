@@ -29,7 +29,9 @@ class SidebarWindowController: WindowController {
     }
     
     required init(viewController: SidebarViewController) {
-        let window = NSWindow(contentViewController: viewController)
+        let window = NSWindow()
+        window.appearance = NSAppearance(named: .darkAqua)
+        window.contentViewController = viewController
         super.init(window: window)
         
         windowFrameAutosaveName = NSWindow.FrameAutosaveName("Main Window")
@@ -45,7 +47,7 @@ class SidebarWindowController: WindowController {
         
         window.titlebarAppearsTransparent = true
         window.title = "Proton VPN"
-        window.appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
+        window.appearance = NSAppearance(named: .darkAqua)
         window.backgroundColor = .color(.background, .weak)
         
         if !AppLaunchRoutine.launchedBefore {

@@ -56,8 +56,12 @@ public struct ConnectionStatusFeature: ReducerProtocol {
                 return .run { send in
                     @Dependency(\.vpnConnectionStatusPublisher) var vpnConnectionStatusPublisher
                     
-                    for await vpnStatus in vpnConnectionStatusPublisher().values {
-                        await send(.newConnectionStatus(vpnStatus), animation: .default)
+                    if #available(macOS 12.0, *) {
+                        for await vpnStatus in vpnConnectionStatusPublisher().values {
+                            await send(.newConnectionStatus(vpnStatus), animation: .default)
+                        }
+                    } else {
+                        assertionFailure("Use target at least macOS 12.0")
                     }
                 }
 

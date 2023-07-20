@@ -22,6 +22,7 @@
 
 import Cocoa
 import Theme
+import Ergonomics
 
 class ExpandCellButton: HoverDetectionButton {
     override func awakeFromNib() {
@@ -37,8 +38,10 @@ class ExpandCellButton: HoverDetectionButton {
     private func configureButton() {
         wantsLayer = true
         contentTintColor = self.color(.icon)
-        layer?.backgroundColor = self.cgColor(.background)
-        layer?.borderColor = self.cgColor(.border)
+        DarkAppearance {
+            layer?.backgroundColor = self.cgColor(.background)
+            layer?.borderColor = self.cgColor(.border)
+        }
     }
 }
 

@@ -22,6 +22,7 @@
 
 import Cocoa
 import vpncore
+import Ergonomics
 
 final class CreateNewProfileViewController: NSViewController {
     
@@ -98,7 +99,9 @@ final class CreateNewProfileViewController: NSViewController {
     
     private func setupView() {
         view.wantsLayer = true
-        view.layer?.backgroundColor = viewModel.cgColor(.background)
+        DarkAppearance {
+            view.layer?.backgroundColor = viewModel.cgColor(.background)
+        }
     }
     
     private func setupHeaderView() {
@@ -199,7 +202,9 @@ final class CreateNewProfileViewController: NSViewController {
         saveButton.setAccessibilityIdentifier("SaveButton")
         
         footerView.wantsLayer = true
-        footerView.layer?.backgroundColor = .cgColor(.background, .weak)
+        DarkAppearance {
+            footerView.layer?.backgroundColor = .cgColor(.background, .weak)
+        }
     }
 
     @objc private func typeSelected() {

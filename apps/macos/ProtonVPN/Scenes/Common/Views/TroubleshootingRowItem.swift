@@ -23,6 +23,7 @@
 import Foundation
 import Cocoa
 import vpncore
+import Ergonomics
 
 final class TroubleshootingRowItem: NSTableRowView {
 
@@ -59,7 +60,9 @@ final class TroubleshootingRowItem: NSTableRowView {
             trailingConstraint?.constant = -80
             switchView.isHidden = false
             switchView.setState(actionable.isOn ? .on : .off)
-            switchView.maskColor = .cgColor(.background)
+            DarkAppearance {
+                switchView.maskColor = .cgColor(.background)
+            }
         }
     }
     

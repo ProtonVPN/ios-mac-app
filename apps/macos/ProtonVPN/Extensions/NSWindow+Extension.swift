@@ -28,7 +28,7 @@ extension NSWindow {
         styleMask.remove(NSWindow.StyleMask.resizable)
         title = modalTitle
         titlebarAppearsTransparent = true
-        appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
+        appearance = NSAppearance(named: .darkAqua)
         backgroundColor = .color(.background, .weak)
     }
     
@@ -37,7 +37,7 @@ extension NSWindow {
         styleMask.remove(NSWindow.StyleMask.closable)
         title = warningTitle
         titlebarAppearsTransparent = true
-        appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
+        appearance = NSAppearance(named: .darkAqua)
         backgroundColor = .color(.background, .weak)
     }
     
@@ -47,21 +47,21 @@ extension NSWindow {
         isOpaque = false
         titlebarAppearsTransparent = true
         titleVisibility = .hidden
-        appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
+        appearance = NSAppearance(named: .darkAqua)
         backgroundColor = .color(.background, .weak)
     }
     
     func applyLoginAppearance() {
         titlebarAppearsTransparent = true
         title = "Proton VPN"
-        appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
+        appearance = NSAppearance(named: .darkAqua)
         backgroundColor = .color(.background, .weak)
     }
 
     func applySidebarAppearance() {
         titlebarAppearsTransparent = true
         title = "Proton VPN"
-        appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
+        appearance = NSAppearance(named: .darkAqua)
         backgroundColor = .color(.background, .weak)
         
         minSize = NSSize(width: AppConstants.Windows.sidebarWidth, height: AppConstants.Windows.minimumSidebarHeight)

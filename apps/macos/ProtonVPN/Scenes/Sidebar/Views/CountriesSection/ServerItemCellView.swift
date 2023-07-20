@@ -23,6 +23,7 @@
 import Cocoa
 import vpncore
 import Theme
+import Ergonomics
 
 protocol ServerItemCellViewDelegate: AnyObject {
     func userDidRequestStreamingInfo(server: ServerItemViewModel)
@@ -47,7 +48,9 @@ final class ServerItemCellView: NSView {
     override func awakeFromNib() {
         super.awakeFromNib()
         wantsLayer = true
-        layer?.backgroundColor = .cgColor(.background, .weak)
+        DarkAppearance {
+            layer?.backgroundColor = .cgColor(.background, .weak)
+        }
         upgradeBtn.stringValue = LocalizedString.upgrade
 
         let imageMargin = 8

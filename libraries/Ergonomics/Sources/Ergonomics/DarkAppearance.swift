@@ -1,5 +1,5 @@
 //
-//  Created on 22/03/2023.
+//  Created on 20/07/2023.
 //
 //  Copyright (c) 2023 Proton AG
 //
@@ -16,18 +16,18 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
+#if canImport(Cocoa)
+import Cocoa
 
-public struct NetShieldStatsItemModel {
-    public let title: String
-    public let value: String
-    public let isEnabled: Bool
-
-    static func enabled(title: String, value: String) -> NetShieldStatsItemModel {
-        return Self(title: title, value: value, isEnabled: false)
-    }
-
-    static func disabled(title: String) -> NetShieldStatsItemModel {
-        return Self(title: title, value: "-", isEnabled: false)
+/// Use this method to force the usage of dark theme on macOS, where we set the background color using CGColor
+@available(macOS 11, *)
+public struct DarkAppearance {
+    @discardableResult
+    public init(_ draw: () -> Void) {
+        NSAppearance(named: .darkAqua)?.performAsCurrentDrawingAppearance {
+            draw()
+        }
     }
 }
+
+#endif

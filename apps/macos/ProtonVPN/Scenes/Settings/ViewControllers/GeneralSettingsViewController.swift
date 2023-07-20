@@ -23,6 +23,7 @@
 import Cocoa
 import vpncore
 import AppKit
+import Ergonomics
 
 public protocol ReloadableViewController: class {
     func reloadView()
@@ -54,7 +55,9 @@ final class GeneralSettingsViewController: NSViewController, ReloadableViewContr
     
     private func setupView() {
         view.wantsLayer = true
-        view.layer?.backgroundColor = .cgColor(.background, .weak)
+        DarkAppearance {
+            view.layer?.backgroundColor = .cgColor(.background, .weak)
+        }
     }
     
     private func setupStartOnBootItem() {

@@ -22,6 +22,8 @@
 
 import Cocoa
 import MapKit
+import Theme
+import Ergonomics
 
 class MapView: NSView {
     
@@ -83,19 +85,23 @@ class MapView: NSView {
         initialDimensions = dimensions
         
         activeConnectionsLayer = CAShapeLayer()
-        activeConnectionsLayer.fillColor = .cgColor(.icon, .transparent)
-        activeConnectionsLayer.strokeColor = .cgColor(.icon, .interactive)
         
         inactiveConnectionsLayer = CAShapeLayer()
-        inactiveConnectionsLayer.fillColor = .cgColor(.icon, .transparent)
-        inactiveConnectionsLayer.strokeColor = .cgColor(.icon, [.interactive, .weak])
         
         super.init(coder: decoder)
         
         mapView.layer = CALayer()
         wantsLayer = true
-        mapView.layer?.backgroundColor = .cgColor(.background)
         mapView.layer?.masksToBounds = true
+        
+        DarkAppearance {
+            mapView.layer?.backgroundColor = .cgColor(.background)
+            activeConnectionsLayer.fillColor = .cgColor(.icon, .transparent)
+            activeConnectionsLayer.strokeColor = .cgColor(.icon, .interactive)
+
+            inactiveConnectionsLayer.fillColor = .cgColor(.icon, .transparent)
+            inactiveConnectionsLayer.strokeColor = .cgColor(.icon, [.interactive, .weak])
+        }
         
         mapView.frame = frame
         mapLayer.frame = frame

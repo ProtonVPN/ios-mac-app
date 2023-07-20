@@ -22,6 +22,7 @@
 
 import Cocoa
 import vpncore
+import Ergonomics
 
 final class SettingsTabBarViewController: NSViewController {
     
@@ -54,7 +55,9 @@ final class SettingsTabBarViewController: NSViewController {
     
     private func setupView() {
         view.wantsLayer = true
-        view.layer?.backgroundColor = .cgColor(.background)
+        DarkAppearance {
+            view.layer?.backgroundColor = .cgColor(.background)
+        }
         
         tabBarView.tabWidth = accountButton.bounds.width
         tabBarView.tabHeight = accountButton.bounds.height

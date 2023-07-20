@@ -21,6 +21,7 @@
 //
 import Cocoa
 import vpncore
+import Ergonomics
 
 final class ConnectionSettingsViewController: NSViewController, ReloadableViewController {
     
@@ -64,7 +65,9 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     
     private func setupView() {
         view.wantsLayer = true
-        view.layer?.backgroundColor = .cgColor(.background, .weak)
+        DarkAppearance {
+            view.layer?.backgroundColor = .cgColor(.background, .weak)
+        }
     }
     
     private func setupAutoConnectItem() {

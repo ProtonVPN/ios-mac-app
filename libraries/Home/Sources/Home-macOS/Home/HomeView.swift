@@ -36,8 +36,10 @@ public struct HomeView: View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             VStack {
                 let item = viewStore.state.mostRecent ?? .defaultFastest
-                ConnectionStatusView(store: store.scope(state: \.connectionStatus,
-                                                        action: { .connectionStatusViewAction($0) }))
+                if #available(macOS 12.0, *) {
+                    ConnectionStatusView(store: store.scope(state: \.connectionStatus,
+                                                            action: { .connectionStatusViewAction($0) }))
+                }
                 Spacer()
                     .layoutPriority(0.2) // should prioritise stretching this spacer
                 VStack {

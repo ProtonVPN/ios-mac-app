@@ -23,6 +23,7 @@
 import Cocoa
 import vpncore
 import Theme
+import Ergonomics
 
 final class CountryItemCellView: NSView {
     
@@ -72,7 +73,9 @@ final class CountryItemCellView: NSView {
         smartIV.image = AppTheme.Icon.globe.colored(.weak)
 
         separatorView.wantsLayer = true
-        separatorView.layer?.backgroundColor = .cgColor(.border, .weak)
+        DarkAppearance {
+            separatorView.layer?.backgroundColor = .cgColor(.border, .weak)
+        }
         let trackingFrame = NSRect(origin: frame.origin, size: CGSize(width: frame.size.width, height: frame.size.height - 4))
         let trackingArea = NSTrackingArea(rect: trackingFrame, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow], owner: self, userInfo: nil)
         addTrackingArea(trackingArea)

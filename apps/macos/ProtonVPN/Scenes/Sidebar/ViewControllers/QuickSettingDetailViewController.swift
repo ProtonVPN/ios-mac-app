@@ -26,6 +26,8 @@ import Modals_macOS
 import SwiftUI
 import LocalFeatureFlags
 import Theme
+import Home
+import Home_macOS
 
 protocol QuickSettingsDetailViewControllerProtocol: class {
     var arrowIV: NSImageView! { get }
@@ -38,6 +40,7 @@ protocol QuickSettingsDetailViewControllerProtocol: class {
     var dropdownNote: NSTextField! { get }
 
     func reloadOptions()
+    func updateNetshieldStats()
 }
 
 class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailViewControllerProtocol {
@@ -59,8 +62,21 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
     @IBOutlet var upgradeTopConstraint: NSLayoutConstraint!
     @IBOutlet var upgradeBottomConstraint: NSLayoutConstraint!
 
+    @IBOutlet var netShieldStatsContainer: NSView! {
+        didSet {
+            let netShieldPresenter = presenter as? NetshieldDropdownPresenter
+            guard let netShieldPresenter, netShieldPresenter.isNetShieldStatsEnabled else {
+                netShieldStatsContainer?.removeFromSuperview()
+                return
+            }
+            setupNetShieldStatsContainer(presenter: netShieldPresenter)
+        }
+    }
+    
     let presenter: QuickSettingDropdownPresenterProtocol
 
+    var netShieldStatsView: NetShieldStatsView?
+    
     init(_ presenter: QuickSettingDropdownPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: QuickSettingDetailViewController.className(), bundle: nil)
@@ -71,6 +87,25 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         fatalError("init(coder:) has not been implemented")
     }
 
+    func setupNetShieldStatsContainer(presenter: NetshieldDropdownPresenter) {
+        let hostingView = statsView(viewModel: presenter.netShieldViewModel)
+        netShieldStatsContainer.addSubview(hostingView)
+        netShieldStatsContainer.topAnchor.constraint(equalTo: hostingView.topAnchor).isActive = true
+        netShieldStatsContainer.bottomAnchor.constraint(equalTo: hostingView.bottomAnchor).isActive = true
+        netShieldStatsContainer.leadingAnchor.constraint(equalTo: hostingView.leadingAnchor).isActive = true
+        netShieldStatsContainer.trailingAnchor.constraint(equalTo: hostingView.trailingAnchor).isActive = true
+    }
+
+    func statsView(viewModel: NetShieldModel) -> NSHostingView<NetShieldStatsView> {
+        let netShieldStatsView = NetShieldStatsView(viewModel: viewModel)
+        self.netShieldStatsView = netShieldStatsView
+        let view = NSHostingView(rootView: netShieldStatsView)
+        view.translatesAutoresizingMaskIntoConstraints = false
+
+        updateNetshieldStats()
+        return view
+    }
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
@@ -105,6 +140,14 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         dropdownLearnMore.title = LocalizedString.learnMore
 
         reloadOptions()
+    }
+
+    // MARK: - Utils
+
+    func updateNetshieldStats() {
+        if let model = (presenter as? NetshieldDropdownPresenter)?.netShieldViewModel {
+            netShieldStatsView?.viewModel = model
+        }
     }
 
     func reloadOptions() {

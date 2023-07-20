@@ -25,7 +25,7 @@ public extension RecentConnection {
         .init(
             pinned: true,
             underMaintenance: false,
-            connectionDate: .now,
+            connectionDate: Date(),
             connection: .init(
                 location: .exact(
                     .paid,
@@ -41,7 +41,7 @@ public extension RecentConnection {
         .init(
             pinned: false,
             underMaintenance: false,
-            connectionDate: .now.addingTimeInterval(-5 * 60.0),
+            connectionDate: Date().addingTimeInterval(-5 * 60.0),
             connection: .init(
                 location: .fastest,
                 features: []
@@ -52,7 +52,7 @@ public extension RecentConnection {
         .init(
             pinned: false,
             underMaintenance: false,
-            connectionDate: .now,
+            connectionDate: Date(),
             connection: .init(
                 location: .region(code: "UA"),
                 features: [.tor]
@@ -63,7 +63,7 @@ public extension RecentConnection {
         .init(
             pinned: true,
             underMaintenance: false,
-            connectionDate: .now,
+            connectionDate: Date(),
             connection: .init(
                 location: .fastest,
                 features: []
@@ -74,7 +74,7 @@ public extension RecentConnection {
         .init(
             pinned: false,
             underMaintenance: false,
-            connectionDate: .now.addingTimeInterval(-2 * 60.0),
+            connectionDate: Date().addingTimeInterval(-2 * 60.0),
             connection: .init(
                 location: .exact(
                     .free,
@@ -90,7 +90,7 @@ public extension RecentConnection {
         .init(
             pinned: false,
             underMaintenance: true,
-            connectionDate: .now.addingTimeInterval(-6 * 60.0),
+            connectionDate: Date().addingTimeInterval(-6 * 60.0),
             connection: .init(
                 location: .secureCore(.hop(to: "US", via: "CH")),
                 features: [.streaming]
@@ -101,7 +101,7 @@ public extension RecentConnection {
         .init(
             pinned: true,
             underMaintenance: true,
-            connectionDate: .now.addingTimeInterval(-8 * 60.0),
+            connectionDate: Date().addingTimeInterval(-8 * 60.0),
             connection: .init(
                 location: .region(code: "UA"),
                 features: [.streaming]
@@ -112,7 +112,7 @@ public extension RecentConnection {
         .init(
             pinned: false,
             underMaintenance: false,
-            connectionDate: .now.addingTimeInterval(-6 * 60 * 60.0),
+            connectionDate: Date().addingTimeInterval(-6 * 60 * 60.0),
             connection: .init(
                 location: .secureCore(.fastestHop(to: "AR")),
                 features: []

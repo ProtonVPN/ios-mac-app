@@ -22,6 +22,7 @@
 
 import Cocoa
 import Theme
+import Ergonomics
 
 class CountriesSectionHeaderView: NSView {
 
@@ -37,7 +38,9 @@ class CountriesSectionHeaderView: NSView {
             wantsLayer = true
             titleLbl.stringValue = viewModel?.title ?? ""
             titleLbl.textColor = .color(.text, .hint)
-            layer?.backgroundColor = viewModel?.backgroundColor ?? .clear
+            DarkAppearance {
+                layer?.backgroundColor = .cgColor(.background, .weak)
+            }
             informationBtn.isHidden = viewModel?.didTapInfoBtn == nil
             informationBtn.image = AppTheme.Icon.infoCircleFilled.colored(.hint)
         }

@@ -23,6 +23,7 @@ import NetworkExtension
 import VPNShared
 import LocalFeatureFlags
 import Dependencies
+import Home
 
 public protocol VpnManagerProtocol {
 
@@ -32,7 +33,7 @@ public protocol VpnManagerProtocol {
     var isLocalAgentConnected: Bool? { get }
     var currentVpnProtocol: VpnProtocol? { get }
 
-    var netShieldStats: NetShieldStats { get }
+    var netShieldStats: NetShieldModel { get }
 
     func appBackgroundStateDidChange(isBackground: Bool)
     func isOnDemandEnabled(handler: @escaping (Bool) -> Void)
@@ -73,7 +74,7 @@ public class VpnManager: VpnManagerProtocol {
     
     private let vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory
 
-    public internal (set) var netShieldStats: NetShieldStats = .disabled
+    public internal (set) var netShieldStats: NetShieldModel = .init(trackers: 0, ads: 0, data: 0, enabled: false)
 
     // hacky way to initiase DependencyValues before we enter LocalAgentQueue to avoid deadlock during tests
     @Dependency(\.timerFactory) var timerFactory

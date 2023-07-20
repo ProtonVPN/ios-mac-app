@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Ergonomics
 
 class ColorPickerViewController: NSViewController {
     
@@ -59,7 +60,9 @@ class ColorPickerViewController: NSViewController {
     private func setupView() {
         let view = NSView()
         view.wantsLayer = true
-        view.layer?.backgroundColor = .cgColor(.background, .weak)
+        DarkAppearance {
+            view.layer?.backgroundColor = .cgColor(.background, .weak)
+        }
         collectionView.backgroundView = view
     }
     
