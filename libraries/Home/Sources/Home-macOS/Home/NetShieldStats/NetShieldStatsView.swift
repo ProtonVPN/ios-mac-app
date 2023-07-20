@@ -22,7 +22,7 @@ import Theme
 
 public struct NetShieldStatsView: View {
 
-    public var viewModel: NetShieldModel
+    @ObservedObject public var viewModel: NetShieldModel
 
     public var body: some View {
         HStack(spacing: 0) {
@@ -45,7 +45,7 @@ struct StatsView: View {
     var statsViewHeight: CGFloat = 56
     var statsViewWidth: CGFloat = 80
 
-    let model: NetShieldModel.Stat
+    @State var model: NetShieldModel.Stat
 
     public var body: some View {
         VStack(alignment: .center) {

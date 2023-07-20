@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Ergonomics
 
 class ButtonMask: NSView {
     var drawBorder: Bool = false {
@@ -29,10 +30,21 @@ class ButtonMask: NSView {
         }
     }
 
-    var maskColor: CGColor = .cgColor(.background, .weak) {
+    var maskColor: CGColor = .clear {
         didSet {
             needsDisplay = true
         }
+    }
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        DarkAppearance {
+            self.maskColor = .cgColor(.background, .weak)
+        }
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func draw(_ dirtyRect: NSRect) {

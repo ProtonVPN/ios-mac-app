@@ -46,7 +46,7 @@ class AboutWindowController: WindowController {
         window.styleMask.remove(NSWindow.StyleMask.resizable)
         window.title = LocalizedString.about
         window.titlebarAppearsTransparent = true
-        window.appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
+        window.appearance = NSAppearance(named: .darkAqua)
         window.backgroundColor = .color(.background, .weak)
     }
 }

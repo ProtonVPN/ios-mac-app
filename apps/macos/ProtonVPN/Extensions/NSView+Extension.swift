@@ -24,9 +24,9 @@ import Cocoa
 
 extension NSView {
     
-    func animateBackgroundColor(_ color: NSColor, delegate: AnyObject? = nil) {
+    func animateBackgroundColor(_ color: CGColor, delegate: AnyObject? = nil) {
         let animation = CABasicAnimation(keyPath: "backgroundColor")
-        animation.toValue = color.cgColor
+        animation.toValue = color
         animation.duration = 0.2
         animation.repeatCount = 0
         

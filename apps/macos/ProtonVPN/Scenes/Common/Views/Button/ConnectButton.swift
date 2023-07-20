@@ -23,6 +23,7 @@
 import Cocoa
 import vpncore
 import Theme
+import Ergonomics
 
 class ConnectButton: ResizingTextButton {
     
@@ -65,8 +66,10 @@ class ConnectButton: ResizingTextButton {
         wantsLayer = true
         layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
         layer?.borderWidth = 2
-        layer?.backgroundColor = self.cgColor(.background)
-        layer?.borderColor = self.cgColor(.border)
+        DarkAppearance {
+            layer?.backgroundColor = self.cgColor(.background)
+            layer?.borderColor = self.cgColor(.border)
+        }
 
         let title: String
         if isConnected {

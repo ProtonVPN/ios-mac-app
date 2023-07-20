@@ -22,6 +22,7 @@
 
 import Cocoa
 import vpncore
+import Ergonomics
 
 enum ProfilesTab: Equatable {
     
@@ -61,7 +62,9 @@ class ProfilesTabBarViewController: NSViewController {
     
     private func setupView() {
         view.wantsLayer = true
-        view.layer?.backgroundColor = .cgColor(.background)
+        DarkAppearance {
+            view.layer?.backgroundColor = .cgColor(.background)
+        }
     }
     
     private func setupComponents() {

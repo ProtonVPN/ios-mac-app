@@ -27,6 +27,7 @@ import UIKit
 import ProtonCore_UIFoundations
 import VPNShared
 import LocalFeatureFlags
+import Home
 
 class StatusViewModel {
     
@@ -75,7 +76,7 @@ class StatusViewModel {
     private lazy var isNetShieldStatsEnabled: Bool = { propertiesManager.featureFlags.netShieldStats }()
 
     private var timer: Timer?
-    private var netShieldStats: NetShieldStats = .disabled
+    private var netShieldStats: NetShieldModel = .init(trackers: 0, ads: 0, data: 0, enabled: false)
     private var connectedDate = Date()
     private var timeCellIndexPath: IndexPath?
     private var currentTime: String {
@@ -402,15 +403,11 @@ class StatusViewModel {
         .netShieldStats(viewModel: netShieldViewModel)
     }
 
-    private var netShieldViewModel: NetShieldStatsViewModel {
-        guard case .enabled(let ads, let trackers, let bytes) = netShieldStats else {
-            return .disabled
-        }
-
+    private var netShieldViewModel: NetShieldModel {
         // Show grayed out stats if disconnected, or netshield is turned off
         let isActive = appStateManager.displayState == .connected && netShieldPropertyProvider.netShieldType == .level2
-
-        return .enabled(adsBlocked: ads, trackersStopped: trackers, bytesSaved: bytes, paused: !isActive)
+        netShieldStats.enabled = isActive
+        return netShieldStats
     }
 
     private var netShieldV2Cells: [TableViewCellModel] {

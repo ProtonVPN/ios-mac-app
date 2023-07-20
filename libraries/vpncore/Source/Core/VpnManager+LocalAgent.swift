@@ -23,6 +23,7 @@
 import Foundation
 import VPNShared
 import LocalFeatureFlags
+import Home
 
 private let localAgentQueue = DispatchQueue(label: "ch.protonvpn.apple.local-agent")
 
@@ -393,7 +394,7 @@ extension VpnManager: LocalAgentDelegate {
         }
     }
 
-    func netShieldStatsChanged(to stats: NetShieldStats) {
+    func netShieldStatsChanged(to stats: NetShieldModel) {
         netShieldStats = stats
     }
 

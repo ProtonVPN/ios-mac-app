@@ -18,6 +18,7 @@
 
 import Cocoa
 import vpncore
+import Ergonomics
 
 final class AdvancedSettingsViewController: NSViewController, ReloadableViewController {
 
@@ -48,7 +49,9 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
 
     private func setupView() {
         view.wantsLayer = true
-        view.layer?.backgroundColor = .cgColor(.background, .weak)
+        DarkAppearance {
+            view.layer?.backgroundColor = .cgColor(.background, .weak)
+        }
     }
 
     private func setupAlternativeRoutingItem() {

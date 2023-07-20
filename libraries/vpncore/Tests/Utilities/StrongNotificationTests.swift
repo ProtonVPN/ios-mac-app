@@ -79,7 +79,7 @@ final class ProtonNotificationTests: XCTestCase {
     }
 
     func testHandlerNotInvokedWithBadData() {
-        let handlerInvocation = XCTestExpectation(description: "Assertion failure should be triggered missing data or type mistmatches")
+        let handlerInvocation = XCTestExpectation(description: "Assertion failure should be triggered missing data or type mismatches")
         handlerInvocation.expectedFulfillmentCount = 2
 
         DebugEnvironment.execute({

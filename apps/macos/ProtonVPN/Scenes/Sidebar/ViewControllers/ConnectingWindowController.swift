@@ -45,6 +45,7 @@ class ConnectingWindowController: WindowController {
         window.backgroundColor = NSColor.clear
         window.isOpaque = false
         window.hasShadow = false
+        window.appearance = NSAppearance(named: .darkAqua)
         
         window.ignoresMouseEvents = false
     }

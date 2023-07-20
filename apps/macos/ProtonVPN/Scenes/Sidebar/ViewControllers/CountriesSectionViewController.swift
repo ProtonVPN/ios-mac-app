@@ -25,6 +25,8 @@ import vpncore
 import AppKit
 import VPNShared
 import Theme
+import Ergonomics
+import Home
 
 class QuickSettingsStack: NSStackView {
 
@@ -155,18 +157,14 @@ class CountriesSectionViewController: NSViewController {
 
         updateStats(stats: presenter.netShieldStats)
         if presenter.netShieldPropertyProvider.netShieldType != .level2 {
-            updateStats(stats: .disabled)
+            updateStats(stats: .init(trackers: 0, ads: 0, data: 0, enabled: false))
         }
     }
 
-    func updateStats(stats: NetShieldStats) {
-        guard case .enabled(let ads, let trackers, _) = stats else {
-            netShieldStatsLabel?.isEnabled = false
-            return
-        }
-        netShieldStatsLabel?.isEnabled = true
-        let badge = (ads + trackers) >= 99 ? "99+" : "\(ads + trackers)"
-        netShieldStatsLabel?.stringValue = "\(badge)"
+    func updateStats(stats: NetShieldModel) {
+        netShieldStatsLabel?.isEnabled = stats.enabled
+        let badge = (stats.adsCount + stats.trackersCount) >= 99 ? "99+" : "\(stats.adsCount + stats.trackersCount)"
+        netShieldStatsLabel?.stringValue = badge
     }
 
     func addNetShieldObservers() {
@@ -181,7 +179,7 @@ class CountriesSectionViewController: NSViewController {
                                                                          object: nil) { [weak self] level in
             DispatchQueue.main.async {
                 if (level.object as? NetShieldType) != .level2 {
-                    self?.updateStats(stats: .disabled)
+                    self?.updateStats(stats: .init(trackers: 0, ads: 0, data: 0, enabled: false))
                 }
             }
         })
@@ -215,12 +213,15 @@ class CountriesSectionViewController: NSViewController {
     }
 
     private func setupColors() {
-        view.layer?.backgroundColor = .cgColor(.background, .weak)
+        DarkAppearance {
+            view.layer?.backgroundColor = .cgColor(.background, .weak)
+            searchBox.layer?.backgroundColor = .cgColor(.background)
+        }
+
         bottomHorizontalLine.fillColor = .color(.border, .weak)
         searchIcon.image = AppTheme.Icon.magnifier.colored(.hint)
         clearSearchBtn.image = AppTheme.Icon.crossCircleFilled.colored(.hint)
 
-        searchBox.layer?.backgroundColor = .cgColor(.background)
         searchBox.borderColor = .color(.border)
 
         serverListTableView.backgroundColor = .color(.background, .weak)

@@ -24,6 +24,7 @@ import Cocoa
 import vpncore
 import Foundation
 import Theme
+import Ergonomics
 
 final class LoginViewController: NSViewController {
     
@@ -225,7 +226,9 @@ final class LoginViewController: NSViewController {
         startOnBootButton.setAccessibilityLabel(LocalizedString.startOnBoot)
         
         startOnBootButton.drawsUnderOverlay = true
-        startOnBootButton.maskColor = .cgColor(.background)
+        DarkAppearance {
+            startOnBootButton.maskColor = .cgColor(.background)
+        }
         startOnBootButton.buttonView?.tag = Switch.startOnBoot.rawValue
         startOnBootButton.setState(viewModel.startOnBoot ? .on : .off)
         startOnBootButton.delegate = self
@@ -337,7 +340,7 @@ final class LoginViewController: NSViewController {
         
         helpPopover = NSPopover()
         helpPopover!.contentViewController = HelpPopoverViewController(viewModel: viewModel.helpPopoverViewModel)
-        helpPopover!.appearance = NSAppearance(named: .vibrantDark)
+        helpPopover!.appearance = NSAppearance(named: .darkAqua)
         helpPopover!.behavior = .transient
         helpPopover!.show(relativeTo: needHelpButton.bounds, of: needHelpButton, preferredEdge: .maxX)
         helpPopover!.delegate = self

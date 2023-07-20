@@ -23,6 +23,7 @@
 import Cocoa
 import vpncore
 import Theme
+import Ergonomics
 
 enum ButtonState: Int {
     case off, on
@@ -159,7 +160,9 @@ class SwitchButton: NSView, CAAnimationDelegate {
     func setState(_ state: ButtonState, animated: Bool = false) {
         currentButtonState = state
         if animated {
-            resolveAnimation()
+            DarkAppearance {
+                resolveAnimation()
+            }
         } else {
             switchWithoutAnimation()
         }
@@ -170,10 +173,10 @@ class SwitchButton: NSView, CAAnimationDelegate {
         switch currentButtonState {
         case .on:
             innerView?.animator().frame.origin = NSPoint(x: 0, y: 0)
-            innerView?.animateBackgroundColor(self.color(.background), delegate: self)
+            innerView?.animateBackgroundColor(self.cgColor(.background), delegate: self)
         case .off:
             innerView?.animator().frame.origin = NSPoint(x: -1 * (Int(buttonWidth - knobSize) - knobPadding * 2), y: 0)
-            innerView?.animateBackgroundColor(self.color(.background), delegate: self)
+            innerView?.animateBackgroundColor(self.cgColor(.background), delegate: self)
         }
     }
     
@@ -230,13 +233,17 @@ class SwitchButton: NSView, CAAnimationDelegate {
 
         knobView.wantsLayer = true
         knobView.layer?.cornerRadius = CGFloat(knobSize / 2)
-        knobView.layer?.backgroundColor = self.cgColor(.icon)
+        DarkAppearance {
+            knobView.layer?.backgroundColor = self.cgColor(.icon)
+        }
         
         return knobView
     }
     
     private func setInnerColor() {
-        self.innerView?.layer?.backgroundColor = self.cgColor(.background)
+        DarkAppearance {
+            self.innerView?.layer?.backgroundColor = self.cgColor(.background)
+        }
     }
     
     private func switchWithoutAnimation() {

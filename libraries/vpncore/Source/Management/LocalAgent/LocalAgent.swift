@@ -28,6 +28,7 @@ import Network
 import LocalFeatureFlags
 import Dependencies
 import Timer
+import Home
 
 private enum LocalAgentFeature: String, FeatureFlag {
     var category: String { "LocalAgent" }
@@ -40,7 +41,7 @@ protocol LocalAgentDelegate: AnyObject {
     func didChangeState(state: LocalAgentState)
     func didReceiveFeatures(_ features: VPNConnectionFeatures)
     func didReceiveConnectionDetails(_ details: ConnectionDetailsMessage)
-    func netShieldStatsChanged(to stats: NetShieldStats)
+    func netShieldStatsChanged(to stats: NetShieldModel)
 }
 
 protocol LocalAgent {
@@ -59,7 +60,7 @@ protocol LocalAgent {
 
 public struct NetShieldStatsNotification: StrongNotification {
     public static var name = Notification.Name("ch.protonvpn.localagent.netshieldstats")
-    public var data: NetShieldStats
+    public var data: NetShieldModel
 }
 
 public protocol LocalAgentConnectionWrapper {
@@ -206,7 +207,7 @@ final class LocalAgentImplementation: LocalAgent {
 
     func disconnect() {
         agent?.close()
-        netShieldStatsChanged(to: .disabled)
+        netShieldStatsChanged(to: .init(trackers: 0, ads: 0, data: 0, enabled: false))
     }
 
     func requestStatus(withStats shouldRequestStats: Bool) {
@@ -272,7 +273,7 @@ final class LocalAgentImplementation: LocalAgent {
         statusTimer = nil
     }
 
-    private func netShieldStatsChanged(to stats: NetShieldStats) {
+    private func netShieldStatsChanged(to stats: NetShieldModel) {
         self.delegate?.netShieldStatsChanged(to: stats)
         NotificationCenter.default.post(NetShieldStatsNotification(data: stats), object: self)
     }
@@ -288,10 +289,11 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
     func didReceiveFeatureStatistics(_ statistics: FeatureStatisticsMessage) {
         guard isNetShieldStatsEnabled else { return }
 
-        let stats: NetShieldStats = .enabled(
-            adsBlocked: statistics.netShield.adsBlocked ?? 0,
-            trackersBlocked: statistics.netShield.trackersBlocked ?? 0,
-            bytesSaved: statistics.netShield.bytesSaved)
+        let stats: NetShieldModel = .init(
+            trackers: statistics.netShield.trackersBlocked ?? 0,
+            ads: statistics.netShield.adsBlocked ?? 0,
+            data: statistics.netShield.bytesSaved,
+            enabled: true)
 
         netShieldStatsChanged(to: stats)
     }
@@ -352,9 +354,4 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
         }
         
     }
-}
-
-public enum NetShieldStats {
-    case disabled
-    case enabled(adsBlocked: Int, trackersBlocked: Int, bytesSaved: Int)
 }

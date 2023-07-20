@@ -22,6 +22,7 @@
 
 import Cocoa
 import vpncore
+import Ergonomics
 
 final class AccountViewController: NSViewController {
 
@@ -68,7 +69,9 @@ final class AccountViewController: NSViewController {
 
     private func setupUI() {
         view.wantsLayer = true
-        view.layer?.backgroundColor = .cgColor(.background, .weak)
+        DarkAppearance {
+            view.layer?.backgroundColor = .cgColor(.background, .weak)
+        }
         setupStackView()
         setupFooterView()
     }

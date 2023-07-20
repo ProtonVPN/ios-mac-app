@@ -22,6 +22,7 @@
 
 import UIKit
 import vpncore
+import Home
 
 enum TableViewCellModel {
     
@@ -50,7 +51,7 @@ enum TableViewCellModel {
     case attributedKeyValue(key: NSAttributedString, value: NSAttributedString, handler: () -> Void)
     case textWithActivityCell(title: String, textColor: UIColor, backgroundColor: UIColor, showActivity: Bool)
     case attributedTooltip(text: NSAttributedString)
-    case netShieldStats(viewModel: NetShieldStatsViewModel)
+    case netShieldStats(viewModel: NetShieldModel)
 }
 
 protocol ButtonWithLoadingIndicatorController: AnyObject {

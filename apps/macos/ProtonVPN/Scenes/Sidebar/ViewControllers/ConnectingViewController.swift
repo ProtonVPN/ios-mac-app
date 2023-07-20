@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Ergonomics
 
 class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
 
@@ -87,21 +88,23 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
     // MARK: - Private functions
     
     private func update() {
-        let graphic = viewModel.graphic(with: graphicContainer.bounds)
-        if !graphicContainer.subviews.contains(graphic) {
-            graphicContainer.subviews.forEach {
-                $0.removeFromSuperview()
+        DarkAppearance {
+            let graphic = viewModel.graphic(with: graphicContainer.bounds)
+            if !graphicContainer.subviews.contains(graphic) {
+                graphicContainer.subviews.forEach {
+                    $0.removeFromSuperview()
+                }
+                graphicContainer.addSubview(graphic)
             }
-            graphicContainer.addSubview(graphic)
+            phaseLabel.isHidden = viewModel.hidePhase
+            phaseLabel.attributedStringValue = viewModel.firstString
+
+            connectionLabel.attributedStringValue = viewModel.secondString
+            connectionLabel.allowsEditingTextAttributes = true
+            connectionLabel.isSelectable = true
+
+            updateButtons()
         }
-        phaseLabel.isHidden = viewModel.hidePhase
-        phaseLabel.attributedStringValue = viewModel.firstString
-        
-        connectionLabel.attributedStringValue = viewModel.secondString
-        connectionLabel.allowsEditingTextAttributes = true
-        connectionLabel.isSelectable = true
-        
-        updateButtons()
     }
     
     private func updateButtons() {

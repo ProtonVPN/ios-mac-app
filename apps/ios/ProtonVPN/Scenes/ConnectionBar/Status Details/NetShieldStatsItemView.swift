@@ -18,6 +18,7 @@
 
 import UIKit
 import vpncore
+import Home
 
 class NetShieldStatsItemView: UIView {
     @IBOutlet weak var contentView: UIView!
@@ -43,7 +44,7 @@ class NetShieldStatsItemView: UIView {
         titleLabel.font = UIFont.systemFont(ofSize: 13)
     }
 
-    func setup(with model: NetShieldStatsItemModel) {
+    func setup(with model: NetShieldModel.Stat) {
         valueLabel.text = model.value
         titleLabel.text = model.title.replacingOccurrences(of: " ", with: "\n")
 

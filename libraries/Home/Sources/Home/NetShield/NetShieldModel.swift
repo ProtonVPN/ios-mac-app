@@ -19,7 +19,13 @@
 import Foundation
 import Strings
 
-public struct NetShieldModel: Equatable {
+public class NetShieldModel: Equatable, ObservableObject {
+    public static func == (lhs: NetShieldModel, rhs: NetShieldModel) -> Bool {
+        lhs.ads == rhs.ads &&
+        lhs.trackers == rhs.trackers &&
+        lhs.data == rhs.data &&
+        lhs.enabled == rhs.enabled
+    }
 
     private static let formatter = NetShieldStatsNumberFormatter()
     private static let byteCountFormatter = {
@@ -28,17 +34,22 @@ public struct NetShieldModel: Equatable {
         return formatter
     }()
 
-    public let trackers: Stat
-    public let ads: Stat
-    public let data: Stat
+    public var trackers: Stat
+    public var ads: Stat
+    public var data: Stat
 
-    public init(trackers: Stat, ads: Stat, data: Stat) {
+    public var trackersCount: Int
+    public var adsCount: Int
+
+    public init(trackers: Stat, ads: Stat, data: Stat, trackersCount: Int, adsCount: Int) {
         self.trackers = trackers
         self.ads = ads
         self.data = data
+        self.trackersCount = trackersCount
+        self.adsCount = adsCount
     }
 
-    public init(trackers: Int, ads: Int, data: Int, enabled: Bool) {
+    public convenience init(trackers: Int, ads: Int, data: Int, enabled: Bool) {
         let adsStat = Stat(value: Self.formatter.string(from: ads),
                            title: Localizable.netshieldStatsAdsBlocked(ads),
                            help: Localizable.netshieldStatsHintAds,
@@ -54,14 +65,26 @@ public struct NetShieldModel: Equatable {
 
         self.init(trackers: trackersStat,
                   ads: adsStat,
-                  data: dataStat)
+                  data: dataStat,
+                  trackersCount: trackers,
+                  adsCount: ads)
+    }
+
+    public var enabled: Bool {
+        set {
+            trackers.isEnabled = newValue
+            ads.isEnabled = newValue
+            data.isEnabled = newValue
+        } get {
+            ads.isEnabled
+        }
     }
 
     public struct Stat: Equatable {
         public let value: String
         public let title: String
         public let help: String
-        public let isEnabled: Bool
+        public var isEnabled: Bool
 
         public init(value: String, title: String, help: String, isEnabled: Bool) {
             self.value = value

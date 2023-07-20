@@ -178,7 +178,7 @@ private extension HomeFeature.State {
             .init(
                 pinned: false,
                 underMaintenance: false,
-                connectionDate: .now,
+                connectionDate: Date(),
                 connection: .chrząszczyrzewoszczyce
             )
         ],
@@ -191,7 +191,7 @@ private extension HomeFeature.State {
             .init(
                 pinned: false,
                 underMaintenance: false,
-                connectionDate: .now,
+                connectionDate: Date(),
                 connection: .dibba
             )
         ],
@@ -204,7 +204,7 @@ private extension HomeFeature.State {
             .init(
                 pinned: false,
                 underMaintenance: false,
-                connectionDate: .now,
+                connectionDate: Date(),
                 connection: .fastest
             )
         ],
@@ -217,7 +217,7 @@ private extension HomeFeature.State {
             .init(
                 pinned: false,
                 underMaintenance: false,
-                connectionDate: .now,
+                connectionDate: Date(),
                 connection: .region
             )
         ],
@@ -230,7 +230,7 @@ private extension HomeFeature.State {
             .init(
                 pinned: false,
                 underMaintenance: false,
-                connectionDate: .now,
+                connectionDate: Date(),
                 connection: .secureCoreFastest
             )
         ],
@@ -243,7 +243,7 @@ private extension HomeFeature.State {
             .init(
                 pinned: false,
                 underMaintenance: false,
-                connectionDate: .now,
+                connectionDate: Date(),
                 connection: .secureCoreFastestHop
             )
         ],
@@ -256,7 +256,7 @@ private extension HomeFeature.State {
             .init(
                 pinned: false,
                 underMaintenance: false,
-                connectionDate: .now,
+                connectionDate: Date(),
                 connection: .secureCoreHopToVia
             )
         ],

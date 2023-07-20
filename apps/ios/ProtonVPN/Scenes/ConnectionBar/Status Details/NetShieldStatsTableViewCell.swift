@@ -18,6 +18,7 @@
 
 import UIKit
 import vpncore
+import Home
 
 class NetShieldStatsTableViewCell: UITableViewCell {
     @IBOutlet private var adsStatView: NetShieldStatsItemView!
@@ -38,9 +39,9 @@ class NetShieldStatsTableViewCell: UITableViewCell {
         backgroundColor = .secondaryBackgroundColor()
     }
 
-    func setup(with viewModel: NetShieldStatsViewModel) {
-        adsStatView.setup(with: viewModel.adsModel)
-        trackersStatView.setup(with: viewModel.trackersModel)
-        dataStatView.setup(with: viewModel.dataModel)
+    func setup(with viewModel: NetShieldModel) {
+        adsStatView.setup(with: viewModel.ads)
+        trackersStatView.setup(with: viewModel.trackers)
+        dataStatView.setup(with: viewModel.data)
     }
 }

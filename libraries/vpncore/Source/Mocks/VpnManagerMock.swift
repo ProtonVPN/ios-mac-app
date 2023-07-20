@@ -21,10 +21,11 @@
 
 import Foundation
 import VPNShared
+import Home
 
 public class VpnManagerMock: VpnManagerProtocol {
 
-    public var netShieldStats: NetShieldStats = .disabled
+    public var netShieldStats: NetShieldModel = .init(trackers: 0, ads: 0, data: 0, enabled: false)
 
     private let serverDescriptor = ServerDescriptor(username: "", address: "")
     private var onDemand: Bool = false

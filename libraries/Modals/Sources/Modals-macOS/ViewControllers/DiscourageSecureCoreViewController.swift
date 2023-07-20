@@ -18,6 +18,7 @@
 
 import Cocoa
 import Modals
+import Ergonomics
 
 final class DiscourageSecureCoreViewController: NSViewController {
 
@@ -46,7 +47,9 @@ final class DiscourageSecureCoreViewController: NSViewController {
     override public func awakeFromNib() {
         super.awakeFromNib()
         view.wantsLayer = true
-        view.layer?.backgroundColor = .cgColor(.background)
+        DarkAppearance {
+            view.layer?.backgroundColor = .cgColor(.background)
+        }
     }
 
     override public func viewDidLoad() {
