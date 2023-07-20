@@ -559,6 +559,8 @@ fileprivate extension VpnGateway {
 
         let tier = downgradeInfo.to.maxTier
         let serverManager = ServerManagerImplementation.instance(forTier: downgradeInfo.to.maxTier, serverStorage: serverStorage)
+        // Beware: selector selects only non-restricted servers atm. This works now, because
+        // if users plan is downgraded, he won't have restricted servers anymore (VPNAPPL-1841)
         let selector = VpnServerSelector(serverType: .unspecified,
                                          userTier: tier,
                                          serverGrouping:

@@ -60,7 +60,7 @@ class VpnServerSelector {
         // use the ui to determine connection type if unspecified
         let type = connectionRequest.serverType == .unspecified ? serverTypeToggle : connectionRequest.serverType
         
-        let sortedServers: [ServerModel]
+        var sortedServers: [ServerModel]
         let forSpecificCountry: Bool
 
         switch connectionRequest.connectionType {
@@ -83,6 +83,9 @@ class VpnServerSelector {
                 .sorted(by: { $0.score < $1.score }) // sort by highest tier first, then lowest score
             forSpecificCountry = false
         }
+
+        // Don't include restricted servers. They are selected only manually atm (VPNAPPL-1841)
+        sortedServers = sortedServers.filter { !$0.feature.contains(.restricted) }
             
         let servers = filter(servers: sortedServers, forSpecificCountry: forSpecificCountry, type: type)
         
