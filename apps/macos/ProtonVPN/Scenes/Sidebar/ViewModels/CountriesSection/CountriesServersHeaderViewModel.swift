@@ -34,16 +34,30 @@ class CountryHeaderViewModel: CountriesServersHeaderViewModelProtocol {
     let backgroundColor: CGColor = .cgColor(.background, .weak)
     var didTapInfoBtn: (() -> Void)?
     
-    init(_ sectionHeader: String, totalCountries: Int?, isPremium: Bool, countriesViewModel: CountriesSectionViewModel) {
+    init(_ sectionHeader: String, totalCountries: Int?, buttonType: InfoButtonType?, countriesViewModel: CountriesSectionViewModel) {
         var title = sectionHeader
         if let totalCountries {
             title += " (\(totalCountries))"
         }
         self.title = title
-        guard isPremium else { return }
-        didTapInfoBtn = {
-            countriesViewModel.displayPremiumServices?()
+
+        if let buttonType {
+            switch buttonType {
+            case .premium:
+                didTapInfoBtn = {
+                    countriesViewModel.displayPremiumServices?()
+                }
+            case .gateway:
+                didTapInfoBtn = {
+                    countriesViewModel.displayGatewaysServices?()
+                }
+            }
         }
+    }
+
+    enum InfoButtonType {
+        case premium
+        case gateway
     }
 }
 

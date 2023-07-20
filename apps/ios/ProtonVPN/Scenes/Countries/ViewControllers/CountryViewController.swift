@@ -87,24 +87,25 @@ extension CountryViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ServersHeaderView.identifier) as? ServersHeaderView {
-            headerView.setName(name: viewModel?.titleFor(section: section) ?? "")
-            headerView.callback = nil
-            guard let viewModel else {
-                return headerView
-            }
-            if viewModel.streamingAvailable, viewModel.isServerPlusOrAbove(for: section) {
-                headerView.callback = { [weak self] in
-                    self?.displayStreamingServices()
-                }
-            } else if viewModel.isServerFree(for: section) {
-                headerView.callback = { [weak self] in
-                    self?.displayFreeServersInfo()
-                }
-            }
+        guard viewModel?.showServerHeaders ?? false, let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ServersHeaderView.identifier) as? ServersHeaderView else {
+            return UIView()
+        }
+
+        headerView.setName(name: viewModel?.titleFor(section: section) ?? "")
+        headerView.callback = nil
+        guard let viewModel else {
             return headerView
         }
-        return UIView()
+        if viewModel.streamingAvailable, viewModel.isServerPlusOrAbove(for: section) {
+            headerView.callback = { [weak self] in
+                self?.displayStreamingServices()
+            }
+        } else if viewModel.isServerFree(for: section) {
+            headerView.callback = { [weak self] in
+                self?.displayFreeServersInfo()
+            }
+        }
+        return headerView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

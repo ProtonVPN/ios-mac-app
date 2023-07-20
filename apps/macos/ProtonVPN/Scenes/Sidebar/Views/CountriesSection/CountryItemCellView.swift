@@ -86,9 +86,9 @@ final class CountryItemCellView: NSView {
         }
         connectButton.isHidden = isConnectButtonHidden(mouseHover: true)
         if !connectButton.isHidden {
-            torIV.isHidden = (viewModel.isTorAvailable && !viewModel.isTierTooLow) || !viewModel.isTorAvailable
-            p2pIV.isHidden = (viewModel.isP2PAvailable && !viewModel.isTierTooLow) || !viewModel.isP2PAvailable
-            smartIV.isHidden = (viewModel.isSmartAvailable && !viewModel.isTierTooLow) || !viewModel.isSmartAvailable
+            [torIV, p2pIV, smartIV].forEach {
+                $0.isHidden = true
+            }
         }
         addCursorRect(frame, cursor: .pointingHand)
     }
@@ -153,9 +153,15 @@ final class CountryItemCellView: NSView {
     // MARK: - Private
     
     private func configureFeatures() {
-        torIV.isHidden = !viewModel.isTorAvailable || viewModel.isConnected
-        p2pIV.isHidden = !viewModel.isP2PAvailable || viewModel.isConnected
-        smartIV.isHidden = !viewModel.isSmartAvailable || viewModel.isConnected
+        if viewModel.showFeatureIcons {
+            torIV.isHidden = !viewModel.isTorAvailable || viewModel.isConnected
+            p2pIV.isHidden = !viewModel.isP2PAvailable || viewModel.isConnected
+            smartIV.isHidden = !viewModel.isSmartAvailable || viewModel.isConnected
+        } else {
+            [torIV, p2pIV, smartIV].forEach {
+                $0.isHidden = true
+            }
+        }
     }
     
     // MARK: - Accessibility

@@ -42,3 +42,10 @@ struct FreeFeaturesOverlayViewModel: FeaturesOverlayViewModelProtocol {
         self.featureViewModels = featureViewModels
     }
 }
+
+struct GatewayFeaturesOverlayViewModel: FeaturesOverlayViewModelProtocol {
+    let title: String = LocalizedString.locationsGateways
+    var featureViewModels: [FeatureCellViewModel] {
+        [GatewayFeature()]
+    }
+}

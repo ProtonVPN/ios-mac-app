@@ -76,6 +76,7 @@ class CountriesSectionViewModel {
     var displayStreamingServices: ((String, [VpnStreamingOption], PropertiesManagerProtocol) -> Void)?
     var displayPremiumServices: (() -> Void)?
     var displayFreeServices: (() -> Void)?
+    var displayGatewaysServices: (() -> Void)?
     let contentSwitch = Notification.Name("CountriesSectionViewModelContentSwitch")
     
     var isSecureCoreEnabled: Bool {
@@ -393,7 +394,7 @@ class CountriesSectionViewModel {
         let gatewayContent = countries.filter { $0.servers.contains(where: { $0.feature.contains(.restricted) }) }
         if !gatewayContent.isEmpty {
             containsGateways = true
-            gatewaysSection = [ .header(CountryHeaderViewModel(LocalizedString.locationsGateways, totalCountries: nil, isPremium: false, countriesViewModel: self)) ]
+            gatewaysSection = [ .header(CountryHeaderViewModel(LocalizedString.locationsGateways, totalCountries: nil, buttonType: .gateway, countriesViewModel: self)) ]
             gatewaysSection += gatewayContent.enumerated().map { index, country -> CellModel in
                 return .country(self.countryViewModel(country, id: idForGateway(countryCode: country.country.countryCode), displaySeparator: index != 0, serversFilter: { $0.feature.contains(.restricted) }, showCountryConnectButton: false))
             }
@@ -405,7 +406,7 @@ class CountriesSectionViewModel {
 
         if userTier > 1 {
             // PLUS VISIONARY
-            let headerVM = CountryHeaderViewModel(LocalizedString.locationsAll, totalCountries: countries.count, isPremium: true, countriesViewModel: self)
+            let headerVM = CountryHeaderViewModel(LocalizedString.locationsAll, totalCountries: countries.count, buttonType: .premium, countriesViewModel: self)
             return (gatewaysSection
                 + [ .header(headerVM) ]
                 + countries.enumerated().map { index, country -> CellModel in
@@ -416,7 +417,7 @@ class CountriesSectionViewModel {
         if userTier == 1 {
             // BASIC
             let plusLocations = countries.filter { $0.0.lowestTier > 1 }
-            let headerPlusVM = CountryHeaderViewModel(LocalizedString.locationsPlus, totalCountries: plusLocations.count, isPremium: true, countriesViewModel: self)
+            let headerPlusVM = CountryHeaderViewModel(LocalizedString.locationsPlus, totalCountries: plusLocations.count, buttonType: .premium, countriesViewModel: self)
 
             return (gatewaysSection
                 + [ .header(headerPlusVM) ]
@@ -429,8 +430,8 @@ class CountriesSectionViewModel {
 
         let freeLocations = countries.filter { $0.0.lowestTier == 0 }
         let plusLocations = countries.filter { $0.0.lowestTier != 0 }
-        let headerFreeVM = CountryHeaderViewModel(LocalizedString.locationsFree, totalCountries: freeLocations.count, isPremium: false, countriesViewModel: self)
-        let headerPlusVM = CountryHeaderViewModel(LocalizedString.locationsPlus, totalCountries: plusLocations.count, isPremium: true, countriesViewModel: self)
+        let headerFreeVM = CountryHeaderViewModel(LocalizedString.locationsFree, totalCountries: freeLocations.count, buttonType: nil, countriesViewModel: self)
+        let headerPlusVM = CountryHeaderViewModel(LocalizedString.locationsPlus, totalCountries: plusLocations.count, buttonType: nil, countriesViewModel: self)
 
         return (gatewaysSection
             + [ .header(headerFreeVM) ]
@@ -459,7 +460,8 @@ class CountriesSectionViewModel {
             isOpened: false,
             displaySeparator: displaySeparator,
             serversFilter: serversFilter,
-            showCountryConnectButton: showCountryConnectButton
+            showCountryConnectButton: showCountryConnectButton,
+            showFeatureIcons: showCountryConnectButton // Currently it's used only on Gateway rows, so if we hide connect button, we also hide feature icons
         )
     }
     

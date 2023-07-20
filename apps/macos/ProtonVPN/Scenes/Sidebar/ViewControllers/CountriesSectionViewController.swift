@@ -267,6 +267,7 @@ class CountriesSectionViewController: NSViewController {
         let freeFeaturesOverlayViewModel = viewModel.freeFeaturesOverlayViewModel()
         viewModel.displayFreeServices = { self.presentAsSheet(FeaturesOverlayViewController(viewModel: freeFeaturesOverlayViewModel)) }
         viewModel.displayStreamingServices = { self.presentAsSheet(StreamingServicesOverlayViewController(viewModel: StreamingServicesOverlayViewModel(country: $0, streamServices: $1, propertiesManager: $2))) }
+        viewModel.displayGatewaysServices = { self.presentAsSheet(FeaturesOverlayViewController(viewModel: GatewayFeaturesOverlayViewModel())) }
     }
     
     private func setupQuickSettings() {

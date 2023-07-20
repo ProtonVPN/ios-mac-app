@@ -37,6 +37,7 @@ private struct Section {
     let rows: [Row]
     let serversFilter: ((ServerModel) -> Bool)?
     let showCountryConnectButton: Bool
+    let showFeatureIcons: Bool
 }
 
 class CountriesViewModel: SecureCoreToggleHandler {
@@ -163,11 +164,12 @@ class CountriesViewModel: SecureCoreToggleHandler {
         return cellModel(
             countryGroup: countryGroup,
             serversFilter: section.serversFilter,
-            showCountryConnectButton: section.showCountryConnectButton
+            showCountryConnectButton: section.showCountryConnectButton,
+            showFeatureIcons: section.showCountryConnectButton
         )
     }
 
-    private func cellModel(countryGroup: CountryGroup, serversFilter: ((ServerModel) -> Bool)?, showCountryConnectButton: Bool) -> CountryItemViewModel {
+    private func cellModel(countryGroup: CountryGroup, serversFilter: ((ServerModel) -> Bool)?, showCountryConnectButton: Bool, showFeatureIcons: Bool) -> CountryItemViewModel {
         return CountryItemViewModel(countryGroup: countryGroup,
                                     serverType: state.serverType,
                                     appStateManager: appStateManager,
@@ -177,7 +179,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
                                     propertiesManager: propertiesManager,
                                     planService: planService,
                                     serversFilter: serversFilter,
-                                    showCountryConnectButton: showCountryConnectButton
+                                    showCountryConnectButton: showCountryConnectButton,
+                                    showFeatureIcons: showFeatureIcons
         )
     }
     
@@ -254,7 +257,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
                 title: "\(LocalizedString.locationsGateways)",
                 rows: gatewayContent,
                 serversFilter: { $0.feature.contains(.restricted) },
-                showCountryConnectButton: false
+                showCountryConnectButton: false,
+                showFeatureIcons: false
             ))
             // In case we found restricted servers, we should not only add them to the front of
             // the list, but also remove them from the bottom part
@@ -269,7 +273,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
                     title: "\(LocalizedString.locationsFree) (\(rows.count))",
                     rows: rows,
                     serversFilter: defaultServersFilter,
-                    showCountryConnectButton: true
+                    showCountryConnectButton: true,
+                    showFeatureIcons: true
                 ))
             }
             do { // Second section
@@ -278,7 +283,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
                     title: "\(LocalizedString.locationsPlus) (\(rows.count))",
                     rows: rows,
                     serversFilter: defaultServersFilter,
-                    showCountryConnectButton: true
+                    showCountryConnectButton: true,
+                    showFeatureIcons: true
                 ))
             }
         case 1: // Basic
@@ -287,7 +293,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
                 title: "\(LocalizedString.locationsAll) (\(rows.count))",
                 rows: rows,
                 serversFilter: defaultServersFilter,
-                showCountryConnectButton: true
+                showCountryConnectButton: true,
+                showFeatureIcons: true
             ))
         default: // Plus and up
             let rows = currentContent
@@ -295,7 +302,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
                 title: "\(LocalizedString.locationsAll) (\(rows.count))",
                 rows: rows,
                 serversFilter: defaultServersFilter,
-                showCountryConnectButton: true
+                showCountryConnectButton: true,
+                showFeatureIcons: true
             ))
         }
         tableData = newTableData
@@ -306,9 +314,9 @@ extension CountriesViewModel {
     var searchData: [CountryViewModel] {
         switch state {
         case let .standard(data):
-            return data.map({ cellModel(countryGroup: $0, serversFilter: nil, showCountryConnectButton: true) })
+            return data.map({ cellModel(countryGroup: $0, serversFilter: nil, showCountryConnectButton: true, showFeatureIcons: false) })
         case let .secureCore(data):
-            return data.map({ cellModel(countryGroup: $0, serversFilter: nil, showCountryConnectButton: true) })
+            return data.map({ cellModel(countryGroup: $0, serversFilter: nil, showCountryConnectButton: true, showFeatureIcons: false) })
         }
     }
 }

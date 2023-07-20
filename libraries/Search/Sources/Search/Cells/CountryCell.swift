@@ -69,9 +69,9 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
             countryName.textColor = viewModel.textColor
             highlightMatches(countryName, viewModel.description, searchText)
 
-            torIV.isHidden = !viewModel.torAvailable
-            smartIV.isHidden = !viewModel.isSmartAvailable
-            p2pIV.isHidden = !viewModel.p2pAvailable
+            torIV.isHidden = !(viewModel.torAvailable && viewModel.showFeatureIcons)
+            smartIV.isHidden = !(viewModel.isSmartAvailable && viewModel.showFeatureIcons)
+            p2pIV.isHidden = !(viewModel.p2pAvailable && viewModel.showFeatureIcons)
 
             backgroundColor = .clear
             flagIcon.image = viewModel.flag
