@@ -26,7 +26,6 @@ import ProtonCore_UIFoundations
 import TimerMock
 import VPNShared
 import VPNSharedTesting
-import VPNAppCore
 
 class CountryItemViewModelTests: XCTestCase {
 
@@ -74,7 +73,10 @@ class CountryItemViewModelTests: XCTestCase {
             alertService: AlertServiceEmptyStub(),
             connectionStatusService: ConnectionStatusServiceMock(),
             propertiesManager: PropertiesManagerMock(),
-            planService: PlanServiceMock()
+            planService: PlanServiceMock(),
+            serversFilter: nil,
+            showCountryConnectButton: true,
+            showFeatureIcons: true
             )
 
         return viewModel

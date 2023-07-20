@@ -21,6 +21,10 @@ import UIKit
 @testable import Search
 
 final class CountryViewModelMock: CountryViewModel {
+    var showCountryConnectButton: Bool = true
+
+    var showFeatureIcons: Bool = true
+
     let description: String
 
     let isSmartAvailable: Bool = false

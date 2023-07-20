@@ -39,6 +39,12 @@ class CountryItemViewModel {
     private let serversFilter: ((ServerModel) -> Bool)?
     /// In gateways countries there is no connect button
     public let showCountryConnectButton: Bool
+    /// Hide feature icons in Gateway countries
+    public let showFeatureIcons: Bool
+    /// Hide headers in server list for Gateway countries.
+    /// - Note: Atm it's used only for gateways, we can use `showFeatureIcons`. If there is a need
+    /// to make it work separately, feel free to ask for this info in `init`
+    public var showServerHeaders: Bool { showFeatureIcons }
 
     // MARK: Dependencies
     private let appStateManager: AppStateManager
@@ -219,7 +225,7 @@ class CountryItemViewModel {
     }()
 
     // MARK: Init routine
-    init(countryGroup: CountryGroup, serverType: ServerType, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, alertService: AlertService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol, planService: PlanService, serversFilter: ((ServerModel) -> Bool)?, showCountryConnectButton: Bool) {
+    init(countryGroup: CountryGroup, serverType: ServerType, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, alertService: AlertService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol, planService: PlanService, serversFilter: ((ServerModel) -> Bool)?, showCountryConnectButton: Bool, showFeatureIcons: Bool) {
         self.countryModel = countryGroup.country
         self.serverModels = countryGroup.servers
         self.appStateManager = appStateManager
@@ -231,6 +237,7 @@ class CountryItemViewModel {
         self.planService = planService
         self.serversFilter = serversFilter
         self.showCountryConnectButton = showCountryConnectButton
+        self.showFeatureIcons = showFeatureIcons
         self.populateSupportedServerModels(supporting: propertiesManager.connectionProtocol)
         startObserving()
     }

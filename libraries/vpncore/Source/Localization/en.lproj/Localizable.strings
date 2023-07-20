@@ -1616,6 +1616,14 @@
 "_locations_plus" = "Plus Locations";
 "_locations_plus" = "Plus Locations";
 
+/* Gateways info modal */
+
+/* Gateways info modals title (both iOS and macOS) */
+"_gateways_modal_title" = "What's a gateway?";
+
+/* Gateways info modals text (both iOS and macOS) */
+"_gateways_modal_text" = "A VPN gateway is a secure connection that provides controlled access to your company's data and services through dedicated servers";
+
 "_vpn_accelerator_title" = "VPN Accelerator";
 "_vpn_accelerator_change_title" = "Change VPN Accelerator";
 

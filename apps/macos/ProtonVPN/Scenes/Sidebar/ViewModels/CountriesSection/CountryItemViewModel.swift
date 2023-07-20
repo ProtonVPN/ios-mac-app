@@ -39,6 +39,8 @@ class CountryItemViewModel {
     public let id: String
     /// In gateways countries there is no connect button
     public let showCountryConnectButton: Bool
+    /// Hide feature icons in Gateway countries
+    public let showFeatureIcons: Bool
 
     fileprivate let vpnGateway: VpnGatewayProtocol
     fileprivate let appStateManager: AppStateManager
@@ -97,7 +99,9 @@ class CountryItemViewModel {
          isOpened: Bool,
          displaySeparator: Bool,
          serversFilter: ((ServerModel) -> Bool)?,
-         showCountryConnectButton: Bool) {
+         showCountryConnectButton: Bool,
+         showFeatureIcons: Bool
+    ) {
 
         self.id = id
         self.countryModel = country.0
@@ -113,6 +117,7 @@ class CountryItemViewModel {
         self.appStateManager = appStateManager
         self.serversFilter = serversFilter
         self.showCountryConnectButton = showCountryConnectButton
+        self.showFeatureIcons = showFeatureIcons
 
         populateSupportedServerModels(supporting: propertiesManager.connectionProtocol)
         startObserving()
