@@ -121,28 +121,32 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
     }
 
     public func store(_ certificate: VpnCertificateWithFeatures) {
-        do {
-            try store(certificate: certificate.certificate)
-            storage.setEncodableValue(certificate.features, forKey: DefaultsStorageKey.vpnCertificateFeatures)
-            log.debug("Cert with features saved: \(String(describing: certificate.features))", category: .userCert)
-            delegate?.certificateStored(certificate.certificate)
-        } catch {
-            log.error("Saving VPN certificate failed with error: \(error)", category: .userCert)
-        }
+        encodeAndStore(certificate: certificate.certificate, features: certificate.features)
     }
 
     public func store(_ certificate: VpnCertificate) {
-        do {
-            try store(certificate: certificate)
-            log.debug("VPN certificate saved, valid until: \(certificate.validUntil)", category: .userCert)
-            delegate?.certificateStored(certificate)
-        } catch {
-            log.error("Saving VPN certificate failed with error: \(error)", category: .userCert)
-        }
+        encodeAndStore(certificate: certificate, features: nil)
     }
 
-    private func store(certificate: VpnCertificate) throws {
-        let data = try JSONEncoder().encode(certificate)
-        try appKeychain.set(data, key: KeychainStorageKey.vpnCertificate)
+    private func encodeAndStore(certificate: VpnCertificate, features: VPNConnectionFeatures?) {
+        do {
+            let data = try JSONEncoder().encode(certificate)
+            try appKeychain.set(data, key: KeychainStorageKey.vpnCertificate)
+
+            if let features {
+                storage.setEncodableValue(features, forKey: DefaultsStorageKey.vpnCertificateFeatures)
+            }
+
+            log.debug("VPN certificate saved", category: .userCert, metadata: [
+                "validUntil": "\(certificate.validUntil)",
+                "features": .string(features?.asDict.description ?? "nil")
+            ])
+            delegate?.certificateStored(certificate)
+        } catch {
+            log.error("Saving VPN certificate failed", category: .userCert, metadata: [
+                "error": "\(error)",
+                "features": .string(features?.asDict.description ?? "nil")
+            ])
+        }
     }
 }
