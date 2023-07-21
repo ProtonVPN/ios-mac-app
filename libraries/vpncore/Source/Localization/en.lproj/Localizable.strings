@@ -1614,7 +1614,7 @@
 "_locations_all" = "All Locations";
 "_locations_free" = "Free Locations";
 "_locations_plus" = "Plus Locations";
-"_locations_plus" = "Plus Locations";
+"_locations_gateways" = "Gateways";
 
 /* Gateways info modal */
 
