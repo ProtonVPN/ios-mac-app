@@ -431,7 +431,7 @@ class CountriesSectionViewModel {
         let freeLocations = countries.filter { $0.0.lowestTier == 0 }
         let plusLocations = countries.filter { $0.0.lowestTier != 0 }
         let headerFreeVM = CountryHeaderViewModel(LocalizedString.locationsFree, totalCountries: freeLocations.count, buttonType: nil, countriesViewModel: self)
-        let headerPlusVM = CountryHeaderViewModel(LocalizedString.locationsPlus, totalCountries: plusLocations.count, buttonType: nil, countriesViewModel: self)
+        let headerPlusVM = CountryHeaderViewModel(LocalizedString.locationsPlus, totalCountries: plusLocations.count, buttonType: .premium, countriesViewModel: self)
 
         return (gatewaysSection
             + [ .header(headerFreeVM) ]
