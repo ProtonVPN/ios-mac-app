@@ -22,6 +22,7 @@
 
 import Cocoa
 import Theme
+import Ergonomics
 
 class PopUpViewController: NSViewController {
     
@@ -82,7 +83,9 @@ class PopUpViewController: NSViewController {
     
     private func setupBodySection() {
         bodyView.wantsLayer = true
-        bodyView.layer?.backgroundColor = .cgColor(.background, .weak)
+        DarkAppearance {
+            bodyView.layer?.backgroundColor = .cgColor(.background, .weak)
+        }
         
         popUpIcon.image = AppTheme.Icon.vpnMainTransparent
         if !viewModel.showIcon {
@@ -101,7 +104,9 @@ class PopUpViewController: NSViewController {
     
     private func setupFooterSection() {
         footerView.wantsLayer = true
-        footerView.layer?.backgroundColor = .cgColor(.background, .weak)
+        DarkAppearance {
+            footerView.layer?.backgroundColor = .cgColor(.background, .weak)
+        }
         
         if let cancelTitle = viewModel.cancelButtonTitle {
             cancelButton.title = cancelTitle

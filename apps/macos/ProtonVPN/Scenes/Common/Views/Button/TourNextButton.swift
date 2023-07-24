@@ -22,6 +22,7 @@
 
 import Cocoa
 import Theme
+import Ergonomics
 
 // MARK: - Used by TourNextButton and its TourNextButtonCell cell
 private let textOffset: CGFloat = 16
@@ -49,8 +50,10 @@ class TourNextButton: HoverDetectionButton {
 
         wantsLayer = true
         layer?.cornerRadius = bounds.height / 2
-        layer?.backgroundColor = self.cgColor(.background)
-        layer?.borderColor = self.cgColor(.border)
+        DarkAppearance {
+            layer?.backgroundColor = self.cgColor(.background)
+            layer?.borderColor = self.cgColor(.border)
+        }
         layer?.borderWidth = 2.0
     }
     

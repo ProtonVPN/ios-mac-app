@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Ergonomics
 
 class TabBarButton: NSButton {
     static func backgroundColor(forFocus present: Bool) -> CGColor {
@@ -77,7 +78,9 @@ class TabBarButton: NSButton {
         super.draw(dirtyRect)
         
         wantsLayer = true
-        layer?.backgroundColor = .cgColor(.background, .transparent)
+        DarkAppearance {
+            layer?.backgroundColor = .cgColor(.background, .transparent)
+        }
     }
     
     private func setupAttributedTitle() {

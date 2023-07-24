@@ -24,6 +24,7 @@ import Cocoa
 import vpncore
 import WebKit
 import Theme
+import Ergonomics
 
 class AboutViewController: NSViewController {
     
@@ -77,7 +78,9 @@ class AboutViewController: NSViewController {
     
     private func setupView() {
         backgroundView.wantsLayer = true
-        backgroundView.layer?.backgroundColor = .cgColor(.background)
+        DarkAppearance {
+            backgroundView.layer?.backgroundColor = .cgColor(.background)
+        }
     }
     
     private func setupComponents() {
@@ -97,7 +100,9 @@ class AboutViewController: NSViewController {
         
         changelogLabel.attributedStringValue = LocalizedString.changelog.styled(font: .themeFont(.heading3, bold: true), alignment: .left)
 
-        webView.layer?.backgroundColor = .cgColor(.background)
+        DarkAppearance {
+            webView.layer?.backgroundColor = .cgColor(.background)
+        }
         webView.loadHTMLString(changelogHtml, baseURL: nil)
     }
         

@@ -18,6 +18,7 @@
 
 import Foundation
 import Cocoa
+import Ergonomics
 
 final class BannerView: NSView {
     private lazy var label: NSTextField = {
@@ -52,7 +53,9 @@ final class BannerView: NSView {
 
         wantsLayer = true
         layer?.cornerRadius = 6
-        layer?.backgroundColor = .cgColor(.background, .interactive)
+        DarkAppearance {
+            layer?.backgroundColor = .cgColor(.background, .interactive)
+        }
 
         addSubview(label)
         NSLayoutConstraint.activate([

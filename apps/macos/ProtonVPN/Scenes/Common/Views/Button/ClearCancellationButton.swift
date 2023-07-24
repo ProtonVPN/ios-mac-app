@@ -22,6 +22,7 @@
 
 import Cocoa
 import Theme
+import Ergonomics
 
 class ClearCancellationButton: HoverDetectionButton {
     override var title: String {
@@ -41,9 +42,11 @@ class ClearCancellationButton: HoverDetectionButton {
         
         wantsLayer = true
         layer?.borderWidth = 2
-        layer?.borderColor = self.cgColor(.border)
+        DarkAppearance {
+            layer?.borderColor = self.cgColor(.border)
+            layer?.backgroundColor = self.cgColor(.background)
+        }
         layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
-        layer?.backgroundColor = self.cgColor(.background)
         attributedTitle = self.style(title, font: .themeFont(fontSize))
     }
     

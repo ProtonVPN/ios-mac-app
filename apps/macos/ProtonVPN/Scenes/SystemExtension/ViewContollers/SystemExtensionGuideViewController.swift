@@ -41,7 +41,7 @@ class SystemExtensionGuideViewController: NSViewController {
     }
 
     override func loadView() {
-        view = NSHostingView(rootView: SystemExtensionTutorialView())
+        view = NSHostingView(rootView: SystemExtensionTutorialView().preferredColorScheme(.dark))
     }
 
     override func viewDidLoad() {

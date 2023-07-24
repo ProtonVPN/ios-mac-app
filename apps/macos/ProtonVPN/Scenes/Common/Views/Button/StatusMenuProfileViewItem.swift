@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Ergonomics
 
 class StatusMenuProfileViewItem: NSTableRowView {
     
@@ -87,11 +88,13 @@ class StatusMenuProfileViewItem: NSTableRowView {
             guard let self = self else {
                 return
             }
-            
-            if self.button.isHovered, let viewModel = self.viewModel, viewModel.canConnect {
-                self.button.layer?.backgroundColor = .cgColor(.background, [.transparent, .hovered])
-            } else {
-                self.button.layer?.backgroundColor = .cgColor(.background, [.transparent])
+
+            DarkAppearance {
+                if self.button.isHovered, let viewModel = self.viewModel, viewModel.canConnect {
+                    self.button.layer?.backgroundColor = .cgColor(.background, [.transparent, .hovered])
+                } else {
+                    self.button.layer?.backgroundColor = .cgColor(.background, [.transparent])
+                }
             }
             self.button.needsDisplay = true
         }

@@ -60,9 +60,11 @@ class ConnectingOverlayButton: HoverDetectionButton {
         wantsLayer = true
         layer?.borderWidth = 2
         layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
-        
-        layer?.backgroundColor = self.cgColor(.background)
-        layer?.borderColor = self.cgColor(.border)
+
+        DarkAppearance {
+            layer?.backgroundColor = self.cgColor(.background)
+            layer?.borderColor = self.cgColor(.border)
+        }
         attributedTitle = self.style(title, font: .themeFont(.heading4))
     }
 }

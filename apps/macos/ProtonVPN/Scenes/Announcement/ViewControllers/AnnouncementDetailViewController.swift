@@ -23,6 +23,7 @@
 import Cocoa
 import SDWebImage
 import vpncore
+import Ergonomics
 
 final class AnnouncementDetailViewController: NSViewController {
     @IBOutlet private weak var incentiveLabel: NSTextField!
@@ -73,7 +74,9 @@ final class AnnouncementDetailViewController: NSViewController {
         pillLabel.stringValue = data.pill
 
         pillView.wantsLayer = true
-        pillView.layer?.backgroundColor = .cgColor(.background, .danger)
+        DarkAppearance {
+            pillView.layer?.backgroundColor = .cgColor(.background, .danger)
+        }
 
         if let pictureUrl = URL(string: data.pictureURL) {
             pictureView.sd_setImage(with: pictureUrl, completed: nil)

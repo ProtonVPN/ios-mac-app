@@ -131,12 +131,14 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
     }
 
     private func setupBackgroundColor() {
-        dynamicContentView.wantsLayer = true
-        dynamicContentView.layer?.backgroundColor = .cgColor(.background)
-        footerView.wantsLayer = true
-        footerView.layer?.backgroundColor = .cgColor(.background)
-        backgroundView.wantsLayer = true
-        backgroundView.layer?.backgroundColor = .cgColor(.background)
+        DarkAppearance {
+            dynamicContentView.wantsLayer = true
+            dynamicContentView.layer?.backgroundColor = .cgColor(.background)
+            footerView.wantsLayer = true
+            footerView.layer?.backgroundColor = .cgColor(.background)
+            backgroundView.wantsLayer = true
+            backgroundView.layer?.backgroundColor = .cgColor(.background)
+        }
     }
         
     private func setupSecureCoreSection() {

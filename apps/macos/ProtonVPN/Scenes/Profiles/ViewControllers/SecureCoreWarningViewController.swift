@@ -22,6 +22,7 @@
 
 import Cocoa
 import vpncore
+import Ergonomics
 
 final class SecureCoreWarningViewController: NSViewController {
     
@@ -55,7 +56,9 @@ final class SecureCoreWarningViewController: NSViewController {
     
     private func setupView() {
         view.wantsLayer = true
-        view.layer?.backgroundColor = .cgColor(.background, .weak)
+        DarkAppearance {
+            view.layer?.backgroundColor = .cgColor(.background, .weak)
+        }
     }
     
     private func setupComponents() {

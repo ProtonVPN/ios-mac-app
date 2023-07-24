@@ -22,6 +22,7 @@
 
 import Cocoa
 import Theme
+import Ergonomics
 
 class StatusMenuItemBackground: HoverDetectionButtonAdvanced {
     
@@ -41,7 +42,9 @@ class StatusMenuItemBackground: HoverDetectionButtonAdvanced {
         } else {
             style = .transparent
         }
-        
-        layer?.backgroundColor = .cgColor(.background, style)
+
+        DarkAppearance {
+            layer?.backgroundColor = .cgColor(.background, style)
+        }
     }
 }

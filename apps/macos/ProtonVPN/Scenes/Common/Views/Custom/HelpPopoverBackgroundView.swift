@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Ergonomics
 
 class HelpPopoverBackgroundView: NSView {
 
@@ -30,7 +31,9 @@ class HelpPopoverBackgroundView: NSView {
         }
         
         superview.wantsLayer = true
-        superview.layer?.backgroundColor = .cgColor(.background, .weak)
+        DarkAppearance {
+            superview.layer?.backgroundColor = .cgColor(.background, .weak)
+        }
     }
     
 }

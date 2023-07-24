@@ -23,6 +23,7 @@
 import Cocoa
 import vpncore
 import Theme
+import Ergonomics
 
 class FeaturesOverlayViewController: NSViewController {
 
@@ -47,7 +48,9 @@ class FeaturesOverlayViewController: NSViewController {
         addFeatureRows()
         dismissButton.image = AppTheme.Icon.crossSmall
         view.wantsLayer = true
-        view.layer?.backgroundColor = .cgColor(.background)
+        DarkAppearance {
+            view.layer?.backgroundColor = .cgColor(.background)
+        }
     }
 
     private func addFeatureRows() {

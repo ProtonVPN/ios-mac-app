@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Ergonomics
 
 class StatusMenuProfilesListController: WindowController {
 
@@ -63,11 +64,13 @@ class StatusMenuProfilesListController: WindowController {
         window.appearance = NSAppearance(named: .darkAqua)
         
         topView.wantsLayer = true
-        topView.layer?.backgroundColor = .cgColor(.background, .weak)
         
         roundedView.wantsLayer = true
-        roundedView.layer?.backgroundColor = .cgColor(.background, .weak)
         roundedView.layer?.cornerRadius = 8
+        DarkAppearance {
+            topView.layer?.backgroundColor = .cgColor(.background, .weak)
+            roundedView.layer?.backgroundColor = .cgColor(.background, .weak)
+        }
     }
     
     private func setupProfilesList() {

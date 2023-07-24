@@ -46,7 +46,9 @@ class InteractiveActionButton: HoverDetectionButton {
         super.viewWillDraw()
         
         wantsLayer = true
-        layer?.backgroundColor = .cgColor(.background, .transparent)
+        DarkAppearance {
+            layer?.backgroundColor = .cgColor(.background, .transparent)
+        }
         setAttributedTitle()
     }
     
