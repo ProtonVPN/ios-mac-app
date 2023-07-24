@@ -30,7 +30,7 @@ public class FileStorage {
 
     public func store(_ data: Data, forKey key: String) throws {
         let url = try buildURL(key)
-        try data.write(to: url)
+        try data.write(to: url, options: .atomic)
         log.debug("Wrote \(data.count) bytes while saving value for \(key) at \(url)", category: .persistence)
     }
 

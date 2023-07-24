@@ -52,7 +52,7 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
                 if let services = properties.streamingServices {
                     self.propertiesManager.streamingServices = services.streamingServices
                 }
-                self.serverStorage.store(properties.serverModels)
+                self.serverStorage.store(properties.serverModels, keepStalePaidServers: isFreeTier)
                 completion(.success)
             case let .failure(error):
                 completion(.failure(error))

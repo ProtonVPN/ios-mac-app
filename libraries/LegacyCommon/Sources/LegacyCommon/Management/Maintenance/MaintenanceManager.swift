@@ -115,7 +115,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
                 ) { result in
                     switch result {
                     case let .success(servers):
-                        self.serverStorage.store(servers)
+                        self.serverStorage.store(servers, keepStalePaidServers: isFree)
                         completion?(true)
                     case let .failure(error):
                         failure?(error)

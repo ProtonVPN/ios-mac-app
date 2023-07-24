@@ -462,7 +462,7 @@ public class VpnGateway: VpnGatewayProtocol {
                     if let services = properties.streamingServices {
                         self.propertiesManager.streamingServices = services.streamingServices
                     }
-                    self.serverStorage.store(properties.serverModels)
+                    self.serverStorage.store(properties.serverModels, keepStalePaidServers: refreshFreeTierInfo)
                     self.profileManager.refreshProfiles()
                 case .failure:
                     // Ignore failures as this is a non-critical call

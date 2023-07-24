@@ -25,7 +25,6 @@ import LegacyCommon
 import Combine
 
 class ServerStorageArrayMock: ServerStorage {
-
     var contentChanged: Notification.Name = Notification.Name(rawValue: "ServerStorageArrayMock.contentChanged")
     
     private var servers: [ServerModel]
@@ -38,7 +37,20 @@ class ServerStorageArrayMock: ServerStorage {
         return servers
     }
     
-    func store(_ newServers: [ServerModel]) {
+    func store(_ newServers: [ServerModel], shouldLeaveStaleEntry: ((ServerModel) -> Bool)?) {
+        var staleEntries = [ServerModel]()
+        if let shouldLeaveStaleEntry {
+            let newServerIds = Set(newServers.map(\.id))
+            staleEntries = servers.filter {
+                !newServerIds.contains($0.id) && shouldLeaveStaleEntry($0)
+            }
+
+            assert(
+                newServerIds.isDisjoint(with: staleEntries.map(\.id)),
+                "Two servers exist with same id, bad invariant"
+            )
+        }
+
         self.servers = newServers
     }
     

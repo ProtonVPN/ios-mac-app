@@ -31,10 +31,24 @@ public protocol ServerStorage {
     func fetch() -> [ServerModel]
     func fetchAge() -> TimeInterval
 
-    func store(_ newServers: [ServerModel])
+    func store(_ newServers: [ServerModel], shouldLeaveStaleEntry: ((ServerModel) -> Bool)?)
     func update(continuousServerProperties: ContinuousServerPropertiesDictionary)
 
     var allServersPublisher: CurrentValueSubject<[ServerModel], Never> { get }
+}
+
+extension ServerStorage {
+    public func store(_ newServers: [ServerModel]) {
+        store(newServers, shouldLeaveStaleEntry: nil)
+    }
+
+    public func store(_ newServers: [ServerModel], keepStalePaidServers: Bool) {
+        guard keepStalePaidServers else {
+            store(newServers)
+            return
+        }
+        store(newServers, shouldLeaveStaleEntry: { !$0.isFree })
+    }
 }
 
 public protocol ServerStorageFactory {
@@ -47,7 +61,6 @@ public class ServerStorageConcrete: ServerStorage {
     private let storageKey     = "servers"
     private let ageKey         = "age"
 
-    @Dependency(\.storage) var storage
     @Dependency(\.defaultsProvider) var provider
     @Dependency(\.dataStorage) var dataStorage
 
@@ -98,15 +111,33 @@ public class ServerStorageConcrete: ServerStorage {
         }
     }
 
-    public func store(_ newServers: [ServerModel]) {
+    public func store(_ newServers: [ServerModel], shouldLeaveStaleEntry: ((ServerModel) -> Bool)?) {
+        if shouldLeaveStaleEntry != nil, ServerStorageConcrete.servers.isEmpty {
+            // Re-populate servers
+            _ = fetch()
+        }
+
         let defaults = provider.getDefaults()
         ServerStorageConcrete.queue.async { [defaults, dataStorage, versionKey, ageKey, storageKey, storageVersion] in
             do {
+                let newServerIds = Set(newServers.map(\.id))
+                var staleServers = [ServerModel]()
+
+                if let shouldLeaveStaleEntry {
+                    staleServers = ServerStorageConcrete.servers.filter { server in
+                        !newServerIds.contains(server.id) && shouldLeaveStaleEntry(server)
+                    }
+                    assert(
+                        newServerIds.isDisjoint(with: staleServers.map(\.id)),
+                        "Attempted to write same server twice - bad invariant in ServerStorageConcrete"
+                    )
+                }
+
                 let age = Date().timeIntervalSince1970
                 let serversData = try JSONEncoder().encode(newServers)
 
                 ServerStorageConcrete.age = age
-                ServerStorageConcrete.servers = newServers
+                ServerStorageConcrete.servers = newServers + staleServers
 
                 try dataStorage.store(serversData, forKey: storageKey)
                 defaults.set(storageVersion, forKey: versionKey)

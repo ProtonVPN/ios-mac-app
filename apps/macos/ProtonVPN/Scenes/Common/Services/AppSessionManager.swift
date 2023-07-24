@@ -89,6 +89,12 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         didSet { loggedIn = sessionStatus == .established }
     }
 
+    var shouldRefreshServersAccordingToUserTier: Bool {
+        // Every n times, fully refresh the server list, including the paid ones.
+        let n = 10
+        return successfulConsecutiveSessionRefreshes % n == 0
+    }
+
     init(factory: Factory) {
         self.factory = factory
         super.init(factory: factory)
@@ -171,13 +177,19 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     private func retrieveProperties() async throws {
         guard let properties = try await getVPNProperties() else {
+            successfulConsecutiveSessionRefreshes = 0
             return
         }
 
         if let credentials = properties.vpnCredentials {
             vpnKeychain.store(vpnCredentials: credentials)
+            self.serverStorage.store(
+                properties.serverModels,
+                keepStalePaidServers: credentials.maxTier == CoreAppConstants.VpnTiers.free
+            )
+        } else {
+            self.serverStorage.store(properties.serverModels)
         }
-        self.serverStorage.store(properties.serverModels)
 
         if await appState.isDisconnected {
             propertiesManager.userLocation = properties.location
@@ -197,8 +209,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             try await resolveActiveSession()
         } catch {
             logOutCleanup()
+            successfulConsecutiveSessionRefreshes = 0
             throw error
         }
+
+        successfulConsecutiveSessionRefreshes += 1
     }
 
     private func getVPNProperties() async throws -> VpnProperties? {
@@ -206,7 +221,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         let location = propertiesManager.userLocation
 
         do {
-            return try await vpnApiService.vpnProperties(isDisconnected: isDisconnected, lastKnownLocation: location)
+            return try await vpnApiService.vpnProperties(
+                isDisconnected: isDisconnected,
+                lastKnownLocation: location,
+                serversAccordingToTier: shouldRefreshServersAccordingToUserTier
+            )
         } catch {
             log.error("Failed to obtain user's VPN properties: \(error.localizedDescription)", category: .app)
             if serverStorage.fetch().isEmpty, self.propertiesManager.userLocation?.ip == nil, (error is KeychainError) {

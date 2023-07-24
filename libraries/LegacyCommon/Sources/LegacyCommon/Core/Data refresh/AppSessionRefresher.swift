@@ -65,7 +65,8 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     public var lastPartnersInfoRefresh: Date?
     
     public var loggedIn = false
-    
+    public var successfulConsecutiveSessionRefreshes = 0
+
     public var vpnApiService: VpnApiService
     public var vpnKeychain: VpnKeychainProtocol
     public var propertiesManager: PropertiesManagerProtocol
@@ -84,20 +85,22 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     
     @objc public func refreshData() {
         lastDataRefresh = Date()
-        attemptSilentLogIn { result in
+        attemptSilentLogIn { [weak self] result in
             switch result {
             case .success:
-                break
+                self?.successfulConsecutiveSessionRefreshes += 1
             case let .failure(error):
                 log.error("Failed to refresh vpn credentials", category: .app, metadata: ["error": "\(error)"])
 
                 let error = error as NSError
                 switch error.code {
                 case ApiErrorCode.apiVersionBad, ApiErrorCode.appVersionBad:
-                    self.alertService.push(alert: AppUpdateRequiredAlert(error as! ApiError))
+                    self?.alertService.push(alert: AppUpdateRequiredAlert(error as! ApiError))
                 default:
                     break // ignore failures
                 }
+                
+                self?.successfulConsecutiveSessionRefreshes = 0
             }
         }
     }
