@@ -19,11 +19,11 @@
 import Foundation
 import XCTest
 
-fileprivate let qcButton = "Connect"
+fileprivate let qcButton = "Quick Connect"
 fileprivate let preferencesTitle = "Preferences"
 fileprivate let menuItemReportAnIssue = "Report an Issue..."
 fileprivate let menuItemProfiles = "Overview"
-fileprivate let statusTitle = "You are unprotected"
+fileprivate let statusTitle = "You are not connected"
 
 class MainRobot {
 

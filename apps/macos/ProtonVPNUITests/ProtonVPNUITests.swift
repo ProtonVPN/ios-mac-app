@@ -105,7 +105,7 @@ class ProtonVPNUITests: XCTestCase {
 
     func login(withCredentials credentials: Credentials) {
         
-        let buttonQuickConnect = app.buttons["Connect"]
+        let buttonQuickConnect = app.buttons["Quick Connect"]
         super.setUp()
            loginRobot
                .loginUser(credentials: credentials)
@@ -171,7 +171,7 @@ class ProtonVPNUITests: XCTestCase {
     }
     
     func logInIfNeeded() {
-        let buttonQuickConnect = app.buttons["Connect"]
+        let buttonQuickConnect = app.buttons["Quick Connect"]
         if buttonQuickConnect.waitForExistence(timeout: 4) {
             return
         } else {
