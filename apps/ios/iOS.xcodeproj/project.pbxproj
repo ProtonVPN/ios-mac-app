@@ -449,6 +449,7 @@
 		E5F90B7229C9B5AB000509DF /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C5597B20A5672A00E6D3F6 /* UIColor+Extension.swift */; };
 		E5FA6F2827C7E12200E781FC /* SubuserAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5FA6F2727C7E12200E781FC /* SubuserAlertViewController.storyboard */; };
 		E5FFB24429F80185000C65A9 /* ProtonVPNApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFB24329F80185000C65A9 /* ProtonVPNApp.swift */; };
+		E90226D22A6E55A3009D3748 /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = E90226D12A6E55A3009D3748 /* Ergonomics */; };
 		E90AAE2527A0407400FDAEC6 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */; };
 		E9200ED72660CC0F00BBAB9C /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9200ED62660CC0F00BBAB9C /* vpncore.framework */; };
 		E93F769327C788740033B88F /* WGLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93F769227C788740033B88F /* WGLogFormatter.swift */; };
@@ -460,6 +461,7 @@
 		E9492ED92669178100500E7D /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCDA20908E6F0030E1EB /* AppConstants.swift */; };
 		E9492EDA2669178100500E7D /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCDA20908E6F0030E1EB /* AppConstants.swift */; };
 		E9492EE3266A14E800500E7D /* LogSelectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9492EE2266A14E800500E7D /* LogSelectionViewModelTests.swift */; };
+		E95C18A02A6E4D7D009F1ABB /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = E95C189F2A6E4D7D009F1ABB /* Ergonomics */; };
 		E95F81E727B1474800A2458A /* iOSUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95F81E627B1474800A2458A /* iOSUpdateManager.swift */; };
 		E977A79F26821CA90013495A /* Client.plist in Resources */ = {isa = PBXBuildFile; fileRef = 79C5598320AAC59F00E6D3F6 /* Client.plist */; };
 		E97A67732772015A002EB33C /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E154A0C822E0A9A000283CF9 /* ObfuscatedConstants.swift */; };
@@ -1139,6 +1141,7 @@
 				E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */,
 				F3BC534B278598CE009E49B4 /* Onboarding in Frameworks */,
 				E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */,
+				E95C18A02A6E4D7D009F1ABB /* Ergonomics in Frameworks */,
 				ADBA84DF2A58A1A0001EF3F5 /* CasePaths in Frameworks */,
 				D563A7562A5D260C00908254 /* Strings in Frameworks */,
 				257C90332E8EB77D46C645E6 /* Pods_ProtonVPN.framework in Frameworks */,
@@ -1156,6 +1159,7 @@
 				D563A7582A5D355F00908254 /* Strings in Frameworks */,
 				4CD110812A2A095D0062AE13 /* PMLogger in Frameworks */,
 				D55F10F0297FD1DF00EAF2AB /* LocalFeatureFlags in Frameworks */,
+				E90226D22A6E55A3009D3748 /* Ergonomics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2594,6 +2598,7 @@
 				0F37F582FD946FEFFFACCDE6 /* Theme */,
 				ADBA84DE2A58A1A0001EF3F5 /* CasePaths */,
 				D563A7552A5D260C00908254 /* Strings */,
+				E95C189F2A6E4D7D009F1ABB /* Ergonomics */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -2621,6 +2626,7 @@
 				4CD110802A2A095D0062AE13 /* PMLogger */,
 				E063C2AAE493E6D9567B52F4 /* Theme */,
 				D563A7572A5D355F00908254 /* Strings */,
+				E90226D12A6E55A3009D3748 /* Ergonomics */,
 			);
 			productName = ProtonVPNTests;
 			productReference = 791DE5EF208DDA3200A29EA5 /* ProtonVPNTests.xctest */;
@@ -5164,6 +5170,14 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E5A4AD2A2A3C48B400CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
 			productName = Dependencies;
+		};
+		E90226D12A6E55A3009D3748 /* Ergonomics */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Ergonomics;
+		};
+		E95C189F2A6E4D7D009F1ABB /* Ergonomics */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Ergonomics;
 		};
 		E98EE34D2671EDD200B86BA0 /* WireGuardKit */ = {
 			isa = XCSwiftPackageProductDependency;
