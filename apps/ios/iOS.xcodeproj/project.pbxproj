@@ -43,6 +43,13 @@
 		42C37B002434E62C00366B79 /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
 		47A5FDF82BE7BAF5F74AA67E /* Pods-ProtonVPNUITests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0621B577842515BF2198993 /* Pods-ProtonVPNUITests-metadata.plist */; };
 		4C74D3292A0B9D67004F8528 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 4C74D3282A0B9D67004F8528 /* PMLogger */; };
+		4C78F5F52A6E8C0F0099DA1A /* TunnelKitOpenVPNAppExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 4C78F5F42A6E8C0F0099DA1A /* TunnelKitOpenVPNAppExtension */; };
+		4C78F5F72A6E8C380099DA1A /* TunnelKitOpenVPN in Frameworks */ = {isa = PBXBuildFile; productRef = 4C78F5F62A6E8C380099DA1A /* TunnelKitOpenVPN */; };
+		4C78F5F92A6E908D0099DA1A /* ProtonCore-PaymentsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4C78F5F82A6E908D0099DA1A /* ProtonCore-PaymentsUI */; };
+		4C78F5FB2A6E90DD0099DA1A /* ProtonCore-CoreTranslation in Frameworks */ = {isa = PBXBuildFile; productRef = 4C78F5FA2A6E90DD0099DA1A /* ProtonCore-CoreTranslation */; };
+		4C78F5FD2A6E90E40099DA1A /* ProtonCore-CryptoGoInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 4C78F5FC2A6E90E40099DA1A /* ProtonCore-CryptoGoInterface */; };
+		4C78F5FF2A6E91E00099DA1A /* ProtonCore-Log in Frameworks */ = {isa = PBXBuildFile; productRef = 4C78F5FE2A6E91E00099DA1A /* ProtonCore-Log */; };
+		4C78F6012A6E921D0099DA1A /* ProtonCore-Utilities in Frameworks */ = {isa = PBXBuildFile; productRef = 4C78F6002A6E921D0099DA1A /* ProtonCore-Utilities */; };
 		4C7D404E2A60244C00ACDBED /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 4C7D404D2A60244C00ACDBED /* Alamofire */; };
 		4C7D40562A60250300ACDBED /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 4C7D40552A60250300ACDBED /* SDWebImage */; };
 		4C7D405C2A6027C400ACDBED /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 4C7D405B2A6027C400ACDBED /* KeychainAccess */; };
@@ -139,15 +146,12 @@
 		79FD80E521108049003B16E2 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FD80E421108049003B16E2 /* LaunchViewController.swift */; };
 		79FF145320C41ECE00BA3623 /* ProfilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FF145220C41ECE00BA3623 /* ProfilesViewController.swift */; };
 		79FF145520C41EE200BA3623 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FF145420C41EE200BA3623 /* SettingsViewController.swift */; };
-		85FDAD4CC9FABA90456AD643 /* Pods-ProtonVPN-WireGuardiOS Extension-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = B0D44B0BD8873013421C4548 /* Pods-ProtonVPN-WireGuardiOS Extension-metadata.plist */; };
 		86B07CD2711C002F53844E95 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */; };
 		89926E3756CED95AB662D371 /* PasswordRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */; };
 		8CE611B08C0E5F102ECF4E3A /* Pods-ProtonVPN-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 144DDB28DA09A1DD0A1BDCC9 /* Pods-ProtonVPN-metadata.plist */; };
-		96BEBF321E33B229DE18022A /* Pods-OpenVPN Extension-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0E910E5C3CE68C69236B82D /* Pods-OpenVPN Extension-metadata.plist */; };
 		9CAA535B7E08D1D7EA1B1153 /* WireguardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725FA809DE263D5243FD5A16 /* WireguardConfig.swift */; };
 		A01D7C58C3C1AEBA17A6C5AF /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E128E9975D2A268D9FB56F0 /* AnnouncementDetailViewController.swift */; };
 		A264F1C92E772DA03634D8A8 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */; };
-		AA7F4BB1B033290373864C0C /* Pods-WireGuardiOS Extension-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = C580A09B90DA2933EBF31BCB /* Pods-WireGuardiOS Extension-metadata.plist */; };
 		AD37FAC329B63E1100D4DE4E /* NetShieldStatsItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */; };
 		AD37FAC529B7310200D4DE4E /* NetShieldStatsItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */; };
 		AD6099FB299B2343007E46BC /* ImageSubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6099FA299B2343007E46BC /* ImageSubtitleTableViewCell.swift */; };
@@ -1093,13 +1097,14 @@
 				4C7D40562A60250300ACDBED /* SDWebImage in Frameworks */,
 				4C7D405C2A6027C400ACDBED /* KeychainAccess in Frameworks */,
 				D555C49F297FB961000593EF /* LocalFeatureFlags in Frameworks */,
+				4C78F5FD2A6E90E40099DA1A /* ProtonCore-CryptoGoInterface in Frameworks */,
 				4CB776CD2A1F5E61004CA127 /* ComposableArchitecture in Frameworks */,
 				4C7D404E2A60244C00ACDBED /* Alamofire in Frameworks */,
 				D5D78E5528CF60A900B2A156 /* vpncore.framework in Frameworks */,
+				4C78F5FB2A6E90DD0099DA1A /* ProtonCore-CoreTranslation in Frameworks */,
 				4CB776D22A1F6250004CA127 /* PMLogger in Frameworks */,
 				4C7D40642A60282D00ACDBED /* AlamofireImage in Frameworks */,
 				D573D114264A70980033CE19 /* UIKit.framework in Frameworks */,
-				E56790E42A45D48F0089CA79 /* Strings in Frameworks */,
 				4C9754FA2A6018040035A61B /* GSMessages in Frameworks */,
 				E198D6B12163B31A00F2F0E0 /* libc++.tbd in Frameworks */,
 				E18006E7218B0B7B009E01E3 /* StoreKit.framework in Frameworks */,
@@ -1134,6 +1139,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C78F5F92A6E908D0099DA1A /* ProtonCore-PaymentsUI in Frameworks */,
 				E9200ED72660CC0F00BBAB9C /* vpncore.framework in Frameworks */,
 				D555C49B297EE22D000593EF /* LocalFeatureFlags in Frameworks */,
 				D554556422805539006574F9 /* NetworkExtension.framework in Frameworks */,
@@ -1154,9 +1160,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C78F6012A6E921D0099DA1A /* ProtonCore-Utilities in Frameworks */,
+				4C78F5F52A6E8C0F0099DA1A /* TunnelKitOpenVPNAppExtension in Frameworks */,
 				D555C493297E7B22000593EF /* NEHelper in Frameworks */,
 				D555C495297E7B26000593EF /* PMLogger in Frameworks */,
+				4C78F5FF2A6E91E00099DA1A /* ProtonCore-Log in Frameworks */,
 				E144150422EF39F700894DD0 /* NetworkExtension.framework in Frameworks */,
+				4C78F5F72A6E8C380099DA1A /* TunnelKitOpenVPN in Frameworks */,
 				D555C497297E7B3A000593EF /* Timer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2525,6 +2535,8 @@
 				4C7D40632A60282D00ACDBED /* AlamofireImage */,
 				4C7D40662A60289400ACDBED /* OHHTTPStubs */,
 				4C7D40732A60297400ACDBED /* Reachability */,
+				4C78F5FA2A6E90DD0099DA1A /* ProtonCore-CoreTranslation */,
+				4C78F5FC2A6E90E40099DA1A /* ProtonCore-CryptoGoInterface */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -2574,6 +2586,7 @@
 			name = "Siri Shortcut Handler";
 			packageProductDependencies = (
 				D555C49A297EE22D000593EF /* LocalFeatureFlags */,
+				4C78F5F82A6E908D0099DA1A /* ProtonCore-PaymentsUI */,
 			);
 			productName = "Siri Shortcut Handler";
 			productReference = D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */;
@@ -2622,6 +2635,10 @@
 				D555C492297E7B22000593EF /* NEHelper */,
 				D555C494297E7B26000593EF /* PMLogger */,
 				D555C496297E7B3A000593EF /* Timer */,
+				4C78F5F42A6E8C0F0099DA1A /* TunnelKitOpenVPNAppExtension */,
+				4C78F5F62A6E8C380099DA1A /* TunnelKitOpenVPN */,
+				4C78F5FE2A6E91E00099DA1A /* ProtonCore-Log */,
+				4C78F6002A6E921D0099DA1A /* ProtonCore-Utilities */,
 			);
 			productName = "OpenVPN Extension";
 			productReference = E14414F722EF38ED00894DD0 /* OpenVPN Extension.appex */;
@@ -2947,7 +2964,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96BEBF321E33B229DE18022A /* Pods-OpenVPN Extension-metadata.plist in Resources */,
 				D555C499297EC9CD000593EF /* Client.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2970,8 +2986,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E977A79F26821CA90013495A /* Client.plist in Resources */,
-				85FDAD4CC9FABA90456AD643 /* Pods-ProtonVPN-WireGuardiOS Extension-metadata.plist in Resources */,
-				AA7F4BB1B033290373864C0C /* Pods-WireGuardiOS Extension-metadata.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3035,7 +3049,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ]; then\n\"${PODS_ROOT}/SwiftLint/swiftlint\" --config ../../.swiftlint.yml\nelse\necho \"Skipping swiftlint on CI\"\nfi\n";
+			shellScript = "SWIFTLINT=${SWIFTLINT:-$(command -v swiftlint)}\n\nif [ -x \"$SWIFTLINT\" ]; then\n\"$SWIFTLINT\" --config ../../.swiftlint.yml\nelse\necho \"Swiftlint not found, skipping...\"\nfi\n";
 		};
 		D5136C0C2284154F0002C095 /* Run SwiftLint Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3054,7 +3068,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ]; then\n\"${PODS_ROOT}/SwiftLint/swiftlint\" --config ../../.swiftlint.yml\nelse\necho \"Skipping swiftlint on CI\"\nfi\n";
+			shellScript = "SWIFTLINT=${SWIFTLINT:-$(command -v swiftlint)}\n\nif [ -x \"$SWIFTLINT\" ]; then\n\"$SWIFTLINT\" --config ../../.swiftlint.yml\nelse\necho \"Swiftlint not found, skipping...\"\nfi\n";
 		};
 		D5136C0D228415570002C095 /* Run Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3073,7 +3087,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ]; then\n\"${PODS_ROOT}/SwiftLint/swiftlint\" --config ../../.swiftlint.yml\nelse\necho \"Skipping swiftlint on CI\"\nfi\n";
+			shellScript = "SWIFTLINT=${SWIFTLINT:-$(command -v swiftlint)}\n\nif [ -x \"$SWIFTLINT\" ]; then\n\"$SWIFTLINT\" --config ../../.swiftlint.yml\nelse\necho \"Swiftlint not found, skipping...\"\nfi\n";
 		};
 		D555C498297EC82E000593EF /* Generayte obfuscated constants */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3132,7 +3146,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ]; then\n\"${PODS_ROOT}/SwiftLint/swiftlint\" --config ../../.swiftlint.yml\nelse\necho \"Skipping swiftlint on CI\"\nfi\n";
+			shellScript = "SWIFTLINT=${SWIFTLINT:-$(command -v swiftlint)}\n\nif [ -x \"$SWIFTLINT\" ]; then\n\"$SWIFTLINT\" --config ../../.swiftlint.yml\nelse\necho \"Swiftlint not found, skipping...\"\nfi\n";
 		};
 		E17FBC5D22DF75160080300A /* Generate Obfuscated Constants */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3172,7 +3186,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ]; then\n\"${PODS_ROOT}/SwiftLint/swiftlint\" --config ../../.swiftlint.yml\nelse\necho \"Skipping swiftlint on CI\"\nfi\n";
+			shellScript = "SWIFTLINT=${SWIFTLINT:-$(command -v swiftlint)}\n\nif [ -x \"$SWIFTLINT\" ]; then\n\"$SWIFTLINT\" --config ../../.swiftlint.yml\nelse\necho \"Swiftlint not found, skipping...\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -4881,6 +4895,34 @@
 		4C74D3282A0B9D67004F8528 /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PMLogger;
+		};
+		4C78F5F42A6E8C0F0099DA1A /* TunnelKitOpenVPNAppExtension */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TunnelKitOpenVPNAppExtension;
+		};
+		4C78F5F62A6E8C380099DA1A /* TunnelKitOpenVPN */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TunnelKitOpenVPN;
+		};
+		4C78F5F82A6E908D0099DA1A /* ProtonCore-PaymentsUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "ProtonCore-PaymentsUI";
+		};
+		4C78F5FA2A6E90DD0099DA1A /* ProtonCore-CoreTranslation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "ProtonCore-CoreTranslation";
+		};
+		4C78F5FC2A6E90E40099DA1A /* ProtonCore-CryptoGoInterface */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "ProtonCore-CryptoGoInterface";
+		};
+		4C78F5FE2A6E91E00099DA1A /* ProtonCore-Log */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "ProtonCore-Log";
+		};
+		4C78F6002A6E921D0099DA1A /* ProtonCore-Utilities */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "ProtonCore-Utilities";
 		};
 		4C7D404D2A60244C00ACDBED /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;

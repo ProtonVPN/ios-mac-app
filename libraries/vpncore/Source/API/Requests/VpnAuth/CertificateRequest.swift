@@ -24,19 +24,21 @@ import ProtonCore_Networking
 import Foundation
 import VPNShared
 
+#if canImport(UIKit)
+import UIKit
+
+fileprivate let deviceName = UIDevice.current.name
+#else
+fileprivate let deviceName = Host.current().localizedName ?? ""
+#endif
+
 final class CertificateRequest: Request {
     let publicKey: PublicKey
-    let deviceName: String
     let features: VPNConnectionFeatures?
 
     init(publicKey: PublicKey, features: VPNConnectionFeatures?) {
         self.publicKey = publicKey
         self.features = features
-        #if os(iOS)
-        deviceName = UIDevice.current.name
-        #else
-        deviceName = Host.current().localizedName ?? ""
-        #endif
     }
 
     var path: String {
