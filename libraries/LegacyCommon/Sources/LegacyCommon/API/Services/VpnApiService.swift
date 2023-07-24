@@ -66,10 +66,15 @@ public class VpnApiService {
 
     public func vpnProperties(isDisconnected: Bool,
                               lastKnownLocation: UserLocation?,
+                              serversAccordingToTier: Bool,
                               completion: @MainActor @escaping (Result<VpnProperties, Error>) -> Void) {
         Task {
             do {
-                let prop = try await vpnProperties(isDisconnected: isDisconnected, lastKnownLocation: lastKnownLocation)
+                let prop = try await vpnProperties(
+                    isDisconnected: isDisconnected,
+                    lastKnownLocation: lastKnownLocation,
+                    serversAccordingToTier: serversAccordingToTier
+                )
                 await completion(.success(prop))
             } catch {
                 await completion(.failure(error))
@@ -77,7 +82,7 @@ public class VpnApiService {
         }
     }
 
-    public func vpnProperties(isDisconnected: Bool, lastKnownLocation: UserLocation?) async throws -> VpnProperties {
+    public func vpnProperties(isDisconnected: Bool, lastKnownLocation: UserLocation?, serversAccordingToTier: Bool) async throws -> VpnProperties {
 
         // Only retrieve IP address when not connected to VPN
         async let asyncLocation = (isDisconnected ? userLocation() : lastKnownLocation) ?? lastKnownLocation
@@ -86,7 +91,7 @@ public class VpnApiService {
         return await VpnProperties(
             serverModels: try serverInfo(
                 ip: asyncLocation?.ip,
-                freeTier: asyncCredentials?.maxTier == CoreAppConstants.VpnTiers.free
+                freeTier: asyncCredentials?.maxTier == CoreAppConstants.VpnTiers.free && serversAccordingToTier
             ),
             vpnCredentials: asyncCredentials,
             location: asyncLocation,

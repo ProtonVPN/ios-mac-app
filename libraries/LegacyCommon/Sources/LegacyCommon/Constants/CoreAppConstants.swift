@@ -95,7 +95,7 @@ public class CoreAppConstants {
         public static let announcementRefreshTime: TimeInterval = 3 * 60 * 60 // 3 h
 
         // P2P (need to move to LocalAgent for this)
-        static let p2pBlockedRefreshTime: TimeInterval = 90 // 90 seconds
+        public static let p2pBlockedRefreshTime: TimeInterval = 90 // 90 seconds
     }
     
     public struct Maintenance {

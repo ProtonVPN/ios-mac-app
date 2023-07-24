@@ -64,12 +64,25 @@ public class ServerStorageMock: ServerStorage {
             result[server.id] = server
         })
     }
-    
-    public func store(_ newServers: [ServerModel]) {
-        populateServers(newServers)
+
+    public func store(_ newServers: [ServerModel], shouldLeaveStaleEntry: ((ServerModel) -> Bool)?) {
+        var staleEntries = [ServerModel]()
+        if let shouldLeaveStaleEntry {
+            let newServerIds = Set(newServers.map(\.id))
+            staleEntries = servers.values.filter {
+                !newServerIds.contains($0.id) && shouldLeaveStaleEntry($0)
+            }
+
+            assert(
+                newServerIds.isDisjoint(with: staleEntries.map(\.id)),
+                "Two servers exist with same id, bad invariant"
+            )
+        }
+
+        populateServers(newServers + staleEntries)
         didStoreNewServers?(newServers)
     }
-    
+
     public func update(continuousServerProperties: ContinuousServerPropertiesDictionary) {
         var updatedServers: [ServerModel] = []
         for (serverId, properties) in continuousServerProperties {

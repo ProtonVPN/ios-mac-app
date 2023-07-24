@@ -417,7 +417,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
     func retrieveAndSetVpnProperties() {
         let expectation = XCTestExpectation(description: "Retrieves VPN properties")
 
-        container.vpnApiService.vpnProperties(isDisconnected: true, lastKnownLocation: nil) { [weak self] result in
+        container.vpnApiService.vpnProperties(isDisconnected: true, lastKnownLocation: nil, serversAccordingToTier: true) { [weak self] result in
             defer { expectation.fulfill() }
 
             guard case let .success(vpnProperties) = result else {
