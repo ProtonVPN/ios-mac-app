@@ -7,14 +7,14 @@
 //
 
 import Foundation
-import ProtonCore_Foundations
-import ProtonCore_Networking
-import ProtonCore_Services
-import ProtonCore_Authentication
-import ProtonCore_Environment
-import ProtonCore_FeatureSwitch
+import ProtonCoreFoundations
+import ProtonCoreNetworking
+import ProtonCoreServices
+import ProtonCoreAuthentication
+import ProtonCoreEnvironment
+import ProtonCoreFeatureSwitch
 #if os(iOS)
-import ProtonCore_Challenge
+import ProtonCoreChallenge
 #endif
 import GoLibs
 import VPNShared
@@ -250,7 +250,7 @@ extension CoreNetworking: APIServiceDelegate {
 
 // MARK: AuthDelegate
 extension CoreNetworking: AuthDelegate {
-    public var authSessionInvalidatedDelegateForLoginAndSignup: ProtonCore_Services.AuthSessionInvalidatedDelegate? {
+    public var authSessionInvalidatedDelegateForLoginAndSignup: ProtonCoreServices.AuthSessionInvalidatedDelegate? {
         get { self }
         set { /* intentionally ignored */ _ = newValue }
     }
@@ -308,7 +308,7 @@ extension CoreNetworking: AuthDelegate {
     public func authCredential(sessionUID: String) -> AuthCredential? {
         if let authCredentials = authKeychain.fetch() {
             // the app stores credentials in an old format for compatibility reasons, conversion is needed
-            return ProtonCore_Networking.AuthCredential(Credential(authCredentials))
+            return ProtonCoreNetworking.AuthCredential(Credential(authCredentials))
         } else if let unauthCredentials = unauthKeychain.fetch() {
             return unauthCredentials
         } else {

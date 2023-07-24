@@ -21,7 +21,7 @@
 //
 
 import UIKit
-import ProtonCore_UIFoundations
+import ProtonCoreUIFoundations
 
 class ServersHeaderView: UITableViewHeaderFooterView {
 

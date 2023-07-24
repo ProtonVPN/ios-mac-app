@@ -19,7 +19,7 @@
 import Foundation
 import UIKit
 import vpncore
-import ProtonCore_UIFoundations
+import ProtonCoreUIFoundations
 
 final class CouponViewController: UIViewController {
 

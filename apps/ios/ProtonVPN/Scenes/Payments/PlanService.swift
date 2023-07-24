@@ -20,9 +20,9 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import ProtonCore_DataModel
-import ProtonCore_Payments
-import ProtonCore_PaymentsUI
+import ProtonCoreDataModel
+import ProtonCorePayments
+import ProtonCorePaymentsUI
 import vpncore
 import UIKit
 import VPNShared

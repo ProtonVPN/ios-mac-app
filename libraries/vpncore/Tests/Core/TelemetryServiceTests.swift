@@ -18,7 +18,7 @@
 
 import Foundation
 import LocalFeatureFlags
-import ProtonCore_Networking
+import ProtonCoreNetworking
 import VPNShared
 import XCTest
 @testable import vpncore

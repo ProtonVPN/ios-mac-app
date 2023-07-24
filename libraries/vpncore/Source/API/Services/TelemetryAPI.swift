@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import ProtonCore_Utilities
+import ProtonCoreUtilities
 
 public protocol TelemetryAPI {
     func flushEvent(event: [String: Any]) async throws

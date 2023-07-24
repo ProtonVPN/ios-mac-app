@@ -22,7 +22,7 @@
 
 import UIKit
 import vpncore
-import ProtonCore_UIFoundations
+import ProtonCoreUIFoundations
 
 class TroubleshootViewController: UIViewController {
 

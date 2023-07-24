@@ -20,7 +20,7 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import ProtonCore_APIClient
+import ProtonCoreAPIClient
 import VPNShared
 
 public protocol ReportBugViewModelFactory {

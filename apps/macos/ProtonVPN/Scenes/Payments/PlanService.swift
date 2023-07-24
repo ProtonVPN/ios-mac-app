@@ -20,8 +20,8 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import ProtonCore_DataModel
-import ProtonCore_Payments
+import ProtonCoreDataModel
+import ProtonCorePayments
 import vpncore
 
 protocol PlanServiceFactory {

@@ -24,7 +24,7 @@ import UIKit
 #elseif canImport(Cocoa)
 import Cocoa
 #endif
-import ProtonCore_UIFoundations
+import ProtonCoreUIFoundations
 import VPNAppCore
 
 public class ProfileConstants {

@@ -8,8 +8,8 @@
 
 import Foundation
 import vpncore
-import ProtonCore_Networking
-import ProtonCore_Services
+import ProtonCoreNetworking
+import ProtonCoreServices
 
 // swiftlint:disable type_name
 final class macOSNetworkingDelegate: NetworkingDelegate {

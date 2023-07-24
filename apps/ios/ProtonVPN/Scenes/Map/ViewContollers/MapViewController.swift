@@ -23,7 +23,7 @@
 import CoreLocation
 import UIKit
 import vpncore
-import ProtonCore_UIFoundations
+import ProtonCoreUIFoundations
 
 final class MapViewController: UIViewController {
 

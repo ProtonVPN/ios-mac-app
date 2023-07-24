@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import ProtonCore_Payments
-import ProtonCore_PaymentsUI
+import ProtonCorePayments
+import ProtonCorePaymentsUI
 import vpncore
 import VPNShared
 

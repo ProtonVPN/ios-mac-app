@@ -23,7 +23,7 @@
 import Foundation
 import vpncore
 import UIKit
-import ProtonCore_UIFoundations
+import ProtonCoreUIFoundations
 
 extension CreateOrEditProfileViewModel {
     private var fontSize: CGFloat {

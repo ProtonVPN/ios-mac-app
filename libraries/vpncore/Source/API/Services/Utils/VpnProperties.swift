@@ -20,7 +20,7 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import ProtonCore_DataModel
+import ProtonCoreDataModel
 
 public struct VpnProperties {
     

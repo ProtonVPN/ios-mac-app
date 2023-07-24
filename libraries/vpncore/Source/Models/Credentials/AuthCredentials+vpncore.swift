@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import ProtonCore_Networking
+import ProtonCoreNetworking
 import VPNShared
 
 extension AuthCredentials {

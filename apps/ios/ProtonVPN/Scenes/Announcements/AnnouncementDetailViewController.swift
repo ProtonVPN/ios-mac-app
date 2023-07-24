@@ -24,7 +24,7 @@ import Foundation
 import UIKit
 import vpncore
 import Alamofire
-import ProtonCore_UIFoundations
+import ProtonCoreUIFoundations
 
 final class AnnouncementDetailViewController: AnnouncementViewController {
 

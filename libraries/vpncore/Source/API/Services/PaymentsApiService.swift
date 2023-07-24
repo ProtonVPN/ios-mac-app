@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import ProtonCore_Networking
+import ProtonCoreNetworking
 
 public enum PaymentsApiServiceSuccess {
     case planUpgraded

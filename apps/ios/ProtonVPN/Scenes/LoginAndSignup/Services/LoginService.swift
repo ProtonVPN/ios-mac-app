@@ -8,12 +8,12 @@
 
 import Foundation
 import vpncore
-import ProtonCore_DataModel
-import ProtonCore_Login
-import ProtonCore_LoginUI
-import ProtonCore_Networking
-import ProtonCore_Payments
-import ProtonCore_UIFoundations
+import ProtonCoreDataModel
+import ProtonCoreLogin
+import ProtonCoreLoginUI
+import ProtonCoreNetworking
+import ProtonCorePayments
+import ProtonCoreUIFoundations
 import UIKit
 import VPNShared
 

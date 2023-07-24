@@ -18,7 +18,7 @@
 
 import AppKit
 import vpncore
-import ProtonCore_UIFoundations
+import ProtonCoreUIFoundations
 
 protocol TwoFactorDelegate: WarningViewDelegate {
     func twoFactorButtonAction(code: String)

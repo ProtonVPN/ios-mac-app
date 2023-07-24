@@ -45,11 +45,6 @@
 		4C74D3292A0B9D67004F8528 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 4C74D3282A0B9D67004F8528 /* PMLogger */; };
 		4C78F5F52A6E8C0F0099DA1A /* TunnelKitOpenVPNAppExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 4C78F5F42A6E8C0F0099DA1A /* TunnelKitOpenVPNAppExtension */; };
 		4C78F5F72A6E8C380099DA1A /* TunnelKitOpenVPN in Frameworks */ = {isa = PBXBuildFile; productRef = 4C78F5F62A6E8C380099DA1A /* TunnelKitOpenVPN */; };
-		4C78F5F92A6E908D0099DA1A /* ProtonCore-PaymentsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4C78F5F82A6E908D0099DA1A /* ProtonCore-PaymentsUI */; };
-		4C78F5FB2A6E90DD0099DA1A /* ProtonCore-CoreTranslation in Frameworks */ = {isa = PBXBuildFile; productRef = 4C78F5FA2A6E90DD0099DA1A /* ProtonCore-CoreTranslation */; };
-		4C78F5FD2A6E90E40099DA1A /* ProtonCore-CryptoGoInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 4C78F5FC2A6E90E40099DA1A /* ProtonCore-CryptoGoInterface */; };
-		4C78F5FF2A6E91E00099DA1A /* ProtonCore-Log in Frameworks */ = {isa = PBXBuildFile; productRef = 4C78F5FE2A6E91E00099DA1A /* ProtonCore-Log */; };
-		4C78F6012A6E921D0099DA1A /* ProtonCore-Utilities in Frameworks */ = {isa = PBXBuildFile; productRef = 4C78F6002A6E921D0099DA1A /* ProtonCore-Utilities */; };
 		4C7D404E2A60244C00ACDBED /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 4C7D404D2A60244C00ACDBED /* Alamofire */; };
 		4C7D40562A60250300ACDBED /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 4C7D40552A60250300ACDBED /* SDWebImage */; };
 		4C7D405C2A6027C400ACDBED /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 4C7D405B2A6027C400ACDBED /* KeychainAccess */; };
@@ -62,8 +57,13 @@
 		4CB776CD2A1F5E61004CA127 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 4CB776CC2A1F5E61004CA127 /* ComposableArchitecture */; };
 		4CB776D22A1F6250004CA127 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 4CB776D12A1F6250004CA127 /* PMLogger */; };
 		4CB776D52A1F62DF004CA127 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 4CB776D42A1F62DF004CA127 /* Logging */; };
+		4CCB4C5C2A6ECCE1002D4204 /* ProtonCoreLog in Frameworks */ = {isa = PBXBuildFile; productRef = 4CCB4C5B2A6ECCE1002D4204 /* ProtonCoreLog */; };
+		4CCB4C5E2A6ED114002D4204 /* ProtonCoreUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = 4CCB4C5D2A6ED114002D4204 /* ProtonCoreUtilities */; };
+		4CCB4C602A6ED15B002D4204 /* ProtonCoreCryptoGoInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 4CCB4C5F2A6ED15B002D4204 /* ProtonCoreCryptoGoInterface */; };
+		4CCB4C622A6ED160002D4204 /* ProtonCoreCoreTranslation in Frameworks */ = {isa = PBXBuildFile; productRef = 4CCB4C612A6ED160002D4204 /* ProtonCoreCoreTranslation */; };
 		4CD1107F2A2A09410062AE13 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1107E2A2A09410062AE13 /* Logging */; };
 		4CD110812A2A095D0062AE13 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD110802A2A095D0062AE13 /* PMLogger */; };
+		4CEF8EB22A6EEA52000FBC01 /* TunnelKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4CEF8EB12A6EEA52000FBC01 /* TunnelKit */; };
 		572DD1FF28EAD6E60051DB1A /* credentials_bf22.plist in Resources */ = {isa = PBXBuildFile; fileRef = 572DD1FE28EAD6E60051DB1A /* credentials_bf22.plist */; };
 		57E3438E28E573D60012B2DF /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438D28E573D60012B2DF /* PlanTests.swift */; };
 		57E3439028E576A70012B2DF /* SubscriptionsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438F28E576A70012B2DF /* SubscriptionsRobot.swift */; };
@@ -1092,16 +1092,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADBA84D92A589F27001EF3F5 /* Theme in Frameworks */,
+				4CCB4C602A6ED15B002D4204 /* ProtonCoreCryptoGoInterface in Frameworks */,
 				F34AC17B27F439810007FF93 /* Review in Frameworks */,
 				E5A4AD2C2A3C48B400CC91D7 /* Dependencies in Frameworks */,
 				4C7D40562A60250300ACDBED /* SDWebImage in Frameworks */,
 				4C7D405C2A6027C400ACDBED /* KeychainAccess in Frameworks */,
 				D555C49F297FB961000593EF /* LocalFeatureFlags in Frameworks */,
-				4C78F5FD2A6E90E40099DA1A /* ProtonCore-CryptoGoInterface in Frameworks */,
 				4CB776CD2A1F5E61004CA127 /* ComposableArchitecture in Frameworks */,
 				4C7D404E2A60244C00ACDBED /* Alamofire in Frameworks */,
 				D5D78E5528CF60A900B2A156 /* vpncore.framework in Frameworks */,
-				4C78F5FB2A6E90DD0099DA1A /* ProtonCore-CoreTranslation in Frameworks */,
 				4CB776D22A1F6250004CA127 /* PMLogger in Frameworks */,
 				4C7D40642A60282D00ACDBED /* AlamofireImage in Frameworks */,
 				D573D114264A70980033CE19 /* UIKit.framework in Frameworks */,
@@ -1112,10 +1111,12 @@
 				F348C9D627D8E54200622584 /* Search in Frameworks */,
 				E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */,
 				4C7D40672A60289400ACDBED /* OHHTTPStubs in Frameworks */,
+				4CCB4C622A6ED160002D4204 /* ProtonCoreCoreTranslation in Frameworks */,
 				F3BC534B278598CE009E49B4 /* Onboarding in Frameworks */,
 				E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */,
 				E95C18A02A6E4D7D009F1ABB /* Ergonomics in Frameworks */,
 				ADBA84DF2A58A1A0001EF3F5 /* CasePaths in Frameworks */,
+				4CEF8EB22A6EEA52000FBC01 /* TunnelKit in Frameworks */,
 				D563A7562A5D260C00908254 /* Strings in Frameworks */,
 				4CB776D52A1F62DF004CA127 /* Logging in Frameworks */,
 			);
@@ -1139,7 +1140,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C78F5F92A6E908D0099DA1A /* ProtonCore-PaymentsUI in Frameworks */,
 				E9200ED72660CC0F00BBAB9C /* vpncore.framework in Frameworks */,
 				D555C49B297EE22D000593EF /* LocalFeatureFlags in Frameworks */,
 				D554556422805539006574F9 /* NetworkExtension.framework in Frameworks */,
@@ -1160,11 +1160,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C78F6012A6E921D0099DA1A /* ProtonCore-Utilities in Frameworks */,
+				4CCB4C5C2A6ECCE1002D4204 /* ProtonCoreLog in Frameworks */,
 				4C78F5F52A6E8C0F0099DA1A /* TunnelKitOpenVPNAppExtension in Frameworks */,
+				4CCB4C5E2A6ED114002D4204 /* ProtonCoreUtilities in Frameworks */,
 				D555C493297E7B22000593EF /* NEHelper in Frameworks */,
 				D555C495297E7B26000593EF /* PMLogger in Frameworks */,
-				4C78F5FF2A6E91E00099DA1A /* ProtonCore-Log in Frameworks */,
 				E144150422EF39F700894DD0 /* NetworkExtension.framework in Frameworks */,
 				4C78F5F72A6E8C380099DA1A /* TunnelKitOpenVPN in Frameworks */,
 				D555C497297E7B3A000593EF /* Timer in Frameworks */,
@@ -2535,8 +2535,9 @@
 				4C7D40632A60282D00ACDBED /* AlamofireImage */,
 				4C7D40662A60289400ACDBED /* OHHTTPStubs */,
 				4C7D40732A60297400ACDBED /* Reachability */,
-				4C78F5FA2A6E90DD0099DA1A /* ProtonCore-CoreTranslation */,
-				4C78F5FC2A6E90E40099DA1A /* ProtonCore-CryptoGoInterface */,
+				4CCB4C5F2A6ED15B002D4204 /* ProtonCoreCryptoGoInterface */,
+				4CCB4C612A6ED160002D4204 /* ProtonCoreCoreTranslation */,
+				4CEF8EB12A6EEA52000FBC01 /* TunnelKit */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -2586,7 +2587,6 @@
 			name = "Siri Shortcut Handler";
 			packageProductDependencies = (
 				D555C49A297EE22D000593EF /* LocalFeatureFlags */,
-				4C78F5F82A6E908D0099DA1A /* ProtonCore-PaymentsUI */,
 			);
 			productName = "Siri Shortcut Handler";
 			productReference = D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */;
@@ -2637,8 +2637,8 @@
 				D555C496297E7B3A000593EF /* Timer */,
 				4C78F5F42A6E8C0F0099DA1A /* TunnelKitOpenVPNAppExtension */,
 				4C78F5F62A6E8C380099DA1A /* TunnelKitOpenVPN */,
-				4C78F5FE2A6E91E00099DA1A /* ProtonCore-Log */,
-				4C78F6002A6E921D0099DA1A /* ProtonCore-Utilities */,
+				4CCB4C5B2A6ECCE1002D4204 /* ProtonCoreLog */,
+				4CCB4C5D2A6ED114002D4204 /* ProtonCoreUtilities */,
 			);
 			productName = "OpenVPN Extension";
 			productReference = E14414F722EF38ED00894DD0 /* OpenVPN Extension.appex */;
@@ -4904,26 +4904,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = TunnelKitOpenVPN;
 		};
-		4C78F5F82A6E908D0099DA1A /* ProtonCore-PaymentsUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "ProtonCore-PaymentsUI";
-		};
-		4C78F5FA2A6E90DD0099DA1A /* ProtonCore-CoreTranslation */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "ProtonCore-CoreTranslation";
-		};
-		4C78F5FC2A6E90E40099DA1A /* ProtonCore-CryptoGoInterface */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "ProtonCore-CryptoGoInterface";
-		};
-		4C78F5FE2A6E91E00099DA1A /* ProtonCore-Log */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "ProtonCore-Log";
-		};
-		4C78F6002A6E921D0099DA1A /* ProtonCore-Utilities */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "ProtonCore-Utilities";
-		};
 		4C7D404D2A60244C00ACDBED /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4C7D404C2A60244C00ACDBED /* XCRemoteSwiftPackageReference "Alamofire" */;
@@ -4983,6 +4963,22 @@
 			package = 4CB776D32A1F62DF004CA127 /* XCRemoteSwiftPackageReference "swift-log" */;
 			productName = Logging;
 		};
+		4CCB4C5B2A6ECCE1002D4204 /* ProtonCoreLog */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCoreLog;
+		};
+		4CCB4C5D2A6ED114002D4204 /* ProtonCoreUtilities */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCoreUtilities;
+		};
+		4CCB4C5F2A6ED15B002D4204 /* ProtonCoreCryptoGoInterface */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCoreCryptoGoInterface;
+		};
+		4CCB4C612A6ED160002D4204 /* ProtonCoreCoreTranslation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCoreCoreTranslation;
+		};
 		4CD1107E2A2A09410062AE13 /* Logging */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4CB776D32A1F62DF004CA127 /* XCRemoteSwiftPackageReference "swift-log" */;
@@ -4991,6 +4987,10 @@
 		4CD110802A2A095D0062AE13 /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PMLogger;
+		};
+		4CEF8EB12A6EEA52000FBC01 /* TunnelKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TunnelKit;
 		};
 		ADBA84DE2A58A1A0001EF3F5 /* CasePaths */ = {
 			isa = XCSwiftPackageProductDependency;
