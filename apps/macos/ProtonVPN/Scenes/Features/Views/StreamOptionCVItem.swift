@@ -22,6 +22,7 @@
 
 import Cocoa
 import vpncore
+import Ergonomics
 
 class StreamOptionCVItem: NSCollectionViewItem {
 
@@ -36,7 +37,9 @@ class StreamOptionCVItem: NSCollectionViewItem {
             serviceIV.isHidden = true
             serviceLbl.isHidden = false
             view.wantsLayer = true
-            view.layer?.backgroundColor = .cgColor(.background)
+            DarkAppearance {
+                view.layer?.backgroundColor = .cgColor(.background)
+            }
             
             guard let url = viewModel.url else { return }
             

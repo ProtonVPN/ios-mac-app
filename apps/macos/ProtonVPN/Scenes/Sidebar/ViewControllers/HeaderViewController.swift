@@ -24,6 +24,7 @@ import Cocoa
 import SDWebImage
 import vpncore
 import Theme
+import Ergonomics
 
 final class HeaderViewController: NSViewController {
 
@@ -86,7 +87,9 @@ final class HeaderViewController: NSViewController {
     
     private func setupPersistentView() {
         backgroundView.wantsLayer = true
-        backgroundView.layer?.backgroundColor = .cgColor(.background)
+        DarkAppearance {
+            backgroundView.layer?.backgroundColor = .cgColor(.background)
+        }
                 
         connectButton.target = self
         connectButton.action = #selector(quickConnectButtonAction)
@@ -158,7 +161,9 @@ final class HeaderViewController: NSViewController {
     fileprivate func setupBadgeView() {
         badgeView.wantsLayer = true
         badgeView.layer?.cornerRadius = 3
-        badgeView.layer?.backgroundColor = .cgColor(.background, .info)
+        DarkAppearance {
+            badgeView.layer?.backgroundColor = .cgColor(.background, .info)
+        }
         badgeView.isHidden = true
     }
 

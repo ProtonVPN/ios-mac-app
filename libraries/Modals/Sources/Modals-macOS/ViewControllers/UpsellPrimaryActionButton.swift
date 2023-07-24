@@ -18,6 +18,7 @@
 
 import Cocoa
 import Theme
+import Ergonomics
 
 final class UpsellPrimaryActionButton: HoverDetectionButton {
 
@@ -46,7 +47,9 @@ final class UpsellPrimaryActionButton: HoverDetectionButton {
     private func configureButton() {
         wantsLayer = true
         layer?.cornerRadius = 8
-        layer?.backgroundColor = isHovered ? .cgColor(.icon, [.interactive, .hovered]) : .cgColor(.icon, .interactive)
+        DarkAppearance {
+            layer?.backgroundColor = isHovered ? .cgColor(.icon, [.interactive, .hovered]) : .cgColor(.icon, .interactive)
+        }
     }
 
     private func configureTitle() {

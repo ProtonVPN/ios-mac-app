@@ -22,6 +22,7 @@
 
 import Cocoa
 import vpncore
+import Ergonomics
 
 class WarningPopupViewController: NSViewController {
 
@@ -62,7 +63,9 @@ class WarningPopupViewController: NSViewController {
     private func setupBodySection() {
         warningScrollViewContainer.isHidden = true
         bodyView.wantsLayer = true
-        bodyView.layer?.backgroundColor = .cgColor(.background, .weak)
+        DarkAppearance {
+            bodyView.layer?.backgroundColor = .cgColor(.background, .weak)
+        }
         
         warningImage.image = viewModel.image
         warningDescriptionLabel.attributedStringValue = viewModel.description.styled(alignment: .natural)
@@ -70,7 +73,9 @@ class WarningPopupViewController: NSViewController {
     
     private func setupFooterSection() {
         footerView.wantsLayer = true
-        footerView.layer?.backgroundColor = .cgColor(.background, .weak)
+        DarkAppearance {
+            footerView.layer?.backgroundColor = .cgColor(.background, .weak)
+        }
         
         cancelButton.title = LocalizedString.cancel
         cancelButton.fontSize = .paragraph

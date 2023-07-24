@@ -23,6 +23,7 @@
 import Foundation
 import Cocoa
 import vpncore
+import Ergonomics
 
 final class TroubleshootingPopup: NSViewController {
 
@@ -53,9 +54,11 @@ final class TroubleshootingPopup: NSViewController {
 
     private func setupUI() {
         view.wantsLayer = true
-        let backgroundColor: NSColor = .color(.background)
-        view.layer?.backgroundColor = backgroundColor.cgColor
-        tableView.backgroundColor = backgroundColor
+        DarkAppearance {
+            let backgroundColor: NSColor = .color(.background)
+            view.layer?.backgroundColor = backgroundColor.cgColor
+            tableView.backgroundColor = backgroundColor
+        }
     }
 
     private func setupData() {

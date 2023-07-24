@@ -21,11 +21,14 @@
 //
 
 import Cocoa
+import Ergonomics
 
 class TourDescriptionView: NSView {
     override func viewWillDraw() {
         wantsLayer = true
-        layer?.backgroundColor = .cgColor(.background, .interactive)
+        DarkAppearance {
+            layer?.backgroundColor = .cgColor(.background, .interactive)
+        }
         
         layer?.cornerRadius = 16
     }

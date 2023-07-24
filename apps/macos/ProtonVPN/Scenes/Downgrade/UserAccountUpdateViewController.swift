@@ -23,6 +23,7 @@
 import Cocoa
 import vpncore
 import Theme
+import Ergonomics
 
 class UserAccountUpdateViewController: NSViewController {
 
@@ -78,9 +79,11 @@ class UserAccountUpdateViewController: NSViewController {
         super.viewDidLoad()
         title = "Proton VPN"
         view.wantsLayer = true
-        view.layer?.backgroundColor = .cgColor(.background, .weak)
         serversView.wantsLayer = true
-        serversView.layer?.backgroundColor = .cgColor(.background, .weak)
+        DarkAppearance {
+            view.layer?.backgroundColor = .cgColor(.background, .weak)
+            serversView.layer?.backgroundColor = .cgColor(.background, .weak)
+        }
         serversView.layer?.cornerRadius = 8
 
         if alert is MaxSessionsAlert {

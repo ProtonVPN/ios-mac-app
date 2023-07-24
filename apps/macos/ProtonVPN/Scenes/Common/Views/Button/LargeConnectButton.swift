@@ -44,9 +44,11 @@ class LargeConnectButton: HoverDetectionButton {
         
         wantsLayer = true
         layer?.borderWidth = 2
-        layer?.borderColor = self.cgColor(.border)
         layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
-        layer?.backgroundColor = self.cgColor(.background)
+        DarkAppearance {
+            layer?.borderColor = self.cgColor(.border)
+            layer?.backgroundColor = self.cgColor(.background)
+        }
         
         let title: String = isConnected ? LocalizedString.disconnect : LocalizedString.quickConnect
         attributedTitle = self.style(title, font: .themeFont(.heading4))

@@ -62,7 +62,9 @@ class WelcomeViewController: NSViewController {
         super.viewDidLoad()
         
         view.wantsLayer = true
-        view.layer?.backgroundColor = .cgColor(.background, .weak)
+        DarkAppearance {
+            view.layer?.backgroundColor = .cgColor(.background, .weak)
+        }
         
         if let mapImage = mapView.image {
             mapView.image = mapImage.colored(context: .background)

@@ -23,6 +23,7 @@
 import Cocoa
 import vpncore
 import Theme
+import Ergonomics
 
 class ExpandableContentPopupViewController: NSViewController {
     
@@ -73,8 +74,10 @@ class ExpandableContentPopupViewController: NSViewController {
         expandableLbl.textColor = .color(.text, .weak)
         contentView.wantsLayer = true
         footerView.wantsLayer = true
-        contentView.layer?.backgroundColor = .cgColor(.background)
-        footerView.layer?.backgroundColor = .cgColor(.background)
+        DarkAppearance {
+            contentView.layer?.backgroundColor = .cgColor(.background)
+            footerView.layer?.backgroundColor = .cgColor(.background)
+        }
         displayMoreBtn.title = LocalizedString.moreInfo + "  "
         displayMoreBtn.target = self
         displayMoreBtn.action = #selector(expandBtnTap)

@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Ergonomics
 
 enum ExpandMapButtonState {
     case expanded
@@ -41,7 +42,9 @@ class ExpandMapButton: HoverDetectionButton {
         super.init(coder: coder)
         
         wantsLayer = true
-        layer?.backgroundColor = .cgColor(.background, .transparent)
+        DarkAppearance {
+            layer?.backgroundColor = .cgColor(.background, .transparent)
+        }
     }
     
     override func draw(_ dirtyRect: NSRect) {

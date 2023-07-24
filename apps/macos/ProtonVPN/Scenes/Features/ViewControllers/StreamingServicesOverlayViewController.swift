@@ -23,6 +23,7 @@
 import Cocoa
 import vpncore
 import Theme
+import Ergonomics
 
 class StreamingServicesOverlayViewController: NSViewController {
     @IBOutlet private weak var streamingIcon: NSImageView!
@@ -62,7 +63,9 @@ class StreamingServicesOverlayViewController: NSViewController {
         servicesCV.backgroundColors = [backgroundColor]
         dismissButton.image = AppTheme.Icon.crossSmall
         view.wantsLayer = true
-        view.layer?.backgroundColor = backgroundColor.cgColor
+        DarkAppearance {
+            view.layer?.backgroundColor = backgroundColor.cgColor
+        }
     }
     
     // MARK: - Actions

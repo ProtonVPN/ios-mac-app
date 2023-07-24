@@ -23,6 +23,7 @@
 import Cocoa
 import vpncore
 import Theme
+import Ergonomics
 
 class LoginButton: HoverDetectionButton {
     var displayTitle: String?
@@ -49,8 +50,10 @@ class LoginButton: HoverDetectionButton {
         wantsLayer = true
         layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
         layer?.borderWidth = 2
-        layer?.borderColor = self.cgColor(.border)
-        layer?.backgroundColor = self.cgColor(.background)
+        DarkAppearance {
+            layer?.borderColor = self.cgColor(.border)
+            layer?.backgroundColor = self.cgColor(.background)
+        }
         attributedTitle = self.style((displayTitle ?? LocalizedString.login), font: .themeFont(.heading4))
     }
 }

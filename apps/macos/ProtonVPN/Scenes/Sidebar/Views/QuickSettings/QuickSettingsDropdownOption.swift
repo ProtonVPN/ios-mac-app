@@ -93,8 +93,10 @@ class QuickSettingsDropdownOption: NSView {
     // MARK: - Private
 
     private func setBackground() {
-        containerView.layer?.backgroundColor = self.cgColor(.background)
-        containerView.layer?.borderColor = self.cgColor(.border)
+        DarkAppearance {
+            containerView.layer?.backgroundColor = self.cgColor(.background)
+            containerView.layer?.borderColor = self.cgColor(.border)
+        }
     }
 
     private func applyState() {

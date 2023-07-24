@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Ergonomics
 
 class ProfileSectionViewController: NSViewController {
     
@@ -52,7 +53,9 @@ class ProfileSectionViewController: NSViewController {
     
     private func setupView() {
         view.wantsLayer = true
-        view.layer?.backgroundColor = .cgColor(.background, .weak)
+        DarkAppearance {
+            view.layer?.backgroundColor = .cgColor(.background, .weak)
+        }
     }
     
     private func setupTableView() {
