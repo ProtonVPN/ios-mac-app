@@ -7,7 +7,9 @@
 //
 //  See LICENSE for up to date license information.
 
-import TunnelKit
+import TunnelKitOpenVPNAppExtension
+import TunnelKitOpenVPN
+
 import NetworkExtension
 import NEHelper
 import VPNShared
@@ -45,32 +47,39 @@ class PacketTunnelProvider: OpenVPNTunnelProvider, ExtensionAPIServiceDelegate {
         }
 
         tunnelProviderProtocol.username = nil // No need for a username inside NE
-        let providerConfig = tunnelProviderProtocol.providerConfiguration ?? [:]
+        let providerConfigDict = tunnelProviderProtocol.providerConfiguration ?? [:]
 
-        guard let ovpnConfig = try? OpenVPNTunnelProvider.Configuration.parsed(from: providerConfig) else {
+        guard let data = try? JSONSerialization.data(withJSONObject: providerConfigDict),
+              let ovpnConfig = try? JSONDecoder().decode(OpenVPN.Configuration.self, from: data) else {
             log.error("Can't parse OpenVPN config from given NETunnelProviderProtocol")
-            return super.protocolConfiguration
-        }
-
-        guard let appGroup = (try? Configuration.appGroup(from: providerConfig)) else {
-            log.error("Can't parse AppGroup from OpenVPN configuration")
             return super.protocolConfiguration
         }
 
         let backup = tunnelProviderProtocol.backupCustomSettings()
         var ovpnBuilder = ovpnConfig.builder()
-        var sessionBuilder = ovpnBuilder.sessionConfiguration.builder()
 
         // Next two sets are the essence of this method and why it exists: put key and certificate into the config
         if let keys = self.vpnAuthenticationStorage.getStoredKeys() {
-            sessionBuilder.clientKey = OpenVPN.CryptoContainer(pem: keys.privateKey.derRepresentation) // ed25519
+            ovpnBuilder.clientKey = OpenVPN.CryptoContainer(pem: keys.privateKey.derRepresentation) // ed25519
         }
         if let certificate = self.vpnAuthenticationStorage.getStoredCertificate() {
-            sessionBuilder.clientCertificate = OpenVPN.CryptoContainer(pem: certificate.certificate)
+            ovpnBuilder.clientCertificate = OpenVPN.CryptoContainer(pem: certificate.certificate)
         }
 
-        ovpnBuilder.sessionConfiguration = sessionBuilder.build()
-        tunnelProviderProtocol.providerConfiguration = ovpnBuilder.build().generatedProviderConfiguration(appGroup: appGroup)
+        do {
+            let updatedProviderConfigDict = try OpenVPN.ProviderConfiguration(
+                "ProtonVPN.OpenVPN",
+                appGroup: AppConstants.AppGroups.main,
+                configuration: ovpnBuilder.build()
+            )
+                .asTunnelProtocol(withBundleIdentifier: Bundle.main.bundleIdentifier!, extra: nil)
+                .providerConfiguration
+
+            tunnelProviderProtocol.providerConfiguration = updatedProviderConfigDict
+        } catch {
+            log.error("Couldn't update provider config: \(error)")
+        }
+
         tunnelProviderProtocol.restoreCustomSettingsFrom(backup: backup)
 
         return tunnelProviderProtocol

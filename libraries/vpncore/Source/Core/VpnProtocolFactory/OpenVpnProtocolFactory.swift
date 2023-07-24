@@ -9,8 +9,12 @@
 
 import Foundation
 import NetworkExtension
-import TunnelKit
 import VPNShared
+
+import TunnelKitCore
+import TunnelKitOpenVPNManager
+import TunnelKitOpenVPNCore
+import TunnelKitOpenVPNAppExtension
 
 public protocol OpenVpnProtocolFactoryCreator {
     func makeOpenVpnProtocolFactory() -> OpenVpnProtocolFactory
@@ -85,14 +89,13 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
     
     private let debugLogFormat = "$Dyyyy-MM-dd'T'HH:mm:ss.SSSZ$d $L protocol $N.$F:$l - $M"
     
-    private lazy var emptyTunnelConfiguration: OpenVPNTunnelProvider.Configuration = {
-        let emptyOpenVpnConfiguration = OpenVPN.ConfigurationBuilder().build()
-        var emptyTunnelBuilder = OpenVPNTunnelProvider.ConfigurationBuilder(sessionConfiguration: emptyOpenVpnConfiguration)
-        emptyTunnelBuilder.shouldDebug = true // can always be true, since this object is only used to read/delete logs, not create any
-        emptyTunnelBuilder.debugLogFormat = debugLogFormat
-        
-        return emptyTunnelBuilder.build()
+    private lazy var emptyTunnelConfiguration: OpenVPN.Configuration = {
+        OpenVPN.ConfigurationBuilder().build()
     }()
+
+    private func providerConfiguration(_ configuration: OpenVPN.Configuration) -> OpenVPN.ProviderConfiguration {
+        OpenVPN.ProviderConfiguration("ProtonVPN.OpenVPN", appGroup: appGroup, configuration: configuration)
+    }
 
     public typealias Factory = PropertiesManagerFactory &
         NETunnelProviderManagerWrapperFactory
@@ -116,8 +119,13 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
     
     public func create(_ configuration: VpnManagerConfiguration) throws -> NEVPNProtocol {
         let openVpnConfig = openVpnConfiguration(for: configuration)
-        let generator = tunnelProviderGenerator(for: openVpnConfig)
-        let neProtocol = try generator.generatedTunnelProtocol(withBundleIdentifier: bundleId, appGroup: appGroup, context: bundleId, username: configuration.username)
+        var providerConfig = providerConfiguration(openVpnConfig)
+
+        providerConfig.shouldDebug = true
+        providerConfig.debugLogFormat = debugLogFormat
+
+        let neProtocol = try providerConfig.asTunnelProtocol(withBundleIdentifier: bundleId, extra: nil)
+        neProtocol.username = configuration.username
 
         // Note: `generator.generatedTunnelProtocol` overwrites the `providerConfiguration` dictionary. This should be
         // set afterwards, since this property's storage is backed by the same dictionary.
@@ -142,14 +150,11 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
     }
     
     open func logs(completion: @escaping (String?) -> Void) {
-        logData { [appGroup, emptyTunnelConfiguration] (data) in
-            guard let data = data, let log = String(data: data, encoding: .utf8) else {
-                let log = emptyTunnelConfiguration.existingLog(in: appGroup)
-                completion(log)
-                return
-            }
-            completion(log)
+        guard let url = providerConfiguration(emptyTunnelConfiguration).urlForDebugLog else {
+            completion(nil)
+            return
         }
+        completion(try? String(contentsOf: url))
     }
     
     // MARK: - Private stuff
@@ -162,17 +167,16 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         configurationBuilder.digest = .sha512
         configurationBuilder.compressionFraming = .compress
         configurationBuilder.renegotiatesAfter = 0
-        configurationBuilder.hostname = connectionConfiguration.entryServerAddress
         configurationBuilder.checksEKU = true
         configurationBuilder.checksSANHost = true
         configurationBuilder.sanHost = connectionConfiguration.hostname
         configurationBuilder.mtu = 1250
-        
+
         let socketType = socketTypeFor(connectionConfiguration.vpnProtocol)
-        
-        configurationBuilder.endpointProtocols = connectionConfiguration.ports.map({ (port) -> EndpointProtocol in
-            return EndpointProtocol(socketType, (UInt16(port)))
-        })
+
+        configurationBuilder.remotes = connectionConfiguration.ports.map { port in
+            Endpoint(connectionConfiguration.entryServerAddress, EndpointProtocol(socketType, UInt16(port)))
+        }
         
         return configurationBuilder.build()
     }
@@ -192,38 +196,8 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         
         return socketType
     }
-    
-    private func tunnelProviderGenerator(for openVpnConfiguration: OpenVPN.Configuration) -> OpenVPNTunnelProvider.Configuration {
-        var configurationBuilder = OpenVPNTunnelProvider.ConfigurationBuilder(sessionConfiguration: openVpnConfiguration)
-        configurationBuilder.shouldDebug = true // FUTURETODO: set based on the user's preference
-        configurationBuilder.masksPrivateData = true
-        configurationBuilder.debugLogFormat = debugLogFormat
-        
-        return configurationBuilder.build()
-    }
-    
+
     private func portsConfig() -> OpenVpnConfig {
         return propertiesManager.openVpnConfig
     }
-    
-    private func logData(completion: @escaping (Data?) -> Void) {
-        guard let connection = vpnManager?.vpnConnection as? NETunnelProviderSessionWrapper else {
-            completion(nil)
-            return
-        }
-        
-        do {
-            try connection.sendProviderMessage(OpenVPNTunnelProvider.Message.requestLog.data) { (data) in
-                guard let data = data, !data.isEmpty else {
-                    completion(nil)
-                    return
-                }
-                
-                completion(data)
-            }
-        } catch {
-            completion(nil)
-        }
-    }
-    
 }

@@ -10,7 +10,6 @@
 		00812A4F085892E5DCCEE741 /* SysexGuideWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E54F86CCDE59E21DC60F9A /* SysexGuideWindowController.swift */; };
 		09A7611B37870D3AFF300CF6 /* WireguardMacProtocolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9284811B4C31B0BCAC0918BC /* WireguardMacProtocolFactory.swift */; };
 		119C351666130ADA97AB491F /* SubuserAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C9A83FB783483559C8FE68 /* SubuserAlertWindowController.swift */; };
-		1AB2B04FC95F7F16FE21C0C5 /* Pods-ProtonVPN WireGuard-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED9AB4330114A9F0C8F8B1E5 /* Pods-ProtonVPN WireGuard-metadata.plist */; };
 		3328A24484BCAA8F674140DC /* XPCConnectionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BB7FC660BD3A61E44211E /* XPCConnectionsRepository.swift */; };
 		42082651256BB78600A621EC /* NSView+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42082650256BB78600A621EC /* NSView+Children.swift */; };
 		42082671256BC3B900A621EC /* BlockableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42082670256BC3B900A621EC /* BlockableScrollView.swift */; };
@@ -53,6 +52,7 @@
 		4C0930F42A3868340069323E /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = 4C0930F32A3868340069323E /* Ergonomics */; };
 		4C54383327C3DC0600D7A88D /* ModelIDChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54383227C3DC0600D7A88D /* ModelIDChecker.swift */; };
 		4C74D32B2A0B9D7F004F8528 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 4C74D32A2A0B9D7F004F8528 /* PMLogger */; };
+		4C78F5F32A6E8BFF0099DA1A /* TunnelKitOpenVPNAppExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 4C78F5F22A6E8BFF0099DA1A /* TunnelKitOpenVPNAppExtension */; };
 		4C7CADE2280056090008778E /* (null) in Sources */ = {isa = PBXBuildFile; };
 		4C7CADE4280060C90008778E /* CGMutablePath+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CADE3280060C90008778E /* CGMutablePath+Extension.swift */; };
 		4C7CAEC128006E5C0008778E /* LoadingAnimationFrames in Resources */ = {isa = PBXBuildFile; fileRef = 4C7CAEC028006E5C0008778E /* LoadingAnimationFrames */; };
@@ -67,7 +67,6 @@
 		4C8641C627D2624400EEFB1D /* IPCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928092F26B42B63008C9F2C /* IPCHelper.swift */; };
 		4C8641C727D2624400EEFB1D /* IPCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928092F26B42B63008C9F2C /* IPCHelper.swift */; };
 		4C9754F72A60173C0035A61B /* SwiftOTP in Frameworks */ = {isa = PBXBuildFile; productRef = 4C9754F62A60173C0035A61B /* SwiftOTP */; };
-		4C9BE3AE27C77FC700F50123 /* ConnectionIntercepts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BE3AD27C77FC700F50123 /* ConnectionIntercepts.swift */; };
 		4CA7BA4F2965788B0001C7E7 /* PopUpButtonItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA7BA4E2965788B0001C7E7 /* PopUpButtonItemViewModel.swift */; };
 		4CA7BA512965E0040001C7E7 /* SecureCoreWarningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA7BA502965E0040001C7E7 /* SecureCoreWarningViewModel.swift */; };
 		4CB2A3D3289131BA002E839E /* ExtensionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2A3D2289131BA002E839E /* ExtensionInfo.swift */; };
@@ -149,7 +148,6 @@
 		D5FD4B9F264BEF4E001F26CE /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = D557D587264AC344007E4396 /* ProtonVPN_ike_root.der */; };
 		D5FD4C1F264C1E6E001F26CE /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FD4C1C264C1B30001F26CE /* vpncore.framework */; };
 		D776B15FEDF80D85F45DA922 /* Pods-ProtonVPNmacOSUITests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BCD962016C3E0EB5866A928 /* Pods-ProtonVPNmacOSUITests-metadata.plist */; };
-		D97746283DCDA99D9169BA3F /* Pods-ProtonVPN OpenVPN-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = D70C6E940EE6AF87FD04B1BA /* Pods-ProtonVPN OpenVPN-metadata.plist */; };
 		E1144E3E22E8D4770087A685 /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1144E3D22E8D4770087A685 /* ObfuscatedConstants.swift */; };
 		E1261FB9202CA45C005E9880 /* ColoredLoadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1261FB8202CA45C005E9880 /* ColoredLoadButton.swift */; };
 		E13464AB2033780300C0DB7D /* LoadCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13464AA2033780300C0DB7D /* LoadCircle.swift */; };
@@ -1421,6 +1419,7 @@
 			files = (
 				D5E02A7E2996378700362621 /* NEHelper in Frameworks */,
 				42EF09DC257A713F00E2EDCA /* NetworkExtension.framework in Frameworks */,
+				4C78F5F32A6E8BFF0099DA1A /* TunnelKitOpenVPNAppExtension in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3117,6 +3116,7 @@
 			name = "ProtonVPN OpenVPN";
 			packageProductDependencies = (
 				D5E02A7D2996378700362621 /* NEHelper */,
+				4C78F5F22A6E8BFF0099DA1A /* TunnelKitOpenVPNAppExtension */,
 			);
 			productName = "ProtonVPN OpenVPN";
 			productReference = 42EF09DB257A713F00E2EDCA /* ch.protonvpn.mac.OpenVPN-Extension.systemextension */;
@@ -3444,7 +3444,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D97746283DCDA99D9169BA3F /* Pods-ProtonVPN OpenVPN-metadata.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3497,7 +3496,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E93D023626A1C90A0098520D /* Info.plist in Resources */,
-				1AB2B04FC95F7F16FE21C0C5 /* Pods-ProtonVPN WireGuard-metadata.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5726,6 +5724,10 @@
 		4C74D32A2A0B9D7F004F8528 /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PMLogger;
+		};
+		4C78F5F22A6E8BFF0099DA1A /* TunnelKitOpenVPNAppExtension */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TunnelKitOpenVPNAppExtension;
 		};
 		4C7D40582A60251700ACDBED /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
