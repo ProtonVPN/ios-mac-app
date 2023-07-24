@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import ProtonCore_Doh
+import ProtonCoreDoh
 
 public protocol DoHVPNFactory {
     func makeDoHVPN() -> DoHVPN

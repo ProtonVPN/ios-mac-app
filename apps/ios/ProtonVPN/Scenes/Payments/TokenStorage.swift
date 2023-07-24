@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import ProtonCore_Payments
+import ProtonCorePayments
 
 final class TokenStorage: PaymentTokenStorage {
     var token: PaymentToken?

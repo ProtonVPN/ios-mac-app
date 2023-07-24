@@ -20,7 +20,7 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import ProtonCore_Networking
+import ProtonCoreNetworking
 
 public class UnauthKeychainMock: UnauthKeychainHandle {
 

@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import UIKit
-import ProtonCore_UIFoundations
+import ProtonCoreUIFoundations
 
 /// A two-line, detail accessory cell with a large image at the leading edge.
 final class ImageSubtitleTableViewCell: UITableViewCell {

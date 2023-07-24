@@ -20,7 +20,7 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import ProtonCore_Networking
+import ProtonCoreNetworking
 
 final class VPNSessionsCountRequest: Request {
     

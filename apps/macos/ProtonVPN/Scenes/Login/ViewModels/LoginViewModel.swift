@@ -23,9 +23,9 @@
 import AppKit
 import Foundation
 import vpncore
-import ProtonCore_Login
-import ProtonCore_Networking
-import ProtonCore_Authentication
+import ProtonCoreLogin
+import ProtonCoreNetworking
+import ProtonCoreAuthentication
 import VPNShared
 
 final class LoginViewModel {

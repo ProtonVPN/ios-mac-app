@@ -17,14 +17,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import fusion
-import ProtonCore_TestingToolkit
+import ProtonCoreTestingToolkit
 
 private let phoneTextFieldId = "RecoveryViewController.recoveryPhoneTextField.textField"
 private let nextButtonId = "RecoveryViewController.nextButton"
 
 class RecoveryRobot: CoreElements {
     
-    let coreRecoveryRobot = ProtonCore_TestingToolkit.RecoveryRobot()
+    let coreRecoveryRobot = ProtonCoreTestingToolkit.RecoveryRobot()
     
     func nextButtonTap<T: CoreElements>(robot _: T.Type) -> T {
         button(nextButtonId).tap()
@@ -46,7 +46,7 @@ class RecoveryRobot: CoreElements {
     
     class Verify: CoreElements {
         
-        let coreRecoveryRobot = ProtonCore_TestingToolkit.RecoveryRobot()
+        let coreRecoveryRobot = ProtonCoreTestingToolkit.RecoveryRobot()
         
         @discardableResult
         func nextButtonIsEnabled() -> RecoveryRobot {

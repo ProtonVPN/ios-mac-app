@@ -23,7 +23,7 @@
 import UIKit
 import GSMessages
 import vpncore
-import ProtonCore_UIFoundations
+import ProtonCoreUIFoundations
 import Theme
 
 protocol ProfilesViewControllerDelegate: AnyObject {

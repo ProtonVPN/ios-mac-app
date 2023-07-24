@@ -7,10 +7,10 @@
 //
 
 import Foundation
-import ProtonCore_Networking
-import ProtonCore_Services
-import ProtonCore_Authentication
-import ProtonCore_Foundations
+import ProtonCoreNetworking
+import ProtonCoreServices
+import ProtonCoreAuthentication
+import ProtonCoreFoundations
 import VPNShared
 
 public final class NetworkingMock {

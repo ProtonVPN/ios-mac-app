@@ -23,7 +23,7 @@
 import UIKit
 import vpncore
 import Search
-import ProtonCore_UIFoundations
+import ProtonCoreUIFoundations
 
 final class CountriesViewController: UIViewController {
     

@@ -18,7 +18,7 @@
 
 import Foundation
 import VPNShared
-import ProtonCore_UIFoundations
+import ProtonCoreUIFoundations
 
 extension NetShieldType {
     

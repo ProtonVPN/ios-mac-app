@@ -22,7 +22,7 @@
 
 import XCTest
 import vpncore
-import ProtonCore_UIFoundations
+import ProtonCoreUIFoundations
 import TimerMock
 import VPNShared
 import VPNSharedTesting

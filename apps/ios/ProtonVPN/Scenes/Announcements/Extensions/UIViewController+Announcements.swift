@@ -24,7 +24,7 @@ import UIKit
 import Alamofire
 import AlamofireImage
 import vpncore
-import ProtonCore_UIFoundations
+import ProtonCoreUIFoundations
 
 extension UIViewController {
 

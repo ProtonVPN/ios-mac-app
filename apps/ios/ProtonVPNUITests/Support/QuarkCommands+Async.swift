@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import ProtonCore_QuarkCommands
+import ProtonCoreQuarkCommands
 
 extension QuarkCommands {
     public static func createAsync(account: AccountAvailableForCreation, currentlyUsedHostUrl: String) async throws {

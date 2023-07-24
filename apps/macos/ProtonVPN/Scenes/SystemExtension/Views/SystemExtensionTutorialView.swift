@@ -20,7 +20,7 @@ import AppKit
 import Combine
 import SwiftUI
 import AVKit
-import ProtonCore_UIFoundations
+import ProtonCoreUIFoundations
 import vpncore
 
 struct SystemExtensionTutorialView: View {

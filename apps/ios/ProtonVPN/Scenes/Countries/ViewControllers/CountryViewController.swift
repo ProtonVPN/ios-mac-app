@@ -22,7 +22,7 @@
 
 import UIKit
 import Search
-import ProtonCore_UIFoundations
+import ProtonCoreUIFoundations
 
 final class CountryViewController: UIViewController {
 

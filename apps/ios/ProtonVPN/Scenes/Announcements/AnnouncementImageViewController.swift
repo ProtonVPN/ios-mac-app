@@ -21,7 +21,7 @@ import UIKit
 import vpncore
 import Alamofire
 import SDWebImage
-import ProtonCore_UIFoundations
+import ProtonCoreUIFoundations
 
 final class AnnouncementImageViewController: AnnouncementViewController {
 

@@ -18,7 +18,7 @@
 
 import UIKit
 import vpncore
-import ProtonCore_UIFoundations
+import ProtonCoreUIFoundations
 
 class ServersInformationViewController: UIViewController {
     static var identifier: String {

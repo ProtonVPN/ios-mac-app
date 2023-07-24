@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import ProtonCore_UIFoundations
+import ProtonCoreUIFoundations
 #if canImport(UIKit)
 import UIKit
 #elseif canImport(AppKit)

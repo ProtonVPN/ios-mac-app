@@ -19,9 +19,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
-import ProtonCore_Networking
-import ProtonCore_Authentication
-import ProtonCore_DataModel
+import ProtonCoreNetworking
+import ProtonCoreAuthentication
+import ProtonCoreDataModel
 import VPNShared
 import LocalFeatureFlags
 

@@ -21,7 +21,7 @@
 //
 import UIKit
 import vpncore
-import ProtonCore_UIFoundations
+import ProtonCoreUIFoundations
 
 class ConnectionBarViewController: UIViewController {
     

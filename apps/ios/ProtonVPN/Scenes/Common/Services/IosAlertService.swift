@@ -25,7 +25,7 @@ import vpncore
 import Modals
 import Modals_iOS
 import UIKit
-import ProtonCore_UIFoundations
+import ProtonCoreUIFoundations
 
 class IosAlertService {
         

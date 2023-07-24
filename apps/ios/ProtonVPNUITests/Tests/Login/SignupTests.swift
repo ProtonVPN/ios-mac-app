@@ -7,10 +7,10 @@
 //
 
 import fusion
-import ProtonCore_Doh
-import ProtonCore_Environment
-import ProtonCore_QuarkCommands
-import ProtonCore_TestingToolkit
+import ProtonCoreDoh
+import ProtonCoreEnvironment
+import ProtonCoreQuarkCommands
+import ProtonCoreTestingToolkit
 
 class SignupTests: ProtonVPNUITests {
     lazy var environment: Environment = {
@@ -50,7 +50,7 @@ class SignupTests: ProtonVPNUITests {
 
         SignupExternalAccountsCapability()
             .signUpWithExternalAccount(
-                signupRobot: ProtonCore_TestingToolkit.SignupRobot(),
+                signupRobot: ProtonCoreTestingToolkit.SignupRobot(),
                 userEmail: email,
                 password: password,
                 verificationCode: code,
@@ -89,7 +89,7 @@ class SignupTests: ProtonVPNUITests {
             .showSignup()
             .verify.signupScreenIsShown()
 
-        ProtonCore_TestingToolkit.SignupRobot()
+        ProtonCoreTestingToolkit.SignupRobot()
             .insertExternalEmail(name: email)
             .nextButtonTapToOwnershipHV()
             .fillInTextField(code)

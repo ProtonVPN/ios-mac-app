@@ -18,9 +18,9 @@
 
 import Foundation
 import XCTest
-import ProtonCore_TestingToolkit
-import ProtonCore_QuarkCommands
-import ProtonCore_Doh
+import ProtonCoreTestingToolkit
+import ProtonCoreQuarkCommands
+import ProtonCoreDoh
 
 class TokenRefreshTests: ProtonVPNUITests {
     

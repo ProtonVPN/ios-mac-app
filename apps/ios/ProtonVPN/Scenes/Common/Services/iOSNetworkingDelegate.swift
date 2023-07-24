@@ -9,11 +9,11 @@
 import Foundation
 import vpncore
 import GoLibs
-import ProtonCore_DataModel
-import ProtonCore_Networking
-import ProtonCore_Services
-import ProtonCore_ForceUpgrade
-import ProtonCore_HumanVerification
+import ProtonCoreDataModel
+import ProtonCoreNetworking
+import ProtonCoreServices
+import ProtonCoreForceUpgrade
+import ProtonCoreHumanVerification
 
 final class iOSNetworkingDelegate: NetworkingDelegate {
     private let forceUpgradeService: ForceUpgradeDelegate

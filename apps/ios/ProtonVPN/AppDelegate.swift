@@ -28,12 +28,12 @@ import Foundation
 import TrustKit
 
 // Core dependencies
-import ProtonCore_Services
-import ProtonCore_Log
-import ProtonCore_UIFoundations
-import ProtonCore_Environment
-import ProtonCore_FeatureSwitch
-import ProtonCore_Observability
+import ProtonCoreServices
+import ProtonCoreLog
+import ProtonCoreUIFoundations
+import ProtonCoreEnvironment
+import ProtonCoreFeatureSwitch
+import ProtonCoreObservability
 
 // Local dependencies
 import vpncore
@@ -261,7 +261,7 @@ fileprivate extension AppDelegate {
 
 extension AppDelegate {
     private func setupCoreIntegration() {
-        ProtonCore_Log.PMLog.callback = { (message, level) in
+        ProtonCoreLog.PMLog.callback = { (message, level) in
             switch level {
             case .debug, .info, .trace, .warn:
                 log.debug("\(message)", category: .core)

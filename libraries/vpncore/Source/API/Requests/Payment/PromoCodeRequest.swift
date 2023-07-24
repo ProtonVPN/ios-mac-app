@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import ProtonCore_APIClient
-import ProtonCore_Networking
+import ProtonCoreAPIClient
+import ProtonCoreNetworking
 
 final class PromoCodeRequest: Request {
     let code: String

@@ -18,7 +18,7 @@
 
 import BugReport
 import SwiftUI
-import ProtonCore_UIFoundations
+import ProtonCoreUIFoundations
 
 extension BugReport.Colors {
     public init() {

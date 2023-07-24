@@ -8,12 +8,12 @@
 
 import XCTest
 import fusion
-import ProtonCore_TestingToolkit
+import ProtonCoreTestingToolkit
 
 class LoginExtAccountTests: ProtonVPNUITests {
 
     let mainRobot = MainRobot()
-    let loginRobot = ProtonCore_TestingToolkit.LoginRobot()
+    let loginRobot = ProtonCoreTestingToolkit.LoginRobot()
     
     override func setUp() {
         launchEnvironment = "ExtAccountNotSupportedStub"
