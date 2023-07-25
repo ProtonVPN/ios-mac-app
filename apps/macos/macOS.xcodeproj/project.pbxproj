@@ -530,6 +530,7 @@
 		E5CF49512A3C603200ACE1CB /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = E5CF49502A3C603200ACE1CB /* Logging */; };
 		E5CF79CD29FBBA720072E7EC /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E57B263129C3188D00533B7C /* AVKit.framework */; };
 		E5CFAACE29E92E8300C36735 /* AppTheme+Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CFAACD29E92E8300C36735 /* AppTheme+Icons.swift */; };
+		E5DDFE192A6FE663009BE3EC /* Client.plist in Resources */ = {isa = PBXBuildFile; fileRef = EEE113251F2CF19800C8221C /* Client.plist */; };
 		E5E48CF52A4C362300B09111 /* Home-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48CF42A4C362300B09111 /* Home-macOS */; };
 		E5E48CF72A4C363700B09111 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48CF62A4C363700B09111 /* ComposableArchitecture */; };
 		E5E48CF92A4C365000B09111 /* ConnectionDetails in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48CF82A4C365000B09111 /* ConnectionDetails */; };
@@ -3254,6 +3255,7 @@
 			buildConfigurationList = E5DB889629FAB82D004D6637 /* Build configuration list for PBXNativeTarget "ProtonVPN-mac-redesign" */;
 			buildPhases = (
 				890729E89254D58347712640 /* [CP] Check Pods Manifest.lock */,
+				E5DDFE182A6FE10B009BE3EC /* Generate Obfuscated Constants */,
 				E5DB888629FAB82B004D6637 /* Sources */,
 				E5DB888729FAB82B004D6637 /* Frameworks */,
 				E5DB888829FAB82B004D6637 /* Resources */,
@@ -3551,6 +3553,7 @@
 				E5BDD80F2A67FE9C00F3BB7C /* LoadingAnimationFrames in Resources */,
 				E5BDD80C2A67FDE600F3BB7C /* TwoFactorView.xib in Resources */,
 				E5BDD80E2A67FDEC00F3BB7C /* WarningView.xib in Resources */,
+				E5DDFE192A6FE663009BE3EC /* Client.plist in Resources */,
 				E5BDD80B2A67FDD800F3BB7C /* Login.xib in Resources */,
 				E5BDD80D2A67FDE900F3BB7C /* LoadingView.xib in Resources */,
 			);
@@ -3901,6 +3904,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\necho \"sentry-cli: dSYM upload starting\"\nif which sentry-cli >/dev/null; then\nexport SENTRY_URL='https://sentry.protontech.ch/'\nexport SENTRY_ORG='sentry'\nexport SENTRY_PROJECT='macos-vpn-prod'\n# Add auth token to your env vars:\n# export SENTRY_AUTH_TOKEN=YOU_AUTH_TOKEN\nERROR=$(sentry-cli upload-dsym 2>&1 >/dev/null)\necho \"sentry-cli: dSYM upload complete\"\nif [ ! $? -eq 0 ]; then\necho \"warning: sentry-cli - $ERROR\"\nfi\nelse\necho \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\nfi\nfi\n";
+		};
+		E5DDFE182A6FE10B009BE3EC /* Generate Obfuscated Constants */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Obfuscated Constants";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd ${PROJECT_DIR}/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ..\n";
+			showEnvVarsInLog = 0;
 		};
 		E93C4F1626A1C1F30006680C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5278,13 +5301,14 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ProtonVPN-mac-redesign-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Proton Technologies AG. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 5.0.0;
+				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
@@ -5319,13 +5343,14 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ProtonVPN-mac-redesign-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Proton Technologies AG. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 5.0.0;
+				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5358,13 +5383,14 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ProtonVPN-mac-redesign-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Proton Technologies AG. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 5.0.0;
+				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
