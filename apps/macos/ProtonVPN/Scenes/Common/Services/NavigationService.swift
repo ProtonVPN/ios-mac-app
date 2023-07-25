@@ -153,11 +153,10 @@ class NavigationService {
     }
     
     private func showLogIn(initialError: String? = nil) {
+        appHasPresented = true
 #if REDESIGN
         sendAction?(.showLogin(.showError(initialError: initialError)))
-#endif
-        appHasPresented = true
-#if !REDESIGN
+#else
         let viewModel = loginViewModel()
         viewModel.initialError = initialError
         windowService.showLogin(viewModel: viewModel)
@@ -171,12 +170,10 @@ class NavigationService {
     }
     
     private func showSidebar() {
+        appHasPresented = true
 #if REDESIGN
         sendAction?(.logIn(.init()))
-#endif
-        appHasPresented = true
-
-#if !REDESIGN
+#else
         windowService.showSidebar(appStateManager: appStateManager, vpnGateway: vpnGateway)
 #endif
     }
