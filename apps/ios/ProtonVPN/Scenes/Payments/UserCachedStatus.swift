@@ -9,7 +9,7 @@
 import Foundation
 import ProtonCorePayments
 import ProtonCorePaymentsUI
-import vpncore
+import LegacyCommon
 import VPNShared
 
 final class UserCachedStatus: ServicePlanDataStorage {

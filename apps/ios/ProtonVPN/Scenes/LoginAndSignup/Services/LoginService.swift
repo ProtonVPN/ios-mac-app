@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import vpncore
+import LegacyCommon
 import ProtonCoreDataModel
 import ProtonCoreLogin
 import ProtonCoreLoginUI
@@ -137,11 +137,11 @@ final class CoreLoginService {
     }
 
     private func show(initialError: String?, withOverlayViewController: UIViewController?) {
-        #if DEBUG
-        if ProcessInfo.processInfo.environment["ExtAccountNotSupportedStub"] != nil {
-            LoginExternalAccountNotSupportedSetup.start()
-        }
-        #endif
+//        #if DEBUG
+//        if ProcessInfo.processInfo.environment["ExtAccountNotSupportedStub"] != nil {
+//            LoginExternalAccountNotSupportedSetup.start()
+//        }
+//        #endif
         
         let loginResultCompletion = { [weak self] (result: LoginAndSignupResult) -> Void in
             self?.processLoginResult(result: result)

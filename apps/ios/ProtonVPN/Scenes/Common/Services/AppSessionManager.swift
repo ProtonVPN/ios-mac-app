@@ -20,7 +20,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import vpncore
+import LegacyCommon
 import UIKit
 import Foundation
 import Search
@@ -193,7 +193,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 let models = self.serverStorage.fetch()
                 guard !models.isEmpty, // only fail if there is a major reason
                       self.propertiesManager.userLocation?.ip != nil,
-                      !(error is vpncore.KeychainError) else {
+                      !(error is LegacyCommon.KeychainError) else {
                         failure(error)
                         return
                 }
@@ -297,7 +297,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 let models = self.serverStorage.fetch()
                 guard !models.isEmpty, // only fail if there is a major reason
                       self.propertiesManager.userLocation?.ip != nil,
-                      !(error is vpncore.KeychainError) else {
+                      !(error is LegacyCommon.KeychainError) else {
                           fail(error)
                           return
                 }

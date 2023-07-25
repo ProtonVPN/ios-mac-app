@@ -4,7 +4,7 @@
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
-//  This file is part of vpncore.
+//  This file is part of LegacyCommon.
 //
 //  vpncore is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 //  GNU General Public License for more details.
 //
 //  You should have received a copy of the GNU General Public License
-//  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
+//  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
 import PMLogger

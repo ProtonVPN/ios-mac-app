@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import vpncore
+import LegacyCommon
 
 class SecureCoreWarningViewModel {
     let sessionService: SessionService

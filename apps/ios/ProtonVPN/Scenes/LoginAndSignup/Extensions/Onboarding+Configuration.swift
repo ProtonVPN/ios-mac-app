@@ -18,7 +18,7 @@
 
 import Foundation
 import Onboarding
-import vpncore
+import LegacyCommon
 
 extension Configuration {
     init(telemetryEnabled: Bool) {

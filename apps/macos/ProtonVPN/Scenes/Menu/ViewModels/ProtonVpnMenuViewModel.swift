@@ -21,7 +21,7 @@
 //
 
 import Cocoa
-import vpncore
+import LegacyCommon
 
 protocol ProtonVpnMenuViewModelFactory {
     func makeProtonVpnMenuViewModel() -> ProtonVpnMenuViewModel

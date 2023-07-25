@@ -18,7 +18,7 @@
 
 import Foundation
 import Search
-import vpncore
+import LegacyCommon
 import UIKit
 import VPNShared
 

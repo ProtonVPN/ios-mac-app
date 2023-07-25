@@ -20,8 +20,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Foundation
 import Reachability
-import vpncore
+import LegacyCommon
 import Strings
 
 enum TodayViewModelState {

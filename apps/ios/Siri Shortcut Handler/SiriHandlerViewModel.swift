@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import vpncore
+import LegacyCommon
 import Timer
 import VPNShared
 
@@ -99,6 +99,9 @@ class SiriHandlerViewModel {
          serverStorage: ServerStorage,
          availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory) {
         setUpNSCoding(withModuleName: "ProtonVPN")
+        SiriHelper.disconnectIntent = DisconnectIntent()
+        SiriHelper.quickConnectIntent = QuickConnectIntent()
+
         let sharedDefaults = UserDefaults(suiteName: AppConstants.AppGroups.main)!
         Storage.setSpecificDefaults(sharedDefaults, largeDataStorage: FileStorage.cached)
 
@@ -149,7 +152,7 @@ class SiriHandlerViewModel {
         let activity = NSUserActivity(activityType: "com.protonmail.vpn.disconnect")
         completion(DisconnectIntentResponse(code: .continueInApp, userActivity: activity))
     }
-    
+
     public func getConnectionStatus(_ completion: @escaping (GetConnectionStatusIntentResponse) -> Void) {
         let status = getConnectionStatusString(connection: vpnGateway.connection)
         let response = GetConnectionStatusIntentResponse.success(status: status)

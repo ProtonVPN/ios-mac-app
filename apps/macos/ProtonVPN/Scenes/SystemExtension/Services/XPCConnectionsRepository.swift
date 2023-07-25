@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import vpncore
+import LegacyCommon
 
 /// Central place for getting XPC connections available to the app.
 protocol XPCConnectionsRepository {

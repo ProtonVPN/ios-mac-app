@@ -18,7 +18,7 @@
 
 import Foundation
 import ProtonCoreLogin
-import vpncore
+import LegacyCommon
 import VPNShared
 
 extension AuthCredentials {

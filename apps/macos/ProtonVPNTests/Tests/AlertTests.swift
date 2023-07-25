@@ -21,7 +21,8 @@
 //
 
 import XCTest
-@testable import vpncore
+import LegacyCommon
+import LegacyCommonTestSupport
 import VPNShared
 @testable import ProtonVPN
 
@@ -92,31 +93,18 @@ class AlertTests: XCTestCase {
     
 }
 
-fileprivate class SessionServiceMock: SessionService {
-    let accountHost: URL = URL(string: "account host")!
-    var sessionCookie: HTTPCookie?
-
-    func clientSessionId(forContext context: AppContext) -> String {
-        return context.rawValue
-    }
-
-    func getSelector(clientId: String, independent: Bool, timeout: TimeInterval?) async throws -> String {
-        return CoreAppConstants.ProtonVpnLinks.accountDashboard
-    }
-}
-
-class TelemetrySettingsFactoryMock: TelemetrySettings.Factory {
-    func makeAuthKeychainHandle() -> VPNShared.AuthKeychainHandle {
+public class TelemetrySettingsFactoryMock: TelemetrySettings.Factory {
+    public func makeAuthKeychainHandle() -> VPNShared.AuthKeychainHandle {
         AuthKeychainHandleMock()
     }
 
-    func makePropertiesManager() -> vpncore.PropertiesManagerProtocol {
+    public func makePropertiesManager() -> LegacyCommon.PropertiesManagerProtocol {
         PropertiesManagerMock()
     }
 }
 
-fileprivate class TelemetrySettingsMock: TelemetrySettings {
-    init() {
+public class TelemetrySettingsMock: TelemetrySettings {
+    public init() {
         super.init(TelemetrySettingsFactoryMock())
     }
 }
@@ -183,11 +171,11 @@ fileprivate class OsxUiAlertServiceFactoryMock: OsxUiAlertService.Factory {
 }
 
 fileprivate class MacAlertServiceFactoryMock: MacAlertService.Factory {
-    func makeVpnKeychain() -> vpncore.VpnKeychainProtocol {
+    func makeVpnKeychain() -> LegacyCommon.VpnKeychainProtocol {
         return VpnKeychainMock()
     }
 
-    func makeTelemetrySettings() -> vpncore.TelemetrySettings {
+    func makeTelemetrySettings() -> LegacyCommon.TelemetrySettings {
         return telemetrySettings
     }
 

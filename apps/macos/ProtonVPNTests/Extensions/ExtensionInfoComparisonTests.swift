@@ -7,7 +7,8 @@
 //
 
 import XCTest
-@testable import vpncore
+import LegacyCommon
+import LegacyCommonTestSupport
 
 class ExtensionInfoComparisonTests: XCTestCase {
 

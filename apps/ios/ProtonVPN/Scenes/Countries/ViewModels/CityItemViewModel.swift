@@ -19,7 +19,7 @@
 import Foundation
 import UIKit
 import Search
-import vpncore
+import LegacyCommon
 import ProtonCoreUIFoundations
 import Strings
 

@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import vpncore
+import LegacyCommon
 import VPNShared
 
 class AppSessionManagerMock: AppSessionManager {

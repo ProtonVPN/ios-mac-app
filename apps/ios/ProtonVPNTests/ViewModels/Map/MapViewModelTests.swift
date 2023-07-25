@@ -21,7 +21,7 @@
 //
 
 import CoreLocation
-import vpncore
+import LegacyCommon
 import XCTest
 import TimerMock
 import VPNShared

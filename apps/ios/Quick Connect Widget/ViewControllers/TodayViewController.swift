@@ -22,9 +22,9 @@
 
 import Reachability
 import UIKit
-import vpncore
+import LegacyCommon
 import NotificationCenter
-import ProtonCore_UIFoundations
+import ProtonCoreUIFoundations
 
 final class TodayViewController: UIViewController {
     @IBOutlet private weak var connectionLabel: UILabel!

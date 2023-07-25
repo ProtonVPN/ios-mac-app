@@ -22,7 +22,7 @@
 
 import GSMessages
 import UIKit
-import vpncore
+import LegacyCommon
 
 final class StatusViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView?

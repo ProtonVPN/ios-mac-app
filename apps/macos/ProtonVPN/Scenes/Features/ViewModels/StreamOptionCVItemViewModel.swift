@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import vpncore
+import LegacyCommon
 
 protocol StreamOptionCVItemViewModelProtocol {
     var serviceName: String { get }

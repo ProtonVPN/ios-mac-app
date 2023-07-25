@@ -20,7 +20,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import vpncore
+import LegacyCommon
+import LegacyCommonTestSupport
 import XCTest
 import VPNShared
 

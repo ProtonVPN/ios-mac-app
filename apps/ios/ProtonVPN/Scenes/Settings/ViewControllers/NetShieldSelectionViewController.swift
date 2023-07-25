@@ -18,7 +18,7 @@
 
 import Foundation
 import UIKit
-import vpncore
+import LegacyCommon
 
 final class NetShieldSelectionViewController: UITableViewController {
     private let viewModel: NetShieldSelectionViewModel

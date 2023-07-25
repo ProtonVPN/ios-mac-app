@@ -21,7 +21,7 @@
 //
 
 import XCTest
-import vpncore
+import LegacyCommon
 import ProtonCoreUIFoundations
 import TimerMock
 import VPNShared

@@ -18,7 +18,7 @@
 
 import Foundation
 import AppKit
-import vpncore
+import LegacyCommon
 import Theme
 
 protocol WarningViewDelegate: class {

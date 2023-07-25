@@ -13,7 +13,7 @@ test:unit:vpncore:ios:
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_core_test
-    - scripts/print-coverage.sh fastlane/test_output/vpncore-ios.xcresult vpncore.framework
+    - scripts/print-coverage.sh fastlane/test_output/vpncore-ios.xcresult LegacyCommon.framework
     - xcrun xccov view --report --json fastlane/test_output/vpncore-ios.xcresult > coverage.json
     - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
   after_script:
@@ -36,7 +36,7 @@ test:unit:vpncore:macos:
     - macOS_vpn
   script:
     - fastlane macos_core_test
-    - scripts/print-coverage.sh fastlane/test_output/vpncore-macos.xcresult vpncore.framework
+    - scripts/print-coverage.sh fastlane/test_output/vpncore-macos.xcresult LegacyCommon.framework
     - xcrun xccov view --report --json fastlane/test_output/vpncore-macos.xcresult > coverage.json
     - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
   artifacts:

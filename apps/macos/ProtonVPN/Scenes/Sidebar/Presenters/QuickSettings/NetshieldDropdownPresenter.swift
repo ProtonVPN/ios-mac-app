@@ -22,7 +22,7 @@
 
 import Foundation
 import Modals_macOS
-import vpncore
+import LegacyCommon
 import AppKit
 import VPNShared
 import Home
@@ -77,7 +77,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         })
     }
 
-    var netShieldViewModel: NetShieldModel {
+    var netShieldViewModel: LegacyCommon.NetShieldModel {
         // Show grayed out stats if disconnected, or netshield is turned off
         let isActive = appStateManager.displayState == .connected && netShieldPropertyProvider.netShieldType == .level2
         netShieldStats.enabled = isActive

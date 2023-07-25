@@ -8,7 +8,7 @@
 //  See LICENSE for up to date license information.
 
 import UIKit
-import vpncore
+import LegacyCommon
 
 final class VpnProtocolViewController: UIViewController {
 

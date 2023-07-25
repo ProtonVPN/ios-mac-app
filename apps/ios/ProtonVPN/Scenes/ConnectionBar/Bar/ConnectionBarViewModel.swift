@@ -22,7 +22,7 @@
 
 import Foundation
 import UIKit
-import vpncore
+import LegacyCommon
 
 final class ConnectionBarViewModel {
     

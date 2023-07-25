@@ -23,7 +23,7 @@
 import Foundation
 import CoreWLAN
 import Reachability
-import vpncore
+import LegacyCommon
 
 protocol WiFiSecurityMonitorFactory {
     func makeWiFiSecurityMonitor() -> WiFiSecurityMonitor

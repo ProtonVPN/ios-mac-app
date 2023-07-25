@@ -21,7 +21,7 @@
 //
 
 import UIKit
-import vpncore
+import LegacyCommon
 
 protocol ServersFeaturesInformationViewModel {
     func titleFor( _ section: Int ) -> String

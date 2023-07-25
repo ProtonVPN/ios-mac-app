@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import UIKit
-import vpncore
+import LegacyCommon
 
 final class SettingsAccountViewController: UIViewController {
     

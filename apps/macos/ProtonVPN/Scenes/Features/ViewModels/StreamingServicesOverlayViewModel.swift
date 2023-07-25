@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import vpncore
+import LegacyCommon
 
 protocol StreamingServicesOverlayViewModelProtocol {
     var propertiesManager: PropertiesManagerProtocol { get }

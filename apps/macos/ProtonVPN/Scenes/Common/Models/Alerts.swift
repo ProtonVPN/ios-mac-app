@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import vpncore
+import LegacyCommon
 
 public class ClearApplicationDataAlert: SystemAlert {
     public var title: String? = LocalizedString.deleteApplicationDataPopupTitle

@@ -24,6 +24,9 @@
          location = "container:"
          name = "Core">
          <FileRef
+            location = "group:libraries/LegacyCommon">
+         </FileRef>
+         <FileRef
             location = "group:libraries/Ergonomics">
          </FileRef>
          <FileRef
@@ -108,9 +111,6 @@
          location = "group:sampleapps/SearchSampleApp/SearchSampleApp.xcodeproj">
       </FileRef>
    </Group>
-   <FileRef
-      location = "group:libraries/vpncore/Core.xcodeproj">
-   </FileRef>
    <FileRef
       location = "group:apps/ios/iOS.xcodeproj">
    </FileRef>

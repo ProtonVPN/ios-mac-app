@@ -21,7 +21,7 @@
 //
 
 import Cocoa
-import vpncore
+import LegacyCommon
 
 protocol OverviewItemViewModelDelegate: class {
     func showDeleteWarning(_ viewModel: WarningPopupViewModel)

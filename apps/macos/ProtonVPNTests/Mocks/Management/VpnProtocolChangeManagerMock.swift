@@ -23,7 +23,8 @@
 import Foundation
 import VPNShared
 @testable import ProtonVPN
-@testable import vpncore
+import LegacyCommon
+import LegacyCommonTestSupport
 
 class VpnProtocolChangeManagerMock: VpnProtocolChangeManager {
     var protocolChanged: ((VpnProtocol) -> Void)?

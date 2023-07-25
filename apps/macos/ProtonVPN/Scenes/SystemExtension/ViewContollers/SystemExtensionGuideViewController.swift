@@ -19,7 +19,7 @@
 import AppKit
 import Combine
 import SwiftUI
-import vpncore
+import LegacyCommon
 
 class SystemExtensionGuideViewController: NSViewController {
 

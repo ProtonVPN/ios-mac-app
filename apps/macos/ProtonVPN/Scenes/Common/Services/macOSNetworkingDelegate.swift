@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import vpncore
+import LegacyCommon
 import ProtonCoreNetworking
 import ProtonCoreServices
 

@@ -22,7 +22,7 @@
 
 import GSMessages
 import UIKit
-import vpncore
+import LegacyCommon
 
 class CreateProfileViewController: UITableViewController {
     

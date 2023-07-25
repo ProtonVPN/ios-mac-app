@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import vpncore
+import LegacyCommon
 
 final class GeneralSettingsViewModel {
     private let propertiesManager: PropertiesManagerProtocol

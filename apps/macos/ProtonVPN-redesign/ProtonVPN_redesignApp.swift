@@ -21,7 +21,7 @@ import SwiftUI
 import Theme
 import Home
 import Home_macOS
-import vpncore
+import LegacyCommon
 import Logging
 import ComposableArchitecture
 import VPNAppCore

@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import vpncore
+import LegacyCommon
 
 protocol UpdateFileSelector {
     var updateFileUrl: String { get }

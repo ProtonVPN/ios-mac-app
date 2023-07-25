@@ -22,7 +22,7 @@
 
 import Foundation
 import ServiceManagement
-import vpncore
+import LegacyCommon
 
 extension PropertiesManagerProtocol {
     var earlyAccess: Bool {

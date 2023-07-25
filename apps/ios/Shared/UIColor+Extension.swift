@@ -21,7 +21,7 @@
 //
 
 import UIKit
-import vpncore
+import LegacyCommon
 import Theme
 
 extension UIColor {

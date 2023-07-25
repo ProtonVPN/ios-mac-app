@@ -8,7 +8,7 @@
 
 import Foundation
 import NetworkExtension
-import vpncore
+import LegacyCommon
 import TunnelKit
 import LocalFeatureFlags
 import VPNShared

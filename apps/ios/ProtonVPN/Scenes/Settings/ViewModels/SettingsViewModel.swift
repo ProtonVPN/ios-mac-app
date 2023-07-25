@@ -21,7 +21,7 @@
 //
 
 import UIKit
-import vpncore
+import LegacyCommon
 import ProtonCoreUIFoundations
 import VPNShared
 import LocalFeatureFlags

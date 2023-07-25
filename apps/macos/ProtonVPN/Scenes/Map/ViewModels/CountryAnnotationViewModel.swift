@@ -22,7 +22,7 @@
 
 import Foundation
 import CoreLocation
-import vpncore
+import LegacyCommon
 import Cocoa
 import Theme
 import Strings

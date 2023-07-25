@@ -22,7 +22,7 @@
 
 import UIKit
 import ProtonCoreUIFoundations
-import vpncore
+import LegacyCommon
 
 class ServersFeaturesInformationVC: UIViewController {
 

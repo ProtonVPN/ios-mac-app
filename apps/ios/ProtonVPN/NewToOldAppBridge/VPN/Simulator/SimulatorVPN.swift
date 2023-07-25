@@ -20,7 +20,7 @@
 
 import Foundation
 import VPNAppCore
-import vpncore
+import LegacyCommon
 
 /// Allows "connecting" to VPN on a simulator by faking VPN connection status
 ///

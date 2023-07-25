@@ -23,7 +23,7 @@
 import UIKit
 import Alamofire
 import AlamofireImage
-import vpncore
+import LegacyCommon
 import ProtonCoreUIFoundations
 
 extension UIViewController {

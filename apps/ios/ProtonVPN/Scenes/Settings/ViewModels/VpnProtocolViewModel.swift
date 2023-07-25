@@ -8,7 +8,7 @@
 //  See LICENSE for up to date license information.
 
 import Foundation
-import vpncore
+import LegacyCommon
 import VPNAppCore
 
 final class VpnProtocolViewModel {

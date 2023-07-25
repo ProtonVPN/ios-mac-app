@@ -22,7 +22,7 @@
 
 import Cocoa
 import MapKit
-import vpncore
+import LegacyCommon
 import Theme
 
 private let sqrt3 = sqrt(3)

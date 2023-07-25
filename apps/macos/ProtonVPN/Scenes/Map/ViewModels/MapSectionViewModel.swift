@@ -22,7 +22,7 @@
 
 import Foundation
 import MapKit
-import vpncore
+import LegacyCommon
 
 struct AnnotationChange {
     
