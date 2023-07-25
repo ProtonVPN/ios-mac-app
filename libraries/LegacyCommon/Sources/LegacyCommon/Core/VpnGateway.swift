@@ -346,15 +346,15 @@ public class VpnGateway: VpnGatewayProtocol {
     }
     
     public func connect(with request: ConnectionRequest?) {
-        siriHelper?.donateQuickConnect() // Change to another donation when appropriate
-        propertiesManager.lastConnectionRequest = request
-
         let `protocol` = request?.connectionProtocol ?? globalConnectionProtocol
 
         if `protocol`.isDeprecated {
             showProtocolDeprecatedAlert(request: request)
             return
         }
+
+        siriHelper?.donateQuickConnect() // Change to another donation when appropriate
+        propertiesManager.lastConnectionRequest = request
         
         guard let request else {
             gatherParametersAndConnect(with: `protocol`, server: appStateManager.activeConnection()?.server, netShieldType: netShieldType, natType: natType, safeMode: safeMode)
@@ -601,7 +601,6 @@ fileprivate extension VpnGateway {
     }
 
     private func showProtocolDeprecatedAlert(request: ConnectionRequest?) {
-        stopConnecting(userInitiated: false)
         let alert = ProtocolDeprecatedAlert(enableSmartProtocolHandler: {
             if self.globalConnectionProtocol.isDeprecated {
                 log.info("Global protocol (\(self.globalConnectionProtocol)) is deprecated, updating to smart")
