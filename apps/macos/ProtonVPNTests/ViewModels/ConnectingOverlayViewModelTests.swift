@@ -22,7 +22,9 @@
 
 import XCTest
 @testable import ProtonVPN
-@testable import vpncore
+import LegacyCommon
+import LegacyCommonTestSupport
+import Strings
 
 class ConnectingOverlayViewModelTests: XCTestCase {
     

@@ -22,7 +22,7 @@
 
 import UIKit
 import CoreLocation
-import vpncore
+import LegacyCommon
 import Strings
 
 enum AnnotationViewState {

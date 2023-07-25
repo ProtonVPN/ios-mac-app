@@ -21,7 +21,7 @@
 //
 
 import Cocoa
-import vpncore
+import LegacyCommon
 import VPNShared
 
 final class SidebarViewController: NSViewController, NSWindowDelegate {

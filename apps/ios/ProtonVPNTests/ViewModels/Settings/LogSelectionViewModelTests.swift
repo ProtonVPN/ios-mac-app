@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import vpncore
+import LegacyCommon
 
 class LogSelectionViewModelTests: XCTestCase {
 

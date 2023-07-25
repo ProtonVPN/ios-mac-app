@@ -22,7 +22,7 @@
 
 import Cocoa
 import SDWebImage
-import vpncore
+import LegacyCommon
 
 final class AnnouncementFeatureView: NSView {
     @IBOutlet private weak var iconImageView: NSImageView!

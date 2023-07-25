@@ -22,7 +22,7 @@
 
 import Cocoa
 import os
-import vpncore
+import LegacyCommon
 import PMLogger
 import VPNShared
 import ComposableArchitecture

@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppKit
-import vpncore
+import LegacyCommon
 
 class LoadingView: NSView {
     @IBOutlet private weak var loadingSymbol: LoadingAnimationView!

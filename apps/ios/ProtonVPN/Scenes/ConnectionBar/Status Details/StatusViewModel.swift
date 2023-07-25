@@ -22,9 +22,9 @@
 
 import Foundation
 import GSMessages
-import vpncore
+import LegacyCommon
 import UIKit
-import ProtonCore_UIFoundations
+import ProtonCoreUIFoundations
 import VPNShared
 import LocalFeatureFlags
 import Home

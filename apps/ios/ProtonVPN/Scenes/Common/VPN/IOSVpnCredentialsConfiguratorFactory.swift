@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import vpncore
+import LegacyCommon
 import VPNShared
 
 final class IOSVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory {

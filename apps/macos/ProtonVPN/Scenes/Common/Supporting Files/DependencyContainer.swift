@@ -22,7 +22,7 @@
 
 import AppKit
 import Foundation
-import vpncore
+import LegacyCommon
 import BugReport
 import NetworkExtension
 

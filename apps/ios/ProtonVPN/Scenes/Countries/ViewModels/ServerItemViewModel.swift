@@ -21,7 +21,7 @@
 //
 
 import UIKit
-import vpncore
+import LegacyCommon
 import Search
 import ProtonCoreUIFoundations
 import AlamofireImage

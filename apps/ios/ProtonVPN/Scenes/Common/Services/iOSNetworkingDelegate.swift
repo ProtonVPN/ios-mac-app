@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import vpncore
+import LegacyCommon
 import GoLibs
 import ProtonCoreDataModel
 import ProtonCoreNetworking
@@ -26,7 +26,12 @@ final class iOSNetworkingDelegate: NetworkingDelegate {
     }
 
     func set(apiService: APIService) {
-        humanVerify = HumanCheckHelper(apiService: apiService, supportURL: getSupportURL(), clientApp: ClientApp.vpn)
+        humanVerify = HumanCheckHelper(
+            apiService: apiService,
+            supportURL: getSupportURL(),
+            inAppTheme: { .dark },
+            clientApp: ClientApp.vpn
+        )
     }
 
     func onLogout() {

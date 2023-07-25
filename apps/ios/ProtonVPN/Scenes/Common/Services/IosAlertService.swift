@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import vpncore
+import LegacyCommon
 import Modals
 import Modals_iOS
 import UIKit

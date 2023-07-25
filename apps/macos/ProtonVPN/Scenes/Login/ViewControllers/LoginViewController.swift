@@ -21,7 +21,7 @@
 //
 
 import Cocoa
-import vpncore
+import LegacyCommon
 import Foundation
 import Theme
 import Ergonomics

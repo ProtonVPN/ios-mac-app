@@ -20,19 +20,20 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Foundation
 import Intents
-import vpncore
+import LegacyCommon
 import NetworkExtension
 import VPNShared
 
-class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHandling, GetConnectionStatusIntentHandling {
+class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHandling /*, GetConnectionStatusIntentHandling */ {
     
     let siriHandlerViewModel: SiriHandlerViewModel
     
     override init() { // swiftlint:disable:this function_body_length
         let dependencyFactory = SiriIntentHandlerDependencyFactory()
         let doh = DoHVPN(apiHost: "", verifyHost: "", alternativeRouting: false, appState: .disconnected)
-        let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()),
+        let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()),
                                         appInfo: dependencyFactory.makeAppInfo(context: .siriIntentHandler),
                                         doh: doh,
                                         authKeychain: dependencyFactory.makeAuthKeychainHandle(),
@@ -117,11 +118,11 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
     func handle(intent: DisconnectIntent, completion: @escaping (DisconnectIntentResponse) -> Void) {
         siriHandlerViewModel.disconnect(completion)
     }
-    
+
     func handle(intent: GetConnectionStatusIntent, completion: @escaping (GetConnectionStatusIntentResponse) -> Void) {
         siriHandlerViewModel.getConnectionStatus(completion)
     }
-    
+
     override func handler(for intent: INIntent) -> Any {
         // This is the default implementation.  If you want different objects to handle different intents,
         // you can override this and return the handler you want for that particular intent.

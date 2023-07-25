@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import vpncore
+import LegacyCommon
 
 // Overriden to make use of XPC connection, available only on macOS.
 class OpenVpnMacProtocolFactory: OpenVpnProtocolFactory {

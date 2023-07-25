@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import vpncore
+import LegacyCommon
 
 protocol EnvironmentsViewControllerDelegate: AnyObject {
     func userDidSelectContinue()

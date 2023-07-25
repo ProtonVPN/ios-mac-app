@@ -4,7 +4,7 @@
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
-//  This file is part of vpncore.
+//  This file is part of LegacyCommon.
 //
 //  vpncore is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,13 +17,13 @@
 //  GNU General Public License for more details.
 //
 //  You should have received a copy of the GNU General Public License
-//  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
+//  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
 import ProtonCoreDataModel
 import ProtonCorePayments
 import ProtonCorePaymentsUI
-import vpncore
+import LegacyCommon
 import UIKit
 import VPNShared
 
@@ -194,7 +194,7 @@ final class CorePlanService: PlanService {
     private func createPaymentsUI(onlyPlusPlan: Bool = false) -> PaymentsUI {
         let plusPlanNames = [AccountPlan.plus, AccountPlan.vpnPlus].map({ $0.rawValue })
         let planNames = onlyPlusPlan ? ObfuscatedConstants.planNames.filter({ plusPlanNames.contains($0) }) : ObfuscatedConstants.planNames
-        return PaymentsUI(payments: payments, clientApp: ClientApp.vpn, shownPlanNames: planNames)
+        return PaymentsUI(payments: payments, clientApp: ClientApp.vpn, shownPlanNames: planNames, customization: .init(inAppTheme: { .dark }))
     }
 
     private func handlePaymentsResponse(response: PaymentsUIResultReason) {

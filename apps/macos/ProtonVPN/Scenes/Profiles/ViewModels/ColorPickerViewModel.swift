@@ -21,7 +21,7 @@
 //
 
 import Cocoa
-import vpncore
+import LegacyCommon
 
 class ColorPickerViewModel {
     private let colors: [NSColor]

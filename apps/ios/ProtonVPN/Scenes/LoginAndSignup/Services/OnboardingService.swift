@@ -19,7 +19,7 @@
 import Foundation
 import Onboarding
 import UIKit
-import vpncore
+import LegacyCommon
 import LocalFeatureFlags
 import VPNShared
 

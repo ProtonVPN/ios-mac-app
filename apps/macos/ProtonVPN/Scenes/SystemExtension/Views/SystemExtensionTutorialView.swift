@@ -21,7 +21,7 @@ import Combine
 import SwiftUI
 import AVKit
 import ProtonCoreUIFoundations
-import vpncore
+import LegacyCommon
 
 struct SystemExtensionTutorialView: View {
 

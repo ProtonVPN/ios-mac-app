@@ -36,7 +36,7 @@ import ProtonCoreFeatureSwitch
 import ProtonCoreObservability
 
 // Local dependencies
-import vpncore
+import LegacyCommon
 import Logging
 import PMLogger
 import VPNShared
@@ -70,7 +70,10 @@ extension AppDelegate: UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         setupLogsForApp()
         setupDebugHelpers()
-        
+
+        SiriHelper.quickConnectIntent = QuickConnectIntent()
+        SiriHelper.disconnectIntent = DisconnectIntent()
+
         // Force all encoded objects to be decoded and recoded using the ProtonVPN module name
         setUpNSCoding(withModuleName: "ProtonVPN")
         // Use shared defaults

@@ -22,7 +22,7 @@
 
 import UIKit
 import GSMessages
-import vpncore
+import LegacyCommon
 import ProtonCoreUIFoundations
 import Theme
 

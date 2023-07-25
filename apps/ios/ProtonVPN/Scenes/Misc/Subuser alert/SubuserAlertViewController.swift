@@ -18,7 +18,7 @@
 
 import Foundation
 import UIKit
-import vpncore
+import LegacyCommon
 
 class SubuserAlertViewController: UIViewController {
     

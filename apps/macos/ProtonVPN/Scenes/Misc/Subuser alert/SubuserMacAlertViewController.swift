@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Cocoa
-import vpncore
+import LegacyCommon
 
 final class SubuserMacAlertViewController: NSViewController {
     
@@ -71,7 +71,7 @@ final class SubuserMacAlertViewController: NSViewController {
     }
     
     private func setupViews() {
-        imageView.image = Bundle.vpnCore.image(forResource: NSImage.Name("alert-pro-account"))
+        imageView.image = Bundle.LegacyCommon.image(forResource: NSImage.Name("alert-pro-account"))
         
         assignConnectionsButton.actionType = .confirmative
         assignConnectionsButton.isEnabled = true

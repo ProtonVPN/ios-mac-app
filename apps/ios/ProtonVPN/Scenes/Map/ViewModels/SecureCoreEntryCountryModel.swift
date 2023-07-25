@@ -22,7 +22,7 @@
 
 import CoreLocation
 import UIKit
-import vpncore
+import LegacyCommon
 import Strings
 
 class SecureCoreEntryCountryModel: AnnotationViewModel, Hashable {

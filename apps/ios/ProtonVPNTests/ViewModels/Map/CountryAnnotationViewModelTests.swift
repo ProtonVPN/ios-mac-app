@@ -21,7 +21,7 @@
 //
 
 import XCTest
-import vpncore
+import LegacyCommon
 import TimerMock
 import VPNShared
 import VPNSharedTesting

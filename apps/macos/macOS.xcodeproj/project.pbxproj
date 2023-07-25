@@ -48,6 +48,7 @@
 		42EF09E1257A713F00E2EDCA /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EF09E0257A713F00E2EDCA /* main.swift */; };
 		42EF09E6257A713F00E2EDCA /* ch.protonvpn.mac.OpenVPN-Extension.systemextension in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 42EF09DB257A713F00E2EDCA /* ch.protonvpn.mac.OpenVPN-Extension.systemextension */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		42F63FE92566B66000DE60B2 /* ReconnectingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */; };
+		4C0643142A73A4B30074BB83 /* TunnelKitOpenVPNAppExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 4C0643132A73A4B30074BB83 /* TunnelKitOpenVPNAppExtension */; };
 		4C0930EC2A3863AD0069323E /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = 4C0930EB2A3863AD0069323E /* Theme */; };
 		4C0930F42A3868340069323E /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = 4C0930F32A3868340069323E /* Ergonomics */; };
 		4C54383327C3DC0600D7A88D /* ModelIDChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54383227C3DC0600D7A88D /* ModelIDChecker.swift */; };
@@ -1437,6 +1438,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E555DF772A4F194B00FD15C8 /* Dependencies in Frameworks */,
+				4C0643142A73A4B30074BB83 /* TunnelKitOpenVPNAppExtension in Frameworks */,
+				4CD1F79C2A72E57A00E8AB01 /* LegacyCommonTestSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3160,6 +3163,11 @@
 			name = ProtonVPNmacOSTests;
 			packageProductDependencies = (
 				E555DF762A4F194B00FD15C8 /* Dependencies */,
+				4CD1F7992A72E57A00E8AB01 /* LegacyCommon */,
+				4CD1F79B2A72E57A00E8AB01 /* LegacyCommonTestSupport */,
+				4CB4DFA32A73A2FE001C949D /* TunnelKit */,
+				4CB4DFA52A73A2FE001C949D /* TunnelKitOpenVPN */,
+				4C0643132A73A4B30074BB83 /* TunnelKitOpenVPNAppExtension */,
 			);
 			productName = ProtonVPNTests;
 			productReference = E15B754D20FA83CB0022C406 /* ProtonVPNmacOSTests.xctest */;
@@ -5713,6 +5721,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4C0643132A73A4B30074BB83 /* TunnelKitOpenVPNAppExtension */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TunnelKitOpenVPNAppExtension;
+		};
 		4C0930EB2A3863AD0069323E /* Theme */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Theme;

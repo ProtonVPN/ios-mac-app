@@ -17,7 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import XCTest
-import vpncore
+import LegacyCommon
+import LegacyCommonTestSupport
+
 import VPNShared
 import Dependencies
 @testable import ProtonVPN
@@ -398,7 +400,7 @@ fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     func makeVpnAuthentication() -> VpnAuthentication { VpnAuthenticationMock() }
     func makeVpnGateway() -> VpnGatewayProtocol { VpnGatewayMock() }
     func makeVpnKeychain() -> VpnKeychainProtocol { vpnKeychain }
-    func makeVpnApiService() -> vpncore.VpnApiService { vpnAPIService }
+    func makeVpnApiService() -> LegacyCommon.VpnApiService { vpnAPIService }
     func makeNetworking() -> Networking { NetworkingMock() }
 
     init(

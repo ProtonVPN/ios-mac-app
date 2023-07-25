@@ -18,7 +18,7 @@
 
 import Foundation
 import UIKit
-import vpncore
+import LegacyCommon
 import Alamofire
 import SDWebImage
 import ProtonCoreUIFoundations

@@ -21,7 +21,7 @@
 //
 
 import Cocoa
-import vpncore
+import LegacyCommon
 
 protocol ProfilesMenuViewModelFactory {
     func makeProfilesMenuViewModel() -> ProfilesMenuViewModel

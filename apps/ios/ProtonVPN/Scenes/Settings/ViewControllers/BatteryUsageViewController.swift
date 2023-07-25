@@ -21,7 +21,7 @@
 //
 
 import UIKit
-import vpncore
+import LegacyCommon
 
 class BatteryUsageViewController: UIViewController {
     

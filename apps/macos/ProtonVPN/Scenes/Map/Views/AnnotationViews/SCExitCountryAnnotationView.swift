@@ -22,7 +22,7 @@
 
 import Cocoa
 import MapKit
-import vpncore
+import LegacyCommon
 
 class SCExitCountryAnnotationView: MapAnnotationView {
     let viewModel: SCExitCountryAnnotationViewModel

@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import vpncore
+import LegacyCommon
 
 class PlanServiceMock: PlanService {
     weak var delegate: PlanServiceDelegate?

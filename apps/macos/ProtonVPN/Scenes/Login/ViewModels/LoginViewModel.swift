@@ -22,7 +22,7 @@
 
 import AppKit
 import Foundation
-import vpncore
+import LegacyCommon
 import ProtonCoreLogin
 import ProtonCoreNetworking
 import ProtonCoreAuthentication

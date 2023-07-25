@@ -9,7 +9,7 @@
 import Foundation
 import VPNShared
 
-// Important! If changing this request, don't forget there is `CertificateRequest` class that does the same request, but in vpncore.
+// Important! If changing this request, don't forget there is `CertificateRequest` class that does the same request, but in LegacyCommon.
 
 struct CertificateRefreshRequest: APIRequest {
     let endpointUrl = "vpn/v1/certificate"

@@ -20,7 +20,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import vpncore
+import LegacyCommon
 import Combine
 
 class ServerStorageArrayMock: ServerStorage {
@@ -49,5 +49,5 @@ class ServerStorageArrayMock: ServerStorage {
         1
     }
 
-    var allServersPublisher = CurrentValueSubject<[vpncore.ServerModel], Never>([])
+    var allServersPublisher = CurrentValueSubject<[LegacyCommon.ServerModel], Never>([])
 }

@@ -36,7 +36,7 @@ import ProtonCoreFeatureSwitch
 import ProtonCoreObservability
 
 // Local dependencies
-import vpncore
+import LegacyCommon
 import Logging
 import PMLogger
 import VPNShared

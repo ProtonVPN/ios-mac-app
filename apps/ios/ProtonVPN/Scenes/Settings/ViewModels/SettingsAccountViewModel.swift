@@ -20,7 +20,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import vpncore
+import LegacyCommon
 import UIKit
 import ProtonCoreAccountDeletion
 import ProtonCoreNetworking
@@ -187,15 +187,17 @@ final class SettingsAccountViewModel {
     
     private func proceedWithAccountDeletion(viewController: UIViewController) {
         let deletionService = AccountDeletionService(api: factory.makeNetworking().apiService)
-        deletionService.initiateAccountDeletionProcess(over: viewController) { [weak self] in
-            self?.controller.stopLoading()
-        } completion: { [weak self] result in
-            self?.controller.stopLoading()
-            switch result {
-            case .success: self?.handleAccountDeletionSuccess()
-            case .failure(let error): self?.handleAccountDeletionFailure(error)
+        deletionService.initiateAccountDeletionProcess(
+            over: viewController,
+            performAfterShowingAccountDeletionScreen: { [weak self] in
+                self?.controller.stopLoading()
+            }, completion: { [weak self] result in
+                self?.controller.stopLoading()
+                switch result {
+                case .success: self?.handleAccountDeletionSuccess()
+                case .failure(let error): self?.handleAccountDeletionFailure(error)
             }
-        }
+        })
     }
     
     private func handleAccountDeletionSuccess() {

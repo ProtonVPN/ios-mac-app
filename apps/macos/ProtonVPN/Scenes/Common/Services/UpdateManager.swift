@@ -22,7 +22,7 @@
 
 import Foundation
 import Sparkle
-import vpncore
+import LegacyCommon
 import Cocoa
 
 protocol UpdateManagerFactory {

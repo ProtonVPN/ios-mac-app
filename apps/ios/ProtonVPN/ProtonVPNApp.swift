@@ -23,7 +23,7 @@ import Home
 import Home_iOS
 import ConnectionDetails
 import ConnectionDetails_iOS
-import vpncore
+import LegacyCommon
 import VPNShared
 import VPNAppCore
 import Settings
