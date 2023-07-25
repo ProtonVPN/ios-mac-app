@@ -118,7 +118,9 @@ public class ServerStorageConcrete: ServerStorage {
         }
 
         let defaults = provider.getDefaults()
+
         ServerStorageConcrete.queue.async { [defaults, dataStorage, versionKey, ageKey, storageKey, storageVersion] in
+            var storedServers: [ServerModel] = []
             do {
                 let newServerIds = Set(newServers.map(\.id))
                 var staleServers = [ServerModel]()
@@ -133,11 +135,12 @@ public class ServerStorageConcrete: ServerStorage {
                     )
                 }
 
+                storedServers = newServers + staleServers
                 let age = Date().timeIntervalSince1970
-                let serversData = try JSONEncoder().encode(newServers)
+                let serversData = try JSONEncoder().encode(storedServers)
 
                 ServerStorageConcrete.age = age
-                ServerStorageConcrete.servers = newServers + staleServers
+                ServerStorageConcrete.servers = storedServers
 
                 try dataStorage.store(serversData, forKey: storageKey)
                 defaults.set(storageVersion, forKey: versionKey)
@@ -146,13 +149,13 @@ public class ServerStorageConcrete: ServerStorage {
 
                 self.allServersPublisher.send(newServers)
 
-                log.debug("Server list saved (count: \(newServers.count))", category: .app)
+                log.debug("Server list saved (count: \(storedServers.count))", category: .app)
 
             } catch {
                 log.error("Failed to save server list with error: \(error)", category: .app)
             }
 
-            DispatchQueue.main.async { NotificationCenter.default.post(name: self.contentChanged, object: newServers) }
+            DispatchQueue.main.async { NotificationCenter.default.post(name: self.contentChanged, object: storedServers) }
         }
     }
     
