@@ -22,39 +22,28 @@ import Theme
 struct OnboardingButton: View {
 
     var completion: (() -> Void)?
-    var geometry: GeometryProxy
-
-    let framePadding: CGFloat = .themeSpacing16
 
     var body: some View {
-        Spacer()
-        Button {
-            completion?()
-        } label: {
-            Text(LocalizedString.onboardingNext)
-                .foregroundColor(Color(.text, .primary))
-                .themeFont(.body1())
-                .frame(minWidth: geometry.size.width - framePadding * 2,
-                       minHeight: 48)
-                .background(RoundedRectangle(cornerRadius: .themeRadius8)
-                    .fill(Color(.background, .interactive)))
-                .contentShape(RoundedRectangle(cornerRadius: .themeRadius8))
-                .padding(.bottom)
-        }
+        HStack {
+            Spacer(minLength: .themeSpacing16)
+            Button {
+                completion?()
+            } label: {
+                Text(LocalizedString.onboardingNext)
+                    .foregroundColor(Color(.text, .primary))
+                    .themeFont(.body1())
+                    .frame(maxWidth: .infinity, minHeight: 48)
+                    .background(RoundedRectangle(cornerRadius: .themeRadius8)
+                        .fill(Color(.background, .interactive)))
 
+            }
+            Spacer(minLength: .themeSpacing16)
+        }
     }
 }
 
 struct OnboardingButton_Previews: PreviewProvider {
     static var previews: some View {
-        GeometryReader { geometry in
-            ZStack {
-                Color(.background)
-                    .ignoresSafeArea()
-                VStack() {
-                    OnboardingButton(geometry: geometry)
-                }
-            }
-        }
+        OnboardingButton()
     }
 }

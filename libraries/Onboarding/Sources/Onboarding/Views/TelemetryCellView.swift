@@ -24,8 +24,7 @@ struct TelemetryCellView: View {
     let title: String
     let description: String
 
-    @State var isOn: Bool
-    var preferenceChange: (Bool) -> Void
+    @Binding var isOn: Bool
 
     var body: some View {
         HStack(alignment: .top) {
@@ -43,18 +42,21 @@ struct TelemetryCellView: View {
 
             Toggle(isOn: $isOn, label: { })
                 .toggleStyle(SwitchToggleStyle(tint: Color(.icon, .interactive)))
-                .onChange(of: isOn, perform: preferenceChange) // Update the state of this preference
         }
         .padding()
     }
 }
 
 struct TelemetryCellView_Previews: PreviewProvider {
+    static var isOn = true
     static var previews: some View {
         TelemetryCellView(title: LocalizedString.onboardingUsageStatsTitle,
                           description: LocalizedString.onboardingUsageStatsDescription,
-                          isOn: true,
-                          preferenceChange: { _ in })
+                          isOn: .init(get: {
+            isOn
+        }, set: { newValue in
+            isOn = newValue
+        }))
         .previewLayout(.sizeThatFits)
         .background(Color(.background))
     }

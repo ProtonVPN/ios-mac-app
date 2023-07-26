@@ -21,9 +21,9 @@ import SwiftUI
 
 class TelemetryViewController: UIViewController {
 
-    var completion: (() -> Void)?
     var preferenceChangeUsageData: ((Bool) -> Void) = { _ in }
     var preferenceChangeCrashReports: ((Bool) -> Void) = { _ in }
+    var completion: (() -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,9 +31,11 @@ class TelemetryViewController: UIViewController {
         // Telemetry is off by default, crash report is on
         preferenceChangeCrashReports(true)
 
-        let telemetryView = TelemetryView(preferenceChangeUsageData: preferenceChangeUsageData,
-                                          preferenceCrashReports: preferenceChangeCrashReports,
-                                          completion: completion)
+        let telemetryView = TelemetryView() { usageData, crashReports in
+            self.preferenceChangeUsageData(usageData)
+            self.preferenceChangeCrashReports(crashReports)
+            self.completion?()
+        }
 
         let hostingController = UIHostingController(rootView: telemetryView)
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false

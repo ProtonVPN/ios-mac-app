@@ -174,7 +174,8 @@ extension OnboardingCoordinator: TourViewControllerDelegate {
         },
                       preferenceCrashReports: { crashReports in
             self.delegate?.preferenceChangeCrashReports(telemetryCrashReports: crashReports)
-        }, completion: { [weak self] in
+        },
+                      completion: { [weak self] in
             self?.showNoLogs()
         })
     }

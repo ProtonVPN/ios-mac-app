@@ -52,11 +52,11 @@ final class ViewController: UIViewController {
 
 extension ViewController: OnboardingCoordinatorDelegate {
     func preferenceChangeUsageData(telemetryUsageData: Bool) {
-
+        print("preferenceChangeUsageData(telemetryUsageData: \(telemetryUsageData))")
     }
 
     func preferenceChangeCrashReports(telemetryCrashReports: Bool) {
-
+        print("preferenceChangeCrashReports(telemetryCrashReports: \(telemetryCrashReports))")
     }
 
     func userDidRequestPlanPurchase(completion: @escaping OnboardingPlanPurchaseCompletion) {
