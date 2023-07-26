@@ -46,7 +46,7 @@ distribute:ios:testflight:alpha:
     # Otherwise allow manual release
     - when: manual
   variables:
-    CI_KEYCHAIN_NAME: "IOS_RELEASE"
+    CI_KEYCHAIN_NAME: "IOS_RELEASE_$CI_PIPELINE_ID"
   artifacts:
     name: "ios-build-nr"
     when: always
