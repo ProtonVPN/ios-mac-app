@@ -40,7 +40,12 @@ extension SecureCoreToggleHandler {
             if succeeded {
                 let newType = self.activeView == .secureCore ? ServerType.standard : .secureCore
                 self.vpnGateway.changeActiveServerType(newType)
-                self.setStateOf(type: newType)
+                // Some classes wait for `VpnGateway.activeServerTypeChanged` notification, which is
+                // posted on main queue. So to prevent race condition it's better to run `setStateOf`
+                // on the same queue.
+                DispatchQueue.main.async {
+                    self.setStateOf(type: newType)
+                }
             }
             completion(succeeded)
         }
