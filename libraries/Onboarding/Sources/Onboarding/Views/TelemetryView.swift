@@ -23,33 +23,29 @@ struct TelemetryView: View {
     @State var image = UIImage(named: "telemetry-illustration",
                                in: .module,
                                compatibleWith: nil)
+    @State var usageStatisticsOn: Bool = true
+    @State var crashReportsOn: Bool = true
 
-    var preferenceChangeUsageData: ((Bool) -> Void)
-    var preferenceCrashReports: ((Bool) -> Void)
-    var usageStatisticsOn: Bool?
-    var crashReportsOn: Bool?
-
-    var completion: (() -> Void)?
+    var completion: ((Bool, Bool) -> Void)
 
     var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                Color(.background, .strong).ignoresSafeArea()
-                VStack() {
-                    Spacer()
-                    Image(uiImage: image!)
-                    Text(LocalizedString.onboardingTelemetryTitle)
-                        .themeFont(.headline)
-                        .foregroundColor(Color(.text))
-                        .padding()
+        ZStack {
+            Color(.background, .strong).ignoresSafeArea()
+            VStack() {
+                Spacer()
+                Image(uiImage: image!)
+                Text(LocalizedString.onboardingTelemetryTitle)
+                    .themeFont(.headline)
+                    .foregroundColor(Color(.text))
+                    .padding()
 
-                    TelemetryTogglesView(preferenceChangeUsageData: preferenceChangeUsageData,
-                                         preferenceCrashReports: preferenceCrashReports,
-                                         usageStatisticsOn: usageStatisticsOn,
-                                         crashReportsOn: crashReportsOn)
-                    OnboardingButton(completion: completion,
-                                     geometry: geometry)
-                }
+                TelemetryTogglesView(usageStatisticsOn: $usageStatisticsOn,
+                                     crashReportsOn: $crashReportsOn)
+                Spacer()
+                OnboardingButton(completion: {
+                    completion(usageStatisticsOn, crashReportsOn)
+                })
+                .padding(.bottom)
             }
         }
     }
@@ -57,7 +53,8 @@ struct TelemetryView: View {
 
 struct TelemetryView_Previews: PreviewProvider {
     static var previews: some View {
-        TelemetryView(preferenceChangeUsageData: { _ in },
-                      preferenceCrashReports: { _ in })
+        TelemetryView() { _, _ in
+
+        }
     }
 }

@@ -20,26 +20,21 @@ import SwiftUI
 
 struct TelemetryTogglesView: View {
 
-    var preferenceChangeUsageData: ((Bool) -> Void) = { _ in }
-    var preferenceCrashReports: ((Bool) -> Void) = { _ in }
-
-    let usageStatisticsOn: Bool?
-    let crashReportsOn: Bool?
+    @Binding var usageStatisticsOn: Bool
+    @Binding var crashReportsOn: Bool
 
     var body: some View {
         VStack(spacing: 0) {
             VStack(spacing: 0) {
                 TelemetryCellView(title: LocalizedString.onboardingUsageStatsTitle,
                                   description: LocalizedString.onboardingUsageStatsDescription,
-                                  isOn: usageStatisticsOn ?? false,
-                                  preferenceChange: preferenceChangeUsageData)
+                                  isOn: $usageStatisticsOn)
                 Divider()
                     .background(Color(.border))
                     .padding(.leading)
                 TelemetryCellView(title: LocalizedString.onboardingCrashReportsTitle,
                                   description: LocalizedString.onboardingCrashReportsDescription,
-                                  isOn: crashReportsOn ?? true,
-                                  preferenceChange: preferenceCrashReports)
+                                  isOn: $crashReportsOn)
             }
             .background(Color(.background))
             OnboardingFooter()
@@ -48,11 +43,11 @@ struct TelemetryTogglesView: View {
 }
 
 struct TelemetryTogglesView_Previews: PreviewProvider {
+    @State static var usageStatisticsOn: Bool = true
+    @State static var crashReportsOn: Bool = true
     static var previews: some View {
-        TelemetryTogglesView(preferenceChangeUsageData: { _ in  },
-                             preferenceCrashReports: { _ in  },
-                             usageStatisticsOn: true,
-                             crashReportsOn: false)
+        TelemetryTogglesView(usageStatisticsOn: $usageStatisticsOn,
+                             crashReportsOn: $crashReportsOn)
             .previewLayout(.sizeThatFits)
     }
 }
