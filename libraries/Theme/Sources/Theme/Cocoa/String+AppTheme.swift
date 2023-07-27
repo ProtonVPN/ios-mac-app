@@ -22,13 +22,13 @@ import Foundation
 import Cocoa
 
 public extension String {
-    func styled(_ style: AppTheme.Style = .normal, context: AppTheme.Context = .text, font: NSFont = .themeFont(), hover: Bool = false, alignment: NSTextAlignment = .center, lineBreakMode: NSLineBreakMode? = nil) -> NSAttributedString {
+    func styled(_ style: AppTheme.Style = .normal, context: AppTheme.Context = .text, font: NSFont = .themeFont(), hover: Bool = false, alignment: NSTextAlignment = .center, lineBreakMode: NSLineBreakMode? = nil, textColor: NSColor? = nil) -> NSAttributedString {
         var style = style
         if hover {
             style.insert(.hovered)
         }
 
-        let color: NSColor = .color(context, style)
+        let color: NSColor = textColor ?? .color(context, style)
         let newString = NSMutableAttributedString(string: self)
         let range = (self as NSString).range(of: self)
         newString.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: range)
