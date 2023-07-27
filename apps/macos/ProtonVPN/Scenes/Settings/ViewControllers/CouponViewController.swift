@@ -19,6 +19,7 @@
 import Cocoa
 import LegacyCommon
 import Theme
+import Strings
 
 protocol CouponViewControllerDelegate: AnyObject {
     func userDidCloseCouponViewController()
@@ -73,11 +74,11 @@ final class CouponViewController: NSViewController {
         view.layer?.shadowRadius = 5
 
         tooltipTriangle.image = Asset.reverseTriangle.image.colored(context: .background)
-        applyButton.title = LocalizedString.applyCoupon
+        applyButton.title = Localizable.applyCoupon
 
         textField.textColor = .color(.text)
         textField.font = .themeFont()
-        textField.placeholderAttributedString = LocalizedString.couponCode.styled(.weak, alignment: .left)
+        textField.placeholderAttributedString = Localizable.couponCode.styled(.weak, alignment: .left)
         textField.usesSingleLineMode = true
         textField.delegate = self
         textField.focusDelegate = self

@@ -61,7 +61,7 @@ class CountryItemViewModel {
     
     var countryCode: String { countryModel.countryCode }
     var secureCoreEnabled: Bool { propertiesManager.secureCoreToggle }
-    var countryName: String { LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable }
+    var countryName: String { LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable }
 
     @ConcurrentlyReadable private var supportedServerModels = [ServerModel]()
     
@@ -74,8 +74,8 @@ class CountryItemViewModel {
     }
     
     var accessibilityLabel: String {
-        if isTierTooLow { return "\(countryName). \(LocalizedString.updateRequired)" }
-        if underMaintenance { return "\(countryName). \(LocalizedString.onMaintenance)" }
+        if isTierTooLow { return "\(countryName). \(Localizable.updateRequired)" }
+        if underMaintenance { return "\(countryName). \(Localizable.onMaintenance)" }
         return countryName
     }
     

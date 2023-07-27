@@ -24,6 +24,7 @@ import Cocoa
 import LegacyCommon
 import Theme
 import Ergonomics
+import Strings
 
 class QuickSettingsDropdownOption: NSView {
         
@@ -57,7 +58,7 @@ class QuickSettingsDropdownOption: NSView {
         setBackground()
 
         plusBox.cornerRadius = AppTheme.ButtonConstants.cornerRadius
-        plusText.stringValue = LocalizedString.plus
+        plusText.stringValue = Localizable.plus
         plusAndTitleConstraint.isActive = false
 
         optionIconIV.cell?.setAccessibilityElement(false)

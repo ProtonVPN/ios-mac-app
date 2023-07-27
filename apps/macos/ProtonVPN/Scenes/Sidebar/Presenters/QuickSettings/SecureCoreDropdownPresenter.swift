@@ -24,6 +24,7 @@ import Foundation
 import LegacyCommon
 import AppKit
 import Theme
+import Strings
 
 class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     
@@ -38,7 +39,7 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     }
     
     override var title: String! {
-        return LocalizedString.secureCore
+        return Localizable.secureCore
     }
     
     override var learnLink: String {
@@ -56,8 +57,8 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewController?.dropdownDescription.attributedStringValue = LocalizedString.quickSettingsSecureCoreDescription.styled(font: .themeFont(.small), alignment: .left)
-        viewController?.dropdownNote.attributedStringValue = LocalizedString.quickSettingsSecureCoreNote.styled(.weak, font: .themeFont(.small), alignment: .left)
+        viewController?.dropdownDescription.attributedStringValue = Localizable.quickSettingsSecureCoreDescription.styled(font: .themeFont(.small), alignment: .left)
+        viewController?.dropdownNote.attributedStringValue = Localizable.quickSettingsSecureCoreNote.styled(.weak, font: .themeFont(.small), alignment: .left)
         if propertiesManager.featureFlags.netShield {
             viewController?.arrowHorizontalConstraint.constant = -((AppConstants.Windows.sidebarWidth - 18) / 3) + 7
         } else {
@@ -69,7 +70,7 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     
     private var secureCoreOff: QuickSettingGenericOption {
         let active = !propertiesManager.secureCoreToggle
-        let text = LocalizedString.secureCore + " " + LocalizedString.switchSideButtonOff.capitalized
+        let text = Localizable.secureCore + " " + Localizable.switchSideButtonOff.capitalized
         let icon = AppTheme.Icon.lock
         return QuickSettingGenericOption(text, icon: icon, active: active, requiresUpdate: requiresUpdate(secureCore: false), selectCallback: {
             self.vpnGateway.changeActiveServerType(.standard)
@@ -79,7 +80,7 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     
     private var secureCoreOn: QuickSettingGenericOption {
         let active = propertiesManager.secureCoreToggle
-        let text = LocalizedString.secureCore + " " + LocalizedString.switchSideButtonOn.capitalized
+        let text = Localizable.secureCore + " " + Localizable.switchSideButtonOn.capitalized
         let icon = AppTheme.Icon.locks
         return QuickSettingGenericOption(text, icon: icon, active: active, requiresUpdate: requiresUpdate(secureCore: true), selectCallback: {
             guard !self.requiresUpdate(secureCore: true) else {

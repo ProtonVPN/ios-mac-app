@@ -23,6 +23,7 @@
 import Foundation
 import LegacyCommon
 import AppKit
+import Strings
 
 class WindowMenuController: NSObject {
     
@@ -36,8 +37,8 @@ class WindowMenuController: NSObject {
     
     // MARK: - Private functions
     private func setupPersistentView() {
-        windowMenu.title = LocalizedString.menuWindow
-        minimizeItem.title = LocalizedString.menuMinimize
+        windowMenu.title = Localizable.menuWindow
+        minimizeItem.title = Localizable.menuMinimize
     }
     
 }

@@ -22,6 +22,7 @@
 
 import Cocoa
 import LegacyCommon
+import Strings
 
 class HelpPopoverViewController: NSViewController {
 
@@ -45,10 +46,10 @@ class HelpPopoverViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        resetButton.title = LocalizedString.resetPassword
-        forgotButton.title = LocalizedString.forgotUsername
-        commonIssuesButton.title = LocalizedString.commonIssues
-        reportBugButton.title = LocalizedString.reportBug
+        resetButton.title = Localizable.resetPassword
+        forgotButton.title = Localizable.forgotUsername
+        commonIssuesButton.title = Localizable.commonIssues
+        reportBugButton.title = Localizable.reportBug
     }
     
     @IBAction func resetAction(_ sender: Any) {

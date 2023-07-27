@@ -22,6 +22,7 @@
 
 import Cocoa
 import LegacyCommon
+import Strings
 
 enum SidebarTab {
     case countries
@@ -57,11 +58,11 @@ class SidebarTabBarViewController: NSViewController {
     }
     
     private func setupButtons() {
-        countriesButton.title = LocalizedString.countries
+        countriesButton.title = Localizable.countries
         countriesButton.target = self
         countriesButton.action = #selector(countriesTabAction(_:))
         
-        profilesButton.title = LocalizedString.profiles
+        profilesButton.title = Localizable.profiles
         profilesButton.target = self
         profilesButton.action = #selector(profilesTabAction(_:))
         

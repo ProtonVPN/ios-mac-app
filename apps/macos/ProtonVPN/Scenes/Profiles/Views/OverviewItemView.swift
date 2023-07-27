@@ -22,6 +22,7 @@
 
 import Cocoa
 import LegacyCommon
+import Strings
 
 class OverviewItemView: NSTableRowView {
     
@@ -39,16 +40,16 @@ class OverviewItemView: NSTableRowView {
     fileprivate var viewModel: OverviewItemViewModel!
 
     private lazy var accessibilityConnectAction: NSAccessibilityCustomAction = {
-        let connectActionName = viewModel.isUsersTierTooLow ? LocalizedString.upgrade : LocalizedString.connect
+        let connectActionName = viewModel.isUsersTierTooLow ? Localizable.upgrade : Localizable.connect
         return NSAccessibilityCustomAction(name: connectActionName, target: self, selector: #selector(connectButtonAction(_:)))
     }()
 
     private lazy var accessibilityEditAction: NSAccessibilityCustomAction = {
-        NSAccessibilityCustomAction(name: LocalizedString.edit, target: self, selector: #selector(editButtonAction(_:)))
+        NSAccessibilityCustomAction(name: Localizable.edit, target: self, selector: #selector(editButtonAction(_:)))
     }()
 
     private lazy var accessibilityDeleteAction: NSAccessibilityCustomAction = {
-        NSAccessibilityCustomAction(name: LocalizedString.delete, target: self, selector: #selector(deleteButtonAction(_:)))
+        NSAccessibilityCustomAction(name: Localizable.delete, target: self, selector: #selector(deleteButtonAction(_:)))
     }()
     
     func updateView(withModel viewModel: OverviewItemViewModel) {

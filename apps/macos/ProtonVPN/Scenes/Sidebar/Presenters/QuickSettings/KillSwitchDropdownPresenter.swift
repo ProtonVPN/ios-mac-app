@@ -24,6 +24,7 @@ import Foundation
 import LegacyCommon
 import AppKit
 import Theme
+import Strings
 
 class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     
@@ -39,7 +40,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     }
     
     override var title: String! {
-        return LocalizedString.killSwitch
+        return Localizable.killSwitch
     }
     
     init( _ factory: Factory ) {
@@ -53,8 +54,8 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewController?.dropdownDescription.attributedStringValue = LocalizedString.quickSettingsKillSwitchDescription.styled(font: .themeFont(.small), alignment: .left)
-        viewController?.dropdownNote.attributedStringValue = LocalizedString.quickSettingsKillSwitchNote.styled(.weak, font: .themeFont(.small), alignment: .left)
+        viewController?.dropdownDescription.attributedStringValue = Localizable.quickSettingsKillSwitchDescription.styled(font: .themeFont(.small), alignment: .left)
+        viewController?.dropdownNote.attributedStringValue = Localizable.quickSettingsKillSwitchNote.styled(.weak, font: .themeFont(.small), alignment: .left)
         viewController?.dropdownUpgradeButton.isHidden = true
         if propertiesManager.featureFlags.netShield {
             viewController?.arrowHorizontalConstraint.constant = ((AppConstants.Windows.sidebarWidth - 18) / 3) - 7
@@ -67,7 +68,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     
     private var killSwitchOff: QuickSettingGenericOption {
         let active = propertiesManager.killSwitch
-        let text = LocalizedString.killSwitch + " " + LocalizedString.switchSideButtonOff.capitalized
+        let text = Localizable.killSwitch + " " + Localizable.switchSideButtonOff.capitalized
         let icon = AppTheme.Icon.switchOff
         return QuickSettingGenericOption(text, icon: icon, active: !active, selectCallback: {
             self.propertiesManager.killSwitch = false
@@ -80,7 +81,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     
     private var killSwitchOn: QuickSettingGenericOption {
         let active = propertiesManager.killSwitch
-        let text = LocalizedString.killSwitch + " " + LocalizedString.switchSideButtonOn.capitalized
+        let text = Localizable.killSwitch + " " + Localizable.switchSideButtonOn.capitalized
         let icon = AppTheme.Icon.switchOn
 
         let connect = {

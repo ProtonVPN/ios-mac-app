@@ -20,6 +20,7 @@ import Foundation
 import AppKit
 import LegacyCommon
 import Theme
+import Strings
 
 protocol WarningViewDelegate: class {
     func keychainHelpAction()
@@ -54,7 +55,7 @@ class WarningView: NSStackView {
         super.awakeFromNib()
         isHidden = true
 
-        helpLink.title = LocalizedString.learnMore
+        helpLink.title = Localizable.learnMore
         helpLink.isHidden = true
         helpLink.target = self
         helpLink.action = #selector(keychainHelpAction)

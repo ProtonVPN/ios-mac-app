@@ -22,6 +22,7 @@
 
 import Cocoa
 import LegacyCommon
+import Strings
 
 class AcknowledgementsWindowController: WindowController {
     
@@ -44,7 +45,7 @@ class AcknowledgementsWindowController: WindowController {
         
         window.styleMask.remove(NSWindow.StyleMask.miniaturizable)
         window.styleMask.remove(NSWindow.StyleMask.resizable)
-        window.title = LocalizedString.acknowledgements
+        window.title = Localizable.acknowledgements
         window.titlebarAppearsTransparent = true
         window.appearance = NSAppearance(named: .darkAqua)
         window.backgroundColor = .color(.background, .weak)

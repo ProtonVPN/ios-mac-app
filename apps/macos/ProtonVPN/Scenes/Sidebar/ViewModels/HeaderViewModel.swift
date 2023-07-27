@@ -24,6 +24,7 @@ import Cocoa
 import LegacyCommon
 import VPNShared
 import Theme
+import Strings
 
 protocol HeaderViewModelDelegate: class {
     func bitrateUpdated(with attributedString: NSAttributedString)
@@ -229,11 +230,11 @@ final class HeaderViewModel {
     
     private func formHeaderLabel() -> NSAttributedString {
         if !isConnected {
-            return LocalizedString.youAreNotConnected.styled(.danger, font: .themeFont(.heading4, bold: true), alignment: .left)
+            return Localizable.youAreNotConnected.styled(.danger, font: .themeFont(.heading4, bold: true), alignment: .left)
         }
         
         guard let server = appStateManager.activeConnection()?.server else {
-            return LocalizedString.noDescriptionAvailable.styled(font: .themeFont(.heading4), alignment: .left)
+            return Localizable.noDescriptionAvailable.styled(font: .themeFont(.heading4), alignment: .left)
         }
 
         let font = NSFont.themeFont(.heading4)
@@ -251,9 +252,9 @@ final class HeaderViewModel {
     }
     
     private func formIpLabel() -> NSAttributedString {
-        let ip = LocalizedString.ipValue(getCurrentIp() ?? LocalizedString.unavailable)
+        let ip = Localizable.ipValue(getCurrentIp() ?? Localizable.unavailable)
         let attributedString = NSMutableAttributedString(attributedString: ip.styled(alignment: .left))
-        let ipRange = (ip as NSString).range(of: getCurrentIp() ?? LocalizedString.unavailable)
+        let ipRange = (ip as NSString).range(of: getCurrentIp() ?? Localizable.unavailable)
         attributedString.addAttribute(.font, value: NSFont.themeFont(bold: true), range: ipRange)
         return attributedString
     }
@@ -270,7 +271,7 @@ final class HeaderViewModel {
         guard let server = appStateManager.activeConnection()?.server else {
             return nil
         }
-        return (short ? "\(server.load)%" : " \(LocalizedString.serverLoadPercentage(server.load))")
+        return (short ? "\(server.load)%" : " \(Localizable.serverLoadPercentage(server.load))")
             .styled(font: .themeFont(.small), alignment: .right)
     }
 }

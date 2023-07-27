@@ -22,6 +22,7 @@
 
 import Foundation
 import LegacyCommon
+import Strings
 
 protocol FeaturesOverlayViewModelProtocol {
     var title: String { get }
@@ -29,14 +30,14 @@ protocol FeaturesOverlayViewModelProtocol {
 }
 
 struct PremiumFeaturesOverlayViewModel: FeaturesOverlayViewModelProtocol {
-    let title: String = LocalizedString.featuresTitle
+    let title: String = Localizable.featuresTitle
     var featureViewModels: [FeatureCellViewModel] {
         [SmartRoutingFeature(), StreamingFeature(), P2PFeature(), TorFeature()]
     }
 }
 
 struct FreeFeaturesOverlayViewModel: FeaturesOverlayViewModelProtocol {
-    let title: String = LocalizedString.informationTitle
+    let title: String = Localizable.informationTitle
     let featureViewModels: [FeatureCellViewModel]
     init(featureViewModels: [FeatureCellViewModel]) {
         self.featureViewModels = featureViewModels

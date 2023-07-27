@@ -22,6 +22,7 @@
 
 import Cocoa
 import LegacyCommon
+import Strings
 
 class ProfilesMenuController: NSObject {
     
@@ -44,15 +45,15 @@ class ProfilesMenuController: NSObject {
     
     // MARK: - Private functions
     private func setupPersistentView() {
-        profilesMenu.title = LocalizedString.profiles
+        profilesMenu.title = Localizable.profiles
         profilesMenu.autoenablesItems = false
         
-        overviewItem.title = LocalizedString.overview
+        overviewItem.title = Localizable.overview
         overviewItem.isEnabled = false
         overviewItem.target = self
         overviewItem.action = #selector(overviewItemAction)
         
-        createNewProfileItem.title = LocalizedString.createNewProfile
+        createNewProfileItem.title = Localizable.createNewProfile
         createNewProfileItem.isEnabled = false
         createNewProfileItem.target = self
         createNewProfileItem.action = #selector(createNewProfileItemAction)

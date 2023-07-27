@@ -23,6 +23,7 @@
 import Cocoa
 import LegacyCommon
 import Theme
+import Strings
 
 class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
     
@@ -61,7 +62,7 @@ class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
     private func formSecondaryDescription() -> NSAttributedString {
         let description: String
         if underMaintenance {
-            description = LocalizedString.maintenance
+            description = Localizable.maintenance
         } else {
             description = ""
         }

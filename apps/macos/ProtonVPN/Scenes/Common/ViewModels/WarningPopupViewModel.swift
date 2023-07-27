@@ -23,6 +23,7 @@
 import Cocoa
 import LegacyCommon
 import Theme
+import Strings
 
 class WarningPopupViewModel {
     
@@ -43,9 +44,9 @@ class WarningPopupViewModel {
          linkDescription: String?,
          url: String?,
          onConfirm: @escaping () -> Void,
-         confirmTitle: String = LocalizedString.ok,
+         confirmTitle: String = Localizable.ok,
          onCancel: (() -> Void)?,
-         cancelTitle: String = LocalizedString.cancel) {
+         cancelTitle: String = Localizable.cancel) {
         self.image = image
         self.title = title
         self.description = description

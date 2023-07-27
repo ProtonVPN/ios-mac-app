@@ -24,6 +24,7 @@ import Cocoa
 import LegacyCommon
 import Theme
 import Ergonomics
+import Strings
 
 class LargeConnectButton: HoverDetectionButton {
     
@@ -50,7 +51,7 @@ class LargeConnectButton: HoverDetectionButton {
             layer?.backgroundColor = self.cgColor(.background)
         }
         
-        let title: String = isConnected ? LocalizedString.disconnect : LocalizedString.quickConnect
+        let title: String = isConnected ? Localizable.disconnect : Localizable.quickConnect
         attributedTitle = self.style(title, font: .themeFont(.heading4))
     }
 }

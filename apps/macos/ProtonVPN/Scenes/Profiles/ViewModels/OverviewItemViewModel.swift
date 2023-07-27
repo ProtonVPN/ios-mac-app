@@ -22,6 +22,7 @@
 
 import Cocoa
 import LegacyCommon
+import Strings
 
 protocol OverviewItemViewModelDelegate: class {
     func showDeleteWarning(_ viewModel: WarningPopupViewModel)
@@ -93,7 +94,7 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
     func deleteAction() {
         guard let delegate = delegate else { return }
         
-        let warningViewModel = WarningPopupViewModel(title: LocalizedString.deleteProfileHeader, description: LocalizedString.deleteProfileWarning) { [weak self] in
+        let warningViewModel = WarningPopupViewModel(title: Localizable.deleteProfileHeader, description: Localizable.deleteProfileWarning) { [weak self] in
             guard let self = self else {
                 return
             }
@@ -105,9 +106,9 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
     
     private func formConnectButtonTitle() -> String {
         if underMaintenance {
-            return LocalizedString.maintenance
+            return Localizable.maintenance
         } else {
-            return LocalizedString.connect
+            return Localizable.connect
         }
     }
 }

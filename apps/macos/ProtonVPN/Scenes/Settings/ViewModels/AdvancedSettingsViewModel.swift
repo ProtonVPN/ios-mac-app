@@ -19,6 +19,7 @@
 import LegacyCommon
 import VPNShared
 import LocalFeatureFlags
+import Strings
 
 final class AdvancedSettingsViewModel {
     typealias Factory = PropertiesManagerFactory
@@ -117,7 +118,7 @@ final class AdvancedSettingsViewModel {
                 self?.natTypePropertyProvider.natType = natType
                 completion(true)
             case .withReconnect:
-                self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.moderateNatTitle, confirmHandler: { [weak self] in
+                self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.moderateNatTitle, confirmHandler: { [weak self] in
                     self?.natTypePropertyProvider.natType = natType
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "natType"])
                     self?.vpnGateway.retryConnection()
@@ -147,7 +148,7 @@ final class AdvancedSettingsViewModel {
                 self?.safeModePropertyProvider.safeMode = safeMode
                 completion(true)
             case .withReconnect:
-                self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.nonStandardPortsTitle, confirmHandler: { [weak self] in
+                self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.nonStandardPortsTitle, confirmHandler: { [weak self] in
                     self?.safeModePropertyProvider.safeMode = safeMode
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "safeMode"])
                     self?.vpnGateway.retryConnection()

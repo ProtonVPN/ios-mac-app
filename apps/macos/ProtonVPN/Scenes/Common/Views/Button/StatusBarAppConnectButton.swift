@@ -24,6 +24,7 @@ import Cocoa
 import LegacyCommon
 import Theme
 import Ergonomics
+import Strings
 
 class LargeDropdownButton: HoverDetectionButton {
     
@@ -78,7 +79,7 @@ class StatusBarAppConnectButton: LargeDropdownButton {
         context.addPath(path)
         context.drawPath(using: .fillStroke)
 
-        let buttonTitle = self.style(isConnected ? LocalizedString.disconnect : LocalizedString.quickConnect)
+        let buttonTitle = self.style(isConnected ? Localizable.disconnect : Localizable.quickConnect)
         let textHeight = buttonTitle.size().height
         buttonTitle.draw(in: CGRect(x: bounds.height/2, y: (bounds.height - textHeight) / 2, width: bounds.width - bounds.height/2, height: textHeight))
     }

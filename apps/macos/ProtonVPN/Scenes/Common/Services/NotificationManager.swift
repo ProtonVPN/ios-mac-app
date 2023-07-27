@@ -23,6 +23,7 @@
 import LegacyCommon
 import Foundation
 import VPNShared
+import Strings
 
 class NotificationManager: NSObject, NotificationManagerProtocol {
     
@@ -69,7 +70,7 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
     
     private func connectedNotification(for server: ServerModel) -> NSUserNotification {
         let notification = NSUserNotification()
-        notification.title = "Proton VPN " + LocalizedString.connected
+        notification.title = "Proton VPN " + Localizable.connected
         notification.subtitle = connectSubtitle(forServer: server)
         notification.informativeText = connectInformativeText(forServer: server)
         notification.hasActionButton = false
@@ -85,7 +86,7 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
     }
     
     private func connectInformativeText(forServer server: ServerModel) -> String {
-        return LocalizedString.ipValue(appStateManager.activeConnection()?.serverIp.exitIp ?? LocalizedString.unavailable)
+        return Localizable.ipValue(appStateManager.activeConnection()?.serverIp.exitIp ?? Localizable.unavailable)
     }
     
     private func fire(_ notification: NSUserNotification) {
@@ -107,9 +108,9 @@ extension NotificationManager: NSUserNotificationCenterDelegate {
 extension NotificationManager {
     func displayServerGoingOnMaintenance() {
         let notification = NSUserNotification()
-        notification.title = LocalizedString.maintenanceOnServerDetectedTitle
-        notification.subtitle = LocalizedString.maintenanceOnServerDetectedSubtitle
-        notification.informativeText = LocalizedString.maintenanceOnServerDetectedSubtitle
+        notification.title = Localizable.maintenanceOnServerDetectedTitle
+        notification.subtitle = Localizable.maintenanceOnServerDetectedSubtitle
+        notification.informativeText = Localizable.maintenanceOnServerDetectedSubtitle
         notification.hasActionButton = false
         fire(notification)
     }

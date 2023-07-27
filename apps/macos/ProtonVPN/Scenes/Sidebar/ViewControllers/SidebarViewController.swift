@@ -23,6 +23,7 @@
 import Cocoa
 import LegacyCommon
 import VPNShared
+import Strings
 
 final class SidebarViewController: NSViewController, NSWindowDelegate {
 
@@ -196,11 +197,11 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         if window.frame.width <= sidebarWidth + expandButtonWidth {
             self.expandButton.expandState = .compact
             self.expandButtonLeading.constant = 0.0
-            self.expandButton.setAccessibilityLabel(LocalizedString.mapShow)
+            self.expandButton.setAccessibilityLabel(Localizable.mapShow)
         } else {
             self.expandButton.expandState = .expanded
             self.expandButtonLeading.constant = -expandButtonWidth
-            self.expandButton.setAccessibilityLabel(LocalizedString.mapHide)
+            self.expandButton.setAccessibilityLabel(Localizable.mapHide)
         }
         
         switch view.userInterfaceLayoutDirection {

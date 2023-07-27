@@ -25,6 +25,7 @@ import LegacyCommon
 import VPNShared
 import VPNAppCore
 import Theme
+import Strings
 
 final class ConnectionSettingsViewModel {
     
@@ -348,7 +349,7 @@ final class ConnectionSettingsViewModel {
                 self?.propertiesManager.vpnAcceleratorEnabled = enabled
                 completion(true)
             case .withReconnect:
-                self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnProtocol, confirmHandler: { [weak self] in
+                self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.vpnProtocol, confirmHandler: { [weak self] in
                     self?.propertiesManager.vpnAcceleratorEnabled = enabled
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "vpnAccelerator"])
                     self?.vpnGateway.retryConnection()
@@ -407,7 +408,7 @@ final class ConnectionSettingsViewModel {
             return profileString(for: index - 1)
         } else {
             let imageAttributedString = attributedAttachment(style: .weak)
-            return concatenated(imageString: imageAttributedString, with: LocalizedString.disabled, enabled: true)
+            return concatenated(imageString: imageAttributedString, with: Localizable.disabled, enabled: true)
         }
     }
     

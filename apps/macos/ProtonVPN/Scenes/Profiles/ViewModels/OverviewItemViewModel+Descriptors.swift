@@ -42,32 +42,32 @@ extension OverviewItemViewModel {
     
     private func systemProfileDescriptor(forProfile profile: Profile) -> NSAttributedString {
         guard profile.profileType == .system else {
-            return LocalizedString.unavailable.styled(font: .themeFont(.heading4), alignment: .left)
+            return Localizable.unavailable.styled(font: .themeFont(.heading4), alignment: .left)
         }
         
         let description: NSAttributedString
         switch profile.serverOffering {
         case .fastest:
-            description = LocalizedString.fastestAvailableServer.styled(font: .themeFont(.heading4), alignment: .left)
+            description = Localizable.fastestAvailableServer.styled(font: .themeFont(.heading4), alignment: .left)
         case .random:
-            description = LocalizedString.differentServerEachTime.styled(font: .themeFont(.heading4), alignment: .left)
+            description = Localizable.differentServerEachTime.styled(font: .themeFont(.heading4), alignment: .left)
         case .custom:
-            description = LocalizedString.unavailable.styled(font: .themeFont(.heading4), alignment: .left)
+            description = Localizable.unavailable.styled(font: .themeFont(.heading4), alignment: .left)
         }
         return description
     }
     
     private func userProfileDescriptor(forProfile profile: Profile) -> NSAttributedString {
         guard profile.profileType == .user else {
-            return LocalizedString.unavailable.styled(font: .themeFont(.heading4), alignment: .left)
+            return Localizable.unavailable.styled(font: .themeFont(.heading4), alignment: .left)
         }
         
         let description: NSAttributedString
         switch profile.serverOffering {
         case .fastest(let cCode):
-            description = defaultServerDescriptor(profile.serverType, forCountry: cCode, description: LocalizedString.fastest)
+            description = defaultServerDescriptor(profile.serverType, forCountry: cCode, description: Localizable.fastest)
         case .random(let cCode):
-            description = defaultServerDescriptor(profile.serverType, forCountry: cCode, description: LocalizedString.random)
+            description = defaultServerDescriptor(profile.serverType, forCountry: cCode, description: Localizable.random)
         case .custom(let sWrapper):
             description = customServerDescriptor(forModel: sWrapper.server)
         }

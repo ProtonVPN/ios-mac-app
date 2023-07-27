@@ -22,6 +22,7 @@
 
 import Cocoa
 import LegacyCommon
+import Strings
 
 class SettingsWindowController: WindowController {
     
@@ -43,7 +44,7 @@ class SettingsWindowController: WindowController {
         }
         
         window.styleMask.remove(NSWindow.StyleMask.resizable)
-        window.title = LocalizedString.preferences
+        window.title = Localizable.preferences
         window.titlebarAppearsTransparent = true
         window.appearance = NSAppearance(named: .darkAqua)
         window.backgroundColor = .color(.background, .weak)

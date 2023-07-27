@@ -22,6 +22,7 @@
 
 import Cocoa
 import LegacyCommon
+import Strings
 
 class FooterItemView: NSView {
 
@@ -33,11 +34,11 @@ class FooterItemView: NSView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        createNewProfileButton.title = LocalizedString.createNewProfile
+        createNewProfileButton.title = Localizable.createNewProfile
         createNewProfileButton.target = self
         createNewProfileButton.action = #selector(createNewProfileButtonAction(_:))
         
-        manageProfilesButton.title = LocalizedString.manageProfiles
+        manageProfilesButton.title = Localizable.manageProfiles
         manageProfilesButton.target = self
         manageProfilesButton.action = #selector(manageProfilesButtonAction(_:))
     }

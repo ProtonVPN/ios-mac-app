@@ -23,6 +23,7 @@
 import Cocoa
 import LegacyCommon
 import Theme
+import Strings
 
 class MapHeaderViewModel {
     
@@ -45,7 +46,7 @@ class MapHeaderViewModel {
     }
     
     var description: NSAttributedString {
-        let text = (isConnected ? LocalizedString.connected : LocalizedString.disconnected).uppercased()
+        let text = (isConnected ? Localizable.connected : Localizable.disconnected).uppercased()
         let style: AppTheme.Style = isConnected ? [.interactive, .hint] : .danger
         return text.styled(style, font: .themeFont(literalSize: 19, bold: true))
     }

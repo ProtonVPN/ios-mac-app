@@ -24,6 +24,7 @@ import Cocoa
 import LegacyCommon
 import Theme
 import Ergonomics
+import Strings
 
 class ShowApplicationButton: HoverDetectionButton {
     required init?(coder: NSCoder) {
@@ -40,6 +41,6 @@ class ShowApplicationButton: HoverDetectionButton {
     
     private func configureView() {
         let hover: AppTheme.Style = isHovered ? .hovered : []
-        attributedTitle = LocalizedString.showProtonvpn.styled([.interactive, .hint] + hover)
+        attributedTitle = Localizable.showProtonvpn.styled([.interactive, .hint] + hover)
     }
 }

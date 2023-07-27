@@ -22,6 +22,7 @@
 
 import Foundation
 import LegacyCommon
+import Strings
 
 class ExpandablePopupViewModel: NSObject {
     
@@ -51,7 +52,7 @@ class ExpandablePopupViewModel: NSObject {
     }
     
     var actionButtonTitle: String {
-        return action(0)?.title ?? LocalizedString.ok
+        return action(0)?.title ?? Localizable.ok
     }
     
     func action() {
