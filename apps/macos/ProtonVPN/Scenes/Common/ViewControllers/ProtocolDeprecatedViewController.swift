@@ -18,7 +18,7 @@
 
 import Foundation
 import Cocoa
-import vpncore
+import LegacyCommon
 
 final class ProtocolDeprecatedViewController: WarningPopupViewController {
 

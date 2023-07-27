@@ -24,6 +24,7 @@ import Cocoa
 import LegacyCommon
 import Theme
 import Ergonomics
+import Strings
 
 class ConnectButton: ResizingTextButton {
     
@@ -73,10 +74,10 @@ class ConnectButton: ResizingTextButton {
 
         let title: String
         if isConnected {
-            title = isHovered ? LocalizedString.disconnect : LocalizedString.connected
-            setAccessibilityLabel(String(format: "%@ %@", LocalizedString.disconnect, nameForAccessibility ?? ""))
+            title = isHovered ? Localizable.disconnect : Localizable.connected
+            setAccessibilityLabel(String(format: "%@ %@", Localizable.disconnect, nameForAccessibility ?? ""))
         } else {
-            title = upgradeRequired ? LocalizedString.upgrade : LocalizedString.connect
+            title = upgradeRequired ? Localizable.upgrade : Localizable.connect
             setAccessibilityLabel(String(format: "%@ %@", title, nameForAccessibility ?? ""))
         }
         attributedTitle = title.styled(font: .themeFont(.small))

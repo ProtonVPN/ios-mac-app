@@ -24,6 +24,7 @@ import Cocoa
 import LegacyCommon
 import Theme
 import Ergonomics
+import Strings
 
 protocol ServerItemCellViewDelegate: AnyObject {
     func userDidRequestStreamingInfo(server: ServerItemViewModel)
@@ -51,7 +52,7 @@ final class ServerItemCellView: NSView {
         DarkAppearance {
             layer?.backgroundColor = .cgColor(.background, .weak)
         }
-        upgradeBtn.stringValue = LocalizedString.upgrade
+        upgradeBtn.stringValue = Localizable.upgrade
 
         let imageMargin = 8
         maintenanceIV.wantsLayer = true

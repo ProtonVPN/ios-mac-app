@@ -20,8 +20,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 import Cocoa
-import vpncore
+import LegacyCommon
 import Ergonomics
+import Strings
 
 final class ConnectionSettingsViewController: NSViewController, ReloadableViewController {
     
@@ -78,7 +79,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
             return menuItem
         }
 
-        let model = SettingsDropDownView.ViewModel(labelText: LocalizedString.autoConnect, toolTip: LocalizedString.autoConnectTooltip, progressIndicatorToolTip: nil, menuItems: menuItems, selectedIndex: viewModel.autoConnectProfileIndex)
+        let model = SettingsDropDownView.ViewModel(labelText: Localizable.autoConnect, toolTip: Localizable.autoConnectTooltip, progressIndicatorToolTip: nil, menuItems: menuItems, selectedIndex: viewModel.autoConnectProfileIndex)
 
         autoConnectView.setupItem(model: model, target: self, action: #selector(autoConnectItemSelected))
     }
@@ -91,7 +92,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
             return menuItem
         }
 
-        let model = SettingsDropDownView.ViewModel(labelText: LocalizedString.quickConnect, toolTip: LocalizedString.quickConnectTooltip, progressIndicatorToolTip: nil, menuItems: menuItems, selectedIndex: viewModel.quickConnectProfileIndex)
+        let model = SettingsDropDownView.ViewModel(labelText: Localizable.quickConnect, toolTip: Localizable.quickConnectTooltip, progressIndicatorToolTip: nil, menuItems: menuItems, selectedIndex: viewModel.quickConnectProfileIndex)
 
         quickConnectView.setupItem(model: model, target: self, action: #selector(quickConnectItemSelected))
     }
@@ -106,9 +107,9 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         }
 
         let model = SettingsDropDownView.ViewModel(
-            labelText: LocalizedString.protocol,
-            toolTip: LocalizedString.smartProtocolDescription,
-            progressIndicatorToolTip: LocalizedString.sysexSettingsDescription,
+            labelText: Localizable.protocol,
+            toolTip: Localizable.smartProtocolDescription,
+            progressIndicatorToolTip: Localizable.sysexSettingsDescription,
             menuItems: menuItems,
             selectedIndex: viewModel.protocolIndex(for: viewModel.selectedProtocol)
         )
@@ -120,21 +121,21 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     
     private func setupVpnAcceleratorItem() {
         vpnAcceleratorView.isHidden = !viewModel.isAcceleratorFeatureEnabled
-        let toolTip = LocalizedString.vpnAcceleratorDescription
-            .replacingOccurrences(of: LocalizedString.vpnAcceleratorDescriptionAltLink, with: "")
+        let toolTip = Localizable.vpnAcceleratorDescription
+            .replacingOccurrences(of: Localizable.vpnAcceleratorDescriptionAltLink, with: "")
             .trimmingCharacters(in: .whitespacesAndNewlines)
 
-        let model = SettingsTickboxView.ViewModel(labelText: LocalizedString.vpnAcceleratorTitle, buttonState: viewModel.vpnAcceleratorEnabled, toolTip: String(toolTip))
+        let model = SettingsTickboxView.ViewModel(labelText: Localizable.vpnAcceleratorTitle, buttonState: viewModel.vpnAcceleratorEnabled, toolTip: String(toolTip))
         vpnAcceleratorView.setupItem(model: model, delegate: self)
     }
     
     private func setupDnsLeakProtectionItem() {
-        let model = SettingsTickboxView.ViewModel(labelText: LocalizedString.dnsLeakProtection, buttonState: true, buttonEnabled: false, toolTip: LocalizedString.dnsLeakProtectionTooltip)
+        let model = SettingsTickboxView.ViewModel(labelText: Localizable.dnsLeakProtection, buttonState: true, buttonEnabled: false, toolTip: Localizable.dnsLeakProtectionTooltip)
         dnsLeakProtectionView.setupItem(model: model, delegate: self)
     }
 
     private func setupAllowLANItem() {
-        let model = SettingsTickboxView.ViewModel(labelText: LocalizedString.allowLanTitle, buttonState: viewModel.allowLAN, toolTip: LocalizedString.allowLanInfo)
+        let model = SettingsTickboxView.ViewModel(labelText: Localizable.allowLanTitle, buttonState: viewModel.allowLAN, toolTip: Localizable.allowLanInfo)
         allowLANView.setupItem(model: model, delegate: self)
     }
 

@@ -21,8 +21,9 @@
 //
 
 import Cocoa
-import vpncore
+import LegacyCommon
 import Ergonomics
+import Strings
 
 final class SecureCoreWarningViewController: NSViewController {
     
@@ -51,7 +52,7 @@ final class SecureCoreWarningViewController: NSViewController {
     override func viewWillAppear() {
         super.viewWillAppear()
         
-        view.window?.applyModalAppearance(withTitle: LocalizedString.upgradeRequired)
+        view.window?.applyModalAppearance(withTitle: Localizable.upgradeRequired)
     }
     
     private func setupView() {
@@ -64,13 +65,13 @@ final class SecureCoreWarningViewController: NSViewController {
     private func setupComponents() {
         descriptionLabel.usesSingleLineMode = false
         descriptionLabel.cell?.lineBreakMode = .byWordWrapping
-        descriptionLabel.attributedStringValue = LocalizedString.planDoesNotIncludeSecureCore.styled(font: .themeFont(.heading4, bold: true))
+        descriptionLabel.attributedStringValue = Localizable.planDoesNotIncludeSecureCore.styled(font: .themeFont(.heading4, bold: true))
         
-        upgradeButton.title = LocalizedString.upgradeRequired
+        upgradeButton.title = Localizable.upgradeRequired
         upgradeButton.target = self
         upgradeButton.action = #selector(upgradeButtonAction)
         
-        learnMoreButton.title = LocalizedString.learnMoreAboutSecureCore
+        learnMoreButton.title = Localizable.learnMoreAboutSecureCore
         learnMoreButton.target = self
         learnMoreButton.action = #selector(learnMoreButtonAction)
     }

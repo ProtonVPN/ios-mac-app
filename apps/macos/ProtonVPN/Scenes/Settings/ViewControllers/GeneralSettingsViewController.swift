@@ -24,6 +24,7 @@ import Cocoa
 import LegacyCommon
 import AppKit
 import Ergonomics
+import Strings
 
 public protocol ReloadableViewController: class {
     func reloadView()
@@ -61,27 +62,27 @@ final class GeneralSettingsViewController: NSViewController, ReloadableViewContr
     }
     
     private func setupStartOnBootItem() {
-        let viewModel = SettingsTickboxView.ViewModel(labelText: LocalizedString.startOnBoot, buttonState: viewModel.startOnBoot)
+        let viewModel = SettingsTickboxView.ViewModel(labelText: Localizable.startOnBoot, buttonState: viewModel.startOnBoot)
         startOnBootView.setupItem(model: viewModel, delegate: self)
     }
     
     private func setupStartMinimizedItem() {
-        let viewModel = SettingsTickboxView.ViewModel(labelText: LocalizedString.startMinimized, buttonState: viewModel.startMinimized)
+        let viewModel = SettingsTickboxView.ViewModel(labelText: Localizable.startMinimized, buttonState: viewModel.startMinimized)
         startMinimizedView.setupItem(model: viewModel, delegate: self)
     }
     
     private func setupSystemNotificationsItem() {
-        let viewModel = SettingsTickboxView.ViewModel(labelText: LocalizedString.systemNotifications, buttonState: viewModel.systemNotifications)
+        let viewModel = SettingsTickboxView.ViewModel(labelText: Localizable.systemNotifications, buttonState: viewModel.systemNotifications)
         systemNotificationsView.setupItem(model: viewModel, delegate: self)
     }
     
     private func setupEarlyAccessItem() {
-        let viewModel = SettingsTickboxView.ViewModel(labelText: LocalizedString.earlyAccess, buttonState: viewModel.earlyAccess, toolTip: LocalizedString.earlyAccessTooltip)
+        let viewModel = SettingsTickboxView.ViewModel(labelText: Localizable.earlyAccess, buttonState: viewModel.earlyAccess, toolTip: Localizable.earlyAccessTooltip)
         earlyAccessView.setupItem(model: viewModel, delegate: self)
     }
 
     private func setupUnprotectedNetworkItem() {
-        let viewModel = SettingsTickboxView.ViewModel(labelText: LocalizedString.unprotectedNetwork, buttonState: viewModel.unprotectedNetworkNotifications, toolTip: LocalizedString.unprotectedNetworkTooltip)
+        let viewModel = SettingsTickboxView.ViewModel(labelText: Localizable.unprotectedNetwork, buttonState: viewModel.unprotectedNetworkNotifications, toolTip: Localizable.unprotectedNetworkTooltip)
         unprotectedNetworkView.setupItem(model: viewModel, delegate: self)
     }
     

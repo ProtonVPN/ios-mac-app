@@ -21,8 +21,9 @@
 //
 
 import Cocoa
-import vpncore
+import LegacyCommon
 import Ergonomics
+import Strings
 
 enum ProfilesTab: Equatable {
     
@@ -68,13 +69,13 @@ class ProfilesTabBarViewController: NSViewController {
     }
     
     private func setupComponents() {
-        headerLabel.attributedStringValue = LocalizedString.profiles.styled(font: .themeFont(.heading1), alignment: .left)
+        headerLabel.attributedStringValue = Localizable.profiles.styled(font: .themeFont(.heading1), alignment: .left)
         
-        overviewButton.title = LocalizedString.overview
+        overviewButton.title = Localizable.overview
         overviewButton.target = self
         overviewButton.action = #selector(overviewButtonAction)
         
-        createNewProfileButton.title = LocalizedString.createNewProfile
+        createNewProfileButton.title = Localizable.createNewProfile
         createNewProfileButton.target = self
         createNewProfileButton.action = #selector(createNewProfileButtonAction)
         

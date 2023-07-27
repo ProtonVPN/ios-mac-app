@@ -21,8 +21,10 @@
 //
 
 import Cocoa
-import vpncore
+import LegacyCommon
 import Ergonomics
+import Theme
+import Strings
 
 final class AccountViewController: NSViewController {
 
@@ -77,31 +79,31 @@ final class AccountViewController: NSViewController {
     }
     
     private func setupStackView() {
-        usernameLabel.attributedStringValue = LocalizedString.username.styled(font: .themeFont(.heading4), alignment: .left)
+        usernameLabel.attributedStringValue = Localizable.username.styled(font: .themeFont(.heading4), alignment: .left)
         usernameValue.attributedStringValue = viewModel.username.styled(.weak, font: .themeFont(.heading4), alignment: .right)
         usernameSeparator.fillColor = .color(.border, .weak)
         
-        accountTypeLabel.attributedStringValue = LocalizedString.accountType.styled(font: .themeFont(.heading4), alignment: .left)
+        accountTypeLabel.attributedStringValue = Localizable.accountType.styled(font: .themeFont(.heading4), alignment: .left)
         accountTypeValue.attributedStringValue = viewModel.accountType.styled(.weak, font: .themeFont(.heading4), alignment: .right)
         accountTypeSeparator.fillColor = .color(.border, .weak)
         
-        accountPlanLabel.attributedStringValue = LocalizedString.accountPlan.styled(font: .themeFont(.heading4), alignment: .left)
+        accountPlanLabel.attributedStringValue = Localizable.accountPlan.styled(font: .themeFont(.heading4), alignment: .left)
         accountPlanSeparator.fillColor = .color(.border, .weak)
         
         if let accountPlan = viewModel.accountPlan {
             accountPlanValue.attributedStringValue = accountPlan.description.styled(accountPlan.styleForUI, font: .themeFont(.heading4), alignment: .right)
         } else {
-            accountPlanValue.attributedStringValue = LocalizedString.unavailable.styled(.weak, font: .themeFont(.heading4), alignment: .right)
+            accountPlanValue.attributedStringValue = Localizable.unavailable.styled(.weak, font: .themeFont(.heading4), alignment: .right)
         }
     }
     
     private func setupFooterView() {
-        manageSubscriptionButton.title = LocalizedString.manageSubscription
+        manageSubscriptionButton.title = Localizable.manageSubscription
         manageSubscriptionButton.target = self
         manageSubscriptionButton.action = #selector(manageSubscriptionButtonAction)
 
-        manageSubscriptionButton.title = LocalizedString.manageSubscription
-        useCouponButton.title = LocalizedString.useCoupon
+        manageSubscriptionButton.title = Localizable.manageSubscription
+        useCouponButton.title = Localizable.useCoupon
 
         couponViewController.delegate = self
         couponViewController.viewWillAppear()
@@ -127,7 +129,7 @@ final class AccountViewController: NSViewController {
         if let accountPlan = viewModel.accountPlan {
             accountPlanValue.attributedStringValue = accountPlan.description.styled(accountPlan.styleForUI, font: .themeFont(.heading4), alignment: .right)
         } else {
-            accountPlanValue.attributedStringValue = LocalizedString.unavailable.styled(.weak, font: .themeFont(.heading4), alignment: .right)
+            accountPlanValue.attributedStringValue = Localizable.unavailable.styled(.weak, font: .themeFont(.heading4), alignment: .right)
         }
 
         useCouponButton.isHidden = !viewModel.canUsePromo

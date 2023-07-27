@@ -24,6 +24,7 @@ import Cocoa
 import LegacyCommon
 import Theme
 import Ergonomics
+import Strings
 
 class UserAccountUpdateViewController: NSViewController {
 
@@ -114,9 +115,9 @@ class UserAccountUpdateViewController: NSViewController {
         feature3View.isHidden = !alert.displayFeatures
         featuresTitleLbl.isHidden = !alert.displayFeatures
         guard alert.displayFeatures else { return }
-        feature1Lbl.stringValue = LocalizedString.subscriptionUpgradeOption1(serverManager.grouping(for: .standard).count)
-        feature2Lbl.stringValue = LocalizedString.subscriptionUpgradeOption2(AccountPlan.plus.devicesCount)
-        feature3Lbl.stringValue = LocalizedString.subscriptionUpgradeOption3
+        feature1Lbl.stringValue = Localizable.subscriptionUpgradeOption1(serverManager.grouping(for: .standard).count)
+        feature2Lbl.stringValue = Localizable.subscriptionUpgradeOption2(AccountPlan.plus.devicesCount)
+        feature3Lbl.stringValue = Localizable.subscriptionUpgradeOption3
     }
     
     private func setupActions() {
@@ -143,8 +144,8 @@ class UserAccountUpdateViewController: NSViewController {
         
         offsetView.isHidden = false
         serversView.isHidden = false
-        setServerHeader(reconnectInfo.fromServer, LocalizedString.fromServerTitle, fromServerIV, fromServerLbl, fromServerTitleLbl)
-        setServerHeader(reconnectInfo.toServer, LocalizedString.toServerTitle, toServerIV, toServerLbl, toServerTitleLbl)
+        setServerHeader(reconnectInfo.fromServer, Localizable.fromServerTitle, fromServerIV, fromServerLbl, fromServerTitleLbl)
+        setServerHeader(reconnectInfo.toServer, Localizable.toServerTitle, toServerIV, toServerLbl, toServerTitleLbl)
     }
     
     private func setServerHeader( _ server: ReconnectInfo.Server,

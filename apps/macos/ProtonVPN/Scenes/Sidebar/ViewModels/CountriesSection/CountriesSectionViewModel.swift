@@ -23,6 +23,7 @@
 import Foundation
 import LegacyCommon
 import VPNShared
+import Strings
 
 enum CellModel {
     case header(CountriesServersHeaderViewModelProtocol)
@@ -107,7 +108,7 @@ class CountriesSectionViewModel {
         }
         /// We want to add the `sectionTitle` - "Our Partners" to the first partner
         if let firstPartner = partnersViewModels.first {
-            partnersViewModels[0] = .init(sectionTitle: LocalizedString.dwPartner2022PartnersTitle,
+            partnersViewModels[0] = .init(sectionTitle: Localizable.dwPartner2022PartnersTitle,
                                           title: firstPartner.title,
                                           description: firstPartner.description,
                                           icon: firstPartner.icon)
@@ -264,8 +265,8 @@ class CountriesSectionViewModel {
 
             let freeServers: [CellModel] = simpleServers.filter { $0.tier == 0 }.map { .server(self.serverViewModel($0)) }
             let plusServers: [CellModel] = simpleServers.filter { $0.tier > 1 }.map { .server(self.serverViewModel($0)) }
-            let freeHeaderVM = ServerHeaderViewModel(LocalizedString.freeServers, totalServers: freeServers.count, country: country, tier: 0, propertiesManager: propertiesManager, countriesViewModel: self)
-            let plusHeaderVM = ServerHeaderViewModel(LocalizedString.plusServers, totalServers: plusServers.count, country: country, tier: 2, propertiesManager: propertiesManager, countriesViewModel: self)
+            let freeHeaderVM = ServerHeaderViewModel(Localizable.freeServers, totalServers: freeServers.count, country: country, tier: 0, propertiesManager: propertiesManager, countriesViewModel: self)
+            let plusHeaderVM = ServerHeaderViewModel(Localizable.plusServers, totalServers: plusServers.count, country: country, tier: 2, propertiesManager: propertiesManager, countriesViewModel: self)
             
             var cells = [CellModel]()
             
@@ -394,7 +395,7 @@ class CountriesSectionViewModel {
         let gatewayContent = countries.filter { $0.servers.contains(where: { $0.feature.contains(.restricted) }) }
         if !gatewayContent.isEmpty {
             containsGateways = true
-            gatewaysSection = [ .header(CountryHeaderViewModel(LocalizedString.locationsGateways, totalCountries: nil, buttonType: .gateway, countriesViewModel: self)) ]
+            gatewaysSection = [ .header(CountryHeaderViewModel(Localizable.locationsGateways, totalCountries: nil, buttonType: .gateway, countriesViewModel: self)) ]
             gatewaysSection += gatewayContent.enumerated().map { index, country -> CellModel in
                 return .country(self.countryViewModel(country, id: idForGateway(countryCode: country.country.countryCode), displaySeparator: index != 0, serversFilter: { $0.feature.contains(.restricted) }, showCountryConnectButton: false))
             }
@@ -406,7 +407,7 @@ class CountriesSectionViewModel {
 
         if userTier > 1 {
             // PLUS VISIONARY
-            let headerVM = CountryHeaderViewModel(LocalizedString.locationsAll, totalCountries: countries.count, buttonType: .premium, countriesViewModel: self)
+            let headerVM = CountryHeaderViewModel(Localizable.locationsAll, totalCountries: countries.count, buttonType: .premium, countriesViewModel: self)
             return (gatewaysSection
                 + [ .header(headerVM) ]
                 + countries.enumerated().map { index, country -> CellModel in
@@ -417,7 +418,7 @@ class CountriesSectionViewModel {
         if userTier == 1 {
             // BASIC
             let plusLocations = countries.filter { $0.0.lowestTier > 1 }
-            let headerPlusVM = CountryHeaderViewModel(LocalizedString.locationsPlus, totalCountries: plusLocations.count, buttonType: .premium, countriesViewModel: self)
+            let headerPlusVM = CountryHeaderViewModel(Localizable.locationsPlus, totalCountries: plusLocations.count, buttonType: .premium, countriesViewModel: self)
 
             return (gatewaysSection
                 + [ .header(headerPlusVM) ]
@@ -430,8 +431,8 @@ class CountriesSectionViewModel {
 
         let freeLocations = countries.filter { $0.0.lowestTier == 0 }
         let plusLocations = countries.filter { $0.0.lowestTier != 0 }
-        let headerFreeVM = CountryHeaderViewModel(LocalizedString.locationsFree, totalCountries: freeLocations.count, buttonType: nil, countriesViewModel: self)
-        let headerPlusVM = CountryHeaderViewModel(LocalizedString.locationsPlus, totalCountries: plusLocations.count, buttonType: .premium, countriesViewModel: self)
+        let headerFreeVM = CountryHeaderViewModel(Localizable.locationsFree, totalCountries: freeLocations.count, buttonType: nil, countriesViewModel: self)
+        let headerPlusVM = CountryHeaderViewModel(Localizable.locationsPlus, totalCountries: plusLocations.count, buttonType: .premium, countriesViewModel: self)
 
         return (gatewaysSection
             + [ .header(headerFreeVM) ]

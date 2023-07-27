@@ -23,6 +23,7 @@
 import Cocoa
 
 class AppConstants {
+    static let bundleId = "ch.protonvpn.mac"
     
     struct Windows {
         static let loginWidth: CGFloat = 340
@@ -59,7 +60,12 @@ class AppConstants {
         static let openVpnLogFilename = "OpenVPN.log"
         static let wireGuardLogFilename = "WireGuard.log"
     }
-    
+
+    struct NetworkExtensions {
+        static let openVpn = "\(AppConstants.bundleId).OpenVPN-Extension"
+        static let wireguard = "\(AppConstants.bundleId).WireGuardiOS-Extension"
+    }
+
     struct Time {
         static let maintenanceMessageTimeThreshold: Double = 3600 * 12 // 12 hours
         

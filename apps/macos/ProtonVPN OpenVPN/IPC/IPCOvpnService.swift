@@ -20,13 +20,13 @@ extension IPCOvpnService { // ProviderCommunication
     override func setCredentials(username: String, password: String, completionHandler: @escaping (Bool) -> Void) {
         let keychain = Keychain(group: nil)
         do {
-            let currentPassword = try? keychain.password(for: username)
+            let currentPassword = try? keychain.password(for: username, context: AppConstants.NetworkExtensions.openVpn)
             guard currentPassword != password else {
                 completionHandler(true)
                 return
             }
             
-            try keychain.set(password: password, for: username)
+            try keychain.set(password: password, for: username, context: AppConstants.NetworkExtensions.openVpn)
             log("PacketTunnelProvider new password saved")
             completionHandler(true)
             

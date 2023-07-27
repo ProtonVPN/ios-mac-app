@@ -58,6 +58,8 @@ let package = Package(
                 // Local
                 "Strings",
                 "Theme",
+                "Home",
+                "Settings",
                 "BugReport",
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),

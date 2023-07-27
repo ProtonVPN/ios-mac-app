@@ -24,6 +24,7 @@ import Foundation
 import UIKit
 import LegacyCommon
 import Search
+import Strings
 
 enum ServerItemModel {
     case server(ServerItemViewModel)
@@ -254,7 +255,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         let gatewayContent = state.currentContent.filter { $0.servers.contains(where: { $0.feature.contains(.restricted) }) }
         if !gatewayContent.isEmpty {
             newTableData.append(Section(
-                title: "\(LocalizedString.locationsGateways)",
+                title: "\(Localizable.locationsGateways)",
                 rows: gatewayContent,
                 serversFilter: { $0.feature.contains(.restricted) },
                 showCountryConnectButton: false,
@@ -270,7 +271,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
             do { // First section
                 let rows = currentContent.filter { $0.0.lowestTier == 0 }
                 newTableData.append(Section(
-                    title: "\(LocalizedString.locationsFree) (\(rows.count))",
+                    title: "\(Localizable.locationsFree) (\(rows.count))",
                     rows: rows,
                     serversFilter: defaultServersFilter,
                     showCountryConnectButton: true,
@@ -280,7 +281,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
             do { // Second section
                 let rows = currentContent.filter { $0.0.lowestTier > 0 }
                 newTableData.append(Section(
-                    title: "\(LocalizedString.locationsPlus) (\(rows.count))",
+                    title: "\(Localizable.locationsPlus) (\(rows.count))",
                     rows: rows,
                     serversFilter: defaultServersFilter,
                     showCountryConnectButton: true,
@@ -290,7 +291,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         case 1: // Basic
             let rows = currentContent.filter { $0.0.lowestTier < 2 }
             newTableData.append(Section(
-                title: "\(LocalizedString.locationsAll) (\(rows.count))",
+                title: "\(Localizable.locationsAll) (\(rows.count))",
                 rows: rows,
                 serversFilter: defaultServersFilter,
                 showCountryConnectButton: true,
@@ -299,7 +300,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         default: // Plus and up
             let rows = currentContent
             newTableData.append(Section(
-                title: "\(LocalizedString.locationsAll) (\(rows.count))",
+                title: "\(Localizable.locationsAll) (\(rows.count))",
                 rows: rows,
                 serversFilter: defaultServersFilter,
                 showCountryConnectButton: true,

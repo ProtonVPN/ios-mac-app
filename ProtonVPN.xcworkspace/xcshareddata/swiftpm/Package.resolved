@@ -38,6 +38,15 @@
         }
       },
       {
+        "package": "DictionaryCoder",
+        "repositoryURL": "https://github.com/almazrafi/DictionaryCoder.git",
+        "state": {
+          "branch": null,
+          "revision": "c340c90eeb4ff318ccea992e57e9ace8aaf3357d",
+          "version": "1.1.0"
+        }
+      },
+      {
         "package": "EllipticCurveKeyPair",
         "repositoryURL": "https://github.com/agens-no/EllipticCurveKeyPair",
         "state": {
@@ -143,6 +152,15 @@
           "branch": null,
           "revision": "88d40ec4688167b0ab8b3856eef9b3ae3076ba90",
           "version": "8.9.0"
+        }
+      },
+      {
+        "package": "Sparkle",
+        "repositoryURL": "https://github.com/sparkle-project/Sparkle",
+        "state": {
+          "branch": null,
+          "revision": "631846cc829f0f0cae327df9bafe5a32b7ddadce",
+          "version": "2.4.0"
         }
       },
       {

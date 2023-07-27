@@ -25,6 +25,7 @@ import LegacyCommon
 import Foundation
 import Theme
 import Ergonomics
+import Strings
 
 final class LoginViewController: NSViewController {
     
@@ -181,7 +182,7 @@ final class LoginViewController: NSViewController {
     }
     
     private func setupUsernameSection() {
-        usernameTextField.style(placeholder: LocalizedString.username)
+        usernameTextField.style(placeholder: Localizable.username)
         usernameTextField.usesSingleLineMode = true
         usernameTextField.tag = TextField.username.rawValue
         usernameTextField.delegate = self
@@ -192,14 +193,14 @@ final class LoginViewController: NSViewController {
     }
     
     private func setupPasswordSection() {
-        passwordSecureTextField.style(placeholder: LocalizedString.password)
+        passwordSecureTextField.style(placeholder: Localizable.password)
         passwordSecureTextField.usesSingleLineMode = true
         passwordSecureTextField.isHidden = false
         passwordSecureTextField.tag = TextField.passwordSecure.rawValue
         passwordSecureTextField.delegate = self
         passwordSecureTextField.focusDelegate = self
 
-        passwordTextField.style(placeholder: LocalizedString.password)
+        passwordTextField.style(placeholder: Localizable.password)
         passwordTextField.usesSingleLineMode = true
         passwordTextField.isHidden = true
         passwordTextField.tag = TextField.password.rawValue
@@ -216,14 +217,14 @@ final class LoginViewController: NSViewController {
         passwordRevealButton.isBordered = false
         passwordRevealButton.target = self
         passwordRevealButton.action = #selector(togglePasswordField)
-        passwordRevealButton.setAccessibilityLabel(LocalizedString.show)
+        passwordRevealButton.setAccessibilityLabel(Localizable.show)
         
         passwordHorizontalLine.fillColor = .color(.border, .weak)
     }
     
     private func setupSwitchSection() {
-        startOnBootLabel.attributedStringValue = LocalizedString.startOnBoot.styled(alignment: .left)
-        startOnBootButton.setAccessibilityLabel(LocalizedString.startOnBoot)
+        startOnBootLabel.attributedStringValue = Localizable.startOnBoot.styled(alignment: .left)
+        startOnBootButton.setAccessibilityLabel(Localizable.startOnBoot)
         
         startOnBootButton.drawsUnderOverlay = true
         DarkAppearance {
@@ -239,11 +240,11 @@ final class LoginViewController: NSViewController {
         loginButton.target = self
         loginButton.action = #selector(loginButtonAction)
         
-        createAccountButton.title = LocalizedString.createAccount
+        createAccountButton.title = Localizable.createAccount
         createAccountButton.target = self
         createAccountButton.action = #selector(createAccountButtonAction)
         
-        needHelpButton.title = LocalizedString.needHelp
+        needHelpButton.title = Localizable.needHelp
         needHelpButton.target = self
         needHelpButton.action = #selector(needHelpButtonAction)
         
@@ -324,7 +325,7 @@ final class LoginViewController: NSViewController {
         secureTextEntry = !secureTextEntry
         passwordTextField.isHidden = secureTextEntry
         passwordSecureTextField.isHidden = !secureTextEntry
-        passwordRevealButton.setAccessibilityValue(secureTextEntry ? LocalizedString.hide : LocalizedString.show)
+        passwordRevealButton.setAccessibilityValue(secureTextEntry ? Localizable.hide : Localizable.show)
     }
     
     @objc private func loginButtonAction() {

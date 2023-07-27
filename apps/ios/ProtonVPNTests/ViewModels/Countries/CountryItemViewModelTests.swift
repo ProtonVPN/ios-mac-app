@@ -22,6 +22,7 @@
 
 import XCTest
 import LegacyCommon
+import LegacyCommonTestSupport
 import ProtonCoreUIFoundations
 import TimerMock
 import VPNShared
@@ -57,7 +58,7 @@ class CountryItemViewModelTests: XCTestCase {
         let country = CountryModel(serverModel: self.serverModel(withStatus: 22))
         let group: CountryGroup = (country, servers)
         let vpnKeychain = VpnKeychainMock()
-        let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()), appInfo: AppInfoImplementation(context: .mainApp), doh: .mock, authKeychain: MockAuthKeychain(), unauthKeychain: UnauthKeychainMock())
+        let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()), appInfo: AppInfoImplementation(context: .mainApp), doh: .mock, authKeychain: MockAuthKeychain(), unauthKeychain: UnauthKeychainMock())
         let vpnApiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation(), authKeychain: MockAuthKeychain())
         let configurationPreparer = VpnManagerConfigurationPreparer(
             vpnKeychain: vpnKeychain,

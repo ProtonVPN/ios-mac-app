@@ -130,9 +130,9 @@ public struct ServerFeatureViewModel: FeatureCellViewModel {
 
 public struct GatewayFeature: FeatureCellViewModel {
     public let icon: Icon = .image(IconProvider.globe)
-    public let title: String = LocalizedString.gatewaysModalTitle
+    public let title: String = Localizable.gatewaysModalTitle
     public var sectionTitle: String?
-    public let description: String = LocalizedString.gatewaysModalText
+    public let description: String = Localizable.gatewaysModalText
     public let footer: String? = nil
     public let urlContact: String? = "https://protonvpn.com/support/dedicated-ips/"
     public init () { }

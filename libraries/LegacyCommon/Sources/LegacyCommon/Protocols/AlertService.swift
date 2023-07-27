@@ -330,17 +330,17 @@ public class ProtocolNotAvailableForServerAlert: SystemAlert {
 }
 
 public class ProtocolDeprecatedAlert: SystemAlert {
-    public var title: String? = LocalizedString.alertProtocolDeprecatedTitle
-    public let linkText: String = LocalizedString.alertProtocolDeprecatedLinkText
+    public var title: String? = Localizable.alertProtocolDeprecatedTitle
+    public let linkText: String = Localizable.alertProtocolDeprecatedLinkText
 
     #if os(iOS)
-    public var message: String? = LocalizedString.alertProtocolDeprecatedBodyIos
+    public var message: String? = Localizable.alertProtocolDeprecatedBodyIos
     #elseif os(macOS)
-    public var message: String? = LocalizedString.alertProtocolDeprecatedBodyMacos
+    public var message: String? = Localizable.alertProtocolDeprecatedBodyMacos
     #endif
 
-    public let confirmTitle: String = LocalizedString.alertProtocolDeprecatedEnableSmart
-    public let dismissTitle: String = LocalizedString.alertProtocolDeprecatedClose
+    public let confirmTitle: String = Localizable.alertProtocolDeprecatedEnableSmart
+    public let dismissTitle: String = Localizable.alertProtocolDeprecatedClose
 
     public var actions = [AlertAction]()
     public let isError: Bool = true
@@ -353,20 +353,20 @@ public class ProtocolDeprecatedAlert: SystemAlert {
         self.enableSmartProtocol = enableSmartProtocolHandler
 
         actions.append(AlertAction(
-            title: LocalizedString.alertProtocolDeprecatedEnableSmart,
+            title: Localizable.alertProtocolDeprecatedEnableSmart,
             style: .confirmative,
             handler: enableSmartProtocolHandler
         ))
         #if os(iOS)
         // On MacOS, a hyperlink is placed in the alert body instead
         actions.append(AlertAction(
-            title: LocalizedString.alertProtocolDeprecatedLearnMore,
+            title: Localizable.alertProtocolDeprecatedLearnMore,
             style: .secondary,
             handler: { SafariService.openLink(url: URL(string: Self.kbURLString)!) }
         ))
         #endif
         actions.append(AlertAction(
-            title: LocalizedString.alertProtocolDeprecatedClose,
+            title: Localizable.alertProtocolDeprecatedClose,
             style: .cancel,
             handler: { }
         ))

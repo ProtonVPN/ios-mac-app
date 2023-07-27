@@ -116,7 +116,12 @@ final class LoginViewModel {
     
     func logIn(username: String, password: String) {
         logInInProgress?()
-        loginService.login(username: username, password: password, challenge: nil) { [weak self] result in
+        loginService.login(
+            username: username,
+            password: password,
+            intent: .auto,
+            challenge: nil
+        ) { [weak self] result in
             self?.handleLoginResult(result: result)
         }
     }
@@ -155,6 +160,8 @@ final class LoginViewModel {
             case .askSecondPassword, .chooseInternalUsernameAndCreateInternalAddress:
                 log.error("Unsupported login scenario", category: .app, metadata: ["result": "\(result)"])
                 logInFailure?(Localizable.loginUnsupportedState)
+            case .ssoChallenge(let ssoChallengeResponse):
+                fatalError("I don't know how to do that yet")
             }
         case let .failure(error):
             handleLoginError(error: error)

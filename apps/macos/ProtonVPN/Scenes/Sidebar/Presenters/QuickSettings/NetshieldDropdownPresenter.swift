@@ -26,6 +26,7 @@ import LegacyCommon
 import AppKit
 import VPNShared
 import Home
+import Strings
 
 class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     
@@ -42,7 +43,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     private var notificationTokens: [NotificationToken] = []
     
     override var title: String! {
-        return LocalizedString.netshieldTitle
+        return Localizable.netshieldTitle
     }
     
     override var learnLink: String {
@@ -77,7 +78,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         })
     }
 
-    var netShieldViewModel: LegacyCommon.NetShieldModel {
+    var netShieldViewModel: NetShieldModel {
         // Show grayed out stats if disconnected, or netshield is turned off
         let isActive = appStateManager.displayState == .connected && netShieldPropertyProvider.netShieldType == .level2
         netShieldStats.enabled = isActive
@@ -91,8 +92,8 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewController?.dropdownUpgradeButton.isHidden = true
-        viewController?.dropdownDescription.attributedStringValue = LocalizedString.quickSettingsNetShieldDescription.styled(font: .themeFont(.small), alignment: .left)
-        viewController?.dropdownNote.attributedStringValue = LocalizedString.quickSettingsNetShieldNote.styled(.weak, font: .themeFont(.small), alignment: .left)
+        viewController?.dropdownDescription.attributedStringValue = Localizable.quickSettingsNetShieldDescription.styled(font: .themeFont(.small), alignment: .left)
+        viewController?.dropdownNote.attributedStringValue = Localizable.quickSettingsNetShieldNote.styled(.weak, font: .themeFont(.small), alignment: .left)
     }
 
     private func contentChanged() {

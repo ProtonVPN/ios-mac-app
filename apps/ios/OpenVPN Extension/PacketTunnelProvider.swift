@@ -15,6 +15,7 @@ import NEHelper
 import VPNShared
 import Timer
 import LocalFeatureFlags
+import DictionaryCoder
 
 class PacketTunnelProvider: OpenVPNTunnelProvider, ExtensionAPIServiceDelegate {
 
@@ -49,9 +50,11 @@ class PacketTunnelProvider: OpenVPNTunnelProvider, ExtensionAPIServiceDelegate {
         tunnelProviderProtocol.username = nil // No need for a username inside NE
         let providerConfigDict = tunnelProviderProtocol.providerConfiguration ?? [:]
 
-        guard let data = try? JSONSerialization.data(withJSONObject: providerConfigDict),
-              let ovpnConfig = try? JSONDecoder().decode(OpenVPN.Configuration.self, from: data) else {
-            log.error("Can't parse OpenVPN config from given NETunnelProviderProtocol")
+        let ovpnConfig: OpenVPN.Configuration
+        do {
+            ovpnConfig = try DictionaryDecoder().decode(OpenVPN.Configuration.self, from: providerConfigDict)
+        } catch {
+            log.error("Can't parse OpenVPN config from given NETunnelProviderProtocol: \(error)")
             return super.protocolConfiguration
         }
 

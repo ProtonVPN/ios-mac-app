@@ -62,7 +62,7 @@ class SubuserAlertViewController: UIViewController {
         view.backgroundColor = .backgroundColor()
 
         // swiftlint:disable:next hardcoded_assets
-        imageView.image = UIImage(named: "alert-pro-account", in: Bundle.vpnCore, compatibleWith: nil)
+        imageView.image = UIImage(named: "alert-pro-account", in: Bundle.legacyCommonEvilDoNotUseThis, compatibleWith: nil)
         
         titleLabel.textColor = .normalTextColor()
         titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)

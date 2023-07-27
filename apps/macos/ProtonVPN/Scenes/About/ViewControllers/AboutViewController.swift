@@ -25,6 +25,7 @@ import LegacyCommon
 import WebKit
 import Theme
 import Ergonomics
+import Strings
 
 class AboutViewController: NSViewController {
     
@@ -90,15 +91,15 @@ class AboutViewController: NSViewController {
         versionString.append(" (\(currentBuild))".styled(.weak, font: .themeFont(bold: true), alignment: .left))
 
         imageHeader.image = Theme.Asset.vpnWordmarkAlwaysDark.image
-        versionTitleLabel.attributedStringValue = LocalizedString.versionCurrent.styled(alignment: .left)
+        versionTitleLabel.attributedStringValue = Localizable.versionCurrent.styled(alignment: .left)
         versionLabel.attributedStringValue = versionString
                             
-        dateTitleLabel.attributedStringValue = LocalizedString.releaseDate.styled(alignment: .left)
+        dateTitleLabel.attributedStringValue = Localizable.releaseDate.styled(alignment: .left)
         dateLabel.attributedStringValue = currentVersionReleaseDate.styled(font: .themeFont(bold: true), alignment: .left)
 
-        acknowledgementsButton.title = LocalizedString.acknowledgements
+        acknowledgementsButton.title = Localizable.acknowledgements
         
-        changelogLabel.attributedStringValue = LocalizedString.changelog.styled(font: .themeFont(.heading3, bold: true), alignment: .left)
+        changelogLabel.attributedStringValue = Localizable.changelog.styled(font: .themeFont(.heading3, bold: true), alignment: .left)
 
         DarkAppearance {
             webView.layer?.backgroundColor = .cgColor(.background)
@@ -109,16 +110,16 @@ class AboutViewController: NSViewController {
     // MARK: - Texts
     
     private var currentVersion: String {
-        return updateManager.currentVersion ?? LocalizedString.unavailable.lowercased()
+        return updateManager.currentVersion ?? Localizable.unavailable.lowercased()
     }
     
     private var currentBuild: String {
-        return updateManager.currentBuild ?? LocalizedString.unavailable.lowercased()
+        return updateManager.currentBuild ?? Localizable.unavailable.lowercased()
     }
     
     private var currentVersionReleaseDate: String {
         guard let currentDate = updateManager.currentVersionReleaseDate else {
-            return LocalizedString.unavailable.lowercased()
+            return Localizable.unavailable.lowercased()
         }
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .short

@@ -22,7 +22,7 @@
 
 import Cocoa
 import SDWebImage
-import vpncore
+import LegacyCommon
 import Ergonomics
 
 final class AnnouncementDetailViewController: NSViewController {

@@ -17,8 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Cocoa
-import vpncore
+import LegacyCommon
 import Ergonomics
+import Strings
 
 final class AdvancedSettingsViewController: NSViewController, ReloadableViewController {
 
@@ -55,30 +56,30 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
     }
 
     private func setupAlternativeRoutingItem() {
-        let tooltip = LocalizedString.troubleshootItemAltDescription
-            .replacingOccurrences(of: LocalizedString.troubleshootItemAltLink1, with: "")
+        let tooltip = Localizable.troubleshootItemAltDescription
+            .replacingOccurrences(of: Localizable.troubleshootItemAltLink1, with: "")
             .trimmingCharacters(in: .whitespacesAndNewlines)
 
-        let model = SettingsTickboxView.ViewModel(labelText: LocalizedString.troubleshootItemAltTitle, buttonState: viewModel.alternativeRouting, toolTip: String(tooltip))
+        let model = SettingsTickboxView.ViewModel(labelText: Localizable.troubleshootItemAltTitle, buttonState: viewModel.alternativeRouting, toolTip: String(tooltip))
 
         alternativeRoutingView.setupItem(model: model, delegate: self)
     }
 
     private func setupNatTypeItem() {
         natTypeView.isHidden = !viewModel.isNATTypeFeatureEnabled
-        let tooltip = LocalizedString.moderateNatExplanation
-            .replacingOccurrences(of: LocalizedString.moderateNatExplanationLink, with: "")
+        let tooltip = Localizable.moderateNatExplanation
+            .replacingOccurrences(of: Localizable.moderateNatExplanationLink, with: "")
             .trimmingCharacters(in: .whitespacesAndNewlines)
 
-        let model = SettingsTickboxView.ViewModel(labelText: LocalizedString.moderateNatTitle, buttonState: viewModel.natType == .moderateNAT, toolTip: String(tooltip))
+        let model = SettingsTickboxView.ViewModel(labelText: Localizable.moderateNatTitle, buttonState: viewModel.natType == .moderateNAT, toolTip: String(tooltip))
 
         natTypeView.setupItem(model: model, delegate: self)
     }
 
     private func setupUsageDataTypeItem() {
         usageDataView.isHidden = !viewModel.isTelemetryFeatureEnabled
-        let tooltip = LocalizedString.settingsMacUsageStatsTooltip
-        let model = SettingsTickboxView.ViewModel(labelText: LocalizedString.settingsMacUsageStatsTitle,
+        let tooltip = Localizable.settingsMacUsageStatsTooltip
+        let model = SettingsTickboxView.ViewModel(labelText: Localizable.settingsMacUsageStatsTitle,
                                                   buttonState: viewModel.usageData,
                                                   toolTip: String(tooltip))
 
@@ -87,8 +88,8 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
 
     private func setupCrashReportsTypeItem() {
         crashReportsView.isHidden = !viewModel.isTelemetryFeatureEnabled
-        let tooltip = LocalizedString.settingsMacCrashReportsTooltip
-        let model = SettingsTickboxView.ViewModel(labelText: LocalizedString.settingsMacCrashReportsTitle,
+        let tooltip = Localizable.settingsMacCrashReportsTooltip
+        let model = SettingsTickboxView.ViewModel(labelText: Localizable.settingsMacCrashReportsTitle,
                                                   buttonState: viewModel.crashReports,
                                                   toolTip: String(tooltip))
 
@@ -97,12 +98,12 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
 
     private func setupSafeModeItem() {
         safeModeView.isHidden = !viewModel.isSafeModeFeatureEnabled
-        let tooltip = LocalizedString.nonStandardPortsExplanation
-            .replacingOccurrences(of: LocalizedString.nonStandardPortsExplanationLink, with: "")
+        let tooltip = Localizable.nonStandardPortsExplanation
+            .replacingOccurrences(of: Localizable.nonStandardPortsExplanationLink, with: "")
             .trimmingCharacters(in: .whitespacesAndNewlines)
 
         // Non-standars ports are enabled when Safe Mode is disabled
-        let model = SettingsTickboxView.ViewModel(labelText: LocalizedString.nonStandardPortsTitle, buttonState: !viewModel.safeMode, toolTip: String(tooltip))
+        let model = SettingsTickboxView.ViewModel(labelText: Localizable.nonStandardPortsTitle, buttonState: !viewModel.safeMode, toolTip: String(tooltip))
 
         safeModeView.setupItem(model: model, delegate: self)
     }

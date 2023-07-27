@@ -28,6 +28,7 @@ import ProtonCoreUIFoundations
 import VPNShared
 import LocalFeatureFlags
 import Home
+import Strings
 
 class StatusViewModel {
     
@@ -143,15 +144,15 @@ class StatusViewModel {
     private var connectionStatusCell: TableViewCellModel {
         switch appStateManager.displayState {
         case .connected:
-            return .textWithActivityCell(title: LocalizedString.connectedToVpn(connectionCountryString), textColor: .normalTextColor(), backgroundColor: .brandColor(), showActivity: false)
+            return .textWithActivityCell(title: Localizable.connectedToVpn(connectionCountryString), textColor: .normalTextColor(), backgroundColor: .brandColor(), showActivity: false)
         case .connecting:
-            return .textWithActivityCell(title: LocalizedString.connectingTo(connectionCountryString), textColor: .notificationWarningColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: true)
+            return .textWithActivityCell(title: Localizable.connectingTo(connectionCountryString), textColor: .notificationWarningColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: true)
         case .loadingConnectionInfo:
-            return .textWithActivityCell(title: LocalizedString.loadingConnectionInfoFor(connectionCountryString), textColor: .normalTextColor(), backgroundColor: .brandColor(), showActivity: true)
+            return .textWithActivityCell(title: Localizable.loadingConnectionInfoFor(connectionCountryString), textColor: .normalTextColor(), backgroundColor: .brandColor(), showActivity: true)
         case .disconnecting:
-            return .textWithActivityCell(title: LocalizedString.disconnecting, textColor: .notificationWarningColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: true)
+            return .textWithActivityCell(title: Localizable.disconnecting, textColor: .notificationWarningColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: true)
         case .disconnected:
-            return .textWithActivityCell(title: LocalizedString.notConnected, textColor: .notificationErrorColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: false)
+            return .textWithActivityCell(title: Localizable.notConnected, textColor: .notificationErrorColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: false)
         }
     }
     
@@ -171,44 +172,44 @@ class StatusViewModel {
         let city = appStateManager.activeConnection()?.server.city != nil ? " - \(appStateManager.activeConnection()?.server.city ?? "")" : ""
         
         let cells: [TableViewCellModel] = [
-            .staticKeyValue(key: LocalizedString.ip, value: activeConnection?.serverIp.exitIp ?? ""),
-            .staticKeyValue(key: LocalizedString.server, value: (activeConnection?.server.name ?? "") + city),
-            .staticKeyValue(key: LocalizedString.protocol, value: activeConnection?.vpnProtocol.localizedString ?? ""),
+            .staticKeyValue(key: Localizable.ip, value: activeConnection?.serverIp.exitIp ?? ""),
+            .staticKeyValue(key: Localizable.server, value: (activeConnection?.server.name ?? "") + city),
+            .staticKeyValue(key: Localizable.protocol, value: activeConnection?.vpnProtocol.localizedString ?? ""),
             timeCell
         ]
         
-        return TableViewSection(title: LocalizedString.technicalDetails, cells: cells)
+        return TableViewSection(title: Localizable.technicalDetails, cells: cells)
     }
     
     private var timeCell: TableViewCellModel {
-        .staticKeyValue(key: LocalizedString.sessionTime, value: currentTime)
+        .staticKeyValue(key: Localizable.sessionTime, value: currentTime)
     }
     
     private var technicalDetailsSectionDisconnected: TableViewSection {
         let cells: [TableViewCellModel] = [
-            .staticKeyValue(key: LocalizedString.ip, value: propertiesManager.userLocation?.ip ?? LocalizedString.unavailable),
-            .staticKeyValue(key: LocalizedString.server, value: LocalizedString.notConnected),
+            .staticKeyValue(key: Localizable.ip, value: propertiesManager.userLocation?.ip ?? Localizable.unavailable),
+            .staticKeyValue(key: Localizable.server, value: Localizable.notConnected),
         ]
         
-        return TableViewSection(title: LocalizedString.technicalDetails, cells: cells)
+        return TableViewSection(title: Localizable.technicalDetails, cells: cells)
     }
 
     private var technicalDetailsSectionConnecting: TableViewSection {
         let cells: [TableViewCellModel] = [
-            .staticKeyValue(key: LocalizedString.ip, value: propertiesManager.userLocation?.ip ?? LocalizedString.unavailable),
-            .staticKeyValue(key: LocalizedString.server, value: LocalizedString.connecting),
+            .staticKeyValue(key: Localizable.ip, value: propertiesManager.userLocation?.ip ?? Localizable.unavailable),
+            .staticKeyValue(key: Localizable.server, value: Localizable.connecting),
         ]
 
-        return TableViewSection(title: LocalizedString.technicalDetails, cells: cells)
+        return TableViewSection(title: Localizable.technicalDetails, cells: cells)
     }
 
     private var technicalDetailsSectionLoadingConnectionInfo: TableViewSection {
         let cells: [TableViewCellModel] = [
-            .staticKeyValue(key: LocalizedString.ip, value: propertiesManager.userLocation?.ip ?? LocalizedString.unavailable),
-            .staticKeyValue(key: LocalizedString.server, value: LocalizedString.loadingConnectionInfo),
+            .staticKeyValue(key: Localizable.ip, value: propertiesManager.userLocation?.ip ?? Localizable.unavailable),
+            .staticKeyValue(key: Localizable.server, value: Localizable.loadingConnectionInfo),
         ]
 
-        return TableViewSection(title: LocalizedString.technicalDetails, cells: cells)
+        return TableViewSection(title: Localizable.technicalDetails, cells: cells)
     }
     
     // MARK: - Save as Profile
@@ -227,14 +228,14 @@ class StatusViewModel {
             connectionRequest(for: profile) == vpnGateway.lastConnectionRequest
         }
         if contains {
-            cell = .button(title: LocalizedString.deleteProfile,
+            cell = .button(title: Localizable.deleteProfile,
                            accessibilityIdentifier: "Delete Profile",
                            color: .notificationErrorColor(),
                            handler: { [deleteProfile] in
                 deleteProfile()
             })
         } else {
-            cell = .button(title: LocalizedString.saveAsProfile,
+            cell = .button(title: Localizable.saveAsProfile,
                            accessibilityIdentifier: "Save as Profile",
                            color: .normalTextColor(),
                            handler: { [saveAsProfile] in
@@ -249,7 +250,7 @@ class StatusViewModel {
         guard let server = appStateManager.activeConnection()?.server,
               profileManager.profile(withServer: server) == nil else {
             log.error("Could not create profile because matching profile already exists", category: .ui)
-            messageHandler?(LocalizedString.profileCreatedSuccessfully,
+            messageHandler?(Localizable.profileCreatedSuccessfully,
                             GSMessageType.success,
                             UIConstants.messageOptions)
             DispatchQueue.main.async { self.contentChanged?() }
@@ -258,7 +259,7 @@ class StatusViewModel {
         
         let vpnProtocol = appStateManager.activeConnection()?.vpnProtocol ?? propertiesManager.vpnProtocol
         _ = profileManager.createProfile(withServer: server, vpnProtocol: vpnProtocol, netShield: appStateManager.activeConnection()?.netShieldType)
-        messageHandler?(LocalizedString.profileCreatedSuccessfully,
+        messageHandler?(Localizable.profileCreatedSuccessfully,
                         GSMessageType.success,
                         UIConstants.messageOptions)
         DispatchQueue.main.async { self.contentChanged?() }
@@ -268,7 +269,7 @@ class StatusViewModel {
         guard let server = appStateManager.activeConnection()?.server,
               let existingProfile = profileManager.profile(withServer: server) else {
             log.error("Could not find profile to delete", category: .ui)
-            messageHandler?(LocalizedString.profileDeletionFailed,
+            messageHandler?(Localizable.profileDeletionFailed,
                             GSMessageType.error,
                             UIConstants.messageOptions)
             DispatchQueue.main.async { self.contentChanged?() }
@@ -276,7 +277,7 @@ class StatusViewModel {
         }
         
         profileManager.deleteProfile(existingProfile)
-        messageHandler?(LocalizedString.profileDeletedSuccessfully,
+        messageHandler?(Localizable.profileDeletedSuccessfully,
                         GSMessageType.success,
                         UIConstants.messageOptions)
         DispatchQueue.main.async { self.contentChanged?() }
@@ -344,7 +345,7 @@ class StatusViewModel {
 
     private var netShieldV1Section: TableViewSection {
         let cells = netShieldPropertyProvider.isUserEligibleForNetShield ? netShieldV1Cells : netShieldV1UnavailableCells
-        return TableViewSection(title: LocalizedString.netshieldSectionTitle, cells: cells)
+        return TableViewSection(title: Localizable.netshieldSectionTitle, cells: cells)
     }
 
     private var netShieldV1Cells: [TableViewCellModel] {
@@ -361,14 +362,14 @@ class StatusViewModel {
 
         var cells = [TableViewCellModel]()
 
-        cells.append(.toggle(title: LocalizedString.netshieldTitle, on: { isNetShieldOn }, enabled: true, handler: { (toggleOn, _) in
+        cells.append(.toggle(title: Localizable.netshieldTitle, on: { isNetShieldOn }, enabled: true, handler: { (toggleOn, _) in
             self.changeNetShield(to: toggleOn ? self.netShieldPropertyProvider.lastActiveNetShieldType : .off) { _ in }
         }))
 
         if isNetShieldOn {
             [NetShieldType.level1, NetShieldType.level2].forEach { type in
                 guard !type.isUserTierTooLow(userTier) else {
-                    cells.append(.invertedKeyValue(key: type.name, value: LocalizedString.upgrade, handler: { [weak self] in
+                    cells.append(.invertedKeyValue(key: type.name, value: Localizable.upgrade, handler: { [weak self] in
                         self?.alertService.push(alert: NetShieldUpsellAlert())
                     }))
                     return
@@ -386,7 +387,7 @@ class StatusViewModel {
     private var netShieldV1UnavailableCells: [TableViewCellModel] {
         var cells = [TableViewCellModel]()
 
-        cells.append(.attributedKeyValue(key: LocalizedString.netshieldTitle.attributed(withColor: UIColor.normalTextColor(), font: UIFont.systemFont(ofSize: 17)), value: LocalizedString.upgrade.attributed(withColor: .brandColor(), font: UIFont.systemFont(ofSize: 17)), handler: { [weak self] in
+        cells.append(.attributedKeyValue(key: Localizable.netshieldTitle.attributed(withColor: UIColor.normalTextColor(), font: UIFont.systemFont(ofSize: 17)), value: Localizable.upgrade.attributed(withColor: .brandColor(), font: UIFont.systemFont(ofSize: 17)), handler: { [weak self] in
             self?.alertService.push(alert: NetShieldUpsellAlert())
         }))
 
@@ -420,8 +421,8 @@ class StatusViewModel {
 
     private var netShieldV2UpsellBannerCell: TableViewCellModel {
         return .imageSubtitle(
-            title: LocalizedString.netshieldUpsellTitle,
-            subtitle: LocalizedString.netshieldUpsellSubtitle,
+            title: Localizable.netshieldUpsellTitle,
+            subtitle: Localizable.netshieldUpsellSubtitle,
             image: Asset.netshieldSmall.image,
             handler: { [weak self] in self?.alertService.push(alert: NetShieldUpsellAlert()) }
         )
@@ -434,8 +435,8 @@ class StatusViewModel {
         let currentNetShieldType = (isConnected ? activeConnection?.netShieldType : netShieldPropertyProvider.netShieldType) ?? .off
 
         return .pushKeyValue(
-            key: LocalizedString.netshieldTitle,
-            value: currentNetShieldType == .off ? LocalizedString.netshieldOff : LocalizedString.netshieldOn,
+            key: Localizable.netshieldTitle,
+            value: currentNetShieldType == .off ? Localizable.netshieldOff : Localizable.netshieldOn,
             icon: currentNetShieldType.icon,
             handler: { [weak self] in self?.pushNetshieldSelectionViewController() }
         )
@@ -443,7 +444,7 @@ class StatusViewModel {
 
     private func pushNetshieldSelectionViewController() {
         let viewModel = NetShieldSelectionViewModel(
-            title: LocalizedString.netshieldTitle,
+            title: Localizable.netshieldTitle,
             allFeatures: NetShieldType.allCases,
             selectedFeature: netShieldPropertyProvider.netShieldType,
             factory: factory,

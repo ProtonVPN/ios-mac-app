@@ -20,7 +20,7 @@ import Foundation
 import AppKit
 import Theme
 
-protocol TickboxViewDelegate: class {
+protocol TickboxViewDelegate: AnyObject {
     func toggleTickbox(_ tickboxView: SettingsTickboxView, to value: ButtonState)
 }
 

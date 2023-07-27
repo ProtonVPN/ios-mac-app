@@ -22,7 +22,7 @@
 
 import Foundation
 import Cocoa
-import vpncore
+import LegacyCommon
 import Ergonomics
 
 final class TroubleshootingRowItem: NSTableRowView {

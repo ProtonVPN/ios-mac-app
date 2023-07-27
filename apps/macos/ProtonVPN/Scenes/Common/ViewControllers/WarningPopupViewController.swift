@@ -21,8 +21,9 @@
 //
 
 import Cocoa
-import vpncore
+import LegacyCommon
 import Ergonomics
+import Strings
 
 class WarningPopupViewController: NSViewController {
 
@@ -77,12 +78,12 @@ class WarningPopupViewController: NSViewController {
             footerView.layer?.backgroundColor = .cgColor(.background, .weak)
         }
         
-        cancelButton.title = LocalizedString.cancel
+        cancelButton.title = Localizable.cancel
         cancelButton.fontSize = .paragraph
         cancelButton.target = self
         cancelButton.action = #selector(cancelButtonAction)
         
-        continueButton.title = LocalizedString.continue
+        continueButton.title = Localizable.continue
         continueButton.fontSize = .paragraph
         continueButton.target = self
         continueButton.action = #selector(continueButtonAction)

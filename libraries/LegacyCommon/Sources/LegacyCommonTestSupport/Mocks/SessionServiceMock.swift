@@ -20,17 +20,17 @@ import Foundation
 import LegacyCommon
 import VPNShared
 
-class SessionServiceMock: SessionService {
-    var sessionCookie: HTTPCookie?
-    var accountHost: URL = URL(string: "https://accountHost.com")!
+public class SessionServiceMock: SessionService {
+    public var sessionCookie: HTTPCookie?
+    public var accountHost: URL = URL(string: "https://accountHost.com")!
 
-    var getSelectorCallback: (Result<String, Error>)?
+    public var getSelectorCallback: (Result<String, Error>)?
 
-    func clientSessionId(forContext context: AppContext) -> String {
+    public func clientSessionId(forContext context: AppContext) -> String {
         return context.rawValue
     }
 
-    func getSelector(clientId: String, independent: Bool, timeout: TimeInterval?) async throws -> String {
+    public func getSelector(clientId: String, independent: Bool, timeout: TimeInterval?) async throws -> String {
         switch getSelectorCallback {
         case .success(let selector):
             return selector
@@ -40,4 +40,6 @@ class SessionServiceMock: SessionService {
             return "SELECTOR"
         }
     }
+
+    public init() {}
 }
