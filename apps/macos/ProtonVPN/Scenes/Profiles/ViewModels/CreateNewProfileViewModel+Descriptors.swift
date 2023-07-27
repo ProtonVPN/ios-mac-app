@@ -24,6 +24,7 @@ import Foundation
 import LegacyCommon
 import AppKit
 import Theme
+import Strings
 
 extension CreateNewProfileViewModel {
     private var fontSize: AppTheme.FontSize {
@@ -53,7 +54,7 @@ extension CreateNewProfileViewModel {
             )
         } else {
             nameAttributedString = NSMutableAttributedString(
-                string: countryString + " (\(LocalizedString.upgradeRequired))",
+                string: countryString + " (\(Localizable.upgradeRequired))",
                 attributes: [
                     .font: NSFont.themeFont(fontSize),
                     .baselineOffset: baselineOffset,
@@ -69,9 +70,9 @@ extension CreateNewProfileViewModel {
         case .custom(let serverWrapper):
             return serverDescriptor(for: serverWrapper.server)
         case .fastest:
-            return defaultServerDescriptor(image: AppTheme.Icon.bolt, name: LocalizedString.fastest)
+            return defaultServerDescriptor(image: AppTheme.Icon.bolt, name: Localizable.fastest)
         case .random:
-            return defaultServerDescriptor(image: AppTheme.Icon.arrowsSwapRight, name: LocalizedString.random)
+            return defaultServerDescriptor(image: AppTheme.Icon.arrowsSwapRight, name: Localizable.random)
         }
     }
     
@@ -110,7 +111,7 @@ extension CreateNewProfileViewModel {
                 )
             } else {
                 serverDescriptor = NSMutableAttributedString(
-                    string: serverString + " (\(LocalizedString.upgradeRequired))",
+                    string: serverString + " (\(Localizable.upgradeRequired))",
                     attributes: [
                         .font: NSFont.themeFont(fontSize),
                         .baselineOffset: baselineOffset,

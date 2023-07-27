@@ -19,6 +19,7 @@
 import AppKit
 import LegacyCommon
 import ProtonCoreUIFoundations
+import Strings
 
 protocol TwoFactorDelegate: WarningViewDelegate {
     func twoFactorButtonAction(code: String)
@@ -71,7 +72,7 @@ final class TwoFactorView: NSView {
         twoFactorTextField.delegate = self
         twoFactorTextField.textColor = .color(.text)
         twoFactorTextField.font = .themeFont(.paragraph)
-        twoFactorTextField.placeholderAttributedString = LocalizedString.twoFactorCode.styled(.weak, font: .themeFont(.small), alignment: .left)
+        twoFactorTextField.placeholderAttributedString = Localizable.twoFactorCode.styled(.weak, font: .themeFont(.small), alignment: .left)
         twoFactorTextField.usesSingleLineMode = true
         twoFactorTextField.setAccessibilityIdentifier("twoFactorTextField")
 
@@ -79,13 +80,13 @@ final class TwoFactorView: NSView {
         twoFactorButton.target = self
         twoFactorButton.action = #selector(twoFactorButtonAction)
 
-        twoFactorButton.displayTitle = LocalizedString.authenticate
+        twoFactorButton.displayTitle = Localizable.authenticate
 
-        twoFactorModeButton.title = LocalizedString.useRecoveryCode
+        twoFactorModeButton.title = Localizable.useRecoveryCode
         twoFactorModeButton.target = self
         twoFactorModeButton.action = #selector(switchTwoFactorModeAction)
 
-        twoFactorTitle.stringValue = LocalizedString.twoFactorAuthentication
+        twoFactorTitle.stringValue = Localizable.twoFactorAuthentication
         twoFactorTitle.textColor = .color(.text)
 
         backButton.target = self
@@ -107,8 +108,8 @@ final class TwoFactorView: NSView {
     }
 
     @objc func switchTwoFactorModeAction() {
-        twoFactorModeButton.title = isRecoveryCodeMode ? LocalizedString.useTwoFactorCode : LocalizedString.useRecoveryCode
-        twoFactorTextField.placeholderString = isRecoveryCodeMode ? LocalizedString.recoveryCode : LocalizedString.twoFactorCode
+        twoFactorModeButton.title = isRecoveryCodeMode ? Localizable.useTwoFactorCode : Localizable.useRecoveryCode
+        twoFactorTextField.placeholderString = isRecoveryCodeMode ? Localizable.recoveryCode : Localizable.twoFactorCode
 
         isRecoveryCodeMode.toggle()
     }

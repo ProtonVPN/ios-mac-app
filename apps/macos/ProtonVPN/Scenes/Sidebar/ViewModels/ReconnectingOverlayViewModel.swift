@@ -21,6 +21,7 @@
 //
 
 import LegacyCommon
+import Strings
 
 class ReconnectingOverlayViewModel: ConnectingOverlayViewModel {
     override var secondString: NSAttributedString {
@@ -29,7 +30,7 @@ class ReconnectingOverlayViewModel: ConnectingOverlayViewModel {
         case .connected, .error, .disconnected:
             return super.secondString
         default:
-            return (LocalizedString.reestablishVpnConnection + "\n\n" + LocalizedString.ipWillNotBeExposed)
+            return (Localizable.reestablishVpnConnection + "\n\n" + Localizable.ipWillNotBeExposed)
                 .styled(font: .themeFont(.heading2))
         }
     }
@@ -37,9 +38,9 @@ class ReconnectingOverlayViewModel: ConnectingOverlayViewModel {
     override var firstString: NSAttributedString {
         switch appState {
         case .connected:
-            return LocalizedString.successfullyConnected.styled(font: .themeFont(.small))
+            return Localizable.successfullyConnected.styled(font: .themeFont(.small))
         default:
-            return LocalizedString.applyingSettings.styled(font: .themeFont(literalSize: 15))
+            return Localizable.applyingSettings.styled(font: .themeFont(literalSize: 15))
         }
     }
 }

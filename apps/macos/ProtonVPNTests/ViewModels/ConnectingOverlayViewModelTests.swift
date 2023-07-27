@@ -88,7 +88,7 @@ class ConnectingOverlayViewModelTests: XCTestCase {
         
         let buttons = viewModel.buttons
         XCTAssert(buttons.count == 1)
-        XCTAssert(buttons[0].0 == LocalizedString.cancel)
+        XCTAssert(buttons[0].0 == Localizable.cancel)
     }
     
     func testWhenAppStateIsConnectingCancelButtonIsShown() throws {
@@ -96,7 +96,7 @@ class ConnectingOverlayViewModelTests: XCTestCase {
         
         let buttons = viewModel.buttons
         XCTAssert(buttons.count == 1)
-        XCTAssert(buttons[0].0 == LocalizedString.cancel)
+        XCTAssert(buttons[0].0 == Localizable.cancel)
     }
     
     func testWhenAppStateIsConnnectedDoneButtonIsShown() throws {
@@ -104,7 +104,7 @@ class ConnectingOverlayViewModelTests: XCTestCase {
         
         let buttons = viewModel.buttons
         XCTAssert(buttons.count == 1)
-        XCTAssert(buttons[0].0 == LocalizedString.done)
+        XCTAssert(buttons[0].0 == Localizable.done)
     }
     
     func testWhenAppStateIsDisconnectingCancelButtonIsShown() throws {
@@ -112,7 +112,7 @@ class ConnectingOverlayViewModelTests: XCTestCase {
         
         let buttons = viewModel.buttons
         XCTAssert(buttons.count == 1)
-        XCTAssert(buttons[0].0 == LocalizedString.cancel)
+        XCTAssert(buttons[0].0 == Localizable.cancel)
     }
     
     func testWhenAppStateIsErrorCancelButtonIsShown() throws {
@@ -120,7 +120,7 @@ class ConnectingOverlayViewModelTests: XCTestCase {
         
         let buttons = viewModel.buttons
         XCTAssert(buttons.count == 1)
-        XCTAssert(buttons[0].0 == LocalizedString.cancel)
+        XCTAssert(buttons[0].0 == Localizable.cancel)
     }
     
     func testWhenAppStateIsAbortedRetryAndCancelButtonsAreShown() throws {
@@ -128,8 +128,8 @@ class ConnectingOverlayViewModelTests: XCTestCase {
         
         let buttons = viewModel.buttons
         XCTAssert(buttons.count == 2)
-        XCTAssert(buttons[0].0 == LocalizedString.tryAgain)
-        XCTAssert(buttons[1].0 == LocalizedString.cancel)
+        XCTAssert(buttons[0].0 == Localizable.tryAgain)
+        XCTAssert(buttons[1].0 == Localizable.cancel)
     }
     
     func testWhenAppStateIsAbortedAndIkev2AndKSAreDetectedDisableKSAndSwitchToOpenVpnAreShown() throws {
@@ -138,9 +138,9 @@ class ConnectingOverlayViewModelTests: XCTestCase {
         
         let buttons = viewModel.buttons
         XCTAssert(buttons.count == 3)
-        XCTAssert(buttons[0].0 == LocalizedString.timeoutKsIkeSwitchProtocol)
-        XCTAssert(buttons[1].0 == LocalizedString.tryAgainWithoutKillswitch)
-        XCTAssert(buttons[2].0 == LocalizedString.cancel)
+        XCTAssert(buttons[0].0 == Localizable.timeoutKsIkeSwitchProtocol)
+        XCTAssert(buttons[1].0 == Localizable.tryAgainWithoutKillswitch)
+        XCTAssert(buttons[2].0 == Localizable.cancel)
     }
 
 }

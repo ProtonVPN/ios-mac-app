@@ -27,6 +27,7 @@ import Modals
 import Modals_macOS
 import VPNShared
 import Theme
+import Strings
 
 final class MacAlertService {
     
@@ -227,7 +228,7 @@ extension MacAlertService: CoreAlertService {
     
     private func showDefaultSystemAlert(_ alert: SystemAlert) {
         if alert.actions.isEmpty {
-            alert.actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
+            alert.actions.append(AlertAction(title: Localizable.ok, style: .confirmative, handler: nil))
         }
         uiAlertService.displayAlert(alert)
     }
@@ -248,10 +249,10 @@ extension MacAlertService: CoreAlertService {
     }
     
     private func show(_ alert: AppUpdateRequiredAlert) {
-        let supportAction = AlertAction(title: LocalizedString.updateRequiredSupport, style: .confirmative) {
+        let supportAction = AlertAction(title: Localizable.updateRequiredSupport, style: .confirmative) {
             SafariService().open(url: CoreAppConstants.ProtonVpnLinks.supportForm)
         }
-        let updateAction = AlertAction(title: LocalizedString.updateRequiredUpdate, style: .confirmative) {
+        let updateAction = AlertAction(title: Localizable.updateRequiredUpdate, style: .confirmative) {
             self.updateManager.startUpdate()
         }
         
@@ -263,7 +264,7 @@ extension MacAlertService: CoreAlertService {
     
     private func show(_ alert: CannotAccessVpnCredentialsAlert) {
         guard appSessionManager.sessionStatus == .established else { return } // already logged out
-        appSessionManager.logOut(force: true, reason: LocalizedString.errorSignInAgain)
+        appSessionManager.logOut(force: true, reason: Localizable.errorSignInAgain)
     }
 
     private func show(_ alert: SystemExtensionTourAlert) {
@@ -273,17 +274,17 @@ extension MacAlertService: CoreAlertService {
     private func show(_ alert: P2pForwardedAlert) {
         let p2pIcon = AppTheme.Icon.arrowsSwitch.asAttachment(size: .rect(width: 15, height: 12))
         
-        let bodyP1 = (LocalizedString.p2pForwardedPopupBodyP1 + " ").styled(alignment: .natural)
-        let bodyP2 = (" " + LocalizedString.p2pForwardedPopupBodyP2).styled(alignment: .natural)
+        let bodyP1 = (Localizable.p2pForwardedPopupBodyP1 + " ").styled(alignment: .natural)
+        let bodyP2 = (" " + Localizable.p2pForwardedPopupBodyP2).styled(alignment: .natural)
         let body = NSAttributedString.concatenate(bodyP1, p2pIcon, bodyP2)
         
-        alert.actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
+        alert.actions.append(AlertAction(title: Localizable.ok, style: .confirmative, handler: nil))
         
         uiAlertService.displayAlert(alert, message: body)
     }
     
     private func show(_ alert: RefreshTokenExpiredAlert) {
-        appSessionManager.logOut(force: true, reason: LocalizedString.invalidRefreshTokenPleaseLogin)
+        appSessionManager.logOut(force: true, reason: Localizable.invalidRefreshTokenPleaseLogin)
     }
 
     private func show(_ alert: VpnServerOnMaintenanceAlert) {

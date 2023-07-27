@@ -22,6 +22,7 @@
 
 import Cocoa
 import LegacyCommon
+import Strings
 
 class TourViewController: NSViewController {
 
@@ -32,20 +33,20 @@ class TourViewController: NSViewController {
     @IBOutlet weak var nextButton: TourNextButton!
     
     private let titles = [
-        LocalizedString.quickConnectTourTitle,
-        LocalizedString.profilesTourTitle,
-        LocalizedString.countriesTourTitle,
-        LocalizedString.quickSettingsTourTitle
+        Localizable.quickConnectTourTitle,
+        Localizable.profilesTourTitle,
+        Localizable.countriesTourTitle,
+        Localizable.quickSettingsTourTitle
     ]
     
     private let descriptions = [
-        LocalizedString.quickConnectTourDescription,
-        LocalizedString.profilesTourDescription,
-        LocalizedString.countriesTourDescription,
-        LocalizedString.quickSettingsTourDescription
-            + "\n• " + LocalizedString.quickSettingsTourFeature1
-            + "\n• " + LocalizedString.quickSettingsTourFeature2
-            + "\n• " + LocalizedString.quickSettingsTourFeature3
+        Localizable.quickConnectTourDescription,
+        Localizable.profilesTourDescription,
+        Localizable.countriesTourDescription,
+        Localizable.quickSettingsTourDescription
+            + "\n• " + Localizable.quickSettingsTourFeature1
+            + "\n• " + Localizable.quickSettingsTourFeature2
+            + "\n• " + Localizable.quickSettingsTourFeature3
     ]
     
     private let previous: (() -> Void)
@@ -75,7 +76,7 @@ class TourViewController: NSViewController {
         pageNumberLabel.attributedStringValue = "\(page)".styled()
         
         previousButton.isHidden = page == 1 // hide back button on first page
-        nextButton.title = page == titles.count ? LocalizedString.endTour : LocalizedString.nextTip
+        nextButton.title = page == titles.count ? Localizable.endTour : Localizable.nextTip
         nextButton.showArrow = page != titles.count
         
         titleLabel.attributedStringValue = titles[page - 1].styled(alignment: .left)
@@ -85,7 +86,7 @@ class TourViewController: NSViewController {
         
         if page == quickSettingStep {
             descriptionLabel.attributedStringValue = descriptionLabel.attributedStringValue.applyStyle(
-                for: [LocalizedString.secureCore, LocalizedString.netshieldTitle, LocalizedString.killSwitch],
+                for: [Localizable.secureCore, Localizable.netshieldTitle, Localizable.killSwitch],
                 attrs: [.font: NSFont.boldSystemFont(ofSize: 12)]
             )
         }

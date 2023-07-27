@@ -22,6 +22,7 @@ import SwiftUI
 import AVKit
 import ProtonCoreUIFoundations
 import LegacyCommon
+import Strings
 
 struct SystemExtensionTutorialView: View {
 
@@ -50,15 +51,15 @@ struct SystemExtensionTutorialView: View {
     var descriptionView: some View {
         HStack(alignment: .center, spacing: 32) {
             VStack(alignment: .leading, spacing: 16) {
-                descriptionWithMarkdown(localised: LocalizedString.sysexDescription1)
+                descriptionWithMarkdown(localised: Localizable.sysexDescription1)
                     .foregroundColor(.init(NSColor.color(.text)))
-                descriptionWithMarkdown(localised: LocalizedString.sysexDescription2)
+                descriptionWithMarkdown(localised: Localizable.sysexDescription2)
                     .foregroundColor(.init(NSColor.color(.text)))
                 if #available(macOS 13, *) {
-                    descriptionWithMarkdown(localised: LocalizedString.sysexDescription3)
+                    descriptionWithMarkdown(localised: Localizable.sysexDescription3)
                         .foregroundColor(.init(NSColor.color(.text)))
                 } else {
-                    descriptionWithMarkdown(localised: LocalizedString.sysexDescription4)
+                    descriptionWithMarkdown(localised: Localizable.sysexDescription4)
                         .foregroundColor(.init(NSColor.color(.text)))
                 }
             }
@@ -76,7 +77,7 @@ struct SystemExtensionTutorialView: View {
 
     var videoView: some View {
         return VStack(alignment: .center, spacing: 32) {
-            Text(LocalizedString.sysexSetUpProtonVpn)
+            Text(Localizable.sysexSetUpProtonVpn)
                 .foregroundColor(.init(NSColor.color(.text)))
                 .font(.system(size: 22, weight: .bold))
             descriptionView
@@ -85,16 +86,16 @@ struct SystemExtensionTutorialView: View {
                     NSWorkspace.shared.open(URL(string: Self.securityPreferencesUrlString)!)
                 } label: {
                     if #available(macOS 13, *) {
-                        Text(LocalizedString.sysexOpenSystemSettings)
+                        Text(Localizable.sysexOpenSystemSettings)
                     } else {
-                        Text(LocalizedString.sysexOpenSecurityPreferences)
+                        Text(Localizable.sysexOpenSecurityPreferences)
                     }
                 }
                 .buttonStyle(PrimaryButtonStyle())
                 Button {
                     SafariService().open(url: CoreAppConstants.ProtonVpnLinks.systemExtensionsInstallationHelp)
                 } label: {
-                    Text(LocalizedString.needHelp)
+                    Text(Localizable.needHelp)
                 }
                 .buttonStyle(LinkButtonStyle())
             }

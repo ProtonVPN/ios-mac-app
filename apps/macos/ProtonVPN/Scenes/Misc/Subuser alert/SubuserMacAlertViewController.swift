@@ -18,6 +18,7 @@
 
 import Cocoa
 import LegacyCommon
+import Strings
 
 final class SubuserMacAlertViewController: NSViewController {
     
@@ -51,23 +52,23 @@ final class SubuserMacAlertViewController: NSViewController {
     
     override func viewWillAppear() {
         super.viewWillAppear()
-        view.window?.applyModalAppearance(withTitle: LocalizedString.subuserAlertTitle)
+        view.window?.applyModalAppearance(withTitle: Localizable.subuserAlertTitle)
     }
     
     private func setupTranslations() {
-        titleView.stringValue = LocalizedString.subuserAlertTitle
+        titleView.stringValue = Localizable.subuserAlertTitle
 
         if role == .organizationAdmin {
-            assignConnectionsButton.title = LocalizedString.subuserAlertEnableConnectionsButton
+            assignConnectionsButton.title = Localizable.subuserAlertEnableConnectionsButton
             assignConnectionsButton.isHidden = false
-            description1Label.stringValue = LocalizedString.subuserAlertDescription1
-            description2Label.stringValue = LocalizedString.subuserAlertDescription2
+            description1Label.stringValue = Localizable.subuserAlertDescription1
+            description2Label.stringValue = Localizable.subuserAlertDescription2
         } else {
             assignConnectionsButton.isHidden = true
-            description1Label.stringValue = LocalizedString.subuserAlertDescription3
+            description1Label.stringValue = Localizable.subuserAlertDescription3
             description2Label.isHidden = true
         }
-        loginButton.title = LocalizedString.subuserAlertLoginButton
+        loginButton.title = Localizable.subuserAlertLoginButton
     }
     
     private func setupViews() {

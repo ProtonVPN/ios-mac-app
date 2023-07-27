@@ -27,6 +27,7 @@ import ProtonCoreLogin
 import ProtonCoreNetworking
 import ProtonCoreAuthentication
 import VPNShared
+import Strings
 
 final class LoginViewModel {
     
@@ -153,7 +154,7 @@ final class LoginViewModel {
                 twoFactorRequired?()
             case .askSecondPassword, .chooseInternalUsernameAndCreateInternalAddress:
                 log.error("Unsupported login scenario", category: .app, metadata: ["result": "\(result)"])
-                logInFailure?(LocalizedString.loginUnsupportedState)
+                logInFailure?(Localizable.loginUnsupportedState)
             }
         case let .failure(error):
             handleLoginError(error: error)

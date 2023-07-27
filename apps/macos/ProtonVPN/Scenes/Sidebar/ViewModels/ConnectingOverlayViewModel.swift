@@ -26,6 +26,7 @@ import VPNAppCore
 import AppKit
 import Logging
 import Theme
+import Strings
 
 protocol OverlayViewModelDelegate: AnyObject {
     func stateChanged()
@@ -112,9 +113,9 @@ class ConnectingOverlayViewModel {
     var firstString: NSAttributedString {
         switch appState {
         case .connected:
-            return LocalizedString.successfullyConnected.styled(font: .themeFont(.small))
+            return Localizable.successfullyConnected.styled(font: .themeFont(.small))
         default:
-            return LocalizedString.initializingConnection.styled(font: .themeFont(.small))
+            return Localizable.initializingConnection.styled(font: .themeFont(.small))
         }
     }
     
@@ -138,17 +139,17 @@ class ConnectingOverlayViewModel {
         
         switch appState {
         case .preparingConnection:
-            string = LocalizedString.preparingConnection
+            string = Localizable.preparingConnection
         case .connected:
-            string = LocalizedString.connectedToVpn(boldString)
+            string = Localizable.connectedToVpn(boldString)
         case .error, .disconnected:
-            boldString = LocalizedString.failed
-            string = LocalizedString.connectingVpn(boldString)
+            boldString = Localizable.failed
+            string = Localizable.connectingVpn(boldString)
         default:
             if isReconnecting {
-                string = LocalizedString.reconnectingTo(boldString) + "\n"
+                string = Localizable.reconnectingTo(boldString) + "\n"
             } else {
-                string = LocalizedString.connectingTo(boldString)
+                string = Localizable.connectingTo(boldString)
             }
         }
         
@@ -163,8 +164,8 @@ class ConnectingOverlayViewModel {
     
     private var timedOutSecondString: NSAttributedString {
         if !isIkeWithKsEnabled {
-            let boldString = LocalizedString.connectionTimedOutBold
-            let string = LocalizedString.connectionTimedOut
+            let boldString = Localizable.connectionTimedOutBold
+            let string = Localizable.connectionTimedOut
             let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.heading2)))
             
             if let stringRange = string.range(of: boldString) {
@@ -174,9 +175,9 @@ class ConnectingOverlayViewModel {
             return attributedString
         }
         
-        let boldString = LocalizedString.connectionTimedOutBold
-        let description = "\n\n" + LocalizedString.timeoutKsIkeDescritpion
-        let string = LocalizedString.connectionTimedOut + description
+        let boldString = Localizable.connectionTimedOutBold
+        let description = "\n\n" + Localizable.timeoutKsIkeDescritpion
+        let string = Localizable.connectionTimedOut + description
                 
         let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.heading2)))
         if let stringRange = string.range(of: boldString) {
@@ -217,22 +218,22 @@ class ConnectingOverlayViewModel {
     }
     
     private var cancelButton: ButtonInfo {
-        return (LocalizedString.cancel, .normal, { self.cancelConnecting() })
+        return (Localizable.cancel, .normal, { self.cancelConnecting() })
     }
     
     private var doneButton: ButtonInfo {
-        return (LocalizedString.done, .normal, { self.cancelConnecting() })
+        return (Localizable.done, .normal, { self.cancelConnecting() })
     }
     
     private var retryButton: ButtonInfo {
-        return (LocalizedString.tryAgain, .normal, {
+        return (Localizable.tryAgain, .normal, {
             log.info("Connection restart requested by pressing Retry button", category: .connectionConnect, event: .trigger)
             self.retryConnection()
         })
     }
     
     private var retryWithoutKSButton: ButtonInfo {
-        return (LocalizedString.tryAgainWithoutKillswitch, .interactive, {
+        return (Localizable.tryAgainWithoutKillswitch, .interactive, {
             self.disableKillSwitch()
             log.info("Connection restart requested by pressing Retry Without KS button", category: .connectionConnect, event: .trigger)
             self.retryConnection()
@@ -240,7 +241,7 @@ class ConnectingOverlayViewModel {
     }
     
     private var retryWithOpenVpnButton: ButtonInfo {
-        return (LocalizedString.timeoutKsIkeSwitchProtocol, .interactive, {
+        return (Localizable.timeoutKsIkeSwitchProtocol, .interactive, {
             log.info("Reconnecting with OpenVPN as suggested to user", category: .connectionConnect)
             self.reconnectWithOvpn()
         })

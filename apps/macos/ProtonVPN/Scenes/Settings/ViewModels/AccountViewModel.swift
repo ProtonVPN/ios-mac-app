@@ -23,6 +23,7 @@
 import Foundation
 import LegacyCommon
 import VPNShared
+import Strings
 
 final class AccountViewModel {
     
@@ -50,8 +51,8 @@ final class AccountViewModel {
         self.sessionService = sessionService
         self.authKeychain = authKeychain
 
-        username = LocalizedString.unavailable
-        accountType = LocalizedString.unavailable
+        username = Localizable.unavailable
+        accountType = Localizable.unavailable
         accountPlan = nil
 
         reload()
@@ -72,12 +73,12 @@ final class AccountViewModel {
                 accountType = vpnCredentials.serviceName
                 accountPlan = vpnCredentials.accountPlan
             } catch {
-                accountType = LocalizedString.unavailable
+                accountType = Localizable.unavailable
                 accountPlan = nil
             }
         } else {
-            username = LocalizedString.unavailable
-            accountType = LocalizedString.unavailable
+            username = Localizable.unavailable
+            accountType = Localizable.unavailable
             accountPlan = nil
         }
 

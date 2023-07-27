@@ -23,6 +23,7 @@
 import Cocoa
 import LegacyCommon
 import Modals_macOS
+import Strings
 
 class ProfileItemViewModel: AbstractProfileViewModel {
     
@@ -105,7 +106,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
     private func formSecondaryDescription() -> NSAttributedString {
         let description: String
         if underMaintenance {
-            description = LocalizedString.maintenance
+            description = Localizable.maintenance
         } else {
             description = ""
         }

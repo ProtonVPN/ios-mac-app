@@ -23,6 +23,7 @@
 import Cocoa
 import LegacyCommon
 import Theme
+import Strings
 
 class QuitApplicationButton: HoverDetectionButton {
  
@@ -40,7 +41,7 @@ class QuitApplicationButton: HoverDetectionButton {
     
     private func configureView() {
         let style: AppTheme.Style = isHovered ? [.danger, .hovered] : .weak
-        let show = (" " + LocalizedString.quit).styled(style)
+        let show = (" " + Localizable.quit).styled(style)
         image = AppTheme.Icon.powerOff.resize(.square(18))
         imagePosition = .imageLeft
         contentTintColor = .color(.icon, style)

@@ -22,6 +22,7 @@
 
 import Cocoa
 import LegacyCommon
+import Strings
 
 class ServerItemViewModel: ServerItemViewModelCore {
 
@@ -35,30 +36,30 @@ class ServerItemViewModel: ServerItemViewModelCore {
         guard isSecureCoreEnabled else {
             return serverModel.name
         }
-        return LocalizedString.via + " " + serverModel.entryCountry
+        return Localizable.via + " " + serverModel.entryCountry
     }
     
     var cityName: String {
-        if underMaintenance { return LocalizedString.maintenance }
+        if underMaintenance { return Localizable.maintenance }
         return serverModel.city ?? ""
     }
     
     var accessibilityLabel: String {
-        if isUsersTierTooLow { return "\(LocalizedString.server ): \(serverName). \(LocalizedString.updateRequired)" }
-        if underMaintenance { return "\(LocalizedString.server ): \(serverName). \(LocalizedString.onMaintenance)" }
+        if isUsersTierTooLow { return "\(Localizable.server ): \(serverName). \(Localizable.updateRequired)" }
+        if underMaintenance { return "\(Localizable.server ): \(serverName). \(Localizable.onMaintenance)" }
 
         var features: [String] = []
 
-        if isTorAvailable { features.append(LocalizedString.torTitle) }
-        if isP2PAvailable { features.append(LocalizedString.p2pTitle) }
-        if isSmartAvailable { features.append(LocalizedString.smartRoutingTitle) }
-        if isStreamingAvailable { features.append(LocalizedString.streamingTitle) }
+        if isTorAvailable { features.append(Localizable.torTitle) }
+        if isP2PAvailable { features.append(Localizable.p2pTitle) }
+        if isSmartAvailable { features.append(Localizable.smartRoutingTitle) }
+        if isStreamingAvailable { features.append(Localizable.streamingTitle) }
         
-        let description = "\(LocalizedString.server ): \(serverName), \(cityName). \(LocalizedString.serverLoad) \(load)%"
+        let description = "\(Localizable.server ): \(serverName), \(cityName). \(Localizable.serverLoad) \(load)%"
 
         if features.isEmpty { return description }
             
-        return "\(description)." + features.reduce(LocalizedString.featuresTitle + ": ", { result, feature in
+        return "\(description)." + features.reduce(Localizable.featuresTitle + ": ", { result, feature in
             return result + feature + "."
         })
     }

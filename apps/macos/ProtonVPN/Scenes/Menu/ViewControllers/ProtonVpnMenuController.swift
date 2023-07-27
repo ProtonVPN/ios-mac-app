@@ -22,6 +22,7 @@
 
 import Cocoa
 import LegacyCommon
+import Strings
 
 class ProtonVpnMenuController: NSObject {
     
@@ -49,38 +50,38 @@ class ProtonVpnMenuController: NSObject {
     // MARK: - Private functions
     private func setupPersistentView() {
         
-        aboutItem.title = LocalizedString.menuAbout
+        aboutItem.title = Localizable.menuAbout
         aboutItem.isEnabled = true
         aboutItem.target = self
         aboutItem.action = #selector(aboutItemAction)
         
-        checkForUpdatesItem.title = LocalizedString.menuCheckUpdates
+        checkForUpdatesItem.title = Localizable.menuCheckUpdates
         checkForUpdatesItem.isEnabled = true
         checkForUpdatesItem.target = self
         checkForUpdatesItem.action = #selector(checkForUpdatesAction)
         
-        preferencesItem.title = LocalizedString.menuPreferences
+        preferencesItem.title = Localizable.menuPreferences
         preferencesItem.isEnabled = false
         preferencesItem.target = self
         preferencesItem.action = #selector(preferencesItemAction)
         
-        logOutItem.title = LocalizedString.menuLogout
+        logOutItem.title = Localizable.menuLogout
         logOutItem.isEnabled = false
         logOutItem.target = self
         logOutItem.action = #selector(logOutItemAction)
         
-        showAllItem.title = LocalizedString.menuShowAll
+        showAllItem.title = Localizable.menuShowAll
         showAllItem.isEnabled = true
         showAllItem.target = self
         showAllItem.action = #selector(showAllItemAction)
         
-        quitItem.title = LocalizedString.menuQuit
+        quitItem.title = Localizable.menuQuit
         quitItem.isEnabled = true
         quitItem.target = self
         quitItem.action = #selector(quitItemAction)
         
-        hideProtonItem.title = LocalizedString.menuHideSelf
-        hideOthersItem.title = LocalizedString.menuHideOthers
+        hideProtonItem.title = Localizable.menuHideSelf
+        hideOthersItem.title = Localizable.menuHideOthers
     }
     
     private func setupEphemeralView() {

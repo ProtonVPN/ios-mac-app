@@ -22,6 +22,7 @@
 
 import Cocoa
 import LegacyCommon
+import Strings
 
 class ReportBugWindowController: WindowController {
 
@@ -43,7 +44,7 @@ class ReportBugWindowController: WindowController {
         }
         
         window.styleMask.remove(NSWindow.StyleMask.resizable)
-        window.title = LocalizedString.reportBug
+        window.title = Localizable.reportBug
         window.titlebarAppearsTransparent = true
         window.appearance = NSAppearance(named: .darkAqua)
         window.backgroundColor = .color(.background, .weak)

@@ -22,6 +22,7 @@
 
 import Cocoa
 import LegacyCommon
+import Strings
 
 final class ProfilesContainerViewController: NSViewController {
     
@@ -72,7 +73,7 @@ final class ProfilesContainerViewController: NSViewController {
     override func viewWillAppear() {
         super.viewWillAppear()
         
-        view.window?.applyModalAppearance(withTitle: LocalizedString.profilesOverview)
+        view.window?.applyModalAppearance(withTitle: Localizable.profilesOverview)
     }
     
     private func setupTabBarView() {

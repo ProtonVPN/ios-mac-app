@@ -23,6 +23,7 @@
 import Cocoa
 import LegacyCommon
 import Theme
+import Strings
 
 class ColoredLoadButton: NSButton {
     var load: Int? {
@@ -36,8 +37,8 @@ class ColoredLoadButton: NSButton {
     }
     
     override func viewWillDraw() {
-        let loadValueString = load != nil ? "\(load!)" : LocalizedString.unavailable
-        toolTip = LocalizedString.serverLoadPercentage(loadValueString)
+        let loadValueString = load != nil ? "\(load!)" : Localizable.unavailable
+        toolTip = Localizable.serverLoadPercentage(loadValueString)
     }
     
     override func draw(_ dirtyRect: NSRect) {

@@ -23,6 +23,7 @@
 import Foundation
 import LegacyCommon
 import AppKit
+import Strings
 
 class PopUpViewModel: NSObject {
     
@@ -37,7 +38,7 @@ class PopUpViewModel: NSObject {
         }
     }
     var confirmButtonTitle: String {
-        return action(0)?.title ?? LocalizedString.ok
+        return action(0)?.title ?? Localizable.ok
     }
     var confirmationType: PrimaryActionType {
         return action(0)?.style ?? .confirmative
@@ -65,7 +66,7 @@ class PopUpViewModel: NSObject {
     
     convenience init(alert: SystemAlert, inAppLinkManager: InAppLinkManager? = nil) {
         self.init(alert: alert,
-                  attributedDescription: (alert.message ?? alert.title ?? LocalizedString.errorInternalError).styled(alignment: .natural),
+                  attributedDescription: (alert.message ?? alert.title ?? Localizable.errorInternalError).styled(alignment: .natural),
                   inAppLinkManager: inAppLinkManager)
     }
     

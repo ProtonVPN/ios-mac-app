@@ -23,6 +23,7 @@
 import Cocoa
 import LegacyCommon
 import Theme
+import Strings
 
 protocol StatusMenuViewModelFactory {
      func makeStatusMenuViewModel() -> StatusMenuViewModel
@@ -106,7 +107,7 @@ final class StatusMenuViewModel {
     }
     
     var cancelButtonTitle: String {
-        return LocalizedString.cancel
+        return Localizable.cancel
     }
     
     func disconnectAction() {
@@ -117,7 +118,7 @@ final class StatusMenuViewModel {
     
     // MARK: - Login section
     var loginDescription: NSAttributedString {
-        return LocalizedString.openAppToLogIn.styled(font: .themeFont(.heading4))
+        return Localizable.openAppToLogIn.styled(font: .themeFont(.heading4))
     }
     
     // MARK: - Header section
@@ -131,15 +132,15 @@ final class StatusMenuViewModel {
     
     // MARK: - Secure core
     var secureCoreLabel: NSAttributedString {
-        return LocalizedString.secureCore.styled()
+        return Localizable.secureCore.styled()
     }
     
     var upgradeForSecureCoreLabel: NSAttributedString {
-        return LocalizedString.upgradeForSecureCore.styled(lineBreakMode: .byWordWrapping)
+        return Localizable.upgradeForSecureCore.styled(lineBreakMode: .byWordWrapping)
     }
     
     var upgradeToPlusTitle: NSAttributedString {
-        return LocalizedString.upgradeToPlus.styled([.interactive, .active])
+        return Localizable.upgradeToPlus.styled([.interactive, .active])
     }
     
     // MARK: - Quick action section - Outputs
@@ -288,8 +289,8 @@ final class StatusMenuViewModel {
             self?.vpnGateway.changeActiveServerType(self?.serverType == .standard ? .secureCore : .standard)
         }
 
-        let viewModel = WarningPopupViewModel(title: LocalizedString.vpnConnectionActive,
-                                              description: LocalizedString.viewToggleWillCauseDisconnect,
+        let viewModel = WarningPopupViewModel(title: Localizable.vpnConnectionActive,
+                                              description: Localizable.viewToggleWillCauseDisconnect,
                                               onConfirm: confirmationClosure)
         disconnectWarning?(viewModel)
     }
@@ -300,9 +301,9 @@ final class StatusMenuViewModel {
             log.info("User accepted unsecure WiFi option", category: .net)
         }
         guard let wifiName = wifiSecurityMonitor.wifiName else { return }
-        let viewModel = WarningPopupViewModel(title: LocalizedString.unsecureWifiTitle,
-                                              description: "\(LocalizedString.unsecureWifi): \(wifiName). \(LocalizedString.unsecureWifiLearnMore)",
-                                              linkDescription: LocalizedString.unsecureWifiLearnMore,
+        let viewModel = WarningPopupViewModel(title: Localizable.unsecureWifiTitle,
+                                              description: "\(Localizable.unsecureWifi): \(wifiName). \(Localizable.unsecureWifiLearnMore)",
+                                              linkDescription: Localizable.unsecureWifiLearnMore,
                                               url: CoreAppConstants.ProtonVpnLinks.unsecureWiFiUrl,
                                               onConfirm: confirmationClosure)
 
@@ -398,9 +399,9 @@ final class StatusMenuViewModel {
     }
     
     private func formIpAddress() -> NSAttributedString {
-        let ip = LocalizedString.ipValue(getCurrentIp() ?? LocalizedString.unavailable)
+        let ip = Localizable.ipValue(getCurrentIp() ?? Localizable.unavailable)
         let attributedString = NSMutableAttributedString(attributedString: ip.styled(font: .themeFont(.small), alignment: .left))
-        let ipRange = (ip as NSString).range(of: getCurrentIp() ?? LocalizedString.unavailable)
+        let ipRange = (ip as NSString).range(of: getCurrentIp() ?? Localizable.unavailable)
         attributedString.addAttribute(.font, value: NSFont.boldSystemFont(ofSize: 12), range: ipRange)
         return attributedString
     }
@@ -415,11 +416,11 @@ final class StatusMenuViewModel {
     
     private func formConnectionLabel() -> NSAttributedString {
         if !isConnected {
-            return LocalizedString.notConnected.styled(.danger)
+            return Localizable.notConnected.styled(.danger)
         }
         
         guard let server = appStateManager.activeConnection()?.server else {
-            return LocalizedString.noDescriptionAvailable.styled()
+            return Localizable.noDescriptionAvailable.styled()
         }
         
         if server.isSecureCore {
@@ -456,8 +457,8 @@ final class StatusMenuViewModel {
             return nil
         }
         
-        let description = propertiesManager.hasConnected ? LocalizedString.enabled.lowercased() : LocalizedString.disabled.lowercased()
-        return LocalizedString.killSwitch + " " + description
+        let description = propertiesManager.hasConnected ? Localizable.enabled.lowercased() : Localizable.disabled.lowercased()
+        return Localizable.killSwitch + " " + description
     }
     
     private func formQuickActionDescription() -> String? {
@@ -468,9 +469,9 @@ final class StatusMenuViewModel {
         let description: String
         switch vpnGateway.connection {
         case .connected:
-            description = LocalizedString.disconnect
+            description = Localizable.disconnect
         case .disconnecting, .disconnected, .connecting:
-            description = LocalizedString.quickConnect
+            description = Localizable.quickConnect
         }
         return description
     }

@@ -22,6 +22,7 @@
 
 import Cocoa
 import LegacyCommon
+import Strings
 
 class HelpMenuController: NSObject {
     
@@ -47,38 +48,38 @@ class HelpMenuController: NSObject {
     
     // MARK: - Private
     private func setupPersistentView() {
-        helpMenu.title = LocalizedString.help
+        helpMenu.title = Localizable.help
         
-        reportAnIssueItem.title = LocalizedString.reportAnIssue
+        reportAnIssueItem.title = Localizable.reportAnIssue
         reportAnIssueItem.isEnabled = true
         reportAnIssueItem.target = self
         reportAnIssueItem.action = #selector(reportAnIssueItemAction)
         
-        logsItem.title = LocalizedString.viewLogs
+        logsItem.title = Localizable.viewLogs
         logsItem.isEnabled = true
         logsItem.target = self
         logsItem.action = #selector(logsAction)
         
-        logsOvpnItem.title = LocalizedString.openVpnLogs
+        logsOvpnItem.title = Localizable.openVpnLogs
         logsOvpnItem.isEnabled = true
         logsOvpnItem.target = self
         logsOvpnItem.action = #selector(openVpnLogsAction)
         
-        logsWGItem.title = LocalizedString.wireguardLogs
+        logsWGItem.title = Localizable.wireguardLogs
         logsWGItem.isEnabled = true
         logsWGItem.target = self
         logsWGItem.action = #selector(openWGLogsAction)
         
-        clearApplicationDataItem.title = LocalizedString.clearApplicationData
+        clearApplicationDataItem.title = Localizable.clearApplicationData
         clearApplicationDataItem.isEnabled = true
         clearApplicationDataItem.target = self
         clearApplicationDataItem.action = #selector(clearApplicationDataItemAction)
 
-        systemExtensionTutorialItem.title = LocalizedString.systemExtensionTutorialMenuItem
+        systemExtensionTutorialItem.title = Localizable.systemExtensionTutorialMenuItem
         systemExtensionTutorialItem.target = self
         systemExtensionTutorialItem.action = #selector(systemExtensionTutorialAction)
 
-        helpItem.title = "Proton VPN " + LocalizedString.help
+        helpItem.title = "Proton VPN " + Localizable.help
         helpItem.isEnabled = true
         helpItem.target = self
         helpItem.action = #selector(helpItemAction)

@@ -24,6 +24,7 @@ import Cocoa
 import LegacyCommon
 import VPNShared
 import Theme
+import Strings
 
 protocol QuickSettingsDropdownOptionPresenter {
     var title: String! { get }
@@ -56,11 +57,11 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
         let text: String
         switch level {
         case .level1:
-            text = LocalizedString.quickSettingsNetshieldOptionLevel1
+            text = Localizable.quickSettingsNetshieldOptionLevel1
         case .level2:
-            text = LocalizedString.quickSettingsNetshieldOptionLevel2
+            text = Localizable.quickSettingsNetshieldOptionLevel2
         case .off:
-            text = LocalizedString.quickSettingsNetshieldOptionOff
+            text = Localizable.quickSettingsNetshieldOptionOff
         }
 
         let icon: NSImage

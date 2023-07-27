@@ -25,6 +25,7 @@ import LegacyCommon
 import VPNShared
 import VPNAppCore
 import Theme
+import Strings
 
 protocol CreateNewProfileViewModelFactory {
     func makeCreateNewProfileViewModel(editProfile: Notification.Name) -> CreateNewProfileViewModel
@@ -127,7 +128,7 @@ class CreateNewProfileViewModel {
     /// Contains one placeholder item at the beginning, followed by all available countries.
     var countryMenuItems: [PopUpButtonItemViewModel] {
         // Placeholder item
-        [.init(title: menuStyle(LocalizedString.selectCountry),
+        [.init(title: menuStyle(Localizable.selectCountry),
                checked: state.countryIndex == nil,
                handler: { [weak self] in self?.update(countryIndex: nil) })] +
         // Countries by index in their grouping
@@ -143,7 +144,7 @@ class CreateNewProfileViewModel {
     /// for that country.
     var serverMenuItems: [PopUpButtonItemViewModel] {
         let placeholder: PopUpButtonItemViewModel =
-            .init(title: menuStyle(LocalizedString.selectServer),
+            .init(title: menuStyle(Localizable.selectServer),
                   checked: state.serverOffering == nil,
                   handler: { [weak self] in self?.update(serverOffering: nil) })
 
@@ -345,16 +346,16 @@ class CreateNewProfileViewModel {
     func save() {
         var errors: [String] = []
         if profileName?.isEmpty != false {
-            errors.append(LocalizedString.profileNameIsRequired)
+            errors.append(Localizable.profileNameIsRequired)
         }
         if (profileName?.count ?? 0) > 25 {
-            errors.append(LocalizedString.profileNameIsTooLong)
+            errors.append(Localizable.profileNameIsTooLong)
         }
         if state.countryIndex == nil {
-            errors.append(LocalizedString.countrySelectionIsRequired)
+            errors.append(Localizable.countrySelectionIsRequired)
         }
         if state.serverOffering == nil {
-            errors.append(LocalizedString.serverSelectionIsRequired)
+            errors.append(Localizable.serverSelectionIsRequired)
         }
         guard errors.isEmpty else {
             contentWarning?(errors.joined(separator: ", "))
@@ -399,7 +400,7 @@ class CreateNewProfileViewModel {
         case .success:
             clearContent()
         case .nameInUse:
-            contentWarning?(LocalizedString.profileNameNeedsToBeUnique)
+            contentWarning?(Localizable.profileNameNeedsToBeUnique)
         }
     }
 }
