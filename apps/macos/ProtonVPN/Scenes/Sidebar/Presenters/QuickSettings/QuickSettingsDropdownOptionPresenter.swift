@@ -30,30 +30,36 @@ protocol QuickSettingsDropdownOptionPresenter {
     var title: String! { get }
     var icon: NSImage! { get }
     var active: Bool! { get }
+    /// B2C users get upsell modals if their plan doesn't allow a feature.
     var requiresUpdate: Bool! { get }
+    /// B2B users should see a "business" badge for disabled features, but no upsell modals.
+    var requiresBusinessUpdate: Bool! { get }
     
     var selectCallback: SuccessCallback? { get }
 }
 
 class QuickSettingGenericOption: QuickSettingsDropdownOptionPresenter {
-    
     let title: String!
     let active: Bool!
     var icon: NSImage! = AppTheme.Icon.brandTor
     var requiresUpdate: Bool!
+    var requiresBusinessUpdate: Bool!
     var selectCallback: (() -> Void)?
     
-    init( _ title: String, icon: NSImage, active: Bool, requiresUpdate: Bool = false, selectCallback: SuccessCallback? = nil ) {
+    init( _ title: String, icon: NSImage, active: Bool, requiresUpdate: Bool = false, requiresBusinessUpdate: Bool = false, selectCallback: SuccessCallback? = nil ) {
         self.title = title
         self.active = active
         self.icon = icon
         self.requiresUpdate = requiresUpdate
+        self.requiresBusinessUpdate = requiresBusinessUpdate
         self.selectCallback = selectCallback
     }
 }
 
 final class QuickSettingNetshieldOption: QuickSettingGenericOption {
     init(level: NetShieldType, vpnGateway: VpnGatewayProtocol, vpnManager: VpnManagerProtocol, netShieldPropertyProvider: NetShieldPropertyProvider, vpnStateConfiguration: VpnStateConfiguration, isActive: Bool, currentUserTier: Int, openUpgradeLink: @escaping () -> Void) {
+        var netShieldPropertyProvider = netShieldPropertyProvider
+        
         let text: String
         switch level {
         case .level1:
@@ -94,5 +100,29 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
                 }
             }
         })
+    }
+}
+
+extension NetShieldType {
+    var quickSettingsText: String {
+        switch self {
+        case .level1:
+            return Localizable.quickSettingsNetshieldOptionLevel1
+        case .level2:
+            return Localizable.quickSettingsNetshieldOptionLevel2
+        case .off:
+            return Localizable.quickSettingsNetshieldOptionOff
+        }
+    }
+
+    var quickSettingsIcon: NSImage {
+        switch self {
+        case .level1:
+            return AppTheme.Icon.shieldHalfFilled
+        case .level2:
+            return AppTheme.Icon.shieldFilled
+        case .off:
+            return AppTheme.Icon.shield
+        }
     }
 }

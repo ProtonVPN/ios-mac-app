@@ -26,7 +26,7 @@ final class ImageSubtitleTableViewCell: UITableViewCell {
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet private weak var _imageView: UIImageView!
 
-    var completionHandler: (() -> Void)?
+    var selectionHandler: (() -> Void)?
 
     override var imageView: UIImageView? {
         _imageView
@@ -44,7 +44,7 @@ final class ImageSubtitleTableViewCell: UITableViewCell {
     }
 
     func select() {
-        completionHandler?()
+        selectionHandler?()
     }
 
     func setupViews() {
@@ -60,6 +60,6 @@ final class ImageSubtitleTableViewCell: UITableViewCell {
         titleLabel.attributedText = title
         subtitleLabel.attributedText = subtitle
         imageView?.image = image
-        completionHandler = handler
+        selectionHandler = handler
     }
 }

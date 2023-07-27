@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -137,6 +137,7 @@
                     <constraint firstItem="Kzj-up-hCK" firstAttribute="top" secondItem="Emp-q6-ALw" secondAttribute="bottom" id="ePa-YT-vqg"/>
                     <constraint firstItem="2Vk-vj-5zc" firstAttribute="leading" secondItem="qUd-gM-Kds" secondAttribute="trailing" constant="16" id="jwA-ud-w8a"/>
                     <constraint firstItem="cCK-ld-bJa" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="lIj-ae-shd"/>
+                    <constraint firstItem="2Vk-vj-5zc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Emp-q6-ALw" secondAttribute="trailing" constant="10" id="oiK-Vr-jya"/>
                     <constraint firstItem="cCK-ld-bJa" firstAttribute="leading" secondItem="uyK-oI-0bQ" secondAttribute="trailing" constant="8" id="qCz-AE-Hhs"/>
                     <constraint firstItem="uyK-oI-0bQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="qJ0-74-PXo"/>
                     <constraint firstItem="8b2-dP-uUu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="t2U-cc-4w7"/>

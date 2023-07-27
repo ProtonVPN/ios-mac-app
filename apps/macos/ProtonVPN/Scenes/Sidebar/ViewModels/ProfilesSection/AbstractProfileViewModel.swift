@@ -52,8 +52,8 @@ class AbstractProfileViewModel {
             var allServersUnderMaintenance = true
             let serversOfProfileType = serverManager.grouping(for: profile.serverType)
             let serversOfProfileTypeAndCountry = serversOfProfileType.first { group -> Bool in
-                return group.0.countryCode == code
-            }?.1
+                return group.serverOfferingId == code
+            }?.servers
             serversOfProfileTypeAndCountry?.forEach { (server) in
                 if minTier > server.tier {
                     minTier = server.tier

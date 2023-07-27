@@ -21,6 +21,7 @@ import XCTest
 import NetworkExtension
 import GoLibs
 import VPNShared
+import Dependencies
 
 @testable import LegacyCommon
 

@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 #if os(iOS)
 import UIKit
 #endif
@@ -37,6 +38,20 @@ public enum AppContext: String {
             return "OpenVpnId"
         }
     }
+
+    public static var `default`: Self = .mainApp
+}
+
+extension AppContext: DependencyKey {
+    public static var liveValue: AppContext { .default }
+    public static var testValue: AppContext = liveValue
+}
+
+extension DependencyValues {
+    public var appContext: AppContext {
+        get { self[AppContext.self] }
+        set { self[AppContext.self] = newValue }
+    }
 }
 
 public protocol AppInfoFactory {
@@ -45,7 +60,7 @@ public protocol AppInfoFactory {
 
 extension AppInfoFactory {
     public func makeAppInfo() -> AppInfo {
-        makeAppInfo(context: .mainApp)
+        makeAppInfo(context: .default)
     }
 }
 
@@ -124,7 +139,12 @@ public class AppInfoImplementation: AppInfo {
     public let osVersion: OperatingSystemVersion
     public let context: AppContext
 
-    public init(context: AppContext, bundle: Bundle = Bundle.main, processInfo: ProcessInfo = ProcessInfo(), modelName: String? = nil) {
+    public init(
+        context: AppContext = .default,
+        bundle: Bundle = .main,
+        processInfo: ProcessInfo = .processInfo,
+        modelName: String? = nil
+    ) {
         self.context = context
         processName = processInfo.processName
         osVersion = processInfo.operatingSystemVersion

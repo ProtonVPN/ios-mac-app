@@ -107,7 +107,8 @@ extension ConnectionConfiguration {
                                  status: 0,
                                  location: ServerLocation(lat: 0, long: 0),
                                  hostCountry: nil,
-                                 translatedCity: nil)
+                                 translatedCity: nil,
+                                 gatewayName: nil)
         let serverIp = ServerIp(id: "",
                                 entryIp: "",
                                 exitIp: "",
@@ -137,7 +138,8 @@ extension ConnectionConfiguration {
                                  status: 0,
                                  location: ServerLocation(lat: 0, long: 0),
                                  hostCountry: nil,
-                                 translatedCity: nil)
+                                 translatedCity: nil,
+                                 gatewayName: nil)
         let serverIp = ServerIp(id: "",
                                 entryIp: "",
                                 exitIp: "",

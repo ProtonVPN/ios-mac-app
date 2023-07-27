@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -24,7 +24,7 @@
                         <action selector="didTapExpandBtn:" target="c22-O7-iKe" id="lIL-Qw-2Vb"/>
                     </connections>
                 </button>
-                <stackView distribution="equalSpacing" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vFF-N8-oAa">
+                <stackView distribution="equalSpacing" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vFF-N8-oAa" userLabel="Flag and Country">
                     <rect key="frame" x="24" y="15" width="70" height="20"/>
                     <subviews>
                         <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gAW-1O-emT" userLabel="secure">
@@ -44,7 +44,7 @@
                         </imageView>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OM7-Qo-nl4">
                             <rect key="frame" x="26" y="0.0" width="46" height="20"/>
-                            <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="LGr-za-yVa">
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Label" id="LGr-za-yVa">
                                 <font key="font" metaFont="system" size="17"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -66,7 +66,7 @@
                         <real value="3.4028234663852886e+38"/>
                     </customSpacing>
                 </stackView>
-                <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ir3-ke-8Ga">
+                <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ir3-ke-8Ga" userLabel="Feature and connection labels">
                     <rect key="frame" x="110" y="9" width="206" height="32"/>
                     <subviews>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Jbi-wV-au5">
@@ -191,6 +191,7 @@
                 <constraint firstItem="vFF-N8-oAa" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="24" id="1kB-O8-zcy"/>
                 <constraint firstItem="iz4-kg-3lt" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="6JB-uC-cyY"/>
                 <constraint firstAttribute="trailing" secondItem="ir3-ke-8Ga" secondAttribute="trailing" constant="24" id="6ir-Y2-L2M"/>
+                <constraint firstItem="ir3-ke-8Ga" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vFF-N8-oAa" secondAttribute="trailing" constant="10" id="6mm-jO-80h"/>
                 <constraint firstItem="Dyo-h7-133" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="aUR-uB-adt"/>
                 <constraint firstAttribute="trailing" secondItem="iz4-kg-3lt" secondAttribute="trailing" id="bOp-6R-2oi"/>
                 <constraint firstItem="ir3-ke-8Ga" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="dmM-UY-QYf"/>

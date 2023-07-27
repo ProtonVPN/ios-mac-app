@@ -116,18 +116,19 @@ public enum ServerOffering: Equatable {
     }
 
     public func supports(connectionProtocol: ConnectionProtocol,
-                         withCountryGroup grouping: CountryGroup?,
+                         withCountryGroup grouping: ServerGroup?,
                          smartProtocolConfig: SmartProtocolConfig) -> Bool {
         switch self {
         case .fastest(let countryCode), .random(let countryCode):
             guard let grouping else {
                 return true
             }
-            assert(grouping.country.countryCode == countryCode, "Mismatched grouping while checking server protocol support")
+            assert(grouping.serverOfferingId == countryCode, "Mismatched grouping while checking server protocol support (\(grouping.kind))")
             return grouping.servers.contains {
                 $0.supports(connectionProtocol: connectionProtocol,
                             smartProtocolConfig: smartProtocolConfig)
             }
+
         case .custom(let wrapper):
             return wrapper.server.supports(connectionProtocol: connectionProtocol,
                                            smartProtocolConfig: smartProtocolConfig)
@@ -145,5 +146,16 @@ public enum ServerOffering: Equatable {
             equal = lsw.server.id == rsw.server.id
         }
         return equal
+    }
+}
+
+extension ServerGroup {
+    public var serverOfferingId: String {
+        switch kind {
+        case .country(let countryModel):
+            return countryModel.countryCode
+        case .gateway(let name):
+            return "gateway-\(name)"
+        }
     }
 }

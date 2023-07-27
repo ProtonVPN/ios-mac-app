@@ -47,11 +47,11 @@ class MigrationVersionTest: XCTestCase {
         MigrationManager(propertiesManager, currentAppVersion: "1.6.0")
             .addCheck("1.5.9") { _, completion in
                 checkValue += 1
-                XCTAssert(false, "This update block should not be run!")
+                XCTFail("This update block should not be run!")
                 completion(nil)
             }.addCheck("1.6.0") { _, completion in
                 checkValue += 1
-                XCTAssert(false, "This update block should not be run!")
+                XCTFail("This update block should not be run!")
                 completion(nil)
             }.migrate { _ in
                 XCTAssertEqual(checkValue, 0)
@@ -66,11 +66,11 @@ class MigrationVersionTest: XCTestCase {
         MigrationManager(propertiesManager, currentAppVersion: "1.8.0")
             .addCheck("1.5.9") { _, completion in
                 checkValue += 1
-                XCTAssert(false, "This update block should not be run!")
+                XCTFail("This update block should not be run!")
                 completion(nil)
             }.addCheck("1.6.0") { _, completion in
                 checkValue += 1
-                XCTAssert(false, "This update block should not be run!")
+                XCTFail("This update block should not be run!")
                 completion(nil)
             }.addCheck("1.6.1") { _, completion in
                 checkValue += 1
@@ -142,7 +142,7 @@ class MigrationVersionTest: XCTestCase {
         }
         
         _ = manager.addCheck("2.2.0") { _, completion in
-            XCTAssert(false, "This update block should not be run!")
+            XCTFail("This update block should not be run!")
             completion(nil)
         }
         

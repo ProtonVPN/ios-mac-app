@@ -34,8 +34,8 @@ public enum AccountPlan: String {
     case family = "family2022"
     case bundlePro = "bundlepro2022"
     case enterprise2022 = "enterprise2022"
-    case vpnpro2023 = "vpnpro2023"
-    case vpnbiz2023 = "vpnbiz2023"
+    case vpnpro2023 = "vpnpro2023" // VPN Essential
+    case vpnbiz2023 = "vpnbiz2023" // VPN Business
     
     public var paid: Bool {
         switch self {
@@ -119,6 +119,14 @@ public enum AccountPlan: String {
         case .visionary, .unlimited, .visionary2022:
             return CoreAppConstants.VpnTiers.visionary
         }
+    }
+
+    public var hasNetShield: Bool {
+        ![.free, .trial, .vpnpro2023].contains(self)
+    }
+
+    public var isBusiness: Bool {
+        [.vpnpro2023, .vpnbiz2023].contains(self)
     }
     
     // MARK: - NSCoding

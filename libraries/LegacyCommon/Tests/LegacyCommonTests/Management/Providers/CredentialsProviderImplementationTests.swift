@@ -1,5 +1,5 @@
 //
-//  UserTierProviderImplementationTests.swift
+//  AccountPlanProviderImplementationTests.swift
 //  vpncore - Created on 2021-01-06.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -23,7 +23,7 @@
 import XCTest
 @testable import LegacyCommon
 
-class UserTierProviderImplementationTests: XCTestCase {
+class CredentialsProviderImplementationTests: XCTestCase {
 
     func testReturnsTierSavedInKeychain() throws {
         let testPairs: [(AccountPlan, Int)] = [
@@ -35,29 +35,25 @@ class UserTierProviderImplementationTests: XCTestCase {
         
         for (plan, tier) in testPairs {
             let keychain = VpnKeychainMock(accountPlan: plan, maxTier: tier)
-            let provider = UserTierProviderImplementation(MocksFactory(vpnKeychain: keychain))
-            XCTAssert(provider.currentUserTier == tier)
+
+            let provider = CredentialsProvider {
+                try? keychain.fetchCached()
+            }
+
+            XCTAssertEqual(provider.tier, tier)
+            XCTAssertEqual(provider.plan, plan)
         }
     }
     
     func testReturnsFreeTierIfNoneIsAvilable() throws {
         let keychain = VpnKeychainMock(accountPlan: AccountPlan.plus, maxTier: CoreAppConstants.VpnTiers.visionary)
         keychain.throwsOnFetch = true
-        let provider = UserTierProviderImplementation(MocksFactory(vpnKeychain: keychain))
-        XCTAssert(provider.currentUserTier == CoreAppConstants.VpnTiers.free)
-    }
-}
 
-private class MocksFactory: VpnKeychainFactory {
-    
-    var vpnKeychainMock: VpnKeychainMock
-    
-    init(vpnKeychain: VpnKeychainMock) {
-        self.vpnKeychainMock = vpnKeychain
+        let provider = CredentialsProvider {
+            try? keychain.fetchCached()
+        }
+
+        XCTAssertEqual(provider.plan, .free)
+        XCTAssertEqual(provider.tier, CoreAppConstants.VpnTiers.free)
     }
-    
-    func makeVpnKeychain() -> VpnKeychainProtocol {
-        return vpnKeychainMock
-    }
-    
 }

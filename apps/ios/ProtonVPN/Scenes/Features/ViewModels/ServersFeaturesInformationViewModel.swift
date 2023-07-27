@@ -25,27 +25,34 @@ import LegacyCommon
 import Strings
 
 protocol ServersFeaturesInformationViewModel {
-    func titleFor( _ section: Int ) -> String
+    func titleFor( _ section: Int ) -> String?
     func featuresCount(for section: Int) -> Int
     func getFeatureViewModel( indexPath: IndexPath ) -> FeatureCellViewModel
     var totalFeatures: Int { get }
     var headerHeight: CGFloat { get }
 }
 
-class ServersFeaturesInformationViewModelImplementation: ServersFeaturesInformationViewModel {
-    
-    let features: [[FeatureCellViewModel]] = [
-        [
-            SmartRoutingFeature(),
-            StreamingFeature(),
-            P2PFeature(),
-            TorFeature()
-        ],
-        [
-            LoadPerformanceFeature()
+struct ServersFeaturesInformationViewModelImplementation: ServersFeaturesInformationViewModel {
+    static let servicesInfo = Self(
+        showTitles: true,
+        features: [
+            [
+                SmartRoutingFeatureCellViewModel(),
+                StreamingFeatureCellViewModel(),
+                P2PFeatureCellViewModel(),
+                TorFeatureCellViewModel()
+            ],
+            [
+                LoadPerformanceFeatureCellViewModel()
+            ]
         ]
-    ]
-    
+    )
+
+    static let gatewaysInfo = Self(showTitles: false, features: [[GatewayFeatureCellViewModel()]])
+
+    let showTitles: Bool
+    let features: [[FeatureCellViewModel]]
+
     // MARK: - ServersFeaturesInformationViewModel
     
     let headerHeight: CGFloat = 52
@@ -62,7 +69,9 @@ class ServersFeaturesInformationViewModelImplementation: ServersFeaturesInformat
         return features[indexPath.section][indexPath.row]
     }
     
-    func titleFor(_ section: Int) -> String {
+    func titleFor(_ section: Int) -> String? {
+        guard showTitles else { return nil }
+
         return section == 0 ? Localizable.featuresTitle : Localizable.performanceTitle
     }
 }

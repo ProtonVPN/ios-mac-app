@@ -242,8 +242,9 @@ extension MacAlertService: CoreAlertService {
     private func show(_ alert: SysexEnabledAlert) {
         @Dependency(\.defaultsProvider) var provider
         guard !provider.getDefaults().bool(forKey: AppConstants.UserDefaults.welcomed),
-              let credentials = try? self.vpnKeychain.fetchCached(),
-              !credentials.isSubuserWithoutSessions else {
+              let credentials = try? self.vpnKeychain.fetchCached() /* , XXX REPLACE
+              !credentials.needConnectionAllocation */
+        else {
             return
         }
 

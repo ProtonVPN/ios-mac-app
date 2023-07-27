@@ -54,7 +54,7 @@ class TelemetryMockFactory: AppStateManagerFactory, NetworkingFactory, Propertie
     }
     
     func makeAuthKeychainHandle() -> AuthKeychainHandle {
-        AuthKeychain(context: .mainApp)
+        AuthKeychain.default
     }
 
     let appStateManager: AppStateManager

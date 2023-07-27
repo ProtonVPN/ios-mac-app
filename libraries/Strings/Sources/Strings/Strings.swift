@@ -770,6 +770,10 @@ public enum Localizable {
   public static var netshieldAlertReconnectDescriptionOn: String { return Localizable.tr("Localizable", "_netshield_alert_reconnect_description_on", fallback: "Your connection will be restarted to change the NetShield mode.\nNote: If some sites don't load, try disabling NetShield.") }
   /// NetShield increases your privacy by blocking advertisements and trackers.
   public static var netshieldAlertUpgradeDescription: String { return Localizable.tr("Localizable", "_netshield_alert_upgrade_description", fallback: "NetShield increases your privacy by blocking advertisements and trackers.") }
+  /// Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle
+  public static var netshieldBusinessUpsellSubtitle: String { return Localizable.tr("Localizable", "_netshield_business_upsell_subtitle", fallback: "When you upgrade to VPN Business") }
+  /// Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title
+  public static var netshieldBusinessUpsellTitle: String { return Localizable.tr("Localizable", "_netshield_business_upsell_title", fallback: "Block ads with NetShield") }
   /// Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield
   public static var netshieldFeatureDescription: String { return Localizable.tr("Localizable", "_netshield_feature_description", fallback: "Protect yourself from ads, malware, and trackers on websites and apps. If websites don't load, try disabling NetShield.\nLearn more") }
   /// Link with more info in the NetShield Feature description

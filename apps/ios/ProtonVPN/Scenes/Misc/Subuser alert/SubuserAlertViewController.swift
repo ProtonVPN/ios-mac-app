@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import LegacyCommon
+import Theme
 import Strings
 
 class SubuserAlertViewController: UIViewController {
@@ -61,9 +62,8 @@ class SubuserAlertViewController: UIViewController {
     private func setupViews() {
         view.backgroundColor = .backgroundColor()
 
-        // swiftlint:disable:next hardcoded_assets
-        imageView.image = UIImage(named: "alert-pro-account", in: Bundle.legacyCommonEvilDoNotUseThis, compatibleWith: nil)
-        
+        imageView.image = Theme.Asset.icAlertProAccount.image
+
         titleLabel.textColor = .normalTextColor()
         titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         

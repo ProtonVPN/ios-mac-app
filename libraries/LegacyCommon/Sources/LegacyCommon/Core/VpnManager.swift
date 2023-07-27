@@ -150,9 +150,9 @@ public class VpnManager: VpnManagerProtocol {
 
     private let vpnStateConfiguration: VpnStateConfiguration
 
-    let natTypePropertyProvider: NATTypePropertyProvider
-    let netShieldPropertyProvider: NetShieldPropertyProvider
-    let safeModePropertyProvider: SafeModePropertyProvider
+    var natTypePropertyProvider: NATTypePropertyProvider
+    var netShieldPropertyProvider: NetShieldPropertyProvider
+    var safeModePropertyProvider: SafeModePropertyProvider
 
     let propertiesManager: PropertiesManagerProtocol
     let alertService: CoreAlertService?

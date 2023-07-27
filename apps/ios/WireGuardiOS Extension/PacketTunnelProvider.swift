@@ -18,7 +18,7 @@ import LocalFeatureFlags
 
 class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate {
     private var timerFactory: TimerFactory!
-    private var appInfo: AppInfo = AppInfoImplementation(context: .wireGuardExtension)
+    private var appInfo: AppInfo = AppInfoImplementation()
     private var certificateRefreshManager: ExtensionCertificateRefreshManager!
     private var serverStatusRefreshManager: ServerStatusRefreshManager!
     private var killSwitchSettingObservation: NSKeyValueObservation!
@@ -55,9 +55,11 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
     }
 
     override init() {
+        AppContext.default = .wireGuardExtension
+
         vpnAuthenticationStorage = VpnAuthenticationKeychain(accessGroup: WGConstants.keychainAccessGroup,
                                                              vpnKeysGenerator: ExtensionVPNKeysGenerator())
-        let authKeychain = AuthKeychain(context: .wireGuardExtension)
+        let authKeychain = AuthKeychain.default
 
         super.init()
 

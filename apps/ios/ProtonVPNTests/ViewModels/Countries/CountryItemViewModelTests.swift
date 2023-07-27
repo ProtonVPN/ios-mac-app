@@ -57,19 +57,35 @@ class CountryItemViewModelTests: XCTestCase {
     
     private func viewModel(withServers servers: [ServerModel]) -> CountryItemViewModel {
         let country = CountryModel(serverModel: self.serverModel(withStatus: 22))
-        let group: CountryGroup = (country, servers)
+        let group: ServerGroup = ServerGroup(kind: .country(country), servers: servers)
         let vpnKeychain = VpnKeychainMock()
-        let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()), appInfo: AppInfoImplementation(context: .mainApp), doh: .mock, authKeychain: MockAuthKeychain(), unauthKeychain: UnauthKeychainMock())
+        let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()), appInfo: AppInfoImplementation(), doh: .mock, authKeychain: MockAuthKeychain(), unauthKeychain: UnauthKeychainMock())
         let vpnApiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation(), authKeychain: MockAuthKeychain())
         let configurationPreparer = VpnManagerConfigurationPreparer(
             vpnKeychain: vpnKeychain,
             alertService: AlertServiceEmptyStub(),
             propertiesManager: PropertiesManagerMock())
         
-        let appStateManager = AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock(), doh: .mock, serverStorage: ServerStorageMock(), natTypePropertyProvider: NATTypePropertyProviderMock(), netShieldPropertyProvider: NetShieldPropertyProviderMock(), safeModePropertyProvider: SafeModePropertyProviderMock())
+        let appStateManager = AppStateManagerImplementation(
+            vpnApiService: vpnApiService,
+            vpnManager: VpnManagerMock(),
+            networking: networking,
+            alertService: AlertServiceEmptyStub(),
+            timerFactory: TimerFactoryMock(),
+            propertiesManager: PropertiesManagerMock(),
+            vpnKeychain: vpnKeychain,
+            configurationPreparer: configurationPreparer,
+            vpnAuthentication: VpnAuthenticationMock(),
+            doh: .mock,
+            serverStorage: ServerStorageMock(),
+            natTypePropertyProvider: NATTypePropertyProviderMock(),
+            netShieldPropertyProvider: NetShieldPropertyProviderMock(),
+            safeModePropertyProvider: SafeModePropertyProviderMock()
+        )
 
         let viewModel = CountryItemViewModel(
-            countryGroup: group,
+            serversGroup: group,
+            servers: group.servers,
             serverType: ServerType.standard,
             appStateManager: appStateManager,
             vpnGateway: VpnGatewayMock(userTier: 1),
@@ -77,10 +93,10 @@ class CountryItemViewModelTests: XCTestCase {
             connectionStatusService: ConnectionStatusServiceMock(),
             propertiesManager: PropertiesManagerMock(),
             planService: PlanServiceMock(),
-            serversFilter: nil,
+            serversFilter: { _ in true },
             showCountryConnectButton: true,
             showFeatureIcons: true
-            )
+        )
 
         return viewModel
     }
@@ -101,7 +117,8 @@ class CountryItemViewModelTests: XCTestCase {
             status: status,
             location: ServerLocation(lat: 1, long: 2),
             hostCountry: nil,
-            translatedCity: nil
+            translatedCity: nil,
+            gatewayName: nil
         )
     }
     

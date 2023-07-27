@@ -29,11 +29,24 @@ import VPNShared
 import LocalFeatureFlags
 import Home
 import Strings
+import Dependencies
+import Theme
 
 class StatusViewModel {
-    
-    // Factory
-    typealias Factory = AppSessionManagerFactory & PropertiesManagerFactory & ProfileManagerFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & VpnKeychainFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory & NATTypePropertyProviderFactory & SafeModePropertyProviderFactory
+    typealias Factory = AppSessionManagerFactory &
+        PropertiesManagerFactory &
+        ProfileManagerFactory &
+        AppStateManagerFactory &
+        VpnGatewayFactory &
+        CoreAlertServiceFactory &
+        VpnKeychainFactory &
+        NetShieldPropertyProviderFactory &
+        VpnManagerFactory &
+        VpnStateConfigurationFactory &
+        PlanServiceFactory &
+        NATTypePropertyProviderFactory &
+        SafeModePropertyProviderFactory
+
     private let factory: Factory
     
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
@@ -60,26 +73,28 @@ class StatusViewModel {
     var isSessionEstablished: Bool {
         return appSessionManager.sessionStatus == .established
     }
-    
-    private var userTier: Int {
-        let tier: Int
-        do {
-            tier = try vpnKeychain.fetchCached().maxTier
-        } catch {
-            tier = CoreAppConstants.VpnTiers.free
-        }
-        return tier
-    }
 
     private var shouldShowNetShieldV1: Bool { isNetShieldEnabled && !isNetShieldStatsEnabled }
     private var shouldShowNetShieldV2: Bool { isNetShieldEnabled && isNetShieldStatsEnabled }
     private lazy var isNetShieldEnabled: Bool = { propertiesManager.featureFlags.netShield }()
     private lazy var isNetShieldStatsEnabled: Bool = { propertiesManager.featureFlags.netShieldStats }()
+    @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
+
+    private lazy var netShieldTypeAuthorizer = featureAuthorizerProvider.authorizer(forSubFeatureOf: NetShieldType.self)
+
+    /// Note: This will also return true if the netshield feature flag is disabled.
+    /// This is to prevent the upsell dialog from being displayed in that specific case.
+    var userIsEligibleForNetshield: Bool {
+        !NetShieldType.allCases.contains {
+            netShieldTypeAuthorizer($0).requiresUpgrade
+        }
+    }
 
     private var timer: Timer?
     private var netShieldStats: NetShieldModel = .init(trackers: 0, ads: 0, data: 0, enabled: false)
     private var connectedDate = Date()
     private var timeCellIndexPath: IndexPath?
+
     private var currentTime: String {
         let time: TimeInterval
         guard case AppState.connected = appStateManager.state else {
@@ -215,10 +230,12 @@ class StatusViewModel {
     // MARK: - Save as Profile
 
     private func connectionRequest(for profile: Profile) -> ConnectionRequest {
-        profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
-                                  withDefaultNATType: natTypePropertyProvider.natType,
-                                  withDefaultSafeMode: safeModePropertyProvider.safeMode,
-                                  trigger: nil)
+        profile.connectionRequest(
+            withDefaultNetshield: netShieldPropertyProvider.netShieldType,
+            withDefaultNATType: natTypePropertyProvider.natType,
+            withDefaultSafeMode: safeModePropertyProvider.safeMode,
+            trigger: nil
+        )
     }
     
     private var saveAsProfileSection: TableViewSection {
@@ -344,7 +361,7 @@ class StatusViewModel {
     // MARK: - NetShield
 
     private var netShieldV1Section: TableViewSection {
-        let cells = netShieldPropertyProvider.isUserEligibleForNetShield ? netShieldV1Cells : netShieldV1UnavailableCells
+        let cells = userIsEligibleForNetshield ? netShieldV1Cells : netShieldV1UnavailableCells
         return TableViewSection(title: Localizable.netshieldSectionTitle, cells: cells)
     }
 
@@ -366,19 +383,28 @@ class StatusViewModel {
             self.changeNetShield(to: toggleOn ? self.netShieldPropertyProvider.lastActiveNetShieldType : .off) { _ in }
         }))
 
-        if isNetShieldOn {
-            [NetShieldType.level1, NetShieldType.level2].forEach { type in
-                guard !type.isUserTierTooLow(userTier) else {
-                    cells.append(.invertedKeyValue(key: type.name, value: Localizable.upgrade, handler: { [weak self] in
-                        self?.alertService.push(alert: NetShieldUpsellAlert())
-                    }))
-                    return
-                }
-                cells.append(.checkmarkStandard(title: type.name, checked: currentNetShieldType == type, handler: { [weak self] in
-                    self?.changeNetShield(to: type) { _ in }
-                    return false
+        guard isNetShieldOn else {
+            return cells
+        }
+
+        for type in [NetShieldType.level1, NetShieldType.level2] {
+            guard netShieldTypeAuthorizer(type).isAllowed else {
+                cells.append(.invertedKeyValue(key: type.name, value: Localizable.upgrade, handler: { [weak self] in
+                    let result = self?.netShieldTypeAuthorizer(type)
+
+                    guard result?.isAllowed == true else {
+                        if result?.requiresUpgrade == true {
+                            self?.alertService.push(alert: NetShieldUpsellAlert())
+                        }
+                        return
+                    }
                 }))
+                continue
             }
+            cells.append(.checkmarkStandard(title: type.name, checked: currentNetShieldType == type, handler: { [weak self] in
+                self?.changeNetShield(to: type) { _ in }
+                return false
+            }))
         }
 
         return cells
@@ -388,12 +414,15 @@ class StatusViewModel {
         var cells = [TableViewCellModel]()
 
         cells.append(.attributedKeyValue(key: Localizable.netshieldTitle.attributed(withColor: UIColor.normalTextColor(), font: UIFont.systemFont(ofSize: 17)), value: Localizable.upgrade.attributed(withColor: .brandColor(), font: UIFont.systemFont(ofSize: 17)), handler: { [weak self] in
-            self?.alertService.push(alert: NetShieldUpsellAlert())
+
+            guard let self, self.userIsEligibleForNetshield else { return }
+            self.alertService.push(alert: NetShieldUpsellAlert())
         }))
 
         [NetShieldType.level1, NetShieldType.level2].forEach { type in
             cells.append(.invertedKeyValue(key: type.name, value: "", handler: { [weak self] in
-                self?.alertService.push(alert: NetShieldUpsellAlert())
+                guard let self, self.userIsEligibleForNetshield else { return }
+                self.alertService.push(alert: NetShieldUpsellAlert())
             }))
         }
 
@@ -412,7 +441,7 @@ class StatusViewModel {
     }
 
     private var netShieldV2Cells: [TableViewCellModel] {
-        guard netShieldPropertyProvider.isUserEligibleForNetShield else {
+        guard userIsEligibleForNetshield else {
             return [netShieldV2UpsellBannerCell]
         }
 
@@ -420,6 +449,16 @@ class StatusViewModel {
     }
 
     private var netShieldV2UpsellBannerCell: TableViewCellModel {
+        if let vpnCredentials = try? vpnKeychain.fetch(), vpnCredentials.accountPlan.isBusiness {
+            return .imageSubtitleImage(
+                title: Localizable.netshieldBusinessUpsellTitle,
+                subtitle: Localizable.netshieldBusinessUpsellSubtitle,
+                leadingImage: Asset.netshieldSmall.image,
+                trailingImage: Theme.Asset.icVpnBusinessBadge.image,
+                handler: { }
+            )
+        }
+
         return .imageSubtitle(
             title: Localizable.netshieldUpsellTitle,
             subtitle: Localizable.netshieldUpsellSubtitle,

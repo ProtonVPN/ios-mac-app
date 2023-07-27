@@ -63,20 +63,21 @@ class ServerHeaderViewModel: CountriesServersHeaderViewModelProtocol {
     let title: String
     var didTapInfoBtn: (() -> Void)?
     
-    init( _ sectionHeader: String, totalServers: Int, country: CountryModel, tier: Int, propertiesManager: PropertiesManagerProtocol, countriesViewModel: CountriesSectionViewModel) {
+    init( _ sectionHeader: String, totalServers: Int, serverGroup: ServerGroup, tier: Int, propertiesManager: PropertiesManagerProtocol, countriesViewModel: CountriesSectionViewModel) {
         title = sectionHeader + " (\(totalServers))"
         guard tier != CoreAppConstants.VpnTiers.free else {
             didTapInfoBtn = { countriesViewModel.displayFreeServices?() }
             return
         }
-        guard !propertiesManager.secureCoreToggle,
+        guard case .country(let country) = serverGroup.kind,
+              !propertiesManager.secureCoreToggle,
               tier > CoreAppConstants.VpnTiers.basic,
               let streamServicesDict = propertiesManager.streamingServices[country.countryCode],
               let key = streamServicesDict.keys.first,
               let streamServices = streamServicesDict[key] else {
             return
         }
-        
+
         didTapInfoBtn = {
             countriesViewModel.displayStreamingServices?(country.country, streamServices, propertiesManager)
         }

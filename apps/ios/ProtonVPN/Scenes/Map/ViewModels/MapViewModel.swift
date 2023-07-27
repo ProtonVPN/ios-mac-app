@@ -150,8 +150,21 @@ class MapViewModel: SecureCoreToggleHandler {
     }
     
     private func exitAnnotations(type: ServerType, userTier: Int) -> [CountryAnnotationViewModel] {
-        return serverManager.grouping(for: type).map {
-            let annotationViewModel = CountryAnnotationViewModel(countryModel: $0.0, servers: $0.1, serverType: activeView, vpnGateway: vpnGateway, appStateManager: appStateManager, enabled: $0.0.lowestTier <= userTier, alertService: alertService, connectionStatusService: connectionStatusService)
+        return serverManager.grouping(for: type).compactMap {
+            guard case ServerGroup.Kind.country(let countryModel) = $0.kind else {
+                return nil
+            }
+
+            let annotationViewModel = CountryAnnotationViewModel(
+                countryModel: countryModel,
+                servers: $0.servers,
+                serverType: activeView,
+                vpnGateway: vpnGateway,
+                appStateManager: appStateManager,
+                enabled: $0.lowestTier <= userTier,
+                alertService: alertService,
+                connectionStatusService: connectionStatusService
+            )
             
             if let oldAnnotationViewModel = countryExitAnnotations.first(where: { (oldAnnotationViewModel) -> Bool in
                 return oldAnnotationViewModel.countryCode == annotationViewModel.countryCode
@@ -183,7 +196,7 @@ class MapViewModel: SecureCoreToggleHandler {
     private func secureCoreEntryAnnotations(_ userTier: Int) -> Set<SecureCoreEntryCountryModel> {
         var entryCountries = Set<SecureCoreEntryCountryModel>()
         serverManager.grouping(for: .secureCore).forEach { group in
-            group.1.forEach { (server) in
+            group.servers.forEach { (server) in
                 var entryCountry = SecureCoreEntryCountryModel(appStateManager: appStateManager, countryCode: server.entryCountryCode, location: LocationUtility.coordinate(forCountry: server.entryCountryCode), vpnGateway: vpnGateway)
                 if let oldEntry = entryCountries.first(where: { (element) -> Bool in return entryCountry == element }) {
                     entryCountry = oldEntry

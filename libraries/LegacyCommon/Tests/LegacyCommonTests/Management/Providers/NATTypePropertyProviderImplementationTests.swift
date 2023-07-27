@@ -24,6 +24,7 @@ import VPNSharedTesting
 
 final class NATTypePropertyProviderImplementationTests: XCTestCase {
     static let username = "user1"
+    private let paidPlans: [AccountPlan] = [.basic, .plus, .visionary]
 
     override func setUp() {
         super.setUp()
@@ -35,54 +36,69 @@ final class NATTypePropertyProviderImplementationTests: XCTestCase {
         let variants: [NATType] = NATType.allCases
 
         for type in variants {
-            let factory = getFactory(natType: type, tier: CoreAppConstants.VpnTiers.plus)
-            XCTAssertEqual(NATTypePropertyProviderImplementation(factory).natType, type)
+            withProvider(natType: type, plan: .plus) {
+                XCTAssertEqual($0.natType, type)
+            }
         }
     }
 
     func testWhenNothingIsSetReturnsStrict() throws {
-        var factory = getFactory(natType: nil, tier: CoreAppConstants.VpnTiers.basic)
-        XCTAssertEqual(NATTypePropertyProviderImplementation(factory).natType, NATType.strictNAT)
-        factory = getFactory(natType: nil, tier: CoreAppConstants.VpnTiers.plus)
-        XCTAssertEqual(NATTypePropertyProviderImplementation(factory).natType, NATType.strictNAT)
-        factory = getFactory(natType: nil, tier: CoreAppConstants.VpnTiers.visionary)
-        XCTAssertEqual(NATTypePropertyProviderImplementation(factory).natType, NATType.strictNAT)
+        for plan in paidPlans {
+            withProvider(natType: nil, plan: plan) { provider in
+                XCTAssertEqual(provider.natType, NATType.strictNAT)
+            }
+        }
     }
 
     func testSavesValueToStorage() {
-        let factory = getFactory(natType: nil, tier: CoreAppConstants.VpnTiers.plus)
-        let provider = NATTypePropertyProviderImplementation(factory)
-
-        for type in NATType.allCases {
-            provider.natType = type
-            @Dependency(\.defaultsProvider) var defaultsProvider
-            XCTAssertEqual(defaultsProvider.getDefaults().integer(forKey: "NATType\(Self.username)"), type.rawValue)
-            XCTAssertEqual(provider.natType, type)
+        withProvider(natType: nil, plan: .plus) { provider in
+            var provider = provider
+            for type in NATType.allCases {
+                provider.natType = type
+                @Dependency(\.defaultsProvider) var defaultsProvider
+                XCTAssertEqual(defaultsProvider.getDefaults().integer(forKey: "NATType\(Self.username)"), type.rawValue)
+                XCTAssertEqual(provider.natType, type)
+            }
         }
     }
 
     func testFreeUserCantTurnModerateNATOn() throws {
-        let factory = getFactory(natType: nil, tier: CoreAppConstants.VpnTiers.free)
-        XCTAssertFalse(NATTypePropertyProviderImplementation(factory).isUserEligibleForNATTypeChange)
+        XCTAssertEqual(getAuthorizer(plan: .free), .failure(.requiresUpgrade))
     }
 
     func testPaidUserCanTurnModerateNATOn() throws {
-        var factory = getFactory(natType: nil, tier: CoreAppConstants.VpnTiers.basic)
-        XCTAssertTrue(NATTypePropertyProviderImplementation(factory).isUserEligibleForNATTypeChange)
-        factory = getFactory(natType: nil, tier: CoreAppConstants.VpnTiers.plus)
-        XCTAssertTrue(NATTypePropertyProviderImplementation(factory).isUserEligibleForNATTypeChange)
-        factory = getFactory(natType: nil, tier: CoreAppConstants.VpnTiers.visionary)
-        XCTAssertTrue(NATTypePropertyProviderImplementation(factory).isUserEligibleForNATTypeChange)
+        let accountPlans: [AccountPlan] = [.basic, .plus, .visionary]
+        for plan in accountPlans {
+            XCTAssertEqual(getAuthorizer(plan: plan), .success)
+        }
     }
 
-    private func getFactory(natType: NATType?, tier: Int) -> PaidFeaturePropertyProviderFactoryMock {
-        let propertiesManager = PropertiesManagerMock()
-        let userTierProvider = UserTierProviderMock(tier)
-        let authKeychain = MockAuthKeychain(context: .mainApp)
-        authKeychain.setMockUsername(Self.username)
+    func withProvider(natType: NATType?, plan: AccountPlan, flags: FeatureFlags = .allDisabled, closure: @escaping (NATTypePropertyProvider) -> Void) {
+        withDependencies {
+            let authKeychain = MockAuthKeychain()
+            authKeychain.setMockUsername(Self.username)
+            $0.authKeychain = authKeychain
 
-        @Dependency(\.defaultsProvider) var defaultsProvider
-        defaultsProvider.getDefaults().set(natType?.rawValue, forKey: "NATType\(Self.username)")
-        return PaidFeaturePropertyProviderFactoryMock(propertiesManager: propertiesManager, userTierProviderMock: userTierProvider, authKeychainMock: authKeychain)
+            $0.credentialsProvider = .constant(credentials: .plan(plan))
+            $0.featureFlagProvider = .constant(flags: flags)
+            $0.featureAuthorizerProvider = LiveFeatureAuthorizerProvider()
+        } operation: {
+            @Dependency(\.defaultsProvider) var defaultsProvider
+            defaultsProvider.getDefaults()
+                .setUserValue(natType?.rawValue, forKey: "NATType")
+            
+            closure(NATTypePropertyProviderImplementation())
+        }
+    }
+
+    func getAuthorizer(plan: AccountPlan) -> FeatureAuthorizationResult {
+        withDependencies {
+            $0.featureFlagProvider = .constant(flags: .allEnabled)
+            $0.credentialsProvider = .constant(credentials: .plan(plan))
+        } operation: {
+            let authorizer = LiveFeatureAuthorizerProvider()
+                .authorizer(for: NATFeature.self)
+            return authorizer()
+        }
     }
 }

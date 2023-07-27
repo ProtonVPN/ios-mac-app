@@ -23,25 +23,13 @@ import VPNShared
 public final class NetShieldPropertyProviderMock: NetShieldPropertyProvider {
     public var lastActiveNetShieldType: NetShieldType = .level1
 
-    public var factory: Factory
-
     public static var netShieldNotification: Notification.Name = Notification.Name("")
-
-    public required init(_ factory: Factory) {
-        self.factory = factory
-    }
-
-    public convenience init() {
-        self.init(PaidFeaturePropertyProviderFactoryMock())
-    }
 
     public var netShieldType: NetShieldType = .off {
         didSet {
             NotificationCenter.default.post(name: Self.netShieldNotification, object: self)
         }
     }
-
-    public var isUserEligibleForNetShield: Bool = true
 
     public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
         // Turn NetShield off on downgrade to free plan
@@ -53,5 +41,7 @@ public final class NetShieldPropertyProviderMock: NetShieldPropertyProvider {
             netShieldType = .level1
         }
     }
+    
+    public init() {}
 }
 #endif

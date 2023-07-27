@@ -25,34 +25,39 @@ import XCTest
 import VPNShared
 
 class ServerManagerTests: XCTestCase {
-
     let serverStorage = ServerStorageMock(fileName: "ServerManagerTestServers", bundle: Bundle.module)
     
-    func testFormGrouping() {
-        let freeTierServerManager = ServerManagerImplementation.instance(forTier: 0, serverStorage: serverStorage) as! ServerManagerImplementation
-        let grouping = freeTierServerManager.formGrouping(from: serverStorage.fetch())
-        
-        XCTAssert(grouping.count == 3)
-        XCTAssert(grouping[0].0.countryCode == "CA")
-        XCTAssert(grouping[0].0.lowestTier == 0)
-        XCTAssert(grouping[1].0.countryCode == "HK")
-        XCTAssert(grouping[1].0.lowestTier == 2)
-        XCTAssert(grouping[2].0.countryCode == "JP")
-        XCTAssert(grouping[2].0.lowestTier == 0)
+    private func assertCountry(_ group: ServerGroup, _ country: String) {
+        switch group.kind {
+        case .country(let countryModel):
+            XCTAssertEqual(countryModel.countryCode, country)
+        case .gateway:
+            XCTFail("Gateway group instead of a country")
+        }
     }
-    
+
+    private func assertGateway(_ group: ServerGroup, _ name: String) {
+        switch group.kind {
+        case .country:
+            XCTFail("Gateway group instead of a country")
+        case .gateway(let gatewayName):
+            XCTAssertEqual(gatewayName, name)
+        }
+    }
+
     func testStandardGrouping() { 
         let serverManager = ServerManagerImplementation.instance(forTier: 2, serverStorage: serverStorage)
         let grouping = serverManager.grouping(for: .standard)
 
-        XCTAssert(grouping.count == 3)
-        XCTAssert(grouping[0].0.countryCode == "CA")
-        XCTAssert(grouping[0].1.count == 1)
-        XCTAssert(grouping[0].1[0].entryCountryCode == "CA")
-        XCTAssert(grouping[0].1[0].exitCountryCode == "CA")
+        XCTAssert(grouping.count == 4)
+        assertGateway(grouping[0], "Mega Gateway 2000")
+        XCTAssert(grouping[0].servers.count == 1)
+        XCTAssert(grouping[0].servers[0].entryCountryCode == "CA")
+        XCTAssert(grouping[0].servers[0].exitCountryCode == "CA")
 
-        XCTAssert(grouping[1].0.countryCode == "HK")
-        XCTAssert(grouping[2].0.countryCode == "JP")
+        assertCountry(grouping[1], "CA")
+        assertCountry(grouping[2], "HK")
+        assertCountry(grouping[3], "JP")
     }
     
     func testSecureCoreFreeGrouping() {
@@ -67,10 +72,10 @@ class ServerManagerTests: XCTestCase {
         let grouping = serverManager.grouping(for: .secureCore)
 
         XCTAssert(grouping.count == 1)
-        XCTAssert(grouping[0].0.countryCode == "CA")
-        XCTAssert(grouping[0].1.count == 1)
-        XCTAssert(grouping[0].1[0].entryCountryCode == "CH")
-        XCTAssert(grouping[0].1[0].exitCountryCode == "CA")
+        assertCountry(grouping[0], "CA")
+        XCTAssert(grouping[0].servers.count == 1)
+        XCTAssert(grouping[0].servers[0].entryCountryCode == "CH")
+        XCTAssert(grouping[0].servers[0].exitCountryCode == "CA")
     }
     
     func testP2pFreeGrouping() {
@@ -85,9 +90,9 @@ class ServerManagerTests: XCTestCase {
         let grouping = serverManager.grouping(for: .p2p)
 
         XCTAssert(grouping.count == 1)
-        XCTAssert(grouping[0].0.countryCode == "JP")
-        XCTAssert(grouping[0].1.count == 1)
-        XCTAssert(grouping[0].1[0].name == "JP#7")
+        assertCountry(grouping[0], "JP")
+        XCTAssert(grouping[0].servers.count == 1)
+        XCTAssert(grouping[0].servers[0].name == "JP#7")
     }
     
     func testTorFreeGrouping() {
@@ -102,14 +107,14 @@ class ServerManagerTests: XCTestCase {
         let grouping = serverManager.grouping(for: .tor)
 
         XCTAssert(grouping.count == 1)
-        XCTAssert(grouping[0].0.countryCode == "JP")
-        XCTAssert(grouping[0].1.count == 1)
-        XCTAssert(grouping[0].1[0].name == "JP#8")
+        assertCountry(grouping[0], "JP")
+        XCTAssert(grouping[0].servers.count == 1)
+        XCTAssert(grouping[0].servers[0].name == "JP#8")
 
         var unsupportedProtocols = VpnProtocol.allCases
         unsupportedProtocols.removeAll(where: { $0 == .wireGuard(.udp) })
 
-        let serverModel = grouping[0].1[0]
+        let serverModel = grouping[0].servers[0]
         XCTAssert(serverModel.supports(vpnProtocol: .wireGuard(.udp)))
 
         for vpnProtocol in unsupportedProtocols {
@@ -171,7 +176,7 @@ class ServerManagerTests: XCTestCase {
         }
     }
 
-    func findServerModel(groupings: [CountryGroup], withServerIpNamed name: String) -> ServerModel? {
+    func findServerModel(groupings: [ServerGroup], withServerIpNamed name: String) -> ServerModel? {
         for grouping in groupings {
             for serverModel in grouping.servers {
                 if serverModel.name == name {

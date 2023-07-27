@@ -23,6 +23,7 @@ import Foundation
 import KeychainAccess
 import Logging
 import VPNShared
+import Dependencies
 
 public typealias VpnDowngradeInfo = (from: VpnCredentials, to: VpnCredentials)
 

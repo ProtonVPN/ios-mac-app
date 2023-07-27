@@ -20,17 +20,7 @@
 import Foundation
 
 public final class SafeModePropertyProviderMock: SafeModePropertyProvider {
-    public var factory: Factory
-
     public static var safeModeNotification: Notification.Name = Notification.Name("")
-
-    public required init(_ factory: Factory) {
-        self.factory = factory
-    }
-
-    public convenience init() {
-        self.init(PaidFeaturePropertyProviderFactoryMock())
-    }
 
     public var safeMode: Bool? = false
 
@@ -43,5 +33,7 @@ public final class SafeModePropertyProviderMock: SafeModePropertyProvider {
             safeMode = true
         }
     }
+
+    public init() {}
 }
 #endif

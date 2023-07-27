@@ -21,6 +21,7 @@
 
 import Foundation
 import KeychainAccess
+import Dependencies
 
 public protocol AuthKeychainHandle {
     func fetch(forContext: AppContext?) -> AuthCredentials?
@@ -42,6 +43,19 @@ public protocol AuthKeychainHandleFactory {
     func makeAuthKeychainHandle() -> AuthKeychainHandle
 }
 
+public struct AuthKeychainHandleDependencyKey: DependencyKey {
+    public static var liveValue: AuthKeychainHandle {
+        AuthKeychain.default
+    }
+}
+
+extension DependencyValues {
+    public var authKeychain: AuthKeychainHandle {
+        get { self[AuthKeychainHandleDependencyKey.self] }
+        set { self[AuthKeychainHandleDependencyKey.self] = newValue }
+    }
+}
+
 public class AuthKeychain {
     public static let clearNotification = Notification.Name("AuthKeychain.clear")
 
@@ -54,7 +68,7 @@ public class AuthKeychain {
         ]
     }
 
-    private static let `default`: AuthKeychainHandle = AuthKeychain(context: .mainApp)
+    public static let `default`: AuthKeychainHandle = AuthKeychain()
 
     public static func fetch() -> AuthCredentials? {
         `default`.fetch()
@@ -69,12 +83,12 @@ public class AuthKeychain {
     }
 
     private let keychain: KeychainAccess.Keychain
-    private let context: AppContext
+    @Dependency(\.appContext) private var context
 
-    public init(context: AppContext = .mainApp) {
+    /// This is fileprivate for a reason. Please use `default`.
+    fileprivate init() {
         self.keychain = .init(service: KeychainConstants.appKeychain)
             .accessibility(.afterFirstUnlockThisDeviceOnly)
-        self.context = context
     }
 }
 

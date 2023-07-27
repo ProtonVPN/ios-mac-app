@@ -21,7 +21,7 @@ import DictionaryCoder
 class PacketTunnelProvider: OpenVPNTunnelProvider, ExtensionAPIServiceDelegate {
 
     private var timerFactory: TimerFactory!
-    private var appInfo: AppInfo = AppInfoImplementation(context: .openVpnExtension)
+    private var appInfo: AppInfo = AppInfoImplementation()
     private var apiService: ExtensionAPIService!
     private var certificateRefreshManager: ExtensionCertificateRefreshManager!
     private let vpnAuthenticationStorage: VpnAuthenticationKeychain
@@ -90,6 +90,7 @@ class PacketTunnelProvider: OpenVPNTunnelProvider, ExtensionAPIServiceDelegate {
     }
 
     override init() {
+        AppContext.default = .openVpnExtension
 
         vpnAuthenticationStorage = VpnAuthenticationKeychain(accessGroup: OpenVPNConstants.keychainAccessGroup,
                                                              vpnKeysGenerator: ExtensionVPNKeysGenerator())
@@ -109,7 +110,7 @@ class PacketTunnelProvider: OpenVPNTunnelProvider, ExtensionAPIServiceDelegate {
         setDataTaskFactory(sendThroughTunnel: false) // This will be changed after we connect
 
         timerFactory = TimerFactoryImplementation()
-        let authKeychain = AuthKeychain(context: .openVpnExtension)
+        let authKeychain = AuthKeychain.default
         apiService = ExtensionAPIService(timerFactory: timerFactory,
                                          keychain: authKeychain,
                                          appInfo: appInfo,

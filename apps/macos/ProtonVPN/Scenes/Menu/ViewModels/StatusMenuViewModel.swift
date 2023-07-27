@@ -60,8 +60,8 @@ final class StatusMenuViewModel {
     var unsecureWiFiWarning: ((WarningPopupViewModel) -> Void)?
     
     var serverType: ServerType = .standard
-    var standardCountries: [CountryGroup]?
-    var secureCoreCountries: [CountryGroup]?
+    var standardCountries: [ServerGroup]?
+    var secureCoreCountries: [ServerGroup]?
     
     weak var viewController: StatusMenuViewControllerProtocol?
 
@@ -311,19 +311,26 @@ final class StatusMenuViewModel {
     }
     
     private func updateCountryList() {
+        // Filter out gateways, because we don't have "Connect to fastest server" for gateways
         standardCountries = serverManager?.grouping(for: .standard)
+            .filter { !$0.feature.contains(.restricted) }
         secureCoreCountries = serverManager?.grouping(for: .secureCore)
+            .filter { !$0.feature.contains(.restricted) }
         
-        let tier: Int
-        do {
-            tier = try vpnKeychain.fetchCached().maxTier
-        } catch {
-            tier = CoreAppConstants.VpnTiers.free
-        }
+        let tier = (try? vpnKeychain.fetchCached().maxTier) ?? CoreAppConstants.VpnTiers.free
         
         if tier == CoreAppConstants.VpnTiers.free {
             standardCountries = standardCountries?.sorted(by: { (countryGroup1, countryGroup2) -> Bool in
-                countryGroup1.0.countryCode < countryGroup2.0.countryCode
+                switch (countryGroup1.kind, countryGroup2.kind) {
+                case (.country(let country1), .country(let country2)):
+                    return country1.countryCode < country2.countryCode
+                case (.gateway(let name1), .gateway(let name2)):
+                    return name1 < name2
+                case (.country, .gateway):
+                    return false
+                case (.gateway, .country):
+                    return true
+                }
             })
         }
         

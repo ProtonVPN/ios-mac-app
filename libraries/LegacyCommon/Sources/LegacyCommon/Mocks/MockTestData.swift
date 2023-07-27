@@ -53,7 +53,9 @@ public struct MockTestData {
                               status: 1, // 0 == under maintenance
                               location: ServerLocation(lat: 46.33, long: 6.5),
                               hostCountry: "Switzerland",
-                              translatedCity: "Not The Eyes")
+                              translatedCity: "Not The Eyes",
+                              gatewayName: nil
+    )
 
     /// free server with relatively low latency score and not under maintenance.
     public var server2 = ServerModel(id: "efgh",
@@ -72,7 +74,9 @@ public struct MockTestData {
                               status: 1,
                               location: ServerLocation(lat: 46.25, long: 6.16),
                               hostCountry: "Switzerland",
-                              translatedCity: "Anatomy")
+                              translatedCity: "Anatomy",
+                              gatewayName: nil
+    )
 
     /// same server as server 2, but placed under maintenance.
     public var server2UnderMaintenance = ServerModel(
@@ -92,7 +96,9 @@ public struct MockTestData {
                               status: 0, // under maintenance
                               location: ServerLocation(lat: 46.25, long: 6.16),
                               hostCountry: "Switzerland",
-                              translatedCity: "Anatomy")
+                              translatedCity: "Anatomy",
+                              gatewayName: nil
+    )
 
     /// plus server with low latency score and p2p feature. not under maintenance.
     public var server3 = ServerModel(id: "ijkl",
@@ -111,7 +117,9 @@ public struct MockTestData {
                               status: 1,
                               location: .init(lat: 47.22, long: 8.32),
                               hostCountry: "Switzerland",
-                              translatedCity: nil)
+                              translatedCity: nil,
+                              gatewayName: nil
+    )
 
     /// plus server with IP override for Stealth protocol.
     public var server4 = ServerModel(id: "mnop",
@@ -133,7 +141,9 @@ public struct MockTestData {
                               status: 1,
                               location: .init(lat: 47.22, long: 8.32),
                               hostCountry: "Switzerland",
-                              translatedCity: nil)
+                              translatedCity: nil,
+                              gatewayName: nil
+    )
 
     /// plus server with IP and port override for Stealth protocol.
     public var server5 = ServerModel(id: "qrst",
@@ -156,7 +166,9 @@ public struct MockTestData {
                               status: 1,
                               location: .init(lat: 47.22, long: 8.32),
                               hostCountry: "Switzerland",
-                              translatedCity: nil)
+                              translatedCity: nil,
+                              gatewayName: nil
+    )
 
     /// plus server which supports Stealth protocol only.
     public var server6 = ServerModel(id: "uvwx",
@@ -178,7 +190,9 @@ public struct MockTestData {
                               status: 1,
                               location: .init(lat: 47.22, long: 8.32),
                               hostCountry: "Switzerland",
-                              translatedCity: nil)
+                              translatedCity: nil,
+                              gatewayName: nil
+    )
 
     /// plus server which supports all the features.
     func server7(id: String = "yzab") -> ServerModel {
@@ -201,7 +215,9 @@ public struct MockTestData {
               status: 1,
               location: .init(lat: 47.22, long: 8.32),
               hostCountry: "Switzerland",
-              translatedCity: nil)
+              translatedCity: nil,
+              gatewayName: nil
+        )
     }
 
     /// plus server which supports WireGuard protocol and OpenVPN UDP only.
@@ -230,7 +246,9 @@ public struct MockTestData {
                               status: 1,
                               location: .init(lat: 47.22, long: 8.32),
                               hostCountry: "Switzerland",
-                              translatedCity: nil)
+                              translatedCity: nil,
+                              gatewayName: nil
+    )
 
     public var defaultClientConfig = ClientConfig(openVPNConfig: .init(defaultTcpPorts: [1234, 5678],
                                                                 defaultUdpPorts: [2345, 6789]),

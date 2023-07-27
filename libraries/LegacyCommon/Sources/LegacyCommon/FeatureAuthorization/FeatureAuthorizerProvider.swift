@@ -42,6 +42,21 @@ extension FeatureAuthorizationResult {
     public static var success: FeatureAuthorizationResult {
         .success(nil)
     }
+
+    public var isAllowed: Bool {
+        guard case .success = self else { return false }
+        return true
+    }
+
+    public var requiresUpgrade: Bool {
+        guard case .failure(.requiresUpgrade) = self else { return false }
+        return true
+    }
+
+    public var featureDisabled: Bool {
+        guard case .failure(.featureDisabled) = self else { return false }
+        return true
+    }
 }
 
 public enum FeatureAuthorizationFailureReason: Error, Equatable {
@@ -70,19 +85,70 @@ public struct Authorizer<Feature: ModularAppFeature> {
 
 /// Represents a feature with no sub-features or 'levels' that may need authorization logic
 public protocol AppFeature {
-    static func canUse(onPlan plan: AccountPlan, featureFlags: FeatureFlags) -> FeatureAuthorizationResult
+    static func canUse(onPlan plan: AccountPlan, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult
+}
+
+public protocol PaidAppFeature: AppFeature {
+    static var featureFlag: KeyPath<FeatureFlags, Bool>? { get }
+    static var minTier: Int { get }
+    static var includedAccountPlans: [AccountPlan]? { get }
+    static var excludedAccountPlans: [AccountPlan]? { get }
+}
+
+extension PaidAppFeature {
+    public static var featureFlag: KeyPath<FeatureFlags, Bool>? {
+        nil
+    }
+
+    public static var minTier: Int {
+        CoreAppConstants.VpnTiers.basic
+    }
+
+    public static var includedAccountPlans: [AccountPlan]? {
+        nil
+    }
+
+    public static var excludedAccountPlans: [AccountPlan]? {
+        nil
+    }
+
+    public static func canUse(onPlan plan: AccountPlan, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+        if let featureFlag {
+            guard featureFlags[keyPath: featureFlag] else {
+                return .failure(.featureDisabled)
+            }
+        }
+
+        if let excludedAccountPlans {
+            guard !excludedAccountPlans.contains(plan) else {
+                return .failure(.requiresUpgrade)
+            }
+        }
+
+        if let includedAccountPlans {
+            guard includedAccountPlans.contains(plan) else {
+                return .failure(.requiresUpgrade)
+            }
+        }
+
+        guard minTier <= userTier else {
+            return .failure(.requiresUpgrade)
+        }
+
+        return .success
+    }
 }
 
 /// Represents a feature that may contains a number of related features, or 'levels'.
 public protocol ModularAppFeature: CaseIterable {
-    func canUse(onPlan plan: AccountPlan, featureFlags: FeatureFlags) -> FeatureAuthorizationResult
+    func canUse(onPlan plan: AccountPlan, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult
 }
 
 enum FeatureAuthorizerKey: DependencyKey {
     public static var liveValue: FeatureAuthorizerProvider { LiveFeatureAuthorizerProvider() }
 
     #if DEBUG
-    public static var mock: MockFeatureAuthorizerProvider { MockFeatureAuthorizerProvider() }
+    public static var testValue: FeatureAuthorizerProvider { MockFeatureAuthorizerProvider() }
     #endif
 }
 

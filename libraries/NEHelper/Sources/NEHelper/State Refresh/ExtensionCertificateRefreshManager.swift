@@ -162,7 +162,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
             }
 
             // and the features we stored from the last request are the same as the ones for this request...
-            guard storedFeatures.equals(other: features, safeModeEnabled: true) else {
+            guard storedFeatures.equals(other: features, safeModeFeatureEnabled: true) else {
                 log.info("Features have been updated (or haven't been stored), refreshing.", category: .userCert)
                 return true
             }

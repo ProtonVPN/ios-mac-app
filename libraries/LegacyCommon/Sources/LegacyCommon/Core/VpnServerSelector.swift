@@ -36,13 +36,13 @@ class VpnServerSelector {
     // Settings for selection
     private var serverTypeToggle: ServerType
     private var userTier: Int
-    private var serverGrouping: [CountryGroup]
+    private var serverGrouping: [ServerGroup]
     private var connectionProtocol: ConnectionProtocol
     private var smartProtocolConfig: SmartProtocolConfig
     
     public init(serverType: ServerType,
                 userTier: Int,
-                serverGrouping: [CountryGroup],
+                serverGrouping: [ServerGroup],
                 connectionProtocol: ConnectionProtocol,
                 smartProtocolConfig: SmartProtocolConfig,
                 appStateGetter: @escaping AppStateGetter) {
@@ -64,7 +64,7 @@ class VpnServerSelector {
         let forSpecificCountry: Bool
 
         switch connectionRequest.connectionType {
-        case ConnectionRequestType.country(let countryCode, _):
+        case ConnectionRequestType.country(let countryCode, _): // TODO: add connection by gateway
             guard let countryGroup = userAccessibleGrouping(type, countryCode: countryCode, serverGrouping: serverGrouping) else {
                 return nil
             }
@@ -78,7 +78,7 @@ class VpnServerSelector {
             forSpecificCountry = false
         default:
             sortedServers = serverGrouping
-                .map({ $0.1 })
+                .map({ $0.servers })
                 .flatMap({ $0 })
                 .sorted(by: { $0.score < $1.score }) // sort by highest tier first, then lowest score
             forSpecificCountry = false
@@ -113,9 +113,14 @@ class VpnServerSelector {
         }
     }
     
-    private func userAccessibleGrouping(_ type: ServerType, countryCode: String, serverGrouping: [CountryGroup]) -> CountryGroup? {
+    private func userAccessibleGrouping(_ type: ServerType, countryCode: String, serverGrouping: [ServerGroup]) -> ServerGroup? {
         return serverGrouping
-            .filter({ $0.0.countryCode == countryCode })
+            .filter {
+                if case .country(let country) = $0.kind {
+                    return country.countryCode == countryCode
+                }
+                return false
+            }
             .first
     }
     

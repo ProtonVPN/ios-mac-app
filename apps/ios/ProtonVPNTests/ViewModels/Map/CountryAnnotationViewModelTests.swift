@@ -70,12 +70,13 @@ class CountryAnnotationViewModelTests: XCTestCase {
             status: 2,
             location: ServerLocation(lat: 1, long: 2),
             hostCountry: nil,
-            translatedCity: nil
+            translatedCity: nil,
+            gatewayName: nil
             )
         )
         let authKeychain = MockAuthKeychain()
         let vpnKeychain = VpnKeychainMock()
-        let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()), appInfo: AppInfoImplementation(context: .mainApp), doh: .mock, authKeychain: authKeychain, unauthKeychain: UnauthKeychainMock())
+        let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()), appInfo: AppInfoImplementation(), doh: .mock, authKeychain: authKeychain, unauthKeychain: UnauthKeychainMock())
         let vpnApiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation(), authKeychain: authKeychain)
         let configurationPreparer = VpnManagerConfigurationPreparer(
             vpnKeychain: vpnKeychain,
@@ -103,7 +104,8 @@ class CountryAnnotationViewModelTests: XCTestCase {
             status: status,
             location: ServerLocation(lat: 1, long: 2),
             hostCountry: nil,
-            translatedCity: nil
+            translatedCity: nil,
+            gatewayName: nil
         )
     }
     

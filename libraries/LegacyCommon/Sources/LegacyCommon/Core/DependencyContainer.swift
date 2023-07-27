@@ -70,7 +70,7 @@ open class Container: PropertiesToOverride {
     @Dependency(\.storage) var storage
     private lazy var propertiesManager: PropertiesManagerProtocol = PropertiesManager()
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain.instance
-    private lazy var authKeychain: AuthKeychainHandle = AuthKeychain(context: .mainApp)
+    private lazy var authKeychain: AuthKeychainHandle = AuthKeychain.default
     private lazy var unauthKeychain: UnauthKeychainHandle = UnauthKeychain()
     private lazy var profileManager = ProfileManager(self)
     private lazy var networking = CoreNetworking(self)
@@ -266,30 +266,24 @@ extension Container: NETunnelProviderManagerWrapperFactory {
     }
 }
 
-extension Container: UserTierProviderFactory {
-    public func makeUserTierProvider() -> UserTierProvider {
-        UserTierProviderImplementation(self)
-    }
-}
-
 // MARK: NATTypePropertyProviderFactory
 extension Container: NATTypePropertyProviderFactory {
     public func makeNATTypePropertyProvider() -> NATTypePropertyProvider {
-        NATTypePropertyProviderImplementation(self)
+        NATTypePropertyProviderImplementation()
     }
 }
 
 // MARK: SafeModePropertyProviderFactory
 extension Container: SafeModePropertyProviderFactory {
     public func makeSafeModePropertyProvider() -> SafeModePropertyProvider {
-        SafeModePropertyProviderImplementation(self)
+        SafeModePropertyProviderImplementation()
     }
 }
 
 // MARK: NetShieldPropertyProviderFactory
 extension Container: NetShieldPropertyProviderFactory {
     public func makeNetShieldPropertyProvider() -> NetShieldPropertyProvider {
-        NetShieldPropertyProviderImplementation(self)
+        NetShieldPropertyProviderImplementation()
     }
 }
 

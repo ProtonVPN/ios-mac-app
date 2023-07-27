@@ -25,15 +25,12 @@ import Dependencies
 import VPNShared
 import LocalFeatureFlags
 
-public protocol NetShieldPropertyProvider: PaidFeaturePropertyProvider {
+public protocol NetShieldPropertyProvider: FeaturePropertyProvider {
     /// Current NetShield type
     var netShieldType: NetShieldType { get set }
 
     /// Used to store last non-off NS level when toggling NS off <-> on in NS V1 UI
     var lastActiveNetShieldType: NetShieldType { get }
-
-    /// Check if current user can use NetShield
-    var isUserEligibleForNetShield: Bool { get }
 
     static var netShieldNotification: Notification.Name { get }
 }
@@ -43,17 +40,14 @@ public protocol NetShieldPropertyProviderFactory {
 }
 
 public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider {
-    public let factory: Factory
-
     public static let netShieldNotification: Notification.Name = Notification.Name("NetShieldChangedNotification")
+    @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
+
+    private lazy var authorizer = featureAuthorizerProvider.authorizer(forSubFeatureOf: NetShieldType.self)
 
     private enum StorageKey: String {
         case netShield = "NetShield"
         case lastActive = "LastActiveNetShield"
-    }
-
-    public required init(_ factory: Factory) {
-        self.factory = factory
     }
 
     public var lastActiveNetShieldType: NetShieldType {
@@ -75,16 +69,11 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
             return value
         }
         set {
-            guard let username = username else {
-                log.error("Unable to update stored NetShield level, username is nil", category: .settings)
-                return
-            }
-
             @Dependency(\.defaultsProvider) var provider
-            provider.getDefaults().setValue(newValue.rawValue, forKey: StorageKey.netShield.rawValue + username)
+            provider.getDefaults().setUserValue(newValue.rawValue, forKey: StorageKey.netShield.rawValue)
             if newValue != .off {
                 // Duplicate active NS level, so that we can remember it to toggle it between off/on (V1 UI)
-                provider.getDefaults().setValue(newValue.rawValue, forKey: StorageKey.lastActive.rawValue + username)
+                provider.getDefaults().setUserValue(newValue.rawValue, forKey: StorageKey.lastActive.rawValue)
             }
 
             executeOnUIThread {
@@ -93,18 +82,6 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
         }
     }
     
-    public var isUserEligibleForNetShield: Bool {
-        var types = NetShieldType.allCases
-        types.removeAll { $0 == .off }
-        
-        for type in types {
-            if !type.isUserTierTooLow(currentUserTier) {
-                return true
-            }
-        }
-        return false
-    }
-
     public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
         // Turn NetShield off on downgrade to free plan
         if tier <= CoreAppConstants.VpnTiers.free {
@@ -112,18 +89,14 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
         }
         // On upgrade from the free plan, switch NetShield to the default value for the new tier
         if tier > oldTier && oldTier <= CoreAppConstants.VpnTiers.free {
-            netShieldType = Self.defaultNetShieldType(for: tier)
+            netShieldType = .level2
         }
     }
 
     private func getStoredNetShieldValue(key: StorageKey) -> NetShieldType? {
-        guard let username = username else {
-            log.error("Failed to retrieve stored NetShield level, username is nil", category: .settings)
-            return nil
-        }
-
         @Dependency(\.defaultsProvider) var provider
-        let rawValue = provider.getDefaults().value(forKey: key.rawValue + username)
+        let rawValue = provider.getDefaults().userValue(forKey: key.rawValue)
+
         guard let intValue = rawValue as? Int else {
             log.info("Failed to retrieve stored NetShield level, stored value is either nil or not an Int: \(String(describing: rawValue))", category: .settings)
             return nil
@@ -134,8 +107,8 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
             return nil
         }
 
-        if type.isUserTierTooLow(currentUserTier) {
-            log.info("User tier \(currentUserTier) is not high enough for stored NS level \(type), returning default (\(defaultNetShieldType))", category: .settings)
+        guard authorizer(type).isAllowed else {
+            log.info("User account has NetShield disabled", category: .settings)
             return defaultNetShieldType
         }
 
@@ -143,14 +116,30 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
     }
     
     private var defaultNetShieldType: NetShieldType {
-        Self.defaultNetShieldType(for: currentUserTier)
+        authorizer(.level1) == .success ? .level1 : .off
     }
 
-    private static func defaultNetShieldType(for userTier: Int) -> NetShieldType {
-        // Select default value: off for free users, level2 for paying users.
-        if userTier <= CoreAppConstants.VpnTiers.free {
-            return .off
+    public init() {}
+}
+
+extension NetShieldType: ModularAppFeature {
+    public func canUse(onPlan plan: AccountPlan, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+        if !featureFlags.netShield {
+            return .failure(.featureDisabled)
         }
-        return .level2
+
+        if plan.isBusiness && !plan.hasNetShield {
+            return .failure(.requiresUpgrade)
+        }
+
+        if case .level2 = self, !featureFlags.netShieldStats {
+            return .failure(.featureDisabled)
+        }
+
+        if isUserTierTooLow(userTier) {
+            return .failure(.requiresUpgrade)
+        }
+
+        return .success
     }
 }

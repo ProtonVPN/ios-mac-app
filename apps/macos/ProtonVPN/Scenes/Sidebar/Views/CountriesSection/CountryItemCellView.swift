@@ -25,6 +25,7 @@ import LegacyCommon
 import Theme
 import Ergonomics
 import Strings
+import ProtonCoreUIFoundations
 
 final class CountryItemCellView: NSView {
     
@@ -116,7 +117,11 @@ final class CountryItemCellView: NSView {
         
         expandButton.image = viewModel.isOpened ? AppTheme.Icon.chevronUp : AppTheme.Icon.chevronDown
         countryLbl.stringValue = viewModel.countryName
-        flagIV.image = AppTheme.Icon.flag(countryCode: viewModel.countryCode)
+        if !viewModel.countryCode.isEmpty {
+            flagIV.image = AppTheme.Icon.flag(countryCode: viewModel.countryCode)
+        } else {
+            flagIV.image = IconProvider.servers
+        }
         connectButton.isConnected = viewModel.isConnected
         connectButton.isHidden = isConnectButtonHidden(mouseHover: false)
         upgradeBtn.isHidden = !viewModel.isTierTooLow || viewModel.underMaintenance

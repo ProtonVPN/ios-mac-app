@@ -21,13 +21,13 @@ import UIKit
 import LegacyCommon
 import VPNShared
 import Strings
+import Dependencies
+import Theme
 
 final class NetShieldSelectionViewModel {
-
-    typealias Factory = VpnKeychainFactory & PlanServiceFactory & AppSessionManagerFactory & CoreAlertServiceFactory & NetShieldPropertyProviderFactory
+    typealias Factory = PlanServiceFactory & AppSessionManagerFactory & CoreAlertServiceFactory & NetShieldPropertyProviderFactory
     private var factory: Factory
 
-    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
@@ -44,6 +44,15 @@ final class NetShieldSelectionViewModel {
     private let allFeatures: [NetShieldType]
 
     let title: String
+
+    @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
+    lazy var netShieldTypeAuthorizer: ((NetShieldType) -> FeatureAuthorizationResult) = featureAuthorizerProvider.authorizer(forSubFeatureOf: NetShieldType.self)
+
+    /// Note: This will also return true if the netshield feature flag is disabled.
+    /// This is to prevent the upsell dialog from being displayed in that specific case.
+    var userIsEligibleForNetShield: Bool {
+        NetShieldType.allCases.allSatisfy { !netShieldTypeAuthorizer($0).requiresUpgrade }
+    }
 
     public init(
         title: String,
@@ -62,25 +71,39 @@ final class NetShieldSelectionViewModel {
     }
 
     var tableViewData: [TableViewSection] {
-        if netShieldPropertyProvider.isUserEligibleForNetShield {
+        if userIsEligibleForNetShield {
             return [netShieldSelectionSection]
         }
         return [netShieldUpsellSection, netShieldSelectionSection]
     }
 
     private var netShieldUpsellSection: TableViewSection {
-        let upsellCell = TableViewCellModel.imageSubtitle(
-            title: Localizable.netshieldUpsellTitle,
-            subtitle: Localizable.netshieldUpsellSubtitle,
-            image: Asset.netshieldSmall.image,
-            handler: { [weak self] in self?.alertService.push(alert: NetShieldUpsellAlert()) }
-        )
+        @Dependency(\.credentialsProvider) var credentialsProvider
+        let upsellCell: TableViewCellModel
+        if credentialsProvider.plan.isBusiness {
+            upsellCell = TableViewCellModel.imageSubtitleImage(
+                title: Localizable.netshieldBusinessUpsellTitle,
+                subtitle: Localizable.netshieldBusinessUpsellSubtitle,
+                leadingImage: Asset.netshieldSmall.image,
+                trailingImage: Theme.Asset.icVpnBusinessBadge.image,
+                handler: { }
+            )
+        } else {
+            upsellCell = TableViewCellModel.imageSubtitle(
+                title: Localizable.netshieldUpsellTitle,
+                subtitle: Localizable.netshieldUpsellSubtitle,
+                image: Asset.netshieldSmall.image,
+                handler: { [weak self] in
+                    self?.alertService.push(alert: NetShieldUpsellAlert())
+                }
+            )
+        }
         return TableViewSection(title: "", showHeader: false, showSeparator: true, cells: [upsellCell])
     }
 
     private var netShieldSelectionSection: TableViewSection {
         let cells = allFeatures.map { cellModel(for: $0) }
-            .appending({ [netShieldDescriptionCell] }, if: netShieldPropertyProvider.isUserEligibleForNetShield)
+            .appending({ [netShieldDescriptionCell] }, if: userIsEligibleForNetShield)
         return TableViewSection(title: "", showHeader: false, cells: cells)
     }
 
@@ -96,7 +119,7 @@ final class NetShieldSelectionViewModel {
         .checkmarkStandard(
             title: netShieldType.name,
             checked: netShieldType == selectedFeature,
-            enabled: !netShieldType.isUserTierTooLow(userTier),
+            enabled: netShieldTypeAuthorizer(netShieldType).isAllowed,
             handler: { [weak self] in
                 self?.userSelected(feature: netShieldType)
                 return true
@@ -112,16 +135,6 @@ final class NetShieldSelectionViewModel {
                 self?.onFinish?()
             }
         }
-    }
-
-    private var userTier: Int {
-        let tier: Int
-        do {
-            tier = try vpnKeychain.fetchCached().maxTier
-        } catch {
-            tier = CoreAppConstants.VpnTiers.free
-        }
-        return tier
     }
 
     @objc private func reload() {
