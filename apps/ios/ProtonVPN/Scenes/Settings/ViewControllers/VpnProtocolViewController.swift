@@ -9,6 +9,7 @@
 
 import UIKit
 import LegacyCommon
+import Strings
 
 final class VpnProtocolViewController: UIViewController {
 
@@ -50,7 +51,7 @@ final class VpnProtocolViewController: UIViewController {
     }
     
     private func setupView() {
-        navigationItem.title = LocalizedString.vpnProtocol
+        navigationItem.title = Localizable.vpnProtocol
         view.backgroundColor = .backgroundColor()
         view.layer.backgroundColor = UIColor.backgroundColor().cgColor
     }

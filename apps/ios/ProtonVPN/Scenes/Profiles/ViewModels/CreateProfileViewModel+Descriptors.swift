@@ -24,6 +24,7 @@ import Foundation
 import LegacyCommon
 import UIKit
 import ProtonCoreUIFoundations
+import Strings
 
 extension CreateOrEditProfileViewModel {
     private var fontSize: CGFloat {
@@ -48,7 +49,7 @@ extension CreateOrEditProfileViewModel {
             )
         } else {
             nameAttributedString = NSMutableAttributedString(
-                string: countryString + " (\(LocalizedString.upgradeRequired))",
+                string: countryString + " (\(Localizable.upgradeRequired))",
                 attributes: [
                     .font: UIFont.systemFont(ofSize: fontSize),
                     .baselineOffset: baselineOffset,
@@ -62,7 +63,7 @@ extension CreateOrEditProfileViewModel {
     internal func serverDescriptor(for server: ServerModel) -> NSAttributedString {
         if server.isSecureCore {
             let via = NSMutableAttributedString(
-                string: "\(LocalizedString.via)  ",
+                string: "\(Localizable.via)  ",
                 attributes: [
                     .font: UIFont.systemFont(ofSize: fontSize),
                     .baselineOffset: baselineOffset,
@@ -94,7 +95,7 @@ extension CreateOrEditProfileViewModel {
                 )
             } else {
                 serverDescriptor = NSMutableAttributedString(
-                    string: serverString + " (\(LocalizedString.upgradeRequired))",
+                    string: serverString + " (\(Localizable.upgradeRequired))",
                     attributes: [
                         .font: UIFont.systemFont(ofSize: fontSize),
                         .baselineOffset: baselineOffset,
@@ -113,10 +114,10 @@ extension CreateOrEditProfileViewModel {
         switch index {
         case 0:
             image = IconProvider.bolt
-            name = LocalizedString.fastest
+            name = Localizable.fastest
         default:
             image = IconProvider.arrowsSwapRight
-            name = LocalizedString.random
+            name = Localizable.random
         }
 
         let imageAttributedString = NSMutableAttributedString(attributedString: NSAttributedString.imageAttachment(image: image, size: CGSize(width: 24, height: 24)))

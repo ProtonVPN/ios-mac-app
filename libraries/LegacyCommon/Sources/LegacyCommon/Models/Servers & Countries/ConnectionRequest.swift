@@ -22,6 +22,7 @@
 import Foundation
 import VPNShared
 import VPNAppCore
+import Strings
 
 extension ConnectionProtocol: CustomStringConvertible {
 
@@ -54,7 +55,7 @@ extension ConnectionProtocol: CustomStringConvertible {
         case let .vpnProtocol(vpnProtocol):
             return vpnProtocol.localizedString
         case .smartProtocol:
-            return LocalizedString.smartTitle
+            return Localizable.smartTitle
         }
     }
 

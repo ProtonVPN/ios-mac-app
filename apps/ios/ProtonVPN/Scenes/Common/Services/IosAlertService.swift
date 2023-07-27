@@ -26,6 +26,7 @@ import Modals
 import Modals_iOS
 import UIKit
 import ProtonCoreUIFoundations
+import Strings
 
 class IosAlertService {
         
@@ -226,7 +227,7 @@ extension IosAlertService: CoreAlertService {
             }
         case let alert as MaxSessionsAlert:
             if alert.accountPlan == .free {
-                viewModel = .reachedDevicePlanLimit(planName: LocalizedString.plus, numberOfDevices: AccountPlan.plus.devicesCount)
+                viewModel = .reachedDevicePlanLimit(planName: Localizable.plus, numberOfDevices: AccountPlan.plus.devicesCount)
             } else {
                 viewModel = .reachedDeviceLimit
             }
@@ -255,7 +256,7 @@ extension IosAlertService: CoreAlertService {
     }
 
     private func show(_ alert: AppUpdateRequiredAlert) {
-        alert.actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: { [weak self] in
+        alert.actions.append(AlertAction(title: Localizable.ok, style: .confirmative, handler: { [weak self] in
             self?.appSessionManager.logOut(force: true, reason: nil)
         }))
         
@@ -264,11 +265,11 @@ extension IosAlertService: CoreAlertService {
     
     private func show(_ alert: CannotAccessVpnCredentialsAlert) {
         guard appSessionManager.sessionStatus == .established else { return } // already logged out
-        appSessionManager.logOut(force: true, reason: LocalizedString.errorSignInAgain)
+        appSessionManager.logOut(force: true, reason: Localizable.errorSignInAgain)
     }
     
     private func show(_ alert: RefreshTokenExpiredAlert) {
-        appSessionManager.logOut(force: true, reason: LocalizedString.invalidRefreshTokenPleaseLogin)
+        appSessionManager.logOut(force: true, reason: Localizable.invalidRefreshTokenPleaseLogin)
     }
     
     private func show(_ alert: MaintenanceAlert) {
@@ -286,7 +287,7 @@ extension IosAlertService: CoreAlertService {
     
     private func showDefaultSystemAlert(_ alert: SystemAlert) {
         if alert.actions.isEmpty {
-            alert.actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
+            alert.actions.append(AlertAction(title: Localizable.ok, style: .confirmative, handler: nil))
         }
         self.uiAlertService.displayAlert(alert)
     }

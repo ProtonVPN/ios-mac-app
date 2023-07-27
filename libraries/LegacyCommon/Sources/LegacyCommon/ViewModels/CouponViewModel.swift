@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Strings
 
 public protocol CouponViewModelFactory {
     func makeCouponViewModel() -> CouponViewModel
@@ -82,19 +83,19 @@ public final class CouponViewModel {
                             switch error {
                             case is CertificateRefreshError:
                                 log.debug("Certificate refresh failed after data reload but the data reloaded successfully", category: .app)
-                                completion(.success(LocalizedString.couponApplied))
+                                completion(.success(Localizable.couponApplied))
                             default:
                                 log.error("Failed to reload data after applying promo code", category: .app, metadata: ["error": "\(error)"])
-                                completion(.success(LocalizedString.couponAppliedPlanNotUpgradedYet))
+                                completion(.success(Localizable.couponAppliedPlanNotUpgradedYet))
                             }
                         case .success:
                             log.debug("Data reloaded after applying promo code", category: .app)
-                            completion(.success(LocalizedString.couponApplied))
+                            completion(.success(Localizable.couponApplied))
                         }
                     }
                 case .planNotUpgradedYet:
                     log.info("Promo code applied, not reloading data because the plan was not upgraded yet", category: .app)
-                    completion(.success(LocalizedString.couponAppliedPlanNotUpgradedYet))
+                    completion(.success(Localizable.couponAppliedPlanNotUpgradedYet))
                 }
             }
         }

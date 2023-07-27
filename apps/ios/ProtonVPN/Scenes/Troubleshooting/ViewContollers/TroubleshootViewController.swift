@@ -23,6 +23,7 @@
 import UIKit
 import LegacyCommon
 import ProtonCoreUIFoundations
+import Strings
 
 class TroubleshootViewController: UIViewController {
 
@@ -64,7 +65,7 @@ class TroubleshootViewController: UIViewController {
         tableView.backgroundColor = .backgroundColor()
         
         headerView.backgroundColor = .secondaryBackgroundColor()
-        titleLabel.attributedText = LocalizedString.troubleshootTitle.attributed(withColor: .normalTextColor(), fontSize: 24)
+        titleLabel.attributedText = Localizable.troubleshootTitle.attributed(withColor: .normalTextColor(), fontSize: 24)
         closeButton.setImage(IconProvider.crossBig, for: .normal)
         closeButton.tintColor = .normalTextColor()
     }

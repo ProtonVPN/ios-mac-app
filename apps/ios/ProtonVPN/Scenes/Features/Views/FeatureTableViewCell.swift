@@ -23,6 +23,7 @@
 import UIKit
 import LegacyCommon
 import ProtonCoreUIFoundations
+import Strings
 
 class FeatureTableViewCell: UITableViewCell {
     
@@ -62,16 +63,16 @@ class FeatureTableViewCell: UITableViewCell {
             }
 
             descriptionLbl.text = viewModel.description
-            learnMoreBtn.setTitle(LocalizedString.learnMore, for: .normal)
+            learnMoreBtn.setTitle(Localizable.learnMore, for: .normal)
             
             if viewModel.displayLoads {
                 loadView.isHidden = false
                 loadViewHeightConstraint.constant = 32
-                loadLowLbl.text = LocalizedString.performanceLoadLow
+                loadLowLbl.text = Localizable.performanceLoadLow
                 loadLowView.backgroundColor = .notificationOKColor()
-                loadMediumLbl.text = LocalizedString.performanceLoadMedium
+                loadMediumLbl.text = Localizable.performanceLoadMedium
                 loadMediumView.backgroundColor = .notificationWarningColor()
-                loadHighLbl.text = LocalizedString.performanceLoadHigh
+                loadHighLbl.text = Localizable.performanceLoadHigh
                 loadHighView.backgroundColor = .notificationErrorColor()
             } else {
                 loadView.isHidden = true

@@ -60,7 +60,7 @@ final class CityItemViewModel: CityViewModel {
     }
 
     var textInPlaceOfConnectIcon: String? {
-        return isUsersTierTooLow ? LocalizedString.upgrade : nil
+        return isUsersTierTooLow ? Localizable.upgrade : nil
     }
 
     var isConnected: Bool {

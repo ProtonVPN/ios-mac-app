@@ -22,6 +22,7 @@
 
 import UIKit
 import LegacyCommon
+import Strings
 
 class ProfilesViewModel {
     typealias Factory = ProfileService
@@ -37,7 +38,7 @@ class ProfilesViewModel {
     private let safeModePropertyProvider: SafeModePropertyProvider
     private let planService: PlanService
     
-    private let sectionTitles = [LocalizedString.recommended, LocalizedString.myProfiles]
+    private let sectionTitles = [Localizable.recommended, Localizable.myProfiles]
         
     private var userTier: Int {
         do {

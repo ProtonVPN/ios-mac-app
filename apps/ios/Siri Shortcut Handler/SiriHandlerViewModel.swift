@@ -24,6 +24,7 @@ import Foundation
 import LegacyCommon
 import Timer
 import VPNShared
+import Strings
 
 class SiriHandlerViewModel {
     
@@ -163,15 +164,15 @@ class SiriHandlerViewModel {
     private func getConnectionStatusString(connection: ConnectionStatus?) -> String {
         switch connection {
         case .connected:
-            return LocalizedString.connected
+            return Localizable.connected
         case .connecting:
-            return LocalizedString.connecting
+            return Localizable.connecting
         case .disconnected:
-            return LocalizedString.disconnected
+            return Localizable.disconnected
         case .disconnecting:
-            return LocalizedString.disconnecting
+            return Localizable.disconnecting
         default:
-            return LocalizedString.vpnstatusNotLoggedin
+            return Localizable.vpnstatusNotLoggedin
         }
     }
     

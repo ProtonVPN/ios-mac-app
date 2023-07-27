@@ -27,6 +27,7 @@ import UIKit
 #elseif canImport(AppKit)
 import AppKit
 #endif
+import Strings
 
 public protocol FeatureCellViewModel {
     var icon: Icon { get }
@@ -53,50 +54,50 @@ extension FeatureCellViewModel {
 
 public struct SmartRoutingFeature: FeatureCellViewModel {
     public let icon: Icon = .image(IconProvider.globe)
-    public let title: String = LocalizedString.smartRoutingTitle
+    public let title: String = Localizable.smartRoutingTitle
     public var sectionTitle: String?
-    public let description: String = LocalizedString.featureSmartRoutingDescription
-    public let footer: String? = LocalizedString.learnMore
+    public let description: String = Localizable.featureSmartRoutingDescription
+    public let footer: String? = Localizable.learnMore
     public let urlContact: String? = CoreAppConstants.ProtonVpnLinks.learnMoreSmartRouting
     public init () { }
 }
 
 public struct StreamingFeature: FeatureCellViewModel {
     public let icon: Icon = .image(IconProvider.play)
-    public let title: String = LocalizedString.streamingTitle
+    public let title: String = Localizable.streamingTitle
     public var sectionTitle: String?
-    public let description: String = LocalizedString.featureStreamingDescription
-    public let footer: String? = LocalizedString.learnMore
+    public let description: String = Localizable.featureStreamingDescription
+    public let footer: String? = Localizable.learnMore
     public let urlContact: String? = CoreAppConstants.ProtonVpnLinks.learnMoreStreaming
     public init () { }
 }
 
 public struct P2PFeature: FeatureCellViewModel {
     public let icon: Icon = .image(IconProvider.arrowsSwitch)
-    public let title: String = LocalizedString.p2pTitle
+    public let title: String = Localizable.p2pTitle
     public var sectionTitle: String?
-    public let description: String = LocalizedString.featureP2pDescription
-    public let footer: String? = LocalizedString.learnMore
+    public let description: String = Localizable.featureP2pDescription
+    public let footer: String? = Localizable.learnMore
     public let urlContact: String? = CoreAppConstants.ProtonVpnLinks.learnMoreP2p
     public init () { }
 }
 
 public struct TorFeature: FeatureCellViewModel {
     public let icon: Icon = .image(IconProvider.brandTor)
-    public let title: String = LocalizedString.featureTor
+    public let title: String = Localizable.featureTor
     public var sectionTitle: String?
-    public let description: String = LocalizedString.featureTorDescription
-    public let footer: String? = LocalizedString.learnMore
+    public let description: String = Localizable.featureTorDescription
+    public let footer: String? = Localizable.learnMore
     public let urlContact: String? = CoreAppConstants.ProtonVpnLinks.learnMoreTor
     public init () { }
 }
 
 public struct LoadPerformanceFeature: FeatureCellViewModel {
     public let icon: Icon = .image(IconProvider.servers)
-    public let title: String = LocalizedString.serverLoadTitle
+    public let title: String = Localizable.serverLoadTitle
     public var sectionTitle: String?
-    public let description: String = LocalizedString.performanceLoadDescription
-    public let footer: String? = LocalizedString.learnMore
+    public let description: String = Localizable.performanceLoadDescription
+    public let footer: String? = Localizable.learnMore
     public let urlContact: String? = CoreAppConstants.ProtonVpnLinks.learnMoreLoads
     public let displayLoads: Bool = true
     public init () { }
@@ -104,9 +105,9 @@ public struct LoadPerformanceFeature: FeatureCellViewModel {
 
 public struct FreeServersFeature: FeatureCellViewModel {
     public let icon: Icon = .image(IconProvider.servers)
-    public let title: String = LocalizedString.featureFreeServers
+    public let title: String = Localizable.featureFreeServers
     public var sectionTitle: String?
-    public let description: String = LocalizedString.featureFreeServersDescription
+    public let description: String = Localizable.featureFreeServersDescription
     public let footer: String? = nil
     public let urlContact: String? = nil
     public init () { }

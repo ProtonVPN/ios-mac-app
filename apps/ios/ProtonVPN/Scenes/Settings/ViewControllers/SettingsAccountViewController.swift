@@ -18,6 +18,7 @@
 
 import UIKit
 import LegacyCommon
+import Strings
 
 final class SettingsAccountViewController: UIViewController {
     
@@ -55,7 +56,7 @@ final class SettingsAccountViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = LocalizedString.account
+        title = Localizable.account
         
         view.backgroundColor = .backgroundColor()
         tableView.separatorColor = .normalSeparatorColor()

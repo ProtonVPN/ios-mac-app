@@ -20,19 +20,20 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Strings
 
 public class NetworkError {
     
     private static let requestTimedOut = NSError(code: NetworkErrorCode.timedOut,
-                                                 localizedDescription: LocalizedString.neRequestTimedOut)
+                                                 localizedDescription: Localizable.neRequestTimedOut)
     private static let cannotConnectToHost = NSError(code: NetworkErrorCode.cannotConnectToHost,
-                                                     localizedDescription: LocalizedString.neUnableToConnectToHost)
+                                                     localizedDescription: Localizable.neUnableToConnectToHost)
     private static let networkConnectionLost = NSError(code: NetworkErrorCode.networkConnectionLost,
-                                                       localizedDescription: LocalizedString.neNetworkConnectionLost)
+                                                       localizedDescription: Localizable.neNetworkConnectionLost)
     private static let notConnectedToInternet = NSError(code: NetworkErrorCode.notConnectedToInternet,
-                                                        localizedDescription: LocalizedString.neNotConnectedToTheInternet)
+                                                        localizedDescription: Localizable.neNotConnectedToTheInternet)
     private static let tls = NSError(code: NetworkErrorCode.tls,
-                                     localizedDescription: LocalizedString.errorMitmDescription)
+                                     localizedDescription: Localizable.errorMitmDescription)
     
     public static func error(forCode code: Int) -> NSError {
         let error: NSError
@@ -49,7 +50,7 @@ public class NetworkError {
             error = tls
         default:
             // FUTURETODO::fix error
-            error = NSError(code: code, localizedDescription: LocalizedString.neCouldntReachServer)
+            error = NSError(code: code, localizedDescription: Localizable.neCouldntReachServer)
         }
         return error
     }

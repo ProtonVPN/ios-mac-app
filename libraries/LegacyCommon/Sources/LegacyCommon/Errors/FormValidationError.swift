@@ -20,6 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Strings
 
 /// Errors in form validation
 public enum FormValidationError: Error {
@@ -33,11 +34,11 @@ extension FormValidationError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .wrongEmail:
-            return LocalizedString.errorFieldEmailWrongFormat
+            return Localizable.errorFieldEmailWrongFormat
         case .emptyValue:
-            return LocalizedString.errorFieldRequired
+            return Localizable.errorFieldRequired
         case .passwordsDontMatch:
-            return LocalizedString.errorFieldPasswordsDontMatch
+            return Localizable.errorFieldPasswordsDontMatch
         }
     }
     

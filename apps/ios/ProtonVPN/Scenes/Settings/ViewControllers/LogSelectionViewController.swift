@@ -9,6 +9,7 @@
 
 import UIKit
 import LegacyCommon
+import Strings
 
 class LogSelectionViewController: UIViewController {
 
@@ -48,7 +49,7 @@ class LogSelectionViewController: UIViewController {
     }
     
     private func setupView() {
-        navigationItem.title = LocalizedString.logs
+        navigationItem.title = Localizable.logs
         view.backgroundColor = .backgroundColor()
         view.layer.backgroundColor = UIColor.backgroundColor().cgColor
     }

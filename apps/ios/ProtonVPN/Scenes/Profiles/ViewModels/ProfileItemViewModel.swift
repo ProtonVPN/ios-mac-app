@@ -84,7 +84,7 @@ final class ProfileItemViewModel {
     }
     
     var textInPlaceOfConnectIcon: String? {
-        return isUsersTierTooLow ? LocalizedString.upgrade : nil
+        return isUsersTierTooLow ? Localizable.upgrade : nil
     }
     
     var icon: ProfileIcon {
@@ -100,7 +100,7 @@ final class ProfileItemViewModel {
     }
     
     var connectButtonTitle: String {
-        return underMaintenance ? LocalizedString.maintenance : LocalizedString.connect
+        return underMaintenance ? Localizable.maintenance : Localizable.connect
     }
     
     var alphaOfMainElements: CGFloat {
@@ -205,29 +205,29 @@ final class ProfileItemViewModel {
     
     private func systemProfileDescriptor(forProfile profile: Profile) -> NSAttributedString {
         guard profile.profileType == .system else {
-            return LocalizedString.unavailable.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
+            return Localizable.unavailable.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         }
 
         switch profile.serverOffering {
         case .fastest:
-            return LocalizedString.fastestAvailableServer.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
+            return Localizable.fastestAvailableServer.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         case .random:
-            return LocalizedString.randomAvailableServer.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
+            return Localizable.randomAvailableServer.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         case .custom:
-            return LocalizedString.unavailable.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
+            return Localizable.unavailable.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         }
     }
     
     private func userProfileDescriptor(forProfile profile: Profile) -> NSAttributedString {
         guard profile.profileType == .user else {
-            return LocalizedString.unavailable.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
+            return Localizable.unavailable.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         }
 
         switch profile.serverOffering {
         case .fastest(let cCode):
-            return defaultServerDescriptor(profile.serverType, forCountry: cCode, description: LocalizedString.fastest)
+            return defaultServerDescriptor(profile.serverType, forCountry: cCode, description: Localizable.fastest)
         case .random(let cCode):
-            return defaultServerDescriptor(profile.serverType, forCountry: cCode, description: LocalizedString.random)
+            return defaultServerDescriptor(profile.serverType, forCountry: cCode, description: Localizable.random)
         case .custom(let sWrapper):
             return customServerDescriptor(forModel: sWrapper.server)
         }

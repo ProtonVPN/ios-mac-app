@@ -106,7 +106,7 @@ class CountryItemViewModel {
     }
     
     var description: String {
-        return LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable
+        return LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable
     }
     
     var backgroundColor: UIColor {
@@ -152,7 +152,7 @@ class CountryItemViewModel {
     }
     
     var textInPlaceOfConnectIcon: String? {
-        return isUsersTierTooLow ? LocalizedString.upgrade : nil
+        return isUsersTierTooLow ? Localizable.upgrade : nil
     }
     
     var alphaOfMainElements: CGFloat {
@@ -346,8 +346,8 @@ class CountryItemViewModel {
 
 extension CountryItemViewModel {
     func serversInformationViewModel() -> ServersInformationViewController.ViewModel {
-        let freeServersRow: InformationTableViewCell.ViewModel = .init(title: LocalizedString.featureFreeServers,
-                                                                       description: LocalizedString.featureFreeServersDescription,
+        let freeServersRow: InformationTableViewCell.ViewModel = .init(title: Localizable.featureFreeServers,
+                                                                       description: Localizable.featureFreeServersDescription,
                                                                        icon: .image(IconProvider.servers))
         var serverInformationViewModels: [InformationTableViewCell.ViewModel] = partnerTypes.map {
             .init(title: $0.type,
@@ -365,10 +365,10 @@ extension CountryItemViewModel {
         var sections: [ServersInformationViewController.Section]
         sections = [.init(title: nil, rowViewModels: serverInformationViewModels)]
         if !partners.isEmpty {
-            sections.append(.init(title: LocalizedString.dwPartner2022PartnersTitle, rowViewModels: partners))
+            sections.append(.init(title: Localizable.dwPartner2022PartnersTitle, rowViewModels: partners))
         }
 
-        return .init(title: LocalizedString.informationTitle, sections: sections)
+        return .init(title: Localizable.informationTitle, sections: sections)
     }
 }
 

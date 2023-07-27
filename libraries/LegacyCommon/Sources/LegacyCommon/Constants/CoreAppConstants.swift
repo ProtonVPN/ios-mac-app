@@ -20,6 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Strings
 
 public class CoreAppConstants {
         
@@ -78,11 +79,11 @@ public class CoreAppConstants {
     public static func serverTierName(forTier tier: Int) -> String {
         switch tier {
         case 0:
-            return LocalizedString.freeServers
+            return Localizable.freeServers
         case 2:
-            return LocalizedString.plusServers
+            return Localizable.plusServers
         default:
-            return LocalizedString.testServers
+            return Localizable.testServers
         }
     }
     

@@ -25,6 +25,7 @@ import LegacyCommon
 import ProtonCoreUIFoundations
 import VPNShared
 import LocalFeatureFlags
+import Strings
 
 final class SettingsViewModel {
     typealias Factory = AppStateManagerFactory &
@@ -125,7 +126,7 @@ final class SettingsViewModel {
     func viewForFooter() -> UIView {
         let view = AppVersionView.loadViewFromNib() as AppVersionView
         view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50)
-        view.appVersionLabel.text = LocalizedString.version + " \(appInfo.bundleShortVersion) (\(appInfo.bundleVersion))"
+        view.appVersionLabel.text = Localizable.version + " \(appInfo.bundleShortVersion) (\(appInfo.bundleVersion))"
         return view
     }
     
@@ -205,8 +206,8 @@ final class SettingsViewModel {
             accountPlanName = vpnCredentials.accountPlan.description
 
         } else {
-            username = LocalizedString.unavailable
-            accountPlanName = LocalizedString.unavailable
+            username = Localizable.unavailable
+            accountPlanName = Localizable.unavailable
         }
 
         let cell = TableViewCellModel.pushAccountDetails(
@@ -217,7 +218,7 @@ final class SettingsViewModel {
             self?.pushSettingsAccountViewController()
         }
 
-        return TableViewSection(title: LocalizedString.account, cells: [cell])
+        return TableViewSection(title: Localizable.account, cells: [cell])
     }
     
     private var securitySection: TableViewSection {
@@ -225,32 +226,32 @@ final class SettingsViewModel {
         
         var cells: [TableViewCellModel] = []
 
-        let protocolValue = propertiesManager.smartProtocol ? LocalizedString.smartTitle : vpnProtocol.localizedString
-        cells.append(.pushKeyValue(key: LocalizedString.protocol, value: protocolValue, handler: { [weak self] in
+        let protocolValue = propertiesManager.smartProtocol ? Localizable.smartTitle : vpnProtocol.localizedString
+        cells.append(.pushKeyValue(key: Localizable.protocol, value: protocolValue, handler: { [weak self] in
             self?.pushProtocolViewController()
         }))
-        cells.append(.tooltip(text: LocalizedString.smartProtocolDescription))
+        cells.append(.tooltip(text: Localizable.smartProtocolDescription))
 
         let netShieldAvailable = propertiesManager.featureFlags.netShield
         if netShieldAvailable {
-            cells.append(.pushKeyValue(key: LocalizedString.netshieldTitle, value: netShieldPropertyProvider.netShieldType.name, handler: { [weak self] in
+            cells.append(.pushKeyValue(key: Localizable.netshieldTitle, value: netShieldPropertyProvider.netShieldType.name, handler: { [weak self] in
                 self?.pushNetshieldSelectionViewController()
             }))
-            cells.append(.tooltip(text: LocalizedString.netshieldTitleTooltip))
+            cells.append(.tooltip(text: Localizable.netshieldTitleTooltip))
         }
         
-        cells.append(.toggle(title: LocalizedString.alwaysOnVpn, on: { true }, enabled: false, handler: nil))
-        cells.append(.tooltip(text: LocalizedString.alwaysOnVpnTooltipIos))
+        cells.append(.toggle(title: Localizable.alwaysOnVpn, on: { true }, enabled: false, handler: nil))
+        cells.append(.tooltip(text: Localizable.alwaysOnVpnTooltipIos))
 
-        cells.append(.toggle(title: LocalizedString.killSwitch, on: { [unowned self] in self.propertiesManager.killSwitch }, enabled: true, handler: ksSwitchCallback()))
-        cells.append(.tooltip(text: LocalizedString.killSwitchTooltip))
+        cells.append(.toggle(title: Localizable.killSwitch, on: { [unowned self] in self.propertiesManager.killSwitch }, enabled: true, handler: ksSwitchCallback()))
+        cells.append(.tooltip(text: Localizable.killSwitchTooltip))
         
-        return TableViewSection(title: LocalizedString.securityOptions, cells: cells)
+        return TableViewSection(title: Localizable.securityOptions, cells: cells)
     }
 
     private var vpnAcceleratorSection: [TableViewCellModel] {
         return [
-            .toggle(title: LocalizedString.vpnAcceleratorTitle, on: { [unowned self] in self.propertiesManager.vpnAcceleratorEnabled }, enabled: true, handler: { (toggleOn, callback)  in
+            .toggle(title: Localizable.vpnAcceleratorTitle, on: { [unowned self] in self.propertiesManager.vpnAcceleratorEnabled }, enabled: true, handler: { (toggleOn, callback)  in
                 self.vpnStateConfiguration.getInfo { info in
                     switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
                     case .withConnectionUpdate:
@@ -258,7 +259,7 @@ final class SettingsViewModel {
                         self.vpnManager.set(vpnAccelerator: self.propertiesManager.vpnAcceleratorEnabled)
                         callback(self.propertiesManager.vpnAcceleratorEnabled)
                     case .withReconnect:
-                        self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnAcceleratorChangeTitle, confirmHandler: {
+                        self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.vpnAcceleratorChangeTitle, confirmHandler: {
                             self.propertiesManager.vpnAcceleratorEnabled.toggle()
                             callback(self.propertiesManager.vpnAcceleratorEnabled)
                             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "vpnAccelerator"])
@@ -270,20 +271,20 @@ final class SettingsViewModel {
                     }
                 }
             }),
-            .attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.vpnAcceleratorDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: LocalizedString.vpnAcceleratorDescriptionAltLink, withUrl: CoreAppConstants.ProtonVpnLinks.vpnAccelerator))
+            .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.vpnAcceleratorDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.vpnAcceleratorDescriptionAltLink, withUrl: CoreAppConstants.ProtonVpnLinks.vpnAccelerator))
         ]
     }
 
     private var allowLanSection: [TableViewCellModel] {
         return [
-            .toggle(title: LocalizedString.allowLanTitle, on: { [unowned self] in self.propertiesManager.excludeLocalNetworks }, enabled: true, handler: self.switchLANCallback()),
-            .tooltip(text: LocalizedString.allowLanInfo)
+            .toggle(title: Localizable.allowLanTitle, on: { [unowned self] in self.propertiesManager.excludeLocalNetworks }, enabled: true, handler: self.switchLANCallback()),
+            .tooltip(text: Localizable.allowLanInfo)
         ]
     }
 
     private var moderateNATSection: [TableViewCellModel] {
         return [
-            .toggle(title: LocalizedString.moderateNatTitle, on: { [unowned self] in self.natTypePropertyProvider.natType == .moderateNAT }, enabled: true, handler: { [weak self] (toggleOn, callback) in
+            .toggle(title: Localizable.moderateNatTitle, on: { [unowned self] in self.natTypePropertyProvider.natType == .moderateNAT }, enabled: true, handler: { [weak self] (toggleOn, callback) in
                 guard let self = self, self.natTypePropertyProvider.isUserEligibleForNATTypeChange else {
                     callback(!toggleOn)
                     self?.alertService.push(alert: ModerateNATUpsellAlert())
@@ -299,7 +300,7 @@ final class SettingsViewModel {
                         self?.vpnManager.set(natType: natType)
                         callback(toggleOn)
                     case .withReconnect:
-                        self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.moderateNatChangeTitle, confirmHandler: { [weak self] in
+                        self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.moderateNatChangeTitle, confirmHandler: { [weak self] in
                             self?.natTypePropertyProvider.natType = natType
                             callback(toggleOn)
                             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "natType"])
@@ -311,7 +312,7 @@ final class SettingsViewModel {
                     }
                 }
             }),
-            .attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.moderateNatExplanation.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: LocalizedString.moderateNatExplanationLink, withUrl: CoreAppConstants.ProtonVpnLinks.moderateNAT))
+            .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.moderateNatExplanation.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.moderateNatExplanationLink, withUrl: CoreAppConstants.ProtonVpnLinks.moderateNAT))
         ]
     }
 
@@ -319,7 +320,7 @@ final class SettingsViewModel {
         // the UI shows the "opposite" value of the safe mode flag
         // if safe mode is enabled the moderate nat checkbox is unchecked and vice versa
         return [
-            .toggle(title: LocalizedString.nonStandardPortsTitle, on: { [unowned self] in self.safeModePropertyProvider.safeMode == false }, enabled: true, handler: { [unowned self] (toggleOn, callback) in
+            .toggle(title: Localizable.nonStandardPortsTitle, on: { [unowned self] in self.safeModePropertyProvider.safeMode == false }, enabled: true, handler: { [unowned self] (toggleOn, callback) in
 
                 guard self.safeModePropertyProvider.isUserEligibleForSafeModeChange else {
                     callback(!toggleOn)
@@ -337,7 +338,7 @@ final class SettingsViewModel {
                         self.vpnManager.set(safeMode: newSafeMode)
                         callback(toggleOn)
                     case .withReconnect:
-                        self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.nonStandardPortsChangeTitle, confirmHandler: {
+                        self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.nonStandardPortsChangeTitle, confirmHandler: {
                             self.safeModePropertyProvider.safeMode = newSafeMode
                             callback(toggleOn)
                             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "safeMode"])
@@ -349,17 +350,17 @@ final class SettingsViewModel {
                     }
                 }
             }),
-            .attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.nonStandardPortsExplanation.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: LocalizedString.nonStandardPortsExplanationLink, withUrl: CoreAppConstants.ProtonVpnLinks.safeMode))
+            .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.nonStandardPortsExplanation.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.nonStandardPortsExplanationLink, withUrl: CoreAppConstants.ProtonVpnLinks.safeMode))
         ]
     }
 
     private var alternativeRoutingSection: [TableViewCellModel] {
         return [
-            .toggle(title: LocalizedString.troubleshootItemAltTitle, on: { [unowned self] in self.propertiesManager.alternativeRouting }, enabled: true, handler: { [unowned self] (toggleOn, callback) in
+            .toggle(title: Localizable.troubleshootItemAltTitle, on: { [unowned self] in self.propertiesManager.alternativeRouting }, enabled: true, handler: { [unowned self] (toggleOn, callback) in
                 self.propertiesManager.alternativeRouting.toggle()
                 callback(self.propertiesManager.alternativeRouting)
             }),
-            .attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.troubleshootItemAltDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: LocalizedString.troubleshootItemAltLink1, withUrl: CoreAppConstants.ProtonVpnLinks.alternativeRouting))
+            .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.troubleshootItemAltDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.troubleshootItemAltLink1, withUrl: CoreAppConstants.ProtonVpnLinks.alternativeRouting))
         ]
     }
 
@@ -374,7 +375,7 @@ final class SettingsViewModel {
             cells.append(contentsOf: moderateNATSection)
         }
 
-        return TableViewSection(title: LocalizedString.advanced, cells: cells)
+        return TableViewSection(title: Localizable.advanced, cells: cells)
     }
 
     private var connectionSection: TableViewSection? {
@@ -388,7 +389,7 @@ final class SettingsViewModel {
             cells.append(contentsOf: allowLanSection)
         }
 
-        return cells.isEmpty ? nil : TableViewSection(title: LocalizedString.connection, cells: cells)
+        return cells.isEmpty ? nil : TableViewSection(title: Localizable.connection, cells: cells)
     }
     
     private func switchLANCallback () -> ((Bool, @escaping (Bool) -> Void) -> Void) {
@@ -469,17 +470,17 @@ final class SettingsViewModel {
     
     private var extensionsSection: TableViewSection {
         let cells: [TableViewCellModel] = [
-            .pushStandard(title: LocalizedString.widget, handler: { [pushExtensionsViewController] in
+            .pushStandard(title: Localizable.widget, handler: { [pushExtensionsViewController] in
                 pushExtensionsViewController()
             })
         ]
         
-        return TableViewSection(title: LocalizedString.extensions, cells: cells)
+        return TableViewSection(title: Localizable.extensions, cells: cells)
     }
 
     private var usageStatisticsSection: TableViewSection {
         let cells: [TableViewCellModel] = [
-            .pushStandard(title: LocalizedString.usageStatistics,
+            .pushStandard(title: Localizable.usageStatistics,
                           handler: { [pushUsageStatisticsViewController] in
                               pushUsageStatisticsViewController()
                           })
@@ -494,7 +495,7 @@ final class SettingsViewModel {
             return nil
         default:
             return TableViewSection(title: "", cells: [
-                .pushStandard(title: LocalizedString.batteryTitle, handler: { [pushBatteryViewController] in
+                .pushStandard(title: Localizable.batteryTitle, handler: { [pushBatteryViewController] in
                     pushBatteryViewController()
                 })
             ])
@@ -503,7 +504,7 @@ final class SettingsViewModel {
     
     private var logSection: TableViewSection {
         let cells: [TableViewCellModel] = [
-            .pushStandard(title: LocalizedString.viewLogs, handler: { [pushLogSelectionViewController] in
+            .pushStandard(title: Localizable.viewLogs, handler: { [pushLogSelectionViewController] in
                 pushLogSelectionViewController()
             })
         ]
@@ -513,10 +514,10 @@ final class SettingsViewModel {
     
     private var bottomSection: TableViewSection {
         let cells: [TableViewCellModel] = [
-            .button(title: LocalizedString.reportBug, accessibilityIdentifier: "Report Bug", color: .normalTextColor(), handler: { [reportBug] in
+            .button(title: Localizable.reportBug, accessibilityIdentifier: "Report Bug", color: .normalTextColor(), handler: { [reportBug] in
                 reportBug()
             }),
-            .button(title: LocalizedString.logOut, accessibilityIdentifier: "Sign out", color: .notificationErrorColor(), handler: { [logOut] in
+            .button(title: Localizable.logOut, accessibilityIdentifier: "Sign out", color: .notificationErrorColor(), handler: { [logOut] in
                 logOut()
             })
         ]
@@ -532,9 +533,9 @@ final class SettingsViewModel {
         let description: String
         switch vpnGateway.connection {
         case .connected, .disconnecting:
-            description = LocalizedString.disconnect
+            description = Localizable.disconnect
         case .disconnected, .connecting:
-            description = LocalizedString.quickConnect
+            description = Localizable.quickConnect
         }
         return description
     }
@@ -619,7 +620,7 @@ final class SettingsViewModel {
 
     private func pushNetshieldSelectionViewController() {
         let viewModel = NetShieldSelectionViewModel(
-            title: LocalizedString.netshieldTitle,
+            title: Localizable.netshieldTitle,
             allFeatures: NetShieldType.allCases,
             selectedFeature: netShieldPropertyProvider.netShieldType,
             factory: factory,

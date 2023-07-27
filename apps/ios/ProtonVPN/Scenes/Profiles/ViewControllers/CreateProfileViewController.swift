@@ -23,6 +23,7 @@
 import GSMessages
 import UIKit
 import LegacyCommon
+import Strings
 
 class CreateProfileViewController: UITableViewController {
     
@@ -64,8 +65,8 @@ class CreateProfileViewController: UITableViewController {
     
     // MARK: - Private functions
     private func setupView() {
-        self.title = LocalizedString.createNewProfile
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: LocalizedString.save, style: .plain, target: self, action: #selector(saveTapped))
+        self.title = Localizable.createNewProfile
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: Localizable.save, style: .plain, target: self, action: #selector(saveTapped))
         renderSaveButton()
         
         // for dismissing keyboard after name is entered

@@ -19,17 +19,18 @@
 import Foundation
 import VPNShared
 import ProtonCoreUIFoundations
+import Strings
 
 extension NetShieldType {
     
     public var name: String {
         switch self {
         case .off:
-            return LocalizedString.netshieldOff
+            return Localizable.netshieldOff
         case .level1:
-            return LocalizedString.netshieldLevel1
+            return Localizable.netshieldLevel1
         case .level2:
-            return LocalizedString.netshieldLevel2
+            return Localizable.netshieldLevel2
         }
     }
 

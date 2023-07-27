@@ -23,6 +23,7 @@
 import UIKit
 import LegacyCommon
 import ProtonCoreUIFoundations
+import Strings
 
 class ServersStreamingFeaturesVC: UIViewController {
     
@@ -54,12 +55,12 @@ class ServersStreamingFeaturesVC: UIViewController {
         super.viewDidLoad()
         closeButton.setImage(IconProvider.crossBig, for: .normal)
         iconImageView.image = IconProvider.play
-        countryLbl.text = LocalizedString.streamingTitle + " - " + viewModel.countryName
-        titleLbl.text = LocalizedString.plusServers
-        featuresLbl.text = LocalizedString.featuresTitle
-        instructionLbl.text = LocalizedString.streamingServersDescription
-        noteLbl.text = LocalizedString.streamingServersNote
-        extraLbl.text = LocalizedString.streamingServersExtra
+        countryLbl.text = Localizable.streamingTitle + " - " + viewModel.countryName
+        titleLbl.text = Localizable.plusServers
+        featuresLbl.text = Localizable.featuresTitle
+        instructionLbl.text = Localizable.streamingServersDescription
+        noteLbl.text = Localizable.streamingServersNote
+        extraLbl.text = Localizable.streamingServersExtra
         servicesCV.register(StreamingServiceCell.nib, forCellWithReuseIdentifier: StreamingServiceCell.identifier)
         servicesCV.delegate = self
         servicesCV.dataSource = self

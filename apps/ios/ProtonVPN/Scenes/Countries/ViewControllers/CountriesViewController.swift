@@ -24,6 +24,7 @@ import UIKit
 import LegacyCommon
 import Search
 import ProtonCoreUIFoundations
+import Strings
 
 final class CountriesViewController: UIViewController {
     
@@ -43,7 +44,7 @@ final class CountriesViewController: UIViewController {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        tabBarItem = UITabBarItem(title: LocalizedString.countries, image: IconProvider.earth, tag: 0)
+        tabBarItem = UITabBarItem(title: Localizable.countries, image: IconProvider.earth, tag: 0)
         tabBarItem.accessibilityIdentifier = "Countries"
     }
     
@@ -68,7 +69,7 @@ final class CountriesViewController: UIViewController {
     }
     
     private func setupView() {
-        navigationItem.title = LocalizedString.countries
+        navigationItem.title = Localizable.countries
         view.layer.backgroundColor = UIColor.backgroundColor().cgColor
     }
     
@@ -83,7 +84,7 @@ final class CountriesViewController: UIViewController {
         secureCoreSeparatorHeight.constant = 1 / UIScreen.main.scale
         secureCoreBar.backgroundColor = .backgroundColor()
         secureCoreLabel.textColor = .normalTextColor()
-        secureCoreLabel.text = LocalizedString.useSecureCore
+        secureCoreLabel.text = Localizable.useSecureCore
         secureCoreSwitch.accessibilityIdentifier = "secureCoreSwitch"
         if let viewModel = viewModel {
             secureCoreSwitch.isEnabled = viewModel.enableViewToggle

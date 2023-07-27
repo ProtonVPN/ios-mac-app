@@ -23,6 +23,7 @@
 import UIKit
 import LegacyCommon
 import ProtonCoreUIFoundations
+import Strings
 
 class DefaultProfileViewModel {
     
@@ -43,7 +44,7 @@ class DefaultProfileViewModel {
                            profileType: .system,
                            serverType: propertiesManager.serverTypeToggle,
                            serverOffering: serverOffering,
-                           name: LocalizedString.random,
+                           name: Localizable.random,
                            connectionProtocol: propertiesManager.connectionProtocol)
         default:
             return Profile(id: "st_f",
@@ -52,7 +53,7 @@ class DefaultProfileViewModel {
                            profileType: .system,
                            serverType: propertiesManager.serverTypeToggle,
                            serverOffering: serverOffering,
-                           name: LocalizedString.fastest,
+                           name: Localizable.fastest,
                            connectionProtocol: propertiesManager.connectionProtocol)
         }
     }
@@ -82,9 +83,9 @@ class DefaultProfileViewModel {
     var title: String {
         switch serverOffering {
         case .fastest:
-            return LocalizedString.fastestConnection
+            return Localizable.fastestConnection
         case .random:
-            return LocalizedString.randomConnection
+            return Localizable.randomConnection
         default:
             return ""
         }

@@ -22,6 +22,7 @@
 import UIKit
 import LegacyCommon
 import ProtonCoreUIFoundations
+import Strings
 
 class ConnectionBarViewController: UIViewController {
     
@@ -44,7 +45,7 @@ class ConnectionBarViewController: UIViewController {
         connectedLabel.textColor = .normalTextColor()
         timerLabel.textColor = .normalTextColor()
         
-        connectedLabel.text = LocalizedString.connected
+        connectedLabel.text = Localizable.connected
         
         arrowImage.image = IconProvider.chevronRight.imageFlippedForRightToLeftLayoutDirection()
         arrowImage.tintColor = .iconWeak()
@@ -84,7 +85,7 @@ class ConnectionBarViewController: UIViewController {
         self.connectedLabel.isHidden = true
         self.timerLabel.isHidden = true
         self.notConnectedLabel.isHidden = false
-        self.notConnectedLabel.text = LocalizedString.loadingConnectionInfo
+        self.notConnectedLabel.text = Localizable.loadingConnectionInfo
         self.notConnectedLabel.textColor = .normalTextColor()
         self.view.setNeedsDisplay()
     }
@@ -94,7 +95,7 @@ class ConnectionBarViewController: UIViewController {
         self.connectedLabel.isHidden = true
         self.timerLabel.isHidden = true
         self.notConnectedLabel.isHidden = false
-        self.notConnectedLabel.text = LocalizedString.connectingDotDotDot
+        self.notConnectedLabel.text = Localizable.connectingDotDotDot
         self.notConnectedLabel.textColor = .notificationWarningColor()
         self.view.setNeedsDisplay()
     }
@@ -120,7 +121,7 @@ class ConnectionBarViewController: UIViewController {
         self.connectedLabel.isHidden = true
         self.timerLabel.isHidden = true
         self.notConnectedLabel.isHidden = false
-        self.notConnectedLabel.text = LocalizedString.notConnected
+        self.notConnectedLabel.text = Localizable.notConnected
         self.notConnectedLabel.textColor = .notificationErrorColor()
         self.arrowImage.isHidden = false
         

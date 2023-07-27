@@ -22,6 +22,7 @@
 
 import UIKit
 import LegacyCommon
+import Strings
 
 class BatteryUsageViewController: UIViewController {
     
@@ -36,9 +37,9 @@ class BatteryUsageViewController: UIViewController {
     }
 
     private func setupTranslations() {
-        self.title = LocalizedString.batteryTitle
-        descriptionLabel.text = LocalizedString.batteryDescription
-        moreButton.setTitle(LocalizedString.batteryMore, for: .normal)
+        self.title = Localizable.batteryTitle
+        descriptionLabel.text = Localizable.batteryDescription
+        moreButton.setTitle(Localizable.batteryMore, for: .normal)
     }
 
     private func setupViews() {

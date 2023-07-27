@@ -25,6 +25,7 @@ import UIKit
 import ProtonCoreAccountDeletion
 import ProtonCoreNetworking
 import VPNShared
+import Strings
 
 final class SettingsAccountViewModel {
     
@@ -84,34 +85,34 @@ final class SettingsAccountViewModel {
             allowUpgrade = planService.allowUpgrade && !allowPlanManagement
 
         } else {
-            username = LocalizedString.unavailable
-            accountPlanName = LocalizedString.unavailable
+            username = Localizable.unavailable
+            accountPlanName = Localizable.unavailable
             allowUpgrade = false
             allowPlanManagement = false
         }
         
         var cells: [TableViewCellModel] = [
-            .staticKeyValue(key: LocalizedString.username, value: username),
-            .staticKeyValue(key: LocalizedString.subscriptionPlan, value: accountPlanName)
+            .staticKeyValue(key: Localizable.username, value: username),
+            .staticKeyValue(key: Localizable.subscriptionPlan, value: accountPlanName)
         ]
         if allowUpgrade {
-            cells.append(TableViewCellModel.button(title: LocalizedString.upgradeSubscription, accessibilityIdentifier: "Upgrade Subscription", color: .brandColor(), handler: { [weak self] in
+            cells.append(TableViewCellModel.button(title: Localizable.upgradeSubscription, accessibilityIdentifier: "Upgrade Subscription", color: .brandColor(), handler: { [weak self] in
                 self?.buySubscriptionAction()
             }))
         }
         if allowPlanManagement {
-            cells.append(TableViewCellModel.button(title: LocalizedString.manageSubscription, accessibilityIdentifier: "Manage subscription", color: .brandColor(), handler: { [weak self] in
+            cells.append(TableViewCellModel.button(title: Localizable.manageSubscription, accessibilityIdentifier: "Manage subscription", color: .brandColor(), handler: { [weak self] in
                 self?.manageSubscriptionAction()
             }))
         }
         
         if propertiesManager.featureFlags.promoCode, let credentials = try? vpnKeychain.fetchCached(), credentials.canUsePromoCode {
-            cells.append(TableViewCellModel.button(title: LocalizedString.useCoupon, accessibilityIdentifier: "Use coupon", color: .textAccent(), handler: { [weak self] in
+            cells.append(TableViewCellModel.button(title: Localizable.useCoupon, accessibilityIdentifier: "Use coupon", color: .textAccent(), handler: { [weak self] in
                 self?.pushCouponViewController()
             }))
         }
         
-        return TableViewSection(title: LocalizedString.account.uppercased(), cells: cells)
+        return TableViewSection(title: Localizable.account.uppercased(), cells: cells)
     }
     
     final class ButtonWithLoadingIndicatorControllerImplementation: ButtonWithLoadingIndicatorController {

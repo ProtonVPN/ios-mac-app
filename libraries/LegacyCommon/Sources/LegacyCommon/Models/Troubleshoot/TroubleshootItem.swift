@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import Strings
 
 public protocol TroubleshootItem {
     var title: String { get }
@@ -48,8 +49,8 @@ public final class AlternateRoutingTroubleshootItem: ActionableTroubleshootItem 
     init(propertiesManager: PropertiesManagerProtocol) {
         self.propertiesManager = propertiesManager
 
-        title = LocalizedString.troubleshootItemAltTitle
-        description = NSMutableAttributedString(string: LocalizedString.troubleshootItemAltDescription).add(link: LocalizedString.troubleshootItemAltLink1, withUrl: CoreAppConstants.ProtonVpnLinks.alternativeRouting)
+        title = Localizable.troubleshootItemAltTitle
+        description = NSMutableAttributedString(string: Localizable.troubleshootItemAltDescription).add(link: Localizable.troubleshootItemAltLink1, withUrl: CoreAppConstants.ProtonVpnLinks.alternativeRouting)
         isOn = propertiesManager.alternativeRouting
     }
 
