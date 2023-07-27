@@ -26,6 +26,7 @@ import VPNAppCore
 import TimerMock
 import VPNShared
 import VPNSharedTesting
+import Strings
 
 class CreateOrEditProfileViewModelTests: XCTestCase {
 
@@ -168,9 +169,9 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
         let tableViewCellTitle: String
         switch dataSetType {
         case .country:
-            tableViewCellTitle = LocalizedString.country
+            tableViewCellTitle = Localizable.country
         case .server:
-            tableViewCellTitle = LocalizedString.server
+            tableViewCellTitle = Localizable.server
         }
         
         viewModel.tableViewData.forEach { section in

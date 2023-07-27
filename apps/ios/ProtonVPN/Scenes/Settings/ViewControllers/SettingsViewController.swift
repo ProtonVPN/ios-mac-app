@@ -23,6 +23,7 @@
 import UIKit
 import LegacyCommon
 import ProtonCoreUIFoundations
+import Strings
 
 final class SettingsViewController: UIViewController {
 
@@ -50,7 +51,7 @@ final class SettingsViewController: UIViewController {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        tabBarItem = UITabBarItem(title: LocalizedString.settings, image: IconProvider.cogWheel, tag: 4)
+        tabBarItem = UITabBarItem(title: Localizable.settings, image: IconProvider.cogWheel, tag: 4)
         tabBarItem.accessibilityIdentifier = "Settings back btn"
     }
     
@@ -72,7 +73,7 @@ final class SettingsViewController: UIViewController {
     }
     
     private func setupView() {
-        navigationItem.title = LocalizedString.settings
+        navigationItem.title = Localizable.settings
         view.backgroundColor = .backgroundColor()
         view.layer.backgroundColor = UIColor.backgroundColor().cgColor
     }

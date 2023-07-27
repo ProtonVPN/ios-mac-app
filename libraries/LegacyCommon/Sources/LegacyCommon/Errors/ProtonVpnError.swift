@@ -20,6 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Strings
 
 // The errors happend locally
 public enum ProtonVpnError: LocalizedError {
@@ -60,39 +61,39 @@ public enum ProtonVpnError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .modulusSignature:
-            return LocalizedString.errorModulusSignature
+            return Localizable.errorModulusSignature
         case .generateSrp:
-            return LocalizedString.errorGenerateSrp
+            return Localizable.errorGenerateSrp
         case .hashPassword:
-            return LocalizedString.errorHashPassword
+            return Localizable.errorHashPassword
         case .fetchSession:
-            return LocalizedString.errorFetchSession
+            return Localizable.errorFetchSession
         case .vpnProperties:
-            return LocalizedString.errorVpnProperties
+            return Localizable.errorVpnProperties
         case .decode(let location):
-            return LocalizedString.errorDecode(location)
+            return Localizable.errorDecode(location)
         case .connectionFailed:
-            return LocalizedString.connectionFailed
+            return Localizable.connectionFailed
         case .vpnManagerUnavailable:
             return "Couldn't retrieve vpn manager"
         case .removeVpnProfileFailed:
             return "Failed to remove VPN profile"
         case .tlsInitialisation:
-            return LocalizedString.errorTlsInitialisation
+            return Localizable.errorTlsInitialisation
         case .tlsServerVerification:
-            return LocalizedString.errorTlsServerVerification
+            return Localizable.errorTlsServerVerification
         case .vpnSessionInProgress:
-            return LocalizedString.errorVpnSessionIsActive
+            return Localizable.errorVpnSessionIsActive
         case .keychainWriteFailed:
-            return LocalizedString.errorKeychainWrite
+            return Localizable.errorKeychainWrite
         case .subuserWithoutSessions:
-            return LocalizedString.subuserAlertDescription1
+            return Localizable.subuserAlertDescription1
         case .userCredentialsMissing:
-            return LocalizedString.errorUserCredentialsMissing
+            return Localizable.errorUserCredentialsMissing
         case .userCredentialsExpired:
-            return LocalizedString.errorUserCredentialsExpired
+            return Localizable.errorUserCredentialsExpired
         case .vpnCredentialsMissing:
-            return LocalizedString.errorVpnCredentialsMissing
+            return Localizable.errorVpnCredentialsMissing
         }
     }
 }

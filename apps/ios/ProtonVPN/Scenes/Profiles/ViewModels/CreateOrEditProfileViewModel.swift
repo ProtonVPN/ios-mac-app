@@ -24,6 +24,7 @@ import GSMessages
 import UIKit
 import LegacyCommon
 import VPNAppCore
+import Strings
 
 class CreateOrEditProfileViewModel: NSObject {
     
@@ -115,18 +116,18 @@ class CreateOrEditProfileViewModel: NSObject {
         cells.append(quickConnectCell)
         cells.append(footerCell)
                 
-        return [TableViewSection(title: LocalizedString.selectProfileColor, cells: cells)]
+        return [TableViewSection(title: Localizable.selectProfileColor, cells: cells)]
     }
     
     func saveProfile(completion: @escaping (Bool) -> Void) {
         guard !name.isEmpty else {
-            messageHandler?(LocalizedString.profileNameIsRequired, GSMessageType.warning, UIConstants.messageOptions)
+            messageHandler?(Localizable.profileNameIsRequired, GSMessageType.warning, UIConstants.messageOptions)
             completion(false)
             return
         }
         
         guard selectedCountryGroup != nil else {
-            messageHandler?(LocalizedString.countrySelectionIsRequired, GSMessageType.warning, UIConstants.messageOptions)
+            messageHandler?(Localizable.countrySelectionIsRequired, GSMessageType.warning, UIConstants.messageOptions)
             completion(false)
             return
         }
@@ -145,7 +146,7 @@ class CreateOrEditProfileViewModel: NSObject {
     private func finishSaveProfile(completion: @escaping (Bool) -> Void) {
         
         guard let serverOffering = selectedServerOffering else {
-            messageHandler?(LocalizedString.serverSelectionIsRequired, GSMessageType.warning, UIConstants.messageOptions)
+            messageHandler?(Localizable.serverSelectionIsRequired, GSMessageType.warning, UIConstants.messageOptions)
             completion(false)
             return
         }
@@ -177,13 +178,13 @@ class CreateOrEditProfileViewModel: NSObject {
         let result = editedProfile != nil ? profileManager.updateProfile(profile) : profileManager.createProfile(profile)
         
         guard result == .success else {
-            messageHandler?(LocalizedString.profileNameNeedsToBeUnique, GSMessageType.warning, UIConstants.messageOptions)
+            messageHandler?(Localizable.profileNameNeedsToBeUnique, GSMessageType.warning, UIConstants.messageOptions)
             completion(false)
             return
         }
 
         guard let username = username else {
-            messageHandler?(LocalizedString.vpnstatusNotLoggedin, GSMessageType.warning, UIConstants.messageOptions)
+            messageHandler?(Localizable.vpnstatusNotLoggedin, GSMessageType.warning, UIConstants.messageOptions)
             completion(false)
             return
         }
@@ -208,11 +209,11 @@ class CreateOrEditProfileViewModel: NSObject {
     }
     
     private var nameCell: TableViewCellModel {
-        return TableViewCellModel.titleTextField(title: LocalizedString.name, textFieldText: name, textFieldPlaceholder: LocalizedString.enterProfileName, textFieldDelegate: self)
+        return TableViewCellModel.titleTextField(title: Localizable.name, textFieldText: name, textFieldPlaceholder: Localizable.enterProfileName, textFieldDelegate: self)
     }
     
     private var secureCoreCell: TableViewCellModel {
-        TableViewCellModel.toggle(title: LocalizedString.featureSecureCore,
+        TableViewCellModel.toggle(title: Localizable.featureSecureCore,
                                   on: { [unowned self] in self.state == .secureCore },
                                   enabled: true,
                                   handler: { [weak self] (_, callback) in
@@ -230,9 +231,9 @@ class CreateOrEditProfileViewModel: NSObject {
         
         if let selectedCountry = selectedCountryGroup {
             let countryAttibutedString = countryDescriptor(for: selectedCountry.0)
-            return TableViewCellModel.pushKeyValueAttributed(key: LocalizedString.country, value: countryAttibutedString, handler: completionHandler)
+            return TableViewCellModel.pushKeyValueAttributed(key: Localizable.country, value: countryAttibutedString, handler: completionHandler)
         } else {
-            return TableViewCellModel.pushKeyValue(key: LocalizedString.country, value: LocalizedString.selectCountry, handler: completionHandler)
+            return TableViewCellModel.pushKeyValue(key: Localizable.country, value: Localizable.selectCountry, handler: completionHandler)
         }
     }
     
@@ -243,27 +244,27 @@ class CreateOrEditProfileViewModel: NSObject {
         
         if let selectedServer = selectedServerOffering {
             let serverAttibutedString = serverName(forServerOffering: selectedServer)
-            return TableViewCellModel.pushKeyValueAttributed(key: LocalizedString.server, value: serverAttibutedString, handler: completionHandler)
+            return TableViewCellModel.pushKeyValueAttributed(key: Localizable.server, value: serverAttibutedString, handler: completionHandler)
         } else {
-            return TableViewCellModel.pushKeyValue(key: LocalizedString.server, value: LocalizedString.selectServer, handler: completionHandler)
+            return TableViewCellModel.pushKeyValue(key: Localizable.server, value: Localizable.selectServer, handler: completionHandler)
         }
     }
     
     private var protocolCell: TableViewCellModel {
-        return TableViewCellModel.pushKeyValue(key: LocalizedString.protocol, value: selectedProtocol.localizedString) { [weak self] in
+        return TableViewCellModel.pushKeyValue(key: Localizable.protocol, value: selectedProtocol.localizedString) { [weak self] in
             self?.pushProtocolViewController()
         }
     }
     
     private var quickConnectCell: TableViewCellModel {
-        return TableViewCellModel.toggle(title: LocalizedString.makeDefaultProfile, on: { [unowned self] in self.isDefaultProfile }, enabled: true, handler: { [weak self] (_, callback) in
+        return TableViewCellModel.toggle(title: Localizable.makeDefaultProfile, on: { [unowned self] in self.isDefaultProfile }, enabled: true, handler: { [weak self] (_, callback) in
             self?.toggleDefault()
             callback(self?.isDefaultProfile == true)
         })
     }
     
     private var footerCell: TableViewCellModel {
-        return TableViewCellModel.tooltip(text: LocalizedString.defaultProfileTooltip)
+        return TableViewCellModel.tooltip(text: Localizable.defaultProfileTooltip)
     }
     
     private var selectedCountryGroup: CountryGroup? {
@@ -381,7 +382,7 @@ class CreateOrEditProfileViewModel: NSObject {
     
     func pushServerSelectionViewController() {
         guard let dataSet = serverSelectionDataSet else {
-            messageHandler?(LocalizedString.countrySelectionIsRequired, GSMessageType.warning, UIConstants.messageOptions)
+            messageHandler?(Localizable.countrySelectionIsRequired, GSMessageType.warning, UIConstants.messageOptions)
             return
         }
         
@@ -445,10 +446,10 @@ extension CreateOrEditProfileViewModel {
         if rows.contains(where: { ($0.object as! CountryGroup).0.lowestTier > userTier }) {
             sections = [
                 SelectionSection(
-                    title: LocalizedString.countriesFree.uppercased(),
+                    title: Localizable.countriesFree.uppercased(),
                     cells: rows.filter { ($0.object as! CountryGroup).0.lowestTier <= userTier }),
                 SelectionSection(
-                    title: LocalizedString.countriesPremium.uppercased(),
+                    title: Localizable.countriesPremium.uppercased(),
                     cells: rows.filter { ($0.object as! CountryGroup).0.lowestTier > userTier }),
             ]
         } else {
@@ -475,7 +476,7 @@ extension CreateOrEditProfileViewModel {
         }
         
         return SelectionDataSet(
-            dataTitle: LocalizedString.countries,
+            dataTitle: Localizable.countries,
             data: sections,
             selectedIndex: selectedIndex
         )
@@ -519,7 +520,7 @@ extension CreateOrEditProfileViewModel {
         }
         
         return SelectionDataSet(
-            dataTitle: LocalizedString.server,
+            dataTitle: Localizable.server,
             data: sections,
             selectedIndex: selectedIndex
         )

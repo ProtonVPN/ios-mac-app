@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import LegacyCommon
+import Strings
 
 class SubuserAlertViewController: UIViewController {
     
@@ -42,19 +43,19 @@ class SubuserAlertViewController: UIViewController {
     }
     
     private func setupTranslations() {
-        titleLabel.text = LocalizedString.subuserAlertTitle
+        titleLabel.text = Localizable.subuserAlertTitle
         if role == .organizationAdmin {
-            assignConnectionsButton.setTitle(LocalizedString.subuserAlertEnableConnectionsButton, for: .normal)
+            assignConnectionsButton.setTitle(Localizable.subuserAlertEnableConnectionsButton, for: .normal)
             assignConnectionsButton.isHidden = false
-            description1Label.text = LocalizedString.subuserAlertDescription1
-            description2Label.text = LocalizedString.subuserAlertDescription2
+            description1Label.text = Localizable.subuserAlertDescription1
+            description2Label.text = Localizable.subuserAlertDescription2
         } else {
             assignConnectionsButton.isHidden = true
-            description1Label.text = LocalizedString.subuserAlertDescription3
+            description1Label.text = Localizable.subuserAlertDescription3
             description2Label.isHidden = true
         }
 
-        loginButton.setTitle(LocalizedString.subuserAlertLoginButton, for: .normal)
+        loginButton.setTitle(Localizable.subuserAlertLoginButton, for: .normal)
     }
     
     private func setupViews() {

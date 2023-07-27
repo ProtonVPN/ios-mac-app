@@ -20,6 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Strings
 
 public enum KeychainError: LocalizedError {
     
@@ -28,7 +29,7 @@ public enum KeychainError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .fetchFailure:
-            return LocalizedString.errorKeychainFetch
+            return Localizable.errorKeychainFetch
         }
     }
 }
@@ -36,5 +37,5 @@ public enum KeychainError: LocalizedError {
 public class KeychainErrorConst {
 
     public static let fetchFailure = NSError(code: ErrorCode.keychainFetchFailure,
-                                      localizedDescription: LocalizedString.errorKeychainFetch)
+                                      localizedDescription: Localizable.errorKeychainFetch)
 }

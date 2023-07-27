@@ -21,6 +21,7 @@
 
 import Foundation
 import VPNShared
+import Strings
 
 public enum ParseError: LocalizedError {
     
@@ -43,19 +44,19 @@ public enum ParseError: LocalizedError {
     public var localizedDescription: String {
         switch self {
         case .serverParse:
-            return LocalizedString.errorServerInfoParser
+            return Localizable.errorServerInfoParser
         case .partnerParse:
-            return LocalizedString.errorPartnerInfoParser
+            return Localizable.errorPartnerInfoParser
         case .sessionCountParse:
-            return LocalizedString.errorSessionCountParser
+            return Localizable.errorSessionCountParser
         case .loadsParse:
-            return LocalizedString.errorLoads
+            return Localizable.errorLoads
         case .subscriptionsParse:
-            return LocalizedString.errorSubscriptionParser
+            return Localizable.errorSubscriptionParser
         case .verificationMethodsParse:
-            return LocalizedString.errorVerificationMethodsParser
+            return Localizable.errorVerificationMethodsParser
         default:
-            return LocalizedString.errorInternalError
+            return Localizable.errorInternalError
         }
     }
 }
@@ -79,18 +80,18 @@ public class ApiError: NSError {
     }
     
     public static let unknownError = ApiError(httpStatusCode: HttpStatusCode.internalServerError, code: HttpStatusCode.internalServerError,
-                                             localizedDescription: LocalizedString.errorInternalError)
+                                             localizedDescription: Localizable.errorInternalError)
     
     private static func errorMessageFor(httpStatusCode statusCode: Int, apiErrorCode code: Int, errorMessage: String?) -> String {
         switch code {
         case ApiErrorCode.wrongLoginCredentials:
-            return LocalizedString.aeWrongLoginCredentials
+            return Localizable.aeWrongLoginCredentials
         case ApiErrorCode.vpnIpNotFound:
-            return LocalizedString.aeVpnInfoNotReceived
+            return Localizable.aeVpnInfoNotReceived
         case ApiErrorCode.apiOffline:
-            return LocalizedString.errorApiOffline
+            return Localizable.errorApiOffline
         default:
-            return errorMessage ?? LocalizedString.errorInternalError
+            return errorMessage ?? Localizable.errorInternalError
         }
     }
 }

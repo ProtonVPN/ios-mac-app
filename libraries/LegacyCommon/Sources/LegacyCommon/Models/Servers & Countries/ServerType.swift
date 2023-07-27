@@ -20,6 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Strings
 
 public enum ServerType: Int, Codable, CustomStringConvertible {
     case standard = 0
@@ -63,13 +64,13 @@ public enum ServerType: Int, Codable, CustomStringConvertible {
     public var localizedString: String {
         switch self {
         case .standard:
-            return LocalizedString.standard
+            return Localizable.standard
         case .secureCore:
-            return LocalizedString.secureCore
+            return Localizable.secureCore
         case .p2p:
-            return LocalizedString.p2p
+            return Localizable.p2p
         case .tor:
-            return LocalizedString.tor
+            return Localizable.tor
         case .unspecified:
             return "Unspecified"
         }

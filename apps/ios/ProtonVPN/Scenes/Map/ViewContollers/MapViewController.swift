@@ -24,6 +24,7 @@ import CoreLocation
 import UIKit
 import LegacyCommon
 import ProtonCoreUIFoundations
+import Strings
 
 final class MapViewController: UIViewController {
 
@@ -48,7 +49,7 @@ final class MapViewController: UIViewController {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        tabBarItem = UITabBarItem(title: LocalizedString.map, image: IconProvider.map, tag: 1)
+        tabBarItem = UITabBarItem(title: Localizable.map, image: IconProvider.map, tag: 1)
         tabBarItem.accessibilityIdentifier = "Map"
     }
     
@@ -79,7 +80,7 @@ final class MapViewController: UIViewController {
     }
     
     private func setupView() {
-        navigationItem.title = LocalizedString.map
+        navigationItem.title = Localizable.map
         view.backgroundColor = .backgroundColor()
         
         scrollView.decelerationRate = UIScrollView.DecelerationRate.normal
@@ -108,7 +109,7 @@ final class MapViewController: UIViewController {
     private func setupSecureCoreBar() {
         secureCoreBar.backgroundColor = .backgroundColor()
         secureCoreLabel.textColor = .normalTextColor()
-        secureCoreLabel.text = LocalizedString.useSecureCore
+        secureCoreLabel.text = Localizable.useSecureCore
         if let viewModel = viewModel {
             secureCoreSwitch.isEnabled = viewModel.enableViewToggle
             secureCoreSwitch.isOn = viewModel.secureCoreOn

@@ -19,6 +19,7 @@
 import UIKit
 import LegacyCommon
 import ProtonCoreUIFoundations
+import Strings
 
 class ServersInformationViewController: UIViewController {
     static var identifier: String {
@@ -53,7 +54,7 @@ class ServersInformationViewController: UIViewController {
 
         view.backgroundColor = .backgroundColor()
 
-        titleLabel.text = LocalizedString.informationTitle
+        titleLabel.text = Localizable.informationTitle
         titleLabel.font = .boldSystemFont(ofSize: 17)
         titleLabel.textColor = .normalTextColor()
     }

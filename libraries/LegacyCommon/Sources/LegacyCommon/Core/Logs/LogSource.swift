@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Strings
 
 public enum LogSource: CaseIterable {
     case app
@@ -19,9 +20,9 @@ public enum LogSource: CaseIterable {
 
     public var title: String {
         switch self {
-        case .app: return LocalizedString.applicationLogs
-        case .openvpn: return LocalizedString.openVpnLogs
-        case .wireguard: return LocalizedString.wireguardLogs
+        case .app: return Localizable.applicationLogs
+        case .openvpn: return Localizable.openVpnLogs
+        case .wireguard: return Localizable.wireguardLogs
         case .osLog: return "os_log" // Not used in UI
         }
     }

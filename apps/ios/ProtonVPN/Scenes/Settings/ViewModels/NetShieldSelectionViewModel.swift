@@ -20,6 +20,7 @@ import Foundation
 import UIKit
 import LegacyCommon
 import VPNShared
+import Strings
 
 final class NetShieldSelectionViewModel {
 
@@ -69,8 +70,8 @@ final class NetShieldSelectionViewModel {
 
     private var netShieldUpsellSection: TableViewSection {
         let upsellCell = TableViewCellModel.imageSubtitle(
-            title: LocalizedString.netshieldUpsellTitle,
-            subtitle: LocalizedString.netshieldUpsellSubtitle,
+            title: Localizable.netshieldUpsellTitle,
+            subtitle: Localizable.netshieldUpsellSubtitle,
             image: Asset.netshieldSmall.image,
             handler: { [weak self] in self?.alertService.push(alert: NetShieldUpsellAlert()) }
         )
@@ -84,10 +85,10 @@ final class NetShieldSelectionViewModel {
     }
 
     private var netShieldDescriptionCell: TableViewCellModel {
-        let attributedFeatureDescription = LocalizedString.netshieldFeatureDescription
+        let attributedFeatureDescription = Localizable.netshieldFeatureDescription
             .attributed(withColor: UIColor.weakTextColor(), fontSize: 13)
         let cellText = NSMutableAttributedString(attributedString: attributedFeatureDescription)
-            .add(link: LocalizedString.netshieldFeatureDescriptionAltLink, withUrl: CoreAppConstants.ProtonVpnLinks.netshieldSupport)
+            .add(link: Localizable.netshieldFeatureDescriptionAltLink, withUrl: CoreAppConstants.ProtonVpnLinks.netshieldSupport)
         return .attributedTooltip(text: cellText)
     }
 

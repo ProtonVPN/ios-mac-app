@@ -20,6 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Strings
 
 public enum PrimaryActionType {
     case confirmative
@@ -119,7 +120,7 @@ extension SystemAlert {
 }
 
 public class AccountDeletionErrorAlert: SystemAlert {
-    public var title: String? = LocalizedString.accountDeletionError
+    public var title: String? = Localizable.accountDeletionError
     public var message: String?
     public var actions = [AlertAction]()
     public let isError: Bool = true
@@ -132,22 +133,22 @@ public class AccountDeletionErrorAlert: SystemAlert {
 
 public class AccountDeletionWarningAlert: SystemAlert {
     
-    public var title: String? = LocalizedString.vpnConnectionActive
-    public var message: String? = LocalizedString.accountDeletionConnectionWarning
+    public var title: String? = Localizable.vpnConnectionActive
+    public var message: String? = Localizable.accountDeletionConnectionWarning
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
     
     public init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
+        actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: cancelHandler))
     }
 }
 
 /// App should update to be able to use API
 public class AppUpdateRequiredAlert: SystemAlert {
-    public var title: String? = LocalizedString.updateRequired
-    public var message: String? = LocalizedString.updateRequiredNoLongerSupported
+    public var title: String? = Localizable.updateRequired
+    public var message: String? = Localizable.updateRequiredNoLongerSupported
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
@@ -168,16 +169,16 @@ public class CannotAccessVpnCredentialsAlert: SystemAlert {
 }
 
 public class P2pBlockedAlert: SystemAlert {
-    public var title: String? = LocalizedString.p2pDetectedPopupTitle
-    public var message: String? = LocalizedString.p2pDetectedPopupBody
+    public var title: String? = Localizable.p2pDetectedPopupTitle
+    public var message: String? = Localizable.p2pDetectedPopupBody
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
 }
 
 public class P2pForwardedAlert: SystemAlert {
-    public var title: String? = LocalizedString.p2pForwardedPopupTitle
-    public var message: String? = LocalizedString.p2pForwardedPopupBody
+    public var title: String? = Localizable.p2pForwardedPopupTitle
+    public var message: String? = Localizable.p2pForwardedPopupBody
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
@@ -194,8 +195,8 @@ public class RefreshTokenExpiredAlert: SystemAlert {
 }
 
 public class UpgradeUnavailableAlert: SystemAlert {
-    public var title: String? = LocalizedString.upgradeUnavailableTitle
-    public var message: String? = LocalizedString.upgradeUnavailableBody
+    public var title: String? = Localizable.upgradeUnavailableTitle
+    public var message: String? = Localizable.upgradeUnavailableBody
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
@@ -204,14 +205,14 @@ public class UpgradeUnavailableAlert: SystemAlert {
         let confirmHandler: () -> Void = {
             SafariService().open(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
         }
-        actions.append(AlertAction(title: LocalizedString.account, style: .confirmative, handler: confirmHandler))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
+        actions.append(AlertAction(title: Localizable.account, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: nil))
     }
 }
 
 public class DelinquentUserAlert: SystemAlert {
-    public var title: String? = LocalizedString.delinquentUserTitle
-    public var message: String? = LocalizedString.delinquentUserDescription
+    public var title: String? = Localizable.delinquentUserTitle
+    public var message: String? = Localizable.delinquentUserDescription
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
@@ -220,8 +221,8 @@ public class DelinquentUserAlert: SystemAlert {
 }
 
 public class VpnStuckAlert: SystemAlert {
-    public var title: String? = LocalizedString.vpnStuckDisconnectingTitle
-    public var message: String? = LocalizedString.vpnStuckDisconnectingBody
+    public var title: String? = Localizable.vpnStuckDisconnectingTitle
+    public var message: String? = Localizable.vpnStuckDisconnectingBody
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
@@ -230,7 +231,7 @@ public class VpnStuckAlert: SystemAlert {
 }
 
 public class VpnNetworkUnreachableAlert: SystemAlert {
-    public var title: String? = LocalizedString.notConnectedToTheInternet
+    public var title: String? = Localizable.notConnectedToTheInternet
     public var message: String?
     public var actions = [AlertAction]()
     public let isError: Bool = true
@@ -238,7 +239,7 @@ public class VpnNetworkUnreachableAlert: SystemAlert {
 }
 
 public class MaintenanceAlert: SystemAlert {
-    public var title: String? = LocalizedString.allServersInProfileUnderMaintenance
+    public var title: String? = Localizable.allServersInProfileUnderMaintenance
     public var message: String?
     public var actions = [AlertAction]()
     public let isError: Bool = true
@@ -246,26 +247,26 @@ public class MaintenanceAlert: SystemAlert {
     public let type: MaintenanceAlertType
     
     public init() {
-        title = LocalizedString.allServersInProfileUnderMaintenance
+        title = Localizable.allServersInProfileUnderMaintenance
         type = .alert
     }
     
     public init(countryName: String) {
-        title = LocalizedString.countryServersUnderMaintenance(countryName)
+        title = Localizable.countryServersUnderMaintenance(countryName)
         type = .alert
     }
 
     public init(cityName: String) {
-        title = LocalizedString.countryServersUnderMaintenance(cityName)
+        title = Localizable.countryServersUnderMaintenance(cityName)
         type = .alert
     }
     
     /// If `forSpecificCountry` is set, switches between country and servers texts, if it's nil, uses one text
     public init(forSpecificCountry: Bool?) {
         if let forSpecificCountry = forSpecificCountry {
-            title = forSpecificCountry ? LocalizedString.allServersInCountryUnderMaintenance : LocalizedString.allServersUnderMaintenance
+            title = forSpecificCountry ? Localizable.allServersInCountryUnderMaintenance : Localizable.allServersUnderMaintenance
         } else {
-            title = LocalizedString.serverUnderMaintenance
+            title = Localizable.serverUnderMaintenance
         }
         type = .notification
     }
@@ -277,52 +278,52 @@ public class MaintenanceAlert: SystemAlert {
 }
 
 public class SecureCoreToggleDisconnectAlert: SystemAlert {
-    public var title: String? = LocalizedString.warning
-    public var message: String? = LocalizedString.viewToggleWillCauseDisconnect
+    public var title: String? = Localizable.warning
+    public var message: String? = Localizable.viewToggleWillCauseDisconnect
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
     
     public init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: {
+        actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: {
             NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.settingsChange)
             confirmHandler()
         }))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
+        actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: cancelHandler))
     }    
 }
 
 public class ChangeProtocolDisconnectAlert: SystemAlert {
-    public var title: String? = LocalizedString.vpnConnectionActive
-    public var message: String? = LocalizedString.changeProtocolDisconnectWarning
+    public var title: String? = Localizable.vpnConnectionActive
+    public var message: String? = Localizable.changeProtocolDisconnectWarning
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
     
     public init(confirmHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: {
+        actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: {
             NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.settingsChange)
             confirmHandler()
         }))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: dismiss))
+        actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: dismiss))
     }
 }
 
 public class ProtocolNotAvailableForServerAlert: SystemAlert {
-    public var title: String? = LocalizedString.vpnProtocolNotSupportedTitle
-    public var message: String? = LocalizedString.vpnProtocolNotSupportedText
+    public var title: String? = Localizable.vpnProtocolNotSupportedTitle
+    public var message: String? = Localizable.vpnProtocolNotSupportedText
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
     public init(confirmHandler: (() -> Void)? = nil, cancelHandler: (() -> Void)? = nil) {
         if let confirmHandler {
-            actions.append(AlertAction(title: LocalizedString.disconnect,
+            actions.append(AlertAction(title: Localizable.disconnect,
                                        style: .destructive,
                                        handler: confirmHandler))
         }
-        let dismissText = confirmHandler == nil ? LocalizedString.ok : LocalizedString.cancel
-        actions.append(AlertAction(title: LocalizedString.cancel,
+        let dismissText = confirmHandler == nil ? Localizable.ok : Localizable.cancel
+        actions.append(AlertAction(title: Localizable.cancel,
                                    style: .cancel,
                                    handler: cancelHandler ?? dismiss))
     }
@@ -378,70 +379,70 @@ public class ReconnectOnSettingsChangeAlert: SystemAlert {
     }
     public static let userCancelled = UserCancelledReconnect()
 
-    public var title: String? = LocalizedString.changeSettings
-    public var message: String? = LocalizedString.reconnectOnSettingsChangeBody
+    public var title: String? = Localizable.changeSettings
+    public var message: String? = Localizable.reconnectOnSettingsChangeBody
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
     
     public init(confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: {
+        actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: {
             NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.settingsChange)
             confirmHandler()
         }))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
+        actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: cancelHandler))
     }
 }
 
 public class ReconnectOnActionAlert: SystemAlert {
     public var title: String?
-    public var message: String? = LocalizedString.actionRequiresReconnect
+    public var message: String? = Localizable.actionRequiresReconnect
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
     
     public init(actionTitle: String, confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
         title = actionTitle
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: {
+        actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: {
             NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.settingsChange)
             confirmHandler()
         }))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
+        actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: cancelHandler))
     }
 }
 
 public class TurnOnKillSwitchAlert: SystemAlert {
-    public var title: String? = LocalizedString.turnKsOnTitle
-    public var message: String? = LocalizedString.turnKsOnDescription
+    public var title: String? = Localizable.turnKsOnTitle
+    public var message: String? = Localizable.turnKsOnDescription
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
     
     public init(confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: {
+        actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: {
             NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.settingsChange)
             confirmHandler()
         }))
-        actions.append(AlertAction(title: LocalizedString.notNow, style: .cancel, handler: cancelHandler))
+        actions.append(AlertAction(title: Localizable.notNow, style: .cancel, handler: cancelHandler))
     }
 }
 
 public class AllowLANConnectionsAlert: SystemAlert {
-    public var title: String? = LocalizedString.allowLanTitle
-    public var message: String? = LocalizedString.allowLanDescription
+    public var title: String? = Localizable.allowLanTitle
+    public var message: String? = Localizable.allowLanDescription
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
     
     public init(connected: Bool, confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
         if connected {
-            message! += "\n\n" + LocalizedString.allowLanNote
+            message! += "\n\n" + Localizable.allowLanNote
         }
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: {
+        actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: {
             NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.settingsChange)
             confirmHandler()
         }))
-        actions.append(AlertAction(title: LocalizedString.notNow, style: .cancel, handler: cancelHandler))
+        actions.append(AlertAction(title: Localizable.notNow, style: .cancel, handler: cancelHandler))
     }
 }
 
@@ -451,55 +452,55 @@ public class ReconnectOnSmartProtocolChangeAlert: SystemAlert {
     }
     public static let userCancelled = UserCancelledReconnect()
 
-    public var title: String? = LocalizedString.smartProtocolReconnectModalTitle
-    public var message: String? = LocalizedString.smartProtocolReconnectModalBody
+    public var title: String? = Localizable.smartProtocolReconnectModalTitle
+    public var message: String? = Localizable.smartProtocolReconnectModalBody
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
     public init(confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
+        actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: cancelHandler))
     }
 }
 
 public class LogoutWarningAlert: SystemAlert {
-    public var title: String? = LocalizedString.vpnConnectionActive
-    public var message: String? = LocalizedString.logOutWarning
+    public var title: String? = Localizable.vpnConnectionActive
+    public var message: String? = Localizable.logOutWarning
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
     
     public init(confirmHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: {
+        actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: {
             NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.logout)
             confirmHandler()
         }))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
+        actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: nil))
     }
 }
 
 public class LogoutWarningLongAlert: LogoutWarningAlert {
     override public init(confirmHandler: @escaping () -> Void) {
         super.init(confirmHandler: confirmHandler)
-        message = LocalizedString.logOutWarningLong
+        message = Localizable.logOutWarningLong
     }
 }
 
 public class BugReportSentAlert: SystemAlert {
     public var title: String? = ""
-    public var message: String? = LocalizedString.reportSuccess
+    public var message: String? = Localizable.reportSuccess
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
     
     public init(confirmHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: Localizable.ok, style: .confirmative, handler: confirmHandler))
     }
 }
 
 public class UnknownErrortAlert: SystemAlert {
-    public var title: String? = LocalizedString.errorUnknownTitle
+    public var title: String? = Localizable.errorUnknownTitle
     public var message: String?
     public var actions = [AlertAction]()
     public let isError: Bool = true
@@ -507,12 +508,12 @@ public class UnknownErrortAlert: SystemAlert {
     
     public init(error: Error, confirmHandler: (() -> Void)?) {
         message = error.localizedDescription
-        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: Localizable.ok, style: .confirmative, handler: confirmHandler))
     }
 }
 
 public class ReportBugAlert: SystemAlert {
-    public var title: String? = LocalizedString.errorUnknownTitle
+    public var title: String? = Localizable.errorUnknownTitle
     public var message: String?
     public var actions = [AlertAction]()
     public let isError: Bool = true
@@ -527,8 +528,8 @@ public class MITMAlert: SystemAlert {
         case vpn
     }
     
-    public var title: String? = LocalizedString.errorMitmTitle
-    public var message: String? = LocalizedString.errorMitmDescription
+    public var title: String? = Localizable.errorMitmTitle
+    public var message: String? = Localizable.errorMitmDescription
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
@@ -536,29 +537,29 @@ public class MITMAlert: SystemAlert {
     public init(messageType: MessageType = .api) {
         switch messageType {
         case .api:
-            message = LocalizedString.errorMitmDescription
+            message = Localizable.errorMitmDescription
         case .vpn:
-            message = LocalizedString.errorMitmVpnDescription
+            message = Localizable.errorMitmVpnDescription
         }        
     }
 }
 
 public class UnreachableNetworkAlert: SystemAlert {
-    public var title: String? = LocalizedString.warning
-    public var message: String? = LocalizedString.neUnableToConnectToHost
+    public var title: String? = Localizable.warning
+    public var message: String? = Localizable.neUnableToConnectToHost
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
     
     public init(error: Error, troubleshoot: @escaping () -> Void) {
         message = error.localizedDescription
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
-        actions.append(AlertAction(title: LocalizedString.neTroubleshoot, style: .confirmative, handler: troubleshoot))
+        actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: nil))
+        actions.append(AlertAction(title: Localizable.neTroubleshoot, style: .confirmative, handler: troubleshoot))
     }
 }
 
 public class ConnectionTroubleshootingAlert: SystemAlert {
-    public var title: String? = LocalizedString.errorUnknownTitle
+    public var title: String? = Localizable.errorUnknownTitle
     public var message: String?
     public var actions = [AlertAction]()
     public let isError: Bool = true
@@ -568,8 +569,8 @@ public class ConnectionTroubleshootingAlert: SystemAlert {
 }
 
 public class VpnServerOnMaintenanceAlert: SystemAlert {
-    public var title: String? = LocalizedString.maintenanceOnServerDetectedTitle
-    public var message: String? = LocalizedString.maintenanceOnServerDetectedDescription
+    public var title: String? = Localizable.maintenanceOnServerDetectedTitle
+    public var message: String? = Localizable.maintenanceOnServerDetectedDescription
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
@@ -578,35 +579,35 @@ public class VpnServerOnMaintenanceAlert: SystemAlert {
 }
 
 public class ReconnectOnNetshieldChangeAlert: SystemAlert {
-    public var title: String? = LocalizedString.reconnectionRequired
-    public var message: String? = LocalizedString.netshieldAlertReconnectDescriptionOn
+    public var title: String? = Localizable.reconnectionRequired
+    public var message: String? = Localizable.netshieldAlertReconnectDescriptionOn
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
     public init(isOn: Bool, continueHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        message = isOn ? LocalizedString.netshieldAlertReconnectDescriptionOn : LocalizedString.netshieldAlertReconnectDescriptionOff
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: continueHandler))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
+        message = isOn ? Localizable.netshieldAlertReconnectDescriptionOn : Localizable.netshieldAlertReconnectDescriptionOff
+        actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: continueHandler))
+        actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: cancelHandler))
     }
 }
 
 public class NetShieldRequiresUpgradeAlert: SystemAlert {
-    public var title: String? = LocalizedString.upgradeRequired
-    public var message: String? = LocalizedString.netshieldAlertUpgradeDescription + "\n\n" + LocalizedString.getPlusForFeature
+    public var title: String? = Localizable.upgradeRequired
+    public var message: String? = Localizable.netshieldAlertUpgradeDescription + "\n\n" + Localizable.getPlusForFeature
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
     public init(continueHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        actions.append(AlertAction(title: LocalizedString.upgrade, style: .confirmative, handler: continueHandler))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
+        actions.append(AlertAction(title: Localizable.upgrade, style: .confirmative, handler: continueHandler))
+        actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: cancelHandler))
     }
 }
 
 public class SysexEnabledAlert: SystemAlert {
-    public var title: String? = LocalizedString.sysexEnabledTitle
-    public var message: String? = LocalizedString.sysexEnabledDescription
+    public var title: String? = Localizable.sysexEnabledTitle
+    public var message: String? = Localizable.sysexEnabledDescription
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
@@ -615,14 +616,14 @@ public class SysexEnabledAlert: SystemAlert {
 }
 
 public class SysexInstallingErrorAlert: SystemAlert {
-    public var title: String? = LocalizedString.sysexCannotEnable
-    public var message: String? = LocalizedString.sysexErrorDescription
+    public var title: String? = Localizable.sysexCannotEnable
+    public var message: String? = Localizable.sysexErrorDescription
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
     public init() {
-        actions.append(AlertAction(title: LocalizedString.ok, style: .cancel, handler: nil))
+        actions.append(AlertAction(title: Localizable.ok, style: .cancel, handler: nil))
     }
 }
 
@@ -640,8 +641,8 @@ public class SystemExtensionTourAlert: SystemAlert {
 }
 
 public class VPNAuthCertificateRefreshErrorAlert: SystemAlert {
-    public var title: String? = LocalizedString.vpnauthCertfailTitle
-    public var message: String? = LocalizedString.vpnauthCertfailDescription
+    public var title: String? = Localizable.vpnauthCertfailTitle
+    public var message: String? = Localizable.vpnauthCertfailDescription
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
@@ -652,7 +653,7 @@ public class VPNAuthCertificateRefreshErrorAlert: SystemAlert {
 public class MaxSessionsAlert: UserAccountUpdateAlert {
     public var reconnectInfo: ReconnectInfo?
     public var displayFeatures: Bool = false
-    public var title: String? = LocalizedString.maximumDeviceTitle
+    public var title: String? = Localizable.maximumDeviceTitle
     public var message: String?
     public var actions: [AlertAction] = []
     public var isError: Bool = false
@@ -663,32 +664,32 @@ public class MaxSessionsAlert: UserAccountUpdateAlert {
         self.accountPlan = accountPlan
         switch accountPlan {
         case .free, .basic:
-            message = LocalizedString.maximumDevicePlanLimitPart1(LocalizedString.tierPlus) + LocalizedString.maximumDevicePlanLimitPart2(AccountPlan.plus.devicesCount)
+            message = Localizable.maximumDevicePlanLimitPart1(Localizable.tierPlus) + Localizable.maximumDevicePlanLimitPart2(AccountPlan.plus.devicesCount)
         default:
-            message = LocalizedString.maximumDeviceReachedDescription
+            message = Localizable.maximumDeviceReachedDescription
         }
         
-        actions.append(AlertAction(title: LocalizedString.upgrade, style: .confirmative, handler: nil))
-        actions.append(AlertAction(title: LocalizedString.noThanks, style: .cancel, handler: nil))
+        actions.append(AlertAction(title: Localizable.upgrade, style: .confirmative, handler: nil))
+        actions.append(AlertAction(title: Localizable.noThanks, style: .cancel, handler: nil))
     }
 }
 
 public class UserPlanDowngradedAlert: UserAccountUpdateAlert {
     public var imageName: String?
     public var displayFeatures: Bool = true
-    public var title: String? = LocalizedString.subscriptionExpiredTitle
-    public var message: String? = LocalizedString.subscriptionExpiredDescription
+    public var title: String? = Localizable.subscriptionExpiredTitle
+    public var message: String? = Localizable.subscriptionExpiredDescription
     public var actions: [AlertAction] = []
     public var isError: Bool = false
     public var dismiss: (() -> Void)?
     public var reconnectInfo: ReconnectInfo?
     
     public init(reconnectInfo: ReconnectInfo?) {
-        actions.append(AlertAction(title: LocalizedString.upgradeAgain, style: .confirmative, handler: nil))
-        actions.append(AlertAction(title: LocalizedString.noThanks, style: .cancel, handler: nil))
+        actions.append(AlertAction(title: Localizable.upgradeAgain, style: .confirmative, handler: nil))
+        actions.append(AlertAction(title: Localizable.noThanks, style: .cancel, handler: nil))
         self.reconnectInfo = reconnectInfo
         if reconnectInfo != nil {
-            message = LocalizedString.subscriptionExpiredReconnectionDescription
+            message = Localizable.subscriptionExpiredReconnectionDescription
         }
     }
 }
@@ -697,25 +698,25 @@ public class UserBecameDelinquentAlert: UserAccountUpdateAlert {
     public var imageName: String?
     public var displayFeatures: Bool = false
     public var reconnectInfo: ReconnectInfo?
-    public var title: String? = LocalizedString.delinquentTitle
-    public var message: String? = LocalizedString.delinquentDescription
+    public var title: String? = Localizable.delinquentTitle
+    public var message: String? = Localizable.delinquentDescription
     public var actions: [AlertAction] = []
     public var isError: Bool = false
     public var dismiss: (() -> Void)?
     
     public init(reconnectInfo: ReconnectInfo?) {
-        actions.append(AlertAction(title: LocalizedString.updateBilling, style: .confirmative, handler: nil))
-        actions.append(AlertAction(title: LocalizedString.noThanks, style: .cancel, handler: nil))
+        actions.append(AlertAction(title: Localizable.updateBilling, style: .confirmative, handler: nil))
+        actions.append(AlertAction(title: Localizable.noThanks, style: .cancel, handler: nil))
         self.reconnectInfo = reconnectInfo
         if reconnectInfo != nil {
-            message = LocalizedString.delinquentReconnectionDescription
+            message = Localizable.delinquentReconnectionDescription
         }
     }
 }
 
 public class VpnServerErrorAlert: SystemAlert {
-    public var title: String? = LocalizedString.localAgentServerErrorTitle
-    public var message: String? = LocalizedString.localAgentServerErrorMessage
+    public var title: String? = Localizable.localAgentServerErrorTitle
+    public var message: String? = Localizable.localAgentServerErrorMessage
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
@@ -724,8 +725,8 @@ public class VpnServerErrorAlert: SystemAlert {
 }
 
 public class VpnServerSubscriptionErrorAlert: SystemAlert {
-    public var title: String? = LocalizedString.localAgentPolicyViolationErrorTitle
-    public var message: String? = LocalizedString.localAgentPolicyViolationErrorMessage
+    public var title: String? = Localizable.localAgentPolicyViolationErrorTitle
+    public var message: String? = Localizable.localAgentPolicyViolationErrorMessage
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
@@ -806,7 +807,7 @@ public class SubuserWithoutConnectionsAlert: SystemAlert {
 }
 
 public class TooManyCertificateRequestsAlert: SystemAlert {
-    public var title: String? = LocalizedString.vpnauthTooManyCertsTitle
+    public var title: String? = Localizable.vpnauthTooManyCertsTitle
     public var message: String?
     public var actions = [AlertAction]()
     public let isError: Bool = true
@@ -814,7 +815,7 @@ public class TooManyCertificateRequestsAlert: SystemAlert {
 
     public init(retryAfter: TimeInterval? = nil) {
         guard let retryAfter = retryAfter else {
-            message = LocalizedString.vpnauthTooManyCertsDescription
+            message = Localizable.vpnauthTooManyCertsDescription
             return
         }
 
@@ -829,32 +830,32 @@ public class TooManyCertificateRequestsAlert: SystemAlert {
             minutesToWait += 1
         }
 
-        message = LocalizedString.vpnauthTooManyCertsRetryAfter(minutesToWait)
+        message = Localizable.vpnauthTooManyCertsRetryAfter(minutesToWait)
     }
 }
 
 public class NEKSOnT2Alert: SystemAlert {
     public static let t2kbUrlString = "https://protonvpn.com/support/macos-t2-chip-kill-switch/"
 
-    public var title: String? = LocalizedString.neksT2Title
-    public var message: String? = LocalizedString.neksT2Description
+    public var title: String? = Localizable.neksT2Title
+    public var message: String? = Localizable.neksT2Description
     public var actions: [AlertAction] = []
     public var isError: Bool = false
     public var dismiss: (() -> Void)?
 
-    public let link = LocalizedString.neksT2Hyperlink
+    public let link = Localizable.neksT2Hyperlink
     public let killSwitchOffAction: AlertAction
     public let connectAnywayAction: AlertAction
 
     public init(killSwitchOffHandler: @escaping () -> Void, connectAnywayHandler: @escaping () -> Void) {
-        self.killSwitchOffAction = AlertAction(title: LocalizedString.wgksKsOff, style: .confirmative, handler: killSwitchOffHandler)
-        self.connectAnywayAction = AlertAction(title: LocalizedString.neksT2Connect, style: .destructive, handler: connectAnywayHandler)
+        self.killSwitchOffAction = AlertAction(title: Localizable.wgksKsOff, style: .confirmative, handler: killSwitchOffHandler)
+        self.connectAnywayAction = AlertAction(title: Localizable.neksT2Connect, style: .destructive, handler: connectAnywayHandler)
     }
 }
 
 public class ProtonUnreachableAlert: SystemAlert {
     public var title: String?
-    public var message: String? = LocalizedString.protonWebsiteUnreachable
+    public var message: String? = Localizable.protonWebsiteUnreachable
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
@@ -873,17 +874,17 @@ public class LocalAgentSystemErrorAlert: SystemAlert {
     init(error: LocalAgentErrorSystemError) {
         switch error {
         case .splitTcp:
-            title = LocalizedString.vpnAcceleratorTitle
-            message = LocalizedString.vpnFeatureCannotBeSetError(LocalizedString.vpnAcceleratorTitle)
+            title = Localizable.vpnAcceleratorTitle
+            message = Localizable.vpnFeatureCannotBeSetError(Localizable.vpnAcceleratorTitle)
         case .netshield:
-            title = LocalizedString.netshieldTitle
-            message = LocalizedString.vpnFeatureCannotBeSetError(LocalizedString.netshieldTitle)
+            title = Localizable.netshieldTitle
+            message = Localizable.vpnFeatureCannotBeSetError(Localizable.netshieldTitle)
         case .nonRandomizedNat:
-            title = LocalizedString.moderateNatTitle
-            message = LocalizedString.vpnFeatureCannotBeSetError(LocalizedString.moderateNatTitle)
+            title = Localizable.moderateNatTitle
+            message = Localizable.vpnFeatureCannotBeSetError(Localizable.moderateNatTitle)
         case .safeMode:
-            title = LocalizedString.nonStandardPortsTitle
-            message = LocalizedString.vpnFeatureCannotBeSetError(LocalizedString.nonStandardPortsTitle)
+            title = Localizable.nonStandardPortsTitle
+            message = Localizable.vpnFeatureCannotBeSetError(Localizable.nonStandardPortsTitle)
         }
     }
 }

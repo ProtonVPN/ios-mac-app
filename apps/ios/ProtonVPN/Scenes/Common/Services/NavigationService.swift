@@ -27,6 +27,7 @@ import SwiftUI
 import BugReport
 import VPNShared
 import Onboarding
+import Strings
 
 // MARK: Country Service
 
@@ -332,7 +333,7 @@ extension NavigationService: SettingsService {
             },
             usageStatisticsOn: telemetrySettings.telemetryUsageData,
             crashReportsOn: telemetrySettings.telemetryCrashReports,
-            title: LocalizedString.usageStatistics
+            title: Localizable.usageStatistics
         )
     }
     

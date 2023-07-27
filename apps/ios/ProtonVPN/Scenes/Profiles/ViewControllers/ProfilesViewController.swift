@@ -25,6 +25,7 @@ import GSMessages
 import LegacyCommon
 import ProtonCoreUIFoundations
 import Theme
+import Strings
 
 protocol ProfilesViewControllerDelegate: AnyObject {
     func showProfileCreatedSuccessMessage()
@@ -43,7 +44,7 @@ class ProfilesViewController: UIViewController {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        tabBarItem = UITabBarItem(title: LocalizedString.profiles, image: IconProvider.bookmark, tag: 3)
+        tabBarItem = UITabBarItem(title: Localizable.profiles, image: IconProvider.bookmark, tag: 3)
         tabBarItem.accessibilityIdentifier = "Profiles"
     }
     
@@ -66,7 +67,7 @@ class ProfilesViewController: UIViewController {
     }
 
     private func setupView() {
-        navigationItem.title = LocalizedString.profiles
+        navigationItem.title = Localizable.profiles
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createProfile))
         renderEditButton()
         
@@ -175,7 +176,7 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .destructive, title: LocalizedString.delete) { [weak self] ( _, _, completionHandler) in
+        let action = UIContextualAction(style: .destructive, title: Localizable.delete) { [weak self] ( _, _, completionHandler) in
             guard let self = self else {
                 completionHandler(false)
                 return
@@ -200,10 +201,10 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
     private func renderEditing(_ editing: Bool) {
         if editing && !tableView.isEditing {
             tableView.setEditing(true, animated: true)
-            self.editButtonItem.title = LocalizedString.done
+            self.editButtonItem.title = Localizable.done
         } else {
             tableView.setEditing(false, animated: true)
-            self.editButtonItem.title = LocalizedString.edit
+            self.editButtonItem.title = Localizable.edit
             renderEditButton()
         }
     }
@@ -219,11 +220,11 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
 extension ProfilesViewController: ProfilesViewControllerDelegate {
     
     func showProfileCreatedSuccessMessage() {
-        showMessage(LocalizedString.profileCreatedSuccessfully, type: GSMessageType.success, options: UIConstants.messageOptions)
+        showMessage(Localizable.profileCreatedSuccessfully, type: GSMessageType.success, options: UIConstants.messageOptions)
     }
     
     func showProfileEditedSuccessMessage() {
-        showMessage(LocalizedString.profileEditedSuccessfully, type: GSMessageType.success, options: UIConstants.messageOptions)
+        showMessage(Localizable.profileEditedSuccessfully, type: GSMessageType.success, options: UIConstants.messageOptions)
     }
     
     func reloadProfiles() {

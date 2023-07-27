@@ -100,7 +100,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
     }
     
     var textInPlaceOfConnectIcon: String? {
-        return isUsersTierTooLow ? LocalizedString.upgrade : nil
+        return isUsersTierTooLow ? Localizable.upgrade : nil
     }
     
     init(serverModel: ServerModel,

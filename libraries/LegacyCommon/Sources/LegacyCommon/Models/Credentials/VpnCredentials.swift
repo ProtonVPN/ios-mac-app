@@ -21,6 +21,7 @@
 
 import Foundation
 import VPNShared
+import Strings
 
 public class VpnCredentials: NSObject, NSSecureCoding {
 
@@ -248,7 +249,7 @@ extension CachedVpnCredentials {
     }
 
     public var serviceName: String {
-        var name = LocalizedString.unavailable
+        var name = Localizable.unavailable
         if services & 0b001 != 0 {
             name = "Proton Mail"
         } else if services & 0b100 != 0 {

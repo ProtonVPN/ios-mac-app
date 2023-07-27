@@ -20,6 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Strings
 
 public enum ApplicationError: Error {
     case userCreation
@@ -30,9 +31,9 @@ extension ApplicationError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .userCreation:
-            return LocalizedString.errorUserCreation
+            return Localizable.errorUserCreation
         case .emailVerificationUnavailable:
-            return LocalizedString.errorEmailVerificationDisabled
+            return Localizable.errorEmailVerificationDisabled
         }
     }
 }

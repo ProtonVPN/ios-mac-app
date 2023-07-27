@@ -16,6 +16,7 @@ import ProtonCorePayments
 import ProtonCoreUIFoundations
 import UIKit
 import VPNShared
+import Strings
 
 protocol LoginServiceFactory: AnyObject {
     func makeLoginService() -> LoginService
@@ -95,7 +96,7 @@ final class CoreLoginService {
     }
 
     private func finishFlow() -> WorkBeforeFlow {
-        WorkBeforeFlow(stepName: LocalizedString.loginFetchVpnData) { [weak self] (data: LoginData, completion: @escaping (Result<Void, Error>) -> Void) -> Void in
+        WorkBeforeFlow(stepName: Localizable.loginFetchVpnData) { [weak self] (data: LoginData, completion: @escaping (Result<Void, Error>) -> Void) -> Void in
             // attempt to use the login data to log in the app
             let authCredentials = AuthCredentials(data)
             self?.appSessionManager.finishLogin(authCredentials: authCredentials, completion: completion)
@@ -103,7 +104,7 @@ final class CoreLoginService {
     }
 
     private func helpDecorator(input: [[HelpItem]]) -> [[HelpItem]] {
-        let reportBugItem = HelpItem.custom(icon: IconProvider.bug, title: LocalizedString.reportBug, behaviour: { [weak self] viewController in
+        let reportBugItem = HelpItem.custom(icon: IconProvider.bug, title: Localizable.reportBug, behaviour: { [weak self] viewController in
             self?.settingsService.presentReportBug()
         })
         var result = input
@@ -151,7 +152,7 @@ final class CoreLoginService {
                                                       customErrorPresenter: self,
                                                       initialError: initialError,
                                                       helpDecorator: helpDecorator)
-        let variant: WelcomeScreenVariant = .vpn(WelcomeScreenTexts(body: LocalizedString.welcomeBody))
+        let variant: WelcomeScreenVariant = .vpn(WelcomeScreenTexts(body: Localizable.welcomeBody))
         let welcomeViewController = loginInterface.welcomeScreenForPresentingFlow(variant: variant,
                                                                                   customization: customization,
                                                                                   updateBlock: loginResultCompletion)

@@ -22,6 +22,7 @@
 
 import Foundation
 import LegacyCommon
+import Strings
 
 struct WidgetSettingsViewModel {
 
@@ -35,11 +36,11 @@ struct WidgetSettingsViewModel {
 
     private var widgetInstructions: TableViewSection {
         let cells: [TableViewCellModel] = [
-            .instructionStep(number: 1, text: LocalizedString.activateWidgetStep1),
-            .instructionStep(number: 2, text: LocalizedString.activateWidgetStep2),
-            .instructionStep(number: 3, text: LocalizedString.activateWidgetStep3)
+            .instructionStep(number: 1, text: Localizable.activateWidgetStep1),
+            .instructionStep(number: 2, text: Localizable.activateWidgetStep2),
+            .instructionStep(number: 3, text: Localizable.activateWidgetStep3)
         ]
         
-        return TableViewSection(title: LocalizedString.activateWidget.uppercased(), cells: cells)
+        return TableViewSection(title: Localizable.activateWidget.uppercased(), cells: cells)
     }
 }

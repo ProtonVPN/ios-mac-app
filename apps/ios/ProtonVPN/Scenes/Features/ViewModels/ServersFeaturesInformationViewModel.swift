@@ -22,6 +22,7 @@
 
 import UIKit
 import LegacyCommon
+import Strings
 
 protocol ServersFeaturesInformationViewModel {
     func titleFor( _ section: Int ) -> String
@@ -62,6 +63,6 @@ class ServersFeaturesInformationViewModelImplementation: ServersFeaturesInformat
     }
     
     func titleFor(_ section: Int) -> String {
-        return section == 0 ? LocalizedString.featuresTitle : LocalizedString.performanceTitle
+        return section == 0 ? Localizable.featuresTitle : Localizable.performanceTitle
     }
 }

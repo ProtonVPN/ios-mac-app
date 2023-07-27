@@ -23,6 +23,7 @@
 import UIKit
 import ProtonCoreUIFoundations
 import LegacyCommon
+import Strings
 
 class ServersFeaturesInformationVC: UIViewController {
 
@@ -46,7 +47,7 @@ class ServersFeaturesInformationVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .backgroundColor()
-        titleLbl.text = LocalizedString.informationTitle
+        titleLbl.text = Localizable.informationTitle
         closeButton.setImage(IconProvider.crossBig, for: .normal) 
         featuresTableView.register(FeatureTableViewCell.nib, forCellReuseIdentifier: FeatureTableViewCell.identifier)
         featuresTableView.dataSource = self

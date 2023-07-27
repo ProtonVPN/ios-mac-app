@@ -10,6 +10,7 @@
 import Foundation
 import VPNShared
 import LocalFeatureFlags
+import Strings
 
 extension VpnProtocol: DefaultableProperty {
     public init() {
@@ -51,24 +52,24 @@ extension VpnProtocol { // Text for UI
         var string: String
         switch self {
         case .ike:
-            string = LocalizedString.ikev2
+            string = Localizable.ikev2
         case .openVpn(let transportProtocol):
-            string = LocalizedString.openvpn
+            string = Localizable.openvpn
             switch transportProtocol {
             case .tcp:
-                string += " (\(LocalizedString.tcp))"
+                string += " (\(Localizable.tcp))"
             case .udp:
-                string += " (\(LocalizedString.udp))"
+                string += " (\(Localizable.udp))"
             }
         case .wireGuard(let transportProtocol):
-            string = LocalizedString.wireguard
+            string = Localizable.wireguard
             switch transportProtocol {
             case .udp:
-                string += "" // (\(LocalizedString.udp))
+                string += "" // (\(Localizable.udp))
             case .tcp:
-                string += " (\(LocalizedString.tcp))"
+                string += " (\(Localizable.tcp))"
             case .tls:
-                string = LocalizedString.wireguardTls
+                string = Localizable.wireguardTls
             }
         }
 

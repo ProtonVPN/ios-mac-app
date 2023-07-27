@@ -20,6 +20,7 @@ import Foundation
 import UIKit
 import LegacyCommon
 import ProtonCoreUIFoundations
+import Strings
 
 final class CouponViewController: UIViewController {
 
@@ -53,14 +54,14 @@ final class CouponViewController: UIViewController {
     }
 
     private func setupUI() {
-        title = LocalizedString.useCoupon
+        title = Localizable.useCoupon
         view.backgroundColor = UIColor.backgroundColor()
 
         textField.autocapitalizationType = .allCharacters
         textField.allowOnlyUppercase = true
-        textField.title = LocalizedString.useCoupon
+        textField.title = Localizable.useCoupon
 
-        applyButton.setTitle(LocalizedString.applyCoupon, for: .normal)
+        applyButton.setTitle(Localizable.applyCoupon, for: .normal)
         applyButton.addTarget(self, action: #selector(applyTapped), for: .touchUpInside)
     }
 
@@ -93,7 +94,7 @@ final class CouponViewController: UIViewController {
     private func showErrorBanner(error: Error) {
         banner?.dismiss()
         banner = PMBanner(message: error.localizedDescription, style: PMBannerNewStyle.error, dismissDuration: Double.infinity)
-        banner?.addButton(text: LocalizedString.ok) { [weak self] _ in
+        banner?.addButton(text: Localizable.ok) { [weak self] _ in
             self?.banner?.dismiss()
         }
         banner?.show(at: .top, on: self)

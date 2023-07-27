@@ -22,6 +22,7 @@
 
 import UIKit
 import LegacyCommon
+import Strings
 
 class WidgetSettingsViewController: UIViewController {
 
@@ -54,7 +55,7 @@ class WidgetSettingsViewController: UIViewController {
     }
     
     private func setupView() {
-        navigationItem.title = LocalizedString.widget
+        navigationItem.title = Localizable.widget
         view.backgroundColor = .backgroundColor()
         view.layer.backgroundColor = UIColor.backgroundColor().cgColor
     }

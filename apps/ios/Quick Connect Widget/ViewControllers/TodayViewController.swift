@@ -25,6 +25,7 @@ import UIKit
 import LegacyCommon
 import NotificationCenter
 import ProtonCoreUIFoundations
+import Strings
 
 final class TodayViewController: UIViewController {
     @IBOutlet private weak var connectionLabel: UILabel!
@@ -110,24 +111,24 @@ extension TodayViewController: TodayViewModelDelegate {
         case let .connected(server, entryCountry: entryCountry, country: country):
             let connectionString: String
             if let entryCountry = entryCountry {
-                 connectionString = "\(LocalizedString.connected) \(LocalizedString.via) \(entryCountry)"
+                 connectionString = "\(Localizable.connected) \(Localizable.via) \(entryCountry)"
             } else {
-                connectionString = LocalizedString.connected
+                connectionString = Localizable.connected
             }
 
-            updateUI(LocalizedString.disconnect, buttonState: .destructive, ipAddress: server, country: country, connectionString: connectionString)
+            updateUI(Localizable.disconnect, buttonState: .destructive, ipAddress: server, country: country, connectionString: connectionString)
         case .connecting:
-            updateUI(LocalizedString.cancel, buttonState: .destructive, connectionString: LocalizedString.connectingDotDotDot, animate: true)
+            updateUI(Localizable.cancel, buttonState: .destructive, connectionString: Localizable.connectingDotDotDot, animate: true)
         case .disconnected:
             connectButton.customState = .primary
-            updateUI(LocalizedString.quickConnect, connectionString: LocalizedString.notConnected, connectionLabelTint: .notificationErrorColor(), iconTint: .weakTextColor())
+            updateUI(Localizable.quickConnect, connectionString: Localizable.notConnected, connectionLabelTint: .notificationErrorColor(), iconTint: .weakTextColor())
         case .error:
             connectButton.customState = .secondary
-            updateUI(LocalizedString.ok, connectionString: LocalizedString.connectionFailed, connectionLabelTint: .weakTextColor(), iconTint: .weakTextColor())
+            updateUI(Localizable.ok, connectionString: Localizable.connectionFailed, connectionLabelTint: .weakTextColor(), iconTint: .weakTextColor())
         case .noGateway:
-            updateUI(LocalizedString.logIn, connectionString: LocalizedString.logInToUseWidget, connectionLabelTint: .normalTextColor())
+            updateUI(Localizable.logIn, connectionString: Localizable.logInToUseWidget, connectionLabelTint: .normalTextColor())
         case .unreachable:
-            updateUI(buttonHidden: true, connectionString: LocalizedString.networkUnreachable, connectionLabelTint: .weakTextColor(), iconTint: .weakTextColor())
+            updateUI(buttonHidden: true, connectionString: Localizable.networkUnreachable, connectionLabelTint: .weakTextColor(), iconTint: .weakTextColor())
         }
     }
 

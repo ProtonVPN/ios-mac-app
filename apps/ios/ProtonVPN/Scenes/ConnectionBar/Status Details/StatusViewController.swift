@@ -23,6 +23,7 @@
 import GSMessages
 import UIKit
 import LegacyCommon
+import Strings
 
 final class StatusViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView?
@@ -66,7 +67,7 @@ final class StatusViewController: UIViewController {
     }
     
     func setupView() {
-        navigationItem.title = LocalizedString.status
+        navigationItem.title = Localizable.status
         
         view.backgroundColor = .backgroundColor()
     }
