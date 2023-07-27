@@ -24,6 +24,7 @@ import Cocoa
 import LegacyCommon
 import Theme
 import Ergonomics
+import Strings
 
 class LoginButton: HoverDetectionButton {
     var displayTitle: String?
@@ -54,7 +55,7 @@ class LoginButton: HoverDetectionButton {
             layer?.borderColor = self.cgColor(.border)
             layer?.backgroundColor = self.cgColor(.background)
         }
-        attributedTitle = self.style((displayTitle ?? LocalizedString.login), font: .themeFont(.heading4))
+        attributedTitle = self.style((displayTitle ?? Localizable.login), font: .themeFont(.heading4))
     }
 }
 

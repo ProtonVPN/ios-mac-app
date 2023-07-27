@@ -24,6 +24,7 @@ import Cocoa
 import LegacyCommon
 import Theme
 import Ergonomics
+import Strings
 
 class ExpandableContentPopupViewController: NSViewController {
     
@@ -78,7 +79,7 @@ class ExpandableContentPopupViewController: NSViewController {
             contentView.layer?.backgroundColor = .cgColor(.background)
             footerView.layer?.backgroundColor = .cgColor(.background)
         }
-        displayMoreBtn.title = LocalizedString.moreInfo + "  "
+        displayMoreBtn.title = Localizable.moreInfo + "  "
         displayMoreBtn.target = self
         displayMoreBtn.action = #selector(expandBtnTap)
         hiddenContentHeightConstraint.constant = 0
@@ -100,7 +101,7 @@ class ExpandableContentPopupViewController: NSViewController {
         animating = true
         expanded = !expanded
         
-        displayMoreBtn.title = (expanded ? LocalizedString.lessInfo : LocalizedString.moreInfo) + "  "
+        displayMoreBtn.title = (expanded ? Localizable.lessInfo : Localizable.moreInfo) + "  "
         displayMoreBtn.image = expanded ? AppTheme.Icon.arrowUp : AppTheme.Icon.arrowDown
         self.hiddenContentHeightConstraint.constant = self.expanded ? self.closedHeight : self.expandedHeight
         self.expandableLbl.alphaValue = self.expanded ? 0 : 1

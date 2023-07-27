@@ -22,6 +22,7 @@
 
 import XCTest
 import LegacyCommon
+import LegacyCommonTestSupport
 import VPNAppCore
 import TimerMock
 import VPNShared
@@ -51,7 +52,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
 
     lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychainMock(accountPlan: .visionary, maxTier: 4)
 
-    lazy var networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()), appInfo: appInfo, doh: .mock, authKeychain: authKeychain, unauthKeychain: UnauthKeychainMock())
+    lazy var networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()), appInfo: appInfo, doh: .mock, authKeychain: authKeychain, unauthKeychain: UnauthKeychainMock())
     var vpnApiService: VpnApiService {
         return VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation(), authKeychain: authKeychain)
     }

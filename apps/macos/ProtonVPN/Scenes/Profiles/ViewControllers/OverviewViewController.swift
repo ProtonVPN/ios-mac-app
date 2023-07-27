@@ -21,8 +21,9 @@
 //
 
 import Cocoa
-import vpncore
+import LegacyCommon
 import Ergonomics
+import Strings
 
 class OverviewViewController: NSViewController {
     
@@ -70,9 +71,9 @@ class OverviewViewController: NSViewController {
     }
     
     private func setupHeaderView() {
-        profileLabel.attributedStringValue = LocalizedString.profile.uppercased().styled(context: .field, font: .themeFont(.small, bold: true), alignment: .left)
-        connectionLabel.attributedStringValue = LocalizedString.connection.uppercased().styled(context: .field, font: .themeFont(.small, bold: true), alignment: .left)
-        actionLabel.attributedStringValue = LocalizedString.action.uppercased().styled(context: .field, font: .themeFont(.small, bold: true), alignment: .left)
+        profileLabel.attributedStringValue = Localizable.profile.uppercased().styled(context: .field, font: .themeFont(.small, bold: true), alignment: .left)
+        connectionLabel.attributedStringValue = Localizable.connection.uppercased().styled(context: .field, font: .themeFont(.small, bold: true), alignment: .left)
+        actionLabel.attributedStringValue = Localizable.action.uppercased().styled(context: .field, font: .themeFont(.small, bold: true), alignment: .left)
     }
     
     private func setupTableView() {
@@ -94,7 +95,7 @@ class OverviewViewController: NSViewController {
             footerView.layer?.backgroundColor = .cgColor(.background, .weak)
         }
         
-        createNewProfileButton.title = LocalizedString.createNewProfile
+        createNewProfileButton.title = Localizable.createNewProfile
         createNewProfileButton.target = self
         createNewProfileButton.action = #selector(createNewProfileButtonAction)
         

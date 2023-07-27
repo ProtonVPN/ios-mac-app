@@ -72,7 +72,7 @@ final class SubuserMacAlertViewController: NSViewController {
     }
     
     private func setupViews() {
-        imageView.image = Bundle.LegacyCommon.image(forResource: NSImage.Name("alert-pro-account"))
+        imageView.image = Bundle.legacyCommonEvilDoNotUseThis.image(forResource: NSImage.Name("alert-pro-account"))
         
         assignConnectionsButton.actionType = .confirmative
         assignConnectionsButton.isEnabled = true

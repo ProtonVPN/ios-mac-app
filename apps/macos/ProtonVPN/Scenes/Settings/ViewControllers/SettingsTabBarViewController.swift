@@ -21,8 +21,9 @@
 //
 
 import Cocoa
-import vpncore
+import LegacyCommon
 import Ergonomics
+import Strings
 
 final class SettingsTabBarViewController: NSViewController {
     
@@ -66,24 +67,24 @@ final class SettingsTabBarViewController: NSViewController {
     }
     
     private func setupComponents() {
-        headerLabel.attributedStringValue = LocalizedString.preferences.styled(font: .themeFont(.heading1), alignment: .left)
+        headerLabel.attributedStringValue = Localizable.preferences.styled(font: .themeFont(.heading1), alignment: .left)
         
-        generalButton.title = LocalizedString.general
+        generalButton.title = Localizable.general
         generalButton.target = self
         generalButton.action = #selector(generalButtonAction)
         generalButton.isFocused = viewModel.activeTab == .general
         
-        connectionButton.title = LocalizedString.connection
+        connectionButton.title = Localizable.connection
         connectionButton.target = self
         connectionButton.action = #selector(connectionButtonAction)
         connectionButton.isFocused = viewModel.activeTab == .connection
         
-        accountButton.title = LocalizedString.account
+        accountButton.title = Localizable.account
         accountButton.target = self
         accountButton.action = #selector(accountButtonAction)
         accountButton.isFocused = viewModel.activeTab == .account
 
-        advancedButon.title = LocalizedString.advanced
+        advancedButon.title = Localizable.advanced
         advancedButon.target = self
         advancedButon.action = #selector(advancedButtonAction)
         advancedButon.isFocused = viewModel.activeTab == .advanced

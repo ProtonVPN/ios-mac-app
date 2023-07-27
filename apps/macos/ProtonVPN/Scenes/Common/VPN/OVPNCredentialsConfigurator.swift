@@ -12,6 +12,9 @@ import LegacyCommon
 import LocalFeatureFlags
 import VPNShared
 import TunnelKit
+import TunnelKitOpenVPN
+import TunnelKitOpenVPNAppExtension
+import DictionaryCoder
 
 final class OVPNCredentialsConfigurator: VpnCredentialsConfigurator {
     
@@ -54,9 +57,9 @@ final class OVPNCredentialsConfigurator: VpnCredentialsConfigurator {
                     return
                 }
 
-                let ovpnConfig: OpenVPNTunnelProvider.Configuration
+                let ovpnConfig: OpenVPN.Configuration
                 do {
-                    ovpnConfig = try OpenVPNTunnelProvider.Configuration.parsed(from: providerConfig)
+                    ovpnConfig = try DictionaryDecoder().decode(OpenVPN.Configuration.self, from: providerConfig)
                 } catch let error {
                     log.error("Can't parse OpenVPN config from given NETunnelProviderProtocol: \(error)")
                     assertionFailure("OpenVPNTunnelProvider.Configuration was not saved in tunnelProviderProtocol.providerConfiguration")
@@ -66,18 +69,26 @@ final class OVPNCredentialsConfigurator: VpnCredentialsConfigurator {
 
                 let backup = tunnelProviderProtocol.backupCustomSettings()
                 var ovpnBuilder = ovpnConfig.builder()
-                var sessionBuilder = ovpnBuilder.sessionConfiguration.builder()
 
                 // Client key and certificate have to be passed to OpenVPN for it to be able to connect. Later, LocalAgent can change features without replacing the certificate.
-                sessionBuilder.clientKey = OpenVPN.CryptoContainer(pem: authenticationData.clientKey.derRepresentation) // ed25519
-                sessionBuilder.clientCertificate = OpenVPN.CryptoContainer(pem: authenticationData.clientCertificate)
+                ovpnBuilder.clientKey = OpenVPN.CryptoContainer(pem: authenticationData.clientKey.derRepresentation) // ed25519
+                ovpnBuilder.clientCertificate = OpenVPN.CryptoContainer(pem: authenticationData.clientCertificate)
 
-                ovpnBuilder.sessionConfiguration = sessionBuilder.build()
-                tunnelProviderProtocol.providerConfiguration = ovpnBuilder.build().generatedProviderConfiguration(appGroup: self.appGroup)
+                do {
+                    tunnelProviderProtocol.providerConfiguration = try OpenVPN.ProviderConfiguration(
+                        "ProtonVPN.OpenVPN",
+                        appGroup: self.appGroup,
+                        configuration: ovpnConfig
+                    )
+                    .asTunnelProtocol(withBundleIdentifier: Bundle.main.bundleIdentifier!, extra: nil)
+                    .providerConfiguration
+                } catch {
+                    log.error("Couldn't update provider config: \(error)")
+                }
+
                 tunnelProviderProtocol.restoreCustomSettingsFrom(backup: backup)
 
                 completionHandler(tunnelProviderProtocol)
-
             case .failure(let error):
                 log.error("Error refreshing certificate", category: .userCert, metadata: ["error": "\(error)"])
                 completionHandler(protocolConfig)

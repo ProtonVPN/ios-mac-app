@@ -34,6 +34,7 @@ import ProtonCoreUIFoundations
 import ProtonCoreEnvironment
 import ProtonCoreFeatureSwitch
 import ProtonCoreObservability
+import ProtonCoreCryptoVPNPatchedGoImplementation
 
 // Local dependencies
 import LegacyCommon

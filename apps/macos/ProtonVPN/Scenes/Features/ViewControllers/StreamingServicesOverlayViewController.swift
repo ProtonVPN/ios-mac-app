@@ -24,6 +24,7 @@ import Cocoa
 import LegacyCommon
 import Theme
 import Ergonomics
+import Strings
 
 class StreamingServicesOverlayViewController: NSViewController {
     @IBOutlet private weak var streamingIcon: NSImageView!
@@ -52,11 +53,11 @@ class StreamingServicesOverlayViewController: NSViewController {
         super.viewDidLoad()
         let backgroundColor: NSColor = .color(.background)
         streamingIcon.image = AppTheme.Icon.play.colored(.weak)
-        countryLbl.stringValue = LocalizedString.streamingTitle + " - " + viewModel.countryName
-        featuresLbl.stringValue = LocalizedString.featuresTitle
-        instructionLbl.stringValue = LocalizedString.streamingServersDescription
-        noteLbl.stringValue = LocalizedString.streamingServersNote
-        extraLbl.stringValue = LocalizedString.streamingServersExtra
+        countryLbl.stringValue = Localizable.streamingTitle + " - " + viewModel.countryName
+        featuresLbl.stringValue = Localizable.featuresTitle
+        instructionLbl.stringValue = Localizable.streamingServersDescription
+        noteLbl.stringValue = Localizable.streamingServersNote
+        extraLbl.stringValue = Localizable.streamingServersExtra
         servicesCV.register(StreamOptionCVItem.self, forItemWithIdentifier: cellIdentifier)
         servicesCV.delegate = self
         servicesCV.dataSource = self

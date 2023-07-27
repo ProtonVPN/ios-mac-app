@@ -27,6 +27,7 @@ import VPNShared
 import Theme
 import Ergonomics
 import Home
+import Strings
 
 class QuickSettingsStack: NSStackView {
 
@@ -35,7 +36,7 @@ class QuickSettingsStack: NSStackView {
     }
 
     override func accessibilityLabel() -> String? {
-        LocalizedString.quickSettingsTourTitle
+        Localizable.quickSettingsTourTitle
     }
 
     override func accessibilityRole() -> NSAccessibility.Role? {
@@ -242,7 +243,7 @@ class CountriesSectionViewController: NSViewController {
         searchTextField.delegate = self
         searchTextField.usesSingleLineMode = true
         searchTextField.focusRingType = .none
-        searchTextField.style(placeholder: LocalizedString.searchForCountry, font: .themeFont(.heading4), alignment: .left)
+        searchTextField.style(placeholder: Localizable.searchForCountry, font: .themeFont(.heading4), alignment: .left)
         searchBox.cornerRadius = AppTheme.ButtonConstants.cornerRadius
 
         searchTextField.setAccessibilityIdentifier("SearchTextField")

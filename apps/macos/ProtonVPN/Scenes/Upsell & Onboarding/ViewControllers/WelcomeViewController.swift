@@ -25,6 +25,7 @@ import LegacyCommon
 import LocalFeatureFlags
 import Theme
 import Ergonomics
+import Strings
 
 class WelcomeViewController: NSViewController {
 
@@ -70,11 +71,11 @@ class WelcomeViewController: NSViewController {
             mapView.image = mapImage.colored(context: .background)
         }
         
-        titleLabel.attributedStringValue = LocalizedString.welcomeTitle.styled(font: .themeFont(.title, bold: true))
-        usageStatisticsLabel.attributedStringValue = LocalizedString.onboardingMacUsageStats.styled(font: .themeFont(.small), alignment: .left)
-        crashReportsLabel.attributedStringValue = LocalizedString.onboardingMacCrashReports.styled(font: .themeFont(.small), alignment: .left)
+        titleLabel.attributedStringValue = Localizable.welcomeTitle.styled(font: .themeFont(.title, bold: true))
+        usageStatisticsLabel.attributedStringValue = Localizable.onboardingMacUsageStats.styled(font: .themeFont(.small), alignment: .left)
+        crashReportsLabel.attributedStringValue = Localizable.onboardingMacCrashReports.styled(font: .themeFont(.small), alignment: .left)
         
-        let description = NSMutableAttributedString(attributedString: LocalizedString.welcomeDescription.styled(font: .themeFont(.heading2)))
+        let description = NSMutableAttributedString(attributedString: Localizable.welcomeDescription.styled(font: .themeFont(.heading2)))
         let fullRange = (description.string as NSString).range(of: description.string)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
@@ -83,8 +84,8 @@ class WelcomeViewController: NSViewController {
         description.addAttribute(.paragraphStyle, value: paragraphStyle, range: fullRange)
         descriptionLabel.attributedStringValue = description
         
-        noThanksButton.title = LocalizedString.noThanks
-        takeTourButton.title = LocalizedString.takeTour
+        noThanksButton.title = Localizable.noThanks
+        takeTourButton.title = Localizable.takeTour
 
         setupTelemetry()
     }
@@ -96,7 +97,7 @@ class WelcomeViewController: NSViewController {
         }
 
         learnMore.fontSize = .small
-        learnMore.title = LocalizedString.learnMore
+        learnMore.title = Localizable.learnMore
         learnMore.target = self
         learnMore.action = #selector(learnMoreClicked)
 

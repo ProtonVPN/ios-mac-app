@@ -24,6 +24,7 @@ import Cocoa
 import LegacyCommon
 import Theme
 import Ergonomics
+import Strings
 
 final class CountryItemCellView: NSView {
     
@@ -46,7 +47,7 @@ final class CountryItemCellView: NSView {
         
     override func awakeFromNib() {
         super.awakeFromNib()
-        upgradeBtn.stringValue = LocalizedString.upgrade
+        upgradeBtn.stringValue = Localizable.upgrade
         
         expandButton.wantsLayer = true
         expandButton.layer?.cornerRadius = 16
@@ -63,13 +64,13 @@ final class CountryItemCellView: NSView {
         maintenanceBtn.layer?.borderColor = .cgColor(.icon, .weak)
         maintenanceBtn.layer?.backgroundColor = .clear
 
-        secureIV.toolTip = LocalizedString.secureCoreInfo
+        secureIV.toolTip = Localizable.secureCoreInfo
         secureIV.image = AppTheme.Icon.chevronsRight.colored([.interactive, .strong])
-        torIV.toolTip = LocalizedString.torTitle
+        torIV.toolTip = Localizable.torTitle
         torIV.image = AppTheme.Icon.brandTor.colored(.weak)
-        p2pIV.toolTip = LocalizedString.p2pTitle
+        p2pIV.toolTip = Localizable.p2pTitle
         p2pIV.image = AppTheme.Icon.arrowsSwitch.colored(.weak)
-        smartIV.toolTip = LocalizedString.smartProtocolTitle
+        smartIV.toolTip = Localizable.smartProtocolTitle
         smartIV.image = AppTheme.Icon.globe.colored(.weak)
 
         separatorView.wantsLayer = true
@@ -178,14 +179,14 @@ final class CountryItemCellView: NSView {
         var actions = [NSAccessibilityCustomAction]()
 
         if !expandButton.isHidden {
-            let name = viewModel.isOpened ? LocalizedString.collapseListOfServers : LocalizedString.expandListOfServers
+            let name = viewModel.isOpened ? Localizable.collapseListOfServers : Localizable.expandListOfServers
             actions.append(NSAccessibilityCustomAction(name: name, target: self, selector: #selector(didTapExpandBtn(_:))))
         }
         if upgradeBtn.isHidden {
-            let name = connectButton.isConnected ? LocalizedString.disconnect : LocalizedString.connect
+            let name = connectButton.isConnected ? Localizable.disconnect : Localizable.connect
             actions.append(NSAccessibilityCustomAction(name: name, target: self, selector: #selector(didTapConnectBtn(_:))))
         } else {
-            actions.append(NSAccessibilityCustomAction(name: LocalizedString.upgrade, target: self, selector: #selector(didTapUpgradeBtn(_:))))
+            actions.append(NSAccessibilityCustomAction(name: Localizable.upgrade, target: self, selector: #selector(didTapUpgradeBtn(_:))))
         }
 
         setAccessibilityCustomActions(actions)

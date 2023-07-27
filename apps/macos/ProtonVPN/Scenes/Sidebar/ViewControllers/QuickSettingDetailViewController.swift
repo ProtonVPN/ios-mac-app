@@ -28,6 +28,7 @@ import LocalFeatureFlags
 import Theme
 import Home
 import Home_macOS
+import Strings
 
 protocol QuickSettingsDetailViewControllerProtocol: class {
     var arrowIV: NSImageView! { get }
@@ -132,12 +133,12 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
 
         arrowIV.cell?.setAccessibilityElement(false)
         
-        dropdownUpgradeButton.title = LocalizedString.upgrade
+        dropdownUpgradeButton.title = Localizable.upgrade
         dropdownUpgradeButton.actionType = .confirmative
         dropdownUpgradeButton.fontSize = .paragraph
 
         dropdownLearnMore.fontSize = .small
-        dropdownLearnMore.title = LocalizedString.learnMore
+        dropdownLearnMore.title = Localizable.learnMore
 
         reloadOptions()
     }

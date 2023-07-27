@@ -25,6 +25,8 @@ import NetworkExtension
 import LocalFeatureFlags
 import VPNShared
 import SwiftyBeaver
+import TunnelKitOpenVPN
+import TunnelKitOpenVPNAppExtension
 
 // Use the same logging system as TunnelKit underneath.
 // If more of our classes (form NEHelper lib) will be added, our custom logging
@@ -52,10 +54,10 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
         
     override open func startTunnel(options: [String: NSObject]? = nil, completionHandler: @escaping (Error?) -> Void) {
         if !isEnabled(OpenVPNFeature.macCertificates) {
-            let keychain = Keychain(group: nil)
+            let keychain = TunnelKit.Keychain(group: nil)
             do {
                 if let user = protocolConfiguration.username {
-                    let pass = try keychain.password(for: user)
+                    let pass = try keychain.password(for: user, context: AppConstants.NetworkExtensions.openVpn)
                     self.credentials = OpenVPN.Credentials(user, pass)
                     NSLog("PacketTunnelProvider Credentials found") // swiftlint:disable:this no_print
                 }

@@ -22,6 +22,7 @@
 
 import CoreLocation
 import LegacyCommon
+import LegacyCommonTestSupport
 import XCTest
 import TimerMock
 import VPNShared
@@ -29,7 +30,7 @@ import VPNSharedTesting
 
 class MapViewModelTests: XCTestCase {
 
-    lazy var networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()), appInfo: AppInfoImplementation(context: .mainApp), doh: .mock, authKeychain: MockAuthKeychain(), unauthKeychain: UnauthKeychainMock())
+    lazy var networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()), appInfo: AppInfoImplementation(context: .mainApp), doh: .mock, authKeychain: MockAuthKeychain(), unauthKeychain: UnauthKeychainMock())
     lazy var vpnKeychain = VpnKeychainMock()
 
     var serverStorage: ServerStorage!

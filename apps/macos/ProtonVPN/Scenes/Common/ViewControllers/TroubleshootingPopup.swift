@@ -22,8 +22,9 @@
 
 import Foundation
 import Cocoa
-import vpncore
+import LegacyCommon
 import Ergonomics
+import Strings
 
 final class TroubleshootingPopup: NSViewController {
 
@@ -49,7 +50,7 @@ final class TroubleshootingPopup: NSViewController {
 
     override func viewWillAppear() {
         super.viewWillAppear()
-        view.window?.applyModalAppearance(withTitle: LocalizedString.troubleshootTitle)
+        view.window?.applyModalAppearance(withTitle: Localizable.troubleshootTitle)
     }
 
     private func setupUI() {

@@ -21,8 +21,9 @@
 //
 
 import Cocoa
-import vpncore
+import LegacyCommon
 import Ergonomics
+import Strings
 
 final class CreateNewProfileViewController: NSViewController {
     
@@ -105,14 +106,14 @@ final class CreateNewProfileViewController: NSViewController {
     }
     
     private func setupHeaderView() {
-        profileSettingsLabel.attributedStringValue = viewModel.style(LocalizedString.profileSettings.uppercased(), context: .field, font: .themeFont(.small, bold: true), alignment: .left)
-        connectionSettingsLabel.attributedStringValue = viewModel.style(LocalizedString.connectionSettings.uppercased(), context: .field, font: .themeFont(.small, bold: true), alignment: .left)
+        profileSettingsLabel.attributedStringValue = viewModel.style(Localizable.profileSettings.uppercased(), context: .field, font: .themeFont(.small, bold: true), alignment: .left)
+        connectionSettingsLabel.attributedStringValue = viewModel.style(Localizable.connectionSettings.uppercased(), context: .field, font: .themeFont(.small, bold: true), alignment: .left)
     }
     
     private func setupNameSection() {
-        nameLabel.attributedStringValue = viewModel.style(LocalizedString.name + ":", font: .themeFont(.heading4), alignment: .left)
+        nameLabel.attributedStringValue = viewModel.style(Localizable.name + ":", font: .themeFont(.heading4), alignment: .left)
 
-        nameTextField.style(placeholder: LocalizedString.name, font: .themeFont(.heading4), alignment: .left)
+        nameTextField.style(placeholder: Localizable.name, font: .themeFont(.heading4), alignment: .left)
         nameTextField.drawsBackground = true
         nameTextField.focusRingType = .none
         nameTextField.delegate = self
@@ -123,7 +124,7 @@ final class CreateNewProfileViewController: NSViewController {
     }
 
     private func setupProtocolSection() {
-        protocolLabel.attributedStringValue = viewModel.style(LocalizedString.vpnProtocol, font: .themeFont(.heading4), alignment: .left)
+        protocolLabel.attributedStringValue = viewModel.style(Localizable.vpnProtocol, font: .themeFont(.heading4), alignment: .left)
 
         protocolList.isBordered = false
         protocolList.target = self
@@ -132,20 +133,20 @@ final class CreateNewProfileViewController: NSViewController {
 
         protocolEnablementProgress.isDisplayedWhenStopped = false
         protocolEnablementProgress.appearance = NSAppearance(named: .darkAqua)
-        protocolEnablementProgress.toolTip = LocalizedString.sysexSettingsDescription
+        protocolEnablementProgress.toolTip = Localizable.sysexSettingsDescription
 
         protocolListHorizontalLine.fillColor = viewModel.color(.border)
     }
     
     private func setupColorSection() {
-        colorPickerLabel.attributedStringValue = viewModel.style(LocalizedString.color + ":", font: .themeFont(.heading4), alignment: .left)
+        colorPickerLabel.attributedStringValue = viewModel.style(Localizable.color + ":", font: .themeFont(.heading4), alignment: .left)
         
         colorPickerViewController = ColorPickerViewController(viewModel: viewModel.colorPickerViewModel)
         colorPickerViewContainer.pin(viewController: colorPickerViewController)
     }
     
     private func setupTypeSection() {
-        typeLabel.attributedStringValue = viewModel.style(LocalizedString.feature + ":", font: .themeFont(.heading4), alignment: .left)
+        typeLabel.attributedStringValue = viewModel.style(Localizable.feature + ":", font: .themeFont(.heading4), alignment: .left)
         
         typeList.isBordered = false
         typeList.target = self
@@ -157,7 +158,7 @@ final class CreateNewProfileViewController: NSViewController {
     }
     
     private func setupCountrySection() {
-        countryLabel.attributedStringValue = viewModel.style(LocalizedString.country + ":", font: .themeFont(.heading4), alignment: .left)
+        countryLabel.attributedStringValue = viewModel.style(Localizable.country + ":", font: .themeFont(.heading4), alignment: .left)
         
         countryList.isBordered = false
         countryList.target = self
@@ -169,7 +170,7 @@ final class CreateNewProfileViewController: NSViewController {
     }
     
     private func setupServerSection() {
-        serverLabel.attributedStringValue = viewModel.style(LocalizedString.server + ":", font: .themeFont(.heading4), alignment: .left)
+        serverLabel.attributedStringValue = viewModel.style(Localizable.server + ":", font: .themeFont(.heading4), alignment: .left)
         
         serverList.isBordered = false
         serverList.target = self
@@ -190,11 +191,11 @@ final class CreateNewProfileViewController: NSViewController {
     }
     
     private func setupFooterView() {
-        cancelButton.title = LocalizedString.cancel
+        cancelButton.title = Localizable.cancel
         cancelButton.target = self
         cancelButton.action = #selector(cancelButtonAction)
         
-        saveButton.title = LocalizedString.save
+        saveButton.title = Localizable.save
         saveButton.target = self
         saveButton.action = #selector(saveButtonAction)
         
@@ -229,8 +230,8 @@ final class CreateNewProfileViewController: NSViewController {
 
     @objc private func cancelButtonAction() {
         if isSessionUnderway {
-            let viewModel = WarningPopupViewModel(title: LocalizedString.createNewProfile,
-                                                  description: LocalizedString.currentSelectionWillBeLost) { [weak self] in
+            let viewModel = WarningPopupViewModel(title: Localizable.createNewProfile,
+                                                  description: Localizable.currentSelectionWillBeLost) { [weak self] in
                 self?.viewModel.clearContent()
             }
             presentAsModalWindow(WarningPopupViewController(viewModel: viewModel))
