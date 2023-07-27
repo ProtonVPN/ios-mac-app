@@ -80,7 +80,9 @@ public struct ProtocolSettingsFeature: ReducerProtocol {
             return .none
 
         case let .showReconnectionAlert(`protocol`):
-            state.reconnectionAlert = SettingsAlert.reconnectionAlertState(for: `protocol`)
+            if #available(macOS 12, *) {
+                state.reconnectionAlert = SettingsAlert.reconnectionAlertState(for: `protocol`)
+            }
             return .none
 
         case let .reconnectWith(`protocol`):
