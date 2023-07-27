@@ -113,7 +113,8 @@ lane :create_macos_keychain do
     default_keychain: false,
     add_to_search_list: true,
     unlock: true,
-    require_create: false
+    require_create: false,
+    timeout: 1800
   )
   import_certificate(
     keychain_name: $keychain_name,
@@ -137,7 +138,8 @@ lane :create_ios_keychain do
       add_to_search_list: true,
       unlock: true,
       lock_when_sleeps: false,
-      lock_after_timeout: false
+      lock_after_timeout: false,
+      timeout: 1800
   )
   import_certificate(
       keychain_name: $keychain_name,
