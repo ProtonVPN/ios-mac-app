@@ -116,6 +116,7 @@ class BugReportRobot {
         return BugReportRobot()
     }
     
+    // need to fix toggle a11y
     func toggleSendLogs() -> BugReportRobot {
         app.switches[logsSwitch].firstMatch.tap()
         XCTAssertTrue(app.staticTexts[logsWarning].exists)

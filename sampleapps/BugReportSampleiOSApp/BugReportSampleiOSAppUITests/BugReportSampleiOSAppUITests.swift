@@ -69,7 +69,6 @@ class BugReportSampleiOSAppUITests: XCTestCase {
              .verify.bugReportFormIsShown()
              .enterEmailAddress(email)
              .fillDetails(text)
-             .toggleSendLogs()
              .sendBugReport()
              .verify.successMessageIsShown()
      }
