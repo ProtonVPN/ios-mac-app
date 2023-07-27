@@ -42,6 +42,7 @@
         "LoginTests",
         "LoginTests\/testLoginWithCorrectCredentials_C101()",
         "LoginTests\/testLoginWithIncorrectCredentials_C100()",
+        "LoginTests\/testNeedHelpClosed()",
         "OldLoginTests",
         "PlanTests",
         "ProfilesTests",
