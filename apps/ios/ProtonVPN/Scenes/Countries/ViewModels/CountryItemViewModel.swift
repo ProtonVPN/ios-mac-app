@@ -30,8 +30,9 @@ import Strings
 
 class CountryItemViewModel {
     /// Contains information about the region such as the country code, the tier the
-    /// country is available for, and what features are available.
-    private let countryModel: CountryModel
+    /// country is available for, and what features are available OR a Gateway instead of
+    /// a country.
+    private let serversGroup: ServerGroup
     /// All of the server models available for a given country.
     /// - Note: It's likely you want to access `supportedServerModels` instead.
     private let serverModels: [ServerModel]
@@ -65,7 +66,12 @@ class CountryItemViewModel {
     }
     
     var isUsersTierTooLow: Bool {
-        return userTier < countryModel.lowestTier
+        switch serversGroup.kind {
+        case .country(let countryModel):
+            return userTier < countryModel.lowestTier
+        case .gateway:
+            return false // atm only users who have gateways received them from api
+        }
     }
 
     var underMaintenance: Bool {
@@ -98,15 +104,30 @@ class CountryItemViewModel {
     var connectionChanged: (() -> Void)?
     
     var countryCode: String {
-        return countryModel.countryCode
+        switch serversGroup.kind {
+        case .country(let countryModel):
+            return countryModel.countryCode
+        case .gateway:
+            return ""
+        }
     }
     
     var countryName: String {
-        return LocalizationUtility.default.countryName(forCode: countryCode) ?? ""
+        switch serversGroup.kind {
+        case .country(let countryModel):
+            return LocalizationUtility.default.countryName(forCode: countryModel.countryCode) ?? ""
+        case .gateway:
+            return ""
+        }
     }
     
     var description: String {
-        return LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable
+        switch serversGroup.kind {
+        case .country(let countryModel):
+            return LocalizationUtility.default.countryName(forCode: countryModel.countryCode) ?? Localizable.unavailable
+        case .gateway(let name):
+            return name
+        }
     }
     
     var backgroundColor: UIColor {
@@ -114,11 +135,11 @@ class CountryItemViewModel {
     }
 
     var torAvailable: Bool {
-        return countryModel.feature.contains(.tor)
+        serversGroup.feature.contains(.tor)
     }
     
     var p2pAvailable: Bool {
-        return countryModel.feature.contains(.p2p)
+        serversGroup.feature.contains(.p2p)
     }
     
     var isSmartAvailable: Bool {
@@ -216,18 +237,43 @@ class CountryItemViewModel {
     }()
 
     private lazy var cityItemViewModels: [CityViewModel] = {
+        guard case let ServerGroup.Kind.country(countryModel) = serversGroup.kind else {
+            return []
+        }
+
         let servers = serverViewModels.flatMap({ $1 }).filter({ !$0.city.isEmpty })
         let groups = Dictionary(grouping: servers, by: { $0.city })
         return groups.map({
             let translatedCityName = $0.value.compactMap({ $0.translatedCity }).first
-            return CityItemViewModel(cityName: $0.key, translatedCityName: translatedCityName, countryModel: self.countryModel, servers: $0.value, alertService: self.alertService, vpnGateway: self.vpnGateway, connectionStatusService: self.connectionStatusService)
+            return CityItemViewModel(
+                cityName: $0.key,
+                translatedCityName: translatedCityName,
+                countryModel: countryModel,
+                servers: $0.value,
+                alertService: self.alertService,
+                vpnGateway: self.vpnGateway,
+                connectionStatusService: self.connectionStatusService
+            )
         }).sorted(by: { $0.cityName < $1.cityName })
     }()
 
     // MARK: Init routine
-    init(countryGroup: CountryGroup, serverType: ServerType, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, alertService: AlertService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol, planService: PlanService, serversFilter: ((ServerModel) -> Bool)?, showCountryConnectButton: Bool, showFeatureIcons: Bool) {
-        self.countryModel = countryGroup.country
-        self.serverModels = countryGroup.servers
+    init(
+        serversGroup: ServerGroup,
+        servers: [ServerModel],
+        serverType: ServerType,
+        appStateManager: AppStateManager,
+        vpnGateway: VpnGatewayProtocol,
+        alertService: AlertService,
+        connectionStatusService: ConnectionStatusService,
+        propertiesManager: PropertiesManagerProtocol,
+        planService: PlanService,
+        serversFilter: ((ServerModel) -> Bool)?,
+        showCountryConnectButton: Bool,
+        showFeatureIcons: Bool
+    ) {
+        self.serversGroup = serversGroup
+        self.serverModels = servers
         self.appStateManager = appStateManager
         self.vpnGateway = vpnGateway
         self.alertService = alertService
@@ -397,7 +443,12 @@ extension CountryItemViewModel: CountryViewModel {
     }
 
     var flag: UIImage? {
-        return UIImage.flag(countryCode: countryCode)
+        switch serversGroup.kind {
+        case .country(let countryModel):
+            return UIImage.flag(countryCode: countryModel.countryCode)
+        case .gateway:
+            return IconProvider.servers
+        }
     }
 
     var connectButtonColor: UIColor {

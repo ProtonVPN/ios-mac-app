@@ -21,6 +21,7 @@ import LegacyCommon
 import VPNShared
 import LocalFeatureFlags
 import Strings
+import Dependencies
 
 final class AdvancedSettingsViewModel {
     typealias Factory = PropertiesManagerFactory
@@ -41,6 +42,8 @@ final class AdvancedSettingsViewModel {
     private lazy var natTypePropertyProvider: NATTypePropertyProvider = factory.makeNATTypePropertyProvider()
     private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
     private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
+
+    @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
 
     private var featureFlags: FeatureFlags {
         return propertiesManager.featureFlags
@@ -105,8 +108,12 @@ final class AdvancedSettingsViewModel {
     // MARK: - Setters
 
     func setNatType(natType: NATType, completion: @escaping ((Bool) -> Void)) {
-        guard natTypePropertyProvider.isUserEligibleForNATTypeChange else {
-            alertService.push(alert: ModerateNATUpsellAlert())
+        let canUseNat = featureAuthorizerProvider.authorizer(for: NATFeature.self)
+        let result = canUseNat()
+        guard case .success = result else {
+            if result.requiresUpgrade {
+                alertService.push(alert: ModerateNATUpsellAlert())
+            }
             completion(false)
             return
         }
@@ -135,8 +142,12 @@ final class AdvancedSettingsViewModel {
     }
 
     func setSafeMode(safeMode: Bool, completion: @escaping ((Bool) -> Void)) {
-        guard safeModePropertyProvider.isUserEligibleForSafeModeChange else {
-            alertService.push(alert: SafeModeUpsellAlert())
+        let canUseSafeMode = featureAuthorizerProvider.authorizer(for: SafeModeFeature.self)
+        let result = canUseSafeMode()
+        guard case .success = result else {
+            if result.requiresUpgrade {
+                alertService.push(alert: SafeModeUpsellAlert())
+            }
             completion(false)
             return
         }

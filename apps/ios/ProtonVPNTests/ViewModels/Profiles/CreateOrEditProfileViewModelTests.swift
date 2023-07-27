@@ -47,7 +47,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
     lazy var standardProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .standard, serverOffering: .fastest("US"), name: "", connectionProtocol: ConnectionProtocol.vpnProtocol(.ike))
     lazy var secureCoreProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .secureCore, serverOffering: .fastest("US"), name: "", connectionProtocol: ConnectionProtocol.vpnProtocol(.ike))
 
-    lazy var appInfo = AppInfoImplementation(context: .mainApp)
+    lazy var appInfo = AppInfoImplementation()
 
     lazy var authKeychain: AuthKeychainHandle = MockAuthKeychain()
 
@@ -157,7 +157,8 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
             status: 1,
             location: ServerLocation(lat: 1, long: 2),
             hostCountry: nil,
-            translatedCity: nil
+            translatedCity: nil,
+            gatewayName: nil
         )
     }
     

@@ -37,7 +37,6 @@ final class ConnectionSettingsViewModel {
         & VpnProtocolChangeManagerFactory
         & VpnManagerFactory
         & VpnStateConfigurationFactory
-        & UserTierProviderFactory
         & AuthKeychainHandleFactory
         & AppStateManagerFactory
 
@@ -52,7 +51,6 @@ final class ConnectionSettingsViewModel {
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
-    private lazy var userTierProvider: UserTierProvider = factory.makeUserTierProvider()
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
 

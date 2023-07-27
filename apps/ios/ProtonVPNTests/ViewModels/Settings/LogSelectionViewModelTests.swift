@@ -40,7 +40,7 @@ class LogSelectionViewModelTests: XCTestCase {
             XCTAssertEqual(openedTitle, LogSource.app.title)
             
         default:
-            XCTAssert(false, "Wrong cell type returned")
+            XCTFail("Wrong cell type returned")
         }
         
     }

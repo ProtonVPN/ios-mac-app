@@ -20,17 +20,19 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-
-public typealias CountryGroup = (country: CountryModel, servers: [ServerModel])
+import VPNAppCore
 
 public protocol ServerManager: AnyObject {
+    static func instance(forTier tier: Int, serverStorage: ServerStorage) -> ServerManager
+
     var contentChanged: Notification.Name { get }
     var servers: [ServerModel] { get }
 
-    func grouping(for type: ServerType) -> [CountryGroup]
-    func grouping(for type: ServerType, query: String?) -> [CountryGroup]
-    static func instance(forTier tier: Int, serverStorage: ServerStorage) -> ServerManager
+    func grouping(for type: ServerType) -> [ServerGroup]
+    func grouping(for type: ServerType, query: String?) -> [ServerGroup]
 }
+
+// MARK: - Implementation
 
 public class ServerManagerImplementation: ServerManager {
     private static var managers: [Weak<ServerManagerImplementation>] = []
@@ -42,6 +44,7 @@ public class ServerManagerImplementation: ServerManager {
 
     /// Storage variable for the server list. Use `servers` instead to access the server list.
     private var _servers: [ServerModel] = []
+
     /// This value automatically populates `_servers` in an unsynchronized way if it is
     /// empty, and returns it.
     private var serversNoSync: [ServerModel] {
@@ -60,6 +63,7 @@ public class ServerManagerImplementation: ServerManager {
     /// in the `grouping(for:)` method, they are removed from this list to save memory. Use
     /// `unsortedGroupsNoSync` to access these values rather than using this property directly.
     private var _unsortedGroups: [ServerType: [ServerModel]] = [:]
+
     /// This value automatically populates `_unsortedGroups` in an unsynchronized way if it is
     /// empty, and returns it.
     private var unsortedGroupsNoSync: [ServerType: [ServerModel]] {
@@ -71,7 +75,7 @@ public class ServerManagerImplementation: ServerManager {
 
     /// Sorted server groups. Access to this variable is not synchronized. Get sorted servers using
     /// the `grouping(for:)` method to avoid threading surprises.
-    private var sortedGroupsNoSync: [ServerType: [CountryGroup]] = [:]
+    private var sortedGroupsNoSync: [ServerType: [ServerGroup]] = [:]
     
     private init(tier: Int, serverStorage: ServerStorage) {
         self.userTier = tier
@@ -81,47 +85,14 @@ public class ServerManagerImplementation: ServerManager {
         NotificationCenter.default.addObserver(self, selector: #selector(contentChanged(_:)),
                                                name: serverStorage.contentChanged, object: nil)
     }
-    
-    func formGrouping(from serverModels: [ServerModel]) -> [CountryGroup] {
-        var headers: [CountryModel] = []
-        var servers: [String: [ServerModel]] = [:]
 
-        for server in serverModels {
-            let header = CountryModel(serverModel: server)
-    
-            if let existing = headers.filter({ $0 == header }).first {
-                existing.update(feature: header.feature)
-                existing.update(tier: header.lowestTier)
-            } else {
-                headers.append(header)
-            }
-            
-            if servers[server.countryCode] != nil {
-                servers[server.countryCode]!.append(server)
-            } else {
-                servers[server.countryCode] = [server]
-            }
-        }
-        
-        return headers.sorted(by: { $0.country < $1.country })
-            .map({ ($0, servers[$0.countryCode]!) })
-                .map({ ($0, $1.sorted(by: { s1, s2 in
-                    if !s1.isSecureCore {
-                        return s1 < s2
-                    } else {
-                        return s1.entryCountry < s2.entryCountry
-                    }
-                }))
-            })
-    }
-    
-    public func grouping(for type: ServerType) -> [CountryGroup] {
+    public func grouping(for type: ServerType) -> [ServerGroup] {
         queue.sync {
             if let group = sortedGroupsNoSync[type] {
                 return group
             }
             guard let unsortedGroup = unsortedGroupsNoSync[type], !unsortedGroup.isEmpty else {
-                return [CountryGroup]()
+                return [ServerGroup]()
             }
 
             let sortedGroup = formGrouping(from: unsortedGroup)
@@ -131,25 +102,56 @@ public class ServerManagerImplementation: ServerManager {
         }
     }
     
-    public func grouping(for type: ServerType, query: String?) -> [CountryGroup] {
+    public func grouping(for type: ServerType, query: String?) -> [ServerGroup] {
         let group = grouping(for: type)
         guard let query = query, !query.isEmpty else { return group }
-        return group.compactMap { (country, servers) in
-            if country.matches(searchQuery: query) {
-                return (country, servers)
+        return group.compactMap { group in
+            if group.matches(searchQuery: query) {
+                return group
             }
             
-            let filteredServers = servers.filter { $0.matches(searchQuery: query) }
+            let filteredServers = group.servers.filter { $0.matches(searchQuery: query) }
             
             if filteredServers.isEmpty {
                 return nil
             }
             
-            return (country, filteredServers)
+            return ServerGroup(kind: group.kind, servers: filteredServers)
         }
     }
     
     // MARK: - Private functions
+
+    private func formGrouping(from serverModels: [ServerModel]) -> [ServerGroup] {
+        return Dictionary(
+            grouping: serverModels,
+            by: { server in
+                return server.feature.contains(.restricted) && server.gatewayName != nil
+                    ? ServerGroup.Kind.gateway(server.gatewayName!)
+                    : ServerGroup.Kind.country(CountryModel(serverModel: server))
+            }
+        ).compactMap { (key, value) -> ServerGroup? in
+            guard !value.isEmpty else { return nil }
+            return ServerGroup(
+                kind: key,
+                servers: value,
+                feature: value.reduce(into: ServerFeature.zero, { $0.insert($1.feature) })
+            )
+        }.sorted {
+            // First go gateways (sorted by name), then countries (sorted by name)
+            switch ($0.kind, $1.kind) {
+            case (.gateway(let gatewayName0), .gateway(let gatewayName1)):
+                return gatewayName0 < gatewayName1
+            case (.country(let country0), .country(let country1)):
+                return country0.country < country1.country
+            case (.gateway, .country):
+                return true
+            case (.country, .gateway):
+                return false
+            }
+        }
+    }
+
     @objc private func contentChanged(_ notification: Notification) {
         DispatchQueue.global(qos: .background).async { [weak self] in
             guard let self = self else {
@@ -193,17 +195,6 @@ public class ServerManagerImplementation: ServerManager {
         return groups
     }
     
-    private func sort(countryGroups: [CountryGroup]) -> [CountryGroup] {
-        var sortedCountryGroups: [CountryGroup] = []
-        for countryGroup in countryGroups {
-            let (availableServers, unavailableServers) = countryGroup.servers.filter2 { $0.tier <= self.userTier }
-            let sortedServers = availableServers.sorted { $0.tier > $1.tier } +
-                                unavailableServers.sorted { $0.tier < $1.tier }
-            sortedCountryGroups.append(CountryGroup(countryGroup.country, sortedServers))
-        }
-        return sortedCountryGroups
-    }
-    
     // MARK: - Static functions
     
     public static func instance(forTier tier: Int, serverStorage: ServerStorage) -> ServerManager {
@@ -222,4 +213,15 @@ public class ServerManagerImplementation: ServerManager {
         managers.removeAll()
     }
     
+}
+
+extension ServerGroup {
+    fileprivate func matches(searchQuery: String) -> Bool {
+        switch kind {
+        case .country(let country):
+            return country.matches(searchQuery: searchQuery)
+        case .gateway(let gatewayName):
+            return gatewayName.contains(searchQuery)
+        }
+    }
 }

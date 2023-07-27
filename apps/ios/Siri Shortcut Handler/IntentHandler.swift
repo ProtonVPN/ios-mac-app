@@ -32,14 +32,18 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
     let siriHandlerViewModel: SiriHandlerViewModel
     
     override init() { // swiftlint:disable:this function_body_length
+        AppContext.default = .siriIntentHandler
+        
         injectDefaultCryptoImplementation()
         let dependencyFactory = SiriIntentHandlerDependencyFactory()
         let doh = DoHVPN(apiHost: "", verifyHost: "", alternativeRouting: false, appState: .disconnected)
-        let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()),
-                                        appInfo: dependencyFactory.makeAppInfo(context: .siriIntentHandler),
-                                        doh: doh,
-                                        authKeychain: dependencyFactory.makeAuthKeychainHandle(),
-                                        unauthKeychain: dependencyFactory.makeUnauthKeychainHandle())
+        let networking = CoreNetworking(
+            delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()),
+            appInfo: dependencyFactory.makeAppInfo(),
+            doh: doh,
+            authKeychain: dependencyFactory.makeAuthKeychainHandle(),
+            unauthKeychain: dependencyFactory.makeUnauthKeychainHandle()
+        )
         let openVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.openVpn
         let wireguardVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.wireguard
         let appGroup = AppConstants.AppGroups.main
@@ -47,19 +51,23 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         let propertiesManager = PropertiesManager()
         let vpnKeychain = VpnKeychain.instance
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
-        let authKeychain = AuthKeychain()
+        let authKeychain = AuthKeychain.default
         let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN",
                                                         vpnKeysGenerator: ExtensionVPNKeysGenerator())
-        let userTierProvider = UserTierProviderImplementation(UserTierProviderFactory(vpnKeychainProtocol: vpnKeychain))
-        let paidFeaturePropertyProviderFactory = PaidFeaturePropertyProviderFactory(propertiesManager: propertiesManager, userTierProvider: userTierProvider, authKeychain: authKeychain)
-        let netShieldPropertyProvider = NetShieldPropertyProviderImplementation(paidFeaturePropertyProviderFactory)
-        let natTypePropertyProvider = NATTypePropertyProviderImplementation(paidFeaturePropertyProviderFactory)
-        let safeModePropertyProvider = SafeModePropertyProviderImplementation(paidFeaturePropertyProviderFactory)
+        let netShieldPropertyProvider = NetShieldPropertyProviderImplementation()
+        let natTypePropertyProvider = NATTypePropertyProviderImplementation()
+        let safeModePropertyProvider = SafeModePropertyProviderImplementation()
         let vpnWrapperFactory = VPNWrapperFactory()
         let ikeFactory = IkeProtocolFactory(factory: vpnWrapperFactory)
         let openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager, vpnManagerFactory: vpnWrapperFactory)
         let wireguardVpnFactory = WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager, vpnManagerFactory: vpnWrapperFactory)
-        let vpnStateConfiguration = VpnStateConfigurationManager(ikeProtocolFactory: ikeFactory, openVpnProtocolFactory: openVpnFactory, wireguardProtocolFactory: wireguardVpnFactory, propertiesManager: propertiesManager, appGroup: appGroup)
+        let vpnStateConfiguration = VpnStateConfigurationManager(
+            ikeProtocolFactory: ikeFactory,
+            openVpnProtocolFactory: openVpnFactory,
+            wireguardProtocolFactory: wireguardVpnFactory,
+            propertiesManager: propertiesManager,
+            appGroup: appGroup
+        )
         let sessionService = SessionServiceImplementation(appInfoFactory: dependencyFactory, networking: networking, doh: doh)
 
         let remoteClient = VpnAuthenticationRemoteClient(
@@ -68,46 +76,63 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
             safeModePropertyProvider: safeModePropertyProvider
         )
 
-        let vpnManager = VpnManager(ikeFactory: ikeFactory,
-                                    openVpnFactory: openVpnFactory,
-                                    wireguardProtocolFactory: wireguardVpnFactory,
-                                    appGroup: appGroup,
-                                    vpnAuthentication: remoteClient,
-                                    vpnAuthenticationStorage: vpnAuthKeychain,
-                                    vpnKeychain: vpnKeychain,
-                                    propertiesManager: propertiesManager,
-                                    vpnStateConfiguration: vpnStateConfiguration,
-                                    vpnCredentialsConfiguratorFactory:
-                                        IOSVpnCredentialsConfiguratorFactory(
-                                            propertiesManager: propertiesManager,
-                                            vpnKeychain: vpnKeychain,
-                                            vpnAuthentication: VpnAuthenticationRemoteClient(sessionService: sessionService,
-                                                                                             authenticationStorage: vpnAuthKeychain,
-                                                                                             safeModePropertyProvider: safeModePropertyProvider)),
-                                    localAgentConnectionFactory: LocalAgentConnectionFactoryImplementation(),
-                                    natTypePropertyProvider: natTypePropertyProvider,
-                                    netShieldPropertyProvider: netShieldPropertyProvider,
-                                    safeModePropertyProvider: safeModePropertyProvider,
-                                    serverStorage: ServerStorageConcrete())
+        let vpnManager = VpnManager(
+            ikeFactory: ikeFactory,
+            openVpnFactory: openVpnFactory,
+            wireguardProtocolFactory: wireguardVpnFactory,
+            appGroup: appGroup,
+            vpnAuthentication: remoteClient,
+            vpnAuthenticationStorage: vpnAuthKeychain,
+            vpnKeychain: vpnKeychain,
+            propertiesManager: propertiesManager,
+            vpnStateConfiguration: vpnStateConfiguration,
+            vpnCredentialsConfiguratorFactory:
+                IOSVpnCredentialsConfiguratorFactory(
+                    propertiesManager: propertiesManager,
+                    vpnKeychain: vpnKeychain,
+                    vpnAuthentication: VpnAuthenticationRemoteClient(
+                        sessionService: sessionService,
+                        authenticationStorage: vpnAuthKeychain,
+                        safeModePropertyProvider: safeModePropertyProvider
+                    )
+                ),
+            localAgentConnectionFactory: LocalAgentConnectionFactoryImplementation(),
+            natTypePropertyProvider: natTypePropertyProvider,
+            netShieldPropertyProvider: netShieldPropertyProvider,
+            safeModePropertyProvider: safeModePropertyProvider,
+            serverStorage: ServerStorageConcrete()
+        )
 
         let countryCodeProvider = dependencyFactory.makeCountryCodeProvider()
-        siriHandlerViewModel = SiriHandlerViewModel(networking: networking,
-                                                    vpnApiService: VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: countryCodeProvider, authKeychain: authKeychain),
-                                                    vpnManager: vpnManager,
-                                                    vpnKeychain: vpnKeychain,
-                                                    authKeychain: authKeychain,
-                                                    propertiesManager: propertiesManager,
-                                                    sessionService: sessionService,
-                                                    netShieldPropertyProvider: netShieldPropertyProvider,
-                                                    natTypePropertyProvider: natTypePropertyProvider,
-                                                    safeModePropertyProvider: safeModePropertyProvider,
-                                                    profileManager: ProfileManager(serverStorage: ServerStorageConcrete(),
-                                                                                   propertiesManager: propertiesManager,
-                                                                                   profileStorage: ProfileStorage(authKeychain: dependencyFactory.makeAuthKeychainHandle())),
-                                                    doh: doh,
-                                                    serverStorage: serverStorage,
-                                                    availabilityCheckerResolverFactory: dependencyFactory)
-        
+
+        siriHandlerViewModel = SiriHandlerViewModel(
+            networking: networking,
+            vpnApiService: VpnApiService(
+                networking: networking,
+                vpnKeychain: vpnKeychain,
+                countryCodeProvider: countryCodeProvider,
+                authKeychain: authKeychain
+            ),
+            vpnManager: vpnManager,
+            vpnKeychain: vpnKeychain,
+            authKeychain: authKeychain,
+            propertiesManager: propertiesManager,
+            sessionService: sessionService,
+            netShieldPropertyProvider: netShieldPropertyProvider,
+            natTypePropertyProvider: natTypePropertyProvider,
+            safeModePropertyProvider: safeModePropertyProvider,
+            profileManager: ProfileManager(
+                serverStorage: ServerStorageConcrete(),
+                propertiesManager: propertiesManager,
+                profileStorage: ProfileStorage(
+                    authKeychain: dependencyFactory.makeAuthKeychainHandle()
+                )
+            ),
+            doh: doh,
+            serverStorage: serverStorage,
+            availabilityCheckerResolverFactory: dependencyFactory
+        )
+
         super.init()
     }
     
@@ -130,43 +155,6 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         return self
     }
     
-}
-
-fileprivate class PaidFeaturePropertyProviderFactory: PaidFeaturePropertyProvider.Factory {
-    private let propertiesManager: PropertiesManagerProtocol
-    private let userTierProvider: UserTierProvider
-    private let authKeychain: AuthKeychainHandle
-
-    init(propertiesManager: PropertiesManagerProtocol, userTierProvider: UserTierProvider, authKeychain: AuthKeychainHandle) {
-        self.propertiesManager = propertiesManager
-        self.userTierProvider = userTierProvider
-        self.authKeychain = authKeychain
-    }
-    
-    func makePropertiesManager() -> PropertiesManagerProtocol {
-        return propertiesManager
-    }
-
-    func makeAuthKeychainHandle() -> AuthKeychainHandle {
-        return authKeychain
-    }
-    
-    func makeUserTierProvider() -> UserTierProvider {
-        return userTierProvider
-    }
-}
-
-fileprivate class UserTierProviderFactory: UserTierProviderImplementation.Factory {
-    
-    private let vpnKeychainProtocol: VpnKeychainProtocol
-    
-    public init(vpnKeychainProtocol: VpnKeychainProtocol) {
-        self.vpnKeychainProtocol = vpnKeychainProtocol
-    }
-    
-    func makeVpnKeychain() -> VpnKeychainProtocol {
-        return vpnKeychainProtocol
-    }
 }
 
 fileprivate class VPNWrapperFactory: NEVPNManagerWrapperFactory, NETunnelProviderManagerWrapperFactory {
@@ -206,7 +194,7 @@ extension SiriIntentHandlerDependencyFactory: AvailabilityCheckerResolverFactory
 
 extension SiriIntentHandlerDependencyFactory: AuthKeychainHandleFactory {
     func makeAuthKeychainHandle() -> AuthKeychainHandle {
-        AuthKeychain()
+        AuthKeychain.default
     }
 }
 

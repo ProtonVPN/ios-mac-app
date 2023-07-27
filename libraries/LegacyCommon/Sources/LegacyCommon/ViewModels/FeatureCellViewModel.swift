@@ -52,7 +52,7 @@ extension FeatureCellViewModel {
 
 // MARK: - Features
 
-public struct SmartRoutingFeature: FeatureCellViewModel {
+public struct SmartRoutingFeatureCellViewModel: FeatureCellViewModel {
     public let icon: Icon = .image(IconProvider.globe)
     public let title: String = Localizable.smartRoutingTitle
     public var sectionTitle: String?
@@ -62,7 +62,7 @@ public struct SmartRoutingFeature: FeatureCellViewModel {
     public init () { }
 }
 
-public struct StreamingFeature: FeatureCellViewModel {
+public struct StreamingFeatureCellViewModel: FeatureCellViewModel {
     public let icon: Icon = .image(IconProvider.play)
     public let title: String = Localizable.streamingTitle
     public var sectionTitle: String?
@@ -72,7 +72,7 @@ public struct StreamingFeature: FeatureCellViewModel {
     public init () { }
 }
 
-public struct P2PFeature: FeatureCellViewModel {
+public struct P2PFeatureCellViewModel: FeatureCellViewModel {
     public let icon: Icon = .image(IconProvider.arrowsSwitch)
     public let title: String = Localizable.p2pTitle
     public var sectionTitle: String?
@@ -82,7 +82,7 @@ public struct P2PFeature: FeatureCellViewModel {
     public init () { }
 }
 
-public struct TorFeature: FeatureCellViewModel {
+public struct TorFeatureCellViewModel: FeatureCellViewModel {
     public let icon: Icon = .image(IconProvider.brandTor)
     public let title: String = Localizable.featureTor
     public var sectionTitle: String?
@@ -92,7 +92,7 @@ public struct TorFeature: FeatureCellViewModel {
     public init () { }
 }
 
-public struct LoadPerformanceFeature: FeatureCellViewModel {
+public struct LoadPerformanceFeatureCellViewModel: FeatureCellViewModel {
     public let icon: Icon = .image(IconProvider.servers)
     public let title: String = Localizable.serverLoadTitle
     public var sectionTitle: String?
@@ -103,7 +103,7 @@ public struct LoadPerformanceFeature: FeatureCellViewModel {
     public init () { }
 }
 
-public struct FreeServersFeature: FeatureCellViewModel {
+public struct FreeServersFeatureCellViewModel: FeatureCellViewModel {
     public let icon: Icon = .image(IconProvider.servers)
     public let title: String = Localizable.featureFreeServers
     public var sectionTitle: String?
@@ -128,7 +128,7 @@ public struct ServerFeatureViewModel: FeatureCellViewModel {
     }
 }
 
-public struct GatewayFeature: FeatureCellViewModel {
+public struct GatewayFeatureCellViewModel: FeatureCellViewModel {
     public let icon: Icon = .image(IconProvider.globe)
     public let title: String = Localizable.gatewaysModalTitle
     public var sectionTitle: String?

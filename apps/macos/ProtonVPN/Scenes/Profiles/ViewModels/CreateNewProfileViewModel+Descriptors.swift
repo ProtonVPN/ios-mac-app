@@ -25,6 +25,7 @@ import LegacyCommon
 import AppKit
 import Theme
 import Strings
+import ProtonCoreUIFoundations
 
 extension CreateNewProfileViewModel {
     private var fontSize: AppTheme.FontSize {
@@ -39,11 +40,21 @@ extension CreateNewProfileViewModel {
         AppTheme.Icon.flag(countryCode: countryCode)?.asAttachment(size: .profileIconSize) ?? NSAttributedString(string: "")
     }
 
-    internal func countryDescriptor(for country: CountryModel) -> NSAttributedString {
-        let imageAttributedString = flagString(country.countryCode)
-        let countryString = "  " + country.country
+    internal func countryDescriptor(for group: ServerGroup) -> NSAttributedString {
+        let imageAttributedString: NSAttributedString
+        let countryString: String
+
+        switch group.kind {
+        case .country(let country):
+            imageAttributedString = AppTheme.Icon.flag(countryCode: country.countryCode)?.asAttachment(size: .profileIconSize) ?? NSAttributedString(string: "")
+            countryString = "  " + country.country
+        case .gateway(let name):
+            imageAttributedString = IconProvider.servers.asAttachment(style: .normal, size: .profileIconSize)
+            countryString = "  " + name
+        }
+
         let nameAttributedString: NSAttributedString
-        if userTierSupports(country: country) {
+        if userTierSupports(group: group) {
             nameAttributedString = NSMutableAttributedString(
                 string: countryString,
                 attributes: [

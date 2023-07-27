@@ -24,6 +24,7 @@ import CoreLocation
 import VPNAppCore
 import Strings
 
+// FUTURETODO: get rid of this class and rely only on ServerGroup
 public class CountryModel: Comparable, Hashable {
     
     public let countryCode: String
@@ -53,25 +54,6 @@ public class CountryModel: Comparable, Hashable {
         countryCode = serverModel.countryCode
         lowestTier = serverModel.tier
         feature = self.extractKeyword(serverModel)
-    }
-    
-    /*
-     *  Updates lowest tier property of the country - property
-     *  coresponds to the tier of server with lowest access needed
-     *  for connection.
-     */
-    public func update(tier: Int) {
-        if lowestTier > tier {
-            lowestTier = tier
-        }
-    }
-    
-    /*
-     *  Updates highlight keyword of the country servers according to
-     *  predetermined order of importance.
-     */
-    public func update(feature: ServerFeature) {
-        self.feature.insert(feature)
     }
     
     public func matches(searchQuery: String) -> Bool {

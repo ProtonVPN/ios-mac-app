@@ -48,7 +48,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         let preparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService, propertiesManager: propertiesManager)
         appStateManager = AppStateManagerImplementation(vpnApiService: VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation(), authKeychain: MockAuthKeychain()), vpnManager: vpnManager, networking: networking, alertService: alertService, timerFactory: timerFactory, propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: preparer, vpnAuthentication: VpnAuthenticationMock(), doh: .mock, serverStorage: ServerStorageConcrete(), natTypePropertyProvider: NATTypePropertyProviderMock(), netShieldPropertyProvider: NetShieldPropertyProviderMock(), safeModePropertyProvider: SafeModePropertyProviderMock())
         
-        if case AppState.disconnected = appStateManager.state {} else { XCTAssert(false) }
+        if case AppState.disconnected = appStateManager.state {} else { XCTFail("Wrong state") }
         XCTAssertFalse(appStateManager.state.isConnected)
         XCTAssert(appStateManager.state.isDisconnected)
     }
@@ -153,7 +153,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         let state = self.appStateManager.state
         if case AppState.aborted(let userInitiated) = state {
             XCTAssert(userInitiated)
-        } else { XCTAssert(false) }
+        } else { XCTFail("Wrong state") }
         XCTAssertFalse(state.isConnected)
         XCTAssert(state.isDisconnected)
     }
@@ -291,7 +291,7 @@ class AppStateManagerImplementationTests: XCTestCase {
     }
     
     lazy var connectionConfig: ConnectionConfiguration = {
-        let server = ServerModel(id: "", name: "", domain: "", load: 0, entryCountryCode: "", exitCountryCode: "", tier: 1, feature: .zero, city: nil, ips: [ServerIp](), score: 0.0, status: 0, location: ServerLocation(lat: 0, long: 0), hostCountry: nil, translatedCity: nil)
+        let server = ServerModel(id: "", name: "", domain: "", load: 0, entryCountryCode: "", exitCountryCode: "", tier: 1, feature: .zero, city: nil, ips: [ServerIp](), score: 0.0, status: 0, location: ServerLocation(lat: 0, long: 0), hostCountry: nil, translatedCity: nil, gatewayName: nil)
         let serverIp = ServerIp(id: "", entryIp: "", exitIp: "", domain: "", status: 0)
         return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: .ike, netShieldType: .off, natType: .default, safeMode: true, ports: [500])
     }()

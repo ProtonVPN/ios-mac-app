@@ -24,7 +24,6 @@ import UIKit
 import ProtonCoreUIFoundations
 
 class ServersHeaderView: UITableViewHeaderFooterView {
-
     @IBOutlet private weak var colorView: UIView!
     @IBOutlet private weak var serversName: UILabel!
     @IBOutlet private weak var infoBtn: UIButton!
@@ -35,7 +34,13 @@ class ServersHeaderView: UITableViewHeaderFooterView {
         }
     }
     
-    func setName(name: String) {
+    func setName(name: String?) {
+        guard let name else {
+            serversName.isHidden = true
+            return
+        }
+
+        serversName.isHidden = false
         serversName.text = name
     }
     

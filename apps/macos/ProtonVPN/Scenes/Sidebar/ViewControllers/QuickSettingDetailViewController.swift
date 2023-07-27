@@ -38,6 +38,7 @@ protocol QuickSettingsDetailViewControllerProtocol: class {
     var dropdownDescription: NSTextField! { get }
     var dropdownLearnMore: InteractiveActionButton! { get }
     var dropdownUpgradeButton: PrimaryActionButton! { get }
+    var dropdownBusinessUpsell: NSImageView! { get }
     var dropdownNote: NSTextField! { get }
 
     func reloadOptions()
@@ -55,6 +56,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
     @IBOutlet weak var dropdownDescription: NSTextField!
     @IBOutlet weak var dropdownLearnMore: InteractiveActionButton!
     @IBOutlet weak var dropdownUpgradeButton: PrimaryActionButton!
+    @IBOutlet weak var dropdownBusinessUpsell: NSImageView!
     @IBOutlet weak var dropdownNote: NSTextField!
     
     @IBOutlet weak var dropdownOptionsView: NSView!
@@ -127,6 +129,9 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         dropdownUpgradeButton.actionType = .confirmative
         dropdownUpgradeButton.fontSize = .paragraph
 
+        dropdownBusinessUpsell.image = Theme.Asset.icVpnBusinessBadge.image
+        dropdownBusinessUpsell.isHidden = true
+
         dropdownLearnMore.fontSize = .small
         dropdownLearnMore.title = Localizable.learnMore
 
@@ -148,8 +153,9 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
             let view: QuickSettingsDropdownOption? = QuickSettingsDropdownOption.loadViewFromNib()
             view?.titleLabel.stringValue = presenter.title
             view?.optionIconIV.image = presenter.icon
-            if presenter.requiresUpdate {
-                view?.blockedStyle()
+            if presenter.requiresUpdate || presenter.requiresBusinessUpdate {
+                dropdownBusinessUpsell.isHidden = !presenter.requiresBusinessUpdate
+                view?.blockedStyle(business: presenter.requiresBusinessUpdate)
                 view?.action = {
                     presenter.selectCallback?()
                     self.presenter.dismiss?()

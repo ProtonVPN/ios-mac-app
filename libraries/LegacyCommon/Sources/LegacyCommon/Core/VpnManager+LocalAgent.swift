@@ -362,7 +362,7 @@ extension VpnManager: LocalAgentDelegate {
         }
 
         let storedFeatures = vpnAuthenticationStorage.getStoredCertificateFeatures()
-        guard !features.equals(other: storedFeatures, safeModeEnabled: safeModePropertyProvider.safeModeFeatureEnabled) else {
+        guard !features.equals(other: storedFeatures, safeModeFeatureEnabled: safeModePropertyProvider.safeMode != nil) else {
             return
         }
 

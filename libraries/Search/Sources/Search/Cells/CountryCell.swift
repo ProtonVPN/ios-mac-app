@@ -75,6 +75,7 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
 
             backgroundColor = .clear
             flagIcon.image = viewModel.flag
+            flagIcon.tintColor = .white
             [flagIcon, countryName, torIV, p2pIV, smartIV].forEach { view in
                 view?.alpha = viewModel.alphaOfMainElements
             }

@@ -34,11 +34,21 @@ extension CreateOrEditProfileViewModel {
         return 4
     }
 
-    internal func countryDescriptor(for country: CountryModel) -> NSAttributedString {
-        let imageAttributedString = embededImageIcon(image: UIImage.flag(countryCode: country.countryCode))
-        let countryString = ("  " + country.country)
+    internal func countryDescriptor(for group: ServerGroup) -> NSAttributedString {
+        let imageAttributedString: NSAttributedString
+        let countryString: String
+
+        switch group.kind {
+        case .country(let country):
+            imageAttributedString = embededImageIcon(image: UIImage.flag(countryCode: country.countryCode))
+            countryString = "  " + country.country
+        case .gateway(let name):
+            imageAttributedString = embededImageIcon(image: IconProvider.servers)
+            countryString = "  " + name
+        }
+
         let nameAttributedString: NSAttributedString
-        if country.lowestTier <= userTier {
+        if group.lowestTier <= userTier {
             nameAttributedString = NSMutableAttributedString(
                 string: countryString,
                 attributes: [

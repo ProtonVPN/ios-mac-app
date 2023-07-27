@@ -29,6 +29,7 @@ class MemoryStorage: Storage {
     func get<T: Decodable>(_ type: T.Type, forKey key: String) throws -> T? {
         return nil
     }
+
     func set<T: Encodable>(_ value: T, forKey key: String) throws { }
 
     func setValue(_ value: Any?, forKey key: String) {

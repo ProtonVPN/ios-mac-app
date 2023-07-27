@@ -91,15 +91,15 @@ class CreateNewProfileViewModel {
 
     // MARK: Getters derived from model state
 
-    var selectedServerGrouping: [CountryGroup] {
+    var selectedServerGrouping: [ServerGroup] {
         serverManager.grouping(for: state.serverType)
     }
 
-    var selectedCountryGroup: CountryGroup? {
+    var selectedCountryGroup: ServerGroup? {
         guard let countryIndex = state.countryIndex else {
             return nil
         }
-        return ServerUtility.countryGroup(in: selectedServerGrouping, index: countryIndex)
+        return selectedServerGrouping[countryIndex]
     }
 
     var profileName: String? {
@@ -128,14 +128,18 @@ class CreateNewProfileViewModel {
     /// Contains one placeholder item at the beginning, followed by all available countries.
     var countryMenuItems: [PopUpButtonItemViewModel] {
         // Placeholder item
-        [.init(title: menuStyle(Localizable.selectCountry),
-               checked: state.countryIndex == nil,
-               handler: { [weak self] in self?.update(countryIndex: nil) })] +
+        [PopUpButtonItemViewModel(
+            title: menuStyle(Localizable.selectCountry),
+            checked: state.countryIndex == nil,
+            handler: { [weak self] in self?.update(countryIndex: nil) }
+        )] +
         // Countries by index in their grouping
         serverManager.grouping(for: state.serverType).enumerated().map { (index, grouping) in
-                .init(title: countryDescriptor(for: grouping.country),
-                      checked: state.countryIndex == index,
-                      handler: { [weak self] in self?.update(countryIndex: index) })
+            PopUpButtonItemViewModel(
+                title: countryDescriptor(for: grouping),
+                checked: state.countryIndex == index,
+                handler: { [weak self] in self?.update(countryIndex: index) }
+            )
         }
     }
 
@@ -144,19 +148,20 @@ class CreateNewProfileViewModel {
     /// for that country.
     var serverMenuItems: [PopUpButtonItemViewModel] {
         let placeholder: PopUpButtonItemViewModel =
-            .init(title: menuStyle(Localizable.selectServer),
-                  checked: state.serverOffering == nil,
-                  handler: { [weak self] in self?.update(serverOffering: nil) })
+        PopUpButtonItemViewModel(
+            title: menuStyle(Localizable.selectServer),
+            checked: state.serverOffering == nil,
+            handler: { [weak self] in self?.update(serverOffering: nil) }
+        )
 
         guard let group = selectedCountryGroup else { return [placeholder] }
 
-        let (countryCode, servers) = (group.0.countryCode, group.1)
-        let offerings: [ServerOffering] = [.fastest(countryCode), .random(countryCode)]
-            + servers.map { .custom(.init(server: $0)) }
+        let offerings: [ServerOffering] = [.fastest(group.serverOfferingId), .random(group.serverOfferingId)]
+            + group.servers.map { .custom(.init(server: $0)) }
 
         return [placeholder]
             + offerings.map { offering in
-                .init(title: serverDescriptor(for: offering),
+                PopUpButtonItemViewModel(title: serverDescriptor(for: offering),
                       checked: state.serverOffering == offering,
                       handler: { [weak self] in self?.update(serverOffering: offering) })
             }
@@ -193,8 +198,8 @@ class CreateNewProfileViewModel {
         CoreAppConstants.VpnTiers.plus <= userTier
     }
 
-    func userTierSupports(country: CountryModel) -> Bool {
-        country.lowestTier <= userTier
+    func userTierSupports(group: ServerGroup) -> Bool {
+        group.lowestTier <= userTier
     }
 
     func userTierSupports(server: ServerModel) -> Bool {
@@ -320,8 +325,14 @@ class CreateNewProfileViewModel {
 
         var countryIndex: Int?
         if let countryCode = profile.serverOffering.countryCode {
-            countryIndex = ServerUtility.countryIndex(in: grouping,
-                                                      countryCode: countryCode)
+            countryIndex = grouping.firstIndex {
+                switch $0.kind {
+                case .country(let country):
+                    return country.countryCode == profile.serverOffering.countryCode
+                case .gateway(let name):
+                    return name == profile.serverOffering.countryCode
+                }
+            }
 
             if let countryIndex, connectionProtocol != nil,
                !profile.serverOffering.supports(connectionProtocol: connectionProtocol!,
@@ -378,7 +389,7 @@ class CreateNewProfileViewModel {
         let accessTier: Int
         switch serverOffering {
         case .fastest, .random:
-            accessTier = selectedCountryGroup.country.lowestTier
+            accessTier = selectedCountryGroup.lowestTier
         case .custom(let wrapper):
             accessTier = wrapper.server.tier
         }
@@ -435,12 +446,14 @@ fileprivate struct ModelState {
 /// These update functions call one other in a tree, according to which updates may impact other selected values.
 extension ModelState {
     func updating(serverType: ServerType,
-                  newTypeGrouping: [CountryGroup],
-                  selectedCountryGroup: CountryGroup?,
+                  newTypeGrouping: [ServerGroup],
+                  selectedCountryGroup: ServerGroup?,
                   smartProtocolConfig: SmartProtocolConfig) -> Self {
         var countryIndex = countryIndex
-        if let selectedCountryCode = selectedCountryGroup?.0.countryCode {
-            countryIndex = ServerUtility.countryIndex(in: newTypeGrouping, countryCode: selectedCountryCode)
+
+        // Re-select country/gateway if it's still there after ServerType change
+        if let selectedGroupCode = selectedCountryGroup?.serverOfferingId {
+            countryIndex = newTypeGrouping.firstIndex { $0.serverOfferingId == selectedGroupCode }
         }
 
         return ModelState(profileName: self.profileName,
@@ -454,7 +467,7 @@ extension ModelState {
     }
 
     func updating(countryIndex: Int?,
-                  selectedCountryGroup: CountryGroup?,
+                  selectedCountryGroup: ServerGroup?,
                   smartProtocolConfig: SmartProtocolConfig) -> Self {
         var serverOffering = serverOffering
         if self.countryIndex != countryIndex {
@@ -472,7 +485,7 @@ extension ModelState {
     }
 
     func updating(serverOffering: ServerOffering?,
-                  selectedCountryGroup: CountryGroup?,
+                  selectedCountryGroup: ServerGroup?,
                   smartProtocolConfig: SmartProtocolConfig) -> Self {
         var connectionProtocol = connectionProtocol
         if self.serverOffering != serverOffering,

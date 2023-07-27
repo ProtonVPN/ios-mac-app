@@ -20,14 +20,9 @@ import Foundation
 import Dependencies
 import VPNShared
 
-public protocol SafeModePropertyProvider: PaidFeaturePropertyProvider {
+public protocol SafeModePropertyProvider: FeaturePropertyProvider {
     /// Current Safe Mdde
     var safeMode: Bool? { get set }
-
-    /// If the user can disable Safe Mode
-    var isUserEligibleForSafeModeChange: Bool { get }
-
-    var safeModeFeatureEnabled: Bool { get }
 
     static var safeModeNotification: Notification.Name { get }
 }
@@ -37,63 +32,48 @@ public protocol SafeModePropertyProviderFactory {
 }
 
 public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
-    public let factory: Factory
-
     public static let safeModeNotification: Notification.Name = Notification.Name("SafeModeChanged")
 
     private let key = "SafeMode"
 
-    public required init(_ factory: Factory) {
-        self.factory = factory
+    @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
+    private var canUse: Bool {
+        let authorizer = featureAuthorizerProvider.authorizer(for: SafeModeFeature.self)
+        return authorizer().isAllowed
     }
 
     public var safeMode: Bool? {
         get {
-            // default to nil when the feature is not enabled
-            guard safeModeFeatureEnabled else {
-                return nil
-            }
-
-            guard let username = username else {
-                return nil
-            }
-
-            // true is the default value
-            guard isUserEligibleForSafeModeChange else {
-                return true
-            }
+            guard canUse else { return nil }
 
             @Dependency(\.defaultsProvider) var provider
-            guard let current = provider.getDefaults().value(forKey: key + username) as? Bool else {
+            guard let current = provider.getDefaults().userValue(forKey: key) as? Bool else {
                 return true // true is the default value
             }
 
             return current
         }
         set {
-            guard let username = username else {
-                return
-            }
-
             @Dependency(\.defaultsProvider) var provider
-            provider.getDefaults().setValue(newValue, forKey: key + username)
+            provider.getDefaults().setUserValue(newValue, forKey: key)
             executeOnUIThread {
                 NotificationCenter.default.post(name: type(of: self).safeModeNotification, object: newValue, userInfo: nil)
             }
         }
     }
 
-    public var isUserEligibleForSafeModeChange: Bool {
-        return currentUserTier >= CoreAppConstants.VpnTiers.basic
-    }
-
-    public var safeModeFeatureEnabled: Bool {
-        return propertiesManager.featureFlags.safeMode
-    }
-
     public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
-        if tier <= CoreAppConstants.VpnTiers.free {
-            safeMode = true
+        guard tier > CoreAppConstants.VpnTiers.free else {
+            safeMode = false
+            return
         }
+
+        safeMode = true
     }
+
+    public init() {}
+}
+
+public struct SafeModeFeature: PaidAppFeature {
+    public static let featureFlag: KeyPath<FeatureFlags, Bool>? = \.safeMode
 }

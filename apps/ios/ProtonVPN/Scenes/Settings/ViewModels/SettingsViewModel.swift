@@ -26,6 +26,7 @@ import ProtonCoreUIFoundations
 import VPNShared
 import LocalFeatureFlags
 import Strings
+import Dependencies
 
 final class SettingsViewModel {
     typealias Factory = AppStateManagerFactory &
@@ -68,7 +69,10 @@ final class SettingsViewModel {
     private let protocolService: ProtocolService
     
     var reloadNeeded: (() -> Void)?
-    
+
+    @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
+    lazy var netShieldTypeAuthorizer = featureAuthorizerProvider.authorizer(forSubFeatureOf: NetShieldType.self)
+
     private var vpnGateway: VpnGatewayProtocol
     private var profileManager: ProfileManager?
     private var serverManager: ServerManager?
@@ -284,35 +288,55 @@ final class SettingsViewModel {
 
     private var moderateNATSection: [TableViewCellModel] {
         return [
-            .toggle(title: Localizable.moderateNatTitle, on: { [unowned self] in self.natTypePropertyProvider.natType == .moderateNAT }, enabled: true, handler: { [weak self] (toggleOn, callback) in
-                guard let self = self, self.natTypePropertyProvider.isUserEligibleForNATTypeChange else {
-                    callback(!toggleOn)
-                    self?.alertService.push(alert: ModerateNATUpsellAlert())
-                    return
-                }
+            .toggle(
+                title: Localizable.moderateNatTitle,
+                on: { [unowned self] in self.natTypePropertyProvider.natType == .moderateNAT },
+                enabled: true,
+                handler: { [weak self] (toggleOn, callback) in
+                    let authorizer = self?.featureAuthorizerProvider.authorizer(for: NATFeature.self)
+                    let result = authorizer?()
+                    guard result?.isAllowed == true else {
+                        callback(!toggleOn)
+                        if result?.requiresUpgrade == true {
+                            self?.alertService.push(alert: ModerateNATUpsellAlert())
+                        }
+                        return
+                    }
 
-                let natType = toggleOn ? NATType.moderateNAT : NATType.strictNAT
+                    let natType = toggleOn ? NATType.moderateNAT : NATType.strictNAT
 
-                self.vpnStateConfiguration.getInfo { [weak self] info in
-                    switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
-                    case .withConnectionUpdate:
-                        self?.natTypePropertyProvider.natType = natType
-                        self?.vpnManager.set(natType: natType)
-                        callback(toggleOn)
-                    case .withReconnect:
-                        self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.moderateNatChangeTitle, confirmHandler: { [weak self] in
+                    self?.vpnStateConfiguration.getInfo { [weak self] info in
+                        switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
+                        case .withConnectionUpdate:
+                            self?.natTypePropertyProvider.natType = natType
+                            self?.vpnManager.set(natType: natType)
+                            callback(toggleOn)
+                        case .withReconnect:
+                            self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.moderateNatChangeTitle, confirmHandler: { [weak self] in
+                                self?.natTypePropertyProvider.natType = natType
+                                callback(toggleOn)
+                                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "natType"])
+                                self?.vpnGateway.retryConnection()
+                            }))
+                        case .immediately:
                             self?.natTypePropertyProvider.natType = natType
                             callback(toggleOn)
-                            log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "natType"])
-                            self?.vpnGateway.retryConnection()
-                        }))
-                    case .immediately:
-                        self?.natTypePropertyProvider.natType = natType
-                        callback(toggleOn)
+                        }
                     }
                 }
-            }),
-            .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.moderateNatExplanation.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.moderateNatExplanationLink, withUrl: CoreAppConstants.ProtonVpnLinks.moderateNAT))
+            ),
+            .attributedTooltip(
+                text: NSMutableAttributedString(
+                    attributedString: Localizable.moderateNatExplanation
+                        .attributed(
+                            withColor: UIColor.weakTextColor(),
+                            fontSize: 13
+                        )
+                ).add(
+                    link: Localizable.moderateNatExplanationLink,
+                    withUrl: CoreAppConstants.ProtonVpnLinks.moderateNAT
+                )
+            )
         ]
     }
 
@@ -322,9 +346,13 @@ final class SettingsViewModel {
         return [
             .toggle(title: Localizable.nonStandardPortsTitle, on: { [unowned self] in self.safeModePropertyProvider.safeMode == false }, enabled: true, handler: { [unowned self] (toggleOn, callback) in
 
-                guard self.safeModePropertyProvider.isUserEligibleForSafeModeChange else {
+                let authorizer = featureAuthorizerProvider.authorizer(for: SafeModeFeature.self)
+                let result = authorizer()
+                guard result.isAllowed else {
                     callback(!toggleOn)
-                    self.alertService.push(alert: SafeModeUpsellAlert())
+                    if result.requiresUpgrade {
+                        self.alertService.push(alert: SafeModeUpsellAlert())
+                    }
                     return
                 }
 
@@ -367,7 +395,8 @@ final class SettingsViewModel {
     private var advancedSection: TableViewSection {
         var cells: [TableViewCellModel] = alternativeRoutingSection
 
-        if safeModePropertyProvider.safeModeFeatureEnabled {
+        let authorizer = featureAuthorizerProvider.authorizer(for: SafeModeFeature.self)
+        if !authorizer().featureDisabled {
             cells.append(contentsOf: safeModeSection)
         }
 
@@ -630,8 +659,11 @@ final class SettingsViewModel {
     }
 
     private func changeNetShieldType(to type: NetShieldType, completion: @escaping (Bool) -> Void) {
-        if type.isUserTierTooLow(userTier) {
-            alertService.push(alert: NetShieldUpsellAlert())
+        let result = netShieldTypeAuthorizer(type)
+        guard result.isAllowed else {
+            if result.requiresUpgrade {
+                alertService.push(alert: NetShieldUpsellAlert())
+            }
             completion(false)
             return
         }

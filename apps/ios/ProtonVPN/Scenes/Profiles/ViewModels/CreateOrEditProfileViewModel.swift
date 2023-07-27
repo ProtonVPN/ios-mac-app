@@ -156,11 +156,11 @@ class CreateOrEditProfileViewModel: NSObject {
         let accessTier: Int
         switch serverOffering {
         case .fastest(let countryCode):
-            let countryModel = ServerUtility.country(in: grouping, countryCode: countryCode!)!
-            accessTier = countryModel.lowestTier
+            accessTier = grouping.first(where: { $0.serverOfferingId == countryCode })?.lowestTier ?? 1
+
         case .random(let countryCode):
-            let countryModel = ServerUtility.country(in: grouping, countryCode: countryCode!)!
-            accessTier = countryModel.lowestTier
+            accessTier = grouping.first(where: { $0.serverOfferingId == countryCode })?.lowestTier ?? 1
+
         case .custom(let serverWrapper):
             accessTier = serverWrapper.server.tier
         }
@@ -230,7 +230,7 @@ class CreateOrEditProfileViewModel: NSObject {
         }
         
         if let selectedCountry = selectedCountryGroup {
-            let countryAttibutedString = countryDescriptor(for: selectedCountry.0)
+            let countryAttibutedString = countryDescriptor(for: selectedCountry)
             return TableViewCellModel.pushKeyValueAttributed(key: Localizable.country, value: countryAttibutedString, handler: completionHandler)
         } else {
             return TableViewCellModel.pushKeyValue(key: Localizable.country, value: Localizable.selectCountry, handler: completionHandler)
@@ -267,12 +267,12 @@ class CreateOrEditProfileViewModel: NSObject {
         return TableViewCellModel.tooltip(text: Localizable.defaultProfileTooltip)
     }
     
-    private var selectedCountryGroup: CountryGroup? {
+    private var selectedCountryGroup: ServerGroup? {
         didSet {
             selectedServerOffering = nil
             saveButtonEnabled = true
 
-            guard let row = countries.firstIndex(where: { $0.0 == selectedCountryGroup?.0 }) else {
+            guard let row = countries.firstIndex(where: { $0 == selectedCountryGroup }) else {
                 return
             }
             countryGroup = countries[row]
@@ -294,7 +294,14 @@ class CreateOrEditProfileViewModel: NSObject {
         self.name = profile.name
         self.state = profile.serverType == .secureCore ? .secureCore : .standard
         
-        selectedCountryGroup = countries.filter { $0.0.countryCode == profile.serverOffering.countryCode }.first
+        selectedCountryGroup = countries.first(where: {
+            switch $0.kind {
+            case .country(let country):
+                return country.countryCode == profile.serverOffering.countryCode
+            case .gateway(let name):
+                return name == profile.serverOffering.countryCode
+            }
+        })
         selectedServerOffering = profile.serverOffering
 
         selectedProtocol = profile.connectionProtocol
@@ -324,11 +331,11 @@ class CreateOrEditProfileViewModel: NSObject {
         saveButtonEnabled = true
     }
     
-    private var countries: [CountryGroup] {
+    private var countries: [ServerGroup] {
         serverManager.grouping(for: state)
     }
 
-    var countryGroup: CountryGroup?
+    var countryGroup: ServerGroup?
 
     private var serversByTier: [(tier: Int, servers: [ServerModel])]? {
         // Get newest data, because servers list may have been updated since selected group was set
@@ -371,7 +378,7 @@ class CreateOrEditProfileViewModel: NSObject {
     
     private func pushCountrySelectionViewController() {
         let selectionViewController = profileService.makeSelectionViewController(dataSet: countrySelectionDataSet) { [weak self] selectedObject in
-            guard let selectedCountryGroup = selectedObject as? CountryGroup else {
+            guard let selectedCountryGroup = selectedObject as? ServerGroup else {
                 return
             }
             
@@ -439,18 +446,18 @@ extension CreateOrEditProfileViewModel {
     
     private var countrySelectionDataSet: SelectionDataSet {
         let rows: [SelectionRow] = countries.map({ countryGroup in
-            return SelectionRow(title: countryDescriptor(for: countryGroup.country), object: countryGroup)
+            return SelectionRow(title: countryDescriptor(for: countryGroup), object: countryGroup)
         })
                 
         let sections: [SelectionSection]
-        if rows.contains(where: { ($0.object as! CountryGroup).0.lowestTier > userTier }) {
+        if rows.contains(where: { ($0.object as! ServerGroup).lowestTier > userTier }) {
             sections = [
                 SelectionSection(
                     title: Localizable.countriesFree.uppercased(),
-                    cells: rows.filter { ($0.object as! CountryGroup).0.lowestTier <= userTier }),
+                    cells: rows.filter { ($0.object as! ServerGroup).lowestTier <= userTier }),
                 SelectionSection(
                     title: Localizable.countriesPremium.uppercased(),
-                    cells: rows.filter { ($0.object as! CountryGroup).0.lowestTier > userTier }),
+                    cells: rows.filter { ($0.object as! ServerGroup).lowestTier > userTier }),
             ]
         } else {
             sections = [SelectionSection(
@@ -465,7 +472,7 @@ extension CreateOrEditProfileViewModel {
             outer: for section in sections {
                 var rowIndex = 0
                 for row in section.cells {
-                    if let object = row.object as? CountryGroup, object == countryGroup {
+                    if let object = row.object as? ServerGroup, object == countryGroup {
                         selectedIndex = IndexPath(row: rowIndex, section: sectionIndex)
                         break outer
                     }
@@ -489,8 +496,8 @@ extension CreateOrEditProfileViewModel {
 
         var sections: [SelectionSection] = [
             SelectionSection(title: nil, cells: [
-                SelectionRow(title: defaultServerDescriptor(forIndex: 0), object: ServerOffering.fastest(countryGroup.country.countryCode)),
-                SelectionRow(title: defaultServerDescriptor(forIndex: 1), object: ServerOffering.random(countryGroup.country.countryCode)),
+                SelectionRow(title: defaultServerDescriptor(forIndex: 0), object: ServerOffering.fastest(countryGroup.serverOfferingId)),
+                SelectionRow(title: defaultServerDescriptor(forIndex: 1), object: ServerOffering.random(countryGroup.serverOfferingId)),
             ])
         ]
 

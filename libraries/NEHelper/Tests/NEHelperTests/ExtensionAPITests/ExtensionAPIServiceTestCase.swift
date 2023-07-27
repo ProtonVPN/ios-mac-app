@@ -88,6 +88,8 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
     }
 
     override func setUpWithError() throws {
+        AppContext.default = .wireGuardExtension
+
         mockDataTaskFactory = MockDataTaskFactory { session, request, completionHandler in
             switch request.url?.path {
             case "/vpn/v1/certificate":
@@ -113,7 +115,7 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
         sessionAuthCallback = failCallback
         serverStatusCallback = failCallback
 
-        keychain = MockAuthKeychain(context: .wireGuardExtension)
+        keychain = MockAuthKeychain()
         try! keychain.store(AuthCredentials(username: "johnny",
                                             accessToken: "12345",
                                             refreshToken: "54321",
@@ -125,7 +127,7 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
 
         apiService = ExtensionAPIService(timerFactory: timerFactory,
                                          keychain: keychain,
-                                         appInfo: AppInfoImplementation(context: .wireGuardExtension),
+                                         appInfo: AppInfoImplementation(),
                                          atlasSecret: "")
 
         apiService.delegate = self

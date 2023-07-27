@@ -335,7 +335,6 @@
 		EE35FC451F1CD70700CFE26F /* TabBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE35FC441F1CD70700CFE26F /* TabBarButton.swift */; };
 		EE3B38001F436E14008DF9E7 /* ProfilesTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3B37FE1F436E14008DF9E7 /* ProfilesTabBarViewController.swift */; };
 		EE3B38011F436E14008DF9E7 /* ProfilesTabBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE3B37FF1F436E14008DF9E7 /* ProfilesTabBar.xib */; };
-		EE3FDC2B1F44853300E5C1CE /* ServerUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3FDC2A1F44853300E5C1CE /* ServerUtility.swift */; };
 		EE46A08E1F2E1BD5008B435C /* StatusMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE46A08D1F2E1BD5008B435C /* StatusMenuViewModel.swift */; };
 		EE491A541F5B25FB0008C1DC /* HoverDetectionPopUpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE491A531F5B25FB0008C1DC /* HoverDetectionPopUpButton.swift */; };
 		EE4943EC1F29BE3600CF980F /* Login.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE4943EB1F29BE3600CF980F /* Login.xib */; };
@@ -870,7 +869,6 @@
 		EE35FC441F1CD70700CFE26F /* TabBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarButton.swift; sourceTree = "<group>"; };
 		EE3B37FE1F436E14008DF9E7 /* ProfilesTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilesTabBarViewController.swift; sourceTree = "<group>"; };
 		EE3B37FF1F436E14008DF9E7 /* ProfilesTabBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfilesTabBar.xib; sourceTree = "<group>"; };
-		EE3FDC2A1F44853300E5C1CE /* ServerUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerUtility.swift; sourceTree = "<group>"; };
 		EE46A08D1F2E1BD5008B435C /* StatusMenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusMenuViewModel.swift; sourceTree = "<group>"; };
 		EE491A531F5B25FB0008C1DC /* HoverDetectionPopUpButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoverDetectionPopUpButton.swift; sourceTree = "<group>"; };
 		EE4943EB1F29BE3600CF980F /* Login.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Login.xib; sourceTree = "<group>"; };
@@ -2194,7 +2192,6 @@
 			children = (
 				F36ECE522611E3390089B898 /* Models */,
 				F36ECE212611DEED0089B898 /* Presenters */,
-				F36ECE512611E3220089B898 /* Services */,
 				F36ECE1C2611DE9B0089B898 /* ViewControllers */,
 				F36ECE1D2611DEAC0089B898 /* ViewModels */,
 				F36ECE202611DEE00089B898 /* Views */,
@@ -2587,14 +2584,6 @@
 			children = (
 				E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */,
 				351BB7FC660BD3A61E44211E /* XPCConnectionsRepository.swift */,
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
-		F36ECE512611E3220089B898 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				EE3FDC2A1F44853300E5C1CE /* ServerUtility.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";

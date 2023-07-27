@@ -251,7 +251,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
                        authenticationStorage.cert?.validUntil.formatted())
         XCTAssertEqual(cert.refreshTime.formatted(),
                        authenticationStorage.cert?.refreshTime.formatted())
-        XCTAssert(features.equals(other: authenticationStorage.features, safeModeEnabled: true))
+        XCTAssert(features.equals(other: authenticationStorage.features, safeModeFeatureEnabled: true))
     }
 
     /// If the certificate is still valid but the app is requesting a certificate for use with features different

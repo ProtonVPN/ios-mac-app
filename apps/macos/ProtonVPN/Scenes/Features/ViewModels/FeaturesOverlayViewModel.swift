@@ -32,7 +32,7 @@ protocol FeaturesOverlayViewModelProtocol {
 struct PremiumFeaturesOverlayViewModel: FeaturesOverlayViewModelProtocol {
     let title: String = Localizable.featuresTitle
     var featureViewModels: [FeatureCellViewModel] {
-        [SmartRoutingFeature(), StreamingFeature(), P2PFeature(), TorFeature()]
+        [SmartRoutingFeatureCellViewModel(), StreamingFeatureCellViewModel(), P2PFeatureCellViewModel(), TorFeatureCellViewModel()]
     }
 }
 
@@ -47,6 +47,6 @@ struct FreeFeaturesOverlayViewModel: FeaturesOverlayViewModelProtocol {
 struct GatewayFeaturesOverlayViewModel: FeaturesOverlayViewModelProtocol {
     let title: String = Localizable.locationsGateways
     var featureViewModels: [FeatureCellViewModel] {
-        [GatewayFeature()]
+        [GatewayFeatureCellViewModel()]
     }
 }

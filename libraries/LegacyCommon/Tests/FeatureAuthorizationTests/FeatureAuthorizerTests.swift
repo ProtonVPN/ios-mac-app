@@ -23,7 +23,7 @@ import VPNShared
 
 // Feature with no sub features
 enum TestB2BFeature: AppFeature {
-    static func canUse(onPlan plan: AccountPlan, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    static func canUse(onPlan plan: AccountPlan, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         if plan == .vpnbiz2023 {
             return .success
         }
@@ -36,7 +36,7 @@ enum TestNetShieldType: ModularAppFeature {
     case level1
     case level2
 
-    func canUse(onPlan plan: AccountPlan, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    func canUse(onPlan plan: AccountPlan, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         guard featureFlags.netShield else {
             return .failure(.featureDisabled)
         }
@@ -56,7 +56,7 @@ class FeatureAuthorizerProviderTests: XCTestCase {
 
     func testAuthorizationOfFeatureWithNoSubFeatures() throws {
         let provider = withDependencies {
-            $0.planProvider = .constant(plan: .plus)
+            $0.credentialsProvider = .constant(credentials: .plan(.plus))
             $0.featureFlagProvider = .constant(flags: .allDisabled)
         } operation: {
             LiveFeatureAuthorizerProvider()
@@ -67,7 +67,7 @@ class FeatureAuthorizerProviderTests: XCTestCase {
         XCTAssertEqual(canUseB2B(), .failure(.requiresUpgrade))
 
         withDependencies {
-            $0.planProvider = .constant(plan: .enterprise2022)
+            $0.credentialsProvider = .constant(credentials: .plan(.vpnbiz2023))
         } operation: {
             XCTAssertEqual(canUseB2B(), .success)
         }
@@ -75,7 +75,7 @@ class FeatureAuthorizerProviderTests: XCTestCase {
 
     func testAuthorizationBasedOnFeatureFlags() throws {
         let provider = withDependencies {
-            $0.planProvider = .constant(plan: .plus)
+            $0.credentialsProvider = .constant(credentials: .plan(.plus))
             $0.featureFlagProvider = .constant(flags: .allDisabled)
         } operation: {
             LiveFeatureAuthorizerProvider()
@@ -94,7 +94,7 @@ class FeatureAuthorizerProviderTests: XCTestCase {
 
     func testSubFeatureAuthorization() throws {
         let provider = withDependencies {
-            $0.planProvider = .constant(plan: .free)
+            $0.credentialsProvider = .constant(credentials: .plan(.free))
             $0.featureFlagProvider = .constant(flags: .allEnabled)
         } operation: {
             LiveFeatureAuthorizerProvider()
@@ -108,7 +108,7 @@ class FeatureAuthorizerProviderTests: XCTestCase {
         XCTAssertEqual(authorizer.canUse(.level1), .failure(.requiresUpgrade))
 
         withDependencies {
-            $0.planProvider = .constant(plan: .plus)
+            $0.credentialsProvider = .constant(credentials: .plan(.plus))
         } operation: {
             XCTAssertEqual(authorizer.canUseAllSubFeatures, .success)
             XCTAssertEqual(authorizer.canUse(.level1), .success)

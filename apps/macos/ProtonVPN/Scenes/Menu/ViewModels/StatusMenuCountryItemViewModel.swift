@@ -23,30 +23,44 @@
 import Cocoa
 import LegacyCommon
 import Theme
+import ProtonCoreUIFoundations
 
 class StatusMenuCountryItemViewModel {
     
-    private let countryGroup: CountryGroup
+    private let serverGroup: ServerGroup
     private let type: ServerType
     private let vpnGateway: VpnGatewayProtocol
     
     var flag: NSImage {
-        return AppTheme.Icon.flag(countryCode: countryGroup.country.countryCode) ?? NSImage()
+        switch serverGroup.kind {
+        case .country(let country):
+            return AppTheme.Icon.flag(countryCode: country.countryCode) ?? NSImage()
+        case .gateway:
+            return IconProvider.servers
+        }
     }
     
     var description: NSAttributedString {
         return formDescription()
     }
     
-    init(countryGroup: CountryGroup, type: ServerType, vpnGateway: VpnGatewayProtocol) {
-        self.countryGroup = countryGroup
+    init(countryGroup: ServerGroup, type: ServerType, vpnGateway: VpnGatewayProtocol) {
+        self.serverGroup = countryGroup
         self.type = type
         self.vpnGateway = vpnGateway
     }
     
     func connect() {
-        log.debug("Connect requested by selecting a country in status menu. Will connect to country: \(countryGroup.country.countryCode) serverType: \(type)", category: .connectionConnect, event: .trigger)
-        vpnGateway.connectTo(country: countryGroup.country.countryCode, ofType: type, trigger: .country)
+        log.debug("Connect requested by selecting a country in status menu. Will connect to country: \(serverGroup) serverType: \(type)", category: .connectionConnect, event: .trigger)
+
+        switch serverGroup.kind {
+        case .country(let country):
+            vpnGateway.connectTo(country: country.countryCode, ofType: type, trigger: .country)
+
+        case .gateway:
+            log.error("Connect requested by selecting a gateway in status menu. This is not supported.", category: .connectionConnect, event: .trigger)
+            assertionFailure("Connect requested by selecting a gateway in status menu. This is not supported.")
+        }
     }
     
     // MARK: - Private
@@ -54,12 +68,20 @@ class StatusMenuCountryItemViewModel {
         let label: NSAttributedString
         let font = NSFont.themeFont(literalSize: 11)
 
+        let name: String
+        switch serverGroup.kind {
+        case .country(let country):
+            name = country.countryCode
+        case .gateway(let gatewayName):
+            name = gatewayName
+        }
+
         if type == .secureCore {
             let secureCoreIcon = AppTheme.Icon.chevronsRight.asAttachment(style: [.interactive, .strong], size: .square(16), centeredVerticallyForFont: font)
-            let code = (" " + countryGroup.country.countryCode).styled(font: font)
+            let code = (" " + name).styled(font: font)
             label = NSAttributedString.concatenate(secureCoreIcon, code)
         } else {
-            label = countryGroup.country.countryCode.styled(font: font)
+            label = name.styled(font: font)
         }
         return label
     }

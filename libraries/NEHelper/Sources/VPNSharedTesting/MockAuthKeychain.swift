@@ -24,7 +24,7 @@ public class MockAuthKeychain: AuthKeychainHandle {
 
     var credentialsWereStored: (() -> Void)?
 
-    public init(context: AppContext = .mainApp) {
+    public init(context: AppContext = .default) {
         self.defaultContext = context
     }
 

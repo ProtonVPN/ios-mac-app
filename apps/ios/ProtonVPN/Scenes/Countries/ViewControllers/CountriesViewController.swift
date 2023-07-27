@@ -125,7 +125,14 @@ final class CountriesViewController: UIViewController {
     }
     
     @objc private func displayServicesInfo() {
-        let viewModel = ServersFeaturesInformationViewModelImplementation()
+        let viewModel = ServersFeaturesInformationViewModelImplementation.servicesInfo
+        let vc = ServersFeaturesInformationVC(viewModel)
+        vc.modalPresentationStyle = .overFullScreen
+        present(vc, animated: true, completion: nil)
+    }
+
+    private func displayGatewayInfo() {
+        let viewModel = ServersFeaturesInformationViewModelImplementation.gatewaysInfo
         let vc = ServersFeaturesInformationVC(viewModel)
         vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: true, completion: nil)
@@ -161,12 +168,14 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
             return nil
         }
         
-        if let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ServersHeaderView.identifier) as? ServersHeaderView {
-            headerView.setName(name: viewModel.titleFor(section: section) ?? "")
-            return headerView
+        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ServersHeaderView.identifier) as? ServersHeaderView else {
+            return nil
         }
         
-        return nil
+        headerView.setName(name: viewModel.titleFor(section: section) ?? "")
+        headerView.callback = viewModel.isGateways(section: section) ? displayGatewayInfo : nil
+
+        return headerView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

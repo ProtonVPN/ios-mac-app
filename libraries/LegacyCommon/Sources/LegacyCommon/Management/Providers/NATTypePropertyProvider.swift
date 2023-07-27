@@ -20,12 +20,9 @@ import Foundation
 import Dependencies
 import VPNShared
 
-public protocol NATTypePropertyProvider: PaidFeaturePropertyProvider {
+public protocol NATTypePropertyProvider: FeaturePropertyProvider {
     /// Current NAT type
     var natType: NATType { get set }
-
-    /// If the user can change NAT Type
-    var isUserEligibleForNATTypeChange: Bool { get }
 
     static var natTypeNotification: Notification.Name { get }
 }
@@ -35,48 +32,36 @@ public protocol NATTypePropertyProviderFactory {
 }
 
 public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
-    public let factory: Factory
-
     public static let natTypeNotification: Notification.Name = Notification.Name("NATTypeChanged")
 
     private let key = "NATType"
 
-    public required init(_ factory: Factory) {
-        self.factory = factory
+    @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
+    private var canUse: Bool {
+        let authorizer = featureAuthorizerProvider.authorizer(for: NATFeature.self)
+        return authorizer().isAllowed
     }
 
     public var natType: NATType {
         get {
-            guard isUserEligibleForNATTypeChange else {
-                return .default
-            }
-
-            guard let username = username else {
+            guard canUse else {
                 return .default
             }
 
             @Dependency(\.defaultsProvider) var provider
-            if let value = provider.getDefaults().object(forKey: key + username) as? Int, let natType = NATType(rawValue: value) {
+            if let value = provider.getDefaults().userObject(forKey: key) as? Int, let natType = NATType(rawValue: value) {
                 return natType
             }
 
             return .default
         }
         set {
-            guard let username = username else {
-                return
-            }
-
             @Dependency(\.defaultsProvider) var provider
-            provider.getDefaults().setValue(newValue.rawValue, forKey: key + username)
+            provider.getDefaults().setUserValue(newValue.rawValue, forKey: key)
             executeOnUIThread {
                 NotificationCenter.default.post(name: type(of: self).natTypeNotification, object: newValue, userInfo: nil)
             }
         }
-    }
-
-    public var isUserEligibleForNATTypeChange: Bool {
-        return currentUserTier >= CoreAppConstants.VpnTiers.basic
     }
 
     public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
@@ -84,4 +69,9 @@ public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
             natType = .default
         }
     }
+
+    public init() {}
+}
+
+public struct NATFeature: PaidAppFeature {
 }

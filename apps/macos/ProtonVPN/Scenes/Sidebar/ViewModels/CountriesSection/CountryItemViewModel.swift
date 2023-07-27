@@ -28,8 +28,9 @@ import Strings
 
 class CountryItemViewModel {
     /// Contains information about the region such as the country code, the tier the
-    /// country is available for, and what features are available.
-    let countryModel: CountryModel
+    /// country is available for, and what features are available OR a Gateway instead of
+    /// a country.
+    private let serversGroup: ServerGroup
     /// The grouping of servers for the given country.
     /// - Note: It's likely you want to access `supportedServerModels` instead.
     private let serverModels: [ServerModel]
@@ -49,8 +50,8 @@ class CountryItemViewModel {
     private let countriesSectionViewModel: CountriesSectionViewModel
         
     var isSmartAvailable: Bool { supportedServerModels.allSatisfy({ $0.isVirtual }) }
-    var isTorAvailable: Bool { countryModel.feature.contains(.tor) }
-    var isP2PAvailable: Bool { countryModel.feature.contains(.p2p) }
+    var isTorAvailable: Bool { serversGroup.feature.contains(.tor) }
+    var isP2PAvailable: Bool { serversGroup.feature.contains(.p2p) }
     var isStreamingAvailable: Bool {
         !propertiesManager.secureCoreToggle && propertiesManager.streamingServices[countryCode] != nil
     }
@@ -59,9 +60,24 @@ class CountryItemViewModel {
     let isServerUnderMaintenance: Bool
     private(set) var isOpened: Bool
     
-    var countryCode: String { countryModel.countryCode }
+    var countryCode: String {
+        switch serversGroup.kind {
+        case .country(let countryModel):
+            return countryModel.countryCode
+        case .gateway:
+            return ""
+        }
+    }
     var secureCoreEnabled: Bool { propertiesManager.secureCoreToggle }
-    var countryName: String { LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable }
+
+    var countryName: String {
+        switch serversGroup.kind {
+        case .country(let countryModel):
+            return LocalizationUtility.default.countryName(forCode: countryModel.countryCode) ?? Localizable.unavailable
+        case .gateway(let name):
+            return name
+        }
+    }
 
     @ConcurrentlyReadable private var supportedServerModels = [ServerModel]()
     
@@ -83,14 +99,14 @@ class CountryItemViewModel {
         guard let connectedServer = appStateManager.activeConnection()?.server else { return false }
         return !isTierTooLow && vpnGateway.connection == .connected
             && connectedServer.isSecureCore == false
-            && connectedServer.countryCode == countryModel.countryCode
+            && connectedServer.countryCode == countryCode
             && supportedServerModels.contains(where: { $0 == connectedServer })
     }
     
     let displaySeparator: Bool
     
     init(id: String,
-         country: CountryGroup,
+         serversGroup: ServerGroup,
          vpnGateway: VpnGatewayProtocol,
          appStateManager: AppStateManager,
          countriesSectionViewModel: CountriesSectionViewModel,
@@ -104,13 +120,13 @@ class CountryItemViewModel {
     ) {
 
         self.id = id
-        self.countryModel = country.0
-        self.serverModels = country.1
+        self.serversGroup = serversGroup
+        self.serverModels = serversGroup.servers
         self.vpnGateway = vpnGateway
         self.propertiesManager = propertiesManager
         self.countriesSectionViewModel = countriesSectionViewModel
         
-        self.isTierTooLow = userTier < country.0.lowestTier
+        self.isTierTooLow = userTier < serversGroup.lowestTier
         self.isOpened = isOpened
         self.isServerUnderMaintenance = false
         self.displaySeparator = displaySeparator

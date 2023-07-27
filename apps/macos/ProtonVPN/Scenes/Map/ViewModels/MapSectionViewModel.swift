@@ -181,13 +181,17 @@ class MapSectionViewModel {
     }
     
     private func standardAnnotations(_ userTier: Int) -> [CountryAnnotationViewModel] {
-        return serverManager.grouping(for: .standard).map {
-            let annotation = StandardCountryAnnotationViewModel(appStateManager: appStateManager,
-                                                                vpnGateway: vpnGateway,
-                                                                country: $0.0,
-                                                                userTier: userTier,
-                                                                coordinate: $0.0.location)
-            return annotation
+        return serverManager.grouping(for: .standard).compactMap {
+            guard case ServerGroup.Kind.country(let countryModel) = $0.kind else {
+                return nil
+            }
+            return StandardCountryAnnotationViewModel(
+                appStateManager: appStateManager,
+                vpnGateway: vpnGateway,
+                country: countryModel,
+                userTier: userTier,
+                coordinate: countryModel.location
+            )
         }
     }
     
@@ -216,13 +220,18 @@ class MapSectionViewModel {
     }
     
     private func secureCoreAnnotations(_ userTier: Int) -> [CountryAnnotationViewModel] {
-        let exitCountries = serverManager.grouping(for: .secureCore).map {
-            let annotation = SCExitCountryAnnotationViewModel(appStateManager: appStateManager,
-                                                                                  vpnGateway: vpnGateway,
-                                                                                     country: $0.0,
-                                                                                     servers: $0.1,
-                                                                                    userTier: userTier,
-                                                                                  coordinate: $0.0.location)
+        let exitCountries = serverManager.grouping(for: .secureCore).compactMap {
+            guard case ServerGroup.Kind.country(let countryModel) = $0.kind else {
+                return nil
+            }
+            let annotation = SCExitCountryAnnotationViewModel(
+                appStateManager: appStateManager,
+                vpnGateway: vpnGateway,
+                country: countryModel,
+                servers: $0.servers,
+                userTier: userTier,
+                coordinate: countryModel.location
+            )
             annotation.externalViewStateChange = { [weak self] selection in
                 guard let self = self else {
                     return
@@ -235,7 +244,7 @@ class MapSectionViewModel {
         
         var scEntryCountries: [String: [String]] = [:]
         for group in serverManager.grouping(for: .secureCore) {
-            for server in group.1 where server.isSecureCore {
+            for server in group.servers where server.isSecureCore {
                 if scEntryCountries[server.entryCountryCode] != nil {
                     scEntryCountries[server.entryCountryCode]!.append(server.exitCountryCode)
                 } else {

@@ -24,24 +24,14 @@ import VPNShared
 public final class NATTypePropertyProviderMock: NATTypePropertyProvider {
     public static var natTypeNotification: Notification.Name = NSNotification.Name("")
 
-    public var factory: Factory
-
-    public required init(_ factory: Factory) {
-        self.factory = factory
-    }
-
-    public convenience init() {
-        self.init(PaidFeaturePropertyProviderFactoryMock())
-    }
-
     public var natType: NATType = .default
-
-    public var isUserEligibleForNATTypeChange = true
 
     public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
         if tier <= CoreAppConstants.VpnTiers.free {
             natType = .default
         }
     }
+
+    public init() {}
 }
 #endif

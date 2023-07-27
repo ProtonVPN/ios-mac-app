@@ -34,6 +34,7 @@ enum TableViewCellModel {
                             plan: NSAttributedString,
                             handler: () -> Void)
     case imageSubtitle(title: String, subtitle: String, image: UIImage, handler: () -> Void)
+    case imageSubtitleImage(title: String, subtitle: String, leadingImage: UIImage, trailingImage: UIImage, handler: () -> Void)
     case titleTextField(title: String, textFieldText: String, textFieldPlaceholder: String, textFieldDelegate: UITextFieldDelegate)
     case staticKeyValue(key: String, value: String)
     case staticPushKeyValue(key: String, value: String, handler: (() -> Void))
@@ -102,6 +103,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         tableView.register(AccountDetailsTableViewCell.nib, forCellReuseIdentifier: AccountDetailsTableViewCell.identifier)
         tableView.register(ButtonWithLoadingTableViewCell.nib, forCellReuseIdentifier: ButtonWithLoadingTableViewCell.identifier)
         tableView.register(ImageSubtitleTableViewCell.nib, forCellReuseIdentifier: ImageSubtitleTableViewCell.identifier)
+        tableView.register(ImageSubtitleImageTableViewCell.nib, forCellReuseIdentifier: ImageSubtitleImageTableViewCell.identifier)
         tableView.register(NetShieldStatsTableViewCell.nib, forCellReuseIdentifier: NetShieldStatsTableViewCell.identifier)
     }
     
@@ -189,7 +191,20 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.titleLabel.text = title
             cell.subtitleLabel.text = subtitle
             cell.imageView?.image = image
-            cell.completionHandler = handler
+            cell.selectionHandler = handler
+
+            return cell
+
+        case .imageSubtitleImage(title: let title, subtitle: let subtitle, leadingImage: let leadingImage, trailingImage: let trailingImage, handler: let handler):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ImageSubtitleImageTableViewCell.identifier) as? ImageSubtitleImageTableViewCell else {
+                return UITableViewCell()
+            }
+
+            cell.titleLabel.text = title
+            cell.subtitleLabel.text = subtitle
+            cell.leadingImageView?.image = leadingImage
+            cell.trailingImageView?.image = trailingImage
+            cell.selectionHandler = handler
 
             return cell
         case .titleTextField(title: let title, textFieldText: let textFieldText, textFieldPlaceholder: let textFieldPlaceholder, textFieldDelegate: let delegate):
@@ -355,6 +370,8 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             return -1
         case .imageSubtitle:
             return -1
+        case .imageSubtitleImage:
+            return -1
         case .netShieldStats:
             return UITableView.automaticDimension
         default:
@@ -390,6 +407,11 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             onSelectionChange?()
         case .imageSubtitle:
             guard let cell = cell as? ImageSubtitleTableViewCell else { return }
+
+            cell.select()
+            onSelectionChange?()
+        case .imageSubtitleImage:
+            guard let cell = cell as? ImageSubtitleImageTableViewCell else { return }
 
             cell.select()
             onSelectionChange?()

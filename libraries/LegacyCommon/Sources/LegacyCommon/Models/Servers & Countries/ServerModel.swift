@@ -41,6 +41,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
     public var location: ServerLocation
     public let hostCountry: String?
     public let translatedCity: String?
+    public let gatewayName: String?
     
     override public var description: String {
         return
@@ -58,7 +59,8 @@ public class ServerModel: NSObject, NSCoding, Codable {
             "IPs: \(ips)\n" +
             "Location: \(location)\n" +
             "HostCountry: \(String(describing: hostCountry))\n" +
-            "TranslatedCity: \(String(describing: translatedCity))\n"
+            "TranslatedCity: \(String(describing: translatedCity))\n" +
+            "gatewayName: \(String(describing: gatewayName))\n"
     }
     
     public var logDescription: String {
@@ -155,7 +157,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         }
     }
 
-    public init(id: String, name: String, domain: String, load: Int, entryCountryCode: String, exitCountryCode: String, tier: Int, feature: ServerFeature, city: String?, ips: [ServerIp], score: Double, status: Int, location: ServerLocation, hostCountry: String?, translatedCity: String?) {
+    public init(id: String, name: String, domain: String, load: Int, entryCountryCode: String, exitCountryCode: String, tier: Int, feature: ServerFeature, city: String?, ips: [ServerIp], score: Double, status: Int, location: ServerLocation, hostCountry: String?, translatedCity: String?, gatewayName: String?) {
         self.id = id
         self.name = name
         self.domain = domain
@@ -171,6 +173,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         self.location = location
         self.hostCountry = hostCountry
         self.translatedCity = translatedCity
+        self.gatewayName = gatewayName
         super.init()
     }
     
@@ -190,6 +193,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         hostCountry = dic.string("HostCountry")
         translatedCity = dic["Translations"]?["City"] as? String
         ips = try dic.jsonArrayOrThrow(key: "Servers").map { try ServerIp(dic: $0) }
+        gatewayName = dic.string("GatewayName")
         super.init()
     }
 
@@ -210,16 +214,19 @@ public class ServerModel: NSObject, NSCoding, Codable {
             "Servers": ips.map { $0.asDict },
         ]
 
-        if let city = city {
+        if let city {
             result["City"] = city
         }
-        if let hostCountry = hostCountry {
+        if let hostCountry {
             result["HostCountry"] = hostCountry
         }
-        if let translatedCity = translatedCity {
+        if let translatedCity {
             result["Translations"] = [
                 "City": translatedCity
             ]
+        }
+        if let gatewayName {
+            result["GatewayName"] = gatewayName
         }
 
         return result
@@ -276,6 +283,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         case city = "city"
         case hostCountry = "hostCountry"
         case translatedCity = "translatedCity"
+        case gatewayName = "gatewayName"
     }
     
     public required convenience init(coder aDecoder: NSCoder) {
@@ -306,7 +314,9 @@ public class ServerModel: NSObject, NSCoding, Codable {
                   status: aDecoder.decodeInteger(forKey: CoderKey.status.rawValue),
                   location: location,
                   hostCountry: aDecoder.decodeObject(forKey: CoderKey.hostCountry.rawValue) as? String,
-                  translatedCity: aDecoder.decodeObject(forKey: CoderKey.translatedCity.rawValue) as? String)
+                  translatedCity: aDecoder.decodeObject(forKey: CoderKey.translatedCity.rawValue) as? String,
+                  gatewayName: aDecoder.decodeObject(forKey: CoderKey.gatewayName.rawValue) as? String
+        )
     }
     
     public func encode(with aCoder: NSCoder) {
@@ -331,6 +341,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         aCoder.encode(hostCountry, forKey: CoderKey.hostCountry.rawValue)
 
         aCoder.encode(translatedCity, forKey: CoderKey.translatedCity.rawValue)
+        aCoder.encode(gatewayName, forKey: CoderKey.gatewayName.rawValue)
     }
     
     // MARK: - Codable
@@ -360,7 +371,9 @@ public class ServerModel: NSObject, NSCoding, Codable {
                   status: try container.decode(Int.self, forKey: CoderKey.status),
                   location: location,
                   hostCountry: try container.decodeIfPresent(String.self, forKey: CoderKey.hostCountry),
-                  translatedCity: try container.decodeIfPresent(String.self, forKey: CoderKey.translatedCity))
+                  translatedCity: try container.decodeIfPresent(String.self, forKey: CoderKey.translatedCity),
+                  gatewayName: try container.decodeIfPresent(String.self, forKey: CoderKey.gatewayName)
+        )
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -387,6 +400,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         try container.encode(hostCountry, forKey: .hostCountry)
 
         try container.encode(translatedCity, forKey: .translatedCity)
+        try container.encode(gatewayName, forKey: .gatewayName)
     }
     
     // MARK: - Static functions

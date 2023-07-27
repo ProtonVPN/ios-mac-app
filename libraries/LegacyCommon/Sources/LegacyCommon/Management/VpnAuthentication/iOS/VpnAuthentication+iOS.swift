@@ -18,6 +18,7 @@
 
 import Foundation
 import VPNShared
+import Dependencies
 
 public final class VpnAuthenticationRemoteClient: VpnAuthentication {
     private var connectionProvider: ProviderMessageSender?
@@ -53,8 +54,16 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
     }
 
     public func loadAuthenticationData(features: VPNConnectionFeatures? = nil, completion: @escaping AuthenticationDataCompletion) {
+        @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
+        let safeModeAuthorizer = featureAuthorizerProvider.authorizer(for: SafeModeFeature.self)
+
         // keys are generated, certificate is stored, use it
-        if let keys = authenticationStorage.getStoredKeys(), let existingCertificate = authenticationStorage.getStoredCertificate(), features == nil || features?.equals(other: authenticationStorage.getStoredCertificateFeatures(), safeModeEnabled: safeModePropertyProvider.safeModeFeatureEnabled) == true {
+        if let keys = authenticationStorage.getStoredKeys(),
+           let existingCertificate = authenticationStorage.getStoredCertificate(),
+           features == nil || features?.equals(
+               other: authenticationStorage.getStoredCertificateFeatures(),
+               safeModeFeatureEnabled: safeModeAuthorizer().isAllowed
+           ) == true {
             log.debug("Loading stored vpn authentication data", category: .userCert)
             if existingCertificate.isExpired {
                 log.info("Stored vpn authentication certificate is expired (\(existingCertificate.validUntil)), the local agent will connect but certificate refresh will be needed", category: .userCert, event: .newCertificate)

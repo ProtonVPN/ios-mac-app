@@ -20,15 +20,26 @@ import Foundation
 import Dependencies
 
 public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
-    @Dependency(\.planProvider) var planProvider
+    @Dependency(\.credentialsProvider) var credentialsProvider
     @Dependency(\.featureFlagProvider) var featureFlagProvider
+
+    private var accountDetails: (plan: AccountPlan, tier: Int) {
+        let credentials = credentialsProvider.credentials
+        return (
+            credentials?.accountPlan ?? .free,
+            credentials?.maxTier ?? CoreAppConstants.VpnTiers.free
+        )
+    }
 
     public func authorizer<Feature: AppFeature>(
         for feature: Feature.Type
     ) -> () -> FeatureAuthorizationResult {
         return {
-            Feature.canUse(
-                onPlan: planProvider.plan,
+            let (plan, tier) = accountDetails
+
+            return Feature.canUse(
+                onPlan: plan,
+                userTier: tier,
                 featureFlags: featureFlagProvider.getFeatureFlags()
             )
         }
@@ -38,8 +49,11 @@ public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
         forSubFeatureOf feature: Feature.Type
     ) -> (Feature) -> FeatureAuthorizationResult {
         return { feature in
-            feature.canUse(
-                onPlan: planProvider.plan,
+            let (plan, tier) = accountDetails
+
+            return feature.canUse(
+                onPlan: plan,
+                userTier: tier,
                 featureFlags: featureFlagProvider.getFeatureFlags()
             )
         }
@@ -49,8 +63,11 @@ public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
         for feature: Feature.Type
     ) -> Authorizer<Feature> {
         return Authorizer(canUse: { feature in
-            feature.canUse(
-                onPlan: planProvider.plan,
+            let (plan, tier) = accountDetails
+
+            return feature.canUse(
+                onPlan: plan,
+                userTier: tier,
                 featureFlags: featureFlagProvider.getFeatureFlags()
             )
         })
