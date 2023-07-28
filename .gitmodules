@@ -1,0 +1,14 @@
+[submodule "external/protoncore"]
+	path = external/protoncore
+	url = ../../shared/protoncore
+[submodule "tunnelkit"]
+	path = external/tunnelkit
+	url = ../tunnelkit
+	branch = jkb/rebased
+[submodule "external/apple-fusion"]
+	path = external/apple-fusion
+	url = ../../../tpe/apple-fusion
+[submodule "external/TrustKit"]
+	path = external/TrustKit
+	url = https://github.com/ProtonMail/TrustKit
+	branch = release/1.0.3

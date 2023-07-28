@@ -1,1 +1,0 @@
-../../../TrustKit/TrustKit/public/TSKPinningValidatorCallback.h
