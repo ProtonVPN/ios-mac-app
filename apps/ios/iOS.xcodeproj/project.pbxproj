@@ -2509,6 +2509,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				4C13B9822A742387008A04C2 /* PBXTargetDependency */,
 				D573CFD0264A6A1F0033CE19 /* PBXTargetDependency */,
 				E14414FE22EF38ED00894DD0 /* PBXTargetDependency */,
 				D55455562280280B006574F9 /* PBXTargetDependency */,
@@ -2862,6 +2863,7 @@
 				4C7D40722A60297400ACDBED /* XCRemoteSwiftPackageReference "Reachability" */,
 				E5DEF05D2A7399EC006FC9DC /* XCRemoteSwiftPackageReference "DictionaryCoder" */,
 				4C8C31612A73BB39006AD628 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+				4C13B9802A742376008A04C2 /* XCRemoteSwiftPackageReference "SwiftLint" */,
 			);
 			productRefGroup = 791DE5DA208DDA3000A29EA5 /* Products */;
 			projectDirPath = "";
@@ -3649,6 +3651,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		4C13B9822A742387008A04C2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 4C13B9812A742387008A04C2 /* SwiftLintPlugin */;
+		};
 		791DE5F1208DDA3200A29EA5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 791DE5D8208DDA3000A29EA5 /* ProtonVPN */;
@@ -4689,6 +4695,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		4C13B9802A742376008A04C2 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/SwiftLint";
+			requirement = {
+				kind = exactVersion;
+				version = 0.52.4;
+			};
+		};
 		4C7D404C2A60244C00ACDBED /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
@@ -4833,6 +4847,10 @@
 		4C05E56B2A7169A2009102EB /* LegacyCommon */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LegacyCommon;
+		};
+		4C13B9812A742387008A04C2 /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "plugin:SwiftLintPlugin";
 		};
 		4C506BD62A716BE6005895E6 /* ProtonCorePaymentsUI */ = {
 			isa = XCSwiftPackageProductDependency;
