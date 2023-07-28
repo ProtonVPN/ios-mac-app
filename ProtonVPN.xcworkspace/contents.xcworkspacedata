@@ -6,6 +6,22 @@
       name = "Libraries">
       <Group
          location = "container:"
+         name = "External">
+         <FileRef
+            location = "group:external/protoncore">
+         </FileRef>
+         <FileRef
+            location = "group:external/TrustKit">
+         </FileRef>
+         <FileRef
+            location = "group:external/apple-fusion">
+         </FileRef>
+         <FileRef
+            location = "group:external/tunnelkit">
+         </FileRef>
+      </Group>
+      <Group
+         location = "container:"
          name = "Core">
          <FileRef
             location = "group:libraries/Ergonomics">
@@ -94,9 +110,6 @@
    </Group>
    <FileRef
       location = "group:libraries/vpncore/Core.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Pods/Pods.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:apps/ios/iOS.xcodeproj">
