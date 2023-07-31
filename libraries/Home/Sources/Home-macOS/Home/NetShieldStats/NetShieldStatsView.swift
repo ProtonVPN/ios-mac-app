@@ -22,20 +22,20 @@ import Theme
 
 public struct NetShieldStatsView: View {
 
-    @ObservedObject public var viewModel: NetShieldModel
+    @ObservedObject public var viewModel = NetShieldModel(trackers: 0, ads: 0, data: 0, enabled: false)
 
     public var body: some View {
         HStack(spacing: 0) {
-            StatsView(model: viewModel.ads)
-            StatsView(model: viewModel.trackers)
-            StatsView(model: viewModel.data)
+            StatsView(model: $viewModel.ads)
+            StatsView(model: $viewModel.trackers)
+            StatsView(model: $viewModel.data)
         }
         .padding(8)
         .background(RoundedRectangle(cornerRadius: .themeRadius8)
             .fill(Color(.background, .weak)))
     }
-    public init(viewModel: NetShieldModel) {
-        self.viewModel = viewModel
+    public init() {
+
     }
 }
 
@@ -45,7 +45,7 @@ struct StatsView: View {
     var statsViewHeight: CGFloat = 56
     var statsViewWidth: CGFloat = 80
 
-    @State var model: NetShieldModel.Stat
+    @Binding var model: NetShieldModel.Stat
 
     public var body: some View {
         VStack(alignment: .center) {
@@ -89,9 +89,13 @@ struct StatsView: View {
 }
 
 struct NetShieldStatsView_Previews: PreviewProvider {
+    static var view = NetShieldStatsView()
     static var previews: some View {
-        NetShieldStatsView(viewModel: .random)
+        view
             .background(Color(.background))
             .previewLayout(.sizeThatFits)
+            .onAppear {
+                view.viewModel = .random
+            }
     }
 }

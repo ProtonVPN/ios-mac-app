@@ -76,7 +76,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
     
     let presenter: QuickSettingDropdownPresenterProtocol
 
-    var netShieldStatsView: NetShieldStatsView?
+    var netShieldStatsView = NSHostingView(rootView: NetShieldStatsView())
     
     init(_ presenter: QuickSettingDropdownPresenterProtocol) {
         self.presenter = presenter
@@ -89,22 +89,12 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
     }
 
     func setupNetShieldStatsContainer(presenter: NetshieldDropdownPresenter) {
-        let hostingView = statsView(viewModel: presenter.netShieldViewModel)
-        netShieldStatsContainer.addSubview(hostingView)
-        netShieldStatsContainer.topAnchor.constraint(equalTo: hostingView.topAnchor).isActive = true
-        netShieldStatsContainer.bottomAnchor.constraint(equalTo: hostingView.bottomAnchor).isActive = true
-        netShieldStatsContainer.leadingAnchor.constraint(equalTo: hostingView.leadingAnchor).isActive = true
-        netShieldStatsContainer.trailingAnchor.constraint(equalTo: hostingView.trailingAnchor).isActive = true
-    }
-
-    func statsView(viewModel: NetShieldModel) -> NSHostingView<NetShieldStatsView> {
-        let netShieldStatsView = NetShieldStatsView(viewModel: viewModel)
-        self.netShieldStatsView = netShieldStatsView
-        let view = NSHostingView(rootView: netShieldStatsView)
-        view.translatesAutoresizingMaskIntoConstraints = false
-
-        updateNetshieldStats()
-        return view
+        netShieldStatsView.translatesAutoresizingMaskIntoConstraints = false
+        netShieldStatsContainer.addSubview(netShieldStatsView)
+        netShieldStatsContainer.topAnchor.constraint(equalTo: netShieldStatsView.topAnchor).isActive = true
+        netShieldStatsContainer.bottomAnchor.constraint(equalTo: netShieldStatsView.bottomAnchor).isActive = true
+        netShieldStatsContainer.leadingAnchor.constraint(equalTo: netShieldStatsView.leadingAnchor).isActive = true
+        netShieldStatsContainer.trailingAnchor.constraint(equalTo: netShieldStatsView.trailingAnchor).isActive = true
     }
         
     override func viewDidLoad() {
@@ -147,7 +137,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
 
     func updateNetshieldStats() {
         if let model = (presenter as? NetshieldDropdownPresenter)?.netShieldViewModel {
-            netShieldStatsView?.viewModel = model
+            netShieldStatsView.rootView.viewModel = model
         }
     }
 
