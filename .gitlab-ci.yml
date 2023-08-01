@@ -9,6 +9,7 @@ stages:
   - distribute
 
 variables:
+  GIT_SUBMODULE_STRATEGY: recursive
   LC_ALL: "en_US.UTF-8"
   LANG: "en_US.UTF-8"
   CI_KEYCHAIN_NAME: $CI_JOB_ID

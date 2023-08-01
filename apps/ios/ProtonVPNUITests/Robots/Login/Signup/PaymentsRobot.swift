@@ -17,14 +17,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import fusion
-import ProtonCoreTestingToolkit
+import ProtonCoreTestingToolkitUITestsPaymentsUI
 
 fileprivate let titleId = "PaymentsUIViewController.tableHeaderLabel"
 fileprivate let freePlanTitle = "Free.planNameLabel"
 
 class PaymentsRobot: CoreElements {
     
-    let corePaymentUIRobot = ProtonCoreTestingToolkit.PaymentsUIRobot()
+    let corePaymentUIRobot = PaymentsUIRobot()
     
     public let verify = Verify()
     

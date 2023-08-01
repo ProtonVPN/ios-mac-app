@@ -22,10 +22,10 @@ let package = Package(
         ),
         .testTarget(
             name: "LocalFeatureFlagsTests",
-            dependencies: ["LocalFeatureFlags"],
-            resources: [
-                .copy("Resources")
-            ]
+            dependencies: ["LocalFeatureFlags"]
+//            resources: [
+//                .copy("LocalFeatureFlags/Resources")
+//            ]
         ),
         .plugin(
             name: "FeatureFlagger",

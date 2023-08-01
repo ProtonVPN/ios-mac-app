@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import ProtonCoreTestingToolkit
+import ProtonCoreTestingToolkitUITestsLogin
 
 class LoginTests: ProtonVPNUITests {
 

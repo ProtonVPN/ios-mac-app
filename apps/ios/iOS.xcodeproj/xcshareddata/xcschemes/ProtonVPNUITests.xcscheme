@@ -33,9 +33,6 @@
                   Identifier = "LoginExtAccountTests">
                </Test>
                <Test
-                  Identifier = "LoginTests">
-               </Test>
-               <Test
                   Identifier = "PlanTests">
                </Test>
                <Test

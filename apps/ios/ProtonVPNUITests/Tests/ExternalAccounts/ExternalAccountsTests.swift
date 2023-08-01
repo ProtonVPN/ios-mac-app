@@ -18,7 +18,7 @@
 
 import XCTest
 import fusion
-import ProtonCoreTestingToolkit
+import ProtonCoreTestingToolkitUITestsLogin
 import ProtonCoreQuarkCommands
 import ProtonCoreCoreTranslation
 import ProtonCoreEnvironment
@@ -63,7 +63,7 @@ final class ExternalAccountsTests: ProtonVPNUITests {
             .signInWithAccount(
                 userName: randomUsername,
                 password: randomPassword,
-                loginRobot: ProtonCoreTestingToolkit.LoginRobot(),
+                loginRobot: ProtonCoreTestingToolkitUITestsLogin.LoginRobot(),
                 retRobot: MainRobot.self
             )
         
@@ -85,7 +85,7 @@ final class ExternalAccountsTests: ProtonVPNUITests {
             .signInWithAccount(
                 userName: randomEmail,
                 password: randomPassword,
-                loginRobot: ProtonCoreTestingToolkit.LoginRobot(),
+                loginRobot: ProtonCoreTestingToolkitUITestsLogin.LoginRobot(),
                 retRobot: MainRobot.self
             )
         
@@ -107,7 +107,7 @@ final class ExternalAccountsTests: ProtonVPNUITests {
             .signInWithAccount(
                 userName: randomUsername,
                 password: randomPassword,
-                loginRobot: ProtonCoreTestingToolkit.LoginRobot(),
+                loginRobot: ProtonCoreTestingToolkitUITestsLogin.LoginRobot(),
                 retRobot: MainRobot.self
             )
 
@@ -132,7 +132,7 @@ final class ExternalAccountsTests: ProtonVPNUITests {
 
         SignupExternalAccountsCapability()
             .signUpWithInternalAccount(
-                signupRobot: ProtonCoreTestingToolkit.SignupRobot().otherAccountButtonTap(),
+                signupRobot: ProtonCoreTestingToolkitUITestsLogin.SignupRobot().otherAccountButtonTap(),
                 username: randomUsername,
                 password: randomPassword,
                 userEmail: randomEmail,
@@ -161,7 +161,7 @@ final class ExternalAccountsTests: ProtonVPNUITests {
 
         SignupExternalAccountsCapability()
             .signUpWithExternalAccount(
-                signupRobot: ProtonCoreTestingToolkit.SignupRobot(),
+                signupRobot: ProtonCoreTestingToolkitUITestsLogin.SignupRobot(),
                 userEmail: randomEmail,
                 password: randomPassword,
                 verificationCode: "666666",
@@ -182,7 +182,7 @@ final class ExternalAccountsTests: ProtonVPNUITests {
         _ = MainRobot()
             .showSignup()
 
-        ProtonCoreTestingToolkit.SignupRobot()
+        ProtonCoreTestingToolkitUITestsLogin.SignupRobot()
             .otherAccountButtonTap()
             .verify.domainsButtonIsShown()
     }
@@ -190,21 +190,21 @@ final class ExternalAccountsTests: ProtonVPNUITests {
 
 private let domainsButtonId = "SignupViewController.domainsButton"
 
-extension ProtonCoreTestingToolkit.SignupRobot.Verify {
+extension ProtonCoreTestingToolkitUITestsLogin.SignupRobot.Verify {
     @discardableResult
-    func domainsButtonIsNotShown() -> ProtonCoreTestingToolkit.SignupRobot {
+    func domainsButtonIsNotShown() -> ProtonCoreTestingToolkitUITestsLogin.SignupRobot {
         button(domainsButtonId).checkDoesNotExist()
-        return ProtonCoreTestingToolkit.SignupRobot()
+        return ProtonCoreTestingToolkitUITestsLogin.SignupRobot()
     }
     
     @discardableResult
-    func otherAccountExtButtonIsNotShown() -> ProtonCoreTestingToolkit.SignupRobot {
+    func otherAccountExtButtonIsNotShown() -> ProtonCoreTestingToolkitUITestsLogin.SignupRobot {
         button(CoreString._su_email_address_button).wait().checkDoesNotExist()
-        return ProtonCoreTestingToolkit.SignupRobot()
+        return ProtonCoreTestingToolkitUITestsLogin.SignupRobot()
     }
 }
 
-extension ProtonCoreTestingToolkit.RecoveryRobot {
+extension ProtonCoreTestingToolkitUITestsLogin.RecoveryRobot {
     public func nextButtonTap<T: CoreElements>(robot: T.Type) -> T {
         _ = nextButtonTap()
         return T()
