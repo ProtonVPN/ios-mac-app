@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import fusion
+import Foundation
 
 fileprivate let summaryTitle = "Welcome to Proton VPN"
 fileprivate let summaryDescription = "Learn how to get the most out of Proton VPN in just a few seconds"

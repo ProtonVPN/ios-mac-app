@@ -18,7 +18,7 @@
 
 import Foundation
 import XCTest
-import ProtonCoreTestingToolkit
+import ProtonCoreTestingToolkitUITestsLogin
 import ProtonCoreQuarkCommands
 import ProtonCoreDoh
 

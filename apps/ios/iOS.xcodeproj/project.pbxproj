@@ -476,6 +476,10 @@
 		E1FB5482230C2DD000153F4D /* ColorPickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FB547F230C2DD000153F4D /* ColorPickerTableViewCell.swift */; };
 		E1FB5483230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
 		E1FB5484230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
+		E531EB3C2A78EE9D00E56D7D /* fusion in Frameworks */ = {isa = PBXBuildFile; productRef = E531EB3B2A78EE9D00E56D7D /* fusion */; };
+		E531EB3E2A78EF6300E56D7D /* ProtonCoreTestingToolkitUITestsLogin in Frameworks */ = {isa = PBXBuildFile; productRef = E531EB3D2A78EF6300E56D7D /* ProtonCoreTestingToolkitUITestsLogin */; };
+		E531EB402A78F74900E56D7D /* ProtonCoreTestingToolkitUnitTestsLoginUI in Frameworks */ = {isa = PBXBuildFile; productRef = E531EB3F2A78F74900E56D7D /* ProtonCoreTestingToolkitUnitTestsLoginUI */; };
+		E531EB422A78F98D00E56D7D /* ProtonCoreTestingToolkitUITestsPaymentsUI in Frameworks */ = {isa = PBXBuildFile; productRef = E531EB412A78F98D00E56D7D /* ProtonCoreTestingToolkitUITestsPaymentsUI */; };
 		E532A8A7292520FC00096D2D /* ServersInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59C7A922923B1650034E56F /* ServersInformationViewController.swift */; };
 		E532A8AD29252FFD00096D2D /* InformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */; };
 		E532A8B12925663B00096D2D /* InformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */; };
@@ -1158,6 +1162,10 @@
 			files = (
 				E582CC122A1372B500C91B64 /* Theme in Frameworks */,
 				4C9754F42A6017260035A61B /* SwiftOTP in Frameworks */,
+				E531EB3C2A78EE9D00E56D7D /* fusion in Frameworks */,
+				E531EB402A78F74900E56D7D /* ProtonCoreTestingToolkitUnitTestsLoginUI in Frameworks */,
+				E531EB3E2A78EF6300E56D7D /* ProtonCoreTestingToolkitUITestsLogin in Frameworks */,
+				E531EB422A78F98D00E56D7D /* ProtonCoreTestingToolkitUITestsPaymentsUI in Frameworks */,
 				4C74D3292A0B9D67004F8528 /* PMLogger in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2632,6 +2640,10 @@
 				4C74D3282A0B9D67004F8528 /* PMLogger */,
 				E582CC112A1372B500C91B64 /* Theme */,
 				4C9754F32A6017260035A61B /* SwiftOTP */,
+				E531EB3B2A78EE9D00E56D7D /* fusion */,
+				E531EB3D2A78EF6300E56D7D /* ProtonCoreTestingToolkitUITestsLogin */,
+				E531EB3F2A78F74900E56D7D /* ProtonCoreTestingToolkitUnitTestsLoginUI */,
+				E531EB412A78F98D00E56D7D /* ProtonCoreTestingToolkitUITestsPaymentsUI */,
 			);
 			productName = ProtonVPNUITests;
 			productReference = D5811D7D229BBD870087B63A /* ProtonVPNUITests.xctest */;
@@ -5090,6 +5102,22 @@
 		E063C2AAE493E6D9567B52F4 /* Theme */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Theme;
+		};
+		E531EB3B2A78EE9D00E56D7D /* fusion */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = fusion;
+		};
+		E531EB3D2A78EF6300E56D7D /* ProtonCoreTestingToolkitUITestsLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCoreTestingToolkitUITestsLogin;
+		};
+		E531EB3F2A78F74900E56D7D /* ProtonCoreTestingToolkitUnitTestsLoginUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCoreTestingToolkitUnitTestsLoginUI;
+		};
+		E531EB412A78F98D00E56D7D /* ProtonCoreTestingToolkitUITestsPaymentsUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCoreTestingToolkitUITestsPaymentsUI;
 		};
 		E53D64C42811698F0060C463 /* Modals-iOS */ = {
 			isa = XCSwiftPackageProductDependency;
