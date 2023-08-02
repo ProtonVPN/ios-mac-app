@@ -20,15 +20,6 @@
         }
       },
       {
-        "package": "CollectionConcurrencyKit",
-        "repositoryURL": "https://github.com/JohnSundell/CollectionConcurrencyKit.git",
-        "state": {
-          "branch": null,
-          "revision": "b4f23e24b5a1bff301efc5e70871083ca029ff95",
-          "version": "0.2.0"
-        }
-      },
-      {
         "package": "combine-schedulers",
         "repositoryURL": "https://github.com/pointfreeco/combine-schedulers",
         "state": {
@@ -164,15 +155,6 @@
         }
       },
       {
-        "package": "SourceKitten",
-        "repositoryURL": "https://github.com/jpsim/SourceKitten.git",
-        "state": {
-          "branch": null,
-          "revision": "b6dc09ee51dfb0c66e042d2328c017483a1a5d56",
-          "version": "0.34.1"
-        }
-      },
-      {
         "package": "Sparkle",
         "repositoryURL": "https://github.com/sparkle-project/Sparkle",
         "state": {
@@ -299,24 +281,6 @@
         }
       },
       {
-        "package": "swift-syntax",
-        "repositoryURL": "https://github.com/apple/swift-syntax.git",
-        "state": {
-          "branch": null,
-          "revision": "59ed009d2c4a5a6b78f75a25679b6417ac040dcf",
-          "version": "509.0.0-swift-DEVELOPMENT-SNAPSHOT-2023-07-04-a"
-        }
-      },
-      {
-        "package": "SwiftLint",
-        "repositoryURL": "https://github.com/realm/swiftlint",
-        "state": {
-          "branch": null,
-          "revision": "9eaecbedce469a51bd8487effbd4ab46ec8384ae",
-          "version": "0.52.4"
-        }
-      },
-      {
         "package": "SwiftOTP",
         "repositoryURL": "https://github.com/lachlanbell/SwiftOTP.git",
         "state": {
@@ -344,24 +308,6 @@
         }
       },
       {
-        "package": "SwiftyTextTable",
-        "repositoryURL": "https://github.com/scottrhoyt/SwiftyTextTable.git",
-        "state": {
-          "branch": null,
-          "revision": "c6df6cf533d120716bff38f8ff9885e1ce2a4ac3",
-          "version": "0.9.0"
-        }
-      },
-      {
-        "package": "SWXMLHash",
-        "repositoryURL": "https://github.com/drmohundro/SWXMLHash.git",
-        "state": {
-          "branch": null,
-          "revision": "a853604c9e9a83ad9954c7e3d2a565273982471f",
-          "version": "7.0.2"
-        }
-      },
-      {
         "package": "WireGuardKit",
         "repositoryURL": "https://github.com/ProtonVPN/wireguard-apple.git",
         "state": {
@@ -377,15 +323,6 @@
           "branch": null,
           "revision": "4af50b38daf0037cfbab15514a241224c3f62f98",
           "version": "0.8.5"
-        }
-      },
-      {
-        "package": "Yams",
-        "repositoryURL": "https://github.com/jpsim/Yams.git",
-        "state": {
-          "branch": null,
-          "revision": "0d9ee7ea8c4ebd4a489ad7a73d5c6cad55d6fed3",
-          "version": "5.0.6"
         }
       }
     ]

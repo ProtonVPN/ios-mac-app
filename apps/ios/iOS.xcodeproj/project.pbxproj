@@ -2875,7 +2875,6 @@
 				4C7D40722A60297400ACDBED /* XCRemoteSwiftPackageReference "Reachability" */,
 				E5DEF05D2A7399EC006FC9DC /* XCRemoteSwiftPackageReference "DictionaryCoder" */,
 				4C8C31612A73BB39006AD628 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
-				4C13B9802A742376008A04C2 /* XCRemoteSwiftPackageReference "SwiftLint" */,
 			);
 			productRefGroup = 791DE5DA208DDA3000A29EA5 /* Products */;
 			projectDirPath = "";
@@ -4707,14 +4706,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4C13B9802A742376008A04C2 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/SwiftLint";
-			requirement = {
-				kind = exactVersion;
-				version = 0.52.4;
-			};
-		};
 		4C7D404C2A60244C00ACDBED /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
