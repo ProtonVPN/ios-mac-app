@@ -37,22 +37,22 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView autoresizesSubviews="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c22-O7-iKe" userLabel="Sidebar View">
-            <rect key="frame" x="0.0" y="0.0" width="514" height="507"/>
+            <rect key="frame" x="0.0" y="0.0" width="701" height="507"/>
             <subviews>
                 <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="0.0" verticalLineScroll="19" verticalPageScroll="0.0" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ybt-K1-fU1" customClass="BlockableScrollView" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="514" height="391"/>
+                    <rect key="frame" x="0.0" y="0.0" width="701" height="391"/>
                     <clipView key="contentView" autoresizesSubviews="NO" drawsBackground="NO" copiesOnScroll="NO" id="i8K-V1-h4p">
-                        <rect key="frame" x="0.0" y="0.0" width="514" height="391"/>
+                        <rect key="frame" x="0.0" y="0.0" width="701" height="391"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView autoresizesSubviews="NO" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" tableStyle="plain" selectionHighlightStyle="none" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="cyQ-Pz-NoP">
-                                <rect key="frame" x="0.0" y="0.0" width="515" height="391"/>
+                                <rect key="frame" x="0.0" y="0.0" width="701" height="391"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn width="512" minWidth="40" maxWidth="1000" id="iP6-d7-OA7">
+                                    <tableColumn width="698" minWidth="40" maxWidth="1000" id="iP6-d7-OA7">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -65,11 +65,11 @@
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
                                             <tableCellView id="3UN-bf-YeF">
-                                                <rect key="frame" x="1" y="1" width="512" height="17"/>
+                                                <rect key="frame" x="1" y="1" width="698" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vcu-Fa-qNu">
-                                                        <rect key="frame" x="0.0" y="0.0" width="512" height="17"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="698" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="O64-lx-a5C">
                                                             <font key="font" metaFont="system"/>
@@ -99,15 +99,15 @@
                     </scroller>
                 </scrollView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="KXN-5h-obj" customClass="ShadowView" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="345" width="514" height="46"/>
+                    <rect key="frame" x="0.0" y="345" width="701" height="46"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="46" id="KQ4-vZ-C8w"/>
                     </constraints>
                 </customView>
                 <box hidden="YES" boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="j34-Mf-pR3">
-                    <rect key="frame" x="0.0" y="391" width="514" height="1"/>
+                    <rect key="frame" x="0.0" y="391" width="701" height="1"/>
                     <view key="contentView" id="OBg-2b-oIS">
-                        <rect key="frame" x="0.0" y="0.0" width="514" height="1"/>
+                        <rect key="frame" x="0.0" y="0.0" width="701" height="1"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
                     <constraints>
@@ -115,16 +115,16 @@
                     </constraints>
                 </box>
                 <stackView distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="62O-3H-Vui" userLabel="Quick Settings" customClass="QuickSettingsStack" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="14" y="445" width="486" height="54"/>
+                    <rect key="frame" x="14" y="445" width="673" height="54"/>
                     <subviews>
                         <box boxType="custom" borderType="none" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="ouP-mR-rPp" userLabel="Secure Core">
-                            <rect key="frame" x="0.0" y="0.0" width="162" height="54"/>
+                            <rect key="frame" x="0.0" y="0.0" width="224" height="54"/>
                             <view key="contentView" id="vbU-RU-3aG">
-                                <rect key="frame" x="0.0" y="0.0" width="162" height="54"/>
+                                <rect key="frame" x="0.0" y="0.0" width="224" height="54"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="JrW-be-2tC" userLabel="Dropdown" customClass="QuickSettingButton" customModule="ProtonVPN" customModuleProvider="target">
-                                        <rect key="frame" x="8" y="12" width="146" height="38"/>
+                                        <rect key="frame" x="8" y="12" width="208" height="38"/>
                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="buttonCell:Ahl-H6-ZXc:image" imagePosition="only" alignment="center" inset="2" id="Ahl-H6-ZXc">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -143,13 +143,13 @@
                             <color key="fillColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </box>
                         <box boxType="custom" borderType="none" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="AVF-NI-b29" userLabel="Netshield">
-                            <rect key="frame" x="162" y="0.0" width="162" height="54"/>
+                            <rect key="frame" x="224" y="0.0" width="225" height="54"/>
                             <view key="contentView" id="Uag-7s-udL">
-                                <rect key="frame" x="0.0" y="0.0" width="162" height="54"/>
+                                <rect key="frame" x="0.0" y="0.0" width="225" height="54"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="COp-Cy-iCa" userLabel="Dropdown" customClass="QuickSettingButton" customModule="ProtonVPN" customModuleProvider="target">
-                                        <rect key="frame" x="8" y="12" width="146" height="38"/>
+                                        <rect key="frame" x="8" y="12" width="209" height="38"/>
                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="buttonCell:fea-44-fJR:image" imagePosition="only" alignment="center" inset="2" id="fea-44-fJR">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -157,7 +157,7 @@
                                         <color key="contentTintColor" white="1" alpha="0.97997359149999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </button>
                                     <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3XG-4r-1Ju">
-                                        <rect key="frame" x="83" y="32" width="20" height="14"/>
+                                        <rect key="frame" x="115" y="32" width="20" height="14"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="939-Qe-cvS"/>
                                             <constraint firstAttribute="height" constant="14" id="qs5-Ea-M4k"/>
@@ -182,13 +182,13 @@
                             <color key="fillColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </box>
                         <box boxType="custom" borderType="none" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="Jel-VH-8db" userLabel="KillSwitch">
-                            <rect key="frame" x="324" y="0.0" width="162" height="54"/>
+                            <rect key="frame" x="449" y="0.0" width="224" height="54"/>
                             <view key="contentView" id="Jr2-NA-2AB">
-                                <rect key="frame" x="0.0" y="0.0" width="162" height="54"/>
+                                <rect key="frame" x="0.0" y="0.0" width="224" height="54"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="1zu-fE-s41" userLabel="Dropdown" customClass="QuickSettingButton" customModule="ProtonVPN" customModuleProvider="target">
-                                        <rect key="frame" x="8" y="12" width="146" height="38"/>
+                                        <rect key="frame" x="8" y="12" width="208" height="38"/>
                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="buttonCell:kiH-9O-UGS:image" imagePosition="only" alignment="center" inset="2" id="kiH-9O-UGS">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -227,13 +227,13 @@
                     </customSpacing>
                 </stackView>
                 <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="qf9-9Y-IsT" userLabel="Search bar">
-                    <rect key="frame" x="20" y="399" width="474" height="46"/>
+                    <rect key="frame" x="20" y="399" width="661" height="46"/>
                     <view key="contentView" id="5ic-qN-lH5">
-                        <rect key="frame" x="1" y="1" width="472" height="44"/>
+                        <rect key="frame" x="1" y="1" width="659" height="44"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SQG-nw-URT" customClass="TextFieldWithFocus" customModule="ProtonVPN" customModuleProvider="target">
-                                <rect key="frame" x="30" y="14" width="404" height="16"/>
+                                <rect key="frame" x="30" y="14" width="591" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" id="Rqr-HB-5ac">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -249,7 +249,7 @@
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="IMZ-od-CNp"/>
                             </imageView>
                             <button hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ngW-Fz-8Yk" userLabel="Clear Button">
-                                <rect key="frame" x="440" y="14" width="16" height="16"/>
+                                <rect key="frame" x="627" y="14" width="16" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="ngW-Fz-8Yk" secondAttribute="height" multiplier="1:1" id="lLO-cs-npb"/>
                                     <constraint firstAttribute="height" constant="16" id="xSq-wz-coZ"/>
@@ -277,25 +277,25 @@
                     <color key="borderColor" red="0.24705882352941178" green="0.24705882352941178" blue="0.27843137254901962" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                 </box>
                 <box hidden="YES" boxType="custom" borderType="none" cornerRadius="4" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="xcp-Uy-Ngx" userLabel="SecureCoreContainer">
-                    <rect key="frame" x="0.0" y="0.0" width="514" height="459"/>
+                    <rect key="frame" x="0.0" y="0.0" width="701" height="459"/>
                     <view key="contentView" id="vBk-kT-dS0">
-                        <rect key="frame" x="0.0" y="0.0" width="514" height="459"/>
+                        <rect key="frame" x="0.0" y="0.0" width="701" height="459"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
                     <color key="fillColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </box>
                 <box hidden="YES" boxType="custom" borderType="none" cornerRadius="4" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="wdu-7r-MZX" userLabel="NetshieldContainer">
-                    <rect key="frame" x="0.0" y="0.0" width="514" height="459"/>
+                    <rect key="frame" x="0.0" y="0.0" width="701" height="459"/>
                     <view key="contentView" id="uJo-HA-Gbx">
-                        <rect key="frame" x="0.0" y="0.0" width="514" height="459"/>
+                        <rect key="frame" x="0.0" y="0.0" width="701" height="459"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
                     <color key="fillColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </box>
                 <box hidden="YES" boxType="custom" borderType="none" cornerRadius="4" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="ly1-uI-H8k" userLabel="KillSwitchContainer">
-                    <rect key="frame" x="0.0" y="0.0" width="514" height="459"/>
+                    <rect key="frame" x="0.0" y="0.0" width="701" height="459"/>
                     <view key="contentView" id="64N-EU-ex4">
-                        <rect key="frame" x="0.0" y="0.0" width="514" height="459"/>
+                        <rect key="frame" x="0.0" y="0.0" width="701" height="459"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
                     <color key="fillColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -332,7 +332,7 @@
                 <constraint firstItem="ly1-uI-H8k" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="x9R-ee-9ah"/>
                 <constraint firstAttribute="bottom" secondItem="wdu-7r-MZX" secondAttribute="bottom" id="yWp-km-cGm"/>
             </constraints>
-            <point key="canvasLocation" x="-4317" y="325.5"/>
+            <point key="canvasLocation" x="-4223.5" y="325.5"/>
         </customView>
     </objects>
     <resources>
