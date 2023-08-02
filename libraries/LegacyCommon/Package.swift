@@ -50,7 +50,7 @@ let package = Package(
         .github("pointfreeco", repo: "swift-dependencies", .upToNextMajor(from: "0.1.1")),
         .github("pointfreeco", repo: "swiftui-navigation", exact: "0.8.0"),
         .github("SDWebImage", repo: "SDWebImage", .upTo("5.16.0")),
-        .github("realm", repo: "SwiftLint", exact: "0.52.4"),
+//        .github("realm", repo: "SwiftLint", exact: "0.52.4"),
     ],
     targets: [
         .target(
@@ -99,7 +99,7 @@ let package = Package(
                 .product(name: "TunnelKitOpenVPN", package: "TunnelKit"),
             ],
             plugins: [
-                .plugin(name: "SwiftLintPlugin", package: "SwiftLint")
+//                .plugin(name: "SwiftLintPlugin", package: "SwiftLint")
             ]
         ),
         .target(
@@ -119,6 +119,10 @@ let package = Package(
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .core(module: "TestingToolkitUnitTestsCore")
+            ],
+            resources: [
+                .copy("Resources/test_log_1.log"),
+                .copy("Resources/test_log_2.log")
             ]
         ),
     ]

@@ -1,8 +1,8 @@
-# Jobs for linting/testing/etc. vpncore library.
+# Jobs for linting/testing/etc. LegacyCommon library.
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
 
 
-test:unit:vpncore:ios:
+test:unit:LegacyCommon:ios:
   extends:
     - .mr_job_template
     - .ios_job_template
@@ -13,8 +13,8 @@ test:unit:vpncore:ios:
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_core_test
-    - scripts/print-coverage.sh fastlane/test_output/vpncore-ios.xcresult LegacyCommon.framework
-    - xcrun xccov view --report --json fastlane/test_output/vpncore-ios.xcresult > coverage.json
+    - scripts/print-coverage.sh fastlane/test_output/LegacyCommon-ios.xcresult LegacyCommon.framework
+    - xcrun xccov view --report --json fastlane/test_output/LegacyCommon-ios.xcresult > coverage.json
     - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
   after_script:
     - xcrun simctl delete $CI_JOB_ID
@@ -26,7 +26,7 @@ test:unit:vpncore:ios:
       junit:
         - fastlane/test_output/report.junit
 
-test:unit:vpncore:macos:
+test:unit:LegacyCommon:macos:
   extends: .mac_job_template
   stage: test
   needs:
@@ -36,8 +36,8 @@ test:unit:vpncore:macos:
     - macOS_vpn
   script:
     - fastlane macos_core_test
-    - scripts/print-coverage.sh fastlane/test_output/vpncore-macos.xcresult LegacyCommon.framework
-    - xcrun xccov view --report --json fastlane/test_output/vpncore-macos.xcresult > coverage.json
+    - scripts/print-coverage.sh fastlane/test_output/LegacyCommon-macos.xcresult LegacyCommon.framework
+    - xcrun xccov view --report --json fastlane/test_output/LegacyCommon-macos.xcresult > coverage.json
     - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
   artifacts:
     reports:

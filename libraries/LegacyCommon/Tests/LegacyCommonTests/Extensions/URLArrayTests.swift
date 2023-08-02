@@ -28,9 +28,8 @@ class URLArrayTests: XCTestCase {
     func testReturnsOnlyReachableFiles() {
         
         // Existing files
-        let bundle = Bundle(for: type(of: self))
-        let testFile1 = bundle.url(forResource: "test_log_1", withExtension: "log")!
-        let testFile2 = bundle.url(forResource: "test_log_2", withExtension: "log")!
+        let testFile1 = Bundle.module.url(forResource: "test_log_1", withExtension: "log")!
+        let testFile2 = Bundle.module.url(forResource: "test_log_2", withExtension: "log")!
         
         // File that doesn't exist
         let logsDirectory = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!.appendingPathComponent("Logs", isDirectory: true)

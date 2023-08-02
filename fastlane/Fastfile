@@ -23,7 +23,7 @@ ENV["FASTLANE_XCODE_LIST_TIMEOUT"] = "180"
 desc "Run all Core iOS tests"
 lane :ios_core_test do
   simulator_name = ENV["CI_JOB_ID"]
-  scan(scheme: "vpncore-ios",
+  scan(scheme: "LegacyCommon",
     result_bundle: true,
     derived_data_path: $derived_data_path,
     skip_slack: true,
@@ -32,8 +32,8 @@ lane :ios_core_test do
 end
 
 desc "Run all Core macOS tests"
-lane :macos_core_test do  
-  scan(scheme: "vpncore-macos", 
+lane :LegacyCommon do
+  scan(scheme: "LegacyCommon",
     result_bundle: true,
     derived_data_path: $derived_data_path,
     skip_slack: true,
