@@ -71,7 +71,6 @@
 		4C8C31602A73BB11006AD628 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8C315F2A73BB11006AD628 /* SDWebImage */; };
 		4C8C31632A73BB39006AD628 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8C31622A73BB39006AD628 /* Sentry */; };
 		4C8C31652A73BB6E006AD628 /* LegacyCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8C31642A73BB6E006AD628 /* LegacyCommon */; };
-		4C8C31672A73BB6E006AD628 /* LegacyCommonTestSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8C31662A73BB6E006AD628 /* LegacyCommonTestSupport */; };
 		4C9754F42A6017260035A61B /* SwiftOTP in Frameworks */ = {isa = PBXBuildFile; productRef = 4C9754F32A6017260035A61B /* SwiftOTP */; };
 		4C9754FA2A6018040035A61B /* GSMessages in Frameworks */ = {isa = PBXBuildFile; productRef = 4C9754F92A6018040035A61B /* GSMessages */; };
 		4C9754FC2A6018110035A61B /* GSMessages in Frameworks */ = {isa = PBXBuildFile; productRef = 4C9754FB2A6018110035A61B /* GSMessages */; };
@@ -1128,7 +1127,6 @@
 			files = (
 				ADBA84DA2A589F27001EF3F5 /* Theme in Frameworks */,
 				4CD1107F2A2A09410062AE13 /* Logging in Frameworks */,
-				4C8C31672A73BB6E006AD628 /* LegacyCommonTestSupport in Frameworks */,
 				4C8C315A2A73BAE2006AD628 /* TrustKit in Frameworks */,
 				D563A7582A5D355F00908254 /* Strings in Frameworks */,
 				4C8C315E2A73BAF5006AD628 /* TunnelKitOpenVPN in Frameworks */,
@@ -2590,7 +2588,6 @@
 				4C8C315F2A73BB11006AD628 /* SDWebImage */,
 				4C8C31622A73BB39006AD628 /* Sentry */,
 				4C8C31642A73BB6E006AD628 /* LegacyCommon */,
-				4C8C31662A73BB6E006AD628 /* LegacyCommonTestSupport */,
 			);
 			productName = ProtonVPNTests;
 			productReference = 791DE5EF208DDA3200A29EA5 /* ProtonVPNTests.xctest */;
@@ -4966,10 +4963,6 @@
 		4C8C31642A73BB6E006AD628 /* LegacyCommon */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LegacyCommon;
-		};
-		4C8C31662A73BB6E006AD628 /* LegacyCommonTestSupport */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = LegacyCommonTestSupport;
 		};
 		4C9754F32A6017260035A61B /* SwiftOTP */ = {
 			isa = XCSwiftPackageProductDependency;

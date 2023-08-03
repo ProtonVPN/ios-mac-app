@@ -18,7 +18,6 @@
 
 import XCTest
 import LegacyCommon
-import LegacyCommonTestSupport
 
 import VPNShared
 import Dependencies

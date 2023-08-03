@@ -23,7 +23,6 @@ import Dependencies
 import TimerMock
 import LocalFeatureFlags
 @testable import LegacyCommon
-import LegacyCommonTestSupport
 
 final class LocalAgentTests: XCTestCase {
 

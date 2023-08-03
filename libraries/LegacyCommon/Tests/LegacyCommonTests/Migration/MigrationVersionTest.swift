@@ -22,7 +22,6 @@
 
 import XCTest
 @testable import LegacyCommon
-import LegacyCommonTestSupport
 
 class MigrationVersionTest: XCTestCase {
         

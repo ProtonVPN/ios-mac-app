@@ -20,7 +20,6 @@ import XCTest
 import VPNShared
 import VPNSharedTesting
 @testable import LegacyCommon
-import LegacyCommonTestSupport
 
 final class NATTypePropertyProviderImplementationTests: XCTestCase {
     static let username = "user1"

@@ -15,10 +15,15 @@ let package = Package(
             name: "LegacyCommon",
             targets: ["LegacyCommon"]
         ),
+        /*
+         Future: When SPM decides to be a mature software product, move the Mocks here.
+         macOS unit tests refused to link this target, even though every other target
+         was fine with it:
         .library(
             name: "LegacyCommonTestSupport",
             targets: ["LegacyCommonTestSupport"]
         ),
+        */
     ],
     dependencies: [
         // External packages regularly upstreamed by our project (imported as submodules)
@@ -65,6 +70,10 @@ let package = Package(
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
 
+                // Todo: move these to LegacyCommonTestSupport, if we ever can
+                .product(name: "VPNSharedTesting", package: "NEHelper"),
+                .product(name: "TimerMock", package: "Timer"),
+
                 // Core code
                 .core(module: "AccountDeletion"),
                 .core(module: "APIClient"),
@@ -102,19 +111,31 @@ let package = Package(
 //                .plugin(name: "SwiftLintPlugin", package: "SwiftLint")
             ]
         ),
+        /*
         .target(
             name: "LegacyCommonTestSupport",
             dependencies: [
                 "LegacyCommon",
+                "Strings",
+                "Home",
+                .product(name: "TimerMock", package: "Timer"),
+                .product(name: "VPNAppCore", package: "NEHelper"),
+                .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
                 .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
+
+                .core(module: "Authentication"),
+                .core(module: "DataModel"),
+                .core(module: "Foundations"),
+                .core(module: "Networking"),
+                .core(module: "Services"),
             ]
         ),
+        */
         .testTarget(
             name: "LegacyCommonTests",
             dependencies: [
                 "LegacyCommon",
-                .target(name: "LegacyCommonTestSupport"),
                 .product(name: "TimerMock", package: "Timer"),
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),

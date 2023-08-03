@@ -18,7 +18,6 @@
 
 import XCTest
 @testable import LegacyCommon
-@testable import LegacyCommonTestSupport
 
 final class ServerItemViewModelCoreTests: XCTestCase {
 

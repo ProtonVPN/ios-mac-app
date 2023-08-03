@@ -21,7 +21,6 @@ import XCTest
 import NetworkExtension
 import VPNShared
 @testable import LegacyCommon
-import LegacyCommonTestSupport
 
 /// - Note: To be implemented with remainder of protocol overrides feature.
 class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {

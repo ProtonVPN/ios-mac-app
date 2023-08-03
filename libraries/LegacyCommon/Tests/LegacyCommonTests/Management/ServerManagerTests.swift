@@ -21,7 +21,6 @@
 //
 
 import LegacyCommon
-import LegacyCommonTestSupport
 import XCTest
 import VPNShared
 

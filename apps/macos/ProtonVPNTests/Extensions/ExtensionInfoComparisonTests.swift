@@ -8,7 +8,6 @@
 
 import XCTest
 import LegacyCommon
-import LegacyCommonTestSupport
 
 class ExtensionInfoComparisonTests: XCTestCase {
 

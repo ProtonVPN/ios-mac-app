@@ -23,7 +23,6 @@ import GoLibs
 import VPNShared
 
 @testable import LegacyCommon
-import LegacyCommonTestSupport
 
 /// This class has no test cases, it's meant to be subclassed as it contains all of the
 /// base dependencies required for fully mocking business logic & connection flows.

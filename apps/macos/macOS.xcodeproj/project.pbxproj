@@ -86,7 +86,6 @@
 		4CD1F7952A72DE0400E8AB01 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7942A72DE0400E8AB01 /* ProtonCoreCryptoVPNPatchedGoImplementation */; };
 		4CD1F7972A72DF2700E8AB01 /* DictionaryCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7962A72DF2700E8AB01 /* DictionaryCoder */; };
 		4CD1F7982A72E2CD00E8AB01 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98CFCE1F14E096000D6688 /* AppConstants.swift */; };
-		4CD1F79C2A72E57A00E8AB01 /* LegacyCommonTestSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F79B2A72E57A00E8AB01 /* LegacyCommonTestSupport */; };
 		4CD1F79E2A72E57F00E8AB01 /* LegacyCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F79D2A72E57F00E8AB01 /* LegacyCommon */; };
 		4CD1F7A02A72E57F00E8AB01 /* LegacyCommonTestSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F79F2A72E57F00E8AB01 /* LegacyCommonTestSupport */; };
 		4CE2F42227ECA7B000B21A00 /* GIFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2F42127ECA7B000B21A00 /* GIFView.swift */; };
@@ -164,7 +163,6 @@
 		E1346F7D203B16B800F511FD /* LoadingAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1346F7C203B16B800F511FD /* LoadingAnimationView.swift */; };
 		E13BDF492062912300CF5383 /* TransparentBackedScroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13BDF482062912300CF5383 /* TransparentBackedScroller.swift */; };
 		E13C63FA2038A08400D9E40C /* ExpandMapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13C63F92038A08400D9E40C /* ExpandMapButton.swift */; };
-		E13F4CF220FC99DA00D985C2 /* ServerManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13F4CF120FC99DA00D985C2 /* ServerManagerTests.swift */; };
 		E13F4CF920FC9E0F00D985C2 /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAF7FF01EF30169006771DA /* Dictionary+Extension.swift */; };
 		E13F4CFE20FCC98800D985C2 /* ServerManagerTestServers.json in Resources */ = {isa = PBXBuildFile; fileRef = E13F4CFA20FCBA0300D985C2 /* ServerManagerTestServers.json */; };
 		E1420A71209B56A600697461 /* ConnectionSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1420A70209B56A600697461 /* ConnectionSettingsViewController.swift */; };
@@ -1013,7 +1011,6 @@
 		E1346F7C203B16B800F511FD /* LoadingAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAnimationView.swift; sourceTree = "<group>"; };
 		E13BDF482062912300CF5383 /* TransparentBackedScroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentBackedScroller.swift; sourceTree = "<group>"; };
 		E13C63F92038A08400D9E40C /* ExpandMapButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandMapButton.swift; sourceTree = "<group>"; };
-		E13F4CF120FC99DA00D985C2 /* ServerManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerManagerTests.swift; sourceTree = "<group>"; };
 		E13F4CFA20FCBA0300D985C2 /* ServerManagerTestServers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ServerManagerTestServers.json; sourceTree = "<group>"; };
 		E1420A70209B56A600697461 /* ConnectionSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionSettingsViewController.swift; sourceTree = "<group>"; };
 		E1420A72209B57B100697461 /* ConnectionSettings.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConnectionSettings.xib; sourceTree = "<group>"; };
@@ -1357,7 +1354,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CD1F79C2A72E57A00E8AB01 /* LegacyCommonTestSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1787,7 +1783,6 @@
 			isa = PBXGroup;
 			children = (
 				E15B755B20FC8DA00022C406 /* MapCoordinateTranslatorTests.swift */,
-				E13F4CF120FC99DA00D985C2 /* ServerManagerTests.swift */,
 				E1683FF92372DCBD00992E75 /* AlertTests.swift */,
 				AD8C78AD29898403008AC0B5 /* AppSessionManagerImplementationTests.swift */,
 			);
@@ -3067,7 +3062,6 @@
 			);
 			name = ProtonVPNmacOSTests;
 			packageProductDependencies = (
-				4CD1F79B2A72E57A00E8AB01 /* LegacyCommonTestSupport */,
 			);
 			productName = ProtonVPNTests;
 			productReference = E15B754D20FA83CB0022C406 /* ProtonVPNmacOSTests.xctest */;
@@ -3672,7 +3666,6 @@
 			files = (
 				E15B755C20FC8DA00022C406 /* MapCoordinateTranslatorTests.swift in Sources */,
 				D510690E25B7255B00302699 /* UpdateFileSelectorMock.swift in Sources */,
-				E13F4CF220FC99DA00D985C2 /* ServerManagerTests.swift in Sources */,
 				D54B1E12262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift in Sources */,
 				E1683FFA2372DCBD00992E75 /* AlertTests.swift in Sources */,
 				E9AF94B426B450E600AA1A5F /* ExtensionInfoComparisonTests.swift in Sources */,
@@ -5635,10 +5628,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder" */;
 			productName = DictionaryCoder;
-		};
-		4CD1F79B2A72E57A00E8AB01 /* LegacyCommonTestSupport */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = LegacyCommonTestSupport;
 		};
 		4CD1F79D2A72E57F00E8AB01 /* LegacyCommon */ = {
 			isa = XCSwiftPackageProductDependency;

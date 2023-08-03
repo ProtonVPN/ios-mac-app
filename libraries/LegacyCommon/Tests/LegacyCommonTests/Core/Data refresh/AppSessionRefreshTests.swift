@@ -18,7 +18,6 @@
 
 import Foundation
 @testable import LegacyCommon
-import LegacyCommonTestSupport
 import XCTest
 import Timer
 import TimerMock

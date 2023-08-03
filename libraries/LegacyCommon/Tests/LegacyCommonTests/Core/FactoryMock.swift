@@ -22,7 +22,6 @@
 
 import Foundation
 @testable import LegacyCommon
-import LegacyCommonTestSupport
 
 final class FactoryMock: CoreAlertServiceFactory, PropertiesManagerFactory, NetworkingFactory {
     func makeNetworking() -> Networking {
