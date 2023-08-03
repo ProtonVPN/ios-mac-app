@@ -22,7 +22,6 @@
 
 import XCTest
 import LegacyCommon
-import LegacyCommonTestSupport
 import TimerMock
 import VPNShared
 import VPNSharedTesting

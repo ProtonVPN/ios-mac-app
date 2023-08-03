@@ -18,7 +18,6 @@
 
 import XCTest
 @testable import LegacyCommon
-import LegacyCommonTestSupport
 
 class AnnouncementTests: XCTestCase {
 

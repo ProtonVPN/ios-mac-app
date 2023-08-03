@@ -22,7 +22,6 @@
 
 import XCTest
 @testable import LegacyCommon
-import LegacyCommonTestSupport
 
 extension Offer {
     static let empty: Offer = Offer(label: "", icon: "", panel: nil)

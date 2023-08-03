@@ -22,7 +22,6 @@ import ProtonCoreNetworking
 import VPNShared
 import XCTest
 @testable import LegacyCommon
-import LegacyCommonTestSupport
 
 actor TelemetryAPIImplementationMock: TelemetryAPI {
     func flushEvents(events: [String: Any]) async throws {

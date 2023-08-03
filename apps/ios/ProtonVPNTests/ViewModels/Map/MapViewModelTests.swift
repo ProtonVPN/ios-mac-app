@@ -22,7 +22,6 @@
 
 import CoreLocation
 import LegacyCommon
-import LegacyCommonTestSupport
 import XCTest
 import TimerMock
 import VPNShared

@@ -20,7 +20,6 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 @testable import LegacyCommon
-import LegacyCommonTestSupport
 import XCTest
 import TimerMock
 import VPNSharedTesting

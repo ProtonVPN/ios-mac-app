@@ -20,7 +20,6 @@ import XCTest
 import VPNShared
 import VPNSharedTesting
 @testable import LegacyCommon
-import LegacyCommonTestSupport
 
 final class SafeModePropertyProviderImplementationTests: XCTestCase {
     static let username = "user1"

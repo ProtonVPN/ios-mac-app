@@ -22,7 +22,6 @@
 
 import XCTest
 @testable import LegacyCommon
-import LegacyCommonTestSupport
 
 class AnnouncementRefresherImplementationTests: XCTestCase {
     

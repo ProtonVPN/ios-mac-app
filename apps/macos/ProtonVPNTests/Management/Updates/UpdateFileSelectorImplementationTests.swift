@@ -22,7 +22,6 @@
 
 import XCTest
 import LegacyCommon
-import LegacyCommonTestSupport
 
 @testable import ProtonVPN
 

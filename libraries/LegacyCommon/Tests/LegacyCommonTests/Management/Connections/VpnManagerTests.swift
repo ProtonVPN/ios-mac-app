@@ -21,7 +21,6 @@ import XCTest
 import NetworkExtension
 
 @testable import LegacyCommon
-import LegacyCommonTestSupport
 
 class VpnManagerTests: BaseConnectionTestCase {
     override func setUp() {

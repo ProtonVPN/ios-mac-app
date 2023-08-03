@@ -22,7 +22,6 @@
 
 import Foundation
 import LegacyCommon
-import LegacyCommonTestSupport
 import Combine
 
 class ServerStorageArrayMock: ServerStorage {

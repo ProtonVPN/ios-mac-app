@@ -22,7 +22,6 @@ import NetworkExtension
 import VPNShared
 import GoLibs
 @testable import LegacyCommon
-import LegacyCommonTestSupport
 
 class ConnectionSwitchingTests: BaseConnectionTestCase {
 

@@ -24,7 +24,6 @@ import XCTest
 import VPNShared
 import VPNSharedTesting
 @testable import LegacyCommon
-import LegacyCommonTestSupport
 
 final class NetShieldPropertyProviderImplementationTests: XCTestCase {
     static let username = "user1"

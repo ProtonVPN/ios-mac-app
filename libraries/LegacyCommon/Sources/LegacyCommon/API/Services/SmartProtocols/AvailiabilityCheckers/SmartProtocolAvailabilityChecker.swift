@@ -41,11 +41,11 @@ public protocol SmartProtocolAvailabilityChecker: AnyObject {
 }
 
 extension SmartProtocolAvailabilityChecker {
-    var protocolName: String {
+    public var protocolName: String {
         vpnProtocol.localizedString
     }
 
-    var timeout: TimeInterval {
+    public var timeout: TimeInterval {
         return 3
     }
 
