@@ -26,7 +26,7 @@ import VPNShared
 
 class ServerManagerTests: XCTestCase {
 
-    let serverStorage = ServerStorageMock(fileName: "ServerManagerTestServers", bundle: Bundle(for: ServerManagerTests.self))
+    let serverStorage = ServerStorageMock(fileName: "ServerManagerTestServers", bundle: Bundle.module)
     
     func testFormGrouping() {
         let freeTierServerManager = ServerManagerImplementation.instance(forTier: 0, serverStorage: serverStorage) as! ServerManagerImplementation
