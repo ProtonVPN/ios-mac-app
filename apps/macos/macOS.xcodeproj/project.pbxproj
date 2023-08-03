@@ -164,7 +164,6 @@
 		E13BDF492062912300CF5383 /* TransparentBackedScroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13BDF482062912300CF5383 /* TransparentBackedScroller.swift */; };
 		E13C63FA2038A08400D9E40C /* ExpandMapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13C63F92038A08400D9E40C /* ExpandMapButton.swift */; };
 		E13F4CF920FC9E0F00D985C2 /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAF7FF01EF30169006771DA /* Dictionary+Extension.swift */; };
-		E13F4CFE20FCC98800D985C2 /* ServerManagerTestServers.json in Resources */ = {isa = PBXBuildFile; fileRef = E13F4CFA20FCBA0300D985C2 /* ServerManagerTestServers.json */; };
 		E1420A71209B56A600697461 /* ConnectionSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1420A70209B56A600697461 /* ConnectionSettingsViewController.swift */; };
 		E1420A73209B57B100697461 /* ConnectionSettings.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1420A72209B57B100697461 /* ConnectionSettings.xib */; };
 		E1420A77209C78CE00697461 /* ConnectionSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1420A76209C78CE00697461 /* ConnectionSettingsViewModel.swift */; };
@@ -1011,7 +1010,6 @@
 		E1346F7C203B16B800F511FD /* LoadingAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAnimationView.swift; sourceTree = "<group>"; };
 		E13BDF482062912300CF5383 /* TransparentBackedScroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentBackedScroller.swift; sourceTree = "<group>"; };
 		E13C63F92038A08400D9E40C /* ExpandMapButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandMapButton.swift; sourceTree = "<group>"; };
-		E13F4CFA20FCBA0300D985C2 /* ServerManagerTestServers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ServerManagerTestServers.json; sourceTree = "<group>"; };
 		E1420A70209B56A600697461 /* ConnectionSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionSettingsViewController.swift; sourceTree = "<group>"; };
 		E1420A72209B57B100697461 /* ConnectionSettings.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConnectionSettings.xib; sourceTree = "<group>"; };
 		E1420A76209C78CE00697461 /* ConnectionSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionSettingsViewModel.swift; sourceTree = "<group>"; };
@@ -1789,20 +1787,11 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
-		E13F4D0020FCD6E100D985C2 /* JSON */ = {
-			isa = PBXGroup;
-			children = (
-				E13F4CFA20FCBA0300D985C2 /* ServerManagerTestServers.json */,
-			);
-			path = JSON;
-			sourceTree = "<group>";
-		};
 		E15B754E20FA83CB0022C406 /* ProtonVPNTests */ = {
 			isa = PBXGroup;
 			children = (
 				E15B755120FA83CB0022C406 /* Info.plist */,
 				E9AF94B226B450BA00AA1A5F /* Extensions */,
-				E13F4D0020FCD6E100D985C2 /* JSON */,
 				D5D298A925B5BBFE000FBD74 /* Management */,
 				D5421EA725B6DAF300280C29 /* Mocks */,
 				E13F4CFF20FCD6CF00D985C2 /* Tests */,
@@ -3379,7 +3368,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E13F4CFE20FCC98800D985C2 /* ServerManagerTestServers.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

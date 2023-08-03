@@ -9,7 +9,8 @@ stages:
   - distribute
 
 variables:
-  GIT_SUBMODULE_STRATEGY: recursive
+  GIT_SUBMODULE_STRATEGY: normal
+  GIT_SUBMODULE_FORCE_HTTPS: "true"
   LC_ALL: "en_US.UTF-8"
   LANG: "en_US.UTF-8"
   CI_KEYCHAIN_NAME: $CI_JOB_ID

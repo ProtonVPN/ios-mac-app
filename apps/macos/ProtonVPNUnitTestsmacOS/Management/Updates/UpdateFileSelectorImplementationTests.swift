@@ -23,7 +23,6 @@
 #if false
 import XCTest
 import LegacyCommon
-import LegacyCommonTestSupport
 
 @testable import ProtonVPN
 

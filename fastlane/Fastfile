@@ -32,7 +32,7 @@ lane :ios_core_test do
 end
 
 desc "Run all Core macOS tests"
-lane :LegacyCommon do
+lane :macos_core_test do
   scan(scheme: "LegacyCommon",
     result_bundle: true,
     derived_data_path: $derived_data_path,
