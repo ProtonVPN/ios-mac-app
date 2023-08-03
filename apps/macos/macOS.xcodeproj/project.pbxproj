@@ -87,7 +87,6 @@
 		4CD1F7972A72DF2700E8AB01 /* DictionaryCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7962A72DF2700E8AB01 /* DictionaryCoder */; };
 		4CD1F7982A72E2CD00E8AB01 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98CFCE1F14E096000D6688 /* AppConstants.swift */; };
 		4CD1F79E2A72E57F00E8AB01 /* LegacyCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F79D2A72E57F00E8AB01 /* LegacyCommon */; };
-		4CD1F7A02A72E57F00E8AB01 /* LegacyCommonTestSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F79F2A72E57F00E8AB01 /* LegacyCommonTestSupport */; };
 		4CE2F42227ECA7B000B21A00 /* GIFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2F42127ECA7B000B21A00 /* GIFView.swift */; };
 		4CFFC94427E0C0AE0035969B /* CancellationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFFC94327E0C0AE0035969B /* CancellationButton.swift */; };
 		4E06182DC9F62ECAC45524E0 /* SubuserMacAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 437269ACE0C19C03AA703A72 /* SubuserMacAlertViewController.xib */; };
@@ -1343,7 +1342,6 @@
 			files = (
 				4CD1F79E2A72E57F00E8AB01 /* LegacyCommon in Frameworks */,
 				4C9754F72A60173C0035A61B /* SwiftOTP in Frameworks */,
-				4CD1F7A02A72E57F00E8AB01 /* LegacyCommonTestSupport in Frameworks */,
 				4C74D32B2A0B9D7F004F8528 /* PMLogger in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3030,7 +3028,6 @@
 				4C74D32A2A0B9D7F004F8528 /* PMLogger */,
 				4C9754F62A60173C0035A61B /* SwiftOTP */,
 				4CD1F79D2A72E57F00E8AB01 /* LegacyCommon */,
-				4CD1F79F2A72E57F00E8AB01 /* LegacyCommonTestSupport */,
 			);
 			productName = ProtonVPNUITests;
 			productReference = D5911706229F9574005829DA /* ProtonVPNmacOSUITests.xctest */;
@@ -5620,10 +5617,6 @@
 		4CD1F79D2A72E57F00E8AB01 /* LegacyCommon */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LegacyCommon;
-		};
-		4CD1F79F2A72E57F00E8AB01 /* LegacyCommonTestSupport */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = LegacyCommonTestSupport;
 		};
 		D50B8020295DC3F900D85D29 /* NEHelper */ = {
 			isa = XCSwiftPackageProductDependency;
