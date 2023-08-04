@@ -16,6 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+#if REDESIGN
+
 import ComposableArchitecture
 
 struct InitialStateProvider {
@@ -41,3 +43,5 @@ extension DependencyValues {
         set { self[InitialStateProvider.self] = newValue }
     }
 }
+
+#endif

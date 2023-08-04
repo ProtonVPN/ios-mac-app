@@ -16,6 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+#if REDESIGN
+
 import SwiftUI
 import Theme
 
@@ -63,3 +65,5 @@ struct SideBarItemView_Previews: PreviewProvider {
         .previewLayout(.fixed(width: 200, height: 32 * 3))
     }
 }
+
+#endif
