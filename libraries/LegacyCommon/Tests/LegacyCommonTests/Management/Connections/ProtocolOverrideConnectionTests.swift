@@ -135,7 +135,7 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
     }
 
     // Test disabled due to OpenVPN being deprecated (VPNAPPL-1843)
-    func testExclusiveOverrideWithSpecifiedPorts() {
+    func disabled_testExclusiveOverrideWithSpecifiedPorts() {
         var managerConfig: VpnManagerConfiguration?
 
         populateExpectations(description: "Should connect to openvpn, with overridden ports", [.vpnConnection])
