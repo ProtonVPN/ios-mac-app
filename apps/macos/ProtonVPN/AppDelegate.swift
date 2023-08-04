@@ -220,7 +220,7 @@ extension AppDelegate: NSApplicationDelegate {
     
     private func setNSCodingModuleName() {
         // Force all encoded objects to be decoded and encoded using the ProtonVPN module name
-        setUpNSCoding(withModuleName: NSStringFromClass(type(of: self)).components(separatedBy: ".").first!)
+        setUpNSCoding(withModuleName: "ProtonVPN")
     }
     
     private func startedAtLogin() -> Bool {
