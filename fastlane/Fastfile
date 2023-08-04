@@ -20,26 +20,6 @@ $keychain_name = ENV["CI_KEYCHAIN_NAME"]
 ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "180"
 ENV["FASTLANE_XCODE_LIST_TIMEOUT"] = "180"
 
-desc "Run all Core iOS tests"
-lane :ios_core_test do
-  simulator_name = ENV["CI_JOB_ID"]
-  scan(scheme: "LegacyCommon",
-    result_bundle: true,
-    derived_data_path: $derived_data_path,
-    skip_slack: true,
-    devices: [simulator_name],
-    clean: true)
-end
-
-desc "Run all Core macOS tests"
-lane :macos_core_test do
-  scan(scheme: "LegacyCommon",
-    result_bundle: true,
-    derived_data_path: $derived_data_path,
-    skip_slack: true,
-    clean: true)
-end
-
 desc "Run all iOS app unit tests"
 lane :ios_app_unit_test_all do
   runIOSTests(
