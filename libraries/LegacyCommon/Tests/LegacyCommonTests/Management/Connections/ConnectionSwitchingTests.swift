@@ -24,6 +24,13 @@ import GoLibs
 @testable import LegacyCommon
 
 class ConnectionSwitchingTests: BaseConnectionTestCase {
+    override func setUpWithError() throws {
+        #if os(macOS)
+        throw XCTSkip("Connection switching tests are skipped on macOS, since there is no cert refresh provider.")
+        #else
+        try super.setUpWithError()
+        #endif
+    }
 
     // swiftlint:disable:next function_body_length
     func testFirstTimeConnectionWithSmartProtocol() async {

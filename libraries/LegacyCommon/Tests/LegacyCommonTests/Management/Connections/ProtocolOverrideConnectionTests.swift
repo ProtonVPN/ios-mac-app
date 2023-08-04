@@ -24,8 +24,11 @@ import VPNShared
 
 /// - Note: To be implemented with remainder of protocol overrides feature.
 class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
-    override func setUp() {
-        super.setUp()
+    override func setUpWithError() throws {
+        #if os(macOS)
+        throw XCTSkip("Protocol override tests are skipped on macOS, since there is no cert refresh provider.")
+        #else
+        try super.setUpWithError()
 
         let testData = MockTestData()
 
@@ -33,6 +36,7 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
             testData.server1, testData.server3, testData.server4,
             testData.server5, testData.server6, testData.server8,
         ]
+        #endif
     }
 
     // Disabled because IKEv2 is not supported on iOS (VPNAPPL-1843)
