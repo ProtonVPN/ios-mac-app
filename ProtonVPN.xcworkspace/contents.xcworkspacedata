@@ -11,9 +11,6 @@
             location = "group:external/protoncore">
          </FileRef>
          <FileRef
-            location = "group:external/TrustKit">
-         </FileRef>
-         <FileRef
             location = "group:external/apple-fusion">
          </FileRef>
          <FileRef

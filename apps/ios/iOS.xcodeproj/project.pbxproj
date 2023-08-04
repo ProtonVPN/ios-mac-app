@@ -55,6 +55,8 @@
 		4C7D40642A60282D00ACDBED /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = 4C7D40632A60282D00ACDBED /* AlamofireImage */; };
 		4C7D40672A60289400ACDBED /* OHHTTPStubs in Frameworks */ = {isa = PBXBuildFile; productRef = 4C7D40662A60289400ACDBED /* OHHTTPStubs */; };
 		4C7D40742A60297400ACDBED /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 4C7D40732A60297400ACDBED /* Reachability */; };
+		4C8571D72A7CEC250057FED6 /* TrustKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8571D62A7CEC250057FED6 /* TrustKit */; };
+		4C8571D92A7CEC310057FED6 /* TrustKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8571D82A7CEC310057FED6 /* TrustKit */; };
 		4C8C31462A73B9F4006AD628 /* VPNLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C8C31452A73B9F4006AD628 /* VPNLaunchScreen.storyboard */; };
 		4C8C31482A73BA19006AD628 /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8C31472A73BA19006AD628 /* Home */; };
 		4C8C314A2A73BA19006AD628 /* Home-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8C31492A73BA19006AD628 /* Home-iOS */; };
@@ -65,7 +67,6 @@
 		4C8C31542A73BA36006AD628 /* ProtonCoreLoginUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8C31532A73BA36006AD628 /* ProtonCoreLoginUI */; };
 		4C8C31562A73BAB9006AD628 /* GoLibsCryptoVPNPatchedGo in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8C31552A73BAB9006AD628 /* GoLibsCryptoVPNPatchedGo */; };
 		4C8C31582A73BAB9006AD628 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8C31572A73BAB9006AD628 /* ProtonCoreCryptoVPNPatchedGoImplementation */; };
-		4C8C315A2A73BAE2006AD628 /* TrustKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8C31592A73BAE2006AD628 /* TrustKit */; };
 		4C8C315C2A73BAF5006AD628 /* TunnelKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8C315B2A73BAF5006AD628 /* TunnelKit */; };
 		4C8C315E2A73BAF5006AD628 /* TunnelKitOpenVPN in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8C315D2A73BAF5006AD628 /* TunnelKitOpenVPN */; };
 		4C8C31602A73BB11006AD628 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8C315F2A73BB11006AD628 /* SDWebImage */; };
@@ -1115,6 +1116,7 @@
 				E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */,
 				E95C18A02A6E4D7D009F1ABB /* Ergonomics in Frameworks */,
 				ADBA84DF2A58A1A0001EF3F5 /* CasePaths in Frameworks */,
+				4C8571D72A7CEC250057FED6 /* TrustKit in Frameworks */,
 				4CEF8EB22A6EEA52000FBC01 /* TunnelKit in Frameworks */,
 				D563A7562A5D260C00908254 /* Strings in Frameworks */,
 				4CB776D52A1F62DF004CA127 /* Logging in Frameworks */,
@@ -1127,7 +1129,6 @@
 			files = (
 				ADBA84DA2A589F27001EF3F5 /* Theme in Frameworks */,
 				4CD1107F2A2A09410062AE13 /* Logging in Frameworks */,
-				4C8C315A2A73BAE2006AD628 /* TrustKit in Frameworks */,
 				D563A7582A5D355F00908254 /* Strings in Frameworks */,
 				4C8C315E2A73BAF5006AD628 /* TunnelKitOpenVPN in Frameworks */,
 				4C9754FC2A6018110035A61B /* GSMessages in Frameworks */,
@@ -1136,6 +1137,7 @@
 				4C8C31602A73BB11006AD628 /* SDWebImage in Frameworks */,
 				D55F10F0297FD1DF00EAF2AB /* LocalFeatureFlags in Frameworks */,
 				E90226D22A6E55A3009D3748 /* Ergonomics in Frameworks */,
+				4C8571D92A7CEC310057FED6 /* TrustKit in Frameworks */,
 				4C8C31632A73BB39006AD628 /* Sentry in Frameworks */,
 				4C8C31652A73BB6E006AD628 /* LegacyCommon in Frameworks */,
 			);
@@ -2555,6 +2557,7 @@
 				4C8C31532A73BA36006AD628 /* ProtonCoreLoginUI */,
 				4C8C31552A73BAB9006AD628 /* GoLibsCryptoVPNPatchedGo */,
 				4C8C31572A73BAB9006AD628 /* ProtonCoreCryptoVPNPatchedGoImplementation */,
+				4C8571D62A7CEC250057FED6 /* TrustKit */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -2582,12 +2585,12 @@
 				D563A7572A5D355F00908254 /* Strings */,
 				E90226D12A6E55A3009D3748 /* Ergonomics */,
 				4C9754FB2A6018110035A61B /* GSMessages */,
-				4C8C31592A73BAE2006AD628 /* TrustKit */,
 				4C8C315B2A73BAF5006AD628 /* TunnelKit */,
 				4C8C315D2A73BAF5006AD628 /* TunnelKitOpenVPN */,
 				4C8C315F2A73BB11006AD628 /* SDWebImage */,
 				4C8C31622A73BB39006AD628 /* Sentry */,
 				4C8C31642A73BB6E006AD628 /* LegacyCommon */,
+				4C8571D82A7CEC310057FED6 /* TrustKit */,
 			);
 			productName = ProtonVPNTests;
 			productReference = 791DE5EF208DDA3200A29EA5 /* ProtonVPNTests.xctest */;
@@ -2872,6 +2875,7 @@
 				4C7D40722A60297400ACDBED /* XCRemoteSwiftPackageReference "Reachability" */,
 				E5DEF05D2A7399EC006FC9DC /* XCRemoteSwiftPackageReference "DictionaryCoder" */,
 				4C8C31612A73BB39006AD628 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+				4C8571D52A7CEB600057FED6 /* XCRemoteSwiftPackageReference "TrustKit" */,
 			);
 			productRefGroup = 791DE5DA208DDA3000A29EA5 /* Products */;
 			projectDirPath = "";
@@ -4752,6 +4756,14 @@
 				version = 5.1.0;
 			};
 		};
+		4C8571D52A7CEB600057FED6 /* XCRemoteSwiftPackageReference "TrustKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ProtonMail/TrustKit";
+			requirement = {
+				kind = revision;
+				revision = d107d7cc825f38ae2d6dc7c54af71d58145c3506;
+			};
+		};
 		4C8C31612A73BB39006AD628 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
@@ -4902,6 +4914,16 @@
 			package = 4C7D40722A60297400ACDBED /* XCRemoteSwiftPackageReference "Reachability" */;
 			productName = Reachability;
 		};
+		4C8571D62A7CEC250057FED6 /* TrustKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4C8571D52A7CEB600057FED6 /* XCRemoteSwiftPackageReference "TrustKit" */;
+			productName = TrustKit;
+		};
+		4C8571D82A7CEC310057FED6 /* TrustKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4C8571D52A7CEB600057FED6 /* XCRemoteSwiftPackageReference "TrustKit" */;
+			productName = TrustKit;
+		};
 		4C8C31472A73BA19006AD628 /* Home */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Home;
@@ -4937,10 +4959,6 @@
 		4C8C31572A73BAB9006AD628 /* ProtonCoreCryptoVPNPatchedGoImplementation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCoreCryptoVPNPatchedGoImplementation;
-		};
-		4C8C31592A73BAE2006AD628 /* TrustKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TrustKit;
 		};
 		4C8C315B2A73BAF5006AD628 /* TunnelKit */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -308,6 +308,15 @@
         }
       },
       {
+        "package": "TrustKit",
+        "repositoryURL": "https://github.com/ProtonMail/TrustKit",
+        "state": {
+          "branch": null,
+          "revision": "d107d7cc825f38ae2d6dc7c54af71d58145c3506",
+          "version": null
+        }
+      },
+      {
         "package": "WireGuardKit",
         "repositoryURL": "https://github.com/ProtonVPN/wireguard-apple.git",
         "state": {

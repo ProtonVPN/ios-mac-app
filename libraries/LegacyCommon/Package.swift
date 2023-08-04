@@ -29,7 +29,6 @@ let package = Package(
         // External packages regularly upstreamed by our project (imported as submodules)
         .package(path: "../../external/protoncore"),
         .package(path: "../../external/tunnelkit"),
-        .package(path: "../../external/trustkit"),
 
         // Local packages
         .package(path: "../BugReport"),
@@ -55,6 +54,7 @@ let package = Package(
         .github("pointfreeco", repo: "swift-dependencies", .upToNextMajor(from: "0.1.1")),
         .github("pointfreeco", repo: "swiftui-navigation", exact: "0.8.0"),
         .github("SDWebImage", repo: "SDWebImage", .upTo("5.16.0")),
+        .github("ProtonMail", repo: "TrustKit", revision: "d107d7cc825f38ae2d6dc7c54af71d58145c3506"),
 //        .github("realm", repo: "SwiftLint", exact: "0.52.4"),
     ],
     targets: [
@@ -156,13 +156,23 @@ extension Range<PackageDescription.Version> {
     }
 }
 
+extension String {
+    static func githubUrl(_ author: String, _ repo: String) -> Self {
+        "https://github.com/\(author)/\(repo)"
+    }
+}
+
 extension PackageDescription.Package.Dependency {
     static func github(_ author: String, repo: String, exact version: Version) -> Package.Dependency {
-        .package(url: "https://github.com/\(author)/\(repo)", exact: version)
+        .package(url: .githubUrl(author, repo), exact: version)
+    }
+
+    static func github(_ author: String, repo: String, revision: String) -> Package.Dependency {
+        .package(url: .githubUrl(author, repo), revision: revision)
     }
 
     static func github(_ author: String, repo: String, _ range: Range<Version>) -> Package.Dependency {
-        .package(url: "https://github.com/\(author)/\(repo)", range)
+        .package(url: .githubUrl(author, repo), range)
     }
 }
 

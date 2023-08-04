@@ -62,6 +62,7 @@
 		4C7CAEC128006E5C0008778E /* LoadingAnimationFrames in Resources */ = {isa = PBXBuildFile; fileRef = 4C7CAEC028006E5C0008778E /* LoadingAnimationFrames */; };
 		4C7D40592A60251700ACDBED /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 4C7D40582A60251700ACDBED /* SDWebImage */; };
 		4C7D40772A60298C00ACDBED /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 4C7D40762A60298C00ACDBED /* Reachability */; };
+		4C8571DC2A7CEC5B0057FED6 /* TrustKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8571DB2A7CEC5B0057FED6 /* TrustKit */; };
 		4C8641B527D22A6900EEFB1D /* IPCClientConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641B427D22A6900EEFB1D /* IPCClientConnection.swift */; };
 		4C8641BC27D25C5D00EEFB1D /* CodeSignatureComparitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641B927D25C5D00EEFB1D /* CodeSignatureComparitor.swift */; };
 		4C8641C127D261A000EEFB1D /* CodeSignatureComparitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641B927D25C5D00EEFB1D /* CodeSignatureComparitor.swift */; };
@@ -1428,6 +1429,7 @@
 				4CD1F7872A72BEDA00E8AB01 /* BugReport in Frameworks */,
 				4C7D40592A60251700ACDBED /* SDWebImage in Frameworks */,
 				4CD1F78B2A72BF0100E8AB01 /* LegacyCommon in Frameworks */,
+				4C8571DC2A7CEC5B0057FED6 /* TrustKit in Frameworks */,
 				E5E48D012A4C37F000B09111 /* PMLogger in Frameworks */,
 				4CD1F7932A72DCAD00E8AB01 /* GoLibsCryptoVPNPatchedGo in Frameworks */,
 				D5F65F9E28A14E190062CF85 /* Timer in Frameworks */,
@@ -3199,6 +3201,7 @@
 				4C2599972A7AA27500A31895 /* TunnelKitOpenVPN */,
 				4C2599992A7AA27500A31895 /* TunnelKitOpenVPNAppExtension */,
 				4C25999B2A7AA29800A31895 /* Dependencies */,
+				4C8571DB2A7CEC5B0057FED6 /* TrustKit */,
 			);
 			productName = ProtonVPN;
 			productReference = EED534811EEC112000013607 /* ProtonVPN.app */;
@@ -3323,6 +3326,7 @@
 				4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability" */,
 				4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder" */,
 				4C2599922A7AA25800A31895 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */,
+				4C8571DA2A7CEC5B0057FED6 /* XCRemoteSwiftPackageReference "TrustKit" */,
 			);
 			productRefGroup = EED534821EEC112000013607 /* Products */;
 			projectDirPath = "";
@@ -5472,6 +5476,14 @@
 				version = 5.1.0;
 			};
 		};
+		4C8571DA2A7CEC5B0057FED6 /* XCRemoteSwiftPackageReference "TrustKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ProtonMail/TrustKit";
+			requirement = {
+				kind = revision;
+				revision = d107d7cc825f38ae2d6dc7c54af71d58145c3506;
+			};
+		};
 		4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/lachlanbell/SwiftOTP.git";
@@ -5579,6 +5591,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability" */;
 			productName = Reachability;
+		};
+		4C8571DB2A7CEC5B0057FED6 /* TrustKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4C8571DA2A7CEC5B0057FED6 /* XCRemoteSwiftPackageReference "TrustKit" */;
+			productName = TrustKit;
 		};
 		4C9754F62A60173C0035A61B /* SwiftOTP */ = {
 			isa = XCSwiftPackageProductDependency;
