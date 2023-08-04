@@ -1,10 +1,11 @@
 [submodule "external/protoncore"]
 	path = external/protoncore
 	url = ../../shared/protoncore
+	tag = rc_10.0.0
 [submodule "tunnelkit"]
 	path = external/tunnelkit
 	url = ../tunnelkit
-	branch = jkb/rebased
+	tag = v7.0.0
 [submodule "external/apple-fusion"]
 	path = external/apple-fusion
 	url = ../../../tpe/apple-fusion
