@@ -102,7 +102,6 @@
 		4CF298222A7D3B8E00DEB23F /* ro.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298092A7D3B8E00DEB23F /* ro.lproj */; };
 		4CF298232A7D3B8E00DEB23F /* de.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF2980A2A7D3B8E00DEB23F /* de.lproj */; };
 		4CF298242A7D3B8E00DEB23F /* hu.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF2980B2A7D3B8E00DEB23F /* hu.lproj */; };
-		4CF298252A7D3B8E00DEB23F /* less in Resources */ = {isa = PBXBuildFile; fileRef = 4CF2980C2A7D3B8E00DEB23F /* less */; };
 		4CF298262A7D3B8E00DEB23F /* pt.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF2980D2A7D3B8E00DEB23F /* pt.lproj */; };
 		4CF298272A7D3B8E00DEB23F /* uk.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF2980E2A7D3B8E00DEB23F /* uk.lproj */; };
 		4CF298282A7D3B8E00DEB23F /* pt-BR.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF2980F2A7D3B8E00DEB23F /* pt-BR.lproj */; };
@@ -1480,9 +1479,6 @@
 		79C5598120AAC51100E6D3F6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				E986300326982E7E00F56B87 /* country-names.plist */,
-				E986300726982E9000F56B87 /* ProtonVPN_ike_root.der */,
-				E986305B269835E500F56B87 /* Localization */,
 				4CF298042A7D3B8D00DEB23F /* cs.lproj */,
 				4CF2980A2A7D3B8E00DEB23F /* de.lproj */,
 				4CF298122A7D3B8E00DEB23F /* el.lproj */,
@@ -2917,7 +2913,6 @@
 				79FD80E221107378003B16E2 /* Assets.xcassets in Resources */,
 				793ECF442149041A00C186A7 /* AppVersionView.xib in Resources */,
 				4CF2982F2A7D3B8E00DEB23F /* fr.lproj in Resources */,
-				4CF298252A7D3B8E00DEB23F /* less in Resources */,
 				4CF298172A7D3B8E00DEB23F /* id.lproj in Resources */,
 				428DF9B6262F126600944379 /* StreamingServiceCell.xib in Resources */,
 				E1A4BF5D21ADBF3D004D187F /* Logs.xib in Resources */,
@@ -2969,7 +2964,6 @@
 				428DF979262EFCDE00944379 /* ServersStreamingFeaturesVC.xib in Resources */,
 				79312B7D2118852D00E79D09 /* DrillInTableViewCell.xib in Resources */,
 				E5E7EFF028B8EDEC005249D3 /* AnnouncementImageViewController.xib in Resources */,
-				E986309B269835E500F56B87 /* Localizable.stringsdict in Resources */,
 				4CF2981A2A7D3B8E00DEB23F /* nl.lproj in Resources */,
 				4CF2982E2A7D3B8E00DEB23F /* hr.lproj in Resources */,
 				DE0AD1BB435AE75C8DD9BDB4 /* Environments.storyboard in Resources */,
