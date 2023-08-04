@@ -60,20 +60,22 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
             expectations.certRefresh.fulfill()
         }
 
-        let request = ConnectionRequest(serverType: .standard,
-                                        connectionType: .country("CH", .fastest),
-                                        connectionProtocol: .smartProtocol,
-                                        netShieldType: .level1,
-                                        natType: .moderateNAT,
-                                        safeMode: true,
-                                        profileId: nil,
-                                        trigger: .country)
+        let request = ConnectionRequest(
+            serverType: .standard,
+            connectionType: .country("CH", .fastest),
+            connectionProtocol: .smartProtocol,
+            netShieldType: .level1,
+            natType: .moderateNAT,
+            safeMode: true,
+            profileId: nil,
+            trigger: .country
+        )
 
         await MainActor.run {
             container.vpnGateway.connect(with: request)
         }
 
-        wait(for: [expectations.initialConnection, expectations.certRefresh], timeout: expectationTimeout)
+        await fulfillment(of: [expectations.initialConnection, expectations.certRefresh], timeout: expectationTimeout)
 
         // smart protocol should favor wireguard
         XCTAssertEqual((currentManager?.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier, MockDependencyContainer.wireguardProviderBundleId)
@@ -86,7 +88,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         XCTAssertEqual(date, currentConnection?.connectedDate)
 
         container.vpnGateway.disconnect()
-        wait(for: [expectations.disconnect], timeout: expectationTimeout)
+        await fulfillment(of: [expectations.disconnect], timeout: expectationTimeout)
     }
 
     /// This test should show than when trying to determine the best port for Wireguard if pings for all the ports fail

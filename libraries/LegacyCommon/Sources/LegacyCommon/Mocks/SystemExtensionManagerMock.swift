@@ -18,7 +18,6 @@
 
 #if os(macOS) && DEBUG
 import Foundation
-@testable import LegacyCommon
 import SystemExtensions
 
 public class SystemExtensionManagerMock: SystemExtensionManager {
@@ -34,18 +33,7 @@ public class SystemExtensionManagerMock: SystemExtensionManager {
 
     public var mockVersions: BundleVersions?
 
-    public lazy var bundleAppVersions: BundleVersions = {
-        let macAppBundle = Bundle(for: SystemExtensionManager.self)
-        guard let bundleVersion = macAppBundle.infoDictionary?["CFBundleShortVersionString"] as? String else {
-            fatalError("Bundle has no build version?")
-        }
-
-        guard let buildVersion = macAppBundle.infoDictionary?["CFBundleVersion"] as? String else {
-            fatalError("Bundle has no version?")
-        }
-
-        return (bundleVersion, buildVersion)
-    }()
+    public lazy var bundleAppVersions: BundleVersions = ("4.2.0", "1804201620")
 
     override public func request(_ request: SystemExtensionRequest) {
         guard case .install = request.action else {
