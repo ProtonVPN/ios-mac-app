@@ -58,8 +58,8 @@ class BaseConnectionTestCase: XCTestCase {
                                     profileId: nil,
                                     trigger: nil)
 
-    override func setUp() {
-        super.setUp()
+    override func setUpWithError() throws {
+        try super.setUpWithError()
         container = MockDependencyContainer()
         container.propertiesManager.featureFlags = testData.defaultClientConfig.featureFlags
 
@@ -74,13 +74,8 @@ class BaseConnectionTestCase: XCTestCase {
         }
     }
 
-    override func tearDown() {
-        super.tearDown()
-        // Remove all notifications which these objects have subscribed to. We remove these on test teardown because
-        // zombie objects keep responding to these notifications, supposedly even after they're deinited, and then end
-        // up messing up subsequent test cases.
-        NotificationCenter.default.removeObserver(container.vpnManager)
-        NotificationCenter.default.removeObserver(container.vpnGateway)
+    override func tearDownWithError() throws {
+        try super.tearDownWithError()
 
         for name in neVpnEvents {
             NotificationCenter.default.removeObserver(self, name: name, object: nil)
@@ -92,6 +87,14 @@ class BaseConnectionTestCase: XCTestCase {
         connectionCreated = nil
         didRequestCertRefresh = nil
         didPushNewSessionSelector = nil
+
+        guard container != nil else { return }
+
+        // Remove all notifications which these objects have subscribed to. We remove these on test teardown because
+        // zombie objects keep responding to these notifications, supposedly even after they're deinited, and then end
+        // up messing up subsequent test cases.
+        NotificationCenter.default.removeObserver(container.vpnManager)
+        NotificationCenter.default.removeObserver(container.vpnGateway)
 
         container.neTunnelProviderFactory.tunnelProvidersInPreferences.removeAll()
         container.neTunnelProviderFactory.tunnelProviderPreferencesData.removeAll()
@@ -238,8 +241,8 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
     let localAgentEventQueue = DispatchQueue(label: "local agent testing event queue")
     let laConsts = LocalAgentConstants()!
 
-    override func setUp() {
-        super.setUp()
+    override func setUpWithError() throws {
+        try super.setUpWithError()
 
         mockProviderState.shouldRefresh = false
         container.vpnKeychain.setVpnCredentials(with: .plus, maxTier: CoreAppConstants.VpnTiers.plus)

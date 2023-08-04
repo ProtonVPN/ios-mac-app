@@ -24,6 +24,14 @@ import GoLibs
 @testable import LegacyCommon
 
 class LocalAgentConnectionTests: ConnectionTestCaseDriver {
+    override func setUpWithError() throws {
+        #if os(macOS)
+        throw XCTSkip("LocalAgent connection tests are skipped on macOS, since there is no cert refresh provider.")
+        #else
+        try super.setUpWithError()
+        #endif
+    }
+
     func simpleErrorCase(_ code: Int) -> (() -> Void) {
         { [unowned self] in self.laError(code, nil) }
     }
