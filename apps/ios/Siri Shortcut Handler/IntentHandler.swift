@@ -27,7 +27,7 @@ import NetworkExtension
 import VPNShared
 import ProtonCoreCryptoVPNPatchedGoImplementation
 
-class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHandling /*, GetConnectionStatusIntentHandling */ {
+class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHandling, GetConnectionStatusIntentHandling {
     
     let siriHandlerViewModel: SiriHandlerViewModel
     

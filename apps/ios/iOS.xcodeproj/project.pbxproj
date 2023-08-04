@@ -735,8 +735,6 @@
 		42BB5E5D247FFD7F0002DA8A /* TodayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+realSize.swift"; sourceTree = "<group>"; };
 		4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRobot.swift; sourceTree = "<group>"; };
-		4CF297FC2A7D39F700DEB23F /* Intents.intentdefinition */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
-		4C8C31432A73B904006AD628 /* WireguardConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WireguardConfig.swift; path = "../../LegacyCommon/Sources/LegacyCommon/Core/Client Config/WireguardConfig.swift"; sourceTree = "<group>"; };
 		4C8C31452A73B9F4006AD628 /* VPNLaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = VPNLaunchScreen.storyboard; path = "../../../../../external/protoncore/libraries/UIFoundations/Resources-iOS/Resources-iOS/LaunchScreenStoryboards/VPNLaunchScreen.storyboard"; sourceTree = "<group>"; };
 		4CDC8AB52A74554B004F2537 /* WireguardConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WireguardConfig.swift; path = "../../LegacyCommon/Sources/LegacyCommon/Core/Client Config/WireguardConfig.swift"; sourceTree = "<group>"; };
 		4CF297FC2A7D39F700DEB23F /* Intents.intentdefinition */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
@@ -1338,7 +1336,6 @@
 			isa = PBXGroup;
 			children = (
 				E5FD25D12A73AFCF00D9BDC0 /* ProtonVPN_ike_root.der */,
-				4C8C31432A73B904006AD628 /* WireguardConfig.swift */,
 				E551EB0329AF570E00B6612D /* swiftgen.yml */,
 				E9DBA50B27917C150010E3BD /* Packages */,
 				F38BB450265C0CF600329619 /* Config.xcconfig */,
@@ -1731,6 +1728,7 @@
 		D55455402280280B006574F9 /* Siri Shortcut Handler */ = {
 			isa = PBXGroup;
 			children = (
+				4CF297FC2A7D39F700DEB23F /* Intents.intentdefinition */,
 				D554555F2280435B006574F9 /* Siri Shortcut Handler.entitlements */,
 				D55455412280280B006574F9 /* IntentHandler.swift */,
 				D554556122804DF2006574F9 /* SiriHandlerViewModel.swift */,
@@ -3548,6 +3546,7 @@
 				F3747C0226D4E1A900EF2F00 /* URLConstants.swift in Sources */,
 				D5209C7226CBBE1900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift in Sources */,
 				D5209C7626CBCB3D00AD14EA /* OVPNiOSCredentialsConfigurator.swift in Sources */,
+				4CF297FD2A7D39F700DEB23F /* Intents.intentdefinition in Sources */,
 				D554556222804DF2006574F9 /* SiriHandlerViewModel.swift in Sources */,
 				D5A8CD752456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */,
 				D55455422280280B006574F9 /* IntentHandler.swift in Sources */,
