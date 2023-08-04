@@ -3119,7 +3119,6 @@
 				E93C4F1826A1C1F30006680C /* Sources */,
 				E93C4F1B26A1C1F30006680C /* Frameworks */,
 				E93C4F1E26A1C1F30006680C /* Resources */,
-				4C07DA4D28D9ACED00B5EB1D /* Embed Build Info */,
 			);
 			buildRules = (
 			);
@@ -3485,26 +3484,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4C07DA4D28D9ACED00B5EB1D /* Embed Build Info */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			name = "Embed Build Info";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${SRCROOT}/../../scripts/describe-revision.sh mac \"$SCRIPT_INPUT_FILE_0\"\n";
-		};
 		D5479534228D9BDB00639216 /* Run SwiftLint Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
