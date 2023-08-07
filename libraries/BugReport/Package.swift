@@ -15,8 +15,8 @@ let package = Package(
             targets: ["BugReport"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "0.55.0"),
-        .package(url: "https://github.com/pointfreeco/swiftui-navigation", exact: "0.8.0"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.0.0"),
+        .package(url: "https://github.com/pointfreeco/swiftui-navigation", exact: "1.0.0"),
     ],
     targets: [
         .target(
