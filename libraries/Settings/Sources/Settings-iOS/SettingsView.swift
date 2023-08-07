@@ -276,7 +276,7 @@ struct SettingsView_Previews: PreviewProvider {
                 protocol: .init(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil),
                 theme: .light
             ),
-            reducer: SettingsFeature()
+            reducer: { SettingsFeature() }
         ))
     }
 }

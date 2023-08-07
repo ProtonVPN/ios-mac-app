@@ -45,7 +45,7 @@ public final class MacOSBugReportCreator: BugReportCreator {
         #endif
         let state = ReportBugFeatureMacOS.State(whatsTheIssueState: WhatsTheIssueFeature.State(categories: delegate.model.categories))
         let store = Store(initialState: state,
-                          reducer: reducer)
+                          reducer: { reducer } )
         let rootView = ReportBugView(store: store)
 
         let controller = NSHostingController(

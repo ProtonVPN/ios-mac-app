@@ -24,7 +24,7 @@ import Home
 import Home_macOS
 import VPNAppCore
 
-struct AppReducer: ReducerProtocol {
+struct AppReducer: Reducer {
 
     public typealias ActionSender = (Action) -> Void
 
@@ -43,7 +43,7 @@ struct AppReducer: ReducerProtocol {
         case app(SidebarReducer.Action)
     }
 
-    var body: some ReducerProtocolOf<Self> {
+    var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .showLogin:

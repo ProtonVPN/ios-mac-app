@@ -31,7 +31,7 @@ import Settings_iOS
 
 import ComposableArchitecture
 
-struct AppReducer: ReducerProtocol {
+struct AppReducer: Reducer {
     struct State: Equatable {
         var selectedTab: Tab
 
@@ -61,7 +61,7 @@ struct AppReducer: ReducerProtocol {
         case newConnectionStatus(VPNConnectionStatus)
     }
 
-    var body: some ReducerProtocolOf<Self> {
+    var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .selectedTabChanged(let tab):
@@ -162,18 +162,20 @@ struct ProtonVPNApp: App {
 
         self.store = .init(
             initialState: initialStateProvider.initialState,
-            reducer: AppReducer()
-                .dependency(\.vpnConnectionStatusPublisher, VPNConnectionStatusPublisherKey.watchVPNConnectionStatusChanges)
-                .dependency(\.getServerById, VpnServerGetter.getServerById)
-                .dependency(\.settingsStorage, SettingsStorageKey.userDefaults)
-            #if targetEnvironment(simulator)
-                .dependency(\.connectToVPN, SimulatorHelper.shared.connect)
-                .dependency(\.disconnectVPN, SimulatorHelper.shared.disconnect)
-            #else
-                .dependency(\.connectToVPN, ConnectToVPNKey.bridgedConnect)
-                .dependency(\.disconnectVPN, DisconnectVPNKey.bridgedDisconnect)
-            #endif
-                ._printChanges()
+            reducer: {
+                AppReducer()
+                    .dependency(\.vpnConnectionStatusPublisher, VPNConnectionStatusPublisherKey.watchVPNConnectionStatusChanges)
+                    .dependency(\.getServerById, VpnServerGetter.getServerById)
+                    .dependency(\.settingsStorage, SettingsStorageKey.userDefaults)
+#if targetEnvironment(simulator)
+                    .dependency(\.connectToVPN, SimulatorHelper.shared.connect)
+                    .dependency(\.disconnectVPN, SimulatorHelper.shared.disconnect)
+#else
+                    .dependency(\.connectToVPN, ConnectToVPNKey.bridgedConnect)
+                    .dependency(\.disconnectVPN, DisconnectVPNKey.bridgedDisconnect)
+#endif
+                    ._printChanges()
+            }
         )
     }
 

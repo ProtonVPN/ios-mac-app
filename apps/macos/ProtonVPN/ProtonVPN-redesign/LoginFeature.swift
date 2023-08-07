@@ -21,7 +21,7 @@
 import Foundation
 import ComposableArchitecture
 
-public struct LoginFeature: ReducerProtocol {
+public struct LoginFeature: Reducer {
     public struct State: Equatable {
         var initialError: String?
     }
@@ -31,7 +31,7 @@ public struct LoginFeature: ReducerProtocol {
         case loginButtonPressed(username: String, password: String)
     }
 
-    public var body: some ReducerProtocolOf<LoginFeature> {
+    public var body: some ReducerOf<LoginFeature> {
         Reduce { state, action in
             switch action {
             case .loginButtonPressed:

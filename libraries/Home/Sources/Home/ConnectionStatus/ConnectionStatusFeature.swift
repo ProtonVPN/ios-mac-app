@@ -19,7 +19,7 @@
 import ComposableArchitecture
 import VPNAppCore
 
-public struct ConnectionStatusFeature: ReducerProtocol {
+public struct ConnectionStatusFeature: Reducer {
     public struct State: Equatable {
         public var protectionState: ProtectionState
 
@@ -37,7 +37,7 @@ public struct ConnectionStatusFeature: ReducerProtocol {
 
     public init() { }
 
-    public var body: some ReducerProtocolOf<Self> {
+    public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
 

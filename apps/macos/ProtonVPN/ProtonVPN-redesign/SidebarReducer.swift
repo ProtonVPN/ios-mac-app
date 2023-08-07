@@ -24,7 +24,7 @@ import Home
 import Home_macOS
 import VPNAppCore
 
-struct SidebarReducer: ReducerProtocol {
+struct SidebarReducer: Reducer {
 
     public typealias ActionSender = (Action) -> Void
     
@@ -39,7 +39,7 @@ struct SidebarReducer: ReducerProtocol {
         case home(HomeFeature.Action)
     }
 
-    var body: some ReducerProtocolOf<Self> {
+    var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .home(.connect(let specs)):

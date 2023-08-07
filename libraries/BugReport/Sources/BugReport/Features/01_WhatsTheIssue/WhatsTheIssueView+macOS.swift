@@ -72,7 +72,7 @@ struct WhatsTheIssueView_Previews: PreviewProvider {
 
         return Group {
             WhatsTheIssueView(store: Store(initialState: WhatsTheIssueFeature.State(categories: bugReport.model.categories),
-                                           reducer: WhatsTheIssueFeature()
+                                           reducer: { WhatsTheIssueFeature() }
                                           )
             )
             .frame(width: 400.0)

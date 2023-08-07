@@ -28,8 +28,8 @@ final class ResultTests: XCTestCase {
 
         let store = TestStore(
             initialState: BugReportResultFeature.State(error: nil),
-            reducer: BugReportResultFeature(),
-            prepareDependencies: {
+            reducer: { BugReportResultFeature() },
+            withDependencies: {
                 $0.finishBugReport = {
                     expectationDelegateIsCalled.fulfill()
                 }
@@ -46,8 +46,8 @@ final class ResultTests: XCTestCase {
 
         let store = TestStore(
             initialState: BugReportResultFeature.State(error: nil),
-            reducer: BugReportResultFeature(),
-            prepareDependencies: {
+            reducer: { BugReportResultFeature() },
+            withDependencies: {
                 $0.troubleshoot = {
                     expectationDelegateIsCalled.fulfill()
                 }

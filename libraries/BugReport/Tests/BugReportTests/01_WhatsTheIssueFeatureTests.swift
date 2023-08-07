@@ -37,7 +37,7 @@ final class WhatsTheIssueFeatureTests: XCTestCase {
     func testCategorySelectionShowsQuickFixesIfPossible() async throws {
         let store = TestStore(
             initialState: WhatsTheIssueFeature.State(categories: delegate.model.categories),
-            reducer: WhatsTheIssueFeature()
+            reducer: { WhatsTheIssueFeature() }
         )
 
         let category = categoryWithQuickFixes
@@ -54,7 +54,7 @@ final class WhatsTheIssueFeatureTests: XCTestCase {
     func testCategorySelectionShowsFormIfNoQuickFixesProvided() async throws {
         let store = TestStore(
             initialState: WhatsTheIssueFeature.State(categories: delegate.model.categories),
-            reducer: WhatsTheIssueFeature()
+            reducer: { WhatsTheIssueFeature() }
         )
 
         let category = categoryWithoutQuickFixes

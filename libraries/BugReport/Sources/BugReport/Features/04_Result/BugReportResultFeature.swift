@@ -20,7 +20,7 @@ import Foundation
 import ComposableArchitecture
 import Dependencies
 
-struct BugReportResultFeature: ReducerProtocol {
+struct BugReportResultFeature: Reducer {
 
     struct State: Equatable {
         var error: String?
@@ -32,11 +32,11 @@ struct BugReportResultFeature: ReducerProtocol {
         case troubleshoot
     }
 
-    var body: some ReducerProtocolOf<Self> {
+    var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .finish:
-                return .fireAndForget(priority: .userInitiated) {
+                return .run(priority: .userInitiated) { _ in
                     @Dependency(\.finishBugReport) var finish
                     finish()
                 }
@@ -46,7 +46,7 @@ struct BugReportResultFeature: ReducerProtocol {
                 return .none
 
             case .troubleshoot:
-                return .fireAndForget(priority: .userInitiated) {
+                return .run(priority: .userInitiated) { _ in
                     @Dependency(\.troubleshoot) var troubleshoot
                     troubleshoot()
                 }

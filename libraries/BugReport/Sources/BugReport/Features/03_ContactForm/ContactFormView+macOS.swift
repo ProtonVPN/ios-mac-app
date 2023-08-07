@@ -95,15 +95,15 @@ struct ContactFormView_Previews: PreviewProvider {
 
         return Group {
             ContactFormView(store: Store(initialState: ContactFormFeature.State(fields: bugReport.model.categories[0].inputFields, category: "aa"),
-                                         reducer: ContactFormFeature()))
+                                         reducer: { ContactFormFeature() }))
             .previewDisplayName("Empty form")
 
             ContactFormView(store: Store(initialState: ContactFormFeature.State(fields: formFields, isSending: false),
-                                         reducer: ContactFormFeature()))
+                                         reducer: { ContactFormFeature() }))
             .previewDisplayName("Short form")
 
             ContactFormView(store: Store(initialState: ContactFormFeature.State(fields: formFields, isSending: true),
-                                         reducer: ContactFormFeature()))
+                                         reducer: { ContactFormFeature() }))
             .previewDisplayName("Loading")
 
         }

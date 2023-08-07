@@ -56,7 +56,7 @@ final class ContactFormTests: XCTestCase {
 
         let store = TestStore(
             initialState: ContactFormFeature.State(fields: [shortStringField, longStringField, boolField], category: "Category"),
-            reducer: ContactFormFeature()
+            reducer: { ContactFormFeature() }
         )
 
         // Short String
@@ -83,8 +83,8 @@ final class ContactFormTests: XCTestCase {
         let store = TestStore(
             // ContactFormFeature.State initialiser automatically adds few fields, like email, which is mandatory
             initialState: ContactFormFeature.State(fields: [], category: "Category"),
-            reducer: ContactFormFeature(),
-            prepareDependencies: {
+            reducer: { ContactFormFeature() },
+            withDependencies: {
                 $0.sendBugReport = { bugReportResult async throws in
                     XCTAssertEqual(bugReportResult.email, "email@hotmail.com")
                     try await Task.sleep(nanoseconds: UInt64(1)) // Let's make this truly async
@@ -123,8 +123,8 @@ final class ContactFormTests: XCTestCase {
         let store = TestStore(
             // ContactFormFeature.State initialiser automatically adds few fields, like email, which is mandatory
             initialState: ContactFormFeature.State(fields: [], category: "Category"),
-            reducer: ContactFormFeature(),
-            prepareDependencies: {
+            reducer: { ContactFormFeature() },
+            withDependencies: {
                 $0.sendBugReport = { bugReportResult async throws in
                     XCTAssertEqual(bugReportResult.email, "email@hotmail.com")
                     try await Task.sleep(nanoseconds: UInt64(1)) // Let's make this truly async

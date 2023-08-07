@@ -46,7 +46,7 @@ struct NetShieldSettingsView_Previews: PreviewProvider {
     static var previews: some View {
         NetShieldSettingsView(store: Store(
             initialState: .on,
-            reducer: NetShieldSettingsFeature()
+            reducer: { NetShieldSettingsFeature() }
         ))
     }
 }

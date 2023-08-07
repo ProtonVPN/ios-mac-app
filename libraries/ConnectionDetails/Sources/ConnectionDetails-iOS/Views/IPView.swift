@@ -91,9 +91,8 @@ public struct IPView: View {
 
 struct IPView_Previews: PreviewProvider {
     static var previews: some View {
-        IPView(store: Store(initialState: IPViewFeature.State(localIP: "127.0.0.1",
-                                                              vpnIp: "102.107.197.6"),
-                            reducer: IPViewFeature()))
+        IPView(store: .init(initialState: .init(localIP: "127.0.0.1", vpnIp: "102.107.197.6"),
+                            reducer: { IPViewFeature() }))
         .colorScheme(.dark)
     }
 }

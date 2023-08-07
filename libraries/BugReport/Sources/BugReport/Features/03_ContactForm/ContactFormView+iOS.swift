@@ -129,16 +129,17 @@ struct ContactFormView_Previews: PreviewProvider {
         let formFields = IdentifiedArrayOf(uniqueElements: [FormInputField(inputField: bugReport.model.categories[0].inputFields[0], stringValue: "Entered value")])
 
         return Group {
-            ContactFormView(store: Store(initialState: ContactFormFeature.State(fields: bugReport.model.categories[0].inputFields, category: "aa"),
-                                         reducer: ContactFormFeature()))
+            ContactFormView(store: Store(initialState: .init(fields: bugReport.model.categories[0].inputFields,
+                                                             category: "aa"),
+                                         reducer: { ContactFormFeature() }))
             .previewDisplayName("Empty form")
 
             ContactFormView(store: Store(initialState: ContactFormFeature.State(fields: formFields, isSending: false),
-                                         reducer: ContactFormFeature()))
+                                         reducer: { ContactFormFeature() }))
             .previewDisplayName("Short form")
 
             ContactFormView(store: Store(initialState: ContactFormFeature.State(fields: formFields, isSending: true),
-                                         reducer: ContactFormFeature()))
+                                         reducer: { ContactFormFeature() }))
             .previewDisplayName("Loading")
 
         }

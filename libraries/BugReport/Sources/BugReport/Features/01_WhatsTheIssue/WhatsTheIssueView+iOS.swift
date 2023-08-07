@@ -73,11 +73,11 @@ public struct WhatsTheIssueView: View {
             SwitchStore(routeStore) { state in
                 switch state {
                 case .quickFixes:
-                    CaseLet(state: /WhatsTheIssueFeature.Route.State.quickFixes,
+                    CaseLet(/WhatsTheIssueFeature.Route.State.quickFixes,
                             action: WhatsTheIssueFeature.Route.Action.quickFixes,
                             then: { store in
 
-                        NavigationLink(unwrapping: viewStore.binding(get: { _ in store.scope(state: { $0 }) },
+                        NavigationLink(unwrapping: viewStore.binding(get: { _ in store.scope(state: { $0 }, action: { $0 }) },
                                                                      send: WhatsTheIssueFeature.Action.quickFixesDeselected),
                                        onNavigate: { _ in },
                                        destination: { _ in QuickFixesView(store: store) },
@@ -85,11 +85,11 @@ public struct WhatsTheIssueView: View {
                     })
 
                 case .contactForm:
-                    CaseLet(state: /WhatsTheIssueFeature.Route.State.contactForm,
+                    CaseLet(/WhatsTheIssueFeature.Route.State.contactForm,
                             action: WhatsTheIssueFeature.Route.Action.contactForm,
                             then: { store in
 
-                        NavigationLink(unwrapping: viewStore.binding(get: { _ in store.scope(state: { $0 }) },
+                        NavigationLink(unwrapping: viewStore.binding(get: { _ in store.scope(state: { $0 }, action: { $0 }) },
                                                                      send: WhatsTheIssueFeature.Action.contactFormDeselected),
                                        onNavigate: { _ in },
                                        destination: { _ in ContactFormView(store: store) },
@@ -113,7 +113,7 @@ struct WhatsTheIssueView_Previews: PreviewProvider {
 
         return Group {
             WhatsTheIssueView(store: Store(initialState: WhatsTheIssueFeature.State(categories: bugReport.model.categories),
-                                           reducer: WhatsTheIssueFeature()
+                                           reducer: { WhatsTheIssueFeature() }
                                           )
             )
         }

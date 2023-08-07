@@ -22,7 +22,7 @@ import Dependencies
 import VPNAppCore
 import VPNShared
 
-public struct ProtocolSettingsFeature: ReducerProtocol {
+public struct ProtocolSettingsFeature: Reducer {
     @Dependency(\.disconnectVPN) var disconnectVPN
     @Dependency(\.connectToVPN) var connectVPN
     @Dependency(\.settingsStorage) var storage
@@ -52,7 +52,7 @@ public struct ProtocolSettingsFeature: ReducerProtocol {
         case reconnectionAlertDismissed
     }
 
-    public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+    public func reduce(into state: inout State, action: Action) -> Effect<Action> {
         switch action {
         case let .protocolTapped(`protocol`):
             if state.protocol == `protocol` {

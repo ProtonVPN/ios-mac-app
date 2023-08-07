@@ -111,11 +111,11 @@ struct BugReportResultView_Previews: PreviewProvider {
         return Group {
 
             BugReportResultView(store: Store(initialState: BugReportResultFeature.State(error: nil),
-                                             reducer: BugReportResultFeature()))
+                                             reducer: { BugReportResultFeature() }))
             .previewDisplayName("Success")
 
             BugReportResultView(store: Store(initialState: BugReportResultFeature.State(error: "Just an error"),
-                                             reducer: BugReportResultFeature()))
+                                             reducer: { BugReportResultFeature() }))
             .previewDisplayName("Error")
         }
     }
