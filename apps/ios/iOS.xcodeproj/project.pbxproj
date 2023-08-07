@@ -754,7 +754,6 @@
 		4CF298092A7D3B8E00DEB23F /* ro.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ro.lproj; sourceTree = "<group>"; };
 		4CF2980A2A7D3B8E00DEB23F /* de.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = de.lproj; sourceTree = "<group>"; };
 		4CF2980B2A7D3B8E00DEB23F /* hu.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = hu.lproj; sourceTree = "<group>"; };
-		4CF2980C2A7D3B8E00DEB23F /* less */ = {isa = PBXFileReference; lastKnownFileType = folder; path = less; sourceTree = "<group>"; };
 		4CF2980D2A7D3B8E00DEB23F /* pt.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = pt.lproj; sourceTree = "<group>"; };
 		4CF2980E2A7D3B8E00DEB23F /* uk.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = uk.lproj; sourceTree = "<group>"; };
 		4CF2980F2A7D3B8E00DEB23F /* pt-BR.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "pt-BR.lproj"; sourceTree = "<group>"; };
@@ -1500,7 +1499,6 @@
 				4CF297FE2A7D3B8D00DEB23F /* id.lproj */,
 				4CF298112A7D3B8E00DEB23F /* it.lproj */,
 				4CF298002A7D3B8D00DEB23F /* ja.lproj */,
-				4CF2980C2A7D3B8E00DEB23F /* less */,
 				4CF298012A7D3B8D00DEB23F /* nl.lproj */,
 				4CF298022A7D3B8D00DEB23F /* pl.lproj */,
 				4CF2980F2A7D3B8E00DEB23F /* pt-BR.lproj */,
