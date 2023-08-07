@@ -348,7 +348,7 @@ public class VpnGateway: VpnGatewayProtocol {
     public func connect(with request: ConnectionRequest?) {
         let `protocol` = request?.connectionProtocol ?? globalConnectionProtocol
 
-        if `protocol`.isDeprecated {
+        if `protocol`.isDeprecated && propertiesManager.featureFlags.enforceDeprecatedProtocols {
             showProtocolDeprecatedAlert(request: request)
             return
         }
