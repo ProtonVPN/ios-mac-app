@@ -97,8 +97,8 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
 
     private func getFactory(safeMode: Bool?, tier: Int, safeModeFeatureFlag: Bool = true) -> PaidFeaturePropertyProviderFactoryMock {
         let propertiesManager = PropertiesManagerMock()
-        propertiesManager.featureFlags = FeatureFlags(smartReconnect: true, vpnAccelerator: true, netShield: true, netShieldStats: true, streamingServicesLogos: true, portForwarding: true, moderateNAT: true, pollNotificationAPI: true, serverRefresh: true, guestHoles: true, safeMode: safeModeFeatureFlag, promoCode: true, wireGuardTls: true, localOverrides: nil)
         let userTierProvider = UserTierProviderMock(tier)
+        propertiesManager.featureFlags = FeatureFlags(smartReconnect: true, vpnAccelerator: true, netShield: true, netShieldStats: true, streamingServicesLogos: true, portForwarding: true, moderateNAT: true, pollNotificationAPI: true, serverRefresh: true, guestHoles: true, safeMode: safeModeFeatureFlag, promoCode: true, wireGuardTls: true, enforceDeprecatedProtocols: false, localOverrides: nil)
         let authKeychain = MockAuthKeychain(context: .mainApp)
         authKeychain.setMockUsername(Self.username)
         testDefaults.set(safeMode, forKey: "SafeMode\(Self.username)")
