@@ -105,8 +105,8 @@ extension AppDelegate: NSApplicationDelegate {
                 DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
             }
 
-            // Check sysex approval and revert to IKE before login if necessary
-            self.checkSysexAndAdjustDefaultProtocol()
+            // Check sysex approval and protocol deprecation and revert to Smart or IKE if necessary
+            self.checkSysexAndAdjustGlobalProtocol()
 
             self.container.makeVpnManager().whenReady(queue: DispatchQueue.main) {
                 self.navigationService.launched()
@@ -190,8 +190,14 @@ extension AppDelegate: NSApplicationDelegate {
         }
     }
 
-    private func checkSysexAndAdjustDefaultProtocol() {
+    private func checkSysexAndAdjustGlobalProtocol() {
         let connectionProtocol = propertiesManager.connectionProtocol
+        if connectionProtocol.isDeprecated {
+            // At this time on MacOS, OpenVPN is the only deprecated protocol, and it requires sysex approval, so can
+            // safely fall back to smart protocol
+            propertiesManager.connectionProtocol = .smartProtocol
+        }
+
         guard connectionProtocol.requiresSystemExtension else {
             // Only check for sysex approval if settings have been modified to where the current protocol requires it
             // This prevents showing the scary 'System Extension Blocked' system dialog without sysex tour to explain it

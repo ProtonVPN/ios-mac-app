@@ -83,6 +83,10 @@ extension AppDelegate: UIApplicationDelegate {
         let sharedDefaults = UserDefaults(suiteName: AppConstants.AppGroups.main)!
         Storage.setSpecificDefaults(sharedDefaults, largeDataStorage: FileStorage.cached)
 
+        // Protocol check is placed here for parity with MacOS
+        adjustGlobalProtocolIfNecessary()
+        setupCoreIntegration()
+
 //        Waiting for https://github.com/getsentry/sentry-cocoa/issues/1892 to be fixed
 //        SentryHelper.setupSentry(dsn: ObfuscatedConstants.sentryDsniOS)
         
@@ -260,7 +264,13 @@ fileprivate extension AppDelegate {
                 
             propertiesManager.lastTimeForeground = nil
         }
-    }    
+    }
+
+    private func adjustGlobalProtocolIfNecessary() {
+        if propertiesManager.connectionProtocol.isDeprecated {
+            propertiesManager.connectionProtocol = .smartProtocol
+        }
+    }
 }
 
 extension AppDelegate {
