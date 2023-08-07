@@ -62,10 +62,10 @@ public struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(store: .init(initialState: .init(connections: [],
+        HomeView(store: .init(initialState: .init(connections: .init(),
                                                   connectionStatus: .init(protectionState: .protected(netShield: .random)),
                                                   vpnConnectionStatus: .connected(.init(location: .fastest,
-                                                                                        features: []), nil)),
-                              reducer: HomeFeature()))
+                                                                                        features: .init()), nil)),
+                              reducer: { HomeFeature() }))
     }
 }

@@ -21,7 +21,7 @@ import Foundation
 import ComposableArchitecture
 import SwiftUI
 
-struct ReportBugFeatureiOS: ReducerProtocol {
+struct ReportBugFeatureiOS: Reducer {
 
     struct State: Equatable {
         var whatsTheIssueState: WhatsTheIssueFeature.State
@@ -31,7 +31,7 @@ struct ReportBugFeatureiOS: ReducerProtocol {
         case whatsTheIssueAction(WhatsTheIssueFeature.Action)
     }
 
-    var body: some ReducerProtocolOf<Self> {
+    var body: some ReducerOf<Self> {
         Scope(state: \.whatsTheIssueState, action: /Action.whatsTheIssueAction) {
             WhatsTheIssueFeature()
         }
@@ -67,7 +67,7 @@ struct ReportBugView_Previews: PreviewProvider {
         let reducer = ReportBugFeatureiOS()
 
         return Group {
-            ReportBugView(store: Store(initialState: state, reducer: reducer))
+            ReportBugView(store: Store(initialState: state, reducer: { reducer }))
         }
     }
 }

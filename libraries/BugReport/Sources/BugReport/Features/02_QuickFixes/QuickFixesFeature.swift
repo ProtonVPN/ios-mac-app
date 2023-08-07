@@ -20,7 +20,7 @@ import Foundation
 import ComposableArchitecture
 import SwiftUI
 
-struct QuickFixesFeature: ReducerProtocol {
+struct QuickFixesFeature: Reducer {
 
     struct State: Equatable {
         var category: Category
@@ -35,7 +35,7 @@ struct QuickFixesFeature: ReducerProtocol {
         case contactFormDeselected
     }
 
-    var body: some ReducerProtocolOf<Self> {
+    var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .next:

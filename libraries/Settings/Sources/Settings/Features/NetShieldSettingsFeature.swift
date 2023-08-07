@@ -34,7 +34,7 @@ public enum NetShieldType: LocalizedStringConvertible {
     }
 }
 
-public struct NetShieldSettingsFeature: ReducerProtocol {
+public struct NetShieldSettingsFeature: Reducer {
     public typealias State = NetShieldType
 
     public init() { }
@@ -43,7 +43,7 @@ public struct NetShieldSettingsFeature: ReducerProtocol {
         case set(value: NetShieldType)
     }
 
-    public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+    public func reduce(into state: inout State, action: Action) -> Effect<Action> {
         switch action {
         case let .set(value):
             state = value

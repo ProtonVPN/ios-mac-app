@@ -69,10 +69,10 @@ struct ProtocolSettingsView: View {
             .background(Color(.background, .strong).ignoresSafeArea())
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle(Localizable.settingsTitleProtocol)
-            .alert(
-                self.store.scope(state: \.reconnectionAlert, action: { $0 }),
-                dismiss: .reconnectionAlertDismissed
-            )
+//            .alert(
+//                self.store.scope(state: \.reconnectionAlert, action: { $0 }),
+//                dismiss: .reconnectionAlertDismissed
+//            )
         }
     }
 

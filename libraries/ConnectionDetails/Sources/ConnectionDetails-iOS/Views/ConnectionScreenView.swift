@@ -25,7 +25,7 @@ import Theme
 import SharedViews
 import VPNShared
 
-public struct ConnectionScreenFeature: ReducerProtocol {
+public struct ConnectionScreenFeature: Reducer {
 
     public struct State: Equatable {
         public var ipViewState: IPViewFeature.State
@@ -125,7 +125,7 @@ public struct ConnectionScreenFeature: ReducerProtocol {
     public init() {
     }
 
-    public var body: some ReducerProtocolOf<Self> {
+    public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .watchConnectionStatus:
@@ -299,7 +299,7 @@ struct ConnectionScreenView_Previews: PreviewProvider {
                             city: "City"
                         )
                     ),
-                    reducer: ConnectionScreenFeature()
+                    reducer: { ConnectionScreenFeature() }
                 )
             )
         }

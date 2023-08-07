@@ -34,7 +34,7 @@ public enum KillSwitchState: LocalizedStringConvertible {
     }
 }
 
-public struct KillSwitchSettingsFeature: ReducerProtocol {
+public struct KillSwitchSettingsFeature: Reducer {
 
     public typealias State = KillSwitchState
 
@@ -44,7 +44,7 @@ public struct KillSwitchSettingsFeature: ReducerProtocol {
         case set(value: KillSwitchState)
     }
 
-    public func reduce(into state: inout KillSwitchState, action: Action) -> EffectTask<Action> {
+    public func reduce(into state: inout KillSwitchState, action: Action) -> Effect<Action> {
         switch action {
         case let .set(value):
             state = value

@@ -153,7 +153,7 @@ struct ConnectionCard_Previews: PreviewProvider {
     static var previews: some View {
         let store: StoreOf<HomeFeature> = .init(initialState:
             .init(connections: [
-                .init(
+                RecentConnection(
                     pinned: false,
                     underMaintenance: false,
                     connectionDate: .now,
@@ -162,7 +162,7 @@ struct ConnectionCard_Previews: PreviewProvider {
             ],
                   connectionStatus: .init(protectionState: .protected(netShield: .random)),
                   vpnConnectionStatus: .disconnected),
-            reducer: HomeFeature()
+                                                reducer: { HomeFeature() }
         )
         WithViewStore(store, observe: { $0 }) { store in
             List {

@@ -20,7 +20,7 @@ import Foundation
 
 import ComposableArchitecture
 
-public struct SettingsFeature: ReducerProtocol {
+public struct SettingsFeature: Reducer {
 
     public init() { }
 
@@ -82,7 +82,7 @@ public struct SettingsFeature: ReducerProtocol {
         // case about // MacOS only
     }
 
-    public var body: some ReducerProtocolOf<Self> {
+    public var body: some ReducerOf<Self> {
         Scope(state: \.netShield, action: /Action.netShield) { NetShieldSettingsFeature() }
         Scope(state: \.killSwitch, action: /Action.killSwitch) { KillSwitchSettingsFeature() }
         Scope(state: \.protocol, action: /Action.protocol) { ProtocolSettingsFeature() }

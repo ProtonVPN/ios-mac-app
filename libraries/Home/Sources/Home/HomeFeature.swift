@@ -28,7 +28,7 @@ import VPNAppCore
 
 import CasePaths
 
-public struct HomeFeature: ReducerProtocol {
+public struct HomeFeature: Reducer {
     /// - Note: might want this as a property of all Reducer types
     public typealias ActionSender = (Action) -> Void
 
@@ -84,7 +84,7 @@ public struct HomeFeature: ReducerProtocol {
         case connect
     }
 
-    public var body: some ReducerProtocolOf<Self> {
+    public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case let .connect(spec):

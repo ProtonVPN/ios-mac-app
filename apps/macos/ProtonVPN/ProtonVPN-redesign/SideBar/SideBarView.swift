@@ -109,7 +109,7 @@ struct SideBarView_Previews: PreviewProvider {
     @Dependency(\.initialStateProvider) static var initialStateProvider
     static var previews: some View {
         SideBarView(store: .init(initialState: initialStateProvider.initialState,
-                                 reducer: SidebarReducer()))
+                                 reducer: { SidebarReducer() }))
     }
 }
 

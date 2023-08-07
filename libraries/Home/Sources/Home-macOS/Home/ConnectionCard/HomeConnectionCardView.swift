@@ -152,13 +152,13 @@ struct ConnectionCard_Previews: PreviewProvider {
         )
     }
     static var previews: some View {
-        let storeConnected: StoreOf<HomeFeature> = .init(initialState: .connected, reducer: HomeFeature())
-        let storeConnecting: StoreOf<HomeFeature> = .init(initialState: .connecting, reducer: HomeFeature())
-        let storeDisconnected: StoreOf<HomeFeature> = .init(initialState: .disconnected, reducer: HomeFeature())
-        let storeLoadingConnInfo: StoreOf<HomeFeature> = .init(initialState: .loadingConnectionInfo, reducer: HomeFeature())
-        let secureCoreFastest: StoreOf<HomeFeature> = .init(initialState: .secureCoreFastest, reducer: HomeFeature())
-        let secureCoreFastestHop: StoreOf<HomeFeature> = .init(initialState: .secureCoreFastestHop, reducer: HomeFeature())
-        let secureCoreHopToVia: StoreOf<HomeFeature> = .init(initialState: .secureCoreHopToVia, reducer: HomeFeature())
+        let storeConnected: StoreOf<HomeFeature> = .init(initialState: .connected, reducer: { HomeFeature() })
+        let storeConnecting: StoreOf<HomeFeature> = .init(initialState: .connecting, reducer: { HomeFeature() })
+        let storeDisconnected: StoreOf<HomeFeature> = .init(initialState: .disconnected, reducer: { HomeFeature() })
+        let storeLoadingConnInfo: StoreOf<HomeFeature> = .init(initialState: .loadingConnectionInfo, reducer: { HomeFeature() })
+        let secureCoreFastest: StoreOf<HomeFeature> = .init(initialState: .secureCoreFastest, reducer: { HomeFeature() })
+        let secureCoreFastestHop: StoreOf<HomeFeature> = .init(initialState: .secureCoreFastestHop, reducer: { HomeFeature() })
+        let secureCoreHopToVia: StoreOf<HomeFeature> = .init(initialState: .secureCoreHopToVia, reducer: { HomeFeature() })
         List {
             WithViewStore(storeConnected, observe: { $0 }, content: card)
             WithViewStore(storeConnecting, observe: { $0 }, content: card)

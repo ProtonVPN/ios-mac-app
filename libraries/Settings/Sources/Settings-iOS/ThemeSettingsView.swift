@@ -73,9 +73,9 @@ struct ThemeSettingsView: View {
 
 struct ThemeSettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        ThemeSettingsView(store: StoreOf<ThemeSettingsFeature>(
+        ThemeSettingsView(store: .init(
             initialState: .light,
-            reducer: ThemeSettingsFeature()
+            reducer: { ThemeSettingsFeature() }
         ))
     }
 }

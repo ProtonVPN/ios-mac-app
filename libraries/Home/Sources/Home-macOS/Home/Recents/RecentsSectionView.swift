@@ -66,7 +66,7 @@ struct HomeRecentsSectionView_Previews: PreviewProvider {
     static var previews: some View {
         let store: StoreOf<HomeFeature> = .init(initialState:
             .init(connections: [
-                .pinnedConnection, // first is ignored
+                RecentConnection.pinnedConnection, // first is ignored
                 .pinnedConnection,
                 .connectionRegion,
                 .connectionRegionPinned, // maintenance
@@ -75,7 +75,7 @@ struct HomeRecentsSectionView_Previews: PreviewProvider {
             ],
                   connectionStatus: .init(protectionState: .protected(netShield: .random)),
                   vpnConnectionStatus: .disconnected),
-                                                reducer: HomeFeature()
+                                                reducer: { HomeFeature() }
         )
         WithViewStore(store, observe: { $0 }) { store in
             RecentsSectionView(

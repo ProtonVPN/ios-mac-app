@@ -34,7 +34,7 @@ final class QuickFixesTests: XCTestCase {
 
         let store = TestStore(
             initialState: QuickFixesFeature.State(category: category),
-            reducer: QuickFixesFeature()
+            reducer: { QuickFixesFeature() }
         )
 
         // Open form

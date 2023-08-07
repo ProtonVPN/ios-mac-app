@@ -57,7 +57,7 @@ struct ProtonVPNApp: App {
             SwitchStore(appReducer) { state in
                 switch state {
                 case .loggedIn:
-                    CaseLet(state: /AppReducer.State.loggedIn, action: AppReducer.Action.app) { appStore in
+                    CaseLet(/AppReducer.State.loggedIn, action: AppReducer.Action.app) { appStore in
                         SideBarView(store: appStore)
                     }
                     .onAppear {
@@ -69,7 +69,7 @@ struct ProtonVPNApp: App {
                         NSApp.activate(ignoringOtherApps: true)
                     }
                 case .notLoggedIn:
-                    CaseLet(state: /AppReducer.State.notLoggedIn, action: AppReducer.Action.showLogin) { appStore in
+                    CaseLet(/AppReducer.State.notLoggedIn, action: AppReducer.Action.showLogin) { appStore in
                         LoginViewControllerRepresentable(store: appStore,
                                                          loginViewModel: LoginViewModel(factory: appDelegate.container,
                                                                                         initialError: nil))

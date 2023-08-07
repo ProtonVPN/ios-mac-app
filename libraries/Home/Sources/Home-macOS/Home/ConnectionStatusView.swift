@@ -134,13 +134,13 @@ struct ConnectionStatusView_Previews: PreviewProvider {
     static var previews: some View {
 
         ConnectionStatusView(store: .init(initialState: .init(protectionState: .protected(netShield: .random)),
-                                          reducer: ConnectionStatusFeature()))
+                                          reducer: { ConnectionStatusFeature() }))
         .previewDisplayName("Protected")
         ConnectionStatusView(store: .init(initialState: .init(protectionState: .unprotected(country: "Poland", ip: "192.168.1.0")),
-                                          reducer: ConnectionStatusFeature()))
+                                          reducer: { ConnectionStatusFeature() }))
         .previewDisplayName("Unprotected")
         ConnectionStatusView(store: .init(initialState: .init(protectionState: .protecting(country: "Poland", ip: "192.168.1.0")),
-                                          reducer: ConnectionStatusFeature()))
+                                          reducer: { ConnectionStatusFeature() }))
         .background(.black)
         .previewDisplayName("Protecting")
     }

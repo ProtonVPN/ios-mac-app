@@ -46,7 +46,7 @@ struct KillSwitchSettingsView_Previews: PreviewProvider {
     static var previews: some View {
         KillSwitchSettingsView(store: Store(
             initialState: .on,
-            reducer: KillSwitchSettingsFeature()
+            reducer: { KillSwitchSettingsFeature() }
         ))
     }
 }

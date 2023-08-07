@@ -33,7 +33,7 @@ extension ColorScheme: LocalizedStringConvertible {
     }
 }
 
-public struct ThemeSettingsFeature: ReducerProtocol {
+public struct ThemeSettingsFeature: Reducer {
     public typealias State = ColorScheme
 
     public init() { }
@@ -42,7 +42,7 @@ public struct ThemeSettingsFeature: ReducerProtocol {
         case set(colorScheme: State)
     }
 
-    public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+    public func reduce(into state: inout State, action: Action) -> Effect<Action> {
         switch action {
         case .set(let colorScheme):
             state = colorScheme

@@ -306,31 +306,31 @@ struct Recents_Previews: PreviewProvider {
     static var previews: some View {
         let store: StoreOf<HomeFeature> = .init(initialState:
             .init(connections: [
-                .init(
+                RecentConnection(
                     pinned: true,
                     underMaintenance: false,
                     connectionDate: .now,
                     connection: .init(location: .fastest, features: [])
                 ),
-                .init(
+                RecentConnection(
                     pinned: true,
                     underMaintenance: false,
                     connectionDate: .now,
                     connection: .init(location: .region(code: "CH"), features: [])
                 ),
-                .init(
+                RecentConnection(
                     pinned: false,
                     underMaintenance: false,
                     connectionDate: .now,
                     connection: .init(location: .region(code: "US"), features: [])
                 ),
-                .init(
+                RecentConnection(
                     pinned: false,
                     underMaintenance: false,
                     connectionDate: .now,
                     connection: .init(location: .secureCore(.fastestHop(to: "AR")), features: [])
                 ),
-                .init(
+                RecentConnection(
                     pinned: false,
                     underMaintenance: false,
                     connectionDate: .now,
@@ -338,7 +338,7 @@ struct Recents_Previews: PreviewProvider {
                 ),
             ],
                   connectionStatus: .init(protectionState: .protected(netShield: .random)), vpnConnectionStatus: .disconnected),
-            reducer: HomeFeature()
+                                                reducer: { HomeFeature() }
         )
         WithViewStore(store, observe: { $0 }) { store in
             ScrollView {
