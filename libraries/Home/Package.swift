@@ -28,11 +28,11 @@ let package = Package(
         .package(path: "../Ergonomics"),
         .package(
             url: "https://github.com/pointfreeco/swift-composable-architecture",
-            exact: "0.55.0"
+            exact: "1.0.0"
         ),
         .package(
             url: "https://github.com/pointfreeco/swift-case-paths",
-            exact: "0.14.1"
+            exact: "1.0.0"
         ),
         .package(
             url: "https://github.com/pointfreeco/swift-snapshot-testing",
@@ -40,7 +40,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/pointfreeco/swift-dependencies.git",
-            exact: "0.5.1"
+            exact: "1.0.0"
         ),
     ],
     targets: [

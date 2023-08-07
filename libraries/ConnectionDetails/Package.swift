@@ -32,7 +32,7 @@ let package = Package(
         .package(path: "../NEHelper"),
 
         // 3rd party
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "0.55.0"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.0.0"),
     ],
     targets: [
         .target(
