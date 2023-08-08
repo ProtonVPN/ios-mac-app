@@ -31,12 +31,12 @@ public struct ProtocolSettingsFeature: Reducer {
     public struct State: Equatable {
         public var `protocol`: ConnectionProtocol
         public var vpnConnectionStatus: VPNConnectionStatus
-        public var reconnectionAlert: AlertState<Action>?
+        @PresentationState public var reconnectionAlert: AlertState<Action.Alert>?
 
         public init(
             protocol: ConnectionProtocol,
             vpnConnectionStatus: VPNConnectionStatus,
-            reconnectionAlert: AlertState<Action>?
+            reconnectionAlert: AlertState<Action.Alert>?
         ) {
             self.protocol = `protocol`
             self.vpnConnectionStatus = vpnConnectionStatus
@@ -48,8 +48,11 @@ public struct ProtocolSettingsFeature: Reducer {
         case protocolTapped(ConnectionProtocol)
         case setProtocol(TaskResult<ConnectionProtocol>)
         case showReconnectionAlert(ConnectionProtocol)
-        case reconnectWith(ConnectionProtocol)
-        case reconnectionAlertDismissed
+        case reconnectionAlert(PresentationAction<Alert>)
+
+        public enum Alert: Equatable {
+            case reconnectWith(ConnectionProtocol)
+        }
     }
 
     public func reduce(into state: inout State, action: Action) -> Effect<Action> {
@@ -85,7 +88,7 @@ public struct ProtocolSettingsFeature: Reducer {
             }
             return .none
 
-        case let .reconnectWith(`protocol`):
+        case .reconnectionAlert(.presented(.reconnectWith(let `protocol`))):
             // This may require a blocking interface to at least disconnecting (maybe also connecting)
             return .run { send in
                 // let status = await connectionStatus()
@@ -99,7 +102,7 @@ public struct ProtocolSettingsFeature: Reducer {
                 return
             }
 
-        case .reconnectionAlertDismissed:
+        case .reconnectionAlert(.dismiss):
             state.reconnectionAlert = nil
             return .none
         }

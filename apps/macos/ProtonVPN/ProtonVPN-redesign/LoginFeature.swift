@@ -31,7 +31,7 @@ public struct LoginFeature: Reducer {
         case loginButtonPressed(username: String, password: String)
     }
 
-    public var body: some ReducerOf<LoginFeature> {
+    public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .loginButtonPressed:

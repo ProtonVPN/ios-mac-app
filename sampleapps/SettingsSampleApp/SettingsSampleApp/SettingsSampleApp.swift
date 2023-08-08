@@ -38,9 +38,11 @@ struct SettingsSampleApp: App {
                     protocol: .init(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil),
                     theme: .light
                 ),
-                reducer: SettingsFeature()
-                    ._printChanges()
-                    .dependency(\.settingsStorage, SettingsStorage(setConnectionProtocol: { _ in }))
+                reducer: {
+                    SettingsFeature()
+                        ._printChanges()
+                        .dependency(\.settingsStorage, SettingsStorage(setConnectionProtocol: { _ in }))
+                }
             ))
         }
     }
