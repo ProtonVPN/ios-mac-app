@@ -34,7 +34,6 @@ public struct HomeTabView: View {
 }
 
 public struct HomeView: View {
-//    typealias ActionSender = (HomeFeature.Action) -> ViewStoreTask
     let store: StoreOf<HomeFeature>
 
     static let mapHeight: CGFloat = 300

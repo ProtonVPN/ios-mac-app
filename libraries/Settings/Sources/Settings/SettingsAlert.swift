@@ -23,7 +23,7 @@ import VPNAppCore
 
 public enum SettingsAlert {
     @available(macOS 12, *)
-    public static func reconnectionAlertState(for protocol: ConnectionProtocol) -> AlertState<ProtocolSettingsFeature.Action> {
+    public static func reconnectionAlertState(for protocol: ConnectionProtocol) -> AlertState<ProtocolSettingsFeature.Action.Alert> {
         AlertState {
             TextState(Localizable.settingsProtocolAlertTitle)
         } actions: {
