@@ -17,19 +17,18 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import XCTest
+import Dependencies
 import VPNShared
 import VPNSharedTesting
 @testable import LegacyCommon
 
 final class NATTypePropertyProviderImplementationTests: XCTestCase {
     static let username = "user1"
-    let testDefaults = UserDefaults(suiteName: "test")!
 
     override func setUp() {
         super.setUp()
-
-        testDefaults.removeObject(forKey: "NATType\(Self.username)")
-        Storage.setSpecificDefaults(testDefaults, largeDataStorage: nil)
+        @Dependency(\.defaultsProvider) var provider
+        provider.getDefaults().removeObject(forKey: "NATType\(Self.username)")
     }
 
     func testReturnsSettingFromProperties() throws {
@@ -56,7 +55,8 @@ final class NATTypePropertyProviderImplementationTests: XCTestCase {
 
         for type in NATType.allCases {
             provider.natType = type
-            XCTAssertEqual(testDefaults.integer(forKey: "NATType\(Self.username)"), type.rawValue)
+            @Dependency(\.defaultsProvider) var defaultsProvider
+            XCTAssertEqual(defaultsProvider.getDefaults().integer(forKey: "NATType\(Self.username)"), type.rawValue)
             XCTAssertEqual(provider.natType, type)
         }
     }
@@ -75,15 +75,14 @@ final class NATTypePropertyProviderImplementationTests: XCTestCase {
         XCTAssertTrue(NATTypePropertyProviderImplementation(factory).isUserEligibleForNATTypeChange)
     }
 
-    // MARK: -
-
     private func getFactory(natType: NATType?, tier: Int) -> PaidFeaturePropertyProviderFactoryMock {
         let propertiesManager = PropertiesManagerMock()
         let userTierProvider = UserTierProviderMock(tier)
         let authKeychain = MockAuthKeychain(context: .mainApp)
         authKeychain.setMockUsername(Self.username)
 
-        testDefaults.set(natType?.rawValue, forKey: "NATType\(Self.username)")
+        @Dependency(\.defaultsProvider) var defaultsProvider
+        defaultsProvider.getDefaults().set(natType?.rawValue, forKey: "NATType\(Self.username)")
         return PaidFeaturePropertyProviderFactoryMock(propertiesManager: propertiesManager, userTierProviderMock: userTierProvider, authKeychainMock: authKeychain)
     }
 }

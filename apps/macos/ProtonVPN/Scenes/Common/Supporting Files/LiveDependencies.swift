@@ -1,7 +1,7 @@
 //
-//  Created on 2021-11-25.
+//  Created on 09/08/2023.
 //
-//  Copyright (c) 2021 Proton AG
+//  Copyright (c) 2023 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -20,18 +20,8 @@ import Foundation
 import Dependencies
 import VPNShared
 
-public extension PropertiesManager {
-    
-    func logCurrentState() {
-        let keysToLog = Set(Keys.allCases).subtracting([Keys.userLocation, Keys.streamingServices, Keys.servicePlans, Keys.defaultPlanDetails, Keys.streamingResourcesUrl])
-
-        @Dependency(\.defaultsProvider) var provider
-        var message = ""
-        for key in keysToLog {
-            let value = provider.getDefaults().value(forKeyPath: key.rawValue)
-            message += "\n \(key)=\(value.stringForLog);"
-        }
-        log.info("\(message.maskIPs)", category: .settings, event: .current)
-    }
-    
+extension DefaultsProvider: DependencyKey {
+    public static var liveValue: DefaultsProvider = DefaultsProvider(
+        getDefaults: { UserDefaults.standard }
+    )
 }

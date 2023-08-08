@@ -98,6 +98,7 @@
 		667E0E902A4EDA9000EE83ED /* SSOWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667E0E8F2A4EDA8F00EE83ED /* SSOWebViewController.swift */; };
 		667E0E922A4EE2DF00EE83ED /* SSOWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 667E0E912A4EE2DF00EE83ED /* SSOWebViewController.xib */; };
 		7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7518A5EF1EEF362900E1EB2B /* libc++.tbd */; };
+		AD8130FF2A85360800729E03 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FE2A85360800729E03 /* LiveDependencies.swift */; };
 		AD8C78AE29898403008AC0B5 /* AppSessionManagerImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8C78AD29898403008AC0B5 /* AppSessionManagerImplementationTests.swift */; };
 		ADE590CC2A616E4B00089165 /* ProtocolDeprecatedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE590CB2A616E4B00089165 /* ProtocolDeprecatedViewController.swift */; };
 		B22F32F8278DC07800DBB8CA /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F32F7278DC07800DBB8CA /* StringUtils.swift */; };
@@ -631,6 +632,7 @@
 		9284811B4C31B0BCAC0918BC /* WireguardMacProtocolFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WireguardMacProtocolFactory.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/VPN/WireguardMacProtocolFactory.swift; sourceTree = "<group>"; };
 		9FDB93D66CF4A7DB23EE7AA8 /* AnnouncementFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnouncementFeatureView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Announcement/Views/AnnouncementFeatureView.swift; sourceTree = "<group>"; };
 		A1E54F86CCDE59E21DC60F9A /* SysexGuideWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SysexGuideWindowController.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Windows/SysexGuideWindowController.swift; sourceTree = "<group>"; };
+		AD8130FE2A85360800729E03 /* LiveDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveDependencies.swift; sourceTree = "<group>"; };
 		AD8C78AD29898403008AC0B5 /* AppSessionManagerImplementationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionManagerImplementationTests.swift; sourceTree = "<group>"; };
 		ADE590CB2A616E4B00089165 /* ProtocolDeprecatedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolDeprecatedViewController.swift; sourceTree = "<group>"; };
 		B22F32F7278DC07800DBB8CA /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StringUtils.swift; path = "../../../macos/ProtonVPNUITests/Other classes/StringUtils.swift"; sourceTree = "<group>"; };
@@ -1905,6 +1907,7 @@
 			isa = PBXGroup;
 			children = (
 				D5D6A949230D296400A432D1 /* DependencyContainer.swift */,
+				AD8130FE2A85360800729E03 /* LiveDependencies.swift */,
 				EE4E7DF81F629195000F7D5E /* WindowController.swift */,
 			);
 			path = "Supporting Files";
@@ -3369,6 +3372,7 @@
 				EE74FCB01F5DD71400E266BC /* PopUpViewModel.swift in Sources */,
 				EE7874A51F3B6569001E261E /* WarningPopupViewController.swift in Sources */,
 				667E0E902A4EDA9000EE83ED /* SSOWebViewController.swift in Sources */,
+				AD8130FF2A85360800729E03 /* LiveDependencies.swift in Sources */,
 				D5906F1222D36035001BC074 /* AccountPlan+Extension.swift in Sources */,
 				EE8EF1F21F1FC71F0057CD94 /* OverviewItemViewModel.swift in Sources */,
 				4CA7BA512965E0040001C7E7 /* SecureCoreWarningViewModel.swift in Sources */,

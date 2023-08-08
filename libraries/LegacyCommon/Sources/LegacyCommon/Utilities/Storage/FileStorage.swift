@@ -17,10 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 import VPNShared
 
 // File-based DataStorage, suitable for persisting large amounts of data
-public class FileStorage: DataStorage {
+public class FileStorage {
     private let buildURL: (String) throws -> URL
 
     public init(urlBuilder: @escaping (String) throws -> URL) {
@@ -50,7 +51,18 @@ extension FileManager {
 }
 
 extension FileStorage {
-    public static var cached: DataStorage {
+    public static var cached: FileStorage {
         FileStorage(urlBuilder: { path in (try FileManager.cachesDirectoryURL).appendingPathComponent(path) })
     }
+}
+
+extension DataStorage: DependencyKey {
+
+    public static var liveValue: DataStorage = {
+        let cachesDirectoryFileStorage = FileStorage.cached
+        return DataStorage(
+            storeData: cachesDirectoryFileStorage.store,
+            getData: cachesDirectoryFileStorage.getData
+        )
+    }()
 }

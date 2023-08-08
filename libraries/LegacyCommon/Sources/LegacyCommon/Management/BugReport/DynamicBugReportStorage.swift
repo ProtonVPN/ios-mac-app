@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 import BugReport
 import VPNShared
 
@@ -31,30 +32,21 @@ public protocol DynamicBugReportStorage {
 }
 
 public class DynamicBugReportStorageUserDefaults: DynamicBugReportStorage {
-    
-    private let userDefaults: Storage
+
+    @Dependency(\.storage) var storage
     private let storageKey: String = "DynamicBugReport"
-
-    public typealias Factory = StorageFactory
-
-    public convenience init(_ factory: Factory) {
-        self.init(userDefaults: factory.makeStorage())
-    }
     
-    public init(userDefaults: Storage) {
-        self.userDefaults = userDefaults
-    }
+    public init() { }
     
     public func fetch() -> BugReportModel? {
-        userDefaults.getDecodableValue(BugReportModel.self, forKey: storageKey)
+        try? storage.get(BugReportModel.self, forKey: storageKey)
     }
     
     public func store(_ bugReport: BugReportModel) {
-        userDefaults.setEncodableValue(bugReport, forKey: storageKey)
+        try? storage.set(bugReport, forKey: storageKey)
     }
     
     public func clear() {
-        userDefaults.removeObject(forKey: storageKey)
+        storage.removeObject(forKey: storageKey)
     }
-    
 }

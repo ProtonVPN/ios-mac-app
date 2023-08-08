@@ -49,7 +49,6 @@ class SiriHandlerViewModel {
     lazy var appStateManager: AppStateManager = {
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
         let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN",
-                                                        storage: Storage(),
                                                         vpnKeysGenerator: ExtensionVPNKeysGenerator())
         return AppStateManagerImplementation(vpnApiService: vpnApiService,
                                              vpnManager: vpnManager,
@@ -102,9 +101,6 @@ class SiriHandlerViewModel {
         setUpNSCoding(withModuleName: "ProtonVPN")
         SiriHelper.disconnectIntent = DisconnectIntent()
         SiriHelper.quickConnectIntent = QuickConnectIntent()
-
-        let sharedDefaults = UserDefaults(suiteName: AppConstants.AppGroups.main)!
-        Storage.setSpecificDefaults(sharedDefaults, largeDataStorage: FileStorage.cached)
 
         self.doh = doh
         self.profileManager = profileManager

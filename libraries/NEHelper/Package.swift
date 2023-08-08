@@ -37,7 +37,7 @@ let package = Package(
                 .product(name: "PMLogger", package: "PMLogger"),
                 .product(name: "KeychainAccess", package: "KeychainAccess"),
                 .product(name: "LocalFeatureFlags", package: "LocalFeatureFlags"),
-                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "Dependencies", package: "swift-dependencies")
             ]
         ),
         .target(

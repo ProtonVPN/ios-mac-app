@@ -20,7 +20,7 @@ import Foundation
 import VPNShared
 
 public protocol PaidFeaturePropertyProvider: AnyObject {
-    typealias Factory = PropertiesManagerFactory & UserTierProviderFactory & AuthKeychainHandleFactory & StorageFactory
+    typealias Factory = PropertiesManagerFactory & UserTierProviderFactory & AuthKeychainHandleFactory
     var factory: Factory { get }
     var currentUserTier: Int { get }
 

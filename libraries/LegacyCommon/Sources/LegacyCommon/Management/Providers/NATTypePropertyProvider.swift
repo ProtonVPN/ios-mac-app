@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 import VPNShared
 
 public protocol NATTypePropertyProvider: PaidFeaturePropertyProvider {
@@ -38,12 +39,10 @@ public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
 
     public static let natTypeNotification: Notification.Name = Notification.Name("NATTypeChanged")
 
-    private let storage: Storage
     private let key = "NATType"
 
     public required init(_ factory: Factory) {
         self.factory = factory
-        self.storage = factory.makeStorage()
     }
 
     public var natType: NATType {
@@ -56,7 +55,8 @@ public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
                 return .default
             }
 
-            if let value = storage.defaults.object(forKey: key + username) as? Int, let natType = NATType(rawValue: value) {
+            @Dependency(\.defaultsProvider) var provider
+            if let value = provider.getDefaults().object(forKey: key + username) as? Int, let natType = NATType(rawValue: value) {
                 return natType
             }
 
@@ -67,7 +67,8 @@ public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
                 return
             }
 
-            storage.setValue(newValue.rawValue, forKey: key + username)
+            @Dependency(\.defaultsProvider) var provider
+            provider.getDefaults().setValue(newValue.rawValue, forKey: key + username)
             executeOnUIThread {
                 NotificationCenter.default.post(name: type(of: self).natTypeNotification, object: newValue, userInfo: nil)
             }

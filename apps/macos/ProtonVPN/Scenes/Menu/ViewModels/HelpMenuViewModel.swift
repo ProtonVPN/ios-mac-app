@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Dependencies
 import LegacyCommon
 import PMLogger
 import VPNShared
@@ -124,8 +125,9 @@ class HelpMenuViewModel {
 
             // app data
             if let bundleIdentifier = Bundle.main.bundleIdentifier {
-                Storage.userDefaults().removePersistentDomain(forName: bundleIdentifier)
-                Storage.userDefaults().synchronize()
+                @Dependency(\.defaultsProvider) var provider
+                provider.getDefaults().removePersistentDomain(forName: bundleIdentifier)
+                provider.getDefaults().synchronize()
             }
 
             // Delete Caches folder

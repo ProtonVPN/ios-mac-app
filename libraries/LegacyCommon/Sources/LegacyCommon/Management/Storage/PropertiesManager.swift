@@ -20,6 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 import ProtonCoreDataModel
 import VPNShared
 import VPNAppCore
@@ -239,16 +240,16 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public var onAlternativeRoutingChange: ((Bool) -> Void)?
 
     public var blockOneTimeAnnouncement: Bool {
-        storage.defaults.bool(forKey: Keys.blockOneTimeAnnouncement.rawValue)
+        defaults.bool(forKey: Keys.blockOneTimeAnnouncement.rawValue)
     }
 
     public var blockUpdatePrompt: Bool {
-        storage.defaults.bool(forKey: Keys.blockUpdatePrompt.rawValue)
+        defaults.bool(forKey: Keys.blockUpdatePrompt.rawValue)
     }
 
     public func getAutoConnect(for username: String) -> (enabled: Bool, profileId: String?) {
-        let autoConnectEnabled = storage.defaults.bool(forKey: Keys.autoConnect.rawValue)
-        let profileId = storage.defaults.string(forKey: Keys.autoConnectProfile.rawValue + username)
+        let autoConnectEnabled = defaults.bool(forKey: Keys.autoConnect.rawValue)
+        let profileId = defaults.string(forKey: Keys.autoConnectProfile.rawValue + username)
         return (autoConnectEnabled, profileId)
     }
 
@@ -261,7 +262,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
     public func getTelemetryUsageData(for username: String?) -> Bool {
         guard let username,
-              let string = storage.defaults.string(forKey: Keys.telemetryUsageData.rawValue + username),
+              let string = defaults.string(forKey: Keys.telemetryUsageData.rawValue + username),
               let usageData = Bool(string) else {
             return false // default value for usage data if the user didn't get through the onboarding
         }
@@ -281,7 +282,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     
     public func getTelemetryCrashReports(for username: String?) -> Bool {
         guard let username,
-              let string = storage.defaults.string(forKey: Keys.telemetryCrashReports.rawValue + username),
+              let string = defaults.string(forKey: Keys.telemetryCrashReports.rawValue + username),
               let crashReports = Bool(string) else {
             return true // default value for crash reports if the user didn't get through the onboarding
         }
@@ -294,8 +295,8 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
     // Use to do first time connecting stuff if needed
     @BoolProperty(.connectOnDemand, notifyChangesWith: PropertiesManager.hasConnectedNotification)
-    
     public var hasConnected: Bool
+
     @Property(.lastIkeConnection,
               notifyChangesWith: PropertiesManager.activeConnectionChangedNotification)
     public var lastIkeConnection: ConnectionConfiguration?
@@ -312,7 +313,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     @Property(.lastConnectionRequest) public var lastConnectionRequest: ConnectionRequest?
 
     public func getLastAccountPlan(for username: String) -> AccountPlan? {
-        guard let result = storage.defaults.string(forKey: Keys.lastUserAccountPlan.rawValue + username) else {
+        guard let result = defaults.string(forKey: Keys.lastUserAccountPlan.rawValue + username) else {
             return nil
         }
         return AccountPlan(rawValue: result)
@@ -323,7 +324,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     }
 
     public func getQuickConnect(for username: String) -> String? {
-        storage.defaults.string(forKey: Keys.quickConnectProfile.rawValue + username)
+        defaults.string(forKey: Keys.quickConnectProfile.rawValue + username)
     }
 
     public func setQuickConnect(for username: String, quickConnect: String?) {
@@ -377,7 +378,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     
     public var lastTimeForeground: Date? {
         get {
-            guard let timeSince1970 = storage.defaults.value(forKey: Keys.lastTimeForeground.rawValue) as? Double else { return nil }
+            guard let timeSince1970 = defaults.value(forKey: Keys.lastTimeForeground.rawValue) as? Double else { return nil }
             return Date(timeIntervalSince1970: timeSince1970)
         }
         set {
@@ -392,7 +393,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public var maintenanceServerRefreshIntereval: Int {
         get {
             if storage.contains(Keys.maintenanceServerRefreshIntereval.rawValue) {
-                return storage.defaults.integer(forKey: Keys.maintenanceServerRefreshIntereval.rawValue)
+                return defaults.integer(forKey: Keys.maintenanceServerRefreshIntereval.rawValue)
             } else {
                 return CoreAppConstants.Maintenance.defaultMaintenanceCheckTime
             }
@@ -416,7 +417,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
             #if os(iOS)
             guard #available(iOS 14.2, *) else { return false }
             #endif
-            return storage.defaults.bool(forKey: Keys.excludeLocalNetworks.rawValue)
+            return defaults.bool(forKey: Keys.excludeLocalNetworks.rawValue)
         }
         set {
             storage.setValue(newValue, forKey: Keys.excludeLocalNetworks.rawValue)
@@ -428,7 +429,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
     public var alternativeRouting: Bool {
         get {
-            return storage.defaults.bool(forKey: Keys.alternativeRouting.rawValue)
+            return defaults.bool(forKey: Keys.alternativeRouting.rawValue)
         }
         set {
             storage.setValue(newValue, forKey: Keys.alternativeRouting.rawValue)
@@ -445,22 +446,20 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
     @StringProperty(.streamingResourcesUrl) public var streamingResourcesUrl: String?
     
-    private let storage: Storage
-        
-    public init(storage: Storage) {
-        self.storage = storage
+    @Dependency(\.storage) var storage
 
-        storage.defaults.register(defaults: [
+    let defaults: UserDefaults
+        
+    public init() {
+        @Dependency(\.defaultsProvider) var defaultsProvider
+        self.defaults = defaultsProvider.getDefaults()
+
+        defaults.register(defaults: [
             Keys.alternativeRouting.rawValue: true,
             Keys.excludeLocalNetworks.rawValue: true,
             Keys.smartProtocol.rawValue: ConnectionProtocol.smartProtocol.shouldBeEnabledByDefault,
             Keys.discourageSecureCore.rawValue: true
         ])
-
-        Mirror(reflecting: self).children.forEach {
-            guard var wrapper = $0.value as? DefaultsWrapper else { return }
-            wrapper.storage = storage
-        }
     }
     
     public func logoutCleanup() {
@@ -489,7 +488,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     }
     
     public func getValue(forKey key: String) -> Bool {
-        return storage.defaults.bool(forKey: key)
+        return defaults.bool(forKey: key)
     }
     
     public func setValue(_ value: Bool, forKey key: String) {
@@ -507,16 +506,11 @@ public enum UserRole: Int, Codable, DefaultableProperty {
     }
 }
 
-/// Used to initialize the `storage` property of defaults-backed property wrappers.
-protocol DefaultsWrapper {
-    var storage: Storage! { get set }
-}
-
 /// Provides synchronized in-memory access to stored properties, using defaults as a backing store,
 /// for values from defaults that may not be set.
 @propertyWrapper
-public class Property<Value: Codable>: DefaultsWrapper {
-    var storage: Storage!
+public class Property<Value: Codable> {
+    @Dependency(\.storage) var storage
 
     let key: PropertiesManager.Keys
     let notification: Notification.Name?
@@ -528,14 +522,14 @@ public class Property<Value: Codable>: DefaultsWrapper {
                 return value
             }
 
-            let value = storage.getDecodableValue(Value.self, forKey: key.rawValue)
+            let value = try? storage.get(Value.self, forKey: key.rawValue)
             _wrappedValue.update { $0 = value }
 
             return value
         }
         set {
             _wrappedValue.update { $0 = newValue }
-            storage.setEncodableValue(newValue, forKey: key.rawValue)
+            try? storage.set(newValue, forKey: key.rawValue)
 
             if let notification {
                 executeOnUIThread {
@@ -554,8 +548,8 @@ public class Property<Value: Codable>: DefaultsWrapper {
 
 /// Same as the `Property` wrapper, but will initialize the value if it's not present in defaults.
 @propertyWrapper
-public class InitializedProperty<Value: DefaultableProperty & Codable>: DefaultsWrapper {
-    var storage: Storage!
+public class InitializedProperty<Value: DefaultableProperty & Codable> {
+    @Dependency(\.storage) var storage
 
     let key: PropertiesManager.Keys
     let notification: Notification.Name?
@@ -567,7 +561,7 @@ public class InitializedProperty<Value: DefaultableProperty & Codable>: Defaults
                 return value
             }
 
-            let value = storage.getDecodableValue(Value.self, forKey: key.rawValue) ?? Value()
+            let value = (try? storage.get(Value.self, forKey: key.rawValue)) ?? Value()
 
             guard let _wrappedValue else {
                 _wrappedValue = ConcurrentReaders(value)
@@ -584,7 +578,7 @@ public class InitializedProperty<Value: DefaultableProperty & Codable>: Defaults
                 _wrappedValue = ConcurrentReaders(newValue)
             }
 
-            storage.setEncodableValue(newValue, forKey: key.rawValue)
+            try? storage.set(newValue, forKey: key.rawValue)
 
             if let notification {
                 executeOnUIThread {
@@ -602,15 +596,16 @@ public class InitializedProperty<Value: DefaultableProperty & Codable>: Defaults
 }
 
 @propertyWrapper
-public class BoolProperty: DefaultsWrapper {
-    var storage: Storage!
+public class BoolProperty {
+    @Dependency(\.storage) var storage
 
     let key: PropertiesManager.Keys
     let notification: Notification.Name?
 
     public var wrappedValue: Bool {
         get {
-            return storage.defaults.bool(forKey: key.rawValue)
+            @Dependency(\.defaultsProvider) var provider
+            return provider.getDefaults().bool(forKey: key.rawValue)
         }
         set {
             storage.setValue(newValue, forKey: key.rawValue)
@@ -630,15 +625,16 @@ public class BoolProperty: DefaultsWrapper {
 }
 
 @propertyWrapper
-public class StringProperty: DefaultsWrapper {
-    var storage: Storage!
+public class StringProperty {
+    @Dependency(\.storage) var storage
 
     let key: PropertiesManager.Keys
     let notification: Notification.Name?
 
     public var wrappedValue: String? {
         get {
-            return storage.defaults.string(forKey: key.rawValue)
+            @Dependency(\.defaultsProvider) var provider
+            return provider.getDefaults().string(forKey: key.rawValue)
         }
         set {
             storage.setValue(newValue, forKey: key.rawValue)

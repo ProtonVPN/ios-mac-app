@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import Dependencies
 import VPNShared
 
 public struct FeatureFlags: Codable, DefaultableProperty {
@@ -79,5 +80,21 @@ public struct FeatureFlags: Codable, DefaultableProperty {
 
     public init() {
         self.init(smartReconnect: false, vpnAccelerator: false, netShield: true, netShieldStats: false, streamingServicesLogos: false, portForwarding: false, moderateNAT: false, pollNotificationAPI: false, serverRefresh: false, guestHoles: false, safeMode: false, promoCode: false, wireGuardTls: false, enforceDeprecatedProtocols: false, unsafeLanWarnings: true, localOverrides: nil)
+    }
+}
+
+public struct FeatureFlagProvider: DependencyKey {
+    public var getNewFree: () -> Bool
+
+    public static var liveValue = FeatureFlagProvider(
+        getNewFree: { false }
+    )
+}
+
+
+extension DependencyValues {
+    var featureFlagProvider: FeatureFlagProvider {
+      get { self[FeatureFlagProvider.self] }
+      set { self[FeatureFlagProvider.self] = newValue }
     }
 }

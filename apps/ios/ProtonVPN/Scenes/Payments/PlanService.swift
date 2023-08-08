@@ -72,22 +72,20 @@ final class CorePlanService: PlanService {
 
     public typealias Factory = NetworkingFactory &
         CoreAlertServiceFactory &
-        StorageFactory &
         AuthKeychainHandleFactory
 
     public convenience init(_ factory: Factory) {
         self.init(networking: factory.makeNetworking(),
                   alertService: factory.makeCoreAlertService(),
-                  storage: factory.makeStorage(),
                   authKeychain: factory.makeAuthKeychainHandle())
     }
 
-    init(networking: Networking, alertService: CoreAlertService, storage: Storage, authKeychain: AuthKeychainHandle) {
+    init(networking: Networking, alertService: CoreAlertService, authKeychain: AuthKeychainHandle) {
         self.alertService = alertService
         self.authKeychain = authKeychain
 
         tokenStorage = TokenStorage()
-        userCachedStatus = UserCachedStatus(storage: storage)
+        userCachedStatus = UserCachedStatus()
         payments = Payments(
             inAppPurchaseIdentifiers: ObfuscatedConstants.vpnIAPIdentifiers,
             apiService: networking.apiService,

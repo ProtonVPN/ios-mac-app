@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 import Search
 import LegacyCommon
 import UIKit
@@ -33,22 +34,20 @@ protocol SearchStorageFactory: AnyObject {
 }
 
 final class SearchModuleStorage: SearchStorage {
-    private let storage: Storage
+    @Dependency(\.storage) var storage
     private let key = "RECENT_SEARCHES"
 
-    init(storage: Storage) {
-        self.storage = storage
-    }
+    init() { }
 
     func clear() {
         storage.removeObject(forKey: key)
     }
 
     func get() -> [String] {
-        return storage.getDecodableValue([String].self, forKey: key) ?? []
+        return (try? storage.get([String].self, forKey: key)) ?? []
     }
 
     func save(data: [String]) {
-        storage.setEncodableValue(data, forKey: key)
+        try? storage.set(data, forKey: key)
     }
 }

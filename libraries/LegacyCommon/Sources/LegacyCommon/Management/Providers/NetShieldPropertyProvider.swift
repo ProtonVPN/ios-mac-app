@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import Dependencies
 import VPNShared
 import LocalFeatureFlags
 
@@ -46,8 +47,6 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
 
     public static let netShieldNotification: Notification.Name = Notification.Name("NetShieldChangedNotification")
 
-    private let storage: Storage
-
     private enum StorageKey: String {
         case netShield = "NetShield"
         case lastActive = "LastActiveNetShield"
@@ -55,7 +54,6 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
 
     public required init(_ factory: Factory) {
         self.factory = factory
-        self.storage = factory.makeStorage()
     }
 
     public var lastActiveNetShieldType: NetShieldType {
@@ -82,10 +80,11 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
                 return
             }
 
-            storage.setValue(newValue.rawValue, forKey: StorageKey.netShield.rawValue + username)
+            @Dependency(\.defaultsProvider) var provider
+            provider.getDefaults().setValue(newValue.rawValue, forKey: StorageKey.netShield.rawValue + username)
             if newValue != .off {
                 // Duplicate active NS level, so that we can remember it to toggle it between off/on (V1 UI)
-                storage.setValue(newValue.rawValue, forKey: StorageKey.lastActive.rawValue + username)
+                provider.getDefaults().setValue(newValue.rawValue, forKey: StorageKey.lastActive.rawValue + username)
             }
 
             executeOnUIThread {
@@ -123,7 +122,8 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
             return nil
         }
 
-        let rawValue = storage.defaults.value(forKey: key.rawValue + username)
+        @Dependency(\.defaultsProvider) var provider
+        let rawValue = provider.getDefaults().value(forKey: key.rawValue + username)
         guard let intValue = rawValue as? Int else {
             log.info("Failed to retrieve stored NetShield level, stored value is either nil or not an Int: \(String(describing: rawValue))", category: .settings)
             return nil

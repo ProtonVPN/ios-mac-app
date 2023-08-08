@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import Dependencies
 import LegacyCommon
 import VPNShared
 
@@ -29,13 +30,15 @@ class AppLaunchRoutine {
     static var launchedBefore = true
     
     static func execute(propertiesManager: PropertiesManagerProtocol) {
-        if !Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.launchedBefore) {
+        @Dependency(\.defaultsProvider) var provider
+        let defaults = provider.getDefaults()
+        if !defaults.bool(forKey: AppConstants.UserDefaults.launchedBefore) {
             launchedBefore = false
-            Storage.userDefaults().set(false, forKey: AppConstants.UserDefaults.startOnBoot)
-            Storage.userDefaults().set(false, forKey: AppConstants.UserDefaults.startMinimized)
+            defaults.set(false, forKey: AppConstants.UserDefaults.startOnBoot)
+            defaults.set(false, forKey: AppConstants.UserDefaults.startMinimized)
             propertiesManager.hasConnected = false
-            Storage.userDefaults().set(true, forKey: AppConstants.UserDefaults.systemNotifications)
-            Storage.userDefaults().set(true, forKey: AppConstants.UserDefaults.launchedBefore)
+            defaults.set(true, forKey: AppConstants.UserDefaults.systemNotifications)
+            defaults.set(true, forKey: AppConstants.UserDefaults.launchedBefore)
         }
     }
 }

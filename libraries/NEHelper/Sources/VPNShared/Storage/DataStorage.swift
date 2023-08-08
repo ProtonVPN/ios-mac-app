@@ -17,9 +17,50 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 
 /// Persistent key value store suitable for storing large amounts of data
-public protocol DataStorage {
-    func store(_ data: Data, forKey key: String) throws
-    func getData(forKey key: String) throws -> Data
+public struct DataStorage: TestDependencyKey {
+    var storeData: (_ data: Data, _ key: String) throws -> Void
+    var getData: (_ key: String) throws -> Data
+
+    public init(
+        storeData: @escaping (Data, String) throws -> Void,
+        getData: @escaping (String) throws -> Data
+    ) {
+        self.storeData = storeData
+        self.getData = getData
+    }
+
+    public static var testValue: DataStorage = {
+        let memoryStorage = MemoryStorage()
+        return DataStorage(
+            storeData: { (data, key) in
+                memoryStorage.setValue(data, forKey: key)
+            },
+            getData: { key in
+                guard let data = memoryStorage.getValue(forKey: key) as? Data else {
+                    throw MemoryStorage.StorageError.valueNotFound
+                }
+                return data
+            }
+        )
+    }()
+}
+
+/// Helpers for more ergonomic call site (Protocol Witness cannot define argument labels)
+extension DataStorage {
+    public func store(_ data: Data, forKey key: String) throws {
+        try storeData(data, key)
+    }
+    public func getData(forKey key: String) throws -> Data {
+        try getData(key)
+    }
+}
+
+extension DependencyValues {
+    public var dataStorage: DataStorage {
+      get { self[DataStorage.self] }
+      set { self[DataStorage.self] = newValue }
+    }
 }

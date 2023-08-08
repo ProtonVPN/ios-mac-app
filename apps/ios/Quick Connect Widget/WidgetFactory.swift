@@ -32,13 +32,11 @@ final class WidgetFactory {
     private let appGroup = AppConstants.AppGroups.main
 
     private let alertService = ExtensionAlertService()
-    private let propertiesManager = PropertiesManager(storage: Storage())
+    private let propertiesManager = PropertiesManager()
     
     init() {
         injectDefaultCryptoImplementation()
         setUpNSCoding(withModuleName: "ProtonVPN")
-        let sharedDefaults = UserDefaults(suiteName: AppConstants.AppGroups.main)!
-        Storage.setSpecificDefaults(sharedDefaults, largeDataStorage: FileStorage.cached)
     }
 
     func makeTodayViewModel() -> TodayViewModel {

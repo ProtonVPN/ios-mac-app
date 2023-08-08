@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 import VPNShared
 
 public protocol SafeModePropertyProvider: PaidFeaturePropertyProvider {
@@ -40,12 +41,10 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
 
     public static let safeModeNotification: Notification.Name = Notification.Name("SafeModeChanged")
 
-    private let storage: Storage
     private let key = "SafeMode"
 
     public required init(_ factory: Factory) {
         self.factory = factory
-        self.storage = factory.makeStorage()
     }
 
     public var safeMode: Bool? {
@@ -64,7 +63,8 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
                 return true
             }
 
-            guard let current = storage.defaults.value(forKey: key + username) as? Bool else {
+            @Dependency(\.defaultsProvider) var provider
+            guard let current = provider.getDefaults().value(forKey: key + username) as? Bool else {
                 return true // true is the default value
             }
 
@@ -75,7 +75,8 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
                 return
             }
 
-            storage.setValue(newValue, forKey: key + username)
+            @Dependency(\.defaultsProvider) var provider
+            provider.getDefaults().setValue(newValue, forKey: key + username)
             executeOnUIThread {
                 NotificationCenter.default.post(name: type(of: self).safeModeNotification, object: newValue, userInfo: nil)
             }

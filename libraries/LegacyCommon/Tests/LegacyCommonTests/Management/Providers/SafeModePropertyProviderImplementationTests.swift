@@ -17,19 +17,18 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import XCTest
+import Dependencies
 import VPNShared
 import VPNSharedTesting
 @testable import LegacyCommon
 
 final class SafeModePropertyProviderImplementationTests: XCTestCase {
     static let username = "user1"
-    let testDefaults = UserDefaults(suiteName: "test")!
 
     override func setUp() {
         super.setUp()
-
-        testDefaults.removeObject(forKey: "SafeMode\(Self.username)")
-        Storage.setSpecificDefaults(testDefaults, largeDataStorage: nil)
+        @Dependency(\.defaultsProvider) var provider
+        provider.getDefaults().removeObject(forKey: "SafeMode\(Self.username)")
     }
 
     func testReturnsSettingFromProperties() throws {
@@ -69,12 +68,13 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
     }
 
     func testSavesValueToStorage() {
+        @Dependency(\.defaultsProvider) var defaultsProvider
         let factory = getFactory(safeMode: nil, tier: CoreAppConstants.VpnTiers.plus)
         let provider = SafeModePropertyProviderImplementation(factory)
 
         for type in [true, false] {
             provider.safeMode = type
-            XCTAssertEqual(testDefaults.object(forKey: "SafeMode\(Self.username)") as? Bool, type)
+            XCTAssertEqual(defaultsProvider.getDefaults().object(forKey: "SafeMode\(Self.username)") as? Bool, type)
             XCTAssertEqual(provider.safeMode, type)
         }
     }
@@ -101,7 +101,8 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
         propertiesManager.featureFlags = FeatureFlags(smartReconnect: true, vpnAccelerator: true, netShield: true, netShieldStats: true, streamingServicesLogos: true, portForwarding: true, moderateNAT: true, pollNotificationAPI: true, serverRefresh: true, guestHoles: true, safeMode: safeModeFeatureFlag, promoCode: true, wireGuardTls: true, enforceDeprecatedProtocols: false, unsafeLanWarnings: true, localOverrides: nil)
         let authKeychain = MockAuthKeychain(context: .mainApp)
         authKeychain.setMockUsername(Self.username)
-        testDefaults.set(safeMode, forKey: "SafeMode\(Self.username)")
+        @Dependency(\.defaultsProvider) var provider
+        provider.getDefaults().set(safeMode, forKey: "SafeMode\(Self.username)")
         return PaidFeaturePropertyProviderFactoryMock(propertiesManager: propertiesManager, userTierProviderMock: userTierProvider, authKeychainMock: authKeychain)
     }
 }

@@ -20,8 +20,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import LegacyCommon
 import Foundation
+import Dependencies
+import LegacyCommon
 import VPNShared
 import Strings
 
@@ -34,7 +35,10 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
     private var nonTransientState: AppState = .disconnected
     
     private var shouldShowNotification: Bool {
-        return appSessionManager.sessionStatus == .established && Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.systemNotifications)
+        @Dependency(\.defaultsProvider) var provider
+
+        return appSessionManager.sessionStatus == .established
+            && provider.getDefaults().bool(forKey: AppConstants.UserDefaults.systemNotifications)
     }
     
     init(appStateManager: AppStateManager, appSessionManager: AppSessionManager) {
