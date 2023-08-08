@@ -104,8 +104,6 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
                 XCTFail("Unhandled case")
             }
         }
-
-        let storage = Storage()
         authenticationStorage = MockVpnAuthenticationStorage()
         authenticationStorage.keys = VpnKeys.mock()
         authenticationStorage.features = Self.defaultVpnFeatures
@@ -125,8 +123,7 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
                                             scopes: []))
         timerFactory = TimerFactoryMock()
 
-        apiService = ExtensionAPIService(storage: storage,
-                                         timerFactory: timerFactory,
+        apiService = ExtensionAPIService(timerFactory: timerFactory,
                                          keychain: keychain,
                                          appInfo: AppInfoImplementation(context: .wireGuardExtension),
                                          atlasSecret: "")

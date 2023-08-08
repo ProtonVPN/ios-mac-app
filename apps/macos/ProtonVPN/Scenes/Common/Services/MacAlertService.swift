@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import Dependencies
 import LegacyCommon
 import AppKit
 import Modals
@@ -239,7 +240,8 @@ extension MacAlertService: CoreAlertService {
     // MARK: Custom Alerts
 
     private func show(_ alert: SysexEnabledAlert) {
-        guard !Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.welcomed),
+        @Dependency(\.defaultsProvider) var provider
+        guard !provider.getDefaults().bool(forKey: AppConstants.UserDefaults.welcomed),
               let credentials = try? self.vpnKeychain.fetchCached(),
               !credentials.isSubuserWithoutSessions else {
             return
@@ -248,7 +250,7 @@ extension MacAlertService: CoreAlertService {
         let welcomeViewController = WelcomeViewController(windowService: windowService, telemetrySettings: telemetrySettings)
         windowService.presentKeyModal(viewController: welcomeViewController)
 
-        Storage.userDefaults().set(true, forKey: AppConstants.UserDefaults.welcomed)
+        provider.getDefaults().set(true, forKey: AppConstants.UserDefaults.welcomed)
     }
     
     private func show(_ alert: AppUpdateRequiredAlert) {

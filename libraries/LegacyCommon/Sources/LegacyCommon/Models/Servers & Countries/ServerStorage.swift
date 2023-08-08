@@ -20,6 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 import VPNShared
 import Combine
 
@@ -45,7 +46,11 @@ public class ServerStorageConcrete: ServerStorage {
     private let versionKey     = "serverCacheVersion"
     private let storageKey     = "servers"
     private let ageKey         = "age"
-    
+
+    @Dependency(\.storage) var storage
+    @Dependency(\.defaultsProvider) var provider
+    @Dependency(\.dataStorage) var dataStorage
+
     private static var servers = [ServerModel]()
     private static var age: TimeInterval?
 
@@ -63,15 +68,15 @@ public class ServerStorageConcrete: ServerStorage {
     public func fetch() -> [ServerModel] {
         // Check if stored servers have been updated since last access,
         // so that widget can stay up to date of app server changes
-        let age: TimeInterval = Storage.userDefaults().double(forKey: ageKey)
+        let age: TimeInterval = provider.getDefaults().double(forKey: ageKey)
 
         if ServerStorageConcrete.servers.isEmpty || ServerStorageConcrete.age == nil || age > (ServerStorageConcrete.age! + 1) {
             ServerStorageConcrete.age = age
             
-            let version = Storage.userDefaults().integer(forKey: versionKey)
+            let version = provider.getDefaults().integer(forKey: versionKey)
             if version == storageVersion {
                 do {
-                    let data = try Storage.largeDataStorage.getData(forKey: storageKey)
+                    let data = try dataStorage.getData(forKey: storageKey)
                     let servers = try JSONDecoder().decode([ServerModel].self, from: data)
                     ServerStorageConcrete.servers = servers
                 } catch {
@@ -87,14 +92,15 @@ public class ServerStorageConcrete: ServerStorage {
         if let age = ServerStorageConcrete.age {
             return age
         } else {
-            let age: TimeInterval = Storage.userDefaults().double(forKey: ageKey)
+            let age: TimeInterval = provider.getDefaults().double(forKey: ageKey)
             ServerStorageConcrete.age = age
             return age
         }
     }
-    
+
     public func store(_ newServers: [ServerModel]) {
-        ServerStorageConcrete.queue.async { [versionKey, ageKey, storageKey, storageVersion] in
+        let defaults = provider.getDefaults()
+        ServerStorageConcrete.queue.async { [defaults, dataStorage, versionKey, ageKey, storageKey, storageVersion] in
             do {
                 let age = Date().timeIntervalSince1970
                 let serversData = try JSONEncoder().encode(newServers)
@@ -102,10 +108,10 @@ public class ServerStorageConcrete: ServerStorage {
                 ServerStorageConcrete.age = age
                 ServerStorageConcrete.servers = newServers
 
-                try Storage.largeDataStorage.store(serversData, forKey: storageKey)
-                Storage.userDefaults().set(storageVersion, forKey: versionKey)
-                Storage.userDefaults().set(age, forKey: ageKey)
-                Storage.userDefaults().synchronize()
+                try dataStorage.store(serversData, forKey: storageKey)
+                defaults.set(storageVersion, forKey: versionKey)
+                defaults.set(age, forKey: ageKey)
+                defaults.synchronize()
 
                 self.allServersPublisher.send(newServers)
 

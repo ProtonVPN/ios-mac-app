@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 import NetworkExtension
 import Timer
 import VPNShared
@@ -30,6 +31,8 @@ public protocol ExtensionAPIServiceDelegate: AnyObject {
 }
 
 public final class ExtensionAPIService {
+    @Dependency(\.storage) var storage
+
     /// Intervals are in seconds unless otherwise specified.
     public struct Intervals {
         /// If a retry-after header is not sent, this should be the default retry interval.
@@ -124,9 +127,8 @@ public final class ExtensionAPIService {
         }
     }
 
-    public init(storage: Storage, timerFactory: TimerFactory, keychain: AuthKeychainHandle, appInfo: AppInfo, atlasSecret: String) {
+    public init(timerFactory: TimerFactory, keychain: AuthKeychainHandle, appInfo: AppInfo, atlasSecret: String) {
         self.appInfo = appInfo
-        self.storage = storage
         self.timerFactory = timerFactory
         self.keychain = keychain
         self.atlasSecret = atlasSecret
@@ -154,7 +156,6 @@ public final class ExtensionAPIService {
     public weak var delegate: ExtensionAPIServiceDelegate?
 
     private let apiEndpointStorageKey = "ApiEndpoint"
-    private let storage: Storage
     private let timerFactory: TimerFactory
     private let keychain: AuthKeychainHandle
     private let appInfo: AppInfo

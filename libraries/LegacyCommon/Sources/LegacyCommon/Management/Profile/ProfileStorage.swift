@@ -20,12 +20,16 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 import VPNShared
 
 public protocol ProfileStorageFactory {
     func makeProfileStorage() -> ProfileStorage
 }
 
+// TODO: This would be a good use case for non-user defaults storage
+//  - Profiles can get pretty big because they encode servers (big especially when they are SC servers)
+//  - Once we move to something like Core Data for servers, we could model a relationship between profiles and servers?
 public class ProfileStorage {
     private static let storageVersion = 1
     private static let versionKey     = "profileCacheVersion"
@@ -45,11 +49,12 @@ public class ProfileStorage {
     }
     
     func fetch() -> [Profile] {
+        @Dependency(\.defaultsProvider) var provider
         guard let storageKey = storageKey() else {
             return []
         }
         
-        let version = Storage.userDefaults().integer(forKey: Self.versionKey)
+        let version = provider.getDefaults().integer(forKey: Self.versionKey)
         var profiles = [Profile]()
         if version == Self.storageVersion {
             profiles = fetchFromMemory(storageKey: storageKey)
@@ -76,7 +81,8 @@ public class ProfileStorage {
     }
     
     private func fetchFromMemory(storageKey: String) -> [Profile] {
-        if let data = Storage.userDefaults().data(forKey: storageKey),
+        @Dependency(\.defaultsProvider) var provider
+        if let data = provider.getDefaults().data(forKey: storageKey),
             let userProfiles = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Profile] {
             return userProfiles
         }
@@ -84,9 +90,10 @@ public class ProfileStorage {
     }
     
     private func storeInMemory(_ profiles: [Profile], storageKey: String) {
-        Storage.userDefaults().set(Self.storageVersion, forKey: Self.versionKey)
+        @Dependency(\.defaultsProvider) var provider
+        provider.getDefaults().set(Self.storageVersion, forKey: Self.versionKey)
         let archivedData = try? NSKeyedArchiver.archivedData(withRootObject: profiles, requiringSecureCoding: false)
-        Storage.userDefaults().set(archivedData, forKey: storageKey)
+        provider.getDefaults().set(archivedData, forKey: storageKey)
     }
     
     private func removeSystemProfiles(in profiles: [Profile]) -> [Profile] {

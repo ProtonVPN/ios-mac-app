@@ -25,6 +25,7 @@ import UIKit
 import Foundation
 
 // Third-party dependencies
+import Dependencies
 import TrustKit
 
 // Core dependencies
@@ -48,6 +49,7 @@ public let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 #if !REDESIGN
 @UIApplicationMain
 class AppDelegate: UIResponder {
+    @Dependency(\.defaultsProvider) var defaultsProvider
     private let container = DependencyContainer.shared
     private lazy var vpnManager: VpnManagerProtocol = container.makeVpnManager()
     private lazy var navigationService: NavigationService = container.makeNavigationService()
@@ -57,6 +59,7 @@ class AppDelegate: UIResponder {
 }
 #else
 class AppDelegate: UIResponder {
+    @Dependency(\.defaultsProvider) var defaultsProvider
     private let container = DependencyContainer.shared
     private lazy var vpnManager: VpnManagerProtocol = container.makeVpnManager()
     private lazy var navigationService: NavigationService = container.makeNavigationService()
@@ -68,7 +71,7 @@ class AppDelegate: UIResponder {
 
 // MARK: - UIApplicationDelegate
 extension AppDelegate: UIApplicationDelegate {
-    
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         setupCoreIntegration()
         setupLogsForApp()
@@ -79,9 +82,7 @@ extension AppDelegate: UIApplicationDelegate {
 
         // Force all encoded objects to be decoded and recoded using the ProtonVPN module name
         setUpNSCoding(withModuleName: "ProtonVPN")
-        // Use shared defaults
-        let sharedDefaults = UserDefaults(suiteName: AppConstants.AppGroups.main)!
-        Storage.setSpecificDefaults(sharedDefaults, largeDataStorage: FileStorage.cached)
+        LegacyDefaultsMigration.migrateLargeData(from: defaultsProvider.getDefaults())
 
         // Protocol check is placed here for parity with MacOS
         adjustGlobalProtocolIfNecessary()

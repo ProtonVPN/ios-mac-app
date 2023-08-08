@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Dependencies
 import LegacyCommon
 import VPNShared
 import Strings
@@ -167,7 +168,8 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         let width = window.frame.width
         
         if !window.styleMask.contains(.fullScreen) && self.expandButton.expandState == .expanded && width > sidebarWidth + expandButtonWidth {
-            Storage.userDefaults().set(Int(width - sidebarWidth), forKey: AppConstants.UserDefaults.mapWidth)
+            @Dependency(\.defaultsProvider) var provider
+            provider.getDefaults().set(Int(width - sidebarWidth), forKey: AppConstants.UserDefaults.mapWidth)
         }
         
         if width > sidebarWidth + expandButtonWidth && self.expandButton.expandState == .compact {
@@ -367,7 +369,8 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     }
     
     @objc private func expandButtonAction(_ sender: NSButton) {
-        let savedMapWidth = CGFloat(Storage.userDefaults().integer(forKey: AppConstants.UserDefaults.mapWidth))
+        @Dependency(\.defaultsProvider) var provider
+        let savedMapWidth = CGFloat(provider.getDefaults().integer(forKey: AppConstants.UserDefaults.mapWidth))
         let mapContainerWidth: CGFloat = savedMapWidth > expandButtonWidth ? savedMapWidth : 600
         if expandButton.expandState == .compact {
             if var frame = self.view.window?.frame {

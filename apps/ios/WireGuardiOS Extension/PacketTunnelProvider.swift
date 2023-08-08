@@ -55,10 +55,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
     }
 
     override init() {
-        let storage = Storage()
-
         vpnAuthenticationStorage = VpnAuthenticationKeychain(accessGroup: WGConstants.keychainAccessGroup,
-                                                             storage: storage,
                                                              vpnKeysGenerator: ExtensionVPNKeysGenerator())
         let authKeychain = AuthKeychain(context: .wireGuardExtension)
 
@@ -72,8 +69,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         }
         self.setDataTaskFactory(sendThroughTunnel: true)
 
-        let apiService = ExtensionAPIService(storage: storage,
-                                             timerFactory: timerFactory,
+        let apiService = ExtensionAPIService(timerFactory: timerFactory,
                                              keychain: authKeychain,
                                              appInfo: appInfo,
                                              atlasSecret: ObfuscatedConstants.atlasSecret)
@@ -284,8 +280,9 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         let activationAttemptId = options?["activationAttemptId"] as? String
         let errorNotifier = ErrorNotifier(activationAttemptId: activationAttemptId)
 
+        // TODO: **Really** make sure that we **always** use the live dependency defined in the app target.
         // Use shared defaults to get cert features that were set in the app
-        Storage.setSpecificDefaults(UserDefaults(suiteName: AppConstants.AppGroups.main)!, largeDataStorage: nil)
+        // storage.setSpecificDefaults(UserDefaults(suiteName: AppConstants.AppGroups.main)!, largeDataStorage: nil)
 
         setDataTaskFactoryAccordingToKillSwitchSettings()
 

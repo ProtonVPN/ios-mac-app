@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Dependencies
 import LegacyCommon
 import VPNShared
 import ProtonCoreUtilities
@@ -343,7 +344,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         }
 
         // ensure application data hasn't been cleared
-        guard Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.launchedBefore) else {
+        @Dependency(\.defaultsProvider) var provider
+        guard provider.getDefaults().bool(forKey: AppConstants.UserDefaults.launchedBefore) else {
             confirmationClosure()
             return
         }

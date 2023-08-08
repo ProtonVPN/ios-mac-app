@@ -17,7 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 import KeychainAccess
+import PMLogger
 
 public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
     private struct KeychainStorageKey {
@@ -30,23 +32,12 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
     }
 
     private let appKeychain: KeychainAccess.Keychain
-    private var storage: Storage
     private let vpnKeysGenerator: VPNKeysGenerator
     public weak var delegate: VpnAuthenticationStorageDelegate?
 
-    public typealias Factory = StorageFactory
-
-    public convenience init(_ factory: Factory, accessGroup: String, vpnKeysGenerator: VPNKeysGenerator) {
-        self.init(accessGroup: accessGroup,
-                  storage: factory.makeStorage(),
-                  vpnKeysGenerator: vpnKeysGenerator)
-    }
-
-    public init(accessGroup: String, storage: Storage, vpnKeysGenerator: VPNKeysGenerator) {
-        appKeychain = KeychainAccess.Keychain(service: KeychainConstants.appKeychain,
-                                              accessGroup: accessGroup)
+    public init(accessGroup: String, vpnKeysGenerator: VPNKeysGenerator) {
+        appKeychain = KeychainAccess.Keychain(service: KeychainConstants.appKeychain, accessGroup: accessGroup)
             .accessibility(.afterFirstUnlockThisDeviceOnly)
-        self.storage = storage
         self.vpnKeysGenerator = vpnKeysGenerator
     }
 
@@ -91,7 +82,8 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
     }
 
     public func getStoredCertificateFeatures() -> VPNConnectionFeatures? {
-        return storage.getDecodableValue(VPNConnectionFeatures.self, forKey: DefaultsStorageKey.vpnCertificateFeatures)
+        @Dependency(\.storage) var storage
+        return try? storage.get(VPNConnectionFeatures.self, forKey: DefaultsStorageKey.vpnCertificateFeatures)
     }
 
     public func getStoredKeys() -> VpnKeys? {
@@ -121,32 +113,29 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
     }
 
     public func store(_ certificate: VpnCertificateWithFeatures) {
-        encodeAndStore(certificate: certificate.certificate, features: certificate.features)
+        @Dependency(\.storage) var storage
+        do {
+            try store(certificate: certificate.certificate)
+            try storage.set(certificate.features, forKey: DefaultsStorageKey.vpnCertificateFeatures)
+            log.debug("Cert with features saved: \(String(describing: certificate.features))", category: .userCert)
+            delegate?.certificateStored(certificate.certificate)
+        } catch {
+            log.error("Saving VPN certificate failed with error: \(error)", category: .userCert)
+        }
     }
 
     public func store(_ certificate: VpnCertificate) {
-        encodeAndStore(certificate: certificate, features: nil)
-    }
-
-    private func encodeAndStore(certificate: VpnCertificate, features: VPNConnectionFeatures?) {
         do {
-            let data = try JSONEncoder().encode(certificate)
-            try appKeychain.set(data, key: KeychainStorageKey.vpnCertificate)
-
-            if let features {
-                storage.setEncodableValue(features, forKey: DefaultsStorageKey.vpnCertificateFeatures)
-            }
-
-            log.debug("VPN certificate saved", category: .userCert, metadata: [
-                "validUntil": "\(certificate.validUntil)",
-                "features": .string(features?.asDict.description ?? "nil")
-            ])
+            try store(certificate: certificate)
+            log.debug("VPN certificate saved, valid until: \(certificate.validUntil)", category: .userCert)
             delegate?.certificateStored(certificate)
         } catch {
-            log.error("Saving VPN certificate failed", category: .userCert, metadata: [
-                "error": "\(error)",
-                "features": .string(features?.asDict.description ?? "nil")
-            ])
+            log.error("Saving VPN certificate failed with error: \(error)", category: .userCert)
         }
+    }
+
+    private func store(certificate: VpnCertificate) throws {
+        let data = try JSONEncoder().encode(certificate)
+        try appKeychain.set(data, key: KeychainStorageKey.vpnCertificate)
     }
 }

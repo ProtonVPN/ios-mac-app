@@ -11,6 +11,7 @@ import TunnelKitOpenVPNAppExtension
 import TunnelKitOpenVPN
 
 import NetworkExtension
+import Dependencies
 import NEHelper
 import VPNShared
 import Timer
@@ -89,10 +90,8 @@ class PacketTunnelProvider: OpenVPNTunnelProvider, ExtensionAPIServiceDelegate {
     }
 
     override init() {
-        let storage = Storage()
 
         vpnAuthenticationStorage = VpnAuthenticationKeychain(accessGroup: OpenVPNConstants.keychainAccessGroup,
-                                                             storage: storage,
                                                              vpnKeysGenerator: ExtensionVPNKeysGenerator())
 
         super.init()
@@ -111,8 +110,7 @@ class PacketTunnelProvider: OpenVPNTunnelProvider, ExtensionAPIServiceDelegate {
 
         timerFactory = TimerFactoryImplementation()
         let authKeychain = AuthKeychain(context: .openVpnExtension)
-        apiService = ExtensionAPIService(storage: storage,
-                                         timerFactory: timerFactory,
+        apiService = ExtensionAPIService(timerFactory: timerFactory,
                                          keychain: authKeychain,
                                          appInfo: appInfo,
                                          atlasSecret: ObfuscatedConstants.atlasSecret)

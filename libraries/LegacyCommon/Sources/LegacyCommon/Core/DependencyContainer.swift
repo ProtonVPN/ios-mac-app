@@ -67,16 +67,15 @@ open class Container: PropertiesToOverride {
     public let config: Config
 
     // Lazy instances - get allocated once, and stay allocated
-    private lazy var storage = Storage()
-    private lazy var propertiesManager: PropertiesManagerProtocol = PropertiesManager(storage: storage)
+    @Dependency(\.storage) var storage
+    private lazy var propertiesManager: PropertiesManagerProtocol = PropertiesManager()
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
     private lazy var authKeychain: AuthKeychainHandle = AuthKeychain(context: .mainApp)
     private lazy var unauthKeychain: UnauthKeychainHandle = UnauthKeychain()
     private lazy var profileManager = ProfileManager(self)
     private lazy var networking = CoreNetworking(self)
     private lazy var ikeFactory = IkeProtocolFactory(factory: self)
-    private lazy var vpnAuthenticationKeychain = VpnAuthenticationKeychain(self,
-                                                                           accessGroup: config.accessGroup,
+    private lazy var vpnAuthenticationKeychain = VpnAuthenticationKeychain(accessGroup: config.accessGroup,
                                                                            vpnKeysGenerator: CoreVPNKeysGenerator())
     private lazy var vpnManager: VpnManagerProtocol = VpnManager(self, config: config)
     private lazy var vpnGateway: VpnGatewayProtocol = VpnGateway(self)
@@ -186,13 +185,6 @@ open class Container: PropertiesToOverride {
 
     open func makeUpdateChecker() -> UpdateChecker {
         shouldHaveOverridden()
-    }
-}
-
-// MARK: StorageFactory
-extension Container: StorageFactory {
-    public func makeStorage() -> Storage {
-        storage
     }
 }
 
@@ -407,8 +399,8 @@ extension Container: SafariServiceFactory {
 // MARK: AnnouncementStorageFactory
 extension Container: AnnouncementStorageFactory {
     public func makeAnnouncementStorage() -> AnnouncementStorage {
-        AnnouncementStorageUserDefaults(userDefaults: Storage.userDefaults(),
-                                        keyNameProvider: nil)
+        @Dependency(\.defaultsProvider) var provider
+        return AnnouncementStorageUserDefaults(userDefaults: provider.getDefaults(), keyNameProvider: nil)
     }
 }
 
@@ -499,7 +491,7 @@ extension Container: ProfileStorageFactory {
 // MARK: DynamicBugReportStorageFactory
 extension Container: DynamicBugReportStorageFactory {
     public func makeDynamicBugReportStorage() -> DynamicBugReportStorage {
-        DynamicBugReportStorageUserDefaults(self)
+        DynamicBugReportStorageUserDefaults()
     }
 }
 

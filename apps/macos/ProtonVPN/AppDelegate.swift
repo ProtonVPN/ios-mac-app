@@ -25,6 +25,7 @@ import Cocoa
 import ServiceManagement
 
 // Third-party dependencies
+import Dependencies
 import TrustKit
 
 // Core dependencies
@@ -49,8 +50,8 @@ let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 
 @main
 class AppDelegate: NSObject {
+    @Dependency(\.defaultsProvider) var provider
     public private(set) static var wasRecentlyActive = false
-
     @IBOutlet weak var protonVpnMenu: ProtonVpnMenuController!
     @IBOutlet weak var profilesMenu: ProfilesMenuController!
     @IBOutlet weak var helpMenu: HelpMenuController!
@@ -64,6 +65,7 @@ class AppDelegate: NSObject {
 }
 #else
 class AppDelegate: NSObject {
+    @Dependency(\.defaultsProvider) var provider
     let container = DependencyContainer()
     lazy var navigationService = container.makeNavigationService()
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
@@ -81,7 +83,7 @@ extension AppDelegate: NSApplicationDelegate {
 
         log.info("Starting app version \(appInfo.bundleShortVersion) (\(appInfo.bundleVersion))", category: .app, event: .processStart)
 
-        Storage.setSpecificDefaults(nil, largeDataStorage: FileStorage.cached)
+        LegacyDefaultsMigration.migrateLargeData(from: provider.getDefaults())
         
         // Ignore SIGPIPE errors, which can happen when receiving mach messages or writing to sockets.
         signal(SIGPIPE, SIG_IGN)
@@ -197,7 +199,7 @@ extension AppDelegate: NSApplicationDelegate {
     
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         log.info("applicationShouldTerminate", category: .os)
-        Storage.userDefaults().set(500, forKey: "NSInitialToolTipDelay")
+        provider.getDefaults().set(500, forKey: "NSInitialToolTipDelay")
         return navigationService.handleApplicationShouldTerminate()
     }
     

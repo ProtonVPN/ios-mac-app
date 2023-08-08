@@ -17,16 +17,18 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 import VPNShared
 
 public extension PropertiesManager {
     
     func logCurrentState() {
         let keysToLog = Set(Keys.allCases).subtracting([Keys.userLocation, Keys.streamingServices, Keys.servicePlans, Keys.defaultPlanDetails, Keys.streamingResourcesUrl])
-        
+
+        @Dependency(\.defaultsProvider) var provider
         var message = ""
         for key in keysToLog {
-            let value = Storage.userDefaults().value(forKeyPath: key.rawValue)
+            let value = provider.getDefaults().value(forKeyPath: key.rawValue)
             message += "\n \(key)=\(value.stringForLog);"
         }
         log.info("\(message.maskIPs)", category: .settings, event: .current)

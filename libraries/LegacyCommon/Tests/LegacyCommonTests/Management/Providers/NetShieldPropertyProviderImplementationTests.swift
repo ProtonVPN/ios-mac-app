@@ -21,19 +21,18 @@
 //
 
 import XCTest
+import Dependencies
 import VPNShared
 import VPNSharedTesting
 @testable import LegacyCommon
 
 final class NetShieldPropertyProviderImplementationTests: XCTestCase {
     static let username = "user1"
-    let testDefaults = UserDefaults(suiteName: "test")!
 
     override func setUp() {
         super.setUp()
-
-        testDefaults.removeObject(forKey: "NetShield\(Self.username)")
-        Storage.setSpecificDefaults(testDefaults, largeDataStorage: nil)
+        @Dependency(\.defaultsProvider) var provider
+        provider.getDefaults().removeObject(forKey: "NetShield\(Self.username)")
     }
 
     func testReturnsSettingFromProperties() throws {
@@ -76,10 +75,10 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
         let factory = PaidFeaturePropertyProviderFactoryMock(propertiesManager: propertiesManager, userTierProviderMock: userTierProvider, authKeychainMock: keychain)
         
         let provider = NetShieldPropertyProviderImplementation(factory)
-        
+        @Dependency(\.defaultsProvider) var defaultsProvider
         for type in NetShieldType.allCases {
             provider.netShieldType = type
-            XCTAssertEqual(testDefaults.integer(forKey: "NetShield\(Self.username)"), type.rawValue)
+            XCTAssertEqual(defaultsProvider.getDefaults().integer(forKey: "NetShield\(Self.username)"), type.rawValue)
             XCTAssertEqual(provider.netShieldType, type)
         }
     }
@@ -140,7 +139,8 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
         let propertiesManager = PropertiesManagerMock()
         let authKeychain = MockAuthKeychain(context: .mainApp)
         authKeychain.setMockUsername(Self.username)
-        testDefaults.set(netShieldType?.rawValue, forKey: "NetShield\(Self.username)")
+        @Dependency(\.defaultsProvider) var defaultsProvider
+        defaultsProvider.getDefaults().set(netShieldType?.rawValue, forKey: "NetShield\(Self.username)")
         return PaidFeaturePropertyProviderFactoryMock(propertiesManager: propertiesManager, userTierProviderMock: userTierProvider, authKeychainMock: authKeychain)
     }
 

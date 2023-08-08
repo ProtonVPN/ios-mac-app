@@ -25,7 +25,6 @@ public final class PaidFeaturePropertyProviderFactoryMock: PaidFeaturePropertyPr
     let propertiesManager: PropertiesManagerMock
     let userTierProviderMock: UserTierProviderMock
     let authKeychain: AuthKeychainHandle
-    let storage = Storage()
 
     public init(
         propertiesManager: PropertiesManagerMock = PropertiesManagerMock(),
@@ -49,8 +48,5 @@ public final class PaidFeaturePropertyProviderFactoryMock: PaidFeaturePropertyPr
         return authKeychain
     }
 
-    public func makeStorage() -> Storage {
-        return storage
-    }
 }
 #endif

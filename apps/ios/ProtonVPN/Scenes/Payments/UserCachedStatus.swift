@@ -7,12 +7,16 @@
 //
 
 import Foundation
+import Dependencies
 import ProtonCorePayments
 import ProtonCorePaymentsUI
 import LegacyCommon
 import VPNShared
 
 final class UserCachedStatus: ServicePlanDataStorage {
+    @Dependency(\.storage) var storage
+    @Dependency(\.defaultsProvider) var provider
+
     enum UserCachedStatusKeys: String, CaseIterable {
         case servicePlansDetails
         case defaultPlanDetails
@@ -21,54 +25,48 @@ final class UserCachedStatus: ServicePlanDataStorage {
         case paymentMethods
     }
 
-    private let storage: Storage
-
-    init(storage: Storage) {
-        self.storage = storage
-    }
-
     var servicePlansDetails: [Plan]? {
         get {
-            return storage.getDecodableValue([Plan].self, forKey: UserCachedStatusKeys.servicePlansDetails.rawValue)
+            return try? storage.get([Plan].self, forKey: UserCachedStatusKeys.servicePlansDetails.rawValue)
         }
         set {
-            storage.setEncodableValue(newValue, forKey: UserCachedStatusKeys.servicePlansDetails.rawValue)
+            try? storage.set(newValue, forKey: UserCachedStatusKeys.servicePlansDetails.rawValue)
         }
     }
 
     var defaultPlanDetails: Plan? {
         get {
-            return storage.getDecodableValue(Plan.self, forKey: UserCachedStatusKeys.defaultPlanDetails.rawValue)
+            return try? storage.get(Plan.self, forKey: UserCachedStatusKeys.defaultPlanDetails.rawValue)
         }
         set {
-            storage.setEncodableValue(newValue, forKey: UserCachedStatusKeys.defaultPlanDetails.rawValue)
+            try? storage.set(newValue, forKey: UserCachedStatusKeys.defaultPlanDetails.rawValue)
         }
     }
 
     var currentSubscription: Subscription? {
         get {
-            return storage.getDecodableValue(Subscription.self, forKey: UserCachedStatusKeys.currentSubscription.rawValue)
+            return try? storage.get(Subscription.self, forKey: UserCachedStatusKeys.currentSubscription.rawValue)
         }
         set {
-            storage.setEncodableValue(newValue, forKey: UserCachedStatusKeys.currentSubscription.rawValue)
+            try? storage.set(newValue, forKey: UserCachedStatusKeys.currentSubscription.rawValue)
         }
     }
 
     var paymentsBackendStatusAcceptsIAP: Bool {
         get {
-            return storage.defaults.bool(forKey: UserCachedStatusKeys.paymentsBackendStatusAcceptsIAP.rawValue)
+            return provider.getDefaults().bool(forKey: UserCachedStatusKeys.paymentsBackendStatusAcceptsIAP.rawValue)
         }
         set {
-            storage.setValue(newValue, forKey: UserCachedStatusKeys.paymentsBackendStatusAcceptsIAP.rawValue)
+            provider.getDefaults().set(newValue, forKey: UserCachedStatusKeys.paymentsBackendStatusAcceptsIAP.rawValue)
         }
     }
 
     var paymentMethods: [PaymentMethod]? {
         get {
-            return storage.getDecodableValue([PaymentMethod].self, forKey: UserCachedStatusKeys.paymentMethods.rawValue)
+            return try? storage.get([PaymentMethod].self, forKey: UserCachedStatusKeys.paymentMethods.rawValue)
         }
         set {
-            storage.setEncodableValue(newValue, forKey: UserCachedStatusKeys.paymentMethods.rawValue)
+            try? storage.set(newValue, forKey: UserCachedStatusKeys.paymentMethods.rawValue)
         }
     }
 
@@ -76,7 +74,7 @@ final class UserCachedStatus: ServicePlanDataStorage {
 
     func clear() {
         for key in UserCachedStatusKeys.allCases {
-            storage.defaults.removeObject(forKey: key.rawValue)
+            storage.removeObject(forKey: key.rawValue)
         }
     }
 }
