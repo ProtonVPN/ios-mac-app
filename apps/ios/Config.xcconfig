@@ -9,8 +9,6 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-IOS_APP_VERSION = 5.0.0
-
 // Setup how logs are treated by os_log for different build configurations
 
 OSLOG_LEVEL_ENABLE[config=Debug] = Debug
@@ -30,3 +28,8 @@ DEPLOYMENT_TARGET = $(DEPLOYMENT_TARGET$(REDESIGN))
 REDESIGN_SWIFTFLAGS0 =
 REDESIGN_SWIFTFLAGS1 = -DREDESIGN
 REDESIGN_SWIFTFLAGS = $(REDESIGN_SWIFTFLAGS$(REDESIGN))
+
+APP_VERSION0 = 4.3.0
+APP_VERSION1 = 5.0.0
+
+IOS_APP_VERSION = $(APP_VERSION$(REDESIGN))
