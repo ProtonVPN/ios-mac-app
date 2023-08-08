@@ -924,14 +924,14 @@
 
 /* Title of the deprecated protocol alert. Shown when the user attemps to connect to a profile with OpenVPN */
 "_alert_protocol_deprecated_title" = "Protocol Unavailable";
-/* Body of the deprecated protocol alert on MacOS. Shown when the user attemps to connect to a profile with OpenVPN. The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
-"_alert_protocol_deprecated_body_macos" = "This profile uses a protocol that is outdated and no longer supported. Click update to switch to using the default Smart protocol. Learn more";
+/* Body of the deprecated protocol alert on MacOS. Shown when the user attemps to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
+"_alert_protocol_deprecated_body_macos" = "This profile uses a protocol that is outdated and no longer supported. Click \"Update\" to switch to using the default Smart protocol. Learn more";
 /* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
-"_alert_protocol_deprecated_link_text" = "Learn more?";
-/* Body of the deprecated protocol alert on iOS. Shown when the user attemps to connect to a profile with OpenVPN or IKEv2. */
-"_alert_protocol_deprecated_body_ios" = "This profile uses a protocol that is outdated and no longer supported. Click update to switch to using the default Smart protocol.";
+"_alert_protocol_deprecated_link_text" = "Learn more";
+/* Body of the deprecated protocol alert on iOS. Shown when the user attemps to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
+"_alert_protocol_deprecated_body_ios" = "This profile uses a protocol that is outdated and no longer supported. Click \"Update\" to switch to using the default Smart protocol.";
 /* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attemps to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
-"_alert_protocol_deprecated_enable_smart" = "Enable Smart protocol";
+"_alert_protocol_deprecated_enable_smart" = "Update";
 /* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser*/
 "_alert_protocol_deprecated_learn_more" = "Learn more";
 /* Text for the 'Close' action of the deprecated protocol alert. */
