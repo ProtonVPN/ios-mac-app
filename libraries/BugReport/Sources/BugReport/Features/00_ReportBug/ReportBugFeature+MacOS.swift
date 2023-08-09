@@ -124,7 +124,7 @@ public struct ReportBugView: View {
     @Environment(\.colors) var colors: Colors
     @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
 
-    private let verticalPadding = 64.0
+    private let verticalPadding = 32.0
     private let horizontalPadding = 126.0
 
     public var body: some View {
@@ -142,8 +142,6 @@ public struct ReportBugView: View {
                             return ReportBugFeatureMacOS.Action.whatsTheIssueAction(.route(.quickFixes(.contactFormAction(.resultViewAction($0)))))
                         }
                     }))
-                        .padding(.horizontal, horizontalPadding)
-                        .padding(.bottom, verticalPadding)
 
                 } else {
                     VStack(alignment: .leading, spacing: 0) {
@@ -187,7 +185,6 @@ public struct ReportBugView: View {
                         }
                     }
                     .padding(.horizontal, horizontalPadding)
-                    .padding(.bottom, verticalPadding)
 
                 }
             }
