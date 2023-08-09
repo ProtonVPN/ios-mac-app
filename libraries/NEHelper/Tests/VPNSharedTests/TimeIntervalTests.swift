@@ -21,7 +21,6 @@
 //
 
 import XCTest
-import LegacyCommon
 
 class TimeIntervalTests: XCTestCase {
     

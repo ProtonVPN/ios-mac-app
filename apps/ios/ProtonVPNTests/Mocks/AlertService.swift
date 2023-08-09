@@ -23,6 +23,8 @@
 import Foundation
 import LegacyCommon
 
+@testable import ProtonVPN
+
 class AlertServiceEmptyStub: AlertService {
     
     func push(alert: SystemAlert) {}

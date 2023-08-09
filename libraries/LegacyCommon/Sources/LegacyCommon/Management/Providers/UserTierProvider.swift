@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import Dependencies
 
 public protocol UserTierProvider {
     var currentUserTier: Int { get }

@@ -27,6 +27,8 @@ import TimerMock
 import VPNShared
 import VPNSharedTesting
 
+@testable import ProtonVPN
+
 class MapViewModelTests: XCTestCase {
 
     lazy var networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()), appInfo: AppInfoImplementation(context: .mainApp), doh: .mock, authKeychain: MockAuthKeychain(), unauthKeychain: UnauthKeychainMock())

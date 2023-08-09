@@ -22,6 +22,8 @@
 
 import Foundation
 
+@testable import ProtonVPN
+
 class ConnectionStatusServiceMock: ConnectionStatusService {
     func presentStatusViewController() {}
 }

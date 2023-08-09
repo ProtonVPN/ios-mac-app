@@ -28,6 +28,8 @@ import VPNShared
 import VPNSharedTesting
 import Strings
 
+@testable import ProtonVPN
+
 class CreateOrEditProfileViewModelTests: XCTestCase {
 
     lazy var serverStorage: ServerStorageArrayMock = ServerStorageArrayMock(servers: [

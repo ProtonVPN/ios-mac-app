@@ -23,6 +23,8 @@
 import Foundation
 import LegacyCommon
 
+@testable import ProtonVPN
+
 class ProfileServiceMock: ProfileService {
     
     var dataSet: SelectionDataSet?

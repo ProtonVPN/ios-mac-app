@@ -97,12 +97,36 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
 
     private func getFactory(safeMode: Bool?, tier: Int, safeModeFeatureFlag: Bool = true) -> PaidFeaturePropertyProviderFactoryMock {
         let propertiesManager = PropertiesManagerMock()
+        propertiesManager.featureFlags = FeatureFlags(safeMode: safeModeFeatureFlag)
         let userTierProvider = UserTierProviderMock(tier)
-        propertiesManager.featureFlags = FeatureFlags(smartReconnect: true, vpnAccelerator: true, netShield: true, netShieldStats: true, streamingServicesLogos: true, portForwarding: true, moderateNAT: true, pollNotificationAPI: true, serverRefresh: true, guestHoles: true, safeMode: safeModeFeatureFlag, promoCode: true, wireGuardTls: true, enforceDeprecatedProtocols: false, unsafeLanWarnings: true, localOverrides: nil)
         let authKeychain = MockAuthKeychain(context: .mainApp)
         authKeychain.setMockUsername(Self.username)
         @Dependency(\.defaultsProvider) var provider
         provider.getDefaults().set(safeMode, forKey: "SafeMode\(Self.username)")
         return PaidFeaturePropertyProviderFactoryMock(propertiesManager: propertiesManager, userTierProviderMock: userTierProvider, authKeychainMock: authKeychain)
+    }
+}
+
+private extension FeatureFlags {
+    init(safeMode: Bool) {
+        self.init(
+            smartReconnect: true,
+            vpnAccelerator: true,
+            netShield: true,
+            netShieldStats: true,
+            streamingServicesLogos: true,
+            portForwarding: true,
+            moderateNAT: true,
+            pollNotificationAPI: true,
+            serverRefresh: true,
+            guestHoles: true,
+            safeMode: safeMode,
+            promoCode: true,
+            wireGuardTls: true,
+            enforceDeprecatedProtocols: true,
+            unsafeLanWarnings: true,
+            newFree: true,
+            localOverrides: nil
+        )
     }
 }
