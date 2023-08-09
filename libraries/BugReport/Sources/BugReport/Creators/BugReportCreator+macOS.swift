@@ -50,9 +50,9 @@ public final class MacOSBugReportCreator: BugReportCreator {
 
         let controller = NSHostingController(
             rootView: rootView
-                                .frame(width: 600, height: 650, alignment: .center)
-                                .environment(\.colors, colors)
-                                .preferredColorScheme(.dark)
+                .frame(width: 600, height: 650, alignment: .center)
+                .environment(\.colors, colors)
+                .preferredColorScheme(.dark)
         )
 
         return controller
