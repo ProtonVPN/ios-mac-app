@@ -922,21 +922,6 @@
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Disable Kill switch";
 
-/* Title of the deprecated protocol alert. Shown when the user attemps to connect to a profile with OpenVPN */
-"_alert_protocol_deprecated_title" = "Protocol Unavailable";
-/* Body of the deprecated protocol alert on MacOS. Shown when the user attemps to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
-"_alert_protocol_deprecated_body_macos" = "This profile uses a protocol that is outdated and no longer supported. Click \"Update\" to switch to using the default Smart protocol. Learn more";
-/* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
-"_alert_protocol_deprecated_link_text" = "Learn more";
-/* Body of the deprecated protocol alert on iOS. Shown when the user attemps to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
-"_alert_protocol_deprecated_body_ios" = "This profile uses a protocol that is outdated and no longer supported. Click \"Update\" to switch to using the default Smart protocol.";
-/* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attemps to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
-"_alert_protocol_deprecated_enable_smart" = "Update";
-/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser*/
-"_alert_protocol_deprecated_learn_more" = "Learn more";
-/* Text for the 'Close' action of the deprecated protocol alert. */
-"_alert_protocol_deprecated_close" = "Close";
-
 // MARK: Settings
 
 /* MacOS: Settings screen title */
@@ -1953,20 +1938,18 @@
 /* Connection details screen: Info button text, that show more info about given VPN feature (macOS and iOS) [Redesign_2023] */
 "_connection_details_info_button" = "Info";
 
-// Settings
-
-/* Title of the deprecated protocol alert. Shown when the user attemps to connect to a profile with OpenVPN */
+/* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
 "_alert_protocol_deprecated_title" = "Protocol Unavailable";
-/* Body of the deprecated protocol alert on MacOS. Shown when the user attemps to connect to a profile with OpenVPN. Manage profiles is emphasized with quotation marks, which must be escaped with the backslash (\). The 'Learn more' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
-"_alert_protocol_deprecated_body_macos" = "We found a security issue that affects OpenVPN on macOS. To ensure a secure browsing experience for the Proton community, we removed this protocol.\nTo connect, enable Smart Protocol or go to \"Manage profiles\" to select another protocol. Learn more";
+/* Body of the deprecated protocol alert on MacOS. Shown when the user attempts to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
+"_alert_protocol_deprecated_body_macos" = "This profile uses a protocol that is outdated and no longer supported. Click \"Update\" to switch to using the default Smart protocol. Learn more";
 /* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
 "_alert_protocol_deprecated_link_text" = "Learn more";
-/* Body of the deprecated protocol alert on iOS. Shown when the user attemps to connect to a profile with OpenVPN or IKEv2. Edit profiles is emphasized with quotation marks, which must be escaped with the backslash (\).  */
-"_alert_protocol_deprecated_body_ios" = "We found a security issue that affects IKEv2 and OpenVPN on iOS devices. To ensure a secure browsing experience for the Proton community, we removed these protocols.\n\nTo connect, enable Smart Protocol or go to \"Edit Profiles\" to select another protocol.";
-/* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attemps to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
-"_alert_protocol_deprecated_enable_smart" = "Enable Smart protocol";
+/* Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
+"_alert_protocol_deprecated_body_ios" = "This profile uses a protocol that is outdated and no longer supported. Click \"Update\" to switch to using the default Smart protocol.";
+/* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
+"_alert_protocol_deprecated_enable_smart" = "Update";
 /* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser*/
-"_alert_protocol_deprecated_learn_more" = "Learn More";
+"_alert_protocol_deprecated_learn_more" = "Learn more";
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Close";
 
