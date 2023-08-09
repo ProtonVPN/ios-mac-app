@@ -353,10 +353,6 @@ public enum Localizable {
   public static var enabled: String { return Localizable.tr("Localizable", "_enabled", fallback: "Enabled") }
   /// MacOS app tour: end tour button
   public static var endTour: String { return Localizable.tr("Localizable", "_end_tour", fallback: "End Tour") }
-  /// %@ is always 'PLUS' e.g. ENJOY PLUS FOR FREE!
-  public static func enjoyForFree(_ p1: Any) -> String {
-    return Localizable.tr("Localizable", "_enjoy_for_free", String(describing: p1), fallback: "Enjoy %@ for free!")
-  }
   /// iOS: placeholder for email field in signup and email verification screens
   public static var enterEmailAddress: String { return Localizable.tr("Localizable", "_enter_email_address", fallback: "Enter email address") }
   /// Profile create/change form
@@ -974,8 +970,6 @@ public enum Localizable {
   public static var profilesTourTitle: String { return Localizable.tr("Localizable", "_profiles_tour_title", fallback: "Profiles") }
   /// Protocol
   public static var `protocol`: String { return Localizable.tr("Localizable", "_protocol", fallback: "Protocol") }
-  /// Proton VPN Plus
-  public static var protonvpnPlus: String { return Localizable.tr("Localizable", "_protonvpn_plus", fallback: "Proton VPN Plus") }
   /// %@ is an IP address e.g. Public IP: 123.45.67.890
   public static func publicIp(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_public_ip", String(describing: p1), fallback: "Public IP: %@")
@@ -1651,11 +1645,6 @@ public enum Localizable {
   public static var welcomeBody: String { return Localizable.tr("Localizable", "_welcome_body", fallback: "High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.") }
   /// MacOS welcome screen: description
   public static var welcomeDescription: String { return Localizable.tr("Localizable", "_welcome_description", fallback: "Thanks for using Proton VPN. Take a quick look\nat the main app features.") }
-  /// %@ is always 'Proton VPN Plus' e.g. As a welcome gift, you are granted a 7-day access to a
-  /// Proton VPN Plus subscription which gives you: A list of Plus plan-only features follows this text
-  public static func welcomeGiftDescription(_ p1: Any) -> String {
-    return Localizable.tr("Localizable", "_welcome_gift_description", String(describing: p1), fallback: "As a welcome gift, you are granted a 7-day access to a\n%@ subscription which gives you:")
-  }
   /// Shown on the Welcome screen as the screen headline
   public static var welcomeHeadline: String { return Localizable.tr("Localizable", "_welcome_headline", fallback: "Protect yourself online") }
   /// MacOS welcome screen: title
