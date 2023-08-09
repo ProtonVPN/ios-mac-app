@@ -69,7 +69,7 @@ open class Container: PropertiesToOverride {
     // Lazy instances - get allocated once, and stay allocated
     @Dependency(\.storage) var storage
     private lazy var propertiesManager: PropertiesManagerProtocol = PropertiesManager()
-    private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
+    private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain.instance
     private lazy var authKeychain: AuthKeychainHandle = AuthKeychain(context: .mainApp)
     private lazy var unauthKeychain: UnauthKeychainHandle = UnauthKeychain()
     private lazy var profileManager = ProfileManager(self)

@@ -27,6 +27,8 @@ import VPNShared
 import VPNSharedTesting
 import VPNAppCore
 
+@testable import ProtonVPN
+
 class CountryAnnotationViewModelTests: XCTestCase {
 
     func testUnderMaintenanceLogic() {

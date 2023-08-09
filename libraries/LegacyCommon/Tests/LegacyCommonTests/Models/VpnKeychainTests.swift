@@ -50,7 +50,7 @@ final class VpnKeychainTests: XCTestCase {
             return errSecSuccess
         }
 
-        let vpnKeychain = VpnKeychain()
+        let vpnKeychain = VpnKeychain.instance
         try vpnKeychain.setPassword(password, forKey: key)
 
         wait(for: [expectations.readDataFromKeychain, expectations.oldDataDeletedFromKeychain, expectations.newDataSavedToKeychain], timeout: expectationTimeout)
@@ -76,7 +76,7 @@ final class VpnKeychainTests: XCTestCase {
             return errSecSuccess
         }
 
-        let vpnKeychain = VpnKeychain()
+        let vpnKeychain = VpnKeychain.instance
         try vpnKeychain.setPassword(password, forKey: "key")
 
         wait(for: [readDataFromKeychain], timeout: expectationTimeout)

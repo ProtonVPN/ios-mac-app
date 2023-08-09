@@ -24,6 +24,8 @@ import Foundation
 import LegacyCommon
 import VPNShared
 
+@testable import ProtonVPN
+
 class AppSessionManagerMock: AppSessionManager {
     
     init(sessionStatus: SessionStatus, loggedIn: Bool, sessionChanged: Notification.Name, vpnGateway: VpnGatewayProtocol) {

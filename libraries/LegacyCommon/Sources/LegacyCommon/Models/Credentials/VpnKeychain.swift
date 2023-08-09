@@ -76,7 +76,11 @@ public class VpnKeychain: VpnKeychainProtocol {
     public static let vpnPlanChanged = Notification.Name("VpnKeychainPlanChanged")
     public static let vpnUserDelinquent = Notification.Name("VpnUserDelinquent")
 
-    public init() {}
+    /// Singleton implementation of the `VPNKeychain` ensures that the live value provided by `Dependencies` and the
+    /// VPNKeychain in the legacy DependencyContainer share a single instance and do not duplicate their cached values.
+    public static let instance = VpnKeychain()
+
+    private init() {}
 
     private var cached: CachedVpnCredentials?
     

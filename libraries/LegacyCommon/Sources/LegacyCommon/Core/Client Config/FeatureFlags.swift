@@ -40,6 +40,7 @@ public struct FeatureFlags: Codable, DefaultableProperty {
     @Default<BoolDefaultTrue> public var wireGuardTls: Bool
     @Default<Bool> public var enforceDeprecatedProtocols: Bool
     @Default<BoolDefaultTrue> public var unsafeLanWarnings: Bool
+    @Default<Bool> public var newFree: Bool // Free Rescope
     public var localOverrides: [String: [String: Bool]]?
 
     public init(
@@ -58,6 +59,7 @@ public struct FeatureFlags: Codable, DefaultableProperty {
         wireGuardTls: Bool,
         enforceDeprecatedProtocols: Bool,
         unsafeLanWarnings: Bool,
+        newFree: Bool,
         localOverrides: [String: [String: Bool]]?
     ) {
         self.smartReconnect = smartReconnect
@@ -75,26 +77,29 @@ public struct FeatureFlags: Codable, DefaultableProperty {
         self.wireGuardTls = wireGuardTls
         self.enforceDeprecatedProtocols = enforceDeprecatedProtocols
         self.unsafeLanWarnings = unsafeLanWarnings
+        self.newFree = newFree
         self.localOverrides = localOverrides
     }
 
     public init() {
-        self.init(smartReconnect: false, vpnAccelerator: false, netShield: true, netShieldStats: false, streamingServicesLogos: false, portForwarding: false, moderateNAT: false, pollNotificationAPI: false, serverRefresh: false, guestHoles: false, safeMode: false, promoCode: false, wireGuardTls: false, enforceDeprecatedProtocols: false, unsafeLanWarnings: true, localOverrides: nil)
-    }
-}
-
-public struct FeatureFlagProvider: DependencyKey {
-    public var getNewFree: () -> Bool
-
-    public static var liveValue = FeatureFlagProvider(
-        getNewFree: { false }
-    )
-}
-
-
-extension DependencyValues {
-    var featureFlagProvider: FeatureFlagProvider {
-      get { self[FeatureFlagProvider.self] }
-      set { self[FeatureFlagProvider.self] = newValue }
+        self.init(
+            smartReconnect: false,
+            vpnAccelerator: false,
+            netShield: true,
+            netShieldStats: false,
+            streamingServicesLogos: false,
+            portForwarding: false,
+            moderateNAT: false,
+            pollNotificationAPI: false,
+            serverRefresh: false,
+            guestHoles: false,
+            safeMode: false,
+            promoCode: false,
+            wireGuardTls: false,
+            enforceDeprecatedProtocols: false,
+            unsafeLanWarnings: true,
+            newFree: false,
+            localOverrides: nil
+        )
     }
 }

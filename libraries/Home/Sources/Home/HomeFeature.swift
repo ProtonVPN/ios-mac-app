@@ -32,8 +32,6 @@ public struct HomeFeature: Reducer {
     /// - Note: might want this as a property of all Reducer types
     public typealias ActionSender = (Action) -> Void
 
-    let storage = Storage()
-
     public struct State: Equatable {
         static let maxConnections = 8
 
@@ -48,12 +46,13 @@ public struct HomeFeature: Reducer {
             self.vpnConnectionStatus = vpnConnectionStatus
         }
 
-        mutating func trimConnections(storage: Storage) {
+        mutating func trimConnections() {
+            @Dependency(\.storage) var storage
             while connections.count > Self.maxConnections,
                   let index = connections.lastIndex(where: \.notPinned) {
                 connections.remove(at: index)
             }
-            storage.setEncodableValue(connections, forKey: "RecentConnections")
+            try? storage.set(connections, forKey: "RecentConnections")
         }
     }
 
@@ -108,7 +107,7 @@ public struct HomeFeature: Reducer {
                     connection: spec
                 )
                 state.connections.insert(recent, at: 0)
-                state.trimConnections(storage: storage)
+                state.trimConnections()
 
                 return .none // Actual connection is handled in the app
 
@@ -116,31 +115,31 @@ public struct HomeFeature: Reducer {
                 guard let index = state.connections.firstIndex(where: {
                     $0.connection == spec
                 }) else {
-                    state.trimConnections(storage: storage)
+                    state.trimConnections()
                     return .none
                 }
 
                 state.connections[index].pinned = true
-                state.trimConnections(storage: storage)
+                state.trimConnections()
                 return .none
 
             case let .unpin(spec):
                 guard let index = state.connections.firstIndex(where: {
                     $0.connection == spec
                 }) else {
-                    state.trimConnections(storage: storage)
+                    state.trimConnections()
                     return .none
                 }
 
                 state.connections[index].pinned = false
-                state.trimConnections(storage: storage)
+                state.trimConnections()
                 return .none
 
             case let .remove(spec):
                 state.connections.removeAll {
                     $0.connection == spec
                 }
-                state.trimConnections(storage: storage)
+                state.trimConnections()
                 return .none
 
             case .disconnect:
@@ -172,8 +171,8 @@ public struct HomeFeature: Reducer {
             case .helpButtonPressed:
                 return .none
             case .loadConnections:
-                if let connections = storage.getDecodableValue([RecentConnection].self,
-                                                               forKey: "RecentConnections") {
+                @Dependency(\.storage) var storage
+                if let connections = try? storage.get([RecentConnection].self, forKey: "RecentConnections") {
                     state.connections = connections
                 }
                 return .none

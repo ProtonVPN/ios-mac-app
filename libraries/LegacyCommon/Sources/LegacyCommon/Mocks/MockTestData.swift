@@ -258,6 +258,25 @@ extension ClientConfig {
 }
 
 extension FeatureFlags {
+    public static let allDisabled: Self = .init(
+        smartReconnect: false,
+        vpnAccelerator: false,
+        netShield: false,
+        netShieldStats: false,
+        streamingServicesLogos: false,
+        portForwarding: false,
+        moderateNAT: false,
+        pollNotificationAPI: false,
+        serverRefresh: false,
+        guestHoles: false,
+        safeMode: false,
+        promoCode: false,
+        wireGuardTls: false,
+        enforceDeprecatedProtocols: false,
+        unsafeLanWarnings: false,
+        newFree: false,
+        localOverrides: nil
+    )
     public static let allEnabled: Self = .init(
         smartReconnect: true,
         vpnAccelerator: true,
@@ -272,8 +291,9 @@ extension FeatureFlags {
         safeMode: true,
         promoCode: true,
         wireGuardTls: true,
-        enforceDeprecatedProtocols: false,
+        enforceDeprecatedProtocols: true,
         unsafeLanWarnings: true,
+        newFree: true,
         localOverrides: nil
     )
 
@@ -291,8 +311,9 @@ extension FeatureFlags {
         safeMode: true,
         promoCode: true,
         wireGuardTls: false,
-        enforceDeprecatedProtocols: false,
+        enforceDeprecatedProtocols: true,
         unsafeLanWarnings: true,
+        newFree: true,
         localOverrides: nil
     )
 }

@@ -24,6 +24,8 @@ import XCTest
 import LegacyCommon
 import VPNAppCore
 
+@testable import ProtonVPN
+
 class ServerUtilityTests: XCTestCase {
 
     func testCountryIndex() {

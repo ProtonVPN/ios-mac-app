@@ -9,6 +9,8 @@
 import XCTest
 import LegacyCommon
 
+@testable import ProtonVPN
+
 class LogSelectionViewModelTests: XCTestCase {
 
     var viewModel: LogSelectionViewModel!

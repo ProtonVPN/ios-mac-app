@@ -23,6 +23,8 @@
 import XCTest
 import LegacyCommon
 
+@testable import ProtonVPN
+
 class ColorPickerViewModelTests: XCTestCase {
 
     func testCorrectColorSelection() {

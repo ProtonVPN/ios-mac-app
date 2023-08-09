@@ -22,6 +22,8 @@
 
 import Foundation
 
+@testable import ProtonVPN
+
 class TroubleshootCoordinatorMock: TroubleshootCoordinator {
     
     func start() {

@@ -45,7 +45,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         let appGroup = AppConstants.AppGroups.main
         let serverStorage = ServerStorageConcrete()
         let propertiesManager = PropertiesManager()
-        let vpnKeychain = VpnKeychain()
+        let vpnKeychain = VpnKeychain.instance
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
         let authKeychain = AuthKeychain()
         let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN",
