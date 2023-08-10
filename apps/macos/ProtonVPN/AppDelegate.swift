@@ -317,6 +317,7 @@ extension AppDelegate {
         if ProcessInfo.processInfo.arguments.contains("enforceUnauthSessionStrictVerificationOnBackend") {
             FeatureFactory.shared.enable(&.enforceUnauthSessionStrictVerificationOnBackend)
         }
+        FeatureFactory.shared.enable(&.ssoSignIn)
         #endif
         let apiService = container.makeNetworking().apiService
         apiService.acquireSessionIfNeeded { _ in
