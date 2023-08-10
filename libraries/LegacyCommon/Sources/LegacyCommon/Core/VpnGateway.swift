@@ -313,8 +313,10 @@ public class VpnGateway: VpnGatewayProtocol {
     }
     
     public func connectTo(profile: Profile) {
-        let updatedProfile = profile.withUpdatedConnectionDate()
-        profileManager.updateProfile(updatedProfile)
+        if !profile.isDefaultProfile {
+            let updatedProfile = profile.withUpdatedConnectionDate()
+            profileManager.updateProfile(updatedProfile)
+        }
 
         let connectionRequest = profile.connectionRequest(withDefaultNetshield: netShieldType, withDefaultNATType: natType, withDefaultSafeMode: safeMode, trigger: .profile)
         connect(with: connectionRequest)

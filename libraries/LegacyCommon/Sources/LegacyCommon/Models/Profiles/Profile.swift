@@ -23,7 +23,7 @@ import Foundation
 import VPNShared
 import VPNAppCore
 
-public class Profile: NSObject, NSCoding {
+public class Profile: NSObject, NSCoding, Identifiable {
 
     public static let idLength = 20
 
@@ -62,7 +62,11 @@ public class Profile: NSObject, NSCoding {
             "Protocol: \(connectionProtocol) " +
             "Last connected date: \(lastConnectedDate?.description ?? "None")"
     }
-    
+
+    public var isDefaultProfile: Bool {
+        ProfileConstants.defaultIds.contains(id)
+    }
+
     public func connectionRequest(withDefaultNetshield netShield: NetShieldType, withDefaultNATType natType: NATType, withDefaultSafeMode safeMode: Bool?, trigger: TelemetryDimensions.VPNTrigger?) -> ConnectionRequest {
         switch serverOffering {
         case let .fastest(countryCode):
