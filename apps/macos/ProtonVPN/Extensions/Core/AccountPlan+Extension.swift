@@ -31,7 +31,7 @@ extension AccountPlan {
             return .weak
         case .basic:
             return .info
-        case .trial, .plus, .vpnPlus, .family, .bundlePro, .enterprise2022:
+        case .trial, .plus, .vpnPlus, .family, .bundlePro, .enterprise2022, .vpnbiz2023, .vpnpro2023:
             return .success
         case .visionary, .unlimited, .visionary2022:
             return .interactive

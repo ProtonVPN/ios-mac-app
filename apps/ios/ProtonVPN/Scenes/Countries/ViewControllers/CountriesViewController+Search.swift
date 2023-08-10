@@ -54,7 +54,7 @@ extension CountriesViewController: SearchCoordinatorDelegate {
         switch viewModel.accountPlan {
         case .free, .trial, .basic:
             return .standard(.free)
-        case .plus, .vpnPlus, .family, .bundlePro, .enterprise2022, .visionary, .unlimited, .visionary2022:
+        case .plus, .vpnPlus, .family, .bundlePro, .enterprise2022, .visionary, .unlimited, .visionary2022, .vpnpro2023, .vpnbiz2023:
             return .standard(.plus)
         }
     }
