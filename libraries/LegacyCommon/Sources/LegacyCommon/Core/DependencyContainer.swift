@@ -78,6 +78,7 @@ open class Container: PropertiesToOverride {
                                                                            accessGroup: config.accessGroup,
                                                                            vpnKeysGenerator: CoreVPNKeysGenerator())
     private lazy var vpnManager: VpnManagerProtocol = VpnManager(self, config: config)
+    private lazy var vpnGateway: VpnGatewayProtocol = VpnGateway(self)
 
     private lazy var timerFactory = TimerFactoryImplementation()
 
@@ -336,7 +337,7 @@ extension Container: AvailabilityCheckerResolverFactory {
 // MARK: VpnGatewayFactory
 extension Container: VpnGatewayFactory {
     public func makeVpnGateway() -> VpnGatewayProtocol {
-        VpnGateway(self)
+        vpnGateway
     }
 }
 
