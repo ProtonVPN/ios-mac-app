@@ -82,7 +82,7 @@ public class ServerManagerImplementation: ServerManager {
                                                name: serverStorage.contentChanged, object: nil)
     }
     
-    public func formGrouping(from serverModels: [ServerModel]) -> [CountryGroup] {
+    func formGrouping(from serverModels: [ServerModel]) -> [CountryGroup] {
         var headers: [CountryModel] = []
         var servers: [String: [ServerModel]] = [:]
 
