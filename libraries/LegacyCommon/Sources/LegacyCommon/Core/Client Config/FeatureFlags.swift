@@ -38,9 +38,27 @@ public struct FeatureFlags: Codable, DefaultableProperty {
     @Default<Bool> public var promoCode: Bool
     @Default<BoolDefaultTrue> public var wireGuardTls: Bool
     @Default<Bool> public var enforceDeprecatedProtocols: Bool
+    @Default<BoolDefaultTrue> public var unsafeLanWarnings: Bool
     public var localOverrides: [String: [String: Bool]]?
 
-    public init(smartReconnect: Bool, vpnAccelerator: Bool, netShield: Bool, netShieldStats: Bool, streamingServicesLogos: Bool, portForwarding: Bool, moderateNAT: Bool, pollNotificationAPI: Bool, serverRefresh: Bool, guestHoles: Bool, safeMode: Bool, promoCode: Bool, wireGuardTls: Bool, enforceDeprecatedProtocols: Bool, localOverrides: [String: [String: Bool]]?) {
+    public init(
+        smartReconnect: Bool,
+        vpnAccelerator: Bool,
+        netShield: Bool,
+        netShieldStats: Bool,
+        streamingServicesLogos: Bool,
+        portForwarding: Bool,
+        moderateNAT: Bool,
+        pollNotificationAPI: Bool,
+        serverRefresh: Bool,
+        guestHoles: Bool,
+        safeMode: Bool,
+        promoCode: Bool,
+        wireGuardTls: Bool,
+        enforceDeprecatedProtocols: Bool,
+        unsafeLanWarnings: Bool,
+        localOverrides: [String: [String: Bool]]?
+    ) {
         self.smartReconnect = smartReconnect
         self.vpnAccelerator = vpnAccelerator
         self.netShield = netShield
@@ -55,10 +73,11 @@ public struct FeatureFlags: Codable, DefaultableProperty {
         self.promoCode = promoCode
         self.wireGuardTls = wireGuardTls
         self.enforceDeprecatedProtocols = enforceDeprecatedProtocols
+        self.unsafeLanWarnings = unsafeLanWarnings
         self.localOverrides = localOverrides
     }
 
     public init() {
-        self.init(smartReconnect: false, vpnAccelerator: false, netShield: true, netShieldStats: false, streamingServicesLogos: false, portForwarding: false, moderateNAT: false, pollNotificationAPI: false, serverRefresh: false, guestHoles: false, safeMode: false, promoCode: false, wireGuardTls: false, enforceDeprecatedProtocols: false, localOverrides: nil)
+        self.init(smartReconnect: false, vpnAccelerator: false, netShield: true, netShieldStats: false, streamingServicesLogos: false, portForwarding: false, moderateNAT: false, pollNotificationAPI: false, serverRefresh: false, guestHoles: false, safeMode: false, promoCode: false, wireGuardTls: false, enforceDeprecatedProtocols: false, unsafeLanWarnings: true, localOverrides: nil)
     }
 }

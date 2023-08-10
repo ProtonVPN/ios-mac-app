@@ -214,6 +214,9 @@ extension MacAlertService: CoreAlertService {
         case let alert as ProtocolDeprecatedAlert:
             show(alert)
 
+        case is ConnectingWithBadLANAlert:
+            showDefaultSystemAlert(alert)
+
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")

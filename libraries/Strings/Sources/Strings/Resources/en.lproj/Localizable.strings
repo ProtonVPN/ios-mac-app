@@ -912,7 +912,6 @@
 /* Plan upgrade unavailable alert */
 "_upgrade_unavailable_body" = "Your Proton VPN subscription cannot be upgraded from within the app, please visit account.protonvpn.com to upgrade.";
 
-
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_title" = "Clear application data";
 
@@ -922,7 +921,10 @@
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Disable Kill switch";
 
-// MARK: Settings
+/* iOS and macOS: Enable kill switch on badly-routed networks */
+"_kill_switch_enable" = "Enable Kill Switch";
+
+// Settings
 
 /* MacOS: Settings screen title */
 "_preferences" = "Preferences";
@@ -1759,7 +1761,6 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "%@ setting could not be changed. Please try again later or connect to a different server";
 
-
 /* Home tab in bottom menu */
 /* Home tab in bottom menu [Redesign_2023] */
 "_home_tab" = "Home";
@@ -2076,3 +2077,9 @@
 
 /* Confirmation button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
 "_settings_protocol_alert_button_continue" = "Continue";
+
+/* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
+"_bad_interface_ip_range_alert_title" = "Bad Network Interface";
+
+/* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Your local network might be unsafe (the interface '%@' has the IP and prefix '%@'). Your data may be sent unencrypted over the local network. Enabling Kill Switch will block this traffic. Connections to local peripherals will be interrupted.";

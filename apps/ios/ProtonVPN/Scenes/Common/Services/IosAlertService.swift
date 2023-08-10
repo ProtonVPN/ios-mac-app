@@ -193,6 +193,9 @@ extension IosAlertService: CoreAlertService {
 
         case is ProtocolDeprecatedAlert:
             showDefaultSystemAlert(alert)
+
+        case is ConnectingWithBadLANAlert:
+            showDefaultSystemAlert(alert)
             
         default:
             #if DEBUG

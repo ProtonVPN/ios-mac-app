@@ -31,7 +31,8 @@ typealias PropertiesToOverride = DoHVPNFactory &
                                 VpnCredentialsConfiguratorFactoryCreator &
                                 VpnAuthenticationFactory &
                                 LogContentProviderFactory &
-                                UpdateCheckerFactory
+                                UpdateCheckerFactory &
+                                VpnConnectionInterceptDelegate
 
 open class Container: PropertiesToOverride {
     public struct Config {
@@ -136,6 +137,12 @@ open class Container: PropertiesToOverride {
         shouldHaveOverridden()
     }
     #endif
+
+    open var vpnConnectionInterceptPolicies: [VpnConnectionInterceptPolicyItem] {
+        [
+            MisconfiguredLocalNetworkIntercept(factory: self)
+        ]
+    }
 
     // MARK: - Factories to override
     // MARK: DoHVPNFactory
@@ -489,32 +496,43 @@ extension Container: ProfileStorageFactory {
     }
 }
 
+// MARK: DynamicBugReportStorageFactory
 extension Container: DynamicBugReportStorageFactory {
     public func makeDynamicBugReportStorage() -> DynamicBugReportStorage {
         DynamicBugReportStorageUserDefaults(self)
     }
 }
 
+// MARK: SiriHelperFactory
 extension Container: SiriHelperFactory {
     public func makeSiriHelper() -> SiriHelperProtocol {
         SiriHelper()
     }
 }
 
+// MARK: TelemetryServiceFactory
 extension Container: TelemetryServiceFactory {
     public func makeTelemetryService() async -> TelemetryService {
         return await _telemetryServiceTask.value
     }
 }
 
+// MARK: TelemetrySettingsFactory
 extension Container: TelemetrySettingsFactory {
     public func makeTelemetrySettings() -> TelemetrySettings {
         return TelemetrySettings(self)
     }
 }
 
+// MARK: TelemetryAPIFactory
 extension Container: TelemetryAPIFactory {
     public func makeTelemetryAPI(networking: Networking) -> TelemetryAPI {
         TelemetryAPIImplementation(networking: networking)
+    }
+}
+
+extension Container: NetworkInterfacePropertiesProviderFactory {
+    public func makeInterfacePropertiesProvider() -> NetworkInterfacePropertiesProvider {
+        NetworkInterfacePropertiesProviderImplementation()
     }
 }

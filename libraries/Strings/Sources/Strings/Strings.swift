@@ -115,6 +115,8 @@ public enum Localizable {
   public static var autoConnect: String { return Localizable.tr("Localizable", "_auto_connect", fallback: "Auto Connect") }
   /// MacOS: Settings -> Connection: description.
   public static var autoConnectTooltip: String { return Localizable.tr("Localizable", "_auto_connect_tooltip", fallback: "On app start, you are connected to the selected profile") }
+  /// Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful.
+  public static var badInterfaceIpRangeAlertTitle: String { return Localizable.tr("Localizable", "_bad_interface_ip_range_alert_title", fallback: "Bad Network Interface") }
   /// Battery usages screen description
   public static var batteryDescription: String { return Localizable.tr("Localizable", "_battery_description", fallback: "All traffic on your phone will be managed through OpenVPN, therefore iOS will allocate the battery usage of other apps to Proton VPN.") }
   /// Battery usage More info button text
@@ -588,6 +590,8 @@ public enum Localizable {
   public static var killSwitchBlockingConnection: String { return Localizable.tr("Localizable", "_kill_switch_blocking_connection", fallback: "Kill switch blocking all connections") }
   /// MacOS: killswitch blocking alert button
   public static var killSwitchDisable: String { return Localizable.tr("Localizable", "_kill_switch_disable", fallback: "Disable Kill switch") }
+  /// iOS and macOS: Enable kill switch on badly-routed networks
+  public static var killSwitchEnable: String { return Localizable.tr("Localizable", "_kill_switch_enable", fallback: "Enable Kill Switch") }
   /// MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect
   public static var killSwitchReconnection: String { return Localizable.tr("Localizable", "_kill_switch_reconnection", fallback: "Your internet connection will resume as soon as Proton VPN reconnects to a server.\nTo use the internet without VPN and kill switch protection, cancel the reconnection to the server.") }
   /// MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded
@@ -968,6 +972,10 @@ public enum Localizable {
   public static var profilesTourDescription: String { return Localizable.tr("Localizable", "_profiles_tour_description", fallback: "Save your preferred settings and servers for future use.") }
   /// MacOS app tour: profiles title
   public static var profilesTourTitle: String { return Localizable.tr("Localizable", "_profiles_tour_title", fallback: "Profiles") }
+  /// Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24).
+  public static func promptKillSwitchDueToBadInterfaceIpRange(_ p1: Any, _ p2: Any) -> String {
+    return Localizable.tr("Localizable", "_prompt_kill_switch_due_to_bad_interface_ip_range", String(describing: p1), String(describing: p2), fallback: "Your local network might be unsafe (the interface '%@' has the IP and prefix '%@'). Your data may be sent unencrypted over the local network. Enabling Kill Switch will block this traffic. Connections to local peripherals will be interrupted.")
+  }
   /// Protocol
   public static var `protocol`: String { return Localizable.tr("Localizable", "_protocol", fallback: "Protocol") }
   /// %@ is an IP address e.g. Public IP: 123.45.67.890

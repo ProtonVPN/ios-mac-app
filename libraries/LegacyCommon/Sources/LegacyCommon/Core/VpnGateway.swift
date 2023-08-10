@@ -171,6 +171,8 @@ public class VpnGateway: VpnGatewayProtocol {
         return safeModePropertyProvider.safeMode
     }
 
+    private let connectionIntercepts: [VpnConnectionInterceptPolicyItem]
+
     public typealias Factory = VpnApiServiceFactory &
         AppStateManagerFactory &
         CoreAlertServiceFactory &
@@ -183,25 +185,44 @@ public class VpnGateway: VpnGatewayProtocol {
         PropertiesManagerFactory &
         ProfileManagerFactory &
         AvailabilityCheckerResolverFactory &
-        ServerStorageFactory
+        ServerStorageFactory &
+        VpnConnectionInterceptDelegate
 
     public convenience init(_ factory: Factory) {
-        self.init(vpnApiService: factory.makeVpnApiService(),
-                  appStateManager: factory.makeAppStateManager(),
-                  alertService: factory.makeCoreAlertService(),
-                  vpnKeychain: factory.makeVpnKeychain(),
-                  authKeychain: factory.makeAuthKeychainHandle(),
-                  siriHelper: factory.makeSiriHelper(),
-                  netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
-                  natTypePropertyProvider: factory.makeNATTypePropertyProvider(),
-                  safeModePropertyProvider: factory.makeSafeModePropertyProvider(),
-                  propertiesManager: factory.makePropertiesManager(),
-                  profileManager: factory.makeProfileManager(),
-                  availabilityCheckerResolverFactory: factory,
-                  serverStorage: factory.makeServerStorage())
+        self.init(
+            vpnApiService: factory.makeVpnApiService(),
+            appStateManager: factory.makeAppStateManager(),
+            alertService: factory.makeCoreAlertService(),
+            vpnKeychain: factory.makeVpnKeychain(),
+            authKeychain: factory.makeAuthKeychainHandle(),
+            siriHelper: factory.makeSiriHelper(),
+            netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
+            natTypePropertyProvider: factory.makeNATTypePropertyProvider(),
+            safeModePropertyProvider: factory.makeSafeModePropertyProvider(),
+            propertiesManager: factory.makePropertiesManager(),
+            profileManager: factory.makeProfileManager(),
+            availabilityCheckerResolverFactory: factory,
+            serverStorage: factory.makeServerStorage(),
+            connectionIntercepts: factory.vpnConnectionInterceptPolicies
+        )
     }
 
-    public init(vpnApiService: VpnApiService, appStateManager: AppStateManager, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, authKeychain: AuthKeychainHandle, siriHelper: SiriHelperProtocol? = nil, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, propertiesManager: PropertiesManagerProtocol, profileManager: ProfileManager, availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory, serverStorage: ServerStorage) {
+    public init(
+        vpnApiService: VpnApiService,
+        appStateManager: AppStateManager,
+        alertService: CoreAlertService,
+        vpnKeychain: VpnKeychainProtocol,
+        authKeychain: AuthKeychainHandle,
+        siriHelper: SiriHelperProtocol? = nil,
+        netShieldPropertyProvider: NetShieldPropertyProvider,
+        natTypePropertyProvider: NATTypePropertyProvider,
+        safeModePropertyProvider: SafeModePropertyProvider,
+        propertiesManager: PropertiesManagerProtocol,
+        profileManager: ProfileManager,
+        availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory,
+        serverStorage: ServerStorage,
+        connectionIntercepts: [VpnConnectionInterceptPolicyItem] = []
+    ) {
         self.vpnApiService = vpnApiService
         self.appStateManager = appStateManager
         self.alertService = alertService
@@ -214,6 +235,8 @@ public class VpnGateway: VpnGatewayProtocol {
         self.propertiesManager = propertiesManager
         self.profileManager = profileManager
         self.availabilityCheckerResolverFactory = availabilityCheckerResolverFactory
+        self.connectionIntercepts = connectionIntercepts
+
         serverTierChecker = ServerTierChecker(alertService: alertService, vpnKeychain: vpnKeychain)
 
         let state = appStateManager.state
@@ -488,6 +511,39 @@ public class VpnGateway: VpnGatewayProtocol {
                 self.connectionPreparer?.determineServerParametersAndConnect(with: connectionProtocol, to: server, netShieldType: netShieldType, natType: natType, safeMode: safeMode)
             }
         }
+    }
+
+    /// - Returns: Whether or not the given policy changed connection settings.
+    private func applyInterceptPolicy(policy: VpnConnectionInterceptPolicyItem,
+                                      connectionProtocol: inout ConnectionProtocol,
+                                      smartProtocolConfig: inout SmartProtocolConfig,
+                                      killSwitch: Bool) -> Bool {
+        let group = DispatchGroup()
+        group.enter()
+
+        var result: VpnConnectionInterceptResult = .allow
+        policy.shouldIntercept(connectionProtocol, isKillSwitchOn: killSwitch) { interceptResult in
+            result = interceptResult
+            group.leave()
+        }
+        group.wait()
+
+        guard case .intercept(let parameters) = result else {
+            return false
+        }
+
+        if parameters.smartProtocolWithoutWireGuard {
+            smartProtocolConfig = smartProtocolConfig
+                .configWithWireGuard(udpEnabled: false, tcpEnabled: false, tlsEnabled: false)
+        }
+        if parameters.newKillSwitch != killSwitch {
+            self.propertiesManager.killSwitch = parameters.newKillSwitch
+        }
+        if connectionProtocol != parameters.newProtocol {
+            connectionProtocol = parameters.newProtocol
+        }
+
+        return true
     }
 
     public func postConnectionInformation() {
