@@ -10,6 +10,7 @@
             <connections>
                 <outlet property="createAccountButton" destination="sIO-81-jPa" id="7JO-Uk-siV"/>
                 <outlet property="loginButton" destination="doA-fK-3JY" id="2p4-B6-fyK"/>
+                <outlet property="loginButtonToSSOButtonVerticalOffset" destination="uKJ-YK-Avt" id="XGz-ZW-Pfv"/>
                 <outlet property="logoImage" destination="lMo-f0-lr7" id="OWj-wd-TpX"/>
                 <outlet property="needHelpButton" destination="Mvc-5H-vVI" id="BHA-oa-iTf"/>
                 <outlet property="onboardingView" destination="ehd-hP-OCf" id="ZRf-EI-FaR"/>
@@ -18,6 +19,7 @@
                 <outlet property="passwordSecureTextField" destination="Oat-9Y-92S" id="fXn-BU-oJa"/>
                 <outlet property="passwordTextField" destination="1Vt-py-EJy" id="Gmx-6r-XOl"/>
                 <outlet property="reachabilityCheckIndicator" destination="d4i-Va-ju2" id="3zC-EJ-5Se"/>
+                <outlet property="signInWithSSO" destination="Heu-Az-tfd" id="eaU-hI-0Aj"/>
                 <outlet property="startOnBootButton" destination="AUK-pM-3uL" id="qPs-BD-trr"/>
                 <outlet property="startOnBootLabel" destination="rxN-J0-rur" id="43y-Lx-Xle"/>
                 <outlet property="usernameHorizontalLine" destination="aw7-qm-KCg" id="ro8-Ho-Dc2"/>
@@ -99,7 +101,7 @@
                             </buttonCell>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="doA-fK-3JY" customClass="LoginButton" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="147" y="136" width="46" height="16"/>
+                            <rect key="frame" x="147" y="176" width="46" height="16"/>
                             <buttonCell key="cell" type="bevel" title="Sign In" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="yml-Pq-g1u">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -142,13 +144,21 @@
                                 <constraint firstAttribute="width" constant="40" id="nfK-Js-dR9"/>
                             </constraints>
                         </customView>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Heu-Az-tfd" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="118" y="128" width="104" height="16"/>
+                            <buttonCell key="cell" type="bevel" title="Sign in with SSO" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="IiF-WD-Ec4">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="Mvc-5H-vVI" secondAttribute="bottom" constant="62" id="4sD-1a-fPc"/>
                         <constraint firstItem="rxN-J0-rur" firstAttribute="centerY" secondItem="AUK-pM-3uL" secondAttribute="centerY" id="6iO-Qv-TjH"/>
-                        <constraint firstAttribute="bottom" secondItem="doA-fK-3JY" secondAttribute="bottom" constant="136" id="7Qq-te-s4f"/>
+                        <constraint firstItem="Heu-Az-tfd" firstAttribute="centerX" secondItem="ehd-hP-OCf" secondAttribute="centerX" id="7dc-Ph-kn8"/>
                         <constraint firstItem="FhT-rA-7Im" firstAttribute="leading" secondItem="1Vt-py-EJy" secondAttribute="trailing" constant="5" id="7mw-aU-jiO"/>
                         <constraint firstItem="d4i-Va-ju2" firstAttribute="centerY" secondItem="sIO-81-jPa" secondAttribute="centerY" id="8aq-RB-uAp"/>
+                        <constraint firstItem="sIO-81-jPa" firstAttribute="top" secondItem="Heu-Az-tfd" secondAttribute="bottom" constant="16" id="8h5-Od-mnF"/>
                         <constraint firstItem="doA-fK-3JY" firstAttribute="centerX" secondItem="ehd-hP-OCf" secondAttribute="centerX" id="9et-Q8-vPP"/>
                         <constraint firstItem="dhf-WW-VSQ" firstAttribute="leading" secondItem="Oat-9Y-92S" secondAttribute="leading" id="B4b-qe-cM9"/>
                         <constraint firstItem="Mvc-5H-vVI" firstAttribute="top" secondItem="sIO-81-jPa" secondAttribute="bottom" constant="18" id="E2Z-co-zZo"/>
@@ -158,6 +168,8 @@
                         <constraint firstItem="dhf-WW-VSQ" firstAttribute="top" secondItem="Oat-9Y-92S" secondAttribute="bottom" constant="8" id="K1B-3J-erB"/>
                         <constraint firstItem="L0d-AC-N2e" firstAttribute="top" secondItem="ehd-hP-OCf" secondAttribute="top" constant="16" id="S1V-Ut-LUM"/>
                         <constraint firstItem="1Vt-py-EJy" firstAttribute="leading" secondItem="L0d-AC-N2e" secondAttribute="leading" id="WYZ-h1-kzg"/>
+                        <constraint firstAttribute="bottom" secondItem="Mvc-5H-vVI" secondAttribute="bottom" constant="62" id="Xnq-sV-3xN"/>
+                        <constraint firstItem="sIO-81-jPa" firstAttribute="top" secondItem="doA-fK-3JY" secondAttribute="bottom" priority="249" constant="32" id="YKl-we-h9x"/>
                         <constraint firstItem="Mvc-5H-vVI" firstAttribute="centerX" secondItem="ehd-hP-OCf" secondAttribute="centerX" id="ZWM-wE-k72"/>
                         <constraint firstItem="sIO-81-jPa" firstAttribute="centerX" secondItem="ehd-hP-OCf" secondAttribute="centerX" id="gp4-fv-asJ"/>
                         <constraint firstAttribute="trailing" secondItem="L0d-AC-N2e" secondAttribute="trailing" constant="30" id="gqA-PK-32W"/>
@@ -171,7 +183,7 @@
                         <constraint firstItem="doA-fK-3JY" firstAttribute="top" secondItem="Oat-9Y-92S" secondAttribute="bottom" constant="216" id="quI-lh-U7r"/>
                         <constraint firstItem="FhT-rA-7Im" firstAttribute="centerY" secondItem="Oat-9Y-92S" secondAttribute="centerY" id="rE6-pk-GEh"/>
                         <constraint firstItem="dhf-WW-VSQ" firstAttribute="trailing" secondItem="FhT-rA-7Im" secondAttribute="trailing" id="sfn-b2-xtR"/>
-                        <constraint firstItem="sIO-81-jPa" firstAttribute="top" secondItem="doA-fK-3JY" secondAttribute="bottom" constant="24" id="w49-BC-M9Z"/>
+                        <constraint firstItem="Heu-Az-tfd" firstAttribute="top" secondItem="doA-fK-3JY" secondAttribute="bottom" constant="32" id="uKJ-YK-Avt"/>
                         <constraint firstItem="aw7-qm-KCg" firstAttribute="leading" secondItem="L0d-AC-N2e" secondAttribute="leading" id="x2f-Zn-Nlc"/>
                         <constraint firstItem="rxN-J0-rur" firstAttribute="top" secondItem="dhf-WW-VSQ" secondAttribute="bottom" constant="24" id="zVY-BV-mLG"/>
                         <constraint firstItem="aw7-qm-KCg" firstAttribute="top" secondItem="L0d-AC-N2e" secondAttribute="bottom" constant="8" id="zo0-Z6-KPw"/>

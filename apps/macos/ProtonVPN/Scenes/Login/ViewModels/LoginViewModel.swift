@@ -26,6 +26,9 @@ import LegacyCommon
 import ProtonCoreLogin
 import ProtonCoreNetworking
 import ProtonCoreAuthentication
+import ProtonCoreFeatureSwitch
+import ProtonCoreServices
+import ProtonCoreObservability
 import VPNShared
 import Strings
 
@@ -41,13 +44,14 @@ final class LoginViewModel {
                         SystemExtensionManagerFactory
     private let factory: Factory
     
+    private lazy var apiService: APIService = factory.makeNetworking().apiService
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     private lazy var protonReachabilityChecker: ProtonReachabilityChecker = factory.makeProtonReachabilityChecker()
-    private lazy var loginService: Login = LoginService(api: factory.makeNetworking().apiService,
+    private lazy var loginService: Login = LoginService(api: apiService,
                                                         clientApp: .vpn,
                                                         minimumAccountType: AccountType.username)
     private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
@@ -57,6 +61,7 @@ final class LoginViewModel {
     var logInFailureWithSupport: ((String?) -> Void)?
     var checkInProgress: ((Bool) -> Void)?
     var twoFactorRequired: (() -> Void)?
+    var ssoChallengeReceived: ((URLRequest) -> Void)?
     var initialError: String?
 
     private(set) var isTwoFactorStep: Bool = false
@@ -119,11 +124,57 @@ final class LoginViewModel {
         loginService.login(
             username: username,
             password: password,
-            intent: .auto,
+            intent: FeatureFactory.shared.isEnabled(.ssoSignIn) ? .proton : .auto,
             challenge: nil
         ) { [weak self] result in
             self?.handleLoginResult(result: result)
         }
+    }
+    
+    func logInWithSSO(username: String) {
+        logInInProgress?()
+        loginService.login(
+            username: username,
+            password: "",
+            intent: .sso,
+            challenge: nil
+        ) { [weak self] result in
+            self?.handleLoginResult(result: result)
+        }
+    }
+    
+    func identifyAndProcessSSOResponseToken(from url: URL?, username: String) -> Bool {
+        guard let token = getSSOTokenFromURL(url: url) else { return false }
+        loginService.processResponseToken(idpEmail: username, responseToken: token) { [weak self] result in
+            self?.handleLoginResult(result: result)
+        }
+        return true
+    }
+    
+    private func getSSOTokenFromURL(url: URL?) -> SSOResponseToken? {
+        guard let url, url.path == "/sso/login" else { return nil }
+        
+        var components = URLComponents()
+        components.query = url.fragment
+        
+        guard let items = components.queryItems,
+              let token = (items.first { $0.name == "token" }?.value),
+              let uid = (items.first { $0.name == "uid" }?.value) else {
+            return nil
+        }
+        
+        return .init(token: token, uid: uid)
+    }
+    
+    func isProtonPage(url: URL?) -> Bool {
+        guard let url else { return false }
+        let hosts = [
+            apiService.dohInterface.getAccountHost(),
+            apiService.dohInterface.getCurrentlyUsedHostUrl(),
+            apiService.dohInterface.getHumanVerificationV3Host(),
+            apiService.dohInterface.getCaptchaHostUrl()
+        ]
+        return hosts.contains(where: url.absoluteString.contains)
     }
 
     func provide2FACode(code: String) {
@@ -146,6 +197,7 @@ final class LoginViewModel {
         case let .success(status):
             switch status {
             case let .finished(data):
+                ObservabilityEnv.report(.ssoIdentityProviderLoginResult(status: .successful))
                 appSessionManager.finishLogin(authCredentials: AuthCredentials(data.getCredential), success: {
                     // Strongly capture `self` in this closure to delay de-allocation until sysex tour is shown
                     self.silentlyCheckForUpdates()
@@ -154,6 +206,17 @@ final class LoginViewModel {
                 }, failure: { [weak self] error in
                     self?.handleError(error: error)
                 })
+            case let .ssoChallenge(ssoResponse):
+                Task {
+                    switch await loginService.getSSORequest(challenge: ssoResponse) {
+                    case (let request?, _):
+                        ssoChallengeReceived?(request)
+                    case (_, let error?):
+                        handleError(error: error)
+                    default:
+                        break
+                    }
+                }
             case .ask2FA:
                 isTwoFactorStep = true
                 twoFactorRequired?()
@@ -164,6 +227,7 @@ final class LoginViewModel {
                 fatalError("I don't know how to do that yet")
             }
         case let .failure(error):
+            ObservabilityEnv.report(.ssoIdentityProviderLoginResult(status: .failed))
             handleLoginError(error: error)
         }
     }
@@ -217,22 +281,24 @@ final class LoginViewModel {
     }
 
     private func handleError(error: Error) {
-        specialErrorCaseNotification(error)
+        DispatchQueue.main.async {
+            self.specialErrorCaseNotification(error)
 
-        let nsError = error as NSError
-        if nsError.isTlsError || nsError.isNetworkError {
-            let alert = UnreachableNetworkAlert(error: error, troubleshoot: { [weak self] in
-                self?.alertService.push(alert: ConnectionTroubleshootingAlert())
-            })
-            alertService.push(alert: alert)
-            logInFailure?(nil)
-        } else if case ProtonVpnError.subuserWithoutSessions = error {
-            let role = propertiesManager.userRole
-            alertService.push(alert: SubuserWithoutConnectionsAlert(role: role))
-            isTwoFactorStep = false
-            logInFailure?(nil)
-        } else {
-            logInFailure?(error.localizedDescription)
+            let nsError = error as NSError
+            if nsError.isTlsError || nsError.isNetworkError {
+                let alert = UnreachableNetworkAlert(error: error, troubleshoot: { [weak self] in
+                    self?.alertService.push(alert: ConnectionTroubleshootingAlert())
+                })
+                self.alertService.push(alert: alert)
+                self.logInFailure?(nil)
+            } else if case ProtonVpnError.subuserWithoutSessions = error {
+                let role = self.propertiesManager.userRole
+                self.alertService.push(alert: SubuserWithoutConnectionsAlert(role: role))
+                self.isTwoFactorStep = false
+                self.logInFailure?(nil)
+            } else {
+                self.logInFailure?(error.localizedDescription)
+            }
         }
     }
     

@@ -194,7 +194,10 @@ final class CorePlanService: PlanService {
     private func createPaymentsUI(onlyPlusPlan: Bool = false) -> PaymentsUI {
         let plusPlanNames = [AccountPlan.plus, AccountPlan.vpnPlus].map({ $0.rawValue })
         let planNames = onlyPlusPlan ? ObfuscatedConstants.planNames.filter({ plusPlanNames.contains($0) }) : ObfuscatedConstants.planNames
-        return PaymentsUI(payments: payments, clientApp: ClientApp.vpn, shownPlanNames: planNames, customization: .init(inAppTheme: { .dark }))
+        return PaymentsUI(payments: payments,
+                          clientApp: ClientApp.vpn,
+                          shownPlanNames: planNames,
+                          customization: .init(inAppTheme: { .dark }))
     }
 
     private func handlePaymentsResponse(response: PaymentsUIResultReason) {

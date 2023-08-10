@@ -26,6 +26,8 @@ import Foundation
 import Theme
 import Ergonomics
 import Strings
+import ProtonCoreCoreTranslation
+import ProtonCoreFeatureSwitch
 
 final class LoginViewController: NSViewController {
     
@@ -37,6 +39,11 @@ final class LoginViewController: NSViewController {
     
     fileprivate enum Switch: Int {
         case startOnBoot
+    }
+    
+    fileprivate enum SigninVariant {
+        case protonSignin
+        case ssoSignin
     }
     
     // MARK: - Onboarding view
@@ -89,6 +96,8 @@ final class LoginViewController: NSViewController {
     @IBOutlet private weak var startOnBootButton: SwitchButton!
     
     @IBOutlet private weak var loginButton: LoginButton!
+    @IBOutlet private weak var loginButtonToSSOButtonVerticalOffset: NSLayoutConstraint!
+    @IBOutlet private weak var signInWithSSO: InteractiveActionButton!
     @IBOutlet weak var createAccountButton: InteractiveActionButton!
     @IBOutlet weak var needHelpButton: InteractiveActionButton!
 
@@ -117,6 +126,7 @@ final class LoginViewController: NSViewController {
     
     fileprivate var viewModel: LoginViewModel!
     fileprivate var secureTextEntry = true
+    fileprivate var signInVariant: SigninVariant = .protonSignin
     
     fileprivate var passwordEntry: String {
         return secureTextEntry ? passwordSecureTextField.stringValue : passwordTextField.stringValue
@@ -240,6 +250,17 @@ final class LoginViewController: NSViewController {
         loginButton.target = self
         loginButton.action = #selector(loginButtonAction)
         
+        if FeatureFactory.shared.isEnabled(.ssoSignIn) {
+            signInWithSSO.isHidden = false
+            loginButtonToSSOButtonVerticalOffset.isActive = true
+            signInWithSSO.title = CoreString._ls_sign_in_with_sso_button
+            signInWithSSO.target = self
+            signInWithSSO.action = #selector(signInWithSSOButtonAction)
+        } else {
+            loginButtonToSSOButtonVerticalOffset.isActive = false
+            signInWithSSO.isHidden = true
+        }
+        
         createAccountButton.title = Localizable.createAccount
         createAccountButton.target = self
         createAccountButton.action = #selector(createAccountButtonAction)
@@ -263,10 +284,24 @@ final class LoginViewController: NSViewController {
             }
         }
         viewModel.twoFactorRequired = { [weak self] in self?.presentTwoFactorScreen(withErrorDescription: nil) }
+        viewModel.ssoChallengeReceived = { [weak self] request in
+            DispatchQueue.main.async { [weak self] in
+                self?.showSSOWebView(request: request)
+            }
+        }
     }
     
     private func attemptLogin() {
-        viewModel.logIn(username: usernameTextField.stringValue, password: passwordEntry)
+        switch signInVariant {
+        case .protonSignin:
+            viewModel.logIn(username: usernameTextField.stringValue, password: passwordEntry)
+        case .ssoSignin:
+            guard FeatureFactory.shared.isEnabled(.ssoSignIn) else {
+                assertionFailure("This action should never be called if sso signin is not enabled")
+                return
+            }
+            viewModel.logInWithSSO(username: usernameTextField.stringValue)
+        }
     }
 
     private func presentTwoFactorScreen(withErrorDescription description: String?) {
@@ -278,6 +313,11 @@ final class LoginViewController: NSViewController {
         logoImage.isHidden = false
 
         loadingView.animate(false)
+    }
+    
+    private func showSSOWebView(request: URLRequest) {
+        let ssoViewController = SSOWebViewController(request: request, delegate: self, viewModel: viewModel)
+        presentAsModalWindow(ssoViewController)
     }
     
     private func presentLoadingScreen() {
@@ -332,6 +372,39 @@ final class LoginViewController: NSViewController {
         attemptLogin()
     }
     
+    @objc private func signInWithSSOButtonAction() {
+        guard FeatureFactory.shared.isEnabled(.ssoSignIn) else {
+            assertionFailure("This action should never be called if sso signin is not enabled")
+            return
+        }
+        switch signInVariant {
+        case .protonSignin:
+            signInVariant = .ssoSignin
+            usernameTextField.style(placeholder: CoreString._su_email_field_title)
+            loginButton.displayTitle = CoreString._ls_sign_in_with_sso_button
+            signInWithSSO.title = CoreString._ls_sign_in_button_with_password
+            createAccountButton.isHidden = true
+            passwordTextField.isHidden = true
+            passwordSecureTextField.isHidden = true
+            passwordRevealButton.isHidden = true
+            passwordHorizontalLine.isHidden = true
+        case .ssoSignin:
+            signInVariant = .protonSignin
+            usernameTextField.style(placeholder: CoreString._ls_username_title)
+            loginButton.displayTitle = CoreString._ls_screen_title
+            signInWithSSO.title = CoreString._ls_sign_in_with_sso_button
+            createAccountButton.isHidden = false
+            passwordTextField.isHidden = secureTextEntry
+            passwordSecureTextField.isHidden = !secureTextEntry
+            passwordRevealButton.isHidden = false
+            passwordHorizontalLine.isHidden = false
+        }
+        loginButton.needsDisplay = true
+        loginButton.displayIfNeeded()
+        warningView.isHidden = true
+        enableLoginButtonBasedOnTextFieldsState()
+    }
+    
     @objc private func createAccountButtonAction() {
         viewModel.createAccountAction()
     }
@@ -356,7 +429,16 @@ extension LoginViewController: WarningViewDelegate {
 
 extension LoginViewController: NSTextFieldDelegate {
     func controlTextDidChange(_ obj: Notification) {
-        loginButton.isEnabled = !usernameTextField.stringValue.isEmpty && !passwordEntry.isEmpty
+        enableLoginButtonBasedOnTextFieldsState()
+    }
+    
+    fileprivate func enableLoginButtonBasedOnTextFieldsState() {
+        switch signInVariant {
+        case .protonSignin:
+            loginButton.isEnabled = !usernameTextField.stringValue.isEmpty && !passwordEntry.isEmpty
+        case .ssoSignin:
+            loginButton.isEnabled = !usernameTextField.stringValue.isEmpty
+        }
     }
     
     func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
@@ -412,5 +494,15 @@ extension LoginViewController: SwitchButtonDelegate {
 extension LoginViewController: NSPopoverDelegate {
     func popoverDidClose(_ notification: Notification) {
         helpPopover = nil
+    }
+}
+
+extension LoginViewController: SSOWebViewControllerDelegate {
+    func didDismissViewController() {
+        presentOnboardingScreen(withErrorDescription: nil)
+    }
+    
+    func identifyAndProcessSSOResponseToken(from url: URL?) -> Bool {
+        viewModel.identifyAndProcessSSOResponseToken(from: url, username: usernameTextField.stringValue)
     }
 }
