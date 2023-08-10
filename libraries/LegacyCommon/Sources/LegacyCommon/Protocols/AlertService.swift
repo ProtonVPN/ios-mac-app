@@ -21,6 +21,7 @@
 
 import Foundation
 import Strings
+import Network
 
 public enum PrimaryActionType {
     case confirmative
@@ -886,5 +887,31 @@ public class LocalAgentSystemErrorAlert: SystemAlert {
             title = Localizable.nonStandardPortsTitle
             message = Localizable.vpnFeatureCannotBeSetError(Localizable.nonStandardPortsTitle)
         }
+    }
+}
+
+public class ConnectingWithBadLANAlert: SystemAlert {
+    public var title: String? = Localizable.badInterfaceIpRangeAlertTitle
+    public var message: String?
+
+    public var actions: [AlertAction] = []
+    public var isError: Bool = false
+    public var dismiss: (() -> Void)?
+
+    public init(
+        badIpAndPrefix: String?,
+        badInterfaceName: String?,
+        killSwitchOnHandler: @escaping () -> Void,
+        connectAnywayHandler: @escaping () -> Void
+    ) {
+        self.message = Localizable.promptKillSwitchDueToBadInterfaceIpRange(
+            badInterfaceName ?? "Unknown Interface",
+            badIpAndPrefix ?? "Unknown Subnet"
+        )
+
+        actions.append(contentsOf: [
+            .init(title: Localizable.killSwitchEnable, style: .confirmative, handler: killSwitchOnHandler),
+            .init(title: Localizable.continue, style: .destructive, handler: connectAnywayHandler)
+        ])
     }
 }

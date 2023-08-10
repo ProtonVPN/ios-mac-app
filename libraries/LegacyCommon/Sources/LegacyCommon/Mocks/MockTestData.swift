@@ -273,6 +273,7 @@ extension FeatureFlags {
         promoCode: true,
         wireGuardTls: true,
         enforceDeprecatedProtocols: false,
+        unsafeLanWarnings: true,
         localOverrides: nil
     )
 
@@ -291,6 +292,7 @@ extension FeatureFlags {
         promoCode: true,
         wireGuardTls: false,
         enforceDeprecatedProtocols: false,
+        unsafeLanWarnings: true,
         localOverrides: nil
     )
 }
