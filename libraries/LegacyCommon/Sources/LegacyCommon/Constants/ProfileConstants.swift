@@ -29,12 +29,17 @@ import VPNAppCore
 import Strings
 
 public class ProfileConstants {
+    public static let fastestId = "st_f"
+    public static let randomId = "st_r"
+
+    public static let defaultIds = [fastestId, randomId]
+
     // WARNING: consuming client must contain "fastest" and "random" image assets
     public static func defaultProfiles(connectionProtocol: ConnectionProtocol) -> [Profile] {
         return
-            [ Profile(id: "st_f", accessTier: 0, profileIcon: .image(IconProvider.bolt), profileType: .system,
+            [ Profile(id: fastestId, accessTier: 0, profileIcon: .image(IconProvider.bolt), profileType: .system,
                       serverType: .unspecified, serverOffering: .fastest(nil), name: Localizable.fastest, connectionProtocol: connectionProtocol),
-              Profile(id: "st_r", accessTier: 0, profileIcon: .image(IconProvider.arrowsSwapRight), profileType: .system,
+              Profile(id: randomId, accessTier: 0, profileIcon: .image(IconProvider.arrowsSwapRight), profileType: .system,
                       serverType: .unspecified, serverOffering: .random(nil), name: Localizable.random, connectionProtocol: connectionProtocol) ]
     }
 
