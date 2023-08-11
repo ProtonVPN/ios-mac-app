@@ -45,6 +45,8 @@ struct ProtonVPNApp: App {
         self.appReducer = .init(initialState: .loading, reducer: {
             AppReducer()
                 .dependency(\.vpnConnectionStatusPublisher, VPNConnectionStatusPublisherKey.watchVPNConnectionStatusChanges)
+                .dependency(\.connectToVPN, ConnectToVPNKey.bridgedConnect)
+                .dependency(\.disconnectVPN, DisconnectVPNKey.bridgedDisconnect)
                 ._printChanges()
         })
         appDelegate.navigationService.sendAction = { [appReducer] action in

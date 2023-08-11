@@ -32,7 +32,7 @@ public struct ConnectionStatusView: View {
 
     func title(protectionState: ProtectionState) -> String? {
         switch protectionState {
-        case .protected:
+        case .protected, .protectedSecureCore:
             return nil
         case .unprotected:
             return Localizable.connectionStatusUnprotected
@@ -43,7 +43,7 @@ public struct ConnectionStatusView: View {
 
     func locationText(protectionState: ProtectionState) -> Text? {
         switch protectionState {
-        case .protected:
+        case .protected, .protectedSecureCore:
             return nil
         case let .unprotected(country, ip),
             let .protecting(country, ip):
@@ -60,7 +60,7 @@ public struct ConnectionStatusView: View {
 
     func gradientColor(protectionState: ProtectionState) -> Color {
         switch protectionState {
-        case .protected:
+        case .protected, .protectedSecureCore:
             return Color(.background, .success)
         case .unprotected:
             return Color(.background, .danger)
@@ -69,25 +69,33 @@ public struct ConnectionStatusView: View {
         }
     }
 
+    private var protectedText: Text {
+        Text(Localizable.connectionStatusProtected)
+            .font(.themeFont(.body1(.semibold)))
+            .foregroundColor(Color(.background, .success))
+    }
+
     func titleView(protectionState: ProtectionState) -> some View {
         HStack(alignment: .bottom) {
-            if case .unprotected = protectionState {
-                Theme.Asset.icLockOpenFilled2
-                    .swiftUIImage
-                    .styled(.danger)
-            }
-            if case .protecting = protectionState {
-                ProgressView()
-                    .controlSize(.regular)
-                    .tint(.white)
-            }
-            if case .protected = protectionState {
+            switch protectionState {
+            case .protected:
                 Theme.Asset.icLockFilled
                     .swiftUIImage
                     .foregroundColor(Color(.background, .success))
-                Text(Localizable.connectionStatusProtected) 
-                    .font(.themeFont(.body1(.semibold)))
+                protectedText
+            case .protectedSecureCore:
+                Theme.Asset.icLocksFilled
+                    .swiftUIImage
                     .foregroundColor(Color(.background, .success))
+                protectedText
+            case .protecting:
+                ProgressView()
+                    .controlSize(.regular)
+                    .tint(.white)
+            case .unprotected:
+                Theme.Asset.icLockOpenFilled2
+                    .swiftUIImage
+                    .styled(.danger)
             }
         }
     }
@@ -115,6 +123,8 @@ public struct ConnectionStatusView: View {
                                 .padding(.vertical, 4)
                         } else if case .protected(let netShield) = viewStore.protectionState {
                             NetShieldStatsView(viewModel: netShield)
+                        } else if case .protectedSecureCore(let netShield) = viewStore.protectionState {
+                            NetShieldStatsView(viewModel: netShield)
                         }
                     }
                     .background(.translucentLight,
@@ -139,6 +149,13 @@ struct ConnectionStatusView_Previews: PreviewProvider {
                 Spacer()
             }
             .previewDisplayName("protected")
+            VStack {
+                ConnectionStatusView(store: Store(initialState: ConnectionStatusFeature.State(protectionState: .protectedSecureCore(netShield: .random))) {
+                    ConnectionStatusFeature()
+                })
+                Spacer()
+            }
+            .previewDisplayName("protectedSecureCore")
             VStack {
                 ConnectionStatusView(store: Store(initialState: ConnectionStatusFeature.State(protectionState: .unprotected(country: "Poland", ip: "192.168.1.0"))) {
                     ConnectionStatusFeature()

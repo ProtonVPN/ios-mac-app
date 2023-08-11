@@ -22,6 +22,7 @@ import VPNAppCore
 
 public enum ProtectionState: Equatable {
     case protected(netShield: NetShieldModel)
+    case protectedSecureCore(netShield: NetShieldModel)
     case unprotected(country: String, ip: String)
     case protecting(country: String, ip: String)
 }
@@ -31,7 +32,10 @@ extension VPNConnectionStatus {
         switch self {
         case .disconnected:
             return .unprotected(country: "Country", ip: "127.0.0.1") // todo: get real values
-        case .connected:
+        case .connected(let spec, _):
+            if case .secureCore = spec.location {
+                return .protectedSecureCore(netShield: .random)
+            }
             return .protected(netShield: .random) // todo:
         case .connecting, .loadingConnectionInfo:
             return .protecting(country: "Country", ip: "127.0.0.2") // todo:

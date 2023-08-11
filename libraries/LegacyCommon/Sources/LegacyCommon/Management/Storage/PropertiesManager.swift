@@ -213,6 +213,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         case wireguardConfig = "WireguardConfig"
         case smartProtocolConfig = "SmartProtocolConfig"
         case ratingSettings = "RatingSettings"
+        case lastConnectionIntent = "LastConnectionIntent"
 
         case telemetryUsageData = "TelemetryUsageData"
         case telemetryCrashReports = "TelemetryCrashReports"
@@ -354,7 +355,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     @InitializedProperty(.wireguardConfig) public var wireguardConfig: WireguardConfig
     @InitializedProperty(.smartProtocolConfig) public var smartProtocolConfig: SmartProtocolConfig
     @InitializedProperty(.ratingSettings) public var ratingSettings: RatingSettings
-    @InitializedProperty(.ratingSettings) public var lastConnectionIntent: ConnectionSpec
+    @InitializedProperty(.lastConnectionIntent) public var lastConnectionIntent: ConnectionSpec
 
     #if os(macOS)
     @BoolProperty(.forceExtensionUpgrade) public var forceExtensionUpgrade: Bool

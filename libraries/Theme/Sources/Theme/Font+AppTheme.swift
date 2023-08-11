@@ -72,44 +72,48 @@ public extension Font {
     static func themeFont(_ typography: AppTheme.Typography = .default) -> Font {
         switch typography {
 
-        #if canImport(Cocoa)
-        case .largeTitle(let emphasised):
-            return .system(size: 26, weight: emphasised ? .bold : .regular)
-        case .title1(let emphasised):
-            return .system(size: 22, weight: emphasised ? .bold : .regular)
-        case .title2(let emphasised):
-            return .system(size: 17, weight: emphasised ? .bold : .regular)
-        case .title3(let emphasised):
-            return .system(size: 15, weight: emphasised ? .semibold : .regular)
-        case .headline(let emphasised):
-            return .system(size: 13, weight: emphasised ? .bold : .regular)
-        case .subHeadline(let emphasised):
-            return .system(size: 11, weight: emphasised ? .semibold : .regular)
-        case .body(let emphasised):
-            return .system(size: 13, weight: emphasised ? .semibold : .regular)
-        case .callout(let emphasised):
-            return .system(size: 12, weight: emphasised ? .semibold : .regular)
-        case .footnote(let emphasised):
-            return .system(size: 10, weight: emphasised ? .semibold : .regular)
+#if canImport(Cocoa)
+            // https://developer.apple.com/design/human-interface-guidelines/typography#macOS-built-in-text-styles
+        case .largeTitle(let emphasised): // 26
+            return .largeTitle.weight(emphasised ? .bold : .regular)
+        case .title1(let emphasised): // 22
+            return .title.weight(emphasised ? .bold : .regular)
+        case .title2(let emphasised): // 17
+            return .title2.weight(emphasised ? .bold : .regular)
+        case .title3(let emphasised): // 15
+            return .title3.weight(emphasised ? .semibold : .regular)
+        case .headline(let emphasised): // 13
+            return .headline.weight(emphasised ? .bold : .regular)
+        case .subHeadline(let emphasised): // 11
+            return .subheadline.weight(emphasised ? .semibold : .regular)
+        case .body(let emphasised): // 13
+            return .body.weight(emphasised ? .semibold : .regular)
+        case .callout(let emphasised): // 12
+            return .callout.weight(emphasised ? .semibold : .regular)
+        case .footnote(let emphasised): // 10
+            return .footnote.weight(emphasised ? .semibold : .regular)
 
-        #elseif canImport(UIKit)
-        case .hero:
-            return .custom("", size: 28, relativeTo: .largeTitle).weight(.bold)
-        case .headline:
-            return .custom("", size: 22, relativeTo: .headline).weight(.bold)
-        case .subHeadline:
-            return .custom("", size: 22, relativeTo: .subheadline).weight(.regular)
-        case .body1(let weight):
-            return .custom("", size: 17, relativeTo: .body).weight(weight.rawValue)
-        case .body2(let emphasised):
-            return .custom("", size: 15, relativeTo: .body).weight(emphasised ? .semibold : .regular)
+#elseif canImport(UIKit)
+            // https://developer.apple.com/design/human-interface-guidelines/typography#Specifications
+        case .hero: // 28
+            return .title.weight(.bold)
+        case .headline: // 22
+            return .title2.weight(.bold)
+        case .subHeadline: // 22
+            return .title2.weight(.regular)
+        case .body1(let weight): // 17
+            return .body.weight(weight.rawValue)
+        case .body2(let emphasised): // 15
+            return .subheadline.weight(emphasised ? .semibold : .regular)
         case .body3(let emphasised):
+            // No matching default typography. Note that semibold might not work here.
+            // We either need to accept that or change the size by 1 point up or down.
             return .custom("", size: 14, relativeTo: .body).weight(emphasised ? .semibold : .regular)
-        case .caption(let emphasised):
-            return .custom("", size: 13, relativeTo: .body).weight(emphasised ? .semibold : .regular)
-        case .overline(let emphasised):
-            return .custom("", size: 11, relativeTo: .body).weight(emphasised ? .semibold : .regular)
-        #endif
+        case .caption(let emphasised): // 13
+            return .footnote.weight(emphasised ? .semibold : .regular)
+        case .overline(let emphasised): // 11
+            return .caption2.weight(emphasised ? .semibold : .regular)
+#endif
         }
     }
 }
