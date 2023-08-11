@@ -98,13 +98,7 @@ public protocol VpnGatewayFactory {
 }
 
 public class VpnGateway: VpnGatewayProtocol {
-    private enum ConnectionType {
-        case quick
-        case auto
-        case country(code: String, type: ServerType)
-        case server(ServerModel)
-        case profile(Profile)
-    }
+    @Dependency(\.profileAuthorizer) var profileAuthorizer
     
     private let vpnApiService: VpnApiService
     private let appStateManager: AppStateManager
@@ -306,13 +300,20 @@ public class VpnGateway: VpnGatewayProtocol {
                 return
             }
 
-            if let username = self.authKeychain.fetch()?.username,
-               let autoConnectProfileId = self.propertiesManager.getAutoConnect(for: username).profileId,
-               let profile = self.profileManager.profile(withId: autoConnectProfileId) {
-                self.connectTo(profile: profile)
-            } else {
+            guard let profile = self.profileManager.autoConnectProfile else {
                 self.quickConnect(trigger: .auto)
+                return
             }
+
+            // Check whether the user is allowed to use profiles at all
+            guard profileAuthorizer.canUseProfiles else {
+                // If we're not allowed to use profiles, fallback to fastest. We don't want to upsell here
+                self.quickConnect(trigger: .auto)
+                return
+            }
+
+            // If the tier of the profile is too high, connection will be interrupted later by ServerTierChecker
+            self.connectTo(profile: profile)
         }
     }
     
@@ -321,13 +322,33 @@ public class VpnGateway: VpnGatewayProtocol {
     }
     
     public func quickConnectConnectionRequest(trigger: TelemetryDimensions.VPNTrigger) -> ConnectionRequest {
-        if let username = authKeychain.fetch()?.username,
-           let quickConnectProfileId = propertiesManager.getQuickConnect(for: username),
-           let profile = profileManager.profile(withId: quickConnectProfileId) {
-            return profile.connectionRequest(withDefaultNetshield: netShieldType, withDefaultNATType: natType, withDefaultSafeMode: safeMode, trigger: trigger)
-        } else {
-            return ConnectionRequest(serverType: serverTypeToggle, connectionType: .fastest, connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: nil, trigger: trigger)
+        let defaultQCConnectionRequest = ConnectionRequest(
+            serverType: serverTypeToggle,
+            connectionType: .fastest,
+            connectionProtocol: globalConnectionProtocol,
+            netShieldType: netShieldType,
+            natType: natType,
+            safeMode: safeMode,
+            profileId: nil,
+            trigger: trigger
+        )
+
+        guard let profile = profileManager.quickConnectProfile else {
+            log.info("Using default QC request, user has no QC profile set", category: .connectionConnect)
+            return defaultQCConnectionRequest
         }
+
+        guard profileAuthorizer.canUseProfiles else {
+            log.info("Using default QC request, user not authorized for profiles", category: .connectionConnect)
+            return defaultQCConnectionRequest
+        }
+
+        return profile.connectionRequest(
+            withDefaultNetshield: netShieldType,
+            withDefaultNATType: natType,
+            withDefaultSafeMode: safeMode,
+            trigger: trigger
+        )
     }
     
     public func connectTo(country countryCode: String, ofType serverType: ServerType, trigger: TelemetryDimensions.VPNTrigger = .country) {

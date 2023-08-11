@@ -97,7 +97,7 @@ final class ConnectionSettingsViewModel {
         NotificationCenter.default.removeObserver(self)
     }
 
-    // MARK: - Available protocols
+    // MARK: - Available protocols and Profiles
 
     lazy var availableConnectionProtocols: [ConnectionProtocol] = {
         ConnectionProtocol.availableProtocols(wireguardTLSEnabled: propertiesManager.featureFlags.wireGuardTls)
@@ -105,6 +105,17 @@ final class ConnectionSettingsViewModel {
             .uniqued
             .sorted(by: ConnectionProtocol.uiSort)
     }()
+
+    var availableProfiles: [Profile] {
+        guard profileAuthorizer.canUseProfiles else {
+            // On the free plan, post-rescope, we should only show the 'fastest' auto-connect option
+            return [ProfileConstants.fastestProfile(
+                connectionProtocol: propertiesManager.connectionProtocol,
+                defaultProfileAccessTier: CoreAppConstants.VpnTiers.free
+            )]
+        }
+        return profileManager.allProfiles
+    }
 
     // MARK: - Quick and auto connect for current user
     var username: String? {
@@ -140,7 +151,7 @@ final class ConnectionSettingsViewModel {
         guard let autoConnect = autoConnect, autoConnect.enabled else { return 0 }
         
         guard let profileId = autoConnect.profileId else { return 1 }
-        let index = profileManager.allProfiles.firstIndex {
+        let index = availableProfiles.firstIndex {
             $0.id == profileId
         }
 
@@ -175,11 +186,11 @@ final class ConnectionSettingsViewModel {
     // MARK: - Item counts
     
     var autoConnectItemCount: Int {
-        return profileManager.allProfiles.count + 1
+        return availableProfiles.count + 1
     }
     
     var quickConnectItemCount: Int {
-        return profileManager.allProfiles.count
+        return availableProfiles.count
     }
     
     var protocolItemCount: Int {
@@ -194,7 +205,7 @@ final class ConnectionSettingsViewModel {
         }
         
         if index > 0 {
-            let selectedProfile = profileManager.allProfiles[index - 1]
+            let selectedProfile = availableProfiles[index - 1]
             autoConnect = (enabled: true, profileId: selectedProfile.id)
             log.debug("Autoconnect profile changed", category: .settings, event: .change, metadata: ["profile": "\(selectedProfile.logDescription)"])
         } else {
@@ -424,6 +435,9 @@ final class ConnectionSettingsViewModel {
             return concatenated(imageString: imageAttributedString, with: Localizable.disabled, enabled: true)
         }
     }
+
+    // Don't show quick connect customisation if user is not authorized to use profiles
+    var shouldShowQuickConnect: Bool { profileAuthorizer.canUseProfiles }
     
     func quickConnectItem(for index: Int) -> NSAttributedString {
         return profileString(for: index)
@@ -467,7 +481,7 @@ final class ConnectionSettingsViewModel {
     }
 
     private func profileString(for index: Int) -> NSAttributedString {
-        let profile = profileManager.allProfiles[index]
+        let profile = availableProfiles[index]
         let enabled = profile.accessTier <= userTier
         return concatenated(imageString: profile.profileIcon.attributedAttachment(), with: profile.name, enabled: enabled)
     }

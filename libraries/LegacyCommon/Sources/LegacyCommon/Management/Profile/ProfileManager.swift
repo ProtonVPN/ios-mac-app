@@ -46,15 +46,18 @@ public class ProfileManager {
     @Dependency(\.authKeychain) var authKeychain
 
     public let contentChanged = Notification.Name("ProfileManagerContentChanged")
-    
+
     public var customProfiles: [Profile] = []
+    public var defaultProfiles: [Profile] {
+        ProfileConstants.defaultProfiles(connectionProtocol: propertiesManager.connectionProtocol)
+    }
 
     private var servers: [ServerModel] = []
     private let propertiesManager: PropertiesManagerProtocol
     private let profileStorage: ProfileStorage
 
     public var allProfiles: [Profile] {
-        return ProfileConstants.defaultProfiles(connectionProtocol: propertiesManager.connectionProtocol) + customProfiles
+        return defaultProfiles + customProfiles
     }
 
     public typealias Factory = ServerStorageFactory & PropertiesManagerFactory & ProfileStorageFactory
@@ -106,15 +109,13 @@ public class ProfileManager {
         }
         return profile(withId: profileID)
     }
-
     public func profile(withServer server: ServerModel) -> Profile? {
         return ProfileUtility.profile(withServer: server, in: customProfiles)
     }
     
     public func profile(withId id: String) -> Profile? {
-        return ProfileConstants.defaultProfiles(connectionProtocol: propertiesManager.connectionProtocol).first {
-            id == $0.id
-        } ?? ProfileUtility.profile(withId: id, in: customProfiles)
+        return defaultProfiles.first { id == $0.id }
+            ?? ProfileUtility.profile(withId: id, in: customProfiles)
     }
     
     public func existsProfile(withServer server: ServerModel) -> Bool {

@@ -38,7 +38,7 @@ class ProfilesSectionViewModel {
     private let sysexManager: SystemExtensionManager
 
     var contentChanged: (() -> Void)?
-    
+
     var cellCount: Int {
         return profileManager.allProfiles.count + 1
     }

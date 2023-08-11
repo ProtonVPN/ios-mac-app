@@ -95,6 +95,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         let model = SettingsDropDownView.ViewModel(labelText: Localizable.quickConnect, toolTip: Localizable.quickConnectTooltip, progressIndicatorToolTip: nil, menuItems: menuItems, selectedIndex: viewModel.quickConnectProfileIndex)
 
         quickConnectView.setupItem(model: model, target: self, action: #selector(quickConnectItemSelected))
+        quickConnectView.isHidden = !viewModel.shouldShowQuickConnect
     }
     
     private func setupProtocolItem() {
