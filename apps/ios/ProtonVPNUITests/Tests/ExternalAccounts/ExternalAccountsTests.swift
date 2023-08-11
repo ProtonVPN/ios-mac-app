@@ -20,7 +20,6 @@ import XCTest
 import fusion
 import ProtonCoreTestingToolkitUITestsLogin
 import ProtonCoreQuarkCommands
-import ProtonCoreCoreTranslation
 import ProtonCoreEnvironment
 
 final class ExternalAccountsTests: ProtonVPNUITests {
@@ -194,12 +193,6 @@ extension ProtonCoreTestingToolkitUITestsLogin.SignupRobot.Verify {
     @discardableResult
     func domainsButtonIsNotShown() -> ProtonCoreTestingToolkitUITestsLogin.SignupRobot {
         button(domainsButtonId).checkDoesNotExist()
-        return ProtonCoreTestingToolkitUITestsLogin.SignupRobot()
-    }
-    
-    @discardableResult
-    func otherAccountExtButtonIsNotShown() -> ProtonCoreTestingToolkitUITestsLogin.SignupRobot {
-        button(CoreString._su_email_address_button).wait().checkDoesNotExist()
         return ProtonCoreTestingToolkitUITestsLogin.SignupRobot()
     }
 }

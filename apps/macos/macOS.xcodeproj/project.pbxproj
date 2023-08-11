@@ -230,6 +230,7 @@
 		E565986C2820FEDD004F2240 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986B2820FEDD004F2240 /* WarningView.swift */; };
 		E5772AE429B0B9A90076D824 /* SystemExtensionTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5772AE329B0B9A90076D824 /* SystemExtensionTutorialView.swift */; };
 		E57B263229C3188D00533B7C /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E57B263129C3188D00533B7C /* AVKit.framework */; };
+		E59447542A86217A00E1E241 /* ProtonCoreLoginUI in Frameworks */ = {isa = PBXBuildFile; productRef = E59447532A86217A00E1E241 /* ProtonCoreLoginUI */; };
 		E5C00F0B2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F0A2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift */; };
 		E5C00F0D2A15FC6E0030076F /* (null) in Sources */ = {isa = PBXBuildFile; };
 		E5C00F152A1612950030076F /* NavigationRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F142A1612950030076F /* NavigationRobot.swift */; };
@@ -1085,6 +1086,7 @@
 				E93533DB29CAEE2C005E3A59 /* Sparkle in Frameworks */,
 				E5E48CFF2A4C37A900B09111 /* LocalFeatureFlags in Frameworks */,
 				4C2599982A7AA27500A31895 /* TunnelKitOpenVPN in Frameworks */,
+				E59447542A86217A00E1E241 /* ProtonCoreLoginUI in Frameworks */,
 				4CD1F7872A72BEDA00E8AB01 /* BugReport in Frameworks */,
 				4C7D40592A60251700ACDBED /* SDWebImage in Frameworks */,
 				4CD1F78B2A72BF0100E8AB01 /* LegacyCommon in Frameworks */,
@@ -2811,6 +2813,7 @@
 				4C2599992A7AA27500A31895 /* TunnelKitOpenVPNAppExtension */,
 				4C25999B2A7AA29800A31895 /* Dependencies */,
 				4C8571DB2A7CEC5B0057FED6 /* TrustKit */,
+				E59447532A86217A00E1E241 /* ProtonCoreLoginUI */,
 			);
 			productName = ProtonVPN;
 			productReference = EED534811EEC112000013607 /* ProtonVPN.app */;
@@ -4796,6 +4799,10 @@
 		E53D64C2281169880060C463 /* Modals-macOS */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Modals-macOS";
+		};
+		E59447532A86217A00E1E241 /* ProtonCoreLoginUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCoreLoginUI;
 		};
 		E5E48CF42A4C362300B09111 /* Home-macOS */ = {
 			isa = XCSwiftPackageProductDependency;

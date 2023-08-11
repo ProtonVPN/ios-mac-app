@@ -26,8 +26,8 @@ import Foundation
 import Theme
 import Ergonomics
 import Strings
-import ProtonCoreCoreTranslation
 import ProtonCoreFeatureSwitch
+import ProtonCoreLoginUI
 
 final class LoginViewController: NSViewController {
     
@@ -253,7 +253,7 @@ final class LoginViewController: NSViewController {
         if FeatureFactory.shared.isEnabled(.ssoSignIn) {
             signInWithSSO.isHidden = false
             loginButtonToSSOButtonVerticalOffset.isActive = true
-            signInWithSSO.title = CoreString._ls_sign_in_with_sso_button
+            signInWithSSO.title = LUITranslation.sign_in_with_sso_button.l10n
             signInWithSSO.target = self
             signInWithSSO.action = #selector(signInWithSSOButtonAction)
         } else {
@@ -380,9 +380,9 @@ final class LoginViewController: NSViewController {
         switch signInVariant {
         case .protonSignin:
             signInVariant = .ssoSignin
-            usernameTextField.style(placeholder: CoreString._su_email_field_title)
-            loginButton.displayTitle = CoreString._ls_sign_in_with_sso_button
-            signInWithSSO.title = CoreString._ls_sign_in_button_with_password
+            usernameTextField.style(placeholder: LUITranslation.email_field_title.l10n)
+            loginButton.displayTitle = LUITranslation.sign_in_with_sso_button.l10n
+            signInWithSSO.title = LUITranslation.sign_in_button_with_password.l10n
             createAccountButton.isHidden = true
             passwordTextField.isHidden = true
             passwordSecureTextField.isHidden = true
@@ -390,9 +390,9 @@ final class LoginViewController: NSViewController {
             passwordHorizontalLine.isHidden = true
         case .ssoSignin:
             signInVariant = .protonSignin
-            usernameTextField.style(placeholder: CoreString._ls_username_title)
-            loginButton.displayTitle = CoreString._ls_screen_title
-            signInWithSSO.title = CoreString._ls_sign_in_with_sso_button
+            usernameTextField.style(placeholder: LUITranslation.username_title.l10n)
+            loginButton.displayTitle = LUITranslation._core_sign_in_screen_title.l10n
+            signInWithSSO.title = LUITranslation.sign_in_with_sso_button.l10n
             createAccountButton.isHidden = false
             passwordTextField.isHidden = secureTextEntry
             passwordSecureTextField.isHidden = !secureTextEntry

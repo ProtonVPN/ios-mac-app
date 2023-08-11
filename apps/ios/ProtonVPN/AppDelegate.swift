@@ -275,11 +275,6 @@ fileprivate extension AppDelegate {
 
 extension AppDelegate {
     private func setupCoreIntegration() {
-        NSKeyedUnarchiver.setClass(
-            ProtonCoreNetworking.AuthCredential.self,
-            forClassName: "ProtonCore_Networking.AuthCredential"
-        )
-
         injectDefaultCryptoImplementation()
 
         ProtonCoreLog.PMLog.callback = { (message, level) in
@@ -291,17 +286,8 @@ extension AppDelegate {
             }
         }
 
-        FeatureFactory.shared.enable(&.unauthSession)
-        FeatureFactory.shared.enable(&.observability)
-        FeatureFactory.shared.enable(&.externalSignup)
-        
-        #if DEBUG
-        // this flag is for tests — it should never be turned on in release builds
-        if ProcessInfo.processInfo.arguments.contains("enforceUnauthSessionStrictVerificationOnBackend") {
-            FeatureFactory.shared.enable(&.enforceUnauthSessionStrictVerificationOnBackend)
-        }
-        #endif
         FeatureFactory.shared.enable(&.ssoSignIn)
+
         let apiService = container.makeNetworking().apiService
         apiService.acquireSessionIfNeeded { _ in
             /* the result doesn't require any handling */

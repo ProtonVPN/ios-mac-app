@@ -433,7 +433,8 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
     }
 
     // Test that Smart Protocol doesn't use WireGuard TLS when it's disabled in feature flags.
-    func testSmartProtocolRespectsAPIConfig() { // swiftlint:disable:this function_body_length
+    // TODO: Fix issue with TrustKit and reenable this test
+    func disabled_testSmartProtocolRespectsAPIConfig() { // swiftlint:disable:this function_body_length
         let isConnectedUsingTcpOrTls: () -> Bool = {
             [.wireGuard(.tls), .wireGuard(.tcp)].contains(self.container.vpnManager.currentVpnProtocol)
         }
