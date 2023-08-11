@@ -129,7 +129,7 @@ public final class CoreNetworking: Networking {
                            parameters: route.parameters,
                            headers: route.header,
                            authenticated: route.isAuth,
-                           autoRetry: route.autoRetry,
+                           authRetry: route.authRetry,
                            customAuthCredential: route.authCredential,
                            nonDefaultTimeout: nil,
                            retryPolicy: route.retryPolicy) { (task, result) in

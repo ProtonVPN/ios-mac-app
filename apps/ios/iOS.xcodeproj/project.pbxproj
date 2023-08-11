@@ -81,7 +81,6 @@
 		4CCB4C5C2A6ECCE1002D4204 /* ProtonCoreLog in Frameworks */ = {isa = PBXBuildFile; productRef = 4CCB4C5B2A6ECCE1002D4204 /* ProtonCoreLog */; };
 		4CCB4C5E2A6ED114002D4204 /* ProtonCoreUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = 4CCB4C5D2A6ED114002D4204 /* ProtonCoreUtilities */; };
 		4CCB4C602A6ED15B002D4204 /* ProtonCoreCryptoGoInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 4CCB4C5F2A6ED15B002D4204 /* ProtonCoreCryptoGoInterface */; };
-		4CCB4C622A6ED160002D4204 /* ProtonCoreCoreTranslation in Frameworks */ = {isa = PBXBuildFile; productRef = 4CCB4C612A6ED160002D4204 /* ProtonCoreCoreTranslation */; };
 		4CCDCB5D2A717A7500979877 /* ProtonCoreUIFoundations in Frameworks */ = {isa = PBXBuildFile; productRef = 4CCDCB5C2A717A7500979877 /* ProtonCoreUIFoundations */; };
 		4CD1107F2A2A09410062AE13 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1107E2A2A09410062AE13 /* Logging */; };
 		4CD110812A2A095D0062AE13 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD110802A2A095D0062AE13 /* PMLogger */; };
@@ -1111,7 +1110,6 @@
 				F348C9D627D8E54200622584 /* Search in Frameworks */,
 				E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */,
 				4C7D40672A60289400ACDBED /* OHHTTPStubs in Frameworks */,
-				4CCB4C622A6ED160002D4204 /* ProtonCoreCoreTranslation in Frameworks */,
 				F3BC534B278598CE009E49B4 /* Onboarding in Frameworks */,
 				E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */,
 				E95C18A02A6E4D7D009F1ABB /* Ergonomics in Frameworks */,
@@ -2543,7 +2541,6 @@
 				4C7D40662A60289400ACDBED /* OHHTTPStubs */,
 				4C7D40732A60297400ACDBED /* Reachability */,
 				4CCB4C5F2A6ED15B002D4204 /* ProtonCoreCryptoGoInterface */,
-				4CCB4C612A6ED160002D4204 /* ProtonCoreCoreTranslation */,
 				4CEF8EB12A6EEA52000FBC01 /* TunnelKit */,
 				4C05E5672A716995009102EB /* LegacyCommon */,
 				4C8C31472A73BA19006AD628 /* Home */,
@@ -5023,10 +5020,6 @@
 		4CCB4C5F2A6ED15B002D4204 /* ProtonCoreCryptoGoInterface */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCoreCryptoGoInterface;
-		};
-		4CCB4C612A6ED160002D4204 /* ProtonCoreCoreTranslation */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ProtonCoreCoreTranslation;
 		};
 		4CCDCB5C2A717A7500979877 /* ProtonCoreUIFoundations */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -22,10 +22,10 @@
 
 import Cocoa
 import WebKit
-import ProtonCoreCoreTranslation
 import ProtonCoreNetworking
 import ProtonCoreObservability
 import ProtonCoreUIFoundations
+import ProtonCoreLoginUI
 
 protocol SSOWebViewControllerDelegate: AnyObject {
     func didDismissViewController()
@@ -55,7 +55,7 @@ final class SSOWebViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = CoreString._ls_sign_in_with_sso_title
+        title = LUITranslation.sign_in_with_sso_title.l10n
         let webViewConfiguration = WKWebViewConfiguration()
         webViewConfiguration.websiteDataStore = .nonPersistent()
         webViewConfiguration.defaultWebpagePreferences.preferredContentMode = .desktop
