@@ -33,7 +33,7 @@ struct ConnectionStatusView: View {
 
     func gradientColor(protectionState: ProtectionState) -> Color {
         switch protectionState {
-        case .protected:
+        case .protected, .protectedSecureCore:
             return Color(.background, .success)
         case .unprotected:
             return Color(.background, .danger)
@@ -44,7 +44,7 @@ struct ConnectionStatusView: View {
 
     func title(protectionState: ProtectionState) -> String? {
         switch protectionState {
-        case .protected:
+        case .protected, .protectedSecureCore:
             return nil
         case .unprotected:
             return Localizable.connectionStatusUnprotected
@@ -55,28 +55,34 @@ struct ConnectionStatusView: View {
 
     func titleView(protectionState: ProtectionState) -> some View {
         HStack(alignment: .bottom, spacing: .themeSpacing8) {
-            if case .unprotected = protectionState {
-                Theme.Asset.icLockOpenFilled2
-                    .swiftUIImage
-                    .styled(.danger)
-            }
-            if case .protecting = protectionState {
-                ProgressView()
-            }
-            if case .protected = protectionState {
+            switch protectionState {
+            case .protected:
                 Theme.Asset.icLockFilled
                     .swiftUIImage
                     .foregroundColor(Color(.background, .success))
                 Text(Localizable.connectionStatusProtected)
                     .themeFont(.title2(emphasised: true))
                     .foregroundColor(Color(.text, .success))
+            case .protectedSecureCore:
+                Theme.Asset.icLocksFilled
+                    .swiftUIImage
+                    .foregroundColor(Color(.background, .success))
+                Text(Localizable.connectionStatusProtected)
+                    .themeFont(.title2(emphasised: true))
+                    .foregroundColor(Color(.text, .success))
+            case .protecting:
+                ProgressView()
+            case .unprotected:
+                Theme.Asset.icLockOpenFilled2
+                    .swiftUIImage
+                    .styled(.danger)
             }
         }
     }
 
     func locationText(protectionState: ProtectionState) -> Text? {
         switch protectionState {
-        case .protected:
+        case .protected, .protectedSecureCore:
             return nil
         case let .unprotected(country, ip),
             let .protecting(country, ip):
@@ -136,6 +142,9 @@ struct ConnectionStatusView_Previews: PreviewProvider {
         ConnectionStatusView(store: .init(initialState: .init(protectionState: .protected(netShield: .random)),
                                           reducer: { ConnectionStatusFeature() }))
         .previewDisplayName("Protected")
+        ConnectionStatusView(store: .init(initialState: .init(protectionState: .protectedSecureCore(netShield: .random)),
+                                          reducer: { ConnectionStatusFeature() }))
+        .previewDisplayName("ProtectedSecureCore")
         ConnectionStatusView(store: .init(initialState: .init(protectionState: .unprotected(country: "Poland", ip: "192.168.1.0")),
                                           reducer: { ConnectionStatusFeature() }))
         .previewDisplayName("Unprotected")

@@ -48,6 +48,9 @@ class SimulatorHelper {
         return { specs in
             switch self.status {
             case .disconnected, .connected:
+                let propertyManager = Container.sharedContainer.makePropertiesManager()
+                propertyManager.lastConnectionIntent = specs
+
                 self.switchToConnected(specs)
 
             default:
