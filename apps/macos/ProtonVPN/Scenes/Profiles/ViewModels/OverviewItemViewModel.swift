@@ -72,7 +72,7 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
     func connectAction(completion: () -> Void) {
         log.debug("Connect requested by pressing Connect button on a profile.", category: .connectionConnect, event: .trigger)
         
-        guard !isUsersTierTooLow else {
+        guard canUseProfile else {
             log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
             Task {
                 let url = await sessionService.getPlanSession(mode: .upgrade)

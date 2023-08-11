@@ -21,10 +21,11 @@
 //
 
 import Foundation
+import Dependencies
 import LegacyCommon
 
 class AbstractProfileViewModel {
-    
+    @Dependency(\.profileAuthorizer) var authorizer
     let profile: Profile
     let lowestServerTier: Int
     let userTier: Int
@@ -66,13 +67,11 @@ class AbstractProfileViewModel {
             self.underMaintenance = allServersUnderMaintenance
         }
     }
-    
-    var isUsersTierTooLow: Bool {
-        return userTier < lowestServerTier
-    }
+
+    var canUseProfile: Bool { authorizer.canUseProfile(ofTier: lowestServerTier) }
     
     var alphaOfMainElements: CGFloat {
-        return isUsersTierTooLow ? 0.5 : 1.0
+        return canUseProfile ? 1.0 : 0.5
     }
     
 }

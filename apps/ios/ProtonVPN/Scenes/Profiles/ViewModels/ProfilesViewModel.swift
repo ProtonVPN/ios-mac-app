@@ -21,12 +21,14 @@
 //
 
 import UIKit
+import Dependencies
 import LegacyCommon
 import Strings
 
 class ProfilesViewModel {
     typealias Factory = ProfileService
-    
+
+    @Dependency(\.profileAuthorizer) var profileAuthorizer
     private let factory: Factory
     private let alertService: AlertService
     private var vpnGateway: VpnGatewayProtocol
@@ -37,9 +39,9 @@ class ProfilesViewModel {
     private let natTypePropertyProvider: NATTypePropertyProvider
     private let safeModePropertyProvider: SafeModePropertyProvider
     private let planService: PlanService
-    
+
     private let sectionTitles = [Localizable.recommended, Localizable.myProfiles]
-        
+
     private var userTier: Int {
         do {
             return try vpnGateway.userTier()
@@ -83,6 +85,17 @@ class ProfilesViewModel {
     
     var cellHeight: CGFloat {
         return UIConstants.cellHeight
+    }
+
+    var canUseProfiles: Bool { profileAuthorizer.canUseProfiles }
+
+    func showProfilesUpsellAlert() {
+        // show profiles upsell modal VPNAPPL-1851
+        if canUseProfiles {
+            log.error("Tried to show profiles upsell modal, but profiles are usable", category: .userPlan)
+            return
+        }
+        alertService.push(alert: AllCountriesUpsellAlert())
     }
     
     func cellCount(for section: Int) -> Int {

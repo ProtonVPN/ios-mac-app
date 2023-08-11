@@ -39,8 +39,8 @@ public struct FeatureFlags: Codable, DefaultableProperty {
     @Default<Bool> public var promoCode: Bool
     @Default<BoolDefaultTrue> public var wireGuardTls: Bool
     @Default<Bool> public var enforceDeprecatedProtocols: Bool
+    @Default<Bool> public var showNewFreePlan: Bool // Free Rescope
     @Default<BoolDefaultTrue> public var unsafeLanWarnings: Bool
-    @Default<Bool> public var newFree: Bool // Free Rescope
     public var localOverrides: [String: [String: Bool]]?
 
     public init(
@@ -58,8 +58,8 @@ public struct FeatureFlags: Codable, DefaultableProperty {
         promoCode: Bool,
         wireGuardTls: Bool,
         enforceDeprecatedProtocols: Bool,
+        showNewFreePlan: Bool,
         unsafeLanWarnings: Bool,
-        newFree: Bool,
         localOverrides: [String: [String: Bool]]?
     ) {
         self.smartReconnect = smartReconnect
@@ -76,8 +76,8 @@ public struct FeatureFlags: Codable, DefaultableProperty {
         self.promoCode = promoCode
         self.wireGuardTls = wireGuardTls
         self.enforceDeprecatedProtocols = enforceDeprecatedProtocols
+        self.showNewFreePlan = showNewFreePlan
         self.unsafeLanWarnings = unsafeLanWarnings
-        self.newFree = newFree
         self.localOverrides = localOverrides
     }
 
@@ -97,8 +97,8 @@ public struct FeatureFlags: Codable, DefaultableProperty {
             promoCode: false,
             wireGuardTls: true,
             enforceDeprecatedProtocols: false,
+            showNewFreePlan: false,
             unsafeLanWarnings: true,
-            newFree: false,
             localOverrides: nil
         )
     }

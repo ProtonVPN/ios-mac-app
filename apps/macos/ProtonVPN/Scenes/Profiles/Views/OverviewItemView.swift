@@ -40,7 +40,7 @@ class OverviewItemView: NSTableRowView {
     fileprivate var viewModel: OverviewItemViewModel!
 
     private lazy var accessibilityConnectAction: NSAccessibilityCustomAction = {
-        let connectActionName = viewModel.isUsersTierTooLow ? Localizable.upgrade : Localizable.connect
+        let connectActionName = viewModel.canUseProfile ? Localizable.connect : Localizable.upgrade
         return NSAccessibilityCustomAction(name: connectActionName, target: self, selector: #selector(connectButtonAction(_:)))
     }()
 

@@ -25,7 +25,7 @@ import LegacyCommon
 import Strings
 
 class ProfilesMenuController: NSObject {
-    
+    @IBOutlet weak var profilesMenuItem: NSMenuItem!
     @IBOutlet weak var profilesMenu: NSMenu!
     @IBOutlet weak var overviewItem: NSMenuItem!
     @IBOutlet weak var createNewProfileItem: NSMenuItem!
@@ -41,6 +41,7 @@ class ProfilesMenuController: NSObject {
     func update(with viewModel: ProfilesMenuViewModel) {
         self.viewModel = viewModel
         viewModel.contentChanged = { [weak self] in self?.setupEphemeralView() }
+        viewModel.contentChanged?()
     }
     
     // MARK: - Private functions
@@ -66,9 +67,8 @@ class ProfilesMenuController: NSObject {
     @objc private func createNewProfileItemAction() {
         viewModel.createNewProfileAction()
     }
-    
+
     private func setupEphemeralView() {
-        overviewItem.isEnabled = viewModel.isOverviewEnabled
-        createNewProfileItem.isEnabled = viewModel.isCreateNewProfileEnabled
+        profilesMenuItem.isHidden = !viewModel.areProfilesEnabled
     }
 }

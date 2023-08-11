@@ -68,21 +68,7 @@ class ProfilesTests: ProtonVPNUITests {
             .saveProfile(robot: ProfileRobot.self)
             .verify.profileIsEdited()
     }
-    
-    func testFreeUserCannotCreateProfileWithSecureCore() {
-        let profileName = StringUtils().randomAlphanumericString(length: 10)
-    
-        logoutIfNeeded()
-        changeEnvToProdIfNeeded()
-        openLoginScreen()
-        loginAsFreeUser()
-        mainRobot
-            .goToProfilesTab()
-            .addNewProfile()
-            .setSecureCoreProfile(profileName)
-            .verify.upsellMessage()
-    }
-    
+
     func testMakeDefaultAndSecureCoreProfilePlusUser() {
         let profileName = StringUtils().randomAlphanumericString(length: 10)
         let countryName = "Netherlands"
@@ -99,26 +85,17 @@ class ProfilesTests: ProtonVPNUITests {
             .saveProfile(robot: ProfileRobot.self)
             .verify.profileIsCreated()
     }
-    
-    func testQuickConnectToAServerViaUnavailableProfile() {
-        
-        let profileName = StringUtils().randomAlphanumericString(length: 10)
-        let countryName = "  Argentina (Upgrade Required)"
-        
+
+    // Tests for New Free UI - Disabled until a special NewFree user is available
+    func testProfileCreationUnavailableForFreeUser() {
         logoutIfNeeded()
-        changeEnvToProdIfNeeded()
+        changeEnvToProdIfNeeded() // When available: use environment where ShowNewFreePlan = true
         openLoginScreen()
-        loginAsFreeUser()
+        loginAsFreeUser() // When available: login as NewFree user with ShowNewFreePlan = true
         mainRobot
             .goToProfilesTab()
             .addNewProfile()
-            .setDefaultProfile(profileName, countryName)
-            .saveProfile(robot: ProfileRobot.self)
-            .verify.profileIsCreated()
-        mainRobot
-            .quickConnectViaQCButton()
-            .verify.upsellModalIsShown()
-            .verify.connectionStatusNotConnected()
+            .verify.upsellModalIsOpen()
     }
     
     func testRecommendedProfiles() {

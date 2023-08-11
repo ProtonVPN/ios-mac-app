@@ -291,8 +291,8 @@ extension FeatureFlags {
         promoCode: false,
         wireGuardTls: false,
         enforceDeprecatedProtocols: false,
+        showNewFreePlan: false,
         unsafeLanWarnings: false,
-        newFree: false,
         localOverrides: nil
     )
     public static let allEnabled: Self = .init(
@@ -310,8 +310,8 @@ extension FeatureFlags {
         promoCode: true,
         wireGuardTls: true,
         enforceDeprecatedProtocols: true,
+        showNewFreePlan: true,
         unsafeLanWarnings: true,
-        newFree: true,
         localOverrides: nil
     )
 
@@ -330,8 +330,8 @@ extension FeatureFlags {
         promoCode: true,
         wireGuardTls: false,
         enforceDeprecatedProtocols: true,
+        showNewFreePlan: true,
         unsafeLanWarnings: true,
-        newFree: true,
         localOverrides: nil
     )
 }
