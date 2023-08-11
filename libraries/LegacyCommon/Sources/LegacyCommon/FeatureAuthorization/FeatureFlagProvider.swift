@@ -24,7 +24,7 @@ public struct FeatureFlagProvider: DependencyKey {
     var setFeatureFlags: (FeatureFlags) -> Void
 
     public static var liveValue: FeatureFlagProvider = FeatureFlagProvider(
-        getFeatureFlags: { PropertiesManager().featureFlags },
+        getFeatureFlags: { .allEnabled }, //PropertiesManager().featureFlags },
         setFeatureFlags: { PropertiesManager().featureFlags = $0 }
     )
 
@@ -38,7 +38,7 @@ public struct FeatureFlagProvider: DependencyKey {
 
 extension FeatureFlagProvider {
     public var enforceDeprecatedProtocols: Bool { getFeatureFlags().enforceDeprecatedProtocols }
-    public var newFree: Bool { getFeatureFlags().newFree }
+    public var showNewFreePlan: Bool { getFeatureFlags().showNewFreePlan }
 }
 
 extension DependencyValues {

@@ -30,7 +30,7 @@ class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
     private let vpnGateway: VpnGatewayProtocol
     
     var canConnect: Bool {
-        return !underMaintenance
+        return !underMaintenance && canUseProfile
     }
     
     var icon: ProfileIcon {

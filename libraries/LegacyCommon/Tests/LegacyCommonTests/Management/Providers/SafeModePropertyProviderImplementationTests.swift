@@ -136,8 +136,8 @@ private extension FeatureFlags {
             promoCode: true,
             wireGuardTls: true,
             enforceDeprecatedProtocols: true,
+            showNewFreePlan: true,
             unsafeLanWarnings: true,
-            newFree: true,
             localOverrides: nil
         )
     }

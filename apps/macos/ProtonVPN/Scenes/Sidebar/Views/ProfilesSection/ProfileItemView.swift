@@ -106,7 +106,7 @@ class ProfileItemView: NSView {
         [profileImage, profileCircle, profileName, secondaryDescription].forEach { view in
             view?.alphaValue = viewModel.alphaOfMainElements
         }
-        connectButton.upgradeRequired = viewModel.isUsersTierTooLow
+        connectButton.upgradeRequired = !viewModel.canUseProfile
     }
     
     // MARK: - Accessibility

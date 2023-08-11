@@ -26,6 +26,7 @@ class ProfileTests: ProtonVPNUITests {
     private let profilesRobot = ProfileRobot()
     private let createProfileRobot = CreateProfileRobot()
     private let manageProfilesRobot = ManageProfilesRobot()
+    private let settingsRobot = SettingsRobot()
     
     func testCreateEmptyProfile() {
         
@@ -118,40 +119,14 @@ class ProfileTests: ProtonVPNUITests {
             .selectAutoConnect(autoConnectDisabled)
             .verify.checkProfileIsCreated("￼  " + name)
     }
-    
-    func testQuickConnectToAServerViaUnavailableProfile() {
-        
-        let name = StringUtils().randomAlphanumericString(length: 8)
-        let country = "￼  Austria (Upgrade Required)"
-        let qcFastest = "￼  Fastest"
-        
+
+    // Tests for New Free UI - Disabled until a special NewFree user is available
+    func testProfileManagementUnavailableForFreeUser() {
         logoutIfNeeded()
-        loginAsFreeUser()
+        loginAsFreeUser() // When available: login as NewFree user with ShowNewFreePlan = true
         mainRobot
             .openProfiles()
-            .verify.checkProfileOverViewIsOpen()
-            .createProfile()
-            .verify.checkButtonExists()
-            .setProfileDetails(name, country)
-            .saveProfileSuccessfully()
-        mainRobot
-            .openAppSettings()
-            .verify.checkSettingsIsOpen()
-            .connectionTabClick()
-            .verify.checkConnectionTabIsOpen()
-            .selectQuickConnect(qcFastest)
-            .verify.checkProfileIsCreated("￼  " + name)
-            .selectProfile("￼  " + name)
-            .closeSettings()
-            .closeProfilesOverview()
-            .quickConnectToAServer()
+        settingsRobot
             .verify.checkUpsellModalIsOpen()
-            .closeUpsellModal()
-        mainRobot
-            .openAppSettings()
-            .connectionTabClick()
-            .selectQuickConnect("￼  " + name)
-            .selectProfile(qcFastest)
-
     }
 }	

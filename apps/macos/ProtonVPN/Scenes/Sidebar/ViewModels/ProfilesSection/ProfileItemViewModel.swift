@@ -71,10 +71,9 @@ class ProfileItemViewModel: AbstractProfileViewModel {
     func connectAction() {
         log.debug("Connect requested by selecting a profile.", category: .connectionConnect, event: .trigger)
         
-        guard !isUsersTierTooLow else {
+        guard canUseProfile else {
             log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
             alertService.push(alert: AllCountriesUpsellAlert())
-
             return
         }
 

@@ -22,12 +22,13 @@
 
 import Foundation
 import UIKit
-import LegacyCommon
+import Dependencies
 import ProtonCoreUIFoundations
+import LegacyCommon
 import Strings
 
 final class ProfileItemViewModel {
-    
+    @Dependency(\.profileAuthorizer) var authorizer
     private let profile: Profile
     private let vpnGateway: VpnGatewayProtocol
     private let alertService: AlertService
@@ -40,7 +41,7 @@ final class ProfileItemViewModel {
     private let userTier: Int
     private let lowestServerTier: Int
     private let underMaintenance: Bool
-    
+
     var isConnected: Bool {
         if let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connected {
             return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode, trigger: .profile)
@@ -62,11 +63,11 @@ final class ProfileItemViewModel {
     private var canConnect: Bool {
         return !underMaintenance
     }
-    
+
     private var isUsersTierTooLow: Bool {
-        return userTier < lowestServerTier
+        return !authorizer.canUseProfile(ofTier: lowestServerTier)
     }
-    
+
     var connectionChanged: (() -> Void)?
     
     let connectedConnectIcon: Image = IconProvider.powerOff
@@ -106,7 +107,7 @@ final class ProfileItemViewModel {
     var alphaOfMainElements: CGFloat {
         return isUsersTierTooLow ? 0.5 : 1.0
     }
-    
+
     init(profile: Profile, vpnGateway: VpnGatewayProtocol, alertService: AlertService, userTier: Int, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, connectionStatusService: ConnectionStatusService, planService: PlanService) {
         self.profile = profile
         self.vpnGateway = vpnGateway
@@ -155,8 +156,19 @@ final class ProfileItemViewModel {
     func connectAction() {
         log.debug("Connect requested by selecting a profile.", category: .connectionConnect, event: .trigger)
 
-        if isUsersTierTooLow {
-            log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
+        if !authorizer.canUseProfiles {
+            log.debug("Connect to profile rejected because user is on free plan", category: .connectionConnect, event: .trigger)
+            // show profiles upsell modal VPNAPPL-1851
+            alertService.push(alert: AllCountriesUpsellAlert())
+        } else if !authorizer.canUseProfile(ofTier: lowestServerTier) {
+            // The user is on a paid plan, but this profile requires a higher user tier
+            // This shouldn't really happen unless the user is on the basic plan, or the profile requires visionary tier
+            log.warning(
+                "Connect rejected because user tier is too low",
+                category: .connectionConnect,
+                event: .trigger,
+                metadata: ["userTier": "\(userTier)", "lowestServerTier": "\(lowestServerTier)"]
+            )
             alertService.push(alert: AllCountriesUpsellAlert())
         } else if underMaintenance {
             log.debug("Connect rejected because server is in maintenance", category: .connectionConnect, event: .trigger)
@@ -245,9 +257,9 @@ final class ProfileItemViewModel {
         let doubleArrow = NSAttributedString.imageAttachment(image: IconProvider.chevronsRight, baselineOffset: -4)
 
         if serverType == .secureCore {
-            return  NSAttributedString.concatenate(profileDescription, buffer, doubleArrow, buffer, attributedCountryName)
+            return NSAttributedString.concatenate(profileDescription, buffer, doubleArrow, buffer, attributedCountryName)
         } else {
-            return  NSAttributedString.concatenate(attributedCountryName, buffer, doubleArrow, buffer, profileDescription)
+            return NSAttributedString.concatenate(attributedCountryName, buffer, doubleArrow, buffer, profileDescription)
         }
     }
     

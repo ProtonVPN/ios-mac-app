@@ -27,6 +27,7 @@
         "ProfileTests\/testCreateEmptyProfile()",
         "ProfileTests\/testCreateProfileWithTheSameName()",
         "ProfileTests\/testNewProfileAppearsInTheSettings()",
+        "ProfileTests\/testProfileManagementUnavailableForFreeUser()",
         "ProtonVPNUITests",
         "QuickSettingsTests",
         "QuickSettingsTests\/testOpenQuickSettingsDropdown()",

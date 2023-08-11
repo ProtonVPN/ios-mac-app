@@ -114,6 +114,10 @@ class ProfilesViewController: UIViewController {
     }
     
     @objc private func createProfile() {
+        guard viewModel?.canUseProfiles == true else {
+            viewModel?.showProfilesUpsellAlert()
+            return
+        }
         if let vc = viewModel?.makeCreateProfileViewController() as? CreateProfileViewController {
             vc.profilesViewControllerDelegate = self
             self.navigationController?.pushViewController(vc, animated: true)
@@ -194,6 +198,10 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
+        guard viewModel?.canUseProfiles == true else {
+            viewModel?.showProfilesUpsellAlert()
+            return
+        }
         super.setEditing(editing, animated: animated)
         renderEditing(editing)
     }

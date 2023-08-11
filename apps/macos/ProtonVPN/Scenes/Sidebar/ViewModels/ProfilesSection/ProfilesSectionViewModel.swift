@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import Dependencies
 import LegacyCommon
 
 enum ProfilesSectionListCell {
@@ -29,7 +30,7 @@ enum ProfilesSectionListCell {
 }
 
 class ProfilesSectionViewModel {
-    
+    @Dependency(\.profileAuthorizer) var authorizer
     private let vpnGateway: VpnGatewayProtocol
     private let profileManager: ProfileManager
     private let navService: NavigationService
@@ -57,6 +58,8 @@ class ProfilesSectionViewModel {
         self.profileManager = profileManager
         self.sysexManager = sysexManager
         NotificationCenter.default.addObserver(self, selector: #selector(profilesChanged), name: profileManager.contentChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(profilesChanged), name: VpnKeychain.vpnPlanChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(profilesChanged), name: PropertiesManager.featureFlagsNotification, object: nil)
         for notificationName in protocolChangeNotifications {
             NotificationCenter.default.addObserver(self, selector: #selector(profilesChanged), name: notificationName, object: nil)
         }
@@ -77,12 +80,27 @@ class ProfilesSectionViewModel {
             return .footer(self)
         }
     }
+
+    private var canUseProfiles: Bool { authorizer.canUseProfiles }
+
+    private func showProfilesUpsellAlert() {
+        // show profiles upsell modal VPNAPPL-1851
+        alertService.push(alert: AllCountriesUpsellAlert())
+    }
     
     func createNewProfileAction() {
+        guard canUseProfiles else {
+            showProfilesUpsellAlert()
+            return
+        }
         navService.openProfiles(ProfilesTab.createNewProfile)
     }
     
     func manageProfilesAction() {
+        guard canUseProfiles else {
+            showProfilesUpsellAlert()
+            return
+        }
         navService.openProfiles(ProfilesTab.overview)
     }
     
