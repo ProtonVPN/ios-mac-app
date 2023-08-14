@@ -18,7 +18,7 @@
 
 import Foundation
 
-func localizeStringAndFallbackToEn(_ key: String, _ table: String) -> String {
+func localizeStringAndFallbackToEn(_ key: String, _ table: String, _ value: String) -> String {
     let format = NSLocalizedString(key, tableName: table, bundle: Bundle.module, comment: "")
     if format != key || NSLocale.preferredLanguages.first == "en" {
         return format
@@ -26,7 +26,9 @@ func localizeStringAndFallbackToEn(_ key: String, _ table: String) -> String {
 
     // Fall back to en
     guard let path = Bundle.module.path(forResource: "en", ofType: "lproj"), let bundle = Bundle(path: path) else {
-        return format
+        return value
     }
+
     return NSLocalizedString(key, bundle: bundle, comment: "")
 }
+

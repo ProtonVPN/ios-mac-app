@@ -53,6 +53,10 @@ final class CityItemViewModel: CityViewModel {
 }
 
 final class CountryItemViewModel: CountryViewModel {
+    var showCountryConnectButton: Bool = false
+
+    var showFeatureIcons: Bool = false
+
     let description: String
 
     let isSmartAvailable: Bool = false
