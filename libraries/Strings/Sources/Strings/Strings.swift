@@ -63,19 +63,19 @@ public enum Localizable {
   public static var aeVpnInfoNotReceived: String { return Localizable.tr("Localizable", "_ae_vpn_info_not_received", fallback: "Unable to obtain VPN information") }
   /// API error
   public static var aeWrongLoginCredentials: String { return Localizable.tr("Localizable", "_ae_wrong_login_credentials", fallback: "Wrong username or password") }
-  /// Body of the deprecated protocol alert on iOS. Shown when the user attemps to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\).
+  /// Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\).
   public static var alertProtocolDeprecatedBodyIos: String { return Localizable.tr("Localizable", "_alert_protocol_deprecated_body_ios", fallback: "This profile uses a protocol that is outdated and no longer supported. Click \"Update\" to switch to using the default Smart protocol.") }
-  /// Body of the deprecated protocol alert on MacOS. Shown when the user attemps to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple
+  /// Body of the deprecated protocol alert on MacOS. Shown when the user attempts to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple
   public static var alertProtocolDeprecatedBodyMacos: String { return Localizable.tr("Localizable", "_alert_protocol_deprecated_body_macos", fallback: "This profile uses a protocol that is outdated and no longer supported. Click \"Update\" to switch to using the default Smart protocol. Learn more") }
   /// Text for the 'Close' action of the deprecated protocol alert.
   public static var alertProtocolDeprecatedClose: String { return Localizable.tr("Localizable", "_alert_protocol_deprecated_close", fallback: "Close") }
-  /// Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attemps to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection.
+  /// Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection.
   public static var alertProtocolDeprecatedEnableSmart: String { return Localizable.tr("Localizable", "_alert_protocol_deprecated_enable_smart", fallback: "Update") }
   /// Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser
   public static var alertProtocolDeprecatedLearnMore: String { return Localizable.tr("Localizable", "_alert_protocol_deprecated_learn_more", fallback: "Learn more") }
   /// The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only)
   public static var alertProtocolDeprecatedLinkText: String { return Localizable.tr("Localizable", "_alert_protocol_deprecated_link_text", fallback: "Learn more") }
-  /// Title of the deprecated protocol alert. Shown when the user attemps to connect to a profile with OpenVPN
+  /// Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN
   public static var alertProtocolDeprecatedTitle: String { return Localizable.tr("Localizable", "_alert_protocol_deprecated_title", fallback: "Protocol Unavailable") }
   /// Account plan description
   public static var allCountries: String { return Localizable.tr("Localizable", "_all_countries", fallback: "60+ countries") }
