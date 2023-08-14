@@ -19,6 +19,7 @@
 import Cocoa
 import LegacyCommon
 import Strings
+import Theme
 
 final class SubuserMacAlertViewController: NSViewController {
     
@@ -72,8 +73,8 @@ final class SubuserMacAlertViewController: NSViewController {
     }
     
     private func setupViews() {
-        imageView.image = Bundle.legacyCommonEvilDoNotUseThis.image(forResource: NSImage.Name("alert-pro-account"))
-        
+        imageView.image = Theme.Asset.icAlertProAccount.image
+
         assignConnectionsButton.actionType = .confirmative
         assignConnectionsButton.isEnabled = true
         loginButton.isEnabled = true

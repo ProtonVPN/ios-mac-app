@@ -26,6 +26,7 @@ import Dependencies
 import ProtonCoreUIFoundations
 import LegacyCommon
 import Strings
+import Theme
 
 final class ProfileItemViewModel {
     @Dependency(\.profileAuthorizer) var authorizer
@@ -84,8 +85,8 @@ final class ProfileItemViewModel {
         }
     }
     
-    var textInPlaceOfConnectIcon: String? {
-        return isUsersTierTooLow ? Localizable.upgrade : nil
+    var imageInPlaceOfConnectIcon: UIImage? {
+        return isUsersTierTooLow ? Theme.Asset.vpnSubscriptionBadge.image : nil
     }
     
     var icon: ProfileIcon {

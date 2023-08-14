@@ -403,6 +403,7 @@ public enum Asset {
   public static let icNetshield = ImageAsset(name: "ic-netshield")
   public static let icVpnBusinessBadge = ImageAsset(name: "ic-vpn-business-badge")
   public static let icsBrandTor = SymbolAsset(name: "ics-brand-tor")
+  public static let vpnSubscriptionBadge = ImageAsset(name: "vpn-subscription-badge")
   public static let icAlias = ImageAsset(name: "ic-alias")
   public static let icArchiveBox = ImageAsset(name: "ic-archive-box")
   public static let icArrowDownArrowUp = ImageAsset(name: "ic-arrow-down-arrow-up")

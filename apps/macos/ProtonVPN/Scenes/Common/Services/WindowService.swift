@@ -179,7 +179,7 @@ class WindowServiceImplementation: WindowService {
 
     func showInitialModals() {
         @Dependency(\.featureFlagProvider) var featureFlags
-        let isFreeRescopeEnabled: Bool = featureFlags.newFree
+        let isFreeRescopeEnabled: Bool = featureFlags.showNewFreePlan
         guard isFreeRescopeEnabled, // Only show the what's new modal once the free plans have been activated
               propertiesManager.showWhatsNewModal else {
             return

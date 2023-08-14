@@ -63,7 +63,6 @@ class SubuserAlertViewController: UIViewController {
         view.backgroundColor = .backgroundColor()
 
         imageView.image = Theme.Asset.icAlertProAccount.image
-
         titleLabel.textColor = .normalTextColor()
         titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         

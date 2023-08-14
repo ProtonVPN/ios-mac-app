@@ -92,21 +92,19 @@ class ProfilesTableViewCell: UITableViewCell {
     }
     
     private func renderConnectButton() {
-        if let text = viewModel?.textInPlaceOfConnectIcon {
-            connectButton.setImage(nil, for: .normal)
-            let attributes: [NSAttributedString.Key: UIFont] = [.font: .systemFont(ofSize: 13)]
-            let attributedText = NSAttributedString(string: text, attributes: attributes)
-            connectButton.setAttributedTitle(attributedText, for: .normal)
-            connectButton.contentEdgeInsets = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
-            connectButton.layer.cornerRadius = 8
+        guard let viewModel = viewModel else {
+            return
+        }
+        if let icon = viewModel.imageInPlaceOfConnectIcon {
+            connectButton.setImage(icon, for: .normal)
+            connectButton.backgroundColor = .clear
         } else {
-            connectButton.setImage(viewModel?.connectIcon, for: .normal)
+            connectButton.setImage(viewModel.connectIcon, for: .normal)
             connectButton.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
             connectButton.setAttributedTitle(nil, for: .normal)
             connectButton.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
             connectButton.layer.cornerRadius = 20
+            connectButton.backgroundColor = viewModel.isConnected ? .brandColor() : .weakInteractionColor()
         }
-        connectButton.backgroundColor = viewModel?.isConnected ?? false ? .brandColor() : .weakInteractionColor()
     }
-    
 }

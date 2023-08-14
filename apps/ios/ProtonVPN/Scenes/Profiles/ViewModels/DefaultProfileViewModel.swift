@@ -21,11 +21,16 @@
 //
 
 import UIKit
-import LegacyCommon
+import Dependencies
 import ProtonCoreUIFoundations
+import LegacyCommon
 import Strings
+import Theme
 
 class DefaultProfileViewModel {
+
+    @Dependency(\.profileAuthorizer) var authorizer
+    private let alertService: AlertService
     
     private let serverOffering: ServerOffering
     private let vpnGateway: VpnGatewayProtocol
@@ -34,12 +39,14 @@ class DefaultProfileViewModel {
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private let natTypePropertyProvider: NATTypePropertyProvider
     private let safeModePropertyProvider: SafeModePropertyProvider
-    
+
+    private let defaultAccessTier: Int
+
     private var profile: Profile {
         switch serverOffering {
         case .random:
             return Profile(id: "st_r",
-                           accessTier: 0,
+                           accessTier: defaultAccessTier,
                            profileIcon: .image(IconProvider.arrowsSwapRight),
                            profileType: .system,
                            serverType: propertiesManager.serverTypeToggle,
@@ -48,7 +55,7 @@ class DefaultProfileViewModel {
                            connectionProtocol: propertiesManager.connectionProtocol)
         default:
             return Profile(id: "st_f",
-                           accessTier: 0,
+                           accessTier: defaultAccessTier,
                            profileIcon: .image(IconProvider.bolt),
                            profileType: .system,
                            serverType: propertiesManager.serverTypeToggle,
@@ -74,6 +81,10 @@ class DefaultProfileViewModel {
     
     private var connectedUiState: Bool {
         return isConnected || isConnecting
+    }
+
+    private var isUsersTierTooLow: Bool {
+        return !authorizer.canUseProfile(ofTier: defaultAccessTier)
     }
     
     var connectionChanged: (() -> Void)?
@@ -101,15 +112,28 @@ class DefaultProfileViewModel {
             return UIImage()
         }
     }
+
+    var imageInPlaceOfConnectIcon: UIImage? {
+        return isUsersTierTooLow ? Theme.Asset.vpnSubscriptionBadge.image : nil
+    }
+
+    var alphaOfMainElements: CGFloat {
+        return isUsersTierTooLow ? 0.5 : 1.0
+    }
     
-    init(serverOffering: ServerOffering, vpnGateway: VpnGatewayProtocol, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider) {
+    init(serverOffering: ServerOffering, vpnGateway: VpnGatewayProtocol, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider) {
         self.serverOffering = serverOffering
         self.propertiesManager = propertiesManager
         self.vpnGateway = vpnGateway
+        self.alertService = alertService
         self.connectionStatusService = connectionStatusService
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.natTypePropertyProvider = natTypePropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
+
+        // Post Free-Rescope, default profiles should not be accessible to free users
+        @Dependency(\.featureFlagProvider) var featureFlagProvider
+        self.defaultAccessTier = featureFlagProvider.showNewFreePlan ? 1 : 0
         
         startObserving()
     }
@@ -117,7 +141,11 @@ class DefaultProfileViewModel {
     func connectAction() {
         log.debug("Connect requested by selecting default profile.", category: .connectionConnect, event: .trigger)
         
-        if isConnecting {
+        if !authorizer.canUseProfiles {
+            log.debug("Connect to profile rejected because user is on free plan", category: .connectionConnect, event: .trigger)
+            // show profiles upsell modal VPNAPPL-1851
+            alertService.push(alert: AllCountriesUpsellAlert())
+        } else if isConnecting {
             NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.abort)
             log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.stopConnecting(userInitiated: true)

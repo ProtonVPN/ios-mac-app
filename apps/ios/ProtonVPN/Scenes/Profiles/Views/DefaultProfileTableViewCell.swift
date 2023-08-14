@@ -31,11 +31,15 @@ class DefaultProfileTableViewCell: UITableViewCell {
     
     var viewModel: DefaultProfileViewModel? {
         didSet {
-            viewModel?.connectionChanged = { [weak self] in self?.stateChanged() }
+            guard let viewModel = viewModel else { return }
+            viewModel.connectionChanged = { [weak self] in self?.stateChanged() }
             DispatchQueue.main.async { [weak self] in
-                self?.label.text = self?.viewModel?.title
-                self?.leftImageView.image = self?.viewModel?.image
-                self?.stateChanged()
+                guard let self else { return }
+                label.text = viewModel.title
+                label.alpha = viewModel.alphaOfMainElements
+                leftImageView.alpha = viewModel.alphaOfMainElements
+                leftImageView.image = viewModel.image
+                stateChanged()
             }
         }
     }
@@ -63,8 +67,14 @@ class DefaultProfileTableViewCell: UITableViewCell {
         guard let viewModel = viewModel else {
             return
         }
-        connectButton.setImage(viewModel.connectIcon, for: .normal)
-        connectButton.backgroundColor = viewModel.isConnected ? .brandColor() : .weakInteractionColor()
+        if let icon = viewModel.imageInPlaceOfConnectIcon {
+            connectButton.setImage(icon, for: .normal)
+            connectButton.backgroundColor = .clear
+        } else {
+            connectButton.setImage(viewModel.connectIcon, for: .normal)
+            connectButton.backgroundColor = viewModel.isConnected ? .brandColor() : .weakInteractionColor()
+        }
+
     }
     
 }

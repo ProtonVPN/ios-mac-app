@@ -62,25 +62,47 @@ class ConnectButton: ResizingTextButton {
         super.viewWillDraw()
         configureButton()
     }
-    
-    private func configureButton() {
-        wantsLayer = true
-        layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
+
+    override var intrinsicContentSize: NSSize {
+        if upgradeRequired {
+            // No text is displayed, so set the size to the size of the image (Theme.Asset.vpnSubscriptionBadge.image)
+            return NSSize(width: 38.75, height: 24)
+        }
+        // If displaying text, `ResizingTextButton` calculates size based on the width of `attributedString`
+        return super.intrinsicContentSize
+    }
+
+    private func setup(withText text: String) {
         layer?.borderWidth = 2
         DarkAppearance {
             layer?.backgroundColor = self.cgColor(.background)
             layer?.borderColor = self.cgColor(.border)
         }
+        self.image = nil
+        attributedTitle = text.styled(font: .themeFont(.small))
+    }
 
-        let title: String
+    private func setup(withImage image: NSImage) {
+        layer?.borderColor = .clear
+        layer?.backgroundColor = .clear
+        self.image = image
+    }
+
+    private func configureButton() {
+        wantsLayer = true
+        layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
+
         if isConnected {
-            title = isHovered ? Localizable.disconnect : Localizable.connected
+            let title = isHovered ? Localizable.disconnect : Localizable.connected
+            setup(withText: title)
             setAccessibilityLabel(String(format: "%@ %@", Localizable.disconnect, nameForAccessibility ?? ""))
-        } else {
-            title = upgradeRequired ? Localizable.upgrade : Localizable.connect
-            setAccessibilityLabel(String(format: "%@ %@", title, nameForAccessibility ?? ""))
+        } else if upgradeRequired {
+            setup(withImage: Theme.Asset.vpnSubscriptionBadge.image)
+            setAccessibilityLabel(String(format: "%@ %@", Localizable.upgradeRequired, nameForAccessibility ?? ""))
+        } else { // disconnected, upgrade not required
+            setup(withText: Localizable.connect)
+            setAccessibilityLabel(String(format: "%@ %@", Localizable.connect, nameForAccessibility ?? ""))
         }
-        attributedTitle = title.styled(font: .themeFont(.small))
     }
 }
 

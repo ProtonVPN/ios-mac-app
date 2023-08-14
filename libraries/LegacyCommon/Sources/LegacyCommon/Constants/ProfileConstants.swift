@@ -24,11 +24,13 @@ import UIKit
 #elseif canImport(Cocoa)
 import Cocoa
 #endif
+import Dependencies
 import ProtonCoreUIFoundations
 import VPNAppCore
 import Strings
 
-public class ProfileConstants {
+
+public enum ProfileConstants {
     public static let fastestId = "st_f"
     public static let randomId = "st_r"
 
@@ -36,11 +38,31 @@ public class ProfileConstants {
 
     // WARNING: consuming client must contain "fastest" and "random" image assets
     public static func defaultProfiles(connectionProtocol: ConnectionProtocol) -> [Profile] {
-        return
-            [ Profile(id: fastestId, accessTier: 0, profileIcon: .image(IconProvider.bolt), profileType: .system,
-                      serverType: .unspecified, serverOffering: .fastest(nil), name: Localizable.fastest, connectionProtocol: connectionProtocol),
-              Profile(id: randomId, accessTier: 0, profileIcon: .image(IconProvider.arrowsSwapRight), profileType: .system,
-                      serverType: .unspecified, serverOffering: .random(nil), name: Localizable.random, connectionProtocol: connectionProtocol) ]
+        // Post Free-Rescope, default profiles should not be accessible to free users
+        @Dependency(\.featureFlagProvider) var featureFlagProvider
+        let defaultProfileAccessTier = featureFlagProvider.showNewFreePlan ? 1 : 0
+        return [
+            Profile(
+                id: fastestId,
+                accessTier: defaultProfileAccessTier,
+                profileIcon: .image(IconProvider.bolt),
+                profileType: .system,
+                serverType: .unspecified,
+                serverOffering: .fastest(nil),
+                name: Localizable.fastest,
+                connectionProtocol: connectionProtocol
+            ),
+            Profile(
+                id: randomId,
+                accessTier: 0,
+                profileIcon: .image(IconProvider.arrowsSwapRight),
+                profileType: .system,
+                serverType: .unspecified,
+                serverOffering: .random(nil),
+                name: Localizable.random,
+                connectionProtocol: connectionProtocol
+            )
+        ]
     }
 
 #if canImport(UIKit)
