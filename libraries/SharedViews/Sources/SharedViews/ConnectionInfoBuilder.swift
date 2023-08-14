@@ -88,6 +88,10 @@ public struct ConnectionInfoBuilder {
         return textSubHeader != nil && (showFeatureP2P || showFeatureTor)
     }
 
+    var hasTextFeatures: Bool {
+        textSubHeader != nil || showFeatureP2P || showFeatureTor
+    }
+
     @ViewBuilder
     public var textFeatures: some View {
         // Format looks weird, but it lets us merge several Texts and images

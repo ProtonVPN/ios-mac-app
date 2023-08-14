@@ -76,7 +76,7 @@ struct HomeConnectionCardView: View {
     var card: some View {
         VStack {
             HStack {
-                ConnectionFlagInfoView(intent: item.connection, vpnConnectionActual: vpnConnectionActual)
+                ConnectionFlagInfoView(intent: item.connection, vpnConnectionActual: vpnConnectionActual, withDivider: false)
                 Spacer()
 
                 if vpnConnectionStatus.connectionStatusAvailable {
