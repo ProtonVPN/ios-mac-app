@@ -1,81 +1,68 @@
-/* (No Comment) */
-"onboarding_beprotected_subtitle" = "Proton VPN підтримує всі пристрої, включно з Windows, macOS і багатьма іншими.";
 
-/* (No Comment) */
-"onboarding_beprotected_title" = "Будьте захищені всюди";
-
-/* (No Comment) */
-"onboarding_congratulations" = "Вітаємо";
-
-/* (No Comment) */
-"onboarding_connected_connect_to_plus" = "З'єднатися з сервером Plus";
-
-/* (No Comment) */
-"onboarding_connected_connected_to" = "З'єднано з:";
-
-/* (No Comment) */
-"onboarding_connected_note" = "Безпечно.";
-
-/* (No Comment) */
-"onboarding_connected_subtitle" = "Ваше з'єднання захищене, і ви готові до роботи в інтернеті.";
-
-/* (No Comment) */
-"onboarding_connected_title" = "Вітаємо";
-
-/* (No Comment) */
-"onboarding_continue" = "Продовжити";
-
-/* (No Comment) */
-"onboarding_done" = "Виконано";
-
-/* (No Comment) */
-"onboarding_establish_connect_now" = "З'єднатися зараз";
-
-/* (No Comment) */
-"onboarding_establish_note" = "Ми під'єднаємо вас до найшвидшого і найстабільнішого сервера залежно від вашого розташування.";
-
-/* (No Comment) */
-"onboarding_establish_title" = "Встановіть ваше перше з'єднання";
-
-/* (No Comment) */
-"onboarding_get_plus" = "Отримати Plus";
-
-/* (No Comment) */
-"onboarding_netshield_subtitle" = "Блокуйте зловмисні програми, рекламу й елементи стеження в браузері та в усіх застосунках.";
-
-/* (No Comment) */
-"onboarding_netshield_title" = "Блокуйте рекламу і багато чого іншого";
-
-/* (No Comment) */
-"onboarding_next" = "Далі";
-
-/* (No Comment) */
-"onboarding_not_connected_error" = "Не вдалося встановити з'єднання. Повторіть спробу пізніше у застосунку.";
-
-/* (No Comment) */
-"onboarding_not_connected_subtitle" = "Все готово для перегляду в інтернеті.";
-
-/* (No Comment) */
-"onboarding_plus_only" = "Доступно з Plus";
-
-/* (No Comment) */
-"onboarding_purchased_note" = "Оцініть переваги світу приватності.";
-
-/* (No Comment) */
-"onboarding_skip" = "Пропустити";
-
-/* (No Comment) */
 "onboarding_take_tour" = "Показати знайомство";
 
-/* (No Comment) */
-"onboarding_unblockstreaming_subtitle" = "Secure access to your favorite content from other countries — Now available on Android TV.";
+"onboarding_skip" = "Пропустити";
 
-/* (No Comment) */
-"onboarding_unblockstreaming_title" = "Розблокувати трансляції";
+"onboarding_welcome_title" = "Ласкаво просимо у Proton VPN";
 
-/* (No Comment) */
 "onboarding_welcome_subtitle" = "Довідайтеся, як одержати максимум від Proton VPN всього за кілька секунд";
 
-/* (No Comment) */
-"onboarding_welcome_title" = "Вітаємо у Proton VPN";
+"onboarding_beprotected_title" = "Будьте захищені всюди";
 
+"onboarding_beprotected_subtitle" = "Proton VPN підтримує всі пристрої, включно з Windows, macOS і багатьма іншими.";
+
+"onboarding_unblockstreaming_title" = "Розблокувати стримінг";
+
+"onboarding_unblockstreaming_subtitle" = "Безпечний доступ до улюбленого вмісту з інших країн, тепер і на Android TV.";
+
+"onboarding_netshield_title" = "Блокуйте рекламу і багато чого іншого";
+
+"onboarding_netshield_subtitle" = "Блокуйте зловмисні програми, рекламу та стеження в браузері та в усіх програмах.";
+
+"onboarding_next" = "Далі";
+
+"onboarding_plus_only" = "Доступно з Plus";
+
+"onboarding_establish_title" = "Встановіть ваше перше з'єднання";
+
+"onboarding_establish_note" = "Ми під'єднаємо вас до найшвидшого і найстабільнішого сервера залежно від вашого розташування.";
+
+"onboarding_establish_connect_now" = "З'єднатися зараз";
+
+"onboarding_done" = "Виконано";
+
+"onboarding_connected_title" = "Вітаємо";
+
+"onboarding_connected_subtitle" = "Ваше з'єднання захищене, і ви готові до роботи в інтернеті.";
+
+"onboarding_connected_note" = "Безпечно.";
+
+"onboarding_connected_connected_to" = "З'єднано з:";
+
+"onboarding_connected_connect_to_plus" = "З'єднатися з сервером Plus";
+
+"onboarding_congratulations" = "Вітаємо";
+
+"onboarding_purchased_note" = "Оцініть переваги світу приватності.";
+
+"onboarding_get_plus" = "Отримати Plus";
+
+"onboarding_not_connected_subtitle" = "Все готово для перегляду в інтернеті.";
+
+"onboarding_not_connected_error" = "Не вдалося встановити з'єднання. Повторіть спробу пізніше у застосунку.";
+
+"onboarding_continue" = "Продовжити";
+
+"onboarding_telemetry_title" = "Допоможіть нам протистояти цензурі";
+
+"onboarding_usage_stats_title" = "Анонімна статистика використання";
+
+"onboarding_usage_stats_description" = "Дані про використання допомагають нам обходити блокування VPN і вдосконалювати швидкодію програми.";
+
+"onboarding_crash_reports_title" = "Анонімні звіти про збої";
+
+"onboarding_crash_reports_description" = "Звіти про збої допомагають нам виправляти помилки, виявляти мережеві екрани та уникати блокування VPN.";
+
+"onboarding_footer" = "Ця статистика не містить вашої IP-адреси та не може бути використана для вашої ідентифікації. Ми ніколи не передаємо ці дані третім сторонам.";
+
+"onboarding_footer_learn_more" = "Докладніше";

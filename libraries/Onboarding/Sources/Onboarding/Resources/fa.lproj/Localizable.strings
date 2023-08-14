@@ -1,51 +1,68 @@
-/* (No Comment) */
-"onboarding_beprotected_title" = "همه‌جا محافظت شوید";
 
-/* (No Comment) */
-"onboarding_congratulations" = "تبریک";
+"onboarding_take_tour" = "نمایش آموزش";
 
-/* (No Comment) */
-"onboarding_connected_connect_to_plus" = "به یک سرور Plus متصل شوید";
-
-/* (No Comment) */
-"onboarding_connected_connected_to" = "متصل به:";
-
-/* (No Comment) */
-"onboarding_connected_title" = "تبریک";
-
-/* (No Comment) */
-"onboarding_continue" = "ادامه";
-
-/* (No Comment) */
-"onboarding_done" = "انجام شد";
-
-/* (No Comment) */
-"onboarding_establish_connect_now" = "اتصال";
-
-/* (No Comment) */
-"onboarding_establish_title" = "اولین اتصال خود را برقرار کنید";
-
-/* (No Comment) */
-"onboarding_get_plus" = "دریافت پلاس";
-
-/* (No Comment) */
-"onboarding_netshield_subtitle" = "بدافزارها، تبلیغات و ردیاب ها را در مرورگر و در تمام برنامه ها مسدود کنید.";
-
-/* (No Comment) */
-"onboarding_netshield_title" = "مسدود کردن تبلیغات و خیلی بیشتر";
-
-/* (No Comment) */
-"onboarding_next" = "بعدی";
-
-/* (No Comment) */
-"onboarding_plus_only" = "در دسترس برای Plus";
-
-/* (No Comment) */
-"onboarding_purchased_note" = "از دنیای حریم خصوصی لذت ببرید.";
-
-/* (No Comment) */
 "onboarding_skip" = "رد شدن";
 
-/* (No Comment) */
+"onboarding_welcome_title" = "به Proton VPN خوش آمدید";
+
+"onboarding_welcome_subtitle" = "تنها در چند ثانیه با Proton VPN آشنا شوید";
+
+"onboarding_beprotected_title" = "همه‌جا محافظت شوید";
+
+"onboarding_beprotected_subtitle" = "Proton VPN از تمام دستگاه ها از جمله ویندوز، مک و بسیاری دیگر پشتیبانی می کند.";
+
 "onboarding_unblockstreaming_title" = "رفع انسداد پخش آنلاین";
 
+"onboarding_unblockstreaming_subtitle" = "دسترسی امن به محتوای مورد علاقه شما از دیگر کشورها — هم اکنون در Android TV.";
+
+"onboarding_netshield_title" = "مسدود کردن تبلیغات و خیلی بیشتر";
+
+"onboarding_netshield_subtitle" = "بدافزارها، تبلیغات و ردیاب ها را در مرورگر و در تمام برنامه ها مسدود کنید.";
+
+"onboarding_next" = "بعدی";
+
+"onboarding_plus_only" = "در دسترس برای Plus";
+
+"onboarding_establish_title" = "اولین اتصال خود را برقرار کنید";
+
+"onboarding_establish_note" = "ما شما را به سریع‌ترین و پایدارترین سرور بر اساس موقعیت شما متصل می‌کنیم.";
+
+"onboarding_establish_connect_now" = "اتصال";
+
+"onboarding_done" = "انجام شد";
+
+"onboarding_connected_title" = "تبریک";
+
+"onboarding_connected_subtitle" = "اتصال شما محافظت شده است و آماده برای وبگردی هستید.";
+
+"onboarding_connected_note" = "امن.";
+
+"onboarding_connected_connected_to" = "متصل به:";
+
+"onboarding_connected_connect_to_plus" = "به یک سرور Plus متصل شوید";
+
+"onboarding_congratulations" = "تبریک";
+
+"onboarding_purchased_note" = "از دنیای حریم خصوصی لذت ببرید.";
+
+"onboarding_get_plus" = "دریافت پلاس";
+
+"onboarding_not_connected_subtitle" = "شما برای وبگردی آماده اید.";
+
+"onboarding_not_connected_error" = "برقراری اتصال ممکن نیست. لطفا دوباره در برنامه امتحان کنید.";
+
+"onboarding_continue" = "ادامه";
+
+"onboarding_telemetry_title" = "Help us fight censorship";
+
+"onboarding_usage_stats_title" = "Share anonymous usage statistics";
+
+"onboarding_usage_stats_description" = "Usage data helps us overcome VPN blocks and improve app performance.";
+
+"onboarding_crash_reports_title" = "Share anonymous crash reports";
+
+"onboarding_crash_reports_description" = "Crash reports help us fix bugs, detect firewalls, and avoid VPN blocks.";
+
+"onboarding_footer" = "These statistics do not contain your IP address, and they cannot be used to identify you. We'll never share them with third parties.";
+
+"onboarding_footer_learn_more" = "بیشتر یاد بگیرید";

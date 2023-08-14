@@ -1,81 +1,68 @@
-/* (No Comment) */
-"onboarding_beprotected_subtitle" = "Proton VPN mendukung berbagai perangkat, mulai dari Windows, macOS, dan masih banyak lagi.";
 
-/* (No Comment) */
-"onboarding_beprotected_title" = "Lindungi diri Anda di manapun Anda berada";
-
-/* (No Comment) */
-"onboarding_congratulations" = "Selamat";
-
-/* (No Comment) */
-"onboarding_connected_connect_to_plus" = "Hubungkan ke server Plus";
-
-/* (No Comment) */
-"onboarding_connected_connected_to" = "Terhubung ke:";
-
-/* (No Comment) */
-"onboarding_connected_note" = "Dengan aman.";
-
-/* (No Comment) */
-"onboarding_connected_subtitle" = "Koneksi Anda telah terlindung dan Anda kini telah siap untuk menjelajah internet.";
-
-/* (No Comment) */
-"onboarding_connected_title" = "Selamat";
-
-/* (No Comment) */
-"onboarding_continue" = "Lanjut";
-
-/* (No Comment) */
-"onboarding_done" = "Selesai";
-
-/* (No Comment) */
-"onboarding_establish_connect_now" = "Hubungkan sekarang";
-
-/* (No Comment) */
-"onboarding_establish_note" = "Kami akan menghubungkan Anda ke server yang paling cepat dan stabil bagi Anda.";
-
-/* (No Comment) */
-"onboarding_establish_title" = "Hubungkan diri Anda untuk pertama kalinya";
-
-/* (No Comment) */
-"onboarding_get_plus" = "Dapatkan Plus";
-
-/* (No Comment) */
-"onboarding_netshield_subtitle" = "Lindungi seluruh browser dan aplikasi Anda dari gangguan malware, iklan, dan program pelacak lainnya.";
-
-/* (No Comment) */
-"onboarding_netshield_title" = "Blokir iklan dan lain sebagainya";
-
-/* (No Comment) */
-"onboarding_next" = "Selanjutnya";
-
-/* (No Comment) */
-"onboarding_not_connected_error" = "Tidak dapat terhubung ke jaringan. Silakan coba lagi nanti melalui aplikasi.";
-
-/* (No Comment) */
-"onboarding_not_connected_subtitle" = "Anda kini telah siap untuk menjelajah internet.";
-
-/* (No Comment) */
-"onboarding_plus_only" = "Tersedia dengan Plus";
-
-/* (No Comment) */
-"onboarding_purchased_note" = "Nikmati dunia yang mengedepankan privasi.";
-
-/* (No Comment) */
-"onboarding_skip" = "Lewati";
-
-/* (No Comment) */
 "onboarding_take_tour" = "Ikuti tur kami";
 
-/* (No Comment) */
-"onboarding_unblockstreaming_subtitle" = "Akses konten-konten unggulan dari berbagai negara secara aman. Kini juga tersedia di AndroidTV.";
+"onboarding_skip" = "Lewati";
 
-/* (No Comment) */
-"onboarding_unblockstreaming_title" = "Akses konten streaming yang diblokir";
-
-/* (No Comment) */
-"onboarding_welcome_subtitle" = "Pelajari cara untuk memaksimalkan Proton VPN hanya dalam beberapa detik";
-
-/* (No Comment) */
 "onboarding_welcome_title" = "Selamat datang di Proton VPN";
 
+"onboarding_welcome_subtitle" = "Pelajari cara untuk memaksimalkan Proton VPN hanya dalam beberapa detik";
+
+"onboarding_beprotected_title" = "Lindungi diri Anda di manapun Anda berada";
+
+"onboarding_beprotected_subtitle" = "Proton VPN mendukung berbagai perangkat, mulai dari Windows, macOS, dan masih banyak lagi.";
+
+"onboarding_unblockstreaming_title" = "Akses konten streaming yang diblokir";
+
+"onboarding_unblockstreaming_subtitle" = "Akses aman menuju konten-konten kesayangan Anda dari berbagai negara — kini tersedia di AndroidTV.";
+
+"onboarding_netshield_title" = "Blokir iklan dan lain sebagainya";
+
+"onboarding_netshield_subtitle" = "Lindungi seluruh browser dan aplikasi Anda dari gangguan malware, iklan, dan program pelacak lainnya.";
+
+"onboarding_next" = "Selanjutnya";
+
+"onboarding_plus_only" = "Tersedia dengan Plus";
+
+"onboarding_establish_title" = "Hubungkan diri Anda untuk pertama kalinya";
+
+"onboarding_establish_note" = "Kami akan menghubungkan Anda ke server yang paling cepat dan stabil bagi Anda.";
+
+"onboarding_establish_connect_now" = "Hubungkan sekarang";
+
+"onboarding_done" = "Selesai";
+
+"onboarding_connected_title" = "Selamat";
+
+"onboarding_connected_subtitle" = "Koneksi Anda telah terlindung dan Anda kini telah siap untuk menjelajah internet.";
+
+"onboarding_connected_note" = "Dengan aman.";
+
+"onboarding_connected_connected_to" = "Terhubung ke:";
+
+"onboarding_connected_connect_to_plus" = "Hubungkan ke server Plus";
+
+"onboarding_congratulations" = "Selamat";
+
+"onboarding_purchased_note" = "Nikmati dunia yang mengedepankan privasi.";
+
+"onboarding_get_plus" = "Dapatkan Plus";
+
+"onboarding_not_connected_subtitle" = "Anda kini telah siap untuk menjelajah internet.";
+
+"onboarding_not_connected_error" = "Tidak dapat terhubung ke jaringan. Silakan coba lagi nanti melalui aplikasi.";
+
+"onboarding_continue" = "Lanjut";
+
+"onboarding_telemetry_title" = "Bantu kami melawan sensor";
+
+"onboarding_usage_stats_title" = "Bagikan statistik pemakaian anonim";
+
+"onboarding_usage_stats_description" = "Data penggunaan dapat membantu kami untuk menangkal pemblokiran VPN dan meningkatkan performa aplikasi.";
+
+"onboarding_crash_reports_title" = "Bagikan laporan crash anonim";
+
+"onboarding_crash_reports_description" = "Laporan crash dapat membantu kami untuk memperbaiki bug, mendeteksi firewall, dan menangkal pemblokiran VPN.";
+
+"onboarding_footer" = "Statistik ini tidak mengandung alamat IP Anda dan tidak dapat digunakan untuk mengenali diri Anda. Kami tidak akan pernah membagikan statistik ini kepada pihak ketiga manapun.";
+
+"onboarding_footer_learn_more" = "Pelajari lebih lanjut";

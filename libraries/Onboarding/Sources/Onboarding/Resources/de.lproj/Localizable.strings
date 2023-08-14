@@ -1,81 +1,68 @@
-/* (No Comment) */
-"onboarding_beprotected_subtitle" = "Proton VPN unterstützt alle Geräte, einschließlich Windows, macOS und viele andere.";
 
-/* (No Comment) */
-"onboarding_beprotected_title" = "Sei überall geschützt";
-
-/* (No Comment) */
-"onboarding_congratulations" = "Herzlichen Glückwunsch";
-
-/* (No Comment) */
-"onboarding_connected_connect_to_plus" = "Verbinde dich mit einem Plus-Server";
-
-/* (No Comment) */
-"onboarding_connected_connected_to" = "Verbunden mit:";
-
-/* (No Comment) */
-"onboarding_connected_note" = "Sicher.";
-
-/* (No Comment) */
-"onboarding_connected_subtitle" = "Deine Verbindung ist geschützt und du bist bereit im Internet zu surfen.";
-
-/* (No Comment) */
-"onboarding_connected_title" = "Herzlichen Glückwunsch";
-
-/* (No Comment) */
-"onboarding_continue" = "Fortfahren";
-
-/* (No Comment) */
-"onboarding_done" = "Fertig";
-
-/* (No Comment) */
-"onboarding_establish_connect_now" = "Jetzt verbinden";
-
-/* (No Comment) */
-"onboarding_establish_note" = "Wir verbinden dich je nach deinem Standort mit dem schnellsten und stabilsten Server.";
-
-/* (No Comment) */
-"onboarding_establish_title" = "Stelle deine erste Verbindung her";
-
-/* (No Comment) */
-"onboarding_get_plus" = "Plus holen";
-
-/* (No Comment) */
-"onboarding_netshield_subtitle" = "Blockiere Malware, Werbung und Tracker im Browser und in allen Anwendungen.";
-
-/* (No Comment) */
-"onboarding_netshield_title" = "Werbung blockieren und vieles mehr";
-
-/* (No Comment) */
-"onboarding_next" = "Weiter";
-
-/* (No Comment) */
-"onboarding_not_connected_error" = "Es konnte keine Verbindung hergestellt werden. Bitte versuche es später noch einmal in der App.";
-
-/* (No Comment) */
-"onboarding_not_connected_subtitle" = "Du bist bereit im Internet zu surfen.";
-
-/* (No Comment) */
-"onboarding_plus_only" = "Verfügbar mit Plus";
-
-/* (No Comment) */
-"onboarding_purchased_note" = "Genieße die Welt der Privatsphäre.";
-
-/* (No Comment) */
-"onboarding_skip" = "Überspringen";
-
-/* (No Comment) */
 "onboarding_take_tour" = "Rundgang";
 
-/* (No Comment) */
-"onboarding_unblockstreaming_subtitle" = "Secure access to your favorite content from other countries — Now available on Android TV.";
+"onboarding_skip" = "Überspringen";
 
-/* (No Comment) */
-"onboarding_unblockstreaming_title" = "Streaming entsperren";
-
-/* (No Comment) */
-"onboarding_welcome_subtitle" = "Erfahre in wenigen Sekunden, wie du das Beste aus Proton VPN herausholst";
-
-/* (No Comment) */
 "onboarding_welcome_title" = "Willkommen bei Proton VPN";
 
+"onboarding_welcome_subtitle" = "Erfahre in wenigen Sekunden, wie du das Beste aus Proton VPN herausholst";
+
+"onboarding_beprotected_title" = "Sei überall geschützt";
+
+"onboarding_beprotected_subtitle" = "Proton VPN unterstützt alle Geräte, einschließlich Windows, macOS und viele andere.";
+
+"onboarding_unblockstreaming_title" = "Streaming entsperren";
+
+"onboarding_unblockstreaming_subtitle" = "Sicherer Zugriff auf deine Lieblingsinhalte aus anderen Ländern — jetzt auch auf Android TV.";
+
+"onboarding_netshield_title" = "Werbung blockieren und vieles mehr";
+
+"onboarding_netshield_subtitle" = "Blockiere Malware, Werbung und Tracker im Browser und in allen Anwendungen.";
+
+"onboarding_next" = "Weiter";
+
+"onboarding_plus_only" = "Verfügbar mit Plus";
+
+"onboarding_establish_title" = "Stelle deine erste Verbindung her";
+
+"onboarding_establish_note" = "Wir verbinden dich je nach deinem Standort mit dem schnellsten und stabilsten Server.";
+
+"onboarding_establish_connect_now" = "Jetzt verbinden";
+
+"onboarding_done" = "Fertig";
+
+"onboarding_connected_title" = "Herzlichen Glückwunsch";
+
+"onboarding_connected_subtitle" = "Deine Verbindung ist geschützt, und du bist bereit, sicher im Internet zu surfen.";
+
+"onboarding_connected_note" = "Sicher.";
+
+"onboarding_connected_connected_to" = "Verbunden mit:";
+
+"onboarding_connected_connect_to_plus" = "Verbinde dich mit einem Plus-Server";
+
+"onboarding_congratulations" = "Herzlichen Glückwunsch";
+
+"onboarding_purchased_note" = "Genieße die Welt der Privatsphäre.";
+
+"onboarding_get_plus" = "Plus holen";
+
+"onboarding_not_connected_subtitle" = "Du bist bereit im Internet zu surfen.";
+
+"onboarding_not_connected_error" = "Es konnte keine Verbindung hergestellt werden. Bitte versuche es später noch einmal in der App.";
+
+"onboarding_continue" = "Fortfahren";
+
+"onboarding_telemetry_title" = "Hilf uns dabei, Zensur zu bekämpfen";
+
+"onboarding_usage_stats_title" = "Anonyme Nutzungsstatistiken teilen";
+
+"onboarding_usage_stats_description" = "Nutzungsdaten helfen uns, VPN-Sperren zu überwinden und die Leistung der App zu verbessern.";
+
+"onboarding_crash_reports_title" = "Anonyme Absturzmeldungen teilen";
+
+"onboarding_crash_reports_description" = "Absturzberichte helfen uns, Fehler zu beheben, Firewalls zu erkennen und VPN-Sperren zu vermeiden.";
+
+"onboarding_footer" = "Diese Statistiken enthalten weder deine IP-Adresse noch können diese dazu verwendet werden, um dich zu identifizieren. Wir werden die Statistiken nie an Dritte weitergeben.";
+
+"onboarding_footer_learn_more" = "Mehr erfahren";

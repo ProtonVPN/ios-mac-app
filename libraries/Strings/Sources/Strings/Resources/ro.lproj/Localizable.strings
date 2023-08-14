@@ -1,35 +1,1024 @@
-/* (No Comment) */
-"_5_connections" = "5 conexiuni";
+/* Common word */
 
-/* (No Comment) */
-"_5_connections_description" = "Conectați până la\n5 dispozitive simultan";
+"_cancel" = "Anulare";
+
+/* Common word */
+"_connect" = "Conectare";
+
+/* Common word */
+"_connected" = "Conectat";
+
+/* Common word */
+"_delete" = "Ștergere";
+
+/* Common word */
+"_disconnect" = "Deconectare";
+
+/* Common word */
+"_disconnected" = "Deconectat";
+
+/* Status of VPN connection reported by Siri */
+"_disconnecting" = "Se deconectează";
+
+/* Common word */
+"_done" = "Gata";
+
+/* Common word */
+"_edit" = "Editare";
+
+/* Common word */
+"_ok" = "OK";
+
+/* Common word */
+"_save" = "Salvare";
+
+/* Common word */
+"_unavailable" = "Indisponibil";
+
+/* Description of the expand/collapse button used by accessibility Voice Over */
+"_expand_list_of_servers" = "Extindere listă servere";
+
+"_collapse_list_of_servers" = "Restrângere listă servere";
+
+/* Used as a title in alerts/modals */
+"_warning" = "Avertizare";
+
+/* Button in many places in both iOS and MacOS apps */
+"_upgrade" = "Modificare";
+
+/* iOS: Plan selection during plan upgarde, button insettings screen */
+"_upgrade_subscription" = "Modificare abonament";
+
+/* MacOS: Settings -> Account. Button leading to web interface. */
+"_manage_subscription" = "Gestionare abonament";
+
+/* iOS & MacOS: text near country or server; MacOS: title of several alerts */
+"_upgrade_required" = "Modificare necesară";
+
+/* MacOS: voice over indication for a country or server on maintenance*/ */
+"_on_maintenance" = "În întreținere";
+
+"_reconnection_required" = "Reconectare necesară";
+
+/* Server status in many places in iOS and MacOS apps */
+"_maintenance" = "Întreținere";
+
+/* MacOS: quit application button in custom status menu */
+"_quit" = "Ieșire";
+
+/* MacOS: alert show before quitting app if VPN is connected */
+"_quit_warning" = "Închizând aplicația se va deconecta conexiunea VPN activă. Doriți să continuați?";
+
+/* Common word */
+"_enabled" = "Activat";
+
+/* Common word */
+"_disabled" = "Dezactivat";
+
+/* Button in some alerts */
+"_disable" = "Dezactivare";
+
+/* Button in Kill switch error alert */
+"_report" = "Raportare";
+
+/* Button in Kill switch error alert */
+"_ignore" = "Ignorare";
+
+"_continue" = "Continuare";
+
+/* Button in some alerts */
+"_show_instructions" = "Afișare instrucțiuni";
+
+/* iOS: quick connect widget */
+"_network_unreachable" = "Rețea inaccesibilă";
+
+/* Title in no internet alert */
+"_not_connected_to_the_internet" = "Nu se poate stabili conexiunea VPN. Nu aveți conexiune la internet.";
+
+/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
+"_vpn_connection_active" = "Conexiune VPN activă";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
+"_vpn_protocol_not_supported_title" = "Protocol VPN nesuportat";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
+"_vpn_protocol_not_supported_text" = "Protocolul VPN nu este disponibil pentru conexiunea selectată. Pentru conectare, schimbați protocolul sau serverul.";
+
+/* iOS: button in settings screen */
+"_log_out" = "Deconectare";
+
+/* iOS: Logout alert */
+"_log_out_warning" = "Deconectarea va încheia sesiunea VPN.";
+
+/* MacOS: Logout alert */
+"_log_out_warning_long" = "Deconectându-vă din aplicație veți deconecta conexiunea VPN activă. Doriți să continuați?";
+
+/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
+"_change_protocol_disconnect_warning" = "Modificarea protocoalelor va încheia sesiunea curentă de VPN.";
+
+/* Slogan text under the logo in may places in iOS and MacOS apps */
+"_loading_screen_slogan" = "Internet sigur pretutindeni";
+
+/* Main mac app menu item */
+"_report_an_issue" = "Raportare o problemă...";
+
+/* Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page. */
+"_help" = "Ajutor";
+
+/* MacOS: link in login screen */
+"_learn_more" = "Detalii";
+
+/* iOS: Status view */
+"_ip" = "IP";
+
+/* Common word */
+"_close" = "Închidere";
+
+/* Changing settings title */
+"_change_settings" = "Modificare setări";
+
+/* Suggest the user to upgrade account for new features */
+"_get_plus_for_feature" = "Obțineți Proton VPN Plus pentru a debloca această opțiune precum și altele.";
+
+/* Display more information */
+"_more_info" = "Detalii";
+
+/* Display less information */
+"_less_info" = "Mai puțin";
+
+/* Text addressing to contact costumer support on several sites of the app */
+"_contact_our_support" = "Contactați asistența";
+
+"_turn_on" = "Pornire";
+
+"_not_now" = "Nu acum";
+
+"_allow" = "Permitere";
+
+/* %@ is an IP address e.g. IP: 123.45.67.890 */
+"_ip_value" = "IP: %@";
+
+/* %@ is an IP address e.g. Public IP: 123.45.67.890 */
+"_public_ip" = "IP public: %@";
+
+/* Several places in both iOS and Mac apps */
+"_quick_connect" = "Conectare rapidă";
+
+/* Used in many places in MacOS app */
+"_secure_core" = "Secure Core";
+
+/* %@ is a country e.g. Secure Core Switzerland */
+"_secure_core_country" = "Secure Core %@";
+
+/* Profile create/edit menu */
+"_country" = "Țara";
+
+"_show_protonvpn" = "Afișare Proton VPN";
+
+/* Main mac app menu item */
+"_clear_application_data" = "Ștergere date aplicație";
+
+/* Main mac app menu item */
+"_system_extension_tutorial_menu_item" = "Tutorial extensie de sistem";
+
+/* MacOS: connecting overlay */
+"_preparing_connection" = "Se verifică disponibilitatea serverului";
+
+/* iOS: main button in tabbar during connecting to vpn phase */
+"_connecting" = "Se conectează";
+
+"_connectingDotDotDot" = "Se conectează...";
+
+/* iOS: countries list section header */
+"_countries_free" = "Țări gratuite";
+
+/* iOS: countries list section header */
+"_countries_premium" = "Țări premium";
+
+/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
+"_connecting_vpn" = "Se conectează %@";
+
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
+"_connecting_to" = "Se conectează la %@";
+
+"_reconnecting_to" = "Reconectare la %@";
+
+/* iOS status view */
+"_connected_to" = "Conectat la";
+
+/* macOS: Text on connection overlay shown after connection timed out */
+"_connection_timed_out" = "Conexiunea a expirat";
+
+/* Text that should be bold in _connection_timed_out string */
+"_connection_timed_out_bold" = "expirată";
+
+/* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
+"_connected_to_vpn" = "Conectat la %@";
+
+/* iOS: connection bar; Main mac app menu item; */
+"_not_connected" = "Neconectat";
+
+/* MacOS: text in main window */
+"_you_are_not_connected" = "Nu există conexiune";
+
+/* MacOS: button in connecting overlay */
+"_try_again" = "Reîncercați";
+
+"_try_again_without_killswitch" = "Dezactivați blocarea conexiunii și reîncercați";
+
+/* Button in some alerts */
+"_retry" = "Reîncercare";
+
+/* iOS: section header in countries list */
+"_free_servers" = "Servere gratuite";
+
+/* iOS: section header in countries list */
+"_plus_servers" = "Servere Plus";
+
+/* iOS: section header in countries list */
+"_test_servers" = "Servere de test";
+
+/* MacOS: connecting overlay */
+"_initializing_connection" = "Se inițializează...";
+
+/* MacOS: connecting overlay */
+"_successfully_connected" = "Conexiune reușită";
+
+/* MacOS: connecting overlay */
+"_failed" = "eșuat";
+
+/* Connection error translation. iOS quick connect widget: text shown on error. */
+"_connection_failed" = "Conectare eșuată";
+
+/* iOS status view */
+"_security" = "Securitate";
+
+/* iOS status view */
+"_status" = "Stare";
+
+/* iOS status view */
+"_session_time" = "Durată sesiune";
+
+/* iOS status view */
+"_location" = "Amplasare";
+
+/* iOS status view */
+"_city" = "Oraș";
+
+/* iOS status view */
+"_technical_details" = "Detalii tehnice";
+
+/* Main mac app menu item */
+"_open_app_to_log_in" = "Afișare Proton VPN pentru conectare...";
+
+/* Main mac app menu item */
+"_upgrade_to_plus" = "Trecere la Plus";
+
+/* Main mac app menu item */
+"_upgrade_for_secure_core" = "pentru a utiliza Secure Core";
+
+"_switch_side_button_on" = "Pornit";
+
+"_switch_side_button_off" = "Oprit";
+
+/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
+"_timeout_ks_ike_descritpion" = "Altă aplicație ar putea interfera cu blocarea conexiunii. Pentru a rezolva această problemă, comutați la protocolul OpenVPN sau dezactivați blocarea conexiunii.";
+
+/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
+"_timeout_ks_ike_switch_protocol" = "Comutați la OpenVPN și reîncercați";
+
+/* Disconnect notification */
+"_kill_switch_blocking_connection" = "Blocarea conexiunii blochează toate conexiunile";
+
+/* Disconnect notification */
+"_always_on_will_reconnect" = "VPN permanent va restabili automat conexiunea";
 
 /* MacOS: About window title */
 "_about" = "Despre";
 
-/* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
-"_account" = "Cont";
+/* iOS setting: after this word actual version and build number are appended */
+"_version" = "Versiunea";
 
-/* iOS: Message explaining that deleting account closes the VPN connection */
-"_account_deletion_connection_warning" = "Ștergerea contului va determina închiderea sesiunii VPN.";
+/* MacOS: About window */
+"_version_current" = "Versiune curentă:";
 
-/* Alert title for account deletion error */
-"_account_deletion_error" = "Eroare";
+/* MacOS: About window */
+"_release_date" = "Dată de lansare:";
 
-/* MacOS: Settings -> Account: name of field. */
-"_account_plan" = "Plan cont";
-
-/* MacOS: Settings -> Account: name of field. */
-"_account_type" = "Tip cont";
+/* MacOS: About window */
+"_changelog" = "Istoric modificări";
 
 /* MacOS: About window */
 "_acknowledgements" = "Mulțumiri";
 
+/* Used in sign-in, sign-up and in settings */
+"_username" = "Utilizator";
+
+/* Used in sign-in, sign-up */
+"_password" = "Parola";
+
+/* Sign-up form */
+"_password_confirm" = "Confirmare parolă";
+
+/* Show/hide password switch */
+"_show" = "AFIȘARE";
+
+/* Show/hide password switch */
+"_hide" = "Ascundere";
+
+/* MacOS: Login button */
+"_login" = "Conectare";
+
+/* iOS: Login button in several places */
+"_log_in" = "Conectare";
+
+/* MacOS: label in login and settings screens */
+"_remember_login" = "Memorare autentificare";
+
+/* MacOS: label in login and settings screens */
+"_start_on_boot" = "Pornire automată";
+
+/* MacOS: button in login screen */
+"_create_account" = "Creare cont";
+
+/* MacOS: button in login screen */
+"_need_help" = "Doriți ajutor?";
+
+/* MacOS: button in login screen */
+"_reset_password" = "Resetare parolă";
+
+/* MacOS: button in login screen */
+"_common_issues" = "Probleme comune de conectare";
+
+/* MacOS: button in login screen */
+"_forgot_username" = "Utilizator uitat";
+
+/* iOS: button in login screen */
+"_forgot_password" = "Ați uitat parola?";
+
+/* iOS: button in login and onboarding screens */
+"_sign_up" = "Înscriere";
+
+/* MacOS: alert shown during login if already connected to VPN */
+"_warning_vpn_session_is_active" = "Este activă o altă sesiune Proton VPN pe acest dispozitiv. Continuând procesul de autentificare va cauza închiderea sesiunii curente. Doriți să continuați?";
+
+/* iOS: placeholder for email field in signup and email verification screens */
+"_enter_email_address" = "Introduceți adresa de e-mail";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_country_code_placeholder" = "Cod";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_number_placeholder" = "Introduceți numărul de telefon";
+
+/* iOS: title of phone country code selection screen */
+"_select_phone_country_code" = "Selectare cod țară";
+
+/* iOS: placeholder in phone country code selection screen */
+"_search_phone_country_code_placeholder" = "Căutare țară";
+
+/* iOS: button for switching from sign-up to sign-in screen */
+"_already_have_account" = "Am deja un cont";
+
+/* iOS: Button in email verification screen */
+"_get_verification_email" = "Obținere e-mail de verificare";
+
+/* iOS: Button in SMS verification screen */
+"_get_verification_sms" = "Obținere SMS de verificare";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option" = "Selectați o opțiune de verificare pentru continuare:";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option_top_message" = "Pentru a preveni abuzurile trebuie să dovediți că sunteți o persoană.";
+
+/* iOS: human verification option select button */
+"_use_captcha_verification" = "Verificați cu CAPTCHA";
+
+/* iOS: human verification option select button */
+"_use_other_email_address" = "Verificare cu e-mail";
+
+"_use_sms_verification" = "Verificare cu SMS";
+
+/* iOS: human verification option select button */
+"_request_invitation" = "Solicitare activare manuală";
+
+/* iOS: placeholder for code in human verification code form */
+"_enter_verification_code" = "123 456";
+
+/* iOS: button in human verification code form */
+"_submit_verification_code" = "Trimitere";
+
+/* iOS: button in human verification code form */
+"_resend_no_code" = "Nu ați obținut codul?";
+
+/* iOS: button in human verification code form */
+"_resend_code" = "Solicitare cod nou";
+
+/* iOS: message after human verification code resending */
+"_resend_success" = "Cod nou solicitat";
+
+/* iOS: link inside text under sign-up form */
+"_terms_and_conditions" = "Termeni și condiții";
+
+/* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
+"_terms_and_conditions_disclaimer" = "Folosind Proton VPN, sunteți de acord cu\nconținutul din %@ și %@";
+
+/* iOS: link inside text under sign-up form */
+"_privacy_policy" = "Politica de confidențialitate";
+
+/* iOS: text in human verification code form */
+"_verification_instructions" = "V-a fost trimis un cod de verificare. Introduceți-l mai jos.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete" = "Setare finalizată";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_free" = "Acum aveți abonament la planul gratuit Proton VPN Free. Pentru a începe, bucurați-vă de șapte zile gratuite din planul Proton VPN Plus.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_plus" = "Achiziția a reușit. Planul Proton VPN Plus este acum activ.";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_title" = "Protejați-vă online";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_text" = "Proton VPN este hotărât să vă protejeze și să vă respecte intimitatea. Politica noastră principală este de a colecta cât mai puține date de la utilizatori cu putință, pentru a asigura o experiență privată și anonimă în utilizarea aplicației, astfel:\n\n%@ – pentru a vă conecta, a vă ajuta să recuperați o parolă pierdută și pentru a trimite actualizări importante.\n\n%@ – doar pentru rapoarte ale defectelor și erorilor.\n\nAplicația Proton VPN nu procesează nicio informație de la utilizatori în afară de aceste date. Nu vă înregistrăm activitatea online și nici informațiile personale identificabile. Toate datele enumerate mai sus sunt stocate și procesate pe propriul sistem Proton VPN, fără ca vreo terță parte să aibă acces la acestea.";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_user_details" = "Nume utilizator, adresa de e-mail";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_device_details" = "Model dispozitiv și versiune SO";
+
+/* iOS: data disclaimer screen button */
+"_data_disclaimer_agree" = "Acceptare și continuare";
+
+/* iOS: Map screen title and tabbar item */
+"_map" = "Harta";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_show" = "Afișare hartă";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_hide" = "Ascundere hartă";
+
+/* Description shown together with server info icon */
+"_tor_description" = "Se conectează la rețeaua Tor";
+
+/* Description shown together with server info icon */
+"_p2p_description" = "Suportă trafic P2P";
+
+/* Description shown together with server info icon */
+"_premium_description" = "Server premium";
+
+/* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
+"_via_country" = "prin %@";
+
+/* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
+"_via" = "prin";
+
+/* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
+"_server_load_percentage" = "%@%% solicitare";
+
+/* iOS: Home screen title, tab bar item title; MacOS: TabBar tab title; */
+"_home" = "Început";
+
+/* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
+"_countries" = "Țări";
+
+"_no_servers_to_show" = "Momentan aici nu există servere.";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_plan_does_not_include_secure_core" = "Planul actual nu include funcția Secure Core.";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_learn_more_about_secure_core" = "Aflați mai multe despre Secure Core";
+
+/* MacOS: placeholder for country search */
+"_search_for_country" = "Căutare țară";
+
+/* MacOS: secure core tooltip */
+"_secure_core_info" = "Furnizează o protecție adițională împotriva compromiterii serverului VPN direcționând traficul prin intermediul rețelei noastre Secure Core.";
+
+/* Text in warning screen before actions that will disconnect VPN */
+"_view_toggle_will_cause_disconnect" = "Schimbând starea pentru Secure Core se va închide conexiunea curentă.";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_load" = "Solicitare server:";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_ip" = "IP server:";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_auto_assigned" = "Atribuit automat";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_premium_server" = "Server premium";
+
+/* MacOS profile form: feature selection value */
+"_standard" = "Standard";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_p2p" = "P2P";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_tor" = "Tor";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_p2p_server" = "Server P2P";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_tor_server" = "Server Tor";
+
+/* MacOS Profiles Overview: Table column header */
+"_profile" = "Profil";
+
+/* MacOS: menu item, profiles window main header, sidebar tab title; iOS: Profiles screen title and tabbar item title; */
+"_profiles" = "Profile";
+
+/* iOS: table header section in profiles screen */
+"_recommended" = "Recomandat";
+
+/* iOS: table header section in profiles screen */
+"_my_profiles" = "Profilurile mele";
+
+/* Button */
+"_save_as_profile" = "Salvare ca profil";
+
+/* Button */
+"_delete_profile" = "Ștergere profil";
+
+/* iOS: Success message on profile deletion */
+"_profile_deleted_successfully" = "Profilul a fost șters.";
+
+/* iOS: Error message if profile can't be deleted */
+"_profile_deletion_failed" = "Profilul nu a putut fi șters.";
+
+/* MacOS: Buttons in several places; iOS: profile creation screen title */
+"_create_new_profile" = "Creare profil";
+
+/* MacOS: button in profiles tab in main window */
+"_manage_profiles" = "Gestionare profiluri";
+
+/* MacOS: profiles window title */
+"_profiles_overview" = "Imagine de ansamblu profil";
+
+/* iOS: success message after profile is saved */
+"_profile_created_successfully" = "Profil nou salvat";
+
+/* iOS: failure message after profile is saved */
+"_profile_creation_failed" = "Profilul nu a putut fi creat.l";
+
+/* iOS: success message after profile is saved */
+"_profile_edited_successfully" = "Profil actualizat";
+
+/* MacOS menu item; MacOS Profiles tab title; */
+"_overview" = "Rezumat";
+
+/* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
+"_connection" = "Conexiune";
+
 /* MacOS Profiles Overview: Table header for buttons column */
 "_action" = "Acțiune";
 
-/* (No Comment) */
-"_action_requires_reconnect" = "Conexiunea trebuie repornită pentru a se aplica această modificare";
+/* Used for both profile description when fastest server option is selected and Plan speed description */
+"_fastest" = "Cel mai rapid";
+
+/* Profile create/change form */
+"_fastest_available_server" = "Cel mai rapid server disponibil";
+
+/* iOS: Predefined profile with fastest connection */
+"_fastest_connection" = "Viteza maximă";
+
+/* Profile create/change form and other places describing profile */
+"_random" = "Aleator";
+
+/* Profile create/change form */
+"_random_available_server" = "Server aleator disponibil";
+
+/* iOS: Predefined profile with random server */
+"_random_connection" = "Conexiune aleatoare";
+
+/* Profile create/change form */
+"_different_server_each_time" = "Server diferit de fiecare dată";
+
+/* Text used when no active server information is available */
+"_no_description_available" = "Descriere nedisponibilă";
+
+"_create_profile" = "Creare profil";
+
+/* Profile create/change form */
+"_profile_settings" = "Setări profil";
+
+/* Profile create/change form */
+"_connection_settings" = "Setări conexiune";
+
+/* Profile create/change form */
+"_name" = "Nume";
+
+/* Profile create/change form */
+"_enter_profile_name" = "Introducere nume profil";
+
+/* Profile create/change form */
+"_color" = "Culoare";
+
+/* Profile create/change form */
+"_make_default_profile" = "Setare ca profil implicit";
+
+/* Profile create/change form */
+"_default_profile_tooltip" = "Butonul «Conectare rapidă» utilizează profilul implicit.\n";
+
+"_feature" = "Caracteristica";
+
+/* Profile create/change form */
+"_use_secure_core" = "Secure Core";
+
+/* Profile create/change form */
+"_select_country" = "Selectare țară";
+
+/* Profile create/change form */
+"_server" = "Server";
+
+/* Profile create/change form */
+"_select_server" = "Selectare server";
+
+/* Error in profile create/change form */
+"_profile_name_is_required" = "Introduceți un nume";
+
+/* Error in profile create/change form */
+"_profile_name_is_too_long" = "Lungimea maximă a numelui profilului este 25 de caractere.";
+
+/* Error when user hasn't selected profile country */
+"_country_selection_is_required" = "Selectați o țară";
+
+/* Error when user hasn't selected profile server */
+"_server_selection_is_required" = "Selectați un server";
+
+"_profile_name_needs_to_be_unique" = "Deja există un profil cu același nume.";
+
+/* MacOS: profile creation cancel alert text */
+"_current_selection_will_be_lost" = "Continuând, selecția curentă va fi pierdută. Doriți să continuați?";
+
+/* iOS: new profkle can't be created because not all required fields are filled */
+"_check_if_fields_present" = "Asigurați-vă că toate câmpurile sunt completate";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_header" = "Ștergere profil";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_warning" = "Profilul va fi șters definitiv. Doriți să continuați?";
+
+/* iOS: new profile screen */
+"_select_profile_color" = "Selectare culoare profil";
+
+/* Plan speed */
+"_plan_speed_medium" = "Viteză medie";
+
+/* Plan speed */
+"_plan_speed_high" = "Viteză mare";
+
+"_plan_speed_fastest" = "Viteza maximă";
+
+/* Unknown error that has no better description */
+"_error_internal_error" = "Eroare internă API";
+
+/* VPN session is active error */
+"_error_vpn_session_is_active" = "Sesiunea Proton VPN este activă";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_missing" = "Acreditările utilizatorului lipsesc. Nu se poate autentifica.";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_expired" = "Acreditările utilizatorului au expirat. Reautentificați-vă.";
+
+/* VPN credentials can't be loaded error */
+"_error_vpn_credentials_missing" = "Acreditările VPN lipsesc din lanțul de cehei";
+
+/* Form validation error */
+"_error_field_required" = "Acest câmp este obligatoriu";
+
+"_error_field_email_wrong_format" = "Adresa de e-mail nu este în formatul corect";
+
+"_error_field_passwords_dont_match" = "Parolele nu coincid.";
+
+/* Human validation failed */
+"_error_user_failed_human_validation" = "Nu am reușit să verificăm dacă sunteți o persoană. Reîncercați sau achiziționați un abonament premium.";
+
+/* Error decoding an object */
+"_error_decode" = "Decodarea datelor arhivate a eșuat în clasa: %@";
+
+/* Internal application error */
+"_error_email_verification_disabled" = "Verificarea prin e-mail a fost temporar dezactivată";
+
+/* Error writing to system keychain */
+"_error_keychain_write" = "Proton nu a putut comunica cu dispozitivul. Reîncercați mai târziu.";
+
+/* Error when try to parse modulus signature */
+"_error_modulus_signature" = "Semnătura modulului este goală";
+
+/* Error when generate srp clint */
+"_error_generate_srp" = "Generare SRP eșuată";
+
+/* Error when try to hash password */
+"_error_hash_password" = "Nu se poate aplica funcția hash la parola utilizatorului";
+
+/* Error try to restore user from the session */
+"_error_fetch_session" = "Nu se poate găsi utilizatorul din sesiune";
+
+/* Network error */
+"_ne_request_timed_out" = "Solicitarea de rețea a expirat";
+
+/* Network error */
+"_ne_unable_to_connect_to_host" = "Serviciu indisponibil";
+
+/* Network error */
+"_ne_network_connection_lost" = "Conexiunea la rețea pierdută";
+
+/* Network error */
+"_ne_not_connected_to_the_internet" = "Neconectat la internet";
+
+/* Network error */
+"_ne_couldnt_reach_server" = "Nu s-au putut contacta serverele Proton";
+
+/* API error */
+"_ae_wrong_login_credentials" = "Nume de utilizator sau parolă incorecte";
+
+/* API error */
+"_ae_vpn_info_not_received" = "Nu s-au putut obține informații VPN";
+
+/* Error when try to parse the server info */
+"_error_server_info_parser" = "Nu se pot prelua informațiile serverelor";
+
+/* Error when try to parse the partner info */
+"_error_partner_info_parser" = "Nu se pot prelua informațiile partenerului.";
+
+/* Default error when vpn properties fetch failed */
+"_error_vpn_properties" = "Nu se pot obține proprietățile VPN!";
+
+/* Parsing error */
+"_error_session_count_parser" = "Nu se poate prelua numărul de sesiuni";
+
+/* Parsing error */
+"_error_loads" = "Nu se poate actualiza încărcarea serverelor";
+
+/* API error */
+"_error_api_offline" = "API-ul Proton VPN este în prezent oprit.";
+
+/* Error when try to parse subscription info */
+"_error_subscription_parser" = "Nu se pot prelua informațiile abonamentului";
+
+/* Error when try to parse verification methods */
+"_error_verification_methods_parser" = "Nu se pot analiza metodele de verificare";
+
+/* Keychain error */
+"_error_keychain_fetch" = "Eroare lanț chei.";
+
+/* Error when the app fails to create a user */
+"_error_user_creation" = "Crearea contului a eșuat";
+
+/* General title for several error alerts */
+"_error_unknown_title" = "Eroare necunoscută";
+
+/* Delinquent user alert */
+"_delinquent_user_title" = "Factură neplătită";
+
+/* Delinquent user alert */
+"_delinquent_user_description" = "Contul dvs. are în prezent o factură restantă. Vă rugăm să plătiți toate facturile neachitate la account.protonvpn.com";
+
+/* Generic sign in error */
+"_error_sign_in_again" = "Ceva nu a funcționat bine. Reconectați-vă.";
+
+"_p2p_detected_popup_title" = "Traficul P2P nu se permite pe acest server";
+
+"_p2p_detected_popup_body" = "Conexiunea a fost dezactivată deoarece folosiți un server care nu suportă traficul de la persoană-la-persoană (P2P). P2P nu este suportat pe serverele gratuite sau cele numerotate cu 100 sau mai mult.";
+
+"_p2p_forwarded_popup_title" = "Conexiune redirecționată";
+
+/* Under maintenance alert */
+"_server_under_maintenance" = "Servere în întreținere";
+
+/* macOS: plan upgrade required alert */
+"_upgrade_plan_to_access_server" = "Ne pare rău, acest server nu este disponibil pentru nivelul abonamentului actual. Dacă doriți să accesați mai multe servere, considerați trecerea la alt tip de abonament.";
+
+/* Under maintenance alert */
+"_all_servers_in_country_under_maintenance" = "Toate serverele din această țară sunt în întreținere. Conectați-vă la altă țară.";
+
+"_unsecure_wifi" = "S-a detectat o conexiune WiFi nesigură";
+
+"_unsecure_wifi_learn_more" = "Detalii";
+
+"_unsecure_wifi_title" = "Conexiune WiFi nesigură";
+
+"_maintenance_on_server_detected_title" = "Serverul VPN este în mentenanță";
+
+"_maintenance_on_server_detected_subtitle" = "Serverul la care ați fost conectat este în mentenanță";
+
+"_maintenance_on_server_detected_description" = "Se reconectează la cel mai rapid server disponibil.";
+
+/* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
+"_reconnect_on_settings_change_body" = "Conexiunea trebuie repornită pentru a se aplica această modificare.";
+
+/* Under maintenance alert */
+"_country_servers_under_maintenance" = "%@ servere în întreținere";
+
+/* Under maintenance alert */
+"_all_servers_in_profile_under_maintenance" = "Serverele din profil sunt în întreținere";
+
+/* Under maintenance alert */
+"_all_servers_under_maintenance" = "Toate serverele sunt în întreținere. Acest lucru de obicei înseamnă fie că există dificultăți tehnice din partea Proton VPN, fie că rețeaua dvs. este limitată.";
+
+"_p2p_forwarded_popup_body" = "Conexiunea a fost direcționată automat printr-un alt server deoarece unele servere nu suportă traficul P2P. Aceasta ar putea reduce viteza conexiunii. Folosiți servere cu eticheta P2P pentru e evita redirecționarea.";
+
+"_p2p_forwarded_popup_body_p1" = "Conexiunea a fost direcționată automat printr-un alt server deoarece unele servere nu suportă traficul P2P. Aceasta ar putea reduce viteza conexiunii. Folosiți servere cu";
+
+"_p2p_forwarded_popup_body_p2" = "pictogramă pentru a evita redirecționarea traficului.";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_title" = "Eroare conexiune";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_body" = "Dispozitivul a eșuat închiderea sesiunii VPN anterioare. Va trebui să reporniți dispozitivul înainte de a stabili o nouă conexiune VPN.";
+
+"_update_required" = "Necesită actualizare";
+
+"_update_required_no_longer_supported" = "Această versiune de Proton VPN nu mai este acceptată. Actualizați-o pentru a o mai putea folosi.";
+
+/* Secondary button title in the App update required alert  */
+"_update_required_support" = "Contactați asistența";
+
+/* Primary button title in the App update required alert  */
+"_update_required_update" = "Actualizare";
+
+"_invalid_refresh_token_please_login" = "A trecut ceva de când ați utilizat aplicația Proton VPN. Reautentificați-vă.";
+
+"_error_mitm_title" = "Conexiune nesigură";
+
+"_error_mitm_description" = "Validarea certificatului TLS a eșuat când s-a încercat conectarea la API-ul Proton VPN. Conexiunea la internet vă poate fi monitorizată. Pentru a vă păstra securitatea datelor, împiedicăm aplicația să acceseze API-ul Proton VPN.\nPentru a vă conecta și accesa contul, comutați la o rețea nouă și încercați să vă reconectați.";
+
+"_error_mitm_vpn_description" = "Validarea certificatului TLS a eșuat când s-a încercat conectarea la serverul VPN. Conexiunea la internet vă poate fi monitorizată. Pentru a vă păstra datele în siguranță, împiedicăm aplicația să acceseze acest server VPN.\nSelectați alt server.";
+
+/* Internal error message when there is a problem with initializing tls and connection cannot be established. */
+"_error_tls_initialisation" = "Eroare inițializare TLS";
+
+/* Internal error message when there is a problem with server certificate and connection cannot be established. */
+"_error_tls_server_verification" = "Certificatul serverului nu poate fi verificat.";
+
+/* Mac: neagent help screen */
+"_neagent_description" = "Vi se poate cere să furnizați %@\npentru a vă conecta la serviciul Proton VPN. În cazul în care apare această solicitare,\nintroduceți %@ %@ și faceți clic pe „%@” %@.";
+
+/* Mac: neagent help screen */
+"_neagent_password" = "parola contului calculatorului";
+
+/* Mac: neagent help screen */
+"_mac_password" = "Parola Mac";
+
+/* Mac: neagent help screen */
+"_neagent_first_step" = "(1)";
+
+/* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
+"_neagent_always_allow" = "Permitere întotdeauna";
+
+/* Mac: neagent help screen */
+"_neagent_second_step" = "(2)";
+
+/* Button in several different alerts */
+"_got_it" = "Am înțeles!";
+
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_title" = "Modificare indisponibilă din aplicație";
+
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_body" = "Abonamentul Proton VPN actual nu poate fi modernizat din aplicație. Pentru aceasta vizitați account.protonvpn.com.";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_title" = "Ștergere date aplicație";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_body" = "Toate datele Proton VPN vor fi șterse, iar aplicația se va închide. Doriți să continuați?";
+
+/* MacOS: killswitch blocking alert button */
+"_kill_switch_disable" = "Dezactivare blocare conexiune";
+
+/* MacOS: Settings screen title */
+"_preferences" = "Preferințe";
+
+/* iOS: Settings screen title and tab title */
+"_settings" = "Setări";
+
+/* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
+"_account" = "Cont";
+
+/* Alert title for account deletion error */
+"_account_deletion_error" = "Eroare";
+
+/* iOS: Message explaining that deleting account closes the VPN connection */
+"_account_deletion_connection_warning" = "Ștergerea contului va determina închiderea sesiunii VPN.";
+
+/* MacOS: General tab in setting window */
+"_general" = "Generale";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_type" = "Tip cont";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_plan" = "Plan cont";
+
+"_manage_subscription_on_web" = "Gestionați-vă abonamentul în panoul general";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_kill_switch" = "Blocare conexiune";
+
+/* MacOS: Settings -> Connection. Kill switch functionality description. */
+"_kill_switch_tooltip" = "Blochează tot traficul din rețea când tunelul VPN este pierdut.";
+
+/* iOS Settings: toggle name */
+"_always_on_vpn" = "VPN permanent";
+
+/* iOS Settinsg screen: always-on description under the switch */
+"_always_on_vpn_tooltip_ios" = "Opțiunea VPN permanent restabilește o conexiune VPN securizată, rapid și automat. Pentru securitate, această funcție este întotdeauna activă.";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_auto_connect" = "Autoconectare";
+
+/* MacOS: Settings -> Connection: description. */
+"_auto_connect_tooltip" = "La pornirea aplicației se va folosi profilul selectat";
+
+/* MacOS: Settings -> Connection: description. */
+"_quick_connect_tooltip" = "Butonul «Conectare rapidă» vă va conecta la profilul selectat";
+
+/* MacOS: Settings -> General: name of field. */
+"_start_minimized" = "Pornire micșorat";
+
+/* MacOS: Settings -> General: name of field. */
+"_system_notifications" = "Notificări de sistem";
+
+/* MacOS: Settings -> General: name of field. */
+"_early_access" = "Acces timpuriu";
+
+/* MacOS: Settings -> General: description. */
+"_early_access_tooltip" = "Fiți primul care obține ultimele actualizări. Rețineți că versiunile timpurii pot fi mai puțin stabile.";
+
+/* MacOS: Settings -> General: name of field. */
+"_unprotected_network" = "Notificare despre reţele neprotejate";
+
+/* MacOS: Settings -> General: description */
+"_unprotected_network_tooltip" = "Primiți o notificare când Proton VPN detectează că v-ați conectat la o rețea neprotejată.";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_dns_leak_protection" = "Protecție divulgări DNS";
+
+/* MacOS: Settings -> Connection: description. */
+"_dns_leak_protection_tooltip" = "Previne divulgarea detaliilor interogărilor DNS către terțe părți. Întotdeauna activată.";
+
+/* iOS Settings: table section header */
+"_security_options" = "Opțiuni securitate";
+
+/* iOS Settings -> Connection: name of field. */
+"_subscription_plan" = "Plan abonament";
+
+/* iOS plan selection: header */
+"_choose_plan" = "Alegere abonament";
+
+"_protocol" = "Protocol";
+
+/* iOS Settings -> Protocol: screen title */
+"_vpn_protocol" = "Protocol VPN";
+
+"_openvpn" = "OpenVPN";
+
+/* iOS Settings -> Protocol: IKEv2 option */
+"_ikev2" = "IKEv2";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: TCP option */
+"_tcp" = "TCP";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: UDP option */
+"_udp" = "UDP";
+
+/* iOS Settings -> Protocol -> WireGuard: TLS option */
+"_tls" = "TLS";
+
+/* iOS Settings -> Protocol: WireGuard option */
+"_wireguard" = "WireGuard";
+
+/* Settings -> Protocol: WireGuard TLS Option called "Stealth". Should not be translated. */
+"_wireguard_tls" = "Stealth";
+
+/* MacOS menu item; iOS setting screen item */
+"_view_logs" = "Afișare jurnale";
+
+/* iOS logs screen title */
+"_logs" = "Jurnale";
+
+/* iOS Settings: applications logs row */
+"_application_logs" = "Jurnale aplicație";
+
+/* iOS Settings: OpenVPN logs row */
+"_open_vpn_logs" = "Jurnale OpenVPN";
+
+/* iOS Settings: WireGuard logs row */
+"_wireguard_logs" = "Jurnale WireGuard";
 
 /* iOS widget help screen: title */
 "_activate_widget" = "Activare widget";
@@ -43,536 +1032,37 @@
 /* iOS widget help screen: text */
 "_activate_widget_step_3" = "Adăugați widget-ul Proton VPN la lista de widget-uri active.";
 
-/* Plan information */
-"_adblocker_netshield_feature" = "Blocare reclame (NetShield)";
+/* Report bug screen title; iOS settings screen: item; */
+"_report_bug" = "Raportare o problemă";
 
-/* Section title in Settings */
-"_advanced" = "Avansat";
-
-/* Plan information */
-"_advanced_features" = "+ Funcții avansate";
-
-/* API error */
-"_ae_vpn_info_not_received" = "Nu s-au putut obține informații VPN";
-
-/* API error */
-"_ae_wrong_login_credentials" = "Nume de utilizator sau parolă incorecte";
-
-/* Account plan description */
-"_all_countries" = "peste 60 de țări";
-
-/* Under maintenance alert */
-"_all_servers_in_country_under_maintenance" = "Toate serverele din această țară sunt în întreținere. Conectați-vă la altă țară.";
-
-/* Under maintenance alert */
-"_all_servers_in_profile_under_maintenance" = "Serverele din profil sunt în întreținere";
-
-/* Under maintenance alert */
-"_all_servers_under_maintenance" = "Toate serverele sunt în întreținere. Acest lucru de obicei înseamnă fie că există dificultăți tehnice din partea Proton VPN, fie că rețeaua dvs. este limitată.";
-
-/* (No Comment) */
-"_allow" = "Permitere";
-
-/* (No Comment) */
-"_allow_lan_description" = "Pentru a permite accesul în LAN, setarea „Blocare conexiune” trebuie oprită.\n\nContinuați?";
-
-/* (No Comment) */
-"_allow_lan_info" = "Permite evitarea traficului prin VPN și conectarea la dispozitive din rețeaua locală, cum ar fi imprimanta.";
-
-/* (No Comment) */
-"_allow_lan_note" = "Conexiunea trebuie repornită pentru a se aplica această modificare";
-
-/* (No Comment) */
 "_allow_lan_title" = "Permitere conexiuni LAN";
 
-/* iOS: button for switching from sign-up to sign-in screen */
-"_already_have_account" = "Am deja un cont";
+"_allow_lan_info" = "Permite evitarea traficului prin VPN și conectarea la dispozitive din rețeaua locală, cum ar fi imprimanta.";
 
-/* iOS Settings: toggle name */
-"_always_on_vpn" = "VPN permanent";
+"_allow_lan_description" = "Pentru a permite accesul în LAN, setarea „Blocare conexiune” trebuie oprită.\n\nContinuați?";
 
-/* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "Opțiunea VPN permanent restabilește o conexiune VPN securizată, rapid și automat. Pentru securitate, această funcție este întotdeauna activă.";
+"_allow_lan_note" = "Conexiunea trebuie repornită pentru a se aplica această modificare";
 
-/* Disconnect notification */
-"_always_on_will_reconnect" = "VPN permanent va restabili automat conexiunea";
+/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_title" = "Activați blocarea conexiunii?";
 
-/* iOS Settings: applications logs row */
-"_application_logs" = "Jurnale aplicație";
-
-/* (No Comment) */
-"_applying_settings_" = "Aplicare setări";
-
-/* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_auto_assigned" = "Atribuit automat";
-
-/* MacOS: Settings -> Connection: name of field. */
-"_auto_connect" = "Autoconectare";
-
-/* MacOS: Settings -> Connection: description. */
-"_auto_connect_tooltip" = "La pornirea aplicației se va folosi profilul selectat";
-
-/* Battery usages screen description */
-"_battery_description" = "Întregul trafic de pe telefon va fi gestionat prin OpenVPN, deci iOS va aloca utilizarea bateriei de către alte aplicații către Proton VPN.";
-
-/* Battery usage More info button text */
-"_battery_more" = "Doriți să aflați mai multe?";
-
-/* iOS settings -> Battery usage; Title of battery usage screen; */
-"_battery_title" = "Utilizare baterie";
-
-/* Common word */
-"_cancel" = "Anulare";
-
-/* (No Comment) */
-"_cancel_reconnection" = "Se va anula orice încercare de reconectare și va rămâne deconectată";
-
-/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
-"_change_protocol_disconnect_warning" = "Modificarea protocoalelor va încheia sesiunea curentă de VPN.";
-
-/* Changing settings title */
-"_change_settings" = "Modificare setări";
-
-/* MacOS: About window */
-"_changelog" = "Istoric modificări";
-
-/* iOS: new profkle can't be created because not all required fields are filled */
-"_check_if_fields_present" = "Asigurați-vă că toate câmpurile sunt completate";
-
-/* iOS plan selection: header */
-"_choose_plan" = "Alegere abonament";
-
-/* iOS status view */
-"_city" = "Oraș";
-
-/* Main mac app menu item */
-"_clear_application_data" = "Ștergere date aplicație";
-
-/* Common word */
-"_close" = "Închidere";
-
-/* (No Comment) */
-"_collapse_list_of_servers" = "Restrângere listă servere";
-
-/* Profile create/change form */
-"_color" = "Culoare";
-
-/* MacOS: button in login screen */
-"_common_issues" = "Probleme comune de conectare";
-
-/* Common word */
-"_connect" = "Conectare";
-
-/* Common word */
-"_connected" = "Conectat";
-
-/* iOS status view */
-"_connected_to" = "Conectat la";
-
-/* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
-"_connected_to_vpn" = "Conectat la %@";
-
-/* iOS: main button in tabbar during connecting to vpn phase */
-"_connecting" = "Se conectează";
-
-/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
-"_connecting_to" = "Se conectează la %@";
-
-/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
-"_connecting_vpn" = "%@ conexiune";
-
-/* (No Comment) */
-"_connectingDotDotDot" = "Se conectează...";
-
-/* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
-"_connection" = "Conexiune";
-
-/* Connection error translation. iOS quick connect widget: text shown on error. */
-"_connection_failed" = "Conectare eșuată";
-
-/* Profile create/change form */
-"_connection_settings" = "Setări conexiune";
-
-/* macOS: Text on connection overlay shown after connection timed out */
-"_connection_timed_out" = "Conexiunea a expirat";
-
-/* Text that should be bold in _connection_timed_out string */
-"_connection_timed_out_bold" = "expirată";
-
-/* Text addressing to contact costumer support on several sites of the app */
-"_contact_our_support" = "Contactați asistența";
-
-/* (No Comment) */
-"_continue" = "Continuare";
-
-/* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
-"_countries" = "Țări";
-
-/* iOS: countries list section header */
-"_countries_free" = "Țări gratuite";
-
-/* iOS: countries list section header */
-"_countries_premium" = "Țări premium";
-
-/* MacOS app tour: countries list description */
-"_countries_tour_description" = "Alegeți țara și serverul pe care doriți să le utilizați ca adresă IP vizibilă.";
-
-/* MacOS app tour: countries list title */
-"_countries_tour_title" = "Țări";
-
-/* Profile create/edit menu */
-"_country" = "Țara";
-
-/* Error when user hasn't selected profile country */
-"_country_selection_is_required" = "Selectați o țară";
-
-/* Under maintenance alert */
-"_country_servers_under_maintenance" = "%@ servere în întreținere";
-
-/* MacOS: button in login screen */
-"_create_account" = "Creare cont";
-
-/* MacOS: Buttons in several places; iOS: profile creation screen title */
-"_create_new_profile" = "Creare profil";
-
-/* (No Comment) */
-"_create_profile" = "Creare profil";
-
-/* MacOS: profile creation cancel alert text */
-"_current_selection_will_be_lost" = "Continuând, selecția curentă va fi pierdută. Doriți să continuați?";
-
-/* iOS: data disclaimer screen button */
-"_data_disclaimer_agree" = "Acceptare și continuare";
-
-/* iOS: data disclaimer screen */
-"_data_disclaimer_device_details" = "Model dispozitiv și versiune SO";
-
-/* iOS: data disclaimer screen */
-"_data_disclaimer_text" = "Proton VPN este hotărât să vă protejeze și să vă respecte intimitatea. Politica noastră principală este de a colecta cât mai puține date de la utilizatori cu putință, pentru a asigura o experiență privată și anonimă în utilizarea aplicației, astfel:\n\n%@ – pentru a vă conecta, a vă ajuta să recuperați o parolă pierdută și pentru a trimite actualizări importante.\n\n%@ – doar pentru rapoarte ale defectelor și erorilor.\n\nAplicația Proton VPN nu procesează nicio informație de la utilizatori în afară de aceste date. Nu vă înregistrăm activitatea online și nici informațiile personale identificabile. Toate datele enumerate mai sus sunt stocate și procesate pe propriul sistem Proton VPN, fără ca vreo terță parte să aibă acces la acestea.";
-
-/* iOS: data disclaimer screen */
-"_data_disclaimer_title" = "Protejați-vă online";
-
-/* iOS: data disclaimer screen */
-"_data_disclaimer_user_details" = "Nume utilizator, adresa de e-mail";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "Butonul«Conectare rapidă»utilizează profilul implicit.";
-
-/* Common word */
-"_delete" = "Ștergere";
-
-/* MacOS: clear application data alert */
-"_delete_application_data_popup_body" = "Toate datele Proton VPN vor fi șterse, iar aplicația se va închide. Doriți să continuați?";
-
-/* MacOS: clear application data alert */
-"_delete_application_data_popup_title" = "Ștergere date aplicație";
-
-/* Button */
-"_delete_profile" = "Ștergere profil";
-
-/* MacOS: profile deletion warning */
-"_delete_profile_header" = "Ștergere profil";
-
-/* MacOS: profile deletion warning */
-"_delete_profile_warning" = "Profilul va fi șters definitiv. Doriți să continuați?";
-
-/* (No Comment) */
-"_delinquent_description" = "Veți putea accesa din nou opțiunile premium după ce acestea au fost plătite.";
-
-/* (No Comment) */
-"_delinquent_reconnection_description" = "Veți putea accesa din nou opțiunile premium după ce acestea sunt plătite. Momentan, se reconectează la cel mai rapid server disponibil din planul gratuit.";
-
-/* (No Comment) */
-"_delinquent_title" = "Acest cont VPN are facturi în așteptare";
-
-/* Delinquent user alert */
-"_delinquent_user_description" = "Contul dvs. are în prezent o factură restantă. Vă rugăm să plătiți toate facturile neachitate la account.protonvpn.com";
-
-/* Delinquent user alert */
-"_delinquent_user_title" = "Factură neplătită";
-
-/* Profile create/change form */
-"_different_server_each_time" = "Server diferit de fiecare dată";
-
-/* Button in some alerts */
-"_disable" = "Dezactivare";
-
-/* Common word */
-"_disabled" = "Dezactivat";
-
-/* Common word */
-"_disconnect" = "Deconectare";
-
-/* Common word */
-"_disconnected" = "Deconectat";
-
-/* Status of VPN connection reported by Siri */
-"_disconnecting" = "Se deconectează";
-
-/* iOS onboarding button to check app without logging in */
-"_discover_the_app" = "Descoperiți aplicația";
-
-/* MacOS: Settings -> Connection: name of field. */
-"_dns_leak_protection" = "Protecție divulgări DNS";
-
-/* MacOS: Settings -> Connection: description. */
-"_dns_leak_protection_tooltip" = "Previne divulgarea detaliilor interogărilor DNS către terțe părți. Întotdeauna activată.";
-
-/* Alert message during In App Purchase */
-"_do_you_want_to_activate_subscription_for" = "Doriți să activați abonamentul achiziționat pentru ";
-
-/* Common word */
-"_done" = "Gata";
-
-/* (No Comment) */
-"_dw-partner-2022_partners_title" = "Partenerii noștri";
-
-/* MacOS: Settings -> General: name of field. */
-"_early_access" = "Acces timpuriu";
-
-/* MacOS: Settings -> General: description. */
-"_early_access_tooltip" = "Fiți primul care obține ultimele actualizări. Rețineți că versiunile timpurii pot fi mai puțin stabile.";
-
-/* Common word */
-"_edit" = "Editare";
-
-/* Common word */
-"_enabled" = "Activat";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "Terminare tur";
-
-/* %@ is always 'PLUS' e.g. ENJOY PLUS FOR FREE! */
-"_enjoy_for_free" = "Bucurați-vă de %@ gratuit!";
-
-/* iOS: placeholder for email field in signup and email verification screens */
-"_enter_email_address" = "Introduceți adresa de e-mail";
-
-/* Profile create/change form */
-"_enter_profile_name" = "Introducere nume profil";
-
-/* API error */
-"_error_api_offline" = "API-ul Proton VPN este în prezent oprit.";
-
-/* Error decoding an object */
-"_error_decode" = "Decodarea datelor arhivate a eșuat în clasa: %@";
-
-/* Internal application error */
-"_error_email_verification_disabled" = "Verificarea prin e-mail a fost temporar dezactivată";
-
-/* Error try to restore user from the session */
-"_error_fetch_session" = "Nu se poate găsi utilizatorul din sesiune";
-
-/* (No Comment) */
-"_error_field_email_wrong_format" = "Adresa de e-mail nu este în formatul corect";
-
-/* (No Comment) */
-"_error_field_passwords_dont_match" = "Parolele nu coincid.";
-
-/* Form validation error */
-"_error_field_required" = "Acest câmp este obligatoriu";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "Generare SRP eșuată";
-
-/* Error when try to hash password */
-"_error_hash_password" = "Nu se poate aplica funcția hash la parola utilizatorului";
-
-/* Unknown error that has no better description */
-"_error_internal_error" = "Eroare internă API";
-
-/* Keychain error */
-"_error_keychain_fetch" = "Eroare lanț chei.";
-
-/* Error writing to system keychain */
-"_error_keychain_write" = "Proton nu a putut comunica cu dispozitivul. Reîncercați mai târziu.";
-
-/* Parsing error */
-"_error_loads" = "Nu se poate actualiza încărcarea serverelor";
-
-/* (No Comment) */
-"_error_mitm_description" = "Validarea certificatului TLS a eșuat când s-a încercat conectarea la API-ul Proton VPN. Conexiunea la internet vă poate fi monitorizată. Pentru a vă păstra securitatea datelor, împiedicăm aplicația să acceseze API-ul Proton VPN.\nPentru a vă conecta și accesa contul, comutați la o rețea nouă și încercați să vă reconectați.";
-
-/* (No Comment) */
-"_error_mitm_title" = "Conexiune nesigură";
-
-/* (No Comment) */
-"_error_mitm_vpn_description" = "Validarea certificatului TLS a eșuat când s-a încercat conectarea la serverul VPN. Conexiunea la internet vă poate fi monitorizată. Pentru a vă păstra datele în siguranță, împiedicăm aplicația să acceseze acest server VPN.\nSelectați alt server.";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "Semnătura modulului este goală";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "Nu se pot prelua informațiile partenerului.";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "Nu se pot prelua informațiile serverelor";
-
-/* Parsing error */
-"_error_session_count_parser" = "Nu se poate prelua numărul de sesiuni";
-
-/* Generic sign in error */
-"_error_sign_in_again" = "Ceva nu a funcționat bine. Reconectați-vă.";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "Nu se pot prelua informațiile abonamentului";
-
-/* Internal error message when there is a problem with initializing tls and connection cannot be established. */
-"_error_tls_initialisation" = "Eroare inițializare TLS";
-
-/* Internal error message when there is a problem with server certificate and connection cannot be established. */
-"_error_tls_server_verification" = "Certificatul serverului nu poate fi verificat.";
-
-/* General title for several error alerts */
-"_error_unknown_title" = "Eroare necunoscută";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "Crearea contului a eșuat";
-
-/* VPN credentials can't be loaded error */
-"_error_user_credentials_expired" = "Acreditările utilizatorului au expirat. Reautentificați-vă.";
-
-/* VPN credentials can't be loaded error */
-"_error_user_credentials_missing" = "Acreditările utilizatorului lipsesc. Nu se poate autentifica.";
-
-/* Human validation failed */
-"_error_user_failed_human_validation" = "Nu am reușit să verificăm dacă sunteți o persoană. Reîncercați sau achiziționați un abonament premium.";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "Nu se pot analiza metodele de verificare";
-
-/* VPN credentials can't be loaded error */
-"_error_vpn_credentials_missing" = "Acreditările VPN lipsesc din lanțul de cehei";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "Nu se pot obține proprietățile VPN!";
-
-/* VPN session is active error */
-"_error_vpn_session_is_active" = "Sesiunea Proton VPN este activă";
-
-/* Description of the expand/collapse button used by accessibility Voice Over */
-"_expand_list_of_servers" = "Extindere listă servere";
-
-/* MAC: is inserted into _free_trial_expired_title insteadof %@ */
-"_expired" = "EXPIRAT";
-
-/* iOS: Table header in settings screen */
-"_extensions" = "Extensii";
-
-/* MacOS: connecting overlay */
-"_failed" = "eșuat";
-
-/* Used for both profile description when fastest server option is selected and Plan speed description */
-"_fastest" = "Cel mai rapid";
-
-/* Profile create/change form */
-"_fastest_available_server" = "Cel mai rapid server disponibil";
-
-/* iOS: Predefined profile with fastest connection */
-"_fastest_connection" = "Viteza maximă";
-
-/* (No Comment) */
-"_feature" = "Caracteristica";
-
-/* iOS plan feature */
-"_feature_blocked_content" = "Accesare conținut blocat";
-
-/* (No Comment) */
-"_feature_bt" = "Suport BitTorrent/partajare de fișiere";
-
-/* iOS plan feature */
-"_feature_connections" = "Conexiuni VPN simultane";
-
-/* (No Comment) */
-"_feature_free_servers" = "Servere gratuite";
-
-/* (No Comment) */
-"_feature_free_servers_description" = "Securitate și confidențialitate pentru oricine. Serverele gratuite nu au limite de date și nu vă vom reduce niciodată deliberat viteza de navigare.";
-
-/* (No Comment) */
-"_feature_p2p_description" = "Aceste servere oferă cea mai bună performanță pentru BitTorrent și partajarea de fișiere.";
-
-/* iOS plan feature */
-"_feature_secure_streaming" = "Transmisii în flux sigure";
-
-/* iOS plan feature */
-"_feature_server_count" = "Conectare la servere în";
-
-/* (No Comment) */
-"_feature_smart_routing_description" = "Această tehnologie permite ca Proton VPN să ofere viteză și securitate mai mare în țările dificil de accesat.";
-
-/* iOS plan feature */
-"_feature_speed" = "Viteza";
-
-/* (No Comment) */
-"_feature_streaming_description" = "Serverele Plus suportă trasmisii în flux (Netflix, Disney+ etc.) de oriunde din lume.";
-
-/* iOS plan feature */
-"_feature_tor" = "Tor peste VPN";
-
-/* (No Comment) */
-"_feature_tor_description" = "Direcționează traficul de internet prin rețeaua Tor. Mai lent, dar mai privat.";
-
-/* (No Comment) */
-"_features_title" = "Funcții";
-
-/* (No Comment) */
-"_force_upgrade_message" = "Versiunea aplicației Proton VPN pe care o utilizați în prezent nu mai este suportată. Actualizați la cea mai nouă versiune.";
-
-/* (No Comment) */
-"_force_upgrade_title" = "Este necesară modernizarea aplicației";
-
-/* iOS: button in login screen */
-"_forgot_password" = "Ați uitat parola?";
-
-/* MacOS: button in login screen */
-"_forgot_username" = "Utilizator uitat";
-
-/* Account plan description */
-"_free_countries" = "3 țări";
-
-/* iOS: section header in countries list */
-"_free_servers" = "Servere gratuite";
-
-/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
-"_free_trial_about_to_expire_description" = "Treceți la %@ și continuați să beneficiați de aceste funcții:";
-
-/* MacOS: \Trial about to expire\ screen title */
-"_free_trial_about_to_expire_title" = "Probarea gratuită urmează să expire!";
-
-/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "Contul v-a fost retrogradat la Proton VPN Free.\nIată ce veți pierde față de %@:";
-
-/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
-"_free_trial_expired_title" = "PERIOADA DE PROBARE A %@";
-
-/* Downgrade */
-"_from_server_title" = "De la serverul:";
-
-/* MacOS: General tab in setting window */
-"_general" = "Generale";
+/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_description" = "Activând blocarea conexiunii, nu veți putea accesa dispozitivele din rețeaua locală.\n\nContinuare?";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Luați planul %@";
 
-/* Suggest the user to upgrade account for new features */
-"_get_plus_for_feature" = "Obțineți Proton VPN Plus pentru a debloca această opțiune precum și altele.";
+/* Account plan description */
+"_free_countries" = "3 țări";
 
-/* iOS: Button in email verification screen */
-"_get_verification_email" = "Obținere e-mail de verificare";
+/* Account plan description */
+"_all_countries" = "peste 60 de țări";
 
-/* iOS: Button in SMS verification screen */
-"_get_verification_sms" = "Obținere SMS de verificare";
+/* %@ is a speed description e.g. Speed: Highest */
+"_speed" = "Viteză %@";
 
-/* Button in several different alerts */
-"_got_it" = "Am înțeles!";
-
-/* Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page. */
-"_help" = "Ajutor";
-
-/* Show/hide password switch */
-"_hide" = "Ascundere";
+/* Value of speed in _speed */
+"_medium" = "Medie";
 
 /* Value of speed in _speed */
 "_high" = "Mare";
@@ -580,578 +1070,143 @@
 /* Value of speed in _speed */
 "_highest" = "Maximă";
 
-/* iOS: Home screen title, tab bar item title; MacOS: TabBar tab title; */
-"_home" = "Acasă";
+/* Features of account plan */
+"_plus_plan_features" = "Servere Plus\nSecure Core\nServere Tor";
 
-/* Button in Kill switch error alert */
-"_ignore" = "Ignorare";
+/* Used instead of price for free plans. */
+"_free" = "Gratuit";
 
-/* Streaming & Features */
-"_information_title" = "Informații";
-
-/* MacOS: connecting overlay */
-"_initializing_connection" = "Se inițializează...";
-
-/* (No Comment) */
-"_invalid_refresh_token_please_login" = "A trecut ceva de când ați utilizat aplicația Proton VPN. Reautentificați-vă.";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "De la oamenii de știință și inginerii care au creat Proton Mail, bun venit la un internet mai sigur și privat.";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Bun venit la un internet mai bun";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page2_description" = "Învingeți cenzura și restricțiile regionale. Nu avem reclame, nu există limite de lățime de bandă și nu vă vindem datele.";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "Credem că internetul ar trebui să fie liber";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page3_description" = "Suntem o companie de securitate. Indiferent dacă este vorba de arhitectura noastră Secure Core sau criptare avansată, securitatea este întotdeauna pe primul loc.";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page3_title" = "Securitatea dvs. este prioritatea noastră";
-
-/* %@ is an IP address e.g. IP: 123.45.67.890 */
-"_ip_value" = "IP: %@";
-
-/* (No Comment) */
-"_ip_will_not_be_exposed" = "Adresa IP nu va fi expusă.";
-
-/* MacOS: Settings -> Connection: name of field. */
-"_kill_switch" = "Blocare conexiune";
-
-/* Disconnect notification */
-"_kill_switch_blocking_connection" = "Blocarea conexiunii blochează toate conexiunile";
-
-/* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Dezactivare blocare conexiune";
-
-/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Conexiunea la internet se va relua imediat ce Proton VPN se reconectează la server.\nPentru a folosi internetul fără VPN and protecția de blocare a conexiunii, anulați reconectarea la server.";
-
-/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
-"_kill_switch_reconnection_bold1" = "fără";
-
-/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
-"_kill_switch_reconnection_bold2" = "Protecție blocare conexiune";
-
-/* MacOS: connection screen - cancel button */
-"_kill_switch_reconnection_cancel" = "Anulare reconectare";
-
-/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection_header" = "Blocarea conexiunii vă protejează adresa IP";
-
-/* MacOS: Settings -> Connection. Kill switch functionality description. */
-"_kill_switch_tooltip" = "Blochează tot traficul din rețea când tunelul VPN este pierdut.";
-
-/* MacOS: link in login screen */
-"_learn_more" = "Detalii";
-
-/* MacOS: SecureCore warning alert when users plan has to be upgraded */
-"_learn_more_about_secure_core" = "Aflați mai multe despre Secure Core";
-
-/* Display less information */
-"_less_info" = "Mai puțin";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "Se încarcă informațiile conexiunii";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "Se încarcă informațiile conexiunii pentru %@";
-
-/* Slogan text under the logo in may places in iOS and MacOS apps */
-"_loading_screen_slogan" = "Internet sigur pretutindeni";
-
-/* (No Comment) */
-"_local_agent_policy_violation_error_message" = "Nu vi se permite conectarea la server. Alegeți alt server sau treceți la alt plan.";
-
-/* (No Comment) */
-"_local_agent_policy_violation_error_title" = "Violarea politicii";
-
-/* (No Comment) */
-"_local_agent_server_error_message" = "A apărut o eroare pe server. Conectați-vă la alt server.";
-
-/* Local agent */
-"_local_agent_server_error_title" = "Eroare server";
-
-/* iOS status view */
-"_location" = "Amplasare";
-
-/* (No Comment) */
-"_locations_all" = "Toate țările";
-
-/* (No Comment) */
-"_locations_free" = "Locurile gratuite";
-
-/* (No Comment) */
-"_locations_plus" = "Locuri Plus";
-
-/* iOS: Login button in several places */
-"_log_in" = "Conectare";
-
-/* iOS widget: text for not-logged-in user */
-"_log_in_to_use_widget" = "Conectați-vă pentru a începe";
-
-/* iOS: button in settings screen */
-"_log_out" = "Deconectare";
-
-/* iOS: Logout alert */
-"_log_out_warning" = "Deconectarea va încheia sesiunea VPN.";
-
-/* MacOS: Logout alert */
-"_log_out_warning_long" = "Deconectându-vă din aplicație veți deconecta conexiunea VPN activă. Doriți să continuați?";
-
-/* MacOS: Login button */
-"_login" = "Conectare";
-
-/* iOS logs screen title */
-"_logs" = "Jurnale";
-
-/* Mac: neagent help screen */
-"_mac_password" = "Parola Mac";
-
-/* Server status in many places in iOS and MacOS apps */
-"_maintenance" = "Întreținere";
-
-/* (No Comment) */
-"_maintenance_on_server_detected_description" = "Se reconectează la cel mai rapid server disponibil.";
-
-/* (No Comment) */
-"_maintenance_on_server_detected_subtitle" = "Serverul la care ați fost conectat este în mentenanță";
-
-/* (No Comment) */
-"_maintenance_on_server_detected_title" = "Serverul VPN este în mentenanță";
-
-/* Profile create/change form */
-"_make_default_profile" = "Setare ca profil implicit";
-
-/* MacOS: button in profiles tab in main window */
-"_manage_profiles" = "Gestionare profiluri";
-
-/* MacOS: Settings -> Account. Button leading to web interface. */
-"_manage_subscription" = "Gestionare abonament";
-
-/* (No Comment) */
-"_manage_subscription_on_web" = "Gestionați-vă abonamentul în panoul general";
-
-/* iOS: Map screen title and tabbar item */
-"_map" = "Harta";
-
-/* MacOS: Map view toggle button accessibility label (used by screen readers */
-"_map_hide" = "Ascundere hartă";
-
-/* MacOS: Map view toggle button accessibility label (used by screen readers */
-"_map_show" = "Afișare hartă";
-
-/* (No Comment) */
-"_maximum_device_reached_description" = "Deconectați un alt dispozitiv pentru a-l conecta pe acesta.";
-
-/* (No Comment) */
-"_maximum_device_title" = "Ați atins limita maximă de dispozitive folosite";
-
-/* Cancel button in trial modals used in both iOS and MacOS */
-"_maybe_later" = "Poate mai târziu";
-
-/* Value of speed in _speed */
-"_medium" = "Medie";
-
-/* Main mac app menu item */
-"_menu_about" = "Despre Proton VPN";
-
-/* Main mac app menu item */
-"_menu_check_updates" = "Verificare actualizări...";
-
-/* Main mac app menu item */
-"_menu_hide_others" = "Ascundere restul";
-
-/* Main mac app menu item */
-"_menu_hide_self" = "Ascundere Proton VPN";
-
-/* Main mac app menu item */
-"_menu_logout" = "Deconectare";
-
-/* Main mac app menu item */
-"_menu_minimize" = "Micșorare";
-
-/* Main mac app menu item */
-"_menu_preferences" = "Preferințe";
-
-/* Main mac app menu item */
-"_menu_quit" = "Închidere Proton VPN";
-
-/* Main mac app menu item */
-"_menu_show_all" = "Afișare toate";
-
-/* Main mac app menu item */
-"_menu_window" = "Fereastră";
-
-/* Title for alert shown when enabling Moderate NAT requires reconnection */
-"_moderate_nat_change_title" = "Activare NAT moderat";
-
-/* Title for alert shown when enabling Moderate NAT requires reconnection */
-"_moderate_nat_enable_title" = "Activare NAT moderat";
-
-/* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "NAT moderat dezactivează mapării aleatoare a adreselor locale. Acest lucru vă poate reduce ușor securitatea, dar permite aplicațiilor persoană-la-persoană, cum ar fi jocurile online, să stabilească conexiuni directe.\n \nAflați mai multe";
-
-/* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
-"_moderate_nat_explanation_link" = "Detalii";
-
-/* Moderate NAT feature title in Settings */
-"_moderate_nat_title" = "NAT moderat";
-
-/* Display more information */
-"_more_info" = "Detalii";
+/* Alert message during In App Purchase */
+"_do_you_want_to_activate_subscription_for" = "Doriți să activați abonamentul achiziționat pentru ";
 
 /* Label in Plan information */
 "_most_popular" = "Cel mai popular";
 
+/* Button in plan selection */
+"_select_plan" = "Selectare plan";
+
+/* Plan information */
+"_advanced_features" = "+ Funcții avansate";
+
+/* Plan information */
+"_adblocker_netshield_feature" = "Blocare reclame (NetShield)";
+
+/* Text description in plan selection screen */
+"_plans_footer" = "După confirmarea achiziției unui plan cu plată, contul dvs. iTunes va fi debitat cu suma afișată, care include taxe și comisioane de platformă suplimentare (care nu sunt percepute direct de către Proton). După efectuarea achiziției, planul selectat va fi actualizat automat pentru o perioadă de un an, după care puteți reînnoi sau anula, fie online, fie prin intermediul aplicației iOS.";
+
+/* Per year. Appended to plan price. */
+"_per_year_short" = "/ an";
+
+/* iOS plan feature */
+"_feature_server_count" = "Conectare la servere în";
+
+/* iOS plan feature */
+"_feature_speed" = "Viteza";
+
+/* iOS plan feature */
+"_feature_connections" = "Conexiuni VPN simultane";
+
+/* iOS plan feature */
+"_feature_secure_streaming" = "Transmisii în flux sigure";
+
+/* iOS plan feature */
+"_feature_tor" = "Tor prin VPN";
+
+/* iOS plan feature */
+"_feature_secure_core" = "Secure Core";
+
+/* iOS plan feature */
+"_feature_blocked_content" = "Accesare conținut blocat";
+
+"_feature_bt" = "Suport BitTorrent/partajare de fișiere";
+
+/* MacOS welcome screen: title */
+"_welcome_title" = "BINE AȚI VENIT!";
+
+/* MacOS welcome screen: description */
+"_welcome_description" = "Vă mulțumim că utilizați Proton VPN. Aruncați o privire\nasupra funcțiilor principale ale aplicației.";
+
+/* MacOS welcome screen: cancel button */
+"_no_thanks" = "Nu, mulțumesc";
+
+/* MacOS welcome screen: skip button */
+"_skip" = "Omitere";
+
+/* MacOS welcome screen: take a tour button */
+"_take_tour" = "Faceți un tur";
+
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Plus";
+
+/* MacOS: Used ir trial welcome and trial expired screens */
+"_p2p_servers" = "Servere P2P";
+
+"_5_connections" = "5 conexiuni";
+
 /* Mac: Used in several Trial screens */
 "_multiple_countries" = "Mai multe țări";
+
+/* MAC: is inserted into _free_trial_expired_title insteadof %@ */
+"_expired" = "EXPIRAT";
+
+/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
+"_free_trial_expired_title" = "Perioada de probare a %@";
+
+/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "Contul v-a fost retrogradat la Proton VPN Free.\nIată ce veți pierde față de %@:";
+
+/* Cancel button in trial modals used in both iOS and MacOS */
+"_maybe_later" = "Poate mai târziu";
+
+/* Upgrade button in trial modals used in both iOS and MacOS */
+"_upgrade_now" = "Modificare";
+
+/* MacOS: Button in Upgrade screen */
+"_upgrade_my_plan" = "Modificare plan";
+
+/* MacOS: \Trial about to expire\ screen title */
+"_free_trial_about_to_expire_title" = "Probarea gratuită urmează să expire!";
+
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
+"_free_trial_about_to_expire_description" = "Treceți la %@ și continuați să beneficiați de aceste funcții:";
+
+"_5_connections_description" = "Conectați până la\n5 dispozitive simultan";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_core_description" = "Servere ultrasigure\ngăzduite de noi";
+
+/* MacOS: \Trial about to expire\ screen */
+"_multiple_servers_title" = "Servere multiple";
 
 /* MacOS: \Trial about to expire\ screen */
 "_multiple_servers_description" = "Sute de servere\nîn întreaga lume";
 
 /* MacOS: \Trial about to expire\ screen */
-"_multiple_servers_title" = "Servere multiple";
+"_secure_streaming_title" = "Transmisii în flux sigure";
 
-/* iOS: table header section in profiles screen */
-"_my_profiles" = "Profilurile mele";
-
-/* Profile create/change form */
-"_name" = "Nume";
-
-/* Network error */
-"_ne_couldnt_reach_server" = "Nu s-au putut contacta serverele Proton";
-
-/* Network error */
-"_ne_network_connection_lost" = "Conexiunea la rețea pierdută";
-
-/* Network error */
-"_ne_not_connected_to_the_internet" = "Neconectat la internet";
-
-/* Network error */
-"_ne_request_timed_out" = "Solicitarea de rețea a expirat";
-
-/* Button on alert after a problem with internet connection */
-"_ne_troubleshoot" = "Depanare";
-
-/* Network error */
-"_ne_unable_to_connect_to_host" = "Serviciu indisponibil";
-
-/* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
-"_neagent_always_allow" = "Permitere întotdeauna";
-
-/* Mac: neagent help screen */
-"_neagent_description" = "Vi se poate cere să furnizați %@\npentru a vă conecta la serviciul Proton VPN. În cazul în care apare această solicitare,\nintroduceți %@ %@ și faceți clic pe „%@” %@.";
-
-/* Mac: neagent help screen */
-"_neagent_password" = "parola contului calculatorului";
-
-/* MacOS: button in login screen */
-"_need_help" = "Doriți ajutor?";
-
-/* (No Comment) */
-"_neks_t2_connect" = "Activare așa";
-
-/* (No Comment) */
-"_neks_t2_description" = "Utilizarea blocării conexiunii este instabilă pe acest dispozitiv.\n\nDispozitivul are un cip de securitate T2, care poate duce la probleme de stabilitate a sistemului dacă funcționalitatea blocării conexiunii din macOS este utilizată de Proton VPN.";
-
-/* `_neks_t2_description' localized string. */
-"_neks_t2_hyperlink" = "Cip de securitate T2";
-
-/* NetworkExtension + KillSwitch on T2 Macs */
-"_neks_t2_title" = "Avertizare stabilitate blocare conexiune";
-
-/* (No Comment) */
-"_netshield_alert_reconnect_description_off" = "Conexiunea va fi restabilită pentru a trece în modul NetShield.";
-
-/* (No Comment) */
-"_netshield_alert_reconnect_description_on" = "Conexiunea va fi repornită pentru a schimba modul NetShield.\nNotă: Dacă unele site-uri nu se încarcă, încercați să dezactivați NetShield.";
-
-/* (No Comment) */
-"_netshield_alert_upgrade_description" = "NetShield vă mărește intimitatea blocând reclamele și monitorizarea.";
-
-/* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
-"_netshield_feature_description" = "Protejați-vă de reclame, programe malițioase și urmărirea de pe paginile web și din aplicații. Dacă paginile web nu se încarcă, încercați cu NetShield dezactivat.\nDetalii.";
-
-/* Link with more info in the NetShield Feature description */
-"_netshield_feature_description_alt_link" = "Detalii";
-
-/* Settings -> Netshield: Block malware */
-"_netshield_level1" = "Blocare malware";
-
-/* Settings -> Netshield: Block malware, ads, trackers */
-"_netshield_level2" = "Blocare malware, reclame și urmăritori";
-
-/* Settings -> Netshield, Status -> NetShield: Off */
-"_netshield_off" = "Oprit";
-
-/* Status -> Netshield: On */
-"_netshield_on" = "Activat";
-
-/* Netshield section title in iOS connection screen */
-"_netshield_section_title" = "Blocare malware și reclame";
-
-/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
-"_netshield_stats_data_saved" = "Date\nsalvate";
-
-/* (No Comment) */
-"_netshield_title_tooltip" = "Blocare reclame, urmăritori și malware";
-
-/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
-"_netshield_upsell_subtitle" = "Blocați reclame, urmăritori și malware pe pagini web și aplicații";
-
-/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
-"_netshield_upsell_title" = "Navigați fără reclame cu NetShield";
-
-/* iOS: quick connect widget */
-"_network_unreachable" = "Rețea inaccesibilă";
-
-/* Title of the screen with news and offers. */
-"_news_title" = "Știri";
-
-/* iOS onboarding next item button */
-"_next" = "Înainte";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Înainte";
-
-/* Text used when no active server information is available */
-"_no_description_available" = "Descriere nedisponibilă";
-
-/* (No Comment) */
-"_no_servers_to_show" = "Momentan aici nu există servere.";
-
-/* MacOS welcome screen: cancel button */
-"_no_thanks" = "Nu, mulțumesc";
-
-/* Title for alert shown when enabling Non-standard ports requires reconnection */
-"_non_standard_ports_change_title" = "Activare porturile nonstandard";
-
-/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
-"_non_standard_ports_explanation" = "Utilizați Proton VPN pentru orice nevoie specială, permițând traficul către porturile nonstandard prin VPN.";
-
-/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
-"_non_standard_ports_explanation_link" = "Detalii";
-
-/* Non-standard ports feature title in Settings */
-"_non_standard_ports_title" = "Porturi nonstandard";
-
-/* iOS: connection bar; Main mac app menu item; */
-"_not_connected" = "Neconectat";
-
-/* Title in no internet alert */
-"_not_connected_to_the_internet" = "Nu se poate stabili conexiunea VPN. Nu aveți conexiune la internet.";
-
-/* (No Comment) */
-"_not_now" = "Nu acum";
-
-/* Common word */
-"_ok" = "OK";
-
-/* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "În întreținere";
-
-/* Telemetry label in the onboarding screen for mac next to a toggle */
-"_onboarding_mac_crash_reports" = "Partajare anonimă rapoarte de erori. Asta ne ajută să reparăm erorile, să detectăm paravanele de protecție și să evităm blocările VPN-ului.";
-
-/* Telemetry label in the onboarding screen for mac next to a toggle */
-"_onboarding_mac_usage_stats" = "Partajare anonimă statistici de utilizare. Asta ne ajută să depășim blocările VPN-ului și să îmbunătățim performanța aplicației.";
-
-/* Main mac app menu item */
-"_open_app_to_log_in" = "Afișare Proton VPN pentru conectare...";
-
-/* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "Jurnale OpenVPN";
-
-/* MacOS menu item; MacOS Profiles tab title; */
-"_overview" = "Rezumat";
-
-/* Description shown together with server info icon */
-"_p2p_description" = "Suportă trafic P2P";
-
-/* (No Comment) */
-"_p2p_detected_popup_body" = "Conexiunea a fost dezactivată deoarece folosiți un server care nu suportă traficul de la persoană-la-persoană (P2P). P2P nu este suportat pe serverele gratuite sau cele numerotate cu 100 sau mai mult.";
-
-/* (No Comment) */
-"_p2p_detected_popup_title" = "Traficul P2P nu se permite pe acest server";
-
-/* (No Comment) */
-"_p2p_forwarded_popup_body" = "Conexiunea a fost direcționată automat printr-un alt server deoarece unele servere nu suportă traficul P2P. Aceasta ar putea reduce viteza conexiunii. Folosiți servere cu eticheta P2P pentru e evita redirecționarea.";
-
-/* (No Comment) */
-"_p2p_forwarded_popup_body_p1" = "Conexiunea a fost direcționată automat printr-un alt server deoarece unele servere nu suportă traficul P2P. Aceasta ar putea reduce viteza conexiunii. Folosiți servere cu";
-
-/* (No Comment) */
-"_p2p_forwarded_popup_body_p2" = "pictogramă pentru a evita redirecționarea traficului.";
-
-/* (No Comment) */
-"_p2p_forwarded_popup_title" = "Conexiune redirecționată";
-
-/* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_p2p_server" = "Server P2P";
-
-/* MacOS: Used ir trial welcome and trial expired screens */
-"_p2p_servers" = "Servere P2P";
-
-/* Used in sign-in, sign-up */
-"_password" = "Parola";
-
-/* Sign-up form */
-"_password_confirm" = "Confirmare parolă";
-
-/* Per year. Appended to plan price. */
-"_per_year_short" = "/ an";
-
-/* (No Comment) */
-"_performance_load_description" = "Serverele mai încărcate sunt mai lente decât serverele mai puțin încărcate.";
-
-/* (No Comment) */
-"_performance_load_high" = "Mare";
-
-/* (No Comment) */
-"_performance_load_low" = "Redusă";
-
-/* (No Comment) */
-"_performance_load_medium" = "Medie";
-
-/* (No Comment) */
-"_performance_title" = "Performanță";
-
-/* iOS: placeholder in phone verification screen */
-"_phone_country_code_placeholder" = "Cod";
-
-/* iOS: placeholder in phone verification screen */
-"_phone_number_placeholder" = "Introduceți numărul de telefon";
-
-/* MacOS: SecureCore warning alert when users plan has to be upgraded */
-"_plan_does_not_include_secure_core" = "Planul actual nu include funcția Secure Core.";
-
-/* (No Comment) */
-"_plan_speed_fastest" = "Viteza maximă";
-
-/* Plan speed */
-"_plan_speed_high" = "Viteză mare";
-
-/* Plan speed */
-"_plan_speed_medium" = "Viteză medie";
-
-/* Text description in plan selection screen */
-"_plans_footer" = "După confirmarea achiziției unui plan cu plată, contul dvs. iTunes va fi debitat cu suma afișată, care include taxe și comisioane de platformă suplimentare (care nu sunt percepute direct de către Proton). După efectuarea achiziției, planul selectat va fi actualizat automat pentru o perioadă de un an, după care puteți reînnoi sau anula, fie online, fie prin intermediul aplicației iOS.";
-
-/* Features of account plan */
-"_plus_plan_features" = "Servere Plus\nSecure Core\nServere Tor";
-
-/* iOS: section header in countries list */
-"_plus_servers" = "Servere Plus";
-
-/* MacOS: Settings screen title */
-"_preferences" = "Preferințe";
-
-/* Description shown together with server info icon */
-"_premium_description" = "Server premium";
-
-/* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_premium_server" = "Server premium";
-
-/* MacOS: connecting overlay */
-"_preparing_connection" = "Se verifică disponibilitatea serverului";
-
-/* iOS: link inside text under sign-up form */
-"_privacy_policy" = "Politica de confidențialitate";
-
-/* MacOS Profiles Overview: Table column header */
-"_profile" = "Profil";
-
-/* iOS: success message after profile is saved */
-"_profile_created_successfully" = "Profil nou salvat";
-
-/* iOS: failure message after profile is saved */
-"_profile_creation_failed" = "Profilul nu a putut fi creat.l";
-
-/* iOS: Success message on profile deletion */
-"_profile_deleted_successfully" = "Profilul a fost șters.";
-
-/* iOS: Error message if profile can't be deleted */
-"_profile_deletion_failed" = "Profilul nu a putut fi șters.";
-
-/* iOS: success message after profile is saved */
-"_profile_edited_successfully" = "Profil actualizat";
-
-/* Error in profile create/change form */
-"_profile_name_is_required" = "Introduceți un nume";
-
-/* Error in profile create/change form */
-"_profile_name_is_too_long" = "Lungimea maximă a numelui profilului este 25 de caractere.";
-
-/* (No Comment) */
-"_profile_name_needs_to_be_unique" = "Deja există un profil cu același nume.";
-
-/* Profile create/change form */
-"_profile_settings" = "Setări profil";
-
-/* MacOS: menu item, profiles window main header, sidebar tab title; iOS: Profiles screen title and tabbar item title; */
-"_profiles" = "Profile";
-
-/* MacOS: profiles window title */
-"_profiles_overview" = "Imagine de ansamblu profil";
-
-/* MacOS app tour: profiles description */
-"_profiles_tour_description" = "Salvați setările preferate și serverele pentru o utilizare ulterioară.";
-
-/* MacOS app tour: profiles title */
-"_profiles_tour_title" = "Profile";
-
-/* (No Comment) */
-"_protocol" = "Protocol";
-
-/* %@ is an IP address e.g. Public IP: 123.45.67.890 */
-"_public_ip" = "IP public: %@";
-
-/* Several places in both iOS and Mac apps */
-"_quick_connect" = "Conectare rapidă";
-
-/* MacOS: Settings -> Connection: description. */
-"_quick_connect_tooltip" = "Butonul «Conectare rapidă» vă va conecta la profilul selectat";
-
-/* MacOS app tour: quick connect description */
-"_quick_connect_tour_description" = "Conectare automată la servereul care va furniza cea mai rapidă conexiune.";
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_description" = "Vizionați în siguranță\nconținutul favorit";
 
 /* MacOS app tour: quick connect title */
 "_quick_connect_tour_title" = "Conectare rapidă";
 
-/* (No Comment) */
-"_quick_settings_get_plus" = "Luați Plus";
+/* MacOS app tour: quick connect description */
+"_quick_connect_tour_description" = "Conectare automată la servereul care va furniza cea mai rapidă conexiune.";
 
-/* (No Comment) */
-"_quick_settings_killSwitch_description" = "Dezactivează accesul la internet când cade conexiunea VPN pentru a preveni divulgarea accidentală a adresei IP.";
+/* MacOS app tour: profiles title */
+"_profiles_tour_title" = "Profile";
 
-/* (No Comment) */
-"_quick_settings_killSwitch_note" = "Dacă nu vă puteți conecta la dispozitivele din rețeaua locală, încercați să dezactivați blocarea reclamelor.";
+/* MacOS app tour: profiles description */
+"_profiles_tour_description" = "Salvați setările preferate și serverele pentru o utilizare ulterioară.";
 
-/* (No Comment) */
-"_quick_settings_netShield_description" = "Navigați pe internet fără reclame și malware.";
+/* MacOS app tour: countries list title */
+"_countries_tour_title" = "Țări";
 
-/* (No Comment) */
-"_quick_settings_netShield_note" = "Dacă paginile web nu se încarcă, încercați cu NetShield dezactivat.";
+/* MacOS app tour: countries list description */
+"_countries_tour_description" = "Alegeți țara și serverul pe care doriți să le utilizați ca adresă IP vizibilă.";
 
-/* (No Comment) */
-"_quick_settings_netshield_option_level1" = "Blocare doar malware";
-
-/* (No Comment) */
-"_quick_settings_netshield_option_level2" = "Blocare malware, reclame și urmăritori";
-
-/* (No Comment) */
-"_quick_settings_netshield_option_off" = "Fără blocare";
-
-/* Quick Settings */
-"_quick_settings_secureCore_description" = "Direcționați-vă cele mai importante date prin serverele noastre sigure din țările care respectă intimitatea.";
-
-/* (No Comment) */
-"_quick_settings_secureCore_note" = "„Secure Core” are putea reduce viteza prin VPN";
+/* MacOS app tour: quick settings title */
+"_quick_settings_tour_title" = "Setări rapide";
 
 /* MacOS app tour: quick settings description */
 "_quick_settings_tour_description" = "Măriți-vă securitatea cu un singur clic:";
@@ -1165,62 +1220,73 @@
 /* MacOS app tour: quick settings kill switch */
 "_quick_settings_tour_feature_3" = "Preveniți expunerea adresei IP activând blocarea conexiunii.";
 
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "Setări rapide";
+/* MacOS app tour: next tip button */
+"_next_tip" = "Înainte";
 
-/* MacOS: quit application button in custom status menu */
-"_quit" = "Ieșire";
+/* MacOS app tour: end tour button */
+"_end_tour" = "Terminare tur";
 
-/* MacOS: alert show before quitting app if VPN is connected */
-"_quit_warning" = "Închizând aplicația se va deconecta conexiunea VPN activă. Doriți să continuați?";
+/* iOS onboarding texts */
+"_ios_onboarding_page1_title" = "Bun venit la un internet mai bun";
 
-/* Profile create/change form and other places describing profile */
-"_random" = "Aleator";
+/* iOS onboarding texts */
+"_ios_onboarding_page1_description" = "De la oamenii de știință și inginerii care au creat Proton Mail, bun venit la un internet mai sigur și privat.";
 
-/* Profile create/change form */
-"_random_available_server" = "Server aleator disponibil";
+/* iOS onboarding texts */
+"_ios_onboarding_page2_title" = "Credem că internetul ar trebui să fie liber";
 
-/* iOS: Predefined profile with random server */
-"_random_connection" = "Conexiune aleatoare";
+/* iOS onboarding texts */
+"_ios_onboarding_page2_description" = "Învingeți cenzura și restricțiile regionale. Nu avem reclame, nu există limite de lățime de bandă și nu vă vindem datele.";
 
-/* iOS: table header section in profiles screen */
-"_recommended" = "Recomandat";
+/* iOS onboarding texts */
+"_ios_onboarding_page3_title" = "Securitatea dvs. este prioritatea noastră";
 
-/* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
-"_reconnect_on_settings_change_body" = "Conexiunea trebuie repornită pentru a se aplica această modificare.";
+/* iOS onboarding texts */
+"_ios_onboarding_page3_description" = "Suntem o companie de securitate. Indiferent dacă este vorba de arhitectura noastră Secure Core sau criptare avansată, securitatea este întotdeauna pe primul loc.";
 
-/* (No Comment) */
-"_reconnect_title" = "Se reconectează la cel mai rapid server disponibil.";
+/* iOS onboarding next item button */
+"_next" = "Înainte";
 
-/* (No Comment) */
-"_reconnecting_to" = "Reconectare la %@";
+/* iOS onboarding button to check app without logging in */
+"_discover_the_app" = "Descoperiți aplicația";
 
-/* iOS & MacOS: text that requires restart connection */
-"_reconnection_required" = "Reconectare necesară";
+/* iOS: Table header in settings screen */
+"_extensions" = "Extensii";
 
-/* (No Comment) */
-"_reestablish_vpn_connection_" = "Restabilire conexiune VPN.";
+/* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
+"_widget" = "Widget iOS";
 
-/* MacOS: About window */
-"_release_date" = "Dată de lansare:";
+/* Menu point in settings screen */
+"_usage_statistics" = "Statistici de utilizare";
 
-/* MacOS: label in login and settings screens */
-"_remember_login" = "Memorare autentificare";
+/* iOS widget: text for not-logged-in user */
+"_log_in_to_use_widget" = "Conectați-vă pentru a începe";
 
-/* Button in Kill switch error alert */
-"_report" = "Raportare";
-
-/* Main mac app menu item */
-"_report_an_issue" = "Raportare o problemă...";
+"_vpnstatus_not_loggedin" = "Nu v-ați conectat la Proton VPN. Deschideți aplicația Proton VPN și conectați-vă.";
 
 /* Bug report attachments */
 "_report_attachments" = "Fișiere atașate";
 
-/* Mag bug report: attach logs checkbox */
-"_report_attachments_checkbox" = "Includere jurnale aplicație și detalii sistem";
+/* iOS bug report: header before logs description */
+"_report_logs" = "Jurnale VPN";
 
-/* Report bug screen title; iOS settings screen: item; */
-"_report_bug" = "Raportare o problemă";
+/* iOS bug report: description of log selection switch */
+"_report_logs_description" = "Activarea acestei opțiuni va adăuga la acest raport jurnalele VPN locale";
+
+/* iOS bug report: Title before report bug form */
+"_report_report" = "Mesaj raport";
+
+/* iOS bug report: Placeholder for email form field */
+"_report_placeholder_email" = "E-mail de contact";
+
+/* Bug report: Placeholder for text form field */
+"_report_placeholder_message" = "Mesaj personal...";
+
+/* Bug report: Send report button text */
+"_report_send" = "Trimitere raport";
+
+/* Bug report: Success message after report was sent */
+"_report_success" = "Vă mulțumim pentru raport";
 
 /* Mac bug report: description text before bug report form */
 "_report_description" = "Furnizând următoarele detalii, echipa noastră vă poate identifica problema și o posibilă soluție cu șanse mai mari și în timp mai scurt:\n• Jurnale aplicație Proton VPN\n• Jurnale OpenVPN\n• Jurnale WireGuard";
@@ -1231,269 +1297,219 @@
 /* Mac bug report: feedback field label */
 "_report_field_feedback" = "Ce nu a funcționat bine?";
 
-/* Mag bug report: textfields placeholder */
-"_report_field_placeholder" = "Începeți să scrieți...";
-
 /* Mac bug report: steps field label */
 "_report_field_steps" = "Care sunt exact pașii executați?";
 
-/* iOS bug report: header before logs description */
-"_report_logs" = "Jurnale VPN";
+/* Mag bug report: textfields placeholder */
+"_report_field_placeholder" = "Începeți să scrieți...";
 
-/* iOS bug report: description of log selection switch */
-"_report_logs_description" = "Activarea acestei opțiuni va adăuga la acest raport jurnalele VPN locale";
+/* Mag bug report: attach logs checkbox */
+"_report_attachments_checkbox" = "Includere jurnale aplicație și detalii sistem";
 
-/* iOS bug report: Placeholder for email form field */
-"_report_placeholder_email" = "E-mail de contact";
+/* Main mac app menu item */
+"_menu_about" = "Despre Proton VPN";
 
-/* Bug report: Placeholder for text form field */
-"_report_placeholder_message" = "Mesaj personal...";
+/* Main mac app menu item */
+"_menu_check_updates" = "Verificare actualizări...";
 
-/* iOS bug report: Title before report bug form */
-"_report_report" = "Mesaj raport";
+/* Main mac app menu item */
+"_menu_preferences" = "Preferințe";
 
-/* Bug report: Send report button text */
-"_report_send" = "Trimitere raport";
+/* Main mac app menu item */
+"_menu_hide_self" = "Ascundere Proton VPN";
 
-/* Bug report: Success message after report was sent */
-"_report_success" = "Vă mulțumim pentru raport";
+/* Main mac app menu item */
+"_menu_hide_others" = "Ascundere restul";
 
-/* iOS: human verification option select button */
-"_request_invitation" = "Solicitare activare manuală";
+/* Main mac app menu item */
+"_menu_show_all" = "Afișare toate";
 
-/* iOS: button in human verification code form */
-"_resend_code" = "Solicitare cod nou";
+/* Main mac app menu item */
+"_menu_logout" = "Deconectare";
 
-/* iOS: button in human verification code form */
-"_resend_no_code" = "Nu ați obținut codul?";
+/* Main mac app menu item */
+"_menu_quit" = "Închidere Proton VPN";
 
-/* iOS: message after human verification code resending */
-"_resend_success" = "Cod nou solicitat";
+/* Main mac app menu item */
+"_menu_window" = "Fereastră";
 
-/* MacOS: button in login screen */
-"_reset_password" = "Resetare parolă";
+/* Main mac app menu item */
+"_menu_minimize" = "Micșorare";
 
-/* Button in some alerts */
-"_retry" = "Reîncercare";
+"_subscription_will_expire" = "Planul actual va expira la %@.";
 
-/* Common word */
-"_save" = "Salvare";
+"_subscription_will_renew" = "Planul curent se va reînnoi automat la %@.";
 
-/* Button */
-"_save_as_profile" = "Salvare ca profil";
+"_subscription_description" = "Puteți cumpăra mai multe credite pentru a vă extinde automat planul curent. La sfârșitul perioadei abonamentului, aceste credite vor fi aplicate pentru continuarea planului.";
 
-/* MacOS: placeholder for country search */
-"_search_for_country" = "Căutare țară";
+"_subscription_button" = "Extindere plan cu un an \n%@.";
 
-/* iOS: placeholder in phone country code selection screen */
-"_search_phone_country_code_placeholder" = "Căutare țară";
+"_subscription_extended_success" = "Ați reușit cumpărarea de credite pentru extinderea planului curent.";
 
-/* MacOS: \Trial about to expire\ screen */
-"_secure_core_description" = "Servere ultrasigure\ngăzduite de noi";
+/* Button on alert after a problem with internet connection */
+"_ne_troubleshoot" = "Depanare";
 
-/* MacOS: secure core tooltip */
-"_secure_core_info" = "Furnizează o protecție adițională împotriva compromiterii serverului VPN direcționând traficul prin intermediul rețelei noastre Secure Core.";
+/* Title of connection troubleshooting screen */
+"_troubleshoot_title" = "Depanare";
 
-/* MacOS: \Trial about to expire\ screen */
-"_secure_streaming_description" = "Vizionați în siguranță\nconținutul favorit";
+"_troubleshoot_item_alt_title" = "Permitere rută alternativă";
 
-/* MacOS: \Trial about to expire\ screen */
-"_secure_streaming_title" = "Transmisii în flux sigure";
+"_troubleshoot_item_alt_description" = "În cazul în care site-urile Proton sunt blocate, această setare permite aplicației să încerce o rută alternativă pentru a ajunge la Proton, care poate fi utilă pentru ocolirea paravalor de protecție sau a problemelor de rețea. Vă recomandăm să păstrați această setare activată pentru o mai mare fiabilitate.\nDetalii";
 
-/* iOS status view */
-"_security" = "Securitate";
+"_troubleshoot_item_alt_link1" = "Detalii";
 
-/* iOS Settings: table section header */
-"_security_options" = "Opțiuni securitate";
+"_troubleshoot_item_nointernet_title" = "Nu există conexiune la internet";
 
-/* Profile create/change form */
-"_select_country" = "Selectare țară";
+"_troubleshoot_item_nointernet_description" = "Asigurați-vă că aveți conexiune la internet.";
 
-/* iOS: title of phone country code selection screen */
-"_select_phone_country_code" = "Selectare cod țară";
+"_troubleshoot_item_isp_title" = "Problemă cu furnizorul de servicii internet (ISP)";
 
-/* Button in plan selection */
-"_select_plan" = "Selectare plan";
+"_troubleshoot_item_isp_description" = "Încercați să vă conectați la Proton dintr-o altă rețea (sau folosiți Tor).";
 
-/* iOS: new profile screen */
-"_select_profile_color" = "Selectare culoare profil";
+"_troubleshoot_item_isp_link1" = "Tor";
 
-/* Profile create/change form */
-"_select_server" = "Selectare server";
+"_troubleshoot_item_gov_title" = "Blocare guvernamentală";
 
-/* iOS: text in human verification options screen */
-"_select_verification_option" = "Selectați o opțiune de verificare pentru continuare:";
+"_troubleshoot_item_gov_description" = "Țara dvs. ar putea bloca accesul la Proton. Încercați să folosiți Tor pentru a accesa Proton.";
 
-/* iOS: text in human verification options screen */
-"_select_verification_option_top_message" = "Pentru a preveni abuzurile trebuie să dovediți că sunteți o persoană.";
+"_troubleshoot_item_gov_link1" = "Tor";
 
-/* Profile create/change form */
-"_server" = "Server";
+"_troubleshoot_item_antivirus_title" = "Interferență antivirus";
 
-/* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_server_ip" = "IP server:";
+"_troubleshoot_item_antivirus_description" = "Dezactivați temporar sau eliminați antivirusul.";
 
-/* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_server_load" = "Solicitare server:";
+"_troubleshoot_item_proxy_title" = "Interferență Proxy/Paravan de protecție";
 
-/* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
-"_server_load_percentage" = "Solicitare %@%% ";
+"_troubleshoot_item_proxy_description" = "Dezactivați setările din proxy sau paravanul de protecție sau contactați administratorul de rețea.";
 
-/* (No Comment) */
-"_server_load_title" = "Încărcare server";
+"_troubleshoot_item_proton_title" = "Proton indisponibil";
 
-/* Error when user hasn't selected profile server */
-"_server_selection_is_required" = "Selectați un server";
+"_troubleshoot_item_proton_description" = "Consultare stare Proton pentru aflarea stării sistemului.";
 
-/* Under maintenance alert */
-"_server_under_maintenance" = "Servere în întreținere";
+"_troubleshoot_item_proton_link1" = "Stare Proton";
 
-/* iOS status view */
-"_session_time" = "Durată sesiune";
+"_troubleshoot_item_other_title" = "Încă nu găsesc o soluție";
 
-/* iOS: Settings screen title and tab title */
-"_settings" = "Setări";
+"_troubleshoot_item_other_description" = "Contactați-ne direct prin formularul nostru de suport, e-mail (%@) sau Twitter.";
 
-/* Telemetry label in the settings window for mac */
-"_settings_mac_crash_reports_title" = "Partajare anonimă rapoarte de erori";
+"_troubleshoot_item_other_link1" = "formular de asistență";
 
-/* Telemetry tooltip in the settings window for mac */
-"_settings_mac_crash_reports_tooltip" = "Rapoartele de erori ne ajută să reparăm erorile, să detectăm paravanele de protecție și să evităm blocările VPN-ului.";
+"_troubleshoot_item_other_link2" = "e-mail";
 
-/* Clickable label title in the onboarding screen for mac */
-"_settings_mac_telemetry_learn_more" = "Detalii";
+"_troubleshoot_item_other_link3" = "Twitter";
 
-/* Telemetry label in the settings window for mac */
-"_settings_mac_usage_stats_title" = "Partajare anonimă statistici de utilizare";
+/* iOS settings -> Battery usage; Title of battery usage screen; */
+"_battery_title" = "Utilizare baterie";
 
-/* Telemetry tooltip in the settings window for mac */
-"_settings_mac_usage_stats_tooltip" = "Datele de utilizare ne ajută să depășim blocările VPN-ului și să îmbunătățim performanța aplicației.";
+/* Battery usages screen description */
+"_battery_description" = "Întregul trafic de pe telefon va fi gestionat prin OpenVPN, deci iOS va aloca utilizarea bateriei de către alte aplicații către Proton VPN.";
 
-/* iOS: title of the screen after successfull purchase */
-"_setup_complete" = "Setare finalizată";
+/* Battery usage More info button text */
+"_battery_more" = "Doriți să aflați mai multe?";
 
-/* iOS: title of the screen after successfull purchase */
-"_setup_complete_free" = "Acum aveți abonament la planul gratuit Proton VPN Free. Pentru a începe, bucurați-vă de șapte zile gratuite din planul Proton VPN Plus.";
+/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved"*/ */
+"_netshield_stats_data_saved" = "Date\nsalvate";
 
-/* iOS: title of the screen after successfull purchase */
-"_setup_complete_plus" = "Achiziția a reușit. Planul Proton VPN Plus este acum activ.";
+/* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
+"_netshield_feature_description" = "Protejați-vă de reclame, programe malițioase și urmărirea de pe paginile web și din aplicații. Dacă paginile web nu se încarcă, încercați cu NetShield dezactivat.\nDetalii.";
 
-/* Show/hide password switch */
-"_show" = "AFIȘARE";
+/* Link with more info in the NetShield Feature description */
+"_netshield_feature_description_alt_link" = "Detalii";
 
-/* Button in some alerts */
-"_show_instructions" = "Afișare instrucțiuni";
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_upsell_title" = "Navigați fără reclame cu NetShield";
 
-/* (No Comment) */
-"_show_protonvpn" = "Afișare Proton VPN";
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_upsell_subtitle" = "Blocați reclame, urmăritori și malware pe pagini web și aplicații";
 
-/* iOS: button in login and onboarding screens */
-"_sign_up" = "Înscriere";
+/* Settings -> Netshield: name of field. */
+"_netshield_title" = "NetShield";
 
-/* MacOS welcome screen: skip button */
-"_skip" = "Omitere";
+"_netshield_title_tooltip" = "Blocare reclame, urmăritori și malware";
+
+/* Settings -> Netshield, Status -> NetShield: Off */
+"_netshield_off" = "Oprit";
+
+/* Status -> Netshield: On */
+"_netshield_on" = "Activat";
+
+/* Settings -> Netshield: Block malware */
+"_netshield_level1" = "Blocare malware";
+
+/* Settings -> Netshield: Block malware, ads, trackers */
+"_netshield_level2" = "Blocare malware, reclame și urmăritori";
+
+"_netshield_alert_reconnect_description_on" = "Conexiunea va fi repornită pentru a schimba modul NetShield.\nNotă: Dacă unele site-uri nu se încarcă, încercați să dezactivați NetShield.";
+
+"_netshield_alert_reconnect_description_off" = "Conexiunea va fi restabilită pentru a trece în modul NetShield.";
+
+"_netshield_alert_upgrade_description" = "NetShield vă mărește intimitatea blocând reclamele și monitorizarea.";
+
+/* Netshield section title in iOS connection screen */
+"_netshield_section_title" = "Blocare malware și reclame";
+
+/* Title of the screen with news and offers. */
+"_news_title" = "Știri";
+
+"_quick_settings_secureCore_description" = "Direcționați-vă cele mai importante date prin serverele noastre sigure din țările care respectă intimitatea.";
+
+"_quick_settings_netShield_description" = "Navigați pe internet fără reclame și malware.";
+
+"_quick_settings_killSwitch_description" = "Dezactivează accesul la internet când cade conexiunea VPN pentru a preveni divulgarea accidentală a adresei IP.";
+
+"_quick_settings_secureCore_note" = "„Secure Core” are putea reduce viteza prin VPN";
+
+"_quick_settings_netShield_note" = "Dacă paginile web nu se încarcă, încercați cu NetShield dezactivat.";
+
+"_quick_settings_killSwitch_note" = "Dacă nu vă puteți conecta la dispozitivele din rețeaua locală, încercați să dezactivați blocarea reclamelor.";
+
+"_quick_settings_get_plus" = "Luați Plus";
+
+"_applying_settings_" = "Aplicare setări";
+
+"_reestablish_vpn_connection_" = "Restabilire conexiune VPN.";
+
+"_ip_will_not_be_exposed" = "Adresa IP nu va fi expusă.";
+
+"_cancel_reconnection" = "Se va anula orice încercare de reconectare și va rămâne deconectată";
+
+"_quick_settings_netshield_option_off" = "Fără blocare";
+
+"_quick_settings_netshield_option_level1" = "Blocare doar malware";
+
+"_quick_settings_netshield_option_level2" = "Blocare malware, reclame și urmăritori";
+
+"_upgrade_required_securecore_description" = "Serverele Secure Core sunt disponibile în planul Plus. Treceți la alt plan acum pentru a direcționa traficul prin servele noastre sigure aflate în țări care vă respectă intimitatea.";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection_header" = "Blocarea conexiunii vă protejează adresa IP";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection" = "Conexiunea la internet se va relua imediat ce Proton VPN se reconectează la server.\nPentru a folosi internetul fără VPN and protecția de blocare a conexiunii, anulați reconectarea la server.";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold1" = "fără";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold2" = "Protecție blocare conexiune";
+
+/* MacOS: connection screen - cancel button */
+"_kill_switch_reconnection_cancel" = "Anulare reconectare";
+
+/* Title for Smart Protocol in Settings */
+"_smart_protocol_title" = "Smart Protocol";
+
+/* Shortened title for Smart Protocol on Settings configuration */
+"_smart_title" = "Smart";
 
 /* Description for Smart Protocol in Settings */
 "_smart_protocol_description" = "Activați Smart Protocol pentru a utiliza cel mai bun protocol și port care oferă cea mai bună conectivitate.";
 
-/* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
-"_smart_protocol_reconnect_modal_body" = "Conexiunea va fi restabilită pentru a schimba modul lui Smart Protocol.";
-
 /* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_title" = "Reconectare necesară";
 
-/* %@ is a speed description e.g. Speed: Highest */
-"_speed" = "Viteză %@";
-
-/* MacOS profile form: feature selection value */
-"_standard" = "Standard";
-
-/* MacOS: Settings -> General: name of field. */
-"_start_minimized" = "Pornire micșorat";
-
-/* MacOS: label in login and settings screens */
-"_start_on_boot" = "Pornire automată";
-
-/* iOS status view */
-"_status" = "Stare";
-
-/* (No Comment) */
-"_streaming_servers_description" = "Conectați-vă la un server Plus din această țară pentru a reda transmisii în flux.";
-
-/* (No Comment) */
-"_streaming_servers_extra" = "și mai multe";
-
-/* (No Comment) */
-"_streaming_servers_note" = "Notă: Opriți serviciul de localizare și goliți bufferul aplicației de transmisii în flux pentru a vă asigura că apare conținut actualizat.";
-
-/* (No Comment) */
-"_streaming_title" = "Transmisie în flux";
-
-/* iOS: button in human verification code form */
-"_submit_verification_code" = "Trimitere";
-
-/* (No Comment) */
-"_subscription_button" = "Extindere plan cu un an \n%@.";
-
-/* (No Comment) */
-"_subscription_description" = "Puteți cumpăra mai multe credite pentru a vă extinde automat planul curent. La sfârșitul perioadei abonamentului, aceste credite vor fi aplicate pentru continuarea planului.";
-
-/* (No Comment) */
-"_subscription_expired_description" = "Abonamentul a fost retrogradat.";
-
-/* (No Comment) */
-"_subscription_expired_reconnection_description" = "Abonamentul a fost retrogradat, deci se va reconecta la cel mai rapid server disponibil.";
-
-/* (No Comment) */
-"_subscription_expired_title" = "Abonamentul planului VPN a expirat";
-
-/* (No Comment) */
-"_subscription_extended_success" = "Ați reușit cumpărarea de credite pentru extinderea planului curent.";
-
-/* iOS Settings -> Connection: name of field. */
-"_subscription_plan" = "Plan abonament";
-
-/* (No Comment) */
-"_subscription_upgrade_option3" = "Funcții avansate: NetShield, Secure Core, Tor, P2P";
-
-/* (No Comment) */
-"_subscription_upgrade_title" = "Remodernizați planul pentru a accesa toate funcțiile:";
-
-/* Manage subscription */
-"_subscription_will_expire" = "Planul actual va expira la %@.";
-
-/* (No Comment) */
-"_subscription_will_renew" = "Planul curent se va reînnoi automat la %@.";
-
-/* (No Comment) */
-"_subuser_alert_description1" = "Pentru a începe utilizarea Proton VPN activați conexiunile VPN. Același lucru trebuie făcut pentru oricare utilizator din organizație.";
-
-/* (No Comment) */
-"_subuser_alert_description2" = "Acest pas va dura doar câteva minute. După aceea, veți putea să vă conectați și să vă protejați toate dispozitivele.";
-
-/* (No Comment) */
-"_subuser_alert_description3" = "Momentan nu există nici o conexiune VPN activată pentru acest cont. Pentru a începe să utilizați Proton VPN contactați-vă administratorul contului.";
-
-/* (No Comment) */
-"_subuser_alert_enable_connections_button" = "Activare conexiuni VPN";
-
-/* (No Comment) */
-"_subuser_alert_login_button" = "Reconectați-vă";
-
-/* Subuser alert */
-"_subuser_alert_title" = "Vă mulțumim că ați trecut la planul Business / Visionary";
-
-/* MacOS: connecting overlay */
-"_successfully_connected" = "Conexiune reușită";
-
-/* (No Comment) */
-"_switch_side_button_off" = "Oprit";
-
-/* (No Comment) */
-"_switch_side_button_on" = "Pornit";
-
-/* (No Comment) */
-"_sysex_cannot_enable" = "Nu se poate activa extensia de sistem.";
+/* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
+"_smart_protocol_reconnect_modal_body" = "Conexiunea va fi restabilită pentru a schimba modul lui Smart Protocol.";
 
 /* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
 "_sysex_description_1" = "Pentru a utiliza Proton VPN, trebuie să activați **protocoale personale VPN** în Mac.";
@@ -1507,247 +1523,134 @@
 /* Alternative for Part 3 for pre-ventura of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
 "_sysex_description_4" = "Pentru a continua, faceți clic pe **Deschidere preferințe securitate**, apoi urmați instrucțiunile video de pe acest ecran.";
 
-/* (No Comment) */
-"_sysex_enabled_description" = "Configurare finalizată. Acum puteți naviga pe internet mai rapid cu cele mai bune tehnologii VPN.";
-
-/* (No Comment) */
-"_sysex_enabled_title" = "Configurare finalizată";
-
-/* (No Comment) */
-"_sysex_error_description" = "A apărut o eroare la instalarea extensiei de sistem.\nReinstalați Proton VPN și asigurați-vă că se află în folderul „Aplicații”, pentru a rezolva problema. Alternativ, contactați asistența noastră tehnică.";
-
-/* Default action in the system extension wizard in mac. macOS Ventura */
-"_sysex_open_security_preferences" = "Deschidere preferințe securitate";
+/* Title of the system extension wizard in mac */
+"_sysex_set_up_proton_vpn" = "Setare Proton VPN";
 
 /* Default action in the system extension wizard in mac. Pre-macOS Ventura */
 "_sysex_open_system_settings" = "Deschidere setări sistem";
 
-/* Title of the system extension wizard in mac */
-"_sysex_set_up_proton_vpn" = "Setare Proton VPN";
+/* Default action in the system extension wizard in mac. macOS Ventura */
+"_sysex_open_security_preferences" = "Deschidere preferințe securitate";
 
-/* (No Comment) */
 "_sysex_settings_description" = "Proton VPN necesită încărcarea unei extensii de sistem pentru a beneficia de Smart Protocol, OpenVPN sau WireGuard.";
 
-/* Main mac app menu item */
-"_system_extension_tutorial_menu_item" = "Tutorial extensie de sistem";
+"_sysex_enabled_title" = "Configurare finalizată";
 
-/* MacOS: Settings -> General: name of field. */
-"_system_notifications" = "Notificări de sistem";
+"_sysex_enabled_description" = "Configurare finalizată. Acum puteți naviga pe internet mai rapid cu cele mai bune tehnologii VPN.";
 
-/* MacOS welcome screen: take a tour button */
-"_take_tour" = "Faceți un tur";
+"_sysex_cannot_enable" = "Nu se poate activa extensia de sistem.";
 
-/* iOS status view */
-"_technical_details" = "Detalii tehnice";
+"_sysex_error_description" = "A apărut o eroare la instalarea extensiei de sistem.\nReinstalați Proton VPN și asigurați-vă că se află în folderul „Aplicații”, pentru a rezolva problema. Alternativ, contactați asistența noastră tehnică.";
 
-/* iOS: link inside text under sign-up form */
-"_terms_and_conditions" = "Termeni și condiții";
+"_vpnauth_certfail_title" = "Eroare autentificare";
 
-/* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "Folosind Proton VPN, sunteți de acord cu\nconținutul din %@ și %@";
+"_vpnauth_certfail_description" = "Împrospătarea certificatului VPN a eșuat. Verificați conexiunea.";
 
-/* iOS: section header in countries list */
-"_test_servers" = "Servere de test";
+"_vpnauth_too_many_certs_title" = "Eroare autentificare";
 
-/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
-"_timeout_ks_ike_descritpion" = "Altă aplicație ar putea interfera cu blocarea conexiunii. Pentru a rezolva această problemă, comutați la protocolul OpenVPN sau dezactivați blocarea conexiunii.";
+"_vpnauth_too_many_certs_description" = "Ați atins număr maxim de modificări a setărilor. Reîncercați peste câteva minute.";
 
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
-"_timeout_ks_ike_switch_protocol" = "Comutați la OpenVPN și reîncercați";
+"_from_server_title" = "De la serverul:";
 
-/* (No Comment) */
 "_to_server_title" = "Către serverul:";
 
-/* Description shown together with server info icon */
-"_tor_description" = "Se conectează la rețeaua Tor";
-
-/* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_tor_server" = "Server Tor";
-
-/* (No Comment) */
-"_troubleshoot_item_alt_description" = "În cazul în care site-urile Proton sunt blocate, această setare permite aplicației să încerce o rută alternativă pentru a ajunge la Proton, care poate fi utilă pentru ocolirea paravalor de protecție sau a problemelor de rețea. Vă recomandăm să păstrați această setare activată pentru o mai mare fiabilitate.\nDetalii";
-
-/* (No Comment) */
-"_troubleshoot_item_alt_link1" = "Detalii";
-
-/* (No Comment) */
-"_troubleshoot_item_alt_title" = "Permitere rută alternativă";
-
-/* (No Comment) */
-"_troubleshoot_item_antivirus_description" = "Dezactivați temporar sau eliminați antivirusul.";
-
-/* (No Comment) */
-"_troubleshoot_item_antivirus_title" = "Interferență antivirus";
-
-/* (No Comment) */
-"_troubleshoot_item_gov_description" = "Țara dvs. ar putea bloca accesul la Proton. Încercați să folosiți Tor pentru a accesa Proton.";
-
-/* (No Comment) */
-"_troubleshoot_item_gov_title" = "Blocare guvernamentală";
-
-/* (No Comment) */
-"_troubleshoot_item_isp_description" = "Încercați să vă conectați la Proton dintr-o altă rețea (sau folosiți Tor).";
-
-/* (No Comment) */
-"_troubleshoot_item_isp_title" = "Problemă cu furnizorul de servicii internet (ISP)";
-
-/* (No Comment) */
-"_troubleshoot_item_nointernet_description" = "Asigurați-vă că aveți conexiune la internet.";
-
-/* (No Comment) */
-"_troubleshoot_item_nointernet_title" = "Nu există conexiune la internet";
-
-/* (No Comment) */
-"_troubleshoot_item_other_description" = "Contactați-ne direct prin formularul nostru de suport, e-mail (%@) sau Twitter.";
-
-/* (No Comment) */
-"_troubleshoot_item_other_link1" = "formular de asistență";
-
-/* (No Comment) */
-"_troubleshoot_item_other_link2" = "e-mail";
-
-/* (No Comment) */
-"_troubleshoot_item_other_title" = "Încă nu găsesc o soluție";
-
-/* (No Comment) */
-"_troubleshoot_item_proton_description" = "Consultare stare Proton pentru aflarea stării sistemului.";
-
-/* (No Comment) */
-"_troubleshoot_item_proton_link1" = "Stare Proton";
-
-/* (No Comment) */
-"_troubleshoot_item_proton_title" = "Proton indisponibil";
-
-/* (No Comment) */
-"_troubleshoot_item_proxy_description" = "Dezactivați setările din proxy sau paravanul de protecție sau contactați administratorul de rețea.";
-
-/* (No Comment) */
-"_troubleshoot_item_proxy_title" = "Interferență Proxy/Paravan de protecție";
-
-/* Title of connection troubleshooting screen */
-"_troubleshoot_title" = "Depanare";
-
-/* MacOS: button in connecting overlay */
-"_try_again" = "Reîncercați";
-
-/* (No Comment) */
-"_try_again_without_killswitch" = "Dezactivați blocarea conexiunii și reîncercați";
-
-/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "Activând blocarea conexiunii, nu veți putea accesa dispozitivele din rețeau alocală.\n\nContinuare?";
-
-/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "Activați blocarea conexiunii?";
-
-/* (No Comment) */
-"_turn_on" = "Pornire";
-
-/* Common word */
-"_unavailable" = "Indisponibil";
-
-/* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Notificare despre reţele neprotejate";
-
-/* MacOS: Settings -> General: description */
-"_unprotected_network_tooltip" = "Primiți o notificare când Proton VPN detectează că v-ați conectat la o rețea neprotejată.";
-
-/* (No Comment) */
-"_unsecure_wifi" = "S-a detectat o conexiune WiFi nesigură";
-
-/* (No Comment) */
-"_unsecure_wifi_learn_more" = "Detalii";
-
-/* (No Comment) */
-"_unsecure_wifi_title" = "Conexiune WiFi nesigură";
-
-/* (No Comment) */
 "_update_billing" = "ACTUALIZARE FACTURARE";
 
-/* (No Comment) */
-"_update_required" = "Necesită actualizare";
+"_upgrade_again" = "MODIFICARE DIN NOU";
 
-/* (No Comment) */
-"_update_required_no_longer_supported" = "Această versiune de Proton VPN nu mai este acceptată. Actualizați-o pentru a o mai putea folosi.";
+"_delinquent_title" = "Acest cont VPN are facturi în așteptare";
 
-/* Secondary button title in the App update required alert */
-"_update_required_support" = "Contactați asistența";
+"_delinquent_description" = "Veți putea accesa din nou opțiunile premium după ce acestea au fost plătite.";
 
-/* Primary button title in the App update required alert */
-"_update_required_update" = "Actualizare";
+"_delinquent_reconnection_description" = "Veți putea accesa din nou opțiunile premium după ce acestea sunt plătite. Momentan, se reconectează la cel mai rapid server disponibil din planul gratuit.";
 
-/* Button in many places in both iOS and MacOS apps */
-"_upgrade" = "Modernizare";
+"_maximum_device_title" = "Ați atins limita maximă de dispozitive folosite";
 
-/* (No Comment) */
-"_upgrade_again" = "REMODERNIZARE";
+"_maximum_device_reached_description" = "Deconectați un alt dispozitiv pentru a-l conecta pe acesta.";
 
-/* Main mac app menu item */
-"_upgrade_for_secure_core" = "pentru a utiliza Secure Core";
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Deconectați un alt dispozitiv pentru a-l conecta pe acesta sau treceți la %@.";
 
-/* MacOS: Button in Upgrade screen */
-"_upgrade_my_plan" = "Modernizare plan";
+"_reconnect_title" = "Se reconectează la cel mai rapid server disponibil.";
 
-/* Upgrade button in trial modals used in both iOS and MacOS */
-"_upgrade_now" = "Modernizare";
+"_subscription_expired_title" = "Abonamentul planului VPN a expirat";
 
-/* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_server" = "Ne pare rău, acest server nu este disponibil pentru nivelul abonamentului actual. Dacă doriți să accesați mai multe servere, considerați trecerea la alt tip de abonament.";
+"_subscription_expired_description" = "Abonamentul a fost retrogradat.";
 
-/* iOS & MacOS: text near country or server; MacOS: title of several alerts */
-"_upgrade_required" = "Modernizare necesară";
+"_subscription_expired_reconnection_description" = "Abonamentul a fost retrogradat, deci se va reconecta la cel mai rapid server disponibil.";
 
-/* (No Comment) */
-"_upgrade_required_securecore_description" = "Serverele Secure Core sunt disponibile în planul Plus. Treceți la alt plan acum pentru a direcționa traficul prin servele noastre sigure aflate în țări care vă respectă intimitatea.";
+"_subscription_upgrade_title" = "Remodernizați planul pentru a accesa toate funcțiile:";
 
-/* iOS: Plan selection during plan upgarde, button insettings screen */
-"_upgrade_subscription" = "Modernizare abonament";
+"_subscription_upgrade_option3" = "Funcții avansate: NetShield, Secure Core, Tor, P2P";
 
-/* Main mac app menu item */
-"_upgrade_to_plus" = "Trecere la Plus";
+"_tier_free" = "Gratuite";
 
-/* Plan upgrade unavailable alert */
-"_upgrade_unavailable_body" = "Abonamentul Proton VPN actual nu poate fi modernizat din aplicație. Pentru aceasta vizitați account.protonvpn.com.";
+"_tier_plus" = "Plus";
 
-/* Plan upgrade unavailable alert */
-"_upgrade_unavailable_title" = "Modernizare indisponibilă din aplicație";
+"_tier_visionary" = "Visionary";
 
-/* Menu point in settings screen */
-"_usage_statistics" = "Statistici de utilizare";
+"_information_title" = "Informații";
 
-/* iOS: human verification option select button */
-"_use_captcha_verification" = "Verificați cu CAPTCHA";
+"_features_title" = "Funcții";
 
-/* iOS: human verification option select button */
-"_use_other_email_address" = "Verificare cu e-mail";
+"_performance_title" = "Performanță";
 
-/* (No Comment) */
-"_use_sms_verification" = "Verificare cu SMS";
+"_smart_routing_title" = "Smart Routing";
 
-/* Used in sign-in, sign-up and in settings */
-"_username" = "Utilizator";
+"_streaming_title" = "Transmisie în flux";
 
-/* iOS: text in human verification code form */
-"_verification_instructions" = "V-a fost trimis un cod de verificare. Introduceți-l mai jos.";
+"_p2p_title" = "P2P / BitTorrent";
 
-/* iOS setting: after this word actual version and build number are appended */
-"_version" = "Versiunea";
+"_tor_title" = "Tor";
 
-/* MacOS: About window */
-"_version_current" = "Versiune curentă:";
+"_server_load_title" = "Încărcare server";
 
-/* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
-"_via" = "prin";
+"_dw-partner-2022_partners_title" = "Partenerii noștri";
 
-/* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
-"_via_country" = "prin %@";
+"_streaming_servers_description" = "Conectați-vă la un server Plus din această țară pentru a reda transmisii în flux.";
 
-/* MacOS menu item; iOS setting screen item */
-"_view_logs" = "Afișare jurnale";
+"_streaming_servers_note" = "Notă: Opriți serviciul de localizare și goliți bufferul aplicației de transmisii în flux pentru a vă asigura că apare conținut actualizat.";
 
-/* Text in warning screen before actions that will disconnect VPN */
-"_view_toggle_will_cause_disconnect" = "Schimbând starea pentru Secure Core se va închide conexiunea curentă.";
+"_streaming_servers_extra" = "și mai multe";
 
-/* (No Comment) */
+"_feature_free_servers" = "Servere gratuite";
+
+"_feature_free_servers_description" = "Securitate și confidențialitate pentru oricine. Serverele gratuite nu au limite de date și nu vă vom reduce niciodată deliberat viteza de navigare.";
+
+"_feature_smart_routing_description" = "Această tehnologie permite ca Proton VPN să ofere viteză și securitate mai mare în țările dificil de accesat.";
+
+"_feature_streaming_description" = "Serverele Plus suportă trasmisii în flux (Netflix, Disney+ etc.) de oriunde din lume.";
+
+"_feature_p2p_description" = "Aceste servere oferă cea mai bună performanță pentru BitTorrent și partajarea de fișiere.";
+
+"_feature_tor_description" = "Direcționează traficul de internet prin rețeaua Tor. Mai lent, dar mai privat.";
+
+"_performance_load_description" = "Serverele mai încărcate sunt mai lente decât serverele mai puțin încărcate.";
+
+"_performance_load_low" = "Redusă";
+
+"_performance_load_medium" = "Medie";
+
+"_performance_load_high" = "Mare";
+
+"_locations_all" = "Toate țările";
+
+"_locations_free" = "Locurile gratuite";
+
+"_locations_plus" = "Locuri Plus";
+
+"_locations_plus" = "Locuri Plus";
+
+"_locations_gateways" = "Porți de acces";
+
+/* Gateways info modals title (both iOS and macOS) */
+"_gateways_modal_title" = "Ce este o poartă de acces?";
+
+/* Gateways info modals text (both iOS and macOS) */
+"_gateways_modal_text" = "O poartă de acces VPN este o conexiune sigură care oferă acces controlat la datele și serviciile companiei proprii prin servere dedicate.";
+
+"_vpn_accelerator_title" = "VPN Accelerator";
+
 "_vpn_accelerator_change_title" = "Modificare VPN Accelerator";
 
 /* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
@@ -1756,77 +1659,121 @@
 /* Link with more info in the VPN Accelerator description */
 "_vpn_accelerator_description_alt_link" = "Detalii";
 
-/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
-"_vpn_connection_active" = "Conexiune VPN activă";
+"_action_requires_reconnect" = "Conexiunea trebuie repornită pentru a se aplica această modificare";
 
-/* iOS Settings -> Protocol: screen title */
-"_vpn_protocol" = "Protocol VPN";
+"_local_agent_server_error_title" = "Eroare server";
 
-/* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
-"_vpn_protocol_not_supported_text" = "Protocolul VPN nu este disponibil pentru conexiunea selectată. Pentru conectare, schimbați protocolul sau serverul.";
+"_local_agent_server_error_message" = "A apărut o eroare pe server. Conectați-vă la alt server.";
 
-/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
-"_vpn_protocol_not_supported_title" = "Protocol VPN nesuportat";
+"_local_agent_policy_violation_error_title" = "Violarea politicii";
 
-/* VPN stuck alert */
-"_vpn_stuck_disconnecting_body" = "Dispozitivul a eșuat închiderea sesiunii VPN anterioare. Va trebui să reporniți dispozitivul înainte de a stabili o nouă conexiune VPN.";
+"_local_agent_policy_violation_error_message" = "Nu vi se permite conectarea la server. Alegeți alt server sau treceți la alt plan.";
 
-/* VPN stuck alert */
-"_vpn_stuck_disconnecting_title" = "Eroare conexiune";
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info" = "Se încarcă informațiile conexiunii";
 
-/* (No Comment) */
-"_vpnauth_certfail_description" = "Împrospătarea certificatului VPN a eșuat. Verificați conexiunea.";
-
-/* Cert based auth */
-"_vpnauth_certfail_title" = "Eroare autentificare";
-
-/* (No Comment) */
-"_vpnauth_too_many_certs_description" = "Ați atins număr maxim de modificări a setărilor. Reîncercați peste câteva minute.";
-
-/* (No Comment) */
-"_vpnauth_too_many_certs_title" = "Eroare autentificare";
-
-/* (No Comment) */
-"_vpnstatus_not_loggedin" = "Nu v-ați conectat la Proton VPN. Deschideți aplicația Proton VPN și conectați-vă.";
-
-/* Used as a title in alerts/modals */
-"_warning" = "Avertizare";
-
-/* MacOS: alert shown during login if already connected to VPN */
-"_warning_vpn_session_is_active" = "Este activă o altă sesiune Proton VPN pe acest dispozitiv. Continuând procesul de autentificare va cauza închiderea sesiunii curente. Doriți să continuați?";
-
-/* Shown on the Welcome screen as the longer screen text */
-"_welcome_body" = "VPN elvețian de mare viteză care vă protejează confidențialitatea prin criptarea conexiunii la internet.";
-
-/* MacOS welcome screen: description */
-"_welcome_description" = "Vă mulțumim că utilizați Proton VPN. Aruncați o privire\nasupra funcțiilor principale ale aplicației.";
-
-/* %@ is always 'Proton VPN Plus' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN Plus subscription which gives you: A list of Plus plan-only features follows this text */
-"_welcome_gift_description" = "Ca un cadou de bun venit, aveți 7 zile de acces\nla planul %@ care vă permite să:";
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info_for" = "Se încarcă informațiile conexiunii pentru %@";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "Protejați-vă online";
 
-/* MacOS welcome screen: title */
-"_welcome_title" = "BINE AȚI VENIT!";
+/* Shown on the Welcome screen as the longer screen text */
+"_welcome_body" = "VPN elvețian de mare viteză care vă protejează confidențialitatea prin criptarea conexiunii la internet.";
 
-/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
+"_force_upgrade_title" = "Este necesară modificarea aplicației";
+
+"_force_upgrade_message" = "Versiunea aplicației Proton VPN pe care o utilizați în prezent nu mai este suportată. Actualizați la cea mai nouă versiune.";
+
+"login_fetch_vpn_data" = "Configurare acces VPN";
+
+"login_summary_button" = "Start utilizare Proton VPN";
+
 "_wgks_ks_off" = "Dezactivare blocare conexiune";
 
-/* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "Widget iOS";
+"_neks_t2_title" = "Avertizare stabilitate blocare conexiune";
 
-/* iOS Settings: WireGuard logs row */
-"_wireguard_logs" = "Jurnale WireGuard";
+"_neks_t2_hyperlink" = "Cip de securitate T2";
 
-/* MacOS: text in main window */
-"_you_are_not_connected" = "Nu există conexiune";
+"_neks_t2_description" = "Utilizarea blocării conexiunii este instabilă pe acest dispozitiv.\n\nDispozitivul are un cip de securitate T2, care poate duce la probleme de stabilitate a sistemului dacă funcționalitatea blocării conexiunii din macOS este utilizată de Proton VPN.";
+
+"_neks_t2_connect" = "Activare așa";
+
+"_subuser_alert_title" = "Vă mulțumim că ați trecut la planul Business / Visionary";
+
+"_subuser_alert_description1" = "Pentru a începe utilizarea Proton VPN activați conexiunile VPN. Același lucru trebuie făcut pentru oricare utilizator din organizație.";
+
+"_subuser_alert_description2" = "Acest pas va dura doar câteva minute. După aceea, veți putea să vă conectați și să vă protejați toate dispozitivele.";
+
+"_subuser_alert_description3" = "Momentan nu există nici o conexiune VPN activată pentru acest cont. Pentru a începe să utilizați Proton VPN contactați administratorul contului.";
+
+"_subuser_alert_enable_connections_button" = "Activare conexiuni VPN";
+
+"_subuser_alert_login_button" = "Reconectați-vă";
+
+/* Moderate NAT feature title in Settings */
+"_moderate_nat_title" = "NAT moderat";
+
+/* Explanation for the Moderate NAT feature shown next to the feature in Settings */
+"_moderate_nat_explanation" = "NAT moderat dezactivează alocarea aleatoare a adreselor locale. Acest lucru vă poate reduce ușor securitatea, dar permite aplicațiilor persoană-la-persoană, cum ar fi jocurile online, să stabilească direct conexiuni.\n 
+Detalii";
+
+/* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
+"_moderate_nat_explanation_link" = "Detalii";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_enable_title" = "Activare NAT moderat";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_change_title" = "Activare NAT moderat";
+
+/* Clickable label title in the onboarding screen for mac */
+"_settings_mac_telemetry_learn_more" = "Detalii";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_usage_stats" = "Partajare anonimă statistici de utilizare. Asta ne ajută să depășim blocările VPN-ului și să îmbunătățim performanța aplicației.";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_crash_reports" = "Partajare anonimă rapoarte de erori. Asta ne ajută să reparăm erorile, să detectăm paravanele de protecție și să evităm blocările VPN-ului.";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_usage_stats_title" = "Partajare anonimă statistici de utilizare";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_usage_stats_tooltip" = "Datele de utilizare ne ajută să depășim blocările VPN-ului și să îmbunătățim performanța aplicației.";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_crash_reports_title" = "Partajare anonimă rapoarte de erori";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_crash_reports_tooltip" = "Rapoartele de erori ne ajută să reparăm erorile, să detectăm paravanele de protecție și să evităm blocările VPN-ului.";
+
+/* Section title in Settings */
+"_advanced" = "Avansat";
+
+/* Non-standard ports feature title in Settings */
+"_non_standard_ports_title" = "Porturi nonstandard";
+
+/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
+"_non_standard_ports_explanation" = "Utilizați Proton VPN pentru orice nevoie specială, permițând traficul către porturile nonstandard prin VPN.\nDetalii";
+
+/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
+"_non_standard_ports_explanation_link" = "Detalii";
+
+/* Title for alert shown when enabling Non-standard ports requires reconnection */
+"_non_standard_ports_change_title" = "Activare porturile nonstandard";
+
+/* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
+"proton_website_unreachable" = "Site-ul Proton VPN ar putea fi temporar neaccesibil din cauza restricțiilor de rețea. Utilizați aplicația mobilă pentru a crea un cont Proton nou.";
+
+/* Title of the Use coupon button in Settings */
+"use_coupon" = "Folosire cupon";
+
+/* Title of the screen to apply a coupon */
+"coupon_code" = "Cod cupon";
 
 /* Button to apply coupon */
 "apply_coupon" = "Aplicare";
-
-/* Button to confirm two-factor or recovery code in login */
-"authenticate" = "Autentificare";
 
 /* Banner shown after coupon is applied */
 "coupon_applied" = "Cuponul a fost aplicat cu succes.";
@@ -1834,42 +1781,76 @@
 /* Banner shown after coupon is applied but the plan is not yet upgraded */
 "coupon_applied_plan_not_upgraded_yet" = "Cuponul a fost aplicat cu succes. Abonamentul va fi modificat în câteva minute.";
 
-/* Title of the screen to apply a coupon */
-"coupon_code" = "Cod cupon";
-
-/* (No Comment) */
-"login_fetch_vpn_data" = "Configurare acces VPN";
-
-/* (No Comment) */
-"login_summary_button" = "Start utilizare Proton VPN";
-
-/* Error message shown when tryng to log in with an unsupported method */
-"login_unsupported_state" = "Metodă de autentificare nevalidă. Contactați asistența.";
-
-/* Description of user account update screen part 1 */
-"maximum_device_plan_limit_part_1" = "Deconectați un alt dispozitiv pentru a-l conecta pe acesta sau treceți la %@.";
-
-/* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
-"proton_website_unreachable" = "Site-ul Proton VPN ar putea fi temporar neaccesibil din cauza restricțiilor de rețea. Utilizați aplicația mobilă pentru a crea un cont Proton nou.";
-
-/* Placeholder for the Recovery code text field */
-"recovery_code" = "Cod de recuperare";
-
 /* Title for the Two-factor authentication screen */
 "two_factor_authentication" = "Autentificare cu doi factori";
 
 /* Placeholder for the Two Factor text field */
 "two_factor_code" = "Cod doi factori";
 
-/* Title of the Use coupon button in Settings */
-"use_coupon" = "Folosire cupon";
+/* Title for the button to switch to entering two-factor code */
+"use_two_factor_code" = "Folosire cod doi factori";
+
+/* Placeholder for the Recovery code text field */
+"recovery_code" = "Cod de recuperare";
 
 /* Title for the button to switch to entering recovery code */
 "use_recovery_code" = "Folosire cod de recuperare";
 
-/* Title for the button to switch to entering two-factor code */
-"use_two_factor_code" = "Folosire cod doi factori";
+/* Button to confirm two-factor or recovery code in login */
+"authenticate" = "Autentificare";
+
+/* Error message shown when tryng to log in with an unsupported method */
+"login_unsupported_state" = "Metodă de autentificare nevalidă. Contactați asistența.";
 
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "%@ nu s-a putut modifica. Reîncercați mai târziu sau conectați-vă la alt server.";
 
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
+"netshield_stats_hint_ads" = "Reclamele de pe paginile web folosesc fișiere cookie și scripturi de urmărire pentru a vă identifica.";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
+"netshield_stats_hint_trackers" = "Urmăritorii sunt site-uri terțe care colectează, stochează și vă vând informațiile privind activitatea de pe internet.";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
+"netshield_stats_hint_data" = "Mărimea estimată de reclame, urmăritori și malware pe care NetShield le-a blocat.";
+
+"_netshield_stats_data_saved" = "Date\nsalvate";
+
+/* The count of trackers/ads blocked in thousands */
+"_netshield_stats_blocked_K" = "%@ K";
+
+/* The count of trackers/ads blocked in millions */
+"_netshield_stats_blocked_M" = "%@ M";
+
+/* The count of trackers/ads blocked in billions */
+"_netshield_stats_blocked_G" = "%@ MD";
+
+/* The count of trackers/ads blocked in trillions */
+"_netshield_stats_blocked_T" = "%@ T";
+
+/* The count of trackers/ads blocked in quadrillions */
+"_netshield_stats_blocked_P" = "%@ C";
+
+/* The count of trackers/ads blocked in sextillions */
+"_netshield_stats_blocked_E" = "%@ E";
+
+/* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
+"_alert_protocol_deprecated_title" = "Protocol indisponibil";
+
+/* Body of the deprecated protocol alert on MacOS. Shown when the user attempts to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
+"_alert_protocol_deprecated_body_macos" = "Acest profil folosește un protocol care este învechit și nu mai este acceptat. Faceți clic pe „Actualizare” pentru a trece la utilizarea implicită a Smart protocol. Detalii";
+
+/* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
+"_alert_protocol_deprecated_link_text" = "Detalii";
+
+/* Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
+"_alert_protocol_deprecated_body_ios" = "Acest profil folosește un protocol care este învechit și nu mai este acceptat. Faceți clic pe „Actualizare” pentru a trece la utilizarea implicită a Smart protocol.";
+
+/* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
+"_alert_protocol_deprecated_enable_smart" = "Actualizare";
+
+/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser*/ */
+"_alert_protocol_deprecated_learn_more" = "Detalii";
+
+/* Text for the 'Close' action of the deprecated protocol alert. */
+"_alert_protocol_deprecated_close" = "Închidere";

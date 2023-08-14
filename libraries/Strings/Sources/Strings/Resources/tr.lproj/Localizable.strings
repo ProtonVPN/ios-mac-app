@@ -1,164 +1,6 @@
-/* (No Comment) */
-"_5_connections" = "5 bağlantı";
-
-/* (No Comment) */
-"_5_connections_description" = "Aynı anda 5 aygıta\nkadar bağlantı";
-
-/* MacOS: About window title */
-"_about" = "Hakkında";
-
-/* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
-"_account" = "Hesap";
-
-/* iOS: Message explaining that deleting account closes the VPN connection */
-"_account_deletion_connection_warning" = "Hesabınızı silmek VPN oturumunuzu sonlandıracak.";
-
-/* Alert title for account deletion error */
-"_account_deletion_error" = "Hata";
-
-/* MacOS: Settings -> Account: name of field. */
-"_account_plan" = "Hesap tarifesi";
-
-/* MacOS: Settings -> Account: name of field. */
-"_account_type" = "Hesap türü";
-
-/* MacOS: About window */
-"_acknowledgements" = "Teşekkürler";
-
-/* MacOS Profiles Overview: Table header for buttons column */
-"_action" = "İşlem";
-
-/* (No Comment) */
-"_action_requires_reconnect" = "Bu değişikliğin uygulanması için bağlantınızın yeniden başlatılması gerekiyor";
-
-/* iOS widget help screen: title */
-"_activate_widget" = "Ekran bileşenini etkinleştir";
-
-/* iOS widget help screen: text */
-"_activate_widget_step_1" = "Ekran bileşenlerinize erişmek için ana ekranınızı en soldaki sayfaya kaydırın.";
-
-/* iOS widget help screen: text */
-"_activate_widget_step_2" = "Tamamen aşağı kaydırın ve düzenle düğmesine dokunun.";
-
-/* iOS widget help screen: text */
-"_activate_widget_step_3" = "Proton VPN ekran bileşenini etkin ekran bileşenleri listesine ekleyin.";
-
-/* Plan information */
-"_adblocker_netshield_feature" = "Reklam engelleyici (NetShield)";
-
-/* Section title in Settings */
-"_advanced" = "Gelişmiş";
-
-/* Plan information */
-"_advanced_features" = "+ Gelişmiş özellikler";
-
-/* API error */
-"_ae_vpn_info_not_received" = "VPN bilgileri alınamadı";
-
-/* API error */
-"_ae_wrong_login_credentials" = "Kullanıcı adı veya parola yanlış";
-
-/* Account plan description */
-"_all_countries" = "60 üzerinde ülke";
-
-/* Under maintenance alert */
-"_all_servers_in_country_under_maintenance" = "Bu ülkedeki tüm sunuculara bakım yapılıyor. Lütfen başka bir ülkeye bağlanın.";
-
-/* Under maintenance alert */
-"_all_servers_in_profile_under_maintenance" = "Profil sunucularında bakım yapılıyor";
-
-/* Under maintenance alert */
-"_all_servers_under_maintenance" = "Tüm sunucularda bakım yapılıyor. Bu durum genellikle Proton VPN tarafında teknik sorunlar olduğu ya da ağınızın kısıtlandığı anlamına gelir.";
-
-/* (No Comment) */
-"_allow" = "İzin ver";
-
-/* (No Comment) */
-"_allow_lan_description" = "Yerel ağ erişimine izin vermek için bağlantı kesici kapatılmalıdır.\n\nİlerlemek istiyor musunuz?";
-
-/* (No Comment) */
-"_allow_lan_info" = "VPN bağlantısını kullanmadan yerel ağınızdaki yazıcı gibi aygıtlara bağlanmanızı sağlar.";
-
-/* (No Comment) */
-"_allow_lan_note" = "Bu değişikliği uygulamak için bağlantınızın yeniden başlatılması gerektiğini unutmayın";
-
-/* (No Comment) */
-"_allow_lan_title" = "Yerel ağ bağlantılarına izin verilsin";
-
-/* iOS: button for switching from sign-up to sign-in screen */
-"_already_have_account" = "Zaten bir hesabım var";
-
-/* iOS Settings: toggle name */
-"_always_on_vpn" = "Hep açık VPN";
-
-/* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "Hep açık VPN, kesilen bir güvenli VPN bağlantısını çabuk ve otomatik olarak yeniden kurar. Güvenliğiniz için bu özellik hep açıktır.";
-
-/* Disconnect notification */
-"_always_on_will_reconnect" = "Hep açık VPN bağlantınızı otomatik olarak yeniden kuracak";
-
-/* iOS Settings: applications logs row */
-"_application_logs" = "Uygulama günlüğü kayıtları";
-
-/* (No Comment) */
-"_applying_settings_" = "Ayarlar uygulanıyor";
-
-/* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_auto_assigned" = "Otomatik atanan";
-
-/* MacOS: Settings -> Connection: name of field. */
-"_auto_connect" = "Otomatik bağlantı";
-
-/* MacOS: Settings -> Connection: description. */
-"_auto_connect_tooltip" = "Uygulama başlatıldığında seçilmiş profile bağlanırsınız";
-
-/* Battery usages screen description */
-"_battery_description" = "Telefonunuzdaki tüm trafik OpenVPN üzerinden geçirilecek. Bu nedenle iOS, diğer uygulamaların pil kullanımını Proton VPN için ayıracak.";
-
-/* Battery usage More info button text */
-"_battery_more" = "Ayrıntılı bilgi almak ister misiniz?";
-
-/* iOS settings -> Battery usage; Title of battery usage screen; */
-"_battery_title" = "Pil kullanımı";
-
 /* Common word */
+
 "_cancel" = "İptal";
-
-/* (No Comment) */
-"_cancel_reconnection" = "Bu seçenek, yeniden bağlanma girişimlerini iptal eder ve bağlantınızı kesilmiş olarak bırakır";
-
-/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
-"_change_protocol_disconnect_warning" = "İletişim kurallarını değiştirmek, var olan VPN oturumunuzu sonlandıracak.";
-
-/* Changing settings title */
-"_change_settings" = "Ayarları değiştir";
-
-/* MacOS: About window */
-"_changelog" = "Değişiklik günlüğü";
-
-/* iOS: new profkle can't be created because not all required fields are filled */
-"_check_if_fields_present" = "Lütfen tüm alanları doldurduğunuzdan emin olun";
-
-/* iOS plan selection: header */
-"_choose_plan" = "Abonelik seçin";
-
-/* iOS status view */
-"_city" = "İl";
-
-/* Main mac app menu item */
-"_clear_application_data" = "Uygulama verilerini temizle";
-
-/* Common word */
-"_close" = "Kapat";
-
-/* (No Comment) */
-"_collapse_list_of_servers" = "Sunucu listesini daralt";
-
-/* Profile create/change form */
-"_color" = "Renk";
-
-/* MacOS: button in login screen */
-"_common_issues" = "Sık karşılaşılan oturum açma sorunları";
 
 /* Common word */
 "_connect" = "Bağlan";
@@ -166,140 +8,8 @@
 /* Common word */
 "_connected" = "Bağlandı";
 
-/* iOS status view */
-"_connected_to" = "Şuraya bağlandı";
-
-/* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
-"_connected_to_vpn" = "%@ ile bağlantı kuruldu";
-
-/* iOS: main button in tabbar during connecting to vpn phase */
-"_connecting" = "Bağlanıyor";
-
-/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
-"_connecting_to" = "%@ ile bağlantı kuruluyor";
-
-/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
-"_connecting_vpn" = "%@ bağlanıyor";
-
-/* (No Comment) */
-"_connectingDotDotDot" = "Bağlanıyor...";
-
-/* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
-"_connection" = "Bağlantı";
-
-/* Connection error translation. iOS quick connect widget: text shown on error. */
-"_connection_failed" = "Bağlantı kurulamadı";
-
-/* Profile create/change form */
-"_connection_settings" = "Bağlantı ayarları";
-
-/* macOS: Text on connection overlay shown after connection timed out */
-"_connection_timed_out" = "Bağlantı zaman aşımına uğradı";
-
-/* Text that should be bold in _connection_timed_out string */
-"_connection_timed_out_bold" = "zaman aşımı";
-
-/* Text addressing to contact costumer support on several sites of the app */
-"_contact_our_support" = "Destek ekibimizle görüşün";
-
-/* (No Comment) */
-"_continue" = "İlerle";
-
-/* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
-"_countries" = "Ülkeler";
-
-/* iOS: countries list section header */
-"_countries_free" = "Ücretsiz ülkeler";
-
-/* iOS: countries list section header */
-"_countries_premium" = "Ücretli ülkeler";
-
-/* MacOS app tour: countries list description */
-"_countries_tour_description" = "Çıkış IP adresiniz için kullanmak istediğiniz ülkeyi ve sunucuyu seçin.";
-
-/* MacOS app tour: countries list title */
-"_countries_tour_title" = "Ülkeler";
-
-/* Profile create/edit menu */
-"_country" = "Ülke";
-
-/* Error when user hasn't selected profile country */
-"_country_selection_is_required" = "Lütfen bir ülke seçin";
-
-/* Under maintenance alert */
-"_country_servers_under_maintenance" = "%@ sunucularında bakım yapılıyor";
-
-/* MacOS: button in login screen */
-"_create_account" = "Hesap aç";
-
-/* MacOS: Buttons in several places; iOS: profile creation screen title */
-"_create_new_profile" = "Profil oluştur";
-
-/* (No Comment) */
-"_create_profile" = "Profil oluştur";
-
-/* MacOS: profile creation cancel alert text */
-"_current_selection_will_be_lost" = "İlerlerseniz, geçerli seçim kaybolacak. İlerlemek istiyor musunuz?";
-
-/* iOS: data disclaimer screen button */
-"_data_disclaimer_agree" = "Kabul et ve ilerle";
-
-/* iOS: data disclaimer screen */
-"_data_disclaimer_device_details" = "Aygıtınızın modeli ve işletim sistemi sürümü";
-
-/* iOS: data disclaimer screen */
-"_data_disclaimer_text" = "Proton VPN, gizliliğinize saygı duyar ve korumayı amaçlar. Öncelikli ilkemiz uygulamanın kullanımında kişisel ve anonim bir kullanıcı deneyimi sağlamak için olabildiğince az kullanıcı verisi toplamaktır. Özellikle:\n\n%@ – oturumunuzu açmak, parola sıfırlamak ve önemli hizmet güncellemelerini göndermek için.\n\n%@ – yalnızca kilitlenme bildirimleri ve sorunlar için.\n\nProton VPN uygulaması, bu veriler dışında herhangi bir kullanıcı bilgisini işlemez. Çevrimiçi etkinliklerinizi veya gerçekte kim olduğunuzu belirleyebilecek bilgilerinizi kaydetmeyiz. Yukarıda belirtilen tüm veriler Proton VPN hizmetinin kendi sisteminde saklanır ve işlenir. Hiçbir üçüncü tarafın bu bilgilere erişimi yoktur.";
-
-/* iOS: data disclaimer screen */
-"_data_disclaimer_title" = "Çevrimiçi ortamda kendinizi koruyun";
-
-/* iOS: data disclaimer screen */
-"_data_disclaimer_user_details" = "Kullanıcı adı, e-posta adresi";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "\"Hızlı bağlan\" düğmesi varsayılan profili kullanır.\n";
-
 /* Common word */
 "_delete" = "Sil";
-
-/* MacOS: clear application data alert */
-"_delete_application_data_popup_body" = "Tüm Proton VPN verileri silinecek ve uygulama kapanacak. İlerlemek istiyor musunuz?";
-
-/* MacOS: clear application data alert */
-"_delete_application_data_popup_title" = "Uygulama verilerini temizle";
-
-/* Button */
-"_delete_profile" = "Profili sil";
-
-/* MacOS: profile deletion warning */
-"_delete_profile_header" = "Profili sil";
-
-/* MacOS: profile deletion warning */
-"_delete_profile_warning" = "Profil kalıcı olarak silinecek. İlerlemek istiyor musunuz?";
-
-/* (No Comment) */
-"_delinquent_description" = "Bunları ödedikten sonra ücretli özelliklere yeniden erişebilirsiniz.";
-
-/* (No Comment) */
-"_delinquent_reconnection_description" = "Bunları ödedikten sonra ücretli özelliklere yeniden erişebilirsiniz. Şimdilik bağlantınızı, var olan en hızlı Free tarife sunucusuna geçiriyoruz.";
-
-/* (No Comment) */
-"_delinquent_title" = "VPN hesabınızda ödenmemiş faturalar var";
-
-/* Delinquent user alert */
-"_delinquent_user_description" = "Hesabınızda ödenmemiş bir fatura var. Lütfen account.protonvpn.com adresinden süresi geçmiş tüm faturaları ödeyin";
-
-/* Delinquent user alert */
-"_delinquent_user_title" = "Ödenmemiş fatura";
-
-/* Profile create/change form */
-"_different_server_each_time" = "Her seferinde farklı sunucu";
-
-/* Button in some alerts */
-"_disable" = "Devre dışı bırak";
-
-/* Common word */
-"_disabled" = "Devre dışı";
 
 /* Common word */
 "_disconnect" = "Bağlantıyı kes";
@@ -310,389 +20,89 @@
 /* Status of VPN connection reported by Siri */
 "_disconnecting" = "Bağlantı kesiliyor";
 
-/* iOS onboarding button to check app without logging in */
-"_discover_the_app" = "Uygulamayı keşfedin";
-
-/* MacOS: Settings -> Connection: name of field. */
-"_dns_leak_protection" = "DNS sızıntı koruması";
-
-/* MacOS: Settings -> Connection: description. */
-"_dns_leak_protection_tooltip" = "DNS sorgularının üçüncü taraflara sızdırılmasını önleyin. Hep açık.";
-
-/* Alert message during In App Purchase */
-"_do_you_want_to_activate_subscription_for" = "\t\nSatın alınmış şu aboneliği etkinleştirmek istiyor musunuz ";
-
 /* Common word */
 "_done" = "Tamam";
-
-/* (No Comment) */
-"_dw-partner-2022_partners_title" = "İş ortaklarımız";
-
-/* MacOS: Settings -> General: name of field. */
-"_early_access" = "Erken erişim";
-
-/* MacOS: Settings -> General: description. */
-"_early_access_tooltip" = "Son güncellemeleri ilk alan siz olun. Lütfen erken sürümlerin daha az kararlı olabileceğini unutmayın.";
 
 /* Common word */
 "_edit" = "Düzenle";
 
 /* Common word */
-"_enabled" = "Etkin";
+"_ok" = "Tamam";
 
-/* MacOS app tour: end tour button */
-"_end_tour" = "Turu bitir";
+/* Common word */
+"_save" = "Kaydet";
 
-/* %@ is always 'PLUS' e.g. ENJOY PLUS FOR FREE! */
-"_enjoy_for_free" = "Ücretsiz %@ tadını çıkarın!";
-
-/* iOS: placeholder for email field in signup and email verification screens */
-"_enter_email_address" = "E-posta adresini yazın";
-
-/* Profile create/change form */
-"_enter_profile_name" = "Profil adını yazın";
-
-/* API error */
-"_error_api_offline" = "Proton VPN API şu anda çevrimdışı";
-
-/* Error decoding an object */
-"_error_decode" = "Sınıftaki arşivlenmiş verilerin kodu çözülemedi: %@";
-
-/* Internal application error */
-"_error_email_verification_disabled" = "E-posta doğrulaması geçici olarak devre dışı bırakıldı";
-
-/* Error try to restore user from the session */
-"_error_fetch_session" = "Oturum kullanıcı bulunamadı";
-
-/* (No Comment) */
-"_error_field_email_wrong_format" = "E-posta adresinin biçimi doğru değil";
-
-/* (No Comment) */
-"_error_field_passwords_dont_match" = "Parola ile onayı aynı değil";
-
-/* Form validation error */
-"_error_field_required" = "Bu alan zorunludur";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "SRP oluşturulamadı";
-
-/* Error when try to hash password */
-"_error_hash_password" = "Kullanıcı parolası karılamadı";
-
-/* Unknown error that has no better description */
-"_error_internal_error" = "İç API sorunu";
-
-/* Keychain error */
-"_error_keychain_fetch" = "Anahtarlık sorunu.";
-
-/* Error writing to system keychain */
-"_error_keychain_write" = "Proton aygıtınızla iletişim kuramadı. Lütfen bir süre sonra yeniden deneyin.";
-
-/* Parsing error */
-"_error_loads" = "Sunucu yükleri güncellenemedi";
-
-/* (No Comment) */
-"_error_mitm_description" = "Proton VPN API hizmeti ile bağlantı kurulmaya çalışılırken TLS sertifikası doğrulanamadı. Geçerli internet bağlantınız izlenebilir. Verilerinizi güvende tutmak için, uygulamanın Proton VPN API hizmetine erişmesini engelliyoruz.\nOturum açmak veya hesabınıza erişmek için başka bir ağa geçin ve yeniden bağlanmayı deneyin.";
-
-/* (No Comment) */
-"_error_mitm_title" = "Güvenli olmayan bağlantı";
-
-/* (No Comment) */
-"_error_mitm_vpn_description" = "VPN sunucusuna bağlanmaya çalışılırken TLS sertifikası doğrulanamadı. Geçerli internet bağlantınız izlenebilir. Verilerinizi güvende tutmak için, uygulamanın bu VPN sunucusuna erişmesini engelliyoruz.\nLütfen başka bir sunucu seçin.";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "Modül imzası boş";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "İş ortağı bilgileri işlenemedi";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "Sunucu bilgileri işlenemedi";
-
-/* Parsing error */
-"_error_session_count_parser" = "Oturum sayısı işlenemedi";
-
-/* Generic sign in error */
-"_error_sign_in_again" = "Ne yazık ki bir şeyler ters gitti. Lütfen yeniden oturum açın.";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "Abonelik bilgileri işlenemedi";
-
-/* Internal error message when there is a problem with initializing tls and connection cannot be established. */
-"_error_tls_initialisation" = "TLS başlatma sorunu";
-
-/* Internal error message when there is a problem with server certificate and connection cannot be established. */
-"_error_tls_server_verification" = "Sunucu sertifikası doğrulanamadı.";
-
-/* General title for several error alerts */
-"_error_unknown_title" = "Bilinmeyen sorun";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "Hesap açılamadı";
-
-/* VPN credentials can't be loaded error */
-"_error_user_credentials_expired" = "Kullanıcı kimlik doğrulama bilgilerinin geçerlilik süresi dolmuş. Lütfen oturum açın";
-
-/* VPN credentials can't be loaded error */
-"_error_user_credentials_missing" = "Kullanıcı kimlik doğrulama bilgileri eksik. Oturum açılamadı";
-
-/* Human validation failed */
-"_error_user_failed_human_validation" = "İnsan olduğunuzu doğrulayamadık. Lütfen yeniden deneyin ya da ücretli bir tarifeye geçin.";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "Doğrulama yöntemleri işlenemedi";
-
-/* VPN credentials can't be loaded error */
-"_error_vpn_credentials_missing" = "Anahtar zincirinde VPN kimlik doğrulama bilgileri eksik";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "VPN özellikleri alınamadı!";
-
-/* VPN session is active error */
-"_error_vpn_session_is_active" = "Proton VPN oturumu etkin";
+/* Common word */
+"_unavailable" = "Kullanılamıyor";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Sunucu listesini genişlet";
 
-/* MAC: is inserted into _free_trial_expired_title insteadof %@ */
-"_expired" = "GEÇERLİLİK SÜRESİ DOLMUŞ";
+"_collapse_list_of_servers" = "Sunucu listesini daralt";
 
-/* iOS: Table header in settings screen */
-"_extensions" = "Uzantılar";
+/* Used as a title in alerts/modals */
+"_warning" = "Uyarı";
 
-/* MacOS: connecting overlay */
-"_failed" = "başarısız oldu";
+/* Button in many places in both iOS and MacOS apps */
+"_upgrade" = "Yükselt";
 
-/* Used for both profile description when fastest server option is selected and Plan speed description */
-"_fastest" = "En hızlı";
+/* iOS: Plan selection during plan upgarde, button insettings screen */
+"_upgrade_subscription" = "Aboneliği yükselt";
 
-/* Profile create/change form */
-"_fastest_available_server" = "Kullanılabilecek en hızlı sunucu";
+/* MacOS: Settings -> Account. Button leading to web interface. */
+"_manage_subscription" = "Abonelik yönetimi";
 
-/* iOS: Predefined profile with fastest connection */
-"_fastest_connection" = "En hızlı bağlantı";
+/* iOS & MacOS: text near country or server; MacOS: title of several alerts */
+"_upgrade_required" = "Yükseltme gerekli";
 
-/* (No Comment) */
-"_feature" = "Özellik";
+/* MacOS: voice over indication for a country or server on maintenance*/ */
+"_on_maintenance" = "Bakım yapılıyor";
 
-/* iOS plan feature */
-"_feature_blocked_content" = "Engellenen içeriğe erişin";
+"_reconnection_required" = "Yeniden bağlantı kurmak gerekli";
 
-/* (No Comment) */
-"_feature_bt" = "BitTorrent/dosya paylaşımı desteği";
+/* Server status in many places in iOS and MacOS apps */
+"_maintenance" = "Bakım yapılıyor";
 
-/* iOS plan feature */
-"_feature_connections" = "Eşzamanlı VPN bağlantıları";
+/* MacOS: quit application button in custom status menu */
+"_quit" = "Çıkış";
 
-/* (No Comment) */
-"_feature_free_servers" = "Ücretsiz sunucular";
+/* MacOS: alert show before quitting app if VPN is connected */
+"_quit_warning" = "Uygulamadan çıkmak, etkin VPN bağlantısını kesecek. İlerlemek istiyor musunuz?";
 
-/* (No Comment) */
-"_feature_free_servers_description" = "Herkes için güvenlik ve gizlilik. Ücretsiz sunucularda veri miktarı sınırlaması yoktur ve asla kastılı olarak gezinme hızınızı yavaşlatmayız.";
+/* Common word */
+"_enabled" = "Kullanılıyor";
 
-/* (No Comment) */
-"_feature_p2p_description" = "Bu sunucular, BitTorrent ve dosya paylaşımı için en iyi başarımı sağlar.";
+/* Common word */
+"_disabled" = "Kapalı";
 
-/* iOS plan feature */
-"_feature_secure_streaming" = "Güvenli yayın akışı";
+/* Button in some alerts */
+"_disable" = "Kapat";
 
-/* iOS plan feature */
-"_feature_server_count" = "Şuradaki sunuculara bağlan";
-
-/* (No Comment) */
-"_feature_smart_routing_description" = "Bu teknoloji, hizmet verilmesi zor ülkelerde Proton VPN için daha yüksek hız ve güvenlik sağlar.";
-
-/* iOS plan feature */
-"_feature_speed" = "Hız";
-
-/* (No Comment) */
-"_feature_streaming_description" = "Plus sunucuları, dünyanın her yerindeki yayın akışı hizmetlerini (Netflix, Disney + vb.) destekler.";
-
-/* iOS plan feature */
-"_feature_tor" = "VPN üzerinden Tor";
-
-/* (No Comment) */
-"_feature_tor_description" = "İnternet trafiğinizi Tor ağı üzerinden yöneltin. Yavaş ama daha güvenli.";
-
-/* (No Comment) */
-"_features_title" = "Özellikler";
-
-/* (No Comment) */
-"_force_upgrade_message" = "Şu anda kullandığınız Proton VPN uygulamasının sürümü artık desteklenmiyor. Lütfen son sürüme güncelleyin.";
-
-/* (No Comment) */
-"_force_upgrade_title" = "Uygulamanın güncellemesi gerekli";
-
-/* iOS: button in login screen */
-"_forgot_password" = "Parolanızı mı unuttunuz?";
-
-/* MacOS: button in login screen */
-"_forgot_username" = "Kullanıcı adımı unuttum";
-
-/* Account plan description */
-"_free_countries" = "3 ülke";
-
-/* iOS: section header in countries list */
-"_free_servers" = "Free sunucuları";
-
-/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
-"_free_trial_about_to_expire_description" = "%@ sürümüne yükselterek şu özellikleri kullanmayı sürdürün:";
-
-/* MacOS: \Trial about to expire\ screen title */
-"_free_trial_about_to_expire_title" = "Ücretsiz deneme süreniz sona ermek üzere!";
-
-/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "Hesabınız Proton VPN Free tarifesine düşürüldü.\nİşte %@ tarifesinden özleyeceğiniz şeyler:";
-
-/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
-"_free_trial_expired_title" = "Ücretsiz %@ denemeniz";
-
-/* Downgrade */
-"_from_server_title" = "Şu sunucudan:";
-
-/* MacOS: General tab in setting window */
-"_general" = "Genel";
-
-/* %@ is a plan name e.g. Get Plus Plan */
-"_get_plan" = "%@ tarifesine geçin";
-
-/* Suggest the user to upgrade account for new features */
-"_get_plus_for_feature" = "Bu ve diğer özellikleri kullanmak için Proton VPN Plus tarifesine geçin.";
-
-/* iOS: Button in email verification screen */
-"_get_verification_email" = "E-posta ile doğrula";
-
-/* iOS: Button in SMS verification screen */
-"_get_verification_sms" = "SMS ile doğrula";
-
-/* Button in several different alerts */
-"_got_it" = "Anladım!";
-
-/* Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page. */
-"_help" = "Yardım";
-
-/* Show/hide password switch */
-"_hide" = "GİZLE";
-
-/* Value of speed in _speed */
-"_high" = "Yüksek";
-
-/* Value of speed in _speed */
-"_highest" = "En yüksek";
-
-/* iOS: Home screen title, tab bar item title; MacOS: TabBar tab title; */
-"_home" = "Giriş";
+/* Button in Kill switch error alert */
+"_report" = "Bildir";
 
 /* Button in Kill switch error alert */
 "_ignore" = "Yok say";
 
-/* Streaming & Features */
-"_information_title" = "Bilgiler";
+"_continue" = "İlerle";
 
-/* MacOS: connecting overlay */
-"_initializing_connection" = "Bağlantı hazırlanıyor...";
+/* Button in some alerts */
+"_show_instructions" = "Yönergeleri göster";
 
-/* (No Comment) */
-"_invalid_refresh_token_please_login" = "Proton VPN uygulamasını son kullandığınızdan bu yana epey zaman geçmiş. Lütfen yeniden oturum açın.";
+/* iOS: quick connect widget */
+"_network_unreachable" = "Ağa erişilemiyor";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Proton Mail uygulamasını yaratan bilim insanları ve mühendislerin sunduğu, daha güvenli ve gizli bir internete hoş geldiniz.";
+/* Title in no internet alert */
+"_not_connected_to_the_internet" = "VPN bağlantısı kurulamadı. İnternete bağlı değilsiniz.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Daha iyi bir internete hoş geldiniz";
+/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
+"_vpn_connection_active" = "VPN bağlantısı etkin";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page2_description" = "Sansürü ve bölgesel kısıtlamaları aşın. Reklam yok, bant genişliği sınırlaması yok ve verilerinizi satmıyoruz.";
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
+"_vpn_protocol_not_supported_title" = "VPN iletişim kuralı desteklenmiyor";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "İnternetin özgür olması gerektiğine inanıyoruz";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page3_description" = "Biz bir güvenlik şirketiyiz. İster Secure Core mimarimiz ister gelişmiş şifreleme olsun güvenlik her zaman önce gelir.";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page3_title" = "Güvenliğiniz önceliğimizdir";
-
-/* %@ is an IP address e.g. IP: 123.45.67.890 */
-"_ip_value" = "IP: %@";
-
-/* (No Comment) */
-"_ip_will_not_be_exposed" = "IP adresiniz sızmayacak.";
-
-/* MacOS: Settings -> Connection: name of field. */
-"_kill_switch" = "Bağlantı kesici";
-
-/* Disconnect notification */
-"_kill_switch_blocking_connection" = "Bağlantı kesici tüm bağlantıları engelliyor";
-
-/* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Bağlantı kesiciyi devre dışı bırak";
-
-/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Proton VPN sunucu ile yeniden bağlantı kurduğunda internet bağlantınız açılacak.\nVPN ve bağlantı kesici koruması olmadan internet kullanmak için, yeniden bağlanmayı iptal edin.";
-
-/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
-"_kill_switch_reconnection_bold1" = "olmadan";
-
-/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
-"_kill_switch_reconnection_bold2" = "Bağlantı kesici koruması";
-
-/* MacOS: connection screen - cancel button */
-"_kill_switch_reconnection_cancel" = "Yeniden bağlanmayı iptal et";
-
-/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection_header" = "Bağlantı kesici IP adresinizi koruyor";
-
-/* MacOS: Settings -> Connection. Kill switch functionality description. */
-"_kill_switch_tooltip" = "VPN tüneli kesildiğinde tüm ağ trafiğini engeller.";
-
-/* MacOS: link in login screen */
-"_learn_more" = "Ayrıntılı bilgi alın";
-
-/* MacOS: SecureCore warning alert when users plan has to be upgraded */
-"_learn_more_about_secure_core" = "Secure Core hakkında ayrıntılı bilgi alın";
-
-/* Display less information */
-"_less_info" = "Daha az bilgi";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "Bağlantı bilgileri yükleniyor";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "%@ için bağlantı bilgileri yükleniyor";
-
-/* Slogan text under the logo in may places in iOS and MacOS apps */
-"_loading_screen_slogan" = "Her yerde güvenli internet";
-
-/* (No Comment) */
-"_local_agent_policy_violation_error_message" = "Sunucuya bağlanmanıza izin verilmiyor. Başka bir sunucu seçin ya da tarifenizi yükseltin.";
-
-/* (No Comment) */
-"_local_agent_policy_violation_error_title" = "İlkeye aykırı kullanım";
-
-/* (No Comment) */
-"_local_agent_server_error_message" = "Sunucuda bir sorun çıktı. Lütfen başka bir sunucuya bağlanın.";
-
-/* Local agent */
-"_local_agent_server_error_title" = "Sunucu sorunu";
-
-/* iOS status view */
-"_location" = "Konum";
-
-/* (No Comment) */
-"_locations_all" = "Tüm konumlar";
-
-/* (No Comment) */
-"_locations_free" = "Free konumları";
-
-/* (No Comment) */
-"_locations_plus" = "Plus konumları";
-
-/* iOS: Login button in several places */
-"_log_in" = "Oturum aç";
-
-/* iOS widget: text for not-logged-in user */
-"_log_in_to_use_widget" = "Lütfen başlamak için oturum açın";
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
+"_vpn_protocol_not_supported_text" = "VPN iletişim kuralı seçtiğiniz bağlantı için kullanılamıyor. Bağlantı kurmak için iletişim kuralını ya da sunucuyu değiştirmeyi deneyin.";
 
 /* iOS: button in settings screen */
 "_log_out" = "Oturumu kapat";
@@ -703,128 +113,624 @@
 /* MacOS: Logout alert */
 "_log_out_warning_long" = "Uygulama oturumunu kapatmak, etkin VPN bağlantısını kesecek. İlerlemek istiyor musunuz?";
 
+/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
+"_change_protocol_disconnect_warning" = "İletişim kurallarını değiştirmek, var olan VPN oturumunuzu sonlandıracak.";
+
+/* Slogan text under the logo in may places in iOS and MacOS apps */
+"_loading_screen_slogan" = "Her yerde güvenli internet";
+
+/* Main mac app menu item */
+"_report_an_issue" = "Bir sorun bildirin...";
+
+/* Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page. */
+"_help" = "Yardım";
+
+/* MacOS: link in login screen */
+"_learn_more" = "Ayrıntılı bilgi alın";
+
+/* iOS: Status view */
+"_ip" = "IP";
+
+/* Common word */
+"_close" = "Kapat";
+
+/* Changing settings title */
+"_change_settings" = "Ayarları değiştir";
+
+/* Suggest the user to upgrade account for new features */
+"_get_plus_for_feature" = "Bu ve diğer özellikleri kullanmak için Proton VPN Plus tarifesine geçin.";
+
+/* Display more information */
+"_more_info" = "Ayrıntılı bilgi alın";
+
+/* Display less information */
+"_less_info" = "Daha az bilgi";
+
+/* Text addressing to contact costumer support on several sites of the app */
+"_contact_our_support" = "Destek ekibimizle görüşün";
+
+"_turn_on" = "Aç";
+
+"_not_now" = "Şimdi değil";
+
+"_allow" = "İzin ver";
+
+/* %@ is an IP address e.g. IP: 123.45.67.890 */
+"_ip_value" = "IP: %@";
+
+/* %@ is an IP address e.g. Public IP: 123.45.67.890 */
+"_public_ip" = "Herkese açık IP: %@";
+
+/* Several places in both iOS and Mac apps */
+"_quick_connect" = "Hızlı bağlan";
+
+/* Used in many places in MacOS app */
+"_secure_core" = "Secure Core";
+
+/* %@ is a country e.g. Secure Core Switzerland */
+"_secure_core_country" = "Secure Core %@";
+
+/* Profile create/edit menu */
+"_country" = "Ülke";
+
+"_show_protonvpn" = "Proton VPN penceresini aç";
+
+/* Main mac app menu item */
+"_clear_application_data" = "Uygulama verilerini temizle";
+
+/* Main mac app menu item */
+"_system_extension_tutorial_menu_item" = "Sistem eklentisi eğitimi";
+
+/* MacOS: connecting overlay */
+"_preparing_connection" = "Sunucunun uygunluğu denetleniyor";
+
+/* iOS: main button in tabbar during connecting to vpn phase */
+"_connecting" = "Bağlanıyor";
+
+"_connectingDotDotDot" = "Bağlanıyor...";
+
+/* iOS: countries list section header */
+"_countries_free" = "Ücretsiz ülkeler";
+
+/* iOS: countries list section header */
+"_countries_premium" = "Ücretli ülkeler";
+
+/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
+"_connecting_vpn" = "%@ bağlanıyor";
+
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
+"_connecting_to" = "%@ ile bağlantı kuruluyor";
+
+"_reconnecting_to" = "%@ ile yeniden bağlantı kuruluyor";
+
+/* iOS status view */
+"_connected_to" = "Şuraya bağlandı";
+
+/* macOS: Text on connection overlay shown after connection timed out */
+"_connection_timed_out" = "Bağlantı zaman aşımına uğradı";
+
+/* Text that should be bold in _connection_timed_out string */
+"_connection_timed_out_bold" = "zaman aşımı";
+
+/* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
+"_connected_to_vpn" = "%@ ile bağlantı kuruldu";
+
+/* iOS: connection bar; Main mac app menu item; */
+"_not_connected" = "Bağlı değil";
+
+/* MacOS: text in main window */
+"_you_are_not_connected" = "Bağlı değilsiniz";
+
+/* MacOS: button in connecting overlay */
+"_try_again" = "Yeniden dene";
+
+"_try_again_without_killswitch" = "Bağlantı kesiciyi kapatıp yeniden deneyin";
+
+/* Button in some alerts */
+"_retry" = "Yeniden dene";
+
+/* iOS: section header in countries list */
+"_free_servers" = "Free sunucuları";
+
+/* iOS: section header in countries list */
+"_plus_servers" = "Plus sunucuları";
+
+/* iOS: section header in countries list */
+"_test_servers" = "Test sunucuları";
+
+/* MacOS: connecting overlay */
+"_initializing_connection" = "Bağlantı hazırlanıyor...";
+
+/* MacOS: connecting overlay */
+"_successfully_connected" = "Bağlantı kuruldu";
+
+/* MacOS: connecting overlay */
+"_failed" = "başarısız oldu";
+
+/* Connection error translation. iOS quick connect widget: text shown on error. */
+"_connection_failed" = "Bağlantı kurulamadı";
+
+/* iOS status view */
+"_security" = "Güvenlik";
+
+/* iOS status view */
+"_status" = "Durum";
+
+/* iOS status view */
+"_session_time" = "Oturum süresi";
+
+/* iOS status view */
+"_location" = "Konum";
+
+/* iOS status view */
+"_city" = "İl";
+
+/* iOS status view */
+"_technical_details" = "Teknik ayrıntılar";
+
+/* Main mac app menu item */
+"_open_app_to_log_in" = "Oturum açmak için Proton VPN uygulamasını aç...";
+
+/* Main mac app menu item */
+"_upgrade_to_plus" = "Plus tarifesine yükselt";
+
+/* Main mac app menu item */
+"_upgrade_for_secure_core" = "Secure Core kullanmak için";
+
+"_switch_side_button_on" = "Açık";
+
+"_switch_side_button_off" = "Kapalı";
+
+/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
+"_timeout_ks_ike_descritpion" = "Başka bir uygulama bağlantı kesici ile çakışabilir. Bu sorunu çözmek için OpenVPN iletişim kuralına geçin ya da bağlantı kesiciyi kapatarak yeniden deneyin.";
+
+/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
+"_timeout_ks_ike_switch_protocol" = "OpenVPN kullanmaya geçerek yeniden deneyin";
+
+/* Disconnect notification */
+"_kill_switch_blocking_connection" = "Bağlantı kesici tüm bağlantıları engelliyor";
+
+/* Disconnect notification */
+"_always_on_will_reconnect" = "Hep açık VPN bağlantınızı otomatik olarak yeniden kuracak";
+
+/* MacOS: About window title */
+"_about" = "Hakkında";
+
+/* iOS setting: after this word actual version and build number are appended */
+"_version" = "Sürüm";
+
+/* MacOS: About window */
+"_version_current" = "Geçerli sürüm:";
+
+/* MacOS: About window */
+"_release_date" = "Yayınlanma tarihi:";
+
+/* MacOS: About window */
+"_changelog" = "Değişiklik günlüğü";
+
+/* MacOS: About window */
+"_acknowledgements" = "Teşekkürler";
+
+/* Used in sign-in, sign-up and in settings */
+"_username" = "Kullanıcı adı";
+
+/* Used in sign-in, sign-up */
+"_password" = "Parola";
+
+/* Sign-up form */
+"_password_confirm" = "Parola onayı";
+
+/* Show/hide password switch */
+"_show" = "GÖSTER";
+
+/* Show/hide password switch */
+"_hide" = "GİZLE";
+
 /* MacOS: Login button */
 "_login" = "Oturum aç";
 
-/* iOS logs screen title */
-"_logs" = "Günlük kayıtları";
+/* iOS: Login button in several places */
+"_log_in" = "Oturum aç";
 
-/* Mac: neagent help screen */
-"_mac_password" = "Mac parolası";
+/* MacOS: label in login and settings screens */
+"_remember_login" = "Bilgilerimi hatırla";
 
-/* Server status in many places in iOS and MacOS apps */
-"_maintenance" = "Bakım yapılıyor";
+/* MacOS: label in login and settings screens */
+"_start_on_boot" = "Açılışta başlatılsın";
 
-/* (No Comment) */
-"_maintenance_on_server_detected_description" = "Kullanılabilecek en hızlı sunucuya yeniden bağlanılıyor.";
+/* MacOS: button in login screen */
+"_create_account" = "Hesap aç";
 
-/* (No Comment) */
-"_maintenance_on_server_detected_subtitle" = "Bağlandığınız sunucuda bakım yapılıyor";
+/* MacOS: button in login screen */
+"_need_help" = "Yardım gerekiyor mu?";
 
-/* (No Comment) */
-"_maintenance_on_server_detected_title" = "VPN sunucusunda bakım yapılıyor";
+/* MacOS: button in login screen */
+"_reset_password" = "Parolayı sıfırla";
 
-/* Profile create/change form */
-"_make_default_profile" = "Varsayılan profil yap";
+/* MacOS: button in login screen */
+"_common_issues" = "Sık karşılaşılan oturum açma sorunları";
 
-/* MacOS: button in profiles tab in main window */
-"_manage_profiles" = "Profil yönetimi";
+/* MacOS: button in login screen */
+"_forgot_username" = "Kullanıcı adımı unuttum";
 
-/* MacOS: Settings -> Account. Button leading to web interface. */
-"_manage_subscription" = "Abonelik yönetimi";
+/* iOS: button in login screen */
+"_forgot_password" = "Parolanızı mı unuttunuz?";
 
-/* (No Comment) */
-"_manage_subscription_on_web" = "Web kontrol panosundan aboneliğinizi yönetin";
+/* iOS: button in login and onboarding screens */
+"_sign_up" = "Hesap açın";
+
+/* MacOS: alert shown during login if already connected to VPN */
+"_warning_vpn_session_is_active" = "Bu aygıtta başka bir kullanıcının Proton VPN oturumu etkin. Oturum açma işlemine ilerlemek geçerli oturumun kapatılmasına neden olacak. İlerlemek istiyor musunuz?";
+
+/* iOS: placeholder for email field in signup and email verification screens */
+"_enter_email_address" = "E-posta adresini yazın";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_country_code_placeholder" = "Kod";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_number_placeholder" = "Telefon numarasını yazın";
+
+/* iOS: title of phone country code selection screen */
+"_select_phone_country_code" = "Ülke kodunu seçin";
+
+/* iOS: placeholder in phone country code selection screen */
+"_search_phone_country_code_placeholder" = "Ülke ara";
+
+/* iOS: button for switching from sign-up to sign-in screen */
+"_already_have_account" = "Zaten bir hesabım var";
+
+/* iOS: Button in email verification screen */
+"_get_verification_email" = "E-posta ile doğrula";
+
+/* iOS: Button in SMS verification screen */
+"_get_verification_sms" = "SMS ile doğrula";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option" = "İlerlemek için bir doğrulama yöntemi seçin:";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option_top_message" = "Kötüye kullanımı önlemek için, insan olduğunuzu doğrulamalısınız.";
+
+/* iOS: human verification option select button */
+"_use_captcha_verification" = "CAPTCHA ile doğrula";
+
+/* iOS: human verification option select button */
+"_use_other_email_address" = "E-posta ile doğrula";
+
+"_use_sms_verification" = "SMS ile doğrula";
+
+/* iOS: human verification option select button */
+"_request_invitation" = "El ile kullanıma alma isteği";
+
+/* iOS: placeholder for code in human verification code form */
+"_enter_verification_code" = "123 456";
+
+/* iOS: button in human verification code form */
+"_submit_verification_code" = "Gönder";
+
+/* iOS: button in human verification code form */
+"_resend_no_code" = "Kodu almadınız mı?";
+
+/* iOS: button in human verification code form */
+"_resend_code" = "Yeni kod iste";
+
+/* iOS: message after human verification code resending */
+"_resend_success" = "Yeni kod istendi";
+
+/* iOS: link inside text under sign-up form */
+"_terms_and_conditions" = "Hüküm ve Koşullar";
+
+/* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
+"_terms_and_conditions_disclaimer" = "Proton VPN kullanarak, %@ ve %@ metinlerini\nkabul etmiş olursunuz";
+
+/* iOS: link inside text under sign-up form */
+"_privacy_policy" = "Gizlilik ilkesi";
+
+/* iOS: text in human verification code form */
+"_verification_instructions" = "Size gönderilen doğrulama kodunu aşağıya yazın.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete" = "Kurulum tamamlandı";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_free" = "Ücretsiz Proton VPN hesabınızı açtınız. Başlamak için, yedi günlük Proton VPN Plus tarifemizin tadını çıkarın.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_plus" = "Satın alma işleminiz tamamlandı. Proton VPN Plus tarifeniz kullanıma alındı.";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_title" = "Çevrim içi ortamda kendinizi koruyun";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_text" = "Proton VPN, gizliliğinize saygı duyar ve korumayı amaçlar. Öncelikli ilkemiz uygulamanın kullanımında kişisel ve anonim bir kullanıcı deneyimi sağlamak için olabildiğince az kullanıcı verisi toplamaktır. Özellikle:\n\n%@ – Oturumunuzu açmak, parola sıfırlamak ve önemli hizmet güncellemelerini göndermek için.\n\n%@ – Yalnızca kilitlenme bildirimleri ve sorunlar için.\n\nProton VPN uygulaması, bu veriler dışında herhangi bir kullanıcı bilgisini işlemez. Çevrim içi etkinliklerinizi veya gerçekte kim olduğunuzu belirleyebilecek bilgilerinizi kaydetmeyiz. Yukarıda belirtilen tüm veriler Proton VPN hizmetinin kendi sisteminde saklanır ve işlenir. Hiçbir üçüncü tarafın bu bilgilere erişimi yoktur.";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_user_details" = "Kullanıcı adı, e-posta adresi";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_device_details" = "Aygıtınızın modeli ve işletim sistemi sürümü";
+
+/* iOS: data disclaimer screen button */
+"_data_disclaimer_agree" = "Kabul et ve ilerle";
 
 /* iOS: Map screen title and tabbar item */
 "_map" = "Harita";
 
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
-"_map_hide" = "Haritayı gizle";
-
-/* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_show" = "Haritayı göster";
 
-/* (No Comment) */
-"_maximum_device_reached_description" = "Lütfen bu aygıtı bağlayabilmek için başka bir aygıtın bağlantısını kesin.";
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_hide" = "Haritayı gizle";
 
-/* (No Comment) */
-"_maximum_device_title" = "Kullanabileceğiniz en fazla aygıt sayısı sınırına ulaştınız";
+/* Description shown together with server info icon */
+"_tor_description" = "Tor ağına bağlanır";
 
-/* Cancel button in trial modals used in both iOS and MacOS */
-"_maybe_later" = "Belki daha sonra";
+/* Description shown together with server info icon */
+"_p2p_description" = "P2P trafiğini destekler";
 
-/* Value of speed in _speed */
-"_medium" = "Orta";
+/* Description shown together with server info icon */
+"_premium_description" = "Ücretli sunucu";
 
-/* Main mac app menu item */
-"_menu_about" = "Proton VPN hakkında";
+/* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
+"_via_country" = "%@ üzerinden";
 
-/* Main mac app menu item */
-"_menu_check_updates" = "Güncellemeleri denetle...";
+/* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
+"_via" = "şu ülkeden";
 
-/* Main mac app menu item */
-"_menu_hide_others" = "Diğerlerini gizle";
+/* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
+"_server_load_percentage" = "%@%% yüklü";
 
-/* Main mac app menu item */
-"_menu_hide_self" = "Proton VPN uygulamasını gizle";
+/* iOS: Home screen title, tab bar item title; MacOS: TabBar tab title; */
+"_home" = "Giriş";
 
-/* Main mac app menu item */
-"_menu_logout" = "Oturumu kapat";
+/* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
+"_countries" = "Ülkeler";
 
-/* Main mac app menu item */
-"_menu_minimize" = "Küçült";
+"_no_servers_to_show" = "Şu anda burada gösterilecek bir sunucu yok.";
 
-/* Main mac app menu item */
-"_menu_preferences" = "Ayarlar";
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_plan_does_not_include_secure_core" = "Tarifenizde Secure Core özelliği bulunmuyor.";
 
-/* Main mac app menu item */
-"_menu_quit" = "Proton VPN uygulamasından çık";
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_learn_more_about_secure_core" = "Secure Core hakkında ayrıntılı bilgi alın";
 
-/* Main mac app menu item */
-"_menu_show_all" = "Tümünü göster";
+/* MacOS: placeholder for country search */
+"_search_for_country" = "Ülke ara";
 
-/* Main mac app menu item */
-"_menu_window" = "Pencere";
+/* MacOS: secure core tooltip */
+"_secure_core_info" = "Trafiği Secure Core ağımız üzerinden yönelterek VPN sunucunun ele geçirilmiş olmasına karşı ek koruma sağlar";
 
-/* Title for alert shown when enabling Moderate NAT requires reconnection */
-"_moderate_nat_change_title" = "Ilımlı NAT kullanılsın";
+/* Text in warning screen before actions that will disconnect VPN */
+"_view_toggle_will_cause_disconnect" = "Secure Core özelliğini açmak ya da kapatmak geçerli bağlantınızı keser.";
 
-/* Title for alert shown when enabling Moderate NAT requires reconnection */
-"_moderate_nat_enable_title" = "Ilımlı NAT kullanılsın";
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_load" = "Sunucu yükü:";
 
-/* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "Ilımlı NAT rastgele yerel adres eşleştirmesini devre dışı bırakır. Bu nedenle güvenliğinizi hafifçe olumsuz etkiler. Ancak çevrimiçi oyunlar gibi doğrudan bağlantı kuran uçtan uca bağlantıların kurulabilmesini sağlar. Ayrıntılı bilgi alın";
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_ip" = "Sunucu IP adresi:";
 
-/* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
-"_moderate_nat_explanation_link" = "Ayrıntılı bilgi alın";
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_auto_assigned" = "Otomatik atanan";
 
-/* Moderate NAT feature title in Settings */
-"_moderate_nat_title" = "Ilımlı NAT";
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_premium_server" = "Ücretli sunucu";
 
-/* Display more information */
-"_more_info" = "Ayrıntılı bilgi alın";
+/* MacOS profile form: feature selection value */
+"_standard" = "Standart";
 
-/* Label in Plan information */
-"_most_popular" = "En beğenilen";
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_p2p" = "P2P";
 
-/* Mac: Used in several Trial screens */
-"_multiple_countries" = "Birden çok ülke";
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_tor" = "Tor";
 
-/* MacOS: \Trial about to expire\ screen */
-"_multiple_servers_description" = "Dünya çapında\nyüzlerce sunucu";
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_p2p_server" = "P2P sunucusu";
 
-/* MacOS: \Trial about to expire\ screen */
-"_multiple_servers_title" = "Birden çok sunucu";
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_tor_server" = "Tor sunucusu";
+
+/* MacOS Profiles Overview: Table column header */
+"_profile" = "Profil";
+
+/* MacOS: menu item, profiles window main header, sidebar tab title; iOS: Profiles screen title and tabbar item title; */
+"_profiles" = "Profiller";
+
+/* iOS: table header section in profiles screen */
+"_recommended" = "Önerilen";
 
 /* iOS: table header section in profiles screen */
 "_my_profiles" = "Profillerim";
 
+/* Button */
+"_save_as_profile" = "Profil olarak kaydet";
+
+/* Button */
+"_delete_profile" = "Profili sil";
+
+/* iOS: Success message on profile deletion */
+"_profile_deleted_successfully" = "Profil silindi";
+
+/* iOS: Error message if profile can't be deleted */
+"_profile_deletion_failed" = "Profil silinemedi";
+
+/* MacOS: Buttons in several places; iOS: profile creation screen title */
+"_create_new_profile" = "Profil oluştur";
+
+/* MacOS: button in profiles tab in main window */
+"_manage_profiles" = "Profil yönetimi";
+
+/* MacOS: profiles window title */
+"_profiles_overview" = "Profil özeti";
+
+/* iOS: success message after profile is saved */
+"_profile_created_successfully" = "Yeni profil kaydedildi";
+
+/* iOS: failure message after profile is saved */
+"_profile_creation_failed" = "Profil oluşturulamadı";
+
+/* iOS: success message after profile is saved */
+"_profile_edited_successfully" = "Profil güncellendi";
+
+/* MacOS menu item; MacOS Profiles tab title; */
+"_overview" = "Özet";
+
+/* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
+"_connection" = "Bağlantı";
+
+/* MacOS Profiles Overview: Table header for buttons column */
+"_action" = "İşlem";
+
+/* Used for both profile description when fastest server option is selected and Plan speed description */
+"_fastest" = "En hızlı";
+
+/* Profile create/change form */
+"_fastest_available_server" = "Kullanılabilecek en hızlı sunucu";
+
+/* iOS: Predefined profile with fastest connection */
+"_fastest_connection" = "En hızlı bağlantı";
+
+/* Profile create/change form and other places describing profile */
+"_random" = "Rastgele";
+
+/* Profile create/change form */
+"_random_available_server" = "Rastgele kullanılabilecek sunucu";
+
+/* iOS: Predefined profile with random server */
+"_random_connection" = "Rastgele bağlantı";
+
+/* Profile create/change form */
+"_different_server_each_time" = "Her seferinde farklı sunucu";
+
+/* Text used when no active server information is available */
+"_no_description_available" = "Herhangi bir açıklama yok";
+
+"_create_profile" = "Profil oluştur";
+
+/* Profile create/change form */
+"_profile_settings" = "Profil ayarları";
+
+/* Profile create/change form */
+"_connection_settings" = "Bağlantı ayarları";
+
 /* Profile create/change form */
 "_name" = "Ad";
 
+/* Profile create/change form */
+"_enter_profile_name" = "Profil adını yazın";
+
+/* Profile create/change form */
+"_color" = "Renk";
+
+/* Profile create/change form */
+"_make_default_profile" = "Varsayılan profil yap";
+
+/* Profile create/change form */
+"_default_profile_tooltip" = "\"Hızlı bağlan\" düğmesi varsayılan profili kullanır.\n";
+
+"_feature" = "Özellik";
+
+/* Profile create/change form */
+"_use_secure_core" = "Secure Core";
+
+/* Profile create/change form */
+"_select_country" = "Ülke seçin";
+
+/* Profile create/change form */
+"_server" = "Sunucu";
+
+/* Profile create/change form */
+"_select_server" = "Sunucu seçin";
+
+/* Error in profile create/change form */
+"_profile_name_is_required" = "Lütfen bir ad yazın";
+
+/* Error in profile create/change form */
+"_profile_name_is_too_long" = "Profil adı en fazla 25 karakter uzunluğunda olabilir";
+
+/* Error when user hasn't selected profile country */
+"_country_selection_is_required" = "Lütfen bir ülke seçin";
+
+/* Error when user hasn't selected profile server */
+"_server_selection_is_required" = "Lütfen bir sunucu seçin";
+
+"_profile_name_needs_to_be_unique" = "Aynı adlı bir profil zaten var";
+
+/* MacOS: profile creation cancel alert text */
+"_current_selection_will_be_lost" = "İlerlerseniz, geçerli seçim kaybolacak. İlerlemek istiyor musunuz?";
+
+/* iOS: new profkle can't be created because not all required fields are filled */
+"_check_if_fields_present" = "Lütfen tüm alanları doldurduğunuzdan emin olun";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_header" = "Profili sil";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_warning" = "Profil kalıcı olarak silinecek. İlerlemek istiyor musunuz?";
+
+/* iOS: new profile screen */
+"_select_profile_color" = "Profil rengini seçin";
+
+/* Plan speed */
+"_plan_speed_medium" = "Orta hız";
+
+/* Plan speed */
+"_plan_speed_high" = "Yüksek hız";
+
+"_plan_speed_fastest" = "En yüksek hız";
+
+/* Unknown error that has no better description */
+"_error_internal_error" = "İç API sorunu";
+
+/* VPN session is active error */
+"_error_vpn_session_is_active" = "Proton VPN oturumu etkin";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_missing" = "Kullanıcı kimlik doğrulama bilgileri eksik. Oturum açılamadı";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_expired" = "Kullanıcı kimlik doğrulama bilgilerinin geçerlilik süresi dolmuş. Lütfen oturum açın";
+
+/* VPN credentials can't be loaded error */
+"_error_vpn_credentials_missing" = "Anahtar zincirinde VPN kimlik doğrulama bilgileri eksik";
+
+/* Form validation error */
+"_error_field_required" = "Bu alan zorunludur";
+
+"_error_field_email_wrong_format" = "E-posta adresinin biçimi doğru değil";
+
+"_error_field_passwords_dont_match" = "Parola ile onayı aynı değil";
+
+/* Human validation failed */
+"_error_user_failed_human_validation" = "İnsan olduğunuzu doğrulayamadık. Lütfen yeniden deneyin ya da ücretli bir tarifeye geçin.";
+
+/* Error decoding an object */
+"_error_decode" = "Sınıftaki arşivlenmiş verilerin kodu çözülemedi: %@";
+
+/* Internal application error */
+"_error_email_verification_disabled" = "E-posta doğrulaması geçici olarak kapatıldı";
+
+/* Error writing to system keychain */
+"_error_keychain_write" = "Proton aygıtınızla iletişim kuramadı. Lütfen bir süre sonra yeniden deneyin.";
+
+/* Error when try to parse modulus signature */
+"_error_modulus_signature" = "Modül imzası boş";
+
+/* Error when generate srp clint */
+"_error_generate_srp" = "SRP oluşturulamadı";
+
+/* Error when try to hash password */
+"_error_hash_password" = "Kullanıcı parolası karılamadı";
+
+/* Error try to restore user from the session */
+"_error_fetch_session" = "Oturum kullanıcı bulunamadı";
+
 /* Network error */
-"_ne_couldnt_reach_server" = "Proton sunucularına erişemedik";
+"_ne_request_timed_out" = "Ağ isteği zaman aşımına uğradı";
+
+/* Network error */
+"_ne_unable_to_connect_to_host" = "Hizmete erişilemiyor";
 
 /* Network error */
 "_ne_network_connection_lost" = "Ağ bağlantısı kesildi";
@@ -833,16 +739,130 @@
 "_ne_not_connected_to_the_internet" = "İnternete bağlı değil";
 
 /* Network error */
-"_ne_request_timed_out" = "Ağ isteği zaman aşımına uğradı";
+"_ne_couldnt_reach_server" = "Proton sunucularına erişemedik";
 
-/* Button on alert after a problem with internet connection */
-"_ne_troubleshoot" = "Sorun gider";
+/* API error */
+"_ae_wrong_login_credentials" = "Kullanıcı adı veya parola yanlış";
 
-/* Network error */
-"_ne_unable_to_connect_to_host" = "Hizmete erişilemiyor";
+/* API error */
+"_ae_vpn_info_not_received" = "VPN bilgileri alınamadı";
 
-/* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
-"_neagent_always_allow" = "Her zaman izin ver";
+/* Error when try to parse the server info */
+"_error_server_info_parser" = "Sunucu bilgileri işlenemedi";
+
+/* Error when try to parse the partner info */
+"_error_partner_info_parser" = "İş ortağı bilgileri işlenemedi";
+
+/* Default error when vpn properties fetch failed */
+"_error_vpn_properties" = "VPN özellikleri alınamadı!";
+
+/* Parsing error */
+"_error_session_count_parser" = "Oturum sayısı işlenemedi";
+
+/* Parsing error */
+"_error_loads" = "Sunucu yükleri güncellenemedi";
+
+/* API error */
+"_error_api_offline" = "Proton VPN API şu anda çevrim dışı";
+
+/* Error when try to parse subscription info */
+"_error_subscription_parser" = "Abonelik bilgileri işlenemedi";
+
+/* Error when try to parse verification methods */
+"_error_verification_methods_parser" = "Doğrulama yöntemleri işlenemedi";
+
+/* Keychain error */
+"_error_keychain_fetch" = "Anahtarlık sorunu.";
+
+/* Error when the app fails to create a user */
+"_error_user_creation" = "Hesap açılamadı";
+
+/* General title for several error alerts */
+"_error_unknown_title" = "Bilinmeyen sorun";
+
+/* Delinquent user alert */
+"_delinquent_user_title" = "Ödenmemiş fatura";
+
+/* Delinquent user alert */
+"_delinquent_user_description" = "Hesabınızda ödenmemiş bir fatura var. Lütfen account.protonvpn.com adresinden süresi geçmiş tüm faturaları ödeyin";
+
+/* Generic sign in error */
+"_error_sign_in_again" = "Ne yazık ki bir şeyler ters gitti. Lütfen yeniden oturum açın.";
+
+"_p2p_detected_popup_title" = "Bu sunucuda P2P trafiğine izin verilmiyor";
+
+"_p2p_detected_popup_body" = "Eşler arası (P2P) trafiği desteklemeyen bir sunucu kullandığınız için bağlantınız kapatıldı. P2P, ücretsiz sunucularda ve numarası 100 ve üzerinde olan sunucularda desteklenmez.";
+
+"_p2p_forwarded_popup_title" = "Bağlantı yeniden yöneltildi";
+
+/* Under maintenance alert */
+"_server_under_maintenance" = "Sunucuda bakım yapılıyor";
+
+/* macOS: plan upgrade required alert */
+"_upgrade_plan_to_access_server" = "Ne yazık ki, bu sunucu abonelik tarifeniz ile kullanılamıyor. Daha fazla sunucuya erişmek istiyorsanız, abonelik tarifenizi yükseltmeyi düşünün.";
+
+/* Under maintenance alert */
+"_all_servers_in_country_under_maintenance" = "Bu ülkedeki tüm sunuculara bakım yapılıyor. Lütfen başka bir ülkeye bağlanın.";
+
+"_unsecure_wifi" = "Güvenli olmayan WiFi bağlantısı algılandı";
+
+"_unsecure_wifi_learn_more" = "Ayrıntılı bilgi alın";
+
+"_unsecure_wifi_title" = "Güvenli olmayan WiFi algılandı";
+
+"_maintenance_on_server_detected_title" = "VPN sunucusunda bakım yapılıyor";
+
+"_maintenance_on_server_detected_subtitle" = "Bağlandığınız sunucuda bakım yapılıyor";
+
+"_maintenance_on_server_detected_description" = "Kullanılabilecek en hızlı sunucuya yeniden bağlanılıyor.";
+
+/* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
+"_reconnect_on_settings_change_body" = "Bu değişikliğin uygulanması için bağlantınızın yeniden başlatılması gerekiyor.";
+
+/* Under maintenance alert */
+"_country_servers_under_maintenance" = "%@ sunucularında bakım yapılıyor";
+
+/* Under maintenance alert */
+"_all_servers_in_profile_under_maintenance" = "Profil sunucularında bakım yapılıyor";
+
+/* Under maintenance alert */
+"_all_servers_under_maintenance" = "Tüm sunucularda bakım yapılıyor. Bu durum genellikle Proton VPN tarafında teknik sorunlar olduğu ya da ağınızın kısıtlandığı anlamına gelir.";
+
+"_p2p_forwarded_popup_body" = "Bazı sunucular P2P trafiğini desteklemediğinden, bağlantınız otomatik olarak başka bir sunucu üzerine yöneltildi. Bu durum, bağlantı hızınızı düşürebilir. Yeniden yöneltmeyi önlemek için lütfen P2P etiketli sunucular kullanın.";
+
+"_p2p_forwarded_popup_body_p1" = "Bazı sunucular P2P trafiğini desteklemediğinden bağlantınız otomatik olarak başka bir sunucu üzerine yöneltildi. Bu durum, bağlantı hızınızı düşürebilir. Lütfen şu sunucuları kullanın";
+
+"_p2p_forwarded_popup_body_p2" = "trafiğin yeniden yöneltilmesini önlemek için simge.";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_title" = "Bağlantı sorunu";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_body" = "Aygıtınız önceki VPN oturumunu sonlandıramadı. Yeni bir VPN bağlantısı kurmadan önce aygıtınız yeniden başlatmalısınız.";
+
+"_update_required" = "Güncelleme gerekli";
+
+"_update_required_no_longer_supported" = "Bu Proton VPN sürümü artık desteklenmiyor. Lütfen kullanmayı sürdürmek için uygulamayı güncelleyin.";
+
+/* Secondary button title in the App update required alert  */
+"_update_required_support" = "Destek ekibimizle görüşün";
+
+/* Primary button title in the App update required alert  */
+"_update_required_update" = "Güncelle";
+
+"_invalid_refresh_token_please_login" = "Proton VPN uygulamasını son kullandığınızdan bu yana epey zaman geçmiş. Lütfen yeniden oturum açın.";
+
+"_error_mitm_title" = "Güvenli olmayan bağlantı";
+
+"_error_mitm_description" = "Proton VPN API hizmeti ile bağlantı kurulmaya çalışılırken TLS sertifikası doğrulanamadı. Geçerli internet bağlantınız izlenebilir. Verilerinizi güvende tutmak için, uygulamanın Proton VPN API hizmetine erişmesini engelliyoruz.\nOturum açmak veya hesabınıza erişmek için başka bir ağa geçin ve yeniden bağlanmayı deneyin.";
+
+"_error_mitm_vpn_description" = "VPN sunucusuna bağlanmaya çalışılırken TLS sertifikası doğrulanamadı. Geçerli internet bağlantınız izlenebilir. Verilerinizi güvende tutmak için, uygulamanın bu VPN sunucusuna erişmesini engelliyoruz.\nLütfen başka bir sunucu seçin.";
+
+/* Internal error message when there is a problem with initializing tls and connection cannot be established. */
+"_error_tls_initialisation" = "TLS başlatma sorunu";
+
+/* Internal error message when there is a problem with server certificate and connection cannot be established. */
+"_error_tls_server_verification" = "Sunucu sertifikası doğrulanamadı.";
 
 /* Mac: neagent help screen */
 "_neagent_description" = "Proton VPN hizmetine bağlanmak için\n%@ yazmanız istenebilir. Bu istek görüntülenirse,\n%@%@ yazın ve ‘%@’ %@ üzerine tıklayın.";
@@ -850,308 +870,343 @@
 /* Mac: neagent help screen */
 "_neagent_password" = "bilgisayar hesabının parolası";
 
-/* MacOS: button in login screen */
-"_need_help" = "Yardım gerekiyor mu?";
+/* Mac: neagent help screen */
+"_mac_password" = "Mac parolası";
 
-/* (No Comment) */
-"_neks_t2_connect" = "Gene de etkinleştir";
+/* Mac: neagent help screen */
+"_neagent_first_step" = "(1)";
 
-/* (No Comment) */
-"_neks_t2_description" = "Bu aygıt üzerinde bağlantı kesici kullanımı sorunlara yol açar.\n\nAygıtınızda macOS üzerinde Proton VPN bağlantı kesici özelliği kullanıldığında kararsızlığa yol açan T2 güvenlik çipi bulunuyor.";
+/* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
+"_neagent_always_allow" = "Her zaman izin ver";
 
-/* `_neks_t2_description' localized string. */
-"_neks_t2_hyperlink" = "T2 güvenlik çipi";
+/* Mac: neagent help screen */
+"_neagent_second_step" = "(2)";
 
-/* NetworkExtension + KillSwitch on T2 Macs */
-"_neks_t2_title" = "Bağlantı kesici kararsızlığı uyarısı";
+/* Button in several different alerts */
+"_got_it" = "Anladım!";
 
-/* (No Comment) */
-"_netshield_alert_reconnect_description_off" = "NetShield kipini değiştirmek için bağlantınız yeniden başlatılacak.";
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_title" = "Yükseltme uygulamada içinden yapılamaz";
 
-/* (No Comment) */
-"_netshield_alert_reconnect_description_on" = "NetShield kipini değiştirmek için bağlantınız yeniden başlatılacak.\nNot: Bazı siteler yüklenmezse, NetShield özelliğini devre dışı bırakmayı deneyin.";
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_body" = "Proton VPN aboneliğiniz uygulama içinden yükseltilemez. Yükseltmek için lütfen account.protonvpn.com adresine gidin.";
 
-/* (No Comment) */
-"_netshield_alert_upgrade_description" = "NetShield, reklamları ve etkinlik izleyicileri engelleyerek gizliliğinizi artırır.";
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_title" = "Uygulama verilerini temizle";
 
-/* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
-"_netshield_feature_description" = "Kendinizi siteler ile uygulamalarda bulunabilecek reklam, kötü amaçlı yazılım ve izleyicilerden koruyun. Siteler yüklenmezse NetShield özelliğini kapatmayı deneyin. Ayrıntılı bilgi alın";
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_body" = "Tüm Proton VPN verileri silinecek ve uygulama kapanacak. İlerlemek istiyor musunuz?";
 
-/* Link with more info in the NetShield Feature description */
-"_netshield_feature_description_alt_link" = "Ayrıntılı bilgi alın";
-
-/* Settings -> Netshield: Block malware */
-"_netshield_level1" = "Kötü amaçlı yazılımları engelleyin";
-
-/* Settings -> Netshield: Block malware, ads, trackers */
-"_netshield_level2" = "Kötü amaçlı yazılımları, reklamları, ve etkinlik izleyicileri engelleyin";
-
-/* Settings -> Netshield, Status -> NetShield: Off */
-"_netshield_off" = "Kapalı";
-
-/* Status -> Netshield: On */
-"_netshield_on" = "Açık";
-
-/* Netshield section title in iOS connection screen */
-"_netshield_section_title" = "Zararlı yazılım ve reklam engelleyici";
-
-/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
-"_netshield_stats_data_saved" = "Kazanılan\nveri";
-
-/* (No Comment) */
-"_netshield_title_tooltip" = "Reklam, etkinlik izleyiciler ve kötü amaçlı yazılımların engellenmesini sağlar";
-
-/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
-"_netshield_upsell_subtitle" = "Siteler ile uygulamalarda bulunabilecek reklamları, izleyicileri ve kötü amaçlı yazılımları engelleyin";
-
-/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
-"_netshield_upsell_title" = "NetShield ile reklamlar olmadan gezinin";
-
-/* iOS: quick connect widget */
-"_network_unreachable" = "Ağa erişilemiyor";
-
-/* Title of the screen with news and offers. */
-"_news_title" = "Haberler";
-
-/* iOS onboarding next item button */
-"_next" = "İleri";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Sonraki ipucu";
-
-/* Text used when no active server information is available */
-"_no_description_available" = "Herhangi bir açıklama yok";
-
-/* (No Comment) */
-"_no_servers_to_show" = "Şu anda burada gösterilecek bir sunucu yok.";
-
-/* MacOS welcome screen: cancel button */
-"_no_thanks" = "Hayır, teşekkürler";
-
-/* Title for alert shown when enabling Non-standard ports requires reconnection */
-"_non_standard_ports_change_title" = "Standart olmayan bağlantı noktaları kullanılsın";
-
-/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
-"_non_standard_ports_explanation" = "VPN ağı üzerinden standart olmayan bağlantı noktalarından trafik akışına izin vererek herhangi bir özel gereksinim için Proton VPN kullanabilirsiniz. \nAyrıntılı bilgi alın";
-
-/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
-"_non_standard_ports_explanation_link" = "Ayrıntılı bilgi alın";
-
-/* Non-standard ports feature title in Settings */
-"_non_standard_ports_title" = "Standart olmayan bağlantı noktaları";
-
-/* iOS: connection bar; Main mac app menu item; */
-"_not_connected" = "Bağlı değil";
-
-/* Title in no internet alert */
-"_not_connected_to_the_internet" = "VPN bağlantısı kurulamadı. İnternete bağlı değilsiniz.";
-
-/* (No Comment) */
-"_not_now" = "Şimdi değil";
-
-/* Common word */
-"_ok" = "Tamam";
-
-/* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "Bakım yapılıyor";
-
-/* Telemetry label in the onboarding screen for mac next to a toggle */
-"_onboarding_mac_crash_reports" = "Anonim çökme bildirimlerini paylaşın. Bu bildirimler, hataları gidermemize, güvenlik duvarlarını algılamamıza ve VPN engellemelerini aşmamıza yardımcı olur.";
-
-/* Telemetry label in the onboarding screen for mac next to a toggle */
-"_onboarding_mac_usage_stats" = "Anonim kullanım istatistiklerini paylaşın. Bu istatistikler, VPN engellemelerini aşmamıza ve uygulamayı geliştirmemize yardımcı olur.";
-
-/* Main mac app menu item */
-"_open_app_to_log_in" = "Oturum açmak için Proton VPN uygulamasını aç...";
-
-/* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "OpenVPN günlük kayıtları";
-
-/* MacOS menu item; MacOS Profiles tab title; */
-"_overview" = "Özet";
-
-/* Description shown together with server info icon */
-"_p2p_description" = "P2P trafiğini destekler";
-
-/* (No Comment) */
-"_p2p_detected_popup_body" = "Eşler arası (P2P) trafiği desteklemeyen bir sunucu kullandığınız için bağlantınız devre dışı bırakıldı. P2P, ücretsiz sunucularda ve numarası 100 ve üzerinde olan sunucularda desteklenmez.";
-
-/* (No Comment) */
-"_p2p_detected_popup_title" = "Bu sunucuda P2P trafiğine izin verilmiyor";
-
-/* (No Comment) */
-"_p2p_forwarded_popup_body" = "Bazı sunucular P2P trafiğini desteklemediğinden, bağlantınız otomatik olarak başka bir sunucu üzerine yöneltildi. Bu durum, bağlantı hızınızı düşürebilir. Yeniden yöneltmeyi önlemek için lütfen P2P etiketli sunucular kullanın.";
-
-/* (No Comment) */
-"_p2p_forwarded_popup_body_p1" = "Bazı sunucular P2P trafiğini desteklemediğinden bağlantınız otomatik olarak başka bir sunucu üzerine yöneltildi. Bu durum, bağlantı hızınızı düşürebilir. Lütfen şu sunucuları kullanın";
-
-/* (No Comment) */
-"_p2p_forwarded_popup_body_p2" = "trafiğin yeniden yöneltilmesini önlemek için simge.";
-
-/* (No Comment) */
-"_p2p_forwarded_popup_title" = "Bağlantı yeniden yöneltildi";
-
-/* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_p2p_server" = "P2P sunucusu";
-
-/* MacOS: Used ir trial welcome and trial expired screens */
-"_p2p_servers" = "P2P sunucuları";
-
-/* Used in sign-in, sign-up */
-"_password" = "Parola";
-
-/* Sign-up form */
-"_password_confirm" = "Parola onayı";
-
-/* Per year. Appended to plan price. */
-"_per_year_short" = "/ yıl";
-
-/* (No Comment) */
-"_performance_load_description" = "Yükü yüksek olan sunucular, düşük olanlara göre daha yavaştır.";
-
-/* (No Comment) */
-"_performance_load_high" = "Yüksek";
-
-/* (No Comment) */
-"_performance_load_low" = "Düşük";
-
-/* (No Comment) */
-"_performance_load_medium" = "Orta";
-
-/* (No Comment) */
-"_performance_title" = "Başarım";
-
-/* iOS: placeholder in phone verification screen */
-"_phone_country_code_placeholder" = "Kod";
-
-/* iOS: placeholder in phone verification screen */
-"_phone_number_placeholder" = "Telefon numarasını yazın";
-
-/* MacOS: SecureCore warning alert when users plan has to be upgraded */
-"_plan_does_not_include_secure_core" = "Tarifenizde Secure Core özelliği bulunmuyor.";
-
-/* (No Comment) */
-"_plan_speed_fastest" = "En yüksek hız";
-
-/* Plan speed */
-"_plan_speed_high" = "Yüksek hız";
-
-/* Plan speed */
-"_plan_speed_medium" = "Orta hız";
-
-/* Text description in plan selection screen */
-"_plans_footer" = "Ücretli bir tarife satın aldığınızı onayladıktan sonra, iTunes hesabınızdan vergiler ve ek platform ücretleri (doğrudan Proton tarafından ücretlendirilmeyen) ile birlikte görüntülenen tutar alınır. Satın alma işlemini yaptıktan sonra, 1 yıllık bir dönem için otomatik olarak seçilmiş tarifeye geçersiniz. Bu sürenin sonunda aboneliğinizi çevrimiçi olarak ya da iOS uygulamamız üzerinden yenileyebilir ya da iptal edebilirsiniz.";
-
-/* Features of account plan */
-"_plus_plan_features" = "Plus sunucuları\nSecure Core\nTor sunucuları";
-
-/* iOS: section header in countries list */
-"_plus_servers" = "Plus sunucuları";
+/* MacOS: killswitch blocking alert button */
+"_kill_switch_disable" = "Bağlantı kesiciyi kapat";
 
 /* MacOS: Settings screen title */
 "_preferences" = "Ayarlar";
 
-/* Description shown together with server info icon */
-"_premium_description" = "Ücretli sunucu";
+/* iOS: Settings screen title and tab title */
+"_settings" = "Ayarlar";
 
-/* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_premium_server" = "Ücretli sunucu";
+/* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
+"_account" = "Hesap";
 
-/* MacOS: connecting overlay */
-"_preparing_connection" = "Sunucunun uygunluğu denetleniyor";
+/* Alert title for account deletion error */
+"_account_deletion_error" = "Hata";
 
-/* iOS: link inside text under sign-up form */
-"_privacy_policy" = "Gizlilik ilkesi";
+/* iOS: Message explaining that deleting account closes the VPN connection */
+"_account_deletion_connection_warning" = "Hesabınızı silmek VPN oturumunuzu sonlandıracak.";
 
-/* MacOS Profiles Overview: Table column header */
-"_profile" = "Profil";
+/* MacOS: General tab in setting window */
+"_general" = "Genel";
 
-/* iOS: success message after profile is saved */
-"_profile_created_successfully" = "Yeni profil kaydedildi";
+/* MacOS: Settings -> Account: name of field. */
+"_account_type" = "Hesap türü";
 
-/* iOS: failure message after profile is saved */
-"_profile_creation_failed" = "Profil oluşturulamadı";
+/* MacOS: Settings -> Account: name of field. */
+"_account_plan" = "Hesap tarifesi";
 
-/* iOS: Success message on profile deletion */
-"_profile_deleted_successfully" = "Profil silindi";
+"_manage_subscription_on_web" = "Web kontrol panosundan aboneliğinizi yönetin";
 
-/* iOS: Error message if profile can't be deleted */
-"_profile_deletion_failed" = "Profil silinemedi";
+/* MacOS: Settings -> Connection: name of field. */
+"_kill_switch" = "Bağlantı kesici";
 
-/* iOS: success message after profile is saved */
-"_profile_edited_successfully" = "Profil güncellendi";
+/* MacOS: Settings -> Connection. Kill switch functionality description. */
+"_kill_switch_tooltip" = "VPN tüneli kesildiğinde tüm ağ trafiğini engeller.";
 
-/* Error in profile create/change form */
-"_profile_name_is_required" = "Lütfen bir ad yazın";
+/* iOS Settings: toggle name */
+"_always_on_vpn" = "Hep açık VPN";
 
-/* Error in profile create/change form */
-"_profile_name_is_too_long" = "Profil adı en fazla 25 karakter uzunluğunda olabilir";
+/* iOS Settinsg screen: always-on description under the switch */
+"_always_on_vpn_tooltip_ios" = "Hep açık VPN, kesilen bir güvenli VPN bağlantısını çabuk ve otomatik olarak yeniden kurar. Güvenliğiniz için bu özellik hep açıktır.";
 
-/* (No Comment) */
-"_profile_name_needs_to_be_unique" = "Aynı adlı bir profil zaten var";
+/* MacOS: Settings -> Connection: name of field. */
+"_auto_connect" = "Otomatik bağlantı";
 
-/* Profile create/change form */
-"_profile_settings" = "Profil ayarları";
-
-/* MacOS: menu item, profiles window main header, sidebar tab title; iOS: Profiles screen title and tabbar item title; */
-"_profiles" = "Profiller";
-
-/* MacOS: profiles window title */
-"_profiles_overview" = "Profil özeti";
-
-/* MacOS app tour: profiles description */
-"_profiles_tour_description" = "Kullanmayı yeğlediğiniz ayarları ve sunucuları ileride kullanmak üzere kaydedin.";
-
-/* MacOS app tour: profiles title */
-"_profiles_tour_title" = "Profiller";
-
-/* (No Comment) */
-"_protocol" = "İletişim kuralı";
-
-/* %@ is an IP address e.g. Public IP: 123.45.67.890 */
-"_public_ip" = "Herkese açık IP: %@";
-
-/* Several places in both iOS and Mac apps */
-"_quick_connect" = "Hızlı bağlan";
+/* MacOS: Settings -> Connection: description. */
+"_auto_connect_tooltip" = "Uygulama başlatıldığında seçilmiş profile bağlanırsınız";
 
 /* MacOS: Settings -> Connection: description. */
 "_quick_connect_tooltip" = "Hızlı Bağlan düğmesinin seçtiğiniz profile göre bağlantı kurmasını sağlar";
 
-/* MacOS app tour: quick connect description */
-"_quick_connect_tour_description" = "Size en hızlı bağlantıyı sağlayacak sunucuya otomatik olarak bağlanın.";
+/* MacOS: Settings -> General: name of field. */
+"_start_minimized" = "Küçültülmüş olarak başlatılsın";
+
+/* MacOS: Settings -> General: name of field. */
+"_system_notifications" = "Sistem bildirimleri";
+
+/* MacOS: Settings -> General: name of field. */
+"_early_access" = "Erken erişim";
+
+/* MacOS: Settings -> General: description. */
+"_early_access_tooltip" = "Son güncellemeleri ilk alan siz olun. Lütfen erken sürümlerin daha az kararlı olabileceğini unutmayın.";
+
+/* MacOS: Settings -> General: name of field. */
+"_unprotected_network" = "Korunmayan ağlar bildirilsin";
+
+/* MacOS: Settings -> General: description */
+"_unprotected_network_tooltip" = "Proton VPN korunmayan bir ağa bağlı olduğunuzu algıladığında bir bildirim görüntülenir.";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_dns_leak_protection" = "DNS sızıntı koruması";
+
+/* MacOS: Settings -> Connection: description. */
+"_dns_leak_protection_tooltip" = "DNS sorgularının üçüncü taraflara sızdırılmasını önleyin. Hep açık.";
+
+/* iOS Settings: table section header */
+"_security_options" = "Güvenlik seçenekleri";
+
+/* iOS Settings -> Connection: name of field. */
+"_subscription_plan" = "Abonelik tarifesi";
+
+/* iOS plan selection: header */
+"_choose_plan" = "Abonelik seçin";
+
+"_protocol" = "İletişim kuralı";
+
+/* iOS Settings -> Protocol: screen title */
+"_vpn_protocol" = "VPN iletişim kuralı";
+
+"_openvpn" = "OpenVPN";
+
+/* iOS Settings -> Protocol: IKEv2 option */
+"_ikev2" = "IKEv2";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: TCP option */
+"_tcp" = "TCP";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: UDP option */
+"_udp" = "UDP";
+
+/* iOS Settings -> Protocol -> WireGuard: TLS option */
+"_tls" = "TLS";
+
+/* iOS Settings -> Protocol: WireGuard option */
+"_wireguard" = "WireGuard";
+
+/* Settings -> Protocol: WireGuard TLS Option called "Stealth". Should not be translated. */
+"_wireguard_tls" = "Stealth";
+
+/* MacOS menu item; iOS setting screen item */
+"_view_logs" = "Günlükleri görüntüle";
+
+/* iOS logs screen title */
+"_logs" = "Günlük kayıtları";
+
+/* iOS Settings: applications logs row */
+"_application_logs" = "Uygulama günlüğü kayıtları";
+
+/* iOS Settings: OpenVPN logs row */
+"_open_vpn_logs" = "OpenVPN günlük kayıtları";
+
+/* iOS Settings: WireGuard logs row */
+"_wireguard_logs" = "WireGuard günlük kayıtları";
+
+/* iOS widget help screen: title */
+"_activate_widget" = "Ekran bileşenini kullanıma al";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_1" = "Ekran bileşenlerinize erişmek için ana ekranınızı en soldaki sayfaya kaydırın.";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_2" = "Tamamen aşağı kaydırın ve düzenle düğmesine dokunun.";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_3" = "Proton VPN ekran bileşenini etkin ekran bileşenleri listesine ekleyin.";
+
+/* Report bug screen title; iOS settings screen: item; */
+"_report_bug" = "Bir sorun bildirin";
+
+"_allow_lan_title" = "Yerel ağ bağlantılarına izin verilsin";
+
+"_allow_lan_info" = "VPN bağlantısını kullanmadan yerel ağınızdaki yazıcı gibi aygıtlara bağlanmanızı sağlar.";
+
+"_allow_lan_description" = "Yerel ağ erişimine izin vermek için bağlantı kesici kapatılmalıdır.\n\nİlerlemek istiyor musunuz?";
+
+"_allow_lan_note" = "Bu değişikliği uygulamak için bağlantınızın yeniden başlatılması gerektiğini unutmayın";
+
+/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_title" = "Bağlantı kesici açılsın mı?";
+
+/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_description" = "Bağlantı kesiciyi açtığınızda yerel ağınızdaki aygıtlara erişemeyeceksiniz. \n\nİlerlemek istiyor musunuz?";
+
+/* %@ is a plan name e.g. Get Plus Plan */
+"_get_plan" = "%@ tarifesine geçin";
+
+/* Account plan description */
+"_free_countries" = "3 ülke";
+
+/* Account plan description */
+"_all_countries" = "60 üzerinde ülke";
+
+/* %@ is a speed description e.g. Speed: Highest */
+"_speed" = "%@ hız";
+
+/* Value of speed in _speed */
+"_medium" = "Orta";
+
+/* Value of speed in _speed */
+"_high" = "Yüksek";
+
+/* Value of speed in _speed */
+"_highest" = "En yüksek";
+
+/* Features of account plan */
+"_plus_plan_features" = "Plus sunucuları\nSecure Core\nTor sunucuları";
+
+/* Used instead of price for free plans. */
+"_free" = "Free";
+
+/* Alert message during In App Purchase */
+"_do_you_want_to_activate_subscription_for" = "Satın alınmış şu aboneliği kullanıma almak istiyor musunuz ";
+
+/* Label in Plan information */
+"_most_popular" = "En çok kullanılan";
+
+/* Button in plan selection */
+"_select_plan" = "Tarifeyi seçin";
+
+/* Plan information */
+"_advanced_features" = "+ Gelişmiş özellikler";
+
+/* Plan information */
+"_adblocker_netshield_feature" = "Reklam engelleyici (NetShield)";
+
+/* Text description in plan selection screen */
+"_plans_footer" = "Ücretli bir tarife satın aldığınızı onayladıktan sonra, iTunes hesabınızdan vergiler ve ek platform ücretleri (doğrudan Proton tarafından ücretlendirilmeyen) ile birlikte görüntülenen tutar alınır. Satın alma işlemini yaptıktan sonra, 1 yıllık bir dönem için otomatik olarak seçilmiş tarifeye geçersiniz. Bu sürenin sonunda aboneliğinizi çevrim içi olarak ya da iOS uygulamamız üzerinden yenileyebilir ya da iptal edebilirsiniz.";
+
+/* Per year. Appended to plan price. */
+"_per_year_short" = "/ yıl";
+
+/* iOS plan feature */
+"_feature_server_count" = "Şuradaki sunuculara bağlan";
+
+/* iOS plan feature */
+"_feature_speed" = "Hız";
+
+/* iOS plan feature */
+"_feature_connections" = "Eşzamanlı VPN bağlantıları";
+
+/* iOS plan feature */
+"_feature_secure_streaming" = "Güvenli yayın akışı";
+
+/* iOS plan feature */
+"_feature_tor" = "VPN üzerinden Tor";
+
+/* iOS plan feature */
+"_feature_secure_core" = "Secure Core";
+
+/* iOS plan feature */
+"_feature_blocked_content" = "Engellenen içeriğe erişin";
+
+"_feature_bt" = "BitTorrent/dosya paylaşımı desteği";
+
+/* MacOS welcome screen: title */
+"_welcome_title" = "HOŞ GELDİNİZ!";
+
+/* MacOS welcome screen: description */
+"_welcome_description" = "Proton VPN kullandığınız için teşekkürler. Temel uygulama özelliklerine\nhızlıca göz atın.";
+
+/* MacOS welcome screen: cancel button */
+"_no_thanks" = "Hayır, teşekkürler";
+
+/* MacOS welcome screen: skip button */
+"_skip" = "Atla";
+
+/* MacOS welcome screen: take a tour button */
+"_take_tour" = "Tura çıkın";
+
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Artı";
+
+/* MacOS: Used ir trial welcome and trial expired screens */
+"_p2p_servers" = "P2P sunucuları";
+
+"_5_connections" = "5 bağlantı";
+
+/* Mac: Used in several Trial screens */
+"_multiple_countries" = "Birden çok ülke";
+
+/* MAC: is inserted into _free_trial_expired_title insteadof %@ */
+"_expired" = "GEÇERLİLİK SÜRESİ DOLMUŞ";
+
+/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
+"_free_trial_expired_title" = "Ücretsiz %@ denemeniz";
+
+/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "Hesabınız Proton VPN Free tarifesine düşürüldü.\nİşte %@ tarifesinden özleyeceğiniz şeyler:";
+
+/* Cancel button in trial modals used in both iOS and MacOS */
+"_maybe_later" = "Belki daha sonra";
+
+/* Upgrade button in trial modals used in both iOS and MacOS */
+"_upgrade_now" = "Şimdi yükselt";
+
+/* MacOS: Button in Upgrade screen */
+"_upgrade_my_plan" = "Tarifemi yükselt";
+
+/* MacOS: \Trial about to expire\ screen title */
+"_free_trial_about_to_expire_title" = "Ücretsiz deneme süreniz sona ermek üzere!";
+
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
+"_free_trial_about_to_expire_description" = "%@ sürümüne yükselterek şu özellikleri kullanmayı sürdürün:";
+
+"_5_connections_description" = "Aynı anda 5 aygıta\nkadar bağlantı";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_core_description" = "Ultra güvenli sunucular\nve biz işletiyoruz";
+
+/* MacOS: \Trial about to expire\ screen */
+"_multiple_servers_title" = "Birden çok sunucu";
+
+/* MacOS: \Trial about to expire\ screen */
+"_multiple_servers_description" = "Dünya çapında\nyüzlerce sunucu";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_title" = "Güvenli yayın akışı";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_description" = "En sevdiğiniz içeriklerin\ngüvenli yayın akışı";
 
 /* MacOS app tour: quick connect title */
 "_quick_connect_tour_title" = "Hızlı bağlan";
 
-/* (No Comment) */
-"_quick_settings_get_plus" = "Plus edinin";
+/* MacOS app tour: quick connect description */
+"_quick_connect_tour_description" = "Size en hızlı bağlantıyı sağlayacak sunucuya otomatik olarak bağlanın.";
 
-/* (No Comment) */
-"_quick_settings_killSwitch_description" = "VPN bağlantısı kesildiğinde IP adresinizin isteğiniz dışında sızmasını engellemek için interneti devre dışı bırakır.";
+/* MacOS app tour: profiles title */
+"_profiles_tour_title" = "Profiller";
 
-/* (No Comment) */
-"_quick_settings_killSwitch_note" = "Yerel ağınızdaki aygıtlara bağlanamıyorsanız, bağlantı kesiciyi devre dışı bırakmayı deneyin.";
+/* MacOS app tour: profiles description */
+"_profiles_tour_description" = "Kullanmayı yeğlediğiniz ayarları ve sunucuları ileride kullanmak üzere kaydedin.";
 
-/* (No Comment) */
-"_quick_settings_netShield_description" = "İnternette reklamlar ve kötü amaçlı yazılımlar olmadan gezinin.";
+/* MacOS app tour: countries list title */
+"_countries_tour_title" = "Ülkeler";
 
-/* (No Comment) */
-"_quick_settings_netShield_note" = "Siteler yüklenmiyorsa, NetShield özelliğini devre dışı bırakmayı deneyin";
+/* MacOS app tour: countries list description */
+"_countries_tour_description" = "Çıkış IP adresiniz için kullanmak istediğiniz ülkeyi ve sunucuyu seçin.";
 
-/* (No Comment) */
-"_quick_settings_netshield_option_level1" = "Yalnızca kötü amaçlı yazılımlar engellensin";
-
-/* (No Comment) */
-"_quick_settings_netshield_option_level2" = "Kötü amaçlı yazılımları, reklamları, ve etkinlik izleyicileri engelleyin";
-
-/* (No Comment) */
-"_quick_settings_netshield_option_off" = "Engellenmesin";
-
-/* Quick Settings */
-"_quick_settings_secureCore_description" = "En hassas verilerinizi gizliliğe saygı gösteren ülkelerdeki en güvenli sunucularımız üzerinden yöneltin.";
-
-/* (No Comment) */
-"_quick_settings_secureCore_note" = "Secure Core, VPN hızını azaltabilir";
+/* MacOS app tour: quick settings title */
+"_quick_settings_tour_title" = "Hızlı ayarlar";
 
 /* MacOS app tour: quick settings description */
 "_quick_settings_tour_description" = "Tek bir tıklama ile güvenliğinizi artırın:";
@@ -1165,62 +1220,73 @@
 /* MacOS app tour: quick settings kill switch */
 "_quick_settings_tour_feature_3" = "Bağlantı kesiciyi açarak IP adresinizin açığa çıkmasını önleyin.";
 
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "Hızlı ayarlar";
+/* MacOS app tour: next tip button */
+"_next_tip" = "Sonraki ipucu";
 
-/* MacOS: quit application button in custom status menu */
-"_quit" = "Çıkış";
+/* MacOS app tour: end tour button */
+"_end_tour" = "Turu bitir";
 
-/* MacOS: alert show before quitting app if VPN is connected */
-"_quit_warning" = "Uygulamadan çıkmak, etkin VPN bağlantısını kesecek. İlerlemek istiyor musunuz?";
+/* iOS onboarding texts */
+"_ios_onboarding_page1_title" = "Daha iyi bir internete hoş geldiniz";
 
-/* Profile create/change form and other places describing profile */
-"_random" = "Rastgele";
+/* iOS onboarding texts */
+"_ios_onboarding_page1_description" = "Proton Mail uygulamasını yaratan bilim insanları ve mühendislerin sunduğu, daha güvenli ve gizli bir internete hoş geldiniz.";
 
-/* Profile create/change form */
-"_random_available_server" = "Rastgele kullanılabilecek sunucu";
+/* iOS onboarding texts */
+"_ios_onboarding_page2_title" = "İnternetin özgür olması gerektiğine inanıyoruz";
 
-/* iOS: Predefined profile with random server */
-"_random_connection" = "Rastgele bağlantı";
+/* iOS onboarding texts */
+"_ios_onboarding_page2_description" = "Sansürü ve bölgesel kısıtlamaları aşın. Reklam yok, bant genişliği sınırlaması yok ve verilerinizi satmıyoruz.";
 
-/* iOS: table header section in profiles screen */
-"_recommended" = "Önerilen";
+/* iOS onboarding texts */
+"_ios_onboarding_page3_title" = "Güvenliğiniz önceliğimizdir";
 
-/* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
-"_reconnect_on_settings_change_body" = "Bu değişikliğin uygulanması için bağlantınızın yeniden başlatılması gerekiyor.";
+/* iOS onboarding texts */
+"_ios_onboarding_page3_description" = "Biz bir güvenlik şirketiyiz. İster Secure Core mimarimiz ister gelişmiş şifreleme olsun güvenlik her zaman önce gelir.";
 
-/* (No Comment) */
-"_reconnect_title" = "Kullanılabilecek en hızlı sunucuya yeniden bağlanıyoruz.";
+/* iOS onboarding next item button */
+"_next" = "İleri";
 
-/* (No Comment) */
-"_reconnecting_to" = "%@ ile yeniden bağlantı kuruluyor";
+/* iOS onboarding button to check app without logging in */
+"_discover_the_app" = "Uygulamayı keşfedin";
 
-/* iOS & MacOS: text that requires restart connection */
-"_reconnection_required" = "Yeniden bağlantı kurmak gerekli";
+/* iOS: Table header in settings screen */
+"_extensions" = "Uzantılar";
 
-/* (No Comment) */
-"_reestablish_vpn_connection_" = "VPN bağlantısı yeniden kuruluyor.";
+/* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
+"_widget" = "iOS ekran bileşeni";
 
-/* MacOS: About window */
-"_release_date" = "Yayınlanma tarihi:";
+/* Menu point in settings screen */
+"_usage_statistics" = "Kullanım istatistikleri";
 
-/* MacOS: label in login and settings screens */
-"_remember_login" = "Bilgilerimi hatırla";
+/* iOS widget: text for not-logged-in user */
+"_log_in_to_use_widget" = "Lütfen başlamak için oturum açın";
 
-/* Button in Kill switch error alert */
-"_report" = "Bildir";
-
-/* Main mac app menu item */
-"_report_an_issue" = "Bir sorun bildirin...";
+"_vpnstatus_not_loggedin" = "Proton VPN oturumu açmamışsınız. Proton VPN uygulamasını açıp oturum açın.";
 
 /* Bug report attachments */
 "_report_attachments" = "Ek dosyalar";
 
-/* Mag bug report: attach logs checkbox */
-"_report_attachments_checkbox" = "Uygulama günlüğü kayıtları ve sistem bilgileri katılsın";
+/* iOS bug report: header before logs description */
+"_report_logs" = "VPN günlüğü kayıtları";
 
-/* Report bug screen title; iOS settings screen: item; */
-"_report_bug" = "Bir sorun bildirin";
+/* iOS bug report: description of log selection switch */
+"_report_logs_description" = "Bu seçenek açıldığında, istemci tarafı VPN günlüğü kayıtlarınız bu bildirime eklenir";
+
+/* iOS bug report: Title before report bug form */
+"_report_report" = "Hata bildirimi iletisi";
+
+/* iOS bug report: Placeholder for email form field */
+"_report_placeholder_email" = "İletişim e-posta adresi";
+
+/* Bug report: Placeholder for text form field */
+"_report_placeholder_message" = "İletiniz...";
+
+/* Bug report: Send report button text */
+"_report_send" = "Bildirimi gönder";
+
+/* Bug report: Success message after report was sent */
+"_report_success" = "Bildiriminiz için teşekkür ederiz";
 
 /* Mac bug report: description text before bug report form */
 "_report_description" = "Aşağıdaki bilgileri verdiğinizde ekibimiz, sorununuzu ve olası çözümünü daha yüksek olasılıkla ve daha kısa sürede bulabilir:\n• Proton VPN uygulama günlüğü kayıtları\n• OpenVPN günlüğü kayıtları\n• WireGuard günlüğü kayıtları";
@@ -1231,272 +1297,222 @@
 /* Mac bug report: feedback field label */
 "_report_field_feedback" = "Yanlış giden neydi?";
 
-/* Mag bug report: textfields placeholder */
-"_report_field_placeholder" = "Yazmaya başlayın...";
-
 /* Mac bug report: steps field label */
 "_report_field_steps" = "Tam olarak yaptığınız işlemler nelerdir?";
 
-/* iOS bug report: header before logs description */
-"_report_logs" = "VPN günlüğü kayıtları";
+/* Mag bug report: textfields placeholder */
+"_report_field_placeholder" = "Yazmaya başlayın...";
 
-/* iOS bug report: description of log selection switch */
-"_report_logs_description" = "Bu seçenek etkinleştirildiğinde, istemci tarafı VPN günlüğü kayıtlarınız bu bildirime eklenir";
+/* Mag bug report: attach logs checkbox */
+"_report_attachments_checkbox" = "Uygulama günlüğü kayıtları ve sistem bilgileri katılsın";
 
-/* iOS bug report: Placeholder for email form field */
-"_report_placeholder_email" = "İletişim e-posta adresi";
+/* Main mac app menu item */
+"_menu_about" = "Proton VPN hakkında";
 
-/* Bug report: Placeholder for text form field */
-"_report_placeholder_message" = "İletiniz...";
+/* Main mac app menu item */
+"_menu_check_updates" = "Güncellemeleri denetle...";
 
-/* iOS bug report: Title before report bug form */
-"_report_report" = "Hata bildirimi iletisi";
+/* Main mac app menu item */
+"_menu_preferences" = "Ayarlar";
 
-/* Bug report: Send report button text */
-"_report_send" = "Bildirimi gönder";
+/* Main mac app menu item */
+"_menu_hide_self" = "Proton VPN uygulamasını gizle";
 
-/* Bug report: Success message after report was sent */
-"_report_success" = "Bildiriminiz için teşekkür ederiz";
+/* Main mac app menu item */
+"_menu_hide_others" = "Diğerlerini gizle";
 
-/* iOS: human verification option select button */
-"_request_invitation" = "El ile etkinleştirme isteği";
+/* Main mac app menu item */
+"_menu_show_all" = "Tümünü göster";
 
-/* iOS: button in human verification code form */
-"_resend_code" = "Yeni kod iste";
+/* Main mac app menu item */
+"_menu_logout" = "Oturumu kapat";
 
-/* iOS: button in human verification code form */
-"_resend_no_code" = "Kodu almadınız mı?";
+/* Main mac app menu item */
+"_menu_quit" = "Proton VPN uygulamasından çık";
 
-/* iOS: message after human verification code resending */
-"_resend_success" = "Yeni kod istendi";
+/* Main mac app menu item */
+"_menu_window" = "Pencere";
 
-/* MacOS: button in login screen */
-"_reset_password" = "Parolayı sıfırla";
+/* Main mac app menu item */
+"_menu_minimize" = "Küçült";
 
-/* Button in some alerts */
-"_retry" = "Yeniden dene";
+"_subscription_will_expire" = "Geçerli tarifenin süresi %@ tarihinde dolacak.";
 
-/* Common word */
-"_save" = "Kaydet";
+"_subscription_will_renew" = "Geçerli tarife %@ tarihinde otomatik olarak yenilenecek.";
 
-/* Button */
-"_save_as_profile" = "Profil olarak kaydet";
+"_subscription_description" = "Geçerli tarifenizi otomatik olarak uzatmak için daha fazla kredi satın alabilirsiniz. Bu krediler, geçerli abonelik döneminizin sonunda tarifenizi sürdürmek için kullanılır.";
 
-/* MacOS: placeholder for country search */
-"_search_for_country" = "Ülke ara";
+"_subscription_button" = "Tarifeyi 1 yıl uzatın\n%@.";
 
-/* iOS: placeholder in phone country code selection screen */
-"_search_phone_country_code_placeholder" = "Ülke ara";
+"_subscription_extended_success" = "Geçerli tarifenizin süresini uzatmak için kredi satın aldınız.";
 
-/* MacOS: \Trial about to expire\ screen */
-"_secure_core_description" = "Ultra güvenli sunucular\nve biz işletiyoruz";
+/* Button on alert after a problem with internet connection */
+"_ne_troubleshoot" = "Sorun gider";
 
-/* MacOS: secure core tooltip */
-"_secure_core_info" = "Trafiği Secure Core ağımız üzerinden yönelterek VPN sunucunun ele geçirilmiş olmasına karşı ek koruma sağlar";
+/* Title of connection troubleshooting screen */
+"_troubleshoot_title" = "Sorun giderme";
 
-/* MacOS: \Trial about to expire\ screen */
-"_secure_streaming_description" = "En sevdiğiniz içeriklerin\ngüvenli yayın akışı";
+"_troubleshoot_item_alt_title" = "Alternatif yöneltme kullanılabilsin";
 
-/* MacOS: \Trial about to expire\ screen */
-"_secure_streaming_title" = "Güvenli yayın akışı";
+"_troubleshoot_item_alt_description" = "Bu ayar, Proton sitelerinin engellenmesi durumunda, uygulamanın Proton ağına ulaşmak için alternatif ağ yöneltmesi kullanmasını sağlar. Bu seçenek, güvenlik duvarlarını veya ağ sorunlarını aşmak için yararlı olabilir. Daha fazla güvenilirlik için bu ayarı açık tutmanızı öneririz. \nAyrıntılı bilgi alın";
 
-/* iOS status view */
-"_security" = "Güvenlik";
+"_troubleshoot_item_alt_link1" = "Ayrıntılı bilgi alın";
 
-/* iOS Settings: table section header */
-"_security_options" = "Güvenlik seçenekleri";
+"_troubleshoot_item_nointernet_title" = "İnternet bağlantısı yok";
 
-/* Profile create/change form */
-"_select_country" = "Ülke seçin";
+"_troubleshoot_item_nointernet_description" = "Lütfen internet bağlantınızın çalıştığından emin olun.";
 
-/* iOS: title of phone country code selection screen */
-"_select_phone_country_code" = "Ülke kodunu seçin";
+"_troubleshoot_item_isp_title" = "İnternet hizmeti sağlayıcı (ISP) sorunu";
 
-/* Button in plan selection */
-"_select_plan" = "Tarifeyi seçin";
+"_troubleshoot_item_isp_description" = "Proton ağına başka bir ağdan (ya da Tor üzerinden) bağlanmayı deneyin.";
 
-/* iOS: new profile screen */
-"_select_profile_color" = "Profil rengini seçin";
+"_troubleshoot_item_isp_link1" = "Tor";
 
-/* Profile create/change form */
-"_select_server" = "Sunucu seçin";
+"_troubleshoot_item_gov_title" = "Hükümet engellemesi";
 
-/* iOS: text in human verification options screen */
-"_select_verification_option" = "İlerlemek için bir doğrulama yöntemi seçin:";
+"_troubleshoot_item_gov_description" = "Ülkeniz Proton ağına erişimi engelliyor olabilir. Proton ağına erişmek için Tor kullanmayı deneyin.";
 
-/* iOS: text in human verification options screen */
-"_select_verification_option_top_message" = "Kötüye kullanımı önlemek için, insan olduğunuzu doğrulamalısınız.";
+"_troubleshoot_item_gov_link1" = "Tor";
 
-/* Profile create/change form */
-"_server" = "Sunucu";
+"_troubleshoot_item_antivirus_title" = "Antivirüs çakışması";
 
-/* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_server_ip" = "Sunucu IP adresi:";
+"_troubleshoot_item_antivirus_description" = "Antivirus uygulamanızı geçici olarak kapatın veya kaldırın.";
 
-/* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_server_load" = "Sunucu yükü:";
+"_troubleshoot_item_proxy_title" = "Vekil sunucu veya güvenlik duvarı müdahalesi";
 
-/* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
-"_server_load_percentage" = "%@%% yüklü";
+"_troubleshoot_item_proxy_description" = "Vekil sunucuları veya güvenlik duvarlarını kapatın ya da ağ yöneticinizle görüşün.";
 
-/* (No Comment) */
-"_server_load_title" = "Sunucu yükü";
+"_troubleshoot_item_proton_title" = "Proton çalışmıyor";
 
-/* Error when user hasn't selected profile server */
-"_server_selection_is_required" = "Lütfen bir sunucu seçin";
+"_troubleshoot_item_proton_description" = "Sistemimizin durumunu görmek için Proton durumunu sayfasına bakın.";
 
-/* Under maintenance alert */
-"_server_under_maintenance" = "Sunucuda bakım yapılıyor";
+"_troubleshoot_item_proton_link1" = "Proton durumu";
 
-/* iOS status view */
-"_session_time" = "Oturum süresi";
+"_troubleshoot_item_other_title" = "Hala bir çözüm bulunamadı";
 
-/* iOS: Settings screen title and tab title */
-"_settings" = "Ayarlar";
+"_troubleshoot_item_other_description" = "Destek formumuz, e-posta (%@) ya da Twitter ile doğrudan bizimle görüşün.";
 
-/* Telemetry label in the settings window for mac */
-"_settings_mac_crash_reports_title" = "Anonim çökme bildirimleri paylaşılsın";
+"_troubleshoot_item_other_link1" = "destek formu";
 
-/* Telemetry tooltip in the settings window for mac */
-"_settings_mac_crash_reports_tooltip" = "Çökme bildirimleri hataları gidermemize, güvenlik duvarlarını algılamamıza ve VPN engellemelerini aşmamıza yardımcı olur.";
+"_troubleshoot_item_other_link2" = "e-posta";
 
-/* Clickable label title in the onboarding screen for mac */
-"_settings_mac_telemetry_learn_more" = "Ayrıntılı bilgi alın";
+"_troubleshoot_item_other_link3" = "Twitter";
 
-/* Telemetry label in the settings window for mac */
-"_settings_mac_usage_stats_title" = "Anonim kullanım istatistikleri paylaşılsın";
+/* iOS settings -> Battery usage; Title of battery usage screen; */
+"_battery_title" = "Pil kullanımı";
 
-/* Telemetry tooltip in the settings window for mac */
-"_settings_mac_usage_stats_tooltip" = "Kullanım verileri VPN engellemelerini aşmamıza ve uygulamanın başarımını artırmamıza yardımcı olur.";
+/* Battery usages screen description */
+"_battery_description" = "Telefonunuzdaki tüm trafik OpenVPN üzerinden geçirilecek. Bu nedenle iOS, diğer uygulamaların pil kullanımını Proton VPN için ayıracak.";
 
-/* iOS: title of the screen after successfull purchase */
-"_setup_complete" = "Kurulum tamamlandı";
+/* Battery usage More info button text */
+"_battery_more" = "Ayrıntılı bilgi almak ister misiniz?";
 
-/* iOS: title of the screen after successfull purchase */
-"_setup_complete_free" = "Ücretsiz Proton VPN hesabınızı açtınız. Başlamak için, yedi günlük Proton VPN Plus tarifemizin tadını çıkarın.";
+/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved"*/ */
+"_netshield_stats_data_saved" = "Kazanılan\nveri";
 
-/* iOS: title of the screen after successfull purchase */
-"_setup_complete_plus" = "Satın alma işleminiz tamamlandı. Proton VPN Plus tarifeniz etkinleştirildi.";
+/* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
+"_netshield_feature_description" = "Kendinizi siteler ile uygulamalarda bulunabilecek reklam, kötü amaçlı yazılım ve izleyicilerden koruyun. Siteler yüklenmezse NetShield özelliğini kapatmayı deneyin.\nAyrıntılı bilgi alın";
 
-/* Show/hide password switch */
-"_show" = "GÖSTER";
+/* Link with more info in the NetShield Feature description */
+"_netshield_feature_description_alt_link" = "Ayrıntılı bilgi alın";
 
-/* Button in some alerts */
-"_show_instructions" = "Yönergeleri göster";
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_upsell_title" = "NetShield ile reklamlar olmadan gezinin";
 
-/* (No Comment) */
-"_show_protonvpn" = "Proton VPN penceresini aç";
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_upsell_subtitle" = "Siteler ile uygulamalarda bulunabilecek reklamları, izleyicileri ve kötü amaçlı yazılımları engelleyin";
 
-/* iOS: button in login and onboarding screens */
-"_sign_up" = "Hesap açın";
+/* Settings -> Netshield: name of field. */
+"_netshield_title" = "NetShield";
 
-/* MacOS welcome screen: skip button */
-"_skip" = "Atla";
+"_netshield_title_tooltip" = "Reklam, etkinlik izleyiciler ve kötü amaçlı yazılımların engellenmesini sağlar";
+
+/* Settings -> Netshield, Status -> NetShield: Off */
+"_netshield_off" = "Kapalı";
+
+/* Status -> Netshield: On */
+"_netshield_on" = "Açık";
+
+/* Settings -> Netshield: Block malware */
+"_netshield_level1" = "Kötü amaçlı yazılımları engelleyin";
+
+/* Settings -> Netshield: Block malware, ads, trackers */
+"_netshield_level2" = "Kötü amaçlı yazılımları, reklamları ve izleyicileri engelleyin";
+
+"_netshield_alert_reconnect_description_on" = "NetShield kipini değiştirmek için bağlantınız yeniden başlatılacak.\nNot: Bazı siteler yüklenmezse, NetShield özelliğini kapatmayı deneyin.";
+
+"_netshield_alert_reconnect_description_off" = "NetShield kipini değiştirmek için bağlantınız yeniden başlatılacak.";
+
+"_netshield_alert_upgrade_description" = "NetShield, reklamları ve etkinlik izleyicileri engelleyerek gizliliğinizi artırır.";
+
+/* Netshield section title in iOS connection screen */
+"_netshield_section_title" = "Zararlı yazılım ve reklam engelleyici";
+
+/* Title of the screen with news and offers. */
+"_news_title" = "Haberler";
+
+"_quick_settings_secureCore_description" = "En hassas verilerinizi gizliliğe saygı gösteren ülkelerdeki en güvenli sunucularımız üzerinden yöneltin.";
+
+"_quick_settings_netShield_description" = "İnternette reklamlar ve kötü amaçlı yazılımlar olmadan gezinin.";
+
+"_quick_settings_killSwitch_description" = "VPN bağlantısı kesildiğinde IP adresinizin isteğiniz dışında sızmasını engellemek için interneti kapatır.";
+
+"_quick_settings_secureCore_note" = "Secure Core, VPN hızını azaltabilir";
+
+"_quick_settings_netShield_note" = "Siteler yüklenmiyorsa, NetShield özelliğini kapatmayı deneyin";
+
+"_quick_settings_killSwitch_note" = "Yerel ağınızdaki aygıtlara bağlanamıyorsanız, bağlantı kesici özelliğini kapatmayı deneyin.";
+
+"_quick_settings_get_plus" = "Plus edinin";
+
+"_applying_settings_" = "Ayarlar uygulanıyor";
+
+"_reestablish_vpn_connection_" = "VPN bağlantısı yeniden kuruluyor.";
+
+"_ip_will_not_be_exposed" = "IP adresiniz sızmayacak.";
+
+"_cancel_reconnection" = "Bu seçenek, yeniden bağlanma girişimlerini iptal eder ve bağlantınızı kesilmiş olarak bırakır";
+
+"_quick_settings_netshield_option_off" = "Engellenmesin";
+
+"_quick_settings_netshield_option_level1" = "Yalnızca kötü amaçlı yazılımlar engellensin";
+
+"_quick_settings_netshield_option_level2" = "Kötü amaçlı yazılımları, reklamları ve izleyicileri engelleyin";
+
+"_upgrade_required_securecore_description" = "Secure Core özelliği Plus tarifesi ile kullanılabilir. Trafiği gizliliğe saygı gösteren ülkelerdeki en güvenli sunucularımız üzerinden yöneltmek için tarifenizi yükseltin.";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection_header" = "Bağlantı kesici IP adresinizi koruyor";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection" = "Proton VPN sunucu ile yeniden bağlantı kurduğunda internet bağlantınız açılacak.\nVPN ve bağlantı kesici koruması olmadan internet kullanmak için, yeniden bağlanmayı iptal edin.";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold1" = "olmadan";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold2" = "Bağlantı kesici koruması";
+
+/* MacOS: connection screen - cancel button */
+"_kill_switch_reconnection_cancel" = "Yeniden bağlanmayı iptal et";
+
+/* Title for Smart Protocol in Settings */
+"_smart_protocol_title" = "Smart Protocol";
+
+/* Shortened title for Smart Protocol on Settings configuration */
+"_smart_title" = "Smart";
 
 /* Description for Smart Protocol in Settings */
-"_smart_protocol_description" = "Otomatik olarak en iyi bağlantıyı sunan iletişim kuralı ve bağlantı noktasının kullanılması için Smart Protocol özelliğini etkinleştirin.";
-
-/* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
-"_smart_protocol_reconnect_modal_body" = "Smart Protocol kipini değiştirmek için bağlantınız yeniden başlatılacak.";
+"_smart_protocol_description" = "Otomatik olarak en iyi bağlantıyı sunan iletişim kuralı ve bağlantı noktasının kullanılması için Smart Protocol özelliğini açın.";
 
 /* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_title" = "Yeniden bağlantı kurmak gerekli";
 
-/* %@ is a speed description e.g. Speed: Highest */
-"_speed" = "%@ hız";
-
-/* MacOS profile form: feature selection value */
-"_standard" = "Standart";
-
-/* MacOS: Settings -> General: name of field. */
-"_start_minimized" = "Küçültülmüş olarak başlatılsın";
-
-/* MacOS: label in login and settings screens */
-"_start_on_boot" = "Açılışta başlatılsın";
-
-/* iOS status view */
-"_status" = "Durum";
-
-/* (No Comment) */
-"_streaming_servers_description" = "Yayın akışını başlatmak için bu ülkedeki bir Plus sunucusuna bağlanın.";
-
-/* (No Comment) */
-"_streaming_servers_extra" = "ve daha fazlası";
-
-/* (No Comment) */
-"_streaming_servers_note" = "Not: Yeni içeriğin görüntülenmesini sağlamak için konum hizmetini kapatın ve yayın akışı uygulamalarının ön belleğini temizleyin.";
-
-/* (No Comment) */
-"_streaming_title" = "Yayın akışı";
-
-/* iOS: button in human verification code form */
-"_submit_verification_code" = "Gönder";
-
-/* (No Comment) */
-"_subscription_button" = "Tarifeyi 1 yıl uzat\n%@.";
-
-/* (No Comment) */
-"_subscription_description" = "Geçerli tarifenizi otomatik olarak uzatmak için daha fazla kredi satın alabilirsiniz. Bu krediler, geçerli abonelik döneminizin sonunda tarifenizi sürdürmek için kullanılır.";
-
-/* (No Comment) */
-"_subscription_expired_description" = "Abonelik tarifeniz düşürüldü.";
-
-/* (No Comment) */
-"_subscription_expired_reconnection_description" = "Abonelik tarifeniz düşürüldü. Bu nedenle kullanılabilecek en hızlı sunucuya yeniden bağlanıyoruz.";
-
-/* (No Comment) */
-"_subscription_expired_title" = "VPN abonelik tarifenizin geçerlilik süresi dolmuş";
-
-/* (No Comment) */
-"_subscription_extended_success" = "Geçerli tarifenizin süresini uzatmak için kredi satın aldınız.";
-
-/* iOS Settings -> Connection: name of field. */
-"_subscription_plan" = "Abonelik tarifesi";
-
-/* (No Comment) */
-"_subscription_upgrade_option3" = "Gelişmiş özellikler: NetShield, Secure Core, Tor, P2P";
-
-/* (No Comment) */
-"_subscription_upgrade_title" = "Tüm özelliklerin tadını çıkarmak için yeniden yükseltin:";
-
-/* Manage subscription */
-"_subscription_will_expire" = "Geçerli tarifenin süresi %@ tarihinde dolacak.";
-
-/* (No Comment) */
-"_subscription_will_renew" = "Geçerli tarife %@ tarihinde otomatik olarak yenilenecek.";
-
-/* (No Comment) */
-"_subuser_alert_description1" = "Proton VPN yolculuğunuza başlamak için lütfen hesabınızda ya da başka bir alt hesapta VPN bağlantılarını etkinleştirin.";
-
-/* (No Comment) */
-"_subuser_alert_description2" = "Bu adım birkaç dakika sürecek. Bundan sonra oturum açabilir ve tüm aygıtlarınızı koruyabilirsiniz.";
-
-/* (No Comment) */
-"_subuser_alert_description3" = "Şu anda bu hesap için herhangi bir VPN bağlantısı etkinleştirilmemiş. Proton VPN yolcuğunuza başlamak için yöneticinizle görüşün.";
-
-/* (No Comment) */
-"_subuser_alert_enable_connections_button" = "VPN bağlantılarını etkinleştir";
-
-/* (No Comment) */
-"_subuser_alert_login_button" = "Yeniden oturum aç";
-
-/* Subuser alert */
-"_subuser_alert_title" = "Business/Visionary tarifesine yükselttiğiniz için teşekkürler";
-
-/* MacOS: connecting overlay */
-"_successfully_connected" = "Bağlantı kuruldu";
-
-/* (No Comment) */
-"_switch_side_button_off" = "Kapalı";
-
-/* (No Comment) */
-"_switch_side_button_on" = "Açık";
-
-/* (No Comment) */
-"_sysex_cannot_enable" = "Sistem eklentisi etkinleştirilemedi";
+/* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
+"_smart_protocol_reconnect_modal_body" = "Smart Protocol kipini değiştirmek için bağlantınız yeniden başlatılacak.";
 
 /* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
-"_sysex_description_1" = "Mac bilgisayarınızda Proton VPN kullanabilmek için **özel VPN iletişim kurallarını** etkinleştirmelisiniz.";
+"_sysex_description_1" = "Mac bilgisayarınızda Proton VPN kullanabilmek için **özel VPN iletişim kurallarını** açmalısınız.";
 
 /* Part 2 of the description of the system extension wizard in mac */
 "_sysex_description_2" = "Özel iletişim kuralları daha hızlı ve güvenli bağlantılar kurmanızı sağlar. Çoğu Proton VPN sunucusu ile bağlantı kurmak için bu iletişim kuralları gereklidir.";
@@ -1507,326 +1523,256 @@
 /* Alternative for Part 3 for pre-ventura of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
 "_sysex_description_4" = "İlerlemek için **Güvenlik ayarlarını açın** ve bu ekrandaki görüntülü yönergeleri izleyin.";
 
-/* (No Comment) */
-"_sysex_enabled_description" = "Yapılandırma tamamlandı. Artık internet üzerinde en iyi VPN teknolojilerini kullanarak daha hızlı gezinebilirsiniz.";
-
-/* (No Comment) */
-"_sysex_enabled_title" = "Yapılandırma tamamlandı";
-
-/* (No Comment) */
-"_sysex_error_description" = "Sistem eklentisi kurulurken bir sorun çıktı.\nBu sorunu gidermek için uygulamalar klasöründe olacağından emin olarak yeniden Proton VPN kurun. Alternatif olarak, destek ekibimizle görüşebilirsiniz.";
-
-/* Default action in the system extension wizard in mac. macOS Ventura */
-"_sysex_open_security_preferences" = "Güvenlik ayarlarını aç";
+/* Title of the system extension wizard in mac */
+"_sysex_set_up_proton_vpn" = "Proton VPN kurulumunu yap";
 
 /* Default action in the system extension wizard in mac. Pre-macOS Ventura */
 "_sysex_open_system_settings" = "Sistem ayarlarını aç";
 
-/* Title of the system extension wizard in mac */
-"_sysex_set_up_proton_vpn" = "Proton VPN kurulumunu yap";
+/* Default action in the system extension wizard in mac. macOS Ventura */
+"_sysex_open_security_preferences" = "Güvenlik ayarlarını aç";
 
-/* (No Comment) */
 "_sysex_settings_description" = "Proton VPN uygulamasının, Smart Protocol, OpenVPN ve WireGuard özelliklerini kullanabilmesi için bir sistem eklentisi yüklenmelidir.";
 
-/* Main mac app menu item */
-"_system_extension_tutorial_menu_item" = "Sistem eklentisi eğitimi";
+"_sysex_enabled_title" = "Yapılandırma tamamlandı";
 
-/* MacOS: Settings -> General: name of field. */
-"_system_notifications" = "Sistem bildirimleri";
+"_sysex_enabled_description" = "Yapılandırma tamamlandı. Artık internet üzerinde en iyi VPN teknolojilerini kullanarak daha hızlı gezinebilirsiniz.";
 
-/* MacOS welcome screen: take a tour button */
-"_take_tour" = "Tura çıkın";
+"_sysex_cannot_enable" = "Sistem eklentisi kullanıma alınamadı";
 
-/* iOS status view */
-"_technical_details" = "Teknik ayrıntılar";
+"_sysex_error_description" = "Sistem eklentisi kurulurken bir sorun çıktı.\nBu sorunu gidermek için uygulamalar klasöründe olacağından emin olarak yeniden Proton VPN kurun. Alternatif olarak, destek ekibimizle görüşebilirsiniz.";
 
-/* iOS: link inside text under sign-up form */
-"_terms_and_conditions" = "Hüküm ve Koşullar";
+"_vpnauth_certfail_title" = "Kimlik doğrulama sorunu";
 
-/* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "Proton VPN kullanarak, aşağıdakileri kabul etmiş olursunuz\n%@ ve %@";
+"_vpnauth_certfail_description" = "VPN sertifikası yenilenemedi. Lütfen bağlantınızı denetleyin";
 
-/* iOS: section header in countries list */
-"_test_servers" = "Test sunucuları";
+"_vpnauth_too_many_certs_title" = "Kimlik doğrulama sorunu";
 
-/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
-"_timeout_ks_ike_descritpion" = "Başka bir uygulama bağlantı kesici ile etkileşebilir. Bu sorunu çözmek için OpenVPN iletişim kuralına geçin ya da bağlantı kesiciyi devre dışı bırakarak yeniden deneyin.";
+"_vpnauth_too_many_certs_description" = "Belirli bir sürede yapılabilecek en fazla ayar değişikliği sayısı sınırına ulaştınız. Bir kaç dakika sonra yeniden deneyebilirsiniz";
 
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
-"_timeout_ks_ike_switch_protocol" = "OpenVPN kullanmaya geçerek yeniden deneyin";
+"_from_server_title" = "Şu sunucudan:";
 
-/* (No Comment) */
 "_to_server_title" = "Şu sunucuya:";
 
-/* Description shown together with server info icon */
-"_tor_description" = "Tor ağına bağlanır";
-
-/* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_tor_server" = "Tor sunucusu";
-
-/* (No Comment) */
-"_troubleshoot_item_alt_description" = "Bu ayar, Proton sitelerinin engellenmesi durumunda, uygulamanın Proton ağına ulaşmak için alternatif ağ yöneltmesi kullanmasını sağlar. Bu seçenek, güvenlik duvarlarını veya ağ sorunlarını aşmak için yararlı olabilir. Daha fazla güvenilirlik için bu ayarı açık tutmanızı öneririz. \nAyrıntılı bilgi alın";
-
-/* (No Comment) */
-"_troubleshoot_item_alt_link1" = "Ayrıntılı bilgi alın";
-
-/* (No Comment) */
-"_troubleshoot_item_alt_title" = "Alternatif yöneltme kullanılabilsin";
-
-/* (No Comment) */
-"_troubleshoot_item_antivirus_description" = "Antivirus uygulamanızı geçici olarak devre dışı bırakın veya kaldırın.";
-
-/* (No Comment) */
-"_troubleshoot_item_antivirus_title" = "Antivirüs çakışması";
-
-/* (No Comment) */
-"_troubleshoot_item_gov_description" = "Ülkeniz Proton ağına erişimi engelliyor olabilir. Proton ağına erişmek için Tor kullanmayı deneyin.";
-
-/* (No Comment) */
-"_troubleshoot_item_gov_title" = "Hükümet engellemesi";
-
-/* (No Comment) */
-"_troubleshoot_item_isp_description" = "Proton ağına başka bir ağdan (ya da Tor üzerinden) bağlanmayı deneyin.";
-
-/* (No Comment) */
-"_troubleshoot_item_isp_title" = "İnternet hizmeti sağlayıcı (ISP) sorunu";
-
-/* (No Comment) */
-"_troubleshoot_item_nointernet_description" = "Lütfen internet bağlantınızın çalıştığından emin olun.";
-
-/* (No Comment) */
-"_troubleshoot_item_nointernet_title" = "İnternet bağlantısı yok";
-
-/* (No Comment) */
-"_troubleshoot_item_other_description" = "Destek formumuz, e-posta (%@) ya da Twitter ile doğrudan bizimle görüşün.";
-
-/* (No Comment) */
-"_troubleshoot_item_other_link1" = "destek formu";
-
-/* (No Comment) */
-"_troubleshoot_item_other_link2" = "e-posta";
-
-/* (No Comment) */
-"_troubleshoot_item_other_title" = "Hala bir çözüm bulunamadı";
-
-/* (No Comment) */
-"_troubleshoot_item_proton_description" = "Sistemimizin durumunu görmek için Proton durumunu sayfasına bakın.";
-
-/* (No Comment) */
-"_troubleshoot_item_proton_link1" = "Proton durumu";
-
-/* (No Comment) */
-"_troubleshoot_item_proton_title" = "Proton çalışmıyor";
-
-/* (No Comment) */
-"_troubleshoot_item_proxy_description" = "Vekil sunucuları veya güvenlik duvarlarını devre dışı bırakın ya da ağ yöneticinizle görüşün.";
-
-/* (No Comment) */
-"_troubleshoot_item_proxy_title" = "Vekil sunucu veya güvenlik duvarı müdahalesi";
-
-/* Title of connection troubleshooting screen */
-"_troubleshoot_title" = "Sorun giderme";
-
-/* MacOS: button in connecting overlay */
-"_try_again" = "Yeniden dene";
-
-/* (No Comment) */
-"_try_again_without_killswitch" = "Bağlantı kesiciyi devre dışı bırakıp yeniden deneyin";
-
-/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "Bağlantı kesiciyi etkinleştirdiğinizde yerel ağınızdaki aygıtlara erişemeyeceksiniz. \n\nİlerlemek istiyor musunuz?";
-
-/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "Bağlantı kesici açılsın mı?";
-
-/* (No Comment) */
-"_turn_on" = "Aç";
-
-/* Common word */
-"_unavailable" = "Kullanılamıyor";
-
-/* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Korunmayan ağlar bildirilsin";
-
-/* MacOS: Settings -> General: description */
-"_unprotected_network_tooltip" = "Proton VPN korunmayan bir ağa bağlı olduğunuzu algıladığında bir bildirim görüntülenir.";
-
-/* (No Comment) */
-"_unsecure_wifi" = "Güvenli olmayan WiFi bağlantısı algılandı";
-
-/* (No Comment) */
-"_unsecure_wifi_learn_more" = "Ayrıntılı bilgi alın";
-
-/* (No Comment) */
-"_unsecure_wifi_title" = "Güvenli olmayan WiFi algılandı";
-
-/* (No Comment) */
 "_update_billing" = "FATURAMI GÜNCELLE";
 
-/* (No Comment) */
-"_update_required" = "Güncelleme gerekli";
-
-/* (No Comment) */
-"_update_required_no_longer_supported" = "Bu Proton VPN sürümü artık desteklenmiyor. Lütfen kullanmayı sürdürmek için uygulamayı güncelleyin.";
-
-/* Secondary button title in the App update required alert */
-"_update_required_support" = "Destek ekibimizle görüşün";
-
-/* Primary button title in the App update required alert */
-"_update_required_update" = "Güncelle";
-
-/* Button in many places in both iOS and MacOS apps */
-"_upgrade" = "Yükselt";
-
-/* (No Comment) */
 "_upgrade_again" = "YENİDEN YÜKSELT";
 
-/* Main mac app menu item */
-"_upgrade_for_secure_core" = "Secure Core kullanmak için";
+"_delinquent_title" = "VPN hesabınızda ödenmemiş faturalar var";
 
-/* MacOS: Button in Upgrade screen */
-"_upgrade_my_plan" = "Tarifemi yükselt";
+"_delinquent_description" = "Bunları ödedikten sonra ücretli özelliklere yeniden erişebilirsiniz.";
 
-/* Upgrade button in trial modals used in both iOS and MacOS */
-"_upgrade_now" = "Şimdi yükselt";
+"_delinquent_reconnection_description" = "Bunları ödedikten sonra ücretli özelliklere yeniden erişebilirsiniz. Şimdilik bağlantınızı, var olan en hızlı Free tarife sunucusuna geçiriyoruz.";
 
-/* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_server" = "Ne yazık ki, bu sunucu abonelik tarifeniz ile kullanılamıyor. Daha fazla sunucuya erişmek istiyorsanız, abonelik tarifenizi yükseltmeyi düşünün.";
+"_maximum_device_title" = "Kullanabileceğiniz en fazla aygıt sayısı sınırına ulaştınız";
 
-/* iOS & MacOS: text near country or server; MacOS: title of several alerts */
-"_upgrade_required" = "Yükseltme gerekli";
+"_maximum_device_reached_description" = "Lütfen bu aygıtı bağlayabilmek için başka bir aygıtın bağlantısını kesin.";
 
-/* (No Comment) */
-"_upgrade_required_securecore_description" = "Secure Core özelliği Plus tarifesi ile kullanılabilir. Trafiği gizliliğe saygı gösteren ülkelerdeki en güvenli sunucularımız üzerinden yöneltmek için tarifenizi yükseltin.";
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Lütfen bu aygıtı bağlayabilmek için başka bir aygıtın bağlantısını kesin ya da %@ tarifesine yükseltin";
 
-/* iOS: Plan selection during plan upgarde, button insettings screen */
-"_upgrade_subscription" = "Aboneliği yükselt";
+"_reconnect_title" = "Kullanılabilecek en hızlı sunucuya yeniden bağlanıyoruz.";
 
-/* Main mac app menu item */
-"_upgrade_to_plus" = "Plus tarifesine yükselt";
+"_subscription_expired_title" = "VPN abonelik tarifenizin geçerlilik süresi dolmuş";
 
-/* Plan upgrade unavailable alert */
-"_upgrade_unavailable_body" = "Proton VPN aboneliğiniz uygulama içinden yükseltilemez. Yükseltmek için lütfen account.protonvpn.com adresine gidin.";
+"_subscription_expired_description" = "Abonelik tarifeniz düşürüldü.";
 
-/* Plan upgrade unavailable alert */
-"_upgrade_unavailable_title" = "Yükseltme uygulamada içinden yapılamaz";
+"_subscription_expired_reconnection_description" = "Abonelik tarifeniz düşürüldü. Bu nedenle kullanılabilecek en hızlı sunucuya yeniden bağlanıyoruz.";
 
-/* Menu point in settings screen */
-"_usage_statistics" = "Kullanım istatistikleri";
+"_subscription_upgrade_title" = "Tüm özelliklerin tadını çıkarmak için yeniden yükseltin:";
 
-/* iOS: human verification option select button */
-"_use_captcha_verification" = "CAPTCHA ile doğrula";
+"_subscription_upgrade_option3" = "Gelişmiş özellikler: NetShield, Secure Core, Tor, P2P";
 
-/* iOS: human verification option select button */
-"_use_other_email_address" = "E-posta ile doğrula";
+"_tier_free" = "Free";
 
-/* (No Comment) */
-"_use_sms_verification" = "SMS ile doğrula";
+"_tier_plus" = "Plus";
 
-/* Used in sign-in, sign-up and in settings */
-"_username" = "Kullanıcı adı";
+"_tier_visionary" = "Visionary";
 
-/* iOS: text in human verification code form */
-"_verification_instructions" = "Size gönderilen doğrulama kodunu aşağıya yazın.";
+"_information_title" = "Bilgiler";
 
-/* iOS setting: after this word actual version and build number are appended */
-"_version" = "Sürüm";
+"_features_title" = "Özellikler";
 
-/* MacOS: About window */
-"_version_current" = "Geçerli sürüm:";
+"_performance_title" = "Başarım";
 
-/* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
-"_via" = "şu ülkeden";
+"_smart_routing_title" = "Smart Routing";
 
-/* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
-"_via_country" = "%@ üzerinden";
+"_streaming_title" = "Yayın akışı";
 
-/* MacOS menu item; iOS setting screen item */
-"_view_logs" = "Günlükleri görüntüle";
+"_p2p_title" = "P2P/BitTorrent";
 
-/* Text in warning screen before actions that will disconnect VPN */
-"_view_toggle_will_cause_disconnect" = "Secure Core özelliğini açmak ya da kapatmak geçerli bağlantınızı keser.";
+"_tor_title" = "Tor";
 
-/* (No Comment) */
+"_server_load_title" = "Sunucu yükü";
+
+"_dw-partner-2022_partners_title" = "İş ortaklarımız";
+
+"_streaming_servers_description" = "Yayın akışını başlatmak için bu ülkedeki bir Plus sunucusuna bağlanın.";
+
+"_streaming_servers_note" = "Not: Yeni içeriğin görüntülenmesini sağlamak için konum hizmetini kapatın ve yayın akışı uygulamalarının ön belleğini temizleyin.";
+
+"_streaming_servers_extra" = "ve daha fazlası";
+
+"_feature_free_servers" = "Ücretsiz sunucular";
+
+"_feature_free_servers_description" = "Herkes için güvenlik ve gizlilik. Ücretsiz sunucularda veri miktarı sınırlaması yoktur ve asla kastılı olarak gezinme hızınızı yavaşlatmayız.";
+
+"_feature_smart_routing_description" = "Bu teknoloji, hizmet verilmesi zor ülkelerde Proton VPN için daha yüksek hız ve güvenlik sağlar.";
+
+"_feature_streaming_description" = "Plus sunucuları, dünyanın her yerindeki yayın akışı hizmetlerini (Netflix, Disney + vb.) destekler.";
+
+"_feature_p2p_description" = "Bu sunucular, BitTorrent ve dosya paylaşımı için en iyi başarımı sağlar.";
+
+"_feature_tor_description" = "İnternet trafiğinizi Tor ağı üzerinden yöneltin. Yavaş ama daha güvenli.";
+
+"_performance_load_description" = "Yükü yüksek olan sunucular, düşük olanlara göre daha yavaştır.";
+
+"_performance_load_low" = "Düşük";
+
+"_performance_load_medium" = "Orta";
+
+"_performance_load_high" = "Yüksek";
+
+"_locations_all" = "Tüm konumlar";
+
+"_locations_free" = "Free konumları";
+
+"_locations_plus" = "Plus konumları";
+
+"_locations_plus" = "Plus konumları";
+
+"_locations_gateways" = "Ağ geçitleri";
+
+/* Gateways info modals title (both iOS and macOS) */
+"_gateways_modal_title" = "Ağ geçidi nedir?";
+
+/* Gateways info modals text (both iOS and macOS) */
+"_gateways_modal_text" = "VPN ağ geçidi, şirketinizin verilerine ve hizmetlerine size ayrılmış sunucular üzerinden denetimli erişim sağlayan güvenli bir bağlantıdır";
+
+"_vpn_accelerator_title" = "VPN Accelerator";
+
 "_vpn_accelerator_change_title" = "VPN Accelerator aç/kapat";
 
 /* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
-"_vpn_accelerator_description" = "VPN Accelerator, VPN hızlarını %400 oranında artırabilen benzersiz başarım iyileştirme teknolojileri sunar.\nAyrıntılı bilgi alın";
+"_vpn_accelerator_description" = "VPN Accelerator, VPN hızlarını %%400 oranında artırabilen benzersiz başarım iyileştirme teknolojileri sunar.\nAyrıntılı bilgi alın";
 
 /* Link with more info in the VPN Accelerator description */
 "_vpn_accelerator_description_alt_link" = "Ayrıntılı bilgi alın";
 
-/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
-"_vpn_connection_active" = "VPN bağlantısı etkin";
+"_action_requires_reconnect" = "Bu değişikliğin uygulanması için bağlantınızın yeniden başlatılması gerekiyor";
 
-/* iOS Settings -> Protocol: screen title */
-"_vpn_protocol" = "VPN iletişim kuralı";
+"_local_agent_server_error_title" = "Sunucu sorunu";
 
-/* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
-"_vpn_protocol_not_supported_text" = "VPN iletişim kuralı seçtiğiniz bağlantı için kullanılamıyor. Bağlantı kurmak için iletişim kuralını ya da sunucuyu değiştirmeyi deneyin.";
+"_local_agent_server_error_message" = "Sunucuda bir sorun çıktı. Lütfen başka bir sunucuya bağlanın.";
 
-/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
-"_vpn_protocol_not_supported_title" = "VPN iletişim kuralı desteklenmiyor";
+"_local_agent_policy_violation_error_title" = "İlkeye aykırı kullanım";
 
-/* VPN stuck alert */
-"_vpn_stuck_disconnecting_body" = "Aygıtınız önceki VPN oturumunu sonlandıramadı. Yeni bir VPN bağlantısı kurmadan önce aygıtınız yeniden başlatmalısınız.";
+"_local_agent_policy_violation_error_message" = "Sunucuya bağlanmanıza izin verilmiyor. Başka bir sunucu seçin ya da tarifenizi yükseltin.";
 
-/* VPN stuck alert */
-"_vpn_stuck_disconnecting_title" = "Bağlantı sorunu";
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info" = "Bağlantı bilgileri yükleniyor";
 
-/* (No Comment) */
-"_vpnauth_certfail_description" = "VPN sertifikası yenilenemedi. Lütfen bağlantınızı denetleyin";
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info_for" = "%@ için bağlantı bilgileri yükleniyor";
 
-/* Cert based auth */
-"_vpnauth_certfail_title" = "Kimlik doğrulama sorunu";
-
-/* (No Comment) */
-"_vpnauth_too_many_certs_description" = "Belirli bir sürede yapılabilecek en fazla ayar değişikliği sayısı sınırına ulaştınız. Bir kaç dakika sonra yeniden deneyebilirsiniz";
-
-/* (No Comment) */
-"_vpnauth_too_many_certs_title" = "Kimlik doğrulama sorunu";
-
-/* (No Comment) */
-"_vpnstatus_not_loggedin" = "Proton VPN oturumu açmamışsınız. Proton VPN uygulamasını açıp oturum açın.";
-
-/* Used as a title in alerts/modals */
-"_warning" = "Uyarı";
-
-/* MacOS: alert shown during login if already connected to VPN */
-"_warning_vpn_session_is_active" = "Bu aygıtta başka bir kullanıcının Proton VPN oturumu etkin. Oturum açma işlemine ilerlemek geçerli oturumun kapatılmasına neden olacak. İlerlemek istiyor musunuz?";
+/* Shown on the Welcome screen as the screen headline */
+"_welcome_headline" = "Çevrim içi ortamda kendinizi koruyun";
 
 /* Shown on the Welcome screen as the longer screen text */
 "_welcome_body" = "İnternet bağlantınızı şifreleyerek gizliliğinizi koruyan yüksek hızlı İsviçre'li VPN.";
 
-/* MacOS welcome screen: description */
-"_welcome_description" = "Proton VPN kullandığınız için teşekkürler. Temel uygulama özelliklerine\nhızlıca göz atın.";
+"_force_upgrade_title" = "Uygulamanın güncellemesi gerekli";
 
-/* %@ is always 'Proton VPN Plus' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN Plus subscription which gives you: A list of Plus plan-only features follows this text */
-"_welcome_gift_description" = "Hoş geldiniz hediyesi olarak, size 7 günlük %@ aboneliği\nerişimi verilir ve şu özellikler bulunur:";
+"_force_upgrade_message" = "Şu anda kullandığınız Proton VPN uygulamasının sürümü artık desteklenmiyor. Lütfen son sürüme güncelleyin.";
 
-/* Shown on the Welcome screen as the screen headline */
-"_welcome_headline" = "Çevrimiçi ortamda kendinizi koruyun";
+"login_fetch_vpn_data" = "VPN erişiminiz yapılandırılıyor";
 
-/* MacOS welcome screen: title */
-"_welcome_title" = "HOŞ GELDİNİZ!";
+"login_summary_button" = "Proton VPN kullanmaya başlayın";
 
-/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
-"_wgks_ks_off" = "Bağlantı kesiciyi devre dışı bırak";
+"_wgks_ks_off" = "Bağlantı kesiciyi kapat";
 
-/* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "iOS ekran bileşeni";
+"_neks_t2_title" = "Bağlantı kesici kararsızlığı uyarısı";
 
-/* iOS Settings: WireGuard logs row */
-"_wireguard_logs" = "WireGuard günlük kayıtları";
+"_neks_t2_hyperlink" = "T2 güvenlik çipi";
 
-/* MacOS: text in main window */
-"_you_are_not_connected" = "Bağlı değilsiniz";
+"_neks_t2_description" = "Bu aygıt üzerinde bağlantı kesici kullanımı sorunlara yol açar.\n\nAygıtınızda macOS üzerinde Proton VPN bağlantı kesici özelliği kullanıldığında kararsızlığa yol açan T2 güvenlik çipi bulunuyor.";
+
+"_neks_t2_connect" = "Gene de aç";
+
+"_subuser_alert_title" = "Business/Visionary tarifesine yükselttiğiniz için teşekkürler";
+
+"_subuser_alert_description1" = "Proton VPN yolculuğunuza başlamak için lütfen hesabınızda ya da başka bir alt hesapta VPN bağlantılarını açın.";
+
+"_subuser_alert_description2" = "Bu adım birkaç dakika sürecek. Bundan sonra oturum açabilir ve tüm aygıtlarınızı koruyabilirsiniz.";
+
+"_subuser_alert_description3" = "Şu anda bu hesap için herhangi bir VPN bağlantısı açılmamış. Proton VPN yolcuğunuza başlamak için yöneticinizle görüşün.";
+
+"_subuser_alert_enable_connections_button" = "VPN bağlantılarını aç";
+
+"_subuser_alert_login_button" = "Yeniden oturum aç";
+
+/* Moderate NAT feature title in Settings */
+"_moderate_nat_title" = "Ilımlı NAT";
+
+/* Explanation for the Moderate NAT feature shown next to the feature in Settings */
+"_moderate_nat_explanation" = "Ilımlı NAT rastgele yerel adres eşleştirmesini kapatır. Bu nedenle güvenliğinizi hafifçe olumsuz etkiler. Ancak çevrim içi oyunlar gibi doğrudan bağlantı kuran uçtan uca bağlantıların kurulabilmesini sağlar.\nAyrıntılı bilgi alın";
+
+/* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
+"_moderate_nat_explanation_link" = "Ayrıntılı bilgi alın";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_enable_title" = "Ilımlı NAT kullanılsın";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_change_title" = "Ilımlı NAT kullanılsın";
+
+/* Clickable label title in the onboarding screen for mac */
+"_settings_mac_telemetry_learn_more" = "Ayrıntılı bilgi alın";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_usage_stats" = "Anonim kullanım istatistiklerini paylaşın. Bu istatistikler, VPN engellemelerini aşmamıza ve uygulamayı geliştirmemize yardımcı olur.";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_crash_reports" = "Anonim çökme bildirimlerini paylaşın. Bu bildirimler, hataları gidermemize, güvenlik duvarlarını algılamamıza ve VPN engellemelerini aşmamıza yardımcı olur.";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_usage_stats_title" = "Anonim kullanım istatistikleri paylaşılsın";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_usage_stats_tooltip" = "Kullanım verileri VPN engellemelerini aşmamıza ve uygulamanın başarımını artırmamıza yardımcı olur.";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_crash_reports_title" = "Anonim çökme bildirimleri paylaşılsın";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_crash_reports_tooltip" = "Çökme bildirimleri hataları gidermemize, güvenlik duvarlarını algılamamıza ve VPN engellemelerini aşmamıza yardımcı olur.";
+
+/* Section title in Settings */
+"_advanced" = "Gelişmiş";
+
+/* Non-standard ports feature title in Settings */
+"_non_standard_ports_title" = "Standart olmayan bağlantı noktaları";
+
+/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
+"_non_standard_ports_explanation" = "VPN ağı üzerinden standart olmayan bağlantı noktalarından trafik akışına izin vererek herhangi bir özel gereksinim için Proton VPN kullanabilirsiniz. \nAyrıntılı bilgi alın";
+
+/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
+"_non_standard_ports_explanation_link" = "Ayrıntılı bilgi alın";
+
+/* Title for alert shown when enabling Non-standard ports requires reconnection */
+"_non_standard_ports_change_title" = "Standart olmayan bağlantı noktaları kullanılsın";
+
+/* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
+"proton_website_unreachable" = "Ağ kısıtlamaları nedeniyle Proton VPN sitesine geçici olarak erişlemeyebilir. Lütfen yeni bir Proton hesabı açmak için mobil uygulamayı kullanın.";
+
+/* Title of the Use coupon button in Settings */
+"use_coupon" = "Kupon kullan";
+
+/* Title of the screen to apply a coupon */
+"coupon_code" = "Kupon kodu";
 
 /* Button to apply coupon */
 "apply_coupon" = "Uygula";
-
-/* Button to confirm two-factor or recovery code in login */
-"authenticate" = "Kimliği doğrula";
 
 /* Banner shown after coupon is applied */
 "coupon_applied" = "Kupon uygulandı.";
@@ -1834,42 +1780,76 @@
 /* Banner shown after coupon is applied but the plan is not yet upgraded */
 "coupon_applied_plan_not_upgraded_yet" = "Kupon uygulandı. Aboneliğiniz birkaç dakika içinde yükseltilecek.";
 
-/* Title of the screen to apply a coupon */
-"coupon_code" = "Kupon kodu";
-
-/* (No Comment) */
-"login_fetch_vpn_data" = "VPN erişiminiz yapılandırılıyor";
-
-/* (No Comment) */
-"login_summary_button" = "Proton VPN kullanmaya başlayın";
-
-/* Error message shown when tryng to log in with an unsupported method */
-"login_unsupported_state" = "Oturum açma yöntemi geçersiz. Lütfen destek ekibi ile görüşün.";
-
-/* Description of user account update screen part 1 */
-"maximum_device_plan_limit_part_1" = "Lütfen bu aygıtı bağlayabilmek için başka bir aygıtın bağlantısını kesin ya da %@ tarifesine yükseltin";
-
-/* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
-"proton_website_unreachable" = "Ağ kısıtlamaları nedeniyle Proton VPN sitesine geçici olarak erişlemeyebilir. Lütfen yeni bir Proton hesabı açmak için mobil uygulamayı kullanın.";
-
-/* Placeholder for the Recovery code text field */
-"recovery_code" = "Kurtarma kodu";
-
 /* Title for the Two-factor authentication screen */
 "two_factor_authentication" = "İki adımlı doğrulama";
 
 /* Placeholder for the Two Factor text field */
 "two_factor_code" = "İki adımlı doğrulama kodu";
 
-/* Title of the Use coupon button in Settings */
-"use_coupon" = "Kupon kullan";
+/* Title for the button to switch to entering two-factor code */
+"use_two_factor_code" = "İki adımlı doğrulama kodu kullanılsın";
+
+/* Placeholder for the Recovery code text field */
+"recovery_code" = "Kurtarma kodu";
 
 /* Title for the button to switch to entering recovery code */
 "use_recovery_code" = "Kurtarma kodu kullanılsın";
 
-/* Title for the button to switch to entering two-factor code */
-"use_two_factor_code" = "İki adımlı doğrulama kodu kullanılsın";
+/* Button to confirm two-factor or recovery code in login */
+"authenticate" = "Kimliği doğrula";
+
+/* Error message shown when tryng to log in with an unsupported method */
+"login_unsupported_state" = "Oturum açma yöntemi geçersiz. Lütfen destek ekibi ile görüşün.";
 
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
-"vpn_feature_cannot_be_set_error" = "%@ ayar değiştirilemedi. Lütfen bir süre sonra yeniden deneyin ya da farklı bir sunucuya bağlanın";
+"vpn_feature_cannot_be_set_error" = "%@ ayarı değiştirilemedi. Lütfen bir süre sonra yeniden deneyin ya da farklı bir sunucuya bağlanın";
 
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
+"netshield_stats_hint_ads" = "Reklam siteleri sizi hedeflemek için çerezler ve izleyiciler kullanır.";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
+"netshield_stats_hint_trackers" = "İzleyiciler, sitelerdeki etkinliğiniz ile ilgili bilgi toplayan, depolayan ve satan üçüncü taraf siteleridir.";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
+"netshield_stats_hint_data" = "NetShield tarafından engellenen reklamların, izleyicilerin ve kötü amaçlı yazılımların öngörülen boyutu.";
+
+"_netshield_stats_data_saved" = "Kazanılan\nveri";
+
+/* The count of trackers/ads blocked in thousands */
+"_netshield_stats_blocked_K" = "%@ Bin";
+
+/* The count of trackers/ads blocked in millions */
+"_netshield_stats_blocked_M" = "%@ Milyon";
+
+/* The count of trackers/ads blocked in billions */
+"_netshield_stats_blocked_G" = "%@ Milyar";
+
+/* The count of trackers/ads blocked in trillions */
+"_netshield_stats_blocked_T" = "%@ Trilyon";
+
+/* The count of trackers/ads blocked in quadrillions */
+"_netshield_stats_blocked_P" = "%@ Katrilyon";
+
+/* The count of trackers/ads blocked in sextillions */
+"_netshield_stats_blocked_E" = "%@ Sekstilyon";
+
+/* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
+"_alert_protocol_deprecated_title" = "İletişim kuralı kullanılamıyor";
+
+/* Body of the deprecated protocol alert on MacOS. Shown when the user attempts to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
+"_alert_protocol_deprecated_body_macos" = "Bu profilde, eski ve artık desteklenmeyen bir iletişim kuralı ayarlanmış. Varsayılan Smart Protocol seçeneğine geçmek için \"Güncelle\" üzerine tıklayın. Ayrıntılı bilgi alın";
+
+/* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
+"_alert_protocol_deprecated_link_text" = "Ayrıntılı bilgi alın";
+
+/* Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
+"_alert_protocol_deprecated_body_ios" = "Bu profilde, eski ve artık desteklenmeyen bir iletişim kuralı ayarlanmış. Varsayılan Smart Protocol seçeneğine geçmek için \"Güncelle\" üzerine tıklayın.";
+
+/* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
+"_alert_protocol_deprecated_enable_smart" = "Güncelle";
+
+/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser*/ */
+"_alert_protocol_deprecated_learn_more" = "Ayrıntılı bilgi alın";
+
+/* Text for the 'Close' action of the deprecated protocol alert. */
+"_alert_protocol_deprecated_close" = "Kapat";

@@ -1,17 +1,9 @@
-/* Section header in search */
-"_free_servers" = "Servidores gratuitos";
+/* Title of the search screen */
 
-/* Section header in search */
-"_plus_servers" = "Servidores Plus";
+"search_title" = "Buscar";
 
-/* Placeholder text showing in the search bar on the search screen */
-"search_bar_placeholder" = "País, ciudad o servidor";
-
-/* Section header in search */
-"search_cities" = "Ciudades";
-
-/* Sample cities the user can search for */
-"search_cities_sample" = "Nueva York, Londres, Tokio...";
+/* Title of the Search screen infographic */
+"search_subtitle" = "Buscar cualquier ubicación";
 
 /* Section header in search */
 "search_countries" = "Países";
@@ -19,35 +11,11 @@
 /* Sample countries the user can search for */
 "search_countries_sample" = "Suiza, Estados Unidos, Italia...";
 
-/* Subtitle shown when nothing is found in search */
-"search_no_results_subtitle" = "Intente con una contraseña diferente";
-
-/* Title shown when nothing is found in search */
-"search_no_results_title" = "No se encontraron resultados";
-
-/* Button to clear recent searches history */
-"search_recent_clear" = "Borrar";
-
-/* Cancel button title in the alert asking for confirmation before deleting recent searches */
-"search_recent_clear_cancel" = "Cancelar";
-
-/* Confirmation button title in alert asking for confirmation before deleting recent searches */
-"search_recent_clear_continue" = "Continuar";
-
-/* Title for the alert asking for confirmation before deleting recent searches */
-"search_recent_clear_title" = "Se perderá su historial de búsqueda. ¿Continuar?";
-
-/* Header for the recent searches section in search */
-"search_recent_header" = "Visto recientemente";
-
 /* Section header in search */
-"search_results_cities" = "Ciudades";
+"search_cities" = "Ciudades";
 
-/* Section header in search */
-"search_results_countries" = "Países";
-
-/* Section header in search */
-"search_secure_core_countries" = "Países con Secure Core";
+/* Sample cities the user can search for */
+"search_cities_sample" = "Nueva York, Londres, Tokio...";
 
 /* Section header in Search */
 "search_servers" = "Servidores";
@@ -55,18 +23,50 @@
 /* Sample servers the user can search for */
 "search_servers_sample" = "JP#50, CA#3, IT#14...";
 
-/* Title of the Search screen infographic */
-"search_subtitle" = "Buscar cualquier ubicación";
-
-/* Title of the search screen */
-"search_title" = "Buscar";
-
-/* Subtitle for the upsell banner shown to free users in search */
-"search_upsell_subtitle" = "Más ubicaciones = más contenido desbloqueado + seguridad adicional + velocidades altas";
-
 /* Section header in search */
 "search_us_regions" = "Regiones de EU";
 
 /* Sample US regions the user can search for */
 "search_us_regions_sample" = "California, Florida, Colorado...";
 
+/* Title shown when nothing is found in search */
+"search_no_results_title" = "No se encontraron resultados";
+
+/* Subtitle shown when nothing is found in search */
+"search_no_results_subtitle" = "Intente con una contraseña diferente";
+
+/* Header for the recent searches section in search */
+"search_recent_header" = "Visto recientemente";
+
+/* Button to clear recent searches history */
+"search_recent_clear" = "Borrar";
+
+/* Title for the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_title" = "Se perderá su historial de búsqueda. ¿Continuar?";
+
+/* Cancel button title in the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_cancel" = "Cancelar";
+
+/* Confirmation button title in alert asking for confirmation before deleting recent searches */
+"search_recent_clear_continue" = "Continuar";
+
+/* Placeholder text showing in the search bar on the search screen */
+"search_bar_placeholder" = "País, ciudad o servidor";
+
+/* Subtitle for the upsell banner shown to free users in search */
+"search_upsell_subtitle" = "Más ubicaciones = más contenido desbloqueado + seguridad adicional + velocidades altas";
+
+/* Section header in search */
+"search_secure_core_countries" = "Países con Secure Core";
+
+/* Section header in search */
+"search_results_countries" = "Países";
+
+/* Section header in search */
+"search_results_cities" = "Ciudades";
+
+/* Section header in search */
+"_free_servers" = "Servidores gratuitos";
+
+/* Section header in search */
+"_plus_servers" = "Servidores Plus";

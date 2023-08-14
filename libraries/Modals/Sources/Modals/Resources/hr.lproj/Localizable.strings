@@ -1,14 +1,102 @@
-/* Description of user account update screen */
-"delinquent_description" = "Nakon što platite, moći ćete ponovo pristupiti premium značajkama.";
+/* Upgrade plan button title */
 
-/* Title of user account update screen */
-"delinquent_title" = "Vaš VPN račun ima neplaćene fakture";
+"modals_get_plus" = "Nadogradnja";
 
-/* Header of the view containing information about the server, from which the user will be disconnected */
-"from_server_title" = "Od poslužitelj:";
+/* Dismiss upsell screen button title */
+"modals_upsell_stay_free" = "Ne sada";
 
-/* Title of user account update screen */
-"maximum_device_title" = "Dostigli ste maksimalno ograničenje broja uređaja";
+/* Footer of the All Countries upsell screen */
+"modals_upsell_features_footer" = "And many more premium features";
+
+/* Subtitle of All Countries, NetShield and Secure Core upsell screens */
+"modals_upsell_features_subtitle" = "When you upgrade to VPN Plus";
+
+/* Subtitle of the Safe Mode upsell screen */
+"modals_upsell_features_safe_mode_subtitle" = "Have advanced or professional computing needs that require non-standard ports?\n\nUpgrade to VPN Plus to access this and other premium features.";
+
+/* Learn more button title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_learn_more" = "Saznaj više";
+
+/* Subtitle of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_subtitle" = "Moderate NAT, also known as Nat Type 2, can improve your online experience with various applications and online video games.\n\nUnlock this and other features with a Plus plan.";
+
+/* Title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_title" = "Allow traffic to non-standard ports";
+
+/* Title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_title" = "Enable Moderate NAT";
+
+/* Learn more button title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_learn_more" = "What is Moderate NAT?";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_streaming" = "Access global streaming services";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_highSpeed" = "Browse at the highest speeds (10 Gbps)";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_netshield" = "Block ads and malware with NetShield";
+
+/* Title of the NetShield upsell screen */
+"modals_upsell_net_shield_title" = "Enjoy ad-free browsing with NetShield";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_ads" = "Block ads and trackers";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_malware" = "Protect your device from malware";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_highSpeed" = "Browse at the highest speeds";
+
+/* Title of the Secure Core upsell screen */
+"modals_upsell_secure_core_title" = "Double the encryption with Secure Core";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_route" = "Route through ultra secure servers in Switzerland, Sweden, and Iceland";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_layer" = "Add another layer of encryption to your VPN connection";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_attacks" = "Protect yourself from network attacks";
+
+/* Title of the No Logs screen */
+"modals_no_logs_title" = "No logs and Swiss-based";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_privacy_first" = "Proton VPN is privacy first";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_log_activity" = "We do not log your internet activity";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_third_parties" = "We do not share any data with third parties";
+
+/* Learn more of the No Logs screen */
+"modals_no_logs_external_audit" = "Proton VPN's strict no-log policy is certified by an external audit.";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "A note about speed...";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "Secure Core offers the highest level of security and privacy, but it may reduce your internet speed. If you need more performance, you can disable Secure Core.";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "Ne prikazuj ponovno";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "Activate Secure Core";
+
+/* Title of the New Brand screen */
+"new_plans_brand_title" = "Ažurirani Proton, jedinstvena zaštita";
+
+/* Subtitle of the New Brand screen */
+"new_plans_brand_subtitle" = "Predstavljamo Protonov osvježeni izgled.\nMnogo usluga, jedna misija. Dobrodošli na internet gdje je privatnost zadana vrijednost.";
+
+/* Title of "done" button in New Brand screen */
+"new_plans_brand_got_it" = "Shvaćam";
 
 /* Common button title */
 "modals_common_cancel" = "Poništi";
@@ -19,32 +107,8 @@
 /* Common button title */
 "modals_common_next" = "Sljedeće";
 
-/* Upgrade plan button title */
-"modals_get_plus" = "Nadogradnja";
-
-/* Learn more button title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_learn_more" = "Saznaj više";
-
-/* Dismiss upsell screen button title */
-"modals_upsell_stay_free" = "Ne sada";
-
-/* Title of "done" button in New Brand screen */
-"new_plans_brand_got_it" = "Shvaćam";
-
-/* Title of the New Brand screen */
-"new_plans_brand_title" = "Ažurirani Proton, jedinstvena zaštita";
-
-/* Description of user account update screen */
-"subscription_expired_description" = "Vaša pretplata je snižena na niži plan.";
-
-/* Description of user account update screen */
-"subscription_expired_reconnection_description" = "Vaša pretplata je snižena, stoga vas povezujemo s najbržim dostupnim poslužiteljem.";
-
-/* Title of user account update screen */
-"subscription_expired_title" = "Vaš VPN pretplatnički plan je istekao";
-
-/* Feature list element in user account update screen */
-"subscription_upgrade_option3" = "Napredne značajke: NetShield, Secure Core, Tor, P2P";
+/* Header of the view containing information about the server, from which the user will be disconnected */
+"from_server_title" = "Od poslužitelj:";
 
 /* Header of the view containing information about the server, to which the user will be connected */
 "to_server_title" = "Za poslužitelj:";
@@ -58,3 +122,32 @@
 /* Button action title in user account update screen */
 "upgrade_no_thanks" = "Ne, hvala";
 
+/* Title of user account update screen */
+"subscription_expired_title" = "Vaš VPN pretplatnički plan je istekao";
+
+/* Description of user account update screen */
+"subscription_expired_reconnection_description" = "Vaša pretplata je snižena, stoga vas povezujemo s najbržim dostupnim poslužiteljem.";
+
+/* Description of user account update screen */
+"subscription_expired_description" = "Vaša pretplata je snižena na niži plan.";
+
+/* Feature list element in user account update screen */
+"subscription_upgrade_option3" = "Napredne značajke: NetShield, Secure Core, Tor, P2P";
+
+/* Title of user account update screen */
+"delinquent_title" = "Vaš VPN račun ima neplaćene fakture";
+
+/* Description of user account update screen */
+"delinquent_reconnection_description" = "Nakon što platite, moći ćete ponovo pristupiti premium značajkama. Za sada vas ponovno povezujemo s najbržim Free poslužiteljem koji je na raspolaganju.";
+
+/* Description of user account update screen */
+"delinquent_description" = "Nakon što platite, moći ćete ponovo pristupiti premium značajkama.";
+
+/* Title of user account update screen */
+"maximum_device_title" = "Dostigli ste maksimalno ograničenje broja uređaja";
+
+/* Description of user account update screen part 1*/ */
+"maximum_device_plan_limit_part_1" = "Please disconnect another device to connect to this one or upgrade to %@";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "Please disconnect another device to connect to this one.";
