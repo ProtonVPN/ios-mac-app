@@ -24,70 +24,118 @@ import Strings
 
 public struct ConnectionFlagInfoView: View {
 
-    @ScaledMetric(relativeTo: .body) var topLineHeight: CGFloat = 16
     @ScaledMetric var featureIconSize: CGFloat = 16
 
     let connectionInfoBuilder: ConnectionInfoBuilder
 
     let intent: ConnectionSpec
 
-    public init(intent: ConnectionSpec, vpnConnectionActual: VPNConnectionActual? = nil) {
+    public init(intent: ConnectionSpec, vpnConnectionActual: VPNConnectionActual? = nil, withDivider: Bool) {
         self.intent = intent
         self.connectionInfoBuilder = .init(intent: intent,
                                            vpnConnectionActual: vpnConnectionActual)
+        self.withDivider = withDivider
     }
 
-    public var body: some View {
-        HStack(spacing: .themeSpacing12) {
+    var withDivider: Bool
+
+    var flag: some View {
+        VStack(spacing: 0) {
+            if withDivider {
+                Spacer()
+                    .frame(width: 20, height: 12)
+            }
             FlagView(location: intent.location, flagSize: .defaultSize)
-
-            VStack(alignment: .leading) {
+            if connectionInfoBuilder.hasTextFeatures {
                 Spacer()
-                Text(connectionInfoBuilder.textHeader)
-                    .styled()
-#if canImport(Cocoa)
-                    .themeFont(.body(emphasised: true))
-#elseif canImport(UIKit)
-                    .themeFont(.body1(.semibold))
-#endif
-                    .frame(minHeight: topLineHeight)
-
-                connectionInfoBuilder
-                    .textFeatures
-                    .lineLimit(2)
+            }
+            if withDivider {
                 Spacer()
-                Divider()
-                    .foregroundColor(.init(.border))
-
+                    .frame(height: 12)
             }
         }
     }
+
+    public var body: some View {
+            HStack(spacing: 0) {
+                flag
+                Spacer()
+                    .frame(width: 12)
+                ZStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 0) {
+                            Text(connectionInfoBuilder.textHeader)
+                                .styled()
+#if canImport(Cocoa)
+                                .themeFont(.body(emphasised: true))
+#elseif canImport(UIKit)
+                                .themeFont(.body1(.semibold))
+#endif
+
+                        if connectionInfoBuilder.hasTextFeatures {
+                            connectionInfoBuilder
+                                .textFeatures
+                                .lineLimit(2)
+                                .foregroundColor(.init(.border))
+                        }
+                    }
+                    if withDivider {
+                        VStack {
+                            Spacer()
+                            Divider()
+                        }
+                    }
+                }
+                Spacer(minLength: 0)
+            }
+            .frame(maxWidth: .infinity)
+            .frame(height: withDivider ? 64 : 42)
+        }
 }
 
 struct ConnectionFlagView_Previews: PreviewProvider {
 
     static let cellHeight = 40.0
-    static let cellWidth = 140.0
+    static let cellWidth = 300.0
     static let spacing = 20.0
 
     static func sideBySide(intent: ConnectionSpec, actual: VPNConnectionActual) -> some View {
-        VStack {
             HStack(alignment: .top, spacing: spacing) {
-                ConnectionFlagInfoView(intent: intent ).frame(width: cellWidth)
+                ConnectionFlagInfoView(intent: intent, withDivider: true ).frame(width: cellWidth)
                 Divider()
-                ConnectionFlagInfoView(intent: intent, vpnConnectionActual: actual).frame(width: cellWidth)
+                ConnectionFlagInfoView(intent: intent, vpnConnectionActual: actual, withDivider: false).frame(width: cellWidth)
             }
-            Divider().frame(width: (cellWidth + spacing) * 2)
-        }
         .frame(height: cellHeight)
     }
 
     static var previews: some View {
-        ConnectionFlagInfoView(intent: ConnectionSpec(location: .fastest,
-                                                      features: []),
-                               vpnConnectionActual: .mock())
-        .previewLayout(.fixed(width: 300, height: 200))
-        .background(.yellow)
+        VStack {
+            ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
+                                                          features: []),
+                                   vpnConnectionActual: .mock(),
+                                   withDivider: true)
+            ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
+                                                          features: []),
+                                   vpnConnectionActual: .mock(),
+                                   withDivider: false)
+            ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
+                                                          features: [.p2p, .tor]),
+                                   vpnConnectionActual: .mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)),
+                                   withDivider: true)
+            ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
+                                                          features: [.p2p, .tor]),
+                                   vpnConnectionActual: .mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)),
+                                   withDivider: false)
+            ConnectionFlagInfoView(intent: ConnectionSpec(location: .fastest,
+                                                          features: []),
+                                   vpnConnectionActual: .mock(),
+                                   withDivider: true)
+            ConnectionFlagInfoView(intent: ConnectionSpec(location: .fastest,
+                                                          features: [.p2p, .tor]),
+                                   vpnConnectionActual: .mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)),
+                                   withDivider: false)
+        }
+        .padding()
+        .previewLayout(.sizeThatFits)
         .previewDisplayName("single")
 
         VStack(alignment: .leading, spacing: spacing) {
@@ -131,7 +179,7 @@ struct ConnectionFlagView_Previews: PreviewProvider {
                 actual: .mock()
             )
         }
-        .previewLayout(.sizeThatFits)
+        .previewLayout(.fixed(width: 700, height: 800))
         .previewDisplayName("sideBySide")
     }
 }

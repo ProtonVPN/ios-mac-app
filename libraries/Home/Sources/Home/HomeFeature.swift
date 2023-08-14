@@ -93,48 +93,21 @@ public struct HomeFeature: Reducer {
         Reduce { state, action in
             switch action {
             case let .connect(spec):
-                let index = state.connections.firstIndex(where: { $0.connection == spec })
-                guard index != 0 else { // if it's the fist connection, ignore all the rest
-                    return .none
+                var pinned = false
+
+                if let index = state.connections.firstIndex(where: {
+                    $0.connection == spec
+                }) {
+                    pinned = state.connections[index].pinned
+                    state.connections.remove(at: index)
                 }
-//                var recent = false
-                guard let index else { // if index not found, insert to first and trim
-                    let recent = RecentConnection(
-                        pinned: false,
-                        underMaintenance: false,
-                        connectionDate: Date(),
-                        connection: spec
-                    )
-                    state.connections.insert(recent, at: 0)
-                    state.trimConnections(storage: storage)
-                    return .none
-                }
-                // if index found, we have to move items around
-
-//                pinned = state.connections[index].pinned
-//                state.connections.remove(at: index)
-
-
-                // pop first
-                let popped = state.connections.first
-                state.connections.removeFirst()
-
-                let unpinnedIndex = state.connections.firstIndex { element in
-                    !element.pinned
-                }
-
-//                state.connections.insert(recent, at: 0)
-
-                if let popped {
-                    if popped.pinned {
-                        state.connections.insert(popped, at: 1)
-                    } else if let unpinnedIndex {
-                        state.connections.insert(popped, at: unpinnedIndex + 1)
-                    } else {
-                        state.connections.insert(popped, at: 1)
-                    }
-                }
-
+                let recent = RecentConnection(
+                    pinned: pinned,
+                    underMaintenance: false,
+                    connectionDate: Date(),
+                    connection: spec
+                )
+                state.connections.insert(recent, at: 0)
                 state.trimConnections(storage: storage)
 
                 return .none // Actual connection is handled in the app

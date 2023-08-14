@@ -60,3 +60,17 @@ extension SecureCoreFlagView {
         }
     }
 }
+
+struct SecureCoreFlagView_Previews: PreviewProvider {
+    static var previews: some View {
+        VStack(spacing: 8) {
+            FlagView(location: .fastest, flagSize: .defaultSize)
+            FlagView(location: .region(code: "PL"), flagSize: .defaultSize)
+            FlagView(location: .secureCore(.fastest), flagSize: .defaultSize)
+            FlagView(location: .secureCore(.fastestHop(to: "CZ")), flagSize: .defaultSize)
+            FlagView(location: .secureCore(.hop(to: "GB", via: "LT")), flagSize: .defaultSize)
+        }
+        .padding(8)
+            .previewLayout(.sizeThatFits)
+    }
+}

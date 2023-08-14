@@ -69,7 +69,7 @@ struct RecentRowItemView: View {
                 .frame(.square(iconSize))
                 .padding(.leading, .themeSpacing16)
                 .padding(.trailing, .themeSpacing12)
-            ConnectionFlagInfoView(intent: item.connection)
+            ConnectionFlagInfoView(intent: item.connection, withDivider: true)
         }
         .frame(maxWidth: .infinity, minHeight: Self.itemCellHeight)
         .saveSize(in: $viewSize)
