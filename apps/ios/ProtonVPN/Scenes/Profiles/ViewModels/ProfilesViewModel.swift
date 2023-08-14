@@ -109,12 +109,27 @@ class ProfilesViewModel {
     
     func defaultCellModel(for row: Int) -> DefaultProfileViewModel {
         let serverOffering = row == 0 ? ServerOffering.fastest(nil) : ServerOffering.random(nil)
-        return DefaultProfileViewModel(serverOffering: serverOffering, vpnGateway: vpnGateway, propertiesManager: propertiesManager, connectionStatusService: connectionStatusService, netShieldPropertyProvider: netShieldPropertyProvider, natTypePropertyProvider: natTypePropertyProvider, safeModePropertyProvider: safeModePropertyProvider)
+        return DefaultProfileViewModel(serverOffering: serverOffering,
+                                       vpnGateway: vpnGateway,
+                                       alertService: alertService,
+                                       propertiesManager: propertiesManager,
+                                       connectionStatusService: connectionStatusService,
+                                       netShieldPropertyProvider: netShieldPropertyProvider,
+                                       natTypePropertyProvider: natTypePropertyProvider,
+                                       safeModePropertyProvider: safeModePropertyProvider)
     }
     
     func cellModel(for index: Int) -> ProfileItemViewModel? {
         if let profile = profileManager?.customProfiles[index] {
-            return ProfileItemViewModel(profile: profile, vpnGateway: vpnGateway, alertService: alertService, userTier: userTier, netShieldPropertyProvider: netShieldPropertyProvider, natTypePropertyProvider: natTypePropertyProvider, safeModePropertyProvider: safeModePropertyProvider, connectionStatusService: connectionStatusService, planService: planService)
+            return ProfileItemViewModel(profile: profile,
+                                        vpnGateway: vpnGateway,
+                                        alertService: alertService,
+                                        userTier: userTier,
+                                        netShieldPropertyProvider: netShieldPropertyProvider,
+                                        natTypePropertyProvider: natTypePropertyProvider,
+                                        safeModePropertyProvider: safeModePropertyProvider,
+                                        connectionStatusService: connectionStatusService,
+                                        planService: planService)
         }
         return nil
     }
