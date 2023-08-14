@@ -1,91 +1,121 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>maximum_device_plan_limit_part_2</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string> to get up to %#@num_devices@ connected at the same time.</string>
-		<key>num_devices</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d device</string>
-			<key>other</key>
-			<string>%d devices</string>
-		</dict>
-	</dict>
-	<key>subscription_upgrade_option2</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>Connect up to %#@num_devices@ at the same time</string>
-		<key>num_devices</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d device</string>
-			<key>other</key>
-			<string>%d devices</string>
-		</dict>
-	</dict>
-	<key>subscription_upgrade_option1</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>Hundreds of servers in %#@num_countries@</string>
-		<key>num_countries</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d country</string>
-			<key>other</key>
-			<string>%d countries</string>
-		</dict>
-	</dict>
-	<key>modals_upsell_all_countries_title</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>Access over %#@num_servers@ in %#@num_countries@</string>
-		<key>num_countries</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>other</key>
-			<string>%d countries</string>
-		</dict>
-		<key>num_servers</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>other</key>
-			<string>%d secure servers</string>
-		</dict>
-	</dict>
-	<key>modals_upsell_all_countries_feature_multipleDevices</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>other</key>
-			<string>Connect up to %d devices at once</string>
-		</dict>
-	</dict>
-</dict>
+  <dict>
+    <key>maximum_device_plan_limit_part_2</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string> для адначасовага падключэння да %#@num_devices@.</string>
+      <key>num_devices</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d прылада</string>
+        <key>few</key>
+        <string>%d прылады</string>
+        <key>many</key>
+        <string>%d прылад</string>
+        <key>other</key>
+        <string>%d прылад</string>
+      </dict>
+    </dict>
+    <key>subscription_upgrade_option2</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Падключайце да %#@num_devices@ адначасова</string>
+      <key>num_devices</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d прылады</string>
+        <key>few</key>
+        <string>%d прылад</string>
+        <key>many</key>
+        <string>%d прылад</string>
+        <key>other</key>
+        <string>%d прылад</string>
+      </dict>
+    </dict>
+    <key>subscription_upgrade_option1</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Сотні сервераў у %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d краіне</string>
+        <key>few</key>
+        <string>%d краінах</string>
+        <key>many</key>
+        <string>%d краінах</string>
+        <key>other</key>
+        <string>%d краінах</string>
+      </dict>
+    </dict>
+    <key>modals_upsell_all_countries_title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Атрымайце доступ да %#@num_servers@ у %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>one</key>
+        <string>%d краіне</string>
+        <key>few</key>
+        <string>%d краінах</string>
+        <key>many</key>
+        <string>%d краінах</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d краінах</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>one</key>
+        <string>%d бяспечны сервер</string>
+        <key>few</key>
+        <string>%d бяспечныя серверы</string>
+        <key>many</key>
+        <string>%d бяспечных сервераў</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d бяспечных сервераў</string>
+      </dict>
+    </dict>
+    <key>modals_upsell_all_countries_feature_multipleDevices</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>one</key>
+        <string>Падключайце %d прыладу адначасова</string>
+        <key>few</key>
+        <string>Падключайце %d прылады адначасова</string>
+        <key>many</key>
+        <string>Падключайце %d прылад адначасова</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Падключайце %d прылад адначасова</string>
+      </dict>
+    </dict>
+  </dict>
 </plist>

@@ -1,145 +1,153 @@
 /* Upgrade plan button title */
-"modals_get_plus" = "Upgrade";
+
+"modals_get_plus" = "Палепшыць";
 
 /* Dismiss upsell screen button title */
-"modals_upsell_stay_free" = "Not now";
+"modals_upsell_stay_free" = "Не зараз";
 
 /* Footer of the All Countries upsell screen */
-"modals_upsell_features_footer" = "And many more premium features";
+"modals_upsell_features_footer" = "І шмат іншых прэміяльных функцый";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
-"modals_upsell_features_subtitle" = "When you upgrade to VPN Plus";
+"modals_upsell_features_subtitle" = "Калі вы паляпшаеце да VPN Plus";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Have advanced or professional computing needs that require non-standard ports?\n\nUpgrade to VPN Plus to access this and other premium features.";
+"modals_upsell_features_safe_mode_subtitle" = "У вас дадатковыя або прафесійныя камп'ютарныя патрабаванні, якія патрабуюць нестандартныя парты?\n\nПалепшыце да VPN Plus, каб атрымаць доступ да гэтай і іншых прэміяльных функцый.";
 
 /* Learn more button title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_learn_more" = "Learn More";
+"modals_upsell_safe_mode_learn_more" = "Даведацца больш";
 
 /* Subtitle of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_subtitle" = "Moderate NAT, also known as Nat Type 2, can improve your online experience with various applications and online video games.\n\nUnlock this and other features with a Plus plan.";
+"modals_upsell_features_moderate_nat_subtitle" = "Умераны NAT, таксама вядомы пад назвай Nat Type 2, можа палепшыць працу ў інтэрнэце з разнастайнымі праграмамі і сеткавымі гульнямі.\n\nРазблакіруйце гэту і іншыя функцыі з тарыфным планам Plus.";
 
 /* Title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_title" = "Allow traffic to non-standard ports";
+"modals_upsell_safe_mode_title" = "Дазваляць трафік на нестандартныя парты";
 
 /* Title of the Moderate NAT upsell screen */
-"modals_upsell_moderate_nat_title" = "Enable Moderate NAT";
+"modals_upsell_moderate_nat_title" = "Уключыць умераны NAT";
 
 /* Learn more button title of the Moderate NAT upsell screen */
-"modals_upsell_moderate_nat_learn_more" = "What is Moderate NAT?";
+"modals_upsell_moderate_nat_learn_more" = "Што такое ўмераны NAT?";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_streaming" = "Access global streaming services";
+"modals_upsell_all_countries_feature_streaming" = "Доступ да глабальных сэрвісаў трансляцый";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_highSpeed" = "Browse at the highest speeds (10 Gbps)";
+"modals_upsell_all_countries_feature_highSpeed" = "Праглядайце сайты на самых высокіх хуткасцях (10 Гбіт/с)";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_netshield" = "Block ads and malware with NetShield";
+"modals_upsell_all_countries_feature_netshield" = "Блакіруйце рэкламу і шкодныя праграмы з дапамогай NetShield";
 
 /* Title of the NetShield upsell screen */
-"modals_upsell_net_shield_title" = "Enjoy ad-free browsing with NetShield";
+"modals_upsell_net_shield_title" = "Праглядайце старонкі без рэкламы з дапамогай NetShield";
 
 /* Feature of the NetShield upsell screen */
-"modals_upsell_net_shield_ads" = "Block ads and trackers";
+"modals_upsell_net_shield_ads" = "Блакіраваць рэкламу і праграмы сачэння";
 
 /* Feature of the NetShield upsell screen */
-"modals_upsell_net_shield_malware" = "Protect your device from malware";
+"modals_upsell_net_shield_malware" = "Абараніце сваю прыладу ад шкодных праграм";
 
 /* Feature of the NetShield upsell screen */
-"modals_upsell_net_shield_highSpeed" = "Browse at the highest speeds";
+"modals_upsell_net_shield_highSpeed" = "Праглядайце сайты на самых высокіх хуткасцях";
 
 /* Title of the Secure Core upsell screen */
-"modals_upsell_secure_core_title" = "Double the encryption with Secure Core";
+"modals_upsell_secure_core_title" = "Падвойнае шыфраванне з Secure Core";
 
 /* Feature of the Secure Core upsell screen */
-"modals_upsell_secure_core_route" = "Route through ultra secure servers in Switzerland, Sweden, and Iceland";
+"modals_upsell_secure_core_route" = "Перанакіруйце трафік праз звышабароненыя серверы ў Швейцарыі, Швецыі і Ісландыі";
 
 /* Feature of the Secure Core upsell screen */
-"modals_upsell_secure_core_layer" = "Add another layer of encryption to your VPN connection";
+"modals_upsell_secure_core_layer" = "Дадайце яшчэ адзін слой шыфравання ў ваша падключэнне па VPN";
 
 /* Feature of the Secure Core upsell screen */
-"modals_upsell_secure_core_attacks" = "Protect yourself from network attacks";
+"modals_upsell_secure_core_attacks" = "Абараніце сябе ад сеткавых атак";
 
 /* Title of the No Logs screen */
-"modals_no_logs_title" = "No logs and Swiss-based";
+"modals_no_logs_title" = "Не вядзе журналаў і знаходзіцца ў Швейцарыі";
 
 /* Feature of the No Logs screen */
-"modals_no_logs_privacy_first" = "Proton VPN is privacy first";
+"modals_no_logs_privacy_first" = "Proton VPN - гэта прыватнасць перадусім";
 
 /* Feature of the No Logs screen */
-"modals_no_logs_log_activity" = "We do not log your internet activity";
+"modals_no_logs_log_activity" = "Мы не вядзём журналы вашай актыўнасці ў інтэрнэце";
 
 /* Feature of the No Logs screen */
-"modals_no_logs_third_parties" = "We do not share any data with third parties";
+"modals_no_logs_third_parties" = "Мы не перадаём ніякіх даных староннім асобам";
 
 /* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "Proton VPN's strict no-log policy is certified by an external audit.";
+"modals_no_logs_external_audit" = "Палітыка строгай адсутнасці журналаў актыўнасці Proton VPN пацверджана знешняй праверкай.";
 
 /* Title of the Secure Core discouragement screen */
-"modals_discourage_secure_core_title" = "A note about speed...";
+"modals_discourage_secure_core_title" = "Нататка пра хуткасць...";
 
 /* Subtitle of the Secure Core discouragement screen */
-"modals_discourage_secure_core_subtitle" = "Secure Core offers the highest level of security and privacy, but it may reduce your internet speed. If you need more performance, you can disable Secure Core.";
+"modals_discourage_secure_core_subtitle" = "Secure Core прапануе высокі ўзровень бяспекі і прыватнасці, але можа запаволіць ваша падключэнне. Калі вам неабходна большая прадукцыйнасць, рэкамендуецца адключыць Secure Core.";
 
 /* Turn off Secure Core discouragement screen */
-"modals_discourage_secure_core_dont_show" = "Don’t show again";
+"modals_discourage_secure_core_dont_show" = "Больш не паказваць";
 
 /* Positive user action on Secure Core discouragement screen */
-"modals_discourage_secure_core_activate" = "Activate Secure Core";
+"modals_discourage_secure_core_activate" = "Актываваць Secure Core";
 
 /* Title of the New Brand screen */
-"new_plans_brand_title" = "Updated Proton, unified protection";
+"new_plans_brand_title" = "Абноўлены Proton, уніфікаваная абарона";
 
 /* Subtitle of the New Brand screen */
-"new_plans_brand_subtitle" = "Introducing Proton’s refreshed look.\nMany services, one mission. Welcome to an internet where privacy is the default.";
+"new_plans_brand_subtitle" = "Уводзіны ў абноўлены выгляд Proton. \nШмат сэрвісаў, адна місія. Запрашаем у інтэрнэт, дзе прыватнасць з'яўляецца паўсядзённасцю.";
 
 /* Title of "done" button in New Brand screen */
-"new_plans_brand_got_it" = "Got it";
+"new_plans_brand_got_it" = "Зразумела";
 
 /* Common button title */
-"modals_common_cancel" = "Cancel";
+"modals_common_cancel" = "Скасаваць";
 
 /* Common button title */
-"modals_common_learn_more" = "Learn more";
+"modals_common_learn_more" = "Даведацца больш";
 
 /* Common button title */
-"modals_common_next" = "Next";
-
-// Downgrade
+"modals_common_next" = "Далей";
 
 /* Header of the view containing information about the server, from which the user will be disconnected */
-"from_server_title" = "From server:";
+"from_server_title" = "З сервера:";
+
 /* Header of the view containing information about the server, to which the user will be connected */
-"to_server_title" = "To server:";
+"to_server_title" = "На сервер:";
 
 /* Button action title in user account update screen */
-"update_billing" = "Update My Billing";
+"update_billing" = "Абнавіць мой рахунак";
+
 /* Button action title in user account update screen */
-"upgrade_again" = "Upgrade Again";
+"upgrade_again" = "Палепшыць яшчэ раз";
+
 /* Button action title in user account update screen */
-"upgrade_no_thanks" = "No Thanks";
+"upgrade_no_thanks" = "Не, дзякуй";
 
 /* Title of user account update screen */
-"subscription_expired_title" = "Your VPN subscription plan has expired";
+"subscription_expired_title" = "Ваша падпіска на тарыфны план VPN пратэрмінавана";
+
 /* Description of user account update screen */
-"subscription_expired_reconnection_description" = "Your subscription has been downgraded, so we are reconnecting to the fastest available server.";
+"subscription_expired_reconnection_description" = "Ваша падпіска была паніжана, таму мы перападключаем вас да найхутчэйшага з даступных сервераў.";
+
 /* Description of user account update screen */
-"subscription_expired_description" = "Your subscription has been downgraded.";
+"subscription_expired_description" = "Ваша падпіска была паніжана.";
 
 /* Feature list element in user account update screen */
-"subscription_upgrade_option3" = "Advanced features: NetShield, Secure Core, Tor, P2P";
+"subscription_upgrade_option3" = "Пашыраныя функцыі: NetShield, Secure Core, Tor, P2P";
 
 /* Title of user account update screen */
-"delinquent_title" = "Your VPN account has pending invoices";
+"delinquent_title" = "У вашым уліковым запісе Proton VPN ёсць неаплачаныя рахункі";
+
 /* Description of user account update screen */
-"delinquent_reconnection_description" = "You will be able to access premium features again after these are paid. For now, we are reconnecting to the fastest Free plan server available.";
+"delinquent_reconnection_description" = "Пасля аплаты вы зможаце зноў атрымаць доступ да прэміяльных функцый. Пакуль мы перападключаем вас да самага хуткага даступнага сервера на тарыфным плане Free.";
+
 /* Description of user account update screen */
-"delinquent_description" = "You will be able to access premium features again after these are paid.";
+"delinquent_description" = "Пасля аплаты вы зможаце зноў атрымаць доступ да прэміяльных функцый.";
 
 /* Title of user account update screen */
-"maximum_device_title" = "You have reached your maximum device limit";
-/* Description of user account update screen part 1*/
-"maximum_device_plan_limit_part_1" = "Please disconnect another device to connect to this one or upgrade to %@";
+"maximum_device_title" = "Вы дасягнулі максімальнай колькасці прылад";
+
+/* Description of user account update screen part 1*/ */
+"maximum_device_plan_limit_part_1" = "Адключыце іншую прыладу для падключэння гэтай або палепшыце да %@";
+
 /* Description of user account update screen */
-"maximum_device_limit" = "Please disconnect another device to connect to this one.";
+"maximum_device_limit" = "Адключыце іншую прыладу для падключэння гэтай.";

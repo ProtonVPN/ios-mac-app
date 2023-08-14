@@ -1,35 +1,1024 @@
-/* (No Comment) */
-"_5_connections" = "5 з'єднань";
+/* Common word */
 
-/* (No Comment) */
-"_5_connections_description" = "Під'єднайте до 5 пристроїв\nодночасно";
+"_cancel" = "Скасувати";
+
+/* Common word */
+"_connect" = "З'єднатися";
+
+/* Common word */
+"_connected" = "Під'єднано";
+
+/* Common word */
+"_delete" = "Видалити";
+
+/* Common word */
+"_disconnect" = "Від'єднати";
+
+/* Common word */
+"_disconnected" = "Від'єднано";
+
+/* Status of VPN connection reported by Siri */
+"_disconnecting" = "Роз'єднання";
+
+/* Common word */
+"_done" = "Виконано";
+
+/* Common word */
+"_edit" = "Редагувати";
+
+/* Common word */
+"_ok" = "Гаразд";
+
+/* Common word */
+"_save" = "Зберегти";
+
+/* Common word */
+"_unavailable" = "Недоступно";
+
+/* Description of the expand/collapse button used by accessibility Voice Over */
+"_expand_list_of_servers" = "Розгорнути список серверів";
+
+"_collapse_list_of_servers" = "Згорнути список серверів";
+
+/* Used as a title in alerts/modals */
+"_warning" = "Попередження";
+
+/* Button in many places in both iOS and MacOS apps */
+"_upgrade" = "Покращити";
+
+/* iOS: Plan selection during plan upgarde, button insettings screen */
+"_upgrade_subscription" = "Покращити тарифний план";
+
+/* MacOS: Settings -> Account. Button leading to web interface. */
+"_manage_subscription" = "Керувати передплатою";
+
+/* iOS & MacOS: text near country or server; MacOS: title of several alerts */
+"_upgrade_required" = "Необхідний тарифний план вищого рівня";
+
+/* MacOS: voice over indication for a country or server on maintenance*/ */
+"_on_maintenance" = "Обслуговується";
+
+"_reconnection_required" = "Необхідне перепідключення";
+
+/* Server status in many places in iOS and MacOS apps */
+"_maintenance" = "Обслуговування";
+
+/* MacOS: quit application button in custom status menu */
+"_quit" = "Вийти";
+
+/* MacOS: alert show before quitting app if VPN is connected */
+"_quit_warning" = "Вихід із програми від'єднає активне VPN-з'єднання. Хочете продовжити?";
+
+/* Common word */
+"_enabled" = "Увімкнено";
+
+/* Common word */
+"_disabled" = "Вимкнено";
+
+/* Button in some alerts */
+"_disable" = "Вимкнути";
+
+/* Button in Kill switch error alert */
+"_report" = "Звіт";
+
+/* Button in Kill switch error alert */
+"_ignore" = "Ігнорувати";
+
+"_continue" = "Продовжити";
+
+/* Button in some alerts */
+"_show_instructions" = "Показати інструкції";
+
+/* iOS: quick connect widget */
+"_network_unreachable" = "Мережа недоступна";
+
+/* Title in no internet alert */
+"_not_connected_to_the_internet" = "Не вдалося встановити VPN-з'єднання. Ви не під'єднані до інтернету.";
+
+/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
+"_vpn_connection_active" = "VPN-з'єднання активне";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
+"_vpn_protocol_not_supported_title" = "Протокол VPN не підтримується";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
+"_vpn_protocol_not_supported_text" = "Протокол VPN недоступний для обраного вами з'єднання. Спробуйте змінити протокол або сервер.";
+
+/* iOS: button in settings screen */
+"_log_out" = "Вийти";
+
+/* iOS: Logout alert */
+"_log_out_warning" = "Вихід завершить ваш сеанс VPN.";
+
+/* MacOS: Logout alert */
+"_log_out_warning_long" = "Вихід із програми від'єднає активне VPN-з'єднання. Хочете продовжити?";
+
+/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
+"_change_protocol_disconnect_warning" = "Зміна протоколів завершить ваш поточний сеанс VPN.";
+
+/* Slogan text under the logo in may places in iOS and MacOS apps */
+"_loading_screen_slogan" = "Безпечний інтернет всюди";
+
+/* Main mac app menu item */
+"_report_an_issue" = "Повідомити про проблему...";
+
+/* Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page. */
+"_help" = "Допомога";
+
+/* MacOS: link in login screen */
+"_learn_more" = "Докладніше";
+
+/* iOS: Status view */
+"_ip" = "IP-адреса";
+
+/* Common word */
+"_close" = "Закрити";
+
+/* Changing settings title */
+"_change_settings" = "Змінити параметри";
+
+/* Suggest the user to upgrade account for new features */
+"_get_plus_for_feature" = "Отримайте Proton VPN Plus для доступу до цієї та інших функцій.";
+
+/* Display more information */
+"_more_info" = "Докладніше";
+
+/* Display less information */
+"_less_info" = "Менше інформації";
+
+/* Text addressing to contact costumer support on several sites of the app */
+"_contact_our_support" = "Зв'язатися з підтримкою";
+
+"_turn_on" = "Увімкнути";
+
+"_not_now" = "Не зараз";
+
+"_allow" = "Дозволити";
+
+/* %@ is an IP address e.g. IP: 123.45.67.890 */
+"_ip_value" = "IP-адреса: %@";
+
+/* %@ is an IP address e.g. Public IP: 123.45.67.890 */
+"_public_ip" = "Публічна IP-адреса: %@";
+
+/* Several places in both iOS and Mac apps */
+"_quick_connect" = "Швидке з'єднання";
+
+/* Used in many places in MacOS app */
+"_secure_core" = "Secure Core";
+
+/* %@ is a country e.g. Secure Core Switzerland */
+"_secure_core_country" = "Secure Core %@";
+
+/* Profile create/edit menu */
+"_country" = "Країна";
+
+"_show_protonvpn" = "Показати Proton VPN";
+
+/* Main mac app menu item */
+"_clear_application_data" = "Очистити дані програми";
+
+/* Main mac app menu item */
+"_system_extension_tutorial_menu_item" = "Посібник з розширення системи";
+
+/* MacOS: connecting overlay */
+"_preparing_connection" = "Перевірка доступності сервера";
+
+/* iOS: main button in tabbar during connecting to vpn phase */
+"_connecting" = "З'єднання";
+
+"_connectingDotDotDot" = "З'єднання...";
+
+/* iOS: countries list section header */
+"_countries_free" = "Безплатні країни";
+
+/* iOS: countries list section header */
+"_countries_premium" = "Преміум країни";
+
+/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
+"_connecting_vpn" = "З'єднання %@";
+
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
+"_connecting_to" = "З'єднання з %@";
+
+"_reconnecting_to" = "Повторне з'єднання з %@";
+
+/* iOS status view */
+"_connected_to" = "З'єднано з";
+
+/* macOS: Text on connection overlay shown after connection timed out */
+"_connection_timed_out" = "Час очікування з'єднання минув";
+
+/* Text that should be bold in _connection_timed_out string */
+"_connection_timed_out_bold" = "час очікування завершився";
+
+/* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
+"_connected_to_vpn" = "З'єднано з %@";
+
+/* iOS: connection bar; Main mac app menu item; */
+"_not_connected" = "Не з'єднано";
+
+/* MacOS: text in main window */
+"_you_are_not_connected" = "Ви не під'єднані";
+
+/* MacOS: button in connecting overlay */
+"_try_again" = "Спробувати знову";
+
+"_try_again_without_killswitch" = "Вимкніть Kill Switch і повторіть спробу";
+
+/* Button in some alerts */
+"_retry" = "Повторити спробу";
+
+/* iOS: section header in countries list */
+"_free_servers" = "Безплатні сервери";
+
+/* iOS: section header in countries list */
+"_plus_servers" = "Сервери Plus";
+
+/* iOS: section header in countries list */
+"_test_servers" = "ТЕСТОВІ сервери";
+
+/* MacOS: connecting overlay */
+"_initializing_connection" = "Ініціалізація з'єднання...";
+
+/* MacOS: connecting overlay */
+"_successfully_connected" = "Успішно з'єднано";
+
+/* MacOS: connecting overlay */
+"_failed" = "невдача";
+
+/* Connection error translation. iOS quick connect widget: text shown on error. */
+"_connection_failed" = "Збій з'єднання";
+
+/* iOS status view */
+"_security" = "Безпека";
+
+/* iOS status view */
+"_status" = "Стан";
+
+/* iOS status view */
+"_session_time" = "Час сеансу";
+
+/* iOS status view */
+"_location" = "Розташування";
+
+/* iOS status view */
+"_city" = "Місто";
+
+/* iOS status view */
+"_technical_details" = "Технічні подробиці";
+
+/* Main mac app menu item */
+"_open_app_to_log_in" = "Показати Proton VPN для входу...";
+
+/* Main mac app menu item */
+"_upgrade_to_plus" = "Покращити до Plus";
+
+/* Main mac app menu item */
+"_upgrade_for_secure_core" = "для використання Secure Core";
+
+"_switch_side_button_on" = "УВІМК";
+
+"_switch_side_button_off" = "ВИМК";
+
+/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
+"_timeout_ks_ike_descritpion" = "Інша програма може перешкоджати роботі Kill Switch. Щоб усунути цю проблему, перемкніть на протокол OpenVPN або вимкніть Kill Switch і повторіть спробу.";
+
+/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
+"_timeout_ks_ike_switch_protocol" = "Перемкнути на OpenVPN і повторити спробу";
+
+/* Disconnect notification */
+"_kill_switch_blocking_connection" = "Kill Switch блокує всі з'єднання";
+
+/* Disconnect notification */
+"_always_on_will_reconnect" = "Постійна VPN автоматично відновлюватиме з'єднання";
 
 /* MacOS: About window title */
 "_about" = "Про нас";
 
-/* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
-"_account" = "Обліковий запис";
+/* iOS setting: after this word actual version and build number are appended */
+"_version" = "Версія";
 
-/* iOS: Message explaining that deleting account closes the VPN connection */
-"_account_deletion_connection_warning" = "Видалення облікового запису завершить ваш сенс VPN.";
+/* MacOS: About window */
+"_version_current" = "Поточна версія:";
 
-/* Alert title for account deletion error */
-"_account_deletion_error" = "Помилка";
+/* MacOS: About window */
+"_release_date" = "Дата випуску:";
 
-/* MacOS: Settings -> Account: name of field. */
-"_account_plan" = "Тарифний план";
-
-/* MacOS: Settings -> Account: name of field. */
-"_account_type" = "Тип облікового запису";
+/* MacOS: About window */
+"_changelog" = "Список змін";
 
 /* MacOS: About window */
 "_acknowledgements" = "Подяки";
 
+/* Used in sign-in, sign-up and in settings */
+"_username" = "Ім'я користувача";
+
+/* Used in sign-in, sign-up */
+"_password" = "Пароль";
+
+/* Sign-up form */
+"_password_confirm" = "Підтвердити пароль";
+
+/* Show/hide password switch */
+"_show" = "ПОКАЗАТИ";
+
+/* Show/hide password switch */
+"_hide" = "ПРИХОВАТИ";
+
+/* MacOS: Login button */
+"_login" = "Увійти";
+
+/* iOS: Login button in several places */
+"_log_in" = "Увійти";
+
+/* MacOS: label in login and settings screens */
+"_remember_login" = "Запам'ятати вхід";
+
+/* MacOS: label in login and settings screens */
+"_start_on_boot" = "Запускати під час завантаження";
+
+/* MacOS: button in login screen */
+"_create_account" = "Створити обліковий запис";
+
+/* MacOS: button in login screen */
+"_need_help" = "Потрібна допомога?";
+
+/* MacOS: button in login screen */
+"_reset_password" = "Відновити пароль";
+
+/* MacOS: button in login screen */
+"_common_issues" = "Поширені проблеми з входом";
+
+/* MacOS: button in login screen */
+"_forgot_username" = "Забули ім'я користувача";
+
+/* iOS: button in login screen */
+"_forgot_password" = "Забули пароль?";
+
+/* iOS: button in login and onboarding screens */
+"_sign_up" = "Зареєструватися";
+
+/* MacOS: alert shown during login if already connected to VPN */
+"_warning_vpn_session_is_active" = "На цьому пристрої активний сеанс іншого користувача Proton VPN. Продовживши вхід, поточний сеанс завершиться. Хочете продовжити?";
+
+/* iOS: placeholder for email field in signup and email verification screens */
+"_enter_email_address" = "Введіть адресу е-пошти";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_country_code_placeholder" = "Код";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_number_placeholder" = "Введіть номер телефону";
+
+/* iOS: title of phone country code selection screen */
+"_select_phone_country_code" = "Виберіть код країни";
+
+/* iOS: placeholder in phone country code selection screen */
+"_search_phone_country_code_placeholder" = "Пошук країни";
+
+/* iOS: button for switching from sign-up to sign-in screen */
+"_already_have_account" = "У мене вже є обліковий запис";
+
+/* iOS: Button in email verification screen */
+"_get_verification_email" = "Отримати підтверджувальний лист";
+
+/* iOS: Button in SMS verification screen */
+"_get_verification_sms" = "Отримати підтверджувальне SMS";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option" = "Виберіть варіант підтвердження, щоб продовжити:";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option_top_message" = "Для запобігання зловживань, вам необхідно пройти перевірку.";
+
+/* iOS: human verification option select button */
+"_use_captcha_verification" = "Перевірити через CAPTCHA";
+
+/* iOS: human verification option select button */
+"_use_other_email_address" = "Підтвердити електронною поштою";
+
+"_use_sms_verification" = "Перевірити за допомогою SMS";
+
+/* iOS: human verification option select button */
+"_request_invitation" = "Запит ручної активації";
+
+/* iOS: placeholder for code in human verification code form */
+"_enter_verification_code" = "123 456";
+
+/* iOS: button in human verification code form */
+"_submit_verification_code" = "Відправити";
+
+/* iOS: button in human verification code form */
+"_resend_no_code" = "Не отримали код?";
+
+/* iOS: button in human verification code form */
+"_resend_code" = "Запитати новий код";
+
+/* iOS: message after human verification code resending */
+"_resend_success" = "Запитано новий код";
+
+/* iOS: link inside text under sign-up form */
+"_terms_and_conditions" = "Умови та положення";
+
+/* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
+"_terms_and_conditions_disclaimer" = "Використовуючи Proton VPN, ви приймаєте наші\n%@ та %@";
+
+/* iOS: link inside text under sign-up form */
+"_privacy_policy" = "Політика приватності";
+
+/* iOS: text in human verification code form */
+"_verification_instructions" = "Код підтвердження було надіслано вам. Будь ласка, введіть його нижче.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete" = "Налаштування завершено";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_free" = "Ви зареєструвалися з тарифним планом Proton VPN Free. Скористайтеся нагодою випробувати тарифний план Proton VPN Plus протягом 7 днів безплатно.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_plus" = "Покупка успішна. Ваш тарифний план Proton VPN Plus тепер активний.";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_title" = "Захистіть себе в мережі";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_text" = "Proton VPN відданий захисту і повазі до вашої приватності. Нашою політикою є збір найменшої необхідної кількості даних користувачів для гарантування приватності та анонімності під час роботи програми, зокрема:\n\n%@ – для забезпечення вашого входу, допомоги відновлення пароля, а також інформування про важливі службові оновлення.\n\n%@ – лише для звітів про збої та помилки.\n\nПрограма Proton VPN не обробляє будь-яку інформацію про користувачів, окрім цих даних. Ми не зберігаємо записи про вашу діяльність в мережі та будь-яку інформацію, за якою можна визначити вашу особистість. Усі зазначені вище дані зберігаються та обробляються в нашій власній системі Proton VPN, без можливості доступу будь-яких сторонніх осіб.";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_user_details" = "Ім'я користувача, адреса е-пошти";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_device_details" = "Модель вашого пристрою та версія ОС";
+
+/* iOS: data disclaimer screen button */
+"_data_disclaimer_agree" = "Прийняти та продовжити";
+
+/* iOS: Map screen title and tabbar item */
+"_map" = "Карта";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_show" = "Показати карту";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_hide" = "Приховати карту";
+
+/* Description shown together with server info icon */
+"_tor_description" = "З'єднання з мережею TOR";
+
+/* Description shown together with server info icon */
+"_p2p_description" = "Підтримує трафік P2P";
+
+/* Description shown together with server info icon */
+"_premium_description" = "Premium сервер";
+
+/* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
+"_via_country" = "через %@";
+
+/* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
+"_via" = "через";
+
+/* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
+"_server_load_percentage" = "Навантаження: %@%%";
+
+/* iOS: Home screen title, tab bar item title; MacOS: TabBar tab title; */
+"_home" = "Домівка";
+
+/* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
+"_countries" = "Країни";
+
+"_no_servers_to_show" = "Наразі немає серверів для показу.";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_plan_does_not_include_secure_core" = "Ваш тарифний план не включає функцію Secure Core.";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_learn_more_about_secure_core" = "Дізнатися більше про Secure Core";
+
+/* MacOS: placeholder for country search */
+"_search_for_country" = "Пошук країни";
+
+/* MacOS: secure core tooltip */
+"_secure_core_info" = "Забезпечує додатковий захист від компрометації VPN-сервера, спрямовуючи трафік через нашу мережу Secure Core";
+
+/* Text in warning screen before actions that will disconnect VPN */
+"_view_toggle_will_cause_disconnect" = "Перемкнувши Secure Core, ваше поточне з'єднання завершиться.";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_load" = "Навантаження сервера:";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_ip" = "IP сервера:";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_auto_assigned" = "Призначається автоматично";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_premium_server" = "Premium сервер";
+
+/* MacOS profile form: feature selection value */
+"_standard" = "Стандартний";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_p2p" = "P2P";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_tor" = "TOR";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_p2p_server" = "Сервер P2P";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_tor_server" = "Сервер Tor";
+
+/* MacOS Profiles Overview: Table column header */
+"_profile" = "Профіль";
+
+/* MacOS: menu item, profiles window main header, sidebar tab title; iOS: Profiles screen title and tabbar item title; */
+"_profiles" = "Профілі";
+
+/* iOS: table header section in profiles screen */
+"_recommended" = "Рекомендовано";
+
+/* iOS: table header section in profiles screen */
+"_my_profiles" = "Мої профілі";
+
+/* Button */
+"_save_as_profile" = "Зберегти профіль";
+
+/* Button */
+"_delete_profile" = "Видалити профіль";
+
+/* iOS: Success message on profile deletion */
+"_profile_deleted_successfully" = "Профіль було видалено";
+
+/* iOS: Error message if profile can't be deleted */
+"_profile_deletion_failed" = "Не вдається видалити профіль";
+
+/* MacOS: Buttons in several places; iOS: profile creation screen title */
+"_create_new_profile" = "Створити профіль";
+
+/* MacOS: button in profiles tab in main window */
+"_manage_profiles" = "Керувати профілями";
+
+/* MacOS: profiles window title */
+"_profiles_overview" = "Огляд профілів";
+
+/* iOS: success message after profile is saved */
+"_profile_created_successfully" = "Новий профіль збережено";
+
+/* iOS: failure message after profile is saved */
+"_profile_creation_failed" = "Не вдається створити профіль";
+
+/* iOS: success message after profile is saved */
+"_profile_edited_successfully" = "Профіль оновлено";
+
+/* MacOS menu item; MacOS Profiles tab title; */
+"_overview" = "Огляд";
+
+/* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
+"_connection" = "З'єднання";
+
 /* MacOS Profiles Overview: Table header for buttons column */
 "_action" = "Дія";
 
-/* (No Comment) */
-"_action_requires_reconnect" = "Для застосування змін необхідно перезапустити з'єднання";
+/* Used for both profile description when fastest server option is selected and Plan speed description */
+"_fastest" = "Найшвидший";
+
+/* Profile create/change form */
+"_fastest_available_server" = "Найшвидший доступний сервер";
+
+/* iOS: Predefined profile with fastest connection */
+"_fastest_connection" = "Найшвидше з'єднання";
+
+/* Profile create/change form and other places describing profile */
+"_random" = "Випадковий";
+
+/* Profile create/change form */
+"_random_available_server" = "Випадковий доступний сервер";
+
+/* iOS: Predefined profile with random server */
+"_random_connection" = "Випадкове з'єднання";
+
+/* Profile create/change form */
+"_different_server_each_time" = "Щоразу інший сервер";
+
+/* Text used when no active server information is available */
+"_no_description_available" = "Опис недоступний";
+
+"_create_profile" = "Створити профіль";
+
+/* Profile create/change form */
+"_profile_settings" = "Налаштування профілю";
+
+/* Profile create/change form */
+"_connection_settings" = "Параметри з'єднання";
+
+/* Profile create/change form */
+"_name" = "Назва";
+
+/* Profile create/change form */
+"_enter_profile_name" = "Введіть назву профілю";
+
+/* Profile create/change form */
+"_color" = "Колір";
+
+/* Profile create/change form */
+"_make_default_profile" = "Зробити типовим профілем";
+
+/* Profile create/change form */
+"_default_profile_tooltip" = "Кнопка \"Швидке з'єднання\" використовує типовий профіль.\n";
+
+"_feature" = "Функція";
+
+/* Profile create/change form */
+"_use_secure_core" = "Secure Core";
+
+/* Profile create/change form */
+"_select_country" = "Вибір країни";
+
+/* Profile create/change form */
+"_server" = "Сервер";
+
+/* Profile create/change form */
+"_select_server" = "Вибір сервера";
+
+/* Error in profile create/change form */
+"_profile_name_is_required" = "Введіть назву";
+
+/* Error in profile create/change form */
+"_profile_name_is_too_long" = "Максимальна довжина назви профілю 25 символів";
+
+/* Error when user hasn't selected profile country */
+"_country_selection_is_required" = "Виберіть країну";
+
+/* Error when user hasn't selected profile server */
+"_server_selection_is_required" = "Виберіть сервер";
+
+"_profile_name_needs_to_be_unique" = "Профіль з такою назвою вже існує";
+
+/* MacOS: profile creation cancel alert text */
+"_current_selection_will_be_lost" = "Продовживши, ви втратите свій вибір. Хочете продовжити?";
+
+/* iOS: new profkle can't be created because not all required fields are filled */
+"_check_if_fields_present" = "Будь ласка, перевірте, чи всі поля заповнені";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_header" = "Видалити профіль";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_warning" = "Профіль буде остаточно видалено. Хочете продовжити?";
+
+/* iOS: new profile screen */
+"_select_profile_color" = "Виберіть колір профілю";
+
+/* Plan speed */
+"_plan_speed_medium" = "Середня швидкість";
+
+/* Plan speed */
+"_plan_speed_high" = "Висока швидкість";
+
+"_plan_speed_fastest" = "Найвища швидкість";
+
+/* Unknown error that has no better description */
+"_error_internal_error" = "Внутрішня помилка API";
+
+/* VPN session is active error */
+"_error_vpn_session_is_active" = "Сеанс Proton VPN активний";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_missing" = "Не знайдено облікових даних користувача. Не вдається увійти";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_expired" = "Термін дії облікових даних користувача завершився. Будь ласка, увійдіть";
+
+/* VPN credentials can't be loaded error */
+"_error_vpn_credentials_missing" = "Облікові дані VPN відсутні у в'язці ключів";
+
+/* Form validation error */
+"_error_field_required" = "Це поле обов'язкове";
+
+"_error_field_email_wrong_format" = "Адреса е-пошти має неправильний формат";
+
+"_error_field_passwords_dont_match" = "Паролі відрізняються";
+
+/* Human validation failed */
+"_error_user_failed_human_validation" = "Ми не змогли перевірити, що ви людина. Спробуйте знову, або придбайте тарифний план преміум.";
+
+/* Error decoding an object */
+"_error_decode" = "Не вдалося декодувати архівні дані в класі: %@";
+
+/* Internal application error */
+"_error_email_verification_disabled" = "Перевірка електронною поштою тимчасово вимкнена";
+
+/* Error writing to system keychain */
+"_error_keychain_write" = "Proton не зміг встановити з'єднання з вашим пристроєм. Спробуйте знову пізніше.";
+
+/* Error when try to parse modulus signature */
+"_error_modulus_signature" = "Підпис модуля порожній";
+
+/* Error when generate srp clint */
+"_error_generate_srp" = "Не вдалося генерувати SRP";
+
+/* Error when try to hash password */
+"_error_hash_password" = "Неможливо хешувати пароль користувача";
+
+/* Error try to restore user from the session */
+"_error_fetch_session" = "Неможливо знайти користувача з сеансу";
+
+/* Network error */
+"_ne_request_timed_out" = "Час очікування мережі завершився";
+
+/* Network error */
+"_ne_unable_to_connect_to_host" = "Послуга недоступна";
+
+/* Network error */
+"_ne_network_connection_lost" = "Зв'язок з мережею втрачено";
+
+/* Network error */
+"_ne_not_connected_to_the_internet" = "Немає з'єднання з інтернетом";
+
+/* Network error */
+"_ne_couldnt_reach_server" = "Не вдалося зв'язатися з серверами Proton";
+
+/* API error */
+"_ae_wrong_login_credentials" = "Неправильне ім'я користувача або пароль";
+
+/* API error */
+"_ae_vpn_info_not_received" = "Не вдається отримати інформацію про VPN";
+
+/* Error when try to parse the server info */
+"_error_server_info_parser" = "Неможливо проаналізувати інформацію сервера";
+
+/* Error when try to parse the partner info */
+"_error_partner_info_parser" = "Неможливо проаналізувати інформацію про партнера";
+
+/* Default error when vpn properties fetch failed */
+"_error_vpn_properties" = "Неможливо отримати властивості VPN!";
+
+/* Parsing error */
+"_error_session_count_parser" = "Неможливо проаналізувати кількість сеансів";
+
+/* Parsing error */
+"_error_loads" = "Неможливо оновити навантаженість сервера";
+
+/* API error */
+"_error_api_offline" = "Proton VPN API зараз офлайн";
+
+/* Error when try to parse subscription info */
+"_error_subscription_parser" = "Неможливо проаналізувати інформацію про передплату";
+
+/* Error when try to parse verification methods */
+"_error_verification_methods_parser" = "Неможливо проаналізувати способи перевірки";
+
+/* Keychain error */
+"_error_keychain_fetch" = "Помилка В'язки ключів.";
+
+/* Error when the app fails to create a user */
+"_error_user_creation" = "Не вдалося створити обліковий запис";
+
+/* General title for several error alerts */
+"_error_unknown_title" = "Невідома помилка";
+
+/* Delinquent user alert */
+"_delinquent_user_title" = "Несплачений рахунок";
+
+/* Delinquent user alert */
+"_delinquent_user_description" = "Ваш обліковий запис має протермінований рахунок. Будь ласка, сплатіть всі неоплачені рахунки на account.protonvpn.com";
+
+/* Generic sign in error */
+"_error_sign_in_again" = "Перепрошуємо, щось пішло не так. Повторіть спробу входу.";
+
+"_p2p_detected_popup_title" = "P2P-трафік не дозволений на цьому сервері";
+
+"_p2p_detected_popup_body" = "Ваше з'єднання було вимкнено, тому що ви використовуєте сервер, який не підтримує трафік P2P (peer-to-peer). P2P не підтримується на безплатних серверах, або на серверах з номером 100 і більше.";
+
+"_p2p_forwarded_popup_title" = "З'єднання переспрямовано";
+
+/* Under maintenance alert */
+"_server_under_maintenance" = "Сервер обслуговується";
+
+/* macOS: plan upgrade required alert */
+"_upgrade_plan_to_access_server" = "Перепрошуємо, але цей сервер недоступний для вашого тарифного плану. Якщо ви бажаєте отримати доступ до інших серверів, розгляньте можливість підвищення рівня передплати.";
+
+/* Under maintenance alert */
+"_all_servers_in_country_under_maintenance" = "Усі сервери в цій країні на обслуговуванні. Будь ласка, оберіть іншу країну.";
+
+"_unsecure_wifi" = "Виявлено незахищене з'єднання WiFi";
+
+"_unsecure_wifi_learn_more" = "Докладніше";
+
+"_unsecure_wifi_title" = "Виявлено незахищений WiFi";
+
+"_maintenance_on_server_detected_title" = "VPN-сервер зараз обслуговується";
+
+"_maintenance_on_server_detected_subtitle" = "Сервер, до якого ви були під'єднані, зараз обслуговується";
+
+"_maintenance_on_server_detected_description" = "Повторне підключення до найшвидшого доступного сервера.";
+
+/* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
+"_reconnect_on_settings_change_body" = "Для застосування змін необхідно перезапустити з'єднання.";
+
+/* Under maintenance alert */
+"_country_servers_under_maintenance" = "Сервери країни %@ на обслуговуванні";
+
+/* Under maintenance alert */
+"_all_servers_in_profile_under_maintenance" = "Сервер профілю на обслуговуванні";
+
+/* Under maintenance alert */
+"_all_servers_under_maintenance" = "Усі сервери на обслуговуванні. Зазвичай це означає наявність технічних проблем на стороні Proton VPN, або обмежень вашої мережі.";
+
+"_p2p_forwarded_popup_body" = "Ваше з'єднання було автоматично переспрямоване через інший сервер, оскільки деякі сервери не підтримують трафік P2P. Це може зменшити швидкість з'єднання. Будь ласка, використовуйте сервери з міткою P2P, щоб уникнути переспрямування.";
+
+"_p2p_forwarded_popup_body_p1" = "Ваше з'єднання було автоматично переспрямоване через інший сервер, оскільки певні сервери не підтримують трафік P2P. Це може зменшити швидкість з'єднання. Будь ласка, використовуйте сервери з";
+
+"_p2p_forwarded_popup_body_p2" = "піктограмою, щоб уникнути переспрямування.";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_title" = "Помилка з'єднання";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_body" = "Вашому пристрою не вдалося припинити попередній сеанс VPN. Для встановлення нового VPN-з'єднання вам необхідно перезапустити свій пристрій.";
+
+"_update_required" = "Необхідне оновлення";
+
+"_update_required_no_longer_supported" = "Ця версія Proton VPN більше не підтримується. Щоб продовжити користуватися застосунком оновіть його.";
+
+/* Secondary button title in the App update required alert  */
+"_update_required_support" = "Зв'язатися з підтримкою";
+
+/* Primary button title in the App update required alert  */
+"_update_required_update" = "Оновити";
+
+"_invalid_refresh_token_please_login" = "Ви деякий час не користувалися Proton VPN. Будь ласка, увійдіть.";
+
+"_error_mitm_title" = "Незахищене з'єднання";
+
+"_error_mitm_description" = "Не вдалося перевірити сертифікат TLS під час спроби з'єднання з Proton VPN API. Ваше інтернет-з'єднання може відстежуватися. Для захисту ваших даних ми не дозволяємо програмі отримувати доступ до Proton VPN API.\nЩоб увійти чи отримати доступ до свого облікового запису, змініть мережу і спробуйте з'єднатися знову.";
+
+"_error_mitm_vpn_description" = "Не вдалося перевірити сертифікат TLS під час спроби з'єднання з VPN сервером. Ваше інтернет-з'єднання може відстежуватися. Для захисту ваших даних ми не дозволяємо програмі отримувати доступ до цього сервера VPN.\nБудь ласка, виберіть інший сервер.";
+
+/* Internal error message when there is a problem with initializing tls and connection cannot be established. */
+"_error_tls_initialisation" = "Помилка ініціалізації TLS";
+
+/* Internal error message when there is a problem with server certificate and connection cannot be established. */
+"_error_tls_server_verification" = "Неможливо перевірити сертифікат сервера.";
+
+/* Mac: neagent help screen */
+"_neagent_description" = "Ви можете отримати запит про надання %@\nдля з'єднання зі службою Proton VPN. Якщо запит з'явиться,\nвведіть свій %@ %@ і натисніть ‘%@’ %@.";
+
+/* Mac: neagent help screen */
+"_neagent_password" = "пароль облікового запису комп'ютера";
+
+/* Mac: neagent help screen */
+"_mac_password" = "Пароль Mac";
+
+/* Mac: neagent help screen */
+"_neagent_first_step" = "(1)";
+
+/* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
+"_neagent_always_allow" = "Завжди дозволяти";
+
+/* Mac: neagent help screen */
+"_neagent_second_step" = "(2)";
+
+/* Button in several different alerts */
+"_got_it" = "Зрозуміло!";
+
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_title" = "Зміна тарифного плану недоступна в програмі";
+
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_body" = "Вашу передплату Proton VPN неможливо змінити в застосунку. Для цього перейдіть на account.protonvpn.com.";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_title" = "Очистити дані програми";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_body" = "Усі дані Proton VPN будуть видалені та виконається вихід із застосунку. Бажаєте продовжити?";
+
+/* MacOS: killswitch blocking alert button */
+"_kill_switch_disable" = "Вимкнути Kill Switch";
+
+/* MacOS: Settings screen title */
+"_preferences" = "Параметри";
+
+/* iOS: Settings screen title and tab title */
+"_settings" = "Налаштування";
+
+/* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
+"_account" = "Обліковий запис";
+
+/* Alert title for account deletion error */
+"_account_deletion_error" = "Помилка";
+
+/* iOS: Message explaining that deleting account closes the VPN connection */
+"_account_deletion_connection_warning" = "Видалення облікового запису завершить ваш сенс VPN.";
+
+/* MacOS: General tab in setting window */
+"_general" = "Загальні";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_type" = "Тип облікового запису";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_plan" = "Тарифний план";
+
+"_manage_subscription_on_web" = "Керуйте своєю передплатою на панелі керування вебсайту";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_kill_switch" = "Kill Switch";
+
+/* MacOS: Settings -> Connection. Kill switch functionality description. */
+"_kill_switch_tooltip" = "Блокує весь мережевий трафік у випадку втрати VPN-тунелю.";
+
+/* iOS Settings: toggle name */
+"_always_on_vpn" = "Постійна VPN";
+
+/* iOS Settinsg screen: always-on description under the switch */
+"_always_on_vpn_tooltip_ios" = "Постійна VPN швидко й автоматично відновлює захищене VPN-з'єднання. Для вашої безпеки ця функція завжди увімкнена.";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_auto_connect" = "Автоз'єднання";
+
+/* MacOS: Settings -> Connection: description. */
+"_auto_connect_tooltip" = "Під час запуску програми ви під'єднаєтеся до вибраного профілю";
+
+/* MacOS: Settings -> Connection: description. */
+"_quick_connect_tooltip" = "Кнопка \"Швидке з'єднання\" під'єднає вас до вибраного профілю";
+
+/* MacOS: Settings -> General: name of field. */
+"_start_minimized" = "Запускати згорнутим";
+
+/* MacOS: Settings -> General: name of field. */
+"_system_notifications" = "Системні сповіщення";
+
+/* MacOS: Settings -> General: name of field. */
+"_early_access" = "Ранній доступ";
+
+/* MacOS: Settings -> General: description. */
+"_early_access_tooltip" = "Першими отримуйте найсвіжіші оновлення. Зауважте, що ранні версії можуть бути менш стабільними.";
+
+/* MacOS: Settings -> General: name of field. */
+"_unprotected_network" = "Сповіщати про незахищені мережі";
+
+/* MacOS: Settings -> General: description */
+"_unprotected_network_tooltip" = "Отримувати сповіщення, коли Proton VPN виявляє, що ви під'єдналися до незахищеної мережі.";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_dns_leak_protection" = "Захист від витоку DNS";
+
+/* MacOS: Settings -> Connection: description. */
+"_dns_leak_protection_tooltip" = "Запобігання витоку подробиць DNS-запитів третім сторонам. Завжди увімкнено.";
+
+/* iOS Settings: table section header */
+"_security_options" = "Налаштування безпеки";
+
+/* iOS Settings -> Connection: name of field. */
+"_subscription_plan" = "Тарифний план";
+
+/* iOS plan selection: header */
+"_choose_plan" = "Оберіть передплату";
+
+"_protocol" = "Протокол";
+
+/* iOS Settings -> Protocol: screen title */
+"_vpn_protocol" = "VPN протокол";
+
+"_openvpn" = "OpenVPN";
+
+/* iOS Settings -> Protocol: IKEv2 option */
+"_ikev2" = "IKEv2";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: TCP option */
+"_tcp" = "TCP";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: UDP option */
+"_udp" = "UDP";
+
+/* iOS Settings -> Protocol -> WireGuard: TLS option */
+"_tls" = "TLS";
+
+/* iOS Settings -> Protocol: WireGuard option */
+"_wireguard" = "WireGuard";
+
+/* Settings -> Protocol: WireGuard TLS Option called "Stealth". Should not be translated. */
+"_wireguard_tls" = "Stealth";
+
+/* MacOS menu item; iOS setting screen item */
+"_view_logs" = "Переглянути журнал";
+
+/* iOS logs screen title */
+"_logs" = "Журнали";
+
+/* iOS Settings: applications logs row */
+"_application_logs" = "Журнал програми";
+
+/* iOS Settings: OpenVPN logs row */
+"_open_vpn_logs" = "Журнал OpenVPN";
+
+/* iOS Settings: WireGuard logs row */
+"_wireguard_logs" = "Журнал WireGuard";
 
 /* iOS widget help screen: title */
 "_activate_widget" = "Активувати віджет";
@@ -43,536 +1032,37 @@
 /* iOS widget help screen: text */
 "_activate_widget_step_3" = "Додайте Proton VPN до списку активних віджетів.";
 
-/* Plan information */
-"_adblocker_netshield_feature" = "Блокувальник реклами (NetShield)";
+/* Report bug screen title; iOS settings screen: item; */
+"_report_bug" = "Повідомити про проблему";
 
-/* Section title in Settings */
-"_advanced" = "Додатково";
-
-/* Plan information */
-"_advanced_features" = "+ Розширені можливості";
-
-/* API error */
-"_ae_vpn_info_not_received" = "Не вдається отримати інформацію про VPN";
-
-/* API error */
-"_ae_wrong_login_credentials" = "Неправильне ім'я користувача або пароль";
-
-/* Account plan description */
-"_all_countries" = "60+ країн";
-
-/* Under maintenance alert */
-"_all_servers_in_country_under_maintenance" = "Усі сервери в цій країні на обслуговуванні. Будь ласка, оберіть іншу країну.";
-
-/* Under maintenance alert */
-"_all_servers_in_profile_under_maintenance" = "Сервер профілю на обслуговуванні";
-
-/* Under maintenance alert */
-"_all_servers_under_maintenance" = "Усі сервери на обслуговуванні. Зазвичай це означає наявність технічних проблем на стороні Proton VPN, або обмежень вашої мережі.";
-
-/* (No Comment) */
-"_allow" = "Дозволити";
-
-/* (No Comment) */
-"_allow_lan_description" = "Щоб дозволити LAN-доступ, необхідно вимкнути Kill Switch.\n\nПродовжити?";
-
-/* (No Comment) */
-"_allow_lan_info" = "Дозволяє обійти VPN і з'єднатися з пристроями у вашій локальній мережі, наприклад принтером.";
-
-/* (No Comment) */
-"_allow_lan_note" = "Зверніть увагу, що для застосування змін необхідно перезапустити з'єднання";
-
-/* (No Comment) */
 "_allow_lan_title" = "Дозволити LAN-з'єднання";
 
-/* iOS: button for switching from sign-up to sign-in screen */
-"_already_have_account" = "У мене вже є обліковий запис";
+"_allow_lan_info" = "Дозволяє обійти VPN і з'єднатися з пристроями у вашій локальній мережі, наприклад принтером.";
 
-/* iOS Settings: toggle name */
-"_always_on_vpn" = "Постійна VPN";
+"_allow_lan_description" = "Щоб дозволити LAN-доступ, необхідно вимкнути Kill Switch.\n\nПродовжити?";
 
-/* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "Постійна VPN швидко й автоматично відновлює захищене VPN-з'єднання. Для вашої безпеки ця функція завжди увімкнена.";
+"_allow_lan_note" = "Зверніть увагу, що для застосування змін необхідно перезапустити з'єднання";
 
-/* Disconnect notification */
-"_always_on_will_reconnect" = "Постійна VPN автоматично відновлюватиме з'єднання";
+/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_title" = "Увімкнути Kill Switch?";
 
-/* iOS Settings: applications logs row */
-"_application_logs" = "Журнал програми";
-
-/* (No Comment) */
-"_applying_settings_" = "Застосування параметрів";
-
-/* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_auto_assigned" = "Призначається автоматично";
-
-/* MacOS: Settings -> Connection: name of field. */
-"_auto_connect" = "Автоз'єднання";
-
-/* MacOS: Settings -> Connection: description. */
-"_auto_connect_tooltip" = "Під час запуску програми ви під'єднаєтеся до вибраного профілю";
-
-/* Battery usages screen description */
-"_battery_description" = "Увесь трафік вашого телефона спрямовуватиметься через OpenVPN, тому iOS призначатиме для Proton VPN витрату заряду батареї іншими програмами.";
-
-/* Battery usage More info button text */
-"_battery_more" = "Хочете дізнатися більше?";
-
-/* iOS settings -> Battery usage; Title of battery usage screen; */
-"_battery_title" = "Використання батареї";
-
-/* Common word */
-"_cancel" = "Скасувати";
-
-/* (No Comment) */
-"_cancel_reconnection" = "Це скасує всі спроби повторного з'єднання і залишить вас від'єднаними";
-
-/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
-"_change_protocol_disconnect_warning" = "Зміна протоколів завершить ваш поточний сеанс VPN.";
-
-/* Changing settings title */
-"_change_settings" = "Змінити параметри";
-
-/* MacOS: About window */
-"_changelog" = "Список змін";
-
-/* iOS: new profkle can't be created because not all required fields are filled */
-"_check_if_fields_present" = "Будь ласка, перевірте, чи всі поля заповнені";
-
-/* iOS plan selection: header */
-"_choose_plan" = "Оберіть передплату";
-
-/* iOS status view */
-"_city" = "Місто";
-
-/* Main mac app menu item */
-"_clear_application_data" = "Очистити дані програми";
-
-/* Common word */
-"_close" = "Закрити";
-
-/* (No Comment) */
-"_collapse_list_of_servers" = "Згорнути список серверів";
-
-/* Profile create/change form */
-"_color" = "Колір";
-
-/* MacOS: button in login screen */
-"_common_issues" = "Поширені проблеми з входом";
-
-/* Common word */
-"_connect" = "З'єднатися";
-
-/* Common word */
-"_connected" = "Під'єднано";
-
-/* iOS status view */
-"_connected_to" = "З'єднано з";
-
-/* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
-"_connected_to_vpn" = "З'єднано з %@";
-
-/* iOS: main button in tabbar during connecting to vpn phase */
-"_connecting" = "З'єднання";
-
-/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
-"_connecting_to" = "З'єднання з %@";
-
-/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
-"_connecting_vpn" = "З'єднання %@";
-
-/* (No Comment) */
-"_connectingDotDotDot" = "З'єднання...";
-
-/* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
-"_connection" = "З'єднання";
-
-/* Connection error translation. iOS quick connect widget: text shown on error. */
-"_connection_failed" = "Збій з'єднання";
-
-/* Profile create/change form */
-"_connection_settings" = "Параметри з'єднання";
-
-/* macOS: Text on connection overlay shown after connection timed out */
-"_connection_timed_out" = "Час очікування з'єднання минув";
-
-/* Text that should be bold in _connection_timed_out string */
-"_connection_timed_out_bold" = "час очікування завершився";
-
-/* Text addressing to contact costumer support on several sites of the app */
-"_contact_our_support" = "Зв'язатися з підтримкою";
-
-/* (No Comment) */
-"_continue" = "Продовжити";
-
-/* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
-"_countries" = "Країни";
-
-/* iOS: countries list section header */
-"_countries_free" = "Безплатні країни";
-
-/* iOS: countries list section header */
-"_countries_premium" = "Преміум країни";
-
-/* MacOS app tour: countries list description */
-"_countries_tour_description" = "Виберіть, яку країну і сервер ви бажаєте використовувати для вашої кінцевої IP-адреси.";
-
-/* MacOS app tour: countries list title */
-"_countries_tour_title" = "Країни";
-
-/* Profile create/edit menu */
-"_country" = "Країна";
-
-/* Error when user hasn't selected profile country */
-"_country_selection_is_required" = "Виберіть країну";
-
-/* Under maintenance alert */
-"_country_servers_under_maintenance" = "Сервери країни %@ на обслуговуванні";
-
-/* MacOS: button in login screen */
-"_create_account" = "Створити обліковий запис";
-
-/* MacOS: Buttons in several places; iOS: profile creation screen title */
-"_create_new_profile" = "Створити профіль";
-
-/* (No Comment) */
-"_create_profile" = "Створити профіль";
-
-/* MacOS: profile creation cancel alert text */
-"_current_selection_will_be_lost" = "Продовживши, ви втратите свій вибір. Хочете продовжити?";
-
-/* iOS: data disclaimer screen button */
-"_data_disclaimer_agree" = "Погодитися та продовжити";
-
-/* iOS: data disclaimer screen */
-"_data_disclaimer_device_details" = "Модель вашого пристрою та версія ОС";
-
-/* iOS: data disclaimer screen */
-"_data_disclaimer_text" = "Proton VPN відданий захисту і повазі до вашої приватності. Нашою політикою є збір найменшої необхідної кількості даних користувачів для гарантування приватності та анонімності під час роботи програми, зокрема:\n\n%@ – для забезпечення вашого входу, допомоги відновлення пароля, а також інформування про важливі службові оновлення.\n\n%@ – лише для звітів про збої та помилки.\n\nПрограма Proton VPN не обробляє будь-яку інформацію про користувачів, окрім цих даних. Ми не зберігаємо записи про вашу діяльність в мережі та будь-яку інформацію, за якою можна визначити вашу особистість. Усі зазначені вище дані зберігаються та обробляються в нашій власній системі Proton VPN, без можливості доступу будь-яких сторонніх осіб.";
-
-/* iOS: data disclaimer screen */
-"_data_disclaimer_title" = "Захистіть себе в мережі";
-
-/* iOS: data disclaimer screen */
-"_data_disclaimer_user_details" = "Ім'я користувача, адреса е-пошти";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "Кнопка \"Швидке з'єднання\" використовує типовий профіль.\n";
-
-/* Common word */
-"_delete" = "Видалити";
-
-/* MacOS: clear application data alert */
-"_delete_application_data_popup_body" = "Усі дані Proton VPN будуть видалені та виконається вихід із застосунку. Бажаєте продовжити?";
-
-/* MacOS: clear application data alert */
-"_delete_application_data_popup_title" = "Очистити дані програми";
-
-/* Button */
-"_delete_profile" = "Видалити профіль";
-
-/* MacOS: profile deletion warning */
-"_delete_profile_header" = "Видалити профіль";
-
-/* MacOS: profile deletion warning */
-"_delete_profile_warning" = "Профіль буде остаточно видалено. Хочете продовжити?";
-
-/* (No Comment) */
-"_delinquent_description" = "Ви зможете знову отримати доступ до преміум функцій після оплати.";
-
-/* (No Comment) */
-"_delinquent_reconnection_description" = "Ви зможете знову отримати доступ до преміумфункцій після оплати. А зараз ми встановлюємо з'єднання з найшвидшим БЕЗПЛАТНИМ сервером.";
-
-/* (No Comment) */
-"_delinquent_title" = "У вашому обліковому записі VPN є несплачені рахунки";
-
-/* Delinquent user alert */
-"_delinquent_user_description" = "Ваш обліковий запис має протермінований рахунок. Будь ласка, сплатіть всі неоплачені рахунки на account.protonvpn.com";
-
-/* Delinquent user alert */
-"_delinquent_user_title" = "Несплачений рахунок";
-
-/* Profile create/change form */
-"_different_server_each_time" = "Щоразу інший сервер";
-
-/* Button in some alerts */
-"_disable" = "Вимкнути";
-
-/* Common word */
-"_disabled" = "Вимкнено";
-
-/* Common word */
-"_disconnect" = "Від'єднати";
-
-/* Common word */
-"_disconnected" = "Від'єднано";
-
-/* Status of VPN connection reported by Siri */
-"_disconnecting" = "Роз'єднання";
-
-/* iOS onboarding button to check app without logging in */
-"_discover_the_app" = "Ознайомитися з програмою";
-
-/* MacOS: Settings -> Connection: name of field. */
-"_dns_leak_protection" = "Захист від витоку DNS";
-
-/* MacOS: Settings -> Connection: description. */
-"_dns_leak_protection_tooltip" = "Запобігання витоку подробиць DNS-запитів третім сторонам. Завжди увімкнено.";
-
-/* Alert message during In App Purchase */
-"_do_you_want_to_activate_subscription_for" = "Ви хочете активувати придбану передплату для ";
-
-/* Common word */
-"_done" = "Виконано";
-
-/* (No Comment) */
-"_dw-partner-2022_partners_title" = "Наші партнери";
-
-/* MacOS: Settings -> General: name of field. */
-"_early_access" = "Ранній доступ";
-
-/* MacOS: Settings -> General: description. */
-"_early_access_tooltip" = "Першими отримуйте найсвіжіші оновлення. Зауважте, що ранні версії можуть бути менш стабільними.";
-
-/* Common word */
-"_edit" = "Редагувати";
-
-/* Common word */
-"_enabled" = "Увімкнено";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "Завершити знайомство";
-
-/* %@ is always 'PLUS' e.g. ENJOY PLUS FOR FREE! */
-"_enjoy_for_free" = "Насолоджуйтеся роботою %@ безплатно!";
-
-/* iOS: placeholder for email field in signup and email verification screens */
-"_enter_email_address" = "Введіть адресу е-пошти";
-
-/* Profile create/change form */
-"_enter_profile_name" = "Введіть назву профілю";
-
-/* API error */
-"_error_api_offline" = "Proton VPN API зараз офлайн";
-
-/* Error decoding an object */
-"_error_decode" = "Не вдалося декодувати архівні дані в класі: %@";
-
-/* Internal application error */
-"_error_email_verification_disabled" = "Перевірка електронною поштою тимчасово вимкнена";
-
-/* Error try to restore user from the session */
-"_error_fetch_session" = "Неможливо знайти користувача з сеансу";
-
-/* (No Comment) */
-"_error_field_email_wrong_format" = "Адреса е-пошти має неправильний формат";
-
-/* (No Comment) */
-"_error_field_passwords_dont_match" = "Паролі відрізняються";
-
-/* Form validation error */
-"_error_field_required" = "Це поле обов'язкове";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "Не вдалося генерувати SRP";
-
-/* Error when try to hash password */
-"_error_hash_password" = "Неможливо хешувати пароль користувача";
-
-/* Unknown error that has no better description */
-"_error_internal_error" = "Внутрішня помилка API";
-
-/* Keychain error */
-"_error_keychain_fetch" = "Помилка В'язки ключів.";
-
-/* Error writing to system keychain */
-"_error_keychain_write" = "Proton не зміг встановити з'єднання з вашим пристроєм. Спробуйте знову пізніше.";
-
-/* Parsing error */
-"_error_loads" = "Неможливо оновити навантаженість сервера";
-
-/* (No Comment) */
-"_error_mitm_description" = "Не вдалося перевірити сертифікат TLS під час спроби з'єднання з Proton VPN API. Ваше інтернет-з'єднання може відстежуватися. Для захисту ваших даних ми не дозволяємо програмі отримувати доступ до Proton VPN API.\nЩоб увійти чи отримати доступ до свого облікового запису, змініть мережу і спробуйте з'єднатися знову.";
-
-/* (No Comment) */
-"_error_mitm_title" = "Незахищене з'єднання";
-
-/* (No Comment) */
-"_error_mitm_vpn_description" = "Не вдалося перевірити сертифікат TLS під час спроби з'єднання з VPN сервером. Ваше інтернет-з'єднання може відстежуватися. Для захисту ваших даних ми не дозволяємо програмі отримувати доступ до цього сервера VPN.\nБудь ласка, виберіть інший сервер.";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "Підпис модуля порожній";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "Неможливо проаналізувати інформацію про партнера";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "Неможливо проаналізувати інформацію сервера";
-
-/* Parsing error */
-"_error_session_count_parser" = "Неможливо проаналізувати кількість сеансів";
-
-/* Generic sign in error */
-"_error_sign_in_again" = "Перепрошуємо, щось пішло не так. Повторіть спробу входу.";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "Неможливо проаналізувати інформацію про передплату";
-
-/* Internal error message when there is a problem with initializing tls and connection cannot be established. */
-"_error_tls_initialisation" = "Помилка ініціалізації TLS";
-
-/* Internal error message when there is a problem with server certificate and connection cannot be established. */
-"_error_tls_server_verification" = "Неможливо перевірити сертифікат сервера.";
-
-/* General title for several error alerts */
-"_error_unknown_title" = "Невідома помилка";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "Не вдалося створити обліковий запис";
-
-/* VPN credentials can't be loaded error */
-"_error_user_credentials_expired" = "Термін дії облікових даних користувача завершився. Будь ласка, увійдіть";
-
-/* VPN credentials can't be loaded error */
-"_error_user_credentials_missing" = "Не знайдено облікових даних користувача. Не вдається увійти";
-
-/* Human validation failed */
-"_error_user_failed_human_validation" = "Ми не змогли перевірити, що ви людина. Спробуйте знову, або придбайте тарифний план преміум.";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "Неможливо проаналізувати способи перевірки";
-
-/* VPN credentials can't be loaded error */
-"_error_vpn_credentials_missing" = "Облікові дані VPN відсутні у в'язці ключів";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "Неможливо отримати властивості VPN!";
-
-/* VPN session is active error */
-"_error_vpn_session_is_active" = "Сеанс Proton VPN активний";
-
-/* Description of the expand/collapse button used by accessibility Voice Over */
-"_expand_list_of_servers" = "Розгорнути список серверів";
-
-/* MAC: is inserted into _free_trial_expired_title insteadof %@ */
-"_expired" = "ПРОТЕРМІНОВАНО";
-
-/* iOS: Table header in settings screen */
-"_extensions" = "Розширення";
-
-/* MacOS: connecting overlay */
-"_failed" = "невдача";
-
-/* Used for both profile description when fastest server option is selected and Plan speed description */
-"_fastest" = "Найшвидший";
-
-/* Profile create/change form */
-"_fastest_available_server" = "Найшвидший доступний сервер";
-
-/* iOS: Predefined profile with fastest connection */
-"_fastest_connection" = "Найшвидше з'єднання";
-
-/* (No Comment) */
-"_feature" = "Функція";
-
-/* iOS plan feature */
-"_feature_blocked_content" = "Доступ до заблокованого вмісту";
-
-/* (No Comment) */
-"_feature_bt" = "Підтримка BitTorrent/обміну файлами";
-
-/* iOS plan feature */
-"_feature_connections" = "Одночасних VPN-з'єднань";
-
-/* (No Comment) */
-"_feature_free_servers" = "Безплатні сервери";
-
-/* (No Comment) */
-"_feature_free_servers_description" = "Безпека та приватність для кожного. Безплатні сервери не мають обмежень за обсягом даних, і ми ніколи навмисно не сповільнюватимемо швидкість вашого вебперегляду.";
-
-/* (No Comment) */
-"_feature_p2p_description" = "Ці сервери забезпечують найкращу швидкодію для BitTorrent та обміну файлами.";
-
-/* iOS plan feature */
-"_feature_secure_streaming" = "Захищена трансляція";
-
-/* iOS plan feature */
-"_feature_server_count" = "З'єднатися з серверами в";
-
-/* (No Comment) */
-"_feature_smart_routing_description" = "Ця технологія дозволяє Proton VPN забезпечити вищу швидкість та безпеку у країнах з ускладненим обслуговуванням.";
-
-/* iOS plan feature */
-"_feature_speed" = "Швидкість";
-
-/* (No Comment) */
-"_feature_streaming_description" = "PLUS сервери підтримують потокове передавання (Netflix, Disney+ тощо) звідусіль у світі.";
-
-/* iOS plan feature */
-"_feature_tor" = "Tor через VPN";
-
-/* (No Comment) */
-"_feature_tor_description" = "Спрямовуйте свій інтернет-трафік через мережу Tor. Повільніше, але приватніше.";
-
-/* (No Comment) */
-"_features_title" = "Функції";
-
-/* (No Comment) */
-"_force_upgrade_message" = "Версія застосунку Proton VPN, якою ви зараз користуєтесь, більше не підтримується. Будь ласка, оновіть його до найновішої версії.";
-
-/* (No Comment) */
-"_force_upgrade_title" = "Необхідно покращити програму";
-
-/* iOS: button in login screen */
-"_forgot_password" = "Забули пароль?";
-
-/* MacOS: button in login screen */
-"_forgot_username" = "Забули ім'я користувача";
-
-/* Account plan description */
-"_free_countries" = "3 країни";
-
-/* iOS: section header in countries list */
-"_free_servers" = "Безплатні сервери";
-
-/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
-"_free_trial_about_to_expire_description" = "Передплатіть %@ і продовжуйте використовувати ці функції:";
-
-/* MacOS: \Trial about to expire\ screen title */
-"_free_trial_about_to_expire_title" = "Безплатний пробний період завершується!";
-
-/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "Ваш обліковий запис було понижено до Proton VPN FREE.\nОсь, що ви втрачаєте з %@:";
-
-/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
-"_free_trial_expired_title" = "Ваша безплатна пробна версія %@";
-
-/* Downgrade */
-"_from_server_title" = "Із сервера:";
-
-/* MacOS: General tab in setting window */
-"_general" = "Загальні";
+/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_description" = "Активувавши Kill Switch, ви не зможете отримати доступ до пристроїв у вашій локальній мережі. \n\nПродовжити?";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Отримати %@";
 
-/* Suggest the user to upgrade account for new features */
-"_get_plus_for_feature" = "Отримайте Proton VPN Plus для доступу до цієї та інших функцій.";
+/* Account plan description */
+"_free_countries" = "3 країни";
 
-/* iOS: Button in email verification screen */
-"_get_verification_email" = "Отримати підтверджувальний лист";
+/* Account plan description */
+"_all_countries" = "60+ країн";
 
-/* iOS: Button in SMS verification screen */
-"_get_verification_sms" = "Отримати підтверджувальне SMS";
+/* %@ is a speed description e.g. Speed: Highest */
+"_speed" = "%@ швидкість";
 
-/* Button in several different alerts */
-"_got_it" = "Зрозуміло!";
-
-/* Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page. */
-"_help" = "Допомога";
-
-/* Show/hide password switch */
-"_hide" = "ПРИХОВАТИ";
+/* Value of speed in _speed */
+"_medium" = "Середнє";
 
 /* Value of speed in _speed */
 "_high" = "Висока";
@@ -580,578 +1070,143 @@
 /* Value of speed in _speed */
 "_highest" = "Найвища";
 
-/* iOS: Home screen title, tab bar item title; MacOS: TabBar tab title; */
-"_home" = "Домівка";
+/* Features of account plan */
+"_plus_plan_features" = "Сервери Plus\nSecure Core\nСервери Tor";
 
-/* Button in Kill switch error alert */
-"_ignore" = "Ігнорувати";
+/* Used instead of price for free plans. */
+"_free" = "Безплатно";
 
-/* Streaming & Features */
-"_information_title" = "Відомості";
-
-/* MacOS: connecting overlay */
-"_initializing_connection" = "Ініціалізація з'єднання...";
-
-/* (No Comment) */
-"_invalid_refresh_token_please_login" = "Ви деякий час не користувалися Proton VPN. Будь ласка, увійдіть.";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Від вчених та інженерів, які створили Proton Mail, ласкаво просимо до безпечнішого та приватнішого інтернету.";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Вітаємо у кращому інтернеті";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page2_description" = "Здолайте цензуру та регіональні обмеження. У нас немає реклами, обмеження пропускної здатності, і ми не заробляємо на ваших даних.";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "Ми переконані, що інтернет повинен бути вільним";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page3_description" = "Ми зосереджені на захисті даних. Починаючи від нашої архітектури Secure Core, до розширеного шифрування, безпека завжди на першому місці.";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page3_title" = "Ваша безпека є нашим пріоритетом";
-
-/* %@ is an IP address e.g. IP: 123.45.67.890 */
-"_ip_value" = "IP-адреса: %@";
-
-/* (No Comment) */
-"_ip_will_not_be_exposed" = "Ваш IP не буде викрито.";
-
-/* MacOS: Settings -> Connection: name of field. */
-"_kill_switch" = "Kill Switch";
-
-/* Disconnect notification */
-"_kill_switch_blocking_connection" = "Kill Switch блокує всі з'єднання";
-
-/* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Вимкнути Kill Switch";
-
-/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Ваше з'єднання з інтернетом відновиться одразу, як Proton VPN повторно з'єднається з сервером.\nЩоб користуватися інтернетом без VPN та захисту Kill Switch, скасуйте повторне з'єднання з сервером.";
-
-/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
-"_kill_switch_reconnection_bold1" = "без";
-
-/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
-"_kill_switch_reconnection_bold2" = "Захист Kill Switch";
-
-/* MacOS: connection screen - cancel button */
-"_kill_switch_reconnection_cancel" = "Скасувати повторне з'єднання";
-
-/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection_header" = "Kill Switch захищає вашу IP-адресу";
-
-/* MacOS: Settings -> Connection. Kill switch functionality description. */
-"_kill_switch_tooltip" = "Блокує весь мережевий трафік у випадку втрати VPN-тунелю.";
-
-/* MacOS: link in login screen */
-"_learn_more" = "Докладніше";
-
-/* MacOS: SecureCore warning alert when users plan has to be upgraded */
-"_learn_more_about_secure_core" = "Дізнатися більше про Secure Core";
-
-/* Display less information */
-"_less_info" = "Менше інформації";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "Завантаження інформації про з'єднання";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "Завантаження інформації про з'єднання для %@";
-
-/* Slogan text under the logo in may places in iOS and MacOS apps */
-"_loading_screen_slogan" = "Безпечний інтернет всюди";
-
-/* (No Comment) */
-"_local_agent_policy_violation_error_message" = "Вам не дозволено з'єднання з цим сервером. Оберіть інший сервер чи перейдіть на тарифний план вищого рівня.";
-
-/* (No Comment) */
-"_local_agent_policy_violation_error_title" = "Порушення політики";
-
-/* (No Comment) */
-"_local_agent_server_error_message" = "На сервері сталася помилка. Будь ласка, з'єднайтеся з іншим сервером.";
-
-/* Local agent */
-"_local_agent_server_error_title" = "Помилка сервера";
-
-/* iOS status view */
-"_location" = "Розташування";
-
-/* (No Comment) */
-"_locations_all" = "Усі розташування";
-
-/* (No Comment) */
-"_locations_free" = "Безплатні розташування";
-
-/* (No Comment) */
-"_locations_plus" = "Розташування Plus";
-
-/* iOS: Login button in several places */
-"_log_in" = "Увійти";
-
-/* iOS widget: text for not-logged-in user */
-"_log_in_to_use_widget" = "Увійдіть, щоб розпочати";
-
-/* iOS: button in settings screen */
-"_log_out" = "Вийти";
-
-/* iOS: Logout alert */
-"_log_out_warning" = "Вихід завершить ваш сеанс VPN.";
-
-/* MacOS: Logout alert */
-"_log_out_warning_long" = "Вихід із програми від'єднає активне VPN-з'єднання. Хочете продовжити?";
-
-/* MacOS: Login button */
-"_login" = "Увійти";
-
-/* iOS logs screen title */
-"_logs" = "Журнали";
-
-/* Mac: neagent help screen */
-"_mac_password" = "Пароль Mac";
-
-/* Server status in many places in iOS and MacOS apps */
-"_maintenance" = "Обслуговування";
-
-/* (No Comment) */
-"_maintenance_on_server_detected_description" = "Повторне підключення до найшвидшого доступного сервера.";
-
-/* (No Comment) */
-"_maintenance_on_server_detected_subtitle" = "Сервер, до якого ви були під'єднані, зараз обслуговується";
-
-/* (No Comment) */
-"_maintenance_on_server_detected_title" = "VPN-сервер зараз обслуговується";
-
-/* Profile create/change form */
-"_make_default_profile" = "Зробити типовим профілем";
-
-/* MacOS: button in profiles tab in main window */
-"_manage_profiles" = "Керувати профілями";
-
-/* MacOS: Settings -> Account. Button leading to web interface. */
-"_manage_subscription" = "Керувати передплатою";
-
-/* (No Comment) */
-"_manage_subscription_on_web" = "Керуйте своєю передплатою на панелі керування вебсайту";
-
-/* iOS: Map screen title and tabbar item */
-"_map" = "Карта";
-
-/* MacOS: Map view toggle button accessibility label (used by screen readers */
-"_map_hide" = "Приховати карту";
-
-/* MacOS: Map view toggle button accessibility label (used by screen readers */
-"_map_show" = "Показати карту";
-
-/* (No Comment) */
-"_maximum_device_reached_description" = "Від'єднайте інший пристрій, щоб під'єднатися до цього.";
-
-/* (No Comment) */
-"_maximum_device_title" = "Ви досягли обмеження кількості пристроїв";
-
-/* Cancel button in trial modals used in both iOS and MacOS */
-"_maybe_later" = "Можливо пізніше";
-
-/* Value of speed in _speed */
-"_medium" = "Середнє";
-
-/* Main mac app menu item */
-"_menu_about" = "Про Proton VPN";
-
-/* Main mac app menu item */
-"_menu_check_updates" = "Перевірити оновлення...";
-
-/* Main mac app menu item */
-"_menu_hide_others" = "Приховати інші";
-
-/* Main mac app menu item */
-"_menu_hide_self" = "Сховати Proton VPN";
-
-/* Main mac app menu item */
-"_menu_logout" = "Вийти";
-
-/* Main mac app menu item */
-"_menu_minimize" = "Згорнути";
-
-/* Main mac app menu item */
-"_menu_preferences" = "Параметри";
-
-/* Main mac app menu item */
-"_menu_quit" = "Вийти з Proton VPN";
-
-/* Main mac app menu item */
-"_menu_show_all" = "Показати всі";
-
-/* Main mac app menu item */
-"_menu_window" = "Вікно";
-
-/* Title for alert shown when enabling Moderate NAT requires reconnection */
-"_moderate_nat_change_title" = "Увімкнути помірне NAT";
-
-/* Title for alert shown when enabling Moderate NAT requires reconnection */
-"_moderate_nat_enable_title" = "Увімкнути помірне NAT";
-
-/* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "Помірна NAT вимикає рандомізацію мапінгу локальних адрес. Це може трохи знизити рівень вашої безпеки, але уможливлює користування одноранговими застосунками, як-от онлайн-ігри для встановлення прямих з'єднань.\nДокладніше";
-
-/* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
-"_moderate_nat_explanation_link" = "Докладніше";
-
-/* Moderate NAT feature title in Settings */
-"_moderate_nat_title" = "Помірне NAT";
-
-/* Display more information */
-"_more_info" = "Докладніше";
+/* Alert message during In App Purchase */
+"_do_you_want_to_activate_subscription_for" = "Ви хочете активувати придбану передплату для ";
 
 /* Label in Plan information */
 "_most_popular" = "Найпопулярніший";
 
+/* Button in plan selection */
+"_select_plan" = "Оберіть тарифний план";
+
+/* Plan information */
+"_advanced_features" = "+ Розширені можливості";
+
+/* Plan information */
+"_adblocker_netshield_feature" = "Блокувальник реклами (NetShield)";
+
+/* Text description in plan selection screen */
+"_plans_footer" = "Одразу після підтвердження покупки тарифного плану, з вашого облікового запису iTunes буде списано вказану суму, що включає податки та додаткові платежі платформи (які не стягуються безпосередньо Proton). Після покупки вас автоматично буде переведено на вибраний тарифний план терміном на 1 рік, після чого ви можете продовжити чи скасувати передплату онлайн, або в програмі iOS.";
+
+/* Per year. Appended to plan price. */
+"_per_year_short" = "/ рік";
+
+/* iOS plan feature */
+"_feature_server_count" = "З'єднатися з серверами в";
+
+/* iOS plan feature */
+"_feature_speed" = "Швидкість";
+
+/* iOS plan feature */
+"_feature_connections" = "Одночасних VPN-з'єднань";
+
+/* iOS plan feature */
+"_feature_secure_streaming" = "Захищений стримінг";
+
+/* iOS plan feature */
+"_feature_tor" = "Tor через VPN";
+
+/* iOS plan feature */
+"_feature_secure_core" = "Secure Core";
+
+/* iOS plan feature */
+"_feature_blocked_content" = "Доступ до заблокованого вмісту";
+
+"_feature_bt" = "Підтримка BitTorrent/обміну файлами";
+
+/* MacOS welcome screen: title */
+"_welcome_title" = "ЛАСКАВО ПРОСИМО!";
+
+/* MacOS welcome screen: description */
+"_welcome_description" = "Дякуємо за використання Proton VPN. Погляньте \nна основні функції програми.";
+
+/* MacOS welcome screen: cancel button */
+"_no_thanks" = "Ні, дякую";
+
+/* MacOS welcome screen: skip button */
+"_skip" = "Пропустити";
+
+/* MacOS welcome screen: take a tour button */
+"_take_tour" = "Показати знайомство";
+
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Plus";
+
+/* MacOS: Used ir trial welcome and trial expired screens */
+"_p2p_servers" = "P2P сервери";
+
+"_5_connections" = "5 з'єднань";
+
 /* Mac: Used in several Trial screens */
 "_multiple_countries" = "Різні країни";
+
+/* MAC: is inserted into _free_trial_expired_title insteadof %@ */
+"_expired" = "ПРОТЕРМІНОВАНО";
+
+/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
+"_free_trial_expired_title" = "Ваша безплатна пробна версія %@";
+
+/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "Ваш обліковий запис було понижено до Proton VPN FREE.\nОсь, що ви втрачаєте з %@:";
+
+/* Cancel button in trial modals used in both iOS and MacOS */
+"_maybe_later" = "Можливо пізніше";
+
+/* Upgrade button in trial modals used in both iOS and MacOS */
+"_upgrade_now" = "Передплатити";
+
+/* MacOS: Button in Upgrade screen */
+"_upgrade_my_plan" = "Передплатити тарифний план";
+
+/* MacOS: \Trial about to expire\ screen title */
+"_free_trial_about_to_expire_title" = "Безплатний пробний період завершується!";
+
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
+"_free_trial_about_to_expire_description" = "Передплатіть %@ і надалі користуйтеся цими функціями:";
+
+"_5_connections_description" = "Під'єднайте до 5 пристроїв\nодночасно";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_core_description" = "Найзахищеніші сервери\nрозташовані в нас";
+
+/* MacOS: \Trial about to expire\ screen */
+"_multiple_servers_title" = "Різні сервери";
 
 /* MacOS: \Trial about to expire\ screen */
 "_multiple_servers_description" = "Сотні серверів\nпо всьому світу";
 
 /* MacOS: \Trial about to expire\ screen */
-"_multiple_servers_title" = "Різні сервери";
+"_secure_streaming_title" = "Захищений стримінг";
 
-/* iOS: table header section in profiles screen */
-"_my_profiles" = "Мої профілі";
-
-/* Profile create/change form */
-"_name" = "Назва";
-
-/* Network error */
-"_ne_couldnt_reach_server" = "Не вдалося зв'язатися з серверами Proton";
-
-/* Network error */
-"_ne_network_connection_lost" = "Зв'язок з мережею втрачено";
-
-/* Network error */
-"_ne_not_connected_to_the_internet" = "Немає з'єднання з інтернетом";
-
-/* Network error */
-"_ne_request_timed_out" = "Час очікування мережі завершився";
-
-/* Button on alert after a problem with internet connection */
-"_ne_troubleshoot" = "Усунення проблем";
-
-/* Network error */
-"_ne_unable_to_connect_to_host" = "Послуга недоступна";
-
-/* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
-"_neagent_always_allow" = "Завжди дозволяти";
-
-/* Mac: neagent help screen */
-"_neagent_description" = "Ви можете отримати запит про надання %@\nдля з'єднання зі службою Proton VPN. Якщо запит з'явиться,\nвведіть свій %@ %@ і натисніть ‘%@’ %@.";
-
-/* Mac: neagent help screen */
-"_neagent_password" = "пароль облікового запису комп'ютера";
-
-/* MacOS: button in login screen */
-"_need_help" = "Потрібна допомога?";
-
-/* (No Comment) */
-"_neks_t2_connect" = "Усе одно увімкнути";
-
-/* (No Comment) */
-"_neks_t2_description" = "Робота Kill Switch нестабільна на цьому пристрої.\n\nВаш пристрій має чип безпеки T2, що може призвести до проблем зі стабільністю системи, якщо Proton VPN використовує можливості Kill Switch у macOS.";
-
-/* `_neks_t2_description' localized string. */
-"_neks_t2_hyperlink" = "Чип безпеки T2";
-
-/* NetworkExtension + KillSwitch on T2 Macs */
-"_neks_t2_title" = "Попередження про стабільність Kill Switch";
-
-/* (No Comment) */
-"_netshield_alert_reconnect_description_off" = "Для зміни режиму NetShield ваше з'єднання буде перезапущено.";
-
-/* (No Comment) */
-"_netshield_alert_reconnect_description_on" = "Для зміни режиму NetShield ваше з'єднання буде перезапущено.\nПримітка: Якщо деякі сайти не завантажуються, спробуйте вимкнути NetShield.";
-
-/* (No Comment) */
-"_netshield_alert_upgrade_description" = "NetShield покращує вашу приватність, блокуючи рекламу та елементи стеження.";
-
-/* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
-"_netshield_feature_description" = "Захистіться від реклами, зловмисних програм і елементів стеження на вебсайтах і в програмах. Якщо вебсайти не завантажуються, спробуйте вимкнути NetShield.\nДокладніше";
-
-/* Link with more info in the NetShield Feature description */
-"_netshield_feature_description_alt_link" = "Докладніше";
-
-/* Settings -> Netshield: Block malware */
-"_netshield_level1" = "Блокувати зловмисні програми";
-
-/* Settings -> Netshield: Block malware, ads, trackers */
-"_netshield_level2" = "Блокувати зловмисні програми, рекламу і стеження";
-
-/* Settings -> Netshield, Status -> NetShield: Off */
-"_netshield_off" = "Вимкнено";
-
-/* Status -> Netshield: On */
-"_netshield_on" = "Увімкнено";
-
-/* Netshield section title in iOS connection screen */
-"_netshield_section_title" = "Зловмисні програми та блокувальники реклами";
-
-/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
-"_netshield_stats_data_saved" = "Заощаджено\nданих";
-
-/* (No Comment) */
-"_netshield_title_tooltip" = "Блокувати рекламу, стеження і зловмисні програми";
-
-/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
-"_netshield_upsell_subtitle" = "Блокуйте рекламу, стеження та зловмисні програми на вебсайтах і в програмах";
-
-/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
-"_netshield_upsell_title" = "Користуйтеся інтернетом без реклами завдяки NetShield";
-
-/* iOS: quick connect widget */
-"_network_unreachable" = "Мережа недоступна";
-
-/* Title of the screen with news and offers. */
-"_news_title" = "Новини";
-
-/* iOS onboarding next item button */
-"_next" = "Далі";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Наступна порада";
-
-/* Text used when no active server information is available */
-"_no_description_available" = "Опис недоступний";
-
-/* (No Comment) */
-"_no_servers_to_show" = "Наразі немає серверів для показу.";
-
-/* MacOS welcome screen: cancel button */
-"_no_thanks" = "Ні, дякую";
-
-/* Title for alert shown when enabling Non-standard ports requires reconnection */
-"_non_standard_ports_change_title" = "Увімкнути нестандартні порти";
-
-/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
-"_non_standard_ports_explanation" = "Використовуйте Proton VPN для будь-якої спеціальної потреби, дозволяючи трафік до нестандартних портів через мережу VPN. Докладніше";
-
-/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
-"_non_standard_ports_explanation_link" = "Докладніше";
-
-/* Non-standard ports feature title in Settings */
-"_non_standard_ports_title" = "Нестандартні порти";
-
-/* iOS: connection bar; Main mac app menu item; */
-"_not_connected" = "Не з'єднано";
-
-/* Title in no internet alert */
-"_not_connected_to_the_internet" = "Не вдалося встановити VPN-з'єднання. Ви не під'єднані до інтернету.";
-
-/* (No Comment) */
-"_not_now" = "Не зараз";
-
-/* Common word */
-"_ok" = "Гаразд";
-
-/* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "Обслуговується";
-
-/* Telemetry label in the onboarding screen for mac next to a toggle */
-"_onboarding_mac_crash_reports" = "Надсилайте анонімні звіти про збої. Це допомагає нам виправляти помилки, виявляти мережеві екрани та уникати блокування VPN.";
-
-/* Telemetry label in the onboarding screen for mac next to a toggle */
-"_onboarding_mac_usage_stats" = "Діліться анонімною статистикою використання. Це допомагає нам обходити блокування VPN і вдосконалювати швидкодію програми.";
-
-/* Main mac app menu item */
-"_open_app_to_log_in" = "Показати Proton VPN для входу...";
-
-/* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "Журнал OpenVPN";
-
-/* MacOS menu item; MacOS Profiles tab title; */
-"_overview" = "Огляд";
-
-/* Description shown together with server info icon */
-"_p2p_description" = "Підтримує трафік P2P";
-
-/* (No Comment) */
-"_p2p_detected_popup_body" = "Ваше з'єднання було вимкнено, тому що ви використовуєте сервер, який не підтримує трафік P2P (peer-to-peer). P2P не підтримується на безплатних серверах, або на серверах з номером 100 і більше.";
-
-/* (No Comment) */
-"_p2p_detected_popup_title" = "P2P-трафік не дозволений на цьому сервері";
-
-/* (No Comment) */
-"_p2p_forwarded_popup_body" = "Ваше з'єднання було автоматично переспрямоване через інший сервер, оскільки деякі сервери не підтримують трафік P2P. Це може зменшити швидкість з'єднання. Будь ласка, використовуйте сервери з міткою P2P, щоб уникнути переспрямування.";
-
-/* (No Comment) */
-"_p2p_forwarded_popup_body_p1" = "Ваше з'єднання було автоматично переспрямоване через інший сервер, оскільки певні сервери не підтримують трафік P2P. Це може зменшити швидкість з'єднання. Будь ласка, використовуйте сервери з";
-
-/* (No Comment) */
-"_p2p_forwarded_popup_body_p2" = "піктограмою, щоб уникнути переспрямування.";
-
-/* (No Comment) */
-"_p2p_forwarded_popup_title" = "З'єднання переспрямовано";
-
-/* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_p2p_server" = "Сервер P2P";
-
-/* MacOS: Used ir trial welcome and trial expired screens */
-"_p2p_servers" = "P2P сервери";
-
-/* Used in sign-in, sign-up */
-"_password" = "Пароль";
-
-/* Sign-up form */
-"_password_confirm" = "Підтвердити пароль";
-
-/* Per year. Appended to plan price. */
-"_per_year_short" = "/ рік";
-
-/* (No Comment) */
-"_performance_load_description" = "Сервери з високим навантаженням повільніші за сервери з низьким навантаженням.";
-
-/* (No Comment) */
-"_performance_load_high" = "Високе";
-
-/* (No Comment) */
-"_performance_load_low" = "Низьке";
-
-/* (No Comment) */
-"_performance_load_medium" = "Середнє";
-
-/* (No Comment) */
-"_performance_title" = "Швидкодія";
-
-/* iOS: placeholder in phone verification screen */
-"_phone_country_code_placeholder" = "Код";
-
-/* iOS: placeholder in phone verification screen */
-"_phone_number_placeholder" = "Введіть номер телефону";
-
-/* MacOS: SecureCore warning alert when users plan has to be upgraded */
-"_plan_does_not_include_secure_core" = "Ваш тарифний план не включає функцію Secure Core.";
-
-/* (No Comment) */
-"_plan_speed_fastest" = "Найвища швидкість";
-
-/* Plan speed */
-"_plan_speed_high" = "Висока швидкість";
-
-/* Plan speed */
-"_plan_speed_medium" = "Середня швидкість";
-
-/* Text description in plan selection screen */
-"_plans_footer" = "Одразу після підтвердження покупки тарифного плану, з вашого облікового запису iTunes буде списано вказану суму, що включає податки та додаткові платежі платформи (які не стягуються безпосередньо Proton). Після покупки вас автоматично буде переведено на вибраний тарифний план терміном на 1 рік, після чого ви можете продовжити чи скасувати передплату онлайн, або в програмі iOS.";
-
-/* Features of account plan */
-"_plus_plan_features" = "Сервери Plus\nSecure Core\nСервери Tor";
-
-/* iOS: section header in countries list */
-"_plus_servers" = "Сервери Plus";
-
-/* MacOS: Settings screen title */
-"_preferences" = "Параметри";
-
-/* Description shown together with server info icon */
-"_premium_description" = "Premium сервер";
-
-/* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_premium_server" = "Premium сервер";
-
-/* MacOS: connecting overlay */
-"_preparing_connection" = "Перевірка доступності сервера";
-
-/* iOS: link inside text under sign-up form */
-"_privacy_policy" = "Політика приватності";
-
-/* MacOS Profiles Overview: Table column header */
-"_profile" = "Профіль";
-
-/* iOS: success message after profile is saved */
-"_profile_created_successfully" = "Новий профіль збережено";
-
-/* iOS: failure message after profile is saved */
-"_profile_creation_failed" = "Не вдається створити профіль";
-
-/* iOS: Success message on profile deletion */
-"_profile_deleted_successfully" = "Профіль було видалено";
-
-/* iOS: Error message if profile can't be deleted */
-"_profile_deletion_failed" = "Не вдається видалити профіль";
-
-/* iOS: success message after profile is saved */
-"_profile_edited_successfully" = "Профіль оновлено";
-
-/* Error in profile create/change form */
-"_profile_name_is_required" = "Введіть назву";
-
-/* Error in profile create/change form */
-"_profile_name_is_too_long" = "Максимальна довжина назви профілю 25 символів";
-
-/* (No Comment) */
-"_profile_name_needs_to_be_unique" = "Профіль з такою назвою вже існує";
-
-/* Profile create/change form */
-"_profile_settings" = "Налаштування профілю";
-
-/* MacOS: menu item, profiles window main header, sidebar tab title; iOS: Profiles screen title and tabbar item title; */
-"_profiles" = "Профілі";
-
-/* MacOS: profiles window title */
-"_profiles_overview" = "Огляд профілів";
-
-/* MacOS app tour: profiles description */
-"_profiles_tour_description" = "Збережіть свої налаштування і сервери для майбутнього використання.";
-
-/* MacOS app tour: profiles title */
-"_profiles_tour_title" = "Профілі";
-
-/* (No Comment) */
-"_protocol" = "Протокол";
-
-/* %@ is an IP address e.g. Public IP: 123.45.67.890 */
-"_public_ip" = "Публічний IP: %@";
-
-/* Several places in both iOS and Mac apps */
-"_quick_connect" = "Швидке з'єднання";
-
-/* MacOS: Settings -> Connection: description. */
-"_quick_connect_tooltip" = "Кнопка \"Швидке з'єднання\" під'єднає вас до вибраного профілю";
-
-/* MacOS app tour: quick connect description */
-"_quick_connect_tour_description" = "Автоматично з'єднуйтеся з сервером, який забезпечує найшвидше з'єднання.";
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_description" = "Безпечний стримінг ваших\nулюблених матеріалів";
 
 /* MacOS app tour: quick connect title */
 "_quick_connect_tour_title" = "Швидке з'єднання";
 
-/* (No Comment) */
-"_quick_settings_get_plus" = "Отримати Plus";
+/* MacOS app tour: quick connect description */
+"_quick_connect_tour_description" = "Автоматично з'єднуйтеся з сервером, який забезпечує найшвидше з'єднання.";
 
-/* (No Comment) */
-"_quick_settings_killSwitch_description" = "Вимикає інтернет, якщо втрачається VPN-з'єднання, щоб запобігти випадковому розкриттю IP-адреси.";
+/* MacOS app tour: profiles title */
+"_profiles_tour_title" = "Профілі";
 
-/* (No Comment) */
-"_quick_settings_killSwitch_note" = "Якщо ви не можете з'єднатися з пристроями у вашій локальній мережі, спробуйте вимкнути Kill Switch.";
+/* MacOS app tour: profiles description */
+"_profiles_tour_description" = "Збережіть свої налаштування і сервери для майбутнього використання.";
 
-/* (No Comment) */
-"_quick_settings_netShield_description" = "Користуйтеся інтернетом без реклами та зловмисних програм.";
+/* MacOS app tour: countries list title */
+"_countries_tour_title" = "Країни";
 
-/* (No Comment) */
-"_quick_settings_netShield_note" = "Якщо вебсайти не завантажуються, спробуйте вимкнути NetShield";
+/* MacOS app tour: countries list description */
+"_countries_tour_description" = "Виберіть, яку країну і сервер ви бажаєте використовувати для вашої кінцевої IP-адреси.";
 
-/* (No Comment) */
-"_quick_settings_netshield_option_level1" = "Блокувати лише зловмисні програми";
-
-/* (No Comment) */
-"_quick_settings_netshield_option_level2" = "Блокувати зловмисні програми, рекламу і стеження";
-
-/* (No Comment) */
-"_quick_settings_netshield_option_off" = "Не блокувати";
-
-/* Quick Settings */
-"_quick_settings_secureCore_description" = "Спрямовуйте свої найвразливіші дані через наші найзахищеніші сервери в країнах, що цінують приватність.";
-
-/* (No Comment) */
-"_quick_settings_secureCore_note" = "Secure Core може знижувати швидкість VPN";
+/* MacOS app tour: quick settings title */
+"_quick_settings_tour_title" = "Швидкі налаштування";
 
 /* MacOS app tour: quick settings description */
 "_quick_settings_tour_description" = "Збільште свою безпеку одним натиском:";
@@ -1165,77 +1220,52 @@
 /* MacOS app tour: quick settings kill switch */
 "_quick_settings_tour_feature_3" = "Запобігайте викриттю своєї IP-адреси, увімкнувши Kill Switch.";
 
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "Швидкі налаштування";
+/* MacOS app tour: next tip button */
+"_next_tip" = "Наступна порада";
 
-/* MacOS: quit application button in custom status menu */
-"_quit" = "Вийти";
+/* MacOS app tour: end tour button */
+"_end_tour" = "Завершити знайомство";
 
-/* MacOS: alert show before quitting app if VPN is connected */
-"_quit_warning" = "Вихід із програми від'єднає активне VPN-з'єднання. Хочете продовжити?";
+/* iOS onboarding texts */
+"_ios_onboarding_page1_title" = "Вітаємо у кращому інтернеті";
 
-/* Profile create/change form and other places describing profile */
-"_random" = "Випадковий";
+/* iOS onboarding texts */
+"_ios_onboarding_page1_description" = "Від вчених та інженерів, які створили Proton Mail, ласкаво просимо до безпечнішого та приватнішого інтернету.";
 
-/* Profile create/change form */
-"_random_available_server" = "Випадковий доступний сервер";
+/* iOS onboarding texts */
+"_ios_onboarding_page2_title" = "Ми переконані, що інтернет повинен бути вільним";
 
-/* iOS: Predefined profile with random server */
-"_random_connection" = "Випадкове з'єднання";
+/* iOS onboarding texts */
+"_ios_onboarding_page2_description" = "Здолайте цензуру та регіональні обмеження. У нас немає реклами, обмеження пропускної здатності, і ми не заробляємо на ваших даних.";
 
-/* iOS: table header section in profiles screen */
-"_recommended" = "Рекомендовано";
+/* iOS onboarding texts */
+"_ios_onboarding_page3_title" = "Ваша безпека є нашим пріоритетом";
 
-/* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
-"_reconnect_on_settings_change_body" = "Для застосування змін необхідно перезапустити з'єднання.";
+/* iOS onboarding texts */
+"_ios_onboarding_page3_description" = "Ми зосереджені на захисті даних. Починаючи від нашої архітектури Secure Core, до розширеного шифрування, безпека завжди на першому місці.";
 
-/* (No Comment) */
-"_reconnect_title" = "Триває перепідключення до найшвидшого доступного сервера.";
+/* iOS onboarding next item button */
+"_next" = "Далі";
 
-/* (No Comment) */
-"_reconnecting_to" = "Перепідключення до %@";
+/* iOS onboarding button to check app without logging in */
+"_discover_the_app" = "Ознайомитися з програмою";
 
-/* iOS & MacOS: text that requires restart connection */
-"_reconnection_required" = "Необхідне перепідключення";
+/* iOS: Table header in settings screen */
+"_extensions" = "Розширення";
 
-/* (No Comment) */
-"_reestablish_vpn_connection_" = "Повторне встановлення VPN-з'єднання.";
+/* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
+"_widget" = "iOS віджет";
 
-/* MacOS: About window */
-"_release_date" = "Дата випуску:";
+/* Menu point in settings screen */
+"_usage_statistics" = "Статистика використання";
 
-/* MacOS: label in login and settings screens */
-"_remember_login" = "Запам'ятати вхід";
+/* iOS widget: text for not-logged-in user */
+"_log_in_to_use_widget" = "Увійдіть, щоб розпочати";
 
-/* Button in Kill switch error alert */
-"_report" = "Звіт";
-
-/* Main mac app menu item */
-"_report_an_issue" = "Повідомити про проблему...";
+"_vpnstatus_not_loggedin" = "Ви не увійшли в Proton VPN. Відкрийте програму Proton VPN і виконайте вхід.";
 
 /* Bug report attachments */
 "_report_attachments" = "Вкладення";
-
-/* Mag bug report: attach logs checkbox */
-"_report_attachments_checkbox" = "Долучити журнали програм та системні дані";
-
-/* Report bug screen title; iOS settings screen: item; */
-"_report_bug" = "Повідомити про проблему";
-
-/* Mac bug report: description text before bug report form */
-"_report_description" = "Отримавши ці дані, наша команда зможе визначити вашу проблему і можливе рішення з більшою ймовірністю й у коротший термін:\n- журнали застосунків Proton VPN\n- журнали OpenVPN\n- журнали WіreGuard";
-
-/* Mac bug report: email field label */
-"_report_field_email" = "Адреса е-пошти:";
-
-/* Mac bug report: feedback field label */
-"_report_field_feedback" = "Що трапилося?";
-
-/* Mag bug report: textfields placeholder */
-"_report_field_placeholder" = "Почніть вводити...";
-
-/* Mac bug report: steps field label */
-"_report_field_steps" = "Які саме дії ви виконували?";
 
 /* iOS bug report: header before logs description */
 "_report_logs" = "Журнал VPN";
@@ -1243,14 +1273,14 @@
 /* iOS bug report: description of log selection switch */
 "_report_logs_description" = "Увімкнення додасть VPN-журнали вашої клієнтської програми";
 
+/* iOS bug report: Title before report bug form */
+"_report_report" = "Поскаржитися";
+
 /* iOS bug report: Placeholder for email form field */
 "_report_placeholder_email" = "Контактна електронна пошта";
 
 /* Bug report: Placeholder for text form field */
 "_report_placeholder_message" = "Ваше повідомлення...";
-
-/* iOS bug report: Title before report bug form */
-"_report_report" = "Поскаржитися";
 
 /* Bug report: Send report button text */
 "_report_send" = "Надіслати звіт";
@@ -1258,242 +1288,228 @@
 /* Bug report: Success message after report was sent */
 "_report_success" = "Дякуємо за ваш звіт";
 
-/* iOS: human verification option select button */
-"_request_invitation" = "Запит ручної активації";
+/* Mac bug report: description text before bug report form */
+"_report_description" = "Завдяки наданню зазначеної інформації, наша команда може визначити вашу проблему та можливе рішення з більшою ймовірністю та в коротший строк:\n• Журнали програми Proton VPN\n• Журнали OpenVPN\n• Журнали WireGuard";
 
-/* iOS: button in human verification code form */
-"_resend_code" = "Запитати новий код";
+/* Mac bug report: email field label */
+"_report_field_email" = "Адреса е-пошти:";
 
-/* iOS: button in human verification code form */
-"_resend_no_code" = "Не отримали код?";
+/* Mac bug report: feedback field label */
+"_report_field_feedback" = "Що трапилося?";
 
-/* iOS: message after human verification code resending */
-"_resend_success" = "Запитано новий код";
+/* Mac bug report: steps field label */
+"_report_field_steps" = "Які саме дії ви виконували?";
 
-/* MacOS: button in login screen */
-"_reset_password" = "Відновити пароль";
+/* Mag bug report: textfields placeholder */
+"_report_field_placeholder" = "Почніть вводити...";
 
-/* Button in some alerts */
-"_retry" = "Повторити спробу";
+/* Mag bug report: attach logs checkbox */
+"_report_attachments_checkbox" = "Долучити журнали програм та системні дані";
 
-/* Common word */
-"_save" = "Зберегти";
+/* Main mac app menu item */
+"_menu_about" = "Про Proton VPN";
 
-/* Button */
-"_save_as_profile" = "Зберегти профіль";
+/* Main mac app menu item */
+"_menu_check_updates" = "Перевірити оновлення...";
 
-/* MacOS: placeholder for country search */
-"_search_for_country" = "Пошук країни";
+/* Main mac app menu item */
+"_menu_preferences" = "Параметри";
 
-/* iOS: placeholder in phone country code selection screen */
-"_search_phone_country_code_placeholder" = "Пошук країни";
+/* Main mac app menu item */
+"_menu_hide_self" = "Сховати Proton VPN";
 
-/* MacOS: \Trial about to expire\ screen */
-"_secure_core_description" = "Найзахищеніші сервери\nрозташовані в нас";
+/* Main mac app menu item */
+"_menu_hide_others" = "Приховати інші";
 
-/* MacOS: secure core tooltip */
-"_secure_core_info" = "Забезпечує додатковий захист від компрометації VPN-сервера, спрямовуючи трафік через нашу мережу Secure Core";
+/* Main mac app menu item */
+"_menu_show_all" = "Показати всі";
 
-/* MacOS: \Trial about to expire\ screen */
-"_secure_streaming_description" = "Безпечне потокове передавання\nвашого улюбленого вмісту";
+/* Main mac app menu item */
+"_menu_logout" = "Вийти";
 
-/* MacOS: \Trial about to expire\ screen */
-"_secure_streaming_title" = "Захищена трансляція";
+/* Main mac app menu item */
+"_menu_quit" = "Вийти з Proton VPN";
 
-/* iOS status view */
-"_security" = "Безпека";
+/* Main mac app menu item */
+"_menu_window" = "Вікно";
 
-/* iOS Settings: table section header */
-"_security_options" = "Налаштування безпеки";
+/* Main mac app menu item */
+"_menu_minimize" = "Згорнути";
 
-/* Profile create/change form */
-"_select_country" = "Вибір країни";
+"_subscription_will_expire" = "Поточний тарифний план завершиться %@.";
 
-/* iOS: title of phone country code selection screen */
-"_select_phone_country_code" = "Виберіть код країни";
+"_subscription_will_renew" = "Чинний тарифний план автоматично продовжиться %@.";
 
-/* Button in plan selection */
-"_select_plan" = "Оберіть тарифний план";
+"_subscription_description" = "Ви можете придбати більше кредитів для автоматичного продовження свого поточного тарифного плану. В кінці чинного періоду передплати ці кредити будуть використані для продовження тарифного плану.";
 
-/* iOS: new profile screen */
-"_select_profile_color" = "Виберіть колір профілю";
+"_subscription_button" = "Продовжити план на 1 рік \n%@.";
 
-/* Profile create/change form */
-"_select_server" = "Вибір сервера";
+"_subscription_extended_success" = "Ви успішно придбали кредити для продовження вашого чинного тарифного плану.";
 
-/* iOS: text in human verification options screen */
-"_select_verification_option" = "Виберіть варіант підтвердження, щоб продовжити:";
+/* Button on alert after a problem with internet connection */
+"_ne_troubleshoot" = "Усунення проблем";
 
-/* iOS: text in human verification options screen */
-"_select_verification_option_top_message" = "Для запобігання зловживань, вам необхідно пройти перевірку.";
+/* Title of connection troubleshooting screen */
+"_troubleshoot_title" = "Усунення проблем";
 
-/* Profile create/change form */
-"_server" = "Сервер";
+"_troubleshoot_item_alt_title" = "Дозволити альтернативну маршрутизацію";
 
-/* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_server_ip" = "IP сервера:";
+"_troubleshoot_item_alt_description" = "У випадку блокування сайтів Proton, цей параметр дозволяє програмі спробувати альтернативний мережевий маршрут для доступу до Proton, що може бути корисним для обходу мережевих екранів чи мережевих проблем. Рекомендовано увімкнути цей параметр для більшої надійності. \nДокладніше";
 
-/* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_server_load" = "Навантаження сервера:";
+"_troubleshoot_item_alt_link1" = "Докладніше";
 
-/* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
-"_server_load_percentage" = "%@%% навантаження";
+"_troubleshoot_item_nointernet_title" = "Немає з'єднання з інтернетом";
 
-/* (No Comment) */
-"_server_load_title" = "Навантаження сервера";
+"_troubleshoot_item_nointernet_description" = "Переконайтеся, що ваше з'єднання з інтернетом працює.";
 
-/* Error when user hasn't selected profile server */
-"_server_selection_is_required" = "Виберіть сервер";
+"_troubleshoot_item_isp_title" = "Проблема постачальника послуг інтернету (ISP)";
 
-/* Under maintenance alert */
-"_server_under_maintenance" = "Сервер обслуговується";
+"_troubleshoot_item_isp_description" = "Спробуйте під'єднатися до Proton з іншої мережі (або Tor).";
 
-/* iOS status view */
-"_session_time" = "Час сеансу";
+"_troubleshoot_item_isp_link1" = "Tor";
 
-/* iOS: Settings screen title and tab title */
-"_settings" = "Налаштування";
+"_troubleshoot_item_gov_title" = "Блокування урядом";
 
-/* Telemetry label in the settings window for mac */
-"_settings_mac_crash_reports_title" = "Анонімні звіти про збої";
+"_troubleshoot_item_gov_description" = "Ваша країна може блокувати доступ до Proton. Спробуйте скористатися Tor для доступу до Proton.";
 
-/* Telemetry tooltip in the settings window for mac */
-"_settings_mac_crash_reports_tooltip" = "Звіти про збої допомагають нам виправляти помилки, виявляти мережеві екрани та уникати блокування VPN.";
+"_troubleshoot_item_gov_link1" = "Tor";
 
-/* Clickable label title in the onboarding screen for mac */
-"_settings_mac_telemetry_learn_more" = "Докладніше";
+"_troubleshoot_item_antivirus_title" = "Перешкоджання антивірусу";
 
-/* Telemetry label in the settings window for mac */
-"_settings_mac_usage_stats_title" = "Анонімна статистика використання";
+"_troubleshoot_item_antivirus_description" = "Тимчасово вимкніть чи вилучіть свою антивірусну програму.";
 
-/* Telemetry tooltip in the settings window for mac */
-"_settings_mac_usage_stats_tooltip" = "Дані про використання допомагають нам обходити блокування VPN і вдосконалювати швидкодію програми.";
+"_troubleshoot_item_proxy_title" = "Взаємодія з проксі та мережевим екраном";
 
-/* iOS: title of the screen after successfull purchase */
-"_setup_complete" = "Налаштування завершено";
+"_troubleshoot_item_proxy_description" = "Вимкніть будь-які проксі чи мережеві екрани, або зверніться до свого мережевого адміністратора.";
 
-/* iOS: title of the screen after successfull purchase */
-"_setup_complete_free" = "Ви зареєструвалися з тарифним планом Proton VPN Free. Скористайтеся нагодою випробувати тарифний план Proton VPN Plus протягом 7 днів безплатно.";
+"_troubleshoot_item_proton_title" = "Proton зараз недоступний";
 
-/* iOS: title of the screen after successfull purchase */
-"_setup_complete_plus" = "Покупка успішна. Ваш тарифний план Proton VPN Plus тепер активний.";
+"_troubleshoot_item_proton_description" = "Перевірте стан Proton, щоб дізнатися стан нашої системи.";
 
-/* Show/hide password switch */
-"_show" = "ПОКАЗАТИ";
+"_troubleshoot_item_proton_link1" = "Стан Proton";
 
-/* Button in some alerts */
-"_show_instructions" = "Показати інструкції";
+"_troubleshoot_item_other_title" = "Не вдається знайти рішення";
 
-/* (No Comment) */
-"_show_protonvpn" = "Показати Proton VPN";
+"_troubleshoot_item_other_description" = "Зверніться до нас через форму підтримки, електронною поштою (%@) або в Twitter.";
 
-/* iOS: button in login and onboarding screens */
-"_sign_up" = "Зареєструватися";
+"_troubleshoot_item_other_link1" = "форма підтримки";
 
-/* MacOS welcome screen: skip button */
-"_skip" = "Пропустити";
+"_troubleshoot_item_other_link2" = "електронна пошта";
+
+"_troubleshoot_item_other_link3" = "Twitter";
+
+/* iOS settings -> Battery usage; Title of battery usage screen; */
+"_battery_title" = "Використання батареї";
+
+/* Battery usages screen description */
+"_battery_description" = "Увесь трафік вашого телефона спрямовуватиметься через OpenVPN, тому iOS призначатиме для Proton VPN витрату заряду батареї іншими програмами.";
+
+/* Battery usage More info button text */
+"_battery_more" = "Хочете дізнатися більше?";
+
+/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved"*/ */
+"_netshield_stats_data_saved" = "Заощаджено\nданих";
+
+/* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
+"_netshield_feature_description" = "Захистіться від реклами, зловмисних програм і елементів стеження на вебсайтах і в програмах. Якщо вебсайти не завантажуються, спробуйте вимкнути NetShield.\nДокладніше";
+
+/* Link with more info in the NetShield Feature description */
+"_netshield_feature_description_alt_link" = "Докладніше";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_upsell_title" = "Користуйтеся інтернетом без реклами завдяки NetShield";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_upsell_subtitle" = "Блокуйте рекламу, стеження та зловмисні програми на вебсайтах і в програмах";
+
+/* Settings -> Netshield: name of field. */
+"_netshield_title" = "NetShield";
+
+"_netshield_title_tooltip" = "Блокувати рекламу, стеження і зловмисні програми";
+
+/* Settings -> Netshield, Status -> NetShield: Off */
+"_netshield_off" = "Вимкнено";
+
+/* Status -> Netshield: On */
+"_netshield_on" = "Увімкнено";
+
+/* Settings -> Netshield: Block malware */
+"_netshield_level1" = "Блокувати зловмисні програми";
+
+/* Settings -> Netshield: Block malware, ads, trackers */
+"_netshield_level2" = "Блокувати зловмисні програми, рекламу і стеження";
+
+"_netshield_alert_reconnect_description_on" = "Для зміни режиму NetShield ваше з'єднання буде перезапущено.\nПримітка: якщо деякі сайти не завантажуються, спробуйте вимкнути NetShield.";
+
+"_netshield_alert_reconnect_description_off" = "Для зміни режиму NetShield ваше з'єднання буде перезапущено.";
+
+"_netshield_alert_upgrade_description" = "NetShield покращує вашу приватність, блокуючи рекламу та елементи стеження.";
+
+/* Netshield section title in iOS connection screen */
+"_netshield_section_title" = "Блокування зловмисних програм і реклами";
+
+/* Title of the screen with news and offers. */
+"_news_title" = "Новини";
+
+"_quick_settings_secureCore_description" = "Спрямовуйте свої найвразливіші дані через наші найзахищеніші сервери в країнах, що цінують приватність.";
+
+"_quick_settings_netShield_description" = "Користуйтеся інтернетом без реклами та зловмисних програм.";
+
+"_quick_settings_killSwitch_description" = "Вимикає інтернет, якщо втрачається VPN-з'єднання, щоб запобігти випадковому розкриттю IP-адреси.";
+
+"_quick_settings_secureCore_note" = "Secure Core може знижувати швидкість VPN";
+
+"_quick_settings_netShield_note" = "Якщо вебсайти не завантажуються, спробуйте вимкнути NetShield";
+
+"_quick_settings_killSwitch_note" = "Якщо ви не можете з'єднатися з пристроями у вашій локальній мережі, спробуйте вимкнути Kill Switch.";
+
+"_quick_settings_get_plus" = "Отримати Plus";
+
+"_applying_settings_" = "Застосування параметрів";
+
+"_reestablish_vpn_connection_" = "Повторне встановлення VPN-з'єднання.";
+
+"_ip_will_not_be_exposed" = "Ваш IP не буде викрито.";
+
+"_cancel_reconnection" = "Це скасує всі спроби повторного з'єднання і залишить вас від'єднаними";
+
+"_quick_settings_netshield_option_off" = "Не блокувати";
+
+"_quick_settings_netshield_option_level1" = "Блокувати лише зловмисні програми";
+
+"_quick_settings_netshield_option_level2" = "Блокувати зловмисні програми, рекламу і стеження";
+
+"_upgrade_required_securecore_description" = "Функція Secure Core доступна з тарифним планом Plus. Передплатіть зараз, щоб спрямовувати трафік через наші найзахищеніші сервери в країнах, які цінують приватність.";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection_header" = "Kill Switch захищає вашу IP-адресу";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection" = "Ваше з'єднання з інтернетом відновиться одразу, як Proton VPN повторно з'єднається з сервером.\nЩоб користуватися інтернетом без VPN та захисту Kill Switch, скасуйте повторне з'єднання з сервером.";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold1" = "без";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold2" = "Захист Kill Switch";
+
+/* MacOS: connection screen - cancel button */
+"_kill_switch_reconnection_cancel" = "Скасувати повторне з'єднання";
+
+/* Title for Smart Protocol in Settings */
+"_smart_protocol_title" = "Smart Protocol";
+
+/* Shortened title for Smart Protocol on Settings configuration */
+"_smart_title" = "Smart";
 
 /* Description for Smart Protocol in Settings */
 "_smart_protocol_description" = "Увімкнути Smart Protocol для автоматичного застосування протоколу та порту, які пропонують найкращу якість з'єднання.";
 
-/* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
-"_smart_protocol_reconnect_modal_body" = "Для зміни режиму Smart Protocol ваше з'єднання буде перезапущено.";
-
 /* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_title" = "Необхідне перепідключення";
 
-/* %@ is a speed description e.g. Speed: Highest */
-"_speed" = "%@ швидкість";
-
-/* MacOS profile form: feature selection value */
-"_standard" = "Стандартний";
-
-/* MacOS: Settings -> General: name of field. */
-"_start_minimized" = "Запускати згорнутим";
-
-/* MacOS: label in login and settings screens */
-"_start_on_boot" = "Запускати під час завантаження";
-
-/* iOS status view */
-"_status" = "Стан";
-
-/* (No Comment) */
-"_streaming_servers_description" = "З'єднайтеся із сервером Plus у цій країні для потокового передавання.";
-
-/* (No Comment) */
-"_streaming_servers_extra" = "та інше";
-
-/* (No Comment) */
-"_streaming_servers_note" = "Примітка: Вимкніть службу розташування та зітріть кеш програм потокового передавання, щоб упевнитися, що з'являється новий вміст.";
-
-/* (No Comment) */
-"_streaming_title" = "Потокове передавання";
-
-/* iOS: button in human verification code form */
-"_submit_verification_code" = "Відправити";
-
-/* (No Comment) */
-"_subscription_button" = "Продовжити план на 1 рік \n%@.";
-
-/* (No Comment) */
-"_subscription_description" = "Ви можете придбати більше кредитів для автоматичного продовження свого поточного тарифного плану. В кінці чинного періоду передплати ці кредити будуть використані для продовження тарифного плану.";
-
-/* (No Comment) */
-"_subscription_expired_description" = "Ваша передплата була понижена.";
-
-/* (No Comment) */
-"_subscription_expired_reconnection_description" = "Ваша передплата була понижена, тому ми повторно з'єднуємось із найшвидшим доступним сервером.";
-
-/* (No Comment) */
-"_subscription_expired_title" = "Ваша передплата тарифного плану VPN завершилась";
-
-/* (No Comment) */
-"_subscription_extended_success" = "Ви успішно придбали кредити для продовження вашого чинного тарифного плану.";
-
-/* iOS Settings -> Connection: name of field. */
-"_subscription_plan" = "Тарифний план";
-
-/* (No Comment) */
-"_subscription_upgrade_option3" = "Додаткові функції: NetShield, Secure Core, Tor, P2P";
-
-/* (No Comment) */
-"_subscription_upgrade_title" = "Передплатіть тарифний план знову, щоб користуватись усіма можливостями:";
-
-/* Manage subscription */
-"_subscription_will_expire" = "Чинний тарифний план завершиться %@.";
-
-/* (No Comment) */
-"_subscription_will_renew" = "Чинний тарифний план автоматично продовжиться %@.";
-
-/* (No Comment) */
-"_subuser_alert_description1" = "Щоб почати свою подорож у Proton VPN, увімкніть VPN-з'єднання для свого облікового запису або будь-якого іншого підлеглого облікового запису.";
-
-/* (No Comment) */
-"_subuser_alert_description2" = "Цей крок займе всього кілька хвилин. Після цього ви зможете ввійти в систему і захистити всі свої пристрої.";
-
-/* (No Comment) */
-"_subuser_alert_description3" = "Наразі для цього облікового запису не ввімкнено VPN-з'єднання. Щоб почати свою подорож з Proton VPN, зв'яжіться з вашим адміністратором.";
-
-/* (No Comment) */
-"_subuser_alert_enable_connections_button" = "Увімкнути VPN-з'єднання";
-
-/* (No Comment) */
-"_subuser_alert_login_button" = "Увійти знову";
-
-/* Subuser alert */
-"_subuser_alert_title" = "Дякуємо за передплату Business/Visionary";
-
-/* MacOS: connecting overlay */
-"_successfully_connected" = "Успішно з'єднано";
-
-/* (No Comment) */
-"_switch_side_button_off" = "ВИМК";
-
-/* (No Comment) */
-"_switch_side_button_on" = "УВІМК";
-
-/* (No Comment) */
-"_sysex_cannot_enable" = "Не вдається увімкнути системне розширення";
+/* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
+"_smart_protocol_reconnect_modal_body" = "Для зміни режиму Smart Protocol ваше з'єднання буде перезапущено.";
 
 /* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
 "_sysex_description_1" = "Щоб використовувати Proton VPN, вам потрібно увімкнути ** користувацькі протоколи VPN** на вашому комп'ютері Mac.";
@@ -1507,247 +1523,134 @@
 /* Alternative for Part 3 for pre-ventura of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
 "_sysex_description_4" = "Щоб продовжити, натисніть **Відкрити параметри безпеки**, а потім дотримуйтесь відеоінструкцій на цьому екрані.";
 
-/* (No Comment) */
-"_sysex_enabled_description" = "Налаштування завершено. Тепер ви можете користуватися інтернетом швидше за допомогою найкращих технологій VPN.";
-
-/* (No Comment) */
-"_sysex_enabled_title" = "Налаштування завершено";
-
-/* (No Comment) */
-"_sysex_error_description" = "При встановленні System Extension сталася помилка.\nЩоб виправити цю проблему, перевстановіть Proton VPN, переконавшись, що він розташований в теці програм. Ви також можете звернутися до нашої служби підтримки.";
-
-/* Default action in the system extension wizard in mac. macOS Ventura */
-"_sysex_open_security_preferences" = "Відкрити параметри безпеки";
+/* Title of the system extension wizard in mac */
+"_sysex_set_up_proton_vpn" = "Налаштувати Proton VPN";
 
 /* Default action in the system extension wizard in mac. Pre-macOS Ventura */
 "_sysex_open_system_settings" = "Відкрийте Параметри системи";
 
-/* Title of the system extension wizard in mac */
-"_sysex_set_up_proton_vpn" = "Налаштувати Proton VPN";
+/* Default action in the system extension wizard in mac. macOS Ventura */
+"_sysex_open_security_preferences" = "Відкрити параметри безпеки";
 
-/* (No Comment) */
 "_sysex_settings_description" = "Proton VPN потребує завантаження системного розширення для встановлення зв'язку між Smart Protocol, OpenVPN та WireGuard.";
 
-/* Main mac app menu item */
-"_system_extension_tutorial_menu_item" = "Посібник з розширення системи";
+"_sysex_enabled_title" = "Налаштування завершено";
 
-/* MacOS: Settings -> General: name of field. */
-"_system_notifications" = "Системні сповіщення";
+"_sysex_enabled_description" = "Налаштування завершено. Тепер ви можете користуватися інтернетом швидше за допомогою найкращих технологій VPN.";
 
-/* MacOS welcome screen: take a tour button */
-"_take_tour" = "Показати знайомство";
+"_sysex_cannot_enable" = "Не вдається увімкнути системне розширення";
 
-/* iOS status view */
-"_technical_details" = "Технічні подробиці";
+"_sysex_error_description" = "Під час встановлення System Extension сталася помилка.\nЩоб виправити цю проблему, перевстановіть Proton VPN, переконавшись, що він розташований в теці Applications. Ви також можете звернутися до нашої служби підтримки.";
 
-/* iOS: link inside text under sign-up form */
-"_terms_and_conditions" = "Умови та положення";
+"_vpnauth_certfail_title" = "Помилка автентифікації";
 
-/* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "Використовуючи Proton VPN, ви погоджуєтеся на наші\n%@ та %@";
+"_vpnauth_certfail_description" = "Не вдалося оновити сертифікат VPN. Перевірте своє з'єднання";
 
-/* iOS: section header in countries list */
-"_test_servers" = "ТЕСТОВІ сервери";
+"_vpnauth_too_many_certs_title" = "Помилка автентифікації";
 
-/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
-"_timeout_ks_ike_descritpion" = "Інша програма може перешкоджати роботі Kill Switch. Щоб усунути цю проблему, перемкніть на протокол OpenVPN або вимкніть Kill Switch і повторіть спробу.";
+"_vpnauth_too_many_certs_description" = "Ви досягли максимальної кількості змін параметрів. Спробуйте знову за кілька хвилин";
 
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
-"_timeout_ks_ike_switch_protocol" = "Перемкнути на OpenVPN і повторити спробу";
+"_from_server_title" = "Із сервера:";
 
-/* (No Comment) */
 "_to_server_title" = "До сервера:";
 
-/* Description shown together with server info icon */
-"_tor_description" = "З'єднання з мережею TOR";
-
-/* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_tor_server" = "Сервер Tor";
-
-/* (No Comment) */
-"_troubleshoot_item_alt_description" = "У випадку блокування сайтів Proton, цей параметр дозволяє програмі спробувати альтернативний мережевий маршрут для доступу до Proton, що може бути корисним для обходу мережевих екранів чи мережевих проблем. Рекомендовано увімкнути цей параметр для більшої надійності. \nДокладніше";
-
-/* (No Comment) */
-"_troubleshoot_item_alt_link1" = "Докладніше";
-
-/* (No Comment) */
-"_troubleshoot_item_alt_title" = "Дозволити альтернативну маршрутизацію";
-
-/* (No Comment) */
-"_troubleshoot_item_antivirus_description" = "Тимчасово вимкніть чи вилучіть свою антивірусну програму.";
-
-/* (No Comment) */
-"_troubleshoot_item_antivirus_title" = "Перешкоджання антивірусу";
-
-/* (No Comment) */
-"_troubleshoot_item_gov_description" = "Ваша країна може блокувати доступ до Proton. Спробуйте скористатися Tor для доступу до Proton.";
-
-/* (No Comment) */
-"_troubleshoot_item_gov_title" = "Блокування урядом";
-
-/* (No Comment) */
-"_troubleshoot_item_isp_description" = "Спробуйте під'єднатися до Proton з іншої мережі (або Tor).";
-
-/* (No Comment) */
-"_troubleshoot_item_isp_title" = "Проблема постачальника послуг інтернету (ISP)";
-
-/* (No Comment) */
-"_troubleshoot_item_nointernet_description" = "Переконайтеся, що ваше з'єднання з інтернетом працює.";
-
-/* (No Comment) */
-"_troubleshoot_item_nointernet_title" = "Немає з'єднання з інтернетом";
-
-/* (No Comment) */
-"_troubleshoot_item_other_description" = "Зверніться до нас через форму підтримки, електронною поштою (%@) або в Twitter.";
-
-/* (No Comment) */
-"_troubleshoot_item_other_link1" = "форма підтримки";
-
-/* (No Comment) */
-"_troubleshoot_item_other_link2" = "електронна пошта";
-
-/* (No Comment) */
-"_troubleshoot_item_other_title" = "Не вдається знайти рішення";
-
-/* (No Comment) */
-"_troubleshoot_item_proton_description" = "Перевірте стан Proton, щоб дізнатися стан нашої системи.";
-
-/* (No Comment) */
-"_troubleshoot_item_proton_link1" = "Стан Proton";
-
-/* (No Comment) */
-"_troubleshoot_item_proton_title" = "Proton зараз недоступний";
-
-/* (No Comment) */
-"_troubleshoot_item_proxy_description" = "Вимкніть будь-які проксі чи мережеві екрани, або зверніться до свого мережевого адміністратора.";
-
-/* (No Comment) */
-"_troubleshoot_item_proxy_title" = "Взаємодія з проксі та мережевим екраном";
-
-/* Title of connection troubleshooting screen */
-"_troubleshoot_title" = "Усунення проблем";
-
-/* MacOS: button in connecting overlay */
-"_try_again" = "Спробувати знову";
-
-/* (No Comment) */
-"_try_again_without_killswitch" = "Вимкніть Kill Switch і повторіть спробу";
-
-/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "Активувавши Kill Switch, ви не зможете отримати доступ до пристроїв у вашій локальній мережі. \n\nПродовжити?";
-
-/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "Увімкнути Kill Switch?";
-
-/* (No Comment) */
-"_turn_on" = "Увімкнути";
-
-/* Common word */
-"_unavailable" = "Недоступно";
-
-/* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Сповіщати про незахищені мережі";
-
-/* MacOS: Settings -> General: description */
-"_unprotected_network_tooltip" = "Отримувати сповіщення, коли Proton VPN виявляє, що ви під'єдналися до незахищеної мережі.";
-
-/* (No Comment) */
-"_unsecure_wifi" = "Виявлено незахищене з'єднання WiFi";
-
-/* (No Comment) */
-"_unsecure_wifi_learn_more" = "Докладніше";
-
-/* (No Comment) */
-"_unsecure_wifi_title" = "Виявлено незахищений WiFi";
-
-/* (No Comment) */
 "_update_billing" = "ОНОВИТИ РАХУНОК";
 
-/* (No Comment) */
-"_update_required" = "Необхідне оновлення";
-
-/* (No Comment) */
-"_update_required_no_longer_supported" = "Ця версія Proton VPN більше не підтримується. Щоб продовжити користуватися застосунком оновіть його.";
-
-/* Secondary button title in the App update required alert */
-"_update_required_support" = "Зв'язатися з підтримкою";
-
-/* Primary button title in the App update required alert */
-"_update_required_update" = "Оновити";
-
-/* Button in many places in both iOS and MacOS apps */
-"_upgrade" = "Покращити";
-
-/* (No Comment) */
 "_upgrade_again" = "ПЕРЕДПЛАТИТИ ЗНОВУ";
 
-/* Main mac app menu item */
-"_upgrade_for_secure_core" = "для використання Secure Core";
+"_delinquent_title" = "У вашому обліковому записі VPN є несплачені рахунки";
 
-/* MacOS: Button in Upgrade screen */
-"_upgrade_my_plan" = "Передплатити тарифний план";
+"_delinquent_description" = "Ви зможете знову отримати доступ до преміумфункцій після оплати.";
 
-/* Upgrade button in trial modals used in both iOS and MacOS */
-"_upgrade_now" = "Передплатити";
+"_delinquent_reconnection_description" = "Ви зможете знову отримати доступ до преміумфункцій після оплати. А зараз ми встановлюємо з'єднання з найшвидшим БЕЗПЛАТНИМ сервером.";
 
-/* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_server" = "Перепрошуємо, але цей сервер недоступний для вашого тарифного плану. Якщо ви бажаєте отримати доступ до інших серверів, розгляньте можливість підвищення рівня передплати.";
+"_maximum_device_title" = "Ви досягли обмеження кількості пристроїв";
 
-/* iOS & MacOS: text near country or server; MacOS: title of several alerts */
-"_upgrade_required" = "Необхідний тарифний план вищого рівня";
+"_maximum_device_reached_description" = "Від'єднайте інший пристрій, щоб під'єднатися до цього.";
 
-/* (No Comment) */
-"_upgrade_required_securecore_description" = "Функція Secure Core доступна з тарифним планом Plus. Передплатіть зараз, щоб спрямовувати трафік через наші найзахищеніші сервери в країнах, які цінують приватність.";
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Від'єднайте інший пристрій, щоб під'єднатися до цього, або передплатіть %@";
 
-/* iOS: Plan selection during plan upgarde, button insettings screen */
-"_upgrade_subscription" = "Покращити тарифний план";
+"_reconnect_title" = "Триває перепідключення до найшвидшого доступного сервера.";
 
-/* Main mac app menu item */
-"_upgrade_to_plus" = "Покращити до Plus";
+"_subscription_expired_title" = "Ваша передплата тарифного плану VPN завершилась";
 
-/* Plan upgrade unavailable alert */
-"_upgrade_unavailable_body" = "Вашу передплату Proton VPN неможливо змінити в застосунку. Для цього перейдіть на account.protonvpn.com.";
+"_subscription_expired_description" = "Ваша передплата була понижена.";
 
-/* Plan upgrade unavailable alert */
-"_upgrade_unavailable_title" = "Зміна тарифного плану недоступна в програмі";
+"_subscription_expired_reconnection_description" = "Ваша передплата була понижена, тому ми повторно з'єднуємось із найшвидшим доступним сервером.";
 
-/* Menu point in settings screen */
-"_usage_statistics" = "Статистика використання";
+"_subscription_upgrade_title" = "Передплатіть тарифний план знову, щоб користуватись усіма можливостями:";
 
-/* iOS: human verification option select button */
-"_use_captcha_verification" = "Перевірити через CAPTCHA";
+"_subscription_upgrade_option3" = "Додаткові функції: NetShield, Secure Core, Tor, P2P";
 
-/* iOS: human verification option select button */
-"_use_other_email_address" = "Підтвердити електронною поштою";
+"_tier_free" = "Безплатно";
 
-/* (No Comment) */
-"_use_sms_verification" = "Перевірити за допомогою SMS";
+"_tier_plus" = "Plus";
 
-/* Used in sign-in, sign-up and in settings */
-"_username" = "Ім'я користувача";
+"_tier_visionary" = "Visionary";
 
-/* iOS: text in human verification code form */
-"_verification_instructions" = "Код підтвердження було надіслано вам. Будь ласка, введіть його нижче.";
+"_information_title" = "Відомості";
 
-/* iOS setting: after this word actual version and build number are appended */
-"_version" = "Версія";
+"_features_title" = "Функції";
 
-/* MacOS: About window */
-"_version_current" = "Поточна версія:";
+"_performance_title" = "Швидкодія";
 
-/* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
-"_via" = "через";
+"_smart_routing_title" = "Smart Routing";
 
-/* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
-"_via_country" = "через %@";
+"_streaming_title" = "Стримінг";
 
-/* MacOS menu item; iOS setting screen item */
-"_view_logs" = "Переглянути журнал";
+"_p2p_title" = "P2P/BitTorrent";
 
-/* Text in warning screen before actions that will disconnect VPN */
-"_view_toggle_will_cause_disconnect" = "Перемкнувши Secure Core, ваше поточне з'єднання завершиться.";
+"_tor_title" = "Tor";
 
-/* (No Comment) */
+"_server_load_title" = "Навантаження сервера";
+
+"_dw-partner-2022_partners_title" = "Наші партнери";
+
+"_streaming_servers_description" = "З'єднайтеся із сервером Plus у цій країні, щоб розпочати стримінг.";
+
+"_streaming_servers_note" = "Примітка: вимкніть службу розташування та очистьте кеш стримінгових програм, щоб упевнитися, що з'являються нові матеріали.";
+
+"_streaming_servers_extra" = "та інше";
+
+"_feature_free_servers" = "Безплатні сервери";
+
+"_feature_free_servers_description" = "Безпека та приватність для кожного. Безплатні сервери не мають обмежень за обсягом даних, і ми ніколи навмисно не сповільнюватимемо швидкість вашого вебперегляду.";
+
+"_feature_smart_routing_description" = "Ця технологія дозволяє Proton VPN забезпечити вищу швидкість та безпеку у країнах з ускладненим обслуговуванням.";
+
+"_feature_streaming_description" = "Сервери PLUS підтримують стримінг (Netflix, Disney+ тощо) звідусіль у світі.";
+
+"_feature_p2p_description" = "Ці сервери забезпечують найкращу швидкодію для BitTorrent та обміну файлами.";
+
+"_feature_tor_description" = "Спрямовуйте свій інтернет-трафік через мережу Tor. Повільніше, але приватніше.";
+
+"_performance_load_description" = "Сервери з високим навантаженням повільніші за сервери з низьким навантаженням.";
+
+"_performance_load_low" = "Низьке";
+
+"_performance_load_medium" = "Середнє";
+
+"_performance_load_high" = "Високе";
+
+"_locations_all" = "Усі розташування";
+
+"_locations_free" = "Безплатні розташування";
+
+"_locations_plus" = "Розташування Plus";
+
+"_locations_plus" = "Розташування Plus";
+
+"_locations_gateways" = "Шлюзи";
+
+/* Gateways info modals title (both iOS and macOS) */
+"_gateways_modal_title" = "Що таке шлюз?";
+
+/* Gateways info modals text (both iOS and macOS) */
+"_gateways_modal_text" = "VPN шлюз - це безпечне з'єднання, яке забезпечує контрольований доступ до даних і послуг вашої компанії через виділені сервери";
+
+"_vpn_accelerator_title" = "VPN Accelerator";
+
 "_vpn_accelerator_change_title" = "Змінити VPN Accelerator";
 
 /* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
@@ -1756,77 +1659,120 @@
 /* Link with more info in the VPN Accelerator description */
 "_vpn_accelerator_description_alt_link" = "Докладніше";
 
-/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
-"_vpn_connection_active" = "VPN-з'єднання активне";
+"_action_requires_reconnect" = "Для застосування змін необхідно перезапустити з'єднання";
 
-/* iOS Settings -> Protocol: screen title */
-"_vpn_protocol" = "VPN протокол";
+"_local_agent_server_error_title" = "Помилка сервера";
 
-/* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
-"_vpn_protocol_not_supported_text" = "Протокол VPN недоступний для обраного вами з'єднання. Спробуйте змінити протокол або сервер.";
+"_local_agent_server_error_message" = "На сервері сталася помилка. Будь ласка, з'єднайтеся з іншим сервером.";
 
-/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
-"_vpn_protocol_not_supported_title" = "Протокол VPN не підтримується";
+"_local_agent_policy_violation_error_title" = "Порушення політики";
 
-/* VPN stuck alert */
-"_vpn_stuck_disconnecting_body" = "Вашому пристрою не вдалося припинити попередній сеанс VPN. Для встановлення нового VPN-з'єднання вам необхідно перезапустити свій пристрій.";
+"_local_agent_policy_violation_error_message" = "Вам не дозволено з'єднання з цим сервером. Оберіть інший сервер чи перейдіть на тарифний план вищого рівня.";
 
-/* VPN stuck alert */
-"_vpn_stuck_disconnecting_title" = "Помилка з'єднання";
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info" = "Завантаження інформації про з'єднання";
 
-/* (No Comment) */
-"_vpnauth_certfail_description" = "Не вдалося оновити сертифікат VPN. Перевірте своє з'єднання";
-
-/* Cert based auth */
-"_vpnauth_certfail_title" = "Помилка автентифікації";
-
-/* (No Comment) */
-"_vpnauth_too_many_certs_description" = "Ви досягли максимальної кількості змін параметрів. Спробуйте знову за кілька хвилин";
-
-/* (No Comment) */
-"_vpnauth_too_many_certs_title" = "Помилка автентифікації";
-
-/* (No Comment) */
-"_vpnstatus_not_loggedin" = "Ви не увійшли в Proton VPN. Відкрийте програму Proton VPN і виконайте вхід.";
-
-/* Used as a title in alerts/modals */
-"_warning" = "Попередження";
-
-/* MacOS: alert shown during login if already connected to VPN */
-"_warning_vpn_session_is_active" = "На цьому пристрої активний сеанс іншого користувача Proton VPN. Продовживши вхід, поточний сеанс завершиться. Хочете продовжити?";
-
-/* Shown on the Welcome screen as the longer screen text */
-"_welcome_body" = "Високошвидкісна швейцарська VPN, що захищає вашу приватність, шифруючи інтернет-з'єднання.";
-
-/* MacOS welcome screen: description */
-"_welcome_description" = "Дякуємо за користування Proton VPN. Швидко ознайомтеся\nз основними функціями застосунку.";
-
-/* %@ is always 'Proton VPN Plus' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN Plus subscription which gives you: A list of Plus plan-only features follows this text */
-"_welcome_gift_description" = "Ми даруємо вам 7 днів доступу до\nтарифного плану %@, який надає вам:";
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info_for" = "Завантаження інформації про з'єднання для %@";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "Захистіть себе в мережі";
 
-/* MacOS welcome screen: title */
-"_welcome_title" = "ЛАСКАВО ПРОСИМО!";
+/* Shown on the Welcome screen as the longer screen text */
+"_welcome_body" = "Високошвидкісна швейцарська VPN, що захищає вашу приватність, шифруючи інтернет-з'єднання.";
 
-/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
+"_force_upgrade_title" = "Необхідно покращити програму";
+
+"_force_upgrade_message" = "Версія застосунку Proton VPN, якою ви зараз користуєтесь, більше не підтримується. Будь ласка, оновіть його до найновішої версії.";
+
+"login_fetch_vpn_data" = "Налаштування доступу до VPN";
+
+"login_summary_button" = "Почати користуватися Proton VPN";
+
 "_wgks_ks_off" = "Вимкнути Kill Switch";
 
-/* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "iOS віджет";
+"_neks_t2_title" = "Попередження про стабільність Kill Switch";
 
-/* iOS Settings: WireGuard logs row */
-"_wireguard_logs" = "Журнал WireGuard";
+"_neks_t2_hyperlink" = "Чип безпеки T2";
 
-/* MacOS: text in main window */
-"_you_are_not_connected" = "Ви не під'єднані";
+"_neks_t2_description" = "Робота Kill Switch нестабільна на цьому пристрої.\n\nВаш пристрій має чип безпеки T2, що може призвести до проблем зі стабільністю системи, якщо Proton VPN використовує можливості Kill Switch у macOS.";
+
+"_neks_t2_connect" = "Усе одно увімкнути";
+
+"_subuser_alert_title" = "Дякуємо за передплату Business/Visionary";
+
+"_subuser_alert_description1" = "Щоб почати свою подорож у Proton VPN, увімкніть VPN-з'єднання для свого облікового запису або будь-якого іншого підлеглого облікового запису.";
+
+"_subuser_alert_description2" = "Цей крок займе всього кілька хвилин. Після цього ви зможете ввійти в систему і захистити всі свої пристрої.";
+
+"_subuser_alert_description3" = "Наразі для цього облікового запису не ввімкнено VPN-з'єднання. Щоб почати свою подорож з Proton VPN, зв'яжіться з вашим адміністратором.";
+
+"_subuser_alert_enable_connections_button" = "Увімкнути VPN-з'єднання";
+
+"_subuser_alert_login_button" = "Увійти знову";
+
+/* Moderate NAT feature title in Settings */
+"_moderate_nat_title" = "Помірне NAT";
+
+/* Explanation for the Moderate NAT feature shown next to the feature in Settings */
+"_moderate_nat_explanation" = "Помірна NAT вимикає рандомізацію мапінгу локальних адрес. Це може дещо знизити рівень вашої безпеки, але дає змогу користуватися одноранговими застосунками, як-от онлайн-ігри для встановлення прямих з'єднань.\nДокладніше";
+
+/* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
+"_moderate_nat_explanation_link" = "Докладніше";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_enable_title" = "Увімкнути помірне NAT";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_change_title" = "Увімкнути помірне NAT";
+
+/* Clickable label title in the onboarding screen for mac */
+"_settings_mac_telemetry_learn_more" = "Докладніше";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_usage_stats" = "Діліться анонімною статистикою використання. Це допомагає нам обходити блокування VPN і вдосконалювати швидкодію програми.";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_crash_reports" = "Надсилайте анонімні звіти про збої. Це допомагає нам виправляти помилки, виявляти мережеві екрани та уникати блокування VPN.";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_usage_stats_title" = "Анонімна статистика використання";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_usage_stats_tooltip" = "Дані про використання допомагають нам обходити блокування VPN і вдосконалювати швидкодію програми.";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_crash_reports_title" = "Анонімні звіти про збої";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_crash_reports_tooltip" = "Звіти про збої допомагають нам виправляти помилки, виявляти мережеві екрани та уникати блокування VPN.";
+
+/* Section title in Settings */
+"_advanced" = "Додатково";
+
+/* Non-standard ports feature title in Settings */
+"_non_standard_ports_title" = "Нестандартні порти";
+
+/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
+"_non_standard_ports_explanation" = "Використовуйте Proton VPN для будь-яких особливих потреб, дозволяючи трафік до нестандартних портів через мережу VPN. \nДокладніше";
+
+/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
+"_non_standard_ports_explanation_link" = "Докладніше";
+
+/* Title for alert shown when enabling Non-standard ports requires reconnection */
+"_non_standard_ports_change_title" = "Увімкнути нестандартні порти";
+
+/* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
+"proton_website_unreachable" = "Вебсайт Proton VPN може бути тимчасово недоступний через мережеві обмеження. Скористайтеся мобільним застосунком, щоб створити новий обліковий запис Proton.";
+
+/* Title of the Use coupon button in Settings */
+"use_coupon" = "Використати купон";
+
+/* Title of the screen to apply a coupon */
+"coupon_code" = "Код купону";
 
 /* Button to apply coupon */
 "apply_coupon" = "Застосувати";
-
-/* Button to confirm two-factor or recovery code in login */
-"authenticate" = "Автентифікація";
 
 /* Banner shown after coupon is applied */
 "coupon_applied" = "Купон використано успішно.";
@@ -1834,42 +1780,76 @@
 /* Banner shown after coupon is applied but the plan is not yet upgraded */
 "coupon_applied_plan_not_upgraded_yet" = "Купон успішно застосовано. Ваша передплата буде покращена протягом кількох хвилин.";
 
-/* Title of the screen to apply a coupon */
-"coupon_code" = "Код купону";
-
-/* (No Comment) */
-"login_fetch_vpn_data" = "Налаштування доступу до VPN";
-
-/* (No Comment) */
-"login_summary_button" = "Почати користуватися Proton VPN";
-
-/* Error message shown when tryng to log in with an unsupported method */
-"login_unsupported_state" = "Неправильний метод входу. Зв'яжіться з підтримкою.";
-
-/* Description of user account update screen part 1 */
-"maximum_device_plan_limit_part_1" = "Від'єднайте інший пристрій, щоб під'єднатися до цього або передплатіть %@";
-
-/* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
-"proton_website_unreachable" = "Вебсайт Proton VPN може бути тимчасово недоступний через мережеві обмеження. Скористайтеся мобільним застосунком, щоб створити новий обліковий запис Proton.";
-
-/* Placeholder for the Recovery code text field */
-"recovery_code" = "Код відновлення";
-
 /* Title for the Two-factor authentication screen */
 "two_factor_authentication" = "Двоетапна перевірка";
 
 /* Placeholder for the Two Factor text field */
 "two_factor_code" = "Код двоетапної перевірки";
 
-/* Title of the Use coupon button in Settings */
-"use_coupon" = "Використати купон";
+/* Title for the button to switch to entering two-factor code */
+"use_two_factor_code" = "Використати код двоетапної перевірки";
+
+/* Placeholder for the Recovery code text field */
+"recovery_code" = "Код відновлення";
 
 /* Title for the button to switch to entering recovery code */
 "use_recovery_code" = "Використати код відновлення";
 
-/* Title for the button to switch to entering two-factor code */
-"use_two_factor_code" = "Використати код двоетапної перевірки";
+/* Button to confirm two-factor or recovery code in login */
+"authenticate" = "Автентифікація";
+
+/* Error message shown when tryng to log in with an unsupported method */
+"login_unsupported_state" = "Неправильний метод входу. Зв'яжіться з підтримкою.";
 
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "Налаштування %@ не може бути змінено. Повторіть спробу пізніше або під'єднайтеся до іншого сервера";
 
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
+"netshield_stats_hint_ads" = "Рекламні вебсайти використовують куки та елементи стеження, щоб персоналізувати вас.";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
+"netshield_stats_hint_trackers" = "Елементи стеження – це сторонні вебсайти, які збирають, зберігають і продають дані про вашу діяльність в інтернеті.";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
+"netshield_stats_hint_data" = "Орієнтовний розмір рекламних оголошень, елементів стеження та зловмисних програм, заблокованих NetShield.";
+
+"_netshield_stats_data_saved" = "Заощаджено\nданих";
+
+/* The count of trackers/ads blocked in thousands */
+"_netshield_stats_blocked_K" = "%@ K";
+
+/* The count of trackers/ads blocked in millions */
+"_netshield_stats_blocked_M" = "%@ M";
+
+/* The count of trackers/ads blocked in billions */
+"_netshield_stats_blocked_G" = "%@ G";
+
+/* The count of trackers/ads blocked in trillions */
+"_netshield_stats_blocked_T" = "%@ T";
+
+/* The count of trackers/ads blocked in quadrillions */
+"_netshield_stats_blocked_P" = "%@ P";
+
+/* The count of trackers/ads blocked in sextillions */
+"_netshield_stats_blocked_E" = "%@ E";
+
+/* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
+"_alert_protocol_deprecated_title" = "Протокол недоступний";
+
+/* Body of the deprecated protocol alert on MacOS. Shown when the user attempts to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
+"_alert_protocol_deprecated_body_macos" = "Цей профіль використовує застарілий протокол, який більше не підтримується. Натисніть \"Оновити\", щоб перемикнутися на використання протоколу Smart за замовчуванням. Докладніше";
+
+/* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
+"_alert_protocol_deprecated_link_text" = "Докладніше";
+
+/* Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
+"_alert_protocol_deprecated_body_ios" = "Цей профіль використовує застарілий протокол, який більше не підтримується. Натисніть \"Оновити\", щоб перемкнутися на використання протоколу Smart за замовчуванням.";
+
+/* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
+"_alert_protocol_deprecated_enable_smart" = "Оновити";
+
+/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser*/ */
+"_alert_protocol_deprecated_learn_more" = "Докладніше";
+
+/* Text for the 'Close' action of the deprecated protocol alert. */
+"_alert_protocol_deprecated_close" = "Закрити";

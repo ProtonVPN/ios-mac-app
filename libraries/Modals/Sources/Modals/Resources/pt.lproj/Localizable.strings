@@ -1,14 +1,102 @@
-/* Description of user account update screen */
-"delinquent_description" = "Poderá voltar a aceder a funcionalidades especiais após liquidar as facturas pendentes.";
+/* Upgrade plan button title */
 
-/* Title of user account update screen */
-"delinquent_title" = "A sua conta VPN tem facturas pendentes";
+"modals_get_plus" = "Alterar a subscrição";
 
-/* Header of the view containing information about the server, from which the user will be disconnected */
-"from_server_title" = "Do servidor:";
+/* Dismiss upsell screen button title */
+"modals_upsell_stay_free" = "Agora não";
 
-/* Title of user account update screen */
-"maximum_device_title" = "Atingiu o seu limite máximo de dispositivos";
+/* Footer of the All Countries upsell screen */
+"modals_upsell_features_footer" = "E muitas mais funcionalidades premium";
+
+/* Subtitle of All Countries, NetShield and Secure Core upsell screens */
+"modals_upsell_features_subtitle" = "Quando actualizar para o VPN Plus";
+
+/* Subtitle of the Safe Mode upsell screen */
+"modals_upsell_features_safe_mode_subtitle" = "Tem necessidades informáticas avançadas ou profissionais que requerem portas não standard?\n\nActualize para o VPN Plus para aceder a esta e outras funcionalidades premium.";
+
+/* Learn more button title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_learn_more" = "Saiba mais";
+
+/* Subtitle of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_subtitle" = "O NAT moderado, também conhecido como NAT Tipo 2, pode melhorar a sua experiência em linha com várias aplicações e jogos de vídeo em linha.\n\nDesbloqueie esta e outras funcionalidades com um plano Plus.";
+
+/* Title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_title" = "Permitir tráfego em portas incomuns";
+
+/* Title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_title" = "Ativar NAT moderado";
+
+/* Learn more button title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_learn_more" = "O que é o NAT moderado?";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_streaming" = "Aceda a serviços de streaming globais";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_highSpeed" = "Navegue na velocidade máxima (10 Gbps)";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_netshield" = "Bloqueie publicidades e malware com o NetShield";
+
+/* Title of the NetShield upsell screen */
+"modals_upsell_net_shield_title" = "Desfrute de uma navegação sem publicidades com o NetShield";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_ads" = "Bloqueie publicidades e rastreadores";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_malware" = "Proteja o seu dispositivo do malware";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_highSpeed" = "Navegue na velocidade máxima";
+
+/* Title of the Secure Core upsell screen */
+"modals_upsell_secure_core_title" = "Duplique a encriptação com o Secure Core";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_route" = "Encaminhe através dos servidores ultra seguros na Suíça, Suécia e Islândia";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_layer" = "Adicione outra camada de encriptação à sua ligação VPN";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_attacks" = "Proteja-se de ataques na rede";
+
+/* Title of the No Logs screen */
+"modals_no_logs_title" = "Sem registos e sediado na Suíça";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_privacy_first" = "Proton VPN é privacidade em primeiro lugar";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_log_activity" = "Não registamos a sua atividade na Internet";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_third_parties" = "Não partilhamos nenhum dado com terceiros";
+
+/* Learn more of the No Logs screen */
+"modals_no_logs_external_audit" = "A política rigorosa estrita sem diários do Proton VPN é certificada por uma auditoria externa.";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "Uma nota sobre velocidade...";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "O Secure Core oferece o mais alto nível de segurança e privacidade, mas poderá reduzir a velocidade da sua internet. Se precisar de mais desempenho, poderá desabilitar o Secure Core.";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "Não mostrar novamente";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "Ativar Secure Core";
+
+/* Title of the New Brand screen */
+"new_plans_brand_title" = "Proton actualizado, proteção unificada";
+
+/* Subtitle of the New Brand screen */
+"new_plans_brand_subtitle" = "Apresentando o visual actualizado do Proton.\nMuitos serviços, uma missão. Bem-vindo a uma internet onde a privacidade vem predefinida.";
+
+/* Title of "done" button in New Brand screen */
+"new_plans_brand_got_it" = "Entendido";
 
 /* Common button title */
 "modals_common_cancel" = "Cancelar";
@@ -19,41 +107,14 @@
 /* Common button title */
 "modals_common_next" = "Seguinte";
 
-/* Upgrade plan button title */
-"modals_get_plus" = "Actualizar";
-
-/* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_netshield" = "Bloqueie publicidades e malware com o NetShield";
-
-/* Learn more button title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_learn_more" = "Saiba mais";
-
-/* Dismiss upsell screen button title */
-"modals_upsell_stay_free" = "Agora não";
-
-/* Title of "done" button in New Brand screen */
-"new_plans_brand_got_it" = "Percebi";
-
-/* Title of the New Brand screen */
-"new_plans_brand_title" = "Proton atualizado, proteção unificada";
-
-/* Description of user account update screen */
-"subscription_expired_description" = "A sua subscrição regrediu.";
-
-/* Description of user account update screen */
-"subscription_expired_reconnection_description" = "A sua subscrição regrediu, estamos a ligar ao servidor mais rápido disponível.";
-
-/* Title of user account update screen */
-"subscription_expired_title" = "O seu plano de subscrição VPN expirou";
-
-/* Feature list element in user account update screen */
-"subscription_upgrade_option3" = "Funcionalidades avançadas: NetShield, Secure Core, Tor, P2P";
+/* Header of the view containing information about the server, from which the user will be disconnected */
+"from_server_title" = "Do servidor:";
 
 /* Header of the view containing information about the server, to which the user will be connected */
 "to_server_title" = "Para o servidor:";
 
 /* Button action title in user account update screen */
-"update_billing" = "Actualizar a minha facturação";
+"update_billing" = "Actualizar a minha faturação";
 
 /* Button action title in user account update screen */
 "upgrade_again" = "Actualizar novamente";
@@ -61,3 +122,32 @@
 /* Button action title in user account update screen */
 "upgrade_no_thanks" = "Não, obrigado";
 
+/* Title of user account update screen */
+"subscription_expired_title" = "O seu plano de subscrição VPN expirou";
+
+/* Description of user account update screen */
+"subscription_expired_reconnection_description" = "A sua subscrição foi alterada. Estamos a ligar ao servidor mais rápido disponível.";
+
+/* Description of user account update screen */
+"subscription_expired_description" = "A sua subscrição foi alterada.";
+
+/* Feature list element in user account update screen */
+"subscription_upgrade_option3" = "Funcionalidades avançadas: NetShield, Secure Core, Tor, P2P";
+
+/* Title of user account update screen */
+"delinquent_title" = "A sua conta VPN tem faturas pendentes";
+
+/* Description of user account update screen */
+"delinquent_reconnection_description" = "Poderá aceder novamente a funcionalidades premium após estas serem pagas. Por agora, estamos a ligar ao servidor do plano gratuito mais rápido disponível.";
+
+/* Description of user account update screen */
+"delinquent_description" = "Poderá voltar a aceder a funcionalidades especiais após liquidar as faturas pendentes.";
+
+/* Title of user account update screen */
+"maximum_device_title" = "Atingiu o seu limite máximo de dispositivos";
+
+/* Description of user account update screen part 1*/ */
+"maximum_device_plan_limit_part_1" = "Desligue outro dispositivo para ligar a este ou actualize para %@";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "Desligue outro dispositivo para ligar a este.";

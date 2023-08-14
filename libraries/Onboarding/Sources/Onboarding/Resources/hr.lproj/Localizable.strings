@@ -1,24 +1,68 @@
-/* (No Comment) */
-"onboarding_congratulations" = "Čestitamo";
 
-/* (No Comment) */
-"onboarding_connected_connected_to" = "Povezano s:";
+"onboarding_take_tour" = "Započnite obilazak";
 
-/* (No Comment) */
-"onboarding_connected_title" = "Čestitamo";
-
-/* (No Comment) */
-"onboarding_continue" = "Nastavi";
-
-/* (No Comment) */
-"onboarding_done" = "Gotovo";
-
-/* (No Comment) */
-"onboarding_get_plus" = "Nabavite Plus";
-
-/* (No Comment) */
-"onboarding_next" = "Sljedeće";
-
-/* (No Comment) */
 "onboarding_skip" = "Preskoči";
 
+"onboarding_welcome_title" = "Welcome to Proton VPN";
+
+"onboarding_welcome_subtitle" = "Learn how to get the most out of Proton VPN in just a few seconds";
+
+"onboarding_beprotected_title" = "Be protected everywhere";
+
+"onboarding_beprotected_subtitle" = "Proton VPN supports all devices, including Windows, macOS, and many others.";
+
+"onboarding_unblockstreaming_title" = "Unblock streaming";
+
+"onboarding_unblockstreaming_subtitle" = "Secure access to your favorite content from other countries — Now available on Android TV.";
+
+"onboarding_netshield_title" = "Block ads and much more";
+
+"onboarding_netshield_subtitle" = "Block malware, ads, and trackers in browser and in all apps.";
+
+"onboarding_next" = "Sljedeće";
+
+"onboarding_plus_only" = "Available with Plus";
+
+"onboarding_establish_title" = "Establish your first connection";
+
+"onboarding_establish_note" = "We will connect you to the fastest and most stable server depending on your location.";
+
+"onboarding_establish_connect_now" = "Connect now";
+
+"onboarding_done" = "Gotovo";
+
+"onboarding_connected_title" = "Čestitamo";
+
+"onboarding_connected_subtitle" = "Your connection is protected and you’re ready to browse the web.";
+
+"onboarding_connected_note" = "Safely.";
+
+"onboarding_connected_connected_to" = "Povezano s:";
+
+"onboarding_connected_connect_to_plus" = "Connect to a Plus server";
+
+"onboarding_congratulations" = "Čestitamo";
+
+"onboarding_purchased_note" = "Enjoy the world of privacy.";
+
+"onboarding_get_plus" = "Nabavite Plus";
+
+"onboarding_not_connected_subtitle" = "You’re ready to browse the web.";
+
+"onboarding_not_connected_error" = "Unable to establish a connection. Please try again later in the app.";
+
+"onboarding_continue" = "Nastavi";
+
+"onboarding_telemetry_title" = "Help us fight censorship";
+
+"onboarding_usage_stats_title" = "Share anonymous usage statistics";
+
+"onboarding_usage_stats_description" = "Usage data helps us overcome VPN blocks and improve app performance.";
+
+"onboarding_crash_reports_title" = "Share anonymous crash reports";
+
+"onboarding_crash_reports_description" = "Crash reports help us fix bugs, detect firewalls, and avoid VPN blocks.";
+
+"onboarding_footer" = "These statistics do not contain your IP address, and they cannot be used to identify you. We'll never share them with third parties.";
+
+"onboarding_footer_learn_more" = "Saznajte više";

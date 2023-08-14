@@ -1,14 +1,102 @@
-/* Description of user account update screen */
-"delinquent_description" = "پس از پرداخت شدن این‌ها شما دوباره قادر به دسترسی به قابلیت‌های ویژه خواهید بود.";
+/* Upgrade plan button title */
 
-/* Title of user account update screen */
-"delinquent_title" = "حساب کاربری VPN شما دارای صورت‌حساب‌های در حال انتظار است";
+"modals_get_plus" = "ارتقا";
 
-/* Header of the view containing information about the server, from which the user will be disconnected */
-"from_server_title" = "از سرور:";
+/* Dismiss upsell screen button title */
+"modals_upsell_stay_free" = "الان نه";
 
-/* Title of user account update screen */
-"maximum_device_title" = "شما به حداکثر محدودیت دستگاه خود رسیدید";
+/* Footer of the All Countries upsell screen */
+"modals_upsell_features_footer" = "و بسیاری از ویژگی‌های دیگر";
+
+/* Subtitle of All Countries, NetShield and Secure Core upsell screens */
+"modals_upsell_features_subtitle" = "زمانی که شما به VPN Plus ارتقا دهید";
+
+/* Subtitle of the Safe Mode upsell screen */
+"modals_upsell_features_safe_mode_subtitle" = "Have advanced or professional computing needs that require non-standard ports?\n\nUpgrade to VPN Plus to access this and other premium features.";
+
+/* Learn more button title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_learn_more" = "بیشتر بدانید";
+
+/* Subtitle of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_subtitle" = "Moderate NAT، که به عنوان NAT نوع ۲ نیز شناخته می‌شود، می‌تواند تجربهٔ آنلاین شما را با برنامه‌های متفاوت و بازی‌های ویدئویی آنلاین بهبود ببخشد.\n\n این قابلیت را به همراه قابلیت‌های دیگر با یک طرح Plus باز کنید.";
+
+/* Title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_title" = "امکان عبور ترافیک از پورت‌های غیر استاندارد";
+
+/* Title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_title" = "فعال سازی Moderate NAT";
+
+/* Learn more button title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_learn_more" = "Moderate NAT چیست؟";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_streaming" = "دسترسی به سرویس‌های استریم جهانی";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_highSpeed" = "با بالاترین سرعت وبگردی کنید (10 گیگابیت بر ثانیه)";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_netshield" = "مسدود کردن تبلیغات و بدافزارها با NetShield";
+
+/* Title of the NetShield upsell screen */
+"modals_upsell_net_shield_title" = "با NetShield از وبگردی بدون تبلیغات لذت ببرید";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_ads" = "مسدود کردن تبلیغات و ردیاب‌ها";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_malware" = "دستگاه خود را از بدافزارها محافظت کنید";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_highSpeed" = "با بالاترین سرعت وبگردی کنید";
+
+/* Title of the Secure Core upsell screen */
+"modals_upsell_secure_core_title" = "با Secure Core رمزنگاری را دوبرابر کنید";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_route" = "ارتباط از طریق سرورهای فوق امن در سوییس، سوئد و ایسلند";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_layer" = "اضافه کردن یک لایه دیگر رمزنگاری به ارتباط VPN شما";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_attacks" = "از خودتان در برابر حملات شبکه محافظت کنید";
+
+/* Title of the No Logs screen */
+"modals_no_logs_title" = "بدون ثبت رویداد و مستقر در سوییس";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_privacy_first" = "برای Proton VPN امنیت شما مهمترین است";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_log_activity" = "ما فعالیت آنلاین شما را ثبت نمیکنیم";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_third_parties" = "ما اطلاعات شما را در اختیار دیگران قرار نمی دهیم";
+
+/* Learn more of the No Logs screen */
+"modals_no_logs_external_audit" = "سیاست سختگیرانه عدم ثبت رویداد Proton VPN توسط بازرسی خارج از سازمان گواهی شده است.";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "نکته‌ای دربارهٔ سرعت...";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "فناوری Secure Core بالاترین سطح امنیت و حریم خصوصی را ارائه می‌دهد، اما ممکن است سرعت اینترنت شما را کاهش دهد. اگر به کارایی بیشتری احتیاج دارید، می‌توانید Secure Core را غیرفعال کنید.";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "دوباره نشان نده";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "فعال کردن Secure Core";
+
+/* Title of the New Brand screen */
+"new_plans_brand_title" = "Proton به روز شده، محافظت یکپارچه";
+
+/* Subtitle of the New Brand screen */
+"new_plans_brand_subtitle" = "Introducing Proton’s refreshed look.\nMany services, one mission. Welcome to an internet where privacy is the default.";
+
+/* Title of "done" button in New Brand screen */
+"new_plans_brand_got_it" = "فهمیدم";
 
 /* Common button title */
 "modals_common_cancel" = "لغو";
@@ -19,44 +107,8 @@
 /* Common button title */
 "modals_common_next" = "بعدی";
 
-/* Positive user action on Secure Core discouragement screen */
-"modals_discourage_secure_core_activate" = "فعال کردن Secure Core";
-
-/* Subtitle of the Secure Core discouragement screen */
-"modals_discourage_secure_core_subtitle" = "فناوری Secure Core بالاترین سطح امنیت و حریم خصوصی را ارائه می‌دهد، اما ممکن است سرعت اینترنت شما را کاهش دهد. اگر به کارایی بیشتری احتیاج دارید، می‌توانید Secure Core را غیرفعال کنید.";
-
-/* Upgrade plan button title */
-"modals_get_plus" = "ارتقا";
-
-/* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_netshield" = "مسدود کردن تبلیغات و بدافزارها با NetShield";
-
-/* Learn more button title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_learn_more" = "بیشتر بدانید";
-
-/* Title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_title" = "امکان عبور ترافیک از پورت‌های غیر استاندارد";
-
-/* Dismiss upsell screen button title */
-"modals_upsell_stay_free" = "الان نه";
-
-/* Title of "done" button in New Brand screen */
-"new_plans_brand_got_it" = "فهمیدم";
-
-/* Title of the New Brand screen */
-"new_plans_brand_title" = "Proton به روز شده، محافظت یکپارچه";
-
-/* Description of user account update screen */
-"subscription_expired_description" = "اشتراک شما تنزل یافته است.";
-
-/* Description of user account update screen */
-"subscription_expired_reconnection_description" = "اشتراک شما تنزل یافته است، بنابراین ما در حال اتصال اتصال دوباره به سریع‌ترین سرور موجود هستیم.";
-
-/* Title of user account update screen */
-"subscription_expired_title" = "اشتراک VPN شما به پایان رسیده است";
-
-/* Feature list element in user account update screen */
-"subscription_upgrade_option3" = "قابلیت‌های پیشرفته: NetShield, Secure Core, Tor, P2P";
+/* Header of the view containing information about the server, from which the user will be disconnected */
+"from_server_title" = "از سرور:";
 
 /* Header of the view containing information about the server, to which the user will be connected */
 "to_server_title" = "به سرور:";
@@ -70,3 +122,32 @@
 /* Button action title in user account update screen */
 "upgrade_no_thanks" = "نه متشکرم";
 
+/* Title of user account update screen */
+"subscription_expired_title" = "اشتراک VPN شما به پایان رسیده است";
+
+/* Description of user account update screen */
+"subscription_expired_reconnection_description" = "اشتراک شما تنزل یافته است، بنابراین ما در حال اتصال اتصال دوباره به سریع‌ترین سرور موجود هستیم.";
+
+/* Description of user account update screen */
+"subscription_expired_description" = "اشتراک شما تنزل یافته است.";
+
+/* Feature list element in user account update screen */
+"subscription_upgrade_option3" = "قابلیت‌های پیشرفته: NetShield, Secure Core, Tor, P2P";
+
+/* Title of user account update screen */
+"delinquent_title" = "حساب کاربری VPN شما دارای صورت‌حساب‌های در حال انتظار است";
+
+/* Description of user account update screen */
+"delinquent_reconnection_description" = "بعد از خریداری دوباره قادر خواهید بود تا از امکانات ویژه استفاده کنید. فعلا شما را به سریع ترین سرور موجود طرح رایگان متصل میکنیم.";
+
+/* Description of user account update screen */
+"delinquent_description" = "پس از پرداخت شدن این‌ها شما دوباره قادر به دسترسی به قابلیت‌های ویژه خواهید بود.";
+
+/* Title of user account update screen */
+"maximum_device_title" = "شما به حداکثر محدودیت دستگاه خود رسیدید";
+
+/* Description of user account update screen part 1*/ */
+"maximum_device_plan_limit_part_1" = "لطفا ارتباط دستگاه دیگری را قطع کنید تا این دستگاه متصل شود یا طرح خود را به %@ ارتقا دهید";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "لطفا ارتباط دستگاه دیگری را قطع کنید تا این دستگاه متصل شود.";

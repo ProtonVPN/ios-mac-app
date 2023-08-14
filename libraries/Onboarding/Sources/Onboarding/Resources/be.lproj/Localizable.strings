@@ -1,3 +1,68 @@
-/* (No Comment) */
-"onboarding_unblockstreaming_subtitle" = "Secure access to your favorite content from other countries — Now available on Android TV.";
 
+"onboarding_take_tour" = "Пачаць знаёмства";
+
+"onboarding_skip" = "Прапусціць";
+
+"onboarding_welcome_title" = "Вітаем у Proton VPN";
+
+"onboarding_welcome_subtitle" = "Даведайцеся за некалькі секунд, як атрымаць максімальную карысць ад Proton VPN";
+
+"onboarding_beprotected_title" = "Будзьце абаронены ў любым месцы";
+
+"onboarding_beprotected_subtitle" = "Proton VPN падтрымлівае ўсе прылады, уключаючы Windows, macOS і іншыя платформы.";
+
+"onboarding_unblockstreaming_title" = "Разблакіраваць трансляцыі";
+
+"onboarding_unblockstreaming_subtitle" = "Бяспечны доступ да вашага ўлюблёнага змесціва з іншых краін цяпер даступны і на Android TV.";
+
+"onboarding_netshield_title" = "Блакіроўка рэкламы і шмат чаго іншага";
+
+"onboarding_netshield_subtitle" = "Блакіруе шкодныя праграмы, рэкламу, праграмы сачэння ў браўзерах і ў ва ўсіх праграмах.";
+
+"onboarding_next" = "Далей";
+
+"onboarding_plus_only" = "Даступна з Plus";
+
+"onboarding_establish_title" = "Усталюйце ваша першае падключэнне";
+
+"onboarding_establish_note" = "Мы падключым вас да самага хуткага і стабільнага сервера ў залежнасці ад вашага размяшчэння.";
+
+"onboarding_establish_connect_now" = "Падключыць";
+
+"onboarding_done" = "Гатова";
+
+"onboarding_connected_title" = "Віншуем";
+
+"onboarding_connected_subtitle" = "Ваша падключэнне абаронена і ўсё гатова для прагляду старонак у інтэрнэце.";
+
+"onboarding_connected_note" = "Бяспечна.";
+
+"onboarding_connected_connected_to" = "Падключана да:";
+
+"onboarding_connected_connect_to_plus" = "Падключыцеся да сервера Plus";
+
+"onboarding_congratulations" = "Віншуем";
+
+"onboarding_purchased_note" = "Далучыцеся да свету прыватнасці.";
+
+"onboarding_get_plus" = "Перайсці на Plus";
+
+"onboarding_not_connected_subtitle" = "Усё гатова для прагляду старонак у інтэрнэце.";
+
+"onboarding_not_connected_error" = "Немагчыма ўсталяваць падключэнне. Паспрабуйце яшчэ раз пазней у праграме.";
+
+"onboarding_continue" = "Працягнуць";
+
+"onboarding_telemetry_title" = "Дапамажыце нам змагацца з цэнзурай";
+
+"onboarding_usage_stats_title" = "Абагульванне ананімнай статыстыкі выкарыстання";
+
+"onboarding_usage_stats_description" = "Даныя аб выкарыстанні дапамагаюць нам пераадольваць блакіроўкі VPN і паляпшаць прадукцыйнасць праграмы.";
+
+"onboarding_crash_reports_title" = "Абагульванне ананімных справаздач пра збоі";
+
+"onboarding_crash_reports_description" = "Справаздачы пра збоі дапамагаюць нам выпраўляць памылкі, вызначаць міжсеткавыя экраны, а таксама пазбягаць блакіроўкі VPN.";
+
+"onboarding_footer" = "Гэта статыстыка не змяшчае ваш IP-адрас і яна не будзе выкарыстана, каб ідэнтыфікаваць вас. Мы ніколі не перадаём яе староннім асобам.";
+
+"onboarding_footer_learn_more" = "Даведацца больш";

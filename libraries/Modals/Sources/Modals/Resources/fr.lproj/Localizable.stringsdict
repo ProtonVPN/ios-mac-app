@@ -1,97 +1,97 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>maximum_device_plan_limit_part_2</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string> pour connecter jusqu'à %#@num_devices@ appareils en même temps.</string>
-		<key>num_devices</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d appareil</string>
-			<key>other</key>
-			<string>%d appareils</string>
-		</dict>
-	</dict>
-	<key>modals_upsell_all_countries_feature_multipleDevices</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>Connectez jusqu'à %d appareil à la fois</string>
-			<key>other</key>
-			<string>Connectez jusqu'à %d appareils à la fois</string>
-		</dict>
-	</dict>
-	<key>modals_upsell_all_countries_title</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>Accédez à plus de %#@num_servers@ dans %#@num_countries@</string>
-		<key>num_countries</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d pays</string>
-			<key>other</key>
-			<string>%d pays</string>
-		</dict>
-		<key>num_servers</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d serveur sécurisé</string>
-			<key>other</key>
-			<string>%d serveurs sécurisés</string>
-		</dict>
-	</dict>
-	<key>subscription_upgrade_option1</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>Des centaines de serveurs dans %#@num_countries@</string>
-		<key>num_countries</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d pays</string>
-			<key>other</key>
-			<string>%d pays</string>
-		</dict>
-	</dict>
-	<key>subscription_upgrade_option2</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>Connectez jusqu'à %#@num_devices@ en même temps</string>
-		<key>num_devices</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d appareil</string>
-			<key>other</key>
-			<string>%d appareils</string>
-		</dict>
-	</dict>
-</dict>
+  <dict>
+    <key>maximum_device_plan_limit_part_2</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string> pour connecter jusqu'à %#@num_devices@ en même temps.</string>
+      <key>num_devices</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d appareil</string>
+        <key>other</key>
+        <string>%d appareils</string>
+      </dict>
+    </dict>
+    <key>subscription_upgrade_option2</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Connectez jusqu'à %#@num_devices@ en même temps</string>
+      <key>num_devices</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d appareil</string>
+        <key>other</key>
+        <string>%d appareils</string>
+      </dict>
+    </dict>
+    <key>subscription_upgrade_option1</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Des centaines de serveurs dans %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d pays</string>
+        <key>other</key>
+        <string>%d pays</string>
+      </dict>
+    </dict>
+    <key>modals_upsell_all_countries_title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Accédez à plus de %#@num_servers@ dans %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>one</key>
+        <string>%d pays</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d pays</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>one</key>
+        <string>%d serveur sécurisé</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d serveurs sécurisés</string>
+      </dict>
+    </dict>
+    <key>modals_upsell_all_countries_feature_multipleDevices</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>one</key>
+        <string>Connectez %d appareil</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Connectez jusqu'à %d appareils en même temps</string>
+      </dict>
+    </dict>
+  </dict>
 </plist>

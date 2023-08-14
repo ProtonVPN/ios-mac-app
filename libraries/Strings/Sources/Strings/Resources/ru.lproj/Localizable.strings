@@ -1,35 +1,1024 @@
-/* (No Comment) */
-"_5_connections" = "5 подключений";
+/* Common word */
 
-/* (No Comment) */
-"_5_connections_description" = "Подключение до 5 устройств\nодновременно";
+"_cancel" = "Отмена";
+
+/* Common word */
+"_connect" = "Подключиться";
+
+/* Common word */
+"_connected" = "Подключено";
+
+/* Common word */
+"_delete" = "Удалить";
+
+/* Common word */
+"_disconnect" = "Отключиться";
+
+/* Common word */
+"_disconnected" = "Отключён";
+
+/* Status of VPN connection reported by Siri */
+"_disconnecting" = "Отключение";
+
+/* Common word */
+"_done" = "Готово";
+
+/* Common word */
+"_edit" = "Редактировать";
+
+/* Common word */
+"_ok" = "ОК";
+
+/* Common word */
+"_save" = "Сохранить";
+
+/* Common word */
+"_unavailable" = "Недоступно";
+
+/* Description of the expand/collapse button used by accessibility Voice Over */
+"_expand_list_of_servers" = "Развернуть список серверов";
+
+"_collapse_list_of_servers" = "Свернуть список серверов";
+
+/* Used as a title in alerts/modals */
+"_warning" = "Внимание";
+
+/* Button in many places in both iOS and MacOS apps */
+"_upgrade" = "Улучшить";
+
+/* iOS: Plan selection during plan upgarde, button insettings screen */
+"_upgrade_subscription" = "Улучшить подписку";
+
+/* MacOS: Settings -> Account. Button leading to web interface. */
+"_manage_subscription" = "Управление подпиской";
+
+/* iOS & MacOS: text near country or server; MacOS: title of several alerts */
+"_upgrade_required" = "Требуется обновление";
+
+/* MacOS: voice over indication for a country or server on maintenance*/ */
+"_on_maintenance" = "На техобслуживании";
+
+"_reconnection_required" = "Требуется переподключение";
+
+/* Server status in many places in iOS and MacOS apps */
+"_maintenance" = "Техобслуживание";
+
+/* MacOS: quit application button in custom status menu */
+"_quit" = "Выход";
+
+/* MacOS: alert show before quitting app if VPN is connected */
+"_quit_warning" = "Закрытие приложения приведет к отключению активного VPN-соединения. Вы хотите продолжить?";
+
+/* Common word */
+"_enabled" = "Включены";
+
+/* Common word */
+"_disabled" = "Отключено";
+
+/* Button in some alerts */
+"_disable" = "Отключить";
+
+/* Button in Kill switch error alert */
+"_report" = "Пожаловаться";
+
+/* Button in Kill switch error alert */
+"_ignore" = "Игнорировать";
+
+"_continue" = "Продолжить";
+
+/* Button in some alerts */
+"_show_instructions" = "Показать инструкции";
+
+/* iOS: quick connect widget */
+"_network_unreachable" = "Сеть недоступна";
+
+/* Title in no internet alert */
+"_not_connected_to_the_internet" = "Невозможно установить подключение к VPN. Вы не подключены к Интернету.";
+
+/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
+"_vpn_connection_active" = "VPN-подключение активно";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
+"_vpn_protocol_not_supported_title" = "Протокол VPN не поддерживается";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
+"_vpn_protocol_not_supported_text" = "Протокол VPN недоступен для выбранного вами подключения. Чтобы подключиться, попробуйте изменить протокол или сервер.";
+
+/* iOS: button in settings screen */
+"_log_out" = "Выйти";
+
+/* iOS: Logout alert */
+"_log_out_warning" = "Выход из системы завершит сеанс VPN.";
+
+/* MacOS: Logout alert */
+"_log_out_warning_long" = "Выход из приложения отключит активное VPN-соединение. Хотите продолжить?";
+
+/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
+"_change_protocol_disconnect_warning" = "Изменение протоколов завершит вашу текущую сессию VPN.";
+
+/* Slogan text under the logo in may places in iOS and MacOS apps */
+"_loading_screen_slogan" = "Безопасный Интернет где угодно";
+
+/* Main mac app menu item */
+"_report_an_issue" = "Сообщить о проблеме...";
+
+/* Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page. */
+"_help" = "Справка";
+
+/* MacOS: link in login screen */
+"_learn_more" = "Подробнее";
+
+/* iOS: Status view */
+"_ip" = "IP";
+
+/* Common word */
+"_close" = "Закрыть";
+
+/* Changing settings title */
+"_change_settings" = "Изменить настройки";
+
+/* Suggest the user to upgrade account for new features */
+"_get_plus_for_feature" = "Подключите Proton VPN Plus для получения этой и других функций.";
+
+/* Display more information */
+"_more_info" = "Подробнее";
+
+/* Display less information */
+"_less_info" = "Меньше информации";
+
+/* Text addressing to contact costumer support on several sites of the app */
+"_contact_our_support" = "Связаться с нашей службой поддержки";
+
+"_turn_on" = "Включить";
+
+"_not_now" = "Не сейчас";
+
+"_allow" = "Разрешить";
+
+/* %@ is an IP address e.g. IP: 123.45.67.890 */
+"_ip_value" = "IP: %@";
+
+/* %@ is an IP address e.g. Public IP: 123.45.67.890 */
+"_public_ip" = "Публичный IP: %@";
+
+/* Several places in both iOS and Mac apps */
+"_quick_connect" = "Быстрое подключение";
+
+/* Used in many places in MacOS app */
+"_secure_core" = "Secure Core";
+
+/* %@ is a country e.g. Secure Core Switzerland */
+"_secure_core_country" = "Secure Core %@";
+
+/* Profile create/edit menu */
+"_country" = "Страна";
+
+"_show_protonvpn" = "Показать Proton VPN";
+
+/* Main mac app menu item */
+"_clear_application_data" = "Удалить данные приложения";
+
+/* Main mac app menu item */
+"_system_extension_tutorial_menu_item" = "Руководство по системным расширениям";
+
+/* MacOS: connecting overlay */
+"_preparing_connection" = "Проверка доступности сервера";
+
+/* iOS: main button in tabbar during connecting to vpn phase */
+"_connecting" = "Подключение";
+
+"_connectingDotDotDot" = "Подключение...";
+
+/* iOS: countries list section header */
+"_countries_free" = "Free страны";
+
+/* iOS: countries list section header */
+"_countries_premium" = "Premium страны";
+
+/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
+"_connecting_vpn" = "Сбой %@";
+
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
+"_connecting_to" = "Подключение к %@";
+
+"_reconnecting_to" = "Переподключение к %@";
+
+/* iOS status view */
+"_connected_to" = "Подключен к";
+
+/* macOS: Text on connection overlay shown after connection timed out */
+"_connection_timed_out" = "Время ожидания подключения истекло";
+
+/* Text that should be bold in _connection_timed_out string */
+"_connection_timed_out_bold" = "время ожидания истекло";
+
+/* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
+"_connected_to_vpn" = "Подключено к %@";
+
+/* iOS: connection bar; Main mac app menu item; */
+"_not_connected" = "Не подключен";
+
+/* MacOS: text in main window */
+"_you_are_not_connected" = "Вы не подключены";
+
+/* MacOS: button in connecting overlay */
+"_try_again" = "Попробовать ещё раз";
+
+"_try_again_without_killswitch" = "Отключите Kill Switch и повторите попытку";
+
+/* Button in some alerts */
+"_retry" = "Повторить";
+
+/* iOS: section header in countries list */
+"_free_servers" = "Серверы Free";
+
+/* iOS: section header in countries list */
+"_plus_servers" = "Серверы Plus";
+
+/* iOS: section header in countries list */
+"_test_servers" = "ТЕСТОВЫЕ серверы";
+
+/* MacOS: connecting overlay */
+"_initializing_connection" = "Инициализация подключения...";
+
+/* MacOS: connecting overlay */
+"_successfully_connected" = "Успешное подключение";
+
+/* MacOS: connecting overlay */
+"_failed" = "подключения";
+
+/* Connection error translation. iOS quick connect widget: text shown on error. */
+"_connection_failed" = "Сбой подключения";
+
+/* iOS status view */
+"_security" = "Безопасность";
+
+/* iOS status view */
+"_status" = "Состояние";
+
+/* iOS status view */
+"_session_time" = "Время сеанса";
+
+/* iOS status view */
+"_location" = "Местоположение";
+
+/* iOS status view */
+"_city" = "Город";
+
+/* iOS status view */
+"_technical_details" = "Техническая информация";
+
+/* Main mac app menu item */
+"_open_app_to_log_in" = "Показать Proton VPN, чтобы войти...";
+
+/* Main mac app menu item */
+"_upgrade_to_plus" = "Улучшить до Plus";
+
+/* Main mac app menu item */
+"_upgrade_for_secure_core" = "использовать Secure Core";
+
+"_switch_side_button_on" = "ВКЛ";
+
+"_switch_side_button_off" = "ВЫКЛ";
+
+/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
+"_timeout_ks_ike_descritpion" = "Возможно, другое приложение мешает работе Kill Switch. Чтобы решить эту проблему, переключитесь на протокол OpenVPN или отключите Kill Switch и повторите попытку.";
+
+/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
+"_timeout_ks_ike_switch_protocol" = "Переключиться на OpenVPN и повторить";
+
+/* Disconnect notification */
+"_kill_switch_blocking_connection" = "Kill Switch блокирует все соединения";
+
+/* Disconnect notification */
+"_always_on_will_reconnect" = "Если приложение Proton VPN включено постоянно, переподключение произойдет автоматически";
 
 /* MacOS: About window title */
 "_about" = "О нас";
 
-/* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
-"_account" = "Аккаунт";
+/* iOS setting: after this word actual version and build number are appended */
+"_version" = "Версия";
 
-/* iOS: Message explaining that deleting account closes the VPN connection */
-"_account_deletion_connection_warning" = "При удалении аккаунта завершится ваш сеанс VPN.";
+/* MacOS: About window */
+"_version_current" = "Текущая версия:";
 
-/* Alert title for account deletion error */
-"_account_deletion_error" = "Ошибка";
+/* MacOS: About window */
+"_release_date" = "Дата выпуска:";
 
-/* MacOS: Settings -> Account: name of field. */
-"_account_plan" = "Тарифный план";
-
-/* MacOS: Settings -> Account: name of field. */
-"_account_type" = "Тип аккаунта";
+/* MacOS: About window */
+"_changelog" = "Список изменений";
 
 /* MacOS: About window */
 "_acknowledgements" = "Благодарности";
 
+/* Used in sign-in, sign-up and in settings */
+"_username" = "Имя пользователя";
+
+/* Used in sign-in, sign-up */
+"_password" = "Пароль";
+
+/* Sign-up form */
+"_password_confirm" = "Подтвердите пароль";
+
+/* Show/hide password switch */
+"_show" = "ПОКАЗАТЬ";
+
+/* Show/hide password switch */
+"_hide" = "СКРЫТЬ";
+
+/* MacOS: Login button */
+"_login" = "Войти";
+
+/* iOS: Login button in several places */
+"_log_in" = "Войти";
+
+/* MacOS: label in login and settings screens */
+"_remember_login" = "Оставаться в системе";
+
+/* MacOS: label in login and settings screens */
+"_start_on_boot" = "Автозапуск при загрузке";
+
+/* MacOS: button in login screen */
+"_create_account" = "Создать аккаунт";
+
+/* MacOS: button in login screen */
+"_need_help" = "Нужна помощь?";
+
+/* MacOS: button in login screen */
+"_reset_password" = "Сбросить пароль";
+
+/* MacOS: button in login screen */
+"_common_issues" = "Частые проблемы при входе";
+
+/* MacOS: button in login screen */
+"_forgot_username" = "Забыл имя пользователя";
+
+/* iOS: button in login screen */
+"_forgot_password" = "Забыли пароль?";
+
+/* iOS: button in login and onboarding screens */
+"_sign_up" = "Регистрация";
+
+/* MacOS: alert shown during login if already connected to VPN */
+"_warning_vpn_session_is_active" = "На этом устройстве уже запущен сеанс Proton VPN другим пользователем. Продолжение входа приведет к завершению текущего сеанса. Хотите продолжить?";
+
+/* iOS: placeholder for email field in signup and email verification screens */
+"_enter_email_address" = "Введите адрес эл. почты";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_country_code_placeholder" = "Код";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_number_placeholder" = "Введите номер телефона";
+
+/* iOS: title of phone country code selection screen */
+"_select_phone_country_code" = "Выберите код страны";
+
+/* iOS: placeholder in phone country code selection screen */
+"_search_phone_country_code_placeholder" = "Поиск по странам";
+
+/* iOS: button for switching from sign-up to sign-in screen */
+"_already_have_account" = "У меня уже есть аккаунт";
+
+/* iOS: Button in email verification screen */
+"_get_verification_email" = "Отправить проверочное письмо эл. почты";
+
+/* iOS: Button in SMS verification screen */
+"_get_verification_sms" = "Получить проверочное СМС";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option" = "Пожалуйста, выберите вариант подтверждения, чтобы продолжить:";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option_top_message" = "Для предотвращения злоупотребления, мы должны убедиться, что вы человек.";
+
+/* iOS: human verification option select button */
+"_use_captcha_verification" = "Проверка с помощью капчи";
+
+/* iOS: human verification option select button */
+"_use_other_email_address" = "Подтвердить с помощью электронной почты";
+
+"_use_sms_verification" = "Подтвердить с помощью СМС";
+
+/* iOS: human verification option select button */
+"_request_invitation" = "Запрос ручной активации";
+
+/* iOS: placeholder for code in human verification code form */
+"_enter_verification_code" = "123 456";
+
+/* iOS: button in human verification code form */
+"_submit_verification_code" = "Отправить";
+
+/* iOS: button in human verification code form */
+"_resend_no_code" = "Не получили код?";
+
+/* iOS: button in human verification code form */
+"_resend_code" = "Запросить новый код";
+
+/* iOS: message after human verification code resending */
+"_resend_success" = "Новый код запрошен";
+
+/* iOS: link inside text under sign-up form */
+"_terms_and_conditions" = "Условиями и положениями";
+
+/* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
+"_terms_and_conditions_disclaimer" = "Используя Proton VPN, вы соглашаетесь с нашими\n%@ и %@";
+
+/* iOS: link inside text under sign-up form */
+"_privacy_policy" = "Политика конфиденциальности";
+
+/* iOS: text in human verification code form */
+"_verification_instructions" = "Вам был отправлен проверочный код, пожалуйста, введите его ниже.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete" = "Настройка завершена";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_free" = "Сейчас вы подписались на тариф Proton VPN Free. Сначала воспользуйтесь семью днями тарифа Proton VPN Plus бесплатно.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_plus" = "Покупка прошла успешно. Ваш тариф Proton VPN Plus теперь активен.";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_title" = "Защитите себя в интернете";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_text" = "Proton VPN обязуется защищать и уважать вашу конфиденциальность. Мы стремимся собирать как можно меньше данных о пользователе, чтобы обеспечить конфиденциальность и анонимность при использовании приложения, а именно:\n\n%@ – для входа в систему, восстановления потерянного пароля и отправки важных обновлений сервиса.\n\n%@ – только для сообщений о сбоях и ошибках.\n\nПриложение Proton VPN не обрабатывает никакой другой информации о пользователе, кроме этих данных. Мы не регистрируем ни вашу активность в Интернете, ни какую-либо персональную информацию. Все перечисленные данные хранятся и обрабатываются в собственной системе Proton VPN, и никакие третьи лица не имеют к ним доступа.";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_user_details" = "Имя пользователя, адрес электронной почты";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_device_details" = "Модель вашего устройства и версия ОС";
+
+/* iOS: data disclaimer screen button */
+"_data_disclaimer_agree" = "Принять и продолжить";
+
+/* iOS: Map screen title and tabbar item */
+"_map" = "Карта";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_show" = "Показать карту";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_hide" = "Скрыть карту";
+
+/* Description shown together with server info icon */
+"_tor_description" = "Подключает к сети TOR";
+
+/* Description shown together with server info icon */
+"_p2p_description" = "Поддержка P2P трафика";
+
+/* Description shown together with server info icon */
+"_premium_description" = "Премиум сервер";
+
+/* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
+"_via_country" = "через %@";
+
+/* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
+"_via" = "через";
+
+/* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
+"_server_load_percentage" = "Нагрузка: %@%%";
+
+/* iOS: Home screen title, tab bar item title; MacOS: TabBar tab title; */
+"_home" = "Домашняя страница";
+
+/* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
+"_countries" = "Страны";
+
+"_no_servers_to_show" = "В настоящее время нет серверов, чтобы показать здесь.";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_plan_does_not_include_secure_core" = "Ваш план не включает в себя функцию Secure Core.";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_learn_more_about_secure_core" = "Узнайте больше о Secure Core";
+
+/* MacOS: placeholder for country search */
+"_search_for_country" = "Поиск страны";
+
+/* MacOS: secure core tooltip */
+"_secure_core_info" = "Предоставляет дополнительную защиту от компрометации VPN-сервера, перенаправляя трафик через нашу сеть Secure Core";
+
+/* Text in warning screen before actions that will disconnect VPN */
+"_view_toggle_will_cause_disconnect" = "Переключение Secure Core завершит ваше текущее подключение.";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_load" = "Нагрузка сервера:";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_ip" = "IP-адрес сервера:";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_auto_assigned" = "Назначается автоматически";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_premium_server" = "Премиум сервер";
+
+/* MacOS profile form: feature selection value */
+"_standard" = "Стандартные";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_p2p" = "P2P";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_tor" = "TOR";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_p2p_server" = "P2P сервер";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_tor_server" = "Tor сервер";
+
+/* MacOS Profiles Overview: Table column header */
+"_profile" = "Профиль";
+
+/* MacOS: menu item, profiles window main header, sidebar tab title; iOS: Profiles screen title and tabbar item title; */
+"_profiles" = "Профили";
+
+/* iOS: table header section in profiles screen */
+"_recommended" = "Рекомендованное";
+
+/* iOS: table header section in profiles screen */
+"_my_profiles" = "Мои профили";
+
+/* Button */
+"_save_as_profile" = "Сохранить как профиль";
+
+/* Button */
+"_delete_profile" = "Удалить профиль";
+
+/* iOS: Success message on profile deletion */
+"_profile_deleted_successfully" = "Профиль был удален";
+
+/* iOS: Error message if profile can't be deleted */
+"_profile_deletion_failed" = "Не удалось удалить профиль";
+
+/* MacOS: Buttons in several places; iOS: profile creation screen title */
+"_create_new_profile" = "Создать профиль";
+
+/* MacOS: button in profiles tab in main window */
+"_manage_profiles" = "Управление профилями";
+
+/* MacOS: profiles window title */
+"_profiles_overview" = "Обзор профилей";
+
+/* iOS: success message after profile is saved */
+"_profile_created_successfully" = "Новый профиль сохранен";
+
+/* iOS: failure message after profile is saved */
+"_profile_creation_failed" = "Не удалось создать профиль";
+
+/* iOS: success message after profile is saved */
+"_profile_edited_successfully" = "Профиль обновлен";
+
+/* MacOS menu item; MacOS Profiles tab title; */
+"_overview" = "Обзор";
+
+/* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
+"_connection" = "Подключение";
+
 /* MacOS Profiles Overview: Table header for buttons column */
 "_action" = "Действия";
 
-/* (No Comment) */
-"_action_requires_reconnect" = "Необходимо перезапустить соединение, чтобы применить это изменение";
+/* Used for both profile description when fastest server option is selected and Plan speed description */
+"_fastest" = "Быстрейший";
+
+/* Profile create/change form */
+"_fastest_available_server" = "Самый быстрый доступный сервер";
+
+/* iOS: Predefined profile with fastest connection */
+"_fastest_connection" = "Самое быстрое подключение";
+
+/* Profile create/change form and other places describing profile */
+"_random" = "Случайный";
+
+/* Profile create/change form */
+"_random_available_server" = "Случайный доступный сервер";
+
+/* iOS: Predefined profile with random server */
+"_random_connection" = "Случайное подключение";
+
+/* Profile create/change form */
+"_different_server_each_time" = "Каждый раз разный сервер";
+
+/* Text used when no active server information is available */
+"_no_description_available" = "Описание отсутствует";
+
+"_create_profile" = "Создать профиль";
+
+/* Profile create/change form */
+"_profile_settings" = "Настройки профиля";
+
+/* Profile create/change form */
+"_connection_settings" = "Параметры подключения";
+
+/* Profile create/change form */
+"_name" = "Имя";
+
+/* Profile create/change form */
+"_enter_profile_name" = "Введите название профиля";
+
+/* Profile create/change form */
+"_color" = "Цвет";
+
+/* Profile create/change form */
+"_make_default_profile" = "Использовать по умолчанию";
+
+/* Profile create/change form */
+"_default_profile_tooltip" = "Кнопка «Быстрое подключение» использует профиль по умолчанию.\n";
+
+"_feature" = "Функция";
+
+/* Profile create/change form */
+"_use_secure_core" = "Secure Core";
+
+/* Profile create/change form */
+"_select_country" = "Выбор страны";
+
+/* Profile create/change form */
+"_server" = "Сервер";
+
+/* Profile create/change form */
+"_select_server" = "Выбор сервера";
+
+/* Error in profile create/change form */
+"_profile_name_is_required" = "Пожалуйста, введите название";
+
+/* Error in profile create/change form */
+"_profile_name_is_too_long" = "Максимальная длина имени профиля - 25 символов";
+
+/* Error when user hasn't selected profile country */
+"_country_selection_is_required" = "Пожалуйста, выберите страну";
+
+/* Error when user hasn't selected profile server */
+"_server_selection_is_required" = "Пожалуйста, выберите сервер";
+
+"_profile_name_needs_to_be_unique" = "Профиль с таким названием уже существует";
+
+/* MacOS: profile creation cancel alert text */
+"_current_selection_will_be_lost" = "Продолжив, вы потеряете текущий выбор. Хотите продолжить?";
+
+/* iOS: new profkle can't be created because not all required fields are filled */
+"_check_if_fields_present" = "Пожалуйста, убедитесь, что все поля заполнены";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_header" = "Удалить профиль";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_warning" = "Профиль будет окончательно удален. Вы хотите продолжить?";
+
+/* iOS: new profile screen */
+"_select_profile_color" = "Выберите цвет профиля";
+
+/* Plan speed */
+"_plan_speed_medium" = "Средняя скорость";
+
+/* Plan speed */
+"_plan_speed_high" = "Высокая скорость";
+
+"_plan_speed_fastest" = "Высочайшая скорость";
+
+/* Unknown error that has no better description */
+"_error_internal_error" = "Внутренняя ошибка API";
+
+/* VPN session is active error */
+"_error_vpn_session_is_active" = "Сеанс Proton VPN активен";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_missing" = "Учетные данные пользователя отсутствуют. Не удается войти в систему";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_expired" = "Истек срок действия учетных данных. Пожалуйста, войдите в систему";
+
+/* VPN credentials can't be loaded error */
+"_error_vpn_credentials_missing" = "Учетные данные VPN отсутствуют в связке ключей";
+
+/* Form validation error */
+"_error_field_required" = "Это обязательное поле";
+
+"_error_field_email_wrong_format" = "Неверный формат адреса эл. почты";
+
+"_error_field_passwords_dont_match" = "Пароли не совпадают";
+
+/* Human validation failed */
+"_error_user_failed_human_validation" = "Мы не смогли убедиться, что вы человек. Повторите попытку или приобретите премиум тарифный план.";
+
+/* Error decoding an object */
+"_error_decode" = "Не удалось декодировать архивные данные в классе: %@";
+
+/* Internal application error */
+"_error_email_verification_disabled" = "Email-подтверждения временно отключены";
+
+/* Error writing to system keychain */
+"_error_keychain_write" = "Proton не смог связаться с вашим устройством. Пожалуйста, повторите попытку позже.";
+
+/* Error when try to parse modulus signature */
+"_error_modulus_signature" = "Пустая сигнатура остатка";
+
+/* Error when generate srp clint */
+"_error_generate_srp" = "Не удалось создать SRP";
+
+/* Error when try to hash password */
+"_error_hash_password" = "Не удалось хэшировать пароль пользователя";
+
+/* Error try to restore user from the session */
+"_error_fetch_session" = "Не удалось найти пользователя сеанса";
+
+/* Network error */
+"_ne_request_timed_out" = "Истекло время ожидания запроса";
+
+/* Network error */
+"_ne_unable_to_connect_to_host" = "Служба недоступна";
+
+/* Network error */
+"_ne_network_connection_lost" = "Потеряно подключение к сети";
+
+/* Network error */
+"_ne_not_connected_to_the_internet" = "Не подключен к Интернету";
+
+/* Network error */
+"_ne_couldnt_reach_server" = "Не удалось подключиться к серверам Proton";
+
+/* API error */
+"_ae_wrong_login_credentials" = "Неправильное имя пользователя или пароль";
+
+/* API error */
+"_ae_vpn_info_not_received" = "Невозможно получить информацию о VPN";
+
+/* Error when try to parse the server info */
+"_error_server_info_parser" = "Не могу разобрать информацию о серверах";
+
+/* Error when try to parse the partner info */
+"_error_partner_info_parser" = "Не удается разобрать информацию о партнере";
+
+/* Default error when vpn properties fetch failed */
+"_error_vpn_properties" = "Не могу достать свойства VPN!";
+
+/* Parsing error */
+"_error_session_count_parser" = "Не могу выполнить разбор счетчика сеансов";
+
+/* Parsing error */
+"_error_loads" = "Не могу обновить данные о нагрузке на сервер";
+
+/* API error */
+"_error_api_offline" = "API Proton VPN в настоящее время отключён";
+
+/* Error when try to parse subscription info */
+"_error_subscription_parser" = "Не могу разобрать информацию о подписке";
+
+/* Error when try to parse verification methods */
+"_error_verification_methods_parser" = "Не могу разобрать методы подтверждения";
+
+/* Keychain error */
+"_error_keychain_fetch" = "Ошибка \"Связки Ключей\".";
+
+/* Error when the app fails to create a user */
+"_error_user_creation" = "Сбой создания аккаунта";
+
+/* General title for several error alerts */
+"_error_unknown_title" = "Неизвестная ошибка";
+
+/* Delinquent user alert */
+"_delinquent_user_title" = "Неоплаченный счет";
+
+/* Delinquent user alert */
+"_delinquent_user_description" = "В вашем аккаунте есть неоплаченный счет. Оплатите все неоплаченные счета на account.protonvpn.com";
+
+/* Generic sign in error */
+"_error_sign_in_again" = "Что-то пошло не так. Попробуйте еще раз.";
+
+"_p2p_detected_popup_title" = "P2P трафик не разрешен на этом сервере";
+
+"_p2p_detected_popup_body" = "Ваше соединение было отключено, потому что вы используете сервер, не поддерживающий трафик peer-to-peer (P2P). P2P не поддерживается на бесплатных серверах или серверах с номером более 100.";
+
+"_p2p_forwarded_popup_title" = "Изменился маршрут подключения";
+
+/* Under maintenance alert */
+"_server_under_maintenance" = "Сервер на обслуживании";
+
+/* macOS: plan upgrade required alert */
+"_upgrade_plan_to_access_server" = "К сожалению, этот сервер недоступен для вашего уровня подписки. Если вы хотите получить доступ к большему количеству серверов, подумайте об обновлении подписки.";
+
+/* Under maintenance alert */
+"_all_servers_in_country_under_maintenance" = "Все серверы в этой стране находятся на техническом обслуживании. Пожалуйста, подключитесь к другой стране.";
+
+"_unsecure_wifi" = "Обнаружено небезопасное подключение к Wi-Fi";
+
+"_unsecure_wifi_learn_more" = "Подробнее";
+
+"_unsecure_wifi_title" = "Обнаружен небезопасный Wi-Fi";
+
+"_maintenance_on_server_detected_title" = "VPN-сервер на техобслуживании";
+
+"_maintenance_on_server_detected_subtitle" = "Сервер, к которому Вы были подключены, на техобслуживании";
+
+"_maintenance_on_server_detected_description" = "Переподключение к самому быстрому доступному серверу.";
+
+/* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
+"_reconnect_on_settings_change_body" = "Необходимо перезапустить соединение, чтобы применить это изменение.";
+
+/* Under maintenance alert */
+"_country_servers_under_maintenance" = "Серверы страны %@ на техобслуживании";
+
+/* Under maintenance alert */
+"_all_servers_in_profile_under_maintenance" = "Серверы, указанные в профиле, сейчас на техобслуживании";
+
+/* Under maintenance alert */
+"_all_servers_under_maintenance" = "Все серверы на техобслуживании. Это обычно означает, что на стороне Proton VPN есть технические трудности или ваша сеть ограничена.";
+
+"_p2p_forwarded_popup_body" = "Ваше соединение было автоматически переадресовано через другой сервер, потому что некоторые серверы не поддерживают P2P трафик. Это может снизить скорость подключения. Пожалуйста, используйте серверы с меткой P2P, чтобы избежать переадресации трафика.";
+
+"_p2p_forwarded_popup_body_p1" = "Ваше соединение было автоматически переадресовано через другой сервер, потому что некоторые серверы не поддерживают P2P трафик. Это может снизить скорость подключения. Пожалуйста, используйте серверы со";
+
+"_p2p_forwarded_popup_body_p2" = "значок, чтобы избежать перенаправления трафика.";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_title" = "Ошибка подключения";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_body" = "Вашему устройству не удалось завершить предыдущий сеанс VPN. Вам нужно перезагрузить устройство, прежде чем вы сможете установить новое подключение к VPN.";
+
+"_update_required" = "Требуется обновление";
+
+"_update_required_no_longer_supported" = "Эта версия Proton VPN больше не поддерживается, пожалуйста, обновите приложение, чтобы продолжить его использование.";
+
+/* Secondary button title in the App update required alert  */
+"_update_required_support" = "Связаться с поддержкой";
+
+/* Primary button title in the App update required alert  */
+"_update_required_update" = "Обновить";
+
+"_invalid_refresh_token_please_login" = "Прошло много времени с тех пор, как вы в последний раз использовали приложение Proton VPN. Пожалуйста, войдите в систему заново.";
+
+"_error_mitm_title" = "Небезопасное соединение";
+
+"_error_mitm_description" = "Сбой проверки TLS-сертификата при подключении к API Proton VPN. Ваше текущее интернет-соединение, возможно, находится под наблюдением. Для сохранения безопасности ваших данных, доступ к Proton VPN API ограничен.\nПереключитесь на другую сеть и попробуйте ещё раз для входа или доступа к вашему аккаунту.";
+
+"_error_mitm_vpn_description" = "Сбой проверки сертификата TLS при попытке подключения к VPN серверу. Ваше текущее подключение к Интернету, возможно, прослушивается. Чтобы защитить ваши данные, мы не позволяем приложению получить доступ к этому VPN серверу.\nПожалуйста, выберите другой сервер.";
+
+/* Internal error message when there is a problem with initializing tls and connection cannot be established. */
+"_error_tls_initialisation" = "Ошибка инициализации TLS";
+
+/* Internal error message when there is a problem with server certificate and connection cannot be established. */
+"_error_tls_server_verification" = "Невозможно проверить сертификат сервера.";
+
+/* Mac: neagent help screen */
+"_neagent_description" = "Вам может быть предложено ввести свой %@,\nчтобы подключиться к службе Proton VPN. Если этот запрос появится,\nвведите свой %@ %@ и нажмите ‘%@’ %@.";
+
+/* Mac: neagent help screen */
+"_neagent_password" = "пароль аккаунта компьютера";
+
+/* Mac: neagent help screen */
+"_mac_password" = "Пароль Mac";
+
+/* Mac: neagent help screen */
+"_neagent_first_step" = "(1)";
+
+/* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
+"_neagent_always_allow" = "Всегда разрешать";
+
+/* Mac: neagent help screen */
+"_neagent_second_step" = "(2)";
+
+/* Button in several different alerts */
+"_got_it" = "Я понял!";
+
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_title" = "Улучшение недоступно в приложении";
+
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_body" = "Ваша подписка Proton VPN не может быть улучшена из приложения. Пожалуйста, посетите account.protonvpn.com для улучшения.";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_title" = "Удаление данных приложения";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_body" = "Все данные Proton VPN будут удалены, после чего приложение будет закрыто. Вы хотите продолжить?";
+
+/* MacOS: killswitch blocking alert button */
+"_kill_switch_disable" = "Отключить Kill Switch";
+
+/* MacOS: Settings screen title */
+"_preferences" = "Настройки";
+
+/* iOS: Settings screen title and tab title */
+"_settings" = "Настройки";
+
+/* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
+"_account" = "Аккаунт";
+
+/* Alert title for account deletion error */
+"_account_deletion_error" = "Ошибка";
+
+/* iOS: Message explaining that deleting account closes the VPN connection */
+"_account_deletion_connection_warning" = "При удалении аккаунта завершится ваш сеанс VPN.";
+
+/* MacOS: General tab in setting window */
+"_general" = "Общие положения";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_type" = "Тип аккаунта";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_plan" = "Тарифный план";
+
+"_manage_subscription_on_web" = "Управляйте своей подпиской в панели управления";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_kill_switch" = "Kill Switch";
+
+/* MacOS: Settings -> Connection. Kill switch functionality description. */
+"_kill_switch_tooltip" = "Блокировка всего сетевого трафика при потере подключения к VPN.";
+
+/* iOS Settings: toggle name */
+"_always_on_vpn" = "VPN постоянно вкл.";
+
+/* iOS Settinsg screen: always-on description under the switch */
+"_always_on_vpn_tooltip_ios" = "Если приложение Proton VPN включено постоянно, восстановление защищенного подключения к VPN при обрывах подключения произойдет быстро и автоматически. Эта функция всегда включена для вашей безопасности.";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_auto_connect" = "Автоподключение";
+
+/* MacOS: Settings -> Connection: description. */
+"_auto_connect_tooltip" = "При запуске приложения, вы подключаетесь к выбранному профилю";
+
+/* MacOS: Settings -> Connection: description. */
+"_quick_connect_tooltip" = "Кнопка «Быстрое подключение» подключит вас к выбранному профилю";
+
+/* MacOS: Settings -> General: name of field. */
+"_start_minimized" = "Запускать в свернутом виде";
+
+/* MacOS: Settings -> General: name of field. */
+"_system_notifications" = "Системные уведомления";
+
+/* MacOS: Settings -> General: name of field. */
+"_early_access" = "Ранний доступ";
+
+/* MacOS: Settings -> General: description. */
+"_early_access_tooltip" = "Первыми получайте самые свежие обновления. Помните, что ранние версии могут быть менее стабильными.";
+
+/* MacOS: Settings -> General: name of field. */
+"_unprotected_network" = "Уведомлять о работе в незащищенной сети";
+
+/* MacOS: Settings -> General: description */
+"_unprotected_network_tooltip" = "Получать уведомление, когда Proton VPN обнаруживает, что вы подключены к незащищенной сети.";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_dns_leak_protection" = "Защита от утечки DNS";
+
+/* MacOS: Settings -> Connection: description. */
+"_dns_leak_protection_tooltip" = "Предотвращает утечку информации о DNS запросах третьим лицам. Нельзя отключить.";
+
+/* iOS Settings: table section header */
+"_security_options" = "Параметры безопасности";
+
+/* iOS Settings -> Connection: name of field. */
+"_subscription_plan" = "План подписки";
+
+/* iOS plan selection: header */
+"_choose_plan" = "Выбор подписки";
+
+"_protocol" = "Протокол";
+
+/* iOS Settings -> Protocol: screen title */
+"_vpn_protocol" = "Протокол VPN";
+
+"_openvpn" = "OpenVPN";
+
+/* iOS Settings -> Protocol: IKEv2 option */
+"_ikev2" = "IKEv2";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: TCP option */
+"_tcp" = "TCP";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: UDP option */
+"_udp" = "UDP";
+
+/* iOS Settings -> Protocol -> WireGuard: TLS option */
+"_tls" = "TLS";
+
+/* iOS Settings -> Protocol: WireGuard option */
+"_wireguard" = "WireGuard";
+
+/* Settings -> Protocol: WireGuard TLS Option called "Stealth". Should not be translated. */
+"_wireguard_tls" = "Stealth";
+
+/* MacOS menu item; iOS setting screen item */
+"_view_logs" = "Просмотреть журналы";
+
+/* iOS logs screen title */
+"_logs" = "Логи";
+
+/* iOS Settings: applications logs row */
+"_application_logs" = "Журналы приложения";
+
+/* iOS Settings: OpenVPN logs row */
+"_open_vpn_logs" = "Журналы OpenVPN";
+
+/* iOS Settings: WireGuard logs row */
+"_wireguard_logs" = "Журнал WireGuard";
 
 /* iOS widget help screen: title */
 "_activate_widget" = "Активировать виджет";
@@ -43,536 +1032,37 @@
 /* iOS widget help screen: text */
 "_activate_widget_step_3" = "Добавить виджет Proton VPN в список активных виджетов.";
 
-/* Plan information */
-"_adblocker_netshield_feature" = "Блокировщик рекламы (NetShield)";
+/* Report bug screen title; iOS settings screen: item; */
+"_report_bug" = "Сообщить о проблеме";
 
-/* Section title in Settings */
-"_advanced" = "Продвинутые";
-
-/* Plan information */
-"_advanced_features" = "+ Дополнительные возможности";
-
-/* API error */
-"_ae_vpn_info_not_received" = "Невозможно получить информацию о VPN";
-
-/* API error */
-"_ae_wrong_login_credentials" = "Неправильное имя пользователя или пароль";
-
-/* Account plan description */
-"_all_countries" = "60+ стран";
-
-/* Under maintenance alert */
-"_all_servers_in_country_under_maintenance" = "Все серверы в этой стране находятся на техническом обслуживании. Пожалуйста, подключитесь к другой стране.";
-
-/* Under maintenance alert */
-"_all_servers_in_profile_under_maintenance" = "Серверы, указанные в профиле, сейчас на техобслуживании";
-
-/* Under maintenance alert */
-"_all_servers_under_maintenance" = "Все серверы на техобслуживании. Это обычно означает, что на стороне Proton VPN есть технические трудности или ваша сеть ограничена.";
-
-/* (No Comment) */
-"_allow" = "Разрешить";
-
-/* (No Comment) */
-"_allow_lan_description" = "Чтобы разрешить доступ к локальной сети, Kill Switch должен быть выключен.\n\nПродолжить?";
-
-/* (No Comment) */
-"_allow_lan_info" = "Позволяет обойти VPN и подключиться к устройствам в вашей локальной сети, например принтеру.";
-
-/* (No Comment) */
-"_allow_lan_note" = "Учтите, что для применения этого изменения, ваше подключение должно быть перезапущено";
-
-/* (No Comment) */
 "_allow_lan_title" = "Разрешить соединения по локальной сети";
 
-/* iOS: button for switching from sign-up to sign-in screen */
-"_already_have_account" = "У меня уже есть аккаунт";
+"_allow_lan_info" = "Позволяет обойти VPN и подключиться к устройствам в вашей локальной сети, например принтеру.";
 
-/* iOS Settings: toggle name */
-"_always_on_vpn" = "VPN постоянно вкл.";
+"_allow_lan_description" = "Чтобы разрешить доступ к локальной сети, Kill Switch должен быть выключен.\n\nПродолжить?";
 
-/* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "Если приложение Proton VPN включено постоянно, восстановление защищенного подключения к VPN при обрывах подключения произойдет быстро и автоматически. Эта функция всегда включена для вашей безопасности.";
+"_allow_lan_note" = "Учтите, что для применения этого изменения, ваше подключение должно быть перезапущено";
 
-/* Disconnect notification */
-"_always_on_will_reconnect" = "Если приложение Proton VPN включено постоянно, переподключение произойдет автоматически";
+/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_title" = "Включить Kill Switch?";
 
-/* iOS Settings: applications logs row */
-"_application_logs" = "Журналы приложения";
-
-/* (No Comment) */
-"_applying_settings_" = "Применение настроек";
-
-/* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_auto_assigned" = "Назначается автоматически";
-
-/* MacOS: Settings -> Connection: name of field. */
-"_auto_connect" = "Автоподключение";
-
-/* MacOS: Settings -> Connection: description. */
-"_auto_connect_tooltip" = "При запуске приложения, вы подключаетесь к выбранному профилю";
-
-/* Battery usages screen description */
-"_battery_description" = "Весь трафик на вашем телефоне будет проходить через OpenVPN, поэтому iOS будет относить использование батареи другими приложениями на счет Proton VPN.";
-
-/* Battery usage More info button text */
-"_battery_more" = "Хотите узнать больше?";
-
-/* iOS settings -> Battery usage; Title of battery usage screen; */
-"_battery_title" = "Использование аккумулятора";
-
-/* Common word */
-"_cancel" = "Отмена";
-
-/* (No Comment) */
-"_cancel_reconnection" = "Это отменит любую попытку повторного подключения и оставит вас отключенным";
-
-/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
-"_change_protocol_disconnect_warning" = "Изменение протоколов завершит вашу текущую сессию VPN.";
-
-/* Changing settings title */
-"_change_settings" = "Изменить настройки";
-
-/* MacOS: About window */
-"_changelog" = "Список изменений";
-
-/* iOS: new profkle can't be created because not all required fields are filled */
-"_check_if_fields_present" = "Пожалуйста, убедитесь, что все поля заполнены";
-
-/* iOS plan selection: header */
-"_choose_plan" = "Выбор подписки";
-
-/* iOS status view */
-"_city" = "Город";
-
-/* Main mac app menu item */
-"_clear_application_data" = "Удалить данные приложения";
-
-/* Common word */
-"_close" = "Закрыть";
-
-/* (No Comment) */
-"_collapse_list_of_servers" = "Свернуть список серверов";
-
-/* Profile create/change form */
-"_color" = "Цвет";
-
-/* MacOS: button in login screen */
-"_common_issues" = "Частые проблемы при входе";
-
-/* Common word */
-"_connect" = "Подключиться";
-
-/* Common word */
-"_connected" = "Подключено";
-
-/* iOS status view */
-"_connected_to" = "Подключен к";
-
-/* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
-"_connected_to_vpn" = "Подключен к %@";
-
-/* iOS: main button in tabbar during connecting to vpn phase */
-"_connecting" = "Подключение";
-
-/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
-"_connecting_to" = "Подключение к %@";
-
-/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
-"_connecting_vpn" = "Подключение %@";
-
-/* (No Comment) */
-"_connectingDotDotDot" = "Подключение...";
-
-/* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
-"_connection" = "Подключение";
-
-/* Connection error translation. iOS quick connect widget: text shown on error. */
-"_connection_failed" = "Сбой подключения";
-
-/* Profile create/change form */
-"_connection_settings" = "Параметры подключения";
-
-/* macOS: Text on connection overlay shown after connection timed out */
-"_connection_timed_out" = "Время ожидания подключения истекло";
-
-/* Text that should be bold in _connection_timed_out string */
-"_connection_timed_out_bold" = "время ожидания истекло";
-
-/* Text addressing to contact costumer support on several sites of the app */
-"_contact_our_support" = "Связаться с нашей службой поддержки";
-
-/* (No Comment) */
-"_continue" = "Продолжить";
-
-/* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
-"_countries" = "Страны";
-
-/* iOS: countries list section header */
-"_countries_free" = "Free страны";
-
-/* iOS: countries list section header */
-"_countries_premium" = "Premium страны";
-
-/* MacOS app tour: countries list description */
-"_countries_tour_description" = "Выберите, какую страну и сервер вы хотели бы использовать для конечного IP-адреса.";
-
-/* MacOS app tour: countries list title */
-"_countries_tour_title" = "Страны";
-
-/* Profile create/edit menu */
-"_country" = "Страна";
-
-/* Error when user hasn't selected profile country */
-"_country_selection_is_required" = "Пожалуйста, выберите страну";
-
-/* Under maintenance alert */
-"_country_servers_under_maintenance" = "Серверы страны %@ на техобслуживании";
-
-/* MacOS: button in login screen */
-"_create_account" = "Создать аккаунт";
-
-/* MacOS: Buttons in several places; iOS: profile creation screen title */
-"_create_new_profile" = "Создать профиль";
-
-/* (No Comment) */
-"_create_profile" = "Создать профиль";
-
-/* MacOS: profile creation cancel alert text */
-"_current_selection_will_be_lost" = "Продолжив, вы потеряете текущий выбор. Хотите продолжить?";
-
-/* iOS: data disclaimer screen button */
-"_data_disclaimer_agree" = "Согласиться и продолжить";
-
-/* iOS: data disclaimer screen */
-"_data_disclaimer_device_details" = "Модель вашего устройства и версия ОС";
-
-/* iOS: data disclaimer screen */
-"_data_disclaimer_text" = "Proton VPN обязуется защищать и уважать вашу конфиденциальность. Наша основная политика - собирать как можно меньше пользовательских данных, чтобы обеспечить конфиденциальность и анонимность при использовании приложения, а именно:\n\n%@ - для входа в систему, помощи в восстановлении утерянного пароля и отправки важных обновлений службы.\n\n%@ - только для отчетов о сбоях и ошибках.\n\nПриложение Proton VPN не обрабатывает никакой другой информации о пользователе, кроме этих данных. Мы не регистрируем ваши действия в Интернете и не предоставляем никакой личной идентифицируемой информации. Все перечисленные выше данные хранятся и обрабатываются в собственной системе Proton VPN и ни одна третья сторона не имеет к ним доступа.";
-
-/* iOS: data disclaimer screen */
-"_data_disclaimer_title" = "Защитите себя в интернете";
-
-/* iOS: data disclaimer screen */
-"_data_disclaimer_user_details" = "Имя пользователя, адрес электронной почты";
-
-/* Profile create/change form */
-"_default_profile_tooltip" = "Кнопка «Быстрое подключение» использует профиль по умолчанию.\n";
-
-/* Common word */
-"_delete" = "Удалить";
-
-/* MacOS: clear application data alert */
-"_delete_application_data_popup_body" = "Все данные Proton VPN будут удалены, после чего приложение будет закрыто. Вы хотите продолжить?";
-
-/* MacOS: clear application data alert */
-"_delete_application_data_popup_title" = "Удаление данных приложения";
-
-/* Button */
-"_delete_profile" = "Удалить профиль";
-
-/* MacOS: profile deletion warning */
-"_delete_profile_header" = "Удалить профиль";
-
-/* MacOS: profile deletion warning */
-"_delete_profile_warning" = "Профиль будет окончательно удален. Вы хотите продолжить?";
-
-/* (No Comment) */
-"_delinquent_description" = "Вы снова получите доступ к платным функциям, когда это буден оплачено.";
-
-/* (No Comment) */
-"_delinquent_reconnection_description" = "Вы снова получите доступ к платным функциям, когда эти счета будут оплачены. А пока, мы подключаем Вас к самому быстрому доступному бесплатному серверу.";
-
-/* (No Comment) */
-"_delinquent_title" = "В вашем аккаунте VPN есть неоплаченные счета";
-
-/* Delinquent user alert */
-"_delinquent_user_description" = "В вашем аккаунте есть неоплаченный счет. Оплатите все неоплаченные счета на account.protonvpn.com";
-
-/* Delinquent user alert */
-"_delinquent_user_title" = "Неоплаченный счет";
-
-/* Profile create/change form */
-"_different_server_each_time" = "Каждый раз разный сервер";
-
-/* Button in some alerts */
-"_disable" = "Отключить";
-
-/* Common word */
-"_disabled" = "Отключено";
-
-/* Common word */
-"_disconnect" = "Отключиться";
-
-/* Common word */
-"_disconnected" = "Отключён";
-
-/* Status of VPN connection reported by Siri */
-"_disconnecting" = "Отключение";
-
-/* iOS onboarding button to check app without logging in */
-"_discover_the_app" = "Узнать о приложении";
-
-/* MacOS: Settings -> Connection: name of field. */
-"_dns_leak_protection" = "Защита от утечки DNS";
-
-/* MacOS: Settings -> Connection: description. */
-"_dns_leak_protection_tooltip" = "Предотвращает утечку информации о DNS запросах третьим лицам. Нельзя отключить.";
-
-/* Alert message during In App Purchase */
-"_do_you_want_to_activate_subscription_for" = "Вы хотите активировать купленную подписку на ";
-
-/* Common word */
-"_done" = "Готово";
-
-/* (No Comment) */
-"_dw-partner-2022_partners_title" = "Наши партнеры";
-
-/* MacOS: Settings -> General: name of field. */
-"_early_access" = "Ранний доступ";
-
-/* MacOS: Settings -> General: description. */
-"_early_access_tooltip" = "Первыми получайте самые свежие обновления. Помните, что ранние версии могут быть менее стабильными.";
-
-/* Common word */
-"_edit" = "Редактировать";
-
-/* Common word */
-"_enabled" = "Включены";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "Закончить тур";
-
-/* %@ is always 'PLUS' e.g. ENJOY PLUS FOR FREE! */
-"_enjoy_for_free" = "Пользуйтесь %@ бесплатно!";
-
-/* iOS: placeholder for email field in signup and email verification screens */
-"_enter_email_address" = "Введите адрес эл. почты";
-
-/* Profile create/change form */
-"_enter_profile_name" = "Введите название профиля";
-
-/* API error */
-"_error_api_offline" = "API Proton VPN в настоящее время отключён";
-
-/* Error decoding an object */
-"_error_decode" = "Не удалось декодировать архивные данные в классе: %@";
-
-/* Internal application error */
-"_error_email_verification_disabled" = "Email-подтверждения временно отключены";
-
-/* Error try to restore user from the session */
-"_error_fetch_session" = "Не удалось найти пользователя сеанса";
-
-/* (No Comment) */
-"_error_field_email_wrong_format" = "Неверный формат адреса эл. почты";
-
-/* (No Comment) */
-"_error_field_passwords_dont_match" = "Пароли не совпадают";
-
-/* Form validation error */
-"_error_field_required" = "Это обязательное поле";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "Не удалось создать SRP";
-
-/* Error when try to hash password */
-"_error_hash_password" = "Не удалось хэшировать пароль пользователя";
-
-/* Unknown error that has no better description */
-"_error_internal_error" = "Внутренняя ошибка API";
-
-/* Keychain error */
-"_error_keychain_fetch" = "Ошибка \"Связки Ключей\".";
-
-/* Error writing to system keychain */
-"_error_keychain_write" = "Proton не смог связаться с вашим устройством. Пожалуйста, повторите попытку позже.";
-
-/* Parsing error */
-"_error_loads" = "Не могу обновить данные о нагрузке на сервер";
-
-/* (No Comment) */
-"_error_mitm_description" = "Сбой проверки TLS-сертификата при подключении к API Proton VPN. Ваше текущее интернет-соединение, возможно, находится под наблюдением. Для сохранения безопасности ваших данных, доступ к Proton VPN API ограничен.\nПереключитесь на другую сеть и попробуйте ещё раз для входа или доступа к вашему аккаунту.";
-
-/* (No Comment) */
-"_error_mitm_title" = "Небезопасное соединение";
-
-/* (No Comment) */
-"_error_mitm_vpn_description" = "Сбой проверки сертификата TLS при попытке подключения к VPN серверу. Ваше текущее подключение к Интернету, возможно, прослушивается. Чтобы защитить ваши данные, мы не позволяем приложению получить доступ к этому VPN серверу.\nПожалуйста, выберите другой сервер.";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "Пустая сигнатура остатка";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "Не удается разобрать информацию о партнере";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "Не могу разобрать информацию о серверах";
-
-/* Parsing error */
-"_error_session_count_parser" = "Не могу выполнить разбор счетчика сеансов";
-
-/* Generic sign in error */
-"_error_sign_in_again" = "Что-то пошло не так. Попробуйте еще раз.";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "Не могу разобрать информацию о подписке";
-
-/* Internal error message when there is a problem with initializing tls and connection cannot be established. */
-"_error_tls_initialisation" = "Ошибка инициализации TLS";
-
-/* Internal error message when there is a problem with server certificate and connection cannot be established. */
-"_error_tls_server_verification" = "Невозможно проверить сертификат сервера.";
-
-/* General title for several error alerts */
-"_error_unknown_title" = "Неизвестная ошибка";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "Сбой создания аккаунта";
-
-/* VPN credentials can't be loaded error */
-"_error_user_credentials_expired" = "Истек срок действия учетных данных. Пожалуйста, войдите в систему";
-
-/* VPN credentials can't be loaded error */
-"_error_user_credentials_missing" = "Учетные данные пользователя отсутствуют. Не удается войти в систему";
-
-/* Human validation failed */
-"_error_user_failed_human_validation" = "Мы не смогли убедиться, что вы человек. Повторите попытку или приобретите премиум тарифный план.";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "Не могу разобрать методы подтверждения";
-
-/* VPN credentials can't be loaded error */
-"_error_vpn_credentials_missing" = "Учетные данные VPN отсутствуют в связке ключей";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "Не могу достать свойства VPN!";
-
-/* VPN session is active error */
-"_error_vpn_session_is_active" = "Сеанс Proton VPN активен";
-
-/* Description of the expand/collapse button used by accessibility Voice Over */
-"_expand_list_of_servers" = "Развернуть список серверов";
-
-/* MAC: is inserted into _free_trial_expired_title insteadof %@ */
-"_expired" = "ИСТЕКЛА";
-
-/* iOS: Table header in settings screen */
-"_extensions" = "Расширения";
-
-/* MacOS: connecting overlay */
-"_failed" = "сбой";
-
-/* Used for both profile description when fastest server option is selected and Plan speed description */
-"_fastest" = "Быстрейший";
-
-/* Profile create/change form */
-"_fastest_available_server" = "Самый быстрый доступный сервер";
-
-/* iOS: Predefined profile with fastest connection */
-"_fastest_connection" = "Самое быстрое подключение";
-
-/* (No Comment) */
-"_feature" = "Функция";
-
-/* iOS plan feature */
-"_feature_blocked_content" = "Обход блокировок";
-
-/* (No Comment) */
-"_feature_bt" = "BitTorrent/файлообмен";
-
-/* iOS plan feature */
-"_feature_connections" = "Одновременные VPN-подключения";
-
-/* (No Comment) */
-"_feature_free_servers" = "Серверы Free";
-
-/* (No Comment) */
-"_feature_free_servers_description" = "Безопасность и конфиденциальность для всех. На бесплатных серверах нет ограничений по объему данных, и мы никогда не станем намеренно снижать скорость вашего просмотра веб-страниц.";
-
-/* (No Comment) */
-"_feature_p2p_description" = "Эти серверы обеспечивают лучшую производительность для BitTorrent и обмена файлами.";
-
-/* iOS plan feature */
-"_feature_secure_streaming" = "Защищенный просмотр трансляций";
-
-/* iOS plan feature */
-"_feature_server_count" = "Подключение к серверам в";
-
-/* (No Comment) */
-"_feature_smart_routing_description" = "Эта технология позволяет Proton VPN обеспечивать более высокую скорость и безопасность в трудных для обслуживания странах.";
-
-/* iOS plan feature */
-"_feature_speed" = "Скорость";
-
-/* (No Comment) */
-"_feature_streaming_description" = "Серверы PLUS поддерживают трансляции (Netflix, Disney+, и т. д.) из любой точки мира.";
-
-/* iOS plan feature */
-"_feature_tor" = "Tor через VPN";
-
-/* (No Comment) */
-"_feature_tor_description" = "Направляйте ваш трафик через сеть Tor. Медленнее, но конфиденциальнее.";
-
-/* (No Comment) */
-"_features_title" = "Функции";
-
-/* (No Comment) */
-"_force_upgrade_message" = "Версия приложения Proton VPN, которую вы сейчас используете, больше не поддерживается. Пожалуйста, обновите приложение до последней версии.";
-
-/* (No Comment) */
-"_force_upgrade_title" = "Надо обновить приложение";
-
-/* iOS: button in login screen */
-"_forgot_password" = "Забыли пароль?";
-
-/* MacOS: button in login screen */
-"_forgot_username" = "Забыл имя пользователя";
-
-/* Account plan description */
-"_free_countries" = "3 страны";
-
-/* iOS: section header in countries list */
-"_free_servers" = "Серверы Free";
-
-/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
-"_free_trial_about_to_expire_description" = "Улучшите до %@ и продолжайте пользоваться этими возможностями:";
-
-/* MacOS: \Trial about to expire\ screen title */
-"_free_trial_about_to_expire_title" = "Ваш бесплатный пробный период истекает!";
-
-/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "Ваш аккаунт был переведен на Proton VPN Free. Вот чего вы лишитесь из %@:";
-
-/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
-"_free_trial_expired_title" = "Ваш бесплатный пробный период %@";
-
-/* Downgrade */
-"_from_server_title" = "С сервера:";
-
-/* MacOS: General tab in setting window */
-"_general" = "Общие положения";
+/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_description" = "При активации Kill Switch, вы не сможете получить доступ к устройствам в вашей локальной сети. \n\nПродолжить?";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Получить тариф %@";
 
-/* Suggest the user to upgrade account for new features */
-"_get_plus_for_feature" = "Подключите Proton VPN Plus для получения этой и других функций.";
+/* Account plan description */
+"_free_countries" = "3 страны";
 
-/* iOS: Button in email verification screen */
-"_get_verification_email" = "Отправить проверочное письмо эл. почты";
+/* Account plan description */
+"_all_countries" = "60+ стран";
 
-/* iOS: Button in SMS verification screen */
-"_get_verification_sms" = "Получить проверочное СМС";
+/* %@ is a speed description e.g. Speed: Highest */
+"_speed" = "%@ скорость";
 
-/* Button in several different alerts */
-"_got_it" = "Я понял!";
-
-/* Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page. */
-"_help" = "Справка";
-
-/* Show/hide password switch */
-"_hide" = "СКРЫТЬ";
+/* Value of speed in _speed */
+"_medium" = "Средняя";
 
 /* Value of speed in _speed */
 "_high" = "Высокая";
@@ -580,575 +1070,143 @@
 /* Value of speed in _speed */
 "_highest" = "Наивысшая";
 
-/* Button in Kill switch error alert */
-"_ignore" = "Игнорировать";
+/* Features of account plan */
+"_plus_plan_features" = "Plus серверы\nSecure Core\nTor Серверы";
 
-/* Streaming & Features */
-"_information_title" = "Информация";
+/* Used instead of price for free plans. */
+"_free" = "Бесплатный";
 
-/* MacOS: connecting overlay */
-"_initializing_connection" = "Инициализация подключения...";
-
-/* (No Comment) */
-"_invalid_refresh_token_please_login" = "Прошло много времени с тех пор, как вы в последний раз использовали приложение Proton VPN. Пожалуйста, войдите в систему заново.";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Учёные и инженеры, создавшие ProtonMail, приветствуют вас в более безопасном Интернете без цензуры.";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Добро пожаловать в лучший Интернет";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page2_description" = "Победите цензуру и региональные ограничения. У нас нет рекламы, нет ограничений пропускной способности и мы не продаём ваши данные.";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "Мы считаем, что Интернет должен быть свободным";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page3_description" = "Наша компания специализируется на безопасности. Идёт ли речь о нашей архитектуре Secure Core или о передовом шифровании — безопасность всегда находится на первом месте.";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page3_title" = "Ваша безопасность является нашим приоритетом";
-
-/* %@ is an IP address e.g. IP: 123.45.67.890 */
-"_ip_value" = "IP: %@";
-
-/* (No Comment) */
-"_ip_will_not_be_exposed" = "Ваш IP-адрес не будет раскрыт.";
-
-/* MacOS: Settings -> Connection: name of field. */
-"_kill_switch" = "Kill Switch";
-
-/* Disconnect notification */
-"_kill_switch_blocking_connection" = "Kill Switch блокирует все соединения";
-
-/* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Отключить Kill Switch";
-
-/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Ваше подключение к Интернету возобновится, как только Proton VPN переподключится к серверу.\nЧтобы пользоваться Интернетом без VPN и защиты Kill Switch, отмените повторное подключение к серверу.";
-
-/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
-"_kill_switch_reconnection_bold1" = "без";
-
-/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
-"_kill_switch_reconnection_bold2" = "Защита Kill Switch";
-
-/* MacOS: connection screen - cancel button */
-"_kill_switch_reconnection_cancel" = "Отменить переподключение";
-
-/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection_header" = "Kill Switch защищает ваш IP";
-
-/* MacOS: Settings -> Connection. Kill switch functionality description. */
-"_kill_switch_tooltip" = "Блокировка всего сетевого трафика при потере подключения к VPN.";
-
-/* MacOS: link in login screen */
-"_learn_more" = "Подробнее";
-
-/* MacOS: SecureCore warning alert when users plan has to be upgraded */
-"_learn_more_about_secure_core" = "Узнайте больше о Secure Core";
-
-/* Display less information */
-"_less_info" = "Меньше информации";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "Загрузка данных о подключении";
-
-/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "Загрузка данных о подключении для %@";
-
-/* Slogan text under the logo in may places in iOS and MacOS apps */
-"_loading_screen_slogan" = "Безопасный Интернет где угодно";
-
-/* (No Comment) */
-"_local_agent_policy_violation_error_message" = "Вам не разрешено подключаться к серверу. Выберите другой сервер или улучшите ваш тариф.";
-
-/* (No Comment) */
-"_local_agent_policy_violation_error_title" = "Нарушение правил";
-
-/* (No Comment) */
-"_local_agent_server_error_message" = "На сервере произошла ошибка. Пожалуйста, подключитесь к другому серверу.";
-
-/* Local agent */
-"_local_agent_server_error_title" = "Ошибка сервера";
-
-/* iOS status view */
-"_location" = "Местоположение";
-
-/* (No Comment) */
-"_locations_all" = "Все местоположения";
-
-/* (No Comment) */
-"_locations_free" = "Местоположения Free";
-
-/* (No Comment) */
-"_locations_plus" = "Местоположения Plus";
-
-/* iOS: Login button in several places */
-"_log_in" = "Войти";
-
-/* iOS widget: text for not-logged-in user */
-"_log_in_to_use_widget" = "Пожалуйста, войдите, чтобы начать";
-
-/* iOS: button in settings screen */
-"_log_out" = "Выйти";
-
-/* iOS: Logout alert */
-"_log_out_warning" = "Выход из системы завершит сеанс VPN.";
-
-/* MacOS: Logout alert */
-"_log_out_warning_long" = "Выход из приложения отключит активное VPN-соединение. Хотите продолжить?";
-
-/* MacOS: Login button */
-"_login" = "Войти";
-
-/* iOS logs screen title */
-"_logs" = "Логи";
-
-/* Mac: neagent help screen */
-"_mac_password" = "Пароль Mac";
-
-/* Server status in many places in iOS and MacOS apps */
-"_maintenance" = "Техобслуживание";
-
-/* (No Comment) */
-"_maintenance_on_server_detected_description" = "Переподключение к самому быстрому доступному серверу.";
-
-/* (No Comment) */
-"_maintenance_on_server_detected_subtitle" = "Сервер, к которому Вы были подключены, на техобслуживании";
-
-/* (No Comment) */
-"_maintenance_on_server_detected_title" = "VPN-сервер на техобслуживании";
-
-/* Profile create/change form */
-"_make_default_profile" = "Использовать по умолчанию";
-
-/* MacOS: button in profiles tab in main window */
-"_manage_profiles" = "Управление профилями";
-
-/* MacOS: Settings -> Account. Button leading to web interface. */
-"_manage_subscription" = "Управление подпиской";
-
-/* (No Comment) */
-"_manage_subscription_on_web" = "Управляйте своей подпиской в панели управления";
-
-/* iOS: Map screen title and tabbar item */
-"_map" = "Карта";
-
-/* MacOS: Map view toggle button accessibility label (used by screen readers */
-"_map_hide" = "Скрыть карту";
-
-/* MacOS: Map view toggle button accessibility label (used by screen readers */
-"_map_show" = "Показать карту";
-
-/* (No Comment) */
-"_maximum_device_reached_description" = "Отключите другое устройство, чтобы подключить это.";
-
-/* (No Comment) */
-"_maximum_device_title" = "Вы достигли максимального лимита устройств";
-
-/* Cancel button in trial modals used in both iOS and MacOS */
-"_maybe_later" = "Может, позже";
-
-/* Value of speed in _speed */
-"_medium" = "Средняя";
-
-/* Main mac app menu item */
-"_menu_about" = "О Proton VPN";
-
-/* Main mac app menu item */
-"_menu_check_updates" = "Проверка наличия обновлений...";
-
-/* Main mac app menu item */
-"_menu_hide_others" = "Скрыть другие";
-
-/* Main mac app menu item */
-"_menu_hide_self" = "Скрыть Proton VPN";
-
-/* Main mac app menu item */
-"_menu_logout" = "Выйти";
-
-/* Main mac app menu item */
-"_menu_minimize" = "Свернуть";
-
-/* Main mac app menu item */
-"_menu_preferences" = "Настройки";
-
-/* Main mac app menu item */
-"_menu_quit" = "Закрыть Proton VPN";
-
-/* Main mac app menu item */
-"_menu_show_all" = "Показать все";
-
-/* Main mac app menu item */
-"_menu_window" = "Окно";
-
-/* Title for alert shown when enabling Moderate NAT requires reconnection */
-"_moderate_nat_change_title" = "Включить Умеренный NAT";
-
-/* Title for alert shown when enabling Moderate NAT requires reconnection */
-"_moderate_nat_enable_title" = "Включить Умеренный NAT";
-
-/* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "Умеренный NAT отключает произвольное сопоставление локальных адресов. Это может несколько снизить уровень безопасности, но позволяет одноранговым приложениям, таким как сетевые игры, устанавливать прямые соединения. \nПодробнее";
-
-/* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
-"_moderate_nat_explanation_link" = "Подробнее";
-
-/* Moderate NAT feature title in Settings */
-"_moderate_nat_title" = "Умеренный NAT";
-
-/* Display more information */
-"_more_info" = "Подробнее";
+/* Alert message during In App Purchase */
+"_do_you_want_to_activate_subscription_for" = "Вы хотите активировать купленную подписку на ";
 
 /* Label in Plan information */
 "_most_popular" = "Самый популярный";
 
-/* Mac: Used in several Trial screens */
-"_multiple_countries" = "Множество стран";
+/* Button in plan selection */
+"_select_plan" = "Выберите тарифный план";
 
-/* MacOS: \Trial about to expire\ screen */
-"_multiple_servers_description" = "Сотни серверов \nпо всему миру";
+/* Plan information */
+"_advanced_features" = "+ Дополнительные возможности";
 
-/* MacOS: \Trial about to expire\ screen */
-"_multiple_servers_title" = "Множество серверов";
-
-/* iOS: table header section in profiles screen */
-"_my_profiles" = "Мои профили";
-
-/* Profile create/change form */
-"_name" = "Имя";
-
-/* Network error */
-"_ne_couldnt_reach_server" = "Не удалось подключиться к серверам Proton";
-
-/* Network error */
-"_ne_network_connection_lost" = "Потеряно подключение к сети";
-
-/* Network error */
-"_ne_not_connected_to_the_internet" = "Не подключен к Интернету";
-
-/* Network error */
-"_ne_request_timed_out" = "Истекло время ожидания запроса";
-
-/* Button on alert after a problem with internet connection */
-"_ne_troubleshoot" = "Устранение неполадок";
-
-/* Network error */
-"_ne_unable_to_connect_to_host" = "Служба недоступна";
-
-/* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
-"_neagent_always_allow" = "Всегда разрешать";
-
-/* Mac: neagent help screen */
-"_neagent_description" = "Вам может быть предложено ввести свой %@,\nчтобы подключиться к службе Proton VPN. Если этот запрос появится,\nвведите свой %@ %@ и нажмите ‘%@’ %@.";
-
-/* Mac: neagent help screen */
-"_neagent_password" = "пароль аккаунта компьютера";
-
-/* MacOS: button in login screen */
-"_need_help" = "Нужна помощь?";
-
-/* (No Comment) */
-"_neks_t2_connect" = "Все равно включить";
-
-/* (No Comment) */
-"_neks_t2_description" = "Использование Kill Switch нестабильно на этом устройстве.\n\nВаше устройство оснащено чипом безопасности T2, что может привести к проблемам со стабильностью системы, если функция Kill Switch в macOS используется Proton VPN.";
-
-/* `_neks_t2_description' localized string. */
-"_neks_t2_hyperlink" = "Чип безопасности T2";
-
-/* NetworkExtension + KillSwitch on T2 Macs */
-"_neks_t2_title" = "Предупреждение о стабильности Kill Switch";
-
-/* (No Comment) */
-"_netshield_alert_reconnect_description_off" = "Ваше соединение будет перезапущено для изменения режима NetShield.";
-
-/* (No Comment) */
-"_netshield_alert_reconnect_description_on" = "Ваше соединение будет перезапущено для изменения режима NetShield.\nЗаметьте: Если некоторые сайты не загружаются, попробуйте отключить NetShield.";
-
-/* (No Comment) */
-"_netshield_alert_upgrade_description" = "NetShield увеличивает вашу конфиденциальность, блокируя рекламу и трекеры.";
-
-/* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
-"_netshield_feature_description" = "Защитите себя от рекламы, вредоносных программ, отслеживания на веб-сайтах и в приложениях. Если сайты не загружаются, попробуйте отключить функцию NetShield.\nПодробнее";
-
-/* Link with more info in the NetShield Feature description */
-"_netshield_feature_description_alt_link" = "Подробнее";
-
-/* Settings -> Netshield: Block malware */
-"_netshield_level1" = "Блокировать вредоносные программы";
-
-/* Settings -> Netshield: Block malware, ads, trackers */
-"_netshield_level2" = "Блокировать вредоносные программы, рекламу и трекеры";
-
-/* Settings -> Netshield, Status -> NetShield: Off */
-"_netshield_off" = "Выключено";
-
-/* Status -> Netshield: On */
-"_netshield_on" = "Включён";
-
-/* Netshield section title in iOS connection screen */
-"_netshield_section_title" = "Блокировщик вредоносного ПО и рекламы";
-
-/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
-"_netshield_stats_data_saved" = "Сэкономлено";
-
-/* (No Comment) */
-"_netshield_title_tooltip" = "Блокировать рекламные объявления, трекеры и вредоносные программы";
-
-/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
-"_netshield_upsell_subtitle" = "Блокирует рекламу, трекеры и вредоносные программы на веб-сайтах и в приложениях";
-
-/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
-"_netshield_upsell_title" = "Просматривайте веб-сайты без рекламы с помощью NetShield";
-
-/* iOS: quick connect widget */
-"_network_unreachable" = "Сеть недоступна";
-
-/* Title of the screen with news and offers. */
-"_news_title" = "Новости";
-
-/* iOS onboarding next item button */
-"_next" = "Далее";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Следующий совет";
-
-/* Text used when no active server information is available */
-"_no_description_available" = "Описание отсутствует";
-
-/* (No Comment) */
-"_no_servers_to_show" = "В настоящее время нет серверов, чтобы показать здесь.";
-
-/* MacOS welcome screen: cancel button */
-"_no_thanks" = "Нет, спасибо";
-
-/* Title for alert shown when enabling Non-standard ports requires reconnection */
-"_non_standard_ports_change_title" = "Разрешить нестандартные порты";
-
-/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
-"_non_standard_ports_explanation" = "Используйте Proton VPN для любых особых нужд, разрешая трафик на нестандартные порты через VPN. \nПодробнее";
-
-/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
-"_non_standard_ports_explanation_link" = "Подробнее";
-
-/* Non-standard ports feature title in Settings */
-"_non_standard_ports_title" = "Нестандартные порты";
-
-/* iOS: connection bar; Main mac app menu item; */
-"_not_connected" = "Не подключен";
-
-/* Title in no internet alert */
-"_not_connected_to_the_internet" = "Невозможно установить подключение к VPN. Вы не подключены к Интернету.";
-
-/* (No Comment) */
-"_not_now" = "Не сейчас";
-
-/* Common word */
-"_ok" = "ОК";
-
-/* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "На техобслуживании";
-
-/* Telemetry label in the onboarding screen for mac next to a toggle */
-"_onboarding_mac_crash_reports" = "Делиться анонимными сообщениями о сбоях. Это поможет нам исправить ошибки, обнаружить брандмауэры и избежать блокировки VPN.";
-
-/* Telemetry label in the onboarding screen for mac next to a toggle */
-"_onboarding_mac_usage_stats" = "Делиться анонимной статистикой использования. Это помогает нам преодолевать блокировки VPN и повышать производительность приложения.";
-
-/* Main mac app menu item */
-"_open_app_to_log_in" = "Показать Proton VPN, чтобы войти...";
-
-/* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "Журналы OpenVPN";
-
-/* MacOS menu item; MacOS Profiles tab title; */
-"_overview" = "Обзор";
-
-/* Description shown together with server info icon */
-"_p2p_description" = "Поддержка P2P трафика";
-
-/* (No Comment) */
-"_p2p_detected_popup_body" = "Ваше соединение было отключено, потому что вы используете сервер, не поддерживающий трафик peer-to-peer (P2P). P2P не поддерживается на бесплатных серверах или серверах с номером более 100.";
-
-/* (No Comment) */
-"_p2p_detected_popup_title" = "P2P трафик не разрешен на этом сервере";
-
-/* (No Comment) */
-"_p2p_forwarded_popup_body" = "Ваше соединение было автоматически переадресовано через другой сервер, потому что некоторые серверы не поддерживают P2P трафик. Это может снизить скорость подключения. Пожалуйста, используйте серверы с меткой P2P, чтобы избежать переадресации трафика.";
-
-/* (No Comment) */
-"_p2p_forwarded_popup_body_p1" = "Ваше соединение было автоматически переадресовано через другой сервер, потому что некоторые серверы не поддерживают P2P трафик. Это может снизить скорость подключения. Пожалуйста, используйте серверы со";
-
-/* (No Comment) */
-"_p2p_forwarded_popup_body_p2" = "значок, чтобы избежать перенаправления трафика.";
-
-/* (No Comment) */
-"_p2p_forwarded_popup_title" = "Изменился маршрут подключения";
-
-/* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_p2p_server" = "P2P сервер";
-
-/* MacOS: Used ir trial welcome and trial expired screens */
-"_p2p_servers" = "Р2Р серверы";
-
-/* Used in sign-in, sign-up */
-"_password" = "Пароль";
-
-/* Sign-up form */
-"_password_confirm" = "Подтвердите пароль";
-
-/* Per year. Appended to plan price. */
-"_per_year_short" = "/ год";
-
-/* (No Comment) */
-"_performance_load_description" = "Серверы с высокой нагрузкой медленнее, чем серверы с низкой нагрузкой.";
-
-/* (No Comment) */
-"_performance_load_high" = "Высокая";
-
-/* (No Comment) */
-"_performance_load_low" = "Низкая";
-
-/* (No Comment) */
-"_performance_load_medium" = "Средняя";
-
-/* (No Comment) */
-"_performance_title" = "Производительность";
-
-/* iOS: placeholder in phone verification screen */
-"_phone_country_code_placeholder" = "Код";
-
-/* iOS: placeholder in phone verification screen */
-"_phone_number_placeholder" = "Введите номер телефона";
-
-/* MacOS: SecureCore warning alert when users plan has to be upgraded */
-"_plan_does_not_include_secure_core" = "Ваш план не включает в себя функцию Secure Core.";
-
-/* (No Comment) */
-"_plan_speed_fastest" = "Высочайшая скорость";
-
-/* Plan speed */
-"_plan_speed_high" = "Высокая скорость";
-
-/* Plan speed */
-"_plan_speed_medium" = "Средняя скорость";
+/* Plan information */
+"_adblocker_netshield_feature" = "Блокировщик рекламы (NetShield)";
 
 /* Text description in plan selection screen */
 "_plans_footer" = "При подтверждении покупки платной подписки, с вашего аккаунта в iTunes будет списана сумма, которая включает в себя налог и комиссию платформы (они определяются не компанией Proton). После покупки, ваша подписка будет улучшена до выбранного тарифа на 1 год. После этого вы сможете продлить или отменить подписку как через сайт, так и в нашем приложение для iOS.";
 
-/* Features of account plan */
-"_plus_plan_features" = "Plus серверы\nSecure Core\nTor Серверы";
+/* Per year. Appended to plan price. */
+"_per_year_short" = "/ год";
 
-/* iOS: section header in countries list */
-"_plus_servers" = "Серверы Plus";
+/* iOS plan feature */
+"_feature_server_count" = "Подключение к серверам в";
 
-/* MacOS: Settings screen title */
-"_preferences" = "Настройки";
+/* iOS plan feature */
+"_feature_speed" = "Скорость";
 
-/* Description shown together with server info icon */
-"_premium_description" = "Премиум сервер";
+/* iOS plan feature */
+"_feature_connections" = "Одновременные VPN-подключения";
 
-/* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_premium_server" = "Премиум сервер";
+/* iOS plan feature */
+"_feature_secure_streaming" = "Защищенный просмотр трансляций";
 
-/* MacOS: connecting overlay */
-"_preparing_connection" = "Проверка доступности сервера";
+/* iOS plan feature */
+"_feature_tor" = "Tor через VPN";
 
-/* iOS: link inside text under sign-up form */
-"_privacy_policy" = "Политика конфиденциальности";
+/* iOS plan feature */
+"_feature_secure_core" = "Secure Core";
 
-/* MacOS Profiles Overview: Table column header */
-"_profile" = "Профиль";
+/* iOS plan feature */
+"_feature_blocked_content" = "Обход блокировок";
 
-/* iOS: success message after profile is saved */
-"_profile_created_successfully" = "Новый профиль сохранен";
+"_feature_bt" = "BitTorrent/файлообмен";
 
-/* iOS: failure message after profile is saved */
-"_profile_creation_failed" = "Не удалось создать профиль";
+/* MacOS welcome screen: title */
+"_welcome_title" = "ДОБРО ПОЖАЛОВАТЬ НА БОРТ!";
 
-/* iOS: Success message on profile deletion */
-"_profile_deleted_successfully" = "Профиль был удален";
+/* MacOS welcome screen: description */
+"_welcome_description" = "Спасибо за использование Proton VPN. Взгляните\nна основные возможности приложения.";
 
-/* iOS: Error message if profile can't be deleted */
-"_profile_deletion_failed" = "Не удалось удалить профиль";
+/* MacOS welcome screen: cancel button */
+"_no_thanks" = "Нет, спасибо";
 
-/* iOS: success message after profile is saved */
-"_profile_edited_successfully" = "Профиль обновлен";
+/* MacOS welcome screen: skip button */
+"_skip" = "Пропустить";
 
-/* Error in profile create/change form */
-"_profile_name_is_required" = "Пожалуйста, введите название";
+/* MacOS welcome screen: take a tour button */
+"_take_tour" = "Ознакомительный тур";
 
-/* Error in profile create/change form */
-"_profile_name_is_too_long" = "Максимальная длина имени профиля - 25 символов";
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Plus";
 
-/* (No Comment) */
-"_profile_name_needs_to_be_unique" = "Профиль с таким названием уже существует";
+/* MacOS: Used ir trial welcome and trial expired screens */
+"_p2p_servers" = "Р2Р серверы";
 
-/* Profile create/change form */
-"_profile_settings" = "Настройки профиля";
+"_5_connections" = "5 подключений";
 
-/* MacOS: menu item, profiles window main header, sidebar tab title; iOS: Profiles screen title and tabbar item title; */
-"_profiles" = "Профили";
+/* Mac: Used in several Trial screens */
+"_multiple_countries" = "Множество стран";
 
-/* MacOS: profiles window title */
-"_profiles_overview" = "Обзор профилей";
+/* MAC: is inserted into _free_trial_expired_title insteadof %@ */
+"_expired" = "ИСТЕКЛА";
 
-/* MacOS app tour: profiles description */
-"_profiles_tour_description" = "Сохраните предпочитаемые Вами настройки и серверы для дальнейшего использования.";
+/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
+"_free_trial_expired_title" = "Ваш бесплатный пробный период %@";
 
-/* MacOS app tour: profiles title */
-"_profiles_tour_title" = "Профили";
+/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "Ваш аккаунт был переведен на Proton VPN Free.\nВот чего вы лишитесь из %@:";
 
-/* (No Comment) */
-"_protocol" = "Протокол";
+/* Cancel button in trial modals used in both iOS and MacOS */
+"_maybe_later" = "Может, позже";
 
-/* %@ is an IP address e.g. Public IP: 123.45.67.890 */
-"_public_ip" = "Публичный IP: %@";
+/* Upgrade button in trial modals used in both iOS and MacOS */
+"_upgrade_now" = "Улучшить сейчас";
 
-/* Several places in both iOS and Mac apps */
-"_quick_connect" = "Быстрое подключение";
+/* MacOS: Button in Upgrade screen */
+"_upgrade_my_plan" = "Улучшить мой план";
 
-/* MacOS: Settings -> Connection: description. */
-"_quick_connect_tooltip" = "Кнопка «Быстрое подключение» подключит вас к выбранному профилю";
+/* MacOS: \Trial about to expire\ screen title */
+"_free_trial_about_to_expire_title" = "Ваш бесплатный пробный период истекает!";
 
-/* MacOS app tour: quick connect description */
-"_quick_connect_tour_description" = "Автоматически подключайтесь к серверу, который обеспечит вам самое быстрое подключение.";
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
+"_free_trial_about_to_expire_description" = "Улучшите до %@ и продолжайте пользоваться этими возможностями:";
+
+"_5_connections_description" = "Подключение до 5 устройств\nодновременно";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_core_description" = "Ультра-безопасные серверы\nразмещенные нами";
+
+/* MacOS: \Trial about to expire\ screen */
+"_multiple_servers_title" = "Множество серверов";
+
+/* MacOS: \Trial about to expire\ screen */
+"_multiple_servers_description" = "Сотни серверов\nпо всему миру";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_title" = "Защищенный просмотр трансляций";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_description" = "Защищенный просмотр ваших\nлюбимых трансляций";
 
 /* MacOS app tour: quick connect title */
 "_quick_connect_tour_title" = "Быстрое подключение";
 
-/* (No Comment) */
-"_quick_settings_get_plus" = "Получить Plus";
+/* MacOS app tour: quick connect description */
+"_quick_connect_tour_description" = "Автоматически подключайтесь к серверу, который обеспечит вам самое быстрое подключение.";
 
-/* (No Comment) */
-"_quick_settings_killSwitch_description" = "Отключает Интернет при обрыве подключения к VPN для предотвращения случайной утечки IP-адресов.";
+/* MacOS app tour: profiles title */
+"_profiles_tour_title" = "Профили";
 
-/* (No Comment) */
-"_quick_settings_killSwitch_note" = "Если вы не можете подключиться к устройствам в локальной сети, попробуйте отключить Kill Switch.";
+/* MacOS app tour: profiles description */
+"_profiles_tour_description" = "Сохраните предпочитаемые Вами настройки и серверы для дальнейшего использования.";
 
-/* (No Comment) */
-"_quick_settings_netShield_description" = "Просматривайте Интернет без рекламы и вредоносных программ.";
+/* MacOS app tour: countries list title */
+"_countries_tour_title" = "Страны";
 
-/* (No Comment) */
-"_quick_settings_netShield_note" = "Если веб-сайты не загружаются, попробуйте отключить NetShield";
+/* MacOS app tour: countries list description */
+"_countries_tour_description" = "Выберите, какую страну и сервер вы хотели бы использовать для конечного IP-адреса.";
 
-/* (No Comment) */
-"_quick_settings_netshield_option_level1" = "Блокировать только вредоносные программы";
-
-/* (No Comment) */
-"_quick_settings_netshield_option_level2" = "Блокировать вредоносные программы, рекламу и трекеры";
-
-/* (No Comment) */
-"_quick_settings_netshield_option_off" = "Не блокировать";
-
-/* Quick Settings */
-"_quick_settings_secureCore_description" = "Направляйте свои самые чувствительные данные через наши самые безопасные серверы в странах, уважающих конфиденциальность.";
-
-/* (No Comment) */
-"_quick_settings_secureCore_note" = "Secure Core может снизить скорость VPN";
+/* MacOS app tour: quick settings title */
+"_quick_settings_tour_title" = "Быстрые настройки";
 
 /* MacOS app tour: quick settings description */
 "_quick_settings_tour_description" = "Повысьте свою безопасность одним щелчком мыши:";
@@ -1162,62 +1220,73 @@
 /* MacOS app tour: quick settings kill switch */
 "_quick_settings_tour_feature_3" = "Предотвратите раскрытие вашего IP-адреса, включив Kill Switch.";
 
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "Быстрые настройки";
+/* MacOS app tour: next tip button */
+"_next_tip" = "Следующий совет";
 
-/* MacOS: quit application button in custom status menu */
-"_quit" = "Выход";
+/* MacOS app tour: end tour button */
+"_end_tour" = "Закончить тур";
 
-/* MacOS: alert show before quitting app if VPN is connected */
-"_quit_warning" = "Закрытие приложения приведет к отключению активного VPN-соединения. Вы хотите продолжить?";
+/* iOS onboarding texts */
+"_ios_onboarding_page1_title" = "Добро пожаловать в лучший Интернет";
 
-/* Profile create/change form and other places describing profile */
-"_random" = "Случайный";
+/* iOS onboarding texts */
+"_ios_onboarding_page1_description" = "Учёные и инженеры, создавшие ProtonMail, приветствуют вас в более безопасном Интернете без цензуры.";
 
-/* Profile create/change form */
-"_random_available_server" = "Случайный доступный сервер";
+/* iOS onboarding texts */
+"_ios_onboarding_page2_title" = "Мы считаем, что Интернет должен быть свободным";
 
-/* iOS: Predefined profile with random server */
-"_random_connection" = "Случайное подключение";
+/* iOS onboarding texts */
+"_ios_onboarding_page2_description" = "Победите цензуру и региональные ограничения. У нас нет рекламы, нет ограничений пропускной способности и мы не продаём ваши данные.";
 
-/* iOS: table header section in profiles screen */
-"_recommended" = "Рекомендованное";
+/* iOS onboarding texts */
+"_ios_onboarding_page3_title" = "Ваша безопасность является нашим приоритетом";
 
-/* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
-"_reconnect_on_settings_change_body" = "Необходимо перезапустить соединение, чтобы применить это изменение.";
+/* iOS onboarding texts */
+"_ios_onboarding_page3_description" = "Наша компания специализируется на безопасности. Идёт ли речь о нашей архитектуре Secure Core или о передовом шифровании — безопасность всегда находится на первом месте.";
 
-/* (No Comment) */
-"_reconnect_title" = "Мы переподключаемся к самому быстрому доступному серверу.";
+/* iOS onboarding next item button */
+"_next" = "Далее";
 
-/* (No Comment) */
-"_reconnecting_to" = "Переподключение к %@";
+/* iOS onboarding button to check app without logging in */
+"_discover_the_app" = "Узнать о приложении";
 
-/* iOS & MacOS: text that requires restart connection */
-"_reconnection_required" = "Требуется переподключение";
+/* iOS: Table header in settings screen */
+"_extensions" = "Расширения";
 
-/* (No Comment) */
-"_reestablish_vpn_connection_" = "Восстановление VPN-соединения.";
+/* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
+"_widget" = "iOS виджет";
 
-/* MacOS: About window */
-"_release_date" = "Дата выпуска:";
+/* Menu point in settings screen */
+"_usage_statistics" = "Статистика использования";
 
-/* MacOS: label in login and settings screens */
-"_remember_login" = "Оставаться в системе";
+/* iOS widget: text for not-logged-in user */
+"_log_in_to_use_widget" = "Пожалуйста, войдите, чтобы начать";
 
-/* Button in Kill switch error alert */
-"_report" = "Пожаловаться";
-
-/* Main mac app menu item */
-"_report_an_issue" = "Сообщить о проблеме...";
+"_vpnstatus_not_loggedin" = "Вы не вошли в Proton VPN. Откройте приложение Proton VPN и войдите.";
 
 /* Bug report attachments */
 "_report_attachments" = "Вложения";
 
-/* Mag bug report: attach logs checkbox */
-"_report_attachments_checkbox" = "Включить журналы и системные данные";
+/* iOS bug report: header before logs description */
+"_report_logs" = "Журналы VPN";
 
-/* Report bug screen title; iOS settings screen: item; */
-"_report_bug" = "Сообщить о проблеме";
+/* iOS bug report: description of log selection switch */
+"_report_logs_description" = "Включение этого параметра добавит журналы работы VPN на стороне клиента в этот отчет";
+
+/* iOS bug report: Title before report bug form */
+"_report_report" = "Комментарий к отчету";
+
+/* iOS bug report: Placeholder for email form field */
+"_report_placeholder_email" = "Контактная эл. почта";
+
+/* Bug report: Placeholder for text form field */
+"_report_placeholder_message" = "Ваше сообщение...";
+
+/* Bug report: Send report button text */
+"_report_send" = "Отправить отчёт";
+
+/* Bug report: Success message after report was sent */
+"_report_success" = "Спасибо за ваше сообщение";
 
 /* Mac bug report: description text before bug report form */
 "_report_description" = "Наша команда сможет определить проблему и найти возможное решение с большей вероятностью и за более короткий срок, если вы предоставите следующую информацию:\n• журналы приложения Proton VPN\n• журналы OpenVPN\n• журналы WireGuard";
@@ -1228,269 +1297,219 @@
 /* Mac bug report: feedback field label */
 "_report_field_feedback" = "Что пошло не так?";
 
-/* Mag bug report: textfields placeholder */
-"_report_field_placeholder" = "Начинайте вводить текст...";
-
 /* Mac bug report: steps field label */
 "_report_field_steps" = "Какие именно шаги вы выполняли?";
 
-/* iOS bug report: header before logs description */
-"_report_logs" = "Журналы VPN";
+/* Mag bug report: textfields placeholder */
+"_report_field_placeholder" = "Начинайте вводить текст...";
 
-/* iOS bug report: description of log selection switch */
-"_report_logs_description" = "Включение этого параметра добавит журналы работы VPN на стороне клиента в этот отчет";
+/* Mag bug report: attach logs checkbox */
+"_report_attachments_checkbox" = "Включить журналы и системные данные";
 
-/* iOS bug report: Placeholder for email form field */
-"_report_placeholder_email" = "Контактная эл. почта";
+/* Main mac app menu item */
+"_menu_about" = "О Proton VPN";
 
-/* Bug report: Placeholder for text form field */
-"_report_placeholder_message" = "Ваше сообщение...";
+/* Main mac app menu item */
+"_menu_check_updates" = "Проверка наличия обновлений...";
 
-/* iOS bug report: Title before report bug form */
-"_report_report" = "Комментарий к отчету";
+/* Main mac app menu item */
+"_menu_preferences" = "Настройки";
 
-/* Bug report: Send report button text */
-"_report_send" = "Отправить отчёт";
+/* Main mac app menu item */
+"_menu_hide_self" = "Скрыть Proton VPN";
 
-/* Bug report: Success message after report was sent */
-"_report_success" = "Спасибо за ваше сообщение";
+/* Main mac app menu item */
+"_menu_hide_others" = "Скрыть другие";
 
-/* iOS: human verification option select button */
-"_request_invitation" = "Запрос ручной активации";
+/* Main mac app menu item */
+"_menu_show_all" = "Показать все";
 
-/* iOS: button in human verification code form */
-"_resend_code" = "Запросить новый код";
+/* Main mac app menu item */
+"_menu_logout" = "Выйти";
 
-/* iOS: button in human verification code form */
-"_resend_no_code" = "Не получили код?";
+/* Main mac app menu item */
+"_menu_quit" = "Закрыть Proton VPN";
 
-/* iOS: message after human verification code resending */
-"_resend_success" = "Новый код запрошен";
+/* Main mac app menu item */
+"_menu_window" = "Окно";
 
-/* MacOS: button in login screen */
-"_reset_password" = "Сбросить пароль";
+/* Main mac app menu item */
+"_menu_minimize" = "Свернуть";
 
-/* Button in some alerts */
-"_retry" = "Повторить";
+"_subscription_will_expire" = "Текущий тариф истекает %@.";
 
-/* Common word */
-"_save" = "Сохранить";
+"_subscription_will_renew" = "Ваш тариф будет автоматически продлен %@.";
 
-/* Button */
-"_save_as_profile" = "Сохранить как профиль";
+"_subscription_description" = "Вы можете приобрести больше кредитов, чтобы автоматически обновлять Ваш текущий план. По истечении вашего текущего периода подписки, эти кредиты будут использованы для пролонгации подписки.";
 
-/* MacOS: placeholder for country search */
-"_search_for_country" = "Поиск страны";
+"_subscription_button" = "Продлить подписку на 1 год \n%@.";
 
-/* iOS: placeholder in phone country code selection screen */
-"_search_phone_country_code_placeholder" = "Поиск по странам";
+"_subscription_extended_success" = "Вы успешно приобрели кредиты для продления вашей текущей подписки.";
 
-/* MacOS: \Trial about to expire\ screen */
-"_secure_core_description" = "Ультра-безопасные серверы\nразмещенные нами";
+/* Button on alert after a problem with internet connection */
+"_ne_troubleshoot" = "Устранение неполадок";
 
-/* MacOS: secure core tooltip */
-"_secure_core_info" = "Предоставляет дополнительную защиту от компрометации VPN-сервера, перенаправляя трафик через нашу сеть Secure Core";
+/* Title of connection troubleshooting screen */
+"_troubleshoot_title" = "Устранение неисправностей";
 
-/* MacOS: \Trial about to expire\ screen */
-"_secure_streaming_description" = "Защищенный просмотр трансляций вашего любимого содержимого";
+"_troubleshoot_item_alt_title" = "Разрешить альтернативную маршрутизацию";
 
-/* MacOS: \Trial about to expire\ screen */
-"_secure_streaming_title" = "Защищенный просмотр трансляций";
+"_troubleshoot_item_alt_description" = "В случае блокировки сайтов Proton эта настройка позволяет приложению попробовать альтернативную сетевую маршрутизацию, чтобы добраться до Proton, что может быть полезно для обхода брандмауэров или сетевых проблем. Для большей надежности мы рекомендуем оставить эту настройку включенной. \nПодробнее";
 
-/* iOS status view */
-"_security" = "Безопасность";
+"_troubleshoot_item_alt_link1" = "Подробнее";
 
-/* iOS Settings: table section header */
-"_security_options" = "Параметры безопасности";
+"_troubleshoot_item_nointernet_title" = "Отсутствует подключение к Интернету";
 
-/* Profile create/change form */
-"_select_country" = "Выбор страны";
+"_troubleshoot_item_nointernet_description" = "Пожалуйста, убедитесь, что ваше Интернет-соединение работает.";
 
-/* iOS: title of phone country code selection screen */
-"_select_phone_country_code" = "Выберите код страны";
+"_troubleshoot_item_isp_title" = "Проблема с интернет-провайдером (ISP)";
 
-/* Button in plan selection */
-"_select_plan" = "Выберите тарифный план";
+"_troubleshoot_item_isp_description" = "Попробуйте подключиться к Proton из другой сети (либо Tor).";
 
-/* iOS: new profile screen */
-"_select_profile_color" = "Выберите цвет профиля";
+"_troubleshoot_item_isp_link1" = "Tor";
 
-/* Profile create/change form */
-"_select_server" = "Выбор сервера";
+"_troubleshoot_item_gov_title" = "Правительственная блокировка";
 
-/* iOS: text in human verification options screen */
-"_select_verification_option" = "Пожалуйста, выберите вариант подтверждения, чтобы продолжить:";
+"_troubleshoot_item_gov_description" = "Возможно, ваша страна блокирует доступ к Proton. Попробуйте использовать Tor для доступа к Proton.";
 
-/* iOS: text in human verification options screen */
-"_select_verification_option_top_message" = "Для предотвращения злоупотребления, мы должны убедиться, что вы человек.";
+"_troubleshoot_item_gov_link1" = "Tor";
 
-/* Profile create/change form */
-"_server" = "Сервер";
+"_troubleshoot_item_antivirus_title" = "Конфликт с антивирусом";
 
-/* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_server_ip" = "IP-адрес сервера:";
+"_troubleshoot_item_antivirus_description" = "Временно отключите или удалите антивирусное программное обеспечение.";
 
-/* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_server_load" = "Нагрузка сервера:";
+"_troubleshoot_item_proxy_title" = "Конфликт с прокси-сервером/брандмауэром";
 
-/* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
-"_server_load_percentage" = "Загрузка %@%%";
+"_troubleshoot_item_proxy_description" = "Отключите все прокси-серверы или брандмауэры, или обратитесь к своему сетевому администратору.";
 
-/* (No Comment) */
-"_server_load_title" = "Нагрузка сервера";
+"_troubleshoot_item_proton_title" = "Proton не работает";
 
-/* Error when user hasn't selected profile server */
-"_server_selection_is_required" = "Пожалуйста, выберите сервер";
+"_troubleshoot_item_proton_description" = "Проверьте статус Proton для нашей системы.";
 
-/* Under maintenance alert */
-"_server_under_maintenance" = "Сервер на обслуживании";
+"_troubleshoot_item_proton_link1" = "Статус Proton";
 
-/* iOS status view */
-"_session_time" = "Время сеанса";
+"_troubleshoot_item_other_title" = "Так и не нашлось решение";
 
-/* iOS: Settings screen title and tab title */
-"_settings" = "Настройки";
+"_troubleshoot_item_other_description" = "Свяжитесь с нами напрямую через нашу форму поддержки, по эл. почте (%@), или в Twitter.";
 
-/* Telemetry label in the settings window for mac */
-"_settings_mac_crash_reports_title" = "Делиться анонимными сообщениями о сбоях";
+"_troubleshoot_item_other_link1" = "форма поддержки";
 
-/* Telemetry tooltip in the settings window for mac */
-"_settings_mac_crash_reports_tooltip" = "Сообщения о сбоях помогают нам исправлять ошибки, обнаруживать брандмауэры и избегать блокировки VPN.";
+"_troubleshoot_item_other_link2" = "эл. почта";
 
-/* Clickable label title in the onboarding screen for mac */
-"_settings_mac_telemetry_learn_more" = "Подробнее";
+"_troubleshoot_item_other_link3" = "Twitter";
 
-/* Telemetry label in the settings window for mac */
-"_settings_mac_usage_stats_title" = "Делиться анонимной статистикой использования";
+/* iOS settings -> Battery usage; Title of battery usage screen; */
+"_battery_title" = "Использование аккумулятора";
 
-/* Telemetry tooltip in the settings window for mac */
-"_settings_mac_usage_stats_tooltip" = "Данные об использовании помогают нам преодолевать блокировки VPN и повышать производительность приложения.";
+/* Battery usages screen description */
+"_battery_description" = "Весь трафик на вашем телефоне будет проходить через OpenVPN, поэтому iOS будет относить использование батареи другими приложениями на счет Proton VPN.";
 
-/* iOS: title of the screen after successfull purchase */
-"_setup_complete" = "Настройка завершена";
+/* Battery usage More info button text */
+"_battery_more" = "Хотите узнать больше?";
 
-/* iOS: title of the screen after successfull purchase */
-"_setup_complete_free" = "Сейчас вы подписались на тариф Proton VPN Free. Сначала воспользуйтесь семью днями тарифа Proton VPN Plus бесплатно.";
+/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved"*/ */
+"_netshield_stats_data_saved" = "Данные\nсохранены";
 
-/* iOS: title of the screen after successfull purchase */
-"_setup_complete_plus" = "Покупка прошла успешно. Ваш тариф Proton VPN Plus теперь активен.";
+/* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
+"_netshield_feature_description" = "Защитите себя от рекламы, вредоносных программ, отслеживания на веб-сайтах и в приложениях. Если сайты не загружаются, попробуйте отключить функцию NetShield.\nПодробнее";
 
-/* Show/hide password switch */
-"_show" = "ПОКАЗАТЬ";
+/* Link with more info in the NetShield Feature description */
+"_netshield_feature_description_alt_link" = "Подробнее";
 
-/* Button in some alerts */
-"_show_instructions" = "Показать инструкции";
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_upsell_title" = "Просматривайте веб-сайты без рекламы с помощью NetShield";
 
-/* (No Comment) */
-"_show_protonvpn" = "Показать Proton VPN";
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_upsell_subtitle" = "Блокирует рекламу, трекеры и вредоносные программы на веб-сайтах и в приложениях";
 
-/* iOS: button in login and onboarding screens */
-"_sign_up" = "Регистрация";
+/* Settings -> Netshield: name of field. */
+"_netshield_title" = "NetShield";
 
-/* MacOS welcome screen: skip button */
-"_skip" = "Пропустить";
+"_netshield_title_tooltip" = "Блокировать рекламные объявления, трекеры и вредоносные программы";
+
+/* Settings -> Netshield, Status -> NetShield: Off */
+"_netshield_off" = "Выключено";
+
+/* Status -> Netshield: On */
+"_netshield_on" = "Включён";
+
+/* Settings -> Netshield: Block malware */
+"_netshield_level1" = "Блокировать вредоносные программы";
+
+/* Settings -> Netshield: Block malware, ads, trackers */
+"_netshield_level2" = "Блокировать вредоносные программы, рекламу и трекеры";
+
+"_netshield_alert_reconnect_description_on" = "Ваше соединение будет перезапущено для изменения режима NetShield.\nЗаметьте: Если некоторые сайты не загружаются, попробуйте отключить NetShield.";
+
+"_netshield_alert_reconnect_description_off" = "Ваше соединение будет перезапущено для изменения режима NetShield.";
+
+"_netshield_alert_upgrade_description" = "NetShield увеличивает вашу конфиденциальность, блокируя рекламу и трекеры.";
+
+/* Netshield section title in iOS connection screen */
+"_netshield_section_title" = "Блокировщик вредоносного ПО и рекламы";
+
+/* Title of the screen with news and offers. */
+"_news_title" = "Новости";
+
+"_quick_settings_secureCore_description" = "Направляйте свои самые чувствительные данные через наши самые безопасные серверы в странах, уважающих конфиденциальность.";
+
+"_quick_settings_netShield_description" = "Просматривайте Интернет без рекламы и вредоносных программ.";
+
+"_quick_settings_killSwitch_description" = "Отключает Интернет при обрыве подключения к VPN для предотвращения случайной утечки IP-адресов.";
+
+"_quick_settings_secureCore_note" = "Secure Core может снизить скорость VPN";
+
+"_quick_settings_netShield_note" = "Если веб-сайты не загружаются, попробуйте отключить NetShield";
+
+"_quick_settings_killSwitch_note" = "Если вы не можете подключиться к устройствам в локальной сети, попробуйте отключить Kill Switch.";
+
+"_quick_settings_get_plus" = "Получить Plus";
+
+"_applying_settings_" = "Применение настроек";
+
+"_reestablish_vpn_connection_" = "Восстановление VPN-соединения.";
+
+"_ip_will_not_be_exposed" = "Ваш IP-адрес не будет раскрыт.";
+
+"_cancel_reconnection" = "Это отменит любую попытку повторного подключения и оставит вас отключенным";
+
+"_quick_settings_netshield_option_off" = "Не блокировать";
+
+"_quick_settings_netshield_option_level1" = "Блокировать только вредоносные программы";
+
+"_quick_settings_netshield_option_level2" = "Блокировать вредоносные программы, рекламу и трекеры";
+
+"_upgrade_required_securecore_description" = "Secure Core доступен с тарифом Plus. Улучшите тариф прямо сейчас, чтобы маршрутизировать трафик через наши самые безопасные серверы в дружелюбных по отношению к конфиденциальности странах.";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection_header" = "Kill Switch защищает ваш IP";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection" = "Ваше подключение к Интернету возобновится, как только Proton VPN переподключится к серверу.\nЧтобы пользоваться Интернетом без VPN и защиты Kill Switch, отмените повторное подключение к серверу.";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold1" = "без";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold2" = "Защита Kill Switch";
+
+/* MacOS: connection screen - cancel button */
+"_kill_switch_reconnection_cancel" = "Отменить переподключение";
+
+/* Title for Smart Protocol in Settings */
+"_smart_protocol_title" = "Smart Protocol";
+
+/* Shortened title for Smart Protocol on Settings configuration */
+"_smart_title" = "Smart";
 
 /* Description for Smart Protocol in Settings */
 "_smart_protocol_description" = "Включите Smart Protocol, чтобы автоматически использовать протокол и порт, которые обеспечивают наилучшее подключение.";
 
-/* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
-"_smart_protocol_reconnect_modal_body" = "Ваше соединение будет перезапущено для изменения режима Smart Protocol.";
-
 /* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_title" = "Требуется переподключение";
 
-/* %@ is a speed description e.g. Speed: Highest */
-"_speed" = "%@ скорость";
-
-/* MacOS profile form: feature selection value */
-"_standard" = "Стандартные";
-
-/* MacOS: Settings -> General: name of field. */
-"_start_minimized" = "Запускать в свернутом виде";
-
-/* MacOS: label in login and settings screens */
-"_start_on_boot" = "Автозапуск при загрузке";
-
-/* iOS status view */
-"_status" = "Состояние";
-
-/* (No Comment) */
-"_streaming_servers_description" = "Подключитесь к серверу Plus в этой стране, чтобы начать просмотр трансляции.";
-
-/* (No Comment) */
-"_streaming_servers_extra" = "и многое другое";
-
-/* (No Comment) */
-"_streaming_servers_note" = "Примечание: Отключите службу определения местоположения и очистите кэш приложений трансляции, чтобы обеспечить появление нового содержимого.";
-
-/* (No Comment) */
-"_streaming_title" = "Просмотр трансляций";
-
-/* iOS: button in human verification code form */
-"_submit_verification_code" = "Отправить";
-
-/* (No Comment) */
-"_subscription_button" = "Продлить подписку на 1 год \n%@.";
-
-/* (No Comment) */
-"_subscription_description" = "Вы можете приобрести больше кредитов, чтобы автоматически обновлять Ваш текущий план. По истечении вашего текущего периода подписки, эти кредиты будут использованы для пролонгации подписки.";
-
-/* (No Comment) */
-"_subscription_expired_description" = "Вы перешли на более дешевую версию подписки.";
-
-/* (No Comment) */
-"_subscription_expired_reconnection_description" = "Вы перешли на более дешевую подписку, поэтому мы переподключаемся к самому быстрому доступному серверу.";
-
-/* (No Comment) */
-"_subscription_expired_title" = "Срок вашей подписки на VPN истек";
-
-/* (No Comment) */
-"_subscription_extended_success" = "Вы успешно приобрели кредиты для продления вашей текущей подписки.";
-
-/* iOS Settings -> Connection: name of field. */
-"_subscription_plan" = "План подписки";
-
-/* (No Comment) */
-"_subscription_upgrade_option3" = "Дополнительные возможности: NetShield, Secure Core, Tor, P2P";
-
-/* (No Comment) */
-"_subscription_upgrade_title" = "Улучшите снова, чтобы пользоваться всеми функциями:";
-
-/* Manage subscription */
-"_subscription_will_expire" = "Текущий тариф истекает %@.";
-
-/* (No Comment) */
-"_subscription_will_renew" = "Ваш тариф автоматически обновится %@.";
-
-/* (No Comment) */
-"_subuser_alert_description1" = "Чтобы продолжить с Proton VPN, разрешите подключения к VPN. Также это нужно сделать для всех пользователей вашей организации.";
-
-/* (No Comment) */
-"_subuser_alert_description2" = "Этот шаг займет всего несколько минут. После этого вы сможете войти в систему и защитить все свои устройства.";
-
-/* (No Comment) */
-"_subuser_alert_description3" = "В настоящее время для этого аккаунта не разрешено подключение к VPN. Чтобы начать свое путешествие с Proton VPN, свяжитесь с вашим администратором.";
-
-/* (No Comment) */
-"_subuser_alert_enable_connections_button" = "Разрешить подключения к VPN";
-
-/* (No Comment) */
-"_subuser_alert_login_button" = "Войти снова";
-
-/* Subuser alert */
-"_subuser_alert_title" = "Спасибо за улучшение до Business/Visionary";
-
-/* MacOS: connecting overlay */
-"_successfully_connected" = "Успешное подключение";
-
-/* (No Comment) */
-"_switch_side_button_off" = "ВЫКЛ";
-
-/* (No Comment) */
-"_switch_side_button_on" = "ВКЛ";
-
-/* (No Comment) */
-"_sysex_cannot_enable" = "Не могу включить системное расширение";
+/* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
+"_smart_protocol_reconnect_modal_body" = "Ваше соединение будет перезапущено для изменения режима Smart Protocol.";
 
 /* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
 "_sysex_description_1" = "Для работы Proton VPN, включите **custom VPN protocols** на вашем Mac.";
@@ -1504,326 +1523,256 @@
 /* Alternative for Part 3 for pre-ventura of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
 "_sysex_description_4" = "Для продолжения нажмите **Open Security Preferences** и следуйте видеоинструкциям на экране.";
 
-/* (No Comment) */
-"_sysex_enabled_description" = "Настройка завершена. Теперь вы можете просматривать Интернет быстрее с помощью лучших технологий VPN.";
-
-/* (No Comment) */
-"_sysex_enabled_title" = "Настройка завершена";
-
-/* (No Comment) */
-"_sysex_error_description" = "Произошла ошибка при установке системного расширения.\nПереустановите Proton VPN, убедитесь, что это приложение находится в папке Приложения, чтобы исправить эту проблему. Или же свяжитесь с нашей поддержкой.";
-
-/* Default action in the system extension wizard in mac. macOS Ventura */
-"_sysex_open_security_preferences" = "Открыть настройки безопасности";
+/* Title of the system extension wizard in mac */
+"_sysex_set_up_proton_vpn" = "Настроить Proton VPN";
 
 /* Default action in the system extension wizard in mac. Pre-macOS Ventura */
 "_sysex_open_system_settings" = "Открыть системные настройки";
 
-/* Title of the system extension wizard in mac */
-"_sysex_set_up_proton_vpn" = "Настроить Proton VPN";
+/* Default action in the system extension wizard in mac. macOS Ventura */
+"_sysex_open_security_preferences" = "Открыть настройки безопасности";
 
-/* (No Comment) */
 "_sysex_settings_description" = "Proton VPN потребуется загрузить системное расширение для использования Smart Protocol, OpenVPN и WireGuard.";
 
-/* Main mac app menu item */
-"_system_extension_tutorial_menu_item" = "Руководство по системным расширениям";
+"_sysex_enabled_title" = "Настройка завершена";
 
-/* MacOS: Settings -> General: name of field. */
-"_system_notifications" = "Системные уведомления";
+"_sysex_enabled_description" = "Настройка завершена. Теперь вы можете просматривать Интернет быстрее с помощью лучших технологий VPN.";
 
-/* MacOS welcome screen: take a tour button */
-"_take_tour" = "Ознакомительный тур";
+"_sysex_cannot_enable" = "Не могу включить системное расширение";
 
-/* iOS status view */
-"_technical_details" = "Техническая информация";
+"_sysex_error_description" = "Произошла ошибка при установке системного расширения.\nПереустановите Proton VPN, убедитесь, что это приложение находится в папке Приложения, чтобы исправить эту проблему. Или же свяжитесь с нашей поддержкой.";
 
-/* iOS: link inside text under sign-up form */
-"_terms_and_conditions" = "Условиями и положениями";
+"_vpnauth_certfail_title" = "Ошибка аутентификации";
 
-/* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "Используя Proton VPN, вы соглашаетесь с нашими\n%@ и %@";
+"_vpnauth_certfail_description" = "Не удалось обновить сертификат VPN. Пожалуйста, проверьте свое подключение";
 
-/* iOS: section header in countries list */
-"_test_servers" = "ТЕСТОВЫЕ серверы";
+"_vpnauth_too_many_certs_title" = "Ошибка аутентификации";
 
-/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
-"_timeout_ks_ike_descritpion" = "Возможно, другое приложение мешает работе Kill Switch. Чтобы решить эту проблему, переключитесь на протокол OpenVPN или отключите Kill Switch и повторите попытку.";
+"_vpnauth_too_many_certs_description" = "Вы достигли максимального количества изменений настройки. Пожалуйста, попробуйте снова через несколько минут";
 
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
-"_timeout_ks_ike_switch_protocol" = "Переключиться на OpenVPN и повторить";
+"_from_server_title" = "С сервера:";
 
-/* (No Comment) */
 "_to_server_title" = "На сервер:";
 
-/* Description shown together with server info icon */
-"_tor_description" = "Подключает к сети TOR";
-
-/* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_tor_server" = "Tor сервер";
-
-/* (No Comment) */
-"_troubleshoot_item_alt_description" = "В случае блокировки сайтов Proton эта настройка позволяет приложению попробовать альтернативную сетевую маршрутизацию, чтобы добраться до Proton, что может быть полезно для обхода брандмауэров или сетевых проблем. Для большей надежности мы рекомендуем оставить эту настройку включенной.\nПодробнее";
-
-/* (No Comment) */
-"_troubleshoot_item_alt_link1" = "Подробнее";
-
-/* (No Comment) */
-"_troubleshoot_item_alt_title" = "Разрешить альтернативную маршрутизацию";
-
-/* (No Comment) */
-"_troubleshoot_item_antivirus_description" = "Временно отключите или удалите антивирусное программное обеспечение.";
-
-/* (No Comment) */
-"_troubleshoot_item_antivirus_title" = "Конфликт с антивирусом";
-
-/* (No Comment) */
-"_troubleshoot_item_gov_description" = "Возможно, ваша страна блокирует доступ к Proton. Попробуйте использовать Tor для доступа к Proton.";
-
-/* (No Comment) */
-"_troubleshoot_item_gov_title" = "Правительственная блокировка";
-
-/* (No Comment) */
-"_troubleshoot_item_isp_description" = "Попробуйте подключиться к Proton из другой сети (либо Tor).";
-
-/* (No Comment) */
-"_troubleshoot_item_isp_title" = "Проблема с интернет-провайдером (ISP)";
-
-/* (No Comment) */
-"_troubleshoot_item_nointernet_description" = "Пожалуйста, убедитесь, что ваше Интернет-соединение работает.";
-
-/* (No Comment) */
-"_troubleshoot_item_nointernet_title" = "Отсутствует подключение к Интернету";
-
-/* (No Comment) */
-"_troubleshoot_item_other_description" = "Свяжитесь с нами напрямую через нашу форму поддержки, по эл. почте (%@), или Twitter.";
-
-/* (No Comment) */
-"_troubleshoot_item_other_link1" = "форма поддержки";
-
-/* (No Comment) */
-"_troubleshoot_item_other_link2" = "эл. почта";
-
-/* (No Comment) */
-"_troubleshoot_item_other_title" = "Так и не нашлось решение";
-
-/* (No Comment) */
-"_troubleshoot_item_proton_description" = "Проверьте статус Proton для нашей системы.";
-
-/* (No Comment) */
-"_troubleshoot_item_proton_link1" = "Статус Proton";
-
-/* (No Comment) */
-"_troubleshoot_item_proton_title" = "Proton не работает";
-
-/* (No Comment) */
-"_troubleshoot_item_proxy_description" = "Отключите все прокси-серверы или брандмауэры, или обратитесь к своему сетевому администратору.";
-
-/* (No Comment) */
-"_troubleshoot_item_proxy_title" = "Конфликт с прокси-сервером/брандмауэром";
-
-/* Title of connection troubleshooting screen */
-"_troubleshoot_title" = "Устранение неисправностей";
-
-/* MacOS: button in connecting overlay */
-"_try_again" = "Попробовать ещё раз";
-
-/* (No Comment) */
-"_try_again_without_killswitch" = "Отключите Kill Switch и повторите попытку";
-
-/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "При активации Kill Switch, вы не сможете получить доступ к устройствам в вашей локальной сети. \n\nПродолжить?";
-
-/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "Включить Kill Switch?";
-
-/* (No Comment) */
-"_turn_on" = "Включить";
-
-/* Common word */
-"_unavailable" = "Недоступно";
-
-/* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Уведомлять о работе в незащищенной сети";
-
-/* MacOS: Settings -> General: description */
-"_unprotected_network_tooltip" = "Получать уведомление, когда Proton VPN обнаруживает, что вы подключены к незащищенной сети.";
-
-/* (No Comment) */
-"_unsecure_wifi" = "Обнаружено небезопасное подключение к Wi-Fi";
-
-/* (No Comment) */
-"_unsecure_wifi_learn_more" = "Подробнее";
-
-/* (No Comment) */
-"_unsecure_wifi_title" = "Обнаружен небезопасный Wi-Fi";
-
-/* (No Comment) */
 "_update_billing" = "ОБНОВИТЬ МОИ РЕКВИЗИТЫ";
 
-/* (No Comment) */
-"_update_required" = "Требуется обновление";
-
-/* (No Comment) */
-"_update_required_no_longer_supported" = "Эта версия Proton VPN больше не поддерживается, пожалуйста, обновите приложение, чтобы продолжить его использование.";
-
-/* Secondary button title in the App update required alert */
-"_update_required_support" = "Связаться с поддержкой";
-
-/* Primary button title in the App update required alert */
-"_update_required_update" = "Обновить";
-
-/* Button in many places in both iOS and MacOS apps */
-"_upgrade" = "Улучшить";
-
-/* (No Comment) */
 "_upgrade_again" = "УЛУЧШИТЬ СНОВА";
 
-/* Main mac app menu item */
-"_upgrade_for_secure_core" = "использовать Secure Core";
+"_delinquent_title" = "В вашем аккаунте VPN есть неоплаченные счета";
 
-/* MacOS: Button in Upgrade screen */
-"_upgrade_my_plan" = "Улучшить мой план";
+"_delinquent_description" = "Вы снова получите доступ к платным функциям, когда это буден оплачено.";
 
-/* Upgrade button in trial modals used in both iOS and MacOS */
-"_upgrade_now" = "Улучшить сейчас";
+"_delinquent_reconnection_description" = "Вы снова получите доступ к платным функциям, когда эти счета будут оплачены. А пока, мы подключаем Вас к самому быстрому доступному бесплатному серверу.";
 
-/* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_server" = "К сожалению, этот сервер недоступен для вашего уровня подписки. Если вы хотите получить доступ к большему количеству серверов, подумайте об обновлении подписки.";
+"_maximum_device_title" = "Вы достигли максимального лимита устройств";
 
-/* iOS & MacOS: text near country or server; MacOS: title of several alerts */
-"_upgrade_required" = "Требуется обновление";
+"_maximum_device_reached_description" = "Отключите другое устройство, чтобы подключить это.";
 
-/* (No Comment) */
-"_upgrade_required_securecore_description" = "Secure Core доступен с тарифом Plus. Улучшите тариф прямо сейчас, чтобы маршрутизировать трафик через наши самые безопасные серверы в дружелюбных по отношению к конфиденциальности странах.";
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Отключите другое устройство, чтобы подключиться к этому, или перейдите на %@";
 
-/* iOS: Plan selection during plan upgarde, button insettings screen */
-"_upgrade_subscription" = "Улучшить подписку";
+"_reconnect_title" = "Мы переподключаемся к самому быстрому доступному серверу.";
 
-/* Main mac app menu item */
-"_upgrade_to_plus" = "Улучшить до Plus";
+"_subscription_expired_title" = "Срок вашей подписки на VPN истек";
 
-/* Plan upgrade unavailable alert */
-"_upgrade_unavailable_body" = "Ваша подписка Proton VPN не может быть улучшена из приложения. Пожалуйста, посетите account.protonvpn.com для улучшения.";
+"_subscription_expired_description" = "Вы перешли на более дешевую версию подписки.";
 
-/* Plan upgrade unavailable alert */
-"_upgrade_unavailable_title" = "Улучшение недоступно в приложении";
+"_subscription_expired_reconnection_description" = "Вы перешли на более дешевую подписку, поэтому мы переподключаемся к самому быстрому доступному серверу.";
 
-/* Menu point in settings screen */
-"_usage_statistics" = "Статистика использования";
+"_subscription_upgrade_title" = "Улучшите снова, чтобы пользоваться всеми функциями:";
 
-/* iOS: human verification option select button */
-"_use_captcha_verification" = "Проверка с помощью капчи";
+"_subscription_upgrade_option3" = "Дополнительные возможности: NetShield, Secure Core, Tor, P2P";
 
-/* iOS: human verification option select button */
-"_use_other_email_address" = "Подтвердить с помощью электронной почты";
+"_tier_free" = "Бесплатный";
 
-/* (No Comment) */
-"_use_sms_verification" = "Подтвердить с помощью СМС";
+"_tier_plus" = "Plus";
 
-/* Used in sign-in, sign-up and in settings */
-"_username" = "Имя пользователя";
+"_tier_visionary" = "Visionary";
 
-/* iOS: text in human verification code form */
-"_verification_instructions" = "Вам был отправлен проверочный код, пожалуйста, введите его ниже.";
+"_information_title" = "Информация";
 
-/* iOS setting: after this word actual version and build number are appended */
-"_version" = "Версия";
+"_features_title" = "Функции";
 
-/* MacOS: About window */
-"_version_current" = "Текущая версия:";
+"_performance_title" = "Производительность";
 
-/* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
-"_via" = "через";
+"_smart_routing_title" = "Smart Routing";
 
-/* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
-"_via_country" = "через %@";
+"_streaming_title" = "Просмотр трансляций";
 
-/* MacOS menu item; iOS setting screen item */
-"_view_logs" = "Просмотреть журналы";
+"_p2p_title" = "P2P/BitTorrent";
 
-/* Text in warning screen before actions that will disconnect VPN */
-"_view_toggle_will_cause_disconnect" = "Переключение Secure Core завершит ваше текущее подключение.";
+"_tor_title" = "Tor";
 
-/* (No Comment) */
+"_server_load_title" = "Нагрузка сервера";
+
+"_dw-partner-2022_partners_title" = "Наши партнеры";
+
+"_streaming_servers_description" = "Подключитесь к серверу Plus в этой стране, чтобы начать просмотр трансляции.";
+
+"_streaming_servers_note" = "Примечание: Отключите службу определения местоположения и очистите кэш приложений трансляции, чтобы обеспечить появление нового содержимого.";
+
+"_streaming_servers_extra" = "и многое другое";
+
+"_feature_free_servers" = "Серверы Free";
+
+"_feature_free_servers_description" = "Безопасность и конфиденциальность для всех. На бесплатных серверах нет ограничений по объему данных, и мы никогда не станем намеренно снижать скорость вашего просмотра веб-страниц.";
+
+"_feature_smart_routing_description" = "Эта технология позволяет Proton VPN обеспечивать более высокую скорость и безопасность в трудных для обслуживания странах.";
+
+"_feature_streaming_description" = "Серверы PLUS поддерживают трансляции (Netflix, Disney+, и т. д.) из любой точки мира.";
+
+"_feature_p2p_description" = "Эти серверы обеспечивают лучшую производительность для BitTorrent и обмена файлами.";
+
+"_feature_tor_description" = "Направляйте ваш трафик через сеть Tor. Медленнее, но конфиденциальнее.";
+
+"_performance_load_description" = "Серверы с высокой нагрузкой медленнее, чем серверы с низкой нагрузкой.";
+
+"_performance_load_low" = "Низкая";
+
+"_performance_load_medium" = "Средняя";
+
+"_performance_load_high" = "Высокая";
+
+"_locations_all" = "Все местоположения";
+
+"_locations_free" = "Местоположения Free";
+
+"_locations_plus" = "Местоположения Plus";
+
+"_locations_plus" = "Местоположения Plus";
+
+"_locations_gateways" = "Gateways";
+
+/* Gateways info modals title (both iOS and macOS) */
+"_gateways_modal_title" = "What's a gateway?";
+
+/* Gateways info modals text (both iOS and macOS) */
+"_gateways_modal_text" = "A VPN gateway is a secure connection that provides controlled access to your company's data and services through dedicated servers";
+
+"_vpn_accelerator_title" = "VPN Accelerator";
+
 "_vpn_accelerator_change_title" = "Изменить VPN Accelerator";
 
 /* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
-"_vpn_accelerator_description" = "VPN Accelerator позволяет использовать набор уникальных технологий для улучшения производительности, которые могут увеличить скорость VPN до 400%%.\nУзнать больше";
+"_vpn_accelerator_description" = "VPN Accelerator позволяет использовать набор уникальных технологий, увеличивающих скорость VPN до 400%%.\nУзнать больше";
 
 /* Link with more info in the VPN Accelerator description */
 "_vpn_accelerator_description_alt_link" = "Подробнее";
 
-/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
-"_vpn_connection_active" = "VPN-подключение активно";
+"_action_requires_reconnect" = "Необходимо перезапустить соединение, чтобы применить это изменение";
 
-/* iOS Settings -> Protocol: screen title */
-"_vpn_protocol" = "Протокол VPN";
+"_local_agent_server_error_title" = "Ошибка сервера";
 
-/* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
-"_vpn_protocol_not_supported_text" = "Протокол VPN недоступен для выбранного вами подключения. Чтобы подключиться, попробуйте изменить протокол или сервер.";
+"_local_agent_server_error_message" = "На сервере произошла ошибка. Пожалуйста, подключитесь к другому серверу.";
 
-/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
-"_vpn_protocol_not_supported_title" = "Протокол VPN не поддерживается";
+"_local_agent_policy_violation_error_title" = "Нарушение правил";
 
-/* VPN stuck alert */
-"_vpn_stuck_disconnecting_body" = "Вашему устройству не удалось завершить предыдущий сеанс VPN. Вам нужно перезагрузить устройство, прежде чем вы сможете установить новое подключение к VPN.";
+"_local_agent_policy_violation_error_message" = "Вам не разрешено подключаться к серверу. Выберите другой сервер или улучшите ваш тариф.";
 
-/* VPN stuck alert */
-"_vpn_stuck_disconnecting_title" = "Ошибка подключения";
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info" = "Загрузка данных о подключении";
 
-/* (No Comment) */
-"_vpnauth_certfail_description" = "Не удалось обновить сертификат VPN. Пожалуйста, проверьте свое подключение";
-
-/* Cert based auth */
-"_vpnauth_certfail_title" = "Ошибка аутентификации";
-
-/* (No Comment) */
-"_vpnauth_too_many_certs_description" = "Вы достигли максимального количества изменений настройки. Пожалуйста, попробуйте снова через несколько минут";
-
-/* (No Comment) */
-"_vpnauth_too_many_certs_title" = "Ошибка аутентификации";
-
-/* (No Comment) */
-"_vpnstatus_not_loggedin" = "Вы не вошли в Proton VPN. Откройте приложение Proton VPN и войдите.";
-
-/* Used as a title in alerts/modals */
-"_warning" = "Внимание";
-
-/* MacOS: alert shown during login if already connected to VPN */
-"_warning_vpn_session_is_active" = "На этом устройстве уже запущен сеанс Proton VPN другим пользователем. Продолжение входа приведет к завершению текущего сеанса. Хотите продолжить?";
-
-/* Shown on the Welcome screen as the longer screen text */
-"_welcome_body" = "Высокая скорость VPN из Швейцарии и защита вашей частной жизни шифрованием вашего подключения к Интернету.";
-
-/* MacOS welcome screen: description */
-"_welcome_description" = "Спасибо за использование Proton VPN. Взгляните \nна основные возможности приложения.";
-
-/* %@ is always 'Proton VPN Plus' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN Plus subscription which gives you: A list of Plus plan-only features follows this text */
-"_welcome_gift_description" = "В качестве приветственного подарка вам предоставляется 7-дневный доступ к\nподписке %@, которая дает вам:";
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info_for" = "Загрузка данных о подключении для %@";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "Защитите себя в интернете";
 
-/* MacOS welcome screen: title */
-"_welcome_title" = "ДОБРО ПОЖАЛОВАТЬ НА БОРТ!";
+/* Shown on the Welcome screen as the longer screen text */
+"_welcome_body" = "Высокая скорость VPN из Швейцарии и защита вашей частной жизни шифрованием вашего подключения к Интернету.";
 
-/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
+"_force_upgrade_title" = "Надо обновить приложение";
+
+"_force_upgrade_message" = "Версия приложения Proton VPN, которую вы сейчас используете, больше не поддерживается. Пожалуйста, обновите приложение до последней версии.";
+
+"login_fetch_vpn_data" = "Настройка доступа к VPN";
+
+"login_summary_button" = "Начать использовать Proton VPN";
+
 "_wgks_ks_off" = "Отключить Kill Switch";
 
-/* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "iOS виджет";
+"_neks_t2_title" = "Предупреждение о стабильности Kill Switch";
 
-/* iOS Settings: WireGuard logs row */
-"_wireguard_logs" = "Журнал WireGuard";
+"_neks_t2_hyperlink" = "Чип безопасности T2";
 
-/* MacOS: text in main window */
-"_you_are_not_connected" = "Вы не подключены";
+"_neks_t2_description" = "Использование Kill Switch нестабильно на этом устройстве.\n\nВаше устройство оснащено чипом безопасности T2, что может привести к проблемам со стабильностью системы, если функция Kill Switch в macOS используется Proton VPN.";
+
+"_neks_t2_connect" = "Все равно включить";
+
+"_subuser_alert_title" = "Спасибо за улучшение до Business/Visionary";
+
+"_subuser_alert_description1" = "Чтобы продолжить с Proton VPN, разрешите подключения к VPN. Также это нужно сделать для всех пользователей вашей организации.";
+
+"_subuser_alert_description2" = "Этот шаг займет всего несколько минут. После этого вы сможете войти в систему и защитить все свои устройства.";
+
+"_subuser_alert_description3" = "В настоящее время для этого аккаунта не разрешено подключение к VPN. Чтобы начать свое путешествие с Proton VPN, свяжитесь с вашим администратором.";
+
+"_subuser_alert_enable_connections_button" = "Разрешить подключения к VPN";
+
+"_subuser_alert_login_button" = "Войти снова";
+
+/* Moderate NAT feature title in Settings */
+"_moderate_nat_title" = "Умеренный NAT";
+
+/* Explanation for the Moderate NAT feature shown next to the feature in Settings */
+"_moderate_nat_explanation" = "Умеренный NAT отключает произвольное сопоставление локальных адресов. Это может несколько снизить уровень безопасности, но позволяет одноранговым приложениям, таким как сетевые игры, устанавливать прямые соединения. \nПодробнее";
+
+/* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
+"_moderate_nat_explanation_link" = "Подробнее";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_enable_title" = "Включить Умеренный NAT";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_change_title" = "Включить Умеренный NAT";
+
+/* Clickable label title in the onboarding screen for mac */
+"_settings_mac_telemetry_learn_more" = "Подробнее";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_usage_stats" = "Делиться анонимной статистикой использования. Это помогает нам преодолевать блокировки VPN и повышать производительность приложения.";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_crash_reports" = "Делиться анонимными сообщениями о сбоях. Это поможет нам исправить ошибки, обнаружить брандмауэры и избежать блокировки VPN.";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_usage_stats_title" = "Делиться анонимной статистикой использования";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_usage_stats_tooltip" = "Данные об использовании помогают нам преодолевать блокировки VPN и повышать производительность приложения.";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_crash_reports_title" = "Делиться анонимными сообщениями о сбоях";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_crash_reports_tooltip" = "Сообщения о сбоях помогают нам исправлять ошибки, обнаруживать брандмауэры и избегать блокировки VPN.";
+
+/* Section title in Settings */
+"_advanced" = "Продвинутые";
+
+/* Non-standard ports feature title in Settings */
+"_non_standard_ports_title" = "Нестандартные порты";
+
+/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
+"_non_standard_ports_explanation" = "Используйте Proton VPN для любых особых нужд, разрешая трафик на нестандартные порты через VPN. \nПодробнее";
+
+/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
+"_non_standard_ports_explanation_link" = "Подробнее";
+
+/* Title for alert shown when enabling Non-standard ports requires reconnection */
+"_non_standard_ports_change_title" = "Разрешить нестандартные порты";
+
+/* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
+"proton_website_unreachable" = "Сайт Proton VPN может быть временно недоступен из-за сетевых ограничений. Пожалуйста, используйте мобильное приложение для создания нового аккаунта Proton.";
+
+/* Title of the Use coupon button in Settings */
+"use_coupon" = "Использовать купон";
+
+/* Title of the screen to apply a coupon */
+"coupon_code" = "Код купона";
 
 /* Button to apply coupon */
 "apply_coupon" = "Применить";
-
-/* Button to confirm two-factor or recovery code in login */
-"authenticate" = "Аутентифицировать";
 
 /* Banner shown after coupon is applied */
 "coupon_applied" = "Купон был успешно использован.";
@@ -1831,42 +1780,76 @@
 /* Banner shown after coupon is applied but the plan is not yet upgraded */
 "coupon_applied_plan_not_upgraded_yet" = "Купон был успешно использован. Ваша подписка будет улучшена в течение нескольких минут.";
 
-/* Title of the screen to apply a coupon */
-"coupon_code" = "Код купона";
-
-/* (No Comment) */
-"login_fetch_vpn_data" = "Настройка доступа к VPN";
-
-/* (No Comment) */
-"login_summary_button" = "Начать использовать Proton VPN";
-
-/* Error message shown when tryng to log in with an unsupported method */
-"login_unsupported_state" = "Недействительный способ входа. Пожалуйста, свяжитесь с поддержкой.";
-
-/* Description of user account update screen part 1 */
-"maximum_device_plan_limit_part_1" = "Отключите другое устройство, чтобы подключиться к этому, или перейдите на %@";
-
-/* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
-"proton_website_unreachable" = "Сайт Proton VPN может быть временно недоступен из-за сетевых ограничений. Пожалуйста, используйте мобильное приложение для создания нового аккаунта Proton.";
-
-/* Placeholder for the Recovery code text field */
-"recovery_code" = "Код восстановления";
-
 /* Title for the Two-factor authentication screen */
 "two_factor_authentication" = "Двухфакторная аутентификация";
 
 /* Placeholder for the Two Factor text field */
 "two_factor_code" = "Двухфакторный код";
 
-/* Title of the Use coupon button in Settings */
-"use_coupon" = "Использовать купон";
+/* Title for the button to switch to entering two-factor code */
+"use_two_factor_code" = "Использовать код двухфакторной аутентификации";
+
+/* Placeholder for the Recovery code text field */
+"recovery_code" = "Код восстановления";
 
 /* Title for the button to switch to entering recovery code */
 "use_recovery_code" = "Использовать код восстановления";
 
-/* Title for the button to switch to entering two-factor code */
-"use_two_factor_code" = "Использовать код двухфакторной аутентификации";
+/* Button to confirm two-factor or recovery code in login */
+"authenticate" = "Аутентифицировать";
+
+/* Error message shown when tryng to log in with an unsupported method */
+"login_unsupported_state" = "Недействительный способ входа. Пожалуйста, свяжитесь с поддержкой.";
 
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "Не удалось изменить настройку %@. Пожалуйста, повторите попытку позже или подключитесь к другому серверу";
 
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
+"netshield_stats_hint_ads" = "С помощью трекеров и cookie сайты отслеживают вас для показа таргетированной рекламы.";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
+"netshield_stats_hint_trackers" = "Трекеры – это сторонние веб-сайты, которые собирают, хранят и продают информацию о ваших действиях в сети.";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
+"netshield_stats_hint_data" = "Примерный размер заблокированных NetShield данных (рекламы, трекеров, вредоносных программ).";
+
+"_netshield_stats_data_saved" = "Данные\nсохранены";
+
+/* The count of trackers/ads blocked in thousands */
+"_netshield_stats_blocked_K" = "%@ K";
+
+/* The count of trackers/ads blocked in millions */
+"_netshield_stats_blocked_M" = "%@ M";
+
+/* The count of trackers/ads blocked in billions */
+"_netshield_stats_blocked_G" = "%@ G";
+
+/* The count of trackers/ads blocked in trillions */
+"_netshield_stats_blocked_T" = "%@ T";
+
+/* The count of trackers/ads blocked in quadrillions */
+"_netshield_stats_blocked_P" = "%@ P";
+
+/* The count of trackers/ads blocked in sextillions */
+"_netshield_stats_blocked_E" = "%@ E";
+
+/* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
+"_alert_protocol_deprecated_title" = "Протокол недоступен";
+
+/* Body of the deprecated protocol alert on MacOS. Shown when the user attempts to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
+"_alert_protocol_deprecated_body_macos" = "This profile uses a protocol that is outdated and no longer supported. Click \"Update\" to switch to using the default Smart protocol. Learn more";
+
+/* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
+"_alert_protocol_deprecated_link_text" = "Подробнее";
+
+/* Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
+"_alert_protocol_deprecated_body_ios" = "This profile uses a protocol that is outdated and no longer supported. Click \"Update\" to switch to using the default Smart protocol.";
+
+/* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
+"_alert_protocol_deprecated_enable_smart" = "Update";
+
+/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser*/ */
+"_alert_protocol_deprecated_learn_more" = "Learn more";
+
+/* Text for the 'Close' action of the deprecated protocol alert. */
+"_alert_protocol_deprecated_close" = "Закрыть";

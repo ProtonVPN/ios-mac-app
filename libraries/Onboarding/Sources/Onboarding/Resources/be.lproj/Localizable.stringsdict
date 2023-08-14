@@ -1,92 +1,116 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>onboarding_establish_subtitle</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>Free subscription offers %#@num_servers@ in %#@num_countries@</string>
-		<key>num_countries</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d countries</string>
-			<key>other</key>
-			<string>%d countries</string>
-		</dict>
-		<key>num_servers</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d servers</string>
-			<key>other</key>
-			<string>%d servers</string>
-		</dict>
-	</dict>
-	<key>onboarding_purchased_subtitle</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>You now have access to %#@NUM_SEC_SERVERS@ and other premium features.</string>
-		<key>NUM_SEC_SERVERS</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d secure server</string>
-			<key>other</key>
-			<string>%d secure servers</string>
-		</dict>
-	</dict>
-	<key>onboarding_upsell_feature_multipleDevices</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>Connect %#@NUM_DEVICES@ simultaneously</string>
-		<key>NUM_DEVICES</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d device</string>
-			<key>other</key>
-			<string>%d devices</string>
-		</dict>
-	</dict>
-	<key>onboarding_upsell_title</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>Access all %#@NUM_SERVERS@ in %#@NUM_COUNTRIES@ with Plus</string>
-		<key>NUM_COUNTRIES</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d country</string>
-			<key>other</key>
-			<string>%d countries</string>
-		</dict>
-		<key>NUM_SERVERS</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d server</string>
-			<key>other</key>
-			<string>%d servers</string>
-		</dict>
-	</dict>
-</dict>
+  <dict>
+    <key>onboarding_establish_subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Падпіска Free прадугледжвае %#@num_servers@ у %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>one</key>
+        <string>%d краіна</string>
+        <key>few</key>
+        <string>%d краіны</string>
+        <key>many</key>
+        <string>%d краін</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d краін</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>one</key>
+        <string>%d сервер</string>
+        <key>few</key>
+        <string>%d серверы</string>
+        <key>many</key>
+        <string>%d сервераў</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d сервераў</string>
+      </dict>
+    </dict>
+    <key>onboarding_upsell_title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Доступ да ўсіх %#@NUM_SERVERS@ у %#@NUM_COUNTRIES@ з Plus</string>
+      <key>NUM_COUNTRIES</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d краін</string>
+        <key>one</key>
+        <string>%d краіна</string>
+        <key>few</key>
+        <string>%d краіны</string>
+        <key>many</key>
+        <string>%d краін</string>
+      </dict>
+      <key>NUM_SERVERS</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d сервераў</string>
+        <key>one</key>
+        <string>%d сервер</string>
+        <key>few</key>
+        <string>%d серверы</string>
+        <key>many</key>
+        <string>%d сервераў</string>
+      </dict>
+    </dict>
+    <key>onboarding_purchased_subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Цяпер вы маеце доступ да %#@NUM_SEC_SERVERS@ і іншых прэміяльных функцый.</string>
+      <key>NUM_SEC_SERVERS</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d бяспечных сервераў</string>
+        <key>one</key>
+        <string>%d бяспечны сервер</string>
+        <key>few</key>
+        <string>%d бяспечныя серверы</string>
+        <key>many</key>
+        <string>%d бяспечных сервераў</string>
+      </dict>
+    </dict>
+    <key>onboarding_upsell_feature_multipleDevices</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Падключайце %#@NUM_DEVICES@ адначасова</string>
+      <key>NUM_DEVICES</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d прыладу</string>
+        <key>one</key>
+        <string>%d прыладу</string>
+        <key>few</key>
+        <string>%d прылады</string>
+        <key>many</key>
+        <string>%d прылад</string>
+      </dict>
+    </dict>
+  </dict>
 </plist>
