@@ -50,6 +50,12 @@ struct RecentRowItemView: View {
 
     @Dependency(\.locale) private var locale
 
+    var isRTLLanguage: Bool {
+        if #available(iOS 16, *) {
+            return locale.language.characterDirection == .rightToLeft
+        }
+        return false
+    }
     static let offScreenSwipeDistance: CGFloat = 1000
     static let buttonPadding: CGFloat = .themeSpacing16
     static let itemCellHeight: CGFloat = .themeSpacing64
@@ -157,12 +163,15 @@ struct RecentRowItemView: View {
             abs(value.translation.height) < 10 else {
             return
         }
-        
-        swipeOffset = value.translation.width
+
+        swipeOffset = value.translation.width * (isRTLLanguage ? -1 : 1)
     }
 
     func swipeEnded(_ value: DragGesture.Value) {
-        let sign: CGFloat = value.translation.width < 0 ? -1 : 1
+        var sign: CGFloat = value.translation.width < 0 ? 1 : -1
+        if #available(iOS 16, *) {
+            sign *= isRTLLanguage ? 1 : -1
+        }
 
         withAnimation(.easeOut) {
             guard value.reached(.performAction, accordingTo: viewSize) else {
@@ -194,17 +203,6 @@ struct VerticalLabelStyle: LabelStyle {
 }
 
 extension DragGesture.Value {
-    enum Direction {
-        case left
-        case right
-    }
-
-    var direction: Direction? {
-        guard translation.width != 0 else { return nil }
-
-        return translation.width < 0 ? .left : .right
-    }
-
     /// Ratios as a percentage of the view width for certain swipe/button behaviors.
     enum ThresholdRatio: CGFloat {
         /// How far should we swipe before leaving the button exposed?
