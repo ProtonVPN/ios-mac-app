@@ -177,8 +177,8 @@
         "repositoryURL": "https://github.com/apple/swift-argument-parser",
         "state": {
           "branch": null,
-          "revision": "fee6933f37fde9a5e12a1e4aeaa93fe60116ff2a",
-          "version": "1.2.2"
+          "revision": "8f4d2753f0e4778c76d5f05ad16c74f707390531",
+          "version": "1.2.3"
         }
       },
       {
@@ -222,8 +222,8 @@
         "repositoryURL": "https://github.com/pointfreeco/swift-composable-architecture",
         "state": {
           "branch": null,
-          "revision": "195284b94b799b326729640453f547f08892293a",
-          "version": "1.0.0"
+          "revision": "f62ba37cc0c51acb89f6dd1f552f6a1f9c58027c",
+          "version": "1.1.0"
         }
       },
       {

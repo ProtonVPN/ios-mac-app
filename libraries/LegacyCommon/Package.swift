@@ -50,7 +50,7 @@ let package = Package(
         .github("getsentry", repo: "sentry-cocoa", exact: "8.9.0"),
         .github("kishikawakatsumi", repo: "KeychainAccess", exact: "3.2.1"),
         .github("pointfreeco", repo: "swift-clocks", .upToNextMajor(from: "1.0.0")),
-        .github("pointfreeco", repo: "swift-composable-architecture", exact: "1.0.0"),
+        .github("pointfreeco", repo: "swift-composable-architecture", .upToNextMajor(from: "1.0.0")),
         .github("pointfreeco", repo: "swift-dependencies", .upToNextMajor(from: "1.0.0")),
         .github("pointfreeco", repo: "swiftui-navigation", exact: "1.0.0"),
         .github("SDWebImage", repo: "SDWebImage", .upTo("5.16.0")),
