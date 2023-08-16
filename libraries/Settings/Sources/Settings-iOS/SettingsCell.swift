@@ -28,6 +28,7 @@ struct SettingsCell: View {
     private let onTap: () -> Void
 
     @ScaledMetric private var iconRadius: CGFloat = .themeRadius24
+    private var iconVerticalPadding: CGFloat = 13
 
     init(
         icon: Image,
@@ -51,7 +52,7 @@ struct SettingsCell: View {
     }
 
     var body: some View {
-        HStack(alignment: .center, spacing: .themeSpacing8) {
+        HStack(spacing: .themeSpacing8) {
             iconView
             contentView
             accessoryView
@@ -59,18 +60,20 @@ struct SettingsCell: View {
         .contentShape(Rectangle()) // make the entire cell tappable
         .onTapGesture { onTap() }
         .listRowBackground(Color(.background, .normal))
+        .listRowInsets(EdgeInsets()) // removes padding around content view
     }
 
     private var accessoryView: some View {
         accessory
-            .padding(.trailing, -.themeSpacing4)
+            .padding(.trailing, .themeSpacing16)
     }
 
     private var iconView: some View {
         icon
             .resizable().frame(.square(iconRadius * content.iconRadiusMultiplier))
             .foregroundColor(Color(.icon, .normal))
-            .padding([.top, .bottom, .trailing], .themeSpacing4)
+            .padding(.vertical, iconVerticalPadding)
+            .padding(.leading, .themeSpacing16)
     }
 
     @ViewBuilder

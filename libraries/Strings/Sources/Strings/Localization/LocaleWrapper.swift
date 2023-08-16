@@ -57,7 +57,7 @@ extension Locale: LocaleWrapper {
     }
     
     public var isRTLLanguage: Bool {
-        if #available(iOS 16, *) {
+        if #available(iOS 16, macOS 13, *) {
             return self.language.characterDirection == .rightToLeft
         }
         return false
