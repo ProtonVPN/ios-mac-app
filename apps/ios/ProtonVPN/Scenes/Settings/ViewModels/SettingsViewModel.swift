@@ -499,9 +499,12 @@ final class SettingsViewModel {
     
     private var extensionsSection: TableViewSection {
         let cells: [TableViewCellModel] = [
-            .pushStandard(title: Localizable.widget, handler: { [pushExtensionsViewController] in
-                pushExtensionsViewController()
-            })
+            .pushStandard(
+                title: Localizable.widget,
+                handler: { [pushExtensionsViewController] in
+                    pushExtensionsViewController()
+                }
+            )
         ]
         
         return TableViewSection(title: Localizable.extensions, cells: cells)
@@ -509,10 +512,12 @@ final class SettingsViewModel {
 
     private var usageStatisticsSection: TableViewSection {
         let cells: [TableViewCellModel] = [
-            .pushStandard(title: Localizable.usageStatistics,
-                          handler: { [pushUsageStatisticsViewController] in
-                              pushUsageStatisticsViewController()
-                          })
+            .pushStandard(
+                title: Localizable.usageStatistics,
+                handler: { [pushUsageStatisticsViewController] in
+                    pushUsageStatisticsViewController()
+                }
+            )
         ]
 
         return TableViewSection(title: "", cells: cells)

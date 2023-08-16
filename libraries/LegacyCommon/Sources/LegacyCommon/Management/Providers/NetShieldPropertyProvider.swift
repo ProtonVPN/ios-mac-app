@@ -69,15 +69,31 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
             return value
         }
         set {
+            var success = false
             @Dependency(\.defaultsProvider) var provider
-            provider.getDefaults().setUserValue(newValue.rawValue, forKey: StorageKey.netShield.rawValue)
+            success = provider
+                .getDefaults()
+                .setUserValue(
+                    newValue.rawValue,
+                    forKey: StorageKey.netShield.rawValue
+                )
             if newValue != .off {
                 // Duplicate active NS level, so that we can remember it to toggle it between off/on (V1 UI)
-                provider.getDefaults().setUserValue(newValue.rawValue, forKey: StorageKey.lastActive.rawValue)
+                success = provider
+                    .getDefaults()
+                    .setUserValue(
+                        newValue.rawValue,
+                        forKey: StorageKey.lastActive.rawValue
+                    )
             }
 
-            executeOnUIThread {
-                NotificationCenter.default.post(name: type(of: self).netShieldNotification, object: newValue, userInfo: nil)
+            if success {
+                executeOnUIThread {
+                    NotificationCenter.default.post(
+                        name: type(of: self).netShieldNotification,
+                        object: newValue, userInfo: nil
+                    )
+                }
             }
         }
     }

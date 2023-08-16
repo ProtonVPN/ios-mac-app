@@ -380,16 +380,13 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
     
     private func checkForSubuserWithoutSessions(completion: @escaping (Result<(), Error>) -> Void) {
-        guard let credentials = try? self.vpnKeychain.fetchCached() else {
+        guard let credentials = try? self.vpnKeychain.fetchCached(),
+            credentials.needConnectionAllocation else {
             completion(.success)
             return
         }
-        guard credentials.isSubuserWithoutSessions else {
-            completion(.success)
-            return
-        }
-        
-        log.error("User with insufficient sessions detected. Throwing and error insted of login.", category: .app)
+
+        log.error("User with insufficient sessions detected. Throwing an error instead of logging in.", category: .app)
         logOutCleanup()
         completion(.failure(ProtonVpnError.subuserWithoutSessions))
     }

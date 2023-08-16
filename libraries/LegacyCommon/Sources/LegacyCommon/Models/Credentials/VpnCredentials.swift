@@ -42,6 +42,7 @@ public class VpnCredentials: NSObject, NSSecureCoding {
     public let currency: String
     public let hasPaymentMethod: Bool
     public let subscribed: Int?
+    public let needConnectionAllocation: Bool
     
     override public var description: String {
         "Status: \(status)\n" +
@@ -56,10 +57,28 @@ public class VpnCredentials: NSObject, NSSecureCoding {
         "Delinquent: \(delinquent)\n" +
         "Credit: \(credit) (in \(currency))" +
         "Has Payment Method: \(hasPaymentMethod)\n" +
-        "Subscribed: \(String(describing: subscribed))"
+        "Subscribed: \(String(describing: subscribed))" +
+        "Need Connection Allocation: \(needConnectionAllocation)"
     }
 
-    public init(status: Int, expirationTime: Date, accountPlan: AccountPlan, maxConnect: Int, maxTier: Int, services: Int, groupId: String, name: String, password: String, delinquent: Int, credit: Int, currency: String, hasPaymentMethod: Bool, planName: String?, subscribed: Int?) {
+    public init(
+        status: Int,
+        expirationTime: Date,
+        accountPlan: AccountPlan,
+        maxConnect: Int,
+        maxTier: Int,
+        services: Int,
+        groupId: String,
+        name: String,
+        password: String,
+        delinquent: Int,
+        credit: Int,
+        currency: String,
+        hasPaymentMethod: Bool,
+        planName: String?,
+        subscribed: Int?,
+        needConnectionAllocation: Bool
+    ) {
         self.status = status
         self.expirationTime = expirationTime
         self.accountPlan = accountPlan
@@ -75,6 +94,7 @@ public class VpnCredentials: NSObject, NSSecureCoding {
         self.hasPaymentMethod = hasPaymentMethod
         self.planName = planName // Saving original string we got from API, because we need to know if it was null
         self.subscribed = subscribed
+        self.needConnectionAllocation = needConnectionAllocation
         super.init()
     }
     
@@ -99,6 +119,7 @@ public class VpnCredentials: NSObject, NSSecureCoding {
         groupId = try vpnDic.stringOrThrow(key: "GroupID")
         name = try vpnDic.stringOrThrow(key: "Name")
         password = try vpnDic.stringOrThrow(key: "Password")
+        needConnectionAllocation = vpnDic.bool("NeedConnectionAllocation") ?? false
         delinquent = try dic.intOrThrow(key: "Delinquent")
         credit = try dic.intOrThrow(key: "Credit")
         currency = try dic.stringOrThrow(key: "Currency")
@@ -109,7 +130,7 @@ public class VpnCredentials: NSObject, NSSecureCoding {
 
     /// Used for testing purposes.
     var asDict: JSONDictionary {
-        [
+        ([
             "VPN": [
                 "PlanName": accountPlan.rawValue,
                 "Status": status,
@@ -119,14 +140,16 @@ public class VpnCredentials: NSObject, NSSecureCoding {
                 "GroupID": groupId,
                 "Name": name,
                 "Password": password,
-            ],
+                "NeedConnectionAllocation": needConnectionAllocation,
+            ] as [String: Any],
             "Services": services,
             "Delinquent": delinquent,
             "Credit": credit,
             "Currency": currency,
             "HasPaymentMethod": hasPaymentMethod,
             "Subscribed": subscribed ?? 0,
-        ].mapValues({ $0 as AnyObject })
+        ] as [String: Any])
+        .mapValues({ $0 as AnyObject })
     }
     
     // MARK: - NSCoding
@@ -146,6 +169,7 @@ public class VpnCredentials: NSObject, NSSecureCoding {
         static let currency = "currency"
         static let hasPaymentMethod = "hasPaymentMethod"
         static let subscribed = "subscribed"
+        static let needConnectionAllocation = "needConnectionAllocation"
     }
     
     public required convenience init?(coder aDecoder: NSCoder) {
@@ -157,21 +181,23 @@ public class VpnCredentials: NSObject, NSSecureCoding {
               let subscribed = aDecoder.decodeObject(forKey: CoderKey.subscribed) as? Int else {
             return nil
         }
-        self.init(status: aDecoder.decodeInteger(forKey: CoderKey.status),
-                  expirationTime: expirationTime as Date,
-                  accountPlan: AccountPlan(coder: aDecoder),
-                  maxConnect: aDecoder.decodeInteger(forKey: CoderKey.maxConnect),
-                  maxTier: aDecoder.decodeInteger(forKey: CoderKey.maxTier),
-                  services: aDecoder.decodeInteger(forKey: CoderKey.services),
-                  groupId: groupId,
-                  name: name,
-                  password: password,
-                  delinquent: aDecoder.decodeInteger(forKey: CoderKey.delinquent),
-                  credit: aDecoder.decodeInteger(forKey: CoderKey.credit),
-                  currency: aDecoder.decodeObject(forKey: CoderKey.currency) as? String ?? "",
-                  hasPaymentMethod: aDecoder.decodeBool(forKey: CoderKey.hasPaymentMethod),
-                  planName: planName,
-                  subscribed: subscribed
+        self.init(
+            status: aDecoder.decodeInteger(forKey: CoderKey.status),
+            expirationTime: expirationTime as Date,
+            accountPlan: AccountPlan(coder: aDecoder),
+            maxConnect: aDecoder.decodeInteger(forKey: CoderKey.maxConnect),
+            maxTier: aDecoder.decodeInteger(forKey: CoderKey.maxTier),
+            services: aDecoder.decodeInteger(forKey: CoderKey.services),
+            groupId: groupId,
+            name: name,
+            password: password,
+            delinquent: aDecoder.decodeInteger(forKey: CoderKey.delinquent),
+            credit: aDecoder.decodeInteger(forKey: CoderKey.credit),
+            currency: aDecoder.decodeObject(forKey: CoderKey.currency) as? String ?? "",
+            hasPaymentMethod: aDecoder.decodeBool(forKey: CoderKey.hasPaymentMethod),
+            planName: planName,
+            subscribed: subscribed,
+            needConnectionAllocation: aDecoder.decodeObject(forKey: CoderKey.needConnectionAllocation) as? Bool ?? false
         )
     }
 
@@ -191,6 +217,7 @@ public class VpnCredentials: NSObject, NSSecureCoding {
         aCoder.encode(hasPaymentMethod, forKey: CoderKey.hasPaymentMethod)
         aCoder.encode(planName, forKey: CoderKey.planName)
         aCoder.encode(subscribed, forKey: CoderKey.subscribed)
+        aCoder.encode(needConnectionAllocation, forKey: CoderKey.needConnectionAllocation)
     }
 }
 
@@ -216,6 +243,7 @@ public struct CachedVpnCredentials {
     public let currency: String
     public let hasPaymentMethod: Bool
     public let subscribed: Int?
+    public let needConnectionAllocation: Bool
 
     public var canUsePromoCode: Bool {
         return !isDelinquent && !hasPaymentMethod && credit == 0 && subscribed == 0
@@ -228,17 +256,20 @@ public struct CachedVpnCredentials {
 
 extension CachedVpnCredentials {
     init(credentials: VpnCredentials) {
-        self.init(status: credentials.status,
-                  accountPlan: credentials.accountPlan,
-                  planName: credentials.planName,
-                  maxConnect: credentials.maxConnect,
-                  maxTier: credentials.maxTier,
-                  services: credentials.services,
-                  delinquent: credentials.delinquent,
-                  credit: credentials.credit,
-                  currency: credentials.currency,
-                  hasPaymentMethod: credentials.hasPaymentMethod,
-                  subscribed: credentials.subscribed)
+        self.init(
+            status: credentials.status,
+            accountPlan: credentials.accountPlan,
+            planName: credentials.planName,
+            maxConnect: credentials.maxConnect,
+            maxTier: credentials.maxTier,
+            services: credentials.services,
+            delinquent: credentials.delinquent,
+            credit: credentials.credit,
+            currency: credentials.currency,
+            hasPaymentMethod: credentials.hasPaymentMethod,
+            subscribed: credentials.subscribed,
+            needConnectionAllocation: credentials.needConnectionAllocation
+        )
     }
 }
 
@@ -246,10 +277,6 @@ extension CachedVpnCredentials {
 extension CachedVpnCredentials {
     public var isDelinquent: Bool {
         return delinquent > 2
-    }
-
-    public var isSubuserWithoutSessions: Bool {
-        return planName == nil && maxConnect <= 1
     }
 
     public var serviceName: String {
