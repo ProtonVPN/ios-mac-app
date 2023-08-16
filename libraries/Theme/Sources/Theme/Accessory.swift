@@ -22,6 +22,7 @@ public struct Accessory: View {
     private let style: Style
     private let size: Size
     @ScaledMetric private var radius: CGFloat = .themeRadius16
+    @ScaledMetric private var square: CGFloat = .themeSpacing24
 
     public init(style: Style, size: Size = .regular) {
         self.style = style
@@ -30,8 +31,22 @@ public struct Accessory: View {
 
     public var body: some View {
         style.image?
-            .resizable().frame(.square(radius * size.modifier))
+            .resizable().frame(iconSize)
+            .flipsForRightToLeftLayoutDirection(true)
             .foregroundColor(style.color)
+    }
+
+    var iconSize: AppTheme.IconSize {
+        switch style {
+        case .disclosure:
+            return .square(square * size.modifier)
+        case .externalLink:
+            return .square(square * size.modifier)
+        case .checkmark:
+            return .square(radius * size.modifier)
+        case .none:
+            return .square(radius * size.modifier)
+        }
     }
 
     public enum Size {

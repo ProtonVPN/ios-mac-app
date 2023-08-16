@@ -41,7 +41,7 @@ extension InitialStateProvider: DependencyKey {
                 vpnConnectionStatus: .disconnected
             ),
             settings: .init(
-                destination: .protocol,
+                destination: nil,
                 netShield: .on,
                 killSwitch: .off,
                 protocol: .init(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil),
