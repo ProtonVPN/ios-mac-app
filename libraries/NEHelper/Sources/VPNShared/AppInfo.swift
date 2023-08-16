@@ -92,7 +92,8 @@ extension AppInfo {
     }
 
     public var revisionInfo: String {
-        return bundleInfoDictionary["RevisionInfo"] as? String ?? ""
+        return bundleInfoDictionary["RevisionInfo"] as? String ??
+            "\(bundleShortVersion) (\(bundleVersion))"
     }
 
     private var platformName: String {
