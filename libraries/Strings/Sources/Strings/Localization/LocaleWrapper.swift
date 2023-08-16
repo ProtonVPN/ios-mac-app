@@ -55,4 +55,11 @@ extension Locale: LocaleWrapper {
             return self.regionCode
         }
     }
+    
+    public var isRTLLanguage: Bool {
+        if #available(iOS 16, *) {
+            return self.language.characterDirection == .rightToLeft
+        }
+        return false
+    }
 }
