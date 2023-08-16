@@ -21,8 +21,6 @@ import SwiftUI
 public struct Accessory: View {
     private let style: Style
     private let size: Size
-    @ScaledMetric private var radius: CGFloat = .themeRadius16
-    @ScaledMetric private var square: CGFloat = .themeSpacing24
 
     public init(style: Style, size: Size = .regular) {
         self.style = style
@@ -31,22 +29,9 @@ public struct Accessory: View {
 
     public var body: some View {
         style.image?
-            .resizable().frame(iconSize)
+            .resizable().frame(.square(style.iconSize * size.modifier))
             .flipsForRightToLeftLayoutDirection(true)
             .foregroundColor(style.color)
-    }
-
-    var iconSize: AppTheme.IconSize {
-        switch style {
-        case .disclosure:
-            return .square(square * size.modifier)
-        case .externalLink:
-            return .square(square * size.modifier)
-        case .checkmark:
-            return .square(radius * size.modifier)
-        case .none:
-            return .square(radius * size.modifier)
-        }
     }
 
     public enum Size {
@@ -62,6 +47,10 @@ public struct Accessory: View {
     }
 
     public enum Style {
+
+        @ScaledMetric private static var radius: CGFloat = .themeRadius16
+        @ScaledMetric private static var square: CGFloat = .themeSpacing24
+
         case disclosure
         case externalLink
         case checkmark(isActive: Bool)
@@ -86,6 +75,19 @@ public struct Accessory: View {
                 return .init(.icon, isActive ? [.interactive, .active] : .weak)
             default:
                 return .init(.icon, .weak)
+            }
+        }
+
+        var iconSize: CGFloat {
+            switch self {
+            case .disclosure:
+                return Self.square
+            case .externalLink:
+                return Self.square
+            case .checkmark:
+                return Self.radius
+            case .none:
+                return Self.radius
             }
         }
     }
