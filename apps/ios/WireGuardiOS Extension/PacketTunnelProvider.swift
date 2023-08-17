@@ -18,7 +18,7 @@ import LocalFeatureFlags
 
 class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate {
     private var timerFactory: TimerFactory!
-    private var appInfo: AppInfo = AppInfoImplementation()
+    private var appInfo: AppInfo
     private var certificateRefreshManager: ExtensionCertificateRefreshManager!
     private var serverStatusRefreshManager: ServerStatusRefreshManager!
     private var killSwitchSettingObservation: NSKeyValueObservation!
@@ -59,6 +59,9 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
 
         vpnAuthenticationStorage = VpnAuthenticationKeychain(accessGroup: WGConstants.keychainAccessGroup,
                                                              vpnKeysGenerator: ExtensionVPNKeysGenerator())
+
+        appInfo = AppInfoImplementation()
+
         let authKeychain = AuthKeychain.default
 
         super.init()
