@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Strings
 
 enum PlaceholderItem: CaseIterable {
     case countries
@@ -29,26 +30,26 @@ extension PlaceholderItem {
     var title: String {
         switch self {
         case .countries:
-            return LocalizedString.searchCountries
+            return Localizable.searchCountries
         case .cities:
-            return LocalizedString.searchCities
+            return Localizable.searchCities
         case .usRegions:
-            return LocalizedString.searchUsRegions
+            return Localizable.searchUsRegions
         case .servers:
-            return LocalizedString.searchServers
+            return Localizable.searchServers
         }
     }
 
     var subtitle: String {
         switch self {
         case .countries:
-            return LocalizedString.searchCountriesSample
+            return Localizable.searchCountriesSample
         case .cities:
-            return LocalizedString.searchCitiesSample
+            return Localizable.searchCitiesSample
         case .usRegions:
-            return LocalizedString.searchUsRegionsSample
+            return Localizable.searchUsRegionsSample
         case .servers:
-            return LocalizedString.searchServersSample
+            return Localizable.searchServersSample
         }
     }
 }

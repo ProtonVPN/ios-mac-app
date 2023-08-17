@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import Strings
 
 final class NoResultsView: UIView {
 
@@ -42,7 +43,7 @@ final class NoResultsView: UIView {
         titleStyle(titleLabel)
         subtitleStyle(subtitleLabel)
 
-        titleLabel.text = LocalizedString.searchNoResultsTitle
-        subtitleLabel.text = LocalizedString.searchNoResultsSubtitle
+        titleLabel.text = Localizable.searchNoResultsTitle
+        subtitleLabel.text = Localizable.searchNoResultsSubtitle
     }
 }

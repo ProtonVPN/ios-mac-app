@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import Strings
 
 final class PlaceholderView: UIView {
 
@@ -56,7 +57,7 @@ final class PlaceholderView: UIView {
         baseViewStyle(contentView)
         titleStyle(titleLabel)
 
-        titleLabel.text = LocalizedString.searchSubtitle
+        titleLabel.text = Localizable.searchSubtitle
 
         let items = [PlaceholderItem.countries, PlaceholderItem.cities, PlaceholderItem.servers].map { item -> UIView in
             let view = Bundle.module.loadNibNamed("PlaceholderItemView", owner: self, options: nil)?.first as! PlaceholderItemView

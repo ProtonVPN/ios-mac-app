@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import UIKit
+import Strings
 
 final class UpsellCell: UITableViewCell {
     public static var identifier: String {
@@ -39,7 +40,7 @@ final class UpsellCell: UITableViewCell {
 
     var numberOfCountries: Int = 0 {
         didSet {
-            titleLabel.text = LocalizedString.searchUpsellTitle(numberOfCountries)
+            titleLabel.text = Localizable.searchUpsellTitle(numberOfCountries)
         }
     }
 
@@ -56,6 +57,6 @@ final class UpsellCell: UITableViewCell {
         iconWeakStyle(iconImageView)
         iconHintStyle(chevronImageView)
 
-        subtitleLabel.text = LocalizedString.searchUpsellSubtitle
+        subtitleLabel.text = Localizable.searchUpsellSubtitle
     }
 }

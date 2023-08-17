@@ -42,8 +42,6 @@ There is no way to integrate any custom build steps to a Swift Package Manager p
 
 The CI is set to run a linting step with `SwiftLint`, to make sure your code will not fail the linting step execute `swiftlint --strict` from the module folder (`libraries/Search`).
 
-If you add a new string to `Localizable.strings` you need to execute the `swiftgen` command from the module folder (`libraries/Search`) to regenerate the `LocalizedString.swift` file that allows you a strongly typed access to all the strings in the project.
-
 ## Testing
 
 The project contains a unit tests target that you can run directly from Xcode or from Fastlane with `fastlane ios_search_test`. 

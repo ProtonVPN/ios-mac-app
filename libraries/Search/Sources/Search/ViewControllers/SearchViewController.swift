@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import Strings
 
 protocol SearchViewControllerDelegate: AnyObject {
     func userDidSelectCountry(model: CountryViewModel)
@@ -61,8 +62,8 @@ final class SearchViewController: UIViewController {
         baseViewStyle(tableView)
         searchBarStyle(searchBar)
 
-        title = LocalizedString.searchTitle
-        searchBar.placeholder = LocalizedString.searchBarPlaceholder
+        title = Localizable.searchTitle
+        searchBar.placeholder = Localizable.searchBarPlaceholder
         placeholderView.onlyCountries = viewModel.mode == .secureCore
     }
 
