@@ -2,6 +2,91 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>modals_upsell_all_countries_feature_multipleDevices</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>one</key>
+			<string>Connect up to %d devices at once</string>
+			<key>few</key>
+			<string>Connect up to %d devices at once</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>Connect up to %d devices at once</string>
+		</dict>
+	</dict>
+	<key>modals_upsell_all_countries_title</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Access over %#@num_servers@ in %#@num_countries@</string>
+		<key>num_countries</key>
+		<dict>
+			<key>one</key>
+			<string>%d država</string>
+			<key>few</key>
+			<string>%d države</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d država</string>
+		</dict>
+		<key>num_servers</key>
+		<dict>
+			<key>one</key>
+			<string>%d secure servers</string>
+			<key>few</key>
+			<string>%d secure servers</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d secure servers</string>
+		</dict>
+	</dict>
+	<key>subscription_upgrade_option1</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Stotine poslužitelja u %#@num_countries@</string>
+		<key>num_countries</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d država</string>
+			<key>few</key>
+			<string>%d države</string>
+			<key>other</key>
+			<string>%d država</string>
+		</dict>
+	</dict>
+	<key>subscription_upgrade_option2</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Povežite do %#@num_devices@ istovremeno</string>
+		<key>num_devices</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d device</string>
+			<key>few</key>
+			<string>%d devices</string>
+			<key>other</key>
+			<string>%d devices</string>
+		</dict>
+	</dict>
 	<key>search_upsell_title</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -36,42 +121,6 @@
 			<string>%d devices</string>
 			<key>other</key>
 			<string>%d devices</string>
-		</dict>
-	</dict>
-	<key>_subscription_upgrade_option1</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>one</key>
-			<string>Hundreds of servers in %d country</string>
-			<key>few</key>
-			<string>Hundreds of servers in %d countries</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>Hundreds of servers in %d countries</string>
-		</dict>
-	</dict>
-	<key>_subscription_upgrade_option2</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>one</key>
-			<string>Connect up to %d device at the same time</string>
-			<key>few</key>
-			<string>Connect up to %d devices at the same time</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>Connect up to %d devices at the same time</string>
 		</dict>
 	</dict>
 	<key>_vpnauth_too_many_certs_retry_after</key>

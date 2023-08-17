@@ -2,6 +2,61 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>modals_upsell_all_countries_feature_multipleDevices</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>one</key>
+			<string>Падключайце %d прыладу адначасова</string>
+			<key>few</key>
+			<string>Падключайце %d прылады адначасова</string>
+			<key>many</key>
+			<string>Падключайце %d прылад адначасова</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>Падключайце %d прылад адначасова</string>
+		</dict>
+	</dict>
+	<key>modals_upsell_all_countries_title</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Атрымайце доступ да %#@num_servers@ у %#@num_countries@</string>
+		<key>num_countries</key>
+		<dict>
+			<key>one</key>
+			<string>%d краіне</string>
+			<key>few</key>
+			<string>%d краінах</string>
+			<key>many</key>
+			<string>%d краінах</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d краінах</string>
+		</dict>
+		<key>num_servers</key>
+		<dict>
+			<key>one</key>
+			<string>%d бяспечны сервер</string>
+			<key>few</key>
+			<string>%d бяспечныя серверы</string>
+			<key>many</key>
+			<string>%d бяспечных сервераў</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d бяспечных сервераў</string>
+		</dict>
+	</dict>
 	<key>search_upsell_title</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -40,46 +95,6 @@
 			<string>%d прылад</string>
 			<key>other</key>
 			<string>%d прылад</string>
-		</dict>
-	</dict>
-	<key>_subscription_upgrade_option1</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>one</key>
-			<string>Сотні сервераў у %d краіне</string>
-			<key>few</key>
-			<string>Сотні сервераў у %d краінах</string>
-			<key>many</key>
-			<string>Сотні сервераў у %d краінах</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>Сотні сервераў у %d краінах</string>
-		</dict>
-	</dict>
-	<key>_subscription_upgrade_option2</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>one</key>
-			<string>Падключайце да %d прылады адначасова</string>
-			<key>few</key>
-			<string>Падключайце да %d прылад адначасова</string>
-			<key>many</key>
-			<string>Падключайце да %d прылад адначасова</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>Падключайце да %d прылад адначасова</string>
 		</dict>
 	</dict>
 	<key>_vpnauth_too_many_certs_retry_after</key>

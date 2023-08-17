@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import Modals
+import Strings
 
 public protocol UpsellViewControllerDelegate: AnyObject {
     func userDidRequestPlus()
@@ -71,11 +72,11 @@ public final class UpsellViewController: UIViewController {
         footerStyle(featuresFooterLabel)
         switch upsellType {
         case .noLogs:
-            getPlusButton.setTitle(LocalizedString.modalsCommonNext, for: .normal)
+            getPlusButton.setTitle(Localizable.modalsCommonNext, for: .normal)
         default:
-            getPlusButton.setTitle(LocalizedString.modalsGetPlus, for: .normal)
+            getPlusButton.setTitle(Localizable.modalsGetPlus, for: .normal)
         }
-        useFreeButton.setTitle(LocalizedString.modalsUpsellStayFree, for: .normal)
+        useFreeButton.setTitle(Localizable.modalsUpsellStayFree, for: .normal)
 
         switch upsellType {
         case .noLogs:

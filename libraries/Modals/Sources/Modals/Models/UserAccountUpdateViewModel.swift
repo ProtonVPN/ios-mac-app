@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Strings
 
 public enum UserAccountUpdateViewModel {
     case subscriptionDowngradedReconnecting(numberOfCountries: Int, numberOfDevices: Int, fromServer: (String, Image), toServer: (String, Image))
@@ -28,19 +29,19 @@ public enum UserAccountUpdateViewModel {
 }
 
 extension UserAccountUpdateViewModel {
-    public var fromServerTitle: String { LocalizedString.fromServerTitle }
-    public var toServerTitle: String { LocalizedString.toServerTitle }
+    public var fromServerTitle: String { Localizable.fromServerTitle }
+    public var toServerTitle: String { Localizable.toServerTitle }
 
     public var primaryButtonTitle: String {
         switch self {
         case .subscriptionDowngraded, .subscriptionDowngradedReconnecting:
-            return LocalizedString.upgradeAgain
+            return Localizable.upgradeAgain
         case .pendingInvoicesReconnecting, .pendingInvoices:
-            return LocalizedString.updateBilling
+            return Localizable.updateBilling
         case .reachedDeviceLimit:
-            return LocalizedString.newPlansBrandGotIt
+            return Localizable.newPlansBrandGotIt
         case .reachedDevicePlanLimit:
-            return LocalizedString.modalsGetPlus
+            return Localizable.modalsGetPlus
         }
     }
 
@@ -49,7 +50,7 @@ extension UserAccountUpdateViewModel {
         case .reachedDeviceLimit:
             return nil
         default:
-            return LocalizedString.upgradeNoThanks
+            return Localizable.noThanks
         }
     }
 
@@ -57,9 +58,9 @@ extension UserAccountUpdateViewModel {
         switch self {
         case .subscriptionDowngradedReconnecting(let numberOfCountries, let numberOfDevices, _, _),
                 .subscriptionDowngraded(let numberOfCountries, let numberOfDevices):
-            return [LocalizedString.subscriptionUpgradeOption1(numberOfCountries),
-                    LocalizedString.subscriptionUpgradeOption2(numberOfDevices),
-                    LocalizedString.subscriptionUpgradeOption3]
+            return [Localizable.subscriptionUpgradeOption1(numberOfCountries),
+                    Localizable.subscriptionUpgradeOption2(numberOfDevices),
+                    Localizable.subscriptionUpgradeOption3]
         default:
             return nil
         }
@@ -68,28 +69,28 @@ extension UserAccountUpdateViewModel {
     public var title: String? {
         switch self {
         case .subscriptionDowngradedReconnecting, .subscriptionDowngraded:
-            return LocalizedString.subscriptionExpiredTitle
+            return Localizable.subscriptionExpiredTitle
         case .pendingInvoicesReconnecting, .pendingInvoices:
-            return LocalizedString.delinquentTitle
+            return Localizable.delinquentTitle
         case .reachedDevicePlanLimit, .reachedDeviceLimit:
-            return LocalizedString.maximumDeviceTitle
+            return Localizable.maximumDeviceTitle
         }
     }
 
     public var subtitle: String? {
         switch self {
         case .subscriptionDowngradedReconnecting:
-            return LocalizedString.subscriptionExpiredReconnectionDescription
+            return Localizable.subscriptionExpiredReconnectionDescription
         case .subscriptionDowngraded:
-            return LocalizedString.subscriptionExpiredDescription
+            return Localizable.subscriptionExpiredDescription
         case .pendingInvoicesReconnecting:
-            return LocalizedString.delinquentReconnectionDescription
+            return Localizable.delinquentReconnectionDescription
         case .pendingInvoices:
-            return LocalizedString.delinquentDescription
+            return Localizable.delinquentDescription
         case .reachedDevicePlanLimit(let planName, let numberOfDevices):
-            return LocalizedString.maximumDevicePlanLimitPart1(planName) + LocalizedString.maximumDevicePlanLimitPart2(numberOfDevices)
+            return Localizable.maximumDevicePlanLimitPart1(planName) + Localizable.maximumDevicePlanLimitPart2(numberOfDevices)
         case .reachedDeviceLimit:
-            return LocalizedString.maximumDeviceLimit
+            return Localizable.maximumDeviceLimit
         }
     }
 

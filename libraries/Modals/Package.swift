@@ -21,6 +21,7 @@ let package = Package(
             targets: ["Modals-iOS"])
     ],
     dependencies: [
+        .package(path: "../Strings"),
         .package(name: "Overture", url: "https://github.com/pointfreeco/swift-overture", .exact("0.5.0")),
         .package(path: "../Theme"),
         .package(path: "../Ergonomics")
@@ -28,7 +29,10 @@ let package = Package(
     targets: [
         .target(
             name: "Modals",
-            dependencies: ["Overture"],
+            dependencies: [
+                "Overture",
+                "Strings"
+            ],
             resources: [
                 .process("Resources/Media.xcassets")
             ]

@@ -2,6 +2,81 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>modals_upsell_all_countries_feature_multipleDevices</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>one</key>
+			<string>همزمان با %d دستگاه متصل شوید</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>همزمان با %d دستگاه متصل شوید</string>
+		</dict>
+	</dict>
+	<key>modals_upsell_all_countries_title</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>دسترسی به بالای %#@num_servers@ سرور در بیش از %#@num_countries@ کشور</string>
+		<key>num_countries</key>
+		<dict>
+			<key>one</key>
+			<string>%d کشورها</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d کشور</string>
+		</dict>
+		<key>num_servers</key>
+		<dict>
+			<key>one</key>
+			<string>%d سرور امن</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d سرور امن</string>
+		</dict>
+	</dict>
+	<key>subscription_upgrade_option1</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>صد ها سرور در %#@num_countries@ کشور</string>
+		<key>num_countries</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d کشور</string>
+			<key>other</key>
+			<string>%d کشورها</string>
+		</dict>
+	</dict>
+	<key>subscription_upgrade_option2</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>تا %#@num_devices@ دستگاه را بطور همزمان متصل کنید</string>
+		<key>num_devices</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d دستگاه</string>
+			<key>other</key>
+			<string>%d دستگاه</string>
+		</dict>
+	</dict>
 	<key>search_upsell_title</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -32,38 +107,6 @@
 			<string>%d دستگاه</string>
 			<key>other</key>
 			<string>%d دستگاه</string>
-		</dict>
-	</dict>
-	<key>_subscription_upgrade_option1</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>one</key>
-			<string>صدها سرور در %d کشور</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>صدها سرور در %d کشور</string>
-		</dict>
-	</dict>
-	<key>_subscription_upgrade_option2</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>one</key>
-			<string>تا %d دستگاه را همزمان متصل کنید</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>تا %d دستگاه را همزمان متصل کنید</string>
 		</dict>
 	</dict>
 	<key>_vpnauth_too_many_certs_retry_after</key>

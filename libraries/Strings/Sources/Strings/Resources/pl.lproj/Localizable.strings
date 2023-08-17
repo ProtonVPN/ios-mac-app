@@ -1927,3 +1927,119 @@
 
 /* Section header in search */
 "_plus_servers" = "Serwery planu Plus";
+
+// MARK: Modals
+
+/* Upgrade plan button title */
+"modals_get_plus" = "Ulepsz";
+
+/* Dismiss upsell screen button title */
+"modals_upsell_stay_free" = "Nie teraz";
+
+/* Footer of the All Countries upsell screen */
+"modals_upsell_features_footer" = "I wiele więcej funkcji premium";
+
+/* Subtitle of All Countries, NetShield and Secure Core upsell screens */
+"modals_upsell_features_subtitle" = "Po ulepszeniu planu do wersji VPN Plus";
+
+/* Subtitle of the Safe Mode upsell screen */
+"modals_upsell_features_safe_mode_subtitle" = "Masz zaawansowane lub profesjonalne potrzeby, które wymagają niestandardowych portów?\n\nUlepsz do planu VPN Plus, aby uzyskać dostęp do funkcji premium.";
+
+/* Learn more button title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_learn_more" = "Dowiedz się więcej";
+
+/* Subtitle of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_subtitle" = "Umiarkowany NAT (znany również jako NAT typ 2) może poprawić jakość korzystania z Internetu w różnych aplikacjach i grach online.\n\nOdblokuj tę i inne funkcje dzięki planowi Plus.";
+
+/* Title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_title" = "Zezwalaj na ruch do niestandardowych portów";
+
+/* Title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_title" = "Włącz umiarkowany NAT";
+
+/* Learn more button title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_learn_more" = "Co to jest umiarkowany NAT?";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_streaming" = "Dostęp do globalnych usług streamingu";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_highSpeed" = "Przeglądaj Internet z najwyższą prędkością (10 Gb/s)";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_netshield" = "Zablokuj reklamy i złośliwe oprogramowanie dzięki funkcji NetShield";
+
+/* Title of the NetShield upsell screen */
+"modals_upsell_net_shield_title" = "Ciesz się przeglądaniem bez reklam dzięki funkcji NetShield";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_ads" = "Zablokuj reklamy i elementy śledzące";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_malware" = "Chroń swoje urządzenie przed złośliwym oprogramowaniem";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_highSpeed" = "Przeglądaj Internet z najwyższą prędkością";
+
+/* Title of the Secure Core upsell screen */
+"modals_upsell_secure_core_title" = "Podwójne szyfrowanie dzięki funkcji Secure Core";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_route" = "Przekieruj ruch przez ultra bezpieczne serwery w Szwajcarii, Szwecji i Islandii";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_layer" = "Dodatkowa warstwa szyfrowania połączenia VPN";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_attacks" = "Chroń się przed atakami sieciowymi";
+
+/* Title of the No Logs screen */
+"modals_no_logs_title" = "Szwajcarska usługa bez przechowywania logów";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_privacy_first" = "Proton VPN stawia na prywatność";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_log_activity" = "Nie przechowujemy logów Twojej aktywności w Internecie";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_third_parties" = "Nie udostępniamy danych stronom trzecim";
+
+/* Learn more of the No Logs screen */
+"modals_no_logs_external_audit" = "Polityka braku przechowywania logów Proton VPN została potwierdzona przez zewnętrzny audyt.";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "Uwaga dotycząca prędkości...";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "Funkcja Secure Core oferuje najwyższy poziom bezpieczeństwa i prywatności, ale może zmniejszyć prędkość połączenia. Jeśli potrzebujesz większej wydajności, wyłącz funkcję Secure Core.";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "Nie pokazuj ponownie";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "Aktywuj funkcję Secure Core";
+
+/* Title of the New Brand screen */
+"new_plans_brand_title" = "Nowy Proton, ujednolicona ochrona";
+
+/* Subtitle of the New Brand screen */
+"new_plans_brand_subtitle" = "Przedstawiamy odświeżony wygląd Protona.\nWiele usług, jedna koncepcja. Witamy w Internecie, w którym prywatność jest podstawą.";
+
+/* Title of "done" button in New Brand screen */
+"new_plans_brand_got_it" = "Ok";
+
+/* Common button title */
+"modals_common_cancel" = "Anuluj";
+
+/* Common button title */
+"modals_common_learn_more" = "Dowiedz się więcej";
+
+/* Common button title */
+"modals_common_next" = "Dalej";
+
+/* Description of user account update screen part 1*/ */
+"maximum_device_plan_limit_part_1" = "Aby połączyć się, rozłącz inne urządzenie lub ulepsz konto do planu %@";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "Please disconnect another device to connect to this one.";

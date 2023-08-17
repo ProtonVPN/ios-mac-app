@@ -16,6 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Strings
+
 public enum UpsellType {
     case netShield
     case secureCore
@@ -46,32 +48,32 @@ public enum UpsellType {
     private func title() -> String {
         switch self {
         case .netShield:
-            return LocalizedString.modalsUpsellNetShieldTitle
+            return Localizable.modalsUpsellNetShieldTitle
         case .secureCore:
-            return LocalizedString.modalsUpsellSecureCoreTitle
+            return Localizable.modalsUpsellSecureCoreTitle
         case .allCountries(_, let numberOfServers, let numberOfCountries):
-            return LocalizedString.modalsUpsellAllCountriesTitle(numberOfServers, numberOfCountries)
+            return Localizable.modalsUpsellAllCountriesTitle(numberOfServers, numberOfCountries)
         case .safeMode:
-            return LocalizedString.modalsUpsellSafeModeTitle
+            return Localizable.modalsUpsellSafeModeTitle
         case .moderateNAT:
-            return LocalizedString.modalsUpsellModerateNatTitle
+            return Localizable.modalsUpsellModerateNatTitle
         case .noLogs:
-            return LocalizedString.modalsNoLogsTitle
+            return Localizable.modalsNoLogsTitle
         }
     }
 
     private func subtitle() -> String? {
         switch self {
         case .netShield:
-            return LocalizedString.modalsUpsellFeaturesSubtitle
+            return Localizable.modalsUpsellFeaturesSubtitle
         case .secureCore:
-            return LocalizedString.modalsUpsellFeaturesSubtitle
+            return Localizable.modalsUpsellFeaturesSubtitle
         case .allCountries:
-            return LocalizedString.modalsUpsellFeaturesSubtitle
+            return Localizable.modalsUpsellFeaturesSubtitle
         case .safeMode:
-            return LocalizedString.modalsUpsellFeaturesSafeModeSubtitle
+            return Localizable.modalsUpsellFeaturesSafeModeSubtitle
         case .moderateNAT:
-            return LocalizedString.modalsUpsellFeaturesModerateNatSubtitle
+            return Localizable.modalsUpsellFeaturesModerateNatSubtitle
         case .noLogs:
             return nil
         }
@@ -120,7 +122,7 @@ public enum UpsellType {
     private func footer() -> String? {
         switch self {
         case .allCountries:
-            return LocalizedString.modalsUpsellFeaturesFooter
+            return Localizable.modalsUpsellFeaturesFooter
         default:
             return nil
         }
@@ -129,9 +131,9 @@ public enum UpsellType {
     private func learnMore() -> String? {
         switch self {
         case .moderateNAT:
-            return LocalizedString.modalsUpsellModerateNatLearnMore
+            return Localizable.modalsUpsellModerateNatLearnMore
         case .safeMode:
-            return LocalizedString.modalsUpsellSafeModeLearnMore
+            return Localizable.modalsUpsellSafeModeLearnMore
         default:
             return nil
         }
