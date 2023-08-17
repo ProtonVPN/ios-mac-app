@@ -98,6 +98,10 @@
 		4CF2982E2A7D3B8E00DEB23F /* hr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298152A7D3B8E00DEB23F /* hr.lproj */; };
 		4CF2982F2A7D3B8E00DEB23F /* fr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298162A7D3B8E00DEB23F /* fr.lproj */; };
 		4CF298302A7D406A00DEB23F /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 4CF297FC2A7D39F700DEB23F /* Intents.intentdefinition */; };
+		4CF065C02A8E389700AFD748 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE5E6632A83BC6100AC8523 /* LiveDependencies.swift */; };
+		4CF065C12A8E389700AFD748 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE5E6632A83BC6100AC8523 /* LiveDependencies.swift */; };
+		4CF065C22A8E389800AFD748 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE5E6632A83BC6100AC8523 /* LiveDependencies.swift */; };
+		4CF065C32A8E389900AFD748 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE5E6632A83BC6100AC8523 /* LiveDependencies.swift */; };
 		572DD1FF28EAD6E60051DB1A /* credentials_bf22.plist in Resources */ = {isa = PBXBuildFile; fileRef = 572DD1FE28EAD6E60051DB1A /* credentials_bf22.plist */; };
 		57E3438E28E573D60012B2DF /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438D28E573D60012B2DF /* PlanTests.swift */; };
 		57E3439028E576A70012B2DF /* SubscriptionsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438F28E576A70012B2DF /* SubscriptionsRobot.swift */; };
@@ -3248,6 +3252,7 @@
 				F316A07226DFB0D900669386 /* iOSNetworkingDelegate.swift in Sources */,
 				D5136C9722895C3A0002C095 /* ExtensionAlertService.swift in Sources */,
 				F3747C0226D4E1A900EF2F00 /* URLConstants.swift in Sources */,
+				4CF065C32A8E389900AFD748 /* LiveDependencies.swift in Sources */,
 				D5209C7226CBBE1900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift in Sources */,
 				D5209C7626CBCB3D00AD14EA /* OVPNiOSCredentialsConfigurator.swift in Sources */,
 				4CF297FD2A7D39F700DEB23F /* Intents.intentdefinition in Sources */,
@@ -3308,6 +3313,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CF065C02A8E389700AFD748 /* LiveDependencies.swift in Sources */,
 				D555C491297E78FF000593EF /* PacketTunnelProvider+Logging.swift in Sources */,
 				E14414FA22EF38ED00894DD0 /* PacketTunnelProvider.swift in Sources */,
 				D555C488297E75E1000593EF /* ObfuscatedConstants.swift in Sources */,
@@ -3330,6 +3336,7 @@
 				E17A259E2295670100D78C19 /* ExtensionAlertService.swift in Sources */,
 				D5209C7126CBBE1800AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift in Sources */,
 				E1C983B921E4D77400C81666 /* UIKitString+Extension.swift in Sources */,
+				4CF065C22A8E389800AFD748 /* LiveDependencies.swift in Sources */,
 				42BB5E5F247FFD7F0002DA8A /* TodayViewController.swift in Sources */,
 				E1C983B821E4BEB700C81666 /* UIColor+Extension.swift in Sources */,
 				42BB5E5E247FFD7F0002DA8A /* TodayViewModel.swift in Sources */,
@@ -3350,6 +3357,7 @@
 				E9445D6226528A790075FD31 /* PacketTunnelProvider.swift in Sources */,
 				E99799A926A6FE0C0083D61E /* ringlogger.c in Sources */,
 				F31E91202758F5F900140B2E /* WGLogger.swift in Sources */,
+				4CF065C12A8E389700AFD748 /* LiveDependencies.swift in Sources */,
 				E99799A526A6FE0C0083D61E /* NotificationToken.swift in Sources */,
 				E997998626A6FA870083D61E /* WGConstants.swift in Sources */,
 				E99799A726A6FE0C0083D61E /* NETunnelProviderProtocol+Extension.swift in Sources */,
