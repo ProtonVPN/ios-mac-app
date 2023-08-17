@@ -1853,3 +1853,77 @@
 
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Chiudi";
+
+// MARK: Search
+
+/* Title of the search screen */
+"search_title" = "Cerca";
+
+/* Title of the Search screen infographic */
+"search_subtitle" = "Cerca qualsiasi posizione";
+
+/* Section header in search */
+"search_countries" = "Paesi";
+
+/* Sample countries the user can search for */
+"search_countries_sample" = "Svizzera, Stati Uniti, Italia...";
+
+/* Section header in search */
+"search_cities" = "Città";
+
+/* Sample cities the user can search for */
+"search_cities_sample" = "New York, Londra, Tokyo...";
+
+/* Section header in Search */
+"search_servers" = "Server";
+
+/* Sample servers the user can search for */
+"search_servers_sample" = "JP#50, CA#3, IT#14...";
+
+/* Section header in search */
+"search_us_regions" = "Regioni degli Stati Uniti";
+
+/* Sample US regions the user can search for */
+"search_us_regions_sample" = "California, Florida, Colorado...";
+
+/* Title shown when nothing is found in search */
+"search_no_results_title" = "Nessun risultato trovato";
+
+/* Subtitle shown when nothing is found in search */
+"search_no_results_subtitle" = "Prova con una parola chiave diversa";
+
+/* Header for the recent searches section in search */
+"search_recent_header" = "Visualizzato recentemente";
+
+/* Button to clear recent searches history */
+"search_recent_clear" = "Elimina";
+
+/* Title for the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_title" = "La tua cronologia delle ricerche andrà persa. Continuare?";
+
+/* Cancel button title in the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_cancel" = "Annulla";
+
+/* Confirmation button title in alert asking for confirmation before deleting recent searches */
+"search_recent_clear_continue" = "Continua";
+
+/* Placeholder text showing in the search bar on the search screen */
+"search_bar_placeholder" = "Paese, Città o Server";
+
+/* Subtitle for the upsell banner shown to free users in search */
+"search_upsell_subtitle" = "Più località = più contenuti sbloccati + sicurezza extra + velocità più elevate";
+
+/* Section header in search */
+"search_secure_core_countries" = "Paesi Secure Core";
+
+/* Section header in search */
+"search_results_countries" = "Paesi";
+
+/* Section header in search */
+"search_results_cities" = "Città";
+
+/* Section header in search */
+"_free_servers" = "Server Gratuiti";
+
+/* Section header in search */
+"_plus_servers" = "Server Plus";

@@ -2,6 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>search_upsell_title</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Access all %#@num_countries@</string>
+		<key>num_countries</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d country</string>
+			<key>other</key>
+			<string>%d countries</string>
+		</dict>
+	</dict>
 	<key>maximum_device_plan_limit_part_2</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -150,42 +166,6 @@ stopped</string>
 stopped</string>
 		</dict>
 	</dict>
-    <key>_netshield_stats_trackers_stopped</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%#@VARIABLE@</string>
-        <key>VARIABLE</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>one</key>
-            <string>Tracker
-stopped</string>
-            <key>other</key>
-            <string>Trackers
-stopped</string>
-        </dict>
-    </dict>
-    <key>_netshield_stats_ads_blocked</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%#@VARIABLE@</string>
-        <key>VARIABLE</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>one</key>
-            <string>Ad
-blocked</string>
-            <key>other</key>
-            <string>Ads
-blocked</string>
-        </dict>
-    </dict>
 	<key>_session_length_days</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

@@ -1,362 +1,342 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-  <dict>
-    <key>maximum_device_plan_limit_part_2</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string> تا بتوانید %#@num_devices@ دستگاه را بطور همزمان متصل کنید.</string>
-      <key>num_devices</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d دستگاه</string>
-        <key>other</key>
-        <string>%d دستگاه</string>
-      </dict>
-    </dict>
-    <key>_subscription_upgrade_option1</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@VARIABLE@</string>
-      <key>VARIABLE</key>
-      <dict>
-        <key>one</key>
-        <string>صدها سرور در %d کشور</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>other</key>
-        <string>صدها سرور در %d کشور</string>
-      </dict>
-    </dict>
-    <key>_subscription_upgrade_option2</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@VARIABLE@</string>
-      <key>VARIABLE</key>
-      <dict>
-        <key>one</key>
-        <string>تا %d دستگاه را همزمان متصل کنید</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>other</key>
-        <string>تا %d دستگاه را همزمان متصل کنید</string>
-      </dict>
-    </dict>
-    <key>_vpnauth_too_many_certs_retry_after</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@VARIABLE@</string>
-      <key>VARIABLE</key>
-      <dict>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>شما به حداکثر تعداد تغییرات تنظیمات رسیده اید. لطفا بعد از %d دقیقه دوباره تلاش کنید.</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>other</key>
-        <string>شما به حداکثر تعداد تغییرات تنظیمات رسیده اید. لطفا بعد از %d دقیقه دوباره تلاش کنید.</string>
-      </dict>
-    </dict>
-    <key>_countries_count_plus</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@VARIABLE@</string>
-      <key>VARIABLE</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d +کشور</string>
-        <key>other</key>
-        <string>%d+ کشور</string>
-      </dict>
-    </dict>
-    <key>_countries_count</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@VARIABLE@</string>
-      <key>VARIABLE</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d کشور</string>
-        <key>other</key>
-        <string>%d کشور</string>
-      </dict>
-    </dict>
-    <key>_plans_connections</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@VARIABLE@</string>
-      <key>VARIABLE</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d اتصال</string>
-        <key>other</key>
-        <string>%d اتصال</string>
-      </dict>
-    </dict>
-    <key>_netshield_stats_ads_blocked</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@VARIABLE@</string>
-      <key>VARIABLE</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Ad
+<dict>
+	<key>search_upsell_title</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>دسترسی به همه %#@num_countries@</string>
+		<key>num_countries</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d کشور</string>
+			<key>other</key>
+			<string>%d کشور</string>
+		</dict>
+	</dict>
+	<key>maximum_device_plan_limit_part_2</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string> تا بتوانید %#@num_devices@ دستگاه را بطور همزمان متصل کنید.</string>
+		<key>num_devices</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d دستگاه</string>
+			<key>other</key>
+			<string>%d دستگاه</string>
+		</dict>
+	</dict>
+	<key>_subscription_upgrade_option1</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>one</key>
+			<string>صدها سرور در %d کشور</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>other</key>
+			<string>صدها سرور در %d کشور</string>
+		</dict>
+	</dict>
+	<key>_subscription_upgrade_option2</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>one</key>
+			<string>تا %d دستگاه را همزمان متصل کنید</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>other</key>
+			<string>تا %d دستگاه را همزمان متصل کنید</string>
+		</dict>
+	</dict>
+	<key>_vpnauth_too_many_certs_retry_after</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>شما به حداکثر تعداد تغییرات تنظیمات رسیده اید. لطفا بعد از %d دقیقه دوباره تلاش کنید.</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>other</key>
+			<string>شما به حداکثر تعداد تغییرات تنظیمات رسیده اید. لطفا بعد از %d دقیقه دوباره تلاش کنید.</string>
+		</dict>
+	</dict>
+	<key>_countries_count_plus</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d +کشور</string>
+			<key>other</key>
+			<string>%d+ کشور</string>
+		</dict>
+	</dict>
+	<key>_countries_count</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d کشور</string>
+			<key>other</key>
+			<string>%d کشور</string>
+		</dict>
+	</dict>
+	<key>_plans_connections</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d اتصال</string>
+			<key>other</key>
+			<string>%d اتصال</string>
+		</dict>
+	</dict>
+	<key>_netshield_stats_ads_blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Ad
 blocked</string>
-        <key>other</key>
-        <string>Ads
+			<key>other</key>
+			<string>Ads
 blocked</string>
-      </dict>
-    </dict>
-    <key>_netshield_stats_trackers_stopped</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@VARIABLE@</string>
-      <key>VARIABLE</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Tracker
+		</dict>
+	</dict>
+	<key>_netshield_stats_trackers_stopped</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Tracker
 stopped</string>
-        <key>other</key>
-        <string>Trackers
+			<key>other</key>
+			<string>Trackers
 stopped</string>
-      </dict>
-    </dict>
-    <key>_netshield_stats_trackers_stopped</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@VARIABLE@</string>
-      <key>VARIABLE</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Tracker
-stopped</string>
-        <key>other</key>
-        <string>Trackers
-stopped</string>
-      </dict>
-    </dict>
-    <key>_netshield_stats_ads_blocked</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@VARIABLE@</string>
-      <key>VARIABLE</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Ad
-blocked</string>
-        <key>other</key>
-        <string>Ads
-blocked</string>
-      </dict>
-    </dict>
-    <key>_session_length_days</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@DAYS@</string>
-      <key>DAYS</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d روز</string>
-        <key>one</key>
-        <string>%d روز</string>
-      </dict>
-    </dict>
-    <key>_session_length_days_and_hours</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@DAYS@ %#@HOURS@</string>
-      <key>DAYS</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d روز</string>
-        <key>one</key>
-        <string>%d روز</string>
-      </dict>
-      <key>HOURS</key>
-      <dict>
-        <key>one</key>
-        <string>%d hr</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d hr</string>
-      </dict>
-    </dict>
-    <key>_session_length_hours_and_minutes</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@HOURS@ %#@MINUTES@</string>
-      <key>MINUTES</key>
-      <dict>
-        <key>one</key>
-        <string>%d دقیقه</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d دقیقه</string>
-      </dict>
-      <key>HOURS</key>
-      <dict>
-        <key>one</key>
-        <string>%d hr</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d hr</string>
-      </dict>
-    </dict>
-    <key>_session_length_hours</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@HOURS@</string>
-      <key>HOURS</key>
-      <dict>
-        <key>one</key>
-        <string>%d hr</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d hr</string>
-      </dict>
-    </dict>
-    <key>_session_length_minutes_and_seconds</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@MINUTES@ %#@SECONDS@</string>
-      <key>MINUTES</key>
-      <dict>
-        <key>one</key>
-        <string>%d دقیقه</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d دقیقه</string>
-      </dict>
-      <key>SECONDS</key>
-      <dict>
-        <key>one</key>
-        <string>%d sec</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d sec</string>
-      </dict>
-    </dict>
-    <key>_session_length_minutes</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@MINUTES@</string>
-      <key>MINUTES</key>
-      <dict>
-        <key>one</key>
-        <string>%d دقیقه</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d دقیقه</string>
-      </dict>
-    </dict>
-    <key>_session_length_seconds</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@SECONDS@</string>
-      <key>SECONDS</key>
-      <dict>
-        <key>one</key>
-        <string>%d sec</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d sec</string>
-      </dict>
-    </dict>
-    <key>_step_of</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@STEP@ %#@STEPS@</string>
-      <key>STEPS</key>
-      <dict>
-        <key>one</key>
-        <string>از %d</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>از %d</string>
-      </dict>
-      <key>STEP</key>
-      <dict>
-        <key>one</key>
-        <string>قدم %d</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>مرحله %d</string>
-      </dict>
-    </dict>
-  </dict>
+		</dict>
+	</dict>
+	<key>_session_length_days</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@DAYS@</string>
+		<key>DAYS</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d روز</string>
+			<key>one</key>
+			<string>%d روز</string>
+		</dict>
+	</dict>
+	<key>_session_length_days_and_hours</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@DAYS@ %#@HOURS@</string>
+		<key>DAYS</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d روز</string>
+			<key>one</key>
+			<string>%d روز</string>
+		</dict>
+		<key>HOURS</key>
+		<dict>
+			<key>one</key>
+			<string>%d hr</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d hr</string>
+		</dict>
+	</dict>
+	<key>_session_length_hours_and_minutes</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@HOURS@ %#@MINUTES@</string>
+		<key>MINUTES</key>
+		<dict>
+			<key>one</key>
+			<string>%d دقیقه</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d دقیقه</string>
+		</dict>
+		<key>HOURS</key>
+		<dict>
+			<key>one</key>
+			<string>%d hr</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d hr</string>
+		</dict>
+	</dict>
+	<key>_session_length_hours</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@HOURS@</string>
+		<key>HOURS</key>
+		<dict>
+			<key>one</key>
+			<string>%d hr</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d hr</string>
+		</dict>
+	</dict>
+	<key>_session_length_minutes_and_seconds</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@MINUTES@ %#@SECONDS@</string>
+		<key>MINUTES</key>
+		<dict>
+			<key>one</key>
+			<string>%d دقیقه</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d دقیقه</string>
+		</dict>
+		<key>SECONDS</key>
+		<dict>
+			<key>one</key>
+			<string>%d sec</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d sec</string>
+		</dict>
+	</dict>
+	<key>_session_length_minutes</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@MINUTES@</string>
+		<key>MINUTES</key>
+		<dict>
+			<key>one</key>
+			<string>%d دقیقه</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d دقیقه</string>
+		</dict>
+	</dict>
+	<key>_session_length_seconds</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@SECONDS@</string>
+		<key>SECONDS</key>
+		<dict>
+			<key>one</key>
+			<string>%d sec</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d sec</string>
+		</dict>
+	</dict>
+	<key>_step_of</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@STEP@ %#@STEPS@</string>
+		<key>STEPS</key>
+		<dict>
+			<key>one</key>
+			<string>از %d</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>از %d</string>
+		</dict>
+		<key>STEP</key>
+		<dict>
+			<key>one</key>
+			<string>قدم %d</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>مرحله %d</string>
+		</dict>
+	</dict>
+</dict>
 </plist>

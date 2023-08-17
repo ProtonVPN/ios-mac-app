@@ -1,446 +1,426 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-  <dict>
-    <key>maximum_device_plan_limit_part_2</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string> чтобы подключить до %#@num_devices@ одновременно.</string>
-      <key>num_devices</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d устройство</string>
-        <key>few</key>
-        <string>%d устройств</string>
-        <key>many</key>
-        <string>%d устройства</string>
-        <key>other</key>
-        <string>%d устройства</string>
-      </dict>
-    </dict>
-    <key>_subscription_upgrade_option1</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@VARIABLE@</string>
-      <key>VARIABLE</key>
-      <dict>
-        <key>one</key>
-        <string>Сотни серверов в %d стране</string>
-        <key>few</key>
-        <string>Сотни серверов в %d странах</string>
-        <key>many</key>
-        <string>Сотни серверов в %d странах</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>other</key>
-        <string>Сотни серверов в %d странах</string>
-      </dict>
-    </dict>
-    <key>_subscription_upgrade_option2</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@VARIABLE@</string>
-      <key>VARIABLE</key>
-      <dict>
-        <key>one</key>
-        <string>Подключайте до %d устройства одновременно</string>
-        <key>few</key>
-        <string>Подключайте до %d устройств одновременно</string>
-        <key>many</key>
-        <string>Подключайте до %d устройств одновременно</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>other</key>
-        <string>Подключайте до %d устройств одновременно</string>
-      </dict>
-    </dict>
-    <key>_vpnauth_too_many_certs_retry_after</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@VARIABLE@</string>
-      <key>VARIABLE</key>
-      <dict>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Вы достигли максимального количества изменений настроек. Повторите попытку не менее чем через %d минуту.</string>
-        <key>few</key>
-        <string>Вы достигли максимального количества изменений настроек. Повторите попытку не менее чем через %d минуты.</string>
-        <key>many</key>
-        <string>Вы достигли максимального количества изменений настроек. Повторите попытку не менее чем через %d минут.</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>other</key>
-        <string>Вы достигли максимального количества изменений настроек. Повторите попытку не менее чем через %d минут.</string>
-      </dict>
-    </dict>
-    <key>_countries_count_plus</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@VARIABLE@</string>
-      <key>VARIABLE</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d+ страна</string>
-        <key>few</key>
-        <string>%d+ страны</string>
-        <key>many</key>
-        <string>%d+ стран</string>
-        <key>other</key>
-        <string>%d+ стран</string>
-      </dict>
-    </dict>
-    <key>_countries_count</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@VARIABLE@</string>
-      <key>VARIABLE</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d страна</string>
-        <key>few</key>
-        <string>%d страны</string>
-        <key>many</key>
-        <string>%d стран</string>
-        <key>other</key>
-        <string>%d страны</string>
-      </dict>
-    </dict>
-    <key>_plans_connections</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@VARIABLE@</string>
-      <key>VARIABLE</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d подключение</string>
-        <key>few</key>
-        <string>%d подключения</string>
-        <key>many</key>
-        <string>%d подключений</string>
-        <key>other</key>
-        <string>%d подключений</string>
-      </dict>
-    </dict>
-    <key>_netshield_stats_ads_blocked</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@VARIABLE@</string>
-      <key>VARIABLE</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Реклама заблокирована</string>
-        <key>few</key>
-        <string>Рекламы заблокировано</string>
-        <key>many</key>
-        <string>Реклам заблокировано</string>
-        <key>other</key>
-        <string>Рекламы заблокировано</string>
-      </dict>
-    </dict>
-    <key>_netshield_stats_trackers_stopped</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@VARIABLE@</string>
-      <key>VARIABLE</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Трекер остановлен</string>
-        <key>few</key>
-        <string>Трекера остановлено</string>
-        <key>many</key>
-        <string>Трекеров остановлено</string>
-        <key>other</key>
-        <string>Трекеров остановлено</string>
-      </dict>
-    </dict>
-    <key>_netshield_stats_trackers_stopped</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@VARIABLE@</string>
-      <key>VARIABLE</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Трекер остановлен</string>
-        <key>few</key>
-        <string>Трекера остановлено</string>
-        <key>many</key>
-        <string>Трекеров остановлено</string>
-        <key>other</key>
-        <string>Трекеров остановлено</string>
-      </dict>
-    </dict>
-    <key>_netshield_stats_ads_blocked</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@VARIABLE@</string>
-      <key>VARIABLE</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Реклама заблокирована</string>
-        <key>few</key>
-        <string>Рекламы заблокировано</string>
-        <key>many</key>
-        <string>Реклам заблокировано</string>
-        <key>other</key>
-        <string>Рекламы заблокировано</string>
-      </dict>
-    </dict>
-    <key>_session_length_days</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@DAYS@</string>
-      <key>DAYS</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d дня</string>
-        <key>one</key>
-        <string>%d день</string>
-        <key>few</key>
-        <string>%d дней</string>
-        <key>many</key>
-        <string>%d дня</string>
-      </dict>
-    </dict>
-    <key>_session_length_days_and_hours</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@DAYS@ %#@HOURS@</string>
-      <key>DAYS</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d дня</string>
-        <key>one</key>
-        <string>%d день</string>
-        <key>few</key>
-        <string>%d дней</string>
-        <key>many</key>
-        <string>%d дня</string>
-      </dict>
-      <key>HOURS</key>
-      <dict>
-        <key>one</key>
-        <string>%d ч.</string>
-        <key>few</key>
-        <string>%d ч.</string>
-        <key>many</key>
-        <string>%d ч.</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d ч.</string>
-      </dict>
-    </dict>
-    <key>_session_length_hours_and_minutes</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@HOURS@ %#@MINUTES@</string>
-      <key>MINUTES</key>
-      <dict>
-        <key>one</key>
-        <string>%d мин</string>
-        <key>few</key>
-        <string>%d мин</string>
-        <key>many</key>
-        <string>%d мин</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d мин</string>
-      </dict>
-      <key>HOURS</key>
-      <dict>
-        <key>one</key>
-        <string>%d ч.</string>
-        <key>few</key>
-        <string>%d ч.</string>
-        <key>many</key>
-        <string>%d ч.</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d ч.</string>
-      </dict>
-    </dict>
-    <key>_session_length_hours</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@HOURS@</string>
-      <key>HOURS</key>
-      <dict>
-        <key>one</key>
-        <string>%d ч.</string>
-        <key>few</key>
-        <string>%d ч.</string>
-        <key>many</key>
-        <string>%d ч.</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d ч.</string>
-      </dict>
-    </dict>
-    <key>_session_length_minutes_and_seconds</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@MINUTES@ %#@SECONDS@</string>
-      <key>MINUTES</key>
-      <dict>
-        <key>one</key>
-        <string>%d мин</string>
-        <key>few</key>
-        <string>%d мин</string>
-        <key>many</key>
-        <string>%d мин</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d мин</string>
-      </dict>
-      <key>SECONDS</key>
-      <dict>
-        <key>one</key>
-        <string>%d сек</string>
-        <key>few</key>
-        <string>%d сек</string>
-        <key>many</key>
-        <string>%d сек</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d сек</string>
-      </dict>
-    </dict>
-    <key>_session_length_minutes</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@MINUTES@</string>
-      <key>MINUTES</key>
-      <dict>
-        <key>one</key>
-        <string>%d мин</string>
-        <key>few</key>
-        <string>%d мин</string>
-        <key>many</key>
-        <string>%d мин</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d мин</string>
-      </dict>
-    </dict>
-    <key>_session_length_seconds</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@SECONDS@</string>
-      <key>SECONDS</key>
-      <dict>
-        <key>one</key>
-        <string>%d сек</string>
-        <key>few</key>
-        <string>%d сек</string>
-        <key>many</key>
-        <string>%d сек</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d сек</string>
-      </dict>
-    </dict>
-    <key>_step_of</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@STEP@ %#@STEPS@</string>
-      <key>STEPS</key>
-      <dict>
-        <key>one</key>
-        <string>из %d</string>
-        <key>few</key>
-        <string>из %d</string>
-        <key>many</key>
-        <string>из %d</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>из %d</string>
-      </dict>
-      <key>STEP</key>
-      <dict>
-        <key>one</key>
-        <string>Шаг %d</string>
-        <key>few</key>
-        <string>Шаг %d</string>
-        <key>many</key>
-        <string>Шаг %d</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>Шаг %d</string>
-      </dict>
-    </dict>
-  </dict>
+<dict>
+	<key>search_upsell_title</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Получите доступ к %#@num_countries@</string>
+		<key>num_countries</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d страна</string>
+			<key>few</key>
+			<string>%d стран</string>
+			<key>many</key>
+			<string>%d страны</string>
+			<key>other</key>
+			<string>%d страны</string>
+		</dict>
+	</dict>
+	<key>maximum_device_plan_limit_part_2</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string> чтобы подключить до %#@num_devices@ одновременно.</string>
+		<key>num_devices</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d устройство</string>
+			<key>few</key>
+			<string>%d устройств</string>
+			<key>many</key>
+			<string>%d устройства</string>
+			<key>other</key>
+			<string>%d устройства</string>
+		</dict>
+	</dict>
+	<key>_subscription_upgrade_option1</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>one</key>
+			<string>Сотни серверов в %d стране</string>
+			<key>few</key>
+			<string>Сотни серверов в %d странах</string>
+			<key>many</key>
+			<string>Сотни серверов в %d странах</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>other</key>
+			<string>Сотни серверов в %d странах</string>
+		</dict>
+	</dict>
+	<key>_subscription_upgrade_option2</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>one</key>
+			<string>Подключайте до %d устройства одновременно</string>
+			<key>few</key>
+			<string>Подключайте до %d устройств одновременно</string>
+			<key>many</key>
+			<string>Подключайте до %d устройств одновременно</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>other</key>
+			<string>Подключайте до %d устройств одновременно</string>
+		</dict>
+	</dict>
+	<key>_vpnauth_too_many_certs_retry_after</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Вы достигли максимального количества изменений настроек. Повторите попытку не менее чем через %d минуту.</string>
+			<key>few</key>
+			<string>Вы достигли максимального количества изменений настроек. Повторите попытку не менее чем через %d минуты.</string>
+			<key>many</key>
+			<string>Вы достигли максимального количества изменений настроек. Повторите попытку не менее чем через %d минут.</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>other</key>
+			<string>Вы достигли максимального количества изменений настроек. Повторите попытку не менее чем через %d минут.</string>
+		</dict>
+	</dict>
+	<key>_countries_count_plus</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d+ страна</string>
+			<key>few</key>
+			<string>%d+ страны</string>
+			<key>many</key>
+			<string>%d+ стран</string>
+			<key>other</key>
+			<string>%d+ стран</string>
+		</dict>
+	</dict>
+	<key>_countries_count</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d страна</string>
+			<key>few</key>
+			<string>%d страны</string>
+			<key>many</key>
+			<string>%d стран</string>
+			<key>other</key>
+			<string>%d страны</string>
+		</dict>
+	</dict>
+	<key>_plans_connections</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d подключение</string>
+			<key>few</key>
+			<string>%d подключения</string>
+			<key>many</key>
+			<string>%d подключений</string>
+			<key>other</key>
+			<string>%d подключений</string>
+		</dict>
+	</dict>
+	<key>_netshield_stats_ads_blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Реклама заблокирована</string>
+			<key>few</key>
+			<string>Рекламы заблокировано</string>
+			<key>many</key>
+			<string>Реклам заблокировано</string>
+			<key>other</key>
+			<string>Рекламы заблокировано</string>
+		</dict>
+	</dict>
+	<key>_netshield_stats_trackers_stopped</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Трекер остановлен</string>
+			<key>few</key>
+			<string>Трекера остановлено</string>
+			<key>many</key>
+			<string>Трекеров остановлено</string>
+			<key>other</key>
+			<string>Трекеров остановлено</string>
+		</dict>
+	</dict>
+	<key>_session_length_days</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@DAYS@</string>
+		<key>DAYS</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d дня</string>
+			<key>one</key>
+			<string>%d день</string>
+			<key>few</key>
+			<string>%d дней</string>
+			<key>many</key>
+			<string>%d дня</string>
+		</dict>
+	</dict>
+	<key>_session_length_days_and_hours</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@DAYS@ %#@HOURS@</string>
+		<key>DAYS</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d дня</string>
+			<key>one</key>
+			<string>%d день</string>
+			<key>few</key>
+			<string>%d дней</string>
+			<key>many</key>
+			<string>%d дня</string>
+		</dict>
+		<key>HOURS</key>
+		<dict>
+			<key>one</key>
+			<string>%d ч.</string>
+			<key>few</key>
+			<string>%d ч.</string>
+			<key>many</key>
+			<string>%d ч.</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d ч.</string>
+		</dict>
+	</dict>
+	<key>_session_length_hours_and_minutes</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@HOURS@ %#@MINUTES@</string>
+		<key>MINUTES</key>
+		<dict>
+			<key>one</key>
+			<string>%d мин</string>
+			<key>few</key>
+			<string>%d мин</string>
+			<key>many</key>
+			<string>%d мин</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d мин</string>
+		</dict>
+		<key>HOURS</key>
+		<dict>
+			<key>one</key>
+			<string>%d ч.</string>
+			<key>few</key>
+			<string>%d ч.</string>
+			<key>many</key>
+			<string>%d ч.</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d ч.</string>
+		</dict>
+	</dict>
+	<key>_session_length_hours</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@HOURS@</string>
+		<key>HOURS</key>
+		<dict>
+			<key>one</key>
+			<string>%d ч.</string>
+			<key>few</key>
+			<string>%d ч.</string>
+			<key>many</key>
+			<string>%d ч.</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d ч.</string>
+		</dict>
+	</dict>
+	<key>_session_length_minutes_and_seconds</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@MINUTES@ %#@SECONDS@</string>
+		<key>MINUTES</key>
+		<dict>
+			<key>one</key>
+			<string>%d мин</string>
+			<key>few</key>
+			<string>%d мин</string>
+			<key>many</key>
+			<string>%d мин</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d мин</string>
+		</dict>
+		<key>SECONDS</key>
+		<dict>
+			<key>one</key>
+			<string>%d сек</string>
+			<key>few</key>
+			<string>%d сек</string>
+			<key>many</key>
+			<string>%d сек</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d сек</string>
+		</dict>
+	</dict>
+	<key>_session_length_minutes</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@MINUTES@</string>
+		<key>MINUTES</key>
+		<dict>
+			<key>one</key>
+			<string>%d мин</string>
+			<key>few</key>
+			<string>%d мин</string>
+			<key>many</key>
+			<string>%d мин</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d мин</string>
+		</dict>
+	</dict>
+	<key>_session_length_seconds</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@SECONDS@</string>
+		<key>SECONDS</key>
+		<dict>
+			<key>one</key>
+			<string>%d сек</string>
+			<key>few</key>
+			<string>%d сек</string>
+			<key>many</key>
+			<string>%d сек</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d сек</string>
+		</dict>
+	</dict>
+	<key>_step_of</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@STEP@ %#@STEPS@</string>
+		<key>STEPS</key>
+		<dict>
+			<key>one</key>
+			<string>из %d</string>
+			<key>few</key>
+			<string>из %d</string>
+			<key>many</key>
+			<string>из %d</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>из %d</string>
+		</dict>
+		<key>STEP</key>
+		<dict>
+			<key>one</key>
+			<string>Шаг %d</string>
+			<key>few</key>
+			<string>Шаг %d</string>
+			<key>many</key>
+			<string>Шаг %d</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>Шаг %d</string>
+		</dict>
+	</dict>
+</dict>
 </plist>

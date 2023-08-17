@@ -1,22 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-  <dict>
-    <key>search_upsell_title</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>Accédez à l'ensemble des %#@num_countries@</string>
-      <key>num_countries</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d pays</string>
-        <key>other</key>
-        <string>%d pays</string>
-      </dict>
-    </dict>
-  </dict>
+<dict/>
 </plist>
