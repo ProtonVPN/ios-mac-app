@@ -311,8 +311,10 @@ extension VpnManager: LocalAgentDelegate {
             disconnectWithAlert(alert: DelinquentUserAlert())
         case .policyViolationLowPlan:
             disconnectWithAlert(alert: VpnServerSubscriptionErrorAlert())
-        case .userTorrentNotAllowed, .userBadBehavior:
-            log.error("Local agent reported error \(error) that the app does not handle, just disconnecting", category: .localAgent, event: .error)
+        case .userTorrentNotAllowed:
+            log.error("Received torrent not allowed error from LocalAgent (doing nothing for now, ServiceChecker will handle it)")
+        case .userBadBehavior:
+            log.error("Local agent reporting bad behavior, kicking client", category: .localAgent, event: .error)
             disconnect { }
         case .restrictedServer:
             log.error("Local agent reported restricted server error, waiting for the local agent to recover", category: .localAgent, event: .error)

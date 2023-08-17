@@ -65,7 +65,7 @@ class BaseConnectionTestCase: XCTestCase {
 
         container.networkingDelegate.didHitRoute = didHitRoute
         container.networkingDelegate.apiServerList = [testData.server1]
-        container.networkingDelegate.apiVpnLocation = testData.vpnLocation
+        container.networkingDelegate.apiVpnLocation = .mock
         container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
         container.serverStorage.populateServers(container.networkingDelegate.apiServerList)
 

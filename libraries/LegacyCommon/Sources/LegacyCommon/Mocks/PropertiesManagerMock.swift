@@ -26,6 +26,8 @@ import VPNShared
 import VPNAppCore
 
 public class PropertiesManagerMock: PropertiesManagerProtocol {
+    private let queue = DispatchQueue(label: "ch.proton.test.mock.sync.properties")
+
     public static var activeConnectionChangedNotification: Notification.Name = Notification.Name("activeConnectionChanged")
     public static var killSwitchNotification: Notification.Name = Notification.Name("killSwitch")
     public static var hasConnectedNotification: Notification.Name = Notification.Name("hasConnected")
@@ -106,10 +108,10 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var ratingSettings: RatingSettings = RatingSettings()
     public var lastConnectionIntent: ConnectionSpec = ConnectionSpec()
 
-    #if os(macOS)
+#if os(macOS)
     public var forceExtensionUpgrade: Bool = false
     public var connectedServerNameDoNotUse: String?
-    #endif
+#endif
 
     public var vpnProtocol: VpnProtocol = .ike {
         didSet {
@@ -146,15 +148,32 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
             NotificationCenter.default.post(name: Self.smartProtocolNotification, object: smartProtocol)
         }
     }
-    public var streamingServices: StreamingDictServices = [:]
-    public var partnerTypes: [PartnerType] = []
+
+    public var _streamingServices: StreamingDictServices = [:]
+    public var streamingServices: StreamingDictServices {
+        get { queue.sync { _streamingServices } }
+        set { queue.sync { _streamingServices = newValue } }
+    }
+
+    public var _partnerTypes: [PartnerType] = []
+    public var partnerTypes: [PartnerType] {
+        get { queue.sync { _partnerTypes } }
+        set { queue.sync { _partnerTypes = newValue } }
+    }
+
     public var userRole: UserRole = .noOrganization
     public var excludeLocalNetworks: Bool = true {
         didSet {
             NotificationCenter.default.post(name: Self.excludeLocalNetworksNotification, object: excludeLocalNetworks)
         }
     }
-    public var streamingResourcesUrl: String?
+
+    public var _streamingResourcesUrl: String?
+    public var streamingResourcesUrl: String? {
+        get { queue.sync { _streamingResourcesUrl } }
+        set { queue.sync { _streamingResourcesUrl = newValue } }
+    }
+
     var earlyAccess: Bool = false {
         didSet {
             NotificationCenter.default.post(name: Self.earlyAccessNotification, object: earlyAccess)

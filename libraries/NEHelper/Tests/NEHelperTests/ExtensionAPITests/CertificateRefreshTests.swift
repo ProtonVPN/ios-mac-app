@@ -34,7 +34,6 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
                                                           timerFactory: timerFactory,
                                                           vpnAuthenticationStorage: authenticationStorage,
                                                           keychain: keychain)
-
     }
 
     func testNormalCertRefresh() {

@@ -100,7 +100,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
     func testSuccessfulLoginWithAuthCredentialsLogsIn() throws {
         let loginExpectation = XCTestExpectation(description: "Manager should not time out")
-        networkingDelegate.apiVpnLocation = testData.vpnLocation
+        networkingDelegate.apiVpnLocation = .mock
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
 
         manager.finishLogin(
@@ -120,7 +120,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
     func testSuccessfulSilentLoginLogsIn() throws {
         let loginExpectation = XCTestExpectation(description: "Manager should not time out while logging in")
-        networkingDelegate.apiVpnLocation = testData.vpnLocation
+        networkingDelegate.apiVpnLocation = .mock
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
         authKeychain.credentials = testAuthCredentials
 
@@ -139,7 +139,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
     func testSilentLoginWithMissingCredentialsFails() throws {
         let loginExpectation = XCTestExpectation(description: "Manager should not time out while logging in")
-        networkingDelegate.apiVpnLocation = testData.vpnLocation
+        networkingDelegate.apiVpnLocation = .mock
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
 
         manager.attemptSilentLogIn { result in
@@ -157,7 +157,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
     func testLoginSubuserWithoutSessionsFails() throws {
         let loginExpectation = XCTestExpectation(description: "Manager should not time out")
-        networkingDelegate.apiVpnLocation = testData.vpnLocation
+        networkingDelegate.apiVpnLocation = .mock
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
         vpnKeychain.credentials = subuserCredentials
         XCTAssertTrue(try vpnKeychain.fetchCached().isSubuserWithoutSessions, "Expected cached credentials to represent subuser without sessions")
@@ -189,7 +189,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     }
 
     func testLoginDoesNotPostSessionChangedNotificationWhenAlreadyLoggedIn() throws {
-        networkingDelegate.apiVpnLocation = testData.vpnLocation
+        networkingDelegate.apiVpnLocation = .mock
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
         authKeychain.credentials = testAuthCredentials
         manager.sessionStatus = .established
@@ -213,7 +213,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         let activeSessionAlertExpectation = XCTestExpectation(description: "Active session alert should be shown")
         let differentUserServerDescriptor = ServerDescriptor(username: "Alice", address: "")
         appStateManager.state = .connected(differentUserServerDescriptor)
-        networkingDelegate.apiVpnLocation = testData.vpnLocation
+        networkingDelegate.apiVpnLocation = .mock
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
         authKeychain.credentials = testAuthCredentials
         alertService.addAlertHandler(for: ActiveSessionWarningAlert.self, handler: { alert in
@@ -236,7 +236,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         let activeSessionAlertExpectation = XCTestExpectation(description: "Active session alert should be shown")
         let differentUserServerDescriptor = ServerDescriptor(username: "Alice", address: "")
         appStateManager.state = .connected(differentUserServerDescriptor)
-        networkingDelegate.apiVpnLocation = testData.vpnLocation
+        networkingDelegate.apiVpnLocation = .mock
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
         authKeychain.credentials = testAuthCredentials
         alertService.addAlertHandler(for: ActiveSessionWarningAlert.self, handler: { alert in
@@ -260,7 +260,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         let loginExpectation = XCTestExpectation(description: "Manager should not time out when attempting a login")
         let sameUserServerDescriptor = ServerDescriptor(username: "username", address: "")
         appStateManager.state = .connected(sameUserServerDescriptor)
-        networkingDelegate.apiVpnLocation = testData.vpnLocation
+        networkingDelegate.apiVpnLocation = .mock
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
         authKeychain.credentials = testAuthCredentials
 
@@ -360,7 +360,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         let loginExpectation = XCTestExpectation(description: "Manager should not time out when attempting a login")
         let sessionChangedNotificationExpectation = XCTNSNotificationExpectation(name: SessionChanged.name, object: manager)
 
-        networkingDelegate.apiVpnLocation = testData.vpnLocation
+        networkingDelegate.apiVpnLocation = .mock
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
         authKeychain.credentials = authCredentials
 

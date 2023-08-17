@@ -34,28 +34,34 @@ final class VPNLogicalServicesRequest: Request {
     /// Country codes, if available, to show relay IPs for specific countries
     let countryCodes: [String]
 
-    init(ip: String?, countryCodes: [String]) {
+    /// Whether or not this request is just for the free logicals.
+    let freeTier: Bool
+
+    init(ip: String?, countryCodes: [String], freeTier: Bool) {
         self.ip = ip
         self.countryCodes = countryCodes
+        self.freeTier = freeTier
     }
 
     var path: String {
         let path = URL(string: "/vpn/logicals")!
 
-        var queryItems: [URLQueryItem] = [
-            .init(name: "WithTranslations", value: nil),
-            .init(name: "WithPartnerLogicals", value: "1"),
-        ]
-
-        if LocalFeatureFlags.isEnabled(LogicalFeature.perProtocolEntries) {
-            queryItems.append(.init(name: "WithEntriesForProtocols", value: Self.protocolDescriptions))
-        }
+        var queryItems: [URLQueryItem] = Array(
+            ("WithTranslations", nil),
+            ("WithPartnerLogicals", "1")
+        )
+        .appending(Array(("WithEntriesForProtocols", Self.protocolDescriptions)), if: shouldUseProtocolEntries)
+        .appending(Array(("Tier", "0")), if: freeTier)
 
         return path.appendingQueryItems(queryItems).absoluteString
     }
 
+    var shouldUseProtocolEntries: Bool {
+        LocalFeatureFlags.isEnabled(LogicalFeature.perProtocolEntries)
+    }
+
     var isAuth: Bool {
-        return true
+        true
     }
 
     var header: [String: Any] {
@@ -74,5 +80,11 @@ final class VPNLogicalServicesRequest: Request {
 
     var retryPolicy: ProtonRetryPolicy.RetryMode {
         .background
+    }
+}
+
+extension Array<URLQueryItem> {
+    init(_ elements: (name: String, value: String?)...) {
+        self = elements.map { URLQueryItem(name: $0.name, value: $0.value) }
     }
 }

@@ -187,12 +187,12 @@ public class FullNetworkingMockDelegate: NetworkingMockDelegate {
     /// Any error returned via `Result.failure()` will be treated as a mock error, and thus part of the test.
     /// Any error thrown from this function will be treated as an unexpected error, and will thus fail the test.
     func handleMockNetworkingRequestThrowingOnUnexpectedError(_ request: URLRequest) throws -> Result<Data, Error> { // swiftlint:disable:this function_body_length cyclomatic_complexity
-        guard let path = request.url?.path else {
+        guard let url = request.url else {
             throw UnexpectedError(description: "No path provided to URL request")
         }
 
-        guard let route = MockEndpoint(rawValue: path) else {
-            throw UnexpectedError(description: "Request not implemented: \(path)")
+        guard let route = MockEndpoint(rawValue: url.path) else {
+            throw UnexpectedError(description: "Request not implemented: \(url.path)")
         }
 
         defer { didHitRoute?(route) }
@@ -211,12 +211,19 @@ public class FullNetworkingMockDelegate: NetworkingMockDelegate {
             return .success(Data())
         case .location:
             // for checking IP state
-            let response = apiVpnLocation!
+            let response = apiVpnLocation ?? .mock
             let data = try responseEncoder.encode(response)
             return .success(data)
         case .logicals:
+            var serverList = apiServerList
+
+            if let queryItems = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems,
+               queryItems.contains(where: { $0.name == "Tier" && $0.value == "0" }) {
+                serverList = serverList.filter { $0.isFree }
+            }
+
             // for fetching server list
-            let servers = self.apiServerList.map { $0.asDict }
+            let servers = serverList.map { $0.asDict }
             let data = try JSONSerialization.data(withJSONObject: [
                 "LogicalServers": servers
             ])
@@ -264,8 +271,7 @@ public class FullNetworkingMockDelegate: NetworkingMockDelegate {
 
     func verifyClientIPIsMasked(request: URLRequest) -> Bool {
         guard let ip = request.headers["x-pm-netzone"] else {
-            assertionFailure("Didn't include IP in request dictionary?")
-            return false
+            return true // no IP in request
         }
 
         let (ipDigits, dot, zero) = (#"\d{1,3}"#, #"\."#, #"0"#)
@@ -280,11 +286,11 @@ public class FullNetworkingMockDelegate: NetworkingMockDelegate {
         return true
     }
 
-    private lazy var responseEncoder: JSONEncoder = {
+    private var responseEncoder: JSONEncoder {
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .capitalizeFirstLetter
         return encoder
-    }()
+    }
 }
 
 private extension JSONEncoder.KeyEncodingStrategy {

@@ -25,10 +25,16 @@ import VPNShared
 import Combine
 
 public class ServerStorageMock: ServerStorage {
+    let queue = DispatchQueue(label: "ch.proton.test.mock.sync.server_storage", attributes: .concurrent)
+
     public var didStoreNewServers: (([ServerModel]) -> Void)?
     public var didUpdateServers: (([ServerModel]) -> Void)?
-    
-    public var servers: [String: ServerModel] = [:]
+
+    private var _servers: [String: ServerModel] = [:]
+    public var servers: [String: ServerModel] {
+        get { queue.sync { _servers } }
+        set { queue.sync(flags: .barrier) { _servers = newValue } }
+    }
 
     public var age: TimeInterval = .hours(1)
     

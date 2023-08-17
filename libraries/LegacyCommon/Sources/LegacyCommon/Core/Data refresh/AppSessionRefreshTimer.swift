@@ -27,88 +27,94 @@ public protocol AppSessionRefreshTimerFactory {
     func makeAppSessionRefreshTimer() -> AppSessionRefreshTimer
 }
 
+public protocol AppSessionRefreshTimerDelegate: AnyObject {
+    func shouldRefreshFull() -> Bool
+    func shouldRefreshLoads() -> Bool
+    func shouldRefreshAccount() -> Bool
+    func shouldRefreshStreaming() -> Bool
+    func shouldRefreshPartners() -> Bool
+}
+
+public extension AppSessionRefreshTimerDelegate {
+    func shouldRefreshFull() -> Bool { return true }
+    func shouldRefreshLoads() -> Bool { return true }
+    func shouldRefreshAccount() -> Bool { return true }
+    func shouldRefreshStreaming() -> Bool { return true }
+    func shouldRefreshPartners() -> Bool { return true }
+}
+
 public class AppSessionRefreshTimer {
-    private let fullServerRefreshTimeout: TimeInterval // Default: 3 hours
-    private let serverLoadsRefreshTimeout: TimeInterval // Default: 15 minutes
-    private let accountRefreshTimeout: TimeInterval // Default: 3 minutes
-    
+    // swiftlint:disable:next large_tuple
+    public typealias RefreshIntervals = (
+        full: TimeInterval,
+        loads: TimeInterval,
+        account: TimeInterval,
+        streaming: TimeInterval,
+        partners: TimeInterval
+    )
+
+    private let refreshIntervals: RefreshIntervals
+
     public typealias Factory = AppSessionRefresherFactory & VpnKeychainFactory & TimerFactoryCreator
     private let factory: Factory
     private let timerFactory: TimerFactory
-    
+
     private var timerFullRefresh: BackgroundTimer?
     private var timerLoadsRefresh: BackgroundTimer?
     private var timerAccountRefresh: BackgroundTimer?
-    
-    public typealias RefreshCheckerCallback = () -> Bool
-    private let canRefreshFull: RefreshCheckerCallback
-    private let canRefreshLoads: RefreshCheckerCallback
-    private let canRefreshAccount: RefreshCheckerCallback
+    private var timerStreamingRefresh: BackgroundTimer?
+    private var timerPartnersRefresh: BackgroundTimer?
     
     private var appSessionRefresher: AppSessionRefresher {
         return factory.makeAppSessionRefresher() // Do not retain it
     }
 
-    public init(factory: Factory,
-                // swiftlint:disable:next large_tuple
-                refreshIntervals: (full: TimeInterval, server: TimeInterval, account: TimeInterval),
-                canRefreshFull: @escaping RefreshCheckerCallback = { return true },
-                canRefreshLoads: @escaping RefreshCheckerCallback = { return true },
-                canRefreshAccount: @escaping RefreshCheckerCallback = { return true }) {
+    public weak var delegate: AppSessionRefreshTimerDelegate?
+
+    public init(
+        factory: Factory,
+        refreshIntervals: RefreshIntervals
+    ) {
         self.factory = factory
         self.timerFactory = factory.makeTimerFactory()
-
-        self.fullServerRefreshTimeout = refreshIntervals.full
-        self.serverLoadsRefreshTimeout = refreshIntervals.server
-        self.accountRefreshTimeout = refreshIntervals.account
-        
-        self.canRefreshFull = canRefreshFull
-        self.canRefreshLoads = canRefreshLoads
-        self.canRefreshAccount = canRefreshAccount
+        self.refreshIntervals = refreshIntervals
     }
     
     public func start(now: Bool = false) {
-        if timerFullRefresh == nil || !timerFullRefresh!.isValid {
-            log.debug("Data refresh timer started", category: .app, metadata: ["interval": "\(fullServerRefreshTimeout)"])
+        let refreshes = [
+            (\AppSessionRefreshTimer.timerAccountRefresh, refreshAccount, refreshIntervals.account, appSessionRefresher.lastAccountRefresh),
+            (\AppSessionRefreshTimer.timerFullRefresh, refreshFull, refreshIntervals.full, appSessionRefresher.lastDataRefresh),
+            (\AppSessionRefreshTimer.timerLoadsRefresh, refreshLoads, refreshIntervals.loads, appSessionRefresher.lastServerLoadsRefresh),
+            (\AppSessionRefreshTimer.timerStreamingRefresh, refreshStreaming, refreshIntervals.streaming, appSessionRefresher.lastStreamingInfoRefresh),
+            (\AppSessionRefreshTimer.timerPartnersRefresh, refreshPartners, refreshIntervals.partners, appSessionRefresher.lastPartnersInfoRefresh)
+        ]
 
-            timerFullRefresh = timerFactory.scheduledTimer(timeInterval: fullServerRefreshTimeout,
-                                                           repeats: true,
-                                                           queue: .main,
-                                                           refreshFull)
-        }
-        if timerLoadsRefresh == nil || !timerLoadsRefresh!.isValid {
-            log.debug("Server loads refresh timer started", category: .app, metadata: ["interval": "\(serverLoadsRefreshTimeout)"])
+        var refreshed: Set<KeyPath<AppSessionRefreshTimer, BackgroundTimer?>> = []
+        for (timerPath, timerFunction, refreshInterval, lastRefresh) in refreshes {
+            let timer = self[keyPath: timerPath]
 
-            timerLoadsRefresh = timerFactory.scheduledTimer(timeInterval: serverLoadsRefreshTimeout,
-                                                            repeats: true,
-                                                            queue: .main,
-                                                            refreshLoads)
-        }
-        if timerAccountRefresh == nil || !timerAccountRefresh!.isValid {
-            log.debug("Account refresh timer started", category: .app, metadata: ["interval": "\(accountRefreshTimeout)"])
-
-            timerAccountRefresh = timerFactory.scheduledTimer(timeInterval: accountRefreshTimeout,
-                                                              repeats: true,
-                                                              queue: .main,
-                                                              refreshAccount)
-        }
-
-        var accountRefreshed = false
-        if now {
-            if appSessionRefresher.lastDataRefresh == nil || appSessionRefresher.lastDataRefresh!.addingTimeInterval(fullServerRefreshTimeout) < Date() {
-                refreshFull()
-            } else if appSessionRefresher.lastServerLoadsRefresh == nil || appSessionRefresher.lastServerLoadsRefresh!.addingTimeInterval(serverLoadsRefreshTimeout) < Date() {
-                refreshLoads()
+            if timer == nil || !timer!.isValid {
+                self[keyPath: timerPath] = timerFactory.scheduledTimer(
+                    timeInterval: refreshInterval,
+                    repeats: true,
+                    queue: .main,
+                    timerFunction
+                )
             }
-            
-            if appSessionRefresher.lastAccountRefresh == nil || appSessionRefresher.lastAccountRefresh!.addingTimeInterval(accountRefreshTimeout) < Date() {
-                accountRefreshed = true
-                refreshAccount()
-            }
+
+            guard now else { continue }
+            guard lastRefresh == nil || lastRefresh!.addingTimeInterval(refreshInterval) < Date() else { continue }
+            // We don't need to refresh loads if the full refresh has already been made.
+            guard timerPath != \.timerLoadsRefresh || !refreshed.contains(\.timerFullRefresh) else { continue }
+
+            refreshed.insert(timerPath)
+
+            timerFunction()
         }
 
         // refresh account if the subscribed flag is missing to ensure proper data migration
-        if !accountRefreshed, let credentials = try? factory.makeVpnKeychain().fetchCached(), credentials.subscribed == nil {
+        if !refreshed.contains(\.timerAccountRefresh),
+           let credentials = try? factory.makeVpnKeychain().fetchCached(), credentials.subscribed == nil {
             refreshAccount()
         }
     }
@@ -117,24 +123,40 @@ public class AppSessionRefreshTimer {
         timerFullRefresh?.invalidate()
         timerLoadsRefresh?.invalidate()
         timerAccountRefresh?.invalidate()
+        timerStreamingRefresh?.invalidate()
+        timerPartnersRefresh?.invalidate()
 
         timerFullRefresh = nil
         timerLoadsRefresh = nil
         timerAccountRefresh = nil
+        timerStreamingRefresh = nil
+        timerPartnersRefresh = nil
     }
     
-    @objc private func refreshFull() {
-        guard canRefreshFull() else { return }
+    private func refreshFull() {
+        guard let delegate, delegate.shouldRefreshFull() else { return }
         appSessionRefresher.refreshData()
     }
     
-    @objc private func refreshLoads() {
-        guard canRefreshLoads() else { return }
+    private func refreshLoads() {
+        guard let delegate, delegate.shouldRefreshLoads() else { return }
         appSessionRefresher.refreshServerLoads()
     }
     
-    @objc private func refreshAccount() {
-        guard canRefreshAccount() else { return }
+    private func refreshAccount() {
+        guard let delegate, delegate.shouldRefreshAccount() else { return }
         appSessionRefresher.refreshAccount()
+    }
+
+    private func refreshStreaming() {
+        guard let delegate, delegate.shouldRefreshStreaming() else { return }
+        appSessionRefresher.refreshStreamingServices()
+    }
+
+    private func refreshPartners() {
+        guard let delegate, delegate.shouldRefreshPartners() else { return }
+        Task { [weak self] in
+            await self?.appSessionRefresher.refreshPartners()
+        }
     }
 }

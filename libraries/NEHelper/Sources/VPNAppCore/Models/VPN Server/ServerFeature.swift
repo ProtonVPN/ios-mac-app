@@ -18,12 +18,13 @@
 
 import Foundation
 import Ergonomics
+import ProtonCoreUtilities
 
 public struct ServerFeature: OptionSet, Codable {
 
     public let rawValue: Int
-
-    public static let secureCore = ServerFeature(bitPosition: 0)
+    
+    public static let secureCore = ServerFeature(bitPosition: 0) // 1
     public static let tor = ServerFeature(bitPosition: 1) // 2
     public static let p2p = ServerFeature(bitPosition: 2) // 4
     public static let streaming = ServerFeature(bitPosition: 3) // 8
@@ -33,16 +34,37 @@ public struct ServerFeature: OptionSet, Codable {
 
     public static let zero = ServerFeature([])
 
-    public static var description: String {
-        return
-            "SecureCore = \(secureCore.rawValue)\n" +
-            "TOR        = \(tor.rawValue)\n" +
-            "P2P        = \(p2p.rawValue)\n" +
-            "Streaming  = \(streaming.rawValue)\n" +
-            "IPv6       = \(ipv6.rawValue)\n"
-    }
-
     public init(rawValue: Int) {
         self.rawValue = rawValue
+    }
+}
+
+extension ServerFeature {
+    private var featureName: String {
+        switch self {
+        case .secureCore:
+            return "secureCore"
+        case .tor:
+            return "tor"
+        case .p2p:
+            return "p2p"
+        case .streaming:
+            return "streaming"
+        case .ipv6:
+            return "ipv6"
+        case .restricted:
+            return "restricted"
+        case .partner:
+            return "partnership"
+        default:
+            return ""
+        }
+    }
+
+    func commaSeparatedList(isFree: Bool) -> String {
+        var featureNames = (isFree ? ["free"] : [])
+        return featureNames
+            .appending(elements().map(\.featureName))
+            .joined(separator: ",")
     }
 }

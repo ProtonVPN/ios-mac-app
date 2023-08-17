@@ -22,6 +22,7 @@ import NetworkExtension
 import TimerMock
 import VPNShared
 import VPNSharedTesting
+import Timer
 
 public class MockDependencyContainer {
     public static let appGroup = "test"
@@ -40,6 +41,15 @@ public class MockDependencyContainer {
     }()
 
     public lazy var alertService = CoreAlertServiceDummy()
+    lazy var appSessionRefresher = AppSessionRefresherMock(factory: MockFactory(container: self))
+    lazy var appSessionRefreshTimer = {
+        let result = AppSessionRefreshTimer(
+            factory: MockFactory(container: self),
+            refreshIntervals: (30, 30, 30, 30, 30)
+        )
+        result.delegate = self
+        return result
+    }()
     public lazy var timerFactory = TimerFactoryMock()
     public lazy var propertiesManager = PropertiesManagerMock()
     public lazy var vpnKeychain = VpnKeychainMock()
@@ -168,6 +178,8 @@ public class MockDependencyContainer {
     public init() {}
 }
 
+extension MockDependencyContainer: AppSessionRefreshTimerDelegate { }
+
 /// This exists so that MockDependencyContainer won't create reference cycles by passing `self` as an
 /// argument to dependency initializers.
 class MockFactory {
@@ -199,6 +211,49 @@ extension MockFactory: VpnCredentialsConfiguratorFactory {
 extension MockFactory: CountryCodeProviderFactory {
     func makeCountryCodeProvider() -> CountryCodeProvider {
         CountryCodeProviderImplementation()
+    }
+}
+
+// public typealias Factory = VpnApiServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & CoreAlertServiceFactory
+extension MockFactory: CoreAlertServiceFactory {
+    func makeCoreAlertService() -> CoreAlertService {
+        container.alertService
+    }
+}
+
+extension MockFactory: VpnApiServiceFactory {
+    func makeVpnApiService() -> VpnApiService {
+        container.vpnApiService
+    }
+}
+
+extension MockFactory: VpnKeychainFactory {
+    func makeVpnKeychain() -> VpnKeychainProtocol {
+        container.vpnKeychain
+    }
+}
+
+extension MockFactory: PropertiesManagerFactory {
+    func makePropertiesManager() -> PropertiesManagerProtocol {
+        container.propertiesManager
+    }
+}
+
+extension MockFactory: ServerStorageFactory {
+    func makeServerStorage() -> ServerStorage {
+        container.serverStorage
+    }
+}
+
+extension MockFactory: TimerFactoryCreator {
+    func makeTimerFactory() -> TimerFactory {
+        container.timerFactory
+    }
+}
+
+extension MockFactory: AppSessionRefresherFactory {
+    func makeAppSessionRefresher() -> AppSessionRefresher {
+        container.appSessionRefresher
     }
 }
 #endif

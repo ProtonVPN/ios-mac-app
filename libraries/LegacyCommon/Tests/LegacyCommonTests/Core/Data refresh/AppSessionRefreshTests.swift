@@ -32,12 +32,13 @@ class AppSessionRefreshTimerTests: XCTestCase {
     var networkingDelegate: FullNetworkingMockDelegate!
     var apiService: VpnApiService!
     var vpnKeychain: VpnKeychainMock!
-    var appSessionRefresher: BaseAppSessionRefresher!
+    var appSessionRefresher: AppSessionRefresherMock!
     var timerFactory: TimerFactoryMock!
     var appSessionRefreshTimer: AppSessionRefreshTimer!
     var authKeychain: MockAuthKeychain!
 
     let testData = MockTestData()
+    let location: MockTestData.VPNLocationResponse = .mock
 
     override func setUp() {
         super.setUp()
@@ -46,14 +47,16 @@ class AppSessionRefreshTimerTests: XCTestCase {
         serverStorage = ServerStorageMock(servers: [testData.server1, testData.server2, testData.server3])
         networking = NetworkingMock()
         networkingDelegate = FullNetworkingMockDelegate()
+
         networking.delegate = networkingDelegate
         vpnKeychain = VpnKeychainMock()
         authKeychain = MockAuthKeychain()
         apiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation(), authKeychain: authKeychain)
-        appSessionRefresher = BaseAppSessionRefresher(factory: self)
+        appSessionRefresher = AppSessionRefresherMock(factory: self)
         timerFactory = TimerFactoryMock()
         appSessionRefreshTimer = AppSessionRefreshTimer(factory: self,
-                                                        refreshIntervals: (full: 30, server: 20, account: 10))
+                                                        refreshIntervals: (full: 30, loads: 20, account: 10, streaming: 60, partners: 60))
+        appSessionRefreshTimer.delegate = self
     }
 
     override func tearDown() {
@@ -95,11 +98,19 @@ class AppSessionRefreshTimerTests: XCTestCase {
         var (nServerUpdates, nCredUpdates) = (0, 0)
 
         serverStorage.didUpdateServers = { _ in
+            guard nServerUpdates < expectations.updateServers.count else {
+                XCTFail("Index out of range")
+                return
+            }
             expectations.updateServers[nServerUpdates].fulfill()
             nServerUpdates += 1
         }
 
         vpnKeychain.didStoreCredentials = { _ in
+            guard nCredUpdates < expectations.updateCredentials.count else {
+                XCTFail("Index out of range")
+                return
+            }
             expectations.updateCredentials[nCredUpdates].fulfill()
             nCredUpdates += 1
         }
@@ -110,7 +121,6 @@ class AppSessionRefreshTimerTests: XCTestCase {
 
         networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(accountPlan: .plus,
                                                                            maxTier: CoreAppConstants.VpnTiers.plus)
-        propertiesManager.userLocation = try! UserLocation(dic: testData.vpnLocation.toJsonDict.mapValues { $0 as AnyObject })
 
         appSessionRefresher.loggedIn = true
         appSessionRefreshTimer.start(now: true) // should immediately proceed to refresh credentials
@@ -167,7 +177,7 @@ class AppSessionRefreshTimerTests: XCTestCase {
         appSessionRefresher.didAttemptLogin = {
             XCTFail("Shouldn't call attemptSilentLogin in start(), timeout interval has not yet passed")
         }
-        serverStorage.didStoreNewServers = { _ in
+        serverStorage.didUpdateServers = { _ in
             XCTFail("Shouldn't call refreshLoads in start(), timeout interval has not yet passed")
         }
         vpnKeychain.didStoreCredentials = { _ in
@@ -210,19 +220,5 @@ extension AppSessionRefreshTimerTests: VpnApiServiceFactory, VpnKeychainFactory,
     }
 }
 
-/// This exists because the `attemptSilentLogIn()` function needs to be overridden.
-class BaseAppSessionRefresher: AppSessionRefresherImplementation {
-    var didAttemptLogin: (() -> Void)?
-    var loginError: Error?
-
-    override func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
-        defer { didAttemptLogin?() }
-
-        if let loginError = loginError {
-            completion(.failure(loginError))
-            return
-        }
-
-        completion(.success)
-    }
+extension AppSessionRefreshTimerTests: AppSessionRefreshTimerDelegate {
 }

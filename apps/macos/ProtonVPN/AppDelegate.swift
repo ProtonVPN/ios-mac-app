@@ -41,6 +41,7 @@ import LegacyCommon
 import Logging
 import PMLogger
 import VPNShared
+import Timer
 
 #if !REDESIGN
 
@@ -48,6 +49,8 @@ let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 
 @main
 class AppDelegate: NSObject {
+    public private(set) static var wasRecentlyActive = false
+
     @IBOutlet weak var protonVpnMenu: ProtonVpnMenuController!
     @IBOutlet weak var profilesMenu: ProfilesMenuController!
     @IBOutlet weak var helpMenu: HelpMenuController!
@@ -56,6 +59,7 @@ class AppDelegate: NSObject {
     lazy var navigationService = container.makeNavigationService()
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
     private lazy var appInfo: AppInfo = container.makeAppInfo()
+    private var appInactivityTimer: BackgroundTimer?
     private var notificationManager: NotificationManagerProtocol!
 }
 #else
@@ -64,6 +68,7 @@ class AppDelegate: NSObject {
     lazy var navigationService = container.makeNavigationService()
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
     private lazy var appInfo: AppInfo = container.makeAppInfo()
+    private var appInactivityTimer: BackgroundTimer?
     private var notificationManager: NotificationManagerProtocol!
 }
 #endif
@@ -155,10 +160,38 @@ extension AppDelegate: NSApplicationDelegate {
     
     func applicationDidBecomeActive(_ notification: Notification) {
         log.info("applicationDidBecomeActive", category: .os)
+        updateRecentlyActive(true)
+
         container.makeAppSessionRefreshTimer().start(now: true) // refresh data if time passed
         // Refresh API announcements
         if propertiesManager.featureFlags.pollNotificationAPI, container.makeAuthKeychainHandle().fetch() != nil {
             self.container.makeAnnouncementRefresher().tryRefreshing()
+        }
+    }
+
+    func applicationDidResignActive(_ notification: Notification) {
+        log.info("applicationDidResignActive", category: .os)
+
+        updateRecentlyActive(false)
+    }
+
+    /// Waits until the app has been inactive for the specified interval, then sets ``wasRecentlyActive`` to `false` on
+    /// `AppDelegate`. This is used for the ``AppSessionRefreshTimer`` to decide how often to update certain info.
+    func updateRecentlyActive(_ active: Bool) {
+        appInactivityTimer?.invalidate()
+
+        if active {
+            appInactivityTimer = nil
+            Self.wasRecentlyActive = true
+        } else {
+            appInactivityTimer = container.makeTimerFactory().scheduledTimer(
+                runAt: Date().addingTimeInterval(AppConstants.Time.recentlyActiveThreshold),
+                repeating: .infinity, // doesn't repeat
+                leeway: .seconds(1),
+                queue: .main
+            ) {
+                Self.wasRecentlyActive = false
+            }
         }
     }
     
