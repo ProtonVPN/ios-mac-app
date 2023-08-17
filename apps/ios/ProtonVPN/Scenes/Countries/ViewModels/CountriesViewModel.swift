@@ -306,7 +306,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         case 0: // Free
             do { // First section
                 let rows = currentContent
-                    .filter { $0.lowestTier == 0 }
+                    .filter { $0.kind.lowestTier == 0 }
                 newTableData.append(Section(
                     type: .freeServers,
                     rows: rows,
@@ -317,7 +317,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
             }
             do { // Second section
                 let rows = currentContent
-                    .filter { $0.lowestTier > 0 }
+                    .filter { $0.kind.lowestTier > 0 }
                 newTableData.append(Section(
                     type: .plusServers,
                     rows: rows,
@@ -328,7 +328,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
             }
         case 1: // Basic
             let rows = currentContent
-                .filter { $0.lowestTier < 2 }
+                .filter { $0.kind.lowestTier < 2 }
             newTableData.append(Section(
                 type: .allServers,
                 rows: rows,

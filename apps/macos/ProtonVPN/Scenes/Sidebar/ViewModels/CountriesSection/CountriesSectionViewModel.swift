@@ -430,7 +430,7 @@ class CountriesSectionViewModel {
 
         if userTier == 1 {
             // BASIC
-            let plusLocations = countries.filter { $0.lowestTier > 1 }
+            let plusLocations = countries.filter { $0.kind.lowestTier > 1 }
             let headerPlusVM = CountryHeaderViewModel(Localizable.locationsPlus, totalCountries: plusLocations.count, buttonType: .premium, countriesViewModel: self)
 
             return (gatewaysSection
@@ -445,8 +445,8 @@ class CountriesSectionViewModel {
 
         // Free
 
-        let freeLocations = countries.filter { $0.lowestTier == 0 }
-        let plusLocations = countries.filter { $0.lowestTier != 0 }
+        let freeLocations = countries.filter { $0.kind.lowestTier == 0 }
+        let plusLocations = countries.filter { $0.kind.lowestTier != 0 }
         let headerFreeVM = CountryHeaderViewModel(Localizable.locationsFree, totalCountries: freeLocations.count, buttonType: nil, countriesViewModel: self)
         let headerPlusVM = CountryHeaderViewModel(Localizable.locationsPlus, totalCountries: plusLocations.count, buttonType: .premium, countriesViewModel: self)
 

@@ -156,10 +156,10 @@ class CreateOrEditProfileViewModel: NSObject {
         let accessTier: Int
         switch serverOffering {
         case .fastest(let countryCode):
-            accessTier = grouping.first(where: { $0.serverOfferingId == countryCode })?.lowestTier ?? 1
+            accessTier = grouping.first(where: { $0.serverOfferingId == countryCode })?.kind.lowestTier ?? 1
 
         case .random(let countryCode):
-            accessTier = grouping.first(where: { $0.serverOfferingId == countryCode })?.lowestTier ?? 1
+            accessTier = grouping.first(where: { $0.serverOfferingId == countryCode })?.kind.lowestTier ?? 1
 
         case .custom(let serverWrapper):
             accessTier = serverWrapper.server.tier
@@ -450,14 +450,14 @@ extension CreateOrEditProfileViewModel {
         })
                 
         let sections: [SelectionSection]
-        if rows.contains(where: { ($0.object as! ServerGroup).lowestTier > userTier }) {
+        if rows.contains(where: { ($0.object as! ServerGroup).kind.lowestTier > userTier }) {
             sections = [
                 SelectionSection(
                     title: Localizable.countriesFree.uppercased(),
-                    cells: rows.filter { ($0.object as! ServerGroup).lowestTier <= userTier }),
+                    cells: rows.filter { ($0.object as! ServerGroup).kind.lowestTier <= userTier }),
                 SelectionSection(
                     title: Localizable.countriesPremium.uppercased(),
-                    cells: rows.filter { ($0.object as! ServerGroup).lowestTier > userTier }),
+                    cells: rows.filter { ($0.object as! ServerGroup).kind.lowestTier > userTier }),
             ]
         } else {
             sections = [SelectionSection(
