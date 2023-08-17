@@ -199,7 +199,7 @@ class CreateNewProfileViewModel {
     }
 
     func userTierSupports(group: ServerGroup) -> Bool {
-        group.lowestTier <= userTier
+        group.kind.lowestTier <= userTier
     }
 
     func userTierSupports(server: ServerModel) -> Bool {
@@ -389,7 +389,7 @@ class CreateNewProfileViewModel {
         let accessTier: Int
         switch serverOffering {
         case .fastest, .random:
-            accessTier = selectedCountryGroup.lowestTier
+            accessTier = selectedCountryGroup.kind.lowestTier
         case .custom(let wrapper):
             accessTier = wrapper.server.tier
         }

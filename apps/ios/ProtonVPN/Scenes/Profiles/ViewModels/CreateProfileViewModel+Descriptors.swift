@@ -48,7 +48,7 @@ extension CreateOrEditProfileViewModel {
         }
 
         let nameAttributedString: NSAttributedString
-        if group.lowestTier <= userTier {
+        if group.kind.lowestTier <= userTier {
             nameAttributedString = NSMutableAttributedString(
                 string: countryString,
                 attributes: [

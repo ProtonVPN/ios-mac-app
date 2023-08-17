@@ -161,7 +161,7 @@ class MapViewModel: SecureCoreToggleHandler {
                 serverType: activeView,
                 vpnGateway: vpnGateway,
                 appStateManager: appStateManager,
-                enabled: $0.lowestTier <= userTier,
+                enabled: $0.kind.lowestTier <= userTier,
                 alertService: alertService,
                 connectionStatusService: connectionStatusService
             )

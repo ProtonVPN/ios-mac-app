@@ -126,7 +126,7 @@ class CountryItemViewModel {
         self.propertiesManager = propertiesManager
         self.countriesSectionViewModel = countriesSectionViewModel
         
-        self.isTierTooLow = userTier < serversGroup.lowestTier
+        self.isTierTooLow = userTier < serversGroup.kind.lowestTier
         self.isOpened = isOpened
         self.isServerUnderMaintenance = false
         self.displaySeparator = displaySeparator

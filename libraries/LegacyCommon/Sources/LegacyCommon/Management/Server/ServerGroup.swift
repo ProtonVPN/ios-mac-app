@@ -20,23 +20,10 @@ import Foundation
 import VPNAppCore
 
 /// UI presents servers grouped by either a country or a "gateway"
-public class ServerGroup: Equatable {
+public struct ServerGroup: Equatable {
     public var kind: Kind
     public var servers: [ServerModel]
     public var feature: ServerFeature
-
-    public lazy var lowestTier: Int = {
-        switch kind {
-        case .country:
-            return servers.reduce(into: Int.max) { minTier, server in
-                if server.tier < minTier {
-                    minTier = server.tier
-                }
-            }
-        case .gateway:
-            return CoreAppConstants.VpnTiers.plus
-        }
-    }()
 
     public init(kind: Kind, servers: [ServerModel], feature: ServerFeature = .zero) {
         self.kind = kind
@@ -47,6 +34,15 @@ public class ServerGroup: Equatable {
     public enum Kind: Equatable, Hashable {
         case country(CountryModel)
         case gateway(String)
+
+        public var lowestTier: Int {
+            switch self {
+            case .country(let countryModel):
+                return countryModel.lowestTier
+            case .gateway:
+                return CoreAppConstants.VpnTiers.plus
+            }
+        }
     }
 
     public static func == (lhs: ServerGroup, rhs: ServerGroup) -> Bool {
