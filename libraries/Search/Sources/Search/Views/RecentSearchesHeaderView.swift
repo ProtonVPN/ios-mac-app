@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import Strings
 
 protocol RecentSearchesHeaderViewDelegate: AnyObject {
     func userDidRequestClear()
@@ -36,7 +37,7 @@ final class RecentSearchesHeaderView: UIView {
 
     var count: Int = 0 {
         didSet {
-            titleLabel.text = "\(LocalizedString.searchRecentHeader) (\(count))"
+            titleLabel.text = "\(Localizable.searchRecentHeader) (\(count))"
         }
     }
 
@@ -49,7 +50,7 @@ final class RecentSearchesHeaderView: UIView {
         subtitleStyle(titleLabel)
         textButtonStyle(clearButton)
 
-        clearButton.setTitle(LocalizedString.searchRecentClear, for: .normal)
+        clearButton.setTitle(Localizable.searchRecentClear, for: .normal)
         clearButton.addTarget(self, action: #selector(clearPressed), for: .touchUpInside)
     }
 

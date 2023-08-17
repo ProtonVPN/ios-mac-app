@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Strings
 
 enum SearchResult {
     case upsell
@@ -30,13 +31,13 @@ extension SearchResult {
     var title: String? {
         switch self {
         case let .countries(data):
-            return "\(LocalizedString.searchResultsCountries) (\(data.count))"
+            return "\(Localizable.searchResultsCountries) (\(data.count))"
         case let .servers(tier: tier, servers: data):
             return "\(tier.title) (\(data.count))"
         case let .secureCoreCountries(data):
-            return "\(LocalizedString.searchSecureCoreCountries) (\(data.count))"
+            return "\(Localizable.searchSecureCoreCountries) (\(data.count))"
         case let .cities(data):
-            return "\(LocalizedString.searchCities) (\(data.count))"
+            return "\(Localizable.searchCities) (\(data.count))"
         case .upsell:
             return nil
         }

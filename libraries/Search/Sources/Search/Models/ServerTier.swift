@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Strings
 
 public enum ServerTier {
     case free
@@ -27,9 +28,9 @@ extension ServerTier {
     var title: String {
         switch self {
         case .plus:
-            return LocalizedString.plusServers
+            return Localizable.plusServers
         case .free:
-            return LocalizedString.freeServers
+            return Localizable.freeServers
         }
     }
 

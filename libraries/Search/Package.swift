@@ -13,6 +13,7 @@ let package = Package(
             targets: ["Search"]),
     ],
     dependencies: [
+        .package(path: "../Strings"),
         .package(name: "Overture",
                  url: "https://github.com/pointfreeco/swift-overture", .exact("0.5.0")),
         .package(path: "../Theme")
@@ -23,6 +24,7 @@ let package = Package(
             dependencies: [
                 "Overture",
                 "Theme",
+                "Strings",
             ],
             resources: [
                 .process("Storyboard.storyboard"),
@@ -36,8 +38,7 @@ let package = Package(
                 .process("Cells/ServerCell.xib"),
                 .process("Cells/UpsellCell.xib"),
                 .process("Cells/CityCell.xib"),
-                .process("Assets.xcassets"),
-                .process("Resources")
+                .process("Assets.xcassets")
             ]),
         .testTarget(
             name: "SearchTests",

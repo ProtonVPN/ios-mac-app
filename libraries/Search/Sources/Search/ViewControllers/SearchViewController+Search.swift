@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import Strings
 
 // MARK: Search bar delegate
 
@@ -48,9 +49,9 @@ extension SearchViewController: UISearchBarDelegate {
 
 extension SearchViewController: RecentSearchesHeaderViewDelegate {
     func userDidRequestClear() {
-        let alert = UIAlertController(title: nil, message: LocalizedString.searchRecentClearTitle, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: LocalizedString.searchRecentClearCancel, style: .default))
-        alert.addAction(UIAlertAction(title: LocalizedString.searchRecentClearContinue, style: .default) { [weak self] _ in
+        let alert = UIAlertController(title: nil, message: Localizable.searchRecentClearTitle, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: Localizable.searchRecentClearCancel, style: .default))
+        alert.addAction(UIAlertAction(title: Localizable.searchRecentClearContinue, style: .default) { [weak self] _ in
             self?.viewModel.clearRecentSearches()
         })
 
