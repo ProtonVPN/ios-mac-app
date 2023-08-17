@@ -46,7 +46,8 @@ let package = Package(
                 .product(name: "Timer", package: "Timer"),
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "LocalFeatureFlags", package: "LocalFeatureFlags"),
-                "VPNShared",
+                .core(module: "Utilities"),
+                "VPNShared"
             ]
         ),
         .target(
@@ -65,3 +66,9 @@ let package = Package(
         .testTarget(name: "NEHelperTests", dependencies: ["NEHelper", "VPNSharedTesting"]),
     ]
 )
+
+extension PackageDescription.Target.Dependency {
+    static func core(module: String) -> Self {
+        .product(name: "ProtonCore\(module)", package: "protoncore")
+    }
+}
