@@ -21,7 +21,7 @@ import DictionaryCoder
 class PacketTunnelProvider: OpenVPNTunnelProvider, ExtensionAPIServiceDelegate {
 
     private var timerFactory: TimerFactory!
-    private var appInfo: AppInfo = AppInfoImplementation()
+    private var appInfo: AppInfo
     private var apiService: ExtensionAPIService!
     private var certificateRefreshManager: ExtensionCertificateRefreshManager!
     private let vpnAuthenticationStorage: VpnAuthenticationKeychain
@@ -94,6 +94,8 @@ class PacketTunnelProvider: OpenVPNTunnelProvider, ExtensionAPIServiceDelegate {
 
         vpnAuthenticationStorage = VpnAuthenticationKeychain(accessGroup: OpenVPNConstants.keychainAccessGroup,
                                                              vpnKeysGenerator: ExtensionVPNKeysGenerator())
+
+        appInfo = AppInfoImplementation()
 
         super.init()
         setupLogging()
