@@ -16,14 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Strings
+
 public struct DiscourageSecureCoreFeature {
     public let artImage: Image = Asset.secureCoreDiscourage.image
-    public let title: String = LocalizedString.modalsDiscourageSecureCoreTitle
-    public let subtitle: String = LocalizedString.modalsDiscourageSecureCoreSubtitle
-    public let learnMore: String = LocalizedString.modalsCommonLearnMore
-    public let dontShow: String = LocalizedString.modalsDiscourageSecureCoreDontShow
-    public let activate: String = LocalizedString.modalsDiscourageSecureCoreActivate
-    public let cancel: String = LocalizedString.modalsCommonCancel
+    public let title: String = Localizable.modalsDiscourageSecureCoreTitle
+    public let subtitle: String = Localizable.modalsDiscourageSecureCoreSubtitle
+    public let learnMore: String = Localizable.modalsCommonLearnMore
+    public let dontShow: String = Localizable.modalsDiscourageSecureCoreDontShow
+    public let activate: String = Localizable.modalsDiscourageSecureCoreActivate
+    public let cancel: String = Localizable.modalsCommonCancel
 
     public init() { }
 }

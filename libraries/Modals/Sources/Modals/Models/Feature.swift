@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Strings
 
 #if os(macOS)
 import AppKit
@@ -48,33 +49,33 @@ extension Feature {
     public func title() -> String {
         switch self {
         case .streaming:
-            return LocalizedString.modalsUpsellAllCountriesFeatureStreaming
+            return Localizable.modalsUpsellAllCountriesFeatureStreaming
         case .multipleDevices(let numberOfDevices):
-            return LocalizedString.modalsUpsellAllCountriesFeatureMultipleDevices(numberOfDevices)
+            return Localizable.modalsUpsellAllCountriesFeatureMultipleDevices(numberOfDevices)
         case .netshield:
-            return LocalizedString.modalsUpsellAllCountriesFeatureNetshield
+            return Localizable.modalsUpsellAllCountriesFeatureNetshield
         case .highSpeed:
-            return LocalizedString.modalsUpsellAllCountriesFeatureHighSpeed
+            return Localizable.modalsUpsellAllCountriesFeatureHighSpeed
         case .blockAds:
-            return LocalizedString.modalsUpsellNetShieldAds
+            return Localizable.modalsUpsellNetShieldAds
         case .protectFromMalware:
-            return LocalizedString.modalsUpsellNetShieldMalware
+            return Localizable.modalsUpsellNetShieldMalware
         case .highSpeedNetshield:
-            return LocalizedString.modalsUpsellNetShieldHighSpeed
+            return Localizable.modalsUpsellNetShieldHighSpeed
         case .routeSecureServers:
-            return LocalizedString.modalsUpsellSecureCoreRoute
+            return Localizable.modalsUpsellSecureCoreRoute
         case .addLayer:
-            return LocalizedString.modalsUpsellSecureCoreLayer
+            return Localizable.modalsUpsellSecureCoreLayer
         case .protectFromAttacks:
-            return LocalizedString.modalsUpsellSecureCoreAttacks
+            return Localizable.modalsUpsellSecureCoreAttacks
         case .privacyFirst:
-            return LocalizedString.modalsNoLogsPrivacyFirst
+            return Localizable.modalsNoLogsPrivacyFirst
         case .activityLogging:
-            return LocalizedString.modalsNoLogsLogActivity
+            return Localizable.modalsNoLogsLogActivity
         case .noThirdParties:
-            return LocalizedString.modalsNoLogsThirdParties
+            return Localizable.modalsNoLogsThirdParties
         case .externalAudit:
-            return LocalizedString.modalsNoLogsExternalAudit
+            return Localizable.modalsNoLogsExternalAudit
         }
     }
 

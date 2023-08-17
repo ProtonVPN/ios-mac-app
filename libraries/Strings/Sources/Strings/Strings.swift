@@ -1371,14 +1371,6 @@ public enum Localizable {
   public static var subscriptionExtendedSuccess: String { return Localizable.tr("Localizable", "_subscription_extended_success", fallback: "You have successfully bought credits to extend your current plan.") }
   /// iOS Settings -> Connection: name of field.
   public static var subscriptionPlan: String { return Localizable.tr("Localizable", "_subscription_plan", fallback: "Subscription Plan") }
-  /// Plural format key: "%#@VARIABLE@"
-  public static func subscriptionUpgradeOption1(_ p1: Int) -> String {
-    return Localizable.tr("Localizable", "_subscription_upgrade_option1", p1, fallback: "Plural format key: \"%#@VARIABLE@\"")
-  }
-  /// Plural format key: "%#@VARIABLE@"
-  public static func subscriptionUpgradeOption2(_ p1: Int) -> String {
-    return Localizable.tr("Localizable", "_subscription_upgrade_option2", p1, fallback: "Plural format key: \"%#@VARIABLE@\"")
-  }
   /// Advanced features: NetShield, Secure Core, Tor, P2P
   public static var subscriptionUpgradeOption3: String { return Localizable.tr("Localizable", "_subscription_upgrade_option3", fallback: "Advanced features: NetShield, Secure Core, Tor, P2P") }
   /// Upgrade again to enjoy all the features:
@@ -1691,6 +1683,8 @@ public enum Localizable {
   public static var loginSummaryButton: String { return Localizable.tr("Localizable", "login_summary_button", fallback: "Start using Proton VPN") }
   /// Invalid login method. Please contact support.
   public static var loginUnsupportedState: String { return Localizable.tr("Localizable", "login_unsupported_state", fallback: "Invalid login method. Please contact support.") }
+  /// Description of user account update screen
+  public static var maximumDeviceLimit: String { return Localizable.tr("Localizable", "maximum_device_limit", fallback: "Please disconnect another device to connect to this one.") }
   /// Description of user account update screen part 1
   public static func maximumDevicePlanLimitPart1(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "maximum_device_plan_limit_part_1", String(describing: p1), fallback: "Please disconnect another device to connect to this one or upgrade to %@")
@@ -1699,12 +1693,92 @@ public enum Localizable {
   public static func maximumDevicePlanLimitPart2(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "maximum_device_plan_limit_part_2", p1, fallback: "Plural format key: \" to get up to %#@num_devices@ connected at the same time.\"")
   }
+  /// Common button title
+  public static var modalsCommonCancel: String { return Localizable.tr("Localizable", "modals_common_cancel", fallback: "Cancel") }
+  /// Common button title
+  public static var modalsCommonLearnMore: String { return Localizable.tr("Localizable", "modals_common_learn_more", fallback: "Learn more") }
+  /// Common button title
+  public static var modalsCommonNext: String { return Localizable.tr("Localizable", "modals_common_next", fallback: "Next") }
+  /// Positive user action on Secure Core discouragement screen
+  public static var modalsDiscourageSecureCoreActivate: String { return Localizable.tr("Localizable", "modals_discourage_secure_core_activate", fallback: "Activate Secure Core") }
+  /// Turn off Secure Core discouragement screen
+  public static var modalsDiscourageSecureCoreDontShow: String { return Localizable.tr("Localizable", "modals_discourage_secure_core_dont_show", fallback: "Don’t show again") }
+  /// Subtitle of the Secure Core discouragement screen
+  public static var modalsDiscourageSecureCoreSubtitle: String { return Localizable.tr("Localizable", "modals_discourage_secure_core_subtitle", fallback: "Secure Core offers the highest level of security and privacy, but it may reduce your internet speed. If you need more performance, you can disable Secure Core.") }
+  /// Title of the Secure Core discouragement screen
+  public static var modalsDiscourageSecureCoreTitle: String { return Localizable.tr("Localizable", "modals_discourage_secure_core_title", fallback: "A note about speed...") }
+  /// Upgrade plan button title
+  public static var modalsGetPlus: String { return Localizable.tr("Localizable", "modals_get_plus", fallback: "Upgrade") }
+  /// Learn more of the No Logs screen
+  public static var modalsNoLogsExternalAudit: String { return Localizable.tr("Localizable", "modals_no_logs_external_audit", fallback: "Proton VPN's strict no-log policy is certified by an external audit.") }
+  /// Feature of the No Logs screen
+  public static var modalsNoLogsLogActivity: String { return Localizable.tr("Localizable", "modals_no_logs_log_activity", fallback: "We do not log your internet activity") }
+  /// Feature of the No Logs screen
+  public static var modalsNoLogsPrivacyFirst: String { return Localizable.tr("Localizable", "modals_no_logs_privacy_first", fallback: "Proton VPN is privacy first") }
+  /// Feature of the No Logs screen
+  public static var modalsNoLogsThirdParties: String { return Localizable.tr("Localizable", "modals_no_logs_third_parties", fallback: "We do not share any data with third parties") }
+  /// Title of the No Logs screen
+  public static var modalsNoLogsTitle: String { return Localizable.tr("Localizable", "modals_no_logs_title", fallback: "No logs and Swiss-based") }
+  /// Feature of the All Countries upsell screen
+  public static var modalsUpsellAllCountriesFeatureHighSpeed: String { return Localizable.tr("Localizable", "modals_upsell_all_countries_feature_highSpeed", fallback: "Browse at the highest speeds (10 Gbps)") }
+  /// Plural format key: "%#@VARIABLE@"
+  public static func modalsUpsellAllCountriesFeatureMultipleDevices(_ p1: Int) -> String {
+    return Localizable.tr("Localizable", "modals_upsell_all_countries_feature_multipleDevices", p1, fallback: "Plural format key: \"%#@VARIABLE@\"")
+  }
+  /// Feature of the All Countries upsell screen
+  public static var modalsUpsellAllCountriesFeatureNetshield: String { return Localizable.tr("Localizable", "modals_upsell_all_countries_feature_netshield", fallback: "Block ads and malware with NetShield") }
+  /// Feature of the All Countries upsell screen
+  public static var modalsUpsellAllCountriesFeatureStreaming: String { return Localizable.tr("Localizable", "modals_upsell_all_countries_feature_streaming", fallback: "Access global streaming services") }
+  /// Plural format key: "Access over %#@num_servers@ in %#@num_countries@"
+  public static func modalsUpsellAllCountriesTitle(_ p1: Int, _ p2: Int) -> String {
+    return Localizable.tr("Localizable", "modals_upsell_all_countries_title", p1, p2, fallback: "Plural format key: \"Access over %#@num_servers@ in %#@num_countries@\"")
+  }
+  /// Footer of the All Countries upsell screen
+  public static var modalsUpsellFeaturesFooter: String { return Localizable.tr("Localizable", "modals_upsell_features_footer", fallback: "And many more premium features") }
+  /// Subtitle of the Moderate NAT upsell screen
+  public static var modalsUpsellFeaturesModerateNatSubtitle: String { return Localizable.tr("Localizable", "modals_upsell_features_moderate_nat_subtitle", fallback: "Moderate NAT, also known as Nat Type 2, can improve your online experience with various applications and online video games.\n\nUnlock this and other features with a Plus plan.") }
+  /// Subtitle of the Safe Mode upsell screen
+  public static var modalsUpsellFeaturesSafeModeSubtitle: String { return Localizable.tr("Localizable", "modals_upsell_features_safe_mode_subtitle", fallback: "Have advanced or professional computing needs that require non-standard ports?\n\nUpgrade to VPN Plus to access this and other premium features.") }
+  /// Subtitle of All Countries, NetShield and Secure Core upsell screens
+  public static var modalsUpsellFeaturesSubtitle: String { return Localizable.tr("Localizable", "modals_upsell_features_subtitle", fallback: "When you upgrade to VPN Plus") }
+  /// Learn more button title of the Moderate NAT upsell screen
+  public static var modalsUpsellModerateNatLearnMore: String { return Localizable.tr("Localizable", "modals_upsell_moderate_nat_learn_more", fallback: "What is Moderate NAT?") }
+  /// Title of the Moderate NAT upsell screen
+  public static var modalsUpsellModerateNatTitle: String { return Localizable.tr("Localizable", "modals_upsell_moderate_nat_title", fallback: "Enable Moderate NAT") }
+  /// Feature of the NetShield upsell screen
+  public static var modalsUpsellNetShieldAds: String { return Localizable.tr("Localizable", "modals_upsell_net_shield_ads", fallback: "Block ads and trackers") }
+  /// Feature of the NetShield upsell screen
+  public static var modalsUpsellNetShieldHighSpeed: String { return Localizable.tr("Localizable", "modals_upsell_net_shield_highSpeed", fallback: "Browse at the highest speeds") }
+  /// Feature of the NetShield upsell screen
+  public static var modalsUpsellNetShieldMalware: String { return Localizable.tr("Localizable", "modals_upsell_net_shield_malware", fallback: "Protect your device from malware") }
+  /// Title of the NetShield upsell screen
+  public static var modalsUpsellNetShieldTitle: String { return Localizable.tr("Localizable", "modals_upsell_net_shield_title", fallback: "Enjoy ad-free browsing with NetShield") }
+  /// Learn more button title of the Safe Mode upsell screen
+  public static var modalsUpsellSafeModeLearnMore: String { return Localizable.tr("Localizable", "modals_upsell_safe_mode_learn_more", fallback: "Learn More") }
+  /// Title of the Safe Mode upsell screen
+  public static var modalsUpsellSafeModeTitle: String { return Localizable.tr("Localizable", "modals_upsell_safe_mode_title", fallback: "Allow traffic to non-standard ports") }
+  /// Feature of the Secure Core upsell screen
+  public static var modalsUpsellSecureCoreAttacks: String { return Localizable.tr("Localizable", "modals_upsell_secure_core_attacks", fallback: "Protect yourself from network attacks") }
+  /// Feature of the Secure Core upsell screen
+  public static var modalsUpsellSecureCoreLayer: String { return Localizable.tr("Localizable", "modals_upsell_secure_core_layer", fallback: "Add another layer of encryption to your VPN connection") }
+  /// Feature of the Secure Core upsell screen
+  public static var modalsUpsellSecureCoreRoute: String { return Localizable.tr("Localizable", "modals_upsell_secure_core_route", fallback: "Route through ultra secure servers in Switzerland, Sweden, and Iceland") }
+  /// Title of the Secure Core upsell screen
+  public static var modalsUpsellSecureCoreTitle: String { return Localizable.tr("Localizable", "modals_upsell_secure_core_title", fallback: "Double the encryption with Secure Core") }
+  /// Dismiss upsell screen button title
+  public static var modalsUpsellStayFree: String { return Localizable.tr("Localizable", "modals_upsell_stay_free", fallback: "Not now") }
   /// The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked
   public static var netshieldStatsHintAds: String { return Localizable.tr("Localizable", "netshield_stats_hint_ads", fallback: "Advertisement websites use cookies and trackers to target you.") }
   /// The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved
   public static var netshieldStatsHintData: String { return Localizable.tr("Localizable", "netshield_stats_hint_data", fallback: "Estimated size of ads, trackers, and malware that NetShield has blocked.") }
   /// The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped
   public static var netshieldStatsHintTrackers: String { return Localizable.tr("Localizable", "netshield_stats_hint_trackers", fallback: "Trackers are third-party websites that collect, store, and sell information about your web activity.") }
+  /// Title of "done" button in New Brand screen
+  public static var newPlansBrandGotIt: String { return Localizable.tr("Localizable", "new_plans_brand_got_it", fallback: "Got it") }
+  /// Subtitle of the New Brand screen
+  public static var newPlansBrandSubtitle: String { return Localizable.tr("Localizable", "new_plans_brand_subtitle", fallback: "Introducing Proton’s refreshed look.\nMany services, one mission. Welcome to an internet where privacy is the default.") }
+  /// Title of the New Brand screen
+  public static var newPlansBrandTitle: String { return Localizable.tr("Localizable", "new_plans_brand_title", fallback: "Updated Proton, unified protection") }
   /// The Proton VPN website might be temporarily unreachable due to network restrictions. Please use the mobile app to create a new Proton account.
   public static var protonWebsiteUnreachable: String { return Localizable.tr("Localizable", "proton_website_unreachable", fallback: "The Proton VPN website might be temporarily unreachable due to network restrictions. Please use the mobile app to create a new Proton account.") }
   /// Recovery code
@@ -1757,6 +1831,14 @@ public enum Localizable {
   public static var searchUsRegions: String { return Localizable.tr("Localizable", "search_us_regions", fallback: "US regions") }
   /// Sample US regions the user can search for
   public static var searchUsRegionsSample: String { return Localizable.tr("Localizable", "search_us_regions_sample", fallback: "California, Florida, Colorado...") }
+  /// Plural format key: "Hundreds of servers in %#@num_countries@"
+  public static func subscriptionUpgradeOption1(_ p1: Int) -> String {
+    return Localizable.tr("Localizable", "subscription_upgrade_option1", p1, fallback: "Plural format key: \"Hundreds of servers in %#@num_countries@\"")
+  }
+  /// Plural format key: "Connect up to %#@num_devices@ at the same time"
+  public static func subscriptionUpgradeOption2(_ p1: Int) -> String {
+    return Localizable.tr("Localizable", "subscription_upgrade_option2", p1, fallback: "Plural format key: \"Connect up to %#@num_devices@ at the same time\"")
+  }
   /// Two-factor authentication
   public static var twoFactorAuthentication: String { return Localizable.tr("Localizable", "two_factor_authentication", fallback: "Two-factor authentication") }
   /// Two-factor code

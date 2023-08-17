@@ -2,6 +2,101 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>maximum_device_plan_limit_part_2</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string> чтобы подключить до %#@num_devices@ одновременно.</string>
+		<key>num_devices</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%d устройства</string>
+			<key>many</key>
+			<string>%d устройств</string>
+			<key>one</key>
+			<string>%d устройство</string>
+			<key>other</key>
+			<string>%d устройства</string>
+		</dict>
+	</dict>
+	<key>modals_upsell_all_countries_feature_multipleDevices</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Connect up to %d devices at once</string>
+			<key>other</key>
+			<string>Connect up to %d devices at once</string>
+		</dict>
+	</dict>
+	<key>modals_upsell_all_countries_title</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Access over %#@num_servers@ in %#@num_countries@</string>
+		<key>num_countries</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d countries</string>
+			<key>other</key>
+			<string>%d countries</string>
+		</dict>
+		<key>num_servers</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d secure servers</string>
+			<key>other</key>
+			<string>%d secure servers</string>
+		</dict>
+	</dict>
+	<key>subscription_upgrade_option1</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Hundreds of servers in %#@num_countries@</string>
+		<key>num_countries</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d country</string>
+			<key>other</key>
+			<string>%d countries</string>
+		</dict>
+	</dict>
+	<key>subscription_upgrade_option2</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Connect up to %#@num_devices@ at the same time</string>
+		<key>num_devices</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d device</string>
+			<key>other</key>
+			<string>%d devices</string>
+		</dict>
+	</dict>
 	<key>search_upsell_title</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -82,46 +177,6 @@
 			<string>%d подключений</string>
 		</dict>
 	</dict>
-	<key>_subscription_upgrade_option1</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>few</key>
-			<string>Сотни серверов в %d странах</string>
-			<key>many</key>
-			<string>Сотни серверов в %d странах</string>
-			<key>one</key>
-			<string>Сотни серверов в %d стране</string>
-			<key>other</key>
-			<string>Сотни серверов в %d странах</string>
-		</dict>
-	</dict>
-	<key>_subscription_upgrade_option2</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>few</key>
-			<string>Подключайте до %d устройств одновременно</string>
-			<key>many</key>
-			<string>Подключайте до %d устройств одновременно</string>
-			<key>one</key>
-			<string>Подключайте до %d устройства одновременно</string>
-			<key>other</key>
-			<string>Подключайте до %d устройств одновременно</string>
-		</dict>
-	</dict>
 	<key>_vpnauth_too_many_certs_retry_after</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -140,26 +195,6 @@
 			<string>Вы достигли максимального количества изменений настроек. Повторите попытку не менее чем через %d минуту.</string>
 			<key>other</key>
 			<string>Вы достигли максимального количества изменений настроек. Повторите попытку не менее чем через %d минут.</string>
-		</dict>
-	</dict>
-	<key>maximum_device_plan_limit_part_2</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string> чтобы подключить до %#@num_devices@ одновременно.</string>
-		<key>num_devices</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>few</key>
-			<string>%d устройства</string>
-			<key>many</key>
-			<string>%d устройств</string>
-			<key>one</key>
-			<string>%d устройство</string>
-			<key>other</key>
-			<string>%d устройства</string>
 		</dict>
 	</dict>
 </dict>

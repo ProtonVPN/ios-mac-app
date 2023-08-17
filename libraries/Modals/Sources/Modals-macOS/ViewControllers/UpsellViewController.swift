@@ -23,6 +23,7 @@
 import Cocoa
 import Modals
 import Ergonomics
+import Strings
 
 public final class UpsellViewController: NSViewController {
 
@@ -57,7 +58,7 @@ public final class UpsellViewController: NSViewController {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-        upgradeButton.title = LocalizedString.modalsGetPlus
+        upgradeButton.title = Localizable.modalsGetPlus
         setupSubviews()
         setupFeatures()
         upgradeButton.setAccessibilityIdentifier("ModalUpgradeButton")
