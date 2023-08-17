@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import VPNShared
 
 class AppConstants {
     static let bundleId = "ch.protonvpn.mac"
@@ -67,16 +68,22 @@ class AppConstants {
     }
 
     struct Time {
-        static let maintenanceMessageTimeThreshold: Double = 3600 * 12 // 12 hours
+        static let recentlyActiveThreshold: TimeInterval = .minutes(10)
+
+        static let maintenanceMessageTimeThreshold: TimeInterval = .hours(12)
         
         // Servers list refresh
-        static let fullServerRefresh: TimeInterval = 3600 * 3 // 3 hours
-        static let serverLoadsRefresh: TimeInterval = 60 * 15 // 15 minutes
-        
+        static let fullServerRefresh: TimeInterval = .hours(3)
+        static let serverLoadsRefresh: TimeInterval = .minutes(15)
+
         // Account
-        static let userAccountRefresh: TimeInterval = 60 * 3 // 3 minutes
-        
+        static let userAccountRefresh: TimeInterval = .minutes(3)
+
+        // Streaming & Partners
+        static let streamingInfoRefresh: TimeInterval = .days(2)
+        static let partnersInfoRefresh: TimeInterval = .days(2)
+
         // Status bar blinking speed
-        static let statusIconBlink: TimeInterval = 0.6 // seconds
+        static let statusIconBlink: TimeInterval = .milliseconds(600)
     }
 }

@@ -21,6 +21,7 @@
 //
 
 import UIKit
+import VPNShared
 
 class AppConstants {
 
@@ -37,16 +38,20 @@ class AppConstants {
     
     struct Time {
         // Connection stuck timming
-        static let waitingTimeForConnectionStuck: Double = 3
-        static let timeForForegroundStuck: Double = 30 * 60 // 30 minutes
+        static let waitingTimeForConnectionStuck: TimeInterval = 3 // seconds
+        static let timeForForegroundStuck: TimeInterval = .minutes(30)
 
         // Servers list refresh
-        static let fullServerRefresh: TimeInterval = 3600 * 3 // 3 hours
-        static let serverLoadsRefresh: TimeInterval = 60 * 15 // 15 minutes
+        static let fullServerRefresh: TimeInterval = .hours(3)
+        static let serverLoadsRefresh: TimeInterval = .minutes(15)
         
         // Account
-        static let userAccountRefresh: TimeInterval = 60 * 3  // 3 minutes
-        
+        static let userAccountRefresh: TimeInterval = .minutes(3)
+
+        // Streaming & Partners
+        static let streamingInfoRefresh: TimeInterval = .days(2)
+        static let partnersInfoRefresh: TimeInterval = .days(2)
+
         // Payments
         static let paymentTokenLifetime: TimeInterval = 60 * 59 // 59 minutes
     }

@@ -33,7 +33,6 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         #endif
     }
 
-    // swiftlint:disable:next function_body_length
     func testFirstTimeConnectionWithSmartProtocol() async {
         let expectations = (
             initialConnection: XCTestExpectation(description: "initial connection"),
@@ -576,6 +575,8 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
     /// same user then becomes delinquent on their plan payment.
     func testUserPlanChangingThenBecomingDelinquentWithWireGuard() { // swiftlint:disable:this function_body_length cyclomatic_complexity
         container.serverStorage.populateServers([testData.server1, testData.server3])
+        container.networkingDelegate.apiServerList = [testData.server1, testData.server3]
+
         container.vpnKeychain.setVpnCredentials(with: .plus, maxTier: CoreAppConstants.VpnTiers.plus)
         container.propertiesManager.vpnProtocol = .wireGuard(.udp)
         container.propertiesManager.hasConnected = true
@@ -776,5 +777,170 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         container.vpnGateway.disconnect()
         wait(for: [expectations.disconnections[3]], timeout: expectationTimeout)
+    }
+
+    func testUserPlanChangingFromFreeToPlusAndConnectingToPaidServerThruQuickConnect() { // swiftlint:disable:this function_body_length
+        container.networkingDelegate.apiServerList = [testData.server1, testData.server3]
+
+        container.vpnKeychain.setVpnCredentials(with: .free, maxTier: CoreAppConstants.VpnTiers.free)
+        container.propertiesManager.vpnProtocol = .wireGuard(.udp)
+        container.propertiesManager.hasConnected = true
+        container.authKeychain.setMockUsername("user")
+
+        let freeCreds = try! container.vpnKeychain.fetch()
+        XCTAssertEqual(freeCreds.accountPlan, .free)
+        XCTAssertEqual(freeCreds.maxTier, CoreAppConstants.VpnTiers.free)
+
+        let plusCreds = VpnKeychainMock.vpnCredentials(accountPlan: .plus, maxTier: CoreAppConstants.VpnTiers.plus)
+
+        let (totalConnections, totalDisconnections) = (2, 2)
+
+        let expectations = (
+            connections: (1...totalConnections).map { XCTestExpectation(description: "connection \($0)") },
+            appStateConnectedTransitions: (1...totalConnections).map { XCTestExpectation(description: "app state transition -> connected \($0)") },
+            disconnections: (1...totalDisconnections).map { XCTestExpectation(description: "disconnection \($0)") },
+            serverSaves: (1...totalConnections).map { XCTestExpectation(description: "server list store \($0)") },
+            upgradeNotification: XCTestExpectation(description: "notify upgrade state"),
+            refreshLogicalsAfterPlanUpgrade: XCTestExpectation(description: "refresh logicals after plan upgrade")
+        )
+
+        container.localAgentConnectionFactory.connectionWasCreated = { connection in
+            let consts = LocalAgentConstants()!
+            DispatchQueue.main.async {
+                connection.client.onState(consts.stateConnecting)
+            }
+            DispatchQueue.main.async {
+                connection.client.onState(consts.stateConnected)
+            }
+        }
+
+        var (nConnections,
+             nDisconnections,
+             nServerSaves,
+             nAppStateConnectTransitions) = (0, 0, 0, 0)
+
+        var storedServers: [ServerModel] = []
+        container.serverStorage.didStoreNewServers = { newServers in
+            storedServers = newServers
+            expectations.serverSaves[nServerSaves].fulfill()
+            nServerSaves += 1
+        }
+
+        var observedStates: [AppState] = []
+        let observer = NotificationCenter.default.addObserver(forName: .AppStateManager.stateChange, object: nil, queue: nil) { notification in
+            guard let appState = notification.object as? AppState else { return }
+            defer { observedStates.append(appState) }
+            // debounce multiple "connected" notifications... we should probably fix that
+            if case .connected = appState {
+                if case .connected = observedStates.last { return }
+
+                guard nAppStateConnectTransitions < totalConnections else {
+                    XCTFail("Didn't expect that many (\(nAppStateConnectTransitions + 1)) connection transitions - " +
+                            "previous observed states \(observedStates.map { $0.description })")
+                    return
+                }
+
+                expectations.appStateConnectedTransitions[nAppStateConnectTransitions].fulfill()
+                nAppStateConnectTransitions += 1
+            }
+        }
+        defer { NotificationCenter.default.removeObserver(observer, name: .AppStateManager.stateChange, object: nil) }
+
+        var observedStatuses: [NEVPNStatus] = []
+        var currentManager: NETunnelProviderManagerMock?
+
+        tunnelManagerCreated = { manager in
+            currentManager = manager
+        }
+
+        statusChanged = { vpnStatus in
+            defer { observedStatuses.append(vpnStatus) }
+
+            switch vpnStatus {
+            case .connected:
+                defer { nConnections += 1 }
+                guard nConnections < totalConnections else {
+                    XCTFail("Didn't expect that many (\(nConnections + 1)) connection transitions - " +
+                            "previous statuses \(observedStatuses.map { $0.description })")
+                    return
+                }
+                expectations.connections[nConnections].fulfill()
+            case .disconnected:
+                defer { nDisconnections += 1 }
+                guard nDisconnections < totalDisconnections else {
+                    XCTFail("Didn't expect that many (\(nDisconnections + 1)) disconnection transitions - " +
+                            "previous statuses \(observedStatuses.map { $0.description })")
+                    return
+                }
+                expectations.disconnections[nDisconnections].fulfill()
+            default:
+                break
+            }
+
+        }
+
+        container.appSessionRefreshTimer.start(now: true)
+
+        container.vpnGateway.quickConnect(trigger: .newConnection)
+        wait(
+            for: [
+                expectations.connections[0],
+                expectations.appStateConnectedTransitions[0],
+                expectations.serverSaves[0]
+            ],
+            timeout: expectationTimeout
+        )
+        XCTAssertEqual(nConnections, 1)
+        XCTAssertEqual(storedServers.count, 1) // Just the free server
+        XCTAssertEqual(storedServers.first?.isFree, true)
+
+        // Should connect to server1, that's the only thing in the server list
+        XCTAssertNotNil(currentManager?.protocolConfiguration?.serverAddress)
+        XCTAssertEqual(currentManager?.protocolConfiguration?.serverAddress, testData.server1.ips.first?.entryIp)
+
+        container.vpnGateway.disconnect()
+        wait(for: [expectations.disconnections[0]], timeout: expectationTimeout)
+        XCTAssertEqual(nDisconnections, 1)
+
+        container.networkingDelegate.apiCredentials = plusCreds
+
+        container.networkingDelegate.didHitRoute = { route in
+            guard route == .logicals else { return }
+
+            expectations.refreshLogicalsAfterPlanUpgrade.fulfill()
+        }
+
+        DispatchQueue.main.async {
+            let upgrade: VpnDowngradeInfo = (freeCreds, plusCreds)
+            NotificationCenter.default.post(name: VpnKeychainMock.vpnPlanChanged, object: upgrade)
+            self.container.vpnKeychain.credentials = plusCreds
+
+            NotificationCenter.default.post(name: VpnKeychainMock.vpnCredentialsChanged, object: plusCreds)
+            expectations.upgradeNotification.fulfill()
+        }
+
+        // The plan upgrade should force the system to refresh the (now larger) server list
+        wait(
+            for: [
+                expectations.upgradeNotification,
+                expectations.refreshLogicalsAfterPlanUpgrade,
+                expectations.serverSaves[1]
+            ],
+            timeout: expectationTimeout
+        )
+
+        container.vpnGateway.quickConnect(trigger: .newConnection)
+        wait(
+            for: [expectations.connections[1], expectations.appStateConnectedTransitions[1]],
+            timeout: expectationTimeout
+        )
+        XCTAssertEqual(nConnections, 2)
+
+        // Quick connect should now prefer the plus server
+        XCTAssertNotNil(currentManager?.protocolConfiguration?.serverAddress)
+        XCTAssertEqual(currentManager?.protocolConfiguration?.serverAddress, testData.server3.ips.first?.entryIp)
+        container.vpnGateway.disconnect()
+
+        wait(for: [expectations.disconnections[1]], timeout: expectationTimeout)
     }
 }

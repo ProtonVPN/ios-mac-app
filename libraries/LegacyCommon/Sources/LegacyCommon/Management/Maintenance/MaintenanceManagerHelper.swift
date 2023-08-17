@@ -28,7 +28,11 @@ public protocol MaintenanceManagerHelperFactory {
 
 /// Object for watching properties manager changes and starting/stopping MaintenannceManager
 public class MaintenanceManagerHelper {
-    
+    private static let jitterPercentage = 10
+    private static var randomJitterPercentage: Int {
+        .random(in: -jitterPercentage...jitterPercentage)
+    }
+
     public typealias Factory = MaintenanceManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & VpnGatewayFactory
     private let factory: Factory
     
@@ -53,6 +57,7 @@ public class MaintenanceManagerHelper {
         }
         
         let time = TimeInterval(propertiesManager.maintenanceServerRefreshIntereval * 60)
+        let jitter = (TimeInterval(Self.randomJitterPercentage) / 100) * time
         maintenanceManager.observeCurrentServerState(every: time, repeats: true, completion: { [weak self] isMaintenance in
             guard isMaintenance else {
                 return

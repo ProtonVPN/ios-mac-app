@@ -457,7 +457,7 @@ public class AppStateManagerImplementation: AppStateManager {
 
             serviceChecker?.stop()
             if let alertService = alertService {
-                serviceChecker = ServiceChecker(networking: networking, alertService: alertService, doh: doh)
+                serviceChecker = ServiceChecker(networking: networking, alertService: alertService, doh: doh, refreshInterval: CoreAppConstants.UpdateTime.p2pBlockedRefreshTime)
             }
             attemptingConnection = false
             state = .connected(descriptor)

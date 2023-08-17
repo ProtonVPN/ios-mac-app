@@ -45,11 +45,20 @@ final class DependencyContainer: Container {
     private lazy var iosAlertService = IosAlertService(self)
 
     // Refreshes app data at predefined time intervals
-    private lazy var refreshTimer = AppSessionRefreshTimer(factory: self,
-                                                           refreshIntervals: (AppConstants.Time.fullServerRefresh,
-                                                                              AppConstants.Time.serverLoadsRefresh,
-                                                                              AppConstants.Time.userAccountRefresh),
-                                                           canRefreshAccount: { self.makeAuthKeychainHandle().fetch() != nil })
+    private lazy var refreshTimer: AppSessionRefreshTimer = {
+        let result = AppSessionRefreshTimer(
+            factory: self,
+            refreshIntervals: (
+                full: AppConstants.Time.fullServerRefresh,
+                loads: AppConstants.Time.serverLoadsRefresh,
+                account: AppConstants.Time.userAccountRefresh,
+                streaming: AppConstants.Time.streamingInfoRefresh,
+                partners: AppConstants.Time.partnersInfoRefresh
+            )
+        )
+        result.delegate = self
+        return result
+    }()
 
     private lazy var vpnAuthentication: VpnAuthentication = {
         return VpnAuthenticationRemoteClient(self)
@@ -136,6 +145,12 @@ final class DependencyContainer: Container {
 
     override func makeUpdateChecker() -> UpdateChecker {
         iOSUpdateManager()
+    }
+}
+
+extension DependencyContainer: AppSessionRefreshTimerDelegate {
+    func canRefreshAccount() -> Bool {
+        makeAuthKeychainHandle().fetch() != nil
     }
 }
 

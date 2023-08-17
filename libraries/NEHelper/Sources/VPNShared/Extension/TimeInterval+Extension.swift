@@ -19,6 +19,10 @@
 import Foundation
 
 public extension TimeInterval {
+    static func milliseconds(_ milliseconds: Int) -> Self {
+        Self(milliseconds) / 1000
+    }
+
     static func minutes(_ minutes: Int) -> Self {
         Self(minutes) * 60
     }

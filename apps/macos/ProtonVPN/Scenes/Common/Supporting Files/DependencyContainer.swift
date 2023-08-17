@@ -47,12 +47,21 @@ final class DependencyContainer: Container {
     private lazy var xpcConnectionsRepository: XPCConnectionsRepository = XPCConnectionsRepositoryImplementation()
 
     // Refreshes app data at predefined time intervals
-    private lazy var refreshTimer = AppSessionRefreshTimer(factory: self,
-                                                           refreshIntervals: (AppConstants.Time.fullServerRefresh,
-                                                                              AppConstants.Time.serverLoadsRefresh,
-                                                                              AppConstants.Time.userAccountRefresh),
-                                                           canRefreshLoads: { return NSApp.isActive },
-                                                           canRefreshAccount: { self.makeAuthKeychainHandle().fetch() != nil })
+    private lazy var refreshTimer: AppSessionRefreshTimer = {
+        let result = AppSessionRefreshTimer(
+            factory: self,
+            refreshIntervals: (
+                full: AppConstants.Time.fullServerRefresh,
+                loads: AppConstants.Time.serverLoadsRefresh,
+                account: AppConstants.Time.userAccountRefresh,
+                streaming: AppConstants.Time.streamingInfoRefresh,
+                partners: AppConstants.Time.partnersInfoRefresh
+            )
+        )
+
+        result.delegate = self
+        return result
+    }()
 
     // Manages app updates
     private lazy var updateManager = UpdateManager(self)
@@ -143,6 +152,32 @@ final class DependencyContainer: Container {
     // MARK: UpdateManagerFactory
     override func makeUpdateChecker() -> UpdateChecker {
         updateManager
+    }
+}
+
+extension DependencyContainer: AppSessionRefreshTimerDelegate {
+    private func wasRecentlyActive() -> Bool {
+        AppDelegate.wasRecentlyActive
+    }
+
+    func shouldRefreshLoads() -> Bool {
+        wasRecentlyActive()
+    }
+
+    func shouldRefreshAccount() -> Bool {
+        wasRecentlyActive() && makeAuthKeychainHandle().fetch() != nil
+    }
+
+    func shouldRefreshFull() -> Bool {
+        wasRecentlyActive()
+    }
+
+    func shouldRefreshPartners() -> Bool {
+        wasRecentlyActive()
+    }
+
+    func shouldRefreshStreaming() -> Bool {
+        wasRecentlyActive()
     }
 }
 

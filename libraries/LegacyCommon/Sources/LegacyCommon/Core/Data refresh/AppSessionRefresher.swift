@@ -23,14 +23,34 @@
 import Foundation
 
 /// Classes that confirm to this protocol can refresh data from API into the app
-public protocol AppSessionRefresher {
+public protocol AppSessionRefresher: AnyObject {
     var lastDataRefresh: Date? { get }
     var lastServerLoadsRefresh: Date? { get }
     var lastAccountRefresh: Date? { get }
-        
+    var lastStreamingInfoRefresh: Date? { get }
+    var lastPartnersInfoRefresh: Date? { get }
+
     func refreshData()
     func refreshServerLoads()
     func refreshAccount()
+    func refreshStreamingServices()
+    func refreshPartners(ifUnknownPartnerLogicalExistsIn serverModels: [ServerModel]?) async
+}
+
+extension AppSessionRefresher {
+    public func refreshPartners() async {
+        await refreshPartners(ifUnknownPartnerLogicalExistsIn: nil)
+    }
+
+    public func refreshPartners(
+        ifUnknownPartnerLogicalExistsIn serverModels: [ServerModel]? = nil,
+        completion: @escaping (() -> Void)
+    ) {
+        Task { [weak self] in
+            await self?.refreshPartners(ifUnknownPartnerLogicalExistsIn: serverModels)
+            completion()
+        }
+    }
 }
 
 public protocol AppSessionRefresherFactory {
@@ -38,10 +58,11 @@ public protocol AppSessionRefresherFactory {
 }
 
 open class AppSessionRefresherImplementation: AppSessionRefresher {
-    
     public var lastDataRefresh: Date?
     public var lastServerLoadsRefresh: Date?
     public var lastAccountRefresh: Date?
+    public var lastStreamingInfoRefresh: Date?
+    public var lastPartnersInfoRefresh: Date?
     
     public var loggedIn = false
     
@@ -107,7 +128,46 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
             }
         }
     }
-    
+
+    @objc public func refreshStreamingServices() {
+        guard loggedIn else { return }
+
+        lastStreamingInfoRefresh = Date()
+        Task { [weak self] in
+            do {
+                guard let streamingResponse = try await self?.vpnApiService.virtualServices() else { return }
+                self?.propertiesManager.streamingServices = streamingResponse.streamingServices
+                self?.propertiesManager.streamingResourcesUrl = streamingResponse.resourceBaseURL
+            } catch {
+                log.error("RefreshStreamingInfo error", category: .app, metadata: ["error": "\(error)"])
+            }
+        }
+    }
+
+    public func refreshPartners(ifUnknownPartnerLogicalExistsIn serverModels: [ServerModel]?) async {
+        guard loggedIn else { return }
+
+        if let serverModels {
+            let knownPartnerLogicals = Set(propertiesManager.partnerTypes.flatMap { type in
+                type.partners.flatMap { partner in partner.logicalIDs }
+            })
+            let shouldRefreshPartners = serverModels.contains { logical in
+                logical.feature.contains(.partner) && !knownPartnerLogicals.contains(logical.id)
+            }
+
+            guard shouldRefreshPartners else { return }
+        }
+
+        lastPartnersInfoRefresh = Date()
+        do {
+            guard let partnerServices = try await vpnApiService.partnersServices() else { return }
+            propertiesManager.partnerTypes = partnerServices.partnerTypes
+        } catch {
+            log.error("RefreshPartners error", category: .app, metadata: ["error": "\(error)"])
+        }
+
+    }
+
     // MARK: - Override
     
     open func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {

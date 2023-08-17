@@ -438,14 +438,24 @@ public class VpnGateway: VpnGatewayProtocol {
             guard let self = self else {
                 return
             }
+
+            let refreshFreeTierInfo = (try? vpnKeychain.fetchCached().isFreeTier) ?? false
             
-            self.vpnApiService.refreshServerInfoIfIpChanged(lastKnownIp: self.propertiesManager.userLocation?.ip) { [weak self] result in
-                guard let self = self else {
+            self.vpnApiService.refreshServerInfo(
+                ifIpHasChangedFrom: self.propertiesManager.userLocation?.ip,
+                freeTier: refreshFreeTierInfo
+            ) { [weak self] result in
+                guard let self else {
                     return
                 }
 
                 switch result {
                 case let .success(properties):
+                    guard let properties else {
+                        // IP has not changed
+                        break
+                    }
+
                     if let userLocation = properties.location {
                         self.propertiesManager.userLocation = userLocation
                     }
@@ -572,7 +582,7 @@ public class VpnGateway: VpnGatewayProtocol {
 }
 
 fileprivate extension VpnGateway {
-    @objc func userPlanChanged( _ notification: Notification ) {
+    @objc func userPlanChanged(_ notification: Notification) {
         guard let downgradeInfo = notification.object as? VpnDowngradeInfo else { return }
         let (oldTier, newTier) = (downgradeInfo.from.maxTier, downgradeInfo.to.maxTier)
 
@@ -582,7 +592,21 @@ fileprivate extension VpnGateway {
 
         [netShieldPropertyProvider, natTypePropertyProvider, safeModePropertyProvider]
             .forEach { $0.adjustAfterPlanChange(from: oldTier, to: newTier) }
-        
+
+        // If user is upgrading from a free account, the server list needs to be updated to contain the paid servers.
+        // CAREFUL: refresh server info's continuation is asynchronous here.
+        if oldTier == CoreAppConstants.VpnTiers.free && newTier > CoreAppConstants.VpnTiers.free {
+            vpnApiService.refreshServerInfo(freeTier: false) { [weak self] result in
+                switch result {
+                case .success(let properties):
+                    guard let servers = properties?.serverModels else { break }
+                    self?.serverStorage.store(servers)
+                case .failure(let error):
+                    log.error("Encountered error refreshing server list on plan upgrade: \(error)")
+                }
+            }
+        }
+
         guard newTier < oldTier else { return }
         
         var reconnectInfo: ReconnectInfo?

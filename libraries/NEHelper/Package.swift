@@ -16,6 +16,7 @@ let package = Package(
         .library(name: "VPNSharedTesting", targets: ["VPNSharedTesting"]),
     ],
     dependencies: [
+        .package(path: "../../external/protoncore"),
         .package(path: "../Ergonomics"),
         .package(path: "../Timer"),
         .package(path: "../PMLogger"),

@@ -184,10 +184,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         propertiesManager.openVpnConfig = properties.clientConfig.openVPNConfig
         propertiesManager.wireguardConfig = properties.clientConfig.wireGuardConfig
         propertiesManager.smartProtocolConfig = properties.clientConfig.smartProtocolConfig
-        propertiesManager.streamingServices = properties.streamingResponse?.streamingServices ?? [:]
-        propertiesManager.partnerTypes = properties.partnersResponse?.partnerTypes ?? []
         propertiesManager.userRole = properties.userRole
-        propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
         propertiesManager.featureFlags = properties.clientConfig.featureFlags
         propertiesManager.maintenanceServerRefreshIntereval = properties.clientConfig.serverRefreshInterval
         propertiesManager.ratingSettings = properties.clientConfig.ratingSettings

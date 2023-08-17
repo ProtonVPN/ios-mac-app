@@ -251,7 +251,7 @@ public class VpnManager: VpnManagerProtocol {
         connectionQueue.sync { [weak self] in
             self?.disconnectOnCertRefreshError = !isBackground
             if !isBackground {
-                checkActiveServer()
+                self?.checkActiveServer()
             }
         }
     }

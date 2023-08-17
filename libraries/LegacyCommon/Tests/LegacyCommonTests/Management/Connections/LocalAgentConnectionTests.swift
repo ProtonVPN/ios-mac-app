@@ -112,8 +112,6 @@ class LocalAgentConnectionTests: ConnectionTestCaseDriver {
         let subcases: [Subcase] = [
             (subcaseDescription(alertSubcases.maxSessions),
              simpleErrorCase(laConsts.errorCodeMaxSessionsPlus), [.vpnDisconnection, .alertDisplayed]),
-            (subcaseDescription("torrenting not allowed on this server"),
-             simpleErrorCase(laConsts.errorCodeUserTorrentNotAllowed), [.vpnDisconnection]),
             (subcaseDescription("user bad behavior"),
              simpleErrorCase(laConsts.errorCodeUserBadBehavior), [.vpnDisconnection]),
             (subcaseDescription(alertSubcases.failedCertRefresh), { [unowned self] in

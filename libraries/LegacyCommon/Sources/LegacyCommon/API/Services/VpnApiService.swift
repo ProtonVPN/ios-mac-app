@@ -39,6 +39,12 @@ extension Container: VpnApiServiceFactory {
 public class VpnApiService {
     public typealias Factory = NetworkingFactory & VpnKeychainFactory & CountryCodeProviderFactory & AuthKeychainHandleFactory
 
+    public typealias ServerInfoTuple = (
+        serverModels: [ServerModel],
+        location: UserLocation?,
+        streamingServices: VPNStreamingResponse?
+    )
+
     private let networking: Networking
     private let vpnKeychain: VpnKeychainProtocol
     private let countryCodeProvider: CountryCodeProvider
@@ -75,36 +81,48 @@ public class VpnApiService {
 
         // Only retrieve IP address when not connected to VPN
         async let asyncLocation = (isDisconnected ? userLocation() : lastKnownLocation) ?? lastKnownLocation
+        async let asyncCredentials = try? clientCredentials()
 
-        return await VpnProperties(serverModels: try serverInfo(ip: asyncLocation?.ip),
-                                   vpnCredentials: try? clientCredentials(),
-                                   location: asyncLocation,
-                                   clientConfig: try? clientConfig(for: asyncLocation?.ip),
-                                   streamingResponse: try? virtualServices(),
-                                   partnersResponse: try? partnersServices(),
-                                   user: try? userInfo())
+        return await VpnProperties(
+            serverModels: try serverInfo(
+                ip: asyncLocation?.ip,
+                freeTier: asyncCredentials?.maxTier == CoreAppConstants.VpnTiers.free
+            ),
+            vpnCredentials: asyncCredentials,
+            location: asyncLocation,
+            clientConfig: try? clientConfig(for: asyncLocation?.ip),
+            user: try? userInfo()
+        )
     }
 
-    public func refreshServerInfoIfIpChanged(lastKnownIp: String?) async throws -> (serverModels: [ServerModel],
-                                                                                    location: UserLocation?,
-                                                                                    streamingServices: VPNStreamingResponse?) {
-        async let asyncLocation = userLocation()
+    public func refreshServerInfo(ifIpHasChangedFrom lastKnownIp: String? = nil, freeTier: Bool) async throws -> ServerInfoTuple? {
+        let location = await userLocation()
 
-        return await (serverModels: try serverInfo(ip: asyncLocation?.ip),
-                      location: asyncLocation,
-                      streamingServices: try? virtualServices())
+        guard lastKnownIp == nil || location?.ip != lastKnownIp else {
+            return nil
+        }
+
+        return await (
+            serverModels: try serverInfo(
+                ip: location?.ip,
+                freeTier: freeTier
+            ),
+            location: location,
+            streamingServices: try? virtualServices()
+        )
     }
 
     // swiftlint:disable:next large_tuple
     /// If the user IP has changed since the last connection, refresh the server information. This is a subset of what
     /// is returned from the `vpnProperties` method in the `VpnProperties` object, so just return an anonymous tuple.
-    public func refreshServerInfoIfIpChanged(lastKnownIp: String?,
-                                             completion: @escaping (Result <(serverModels: [ServerModel],
-                                                                             location: UserLocation?,
-                                                                             streamingServices: VPNStreamingResponse?), Error>) -> Void) {
+    public func refreshServerInfo(
+        ifIpHasChangedFrom lastKnownIp: String? = nil,
+        freeTier: Bool,
+        completion: @escaping (Result<ServerInfoTuple?, Error>
+    ) -> Void) {
         Task {
             do {
-                let prop = try await refreshServerInfoIfIpChanged(lastKnownIp: lastKnownIp)
+                let prop = try await refreshServerInfo(ifIpHasChangedFrom: lastKnownIp, freeTier: freeTier)
                 completion(.success(prop))
             } catch {
                 completion(.failure(error))
@@ -141,11 +159,17 @@ public class VpnApiService {
     }
 
     // The following route is used to retrieve VPN server information, including scores for the best server to connect to depending on a user's proximity to a server and its load. To provide relevant scores even when connected to VPN, we send a truncated version of the user's public IP address. In keeping with our no-logs policy, this partial IP address is not stored on the server and is only used to fulfill this one-off API request.
-    public func serverInfo(ip: String?, completion: @escaping (Result<[ServerModel], Error>) -> Void) {
+    public func serverInfo(ip: String?, freeTier: Bool, completion: @escaping (Result<[ServerModel], Error>) -> Void) {
         let shortenedIp = truncatedIp(ip)
         let countryCodes = countryCodeProvider.countryCodes
 
-        networking.request(VPNLogicalServicesRequest(ip: shortenedIp, countryCodes: countryCodes)) { (result: Result<VPNShared.JSONDictionary, Error>) in
+        networking.request(
+            VPNLogicalServicesRequest(
+                ip: shortenedIp,
+                countryCodes: countryCodes,
+                freeTier: freeTier
+            )
+        ) { (result: Result<VPNShared.JSONDictionary, Error>) in
             switch result {
             case let .success(json):
                 guard let serversJson = json.jsonArray(key: "LogicalServers") else {
@@ -170,10 +194,10 @@ public class VpnApiService {
         }
     }
 
-    public func serverInfo(ip: String?) async throws -> [ServerModel] {
+    public func serverInfo(ip: String?, freeTier: Bool) async throws -> [ServerModel] {
         let shortenedIp = truncatedIp(ip)
         return try await withCheckedThrowingContinuation { continuation in
-            serverInfo(ip: shortenedIp, completion: continuation.resume(with:))
+            serverInfo(ip: shortenedIp, freeTier: freeTier, completion: continuation.resume(with:))
         }
     }
 

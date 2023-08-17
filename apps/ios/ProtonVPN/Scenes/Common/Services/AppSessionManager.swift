@@ -177,17 +177,20 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                     self.vpnKeychain.store(vpnCredentials: credentials)
                     self.review.update(plan: credentials.accountPlan.rawValue)
                 }
-                self.propertiesManager.streamingServices = properties.streamingResponse?.streamingServices ?? [:]
-                self.propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
+
                 self.serverStorage.store(properties.serverModels)
                 self.propertiesManager.userLocation = properties.location
 
-                self.resolveActiveSession(success: {
-                    self.refreshVpnAuthCertificate(success: success, failure: failure)
-                }, failure: { error in
-                    self.logOutCleanup()
-                    failure(error)
-                })
+                self.refreshPartners(ifUnknownPartnerLogicalExistsIn: properties.serverModels) {
+                    executeOnUIThread {
+                        self.resolveActiveSession(success: {
+                            self.refreshVpnAuthCertificate(success: success, failure: failure)
+                        }, failure: { error in
+                            self.logOutCleanup()
+                            failure(error)
+                        })
+                    }
+                }
             case let .failure(error):
                 log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
                 let models = self.serverStorage.fetch()
@@ -268,10 +271,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                     self.review.update(plan: credentials.accountPlan.rawValue)
                 }
                 self.serverStorage.store(properties.serverModels)
-                self.propertiesManager.partnerTypes = properties.partnersResponse?.partnerTypes ?? []
                 self.propertiesManager.userRole = properties.userRole
-                self.propertiesManager.streamingServices = properties.streamingResponse?.streamingServices ?? [:]
-                self.propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
                 self.propertiesManager.userLocation = properties.location
                 self.propertiesManager.openVpnConfig = properties.clientConfig.openVPNConfig
                 self.propertiesManager.wireguardConfig = properties.clientConfig.wireGuardConfig

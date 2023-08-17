@@ -35,13 +35,14 @@ public protocol MaintenanceManagerProtocol {
 
 public class MaintenanceManager: MaintenanceManagerProtocol {
     
-    public typealias Factory = VpnApiServiceFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & ServerStorageFactory
+    public typealias Factory = VpnApiServiceFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & ServerStorageFactory & VpnKeychainFactory
     
     private let factory: Factory
     
     private lazy var vpnApiService: VpnApiService = self.factory.makeVpnApiService()
     private lazy var appStateManager: AppStateManager = self.factory.makeAppStateManager()
     private lazy var vpnGateWay: VpnGatewayProtocol = self.factory.makeVpnGateway()
+    private lazy var vpnKeychain: VpnKeychainProtocol = self.factory.makeVpnKeychain()
     private lazy var alertService: CoreAlertService = self.factory.makeCoreAlertService()
     private lazy var serverStorage: ServerStorage = self.factory.makeServerStorage()
     
@@ -96,6 +97,10 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
         }
         
         let serverID = activeConnection.serverIp.id
+
+        // This doesn't need to be a strict check, it's just to reduce load on the API
+        let isFree = (try? vpnKeychain.fetchCached().isFreeTier) ?? false
+
         vpnApiService.serverState(serverId: serverID) { result in
             switch result {
             case let .success(vpnServerState):
@@ -104,7 +109,10 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
                     return
                 }
 
-                self.vpnApiService.serverInfo(ip: nil) { result in
+                self.vpnApiService.serverInfo(
+                    ip: nil,
+                    freeTier: isFree
+                ) { result in
                     switch result {
                     case let .success(servers):
                         self.serverStorage.store(servers)

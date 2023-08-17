@@ -220,6 +220,10 @@ public struct CachedVpnCredentials {
     public var canUsePromoCode: Bool {
         return !isDelinquent && !hasPaymentMethod && credit == 0 && subscribed == 0
     }
+
+    public var isFreeTier: Bool {
+        return maxTier == CoreAppConstants.VpnTiers.free
+    }
 }
 
 extension CachedVpnCredentials {

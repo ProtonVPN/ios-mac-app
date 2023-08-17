@@ -25,20 +25,16 @@ import ProtonCoreDataModel
 public struct VpnProperties {
     
     public let serverModels: [ServerModel]
-    public let streamingResponse: VPNStreamingResponse?
-    public let partnersResponse: VPNPartnersResponse?
     public let vpnCredentials: VpnCredentials?
     public let location: UserLocation?
     public let clientConfig: ClientConfig
     public let userRole: UserRole
 
-    public init(serverModels: [ServerModel], vpnCredentials: VpnCredentials?, location: UserLocation?, clientConfig: ClientConfig?, streamingResponse: VPNStreamingResponse?, partnersResponse: VPNPartnersResponse?, user: User?) {
+    public init(serverModels: [ServerModel], vpnCredentials: VpnCredentials?, location: UserLocation?, clientConfig: ClientConfig?, user: User?) {
         self.serverModels = serverModels
         self.vpnCredentials = vpnCredentials
         self.location = location
         self.clientConfig = clientConfig ?? ClientConfig()
-        self.streamingResponse = streamingResponse
-        self.partnersResponse = partnersResponse
         self.userRole = .init(rawValue: user?.role ?? 0) ?? .noOrganization
     }
 }

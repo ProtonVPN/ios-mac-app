@@ -30,11 +30,11 @@ public struct MockTestData {
             case country = "Country"
             case isp = "ISP"
         }
+
+        public static let mock = VPNLocationResponse(ip: "123.123.123.123", country: "USA", isp: "GreedyCorp, Inc.")
     }
 
     public init() { }
-
-    public var vpnLocation = VPNLocationResponse(ip: "123.123.123.123", country: "USA", isp: "GreedyCorp, Inc.")
 
     /// free server with relatively high latency score and not under maintenance.
     public var server1 = ServerModel(id: "abcd",
