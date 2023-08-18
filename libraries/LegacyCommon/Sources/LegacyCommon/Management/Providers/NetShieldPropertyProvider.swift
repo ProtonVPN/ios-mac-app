@@ -148,11 +148,21 @@ extension NetShieldType: ModularAppFeature {
             return .failure(.requiresUpgrade)
         }
 
-        if case .level2 = self, !featureFlags.netShieldStats {
+        if isUserTierTooLow(userTier) {
+            return .failure(.requiresUpgrade)
+        }
+
+        return .success
+    }
+}
+
+extension NetShieldType: PaidAppFeature {
+    public static func canUse(onPlan plan: AccountPlan, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+        if !featureFlags.netShield {
             return .failure(.featureDisabled)
         }
 
-        if isUserTierTooLow(userTier) {
+        if Self.level1.isUserTierTooLow(userTier) {
             return .failure(.requiresUpgrade)
         }
 

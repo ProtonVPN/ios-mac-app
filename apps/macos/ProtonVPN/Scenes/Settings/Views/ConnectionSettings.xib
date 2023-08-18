@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -249,6 +249,14 @@
                                         <constraint firstAttribute="width" constant="35" id="QJo-c7-iw7"/>
                                     </constraints>
                                 </customView>
+                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PtJ-eO-bdK" userLabel="Upsell Image View" customClass="HoverableButtonImageView" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="421" y="13" width="39" height="24"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="38.75" id="Lsf-iz-ttF"/>
+                                        <constraint firstAttribute="height" constant="24" id="Tv6-zd-8r0"/>
+                                    </constraints>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="z6R-4g-QSo"/>
+                                </imageView>
                                 <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="hbw-eF-9Ju" userLabel="VPN Accelerator Separator">
                                     <rect key="frame" x="42" y="0.0" width="416" height="1"/>
                                     <view key="contentView" id="D6v-Nf-9jm">
@@ -270,8 +278,10 @@
                             </subviews>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="hbw-eF-9Ju" secondAttribute="bottom" id="0Ld-7N-cEk"/>
+                                <constraint firstItem="PtJ-eO-bdK" firstAttribute="centerY" secondItem="TtT-gy-HmN" secondAttribute="centerY" id="KY5-Xv-2cn"/>
                                 <constraint firstItem="5IR-tj-bQx" firstAttribute="leading" secondItem="cCQ-Z4-WdI" secondAttribute="trailing" constant="5" id="Rjn-dX-YAA"/>
                                 <constraint firstItem="TtT-gy-HmN" firstAttribute="centerY" secondItem="4Ov-kj-b9p" secondAttribute="centerY" id="ZNq-9R-TQU"/>
+                                <constraint firstItem="PtJ-eO-bdK" firstAttribute="centerX" secondItem="TtT-gy-HmN" secondAttribute="centerX" id="cZm-Oj-SZe"/>
                                 <constraint firstAttribute="height" constant="50" id="gNM-Ty-7rT"/>
                                 <constraint firstItem="hbw-eF-9Ju" firstAttribute="trailing" secondItem="TtT-gy-HmN" secondAttribute="trailing" id="lQw-Yv-eTA"/>
                                 <constraint firstItem="hbw-eF-9Ju" firstAttribute="leading" secondItem="cCQ-Z4-WdI" secondAttribute="leading" id="oAT-W3-0jz"/>
@@ -283,6 +293,7 @@
                                 <outlet property="label" destination="cCQ-Z4-WdI" id="jpd-kA-Yyb"/>
                                 <outlet property="separator" destination="hbw-eF-9Ju" id="bZv-le-yjB"/>
                                 <outlet property="switchButton" destination="TtT-gy-HmN" id="iRu-Bg-80S"/>
+                                <outlet property="upsellImageView" destination="PtJ-eO-bdK" id="We5-93-3p9"/>
                             </connections>
                         </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="J4X-wa-j7j" userLabel="Allow LAN" customClass="SettingsTickboxView" customModule="ProtonVPN" customModuleProvider="target">
@@ -303,6 +314,14 @@
                                         <constraint firstAttribute="height" constant="20" id="jjD-1g-X19"/>
                                     </constraints>
                                 </customView>
+                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e58-ku-HOK" userLabel="Upsell Image View" customClass="HoverableButtonImageView" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="421" y="13" width="39" height="24"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="24" id="2O9-1C-dwS"/>
+                                        <constraint firstAttribute="width" constant="38.75" id="7t2-ej-kxP"/>
+                                    </constraints>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="jE5-3U-RwS"/>
+                                </imageView>
                                 <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="VA6-tF-8uQ" userLabel="AllowLAN Separator">
                                     <rect key="frame" x="42" y="0.0" width="416" height="1"/>
                                     <view key="contentView" id="EOW-JE-BKg">
@@ -327,9 +346,11 @@
                                 <constraint firstItem="VA6-tF-8uQ" firstAttribute="leading" secondItem="fo8-UF-TQq" secondAttribute="leading" id="M0L-Xl-38s"/>
                                 <constraint firstItem="fo8-UF-TQq" firstAttribute="centerY" secondItem="J4X-wa-j7j" secondAttribute="centerY" id="b7X-hd-IFe"/>
                                 <constraint firstItem="VA6-tF-8uQ" firstAttribute="trailing" secondItem="pKc-xg-lrk" secondAttribute="trailing" id="fdp-uJ-c2Y"/>
+                                <constraint firstItem="e58-ku-HOK" firstAttribute="centerY" secondItem="pKc-xg-lrk" secondAttribute="centerY" id="h6W-y7-nCx"/>
                                 <constraint firstItem="pKc-xg-lrk" firstAttribute="centerY" secondItem="J4X-wa-j7j" secondAttribute="centerY" id="j1t-vM-4hW"/>
                                 <constraint firstItem="o0S-pj-mzL" firstAttribute="centerY" secondItem="J4X-wa-j7j" secondAttribute="centerY" id="oHa-tV-41v"/>
                                 <constraint firstItem="o0S-pj-mzL" firstAttribute="leading" secondItem="fo8-UF-TQq" secondAttribute="trailing" constant="5" id="tBM-wE-vGC"/>
+                                <constraint firstItem="e58-ku-HOK" firstAttribute="centerX" secondItem="pKc-xg-lrk" secondAttribute="centerX" id="u8b-N3-7Yu"/>
                                 <constraint firstAttribute="bottom" secondItem="VA6-tF-8uQ" secondAttribute="bottom" id="zg8-5H-Wi5"/>
                             </constraints>
                             <connections>
@@ -337,6 +358,7 @@
                                 <outlet property="label" destination="fo8-UF-TQq" id="SAD-FW-jHH"/>
                                 <outlet property="separator" destination="VA6-tF-8uQ" id="ENa-PQ-XHq"/>
                                 <outlet property="switchButton" destination="pKc-xg-lrk" id="Gkf-ly-cIP"/>
+                                <outlet property="upsellImageView" destination="e58-ku-HOK" id="12U-51-UWf"/>
                             </connections>
                         </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="6Da-Ut-fXw" userLabel="DNS leak" customClass="SettingsTickboxView" customModule="ProtonVPN" customModuleProvider="target">

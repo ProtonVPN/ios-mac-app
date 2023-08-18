@@ -8,6 +8,7 @@
 //  See LICENSE for up to date license information.
 
 import Foundation
+import Dependencies
 import VPNShared
 
 public enum VpnManagerClientConfiguration {
@@ -121,6 +122,9 @@ public class VpnManagerConfigurationPreparer {
             let passwordRef = try vpnKeychain.fetchOpenVpnPassword()
             
             let exitServer = connectionConfig.serverIp.exitIp
+
+            @Dependency(\.appFeaturePropertyProvider) var appFeaturePropertyProvider
+            let vpnAcceleratorEnabled = appFeaturePropertyProvider.getValue(for: VPNAccelerator.self)
             
             return VpnManagerConfiguration(hostname: connectionConfig.serverIp.domain,
                                            serverId: connectionConfig.server.id,
@@ -133,7 +137,7 @@ public class VpnManagerConfigurationPreparer {
                                            clientPrivateKey: clientPrivateKey?.base64X25519Representation,
                                            vpnProtocol: connectionConfig.vpnProtocol,
                                            netShield: connectionConfig.netShieldType,
-                                           vpnAccelerator: !propertiesManager.featureFlags.vpnAccelerator || propertiesManager.vpnAcceleratorEnabled,
+                                           vpnAccelerator: vpnAcceleratorEnabled == .on,
                                            bouncing: connectionConfig.serverIp.label,
                                            natType: connectionConfig.natType,
                                            safeMode: connectionConfig.safeMode,
@@ -161,8 +165,10 @@ public class VpnManagerConfigurationPreparer {
             extraConfiguration += connectionConfig.netShieldType.vpnManagerClientConfigurationFlags
         }
 
-        if propertiesManager.featureFlags.vpnAccelerator && !propertiesManager.vpnAcceleratorEnabled {
-            // VPN accelerator works with opposite logic, we send this suffix in case of NOT activated and feature enabled
+        @Dependency(\.appFeaturePropertyProvider) var appFeaturePropertyProvider
+        let vpnAcceleratorEnabled = appFeaturePropertyProvider.getValue(for: VPNAccelerator.self)
+        if appFeaturePropertyProvider.getValue(for: VPNAccelerator.self) == .off {
+            // VPN accelerator works with opposite logic, we send this suffix in case of NOT activated
             extraConfiguration += [.vpnAccelerator]
         }
         

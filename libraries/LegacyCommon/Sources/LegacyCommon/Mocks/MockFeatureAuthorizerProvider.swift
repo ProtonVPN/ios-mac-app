@@ -87,4 +87,24 @@ public class MockFeatureAuthorizerProvider: FeatureAuthorizerProvider {
         "\(T.self).\(subFeature)"
     }
 }
+
+public struct ConstantFeatureAuthorizerProvider: FeatureAuthorizerProvider {
+    let result: FeatureAuthorizationResult
+
+    public init(result: FeatureAuthorizationResult) {
+        self.result = result
+    }
+
+    public func authorizer<T: AppFeature>(for feature: T.Type) -> () -> FeatureAuthorizationResult {
+        return { result }
+    }
+
+    public func authorizer<T: ModularAppFeature>(forSubFeatureOf feature: T.Type) -> (T) -> FeatureAuthorizationResult {
+        return { _ in result }
+    }
+
+    public func authorizer<T: ModularAppFeature>(for feature: T.Type) -> Authorizer<T> {
+        return .init(canUse: { _ in result })
+    }
+}
 #endif

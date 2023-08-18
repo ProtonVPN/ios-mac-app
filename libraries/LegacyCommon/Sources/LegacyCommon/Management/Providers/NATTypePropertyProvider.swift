@@ -73,5 +73,4 @@ public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
     public init() {}
 }
 
-public struct NATFeature: PaidAppFeature {
-}
+public struct NATFeature: PaidAppFeature { }

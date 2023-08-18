@@ -31,3 +31,28 @@ class ButtonImageView: NSImageView {
     }
     
 }
+
+class HoverableButtonImageView: ButtonImageView {
+
+    override open func awakeFromNib() {
+        super.awakeFromNib()
+
+        let trackingArea = NSTrackingArea(rect: bounds,
+                                          options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeAlways],
+                                          owner: self,
+                                          userInfo: nil)
+        self.addTrackingArea(trackingArea)
+    }
+
+    override open func mouseEntered(with event: NSEvent) {
+        if isEnabled {
+            self.addCursorRect(bounds, cursor: NSCursor.pointingHand)
+        }
+    }
+
+    override open func mouseExited(with event: NSEvent) {
+        if isEnabled {
+            self.addCursorRect(bounds, cursor: NSCursor.arrow)
+        }
+    }
+}

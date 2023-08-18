@@ -66,12 +66,17 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
     }
 
     private func setupNatTypeItem() {
+        let featureState = viewModel.natDisplayState
         natTypeView.isHidden = !viewModel.isNATTypeFeatureEnabled
         let tooltip = Localizable.moderateNatExplanation
             .replacingOccurrences(of: Localizable.moderateNatExplanationLink, with: "")
             .trimmingCharacters(in: .whitespacesAndNewlines)
 
-        let model = SettingsTickboxView.ViewModel(labelText: Localizable.moderateNatTitle, buttonState: viewModel.natType == .moderateNAT, toolTip: String(tooltip))
+        let model = SettingsTickboxView.ViewModel(
+            labelText: Localizable.moderateNatTitle,
+            state: featureState,
+            toolTip: String(tooltip)
+        )
 
         natTypeView.setupItem(model: model, delegate: self)
     }
@@ -138,6 +143,17 @@ extension AdvancedSettingsViewController: TickboxViewDelegate {
             viewModel.usageData = value == .on
         case crashReportsView:
             viewModel.crashReports = value == .on
+        default:
+            break
+        }
+    }
+
+    func upsellTapped(_ tickboxView: SettingsTickboxView) {
+        switch tickboxView {
+        case natTypeView:
+            viewModel.showNATUpsell()
+        case safeModeView:
+            viewModel.showSafeModeUpsell()
         default:
             break
         }

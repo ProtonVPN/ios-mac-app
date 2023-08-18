@@ -20,13 +20,15 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-import LegacyCommon
 import AppKit
+import Foundation
+import Dependencies
+import LegacyCommon
 import Theme
 import Strings
 
 class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
+    @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
     
     typealias Factory = VpnGatewayFactory & PropertiesManagerFactory & AppStateManagerFactory & CoreAlertServiceFactory & ModelIdCheckerFactory
     
@@ -86,7 +88,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
 
         let connect = {
             self.propertiesManager.killSwitch = true
-            self.propertiesManager.excludeLocalNetworks = false
+            self.featurePropertyProvider.setValue(ExcludeLocalNetworks.off)
             if self.vpnGateway.connection == .connected {
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
                 self.vpnGateway.retryConnection()
@@ -94,7 +96,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
         }
 
         let connectAfterLocalNetworkWarning = {
-            guard self.propertiesManager.excludeLocalNetworks else {
+            guard self.featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on else {
                 connect()
                 return
             }

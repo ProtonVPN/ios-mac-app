@@ -56,7 +56,6 @@ final class AdvancedSettingsViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: natTypePropertyProvider).natTypeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).featureFlagsNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: safeModePropertyProvider).safeModeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).vpnAcceleratorNotification, object: nil)
     }
 
     deinit {
@@ -93,8 +92,16 @@ final class AdvancedSettingsViewModel {
         }
     }
 
-    var natType: NATType {
-        return natTypePropertyProvider.natType
+    var natDisplayState: PaidFeatureDisplayState {
+        let canUseNat = featureAuthorizerProvider.authorizer(for: NATFeature.self)
+        switch canUseNat() {
+        case .success:
+            return .available(enabled: natTypePropertyProvider.natType == .moderateNAT, interactive: true)
+        case .failure(.featureDisabled):
+            return .disabled
+        case .failure(.requiresUpgrade):
+            return .upsell
+        }
     }
 
     var isSafeModeFeatureEnabled: Bool {
@@ -103,6 +110,16 @@ final class AdvancedSettingsViewModel {
 
     var safeMode: Bool {
         return safeModePropertyProvider.safeMode ?? true
+    }
+
+    // MARK: - Upsell Modals
+
+    func showNATUpsell() {
+        alertService.push(alert: ModerateNATUpsellAlert()) // VPNAPPL-1851 Show LANConnections upsell modal
+    }
+
+    func showSafeModeUpsell() {
+        alertService.push(alert: SafeModeUpsellAlert()) // VPNAPPL-1851 Show new Safe Mode upsell modal
     }
 
     // MARK: - Setters

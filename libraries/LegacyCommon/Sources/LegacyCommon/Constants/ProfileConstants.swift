@@ -40,7 +40,7 @@ public enum ProfileConstants {
     public static func defaultProfiles(connectionProtocol: ConnectionProtocol) -> [Profile] {
         // Post Free-Rescope, default profiles should not be accessible to free users
         @Dependency(\.featureFlagProvider) var featureFlagProvider
-        let defaultProfileAccessTier = featureFlagProvider.showNewFreePlan ? 1 : 0
+        let defaultProfileAccessTier = featureFlagProvider[\.showNewFreePlan] ? 1 : 0
         return [
             Profile(
                 id: fastestId,

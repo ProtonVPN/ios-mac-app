@@ -90,7 +90,7 @@ public protocol AppFeature {
 
 public protocol PaidAppFeature: AppFeature {
     static var featureFlag: KeyPath<FeatureFlags, Bool>? { get }
-    static var minTier: Int { get }
+    static func minTier(featureFlags: FeatureFlags) -> Int
     static var includedAccountPlans: [AccountPlan]? { get }
     static var excludedAccountPlans: [AccountPlan]? { get }
 }
@@ -100,7 +100,7 @@ extension PaidAppFeature {
         nil
     }
 
-    public static var minTier: Int {
+    public static func minTier(featureFlags: FeatureFlags) -> Int {
         CoreAppConstants.VpnTiers.basic
     }
 
@@ -131,7 +131,7 @@ extension PaidAppFeature {
             }
         }
 
-        guard minTier <= userTier else {
+        guard minTier(featureFlags: featureFlags) <= userTier else {
             return .failure(.requiresUpgrade)
         }
 
@@ -144,11 +144,15 @@ public protocol ModularAppFeature: CaseIterable {
     func canUse(onPlan plan: AccountPlan, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult
 }
 
-enum FeatureAuthorizerKey: DependencyKey {
+public enum FeatureAuthorizerKey: DependencyKey {
     public static var liveValue: FeatureAuthorizerProvider { LiveFeatureAuthorizerProvider() }
 
     #if DEBUG
     public static var testValue: FeatureAuthorizerProvider { MockFeatureAuthorizerProvider() }
+
+    public static func constant(_ result: FeatureAuthorizationResult) -> FeatureAuthorizerProvider {
+        return ConstantFeatureAuthorizerProvider(result: result)
+    }
     #endif
 }
 

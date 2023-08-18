@@ -213,15 +213,17 @@ class CreateOrEditProfileViewModel: NSObject {
     }
     
     private var secureCoreCell: TableViewCellModel {
-        TableViewCellModel.toggle(title: Localizable.featureSecureCore,
-                                  on: { [unowned self] in self.state == .secureCore },
-                                  enabled: true,
-                                  handler: { [weak self] (_, callback) in
-            self?.toggleState(completion: { [weak self] on in
-                callback(on)
-                self?.contentChanged?()
-            })
-        })
+        TableViewCellModel.upsellableToggle(
+            title: LocalizedString.featureSecureCore,
+            state: { [unowned self] in .available(enabled: self.state == .secureCore, interactive: true) },
+            upsell: { [weak self] in self?.alertService.push(alert: SecureCoreUpsellAlert()) },
+            handler: { [weak self] (_, callback) in
+                self?.toggleState(completion: { [weak self] on in
+                    callback(on)
+                    self?.contentChanged?()
+                })
+            }
+        )
     }
     
     private var countryCell: TableViewCellModel {
@@ -257,10 +259,17 @@ class CreateOrEditProfileViewModel: NSObject {
     }
     
     private var quickConnectCell: TableViewCellModel {
-        return TableViewCellModel.toggle(title: Localizable.makeDefaultProfile, on: { [unowned self] in self.isDefaultProfile }, enabled: true, handler: { [weak self] (_, callback) in
-            self?.toggleDefault()
-            callback(self?.isDefaultProfile == true)
-        })
+        return TableViewCellModel.upsellableToggle(
+            title: LocalizedString.makeDefaultProfile,
+            state: { [unowned self] in .available(enabled: self.isDefaultProfile, interactive: true) },
+            upsell: {
+                // No Upsell: free users cannot be shown this UI since only paid users are allowed to create or edit profiles
+            },
+            handler: { [weak self] (_, callback) in
+                self?.toggleDefault()
+                callback(self?.isDefaultProfile == true)
+            }
+        )
     }
     
     private var footerCell: TableViewCellModel {

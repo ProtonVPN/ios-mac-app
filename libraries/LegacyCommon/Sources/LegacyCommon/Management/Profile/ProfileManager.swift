@@ -20,6 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 import VPNShared
 
 public enum ProfileManagerOperationOutcome {
@@ -42,7 +43,8 @@ public protocol ProfileManagerFactory {
 }
 
 public class ProfileManager {
-    
+    @Dependency(\.authKeychain) var authKeychain
+
     public let contentChanged = Notification.Name("ProfileManagerContentChanged")
     
     public var customProfiles: [Profile] = []
@@ -55,9 +57,7 @@ public class ProfileManager {
         return ProfileConstants.defaultProfiles(connectionProtocol: propertiesManager.connectionProtocol) + customProfiles
     }
 
-    public typealias Factory = ServerStorageFactory &
-        PropertiesManagerFactory &
-        ProfileStorageFactory
+    public typealias Factory = ServerStorageFactory & PropertiesManagerFactory & ProfileStorageFactory
 
     public convenience init(_ factory: Factory) {
         self.init(serverStorage: factory.makeServerStorage(),
@@ -81,7 +81,32 @@ public class ProfileManager {
     public func refreshProfiles() {
         customProfiles = profileStorage.fetch()
     }
-    
+
+    public var username: String? {
+        return authKeychain.fetch()?.username
+    }
+
+    public var autoConnectProfile: Profile? {
+        guard let username else {
+            return nil
+        }
+        let (enabled, profileID) = propertiesManager.getAutoConnect(for: username)
+        guard enabled, let profileID else {
+            return nil
+        }
+        return profile(withId: profileID)
+    }
+
+    public var quickConnectProfile: Profile? {
+        guard let username else {
+            return nil
+        }
+        guard let profileID = propertiesManager.getQuickConnect(for: username) else {
+            return nil
+        }
+        return profile(withId: profileID)
+    }
+
     public func profile(withServer server: ServerModel) -> Profile? {
         return ProfileUtility.profile(withServer: server, in: customProfiles)
     }
