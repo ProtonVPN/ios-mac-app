@@ -103,9 +103,8 @@
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                         </button>
-                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Inv-Tg-zYG" userLabel="Business Upsell">
+                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Inv-Tg-zYG" userLabel="Business Upsell">
                                             <rect key="frame" x="222" y="383" width="120" height="19"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="eMo-u7-yiR"/>
                                         </imageView>
                                     </subviews>
