@@ -37,8 +37,9 @@ public struct FeatureFlagProvider: DependencyKey {
 }
 
 extension FeatureFlagProvider {
-    public var enforceDeprecatedProtocols: Bool { getFeatureFlags().enforceDeprecatedProtocols }
-    public var showNewFreePlan: Bool { getFeatureFlags().showNewFreePlan }
+    public subscript(_ keyPath: KeyPath<FeatureFlags, Bool>) -> Bool {
+        getFeatureFlags()[keyPath: keyPath]
+    }
 }
 
 extension DependencyValues {

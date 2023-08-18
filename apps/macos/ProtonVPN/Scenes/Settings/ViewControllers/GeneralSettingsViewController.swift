@@ -99,6 +99,11 @@ final class GeneralSettingsViewController: NSViewController, ReloadableViewContr
 }
 
 extension GeneralSettingsViewController: TickboxViewDelegate {
+
+    func upsellTapped(_ tickboxView: SettingsTickboxView) {
+        // No upsellable features need to be handled in general settings
+    }
+
     func toggleTickbox(_ tickboxView: SettingsTickboxView, to value: ButtonState) {
         switch tickboxView {
         case startOnBootView:

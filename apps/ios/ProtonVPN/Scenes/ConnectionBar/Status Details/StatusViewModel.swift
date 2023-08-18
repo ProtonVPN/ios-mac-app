@@ -76,9 +76,10 @@ class StatusViewModel {
 
     private var shouldShowNetShieldV1: Bool { isNetShieldEnabled && !isNetShieldStatsEnabled }
     private var shouldShowNetShieldV2: Bool { isNetShieldEnabled && isNetShieldStatsEnabled }
-    private lazy var isNetShieldEnabled: Bool = { propertiesManager.featureFlags.netShield }()
-    private lazy var isNetShieldStatsEnabled: Bool = { propertiesManager.featureFlags.netShieldStats }()
+    private lazy var isNetShieldEnabled: Bool = { featureFlags[\.netShield] }()
+    private lazy var isNetShieldStatsEnabled: Bool = { featureFlags[\.netShieldStats] }()
     @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
+    @Dependency(\.featureFlagProvider) var featureFlags
 
     private lazy var netShieldTypeAuthorizer = featureAuthorizerProvider.authorizer(forSubFeatureOf: NetShieldType.self)
 
@@ -379,9 +380,16 @@ class StatusViewModel {
 
         var cells = [TableViewCellModel]()
 
-        cells.append(.toggle(title: Localizable.netshieldTitle, on: { isNetShieldOn }, enabled: true, handler: { (toggleOn, _) in
-            self.changeNetShield(to: toggleOn ? self.netShieldPropertyProvider.lastActiveNetShieldType : .off) { _ in }
-        }))
+        cells.append(.upsellableToggle(
+            title: LocalizedString.netshieldTitle,
+            state: { .available(enabled: isNetShieldOn, interactive: true) },
+            upsell: {
+                // No Upsell: This UI is shown only for paid users when NetShieldStats feature flag is off
+            },
+            handler: { (toggleOn, _) in
+                self.changeNetShield(to: toggleOn ? self.netShieldPropertyProvider.lastActiveNetShieldType : .off) { _ in }
+            }
+        ))
 
         guard isNetShieldOn else {
             return cells

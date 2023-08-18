@@ -17,9 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 import XCTest
 import NetworkExtension
 import VPNShared
+import VPNSharedTesting
 import GoLibs
 import ProtonCoreServices
 @testable import LegacyCommon
@@ -880,8 +882,12 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         }
 
         container.appSessionRefreshTimer.start(now: true)
+        withDependencies {
+            $0.authKeychain = MockAuthKeychain()
+        } operation: {
+            container.vpnGateway.quickConnect(trigger: .newConnection)
+        }
 
-        container.vpnGateway.quickConnect(trigger: .newConnection)
         wait(
             for: [
                 expectations.connections[0],

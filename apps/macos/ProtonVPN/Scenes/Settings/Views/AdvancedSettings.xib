@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -116,12 +116,22 @@
                                         <constraint firstAttribute="width" constant="35" id="f77-DP-Efh"/>
                                     </constraints>
                                 </customView>
+                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b6R-kc-5NJ" userLabel="Upsell Image View" customClass="HoverableButtonImageView" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="421" y="13" width="39" height="24"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="24" id="oCI-O8-gx4"/>
+                                        <constraint firstAttribute="width" constant="38.75" id="zhO-bH-eME"/>
+                                    </constraints>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="gcB-gL-Yyl"/>
+                                </imageView>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="XYp-dt-ai5" firstAttribute="centerY" secondItem="7eV-97-rsO" secondAttribute="centerY" id="0iX-tJ-7XL"/>
+                                <constraint firstItem="b6R-kc-5NJ" firstAttribute="centerY" secondItem="XYp-dt-ai5" secondAttribute="centerY" id="AWs-pQ-RnK"/>
                                 <constraint firstItem="5vz-D4-DLw" firstAttribute="centerY" secondItem="hVw-co-WZ4" secondAttribute="centerY" id="Gsn-en-40L"/>
                                 <constraint firstAttribute="bottom" secondItem="jxh-61-PaD" secondAttribute="bottom" id="Qv0-d4-n15"/>
                                 <constraint firstItem="5vz-D4-DLw" firstAttribute="leading" secondItem="7eV-97-rsO" secondAttribute="trailing" constant="5" id="T5H-0P-Zg6"/>
+                                <constraint firstItem="b6R-kc-5NJ" firstAttribute="centerX" secondItem="XYp-dt-ai5" secondAttribute="centerX" id="aa6-vc-Yai"/>
                                 <constraint firstItem="7eV-97-rsO" firstAttribute="centerY" secondItem="hVw-co-WZ4" secondAttribute="centerY" id="iFF-1g-DWZ"/>
                                 <constraint firstItem="jxh-61-PaD" firstAttribute="trailing" secondItem="XYp-dt-ai5" secondAttribute="trailing" id="lhv-SS-afp"/>
                                 <constraint firstAttribute="height" constant="50" id="pmd-bN-1hx"/>
@@ -132,6 +142,7 @@
                                 <outlet property="label" destination="7eV-97-rsO" id="4f5-UB-ufL"/>
                                 <outlet property="separator" destination="jxh-61-PaD" id="2h7-Gv-UkB"/>
                                 <outlet property="switchButton" destination="XYp-dt-ai5" id="dsb-M9-oFH"/>
+                                <outlet property="upsellImageView" destination="b6R-kc-5NJ" id="0s8-qw-6Rq"/>
                             </connections>
                         </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Qcl-6z-lpZ" userLabel="Safe Mode" customClass="SettingsTickboxView" customModule="ProtonVPN" customModuleProvider="target">
@@ -170,8 +181,18 @@
                                         <constraint firstAttribute="width" constant="35" id="g94-1K-sGP"/>
                                     </constraints>
                                 </customView>
+                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vdz-Fs-RIE" userLabel="Upsell Image View" customClass="HoverableButtonImageView" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="421" y="13" width="39" height="24"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="24" id="EBz-QP-jWb"/>
+                                        <constraint firstAttribute="width" constant="38.75" id="RlM-Kg-vfE"/>
+                                    </constraints>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="HQL-Co-mwL"/>
+                                </imageView>
                             </subviews>
                             <constraints>
+                                <constraint firstItem="Vdz-Fs-RIE" firstAttribute="centerX" secondItem="7s2-Hh-Q3c" secondAttribute="centerX" id="1Z8-ay-5eV"/>
+                                <constraint firstItem="Vdz-Fs-RIE" firstAttribute="centerY" secondItem="7s2-Hh-Q3c" secondAttribute="centerY" id="7oM-Zu-KS4"/>
                                 <constraint firstItem="e9V-6G-Haw" firstAttribute="centerY" secondItem="Qcl-6z-lpZ" secondAttribute="centerY" id="AUX-LY-BH4"/>
                                 <constraint firstItem="1tp-ed-xbw" firstAttribute="trailing" secondItem="7s2-Hh-Q3c" secondAttribute="trailing" id="Au8-8T-viw"/>
                                 <constraint firstAttribute="bottom" secondItem="1tp-ed-xbw" secondAttribute="bottom" id="DDH-py-hO1"/>
@@ -186,6 +207,7 @@
                                 <outlet property="label" destination="oLy-FT-Szm" id="HAk-ui-vFF"/>
                                 <outlet property="separator" destination="1tp-ed-xbw" id="MQX-J3-NR8"/>
                                 <outlet property="switchButton" destination="7s2-Hh-Q3c" id="Dah-fn-G4d"/>
+                                <outlet property="upsellImageView" destination="Vdz-Fs-RIE" id="t4M-rt-6LD"/>
                             </connections>
                         </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="go9-cO-pXj" customClass="SettingsTickboxView" customModule="ProtonVPN" customModuleProvider="target">

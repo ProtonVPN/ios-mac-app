@@ -133,7 +133,7 @@ class DefaultProfileViewModel {
 
         // Post Free-Rescope, default profiles should not be accessible to free users
         @Dependency(\.featureFlagProvider) var featureFlagProvider
-        self.defaultAccessTier = featureFlagProvider.showNewFreePlan ? 1 : 0
+        self.defaultAccessTier = featureFlagProvider[\.showNewFreePlan] ? 1 : 0
         
         startObserving()
     }

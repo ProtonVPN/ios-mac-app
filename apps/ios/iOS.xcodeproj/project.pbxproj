@@ -1929,6 +1929,13 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		F314141C27B174BF007424E9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		F31E911E2758F5F900140B2E /* vpncore */ = {
 			isa = PBXGroup;
 			children = (

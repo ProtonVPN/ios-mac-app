@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Dependencies
 import LegacyCommon
 import VPNShared
 import VPNAppCore
@@ -28,7 +29,10 @@ import Theme
 import Strings
 
 final class ConnectionSettingsViewModel {
-    
+    @Dependency(\.profileAuthorizer) var profileAuthorizer
+    @Dependency(\.featureAuthorizerProvider) var authorizerProvider
+    @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
+
     typealias Factory = PropertiesManagerFactory
         & VpnGatewayFactory
         & CoreAlertServiceFactory
@@ -82,8 +86,8 @@ final class ConnectionSettingsViewModel {
         selectedProtocol = propertiesManager.connectionProtocol
 
         NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).excludeLocalNetworksNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).vpnAcceleratorNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: ExcludeLocalNetworks.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: VPNAccelerator.notificationName, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tourCancelled), name: SystemExtensionManager.userCancelledTour, object: nil)
 
         checkSysexOrResetProtocol(selectedProtocol)
@@ -156,18 +160,18 @@ final class ConnectionSettingsViewModel {
         return profileIndex
     }
 
-    var allowLAN: Bool {
-        return propertiesManager.excludeLocalNetworks
+    func displayState<T: ProvidableFeature & ToggleableFeature>(for feature: T.Type) -> PaidFeatureDisplayState {
+        let authorizer: () -> FeatureAuthorizationResult = authorizerProvider.authorizer(for: feature)
+        switch authorizer() {
+        case .success:
+            return .available(enabled: featurePropertyProvider.getValue(for: feature) == .on ? true : false, interactive: true)
+        case .failure(.featureDisabled):
+            return .disabled
+        case .failure(.requiresUpgrade):
+            return .upsell
+        }
     }
-    
-    var isAcceleratorFeatureEnabled: Bool {
-        return featureFlags.vpnAccelerator
-    }
-    
-    var vpnAcceleratorEnabled: Bool {
-        return propertiesManager.vpnAcceleratorEnabled
-    }
-    
+
     // MARK: - Item counts
     
     var autoConnectItemCount: Int {
@@ -339,16 +343,17 @@ final class ConnectionSettingsViewModel {
     }
     
     func setVpnAccelerator(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
+        let newValue: VPNAccelerator = enabled ? .on : .off
         vpnStateConfiguration.getInfo { [weak self] info in
             switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
             case .withConnectionUpdate:
                 // in-place change when connected and using local agent
+                self?.featurePropertyProvider.setValue(newValue)
                 self?.vpnManager.set(vpnAccelerator: enabled)
-                self?.propertiesManager.vpnAcceleratorEnabled = enabled
                 completion(true)
             case .withReconnect:
                 self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.vpnProtocol, confirmHandler: { [weak self] in
-                    self?.propertiesManager.vpnAcceleratorEnabled = enabled
+                    self?.featurePropertyProvider.setValue(newValue)
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "vpnAccelerator"])
                     self?.vpnGateway.retryConnection()
                     completion(true)
@@ -356,19 +361,19 @@ final class ConnectionSettingsViewModel {
                     completion(false)
                 }))
             case .immediately:
-                self?.propertiesManager.vpnAcceleratorEnabled = enabled
+                self?.featurePropertyProvider.setValue(newValue)
                 completion(true)
             }
         }
     }
-    
+
     func setAllowLANAccess(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
-        
         let isConnected = vpnGateway.connection == .connected || vpnGateway.connection == .connecting
+        let newValue: ExcludeLocalNetworks = enabled ? .on : .off
         
         if propertiesManager.killSwitch {
             let alert = AllowLANConnectionsAlert(connected: isConnected) {
-                self.propertiesManager.excludeLocalNetworks = enabled
+                self.featurePropertyProvider.setValue(newValue)
                 self.propertiesManager.killSwitch = false
                 if isConnected {
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks", "feature_additional": "killSwitch"])
@@ -384,19 +389,29 @@ final class ConnectionSettingsViewModel {
         }
         
         guard isConnected else {
-            propertiesManager.excludeLocalNetworks = enabled
+            self.featurePropertyProvider.setValue(newValue)
             completion(true)
             return
         }
         
         alertService.push(alert: ReconnectOnSettingsChangeAlert(confirmHandler: {
-            self.propertiesManager.excludeLocalNetworks = enabled
+            self.featurePropertyProvider.setValue(newValue)
             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks"])
             self.vpnGateway.retryConnection()
             completion(true)
         }, cancelHandler: {
             completion(false)
         }))
+    }
+
+    // MARK: - Upsell Modals
+
+    func showLANConnectionUpsell() {
+        alertService.push(alert: ModerateNATUpsellAlert()) // VPNAPPL-1851 Show new LAN Connections upsell modal
+    }
+
+    func showVPNAcceleratorUpsell() {
+        alertService.push(alert: ModerateNATUpsellAlert()) // VPNAPPL-1851 Show VPNAccelerator upsell modal
     }
     
     // MARK: - Item

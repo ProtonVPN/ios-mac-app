@@ -21,22 +21,32 @@
 //
 
 import UIKit
+import vpncore
 
 final class SwitchTableViewCell: UITableViewCell {
 
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var switchControl: ConfirmationToggleSwitch!
-    
+    @IBOutlet weak var upsellImageView: UIImageView!
+
+    var upsellTapped: (() -> Void)?
     var toggled: ((Bool, @escaping (Bool) -> Void) -> Void)?
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         
         self.isSelected = false
-        
+
         backgroundColor = .secondaryBackgroundColor()
         label.textColor = .normalTextColor()
         selectionStyle = .none
+
+        upsellImageView.image = CoreAsset.vpnSubscriptionBadge.image
+        upsellImageView.isHidden = true
+
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(upsellImageViewTapped))
+        upsellImageView.isUserInteractionEnabled = true
+        upsellImageView.addGestureRecognizer(tapRecognizer)
 
         let update = { (on: Bool) -> Void in
             self.switchControl.setOn(on, animated: true)
@@ -46,5 +56,32 @@ final class SwitchTableViewCell: UITableViewCell {
             self.toggled?(!self.switchControl.isOn, update)
         }
     }
-    
+
+    @IBAction func upsellImageViewTapped(_ sender: Any) {
+        guard let upsellTapped else {
+            log.error("Upsell tapped but no upsell action has defined for this element")
+            return
+        }
+        upsellTapped()
+    }
+
+    func setup(with model: PaidFeatureDisplayState) {
+        switch model {
+        case .disabled:
+            log.warning("We shouldn't display cells for disabled features")
+            assertionFailure("We shouldn't display cells for disabled features")
+            // We shouldn't be showing UI for a feature that has been disabled, so just fall back to showing upsell
+            fallthrough
+        case .upsell:
+            switchControl.isHidden = true
+            upsellImageView.isHidden = false
+
+        case .available(let isOn, let isInterative):
+            switchControl.isHidden = false
+            upsellImageView.isHidden = true
+
+            switchControl.isEnabled = isInterative
+            switchControl.isOn = isOn
+        }
+    }
 }

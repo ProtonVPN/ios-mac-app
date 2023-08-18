@@ -411,12 +411,20 @@ extension VpnManager: LocalAgentDelegate {
     }
     
     private func didReceiveFeature(vpnAccelerator: Bool) {
-        guard propertiesManager.vpnAcceleratorEnabled != vpnAccelerator else {
+        let localValue = featurePropertyProvider.getValue(for: VPNAccelerator.self)
+        let localAgentValue: VPNAccelerator = vpnAccelerator ? .on : .off
+
+        if localValue == localAgentValue {
             return
         }
 
-        log.debug("VPN Accelerator was set to \(propertiesManager.vpnAcceleratorEnabled), changing to \(vpnAccelerator) received from local agent", category: .localAgent, event: .stateChange)
-        propertiesManager.vpnAcceleratorEnabled = vpnAccelerator
+        log.debug(
+            "Updating VPNAccelerator setting to value received from local agent",
+            category: .localAgent,
+            event: .stateChange,
+            metadata: ["localValue": "\(localValue)", "localAgentValue": "\(localAgentValue)"]
+        )
+        featurePropertyProvider.setValue(localAgentValue)
     }
 
     private func didReceiveFeature(netshield: NetShieldType) {

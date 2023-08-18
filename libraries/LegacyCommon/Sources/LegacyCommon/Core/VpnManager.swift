@@ -61,6 +61,7 @@ public protocol VpnManagerFactory {
 }
 
 public class VpnManager: VpnManagerProtocol {
+    @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
 
     private var quickReconnection = false
     
@@ -473,7 +474,7 @@ public class VpnManager: VpnManagerProtocol {
         
         // MARK: - KillSwitch configuration
         if #available(iOS 14.2, *) {
-            configuration.excludeLocalNetworks = propertiesManager.excludeLocalNetworks
+            configuration.excludeLocalNetworks = featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on
         }
         configuration.includeAllNetworks = propertiesManager.killSwitch
         

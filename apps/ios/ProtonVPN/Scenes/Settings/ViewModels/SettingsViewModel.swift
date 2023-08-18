@@ -30,28 +30,27 @@ import Dependencies
 
 final class SettingsViewModel {
     typealias Factory = AppStateManagerFactory &
-                        AppSessionManagerFactory &
-                        VpnGatewayFactory &
-                        CoreAlertServiceFactory &
-                        SettingsServiceFactory &
-                        VpnKeychainFactory &
-                        ConnectionStatusServiceFactory &
-                        NetShieldPropertyProviderFactory &
-                        VpnManagerFactory &
-                        VpnStateConfigurationFactory &
-                        PlanServiceFactory &
-                        PropertiesManagerFactory &
-                        AppInfoFactory &
-                        ProfileManagerFactory &
-                        NATTypePropertyProviderFactory &
-                        SafeModePropertyProviderFactory &
-                        PaymentsApiServiceFactory &
-                        CouponViewModelFactory &
-                        AuthKeychainHandleFactory
+    AppSessionManagerFactory &
+    VpnGatewayFactory &
+    CoreAlertServiceFactory &
+    SettingsServiceFactory &
+    VpnKeychainFactory &
+    ConnectionStatusServiceFactory &
+    NetShieldPropertyProviderFactory &
+    VpnManagerFactory &
+    VpnStateConfigurationFactory &
+    PlanServiceFactory &
+    PropertiesManagerFactory &
+    AppInfoFactory &
+    ProfileManagerFactory &
+    NATTypePropertyProviderFactory &
+    SafeModePropertyProviderFactory &
+    PaymentsApiServiceFactory &
+    CouponViewModelFactory &
+    AuthKeychainHandleFactory
 
     private let factory: Factory
     
-    private let maxCharCount = 20
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -71,6 +70,7 @@ final class SettingsViewModel {
     var reloadNeeded: (() -> Void)?
 
     @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
+    @Dependency(\.appFeaturePropertyProvider) private var featurePropertyProvider
     lazy var netShieldTypeAuthorizer = featureAuthorizerProvider.authorizer(forSubFeatureOf: NetShieldType.self)
 
     private var vpnGateway: VpnGatewayProtocol
@@ -141,7 +141,7 @@ final class SettingsViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(reload),
                                                name: type(of: netShieldPropertyProvider).netShieldNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reload),
-                                               name: type(of: propertiesManager).vpnAcceleratorNotification, object: nil)
+                                               name: VPNAccelerator.notificationName, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reload),
                                                name: appSessionManager.dataReloaded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reload),
@@ -204,7 +204,7 @@ final class SettingsViewModel {
         let accountPlanName: String
         
         if let authCredentials = authKeychain.fetch(),
-            let vpnCredentials = try? vpnKeychain.fetchCached() {
+           let vpnCredentials = try? vpnKeychain.fetchCached() {
 
             username = authCredentials.username
             accountPlanName = vpnCredentials.accountPlan.description
@@ -236,73 +236,129 @@ final class SettingsViewModel {
         }))
         cells.append(.tooltip(text: Localizable.smartProtocolDescription))
 
-        let netShieldAvailable = propertiesManager.featureFlags.netShield
-        if netShieldAvailable {
-            cells.append(.pushKeyValue(key: Localizable.netshieldTitle, value: netShieldPropertyProvider.netShieldType.name, handler: { [weak self] in
-                self?.pushNetshieldSelectionViewController()
-            }))
-            cells.append(.tooltip(text: Localizable.netshieldTitleTooltip))
-        }
+        cells.append(contentsOf: netShieldCells)
         
-        cells.append(.toggle(title: Localizable.alwaysOnVpn, on: { true }, enabled: false, handler: nil))
-        cells.append(.tooltip(text: Localizable.alwaysOnVpnTooltipIos))
+        cells.append(.upsellableToggle(
+            title: LocalizedString.alwaysOnVpn,
+            state: { .available(enabled: true, interactive: false) },
+            upsell: { }, // Always on VPN is always in the enabled and non-interactive state
+            handler: nil
+        ))
+        cells.append(.tooltip(text: LocalizedString.alwaysOnVpnTooltipIos))
 
-        cells.append(.toggle(title: Localizable.killSwitch, on: { [unowned self] in self.propertiesManager.killSwitch }, enabled: true, handler: ksSwitchCallback()))
-        cells.append(.tooltip(text: Localizable.killSwitchTooltip))
-        
+        cells.append(.upsellableToggle(
+            title: LocalizedString.killSwitch,
+            state: { [unowned self] in .available(enabled: self.propertiesManager.killSwitch, interactive: true) },
+            upsell: {
+                // No Upsell: Kill Switch is a free feature
+            },
+            handler: ksSwitchCallback()
+        ))
+        cells.append(.tooltip(text: LocalizedString.killSwitchTooltip))
+
         return TableViewSection(title: Localizable.securityOptions, cells: cells)
+    }
+
+    private var netShieldCells: [TableViewCellModel] {
+        let canUse: () -> FeatureAuthorizationResult = featureAuthorizerProvider.authorizer(for: NetShieldType.self)
+        switch canUse() {
+        case .success:
+            return [
+                .pushKeyValue(
+                    key: LocalizedString.netshieldTitle,
+                    value: netShieldPropertyProvider.netShieldType.name,
+                    handler: { [weak self] in self?.pushNetshieldSelectionViewController() }
+                ),
+                .tooltip(text: LocalizedString.netshieldTitleTooltip)
+            ]
+        case .failure(.requiresUpgrade):
+            return [
+                .upsellableToggle(
+                    title: LocalizedString.netshieldTitle,
+                    state: { .upsell },
+                    upsell: { [weak self] in self?.alertService.push(alert: NetShieldUpsellAlert()) },
+                    handler: { (_, _) in }
+                ),
+                .tooltip(text: LocalizedString.netshieldTitleTooltip)
+            ]
+        case .failure(.featureDisabled):
+            return []
+        }
     }
 
     private var vpnAcceleratorSection: [TableViewCellModel] {
         return [
-            .toggle(title: Localizable.vpnAcceleratorTitle, on: { [unowned self] in self.propertiesManager.vpnAcceleratorEnabled }, enabled: true, handler: { (toggleOn, callback)  in
-                self.vpnStateConfiguration.getInfo { info in
-                    switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
-                    case .withConnectionUpdate:
-                        self.propertiesManager.vpnAcceleratorEnabled.toggle()
-                        self.vpnManager.set(vpnAccelerator: self.propertiesManager.vpnAcceleratorEnabled)
-                        callback(self.propertiesManager.vpnAcceleratorEnabled)
-                    case .withReconnect:
-                        self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.vpnAcceleratorChangeTitle, confirmHandler: {
-                            self.propertiesManager.vpnAcceleratorEnabled.toggle()
-                            callback(self.propertiesManager.vpnAcceleratorEnabled)
-                            log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "vpnAccelerator"])
-                            self.vpnGateway.retryConnection()
-                        }))
-                    case .immediately:
-                        self.propertiesManager.vpnAcceleratorEnabled.toggle()
-                        callback(self.propertiesManager.vpnAcceleratorEnabled)
+            .upsellableToggle(
+                title: LocalizedString.vpnAcceleratorTitle,
+                state: { [unowned self] in self.displayState(for: VPNAccelerator.self) },
+                upsell: { [weak self] in self?.alertService.push(alert: ModerateNATUpsellAlert()) }, // TODO: show VPN Accelerator upsell modal VPNAPPL-1851
+                handler: { (toggleOn, callback)  in
+                    self.vpnStateConfiguration.getInfo { info in
+                        switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
+                        case .withConnectionUpdate:
+                            self.featurePropertyProvider.setValue(toggleOn ? VPNAccelerator.on : VPNAccelerator.off)
+                            self.vpnManager.set(vpnAccelerator: toggleOn)
+                            callback(toggleOn)
+                        case .withReconnect:
+                            self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnAcceleratorChangeTitle, confirmHandler: {
+                                self.featurePropertyProvider.setValue(toggleOn ? VPNAccelerator.on : VPNAccelerator.off)
+                                callback(toggleOn)
+                                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "vpnAccelerator"])
+                                self.vpnGateway.retryConnection()
+                            }))
+                        case .immediately:
+                            self.featurePropertyProvider.setValue(toggleOn ? VPNAccelerator.on : VPNAccelerator.off)
+                            callback(toggleOn)
+                        }
                     }
                 }
-            }),
-            .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.vpnAcceleratorDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.vpnAcceleratorDescriptionAltLink, withUrl: CoreAppConstants.ProtonVpnLinks.vpnAccelerator))
+            ),
+            .attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.vpnAcceleratorDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: LocalizedString.vpnAcceleratorDescriptionAltLink, withUrl: CoreAppConstants.ProtonVpnLinks.vpnAccelerator))
         ]
+    }
+
+    func displayState<T: ProvidableFeature & ToggleableFeature>(for feature: T.Type) -> PaidFeatureDisplayState {
+        let authorizer: () -> FeatureAuthorizationResult = featureAuthorizerProvider.authorizer(for: feature)
+        switch authorizer() {
+        case .success:
+            return .available( enabled: featurePropertyProvider.getValue(for: feature) == .on, interactive: true)
+        case .failure(.featureDisabled):
+            return .disabled
+        case .failure(.requiresUpgrade):
+            return .upsell
+        }
     }
 
     private var allowLanSection: [TableViewCellModel] {
         return [
-            .toggle(title: Localizable.allowLanTitle, on: { [unowned self] in self.propertiesManager.excludeLocalNetworks }, enabled: true, handler: self.switchLANCallback()),
-            .tooltip(text: Localizable.allowLanInfo)
-        ]
+            .upsellableToggle(
+                title: LocalizedString.allowLanTitle,
+                state: { [unowned self] in self.displayState(for: ExcludeLocalNetworks.self) },
+                upsell: { [weak self] in self?.alertService.push(alert: ModerateNATUpsellAlert()) }, // TODO: show Allow LAN Connections upsell modal VPNAPPL-1851
+                handler: self.switchLANCallback()
+            ),
+            .tooltip(text: LocalizedString.allowLanInfo)        ]
+    }
+
+    private var moderateNATState: PaidFeatureDisplayState {
+        let canUse: () -> FeatureAuthorizationResult = featureAuthorizerProvider.authorizer(for: NATFeature.self)
+        switch canUse() {
+        case .success:
+            return .available(enabled: self.natTypePropertyProvider.natType == .moderateNAT, interactive: true)
+        case .failure(.requiresUpgrade):
+            return .upsell
+        case .failure(.featureDisabled):
+            return .disabled
+        }
     }
 
     private var moderateNATSection: [TableViewCellModel] {
         return [
-            .toggle(
-                title: Localizable.moderateNatTitle,
-                on: { [unowned self] in self.natTypePropertyProvider.natType == .moderateNAT },
-                enabled: true,
+            .upsellableToggle(
+                title: LocalizedString.moderateNatTitle,
+                state: { [unowned self] in self.moderateNATState },
+                upsell: { [weak self] in self?.alertService.push(alert: ModerateNATUpsellAlert()) }, // TODO: show new upsell modal VPNAPPL-1851
                 handler: { [weak self] (toggleOn, callback) in
-                    let authorizer = self?.featureAuthorizerProvider.authorizer(for: NATFeature.self)
-                    let result = authorizer?()
-                    guard result?.isAllowed == true else {
-                        callback(!toggleOn)
-                        if result?.requiresUpgrade == true {
-                            self?.alertService.push(alert: ModerateNATUpsellAlert())
-                        }
-                        return
-                    }
-
                     let natType = toggleOn ? NATType.moderateNAT : NATType.strictNAT
 
                     self?.vpnStateConfiguration.getInfo { [weak self] info in
@@ -340,22 +396,26 @@ final class SettingsViewModel {
         ]
     }
 
+    private var safeModeState: PaidFeatureDisplayState {
+        let canUse: () -> FeatureAuthorizationResult = featureAuthorizerProvider.authorizer(for: SafeModeFeature.self)
+        switch canUse() {
+        case .success:
+            return .available(enabled: self.safeModePropertyProvider.safeMode == false, interactive: true)
+        case .failure(.requiresUpgrade):
+            return .upsell
+        case .failure(.featureDisabled):
+            return .disabled
+        }
+    }
+
     private var safeModeSection: [TableViewCellModel] {
         // the UI shows the "opposite" value of the safe mode flag
         // if safe mode is enabled the moderate nat checkbox is unchecked and vice versa
-        return [
-            .toggle(title: Localizable.nonStandardPortsTitle, on: { [unowned self] in self.safeModePropertyProvider.safeMode == false }, enabled: true, handler: { [unowned self] (toggleOn, callback) in
-
-                let authorizer = featureAuthorizerProvider.authorizer(for: SafeModeFeature.self)
-                let result = authorizer()
-                guard result.isAllowed else {
-                    callback(!toggleOn)
-                    if result.requiresUpgrade {
-                        self.alertService.push(alert: SafeModeUpsellAlert())
-                    }
-                    return
-                }
-
+        return [.upsellableToggle(
+            title: LocalizedString.nonStandardPortsTitle,
+            state: { [unowned self] in self.safeModeState },
+            upsell: { [weak self] in self?.alertService.push(alert: SafeModeUpsellAlert()) },
+            handler: { [unowned self] (toggleOn, callback) in
                 let currentSafeMode = self.safeModePropertyProvider.safeMode ?? true
                 let newSafeMode = !currentSafeMode
 
@@ -377,17 +437,21 @@ final class SettingsViewModel {
                         callback(toggleOn)
                     }
                 }
-            }),
-            .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.nonStandardPortsExplanation.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.nonStandardPortsExplanationLink, withUrl: CoreAppConstants.ProtonVpnLinks.safeMode))
-        ]
+            }
+        ), .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.nonStandardPortsExplanation.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.nonStandardPortsExplanationLink, withUrl: CoreAppConstants.ProtonVpnLinks.safeMode))]
     }
 
     private var alternativeRoutingSection: [TableViewCellModel] {
         return [
-            .toggle(title: Localizable.troubleshootItemAltTitle, on: { [unowned self] in self.propertiesManager.alternativeRouting }, enabled: true, handler: { [unowned self] (toggleOn, callback) in
-                self.propertiesManager.alternativeRouting.toggle()
-                callback(self.propertiesManager.alternativeRouting)
-            }),
+            .upsellableToggle(
+                title: LocalizedString.troubleshootItemAltTitle,
+                state: { [unowned self] in .available(enabled: self.propertiesManager.alternativeRouting, interactive: true) },
+                upsell: { }, // No Upsell: Alternative Routing is a free feature
+                handler: { [unowned self] (toggleOn, callback) in
+                    self.propertiesManager.alternativeRouting.toggle()
+                    callback(self.propertiesManager.alternativeRouting)
+                }
+            ),
             .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.troubleshootItemAltDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.troubleshootItemAltLink1, withUrl: CoreAppConstants.ProtonVpnLinks.alternativeRouting))
         ]
     }
@@ -421,15 +485,16 @@ final class SettingsViewModel {
         return cells.isEmpty ? nil : TableViewSection(title: Localizable.connection, cells: cells)
     }
     
-    private func switchLANCallback () -> ((Bool, @escaping (Bool) -> Void) -> Void) {
+    private func switchLANCallback() -> ((Bool, @escaping (Bool) -> Void) -> Void) {
         return { (toggleOn, callback) in
             let isConnected = self.vpnGateway.connection == .connected || self.vpnGateway.connection == .connecting
+            let excludeLAN = self.featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self)
             
             var alert: SystemAlert
             
-            if self.propertiesManager.killSwitch, !self.propertiesManager.excludeLocalNetworks {
+            if self.propertiesManager.killSwitch, excludeLAN == .off {
                 alert = AllowLANConnectionsAlert(connected: isConnected) {
-                    self.propertiesManager.excludeLocalNetworks = true
+                    self.featurePropertyProvider.setValue(ExcludeLocalNetworks.on)
                     self.propertiesManager.killSwitch = false
                     if isConnected {
                         log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks", "feature_additional": "killSwitch"])
@@ -442,16 +507,16 @@ final class SettingsViewModel {
                 }
             } else if isConnected {
                 alert = ReconnectOnSettingsChangeAlert(confirmHandler: {
-                    self.propertiesManager.excludeLocalNetworks.toggle()
+                    self.featurePropertyProvider.setValue(toggleOn ? ExcludeLocalNetworks.on : .off)
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks"])
                     self.vpnGateway.retryConnection()
-                    callback(self.propertiesManager.excludeLocalNetworks)
+                    callback(toggleOn)
                 }, cancelHandler: {
-                    callback(self.propertiesManager.excludeLocalNetworks)
+                    callback(self.featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on)
                 })
             } else {
-                self.propertiesManager.excludeLocalNetworks.toggle()
-                callback(self.propertiesManager.excludeLocalNetworks)
+                self.featurePropertyProvider.setValue(toggleOn ? ExcludeLocalNetworks.on : .off)
+                callback(toggleOn)
                 return
             }
             
@@ -464,10 +529,10 @@ final class SettingsViewModel {
             let isConnected = self.vpnGateway.connection == .connected || self.vpnGateway.connection == .connecting
             
             var alert: SystemAlert
-            
-            if self.propertiesManager.excludeLocalNetworks, !self.propertiesManager.killSwitch {
+
+            if self.featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on, !self.propertiesManager.killSwitch {
                 alert = TurnOnKillSwitchAlert {
-                    self.propertiesManager.excludeLocalNetworks = false
+                    self.featurePropertyProvider.setValue(ExcludeLocalNetworks.off)
                     self.propertiesManager.killSwitch = true
                     if isConnected {
                         log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch", "feature_additional": "excludeLocalNetworks"])

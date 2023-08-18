@@ -120,12 +120,18 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     }
     
     private func setupVpnAcceleratorItem() {
-        vpnAcceleratorView.isHidden = !viewModel.isAcceleratorFeatureEnabled
+        let featureState = viewModel.displayState(for: VPNAccelerator.self)
+        vpnAcceleratorView.isHidden = featureState == .disabled
+
         let toolTip = Localizable.vpnAcceleratorDescription
             .replacingOccurrences(of: Localizable.vpnAcceleratorDescriptionAltLink, with: "")
             .trimmingCharacters(in: .whitespacesAndNewlines)
 
-        let model = SettingsTickboxView.ViewModel(labelText: Localizable.vpnAcceleratorTitle, buttonState: viewModel.vpnAcceleratorEnabled, toolTip: String(toolTip))
+        let model = SettingsTickboxView.ViewModel(
+            labelText: Localizable.vpnAcceleratorTitle,
+            state: featureState,
+            toolTip: String(toolTip)
+        )
         vpnAcceleratorView.setupItem(model: model, delegate: self)
     }
     
@@ -135,7 +141,12 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     }
 
     private func setupAllowLANItem() {
-        let model = SettingsTickboxView.ViewModel(labelText: Localizable.allowLanTitle, buttonState: viewModel.allowLAN, toolTip: Localizable.allowLanInfo)
+        let featureState = viewModel.displayState(for: ExcludeLocalNetworks.self)
+        let model = SettingsTickboxView.ViewModel(
+            labelText: Localizable.allowLanTitle,
+            state: featureState,
+            toolTip: Localizable.allowLanInfo
+        )
         allowLANView.setupItem(model: model, delegate: self)
     }
 
@@ -201,6 +212,17 @@ extension ConnectionSettingsViewController: TickboxViewDelegate {
             viewModel.setVpnAccelerator(value == .on, completion: { [weak self] _ in
                 self?.setupVpnAcceleratorItem()
             })
+        default:
+            break
+        }
+    }
+
+    func upsellTapped(_ tickboxView: SettingsTickboxView) {
+        switch tickboxView {
+        case allowLANView:
+            viewModel.showLANConnectionUpsell()
+        case vpnAcceleratorView:
+            viewModel.showVPNAcceleratorUpsell()
         default:
             break
         }

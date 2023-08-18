@@ -19,32 +19,40 @@
 import Foundation
 
 /// Transient `Storage` implementation suitable for unit tests
-class MemoryStorage: Storage {
-    var storage: [String: Any]
+public class MemoryStorage: Storage {
+    public var storage: [String: Any]
 
-    init(initialValue: [String: Any] = [:]) {
+    public init(initialValue: [String: Any] = [:]) {
         self.storage = initialValue
     }
 
-    func get<T: Decodable>(_ type: T.Type, forKey key: String) throws -> T? {
-        return nil
+    public func get<T: Decodable>(_ type: T.Type, forKey key: String) throws -> T? {
+        guard let data = storage[key] as? Data else {
+            return nil
+        }
+        guard let value = try? JSONDecoder().decode(type, from: data) else {
+            return nil
+        }
+        return value
     }
 
-    func set<T: Encodable>(_ value: T, forKey key: String) throws { }
+    public func set<T: Encodable>(_ value: T, forKey key: String) throws {
+        storage[key] = try? JSONEncoder().encode(value)
+    }
 
-    func setValue(_ value: Any?, forKey key: String) {
+    public func setValue(_ value: Any?, forKey key: String) {
         storage[key] = value
     }
 
-    func getValue(forKey key: String) -> Any? {
+    public func getValue(forKey key: String) -> Any? {
         storage[key]
     }
 
-    func contains(_ key: String) -> Bool {
+    public func contains(_ key: String) -> Bool {
         storage[key] != nil
     }
 
-    func removeObject(forKey key: String) {
+    public func removeObject(forKey key: String) {
         storage[key] = nil
     }
 

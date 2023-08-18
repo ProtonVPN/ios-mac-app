@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -26,12 +26,19 @@
                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9fe-bP-Ana" customClass="ConfirmationToggleSwitch" customModule="ProtonVPN" customModuleProvider="target">
                         <rect key="frame" x="255" y="6.5" width="51" height="31"/>
                     </switch>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vfv-wY-XTd">
+                        <rect key="frame" x="255" y="6.5" width="49" height="31"/>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="3Hw-MF-Lhm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="9xR-ve-GTa"/>
                     <constraint firstItem="3Hw-MF-Lhm" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="F4w-AP-LKD"/>
+                    <constraint firstItem="vfv-wY-XTd" firstAttribute="leading" secondItem="9fe-bP-Ana" secondAttribute="leading" id="II9-vR-I9z"/>
                     <constraint firstItem="9fe-bP-Ana" firstAttribute="leading" secondItem="3Hw-MF-Lhm" secondAttribute="trailing" constant="10" id="MnR-ev-JKF"/>
                     <constraint firstItem="9fe-bP-Ana" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="S8a-HY-jCf"/>
+                    <constraint firstItem="vfv-wY-XTd" firstAttribute="trailing" secondItem="9fe-bP-Ana" secondAttribute="trailing" id="SW3-ac-p4A"/>
+                    <constraint firstItem="vfv-wY-XTd" firstAttribute="bottom" secondItem="9fe-bP-Ana" secondAttribute="bottom" id="clq-6I-OE2"/>
+                    <constraint firstItem="vfv-wY-XTd" firstAttribute="top" secondItem="9fe-bP-Ana" secondAttribute="top" id="ika-Hj-ICn"/>
                     <constraint firstAttribute="trailingMargin" secondItem="9fe-bP-Ana" secondAttribute="trailing" id="r2E-jn-VzE"/>
                 </constraints>
             </tableViewCellContentView>
@@ -39,6 +46,7 @@
             <connections>
                 <outlet property="label" destination="3Hw-MF-Lhm" id="P9g-Cq-6dl"/>
                 <outlet property="switchControl" destination="9fe-bP-Ana" id="t4m-sV-OZD"/>
+                <outlet property="upsellImageView" destination="vfv-wY-XTd" id="rZQ-pc-bvR"/>
             </connections>
             <point key="canvasLocation" x="141" y="155"/>
         </tableViewCell>

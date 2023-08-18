@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import Dependencies
 import VPNShared
 
 public struct LocalAgentConfiguration {
@@ -43,9 +44,11 @@ extension LocalAgentConfiguration {
             return nil
         }
 
+        @Dependency(\.appFeaturePropertyProvider) var appFeaturePropertyProvider
+
         self.init(hostname: connectionConfiguration.serverIp.domain,
                   netshield: netShieldPropertyProvider.netShieldType,
-                  vpnAccelerator: !propertiesManager.featureFlags.vpnAccelerator || propertiesManager.vpnAcceleratorEnabled,
+                  vpnAccelerator: appFeaturePropertyProvider.getValue(for: VPNAccelerator.self) == .on,
                   bouncing: connectionConfiguration.serverIp.label,
                   natType: natTypePropertyProvider.natType,
                   safeMode: safeModePropertyProvider.safeMode)
@@ -60,8 +63,10 @@ extension VPNConnectionFeatures {
             return nil
         }
 
+        @Dependency(\.appFeaturePropertyProvider) var appFeaturePropertyProvider
+
         self.init(netshield: netShieldPropertyProvider.netShieldType,
-                  vpnAccelerator: !propertiesManager.featureFlags.vpnAccelerator || propertiesManager.vpnAcceleratorEnabled,
+                  vpnAccelerator: appFeaturePropertyProvider.getValue(for: VPNAccelerator.self) == .on,
                   bouncing: connectionConfiguration.serverIp.label,
                   natType: natTypePropertyProvider.natType,
                   safeMode: safeModePropertyProvider.safeMode)

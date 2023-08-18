@@ -38,7 +38,13 @@ enum TableViewCellModel {
     case titleTextField(title: String, textFieldText: String, textFieldPlaceholder: String, textFieldDelegate: UITextFieldDelegate)
     case staticKeyValue(key: String, value: String)
     case staticPushKeyValue(key: String, value: String, handler: (() -> Void))
-    case toggle(title: String, on: () -> Bool, enabled: Bool, handler: ((Bool, @escaping (Bool) -> Void) -> Void)?)
+    /// `upsell` is executed when the cell accessory is tapped while in the `PaidFeatureDisplayState.upsell` state
+    case upsellableToggle(
+        title: String,
+        state: () -> PaidFeatureDisplayState,
+        upsell: (() -> Void),
+        handler: ((Bool, @escaping (Bool) -> Void) -> Void)?
+    )
     case button(title: String, accessibilityIdentifier: String?, color: UIColor, handler: (() -> Void) )
     case buttonWithLoadingIndicator(title: String,
                                     accessibilityIdentifier: String?,
@@ -234,17 +240,19 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.showDisclosure(true)
             
             return cell
-        case .toggle(title: let title, on: let on, enabled: let enabled, handler: let handler):
+
+        case .upsellableToggle(let title, let state, let upsell, let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchTableViewCell.identifier) as? SwitchTableViewCell else {
                 return UITableViewCell()
             }
             cell.label.text = title
-            cell.switchControl.isOn = on()
-            cell.switchControl.isEnabled = enabled
+            cell.setup(with: state())
+            cell.upsellTapped = upsell
             cell.toggled = handler
             cell.switchControl.accessibilityLabel = title
-            
+
             return cell
+
         case .button(title: let title, accessibilityIdentifier: let accessibilityIdentifier, color: let color, handler: let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ButtonTableViewCell.identifier) as? ButtonTableViewCell else {
                 return UITableViewCell()
