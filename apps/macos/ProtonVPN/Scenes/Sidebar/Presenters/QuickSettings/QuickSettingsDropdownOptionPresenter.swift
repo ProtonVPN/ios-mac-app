@@ -57,7 +57,17 @@ class QuickSettingGenericOption: QuickSettingsDropdownOptionPresenter {
 }
 
 final class QuickSettingNetshieldOption: QuickSettingGenericOption {
-    init(level: NetShieldType, vpnGateway: VpnGatewayProtocol, vpnManager: VpnManagerProtocol, netShieldPropertyProvider: NetShieldPropertyProvider, vpnStateConfiguration: VpnStateConfiguration, isActive: Bool, currentUserTier: Int, openUpgradeLink: @escaping () -> Void) {
+    init(
+        level: NetShieldType,
+        vpnGateway: VpnGatewayProtocol,
+        vpnManager: VpnManagerProtocol,
+        netShieldPropertyProvider: NetShieldPropertyProvider,
+        vpnStateConfiguration: VpnStateConfiguration,
+        isActive: Bool,
+        currentUserTier: Int,
+        currentAccountPlan plan: AccountPlan,
+        openUpgradeLink: @escaping () -> Void
+    ) {
         var netShieldPropertyProvider = netShieldPropertyProvider
         
         let text: String
@@ -80,26 +90,33 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
             icon = AppTheme.Icon.shield
         }
 
-        super.init(text, icon: icon, active: isActive, requiresUpdate: level.isUserTierTooLow(currentUserTier), selectCallback: {
-            guard !level.isUserTierTooLow(currentUserTier) else {
-                openUpgradeLink()
-                return
-            }
+        super.init(
+            text,
+            icon: icon,
+            active: isActive,
+            requiresUpdate: level.isUserTierTooLow(currentUserTier),
+            requiresBusinessUpdate: plan.isBusiness && !plan.hasNetShield,
+            selectCallback: {
+                guard !level.isUserTierTooLow(currentUserTier) else {
+                    openUpgradeLink()
+                    return
+                }
 
-            vpnStateConfiguration.getInfo { info in
-                switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
-                case .withConnectionUpdate:
-                    netShieldPropertyProvider.netShieldType = level
-                    vpnManager.set(netShieldType: level)
-                case .withReconnect:
-                    netShieldPropertyProvider.netShieldType = level
-                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
-                    vpnGateway.reconnect(with: netShieldPropertyProvider.netShieldType)
-                case .immediately:
-                    netShieldPropertyProvider.netShieldType = level
+                vpnStateConfiguration.getInfo { info in
+                    switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
+                    case .withConnectionUpdate:
+                        netShieldPropertyProvider.netShieldType = level
+                        vpnManager.set(netShieldType: level)
+                    case .withReconnect:
+                        netShieldPropertyProvider.netShieldType = level
+                        log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
+                        vpnGateway.reconnect(with: netShieldPropertyProvider.netShieldType)
+                    case .immediately:
+                        netShieldPropertyProvider.netShieldType = level
+                    }
                 }
             }
-        })
+        )
     }
 }
 

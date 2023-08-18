@@ -33,6 +33,7 @@ public struct DataStorage: TestDependencyKey {
     }
 
     public static var testValue: DataStorage = {
+        #if DEBUG
         let memoryStorage = MemoryStorage()
         return DataStorage(
             storeData: { (data, key) in
@@ -45,6 +46,9 @@ public struct DataStorage: TestDependencyKey {
                 return data
             }
         )
+        #else
+        fatalError("No live value is set for data storage")
+        #endif
     }()
 }
 

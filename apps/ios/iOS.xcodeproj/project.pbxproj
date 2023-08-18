@@ -435,7 +435,6 @@
 		F3082A6F27E2293D001A83DF /* CityItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3082A6E27E2293D001A83DF /* CityItemViewModel.swift */; };
 		F314141927B170FC007424E9 /* NetShieldSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141827B170FC007424E9 /* NetShieldSelectionViewModel.swift */; };
 		F314141B27B17380007424E9 /* NetShieldSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141A27B17380007424E9 /* NetShieldSelectionViewController.swift */; };
-		F314141E27B174C5007424E9 /* PaidFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141D27B174C5007424E9 /* PaidFeature.swift */; };
 		F316A07026DFB05E00669386 /* UserCachedStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316A06F26DFB05E00669386 /* UserCachedStatus.swift */; };
 		F316A07226DFB0D900669386 /* iOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */; };
 		F316A07326DFB0E900669386 /* UserCachedStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316A06F26DFB05E00669386 /* UserCachedStatus.swift */; };
@@ -908,7 +907,6 @@
 		F3082A6E27E2293D001A83DF /* CityItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CityItemViewModel.swift; path = ../../../../../ios/ProtonVPN/Scenes/Countries/ViewModels/CityItemViewModel.swift; sourceTree = "<group>"; };
 		F314141827B170FC007424E9 /* NetShieldSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldSelectionViewModel.swift; sourceTree = "<group>"; };
 		F314141A27B17380007424E9 /* NetShieldSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldSelectionViewController.swift; sourceTree = "<group>"; };
-		F314141D27B174C5007424E9 /* PaidFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PaidFeature.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/Models/PaidFeature.swift; sourceTree = "<group>"; };
 		F316A06F26DFB05E00669386 /* UserCachedStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserCachedStatus.swift; path = ../../../../ios/ProtonVPN/Scenes/Payments/UserCachedStatus.swift; sourceTree = "<group>"; };
 		F316A07426DFBCB600669386 /* PlanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlanService.swift; path = ../../../../ios/ProtonVPN/Scenes/Payments/PlanService.swift; sourceTree = "<group>"; };
 		F31E911F2758F5F900140B2E /* WGLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WGLogger.swift; sourceTree = "<group>"; };
@@ -2067,7 +2065,6 @@
 		F36ECCAE2611C73B0089B898 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				F314141C27B174BF007424E9 /* Models */,
 				F36ECCD42611C8530089B898 /* Views */,
 				791DE610208E08E600A29EA5 /* ViewControllers */,
 				F36ECCAF2611C75E0089B898 /* ViewModels */,
@@ -3104,6 +3101,7 @@
 				F348C9D327D7B63300622584 /* CountriesViewController+Search.swift in Sources */,
 				F330F01627FC85AE00C3AA33 /* CouponViewController.swift in Sources */,
 				F314141E27B174C5007424E9 /* PaidFeature.swift in Sources */,
+				ADE5E6642A83BC6100AC8523 /* LiveDependencies.swift in Sources */,
 				428DF98B262F031600944379 /* ServersStreamingFeaturesViewModel.swift in Sources */,
 				E134558921889EC500FEEECE /* Data+Extension.swift in Sources */,
 				79AFDA9420DB3809002F8751 /* ProfileItemViewModel.swift in Sources */,
