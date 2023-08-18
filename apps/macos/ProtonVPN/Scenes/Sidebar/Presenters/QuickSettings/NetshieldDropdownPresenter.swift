@@ -27,6 +27,7 @@ import AppKit
 import VPNShared
 import Home
 import Strings
+import Dependencies
 
 class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     
@@ -103,10 +104,19 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     // MARK: - Private
 
     private func createNetshieldOption(level: NetShieldType) -> QuickSettingGenericOption {
-        return QuickSettingNetshieldOption(level: level, vpnGateway: vpnGateway, vpnManager: vpnManager, netShieldPropertyProvider: netShieldPropertyProvider, vpnStateConfiguration: vpnStateConfiguration, isActive: netShieldPropertyProvider.netShieldType == level, currentUserTier: currentUserTier, openUpgradeLink: presentUpsellAlert)
-    }
-    
-    private var currentUserTier: Int {
-        return(try? vpnGateway.userTier()) ?? CoreAppConstants.VpnTiers.free
+        @Dependency(\.credentialsProvider) var credentialsProvider
+        let credentials = credentialsProvider.credentials
+
+        return QuickSettingNetshieldOption(
+            level: level,
+            vpnGateway: vpnGateway,
+            vpnManager: vpnManager,
+            netShieldPropertyProvider: netShieldPropertyProvider,
+            vpnStateConfiguration: vpnStateConfiguration,
+            isActive: netShieldPropertyProvider.netShieldType == level,
+            currentUserTier: credentials?.maxTier ?? CoreAppConstants.VpnTiers.free,
+            currentAccountPlan: credentials?.accountPlan ?? .free,
+            openUpgradeLink: presentUpsellAlert
+        )
     }
 }
