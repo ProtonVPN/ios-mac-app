@@ -1,0 +1,153 @@
+/* Upgrade plan button title */
+
+"modals_get_plus" = "Tingkatkan";
+
+/* Dismiss upsell screen button title */
+"modals_upsell_stay_free" = "Tidak sekarang";
+
+/* Footer of the All Countries upsell screen */
+"modals_upsell_features_footer" = "Dan berbagai fitur premium lainnya";
+
+/* Subtitle of All Countries, NetShield and Secure Core upsell screens */
+"modals_upsell_features_subtitle" = "Pada saat Anda meningkatkan akun Anda ke VPN Plus";
+
+/* Subtitle of the Safe Mode upsell screen */
+"modals_upsell_features_safe_mode_subtitle" = "Memiliki keperluan tertentu yang memerlukan penggunaan port non-standar?\n\nTingkatkan akun Anda ke VPN Plus untuk menggunakan fitur ini dan berbagai fitur premium lainnya.";
+
+/* Learn more button title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_learn_more" = "Pelajari Lebih Lanjut";
+
+/* Subtitle of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_subtitle" = "NAT Moderat, yang juga dikenal sebagai NAT Type 2, merupakan sebuah fitur yang dapat memperkaya pengalaman online Anda dalam berbagai aplikasi dan permainan online.\n\nNikmati fitur ini dan berbagai fitur lainnya dengan akun Plus.";
+
+/* Title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_title" = "Izinkan lalu lintas data melalui port non-standar";
+
+/* Title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_title" = "Aktifkan NAT Moderat";
+
+/* Learn more button title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_learn_more" = "Apa itu NAT Moderat?";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_streaming" = "Akses berbagai layanan streaming global";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_highSpeed" = "Jelajahi internet pada kecepatan tertinggi (10 Gbps)";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_netshield" = "Blokir iklan dan malware dengan NetShield";
+
+/* Title of the NetShield upsell screen */
+"modals_upsell_net_shield_title" = "Nikmati penjelajahan tanpa iklan dengan NetShield";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_ads" = "Blokir iklan dan program pelacak";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_malware" = "Lindungi perangkat Anda dari malware";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_highSpeed" = "Jelajahi internet pada kecepatan tertinggi";
+
+/* Title of the Secure Core upsell screen */
+"modals_upsell_secure_core_title" = "Enkripsi berganda dengan Secure Core";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_route" = "Alihkan lalu lintas jaringan Anda melalui berbagai server ultra aman di Swiss, Swedia, dan Islandia";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_layer" = "Terapkan lapisan perlindungan tambahan pada koneksi VPN Anda";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_attacks" = "Lindungi diri Anda dari serangan berbasis jaringan";
+
+/* Title of the No Logs screen */
+"modals_no_logs_title" = "Tanpa log dan berbasis di Swiss";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_privacy_first" = "Proton VPN selalu mengutamakan privasi";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_log_activity" = "Kami tidak merekam aktivitas internet Anda";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_third_parties" = "Kami tidak membagikan data apapun kepada pihak ketiga";
+
+/* Learn more of the No Logs screen */
+"modals_no_logs_external_audit" = "Kebijakan tanpa log ketat yang diusung oleh Proton VPN telah tersertifikasi oleh audit eksternal.";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "Catatan mengenai kecepatan...";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "Secure Core menawarkan tingkat keamanan dan privasi tertinggi, namun dapat menurunkan kecepatan internet Anda. Apabila Anda membutuhkan performa yang lebih, Anda dapat menonaktifkan Secure Core.";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "Jangan tampilkan lagi";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "Aktifkan Secure Core";
+
+/* Title of the New Brand screen */
+"new_plans_brand_title" = "Proton yang baru, dengan perlindungan yang tersatukan";
+
+/* Subtitle of the New Brand screen */
+"new_plans_brand_subtitle" = "Memperkenalkan tampilan Proton yang baru.\nBerbagai layanan, satu misi. Selamat datang di internet yang menjunjung privasi sebagai hal yang baku.";
+
+/* Title of "done" button in New Brand screen */
+"new_plans_brand_got_it" = "Mengerti";
+
+/* Common button title */
+"modals_common_cancel" = "Batal";
+
+/* Common button title */
+"modals_common_learn_more" = "Pelajari lebih lanjut";
+
+/* Common button title */
+"modals_common_next" = "Selanjutnya";
+
+/* Header of the view containing information about the server, from which the user will be disconnected */
+"from_server_title" = "Dari server:";
+
+/* Header of the view containing information about the server, to which the user will be connected */
+"to_server_title" = "Ke server:";
+
+/* Button action title in user account update screen */
+"update_billing" = "Perbarui Tagihan Saya";
+
+/* Button action title in user account update screen */
+"upgrade_again" = "Tingkatkan Kembali";
+
+/* Button action title in user account update screen */
+"upgrade_no_thanks" = "Tidak, Terima Kasih";
+
+/* Title of user account update screen */
+"subscription_expired_title" = "Paket langganan VPN Anda telah berakhir";
+
+/* Description of user account update screen */
+"subscription_expired_reconnection_description" = "Paket langganan Anda telah diturunkan, sehingga kami akan menghubungkan Anda kembali ke server tercepat yang tersedia.";
+
+/* Description of user account update screen */
+"subscription_expired_description" = "Paket langganan Anda telah diturunkan.";
+
+/* Feature list element in user account update screen */
+"subscription_upgrade_option3" = "Fitur lanjutan: Netshield, Secure Core, Tor, P2P";
+
+/* Title of user account update screen */
+"delinquent_title" = "Akun VPN Anda memiliki tagihan yang belum dilunasi";
+
+/* Description of user account update screen */
+"delinquent_reconnection_description" = "Anda akan kembali dapat mengakses berbagai fitur premium setelah tagihan berikut dilunasi. Untuk saat ini, kami akan menghubungkan Anda ke server Free tercepat yang tersedia.";
+
+/* Description of user account update screen */
+"delinquent_description" = "Anda akan kembali dapat mengakses berbagai fitur premium setelah tagihan berikut dilunasi.";
+
+/* Title of user account update screen */
+"maximum_device_title" = "Anda telah mencapai batas jumlah perangkat maksimum yang dapat Anda sambungkan";
+
+/* Description of user account update screen part 1*/ */
+"maximum_device_plan_limit_part_1" = "Mohon putuskan perangkat lain agar perangkat ini dapat terhubung atau tingkatkan akun Anda ke %@";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "Mohon putuskan perangkat lain agar perangkat ini dapat terhubung.";

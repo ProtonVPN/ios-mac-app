@@ -378,7 +378,7 @@
 "_search_phone_country_code_placeholder" = "Szukaj kraju";
 
 /* iOS: button for switching from sign-up to sign-in screen */
-"_already_have_account" = "Posiadam już konto";
+"_already_have_account" = "Mam już konto";
 
 /* iOS: Button in email verification screen */
 "_get_verification_email" = "Wyślij e-mail weryfikacyjny";
@@ -899,6 +899,9 @@
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Wyłącz Kill Switch";
+
+/* iOS and macOS: Enable kill switch on badly-routed networks */
+"_kill_switch_enable" = "Włącz Kill Switch";
 
 /* MacOS: Settings screen title */
 "_preferences" = "Ustawienia";
@@ -1854,7 +1857,11 @@
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Zamknij";
 
-// MARK: Search
+/* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
+"_bad_interface_ip_range_alert_title" = "Interfejs sieciowy jest nieprawidłowy";
+
+/* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Sieć lokalna może być niebezpieczna (interfejs '%@' ma adres IP i przerostek '%@'). Dane mogą być przesyłane w postaci niezaszyfrowanej przez sieć lokalną. Włączenie funkcji Kill Switch zablokuje ten ruch. Połączenia z lokalnymi urządzeniami zostaną przerwane.";
 
 /* Title of the search screen */
 "search_title" = "Szukaj";
@@ -1927,8 +1934,6 @@
 
 /* Section header in search */
 "_plus_servers" = "Serwery planu Plus";
-
-// MARK: Modals
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Ulepsz";
@@ -2042,4 +2047,4 @@
 "maximum_device_plan_limit_part_1" = "Aby połączyć się, rozłącz inne urządzenie lub ulepsz konto do planu %@";
 
 /* Description of user account update screen */
-"maximum_device_limit" = "Please disconnect another device to connect to this one.";
+"maximum_device_limit" = "Aby połączyć się, rozłącz inne urządzenie.";

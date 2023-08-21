@@ -900,6 +900,9 @@
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Désactiver Arrêt d'urgence (kill switch)";
 
+/* iOS and macOS: Enable kill switch on badly-routed networks */
+"_kill_switch_enable" = "Activer l'arrêt d'urgence (kill switch)";
+
 /* MacOS: Settings screen title */
 "_preferences" = "Préférences";
 
@@ -1854,7 +1857,11 @@
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Fermer";
 
-// MARK: Search
+/* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
+"_bad_interface_ip_range_alert_title" = "Mauvaise interface réseau";
+
+/* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Votre réseau local peut ne pas être sûr (l'interface %@ dispose de l'IP et du préfixe %@). Vos données peuvent être envoyées sans chiffrement sur votre réseau local. En activant l'arrêt d'urgence (kill switch), vous bloquez ce trafic. Les connexions aux périphériques locaux seront interrompues.";
 
 /* Title of the search screen */
 "search_title" = "Rechercher";
@@ -1927,8 +1934,6 @@
 
 /* Section header in search */
 "_plus_servers" = "Serveurs Plus";
-
-// MARK: Modals
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Changer d'abonnement";
@@ -2035,8 +2040,11 @@
 /* Common button title */
 "modals_common_learn_more" = "En savoir plus";
 
+/* Common button title */
+"modals_common_next" = "Suivant";
+
 /* Description of user account update screen part 1*/ */
 "maximum_device_plan_limit_part_1" = "Déconnectez un autre appareil pour connecter celui-ci ou passez à l'abonnement %@";
 
 /* Description of user account update screen */
-"maximum_device_limit" = "Please disconnect another device to connect to this one.";
+"maximum_device_limit" = "Déconnectez un autre appareil pour pouvoir connecter celui-ci.";

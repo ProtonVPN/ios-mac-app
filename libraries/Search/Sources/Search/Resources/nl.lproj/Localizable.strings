@@ -1,0 +1,72 @@
+/* Title of the search screen */
+
+"search_title" = "Zoek";
+
+/* Title of the Search screen infographic */
+"search_subtitle" = "Zoek voor elke locatie";
+
+/* Section header in search */
+"search_countries" = "Landen";
+
+/* Sample countries the user can search for */
+"search_countries_sample" = "Zwitserland, Verenigde Staten, Italië...";
+
+/* Section header in search */
+"search_cities" = "Steden";
+
+/* Sample cities the user can search for */
+"search_cities_sample" = "New York, Londen, Tokio...";
+
+/* Section header in Search */
+"search_servers" = "Servers";
+
+/* Sample servers the user can search for */
+"search_servers_sample" = "JP#50, CA#3, IT#14...";
+
+/* Section header in search */
+"search_us_regions" = "VS regio's";
+
+/* Sample US regions the user can search for */
+"search_us_regions_sample" = "Californië, Florida, Colorado...";
+
+/* Title shown when nothing is found in search */
+"search_no_results_title" = "Geen resultaten gevonden";
+
+/* Subtitle shown when nothing is found in search */
+"search_no_results_subtitle" = "Probeer een ander sleutelwoord";
+
+/* Header for the recent searches section in search */
+"search_recent_header" = "Recent bekeken";
+
+/* Button to clear recent searches history */
+"search_recent_clear" = "Wissen";
+
+/* Title for the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_title" = "Uw zoekgeschiedenis zal verloren gaan. Doorgaan?";
+
+/* Cancel button title in the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_cancel" = "Annuleer";
+
+/* Confirmation button title in alert asking for confirmation before deleting recent searches */
+"search_recent_clear_continue" = "Doorgaan";
+
+/* Placeholder text showing in the search bar on the search screen */
+"search_bar_placeholder" = "Land, Stad of Server";
+
+/* Subtitle for the upsell banner shown to free users in search */
+"search_upsell_subtitle" = "Meer locaties = meer ongeblokkeerde inhoud + extra beveiliging + hogere snelheden";
+
+/* Section header in search */
+"search_secure_core_countries" = "Secure Core-landen";
+
+/* Section header in search */
+"search_results_countries" = "Landen";
+
+/* Section header in search */
+"search_results_cities" = "Steden";
+
+/* Section header in search */
+"_free_servers" = "Gratis servers";
+
+/* Section header in search */
+"_plus_servers" = "Plus servers";

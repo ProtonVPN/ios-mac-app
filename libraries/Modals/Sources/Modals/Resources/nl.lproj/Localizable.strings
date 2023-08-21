@@ -1,0 +1,153 @@
+/* Upgrade plan button title */
+
+"modals_get_plus" = "Upgraden";
+
+/* Dismiss upsell screen button title */
+"modals_upsell_stay_free" = "Niet nu";
+
+/* Footer of the All Countries upsell screen */
+"modals_upsell_features_footer" = "En veel meer premium functies";
+
+/* Subtitle of All Countries, NetShield and Secure Core upsell screens */
+"modals_upsell_features_subtitle" = "Wanneer u upgrade naar VPN Plus";
+
+/* Subtitle of the Safe Mode upsell screen */
+"modals_upsell_features_safe_mode_subtitle" = "Heeft u geavanceerde professionele IT-noden die niet-standaard poorten vereisen?\n\nUpgrade naar VPN Plus om toegang te krijgen tot deze en meer premium functies.";
+
+/* Learn more button title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_learn_more" = "Meer informatie";
+
+/* Subtitle of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_subtitle" = "Gemiddelde NAT (ook gekend als NAT Type 2) kan uw online ervaring met verschillende applicaties en online videogames verbeteren.\n\nOntgrendel dit en andere functies met een Plus-abonnement.";
+
+/* Title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_title" = "Laat verkeer toe naar niet-standaard poorten";
+
+/* Title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_title" = "Schakel Gemiddelde NAT in";
+
+/* Learn more button title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_learn_more" = "Wat is Gemiddelde NAT?";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_streaming" = "Krijg toegang tot wereldwijde streamingdiensten";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_highSpeed" = "Browse aan de hoogste snelheden (10 Gbps)";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_netshield" = "Blokkeer advertenties en malware met NetShield";
+
+/* Title of the NetShield upsell screen */
+"modals_upsell_net_shield_title" = "Geniet van advertentie-vrij browsen met NetShield";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_ads" = "Blokkeer advertenties en trackers";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_malware" = "Bescherm uw apparaat tegen malware";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_highSpeed" = "Browse aan de hoogste snelheden";
+
+/* Title of the Secure Core upsell screen */
+"modals_upsell_secure_core_title" = "Verdubbel de encryptie met Secure Core";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_route" = "Routeer via ultra beveiligde servers in Zwitserland, Zweden en IJsland";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_layer" = "Voeg een extra laag encryptie toe aan uw VPN-verbinding";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_attacks" = "Bescherm uzelf van netwerkaanvallen";
+
+/* Title of the No Logs screen */
+"modals_no_logs_title" = "Geen logboeken en gebaseerd in Zwitserland";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_privacy_first" = "Proton VPN is privacy eerst";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_log_activity" = "We loggen uw internetactiviteiten niet";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_third_parties" = "We delen geen enkele gegevens met derde partijen";
+
+/* Learn more of the No Logs screen */
+"modals_no_logs_external_audit" = "Proton VPN's strikte geen-logboekenbeleid is gecertificeerd door een externe audit.";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "Een opmerking over snelheid...";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "Secure Core biedt het hoogste niveau van beveiliging en privacy, maar het kan uw internetsnelheid verlagen. Als u hogere prestaties wilt, kan u Secure Core uitschakelen.";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "Niet meer weergeven";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "Secure Core activeren";
+
+/* Title of the New Brand screen */
+"new_plans_brand_title" = "Vernieuwde Proton, uniforme beveiliging";
+
+/* Subtitle of the New Brand screen */
+"new_plans_brand_subtitle" = "Ontdek de nieuwe look van Proton.\nVeel diensten, één missie. Welkom in een internetomgeving waar privacy de standaard is.";
+
+/* Title of "done" button in New Brand screen */
+"new_plans_brand_got_it" = "Begrepen";
+
+/* Common button title */
+"modals_common_cancel" = "Annuleer";
+
+/* Common button title */
+"modals_common_learn_more" = "Meer informatie";
+
+/* Common button title */
+"modals_common_next" = "Volgende";
+
+/* Header of the view containing information about the server, from which the user will be disconnected */
+"from_server_title" = "Van server:";
+
+/* Header of the view containing information about the server, to which the user will be connected */
+"to_server_title" = "Naar server:";
+
+/* Button action title in user account update screen */
+"update_billing" = "Mijn facturering bijwerken";
+
+/* Button action title in user account update screen */
+"upgrade_again" = "Opnieuw upgraden";
+
+/* Button action title in user account update screen */
+"upgrade_no_thanks" = "Nee, bedankt";
+
+/* Title of user account update screen */
+"subscription_expired_title" = "Uw VPN-abonnement is verlopen";
+
+/* Description of user account update screen */
+"subscription_expired_reconnection_description" = "Uw abonnement is gedegradeerd, dus we maken opnieuw verbinding met de snelst beschikbare server.";
+
+/* Description of user account update screen */
+"subscription_expired_description" = "Uw abonnement is gedegradeerd.";
+
+/* Feature list element in user account update screen */
+"subscription_upgrade_option3" = "Geavanceerde functies: NetShield, Secure Core, Tor, P2P";
+
+/* Title of user account update screen */
+"delinquent_title" = "Uw VPN-account heeft openstaande facturen";
+
+/* Description of user account update screen */
+"delinquent_reconnection_description" = "U hebt weer toegang tot premium functies nadat deze zijn betaald. Op dit moment maken we opnieuw verbinding met de snelste beschikbare Gratis abonnement-server.";
+
+/* Description of user account update screen */
+"delinquent_description" = "U hebt weer toegang tot premium functies nadat deze betaald zijn.";
+
+/* Title of user account update screen */
+"maximum_device_title" = "U hebt uw maximum apparaat limiet bereikt";
+
+/* Description of user account update screen part 1*/ */
+"maximum_device_plan_limit_part_1" = "Verbreek verbinding met een ander apparaat om deze te verbinden of upgrade naar %@";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "Verbreek verbinding met een ander apparaat om deze te verbinden.";

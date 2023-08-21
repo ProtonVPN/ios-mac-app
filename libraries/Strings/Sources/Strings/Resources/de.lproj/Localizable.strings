@@ -820,7 +820,7 @@
 "_reconnect_on_settings_change_body" = "Deine Verbindung muss neu aufgebaut werden, um diese Änderung zu übernehmen.";
 
 /* Under maintenance alert */
-"_country_servers_under_maintenance" = "%@ Server in Wartung";
+"_country_servers_under_maintenance" = "%@ Server werden gewartet";
 
 /* Under maintenance alert */
 "_all_servers_in_profile_under_maintenance" = "Profil‐Server sind im Wartungsmodus";
@@ -899,6 +899,9 @@
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Kill Switch deaktivieren";
+
+/* iOS and macOS: Enable kill switch on badly-routed networks */
+"_kill_switch_enable" = "Kill Switch aktivieren";
 
 /* MacOS: Settings screen title */
 "_preferences" = "Einstellungen";
@@ -1854,7 +1857,11 @@
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Schliessen";
 
-// MARK: Search
+/* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
+"_bad_interface_ip_range_alert_title" = "Schlecht konfigurierte Netzwerkschnittstelle";
+
+/* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Dein lokales Netzwerk könnte unsicher sein (die Schnittstelle '%@' hat die IP und den Präfix '%@'). Deine Daten werden möglicherweise unverschlüsselt über das lokale Netz gesendet. Wenn du Kill Switch aktivierst, wird dieser Datenverkehr blockiert. Verbindungen zu lokalen Peripheriegeräten werden unterbrochen.";
 
 /* Title of the search screen */
 "search_title" = "Suchen";
@@ -1927,8 +1934,6 @@
 
 /* Section header in search */
 "_plus_servers" = "Plus‐Server";
-
-// MARK: Modals
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Upgrade benötigt";
@@ -2042,4 +2047,4 @@
 "maximum_device_plan_limit_part_1" = "Bitte trenne zuerst die Verbindung auf einem anderen Gerät, um dich mit diesem zu verbinden, oder führe ein Upgrade auf %@ durch";
 
 /* Description of user account update screen */
-"maximum_device_limit" = "Please disconnect another device to connect to this one.";
+"maximum_device_limit" = "Bitte trenne zuerst die Verbindung auf einem anderen Gerät, um dich mit diesem zu verbinden.";

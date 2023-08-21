@@ -1,0 +1,153 @@
+/* Upgrade plan button title */
+
+"modals_get_plus" = "Yükselt";
+
+/* Dismiss upsell screen button title */
+"modals_upsell_stay_free" = "Şimdi değil";
+
+/* Footer of the All Countries upsell screen */
+"modals_upsell_features_footer" = "Ve pek çok diğer ücretli özellikler";
+
+/* Subtitle of All Countries, NetShield and Secure Core upsell screens */
+"modals_upsell_features_subtitle" = "VPN Plus tarifesine yükselttiğinizde";
+
+/* Subtitle of the Safe Mode upsell screen */
+"modals_upsell_features_safe_mode_subtitle" = "Standart olmayan bağlantı noktaları kullanmanızı gerektiren gelişmiş veya profesyonel bilgi işlem gereksinimleriniz mi var? \n\nBu ve diğer ücretli özelliklere erişmek için VPN Plus tarifesine yükseltin.";
+
+/* Learn more button title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_learn_more" = "Ayrıntılı bilgi alın";
+
+/* Subtitle of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_subtitle" = "Ilımlı NAT, 2. tür NAT olarak da bilinir ve çeşitli uygulamalar ve çevrim içi video oyunlarıyla ilgili çevrim içi deneyiminizi iyileştirebilir.\n\nPlus tarifesi ile bu ve başka özellikleri kullanabilirsiniz.";
+
+/* Title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_title" = "Standart olmayan bağlantı noktalarından trafik geçebilsin";
+
+/* Title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_title" = "Ilımlı NAT özelliğini açabilirsiniz";
+
+/* Learn more button title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_learn_more" = "Ilımlı NAT nedir?";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_streaming" = "Tüm dünyaradaki yayın akışı hizmetlerine erişin";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_highSpeed" = "En yüksek hızlarda gezinin (10 Gb/sn)";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_netshield" = "NetShield ile reklam ve kötü amaçlı yazılımları engelleyin";
+
+/* Title of the NetShield upsell screen */
+"modals_upsell_net_shield_title" = "NetShield ile reklamlar olmadan gezinebilirsiniz";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_ads" = "Reklam ve etkinlik izleyicileri engelleyebilirsiniz";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_malware" = "Aygıtınızı kötü amaçlı yazılımlardan koruyabilirsiniz";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_highSpeed" = "En yüksek hızlarda gezinebilirsiniz";
+
+/* Title of the Secure Core upsell screen */
+"modals_upsell_secure_core_title" = "Secure Core ile şifrelemeyi iki katına çıkarabilirsiniz";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_route" = "İsviçre, İsveç ve İzlanda'daki çok yüksek güvenlikli sunucuları kullanabilirsiniz";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_layer" = "VPN bağlantınıze ek bir şifreleme düzeyi ekleyebilirsiniz";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_attacks" = "Kendinizi ağ saldırılarından koruyabilirsiniz";
+
+/* Title of the No Logs screen */
+"modals_no_logs_title" = "Kayıt tutmuyoruz ve İsviçre merkezliyiz";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_privacy_first" = "Proton VPN gizliliğe öncelik verir";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_log_activity" = "İnternetteki etkinliklerinizi kaydetmeyiz";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_third_parties" = "Üçüncü taraflarla hiç bir veri paylaşmıyoruz";
+
+/* Learn more of the No Logs screen */
+"modals_no_logs_external_audit" = "Proton VPN tarafından uygulanan sıkı kayıt tutmama ilkesi bir dış denetçi tarafından belgelenmiştir.";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "Hız hakkında bir not...";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "Secure Core, en yüksek düzeyde güvenlik ve gizlilik sunar. Ancak internet hızınızı düşürebilir. Başarımı yükseltmeye gerek duyuyorsanız, Secure Core özelliğini kapatabilirsiniz.";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "Bir daha gösterme";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "Secure Core kullanılsın";
+
+/* Title of the New Brand screen */
+"new_plans_brand_title" = "Güncellenmiş Proton, birleşik koruma";
+
+/* Subtitle of the New Brand screen */
+"new_plans_brand_subtitle" = "Yenilenmiş Proton böyle görünüyor. \nBirçok hizmet, tek amaç. Gizliliğe odaklanmış bir internet fikrine hoş geldiniz.";
+
+/* Title of "done" button in New Brand screen */
+"new_plans_brand_got_it" = "Anladım";
+
+/* Common button title */
+"modals_common_cancel" = "İptal";
+
+/* Common button title */
+"modals_common_learn_more" = "Ayrıntılı bilgi alın";
+
+/* Common button title */
+"modals_common_next" = "İleri";
+
+/* Header of the view containing information about the server, from which the user will be disconnected */
+"from_server_title" = "Şu sunucudan:";
+
+/* Header of the view containing information about the server, to which the user will be connected */
+"to_server_title" = "Şu sunucuya:";
+
+/* Button action title in user account update screen */
+"update_billing" = "Faturalarımı güncelle";
+
+/* Button action title in user account update screen */
+"upgrade_again" = "Yeniden yükselt";
+
+/* Button action title in user account update screen */
+"upgrade_no_thanks" = "Hayır, teşekkürler";
+
+/* Title of user account update screen */
+"subscription_expired_title" = "VPN abonelik tarifenizin geçerlilik süresi dolmuş";
+
+/* Description of user account update screen */
+"subscription_expired_reconnection_description" = "Abonelik tarifeniz düşürüldü. Bu nedenle kullanılabilecek en hızlı sunucuya yeniden bağlanıyoruz.";
+
+/* Description of user account update screen */
+"subscription_expired_description" = "Abonelik tarifeniz düşürüldü.";
+
+/* Feature list element in user account update screen */
+"subscription_upgrade_option3" = "Gelişmiş özellikler: NetShield, Secure Core, Tor, P2P";
+
+/* Title of user account update screen */
+"delinquent_title" = "VPN hesabınızda ödenmemiş faturalar var";
+
+/* Description of user account update screen */
+"delinquent_reconnection_description" = "Bunları ödedikten sonra ücretli özelliklere yeniden erişebilirsiniz. Şimdilik bağlantınızı, var olan en hızlı Free tarife sunucusuna geçiriyoruz.";
+
+/* Description of user account update screen */
+"delinquent_description" = "Bunları ödedikten sonra ücretli özelliklere yeniden erişebilirsiniz.";
+
+/* Title of user account update screen */
+"maximum_device_title" = "Kullanabileceğiniz en fazla aygıt sayısı sınırına ulaştınız";
+
+/* Description of user account update screen part 1*/ */
+"maximum_device_plan_limit_part_1" = "Lütfen bu aygıtı bağlayabilmek için başka bir aygıtın bağlantısını kesin ya da %@ tarifesine yükseltin";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "Lütfen bu aygıtı bağlayabilmek için başka bir aygıtın bağlantısını kesin.";

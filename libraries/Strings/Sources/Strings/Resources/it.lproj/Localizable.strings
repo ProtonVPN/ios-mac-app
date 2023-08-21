@@ -900,6 +900,9 @@
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Disabilita Kill switch";
 
+/* iOS and macOS: Enable kill switch on badly-routed networks */
+"_kill_switch_enable" = "Abilita Kill Switch";
+
 /* MacOS: Settings screen title */
 "_preferences" = "Preferenze";
 
@@ -1854,7 +1857,11 @@
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Chiudi";
 
-// MARK: Search
+/* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
+"_bad_interface_ip_range_alert_title" = "Interfaccia di rete difettosa";
+
+/* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "La tua rete locale potrebbe non essere sicura (l'interfaccia '%@' ha l'IP e il prefisso '%@'). I tuoi dati potrebbero essere inviati non crittografati sulla rete locale. L'abilitazione di Kill Switch bloccherà questo traffico. Le connessioni alle periferiche locali verranno interrotte.";
 
 /* Title of the search screen */
 "search_title" = "Cerca";
@@ -1927,8 +1934,6 @@
 
 /* Section header in search */
 "_plus_servers" = "Server Plus";
-
-// MARK: Modals
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Effettua l'upgrade";
@@ -2042,4 +2047,4 @@
 "maximum_device_plan_limit_part_1" = "Scollega un altro dispositivo per connetterti a questo o esegui l'upgrade a %@";
 
 /* Description of user account update screen */
-"maximum_device_limit" = "Please disconnect another device to connect to this one.";
+"maximum_device_limit" = "Disconnetti un altro dispositivo per connettere questo.";

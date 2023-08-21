@@ -900,6 +900,9 @@
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Vypnout Kill Switch";
 
+/* iOS and macOS: Enable kill switch on badly-routed networks */
+"_kill_switch_enable" = "Povolit Kill Switch";
+
 /* MacOS: Settings screen title */
 "_preferences" = "Nastavení";
 
@@ -1854,7 +1857,11 @@
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Zavřít";
 
-// MARK: Search
+/* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
+"_bad_interface_ip_range_alert_title" = "Špatné síťové rozhraní";
+
+/* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Vaše místní síť nemusí být bezpečná (rozhraní '%@' má IP a předvolbu '%@'). Vaše data mohou být v místní síti odesílána nešifrovaně. Povolením Kill Switch se tento provoz zablokuje. Připojení k místním periferiím bude přerušeno.";
 
 /* Title of the search screen */
 "search_title" = "Hledat";
@@ -1927,8 +1934,6 @@
 
 /* Section header in search */
 "_plus_servers" = "Servery Plus";
-
-// MARK: Modals
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Navýšit tarif";
@@ -2042,4 +2047,4 @@
 "maximum_device_plan_limit_part_1" = "Prosíme odpojte jiné zařízení pro připojení tohoto a nebo navyšte na %@";
 
 /* Description of user account update screen */
-"maximum_device_limit" = "Please disconnect another device to connect to this one.";
+"maximum_device_limit" = "Pro připojení k tomuto zařízení odpojte jiné zařízení.";

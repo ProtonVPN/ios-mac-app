@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>maximum_device_plan_limit_part_2</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string> per ottenere fino a %#@num_devices@ connessi contemporaneamente.</string>
+      <key>num_devices</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d dispositivo</string>
+        <key>other</key>
+        <string>%d dispositivi</string>
+      </dict>
+    </dict>
+    <key>subscription_upgrade_option2</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Connetti fino a %#@num_devices@ contemporaneamente</string>
+      <key>num_devices</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d dispositivo</string>
+        <key>other</key>
+        <string>%d dispositivi</string>
+      </dict>
+    </dict>
+    <key>subscription_upgrade_option1</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Centinaia di server in %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d paese</string>
+        <key>other</key>
+        <string>%d paesi</string>
+      </dict>
+    </dict>
+    <key>modals_upsell_all_countries_title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Accedi a oltre %#@num_servers@ in %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>one</key>
+        <string>%d paesi</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d Paesi</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>one</key>
+        <string>%d server sicuri</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d server sicuri</string>
+      </dict>
+    </dict>
+    <key>modals_upsell_all_countries_feature_multipleDevices</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>one</key>
+        <string>Connetti fino a %d dispositivi per volta</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Connetti fino a %d dispositivi per volta</string>
+      </dict>
+    </dict>
+  </dict>
+</plist>

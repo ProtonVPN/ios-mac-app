@@ -1,0 +1,72 @@
+/* Title of the search screen */
+
+"search_title" = "Pesquisar";
+
+/* Title of the Search screen infographic */
+"search_subtitle" = "Pesquisar qualquer localização";
+
+/* Section header in search */
+"search_countries" = "Países";
+
+/* Sample countries the user can search for */
+"search_countries_sample" = "Suíça, Estados Unidos, Itália...";
+
+/* Section header in search */
+"search_cities" = "Cidades";
+
+/* Sample cities the user can search for */
+"search_cities_sample" = "Nova York, Londres, Tóquio...";
+
+/* Section header in Search */
+"search_servers" = "Servidores";
+
+/* Sample servers the user can search for */
+"search_servers_sample" = "JP#50, CA#3, IT#14...";
+
+/* Section header in search */
+"search_us_regions" = "Regiões dos EUA";
+
+/* Sample US regions the user can search for */
+"search_us_regions_sample" = "Califórnia, Flórida, Colorado...";
+
+/* Title shown when nothing is found in search */
+"search_no_results_title" = "Nenhum resultado";
+
+/* Subtitle shown when nothing is found in search */
+"search_no_results_subtitle" = "Tente outra palavra-chave.";
+
+/* Header for the recent searches section in search */
+"search_recent_header" = "Recentemente vistos";
+
+/* Button to clear recent searches history */
+"search_recent_clear" = "Limpar";
+
+/* Title for the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_title" = "O seu histórico de pesquisas será perdido. Continuar?";
+
+/* Cancel button title in the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_cancel" = "Cancelar";
+
+/* Confirmation button title in alert asking for confirmation before deleting recent searches */
+"search_recent_clear_continue" = "Continuar";
+
+/* Placeholder text showing in the search bar on the search screen */
+"search_bar_placeholder" = "País, cidade ou servidor";
+
+/* Subtitle for the upsell banner shown to free users in search */
+"search_upsell_subtitle" = "Mais localizações significam mais conteúdos desbloqueados, segurança adicional e velocidades mais rápidas";
+
+/* Section header in search */
+"search_secure_core_countries" = "Países do Secure Core";
+
+/* Section header in search */
+"search_results_countries" = "Países";
+
+/* Section header in search */
+"search_results_cities" = "Cidades";
+
+/* Section header in search */
+"_free_servers" = "Servidores Free";
+
+/* Section header in search */
+"_plus_servers" = "Servidores Plus";

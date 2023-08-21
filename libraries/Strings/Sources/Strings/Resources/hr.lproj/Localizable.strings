@@ -900,6 +900,9 @@
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Onemogući kill switch";
 
+/* iOS and macOS: Enable kill switch on badly-routed networks */
+"_kill_switch_enable" = "Enable Kill Switch";
+
 /* MacOS: Settings screen title */
 "_preferences" = "Postavke";
 
@@ -1854,7 +1857,11 @@
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Close";
 
-// MARK: Search
+/* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
+"_bad_interface_ip_range_alert_title" = "Bad Network Interface";
+
+/* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Your local network might be unsafe (the interface '%@' has the IP and prefix '%@'). Your data may be sent unencrypted over the local network. Enabling Kill Switch will block this traffic. Connections to local peripherals will be interrupted.";
 
 /* Title of the search screen */
 "search_title" = "Pretraga";
@@ -1927,8 +1934,6 @@
 
 /* Section header in search */
 "_plus_servers" = "Plus poslužitelji";
-
-// MARK: Modals
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Nadogradnja";

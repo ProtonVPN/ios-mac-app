@@ -901,6 +901,9 @@ Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill sw
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Desativar kill switch";
 
+/* iOS and macOS: Enable kill switch on badly-routed networks */
+"_kill_switch_enable" = "Ativar Kill Switch";
+
 /* MacOS: Settings screen title */
 "_preferences" = "Preferências";
 
@@ -1855,7 +1858,11 @@ Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill sw
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Fechar";
 
-// MARK: Search
+/* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
+"_bad_interface_ip_range_alert_title" = "Interface de rede incorreta";
+
+/* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Sua rede local pode não ser segura (a interface '%@' tem o IP e o prefixo '%@'). Seus dados podem ser enviados sem criptografia pela rede local. A ativação do Kill Switch bloqueará esse tráfego. As conexões com periféricos locais serão interrompidas.";
 
 /* Title of the search screen */
 "search_title" = "Procurar";
@@ -1928,8 +1935,6 @@ Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill sw
 
 /* Section header in search */
 "_plus_servers" = "Servidores Plus";
-
-// MARK: Modals
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Atualizar";
@@ -2043,4 +2048,4 @@ Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill sw
 "maximum_device_plan_limit_part_1" = "Desconecte outro dispositivo para se conectar a este ou atualize para %@";
 
 /* Description of user account update screen */
-"maximum_device_limit" = "Please disconnect another device to connect to this one.";
+"maximum_device_limit" = "Desconecte outro dispositivo para conectar a este.";

@@ -900,6 +900,9 @@
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Dezactivare blocare conexiune";
 
+/* iOS and macOS: Enable kill switch on badly-routed networks */
+"_kill_switch_enable" = "Activare blocare conexiune";
+
 /* MacOS: Settings screen title */
 "_preferences" = "Preferințe";
 
@@ -1437,13 +1440,13 @@
 "_netshield_level1" = "Blocare malware";
 
 /* Settings -> Netshield: Block malware, ads, trackers */
-"_netshield_level2" = "Blocare malware, reclame și urmăritori";
+"_netshield_level2" = "Blocare malware, reclame și instrumente de urmărire";
 
 "_netshield_alert_reconnect_description_on" = "Conexiunea va fi repornită pentru a schimba modul NetShield.\nNotă: Dacă unele site-uri nu se încarcă, încercați să dezactivați NetShield.";
 
 "_netshield_alert_reconnect_description_off" = "Conexiunea va fi restabilită pentru a trece în modul NetShield.";
 
-"_netshield_alert_upgrade_description" = "NetShield vă mărește intimitatea blocând reclamele și monitorizarea.";
+"_netshield_alert_upgrade_description" = "NetShield vă mărește intimitatea blocând reclamele și Instrumentele de urmărire.";
 
 /* Netshield section title in iOS connection screen */
 "_netshield_section_title" = "Blocare malware și reclame";
@@ -1477,7 +1480,7 @@
 
 "_quick_settings_netshield_option_level1" = "Blocare doar malware";
 
-"_quick_settings_netshield_option_level2" = "Blocare malware, reclame și urmăritori";
+"_quick_settings_netshield_option_level2" = "Blocare malware, reclame și instrumente de urmărire";
 
 "_upgrade_required_securecore_description" = "Serverele Secure Core sunt disponibile în planul Plus. Treceți la alt plan acum pentru a direcționa traficul prin servele noastre sigure aflate în țări care vă respectă intimitatea.";
 
@@ -1855,7 +1858,11 @@ Detalii";
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Închidere";
 
-// MARK: Search
+/* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
+"_bad_interface_ip_range_alert_title" = "Interfață de rețea configurată greșit";
+
+/* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Rețeaua locală ar putea fi nesigură (interfața „%@” are adresa IP și prefixul „%@”). Datele vă pot fi trimise necriptate prin rețeaua locală. Activarea blocării conexiunii va bloca acest trafic. Conexiunile la perifericele locale vor fi întrerupte.";
 
 /* Title of the search screen */
 "search_title" = "Căutare";
@@ -1928,8 +1935,6 @@ Detalii";
 
 /* Section header in search */
 "_plus_servers" = "Servere Plus";
-
-// MARK: Modals
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Modificare";
@@ -2043,4 +2048,4 @@ Detalii";
 "maximum_device_plan_limit_part_1" = "Deconectați un alt dispozitiv pentru a-l conecta pe acesta sau treceți la %@.";
 
 /* Description of user account update screen */
-"maximum_device_limit" = "Please disconnect another device to connect to this one.";
+"maximum_device_limit" = "Deconectați un alt dispozitiv pentru a-l conecta pe acesta.";
