@@ -343,7 +343,9 @@ extension AppDelegate {
             }
         }
 
+        #if DEBUG
         FeatureFactory.shared.enable(&.ssoSignIn)
+        #endif
 
         let apiService = container.makeNetworking().apiService
         apiService.acquireSessionIfNeeded { _ in
