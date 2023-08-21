@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>maximum_device_plan_limit_part_2</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string> , aby połączyć %#@num_devices@ jednocześnie.</string>
+      <key>num_devices</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d urządzenia</string>
+        <key>few</key>
+        <string>%d urządzeń</string>
+        <key>many</key>
+        <string>%d urządzeń</string>
+        <key>other</key>
+        <string>%d urządzenia</string>
+      </dict>
+    </dict>
+    <key>subscription_upgrade_option2</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Połącz do %#@num_devices@ jednocześnie</string>
+      <key>num_devices</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d urządzenia</string>
+        <key>few</key>
+        <string>%d urządzeń</string>
+        <key>many</key>
+        <string>%d urządzeń</string>
+        <key>other</key>
+        <string>%d urządzenia</string>
+      </dict>
+    </dict>
+    <key>subscription_upgrade_option1</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Setki serwerów w %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d kraju</string>
+        <key>few</key>
+        <string>%d krajach</string>
+        <key>many</key>
+        <string>%d krajach</string>
+        <key>other</key>
+        <string>%d krajach</string>
+      </dict>
+    </dict>
+    <key>modals_upsell_all_countries_title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Dostęp do ponad %#@num_servers@ w %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>one</key>
+        <string>%d kraju</string>
+        <key>few</key>
+        <string>%d krajach</string>
+        <key>many</key>
+        <string>%d krajach</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d krajach</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>one</key>
+        <string>%d bezpiecznego serwera</string>
+        <key>few</key>
+        <string>%d bezpiecznych serwerów</string>
+        <key>many</key>
+        <string>%d bezpiecznych serwerów</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d bezpiecznych serwerów</string>
+      </dict>
+    </dict>
+    <key>modals_upsell_all_countries_feature_multipleDevices</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>one</key>
+        <string>Połącz do %d urządzenia jednocześnie</string>
+        <key>few</key>
+        <string>Połącz do %d urządzeń jednocześnie</string>
+        <key>many</key>
+        <string>Połącz do %d urządzeń jednocześnie</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Połącz do %d urządzeń jednocześnie</string>
+      </dict>
+    </dict>
+  </dict>
+</plist>

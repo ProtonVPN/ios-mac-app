@@ -443,7 +443,7 @@
 "_data_disclaimer_title" = "Bescherm uzelf online";
 
 /* iOS: data disclaimer screen */
-"_data_disclaimer_text" = "Proton VPN doet er alles aan om uw privacy te beschermen en te respecteren. Het is ons belangrijkste beleid om zo min mogelijk gebruikersgegevens te verzamelen om een persoonlijke en anonieme gebruikerservaring bij het gebruik van de app te garanderen, met name:\n\n%@ – om u aan te melden, om een verloren wachtwoord te helpen herstellen , en stuur belangrijke service-updates.\n\n%@ – alleen voor crashmeldingen en fouten.\n\nDe Proton VPN-app verwerkt naast deze gegevens geen gebruikersinformatie. We registreren uw online activiteiten noch enige persoonlijk identificeerbare informatie. Alle hierboven genoemde gegevens worden opgeslagen en verwerkt op het eigen systeem van Proton VPN, zonder dat derden er ooit toegang toe hebben.";
+"_data_disclaimer_text" = "Proton VPN doet er alles aan om uw privacy te beschermen en te respecteren. Het is ons belangrijkste beleid om zo min mogelijk gebruikersgegevens te verzamelen om een persoonlijke en anonieme gebruikerservaring bij het gebruik van de app te garanderen, met name:\n\n%@ – om u aan te melden, om een verloren wachtwoord te helpen herstellen, en stuur belangrijke service-updates.\n\n%@ – alleen voor crashmeldingen en fouten.\n\nDe Proton VPN-app verwerkt naast deze gegevens geen gebruikersinformatie. We registreren uw online activiteiten noch enige persoonlijk identificeerbare informatie. Alle hierboven genoemde gegevens worden opgeslagen en verwerkt op het eigen systeem van Proton VPN, zonder dat derden er ooit toegang toe hebben.";
 
 /* iOS: data disclaimer screen */
 "_data_disclaimer_user_details" = "Gebruikersnaam, e-mailadres";
@@ -899,6 +899,9 @@
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Schakel IP-beveiliging uit";
+
+/* iOS and macOS: Enable kill switch on badly-routed networks */
+"_kill_switch_enable" = "Schakel IP-beveiliging in";
 
 /* MacOS: Settings screen title */
 "_preferences" = "Voorkeuren";
@@ -1647,7 +1650,7 @@
 "_gateways_modal_title" = "Wat is een toegangspoort?";
 
 /* Gateways info modals text (both iOS and macOS) */
-"_gateways_modal_text" = "Een VPN-toegangspoort is een beveiligde verbinding die gecontroleerde toegang biedt tot de gegevens en diensten van uw bedrijf via toegewijde servers";
+"_gateways_modal_text" = "Een VPN-gateway is een beveiligde verbinding die gecontroleerde toegang biedt tot de gegevens en diensten van uw bedrijf via toegewijde servers";
 
 "_vpn_accelerator_title" = "VPN Accelerator";
 
@@ -1854,7 +1857,11 @@
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Sluit";
 
-// MARK: Search
+/* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
+"_bad_interface_ip_range_alert_title" = "Slecht netwerkinterface";
+
+/* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Uw lokale netwerk is mogelijk onveilig (de interface '%@' heeft het IP en voorvoegsel '%@'). Uw data werd mogelijk niet versleuteld verzonden over het lokale netwerk. Als u de IP-beveiliging inschakelt zal dit verkeer worden geblokkeerd. Verbinding met lokale randapparatuur zal worden onderbroken.";
 
 /* Title of the search screen */
 "search_title" = "Zoek";
@@ -1927,8 +1934,6 @@
 
 /* Section header in search */
 "_plus_servers" = "Plus servers";
-
-// MARK: Modals
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Upgraden";
@@ -2042,4 +2047,4 @@
 "maximum_device_plan_limit_part_1" = "Verbreek verbinding met een ander apparaat om deze te verbinden of upgrade naar %@";
 
 /* Description of user account update screen */
-"maximum_device_limit" = "Please disconnect another device to connect to this one.";
+"maximum_device_limit" = "Verbreek verbinding met een ander apparaat om deze te verbinden.";

@@ -1,385 +1,385 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>modals_upsell_all_countries_feature_multipleDevices</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>one</key>
-			<string>Conecta hasta %d dispositivos simultáneamente</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>other</key>
-			<string>Conecta hasta %d dispositivos simultáneamente</string>
-		</dict>
-	</dict>
-	<key>modals_upsell_all_countries_title</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>Accede a más de %#@num_servers@ en %#@num_countries@.</string>
-		<key>num_countries</key>
-		<dict>
-			<key>one</key>
-			<string>%d países</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>other</key>
-			<string>%d países</string>
-		</dict>
-		<key>num_servers</key>
-		<dict>
-			<key>one</key>
-			<string>%d servidores seguros</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>other</key>
-			<string>%d servidores seguros</string>
-		</dict>
-	</dict>
-	<key>subscription_upgrade_option1</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>Cientos de servidores en %#@num_countries@</string>
-		<key>num_countries</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d país</string>
-			<key>other</key>
-			<string>%d países</string>
-		</dict>
-	</dict>
-	<key>subscription_upgrade_option2</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>Conecta hasta %#@num_devices@ al mismo tiempo.</string>
-		<key>num_devices</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d dispositivo</string>
-			<key>other</key>
-			<string>%d dispositivos</string>
-		</dict>
-	</dict>
-	<key>search_upsell_title</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>Accede a todos los %#@num_countries@.</string>
-		<key>num_countries</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d país</string>
-			<key>other</key>
-			<string>%d países</string>
-		</dict>
-	</dict>
-	<key>maximum_device_plan_limit_part_2</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string> para tener hasta %#@num_devices@ conectados al mismo tiempo.</string>
-		<key>num_devices</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d dispositivo</string>
-			<key>other</key>
-			<string>%d dispositivos</string>
-		</dict>
-	</dict>
-	<key>_vpnauth_too_many_certs_retry_after</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>Has alcanzado el número máximo de cambios de configuración. Por favor, inténtalo de nuevo después de al menos %d minutos.</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>Ha alcanzado el número máximo de cambios de configuración. Por favor, inténtalo de nuevo después de al menos %d minutos.</string>
-		</dict>
-	</dict>
-	<key>_countries_count_plus</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d+ país</string>
-			<key>other</key>
-			<string>%d+ países</string>
-		</dict>
-	</dict>
-	<key>_countries_count</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d país</string>
-			<key>other</key>
-			<string>%d países</string>
-		</dict>
-	</dict>
-	<key>_plans_connections</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d conexión</string>
-			<key>other</key>
-			<string>%d conexiones</string>
-		</dict>
-	</dict>
-	<key>_netshield_stats_ads_blocked</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>Anuncio
+  <dict>
+    <key>modals_upsell_all_countries_feature_multipleDevices</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>one</key>
+        <string>Conecta hasta %d dispositivos simultáneamente</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Conecta hasta %d dispositivos simultáneamente</string>
+      </dict>
+    </dict>
+    <key>modals_upsell_all_countries_title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Accede a más de %#@num_servers@ en %#@num_countries@.</string>
+      <key>num_countries</key>
+      <dict>
+        <key>one</key>
+        <string>%d países</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d países</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>one</key>
+        <string>%d servidores seguros</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d servidores seguros</string>
+      </dict>
+    </dict>
+    <key>subscription_upgrade_option1</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Cientos de servidores en %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d país</string>
+        <key>other</key>
+        <string>%d países</string>
+      </dict>
+    </dict>
+    <key>subscription_upgrade_option2</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Conecta hasta %#@num_devices@ al mismo tiempo.</string>
+      <key>num_devices</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d dispositivo</string>
+        <key>other</key>
+        <string>%d dispositivos</string>
+      </dict>
+    </dict>
+    <key>maximum_device_plan_limit_part_2</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string> para tener hasta %#@num_devices@ conectados al mismo tiempo.</string>
+      <key>num_devices</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d dispositivo</string>
+        <key>other</key>
+        <string>%d dispositivos</string>
+      </dict>
+    </dict>
+    <key>search_upsell_title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Accede a todos los %#@num_countries@.</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d país</string>
+        <key>other</key>
+        <string>%d países</string>
+      </dict>
+    </dict>
+    <key>_vpnauth_too_many_certs_retry_after</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Has alcanzado el número máximo de cambios de configuración. Por favor, inténtalo de nuevo después de al menos %d minutos.</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>other</key>
+        <string>Ha alcanzado el número máximo de cambios de configuración. Por favor, inténtalo de nuevo después de al menos %d minutos.</string>
+      </dict>
+    </dict>
+    <key>_countries_count_plus</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d+ país</string>
+        <key>other</key>
+        <string>%d+ países</string>
+      </dict>
+    </dict>
+    <key>_countries_count</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d país</string>
+        <key>other</key>
+        <string>%d países</string>
+      </dict>
+    </dict>
+    <key>_plans_connections</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d conexión</string>
+        <key>other</key>
+        <string>%d conexiones</string>
+      </dict>
+    </dict>
+    <key>_netshield_stats_ads_blocked</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Anuncio
 bloqueado</string>
-			<key>other</key>
-			<string>Anuncios
+        <key>other</key>
+        <string>Anuncios
 bloqueados</string>
-		</dict>
-	</dict>
-	<key>_netshield_stats_trackers_stopped</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>Rastreador
+      </dict>
+    </dict>
+    <key>_netshield_stats_trackers_stopped</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Rastreador
 detenido</string>
-			<key>other</key>
-			<string>Rastreadores
+        <key>other</key>
+        <string>Rastreadores
 detenidos</string>
-		</dict>
-	</dict>
-	<key>_session_length_days</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@DAYS@</string>
-		<key>DAYS</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>other</key>
-			<string>%d días</string>
-			<key>one</key>
-			<string>%d día</string>
-		</dict>
-	</dict>
-	<key>_session_length_days_and_hours</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@DAYS@ %#@HOURS@</string>
-		<key>DAYS</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>other</key>
-			<string>%d días</string>
-			<key>one</key>
-			<string>%d día</string>
-		</dict>
-		<key>HOURS</key>
-		<dict>
-			<key>one</key>
-			<string>%d h</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>other</key>
-			<string>%d h</string>
-		</dict>
-	</dict>
-	<key>_session_length_hours_and_minutes</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@HOURS@ %#@MINUTES@</string>
-		<key>MINUTES</key>
-		<dict>
-			<key>one</key>
-			<string>%d minutos</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>other</key>
-			<string>%d minutos</string>
-		</dict>
-		<key>HOURS</key>
-		<dict>
-			<key>one</key>
-			<string>%d h</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>other</key>
-			<string>%d h</string>
-		</dict>
-	</dict>
-	<key>_session_length_hours</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@HOURS@</string>
-		<key>HOURS</key>
-		<dict>
-			<key>one</key>
-			<string>%d h</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>other</key>
-			<string>%d h</string>
-		</dict>
-	</dict>
-	<key>_session_length_minutes_and_seconds</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@MINUTES@ %#@SECONDS@</string>
-		<key>MINUTES</key>
-		<dict>
-			<key>one</key>
-			<string>%d minutos</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>other</key>
-			<string>%d minutos</string>
-		</dict>
-		<key>SECONDS</key>
-		<dict>
-			<key>one</key>
-			<string>%d s</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>other</key>
-			<string>%d s</string>
-		</dict>
-	</dict>
-	<key>_session_length_minutes</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@MINUTES@</string>
-		<key>MINUTES</key>
-		<dict>
-			<key>one</key>
-			<string>%d minutos</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>other</key>
-			<string>%d minutos</string>
-		</dict>
-	</dict>
-	<key>_session_length_seconds</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@SECONDS@</string>
-		<key>SECONDS</key>
-		<dict>
-			<key>one</key>
-			<string>%d s</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>other</key>
-			<string>%d s</string>
-		</dict>
-	</dict>
-	<key>_step_of</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@STEP@ %#@STEPS@</string>
-		<key>STEPS</key>
-		<dict>
-			<key>one</key>
-			<string>de %d</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>other</key>
-			<string>de %d</string>
-		</dict>
-		<key>STEP</key>
-		<dict>
-			<key>one</key>
-			<string>Paso %d</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>other</key>
-			<string>Paso %d</string>
-		</dict>
-	</dict>
-</dict>
+      </dict>
+    </dict>
+    <key>_session_length_days</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@DAYS@</string>
+      <key>DAYS</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d días</string>
+        <key>one</key>
+        <string>%d día</string>
+      </dict>
+    </dict>
+    <key>_session_length_days_and_hours</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@DAYS@ %#@HOURS@</string>
+      <key>DAYS</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d días</string>
+        <key>one</key>
+        <string>%d día</string>
+      </dict>
+      <key>HOURS</key>
+      <dict>
+        <key>one</key>
+        <string>%d h</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d h</string>
+      </dict>
+    </dict>
+    <key>_session_length_hours_and_minutes</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@HOURS@ %#@MINUTES@</string>
+      <key>MINUTES</key>
+      <dict>
+        <key>one</key>
+        <string>%d minutos</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d minutos</string>
+      </dict>
+      <key>HOURS</key>
+      <dict>
+        <key>one</key>
+        <string>%d h</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d h</string>
+      </dict>
+    </dict>
+    <key>_session_length_hours</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@HOURS@</string>
+      <key>HOURS</key>
+      <dict>
+        <key>one</key>
+        <string>%d h</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d h</string>
+      </dict>
+    </dict>
+    <key>_session_length_minutes_and_seconds</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@MINUTES@ %#@SECONDS@</string>
+      <key>MINUTES</key>
+      <dict>
+        <key>one</key>
+        <string>%d minutos</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d minutos</string>
+      </dict>
+      <key>SECONDS</key>
+      <dict>
+        <key>one</key>
+        <string>%d s</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d s</string>
+      </dict>
+    </dict>
+    <key>_session_length_minutes</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@MINUTES@</string>
+      <key>MINUTES</key>
+      <dict>
+        <key>one</key>
+        <string>%d minutos</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d minutos</string>
+      </dict>
+    </dict>
+    <key>_session_length_seconds</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@SECONDS@</string>
+      <key>SECONDS</key>
+      <dict>
+        <key>one</key>
+        <string>%d s</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d s</string>
+      </dict>
+    </dict>
+    <key>_step_of</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@STEP@ %#@STEPS@</string>
+      <key>STEPS</key>
+      <dict>
+        <key>one</key>
+        <string>de %d</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>de %d</string>
+      </dict>
+      <key>STEP</key>
+      <dict>
+        <key>one</key>
+        <string>Paso %d</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Paso %d</string>
+      </dict>
+    </dict>
+  </dict>
 </plist>

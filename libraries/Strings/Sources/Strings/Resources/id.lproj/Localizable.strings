@@ -443,7 +443,7 @@
 "_data_disclaimer_title" = "Lindungi diri Anda saat online";
 
 /* iOS: data disclaimer screen */
-"_data_disclaimer_text" = "Proton VPN is committed to protecting and respecting your privacy. It is our overriding policy to collect as little user data as possible to ensure a private and anonymous user experience in the use of the App, specifically:\n\n%@ – to log you in, help to recover a lost password, and send important service updates.\n\n%@ – for crash reports and errors only.\n\nThe Proton VPN App does not process any user information besides this data. We don't log your online activity nor any personal identifiable information. All data listed above is stored and processed on Proton VPN's own system, with no third party ever having access to it.";
+"_data_disclaimer_text" = "Proton VPN berkomitmen untuk melindungi dan menghormati privasi Anda. Ini merupakan kebijakan utama kami untuk mengumpulkan data pengguna sesedikit mungkin untuk memastikan pengalaman pengguna yang pribadi dan anonim dalam penggunaan Aplikasi, khususnya:\n\n%@ – untuk masuk, membantu memulihkan kata sandi yang hilang, dan mengirimkan pembaruan layanan penting.\n\n%@ – untuk laporan kerusakan dan kesalahan saja.\n\nAplikasi Proton VPN tidak memproses informasi pengguna apa pun selain data ini. Kami tidak mencatat aktivitas daring Anda atau informasi pribadi apa pun yang dapat diidentifikasi. Semua data yang tercantum di atas disimpan dan diproses di sistem Proton VPN sendiri, tanpa ada pihak ketiga yang dapat mengaksesnya.";
 
 /* iOS: data disclaimer screen */
 "_data_disclaimer_user_details" = "Nama pengguna, alamat email";
@@ -479,7 +479,7 @@
 "_via" = "melalui";
 
 /* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
-"_server_load_percentage" = "%@%% Load";
+"_server_load_percentage" = "Muatan %@%%";
 
 /* iOS: Home screen title, tab bar item title; MacOS: TabBar tab title; */
 "_home" = "Beranda";
@@ -523,7 +523,7 @@
 "_p2p" = "P2P";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
-"_tor" = "TOR";
+"_tor" = "Tor";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_p2p_server" = "Server P2P";
@@ -899,6 +899,9 @@
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Nonaktifkan kill switch";
+
+/* iOS and macOS: Enable kill switch on badly-routed networks */
+"_kill_switch_enable" = "Aktifkan Kill Switch";
 
 /* MacOS: Settings screen title */
 "_preferences" = "Preferensi";
@@ -1437,7 +1440,7 @@
 "_netshield_level1" = "Blokir malware";
 
 /* Settings -> Netshield: Block malware, ads, trackers */
-"_netshield_level2" = "Block malware, ads, & trackers";
+"_netshield_level2" = "Blokir malware, iklan, & program pelacak";
 
 "_netshield_alert_reconnect_description_on" = "Sambungan Anda akan dimulai ulang untuk mengubah mode NetShield yang aktif.\nCatatan: Apabila beberapa situs tidak dapat dimuat, cobalah untuk menonaktifkan NetShield.";
 
@@ -1446,7 +1449,7 @@
 "_netshield_alert_upgrade_description" = "NetShield meningkatkan privasi Anda dengan memblokir iklan dan pelacak.";
 
 /* Netshield section title in iOS connection screen */
-"_netshield_section_title" = "Malware & Ads Blocker";
+"_netshield_section_title" = "Pemblokir Malware & Iklan";
 
 /* Title of the screen with news and offers. */
 "_news_title" = "Berita";
@@ -1477,7 +1480,7 @@
 
 "_quick_settings_netshield_option_level1" = "Blokir malware saja";
 
-"_quick_settings_netshield_option_level2" = "Block malware, ads, & trackers";
+"_quick_settings_netshield_option_level2" = "Blokir malware, iklan, & program pelacak";
 
 "_upgrade_required_securecore_description" = "Secure Core tersedia di paket Plus. Tingkatkan sekarang untuk mengalihkan trafik lewat server teraman kami di negara ramah privasi.";
 
@@ -1485,7 +1488,7 @@
 "_kill_switch_reconnection_header" = "Kill switch melindungi IP Anda";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Your internet connection will resume as soon as Proton VPN reconnects to a server.\nTo use the internet without VPN and kill switch protection, cancel the reconnection to the server.";
+"_kill_switch_reconnection" = "Koneksi internet Anda akan dilanjutkan ketika Proton VPN menghubungkan ulang ke sebuah server.\nUntuk menggunakan internet tanpa VPN dan perlindungan kill switch, batalkan penghubungan ulang ke server.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "tanpa";
@@ -1647,14 +1650,14 @@
 "_gateways_modal_title" = "Apa itu gateway?";
 
 /* Gateways info modals text (both iOS and macOS) */
-"_gateways_modal_text" = "A VPN gateway is a secure connection that provides controlled access to your company's data and services through dedicated servers";
+"_gateways_modal_text" = "Gateway VPN merupakan koneksi aman yang menyediakan akses terkendali ke data dan layanan milik perusahaan Anda melalui server khusus";
 
 "_vpn_accelerator_title" = "VPN Accelerator";
 
 "_vpn_accelerator_change_title" = "Ubah VPN Accelerator";
 
 /* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
-"_vpn_accelerator_description" = "VPN Accelerator enables a set of unique performance enhancing technologies which can increase VPN speeds by up to 400%%.\nLearn more";
+"_vpn_accelerator_description" = "Akselerator VPN mengaktifkan teknologi peningkatan performa yang dapat meningkatkan kecepatan VPN sampai 400%%.\nPelajari lebih lanjut";
 
 /* Link with more info in the VPN Accelerator description */
 "_vpn_accelerator_description_alt_link" = "Pelajari lebih lanjut";
@@ -1834,27 +1837,31 @@
 "_netshield_stats_blocked_E" = "%@ E";
 
 /* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
-"_alert_protocol_deprecated_title" = "Protocol Unavailable";
+"_alert_protocol_deprecated_title" = "Protokol Tidak Tersedia";
 
 /* Body of the deprecated protocol alert on MacOS. Shown when the user attempts to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
-"_alert_protocol_deprecated_body_macos" = "This profile uses a protocol that is outdated and no longer supported. Click \"Update\" to switch to using the default Smart protocol. Learn more";
+"_alert_protocol_deprecated_body_macos" = "Profil ini menggunakan protokol yang lawas dan tidak didukung lagi. Klik \"Perbarui\" untuk ganti ke protokol Smart bawaan. Pelajari lebih lanjut";
 
 /* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
-"_alert_protocol_deprecated_link_text" = "Learn more";
+"_alert_protocol_deprecated_link_text" = "Pelajari lebih lanjut";
 
 /* Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
-"_alert_protocol_deprecated_body_ios" = "This profile uses a protocol that is outdated and no longer supported. Click \"Update\" to switch to using the default Smart protocol.";
+"_alert_protocol_deprecated_body_ios" = "Profil ini menggunakan protokol yang sudah lawas dan tidak didukung lagi. Klik \"Perbarui\" untuk ganti ke protokol Smart bawaan.";
 
 /* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
-"_alert_protocol_deprecated_enable_smart" = "Update";
+"_alert_protocol_deprecated_enable_smart" = "Perbarui";
 
 /* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser*/ */
-"_alert_protocol_deprecated_learn_more" = "Learn more";
+"_alert_protocol_deprecated_learn_more" = "Pelajari lebih lanjut";
 
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Tutup";
 
-// MARK: Search
+/* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
+"_bad_interface_ip_range_alert_title" = "Antarmuka Jaringan Tidak Benar";
+
+/* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Jaringan lokal Anda mungkin tidak aman (antarmuka '%@' memiliki IP dan awalan '%@'). Data Anda dapat dikirim secara tidak terenkripsi melalui jaringan lokal. Mengaktifkan Kill Switch akan memblokir lalu lintas ini. Koneksi ke perangkat lokal akan tidak mungkin.";
 
 /* Title of the search screen */
 "search_title" = "Pencarian";
@@ -1927,8 +1934,6 @@
 
 /* Section header in search */
 "_plus_servers" = "Server Plus";
-
-// MARK: Modals
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Tingkatkan";
@@ -2042,4 +2047,4 @@
 "maximum_device_plan_limit_part_1" = "Mohon putuskan perangkat lain agar perangkat ini dapat terhubung atau tingkatkan akun Anda ke %@";
 
 /* Description of user account update screen */
-"maximum_device_limit" = "Please disconnect another device to connect to this one.";
+"maximum_device_limit" = "Mohon putuskan perangkat lain agar perangkat ini dapat terhubung.";

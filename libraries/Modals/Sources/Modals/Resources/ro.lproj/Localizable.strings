@@ -1,0 +1,153 @@
+/* Upgrade plan button title */
+
+"modals_get_plus" = "Modificare";
+
+/* Dismiss upsell screen button title */
+"modals_upsell_stay_free" = "Nu acum";
+
+/* Footer of the All Countries upsell screen */
+"modals_upsell_features_footer" = "Și multe alte funcții speciale";
+
+/* Subtitle of All Countries, NetShield and Secure Core upsell screens */
+"modals_upsell_features_subtitle" = "Când treceți la VPN Plus";
+
+/* Subtitle of the Safe Mode upsell screen */
+"modals_upsell_features_safe_mode_subtitle" = "Aveți nevoi avansate sau profesionale de utilizare care necesită porturi non-standard?\n\nTreceți la VPN Plus pentru a le accesa și a avea alte funcții premium.";
+
+/* Learn more button title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_learn_more" = "Detalii";
+
+/* Subtitle of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_subtitle" = "NAT moderat, cunoscut și ca NAT tip 2, vă poate îmbunătăți experiența online pentru diferite aplicații și jocuri video online.\n\nObțineți-l alături și de alte funcții cu planul Plus.";
+
+/* Title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_title" = "Permitere trafic la porturile nonstandard";
+
+/* Title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_title" = "Activare NAT moderat";
+
+/* Learn more button title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_learn_more" = "Ce este NAT moderat?";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_streaming" = "Accesați serviciile globale de transmisii în flux";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_highSpeed" = "Navigați cu viteză maximă (10 Gbps)";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_netshield" = "Blocați reclamele și malware-ul cu NetShield";
+
+/* Title of the NetShield upsell screen */
+"modals_upsell_net_shield_title" = "Bucurați-vă de navigarea fără reclame cu NetShield";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_ads" = "Blocare reclame și urmăritori";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_malware" = "Protejați dispozitivul de programele malițioase";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_highSpeed" = "Navigați cu viteză maximă";
+
+/* Title of the Secure Core upsell screen */
+"modals_upsell_secure_core_title" = "Dublați criptarea cu Secure Core";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_route" = "Direcționați traficul prin serverele ultrasigure din Elveția, Suedia si Islanda";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_layer" = "Adăugați încă un nivel de criptare a conexiunii VPN";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_attacks" = "Protejați-vă de atacurile din rețea";
+
+/* Title of the No Logs screen */
+"modals_no_logs_title" = "Fără jurnale și aflată în Elveția";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_privacy_first" = "Proton VPN pune confidențialitatea pe primul loc";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_log_activity" = "Nu vă înregistrăm activitatea de pe internet";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_third_parties" = "Nu partajăm orice date cu terțe părți";
+
+/* Learn more of the No Logs screen */
+"modals_no_logs_external_audit" = "Politica strictă a Proton VPN de a nu ține jurnale este certificată de un audit extern.";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "Observație privind viteza…";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "Secure Core oferă cel mai înalt nivel de securitate și confidențialitate, dar vă poate reduce viteza pe internet. Dacă aveți nevoie de mai multe performanțe, puteți dezactiva Secure Core.";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "Nu mai arăta asta";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "Activare Secure Core";
+
+/* Title of the New Brand screen */
+"new_plans_brand_title" = "Proton actualizat, protecție unificată";
+
+/* Subtitle of the New Brand screen */
+"new_plans_brand_subtitle" = "Vă prezentăm aspectul împrospătat al Proton.\nMulte servicii, o singură misiune. Bine ați venit pe un internet în care confidențialitatea este implicită.";
+
+/* Title of "done" button in New Brand screen */
+"new_plans_brand_got_it" = "Am înțeles";
+
+/* Common button title */
+"modals_common_cancel" = "Anulare";
+
+/* Common button title */
+"modals_common_learn_more" = "Detalii";
+
+/* Common button title */
+"modals_common_next" = "Înainte";
+
+/* Header of the view containing information about the server, from which the user will be disconnected */
+"from_server_title" = "De la serverul:";
+
+/* Header of the view containing information about the server, to which the user will be connected */
+"to_server_title" = "La serverul:";
+
+/* Button action title in user account update screen */
+"update_billing" = "Actualizare facturare";
+
+/* Button action title in user account update screen */
+"upgrade_again" = "Modificare din nou";
+
+/* Button action title in user account update screen */
+"upgrade_no_thanks" = "Nu, mulțumesc";
+
+/* Title of user account update screen */
+"subscription_expired_title" = "Abonamentul planului VPN a expirat";
+
+/* Description of user account update screen */
+"subscription_expired_reconnection_description" = "Abonamentul a fost retrogradat, deci se va reconecta la cel mai rapid server disponibil.";
+
+/* Description of user account update screen */
+"subscription_expired_description" = "Abonamentul a fost retrogradat.";
+
+/* Feature list element in user account update screen */
+"subscription_upgrade_option3" = "Funcții avansate: NetShield, Secure Core, Tor, P2P";
+
+/* Title of user account update screen */
+"delinquent_title" = "Acest cont VPN are facturi în așteptare";
+
+/* Description of user account update screen */
+"delinquent_reconnection_description" = "Veți putea accesa din nou opțiunile premium după ce acestea sunt plătite. Momentan, se reconectează la cel mai rapid server disponibil din planul gratuit.";
+
+/* Description of user account update screen */
+"delinquent_description" = "Veți putea accesa din nou opțiunile premium după ce acestea au fost plătite.";
+
+/* Title of user account update screen */
+"maximum_device_title" = "Ați atins limita maximă de dispozitive folosite";
+
+/* Description of user account update screen part 1*/ */
+"maximum_device_plan_limit_part_1" = "Deconectați un alt dispozitiv pentru a-l conecta pe acesta sau treceți la %@.";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "Deconectați un alt dispozitiv pentru a-l conecta pe acesta.";
