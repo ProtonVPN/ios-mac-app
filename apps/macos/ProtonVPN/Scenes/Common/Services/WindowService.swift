@@ -28,6 +28,7 @@ import AppKit
 import PMLogger
 import Strings
 import Modals_macOS
+import Dependencies
 
 protocol WindowServiceFactory {
     func makeWindowService() -> WindowService
@@ -51,7 +52,6 @@ protocol WindowService: WindowControllerDelegate {
     func openSettingsWindow(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, accountViewModel: AccountViewModel, couponViewModel: CouponViewModel)
     func openProfilesWindow(viewModel: ProfilesContainerViewModel)
     func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService)
-    func openWhatsNewWindow()
     func openSystemExtensionGuideWindow(cancelledHandler: @escaping () -> Void)
     func openSubuserAlertWindow(alert: SubuserWithoutConnectionsAlert)
     
@@ -94,12 +94,14 @@ class WindowServiceImplementation: WindowService {
         & DynamicBugReportManagerFactory
         & VpnKeychainFactory
         & SessionServiceFactory
+        & PropertiesManagerFactory
 
     private let factory: Factory
     
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var bugReportCreator: BugReportCreator = factory.makeBugReportCreator()
+    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     
     fileprivate var mainWindowController: WindowController?
     fileprivate var statusMenuWindowController: StatusMenuWindowController?
@@ -172,6 +174,20 @@ class WindowServiceImplementation: WindowService {
         windowController.window?.makeMain()
         
         mainWindowController = windowController
+        showInitialModals()
+    }
+
+    func showInitialModals() {
+        @Dependency(\.featureFlagProvider) var featureFlags
+        let isFreeRescopeEnabled: Bool = featureFlags.newFree
+        guard isFreeRescopeEnabled, // Only show the what's new modal once the free plans have been activated
+              propertiesManager.showWhatsNewModal else {
+            return
+        }
+        propertiesManager.showWhatsNewModal = false
+
+        presentKeyModal(viewController: ModalsFactory.whatsNewViewController())
+
     }
 
     func showTour() {
@@ -218,17 +234,6 @@ class WindowServiceImplementation: WindowService {
         activeWindowControllers.insert(windowController)
         windowController.showWindow(self)
     }
-
-    func openWhatsNewWindow() {
-        let viewController = ModalsFactory.whatsNewViewController() { [weak self] in
-            self?.closeWindow(withController: ModalWindowController.self)
-        }
-
-        let windowController = ModalWindowController(viewController: viewController)
-        windowController.delegate = self
-        activeWindowControllers.insert(windowController)
-        windowController.showWindow(self)
-    }
     
     func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService) {
         NSApp.setActivationPolicy(.regular)
@@ -238,12 +243,12 @@ class WindowServiceImplementation: WindowService {
         
         let vc = bugReportCreator.createBugReportViewController(delegate: manager, colors: Colors())
         manager.closeBugReportHandler = { [weak self] in
-            self?.closeWindow(withController: ModalWindowController.self)
+            self?.closeWindow(withController: ReportBugWindowController.self)
         }
         viewController = vc
         viewController.title = Localizable.reportBug
 
-        let windowController = ModalWindowController(viewController: viewController)
+        let windowController = ReportBugWindowController(viewController: viewController)
         windowController.delegate = self
         activeWindowControllers.insert(windowController)
         windowController.showWindow(self)

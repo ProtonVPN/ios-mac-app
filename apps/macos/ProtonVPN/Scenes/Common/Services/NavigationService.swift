@@ -182,14 +182,9 @@ class NavigationService {
     }
 
     func showReportBug() {
-        windowService.closeIfPresent(windowController: ModalWindowController.self)
+        windowService.closeIfPresent(windowController: ReportBugWindowController.self)
         let viewModel = factory.makeReportBugViewModel()
         windowService.openReportBugWindow(viewModel: viewModel, alertService: alertService)
-    }
-
-    func showWhatsNew() {
-        windowService.closeIfPresent(windowController: ModalWindowController.self)
-        windowService.openWhatsNewWindow()
     }
 }
 

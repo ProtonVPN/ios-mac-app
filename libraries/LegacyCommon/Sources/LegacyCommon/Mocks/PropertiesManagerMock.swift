@@ -26,6 +26,8 @@ import VPNShared
 import VPNAppCore
 
 public class PropertiesManagerMock: PropertiesManagerProtocol {
+    public var showWhatsNewModal: Bool = true
+
     private let queue = DispatchQueue(label: "ch.proton.test.mock.sync.properties")
 
     public static var activeConnectionChangedNotification: Notification.Name = Notification.Name("activeConnectionChanged")

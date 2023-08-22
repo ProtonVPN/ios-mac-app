@@ -20,6 +20,32 @@ import SwiftUI
 import SharedViews
 import Strings
 import Theme
+import Ergonomics
+
+final class WhatsNewViewController: NSHostingController<WhatsNewView> {
+    required init?(coder: NSCoder) {
+        super.init(coder: coder, rootView: WhatsNewView())
+    }
+
+    convenience init() {
+        self.init(rootView: WhatsNewView())
+    }
+
+    override init(rootView: WhatsNewView) {
+        super.init(rootView: rootView)
+        self.rootView.dismiss = dismiss
+        title =  "Proton VPN"
+        view.window?.titlebarAppearsTransparent = true
+        view.wantsLayer = true
+        DarkAppearance {
+            view.layer?.backgroundColor = Color(.background).cgColor
+        }
+    }
+
+    func dismiss() {
+        dismiss(nil)
+    }
+}
 
 struct WhatsNewView: View {
 

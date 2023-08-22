@@ -24,7 +24,7 @@ import Cocoa
 import LegacyCommon
 import Strings
 
-class ModalWindowController: WindowController {
+class ReportBugWindowController: WindowController {
 
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
@@ -45,9 +45,10 @@ class ModalWindowController: WindowController {
         }
         
         window.styleMask.remove(NSWindow.StyleMask.resizable)
+        window.title = Localizable.reportBug
         window.titlebarAppearsTransparent = true
         window.appearance = NSAppearance(named: .darkAqua)
-        window.backgroundColor = .color(.background)
+        window.backgroundColor = .color(.background, .weak)
     }
     
 }

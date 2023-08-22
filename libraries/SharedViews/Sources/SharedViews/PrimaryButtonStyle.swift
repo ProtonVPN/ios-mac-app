@@ -42,7 +42,16 @@ public struct PrimaryButtonStyle: ButtonStyle {
             .themeBorder(color: .black,
                          lineWidth: 0,
                          cornerRadius: .radius8)
-            .onHover { isHovered = $0 }
+            .onHover {
+                isHovered = $0
+#if canImport(Cocoa)
+                if ($0) {
+                    NSCursor.pointingHand.push()
+                } else {
+                    NSCursor.pop()
+                }
+#endif
+            }
     }
 
     func backgroundColor(isPressed: Bool) -> Color {

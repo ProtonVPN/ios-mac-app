@@ -25,21 +25,24 @@ class ViewController: NSViewController {
     enum Modal {
         case upsell(UpsellType)
         case discourageSecureCore
+        case whatsNew
     }
 
-    let modals: [(type: Modal, title: String)] = [(.upsell(.allCountries(numberOfServers: 1300,
-                                                                         numberOfCountries: 61)), "All countries"),
-                                                  (.upsell(.country(countryFlag: NSImage(named: "Flag")!,
-                                                                    numberOfDevices: 10,
-                                                                    numberOfCountries: 61)), "Countries"),
-                                                  (.upsell(.secureCore), "Secure Core"),
-                                                  (.upsell(.netShield), "Net Shield"),
-                                                  (.upsell(.safeMode), "Safe Mode"),
-                                                  (.upsell(.moderateNAT), "Moderate NAT"),
-                                                  (.upsell(.vpnAccelerator), "VPN Accelerator"),
-                                                  (.upsell(.customization), "Customization"),
-                                                  (.upsell(.profiles), "Profiles"),
-                                                  (.discourageSecureCore, "Discourage Secure Core")]
+    let modals: [(type: Modal, title: String)] = [
+        (.whatsNew, "What's new"),
+        (.upsell(.allCountries(numberOfServers: 1300,
+                               numberOfCountries: 61)), "All countries"),
+        (.upsell(.country(countryFlag: NSImage(named: "Flag")!,
+                          numberOfDevices: 10,
+                          numberOfCountries: 61)), "Countries"),
+        (.upsell(.secureCore), "Secure Core"),
+        (.upsell(.netShield), "Net Shield"),
+        (.upsell(.safeMode), "Safe Mode"),
+        (.upsell(.moderateNAT), "Moderate NAT"),
+        (.upsell(.vpnAccelerator), "VPN Accelerator"),
+        (.upsell(.customization), "Customization"),
+        (.upsell(.profiles), "Profiles"),
+        (.discourageSecureCore, "Discourage Secure Core")]
 
     @IBOutlet weak var tableView: NSTableView! {
         didSet {
@@ -58,6 +61,8 @@ extension ViewController: NSTableViewDelegate {
             viewController = ModalsFactory.upsellViewController(upsellType: type, upgradeAction: { })
         case .discourageSecureCore:
             viewController = ModalsFactory.discourageSecureCoreViewController(onDontShowAgain: nil, onActivate: nil, onCancel: nil, onLearnMore: nil)
+        case .whatsNew:
+            viewController = ModalsFactory.whatsNewViewController()
         }
 
         presentAsModalWindow(viewController)

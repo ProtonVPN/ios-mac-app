@@ -67,6 +67,7 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var serverTypeToggle: ServerType { get }
     var reportBugEmail: String? { get set }
     var discourageSecureCore: Bool { get set }
+    var showWhatsNewModal: Bool { get set }
 
     func getTelemetryUsageData(for username: String?) -> Bool
     func getTelemetryCrashReports(for username: String?) -> Bool
@@ -193,6 +194,9 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
         // Discourage Secure Core
         case discourageSecureCore = "DiscourageSecureCore"
+
+        // Show what's new modal
+        case showWhatsNewModal = "ShowWhatsNewModal"
 
         // Kill Switch
         case killSwitch = "Firewall" // kill switch is a legacy name in the user's preferences
@@ -409,6 +413,8 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
     @BoolProperty(.discourageSecureCore) public var discourageSecureCore: Bool
 
+    @BoolProperty(.showWhatsNewModal) public var showWhatsNewModal: Bool
+
     @BoolProperty(.killSwitch, notifyChangesWith: PropertiesManager.killSwitchNotification)
     public var killSwitch: Bool
 
@@ -458,7 +464,8 @@ public class PropertiesManager: PropertiesManagerProtocol {
             Keys.alternativeRouting.rawValue: true,
             Keys.excludeLocalNetworks.rawValue: true,
             Keys.smartProtocol.rawValue: ConnectionProtocol.smartProtocol.shouldBeEnabledByDefault,
-            Keys.discourageSecureCore.rawValue: true
+            Keys.discourageSecureCore.rawValue: true,
+            Keys.showWhatsNewModal.rawValue: true
         ])
     }
     
@@ -466,6 +473,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         hasConnected = false
         secureCoreToggle = false
         discourageSecureCore = true
+        showWhatsNewModal = true
         lastIkeConnection = nil
         lastOpenVpnConnection = nil
         lastWireguardConnection = nil

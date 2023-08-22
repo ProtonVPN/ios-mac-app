@@ -32,8 +32,8 @@ public struct ModalsFactory {
         return upsell
     }
 
-    static public func whatsNewViewController(dismiss: @escaping () -> Void) -> NSViewController {
-        NSHostingController(rootView: WhatsNewView(dismiss: dismiss))
+    static public func whatsNewViewController() -> NSViewController {
+        WhatsNewViewController()
     }
 
     static public func discourageSecureCoreViewController(onDontShowAgain: ((Bool) -> Void)?, onActivate: (() -> Void)?, onCancel: (() -> Void)?, onLearnMore: (() -> Void)?) -> NSViewController {

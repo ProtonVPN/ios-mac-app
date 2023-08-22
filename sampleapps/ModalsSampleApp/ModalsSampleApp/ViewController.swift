@@ -50,14 +50,14 @@ class ViewController: UITableViewController {
     let modalsFactory = ModalsFactory()
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        3
+        4
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0:
+        case 1:
             return upsells.count
-        case 2:
+        case 3:
             return upgrades.count
         default:
             return 1
@@ -69,10 +69,12 @@ class ViewController: UITableViewController {
 
         let title: String
         if indexPath.section == 0 {
-            title = upsells[indexPath.row].title
+            title = "What's new"
         } else if indexPath.section == 1 {
-            title = "Discourage Secure Core"
+            title = upsells[indexPath.row].title
         } else if indexPath.section == 2 {
+            title = "Discourage Secure Core"
+        } else if indexPath.section == 3 {
             title = upgrades[indexPath.row].title
         } else {
             title = ""
@@ -88,16 +90,18 @@ class ViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let viewController: UIViewController
         if indexPath.section == 0 {
+            viewController = modalsFactory.whatsNewViewController()
+        } else if indexPath.section == 1 {
             let modalVC = modalsFactory.upsellViewController(upsellType: upsells[indexPath.row].type)
             modalVC.delegate = self
             viewController = modalVC
-        } else if indexPath.section == 1 {
+        } else if indexPath.section == 2 {
             let modalVC = modalsFactory.discourageSecureCoreViewController(onDontShowAgain: nil,
                                                                            onActivate: nil,
                                                                            onCancel: nil,
                                                                            onLearnMore: nil)
             viewController = modalVC
-        } else if indexPath.section == 2 {
+        } else if indexPath.section == 3 {
             let modalVC = modalsFactory.userAccountUpdateViewController(viewModel: upgrades[indexPath.row].type,
                                                                         onPrimaryButtonTap: nil)
             viewController = modalVC
