@@ -126,6 +126,7 @@ fileprivate class WindowServiceMock: WindowService {
     func openSettingsWindow(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, accountViewModel: AccountViewModel, couponViewModel: CouponViewModel) { }
     func openProfilesWindow(viewModel: ProfilesContainerViewModel) {}
     func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService) {}
+    func openWhatsNewWindow() { }
     
     func bringWindowsToForeground() -> Bool {
         return false
