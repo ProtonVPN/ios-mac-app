@@ -205,6 +205,7 @@
 		AD81310F2A853E2C00729E03 /* CountryItemViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C942285AEA10002C095 /* CountryItemViewModelTests.swift */; };
 		AD8131102A853E2C00729E03 /* ColorPickerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C8D2285A2620002C095 /* ColorPickerViewModelTests.swift */; };
 		AD8131112A853E2C00729E03 /* LogSelectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9492EE2266A14E800500E7D /* LogSelectionViewModelTests.swift */; };
+		ADA1A0402A95E4EB00F9A6B6 /* Verifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1A03F2A95E4EB00F9A6B6 /* Verifier.swift */; };
 		ADA7343729B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADA7343629B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib */; };
 		ADA7343929B1896300CF8F77 /* NetShieldStatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA7343829B1896300CF8F77 /* NetShieldStatsTableViewCell.swift */; };
 		ADBA84D92A589F27001EF3F5 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = 0F37F582FD946FEFFFACCDE6 /* Theme */; };
@@ -725,6 +726,7 @@
 		AD6099FA299B2343007E46BC /* ImageSubtitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSubtitleTableViewCell.swift; sourceTree = "<group>"; };
 		AD609A02299B89C0007E46BC /* ImageSubtitleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageSubtitleTableViewCell.xib; sourceTree = "<group>"; };
 		AD8130FC2A852E4F00729E03 /* LiveDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveDependencies.swift; sourceTree = "<group>"; };
+		ADA1A03F2A95E4EB00F9A6B6 /* Verifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Verifier.swift; sourceTree = "<group>"; };
 		ADA7343629B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetShieldStatsTableViewCell.xib; sourceTree = "<group>"; };
 		ADA7343829B1896300CF8F77 /* NetShieldStatsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldStatsTableViewCell.swift; sourceTree = "<group>"; };
 		AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AnnouncementFeatureView.xib; path = ../../../../../ios/ProtonVPN/Scenes/Announcements/Views/AnnouncementFeatureView.xib; sourceTree = "<group>"; };
@@ -1929,13 +1931,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		F314141C27B174BF007424E9 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		F31E911E2758F5F900140B2E /* vpncore */ = {
 			isa = PBXGroup;
 			children = (
@@ -2174,7 +2169,6 @@
 				661D36E02948A0DE00A7EBE3 /* ExternalAccounts */,
 				F377835E26E644BC00392958 /* Settings */,
 				F377836126E644BC00392958 /* Connection */,
-				F377836326E644BC00392958 /* TestPlans */,
 				F377836526E644BC00392958 /* Profiles */,
 				F377836726E644BC00392958 /* Login */,
 			);
@@ -2197,13 +2191,6 @@
 				F377836226E644BC00392958 /* ConnectionTests.swift */,
 			);
 			path = Connection;
-			sourceTree = "<group>";
-		};
-		F377836326E644BC00392958 /* TestPlans */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = TestPlans;
 			sourceTree = "<group>";
 		};
 		F377836526E644BC00392958 /* Profiles */ = {
@@ -2241,6 +2228,7 @@
 				F3B783E926E6428C006768A8 /* Connection */,
 				F3B783EE26E6428C006768A8 /* Profiles */,
 				F3B783F126E6428C006768A8 /* Login */,
+				ADA1A03F2A95E4EB00F9A6B6 /* Verifier.swift */,
 			);
 			name = Robots;
 			path = ../../ios/ProtonVPNUITests/Robots;
@@ -3290,6 +3278,7 @@
 				D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */,
 				57E3438E28E573D60012B2DF /* PlanTests.swift in Sources */,
 				B29CD6AF2654109600978637 /* StringUtils.swift in Sources */,
+				ADA1A0402A95E4EB00F9A6B6 /* Verifier.swift in Sources */,
 				F3B783FE26E6428C006768A8 /* NeedHelpRobot.swift in Sources */,
 				661D36E22948A0FC00A7EBE3 /* ExternalAccountsTests.swift in Sources */,
 				B2D4572A2771D8AD0065FEC2 /* PaymentsRobot.swift in Sources */,

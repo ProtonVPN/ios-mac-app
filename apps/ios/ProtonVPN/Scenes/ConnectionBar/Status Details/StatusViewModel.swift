@@ -381,7 +381,7 @@ class StatusViewModel {
         var cells = [TableViewCellModel]()
 
         cells.append(.upsellableToggle(
-            title: LocalizedString.netshieldTitle,
+            title: Localizable.netshieldTitle,
             state: { .available(enabled: isNetShieldOn, interactive: true) },
             upsell: {
                 // No Upsell: This UI is shown only for paid users when NetShieldStats feature flag is off

@@ -86,8 +86,22 @@ class ProfilesTests: ProtonVPNUITests {
             .verify.profileIsCreated()
     }
 
-    // Tests for New Free UI - Disabled until a special NewFree user is available
-    func testProfileCreationUnavailableForFreeUser() {
+    func testFreeUserCannotCreateProfileWithSecureCore() {
+        let profileName = StringUtils().randomAlphanumericString(length: 10)
+
+        logoutIfNeeded()
+        changeEnvToProdIfNeeded()
+        openLoginScreen()
+        loginAsFreeUser()
+        mainRobot
+            .goToProfilesTab()
+            .addNewProfile()
+            .setSecureCoreProfile(profileName)
+            .verify.isShowingUpsellModal(ofType: .secureCore)
+    }
+
+    func testProfileCreationUnavailableForFreeUser() throws {
+        throw XCTSkip("Skipping until we can log in with a user for which ShowNewFreePlan feature flag is true")
         logoutIfNeeded()
         changeEnvToProdIfNeeded() // When available: use environment where ShowNewFreePlan = true
         openLoginScreen()
@@ -95,7 +109,7 @@ class ProfilesTests: ProtonVPNUITests {
         mainRobot
             .goToProfilesTab()
             .addNewProfile()
-            .verify.upsellModalIsOpen()
+            .verify.isShowingUpsellModal(ofType: .profiles)
     }
     
     func testRecommendedProfiles() {
