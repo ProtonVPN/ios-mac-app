@@ -239,22 +239,22 @@ final class SettingsViewModel {
         cells.append(contentsOf: netShieldCells)
         
         cells.append(.upsellableToggle(
-            title: LocalizedString.alwaysOnVpn,
+            title: Localizable.alwaysOnVpn,
             state: { .available(enabled: true, interactive: false) },
             upsell: { }, // Always on VPN is always in the enabled and non-interactive state
             handler: nil
         ))
-        cells.append(.tooltip(text: LocalizedString.alwaysOnVpnTooltipIos))
+        cells.append(.tooltip(text: Localizable.alwaysOnVpnTooltipIos))
 
         cells.append(.upsellableToggle(
-            title: LocalizedString.killSwitch,
+            title: Localizable.killSwitch,
             state: { [unowned self] in .available(enabled: self.propertiesManager.killSwitch, interactive: true) },
             upsell: {
                 // No Upsell: Kill Switch is a free feature
             },
             handler: ksSwitchCallback()
         ))
-        cells.append(.tooltip(text: LocalizedString.killSwitchTooltip))
+        cells.append(.tooltip(text: Localizable.killSwitchTooltip))
 
         return TableViewSection(title: Localizable.securityOptions, cells: cells)
     }
@@ -265,21 +265,21 @@ final class SettingsViewModel {
         case .success:
             return [
                 .pushKeyValue(
-                    key: LocalizedString.netshieldTitle,
+                    key: Localizable.netshieldTitle,
                     value: netShieldPropertyProvider.netShieldType.name,
                     handler: { [weak self] in self?.pushNetshieldSelectionViewController() }
                 ),
-                .tooltip(text: LocalizedString.netshieldTitleTooltip)
+                .tooltip(text: Localizable.netshieldTitleTooltip)
             ]
         case .failure(.requiresUpgrade):
             return [
                 .upsellableToggle(
-                    title: LocalizedString.netshieldTitle,
+                    title: Localizable.netshieldTitle,
                     state: { .upsell },
                     upsell: { [weak self] in self?.alertService.push(alert: NetShieldUpsellAlert()) },
                     handler: { (_, _) in }
                 ),
-                .tooltip(text: LocalizedString.netshieldTitleTooltip)
+                .tooltip(text: Localizable.netshieldTitleTooltip)
             ]
         case .failure(.featureDisabled):
             return []
@@ -289,7 +289,7 @@ final class SettingsViewModel {
     private var vpnAcceleratorSection: [TableViewCellModel] {
         return [
             .upsellableToggle(
-                title: LocalizedString.vpnAcceleratorTitle,
+                title: Localizable.vpnAcceleratorTitle,
                 state: { [unowned self] in self.displayState(for: VPNAccelerator.self) },
                 upsell: { [weak self] in self?.alertService.push(alert: ModerateNATUpsellAlert()) }, // TODO: show VPN Accelerator upsell modal VPNAPPL-1851
                 handler: { (toggleOn, callback)  in
@@ -300,7 +300,7 @@ final class SettingsViewModel {
                             self.vpnManager.set(vpnAccelerator: toggleOn)
                             callback(toggleOn)
                         case .withReconnect:
-                            self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnAcceleratorChangeTitle, confirmHandler: {
+                            self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.vpnAcceleratorChangeTitle, confirmHandler: {
                                 self.featurePropertyProvider.setValue(toggleOn ? VPNAccelerator.on : VPNAccelerator.off)
                                 callback(toggleOn)
                                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "vpnAccelerator"])
@@ -313,7 +313,7 @@ final class SettingsViewModel {
                     }
                 }
             ),
-            .attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.vpnAcceleratorDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: LocalizedString.vpnAcceleratorDescriptionAltLink, withUrl: CoreAppConstants.ProtonVpnLinks.vpnAccelerator))
+            .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.vpnAcceleratorDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.vpnAcceleratorDescriptionAltLink, withUrl: CoreAppConstants.ProtonVpnLinks.vpnAccelerator))
         ]
     }
 
@@ -332,12 +332,13 @@ final class SettingsViewModel {
     private var allowLanSection: [TableViewCellModel] {
         return [
             .upsellableToggle(
-                title: LocalizedString.allowLanTitle,
+                title: Localizable.allowLanTitle,
                 state: { [unowned self] in self.displayState(for: ExcludeLocalNetworks.self) },
                 upsell: { [weak self] in self?.alertService.push(alert: ModerateNATUpsellAlert()) }, // TODO: show Allow LAN Connections upsell modal VPNAPPL-1851
                 handler: self.switchLANCallback()
             ),
-            .tooltip(text: LocalizedString.allowLanInfo)        ]
+            .tooltip(text: Localizable.allowLanInfo)
+        ]
     }
 
     private var moderateNATState: PaidFeatureDisplayState {
@@ -355,7 +356,7 @@ final class SettingsViewModel {
     private var moderateNATSection: [TableViewCellModel] {
         return [
             .upsellableToggle(
-                title: LocalizedString.moderateNatTitle,
+                title: Localizable.moderateNatTitle,
                 state: { [unowned self] in self.moderateNATState },
                 upsell: { [weak self] in self?.alertService.push(alert: ModerateNATUpsellAlert()) }, // TODO: show new upsell modal VPNAPPL-1851
                 handler: { [weak self] (toggleOn, callback) in
@@ -412,7 +413,7 @@ final class SettingsViewModel {
         // the UI shows the "opposite" value of the safe mode flag
         // if safe mode is enabled the moderate nat checkbox is unchecked and vice versa
         return [.upsellableToggle(
-            title: LocalizedString.nonStandardPortsTitle,
+            title: Localizable.nonStandardPortsTitle,
             state: { [unowned self] in self.safeModeState },
             upsell: { [weak self] in self?.alertService.push(alert: SafeModeUpsellAlert()) },
             handler: { [unowned self] (toggleOn, callback) in
@@ -444,7 +445,7 @@ final class SettingsViewModel {
     private var alternativeRoutingSection: [TableViewCellModel] {
         return [
             .upsellableToggle(
-                title: LocalizedString.troubleshootItemAltTitle,
+                title: Localizable.troubleshootItemAltTitle,
                 state: { [unowned self] in .available(enabled: self.propertiesManager.alternativeRouting, interactive: true) },
                 upsell: { }, // No Upsell: Alternative Routing is a free feature
                 handler: { [unowned self] (toggleOn, callback) in

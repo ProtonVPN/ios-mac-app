@@ -19,7 +19,6 @@
   "testTargets" : [
     {
       "skippedTests" : [
-        "ProfileTests\/testProfileManagementUnavailableForFreeUser()",
         "SearchTests"
       ],
       "target" : {

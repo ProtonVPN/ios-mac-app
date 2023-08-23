@@ -20,7 +20,6 @@ fileprivate let saveProfileButton = "Save"
 fileprivate let tabBars = "Profiles"
 fileprivate let secureCoreToggle = "Secure Core"
 fileprivate let defaultProfileToggle = "Make Default Profile"
-fileprivate let upsellModalTitle = "TitleLabel"
 fileprivate let okButton = "OK"
 fileprivate let protocolCell = "Protocol"
 
@@ -142,16 +141,10 @@ class CreateProfileRobot: CoreElements {
     }
     
     class Verify: CoreElements {
-        
+
         @discardableResult
         func profileWithSameName() -> CreateProfileRobot {
             staticText(profileSameName).checkExists()
-            return CreateProfileRobot()
-        }
-
-        @discardableResult
-        func upsellModalIsOpen() -> CreateProfileRobot {
-            staticText(upsellModalTitle).checkExists()
             return CreateProfileRobot()
         }
     }

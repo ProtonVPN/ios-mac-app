@@ -120,13 +120,12 @@ class ProfileTests: ProtonVPNUITests {
             .verify.checkProfileIsCreated("￼  " + name)
     }
 
-    // Tests for New Free UI - Disabled until a special NewFree user is available
-    func testProfileManagementUnavailableForFreeUser() {
+    func testProfileManagementUnavailableForFreeUser() throws {
+        throw XCTSkip("Skipping until we can log in with a user for which ShowNewFreePlan feature flag is true")
         logoutIfNeeded()
         loginAsFreeUser() // When available: login as NewFree user with ShowNewFreePlan = true
         mainRobot
             .openProfiles()
-        settingsRobot
-            .verify.checkUpsellModalIsOpen()
+            .verify.isShowingUpsellModal(ofType: .profiles)
     }
 }	

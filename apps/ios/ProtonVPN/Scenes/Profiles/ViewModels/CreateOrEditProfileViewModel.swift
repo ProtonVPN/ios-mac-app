@@ -214,7 +214,7 @@ class CreateOrEditProfileViewModel: NSObject {
     
     private var secureCoreCell: TableViewCellModel {
         TableViewCellModel.upsellableToggle(
-            title: LocalizedString.featureSecureCore,
+            title: Localizable.featureSecureCore,
             state: { [unowned self] in .available(enabled: self.state == .secureCore, interactive: true) },
             upsell: { [weak self] in self?.alertService.push(alert: SecureCoreUpsellAlert()) },
             handler: { [weak self] (_, callback) in
@@ -260,7 +260,7 @@ class CreateOrEditProfileViewModel: NSObject {
     
     private var quickConnectCell: TableViewCellModel {
         return TableViewCellModel.upsellableToggle(
-            title: LocalizedString.makeDefaultProfile,
+            title: Localizable.makeDefaultProfile,
             state: { [unowned self] in .available(enabled: self.isDefaultProfile, interactive: true) },
             upsell: {
                 // No Upsell: free users cannot be shown this UI since only paid users are allowed to create or edit profiles

@@ -45,7 +45,7 @@ class ManageProfilesRobot {
     
     let verify = Verify()
     
-    class Verify {
+    class Verify: Verifier {
         
         @discardableResult
         func checkProfileOverViewIsOpen() -> ManageProfilesRobot {

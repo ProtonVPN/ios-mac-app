@@ -21,7 +21,8 @@
 //
 
 import UIKit
-import vpncore
+import LegacyCommon
+import Theme
 
 final class SwitchTableViewCell: UITableViewCell {
 
@@ -41,7 +42,7 @@ final class SwitchTableViewCell: UITableViewCell {
         label.textColor = .normalTextColor()
         selectionStyle = .none
 
-        upsellImageView.image = CoreAsset.vpnSubscriptionBadge.image
+        upsellImageView.image = Theme.Asset.vpnSubscriptionBadge.image
         upsellImageView.isHidden = true
 
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(upsellImageViewTapped))
