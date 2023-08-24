@@ -131,6 +131,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
 
         dropdownBusinessUpsell.image = Theme.Asset.icVpnBusinessBadge.image
         dropdownBusinessUpsell.isHidden = true
+        dropdownBusinessUpsell.toolTip = Localizable.availableWithVpnBusinessTooltip
 
         dropdownLearnMore.fontSize = .small
         dropdownLearnMore.title = Localizable.learnMore
@@ -149,11 +150,13 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
     func reloadOptions() {
         var needsUpgrade = false
         let views: [QuickSettingsDropdownOption] = presenter.options.enumerated().map { (index, presenter) in
-            needsUpgrade = needsUpgrade || presenter.requiresUpdate
+            let thisNeedsUpgrade = presenter.requiresUpdate || presenter.requiresBusinessUpdate
+            defer { needsUpgrade = thisNeedsUpgrade || needsUpgrade }
+
             let view: QuickSettingsDropdownOption? = QuickSettingsDropdownOption.loadViewFromNib()
             view?.titleLabel.stringValue = presenter.title
             view?.optionIconIV.image = presenter.icon
-            if presenter.requiresUpdate || presenter.requiresBusinessUpdate {
+            if thisNeedsUpgrade {
                 dropdownBusinessUpsell.isHidden = !presenter.requiresBusinessUpdate
                 view?.blockedStyle(business: presenter.requiresBusinessUpdate)
                 view?.action = {

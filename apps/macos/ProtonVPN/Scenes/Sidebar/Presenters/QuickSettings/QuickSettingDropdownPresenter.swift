@@ -23,7 +23,7 @@
 import Cocoa
 import LegacyCommon
 
-protocol QuickSettingDropdownPresenterProtocol: class {
+protocol QuickSettingDropdownPresenterProtocol: AnyObject {
     
     var title: String! { get }
     
