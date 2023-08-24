@@ -2346,4 +2346,8 @@
 
 // MARK: Onboarding
 
+/* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
+"_available_with_vpn_business_tooltip" = "Available with VPN Business.";
+
 // MARK: BugReport
+

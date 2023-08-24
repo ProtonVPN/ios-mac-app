@@ -115,6 +115,8 @@ public enum Localizable {
   public static var autoConnect: String { return Localizable.tr("Localizable", "_auto_connect", fallback: "Auto Connect") }
   /// MacOS: Settings -> Connection: description.
   public static var autoConnectTooltip: String { return Localizable.tr("Localizable", "_auto_connect_tooltip", fallback: "On app start, you are connected to the selected profile") }
+  /// This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature.
+  public static var availableWithVpnBusinessTooltip: String { return Localizable.tr("Localizable", "_available_with_vpn_business_tooltip", fallback: "Available with VPN Business.") }
   /// Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful.
   public static var badInterfaceIpRangeAlertTitle: String { return Localizable.tr("Localizable", "_bad_interface_ip_range_alert_title", fallback: "Bad Network Interface") }
   /// Battery usages screen description

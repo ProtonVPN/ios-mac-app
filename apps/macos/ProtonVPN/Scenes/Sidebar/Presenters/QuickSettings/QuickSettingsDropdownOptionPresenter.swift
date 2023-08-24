@@ -95,7 +95,7 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
             icon: icon,
             active: isActive,
             requiresUpdate: level.isUserTierTooLow(currentUserTier),
-            requiresBusinessUpdate: plan.isBusiness && !plan.hasNetShield,
+            requiresBusinessUpdate: level != .off && plan.isBusiness && !plan.hasNetShield,
             selectCallback: {
                 guard !level.isUserTierTooLow(currentUserTier) else {
                     openUpgradeLink()
