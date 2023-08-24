@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,13 +15,17 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView id="6J0-Id-6rf">
-            <rect key="frame" x="0.0" y="0.0" width="495" height="24"/>
+        <customView misplaced="YES" id="6J0-Id-6rf">
+            <rect key="frame" x="0.0" y="0.0" width="495" height="23"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <imageView horizontalHuggingPriority="252" verticalHuggingPriority="251" placeholderIntrinsicWidth="24" placeholderIntrinsicHeight="24" translatesAutoresizingMaskIntoConstraints="NO" id="KLr-mZ-Qvo">
-                    <rect key="frame" x="0.0" y="-2" width="24" height="24"/>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="6Qh-lK-nkX"/>
+                <imageView horizontalHuggingPriority="252" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KLr-mZ-Qvo">
+                    <rect key="frame" x="0.0" y="2" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="20" id="bb6-bz-LSi"/>
+                        <constraint firstAttribute="height" constant="20" id="fYh-Ra-c6I"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="6Qh-lK-nkX"/>
                 </imageView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hh4-eL-wOT">
                     <rect key="frame" x="30" y="4" width="459" height="16"/>
@@ -34,7 +38,7 @@
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="hh4-eL-wOT" secondAttribute="trailing" constant="8" id="3BZ-U7-a9D"/>
-                <constraint firstItem="hh4-eL-wOT" firstAttribute="leading" secondItem="KLr-mZ-Qvo" secondAttribute="trailing" constant="8" symbolic="YES" id="M37-RQ-TRA"/>
+                <constraint firstItem="hh4-eL-wOT" firstAttribute="leading" secondItem="KLr-mZ-Qvo" secondAttribute="trailing" constant="12" id="M37-RQ-TRA"/>
                 <constraint firstAttribute="bottom" secondItem="hh4-eL-wOT" secondAttribute="bottom" constant="4" id="SGI-Y4-iZh"/>
                 <constraint firstItem="KLr-mZ-Qvo" firstAttribute="leading" secondItem="6J0-Id-6rf" secondAttribute="leading" id="dKD-lh-lDc"/>
                 <constraint firstItem="hh4-eL-wOT" firstAttribute="top" secondItem="6J0-Id-6rf" secondAttribute="top" constant="4" id="dZg-th-vcK"/>

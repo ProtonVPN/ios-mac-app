@@ -31,7 +31,8 @@ let package = Package(
             name: "Modals",
             dependencies: [
                 "Overture",
-                "Strings"
+                "Strings",
+                "Theme"
             ],
             resources: [
                 .process("Resources/Media.xcassets")
@@ -49,7 +50,7 @@ let package = Package(
         ),
         .testTarget(
             name: "ModalsTests",
-            dependencies: ["Modals", "Overture"]
+            dependencies: ["Modals", "Overture", "Theme"]
             )
     ]
 )

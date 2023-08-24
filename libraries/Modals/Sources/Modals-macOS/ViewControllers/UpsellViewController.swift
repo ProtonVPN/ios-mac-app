@@ -66,7 +66,7 @@ public final class UpsellViewController: NSViewController {
 
     func setupSubviews() {
         titleLabel.textColor = .color(.text)
-        descriptionLabel.textColor = .color(.text)
+        descriptionLabel.textColor = .color(.text, .weak)
 
         if case .allCountries = upsellType {
             footerLabel.textColor = .color(.text, .weak)

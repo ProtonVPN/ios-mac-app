@@ -26,6 +26,7 @@ internal enum Asset {
   internal static let blockAds = ImageAsset(name: "BlockAds")
   internal static let checkmarkCircle = ImageAsset(name: "CheckmarkCircle")
   internal static let closeButton = ImageAsset(name: "CloseButton")
+  internal static let flatIllustration = ImageAsset(name: "Flat illustration")
   internal static let highSpeedIcon = ImageAsset(name: "HighSpeedIcon")
   internal static let moderateNAT = ImageAsset(name: "ModerateNAT")
   internal static let multipleDevicesIcon = ImageAsset(name: "MultipleDevicesIcon")
@@ -39,12 +40,13 @@ internal enum Asset {
   internal static let secureCore = ImageAsset(name: "SecureCore")
   internal static let secureCoreDiscourage = ImageAsset(name: "SecureCoreDiscourage")
   internal static let streamingIcon = ImageAsset(name: "StreamingIcon")
-  internal static let icArrowOutSquare = ImageAsset(name: "ic-arrow-out-square")
-  internal static let icLightbulb = ImageAsset(name: "ic-lightbulb")
+  internal static let customisation = ImageAsset(name: "customisation")
   internal static let maximumDeviceLimitUpsell = ImageAsset(name: "maximum-device-limit-upsell")
   internal static let maximumDeviceLimitWarning = ImageAsset(name: "maximum-device-limit-warning")
   internal static let netshieldIOS = ImageAsset(name: "netshield-iOS")
   internal static let netshieldMacOS = ImageAsset(name: "netshield-macOS")
+  internal static let profiles = ImageAsset(name: "profiles")
+  internal static let speed = ImageAsset(name: "speed")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 

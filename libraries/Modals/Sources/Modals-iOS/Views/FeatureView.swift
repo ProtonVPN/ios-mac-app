@@ -35,6 +35,7 @@ final class FeatureView: UIView {
 
     var feature: Feature? {
         didSet {
+            iconImageView.tintColor = colors.textAccent
             iconImageView.image = feature?.image
             titleLabel.text = feature?.title()
         }

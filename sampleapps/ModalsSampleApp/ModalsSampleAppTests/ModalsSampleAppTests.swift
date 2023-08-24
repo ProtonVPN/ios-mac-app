@@ -25,7 +25,7 @@ final class ModalsSampleAppTests: XCTestCase {
     func testUpsellViewControllerCreation() throws {
         XCTAssertNotNil(ModalsFactory().upsellViewController(upsellType: .secureCore))
         XCTAssertNotNil(ModalsFactory().upsellViewController(upsellType: .netShield))
-        XCTAssertNotNil(ModalsFactory().upsellViewController(upsellType: .allCountries(numberOfDevices: 12, numberOfServers: 23, numberOfCountries: 34)))
+        XCTAssertNotNil(ModalsFactory().upsellViewController(upsellType: .allCountries(numberOfServers: 23, numberOfCountries: 34)))
         XCTAssertNotNil(ModalsFactory().upsellViewController(upsellType: .safeMode))
         XCTAssertNotNil(ModalsFactory().upsellViewController(upsellType: .moderateNAT))
     }

@@ -18,6 +18,7 @@
 
 import Foundation
 import Strings
+import Theme
 
 #if os(macOS)
 import AppKit
@@ -30,8 +31,6 @@ public typealias Image = UIImage
 public enum Feature {
     case streaming
     case multipleDevices(Int)
-    case netshield
-    case highSpeed
     case blockAds
     case protectFromMalware
     case highSpeedNetshield
@@ -42,6 +41,22 @@ public enum Feature {
     case activityLogging
     case noThirdParties
     case externalAudit
+    case gaming
+    case directConnection
+    case fasterServers
+    case increaseConnectionSpeeds
+    case distantServers
+    case accessLAN
+    case profiles
+    case quickConnect
+    case location
+    case profilesProtocols
+    case autoConnect
+    case anyLocation
+    case higherSpeed
+    case geoblockedContent
+    case multipleCountries(Int)
+    case moneyGuarantee
 }
 
 extension Feature {
@@ -52,10 +67,6 @@ extension Feature {
             return Localizable.modalsUpsellAllCountriesFeatureStreaming
         case .multipleDevices(let numberOfDevices):
             return Localizable.modalsUpsellAllCountriesFeatureMultipleDevices(numberOfDevices)
-        case .netshield:
-            return Localizable.modalsUpsellAllCountriesFeatureNetshield
-        case .highSpeed:
-            return Localizable.modalsUpsellAllCountriesFeatureHighSpeed
         case .blockAds:
             return Localizable.modalsUpsellNetShieldAds
         case .protectFromMalware:
@@ -76,13 +87,45 @@ extension Feature {
             return Localizable.modalsNoLogsThirdParties
         case .externalAudit:
             return Localizable.modalsNoLogsExternalAudit
+        case .gaming:
+            return Localizable.modalsUpsellFeaturesModerateNatGaming
+        case .directConnection:
+            return Localizable.modalsUpsellFeaturesModerateNatDirectConnections
+        case .fasterServers:
+            return Localizable.upsellVpnAcceleratorFasterServers
+        case .increaseConnectionSpeeds:
+            return Localizable.upsellVpnAcceleratorIncreaseConnectionSpeeds
+        case .distantServers:
+            return Localizable.upsellVpnAcceleratorDistantServers
+        case .accessLAN:
+            return Localizable.upsellCustomizationAccessLAN
+        case .profiles:
+            return Localizable.upsellCustomizationProfiles
+        case .quickConnect:
+            return Localizable.upsellCustomizationQuickConnect
+        case .location:
+            return Localizable.upsellProfilesFeatureLocation
+        case .profilesProtocols:
+            return Localizable.upsellProfilesFeatureProtocols
+        case .autoConnect:
+            return Localizable.upsellProfilesFeatureAutoConnect
+        case .anyLocation:
+            return Localizable.upsellCountriesAnyLocation
+        case .higherSpeed:
+            return Localizable.upsellCountriesHigherSpeeds
+        case .geoblockedContent:
+            return Localizable.upsellCountriesGeoblockedContent
+        case .multipleCountries(let countries):
+            return Localizable.upsellCountriesBrowseFrom(countries)
+        case .moneyGuarantee:
+            return Localizable.upsellCountriesMoneyBack
         }
     }
 
     public var linkImage: Image? {
         switch self {
         case .externalAudit:
-            return Asset.icArrowOutSquare.image
+            return Theme.Asset.icArrowOutSquare.image
         default:
             return nil
         }
@@ -94,10 +137,6 @@ extension Feature {
             return Asset.streamingIcon.image
         case .multipleDevices:
             return Asset.multipleDevicesIcon.image
-        case .netshield:
-            return Asset.netshieldIcon.image
-        case .highSpeed:
-            return Asset.highSpeedIcon.image
         case .blockAds:
             return Asset.blockAds.image
         case .protectFromMalware:
@@ -113,7 +152,39 @@ extension Feature {
         case .privacyFirst, .activityLogging, .noThirdParties:
             return Asset.checkmarkCircle.image
         case .externalAudit:
-            return Asset.icLightbulb.image
+            return Theme.Asset.icLightbulb.image
+        case .gaming:
+            return Theme.Asset.icMagicWand.image
+        case .directConnection:
+            return Theme.Asset.icArrowsLeftRight.image
+        case .fasterServers:
+            return Theme.Asset.icServers.image
+        case .increaseConnectionSpeeds:
+            return Theme.Asset.icBolt.image
+        case .distantServers:
+            return Theme.Asset.icChartLine.image
+        case .accessLAN:
+            return Theme.Asset.icPrinter.image
+        case .profiles:
+            return Theme.Asset.icPowerOff.image
+        case .quickConnect:
+            return Theme.Asset.icBolt.image
+        case .location:
+            return Theme.Asset.icGlobe.image
+        case .profilesProtocols:
+            return Theme.Asset.icSliders.image
+        case .autoConnect:
+            return Theme.Asset.icRocket.image
+        case .anyLocation:
+            return Theme.Asset.icGlobe.image
+        case .higherSpeed:
+            return Theme.Asset.icRocket.image
+        case .geoblockedContent:
+            return Theme.Asset.icLockOpen.image
+        case .multipleCountries:
+            return Theme.Asset.icGlobe.image
+        case .moneyGuarantee:
+            return Theme.Asset.icShieldFilled.image
         }
     }
 }

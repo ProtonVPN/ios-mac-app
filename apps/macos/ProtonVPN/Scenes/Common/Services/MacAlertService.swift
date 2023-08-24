@@ -86,7 +86,7 @@ extension MacAlertService: CoreAlertService {
         case let alert as AllCountriesUpsellAlert:
             let plus = AccountPlan.plus
             let countriesCount = planService.countriesCount
-            let allCountriesUpsell = UpsellType.allCountries(numberOfDevices: plus.devicesCount, numberOfServers: plus.serversCount, numberOfCountries: countriesCount)
+            let allCountriesUpsell = UpsellType.allCountries(numberOfServers: plus.serversCount, numberOfCountries: countriesCount)
             show(alert: alert, upsellType: allCountriesUpsell)
 
         case let alert as ModerateNATUpsellAlert:

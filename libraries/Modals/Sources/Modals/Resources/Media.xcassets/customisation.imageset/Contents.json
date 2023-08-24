@@ -1,8 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "ic-lightbulb.pdf",
+      "filename" : "customisation-mobile.pdf",
       "idiom" : "universal"
+    },
+    {
+      "filename" : "customisation-desktop.pdf",
+      "idiom" : "mac"
     }
   ],
   "info" : {
