@@ -109,7 +109,7 @@ public final class OnboardingCoordinator {
 
     private func showUpsell() {
         let const = configuration.constants
-        let upsell = UpsellType.allCountries(numberOfDevices: const.numberOfDevices, numberOfServers: const.numberOfServers, numberOfCountries: const.numberOfCountries)
+        let upsell = UpsellType.allCountries(numberOfServers: const.numberOfServers, numberOfCountries: const.numberOfCountries)
         let upsellViewController = modals.upsellViewController(upsellType: upsell)
         upsellViewController.delegate = self
         let popOverNavigationController = UINavigationController(rootViewController: upsellViewController)

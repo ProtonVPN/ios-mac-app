@@ -182,7 +182,7 @@ extension IosAlertService: CoreAlertService {
 
         case is AllCountriesUpsellAlert:
             let plus = AccountPlan.plus
-            let allCountriesUpsell = UpsellType.allCountries(numberOfDevices: plus.devicesCount, numberOfServers: plus.serversCount, numberOfCountries: planService.countriesCount)
+            let allCountriesUpsell = UpsellType.allCountries(numberOfServers: plus.serversCount, numberOfCountries: planService.countriesCount)
             show(upsellType: allCountriesUpsell)
             
         case is LocalAgentSystemErrorAlert:

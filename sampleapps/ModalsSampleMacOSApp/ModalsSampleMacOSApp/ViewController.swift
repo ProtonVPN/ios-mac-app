@@ -27,13 +27,18 @@ class ViewController: NSViewController {
         case discourageSecureCore
     }
 
-    let modals: [(type: Modal, title: String)] = [(.upsell(.allCountries(numberOfDevices: 10,
-                                                                         numberOfServers: 1300,
+    let modals: [(type: Modal, title: String)] = [(.upsell(.allCountries(numberOfServers: 1300,
                                                                          numberOfCountries: 61)), "All countries"),
+                                                  (.upsell(.country(country: "PL",
+                                                                    numberOfDevices: 10,
+                                                                    numberOfCountries: 61)), "Countries"),
                                                   (.upsell(.secureCore), "Secure Core"),
                                                   (.upsell(.netShield), "Net Shield"),
                                                   (.upsell(.safeMode), "Safe Mode"),
                                                   (.upsell(.moderateNAT), "Moderate NAT"),
+                                                  (.upsell(.vpnAccelerator), "VPN Accelerator"),
+                                                  (.upsell(.customization), "Customization"),
+                                                  (.upsell(.profiles), "Profiles"),
                                                   (.discourageSecureCore, "Discourage Secure Core")]
 
     @IBOutlet weak var tableView: NSTableView! {

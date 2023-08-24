@@ -21,10 +21,14 @@ import Strings
 public enum UpsellType {
     case netShield
     case secureCore
-    case allCountries(numberOfDevices: Int, numberOfServers: Int, numberOfCountries: Int)
+    case allCountries(numberOfServers: Int, numberOfCountries: Int)
+    case country(country: String, numberOfDevices: Int, numberOfCountries: Int)
     case safeMode
     case moderateNAT
     case noLogs
+    case vpnAccelerator
+    case customization
+    case profiles
 
     public func upsellFeature() -> UpsellFeature {
         UpsellFeature(title: title(),
@@ -51,14 +55,22 @@ public enum UpsellType {
             return Localizable.modalsUpsellNetShieldTitle
         case .secureCore:
             return Localizable.modalsUpsellSecureCoreTitle
-        case .allCountries(_, let numberOfServers, let numberOfCountries):
+        case .allCountries(let numberOfServers, let numberOfCountries):
             return Localizable.modalsUpsellAllCountriesTitle(numberOfServers, numberOfCountries)
+        case .country(let country, _, _):
+            return Localizable.upsellCountryFeatureTitle(country)
         case .safeMode:
             return Localizable.modalsUpsellSafeModeTitle
         case .moderateNAT:
             return Localizable.modalsUpsellModerateNatTitle
         case .noLogs:
             return Localizable.modalsNoLogsTitle
+        case .vpnAccelerator:
+            return Localizable.upsellVpnAcceleratorTitle
+        case .customization:
+            return Localizable.upsellCustomizationTitle
+        case .profiles:
+            return Localizable.upsellProfilesTitle
         }
     }
 
@@ -70,12 +82,20 @@ public enum UpsellType {
             return Localizable.modalsUpsellFeaturesSubtitle
         case .allCountries:
             return Localizable.modalsUpsellFeaturesSubtitle
+        case .country:
+            return Localizable.upsellCountryFeatureSubtitle
         case .safeMode:
             return Localizable.modalsUpsellFeaturesSafeModeSubtitle
         case .moderateNAT:
-            return Localizable.modalsUpsellFeaturesModerateNatSubtitle
+            return Localizable.modalsUpsellModerateNatSubtitle
         case .noLogs:
             return nil
+        case .vpnAccelerator:
+            return nil
+        case .customization:
+            return nil
+        case .profiles:
+            return Localizable.upsellProfilesSubtitle
         }
     }
 
@@ -85,12 +105,22 @@ public enum UpsellType {
             return [.blockAds, .protectFromMalware, .highSpeedNetshield]
         case .secureCore:
             return [.routeSecureServers, .addLayer, .protectFromAttacks]
-        case .allCountries(let numberOfDevices, _, _):
-            return [.streaming, .multipleDevices(numberOfDevices), .netshield, .highSpeed]
-        case .safeMode, .moderateNAT:
+        case .allCountries:
+            return [.anyLocation, .higherSpeed, .geoblockedContent, .streaming]
+        case .country(_, let numberOfDevices, let numberOfCountries):
+            return [.multipleCountries(numberOfCountries), .higherSpeed, .streaming, .multipleDevices(numberOfDevices), .moneyGuarantee]
+        case .safeMode:
             return []
+        case .moderateNAT:
+            return [.gaming, .directConnection]
         case .noLogs:
             return [.privacyFirst, .activityLogging, .noThirdParties]
+        case .vpnAccelerator:
+            return [.fasterServers, .increaseConnectionSpeeds, .distantServers]
+        case .customization:
+            return [.accessLAN, .profiles, .quickConnect]
+        case .profiles:
+            return [.location, .profilesProtocols, .autoConnect]
         }
     }
 
@@ -116,6 +146,15 @@ public enum UpsellType {
             return Asset.moderateNAT.image
         case .noLogs:
             return Asset.noLogs.image
+        case .vpnAccelerator:
+            return Asset.speed.image
+        case .customization:
+            return Asset.customisation.image
+        case .profiles:
+            return Asset.profiles.image
+        case .country(let country, _, _):
+            // todo: Select correct flag based on country code
+            return Asset.flatIllustration.image
         }
     }
 

@@ -74,7 +74,7 @@
 			<key>one</key>
 			<string>Connect up to %d devices at once</string>
 			<key>other</key>
-			<string>Connect up to %d devices at once</string>
+			<string>Protect up to %d devices</string>
 		</dict>
 	</dict>
 	<key>search_upsell_title</key>

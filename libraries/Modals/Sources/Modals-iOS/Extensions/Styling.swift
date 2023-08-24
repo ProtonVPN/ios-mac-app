@@ -78,7 +78,8 @@ let titleStyle = concat(centeredTextStyle, and: {
 })
 
 let subtitleStyle = concat(centeredTextStyle, and: {
-    $0.font = .systemFont(ofSize: 15, weight: .regular)
+    $0.font = .systemFont(ofSize: 17, weight: .regular)
+    $0.textColor = colors.weakText
 })
 
 let footerStyle = concat(baseTextStyle, and: {
@@ -87,5 +88,5 @@ let footerStyle = concat(baseTextStyle, and: {
 })
 
 let featureTextStyle = concat(baseTextStyle, and: {
-    $0.font = .systemFont(ofSize: 15, weight: .semibold)
+    $0.font = .systemFont(ofSize: 15, weight: .regular)
 })

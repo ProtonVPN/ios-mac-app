@@ -1732,23 +1732,27 @@ public enum Localizable {
   /// Feature of the All Countries upsell screen
   public static var modalsUpsellAllCountriesFeatureNetshield: String { return Localizable.tr("Localizable", "modals_upsell_all_countries_feature_netshield", fallback: "Block ads and malware with NetShield") }
   /// Feature of the All Countries upsell screen
-  public static var modalsUpsellAllCountriesFeatureStreaming: String { return Localizable.tr("Localizable", "modals_upsell_all_countries_feature_streaming", fallback: "Access global streaming services") }
+  public static var modalsUpsellAllCountriesFeatureStreaming: String { return Localizable.tr("Localizable", "modals_upsell_all_countries_feature_streaming", fallback: "Stream your favorite movies") }
   /// Plural format key: "Access over %#@num_servers@ in %#@num_countries@"
   public static func modalsUpsellAllCountriesTitle(_ p1: Int, _ p2: Int) -> String {
     return Localizable.tr("Localizable", "modals_upsell_all_countries_title", p1, p2, fallback: "Plural format key: \"Access over %#@num_servers@ in %#@num_countries@\"")
   }
   /// Footer of the All Countries upsell screen
   public static var modalsUpsellFeaturesFooter: String { return Localizable.tr("Localizable", "modals_upsell_features_footer", fallback: "And many more premium features") }
-  /// Subtitle of the Moderate NAT upsell screen
-  public static var modalsUpsellFeaturesModerateNatSubtitle: String { return Localizable.tr("Localizable", "modals_upsell_features_moderate_nat_subtitle", fallback: "Moderate NAT, also known as Nat Type 2, can improve your online experience with various applications and online video games.\n\nUnlock this and other features with a Plus plan.") }
+  /// Feature of the Moderate NAT upsell screen
+  public static var modalsUpsellFeaturesModerateNatDirectConnections: String { return Localizable.tr("Localizable", "modals_upsell_features_moderate_nat_direct_connections", fallback: "NAT Type 2 (moderate) optimizes speed and stability by enabling direct connections between devices") }
+  /// Feature of the Moderate NAT upsell screen
+  public static var modalsUpsellFeaturesModerateNatGaming: String { return Localizable.tr("Localizable", "modals_upsell_features_moderate_nat_gaming", fallback: "Improve online gaming and video call performance") }
   /// Subtitle of the Safe Mode upsell screen
   public static var modalsUpsellFeaturesSafeModeSubtitle: String { return Localizable.tr("Localizable", "modals_upsell_features_safe_mode_subtitle", fallback: "Have advanced or professional computing needs that require non-standard ports?\n\nUpgrade to VPN Plus to access this and other premium features.") }
   /// Subtitle of All Countries, NetShield and Secure Core upsell screens
-  public static var modalsUpsellFeaturesSubtitle: String { return Localizable.tr("Localizable", "modals_upsell_features_subtitle", fallback: "When you upgrade to VPN Plus") }
+  public static var modalsUpsellFeaturesSubtitle: String { return Localizable.tr("Localizable", "modals_upsell_features_subtitle", fallback: "When you upgrade to Plus") }
   /// Learn more button title of the Moderate NAT upsell screen
   public static var modalsUpsellModerateNatLearnMore: String { return Localizable.tr("Localizable", "modals_upsell_moderate_nat_learn_more", fallback: "What is Moderate NAT?") }
+  /// Subtitle of Moderate NAT upsell screens
+  public static var modalsUpsellModerateNatSubtitle: String { return Localizable.tr("Localizable", "modals_upsell_moderate_nat_subtitle", fallback: "Unlock NAT Type 2 with VPN Plus") }
   /// Title of the Moderate NAT upsell screen
-  public static var modalsUpsellModerateNatTitle: String { return Localizable.tr("Localizable", "modals_upsell_moderate_nat_title", fallback: "Enable Moderate NAT") }
+  public static var modalsUpsellModerateNatTitle: String { return Localizable.tr("Localizable", "modals_upsell_moderate_nat_title", fallback: "Level up your gaming experience") }
   /// Feature of the NetShield upsell screen
   public static var modalsUpsellNetShieldAds: String { return Localizable.tr("Localizable", "modals_upsell_net_shield_ads", fallback: "Block ads and trackers") }
   /// Feature of the NetShield upsell screen
@@ -1847,8 +1851,58 @@ public enum Localizable {
   public static var twoFactorAuthentication: String { return Localizable.tr("Localizable", "two_factor_authentication", fallback: "Two-factor authentication") }
   /// Two-factor code
   public static var twoFactorCode: String { return Localizable.tr("Localizable", "two_factor_code", fallback: "Two-factor code") }
+  /// Feature of Countries upsell modal
+  public static var upsellCountriesAnyLocation: String { return Localizable.tr("Localizable", "upsell_countries_any_location", fallback: "Choose any location") }
+  /// Feature of Country upsell modal
+  public static func upsellCountriesBrowseFrom(_ p1: Int) -> String {
+    return Localizable.tr("Localizable", "upsell_countries_browse_from", p1, fallback: "Browse from %d countries")
+  }
+  /// Feature of Country upsell modal
+  public static func upsellCountriesDevices(_ p1: Int) -> String {
+    return Localizable.tr("Localizable", "upsell_countries_devices", p1, fallback: "Protect up to %d devices")
+  }
+  /// Feature of Countries upsell modal
+  public static var upsellCountriesEvenHigherSpeed: String { return Localizable.tr("Localizable", "upsell_countries_even_higher_speed", fallback: "Even higher VPN speed") }
+  /// Feature of Countries upsell modal
+  public static var upsellCountriesGeoblockedContent: String { return Localizable.tr("Localizable", "upsell_countries_geoblocked_content", fallback: "Access geoblocked content") }
+  /// Feature of Country upsell modal
+  public static var upsellCountriesHigherSpeeds: String { return Localizable.tr("Localizable", "upsell_countries_higher_speeds", fallback: "Higher speeds (10 Gbps)") }
+  /// Feature of Country upsell modal
+  public static var upsellCountriesMoneyBack: String { return Localizable.tr("Localizable", "upsell_countries_money_back", fallback: "30-day money back guarantee") }
+  /// Feature of Country upsell modal
+  public static var upsellCountryFeatureSubtitle: String { return Localizable.tr("Localizable", "upsell_country_feature_subtitle", fallback: "Unlock country selection with VPN Plus") }
+  /// Feature of Country upsell modal
+  public static func upsellCountryFeatureTitle(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "upsell_country_feature_title", String(describing: p1), fallback: "Want to connect to %@?")
+  }
+  /// Feature of Customization upsell modal
+  public static var upsellCustomizationAccessLAN: String { return Localizable.tr("Localizable", "upsell_customization_access_LAN", fallback: "Access devices on your local area network (LAN)") }
+  /// Feature of Customization upsell modal
+  public static var upsellCustomizationProfiles: String { return Localizable.tr("Localizable", "upsell_customization_profiles", fallback: "Save frequently used connections with profiles") }
+  /// Feature of Customization upsell modal
+  public static var upsellCustomizationQuickConnect: String { return Localizable.tr("Localizable", "upsell_customization_quick_connect", fallback: "Get faster access to your profiles with Quick Connect") }
+  /// Title of Customization upsell modal
+  public static var upsellCustomizationTitle: String { return Localizable.tr("Localizable", "upsell_customization_title", fallback: "Unlock advanced VPN customization") }
   /// Button title when user is on lower tier than the server requires [Redesign_2023]
   public static var upsellGetPlus: String { return Localizable.tr("Localizable", "upsell_get_plus", fallback: "Get Plus") }
+  /// Feature of Profiles upsell modal
+  public static var upsellProfilesFeatureAutoConnect: String { return Localizable.tr("Localizable", "upsell_profiles_feature_auto_connect", fallback: "Set up auto-connect for even faster access") }
+  /// Feature of Profiles upsell modal
+  public static var upsellProfilesFeatureLocation: String { return Localizable.tr("Localizable", "upsell_profiles_feature_location", fallback: "Save your preferred server, city, or country") }
+  /// Feature of Profiles upsell modal
+  public static var upsellProfilesFeatureProtocols: String { return Localizable.tr("Localizable", "upsell_profiles_feature_protocols", fallback: "Set custom protocols and premium VPN features") }
+  /// Subtitle of Profiles upsell modal
+  public static var upsellProfilesSubtitle: String { return Localizable.tr("Localizable", "upsell_profiles_subtitle", fallback: "Unlock profiles with VPN Plus") }
+  /// Title of Profiles upsell modal
+  public static var upsellProfilesTitle: String { return Localizable.tr("Localizable", "upsell_profiles_title", fallback: "Get quick access to your frequent connections") }
+  /// Feature of VPN Accelerator upsell modal
+  public static var upsellVpnAcceleratorDistantServers: String { return Localizable.tr("Localizable", "upsell_vpn_accelerator_distant_servers", fallback: "Improved speed and stability when connected to distant servers") }
+  /// Feature of VPN Accelerator upsell modal
+  public static var upsellVpnAcceleratorFasterServers: String { return Localizable.tr("Localizable", "upsell_vpn_accelerator_faster_servers", fallback: "Access faster, less crowded servers") }
+  /// Feature of VPN Accelerator upsell modal
+  public static var upsellVpnAcceleratorIncreaseConnectionSpeeds: String { return Localizable.tr("Localizable", "upsell_vpn_accelerator_increase_connection_speeds", fallback: "Increase connection speeds by up to 400% with VPN Accelerator") }
+  /// Title of VPN Accelerator upsell modal
+  public static var upsellVpnAcceleratorTitle: String { return Localizable.tr("Localizable", "upsell_vpn_accelerator_title", fallback: "Browse at even higher speeds (up to 10 Gbps)") }
   /// Use coupon
   public static var useCoupon: String { return Localizable.tr("Localizable", "use_coupon", fallback: "Use coupon") }
   /// Use recovery code

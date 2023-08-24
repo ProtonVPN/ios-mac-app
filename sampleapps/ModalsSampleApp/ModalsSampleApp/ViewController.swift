@@ -23,12 +23,16 @@ import UIKit
 class ViewController: UITableViewController {
     
     let upsells: [(type: UpsellType, title: String)] = [
-        (.allCountries(numberOfDevices: 10, numberOfServers: 1300, numberOfCountries: 61), "All countries"),
+        (.allCountries(numberOfServers: 1300, numberOfCountries: 61), "All countries"),
+        (.country(country: "PL", numberOfDevices: 10, numberOfCountries: 61), "Countries"),
         (.secureCore, "Secure Core"),
         (.netShield, "Net Shield"),
         (.safeMode, "Safe Mode"),
         (.moderateNAT, "Moderate NAT"),
-        (.noLogs, "No Logs")]
+        (.noLogs, "No Logs"),
+        (.vpnAccelerator, "VPN Accelerator"),
+        (.customization, "Customization"),
+        (.profiles, "Profiles")]
     let upgrades: [(type: UserAccountUpdateViewModel, title: String)] = [
         (.subscriptionDowngradedReconnecting(numberOfCountries: 63,
                                              numberOfDevices: 5,

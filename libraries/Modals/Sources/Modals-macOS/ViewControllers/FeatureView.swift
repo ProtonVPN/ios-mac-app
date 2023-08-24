@@ -19,6 +19,8 @@
 import Foundation
 import AppKit
 import Modals
+import Theme
+import SwiftUI
 
 final class FeatureView: NSView {
 
@@ -61,6 +63,7 @@ final class FeatureView: NSView {
 
     var feature: Feature? {
         didSet {
+            iconImageView.contentTintColor = .color(.icon, .interactive)
             iconImageView.image = feature?.image
             titleLabel.stringValue = feature?.title() ?? ""
         }
