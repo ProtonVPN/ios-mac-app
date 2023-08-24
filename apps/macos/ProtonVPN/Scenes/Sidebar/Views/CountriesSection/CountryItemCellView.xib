@@ -93,7 +93,7 @@
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic-brand-tor" id="VEd-mZ-v1n"/>
                             <color key="contentTintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                         </imageView>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7wh-uQ-7Lp">
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7wh-uQ-7Lp" customClass="UpgradeButton" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="66" y="0.0" width="64" height="32"/>
                             <buttonCell key="cell" type="bevel" title="Upgrade" bezelStyle="rounded" alignment="center" controlSize="large" imageScaling="proportionallyDown" inset="2" id="fbx-Yz-THp">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
