@@ -67,6 +67,14 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     public var loggedIn = false
     public var successfulConsecutiveSessionRefreshes = 0
 
+    public var shouldRefreshServersAccordingToUserTier: Bool {
+        // Every n times, fully refresh the server list, including the paid ones.
+        // Add 1 to the value of `successfulConsecutiveSessionRefreshes` so that on
+        // startup we always do a full refresh.
+        let n = 10
+        return (successfulConsecutiveSessionRefreshes + 1) % n == 0
+    }
+
     public var vpnApiService: VpnApiService
     public var vpnKeychain: VpnKeychainProtocol
     public var propertiesManager: PropertiesManagerProtocol

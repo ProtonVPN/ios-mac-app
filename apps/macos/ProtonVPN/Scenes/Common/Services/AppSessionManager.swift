@@ -89,12 +89,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         didSet { loggedIn = sessionStatus == .established }
     }
 
-    var shouldRefreshServersAccordingToUserTier: Bool {
-        // Every n times, fully refresh the server list, including the paid ones.
-        let n = 10
-        return successfulConsecutiveSessionRefreshes % n == 0
-    }
-
     init(factory: Factory) {
         self.factory = factory
         super.init(factory: factory)
@@ -186,7 +180,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             vpnKeychain.store(vpnCredentials: credentials)
             self.serverStorage.store(
                 properties.serverModels,
-                keepStalePaidServers: credentials.maxTier == CoreAppConstants.VpnTiers.free
+                keepStalePaidServers: shouldRefreshServersAccordingToUserTier && credentials.maxTier == CoreAppConstants.VpnTiers.free
             )
         } else {
             self.serverStorage.store(properties.serverModels)
