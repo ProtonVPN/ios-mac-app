@@ -51,7 +51,7 @@ final class CityItemViewModel: CityViewModel {
 
     var connectIcon: UIImage? {
         if isUsersTierTooLow {
-            return IconProvider.lock
+            return CoreAsset.vpnSubscriptionBadge.image
         } else if underMaintenance {
             return IconProvider.wrench
         } else {
@@ -76,8 +76,11 @@ final class CityItemViewModel: CityViewModel {
     }
 
     var connectButtonColor: UIColor {
+        if isUsersTierTooLow {
+            return .clear
+        }
         if underMaintenance {
-            return isUsersTierTooLow ? UIColor.weakInteractionColor() : .clear
+            return .clear
         }
         return isCurrentlyConnected ? UIColor.interactionNorm() : UIColor.weakInteractionColor()
     }
