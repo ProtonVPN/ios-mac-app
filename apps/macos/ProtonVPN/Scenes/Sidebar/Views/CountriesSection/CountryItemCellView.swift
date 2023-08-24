@@ -48,7 +48,6 @@ final class CountryItemCellView: NSView {
         
     override func awakeFromNib() {
         super.awakeFromNib()
-        upgradeBtn.stringValue = Localizable.upgrade
         
         expandButton.wantsLayer = true
         expandButton.layer?.cornerRadius = 16

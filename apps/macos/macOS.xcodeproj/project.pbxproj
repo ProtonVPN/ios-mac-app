@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00812A4F085892E5DCCEE741 /* SysexGuideWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E54F86CCDE59E21DC60F9A /* SysexGuideWindowController.swift */; };
+		0521A395221AC367E29C3721 /* HoverDetectionImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C128CD4E5B633B16F4022E /* HoverDetectionImageButton.swift */; };
 		09A7611B37870D3AFF300CF6 /* WireguardMacProtocolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9284811B4C31B0BCAC0918BC /* WireguardMacProtocolFactory.swift */; };
 		119C351666130ADA97AB491F /* SubuserAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C9A83FB783483559C8FE68 /* SubuserAlertWindowController.swift */; };
 		3328A24484BCAA8F674140DC /* XPCConnectionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BB7FC660BD3A61E44211E /* XPCConnectionsRepository.swift */; };
@@ -98,9 +99,9 @@
 		667E0E902A4EDA9000EE83ED /* SSOWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667E0E8F2A4EDA8F00EE83ED /* SSOWebViewController.swift */; };
 		667E0E922A4EE2DF00EE83ED /* SSOWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 667E0E912A4EE2DF00EE83ED /* SSOWebViewController.xib */; };
 		7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7518A5EF1EEF362900E1EB2B /* libc++.tbd */; };
-		AD8130FF2A85360800729E03 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FE2A85360800729E03 /* LiveDependencies.swift */; };
 		AD5EB4152AA1298100432BCE /* ChangeServerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5EB4142AA1298100432BCE /* ChangeServerButton.swift */; };
 		AD6AE1522AA8AC2A0076B083 /* ClickthroughTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6AE1512AA8AC2A0076B083 /* ClickthroughTextField.swift */; };
+		AD8130FF2A85360800729E03 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FE2A85360800729E03 /* LiveDependencies.swift */; };
 		AD8C78AE29898403008AC0B5 /* AppSessionManagerImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8C78AD29898403008AC0B5 /* AppSessionManagerImplementationTests.swift */; };
 		ADA1A03E2A95E34000F9A6B6 /* Verifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1A03D2A95E34000F9A6B6 /* Verifier.swift */; };
 		ADE590CC2A616E4B00089165 /* ProtocolDeprecatedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE590CB2A616E4B00089165 /* ProtocolDeprecatedViewController.swift */; };
@@ -236,7 +237,7 @@
 		E57B263229C3188D00533B7C /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E57B263129C3188D00533B7C /* AVKit.framework */; };
 		E59447542A86217A00E1E241 /* ProtonCoreLoginUI in Frameworks */ = {isa = PBXBuildFile; productRef = E59447532A86217A00E1E241 /* ProtonCoreLoginUI */; };
 		E5C00F0B2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F0A2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift */; };
-		E5C00F0D2A15FC6E0030076F /* (null) in Sources */ = {isa = PBXBuildFile; };
+		E5C00F0D2A15FC6E0030076F /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		E5C00F152A1612950030076F /* NavigationRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F142A1612950030076F /* NavigationRobot.swift */; };
 		E5C4EF3B29B611C20013ACB2 /* SystemExtensionGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3A29B611C20013ACB2 /* SystemExtensionGuideViewController.swift */; };
 		E5C4EF3D29B882AF0013ACB2 /* LinkButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3C29B882AF0013ACB2 /* LinkButtonStyle.swift */; };
@@ -268,6 +269,7 @@
 		E5FF89662A810046002B4A49 /* SideBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC762A430A720058B3D9 /* SideBarItemView.swift */; };
 		E5FF89672A810280002B4A49 /* LoginViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E48D042A4D729B00B09111 /* LoginViewControllerRepresentable.swift */; };
 		E5FFC89A2816AEFC00E355DA /* PlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC8992816AEFC00E355DA /* PlanService.swift */; };
+		E641220654A45F3C689A756A /* UpgradeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470ECBEC78B00733301D477F /* UpgradeButton.swift */; };
 		E9036B3F26C1044700EDFDA4 /* IPCOvpnService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9036B3E26C1044700EDFDA4 /* IPCOvpnService.swift */; };
 		E9036B4126C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9036B4026C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift */; };
 		E91BDD38274BC89A005F370C /* WGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDD37274BC89A005F370C /* WGLogger.swift */; };
@@ -568,6 +570,7 @@
 
 /* Begin PBXFileReference section */
 		17F6646170F7CB52D5A45560 /* AnnouncementDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementDetailViewController.xib; sourceTree = "<group>"; };
+		18C128CD4E5B633B16F4022E /* HoverDetectionImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverDetectionImageButton.swift; sourceTree = "<group>"; };
 		351BB7FC660BD3A61E44211E /* XPCConnectionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = XPCConnectionsRepository.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Services/XPCConnectionsRepository.swift; sourceTree = "<group>"; };
 		3FD48FBC3A054F5D91A15F1E /* SubuserMacAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SubuserMacAlertViewController.swift; path = "../../../../../macos/ProtonVPN/Scenes/Misc/Subuser alert/SubuserMacAlertViewController.swift"; sourceTree = "<group>"; };
 		42082650256BB78600A621EC /* NSView+Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Children.swift"; sourceTree = "<group>"; };
@@ -609,6 +612,7 @@
 		42EF09E3257A713F00E2EDCA /* ProtonVPN_OpenVPN.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProtonVPN_OpenVPN.entitlements; sourceTree = "<group>"; };
 		42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectingOverlayViewModel.swift; sourceTree = "<group>"; };
 		437269ACE0C19C03AA703A72 /* SubuserMacAlertViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SubuserMacAlertViewController.xib; path = "../../../../../macos/ProtonVPN/Scenes/Misc/Subuser alert/SubuserMacAlertViewController.xib"; sourceTree = "<group>"; };
+		470ECBEC78B00733301D477F /* UpgradeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeButton.swift; sourceTree = "<group>"; };
 		4C54383227C3DC0600D7A88D /* ModelIDChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ModelIDChecker.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/Utilities/ModelIDChecker.swift; sourceTree = "<group>"; };
 		4C7CADE3280060C90008778E /* CGMutablePath+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CGMutablePath+Extension.swift"; path = "../../../macos/ProtonVPN/Extensions/CGMutablePath+Extension.swift"; sourceTree = "<group>"; };
 		4C7CAEC028006E5C0008778E /* LoadingAnimationFrames */ = {isa = PBXFileReference; lastKnownFileType = folder; path = LoadingAnimationFrames; sourceTree = "<group>"; };
@@ -634,9 +638,9 @@
 		9284811B4C31B0BCAC0918BC /* WireguardMacProtocolFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WireguardMacProtocolFactory.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/VPN/WireguardMacProtocolFactory.swift; sourceTree = "<group>"; };
 		9FDB93D66CF4A7DB23EE7AA8 /* AnnouncementFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnouncementFeatureView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Announcement/Views/AnnouncementFeatureView.swift; sourceTree = "<group>"; };
 		A1E54F86CCDE59E21DC60F9A /* SysexGuideWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SysexGuideWindowController.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Windows/SysexGuideWindowController.swift; sourceTree = "<group>"; };
-		AD8130FE2A85360800729E03 /* LiveDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveDependencies.swift; sourceTree = "<group>"; };
 		AD5EB4142AA1298100432BCE /* ChangeServerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeServerButton.swift; sourceTree = "<group>"; };
 		AD6AE1512AA8AC2A0076B083 /* ClickthroughTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickthroughTextField.swift; sourceTree = "<group>"; };
+		AD8130FE2A85360800729E03 /* LiveDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveDependencies.swift; sourceTree = "<group>"; };
 		AD8C78AD29898403008AC0B5 /* AppSessionManagerImplementationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionManagerImplementationTests.swift; sourceTree = "<group>"; };
 		ADA1A03D2A95E34000F9A6B6 /* Verifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Verifier.swift; sourceTree = "<group>"; };
 		ADE590CB2A616E4B00089165 /* ProtocolDeprecatedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolDeprecatedViewController.swift; sourceTree = "<group>"; };
@@ -2538,6 +2542,8 @@
 				4CFFC94327E0C0AE0035969B /* CancellationButton.swift */,
 				E15A8690202738A1009B9C83 /* ZoomButton.swift */,
 				AD5EB4142AA1298100432BCE /* ChangeServerButton.swift */,
+				18C128CD4E5B633B16F4022E /* HoverDetectionImageButton.swift */,
+				470ECBEC78B00733301D477F /* UpgradeButton.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -2702,8 +2708,6 @@
 				E15B755320FA83CB0022C406 /* PBXTargetDependency */,
 			);
 			name = ProtonVPNmacOSTests;
-			packageProductDependencies = (
-			);
 			productName = ProtonVPNTests;
 			productReference = E15B754D20FA83CB0022C406 /* ProtonVPNmacOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -2925,16 +2929,16 @@
 			);
 			mainGroup = EED534781EEC112000013607;
 			packageReferences = (
-				D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */,
+				D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */,
 				E93533D929CAEE2C005E3A59 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				4C1C07A92A39C937009DE875 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
-				E5A4AD222A3B369E00CC91D7 /* XCRemoteSwiftPackageReference "swiftui-navigation" */,
-				E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log" */,
-				E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
-				4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP" */,
+				E5A4AD222A3B369E00CC91D7 /* XCRemoteSwiftPackageReference "swiftui-navigation.git" */,
+				E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log.git" */,
+				E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */,
+				4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP.git" */,
 				4C7D40572A60251700ACDBED /* XCRemoteSwiftPackageReference "SDWebImage" */,
-				4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability" */,
-				4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder" */,
+				4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability.swift" */,
+				4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder.git" */,
 				4C2599922A7AA25800A31895 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */,
 				4C8571DA2A7CEC5B0057FED6 /* XCRemoteSwiftPackageReference "TrustKit" */,
 			);
@@ -3225,7 +3229,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5C00F0D2A15FC6E0030076F /* (null) in Sources */,
+				E5C00F0D2A15FC6E0030076F /* BuildFile in Sources */,
 				E5C00F0B2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift in Sources */,
 				E5C00F152A1612950030076F /* NavigationRobot.swift in Sources */,
 			);
@@ -3547,6 +3551,8 @@
 				5AD7615A4525DAA15F6ED3BF /* AnnouncementFeatureView.swift in Sources */,
 				119C351666130ADA97AB491F /* SubuserAlertWindowController.swift in Sources */,
 				54A3F867B897C7D92CDF75C9 /* SubuserMacAlertViewController.swift in Sources */,
+				0521A395221AC367E29C3721 /* HoverDetectionImageButton.swift in Sources */,
+				E641220654A45F3C689A756A /* UpgradeButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4615,7 +4621,7 @@
 				minimumVersion = 0.0.0;
 			};
 		};
-		4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability" */ = {
+		4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
 			requirement = {
@@ -4631,7 +4637,7 @@
 				revision = d107d7cc825f38ae2d6dc7c54af71d58145c3506;
 			};
 		};
-		4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP" */ = {
+		4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/lachlanbell/SwiftOTP.git";
 			requirement = {
@@ -4640,7 +4646,7 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder" */ = {
+		4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/almazrafi/DictionaryCoder.git";
 			requirement = {
@@ -4648,7 +4654,7 @@
 				minimumVersion = 1.1.0;
 			};
 		};
-		D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */ = {
+		D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ProtonVPN/wireguard-apple.git";
 			requirement = {
@@ -4656,7 +4662,7 @@
 				revision = 026d18ae27fe83b32a661fbfa1ee698f67ba2221;
 			};
 		};
-		E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
+		E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-dependencies.git";
 			requirement = {
@@ -4664,7 +4670,7 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		E5A4AD222A3B369E00CC91D7 /* XCRemoteSwiftPackageReference "swiftui-navigation" */ = {
+		E5A4AD222A3B369E00CC91D7 /* XCRemoteSwiftPackageReference "swiftui-navigation.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swiftui-navigation.git";
 			requirement = {
@@ -4672,7 +4678,7 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log" */ = {
+		E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-log.git";
 			requirement = {
@@ -4718,7 +4724,7 @@
 		};
 		4C25999B2A7AA29800A31895 /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
+			package = E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */;
 			productName = Dependencies;
 		};
 		4C74D32A2A0B9D7F004F8528 /* PMLogger */ = {
@@ -4736,7 +4742,7 @@
 		};
 		4C7D40762A60298C00ACDBED /* Reachability */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability" */;
+			package = 4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability.swift" */;
 			productName = Reachability;
 		};
 		4C8571DB2A7CEC5B0057FED6 /* TrustKit */ = {
@@ -4746,7 +4752,7 @@
 		};
 		4C9754F62A60173C0035A61B /* SwiftOTP */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP" */;
+			package = 4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP.git" */;
 			productName = SwiftOTP;
 		};
 		4CD1F77F2A72BDF800E8AB01 /* TunnelKitOpenVPN */ = {
@@ -4775,7 +4781,7 @@
 		};
 		4CD1F7962A72DF2700E8AB01 /* DictionaryCoder */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder" */;
+			package = 4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder.git" */;
 			productName = DictionaryCoder;
 		};
 		4CD1F79D2A72E57F00E8AB01 /* LegacyCommon */ = {
@@ -4788,7 +4794,7 @@
 		};
 		D5CA559526A59A9A001E9284 /* WireGuardKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */;
+			package = D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */;
 			productName = WireGuardKit;
 		};
 		D5E02A7D2996378700362621 /* NEHelper */ = {
@@ -4838,7 +4844,7 @@
 		};
 		E5E48D022A4C3D7100B09111 /* Logging */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log" */;
+			package = E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log.git" */;
 			productName = Logging;
 		};
 		E93533DA29CAEE2C005E3A59 /* Sparkle */ = {

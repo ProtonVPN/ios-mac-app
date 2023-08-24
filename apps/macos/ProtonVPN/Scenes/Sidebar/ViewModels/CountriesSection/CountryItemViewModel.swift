@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import vpncore
 import LegacyCommon
 import VPNShared
 import VPNAppCore
@@ -126,7 +127,12 @@ class CountryItemViewModel {
         self.propertiesManager = propertiesManager
         self.countriesSectionViewModel = countriesSectionViewModel
         
-        self.isTierTooLow = userTier < serversGroup.kind.lowestTier
+        @Dependency(\.featureFlagProvider) var featureFlagProvider
+        if featureFlagProvider.showNewFreePlan {
+            self.isTierTooLow = userTier < 1 // No countries are shown as available to free users
+        } else {
+            self.isTierTooLow = userTier < serversGroup.kind.lowestTier
+        }
         self.isOpened = isOpened
         self.isServerUnderMaintenance = false
         self.displaySeparator = displaySeparator
