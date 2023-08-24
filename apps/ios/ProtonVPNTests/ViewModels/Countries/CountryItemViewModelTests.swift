@@ -26,6 +26,7 @@ import ProtonCoreUIFoundations
 import TimerMock
 import VPNShared
 import VPNSharedTesting
+import Dependencies
 import VPNAppCore
 
 @testable import ProtonVPN
@@ -33,23 +34,27 @@ import VPNAppCore
 class CountryItemViewModelTests: XCTestCase {
 
     func testUnderMaintenanceLogic() {
-        XCTAssertFalse(self.viewModel(withServers: [
-            serverModel(withStatus: 5),
-            serverModel(withStatus: 1),
-            serverModel(withStatus: 25),
-        ]).connectIcon! == IconProvider.wrench, "UnderMaintenance returned true while no server is under maintenance")
-        
-        XCTAssertFalse(self.viewModel(withServers: [
-            serverModel(withStatus: 5),
-            serverModel(withStatus: 1),
-            serverModel(withStatus: 0),
-        ]).connectIcon! == IconProvider.wrench, "UnderMaintenance returned true while at least one server is not under maintenance")
-        
-        XCTAssertTrue(self.viewModel(withServers: [
-            serverModel(withStatus: 0),
-            serverModel(withStatus: 0),
-            serverModel(withStatus: 0),
-        ]).connectIcon! == IconProvider.wrench, "UnderMaintenance returned false while all servers are under maintenance")
+        withDependencies {
+            $0.featureFlagProvider = .constant(flags: .allDisabled)
+        } operation: {
+            XCTAssertFalse(self.viewModel(withServers: [
+                serverModel(withStatus: 5),
+                serverModel(withStatus: 1),
+                serverModel(withStatus: 25),
+            ]).connectIcon! == IconProvider.wrench, "UnderMaintenance returned true while no server is under maintenance")
+
+            XCTAssertFalse(self.viewModel(withServers: [
+                serverModel(withStatus: 5),
+                serverModel(withStatus: 1),
+                serverModel(withStatus: 0),
+            ]).connectIcon! == IconProvider.wrench, "UnderMaintenance returned true while at least one server is not under maintenance")
+
+            XCTAssertTrue(self.viewModel(withServers: [
+                serverModel(withStatus: 0),
+                serverModel(withStatus: 0),
+                serverModel(withStatus: 0),
+            ]).connectIcon! == IconProvider.wrench, "UnderMaintenance returned false while all servers are under maintenance")
+        }
     }
 
     // MARK: Mocks
