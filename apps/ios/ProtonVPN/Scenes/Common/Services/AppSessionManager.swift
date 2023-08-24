@@ -100,12 +100,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     let dataReloaded = Notification.Name("AppSessionManagerDataReloaded")
         
     var sessionStatus: SessionStatus = .notEstablished
-
-    var shouldRefreshServersAccordingToUserTier: Bool {
-        // Every n times, fully refresh the server list, including the paid ones.
-        let n = 10
-        return successfulConsecutiveSessionRefreshes % n == 0
-    }
     
     init(factory: Factory) {
         self.factory = factory
@@ -187,7 +181,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                     self.review.update(plan: credentials.accountPlan.rawValue)
                     self.serverStorage.store(
                         properties.serverModels,
-                        keepStalePaidServers: credentials.maxTier == CoreAppConstants.VpnTiers.free
+                        keepStalePaidServers: shouldRefreshServersAccordingToUserTier && credentials.maxTier == CoreAppConstants.VpnTiers.free
                     )
                 } else {
                     self.serverStorage.store(properties.serverModels)
@@ -291,7 +285,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                     self.review.update(plan: credentials.accountPlan.rawValue)
                     self.serverStorage.store(
                         properties.serverModels,
-                        keepStalePaidServers: credentials.maxTier == CoreAppConstants.VpnTiers.free
+                        keepStalePaidServers: shouldRefreshServersAccordingToUserTier && credentials.maxTier == CoreAppConstants.VpnTiers.free
                     )
                 } else {
                     self.serverStorage.store(properties.serverModels)
