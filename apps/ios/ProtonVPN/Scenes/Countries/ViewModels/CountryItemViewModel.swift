@@ -25,6 +25,7 @@ import LegacyCommon
 import Search
 import ProtonCoreUIFoundations
 import VPNShared
+import Dependencies
 import VPNAppCore
 import Strings
 
@@ -68,7 +69,12 @@ class CountryItemViewModel {
     var isUsersTierTooLow: Bool {
         switch serversGroup.kind {
         case .country(let countryModel):
-            return userTier < countryModel.lowestTier
+            @Dependency(\.featureFlagProvider) var featureFlagProvider
+            if featureFlagProvider.showNewFreePlan {
+                return userTier < 1 // No countries are shown as available to free users
+            } else {
+                return userTier < countryModel.lowestTier
+            }
         case .gateway:
             return false // atm only users who have gateways received them from api
         }
@@ -156,7 +162,7 @@ class CountryItemViewModel {
     
     var connectIcon: UIImage? {
         if isUsersTierTooLow {
-            return IconProvider.lock
+            return CoreAsset.vpnSubscriptionBadge.image
         } else if underMaintenance {
             return IconProvider.wrench
         } else {
@@ -421,6 +427,7 @@ extension CountryItemViewModel {
 // MARK: - Search
 
 extension CountryItemViewModel: CountryViewModel {
+
     func getServers() -> [ServerTier: [ServerViewModel]] {
         let convertTier = { (tier: Int) -> ServerTier in
             switch tier {
@@ -452,8 +459,11 @@ extension CountryItemViewModel: CountryViewModel {
     }
 
     var connectButtonColor: UIColor {
+        if isUsersTierTooLow {
+            return .clear
+        }
         if underMaintenance {
-            return isUsersTierTooLow ? UIColor.weakInteractionColor() : .clear
+            return .clear
         }
         return isCurrentlyConnected ? UIColor.interactionNorm() : UIColor.weakInteractionColor()
     }

@@ -91,7 +91,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
     
     var connectIcon: UIImage? {
         if isUsersTierTooLow {
-            return IconProvider.lock
+            return CoreAsset.vpnSubscriptionBadge.image
         } else if underMaintenance {
             return IconProvider.wrench
         } else {
@@ -200,8 +200,11 @@ extension ServerItemViewModel: ServerViewModel {
     }
 
     var connectButtonColor: UIColor {
+        if isUsersTierTooLow {
+            return .clear
+        }
         if underMaintenance {
-            return isUsersTierTooLow ? UIColor.weakInteractionColor() : .clear
+            return .clear
         }
         return connectedUiState ? UIColor.interactionNorm() : UIColor.weakInteractionColor()
     }
