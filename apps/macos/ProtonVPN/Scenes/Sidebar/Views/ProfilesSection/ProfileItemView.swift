@@ -55,7 +55,7 @@ class ProfileItemView: NSView {
         connectButton.isHidden = true
     }
     
-    func updateView(withModel viewModel: ProfileItemViewModel) {
+    func updateView(withModel viewModel: ProfileItemViewModel, hideSeparator: Bool = false) {
         self.viewModel = viewModel
         
         setupImage()
@@ -65,6 +65,7 @@ class ProfileItemView: NSView {
         setupAvailability()
         
         rowSeparator.fillColor = .color(.border, .weak)
+        rowSeparator.isHidden = hideSeparator
     }
     
     // MARK: - Private functions

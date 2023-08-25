@@ -46,18 +46,14 @@ class QuickSettingsStack: NSStackView {
 
 class CountriesSectionViewController: NSViewController {
 
-    fileprivate enum Cell: String {
+    fileprivate enum Cell: String, CaseIterable {
         case country = "CountryItemCellView"
         case server = "ServerItemCellView"
         case header = "CountriesSectionHeaderView"
+        case profile = "ProfileItemView"
         
-        var identifier: NSUserInterfaceItemIdentifier {
-            return NSUserInterfaceItemIdentifier(self.rawValue)
-        }
-        
-        var nib: NSNib? {
-            return NSNib(nibNamed: NSNib.Name(self.rawValue), bundle: nil)
-        }
+        var identifier: NSUserInterfaceItemIdentifier { NSUserInterfaceItemIdentifier(self.rawValue) }
+        var nib: NSNib? { NSNib(nibNamed: NSNib.Name(self.rawValue), bundle: nil) }
     }
     
     enum QuickSettingType {
@@ -256,10 +252,10 @@ class CountriesSectionViewController: NSViewController {
         serverListTableView.ignoresMultiClick = true
         serverListTableView.selectionHighlightStyle = .none
         serverListTableView.intercellSpacing = NSSize(width: 0, height: 0)
-        serverListTableView.register(Cell.country.nib, forIdentifier: Cell.country.identifier)
-        serverListTableView.register(Cell.server.nib, forIdentifier: Cell.server.identifier)
-        serverListTableView.register(Cell.header.nib, forIdentifier: Cell.header.identifier)
-
+        serverListTableView.backgroundColor = .color(.background, .weak)
+        Cell.allCases.forEach { serverListTableView.register($0.nib, forIdentifier: $0.identifier) }
+        
+        serverListScrollView.backgroundColor = .color(.background, .weak)
         shadowView.shadow(for: serverListScrollView.contentView.bounds.origin.y)
         serverListScrollView.contentView.postsBoundsChangedNotifications = true
         
@@ -425,6 +421,10 @@ extension CountriesSectionViewController: NSTableViewDelegate {
         case .header(let model):
             let cell = tableView.makeView(withIdentifier: Cell.header.identifier, owner: self) as! CountriesSectionHeaderView
             cell.viewModel = model
+            return cell
+        case .profile(let profileModel):
+            let cell = tableView.makeView(withIdentifier: Cell.profile.identifier, owner: nil) as! ProfileItemView
+            cell.updateView(withModel: profileModel, hideSeparator: true)
             return cell
         }
     }

@@ -29,6 +29,14 @@ class ProfileSectionViewController: NSViewController {
         static let profile = "Profile"
         static let footer = "Footer"
     }
+
+    fileprivate enum Cell: String, CaseIterable {
+        case profile = "ProfileItemView"
+        case footer = "FooterItemView"
+
+        var identifier: NSUserInterfaceItemIdentifier { NSUserInterfaceItemIdentifier(self.rawValue) }
+        var nib: NSNib? { NSNib(nibNamed: NSNib.Name(self.rawValue), bundle: nil) }
+    }
     
     @IBOutlet weak var profileListTableView: NSTableView!
     @IBOutlet weak var profileListScrollView: NSScrollView!
@@ -64,8 +72,7 @@ class ProfileSectionViewController: NSViewController {
         profileListTableView.ignoresMultiClick = true
         profileListTableView.selectionHighlightStyle = .none
         profileListTableView.backgroundColor = .color(.background, .weak)
-        profileListTableView.register(NSNib(nibNamed: NSNib.Name("ProfileItem"), bundle: nil), forIdentifier: NSUserInterfaceItemIdentifier(rawValue: CellIdentifier.profile))
-        profileListTableView.register(NSNib(nibNamed: NSNib.Name("FooterItem"), bundle: nil), forIdentifier: NSUserInterfaceItemIdentifier(rawValue: CellIdentifier.footer))
+        Cell.allCases.forEach { profileListTableView.register($0.nib, forIdentifier: $0.identifier) }
         
         profileListScrollView.backgroundColor = .color(.background, .weak)
         
@@ -99,11 +106,11 @@ extension ProfileSectionViewController: NSTableViewDelegate {
         
         switch cellModel {
         case .profile(let profileModel):
-            let item = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: CellIdentifier.profile), owner: nil) as! ProfileItemView
+            let item = tableView.makeView(withIdentifier: Cell.profile.identifier, owner: nil) as! ProfileItemView
             item.updateView(withModel: profileModel)
             return item
         case .footer(let footerModel):
-            let item = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: CellIdentifier.footer), owner: nil) as! FooterItemView
+            let item = tableView.makeView(withIdentifier: Cell.footer.identifier, owner: nil) as! FooterItemView
             item.updateView(withModel: footerModel)
             return item
         }
