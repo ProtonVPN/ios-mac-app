@@ -1621,11 +1621,12 @@
 "_performance_load_medium" = "Medium";
 "_performance_load_high" = "High";
 
-"_locations_all" = "All Locations";
-"_locations_free" = "Free Locations";
-"_locations_plus" = "Plus Locations";
-"_locations_plus" = "Plus Locations";
+"_locations_all" = "All locations";
+"_locations_free" = "Free locations";
+"_locations_plus" = "Plus locations";
 "_locations_gateways" = "Gateways";
+/* Header before the list of connections available for free users (in the country list) */
+"_connections_free" = "Free connections";
 
 /* Gateways info modal */
 

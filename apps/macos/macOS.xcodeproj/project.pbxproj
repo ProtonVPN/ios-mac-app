@@ -144,6 +144,7 @@
 		D57597C123B10C2E002D6631 /* WindowMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57597C023B10C2E002D6631 /* WindowMenuController.swift */; };
 		D5906F1222D36035001BC074 /* AccountPlan+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5906F1122D36035001BC074 /* AccountPlan+Extension.swift */; };
 		D5911709229F9574005829DA /* ProtonVPNUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5911708229F9574005829DA /* ProtonVPNUITests.swift */; };
+		D59A13612A98EA8300A3D1D7 /* FastestConnectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59A13602A98EA8300A3D1D7 /* FastestConnectionViewModel.swift */; };
 		D5A8813722CF282E009B63D1 /* ReportBugWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8813522CF282E009B63D1 /* ReportBugWindowController.swift */; };
 		D5AC137A23794B2900244066 /* text-template.html in Resources */ = {isa = PBXBuildFile; fileRef = D5AC137923794B2900244066 /* text-template.html */; };
 		D5AC137C23795B8100244066 /* AcknowledgementsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AC137B23795B8100244066 /* AcknowledgementsWindowController.swift */; };
@@ -311,8 +312,8 @@
 		EE11F92C1F39B7D8006C389C /* HeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE11F92B1F39B7D8006C389C /* HeaderViewController.swift */; };
 		EE13E4371F543F4000E50B06 /* MapSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE13E4361F543F4000E50B06 /* MapSectionViewModel.swift */; };
 		EE182C561F617C0000F3BA4C /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE182C551F617C0000F3BA4C /* NetworkExtension.framework */; };
-		EE24A3941F1BC7A700B70949 /* ProfileItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE24A3931F1BC7A700B70949 /* ProfileItem.xib */; };
-		EE24A3981F1BC7D000B70949 /* FooterItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE24A3971F1BC7D000B70949 /* FooterItem.xib */; };
+		EE24A3941F1BC7A700B70949 /* ProfileItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE24A3931F1BC7A700B70949 /* ProfileItemView.xib */; };
+		EE24A3981F1BC7D000B70949 /* FooterItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE24A3971F1BC7D000B70949 /* FooterItemView.xib */; };
 		EE24A39B1F1BCA0D00B70949 /* ProfileItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE24A39A1F1BCA0D00B70949 /* ProfileItemView.swift */; };
 		EE24A39D1F1BCA1A00B70949 /* FooterItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE24A39C1F1BCA1A00B70949 /* FooterItemView.swift */; };
 		EE24A39F1F1BCF6000B70949 /* ConnectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE24A39E1F1BCF6000B70949 /* ConnectButton.swift */; };
@@ -688,6 +689,7 @@
 		D5911706229F9574005829DA /* ProtonVPNmacOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtonVPNmacOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5911708229F9574005829DA /* ProtonVPNUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNUITests.swift; sourceTree = "<group>"; };
 		D591170A229F9574005829DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D59A13602A98EA8300A3D1D7 /* FastestConnectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastestConnectionViewModel.swift; sourceTree = "<group>"; };
 		D5A8813522CF282E009B63D1 /* ReportBugWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBugWindowController.swift; sourceTree = "<group>"; };
 		D5AC137923794B2900244066 /* text-template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "text-template.html"; sourceTree = "<group>"; };
 		D5AC137B23795B8100244066 /* AcknowledgementsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsWindowController.swift; sourceTree = "<group>"; };
@@ -850,8 +852,8 @@
 		EE11F92B1F39B7D8006C389C /* HeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderViewController.swift; sourceTree = "<group>"; };
 		EE13E4361F543F4000E50B06 /* MapSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSectionViewModel.swift; sourceTree = "<group>"; };
 		EE182C551F617C0000F3BA4C /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
-		EE24A3931F1BC7A700B70949 /* ProfileItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileItem.xib; sourceTree = "<group>"; };
-		EE24A3971F1BC7D000B70949 /* FooterItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FooterItem.xib; sourceTree = "<group>"; };
+		EE24A3931F1BC7A700B70949 /* ProfileItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileItemView.xib; sourceTree = "<group>"; };
+		EE24A3971F1BC7D000B70949 /* FooterItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FooterItemView.xib; sourceTree = "<group>"; };
 		EE24A39A1F1BCA0D00B70949 /* ProfileItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileItemView.swift; sourceTree = "<group>"; };
 		EE24A39C1F1BCA1A00B70949 /* FooterItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FooterItemView.swift; sourceTree = "<group>"; };
 		EE24A39E1F1BCF6000B70949 /* ConnectButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectButton.swift; sourceTree = "<group>"; };
@@ -2256,6 +2258,7 @@
 				EE068DC31F23E8A90006C2D0 /* ProfileItemViewModel.swift */,
 				EE068DC11F23E7E30006C2D0 /* ProfilesSectionViewModel.swift */,
 				D563319D23212A0800CE2EE3 /* AbstractProfileViewModel.swift */,
+				D59A13602A98EA8300A3D1D7 /* FastestConnectionViewModel.swift */,
 			);
 			path = ProfilesSection;
 			sourceTree = "<group>";
@@ -2324,9 +2327,9 @@
 		F36ECE262611DF330089B898 /* ProfilesSection */ = {
 			isa = PBXGroup;
 			children = (
-				EE24A3971F1BC7D000B70949 /* FooterItem.xib */,
+				EE24A3971F1BC7D000B70949 /* FooterItemView.xib */,
 				EE24A39C1F1BCA1A00B70949 /* FooterItemView.swift */,
-				EE24A3931F1BC7A700B70949 /* ProfileItem.xib */,
+				EE24A3931F1BC7A700B70949 /* ProfileItemView.xib */,
 				EE24A39A1F1BCA0D00B70949 /* ProfileItemView.swift */,
 				EE24A3A81F1BDD3300B70949 /* ProfilesSection.xib */,
 			);
@@ -3038,7 +3041,7 @@
 				EEA5562F1F1F48020061F43F /* ColorPickerItem.xib in Resources */,
 				E565986A2820FECE004F2240 /* WarningView.xib in Resources */,
 				D5AC137A23794B2900244066 /* text-template.html in Resources */,
-				EE24A3941F1BC7A700B70949 /* ProfileItem.xib in Resources */,
+				EE24A3941F1BC7A700B70949 /* ProfileItemView.xib in Resources */,
 				42498A522518E96B00ACB7EC /* ExpandableContentPopup.xib in Resources */,
 				EE27DB3D1F4706E400D2FF2B /* SettingsContainer.xib in Resources */,
 				E187021E20E26201000521AC /* StatusMenuProfileViewItem.xib in Resources */,
@@ -3055,7 +3058,7 @@
 				4C7CAEC128006E5C0008778E /* LoadingAnimationFrames in Resources */,
 				F397EA67280565E50072D511 /* CouponViewController.xib in Resources */,
 				42BEF94926317670009180A7 /* FeaturesOverlayViewController.xib in Resources */,
-				EE24A3981F1BC7D000B70949 /* FooterItem.xib in Resources */,
+				EE24A3981F1BC7D000B70949 /* FooterItemView.xib in Resources */,
 				E156C19C20BDA5920054E935 /* StatusMenu.xib in Resources */,
 				42C1F2852552FEA800793A49 /* QuickSettingsDropdownOption.xib in Resources */,
 				E1420A73209B57B100697461 /* ConnectionSettings.xib in Resources */,
@@ -3436,6 +3439,7 @@
 				EE2FE5971F5EF41E00ABA7DE /* MapView.swift in Sources */,
 				E5C4EF3F29B882C10013ACB2 /* PrimaryButtonStyle.swift in Sources */,
 				EEBE350E1EFAC508000ACCD1 /* NSString+Extension.swift in Sources */,
+				D59A13612A98EA8300A3D1D7 /* FastestConnectionViewModel.swift in Sources */,
 				E9AF94CC26BD6E6800AA1A5F /* WGVpnCredentialsConfigurator.swift in Sources */,
 				E1261FB9202CA45C005E9880 /* ColoredLoadButton.swift in Sources */,
 				EE98CFCB1F14D697000D6688 /* NSColor+Extension.swift in Sources */,

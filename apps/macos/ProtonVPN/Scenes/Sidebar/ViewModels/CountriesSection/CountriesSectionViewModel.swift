@@ -24,12 +24,14 @@ import Foundation
 import Dependencies
 import LegacyCommon
 import VPNShared
+import Dependencies
 import Strings
 
 enum CellModel {
     case header(CountriesServersHeaderViewModelProtocol)
     case country(CountryItemViewModel)
     case server(ServerItemViewModel)
+    case profile(ProfileItemViewModel)
 }
 
 struct ContentChange {
@@ -70,7 +72,8 @@ class CountriesSectionViewModel {
     private let vpnKeychain: VpnKeychainProtocol
     private var expandedCountries: Set<String> = []
     private var currentQuery: String?
-    
+    private let sysexManager: SystemExtensionManager
+
     weak var delegate: CountriesSettingsDelegate?
 
     var contentChanged: ((ContentChange) -> Void)?
@@ -156,7 +159,8 @@ class CountriesSectionViewModel {
         VpnKeychainFactory &
         VpnManagerFactory &
         VpnStateConfigurationFactory &
-        ModelIdCheckerFactory
+        ModelIdCheckerFactory &
+        SystemExtensionManagerFactory
 
     private let factory: Factory
     
@@ -170,6 +174,7 @@ class CountriesSectionViewModel {
         self.alertService = factory.makeCoreAlertService()
         self.propertiesManager = factory.makePropertiesManager()
         self.secureCoreState = self.propertiesManager.secureCoreToggle
+        self.sysexManager = factory.makeSystemExtensionManager()
         if case .connected = appStateManager.state {
             self.connectedServer = appStateManager.activeConnection()?.server
         }
@@ -255,12 +260,16 @@ class CountriesSectionViewModel {
             userTier = CoreAppConstants.VpnTiers.free
         }
     }
+
+    private var currentConnectionProtocol: ConnectionProtocol {
+        propertiesManager.connectionProtocol
+    }
     
     private func setupServers(containsGateways: Bool) {
         servers = [:]
         self.serverGroups.forEach { group in
             let availableServers = group.servers.filter {
-                $0.supports(connectionProtocol: propertiesManager.connectionProtocol,
+                $0.supports(connectionProtocol: currentConnectionProtocol,
                             smartProtocolConfig: propertiesManager.smartProtocolConfig)
             }
 
@@ -451,20 +460,44 @@ class CountriesSectionViewModel {
         }
 
         // Free
+        let plusLocations: [ServerGroup]
+        let freePart: [CellModel]
 
-        let freeLocations = countries.filter { $0.kind.lowestTier == 0 }
-        let plusLocations = countries.filter { $0.kind.lowestTier != 0 }
-        let headerFreeVM = CountryHeaderViewModel(Localizable.locationsFree, totalCountries: freeLocations.count, buttonType: nil, countriesViewModel: self)
-        let headerPlusVM = CountryHeaderViewModel(Localizable.locationsPlus, totalCountries: plusLocations.count, buttonType: .premium, countriesViewModel: self)
+        @Dependency(\.featureFlagProvider) var featureFlagProvider
+        if !featureFlagProvider.showNewFreePlan { // old
+            let freeLocations = countries.filter { $0.kind.lowestTier == 0 }
+            plusLocations = countries.filter { $0.kind.lowestTier != 0 }
+
+            let headerFreeVM = CountryHeaderViewModel(LocalizedString.locationsFree, totalCountries: freeLocations.count, buttonType: nil, countriesViewModel: self)
+            freePart = [ .header(headerFreeVM) ]
+                + freeLocations.enumerated().compactMap { index, group -> CellModel? in
+                    if let filter = defaultServersFilter, !group.servers.contains(where: filter) {
+                        return nil
+                    }
+                    return .country(self.countryViewModel(group, displaySeparator: index != 0, serversFilter: defaultServersFilter, showCountryConnectButton: true))
+                }
+        } else { // new
+            plusLocations = countries
+            let headerFreeVM = CountryHeaderViewModel(LocalizedString.connectionsFree, totalCountries: 1, buttonType: nil, countriesViewModel: self)
+            freePart = [
+                .header(headerFreeVM),
+                .profile(FastestConnectionViewModel(
+                    profile: ProfileConstants.fastestProfile(
+                        connectionProtocol: currentConnectionProtocol,
+                        defaultProfileAccessTier: userTier
+                    ),
+                    vpnGateway: vpnGateway,
+                    userTier: userTier,
+                    alertService: alertService,
+                    sysexManager: sysexManager
+                )),
+            ]
+        }
+
+        let headerPlusVM = CountryHeaderViewModel(LocalizedString.locationsPlus, totalCountries: plusLocations.count, buttonType: .premium, countriesViewModel: self)
 
         return (gatewaysSection
-            + [ .header(headerFreeVM) ]
-            + freeLocations.enumerated().compactMap { index, group -> CellModel? in
-                if let filter = defaultServersFilter, !group.servers.contains(where: filter) {
-                    return nil
-                }
-                return .country(self.countryViewModel(group, displaySeparator: index != 0, serversFilter: defaultServersFilter, showCountryConnectButton: true))
-            }
+            + freePart
             + [ .header(headerPlusVM) ]
             + plusLocations.enumerated().compactMap { index, group -> CellModel? in
                 if let filter = defaultServersFilter, !group.servers.contains(where: filter) {
