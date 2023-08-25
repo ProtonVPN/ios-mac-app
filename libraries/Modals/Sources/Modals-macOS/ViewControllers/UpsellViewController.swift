@@ -29,8 +29,6 @@ public final class UpsellViewController: NSViewController {
 
     @IBOutlet private weak var imageView: NSImageView!
     @IBOutlet private weak var titleLabel: NSTextField!
-    @IBOutlet private weak var learnMoreButton: NSButton!
-    @IBOutlet private weak var footerLabel: NSTextField!
     @IBOutlet private weak var descriptionLabel: NSTextField!
     @IBOutlet private weak var upgradeButton: UpsellPrimaryActionButton!
     @IBOutlet private weak var featuresStackView: NSStackView!
@@ -68,12 +66,6 @@ public final class UpsellViewController: NSViewController {
         titleLabel.textColor = .color(.text)
         descriptionLabel.textColor = .color(.text, .weak)
 
-        if case .allCountries = upsellType {
-            footerLabel.textColor = .color(.text, .weak)
-            footerLabel.font = .systemFont(ofSize: 12)
-        } else {
-            footerLabel.removeFromSuperview()
-        }
         titleLabel.setAccessibilityIdentifier("TitleLabel")
         descriptionLabel.setAccessibilityIdentifier("DescriptionLabel")
 
@@ -88,16 +80,7 @@ public final class UpsellViewController: NSViewController {
         } else {
             descriptionLabel.isHidden = true
         }
-        footerLabel?.stringValue = upsellFeature.footer ?? ""
         imageView.image = upsellFeature.artImage
-
-        if let learnMore = upsellFeature.learnMore {
-            learnMoreButton.attributedTitle = NSAttributedString(string: learnMore,
-                                                                 attributes: [.foregroundColor: NSColor.color(.icon, .interactive),
-                                                                    .font: NSFont.systemFont(ofSize: 12)])
-        } else {
-            learnMoreButton.removeFromSuperview()
-        }
 
         for view in featuresStackView.arrangedSubviews {
             view.removeFromSuperview()

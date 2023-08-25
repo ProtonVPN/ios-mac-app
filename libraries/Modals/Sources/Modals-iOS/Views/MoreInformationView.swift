@@ -46,7 +46,6 @@ final class MoreInformationView: UIView {
         contentView.layer.cornerRadius = 12
         contentView.backgroundColor = colors.secondaryBackground
         button.setTitle("", for: .normal)
-        footerStyle(titleLabel)
     }
 
     @IBAction func buttonTapped(_ sender: UIButton) {

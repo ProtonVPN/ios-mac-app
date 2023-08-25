@@ -2172,17 +2172,11 @@
 /* Dismiss upsell screen button title */
 "modals_upsell_stay_free" = "Not now";
 
-/* Footer of the All Countries upsell screen */
-"modals_upsell_features_footer" = "And many more premium features";
-
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "When you upgrade to Plus";
 
 /* Subtitle of the Safe Mode upsell screen */
 "modals_upsell_features_safe_mode_subtitle" = "Have advanced or professional computing needs that require non-standard ports?\n\nUpgrade to VPN Plus to access this and other premium features.";
-
-/* Learn more button title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_learn_more" = "Learn More";
 
 /* Title of the Safe Mode upsell screen */
 "modals_upsell_safe_mode_title" = "Allow traffic to non-standard ports";
@@ -2198,9 +2192,6 @@
 
 /* Feature of the Moderate NAT upsell screen */
 "modals_upsell_features_moderate_nat_direct_connections" = "NAT type 2 (moderate) optimizes speed and stability by enabling direct connections between devices";
-
-/* Learn more button title of the Moderate NAT upsell screen */
-"modals_upsell_moderate_nat_learn_more" = "What is Moderate NAT?";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_streaming" = "Stream your favorite movies";
