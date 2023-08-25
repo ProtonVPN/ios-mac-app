@@ -154,6 +154,9 @@ struct ProtonVPNApp: App {
     let store: StoreOf<AppReducer>
 
     init() {
+        // Force all encoded objects to be decoded and recoded using the ProtonVPN module name
+        setUpNSCoding(withModuleName: "ProtonVPN")
+
         @Dependency(\.initialStateProvider) var initialStateProvider
         _ = DependencyContainer.shared.makeAppStateManager()
 
