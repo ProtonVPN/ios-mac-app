@@ -116,7 +116,7 @@ extension Feature {
         case .geoblockedContent:
             return Localizable.upsellCountriesGeoblockedContent
         case .multipleCountries(let countries):
-            return Localizable.upsellCountriesBrowseFrom(countries)
+            return Localizable.upsellCountriesConnectTo(countries)
         case .moneyGuarantee:
             return Localizable.upsellCountriesMoneyBack
         }

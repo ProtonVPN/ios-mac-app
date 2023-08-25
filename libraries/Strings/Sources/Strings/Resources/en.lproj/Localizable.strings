@@ -2191,13 +2191,13 @@
 "modals_upsell_moderate_nat_title" = "Level up your gaming experience";
 
 /* Subtitle of Moderate NAT upsell screens */
-"modals_upsell_moderate_nat_subtitle" = "Unlock NAT Type 2 with VPN Plus";
+"modals_upsell_moderate_nat_subtitle" = "Unlock NAT type 2 with VPN Plus";
 
 /* Feature of the Moderate NAT upsell screen */
 "modals_upsell_features_moderate_nat_gaming" = "Improve online gaming and video call performance";
 
 /* Feature of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_direct_connections" = "NAT Type 2 (moderate) optimizes speed and stability by enabling direct connections between devices";
+"modals_upsell_features_moderate_nat_direct_connections" = "NAT type 2 (moderate) optimizes speed and stability by enabling direct connections between devices";
 
 /* Learn more button title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_learn_more" = "What is Moderate NAT?";
@@ -2294,13 +2294,13 @@
 "upsell_vpn_accelerator_title" = "Browse at even higher speeds (up to 10 Gbps)";
 
 /* Feature of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_faster_servers" = "Access faster, less crowded servers";
+"upsell_vpn_accelerator_faster_servers" = "Access faster, less crowded servers.";
 
 /* Feature of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_increase_connection_speeds" = "Increase connection speeds by up to 400% with VPN Accelerator";
+"upsell_vpn_accelerator_increase_connection_speeds" = "Increase connection speeds by up to 400% with VPN Accelerator.";
 
 /* Feature of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_distant_servers" = "Improved speed and stability when connected to distant servers";
+"upsell_vpn_accelerator_distant_servers" = "Improved speed and stability when connected to distant servers.";
 
 /* Title of Customization upsell modal */
 "upsell_customization_title" = "Unlock advanced VPN customization";
@@ -2321,13 +2321,13 @@
 "upsell_profiles_subtitle" = "Unlock profiles with VPN Plus";
 
 /* Feature of Profiles upsell modal */
-"upsell_profiles_feature_location" = "Save your preferred server, city, or country";
+"upsell_profiles_feature_location" = "Save your preferred server, city, or country.";
 
 /* Feature of Profiles upsell modal */
-"upsell_profiles_feature_protocols" = "Set custom protocols and premium VPN features";
+"upsell_profiles_feature_protocols" = "Set custom protocols and premium VPN features.";
 
 /* Feature of Profiles upsell modal */
-"upsell_profiles_feature_auto_connect" = "Set up auto-connect for even faster access";
+"upsell_profiles_feature_auto_connect" = "Set up auto-connect for even faster access.";
 
 /* Feature of Countries upsell modal */
 "upsell_countries_any_location" = "Choose any location";
@@ -2339,19 +2339,16 @@
 "upsell_countries_geoblocked_content" = "Access geoblocked content";
 
 /* Feature of Country upsell modal */
-"upsell_countries_browse_from" = "Browse from %d countries";
+"upsell_countries_connect_to" = "Connect to %d countries";
 
 /* Feature of Country upsell modal */
 "upsell_countries_higher_speeds" = "Higher speeds (10 Gbps)";
 
 /* Feature of Country upsell modal */
-"upsell_countries_devices" = "Protect up to %d devices";
-
-/* Feature of Country upsell modal */
 "upsell_countries_money_back" = "30-day money back guarantee";
 
 /* Feature of Country upsell modal */
-"upsell_country_feature_title" = "Want to connect to %@?";
+"upsell_country_feature_title" = "Want to choose a specific country?";
 
 /* Feature of Country upsell modal */
 "upsell_country_feature_subtitle" =  "Unlock country selection with VPN Plus";
