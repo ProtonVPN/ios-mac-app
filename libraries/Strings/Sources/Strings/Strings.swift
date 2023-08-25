@@ -1737,8 +1737,6 @@ public enum Localizable {
   public static func modalsUpsellAllCountriesTitle(_ p1: Int, _ p2: Int) -> String {
     return Localizable.tr("Localizable", "modals_upsell_all_countries_title", p1, p2, fallback: "Plural format key: \"Access over %#@num_servers@ in %#@num_countries@\"")
   }
-  /// Footer of the All Countries upsell screen
-  public static var modalsUpsellFeaturesFooter: String { return Localizable.tr("Localizable", "modals_upsell_features_footer", fallback: "And many more premium features") }
   /// Feature of the Moderate NAT upsell screen
   public static var modalsUpsellFeaturesModerateNatDirectConnections: String { return Localizable.tr("Localizable", "modals_upsell_features_moderate_nat_direct_connections", fallback: "NAT type 2 (moderate) optimizes speed and stability by enabling direct connections between devices") }
   /// Feature of the Moderate NAT upsell screen
@@ -1747,8 +1745,6 @@ public enum Localizable {
   public static var modalsUpsellFeaturesSafeModeSubtitle: String { return Localizable.tr("Localizable", "modals_upsell_features_safe_mode_subtitle", fallback: "Have advanced or professional computing needs that require non-standard ports?\n\nUpgrade to VPN Plus to access this and other premium features.") }
   /// Subtitle of All Countries, NetShield and Secure Core upsell screens
   public static var modalsUpsellFeaturesSubtitle: String { return Localizable.tr("Localizable", "modals_upsell_features_subtitle", fallback: "When you upgrade to Plus") }
-  /// Learn more button title of the Moderate NAT upsell screen
-  public static var modalsUpsellModerateNatLearnMore: String { return Localizable.tr("Localizable", "modals_upsell_moderate_nat_learn_more", fallback: "What is Moderate NAT?") }
   /// Subtitle of Moderate NAT upsell screens
   public static var modalsUpsellModerateNatSubtitle: String { return Localizable.tr("Localizable", "modals_upsell_moderate_nat_subtitle", fallback: "Unlock NAT type 2 with VPN Plus") }
   /// Title of the Moderate NAT upsell screen
@@ -1761,8 +1757,6 @@ public enum Localizable {
   public static var modalsUpsellNetShieldMalware: String { return Localizable.tr("Localizable", "modals_upsell_net_shield_malware", fallback: "Protect your device from malware") }
   /// Title of the NetShield upsell screen
   public static var modalsUpsellNetShieldTitle: String { return Localizable.tr("Localizable", "modals_upsell_net_shield_title", fallback: "Enjoy ad-free browsing with NetShield") }
-  /// Learn more button title of the Safe Mode upsell screen
-  public static var modalsUpsellSafeModeLearnMore: String { return Localizable.tr("Localizable", "modals_upsell_safe_mode_learn_more", fallback: "Learn More") }
   /// Title of the Safe Mode upsell screen
   public static var modalsUpsellSafeModeTitle: String { return Localizable.tr("Localizable", "modals_upsell_safe_mode_title", fallback: "Allow traffic to non-standard ports") }
   /// Feature of the Secure Core upsell screen

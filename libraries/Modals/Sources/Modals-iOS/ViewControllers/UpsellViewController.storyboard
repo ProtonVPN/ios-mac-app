@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,10 +18,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="dqS-16-vVf" customClass="CenteringScrollView" customModule="Modals_iOS">
-                                <rect key="frame" x="0.0" y="44" width="414" height="726"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="722"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GBb-Hz-STb">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="374"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="342"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="382" placeholderIntrinsicHeight="184" translatesAutoresizingMaskIntoConstraints="NO" id="ZLz-VF-2hg">
                                                 <rect key="frame" x="16" y="0.0" width="382" height="184"/>
@@ -57,29 +57,20 @@
                                                     </label>
                                                 </subviews>
                                             </stackView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="And many more premium features" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h8S-Hl-OTq">
-                                                <rect key="frame" x="87" y="342" width="272" height="16"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="9q6-jr-eNp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="GBb-Hz-STb" secondAttribute="leading" constant="16" id="8Wg-Ky-rgG"/>
                                             <constraint firstItem="ZLz-VF-2hg" firstAttribute="leading" secondItem="GBb-Hz-STb" secondAttribute="leading" constant="16" id="8wq-JT-AIr"/>
-                                            <constraint firstAttribute="bottom" secondItem="h8S-Hl-OTq" secondAttribute="bottom" constant="16" id="AjU-uX-dRS"/>
-                                            <constraint firstItem="h8S-Hl-OTq" firstAttribute="top" secondItem="9q6-jr-eNp" secondAttribute="bottom" constant="8" id="E38-fC-6sT"/>
-                                            <constraint firstItem="9q6-jr-eNp" firstAttribute="trailing" secondItem="h8S-Hl-OTq" secondAttribute="trailing" id="FjN-1q-ApB"/>
                                             <constraint firstAttribute="trailing" secondItem="ZLz-VF-2hg" secondAttribute="trailing" constant="16" id="K5L-hO-Wsj"/>
                                             <constraint firstItem="9Jg-ku-cxb" firstAttribute="leading" secondItem="GBb-Hz-STb" secondAttribute="leading" constant="16" id="QZW-bG-Zmz"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9q6-jr-eNp" secondAttribute="trailing" constant="16" id="Rl9-gc-JXB"/>
                                             <constraint firstAttribute="trailing" secondItem="9Jg-ku-cxb" secondAttribute="trailing" constant="16" id="T4Y-IC-3Bd"/>
                                             <constraint firstItem="ZLz-VF-2hg" firstAttribute="top" secondItem="GBb-Hz-STb" secondAttribute="top" id="aRf-P4-vO5"/>
-                                            <constraint firstItem="h8S-Hl-OTq" firstAttribute="leading" secondItem="9q6-jr-eNp" secondAttribute="leading" constant="32" id="c8p-iv-vDb"/>
                                             <constraint firstItem="9q6-jr-eNp" firstAttribute="top" secondItem="9Jg-ku-cxb" secondAttribute="bottom" constant="24" id="gG2-EJ-t0n"/>
                                             <constraint firstItem="9Jg-ku-cxb" firstAttribute="top" secondItem="ZLz-VF-2hg" secondAttribute="bottom" constant="24" id="jaq-0u-PMQ"/>
                                             <constraint firstItem="9q6-jr-eNp" firstAttribute="centerX" secondItem="GBb-Hz-STb" secondAttribute="centerX" id="rUY-u5-jZF"/>
+                                            <constraint firstAttribute="bottom" secondItem="9q6-jr-eNp" secondAttribute="bottom" constant="8" id="zax-5c-dxB"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -131,7 +122,6 @@
                         <outlet property="featureArtImageView" destination="ZLz-VF-2hg" id="dqd-Xg-f0V"/>
                         <outlet property="featureArtImageViewHeight" destination="qOo-cy-pNo" id="TxU-Mv-dvT"/>
                         <outlet property="featureView" destination="GBb-Hz-STb" id="aiH-3H-eTb"/>
-                        <outlet property="featuresFooterLabel" destination="h8S-Hl-OTq" id="2RP-Uc-Dcp"/>
                         <outlet property="featuresStackView" destination="9q6-jr-eNp" id="m22-36-frb"/>
                         <outlet property="getPlusButton" destination="FHs-vS-yIf" id="N2g-2z-GV5"/>
                         <outlet property="scrollView" destination="dqS-16-vVf" id="EQL-Rg-C75"/>

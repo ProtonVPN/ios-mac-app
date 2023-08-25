@@ -35,9 +35,7 @@ public enum UpsellType {
                       subtitle: subtitle(),
                       features: features(),
                       moreInformation: moreInformation(),
-                      artImage: artImage(),
-                      footer: footer(),
-                      learnMore: learnMore())
+                      artImage: artImage())
     }
 
     private func moreInformation() -> Feature? {
@@ -155,26 +153,6 @@ public enum UpsellType {
         case .country(let country, _, _):
             // todo: Select correct flag based on country code
             return Asset.flatIllustration.image
-        }
-    }
-
-    private func footer() -> String? {
-        switch self {
-        case .allCountries:
-            return Localizable.modalsUpsellFeaturesFooter
-        default:
-            return nil
-        }
-    }
-
-    private func learnMore() -> String? {
-        switch self {
-        case .moderateNAT:
-            return Localizable.modalsUpsellModerateNatLearnMore
-        case .safeMode:
-            return Localizable.modalsUpsellSafeModeLearnMore
-        default:
-            return nil
         }
     }
 }

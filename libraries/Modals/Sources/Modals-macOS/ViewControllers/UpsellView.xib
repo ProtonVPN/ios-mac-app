@@ -10,9 +10,7 @@
             <connections>
                 <outlet property="descriptionLabel" destination="jid-dT-2nn" id="Y02-pu-KJz"/>
                 <outlet property="featuresStackView" destination="H0z-3s-Avf" id="DCE-nh-gI9"/>
-                <outlet property="footerLabel" destination="HR9-Ic-tFU" id="gF0-Qe-uEt"/>
                 <outlet property="imageView" destination="53f-me-QcG" id="ZXg-Tb-5iB"/>
-                <outlet property="learnMoreButton" destination="sJ9-cG-aP3" id="hzS-WU-qdm"/>
                 <outlet property="titleLabel" destination="K5y-4F-OTE" id="d6g-uS-SeN"/>
                 <outlet property="upgradeButton" destination="xIg-oV-oUX" id="o9a-GN-HJ3"/>
                 <outlet property="view" destination="A27-85-7le" id="0W6-md-r2A"/>
@@ -20,12 +18,12 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView misplaced="YES" id="A27-85-7le">
-            <rect key="frame" x="0.0" y="0.0" width="520" height="600"/>
+        <customView id="A27-85-7le">
+            <rect key="frame" x="0.0" y="0.0" width="520" height="526"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="xIg-oV-oUX" customClass="UpsellPrimaryActionButton" customModule="Modals_macOS">
-                    <rect key="frame" x="191" y="97" width="139" height="58"/>
+                    <rect key="frame" x="191" y="57" width="139" height="58"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="125" id="6qD-TY-GDb"/>
                         <constraint firstAttribute="height" constant="46" id="JmG-rt-3HP"/>
@@ -44,7 +42,7 @@
                     </connections>
                 </button>
                 <imageView autoresizesSubviews="NO" horizontalHuggingPriority="1000" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="53f-me-QcG">
-                    <rect key="frame" x="60" y="348" width="400" height="184"/>
+                    <rect key="frame" x="60" y="278" width="400" height="184"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="184" id="5ur-kg-plb"/>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="350" id="bJB-0q-st6"/>
@@ -52,7 +50,7 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="top" imageScaling="proportionallyDown" image="PlusCountries" id="XMA-Lx-eBS"/>
                 </imageView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="K5y-4F-OTE">
-                    <rect key="frame" x="58" y="288" width="404" height="52"/>
+                    <rect key="frame" x="58" y="218" width="404" height="52"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="400" id="Zin-MG-Epf"/>
                     </constraints>
@@ -63,7 +61,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jid-dT-2nn">
-                    <rect key="frame" x="58" y="260" width="404" height="20"/>
+                    <rect key="frame" x="58" y="190" width="404" height="20"/>
                     <textFieldCell key="cell" alignment="center" title="When you upgrade to Plus" id="pWA-H7-wVL">
                         <font key="font" metaFont="system" size="17"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -71,7 +69,7 @@
                     </textFieldCell>
                 </textField>
                 <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H0z-3s-Avf">
-                    <rect key="frame" x="138" y="212" width="244" height="16"/>
+                    <rect key="frame" x="159" y="142" width="202" height="16"/>
                     <subviews>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gAJ-Mq-OlP">
                             <rect key="frame" x="-2" y="0.0" width="206" height="16"/>
@@ -92,29 +90,8 @@
                         <real value="3.4028234663852886e+38"/>
                     </customSpacing>
                 </stackView>
-                <textField autoresizesSubviews="NO" horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="HR9-Ic-tFU">
-                    <rect key="frame" x="168" y="182" width="216" height="16"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="And many MORE premium features" id="LEP-zb-by4">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <button verticalHuggingPriority="750" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="sJ9-cG-aP3">
-                    <rect key="frame" x="187" y="64" width="147" height="16"/>
-                    <buttonCell key="cell" type="bevel" title="What is Moderate NAT?" bezelStyle="rounded" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="h6t-qP-IbR">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="learnMore:" target="-2" id="0qn-6e-c58"/>
-                    </connections>
-                </button>
             </subviews>
             <constraints>
-                <constraint firstItem="sJ9-cG-aP3" firstAttribute="top" secondItem="xIg-oV-oUX" secondAttribute="bottom" constant="24" id="5Iv-cc-srI"/>
-                <constraint firstItem="HR9-Ic-tFU" firstAttribute="top" secondItem="H0z-3s-Avf" secondAttribute="bottom" constant="14" id="6FL-uk-8kN"/>
-                <constraint firstItem="sJ9-cG-aP3" firstAttribute="centerX" secondItem="xIg-oV-oUX" secondAttribute="centerX" id="8jN-Nc-WzJ"/>
                 <constraint firstItem="xIg-oV-oUX" firstAttribute="centerX" secondItem="A27-85-7le" secondAttribute="centerX" id="9Du-SK-vkB"/>
                 <constraint firstItem="jid-dT-2nn" firstAttribute="centerX" secondItem="K5y-4F-OTE" secondAttribute="centerX" id="DqN-WB-Da9"/>
                 <constraint firstItem="jid-dT-2nn" firstAttribute="top" secondItem="K5y-4F-OTE" secondAttribute="bottom" constant="8" id="DsS-XJ-WNj"/>
@@ -124,25 +101,21 @@
                 <constraint firstItem="K5y-4F-OTE" firstAttribute="top" secondItem="53f-me-QcG" secondAttribute="bottom" constant="8" id="PiS-8Y-Zxi"/>
                 <constraint firstItem="53f-me-QcG" firstAttribute="centerX" secondItem="A27-85-7le" secondAttribute="centerX" id="Sov-bR-LLg"/>
                 <constraint firstItem="53f-me-QcG" firstAttribute="leading" secondItem="A27-85-7le" secondAttribute="leading" constant="60" id="WM6-p8-FO2"/>
-                <constraint firstItem="HR9-Ic-tFU" firstAttribute="trailing" secondItem="H0z-3s-Avf" secondAttribute="trailing" id="WVa-TG-Bcm"/>
                 <constraint firstItem="xIg-oV-oUX" firstAttribute="top" secondItem="jid-dT-2nn" secondAttribute="bottom" priority="500" constant="32" id="YMd-7Z-pN6"/>
-                <constraint firstAttribute="bottom" secondItem="sJ9-cG-aP3" secondAttribute="bottom" constant="64" id="Zds-dV-SiX"/>
                 <constraint firstAttribute="bottom" secondItem="xIg-oV-oUX" secondAttribute="bottom" priority="749" constant="64" id="b9G-9e-LcM"/>
                 <constraint firstItem="53f-me-QcG" firstAttribute="top" secondItem="A27-85-7le" secondAttribute="top" constant="64" id="jro-up-cdI"/>
                 <constraint firstAttribute="trailing" secondItem="53f-me-QcG" secondAttribute="trailing" constant="60" id="lxg-Ns-IWx"/>
                 <constraint firstItem="xIg-oV-oUX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="A27-85-7le" secondAttribute="leading" constant="100" id="m8E-NF-6pq"/>
                 <constraint firstItem="H0z-3s-Avf" firstAttribute="centerX" secondItem="jid-dT-2nn" secondAttribute="centerX" id="onU-b9-MbI"/>
                 <constraint firstItem="xIg-oV-oUX" firstAttribute="top" secondItem="H0z-3s-Avf" secondAttribute="bottom" priority="999" constant="32" id="qK7-D2-8kp"/>
-                <constraint firstItem="HR9-Ic-tFU" firstAttribute="leading" secondItem="H0z-3s-Avf" secondAttribute="leading" constant="32" id="s6d-ba-ulm"/>
                 <constraint firstItem="jid-dT-2nn" firstAttribute="width" secondItem="K5y-4F-OTE" secondAttribute="width" id="uUe-bx-Bxz"/>
                 <constraint firstItem="H0z-3s-Avf" firstAttribute="top" secondItem="jid-dT-2nn" secondAttribute="bottom" constant="32" id="wsz-SR-9kT"/>
-                <constraint firstItem="xIg-oV-oUX" firstAttribute="top" secondItem="HR9-Ic-tFU" secondAttribute="bottom" constant="32" id="xcq-rO-N5k"/>
                 <constraint firstItem="K5y-4F-OTE" firstAttribute="width" secondItem="53f-me-QcG" secondAttribute="width" id="ypP-4r-k9k"/>
             </constraints>
             <point key="canvasLocation" x="279" y="295.5"/>
         </customView>
     </objects>
     <resources>
-        <image name="PlusCountries" width="328" height="184"/>
+        <image name="PlusCountries" width="320" height="180"/>
     </resources>
 </document>

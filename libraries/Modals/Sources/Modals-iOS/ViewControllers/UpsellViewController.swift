@@ -45,7 +45,6 @@ public final class UpsellViewController: UIViewController {
     @IBOutlet private weak var featuresStackView: UIStackView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subtitleLabel: UILabel!
-    @IBOutlet private weak var featuresFooterLabel: UILabel!
     @IBOutlet private weak var featureArtImageView: UIImageView!
     @IBOutlet private weak var featureArtImageViewHeight: NSLayoutConstraint!
 
@@ -69,7 +68,6 @@ public final class UpsellViewController: UIViewController {
         actionTextButtonStyle(useFreeButton)
         titleStyle(titleLabel)
         subtitleStyle(subtitleLabel)
-        footerStyle(featuresFooterLabel)
         switch upsellType {
         case .noLogs:
             getPlusButton.setTitle(Localizable.modalsCommonNext, for: .normal)
@@ -99,7 +97,6 @@ public final class UpsellViewController: UIViewController {
         } else {
             subtitleLabel.isHidden = true
         }
-        featuresFooterLabel.text = upsellFeature.footer
         featureArtImageView.image = upsellFeature.artImage
         let imageSize = upsellFeature.artImage.size
         featureArtImageViewHeight.constant = (imageSize.height * featureArtImageView.bounds.width) / imageSize.width
