@@ -30,7 +30,7 @@ private let sqrt3 = sqrt(3)
 /// Common class used by all of the different map annotations.
 class MapAnnotationView: MKAnnotationView {
     private static let lineWidth = 1.0
-    internal static let textLineHeight = 30.0
+    internal class var textLineHeight: CGFloat { 40.0 }
 
     internal static let triangleSize: CGSize = {
         let sideLength: CGFloat = 19
@@ -63,6 +63,8 @@ class MapAnnotationView: MKAnnotationView {
             omega: .pi * 3 / 2
         )
     }()
+
+    private static let badgeSize = CGSize(width: 38.75, height: 24)
 
     internal enum ForegroundOrder: Int {
         case wayBack = -1
@@ -205,7 +207,7 @@ class MapAnnotationView: MKAnnotationView {
     }
 
     // swiftlint:disable function_body_length
-    internal func drawAnnotation(context: CGContext, text: [NSAttributedString]) {
+    internal func drawAnnotation(context: CGContext, text: [NSAttributedString], badgeImage: NSImage? = nil) {
         let lineWidth = Self.lineWidth
         let ct = Self.triangleCornerOffsets
 
@@ -270,11 +272,21 @@ class MapAnnotationView: MKAnnotationView {
         context.addPath(path)
         context.drawPath(using: .fillStroke)
 
+        // upgrade badge if connection to this country requires a plan upgrade
+        let shouldShowBadge = badgeImage != nil
+        if shouldShowBadge {
+            let badgeFrame: CGRect = CGRect(x: 15, y: (buttonFrame.height - 24)/2, width: 38.75, height: 24)
+            badgeImage?.draw(in: badgeFrame)
+        }
+
+        let textOffsetX = shouldShowBadge ? 38.75 + 8 : 0
+        let textFrameWidth = shouldShowBadge ? buttonFrame.width - textOffsetX : buttonFrame.width
+
         for (index, textLine) in text.enumerated() {
             let textHeight = textLine.size().height
             let textY = Self.textLineHeight * CGFloat(index) + ((Self.textLineHeight - textHeight) / 2)
 
-            textLine.draw(in: CGRect(x: 0, y: textY, width: buttonFrame.size.width, height: textHeight))
+            textLine.draw(in: CGRect(x: textOffsetX, y: textY, width: textFrameWidth, height: textHeight))
         }
     }
     // swiftlint:enable function_body_length operator_usage_whitespace
@@ -320,12 +332,11 @@ class CountryAnnotationView: MapAnnotationView {
 
     init(viewModel: StandardCountryAnnotationViewModel, reuseIdentifier: String?) {
         self.viewModel = viewModel
-        super.init(buttonSize: CGSize(width: viewModel.buttonWidth,
-                                      height: MapAnnotationView.textLineHeight),
+        super.init(buttonSize: CGSize(width: viewModel.buttonWidth, height: Self.textLineHeight),
                    hoveredTag: .upFront,
                    styleDelegate: viewModel,
                    reuseIdentifier: reuseIdentifier)
-        
+
         viewModel.viewStateChange = { [weak self] in
             guard let self = self else {
                 return
@@ -334,7 +345,7 @@ class CountryAnnotationView: MapAnnotationView {
             self.setupAnnotationView()
             self.needsDisplay = true
         }
-        
+
         setupAnnotationView()
     }
 
@@ -345,30 +356,34 @@ class CountryAnnotationView: MapAnnotationView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("Initializer not supported: \(#function)")
     }
-    
+
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         guard let context = NSGraphicsContext.current?.cgContext else { return }
 
         var buttonText: [NSAttributedString] = []
+        var badgeImage: NSImage?
         if hovered {
             let isPointing = NSCursor.current == NSCursor.pointingHand
-            buttonText.append(isPointing ? viewModel.attributedConnectTitle : viewModel.attributedCountry)
+            buttonText.append(isPointing ? viewModel.attributedHoverTitle : viewModel.attributedCountry)
+            if viewModel.shouldShowUpgradeBadge && !isPointing {
+                badgeImage = CoreAsset.vpnSubscriptionBadge.image
+            }
         }
 
-        drawAnnotation(context: context, text: buttonText)
+        drawAnnotation(context: context, text: buttonText, badgeImage: badgeImage)
     }
 
     override func hitTest(_ point: NSPoint) -> NSView? {
         return hitTestForState(point, hovered: hovered)
     }
-    
+
     override func mouseEntered(with event: NSEvent) {
         mouseInside(with: event, hovered: hovered, stateUpdateCallback: { (hovered: Bool) in
             self.viewModel.uiStateUpdate(hovered ? .hovered : .idle)
         })
     }
-    
+
     override func mouseMoved(with event: NSEvent) {
         mouseInside(with: event, hovered: hovered, stateUpdateCallback: { (hovered: Bool) in
             self.viewModel.uiStateUpdate(hovered ? .hovered : .idle)
@@ -382,16 +397,16 @@ class CountryAnnotationView: MapAnnotationView {
             viewModel.countryConnectAction()
         }
     }
-    
+
     override func mouseExited(with event: NSEvent) {
         viewModel.uiStateUpdate(.idle)
     }
-    
+
     override func resetCursorRects() {
         guard hovered else { return }
         addCursorRect(buttonFrame, cursor: .pointingHand)
     }
-    
+
     override func updateTrackingAreas() {
         super.updateTrackingAreas()
         addAnnotationTrackingAreas(hovered: hovered, stateUpdateCallback: { hovered in
@@ -400,12 +415,12 @@ class CountryAnnotationView: MapAnnotationView {
     }
 
     // MARK: - Private functions
-    
+
     private func setupAnnotationView() {
         setSelection()
         setupFrame()
     }
-    
+
     private func setSelection() {
         if viewModel.state == .idle {
             setSelected(false, animated: false)
@@ -413,7 +428,7 @@ class CountryAnnotationView: MapAnnotationView {
             setSelected(true, animated: true)
         }
     }
-    
+
     private func setupFrame() {
         let height: CGFloat
         let hovered: Bool

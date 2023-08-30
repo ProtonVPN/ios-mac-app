@@ -385,6 +385,19 @@ public class VpnGateway: VpnGatewayProtocol {
             gatherParametersAndConnect(with: `protocol`, server: appStateManager.activeConnection()?.server, netShieldType: netShieldType, natType: natType, safeMode: safeMode)
             return
         }
+
+        @Dependency(\.connectionAuthorizer) var authorizer
+        switch authorizer.authorize(request: request) {
+        case .failure(.requiresUpgrade(let upsellAlert)):
+            alertService?.push(alert: upsellAlert)
+            return
+        case .failure(.cooldown(until: let date)):
+            // VPNAPPL-1870: Show cooldown modal
+            log.info("Change server requested, but random connection is still on cooldown until \(date)")
+            return
+        case .success:
+            break
+        }
         
         gatherParametersAndConnect(with: `protocol`, server: selectServer(connectionRequest: request), netShieldType: request.netShieldType, natType: natType, safeMode: safeMode)
     }
