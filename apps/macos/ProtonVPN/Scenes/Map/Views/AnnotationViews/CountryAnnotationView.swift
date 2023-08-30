@@ -37,6 +37,8 @@ class MapAnnotationView: MKAnnotationView {
         return CGSize(width: sideLength, height: sideLength * sqrt3 / 2)
     }()
 
+    static let badgeSize = CGSize(width: 38.75, height: 24)
+
     /// Rounded corners: if the triangle is equilateral, then the radius of each arc is
     /// a short side of a 30/60/90 right triangle. The x and y coordinates of the top
     /// side are thus adjusted by the "long" side of this triangle, which is
@@ -63,8 +65,6 @@ class MapAnnotationView: MKAnnotationView {
             omega: .pi * 3 / 2
         )
     }()
-
-    private static let badgeSize = CGSize(width: 38.75, height: 24)
 
     internal enum ForegroundOrder: Int {
         case wayBack = -1
@@ -275,11 +275,14 @@ class MapAnnotationView: MKAnnotationView {
         // upgrade badge if connection to this country requires a plan upgrade
         let shouldShowBadge = badgeImage != nil
         if shouldShowBadge {
-            let badgeFrame: CGRect = CGRect(x: 15, y: (buttonFrame.height - 24)/2, width: 38.75, height: 24)
+            let badgeFrame = CGRect(
+                origin: CGPoint(x: 15, y: (buttonFrame.height - Self.badgeSize.height)/2),
+                size: Self.badgeSize
+            )
             badgeImage?.draw(in: badgeFrame)
         }
 
-        let textOffsetX = shouldShowBadge ? 38.75 + 8 : 0
+        let textOffsetX = shouldShowBadge ? Self.badgeSize.width + 8 : 0
         let textFrameWidth = shouldShowBadge ? buttonFrame.width - textOffsetX : buttonFrame.width
 
         for (index, textLine) in text.enumerated() {
@@ -367,7 +370,7 @@ class CountryAnnotationView: MapAnnotationView {
             let isPointing = NSCursor.current == NSCursor.pointingHand
             buttonText.append(isPointing ? viewModel.attributedHoverTitle : viewModel.attributedCountry)
             if viewModel.shouldShowUpgradeBadge && !isPointing {
-                badgeImage = CoreAsset.vpnSubscriptionBadge.image
+                badgeImage = Theme.Asset.vpnSubscriptionBadge.image
             }
         }
 
