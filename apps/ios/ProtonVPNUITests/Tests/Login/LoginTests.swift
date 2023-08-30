@@ -11,9 +11,11 @@ import ProtonCoreTestingToolkitUITestsLogin
 
 class LoginTests: ProtonVPNUITests {
 
-    let mainRobot = MainRobot()
-    let loginRobot = LoginRobot()
-    let needHelpRobot = NeedHelpRobot()
+    private let mainRobot = MainRobot()
+    private let loginRobot = LoginRobot()
+    private let needHelpRobot = NeedHelpRobot()
+    
+    private let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
     
     override func setUp() {
         super.setUp()
@@ -27,7 +29,7 @@ class LoginTests: ProtonVPNUITests {
 
     func testLoginWithIncorrectCredentials() {
 
-        let username = "wrong_username"
+        let username = credentials[0].username
         let userpassword = "wrong_password"
 
         loginRobot
@@ -37,8 +39,6 @@ class LoginTests: ProtonVPNUITests {
     }
 
     func testLoginWithCorrectCredentials() {
-
-        let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
 
         for credential in credentials {
             login(withCredentials: credential)
