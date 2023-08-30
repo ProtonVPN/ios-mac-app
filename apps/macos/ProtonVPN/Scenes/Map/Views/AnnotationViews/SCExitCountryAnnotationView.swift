@@ -30,7 +30,9 @@ class SCExitCountryAnnotationView: MapAnnotationView {
     var hovered: Bool {
         viewModel.state == .hovered
     }
-    
+
+    override class var textLineHeight: CGFloat { 30 }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("Unsupported initializer \(#function)")
     }
@@ -43,7 +45,7 @@ class SCExitCountryAnnotationView: MapAnnotationView {
         self.viewModel = viewModel
 
         super.init(buttonSize: CGSize(width: viewModel.buttonWidth,
-                                      height: MapAnnotationView.textLineHeight * CGFloat(viewModel.servers.count + 1)),
+                                      height: Self.textLineHeight * CGFloat(viewModel.servers.count + 1)),
                    hoveredTag: .upFront,
                    styleDelegate: viewModel,
                    reuseIdentifier: reuseIdentifier)

@@ -22,6 +22,7 @@
 
 import Foundation
 import CoreLocation
+import Dependencies
 import LegacyCommon
 import Cocoa
 import Theme
@@ -37,6 +38,18 @@ class CountryAnnotationViewModel: CustomStyleContext {
     private let minWidth: CGFloat = 100
     private let fallBackWidth: CGFloat = 160
     fileprivate let titlePadding: CGFloat = 15
+
+    // Returns extra width required to display the upgrade badge for countries that require an upgrade
+    private var badgeImageOffset: CGFloat {
+        return available ? 0 : 38.75 + 8 // badge + padding between badge & title
+    }
+
+    var shouldShowUpgradeBadge: Bool {
+        if isConnected || available {
+            return false
+        }
+        return true
+    }
     
     // triggered by any state change
     var viewStateChange: (() -> Void)?
@@ -51,11 +64,22 @@ class CountryAnnotationViewModel: CustomStyleContext {
         return appStateManager.state.isConnected
             && appStateManager.activeConnection()?.server.countryCode == countryCode
     }
-    
+
+    var attributedHoverTitle: NSAttributedString {
+        guard isConnected else {
+            return available ? attributedConnect : attributedUpgrade
+        }
+        return attributedDisconnect
+    }
+
     var attributedConnect: NSAttributedString {
         return self.style(Localizable.connect, font: .themeFont(bold: true))
     }
-    
+
+    var attributedUpgrade: NSAttributedString {
+        return self.style(Localizable.upgrade, font: .themeFont(bold: true))
+    }
+
     var attributedDisconnect: NSAttributedString {
         return self.style(Localizable.disconnect, font: .themeFont(bold: true))
     }
@@ -66,10 +90,11 @@ class CountryAnnotationViewModel: CustomStyleContext {
     }
     
     var buttonWidth: CGFloat {
-        let countryWidth = attributedCountry.size().width + titlePadding * 2
+        let countryWidth = attributedCountry.size().width + titlePadding * 2 + badgeImageOffset
         let connectWidth = attributedConnect.size().width + titlePadding * 2
+        let upgradeWidth = attributedUpgrade.size().width + titlePadding * 2
         let disconnectWidth = attributedDisconnect.size().width + titlePadding * 2
-        let widths = [minWidth, countryWidth, connectWidth, disconnectWidth]
+        let widths = [minWidth, countryWidth, connectWidth, upgradeWidth, disconnectWidth]
         return 2 * round((widths.max() ?? fallBackWidth) / 2) // prevents bluring on non-retina
     }
     
@@ -82,7 +107,12 @@ class CountryAnnotationViewModel: CustomStyleContext {
     init(appStateManager: AppStateManager, country: CountryModel, userTier: Int, coordinate: CLLocationCoordinate2D) {
         self.appStateManager = appStateManager
         self.countryCode = country.countryCode
-        self.available = country.lowestTier <= userTier
+        @Dependency(\.featureFlagProvider) var featureFlags
+        if userTier == 0 && featureFlags[\.showNewFreePlan] {
+            self.available = false
+        } else {
+            self.available = country.lowestTier <= userTier
+        }
         self.coordinate = MapCoordinateTranslator.mapImageCoordinate(from: coordinate)
     }
     
@@ -107,7 +137,7 @@ class CountryAnnotationViewModel: CustomStyleContext {
     func customStyle(context: AppTheme.Context) -> AppTheme.Style {
         switch context {
         case .text:
-            return available ? .normal : [.interactive, .weak, .disabled]
+            return .normal
         case .background:
             guard isConnected else {
                 return .weak
@@ -144,7 +174,7 @@ class StandardCountryAnnotationViewModel: ConnectableAnnotationViewModel {
     var attributedConnectTitle: NSAttributedString {
         return isConnected ? attributedDisconnect : attributedConnect
     }
-    
+
     override var isConnected: Bool {
         return appStateManager.state.isConnected
             && appStateManager.activeConnection()?.server.isSecureCore == false

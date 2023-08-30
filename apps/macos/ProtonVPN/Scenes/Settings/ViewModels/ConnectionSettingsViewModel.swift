@@ -164,7 +164,7 @@ final class ConnectionSettingsViewModel {
         let authorizer: () -> FeatureAuthorizationResult = authorizerProvider.authorizer(for: feature)
         switch authorizer() {
         case .success:
-            return .available(enabled: featurePropertyProvider.getValue(for: feature) == .on ? true : false, interactive: true)
+            return .available(enabled: featurePropertyProvider.getValue(for: feature) == .on, interactive: true)
         case .failure(.featureDisabled):
             return .disabled
         case .failure(.requiresUpgrade):

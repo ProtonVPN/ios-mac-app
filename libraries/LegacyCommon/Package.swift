@@ -65,6 +65,7 @@ let package = Package(
                 "Strings",
                 "Theme",
                 "Home",
+                "Modals",
                 "Settings",
                 "BugReport",
                 .product(name: "VPNShared", package: "NEHelper"),

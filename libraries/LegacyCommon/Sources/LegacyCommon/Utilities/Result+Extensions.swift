@@ -27,3 +27,7 @@ extension Result {
 public struct None: Equatable, ExpressibleByNilLiteral {
     public init(nilLiteral: ()) { }
 }
+
+extension Result where Success == None {
+    public static var success: Self { .success(nil) }
+}

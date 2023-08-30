@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import Dependencies
 import MapKit
 import LegacyCommon
 
@@ -150,6 +151,9 @@ class MapViewModel: SecureCoreToggleHandler {
     }
     
     private func exitAnnotations(type: ServerType, userTier: Int) -> [CountryAnnotationViewModel] {
+        @Dependency(\.featureFlagProvider) var featureFlags
+        let isMapConnectionDisabled = featureFlags[\.showNewFreePlan] && userTier == CoreAppConstants.VpnTiers.free
+
         return serverManager.grouping(for: type).compactMap {
             guard case ServerGroup.Kind.country(let countryModel) = $0.kind else {
                 return nil
@@ -161,7 +165,7 @@ class MapViewModel: SecureCoreToggleHandler {
                 serverType: activeView,
                 vpnGateway: vpnGateway,
                 appStateManager: appStateManager,
-                enabled: $0.kind.lowestTier <= userTier,
+                enabled: isMapConnectionDisabled ? false : $0.kind.lowestTier <= userTier,
                 alertService: alertService,
                 connectionStatusService: connectionStatusService
             )
