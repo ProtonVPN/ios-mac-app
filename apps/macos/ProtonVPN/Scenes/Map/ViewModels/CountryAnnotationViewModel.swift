@@ -41,7 +41,7 @@ class CountryAnnotationViewModel: CustomStyleContext {
 
     // Returns extra width required to display the upgrade badge for countries that require an upgrade
     private var badgeImageOffset: CGFloat {
-        return available ? 0 : 38.75 + 8 // badge + padding between badge & title
+        return available ? 0 : CountryAnnotationView.badgeSize.width + 8 // badge + padding between badge & title
     }
 
     var shouldShowUpgradeBadge: Bool {

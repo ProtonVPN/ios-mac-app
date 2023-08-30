@@ -28,12 +28,16 @@ public struct FeatureFlagProvider: DependencyKey {
         setFeatureFlags: { PropertiesManager().featureFlags = $0 }
     )
 
-    static func constant(flags: FeatureFlags) -> FeatureFlagProvider {
+    #if DEBUG
+    public static var testValue: FeatureFlagProvider = .constant(flags: .allEnabled)
+
+    public static func constant(flags: FeatureFlags) -> FeatureFlagProvider {
         return FeatureFlagProvider(
             getFeatureFlags: { flags },
             setFeatureFlags: { _ in }
         )
     }
+    #endif
 }
 
 extension FeatureFlagProvider {

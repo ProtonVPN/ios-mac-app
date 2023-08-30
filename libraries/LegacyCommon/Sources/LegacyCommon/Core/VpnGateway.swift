@@ -20,6 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 import VPNShared
 import VPNAppCore
 
@@ -388,10 +389,12 @@ public class VpnGateway: VpnGatewayProtocol {
 
         @Dependency(\.connectionAuthorizer) var authorizer
         switch authorizer.authorize(request: request) {
-        case .failure(.requiresUpgrade(let upsellAlert)):
-            alertService?.push(alert: upsellAlert)
+        case .failure(.specificCountryUnavailable(let countryCode)):
+            alertService?.push(alert: AllCountriesUpsellAlert())
+            // VPNAPPL-1851: Show specific country upsell modal
+            log.info("User is not authorized to connect to specific countries (\(countryCode))")
             return
-        case .failure(.cooldown(until: let date)):
+        case .failure(.serverChangeUnavailable(let date)):
             // VPNAPPL-1870: Show cooldown modal
             log.info("Change server requested, but random connection is still on cooldown until \(date)")
             return

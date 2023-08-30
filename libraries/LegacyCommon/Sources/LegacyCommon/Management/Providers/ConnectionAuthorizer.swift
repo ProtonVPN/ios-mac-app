@@ -18,23 +18,21 @@
 
 import Foundation
 import Dependencies
+import Modals
 
-///
+/// Responsible for authorizing or denying connection requests based on the user's plan and available features
 public struct ConnectionAuthorizer {
     public var authorize: (ConnectionRequest) -> ConnectionAuthorizationResult
 
     public func authorize(request: ConnectionRequest) -> ConnectionAuthorizationResult { authorize(request) }
-
-
 }
 
-public typealias ConnectionAuthorizationResult = Result<None, ConnectionAuthorizationFailure>
+public typealias ConnectionAuthorizationResult = Result<None, ConnectionAuthorizationFailureReason>
 
-public enum ConnectionAuthorizationFailure: Error {
-    case cooldown(until: Date)
-    case requiresUpgrade(upsellModal: SystemAlert)
+public enum ConnectionAuthorizationFailureReason: Error, Equatable {
+    case serverChangeUnavailable(until: Date)
+    case specificCountryUnavailable(countryCode: String)
 }
-
 
 extension ConnectionAuthorizer: DependencyKey {
     public static var liveValue: ConnectionAuthorizer = ConnectionAuthorizer(
@@ -56,12 +54,16 @@ extension ConnectionAuthorizer: DependencyKey {
 
             case .city(let countryCode, _), .country(let countryCode, _):
                 if isNewFreePlanActive() {
-                    return .failure(.requiresUpgrade(upsellModal: CountryUpsellAlert(country: countryCode)))
+                    return .failure(.specificCountryUnavailable(countryCode: countryCode))
                 }
                 return .success
             }
         }
     )
+
+    #if DEBUG
+    public static var testValue: ConnectionAuthorizer = ConnectionAuthorizer { request in .success }
+    #endif
 }
 
 extension DependencyValues {
