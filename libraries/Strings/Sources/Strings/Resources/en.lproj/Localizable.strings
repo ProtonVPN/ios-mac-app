@@ -170,6 +170,9 @@
 /* Several places in both iOS and Mac apps */
 "_quick_connect" = "Quick Connect";
 
+/* Title of the change server button */
+"_change_server" = "Change server";
+
 /* Used in many places in MacOS app */
 "_secure_core" = "Secure Core";
 

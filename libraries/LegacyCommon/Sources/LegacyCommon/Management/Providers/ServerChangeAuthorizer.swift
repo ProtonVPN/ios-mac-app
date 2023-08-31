@@ -84,3 +84,21 @@ extension DependencyValues {
       set { self[ServerChangeAuthorizer.self] = newValue }
     }
 }
+
+public enum ServerChangeViewState {
+    case available
+    case unavailable(duration: String)
+
+    public static func from(state: ServerChangeAuthorizer.ServerChangeAvailability) -> Self {
+        switch state {
+        case .available:
+            return .available
+
+        case .unavailable(let until):
+            @Dependency(\.date) var date
+            let formattedDuration = until.timeIntervalSince(date.now)
+                .asColonSeparatedString(maxUnit: .hour, minUnit: .minute)
+            return .unavailable(duration: formattedDuration)
+        }
+    }
+}

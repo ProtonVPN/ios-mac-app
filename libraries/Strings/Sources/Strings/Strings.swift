@@ -131,6 +131,8 @@ public enum Localizable {
   public static var cancelReconnection: String { return Localizable.tr("Localizable", "_cancel_reconnection", fallback: "This will cancel any re-connection attempt and leave you disconnected") }
   /// Warning text that changing the VPN protocol will require the current VPN session to be disconnected
   public static var changeProtocolDisconnectWarning: String { return Localizable.tr("Localizable", "_change_protocol_disconnect_warning", fallback: "Changing protocols will end your current VPN session.") }
+  /// Title of the change server button
+  public static var changeServer: String { return Localizable.tr("Localizable", "_change_server", fallback: "Change server") }
   /// Changing settings title
   public static var changeSettings: String { return Localizable.tr("Localizable", "_change_settings", fallback: "Change settings") }
   /// MacOS: About window
@@ -446,7 +448,7 @@ public enum Localizable {
   /// Profile create/change form
   public static var fastestAvailableServer: String { return Localizable.tr("Localizable", "_fastest_available_server", fallback: "Fastest available server") }
   /// iOS: Predefined profile with fastest connection
-  public static var fastestConnection: String { return Localizable.tr("Localizable", "_fastest_connection", fallback: "Fastest Connection") }
+  public static var fastestConnection: String { return Localizable.tr("Localizable", "_fastest_connection", fallback: "Fastest") }
   /// Feature
   public static var feature: String { return Localizable.tr("Localizable", "_feature", fallback: "Feature") }
   /// iOS plan feature
@@ -1035,7 +1037,7 @@ public enum Localizable {
   /// Profile create/change form
   public static var randomAvailableServer: String { return Localizable.tr("Localizable", "_random_available_server", fallback: "Random available server") }
   /// iOS: Predefined profile with random server
-  public static var randomConnection: String { return Localizable.tr("Localizable", "_random_connection", fallback: "Random Connection") }
+  public static var randomConnection: String { return Localizable.tr("Localizable", "_random_connection", fallback: "Random") }
   /// iOS: table header section in profiles screen
   public static var recommended: String { return Localizable.tr("Localizable", "_recommended", fallback: "Recommended") }
   /// MacOS: Body of alert shown when user changed some settings and connection has to be re-established

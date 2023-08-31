@@ -167,18 +167,18 @@
                                         <rect key="frame" x="0.0" y="0.0" width="340" height="600"/>
                                         <subviews>
                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="PUh-5c-b8S">
-                                                <rect key="frame" x="0.0" y="0.0" width="340" height="380"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="340" height="326"/>
                                             </customView>
                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="0TS-Fg-7cD">
-                                                <rect key="frame" x="0.0" y="380" width="340" height="50"/>
+                                                <rect key="frame" x="0.0" y="326" width="340" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="t7J-Po-vJA"/>
                                                 </constraints>
                                             </customView>
                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="N6y-fY-SzI">
-                                                <rect key="frame" x="0.0" y="430" width="340" height="170"/>
+                                                <rect key="frame" x="0.0" y="376" width="340" height="224"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="170" id="rEx-Kr-Uoo"/>
+                                                    <constraint firstAttribute="height" constant="224" id="rEx-Kr-Uoo"/>
                                                 </constraints>
                                             </customView>
                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="NYr-4L-3gi">

@@ -42,4 +42,23 @@ class TimeIntervalTests: XCTestCase {
         // swiftlint:enable comma
     }
 
+    func testTruncatesUntilMinimumUnit() {
+        XCTAssertEqual(TimeInterval(minutes: 12, seconds: 34).asColonSeparatedString(maxUnit: .day, minUnit: .minute), "12:34")
+        XCTAssertEqual(TimeInterval(minutes: 12, seconds: 34).asColonSeparatedString(maxUnit: .day, minUnit: .hour), "00:12:34")
+        XCTAssertEqual((TimeInterval(1)).asColonSeparatedString(maxUnit: .day, minUnit: .hour), "00:00:01")
+        XCTAssertEqual((TimeInterval(1)).asColonSeparatedString(maxUnit: .day, minUnit: .minute), "00:01")
+        XCTAssertEqual((TimeInterval(1)).asColonSeparatedString(maxUnit: .day, minUnit: .second), "01")
+    }
+
+    func testFirstUnit() {
+        XCTAssertEqual(TimeInterval.days(3).asColonSeparatedString(maxUnit: .hour, minUnit: .hour), "72:00:00")
+        XCTAssertEqual(TimeInterval.days(3).asColonSeparatedString(maxUnit: .minute, minUnit: .minute), "4320:00")
+        XCTAssertEqual(TimeInterval(90).asColonSeparatedString(maxUnit: .second, minUnit: .second), "90")
+    }
+
+    func testPrefixesEmptySegmentsUntilMinimumUnit() {
+        XCTAssertEqual(TimeInterval(12).asColonSeparatedString(maxUnit: .day, minUnit: .minute), "00:12")
+        XCTAssertEqual(TimeInterval(12).asColonSeparatedString(maxUnit: .day, minUnit: .hour), "00:00:12")
+        XCTAssertEqual(TimeInterval(12).asColonSeparatedString(maxUnit: .day, minUnit: .day), "00:00:00:12")
+    }
 }
