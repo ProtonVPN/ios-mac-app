@@ -32,6 +32,7 @@ enum CellModel {
     case country(CountryItemViewModel)
     case server(ServerItemViewModel)
     case profile(ProfileItemViewModel)
+    case banner(BannerViewModel)
 }
 
 struct ContentChange {
@@ -459,9 +460,10 @@ class CountriesSectionViewModel {
                 }, containsGateways)
         }
 
-        // Free
+        // FREE
         let plusLocations: [ServerGroup]
         let freePart: [CellModel]
+        var plusBanner = [CellModel]()
 
         @Dependency(\.featureFlagProvider) var featureFlagProvider
         if !featureFlagProvider.showNewFreePlan { // old
@@ -477,7 +479,7 @@ class CountriesSectionViewModel {
                     return .country(self.countryViewModel(group, displaySeparator: index != 0, serversFilter: defaultServersFilter, showCountryConnectButton: true))
                 }
         } else { // new
-            plusLocations = countries
+            // Free part
             let headerFreeVM = CountryHeaderViewModel(LocalizedString.connectionsFree, totalCountries: 1, buttonType: nil, countriesViewModel: self)
             freePart = [
                 .header(headerFreeVM),
@@ -492,19 +494,33 @@ class CountriesSectionViewModel {
                     sysexManager: sysexManager
                 )),
             ]
+            // Upsell part
+            plusLocations = countries
+            plusBanner.append(.banner(BannerViewModel(
+                leftIcon: CoreAsset.vpnWorldwideCoverage,
+                text: LocalizedString.freeBannerText,
+                action: { [weak self] in
+                    self?.displayUpgradeMessage(nil)
+                },
+                separatorTop: false,
+                separatorBottom: true
+            )))
         }
 
         let headerPlusVM = CountryHeaderViewModel(LocalizedString.locationsPlus, totalCountries: plusLocations.count, buttonType: .premium, countriesViewModel: self)
+        let plusCells = plusLocations.enumerated().compactMap { index, group -> CellModel? in
+            if let filter = defaultServersFilter, !group.servers.contains(where: filter) {
+                return nil
+            }
+            return .country(self.countryViewModel(group, displaySeparator: index != 0, serversFilter: defaultServersFilter, showCountryConnectButton: true))
+        }
 
         return (gatewaysSection
-            + freePart
-            + [ .header(headerPlusVM) ]
-            + plusLocations.enumerated().compactMap { index, group -> CellModel? in
-                if let filter = defaultServersFilter, !group.servers.contains(where: filter) {
-                    return nil
-                }
-                return .country(self.countryViewModel(group, displaySeparator: index != 0, serversFilter: defaultServersFilter, showCountryConnectButton: true))
-            }, containsGateways)
+                + freePart
+                + [ .header(headerPlusVM) ]
+                + plusBanner
+                + plusCells,
+            containsGateways)
     }
     
     private func countryViewModel(_ serversGroup: ServerGroup, displaySeparator: Bool, serversFilter: ((ServerModel) -> Bool)?, showCountryConnectButton: Bool) -> CountryItemViewModel {
