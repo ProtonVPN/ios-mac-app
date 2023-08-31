@@ -134,13 +134,22 @@ public class ServerManagerImplementation: ServerManager {
             guard !value.isEmpty else { return nil }
             var kind = key
 
+            // Order servers inside country/gateway
+            let servers = value.sorted { s1, s2 in
+                if !s1.isSecureCore {
+                    return s1 < s2
+                } else {
+                    return s1.entryCountry < s2.entryCountry
+                }
+            }
+
             switch kind {
             case .country(let countryModel):
                 // The hash function for country models doesn't take their tier into account, just
                 // the country code. So, depending on which server comes first in serverModels, the
                 // lowestTier of the country model could be inconsistent with what's actually in the
                 // grouping of servers by country.
-                countryModel.lowestTier = value.reduce(into: Int.max) { minTier, server in
+                countryModel.lowestTier = servers.reduce(into: Int.max) { minTier, server in
                     if server.tier < minTier {
                         minTier = server.tier
                     }
@@ -151,8 +160,8 @@ public class ServerManagerImplementation: ServerManager {
 
             return ServerGroup(
                 kind: kind,
-                servers: value,
-                feature: value.reduce(into: ServerFeature.zero, { $0.insert($1.feature) })
+                servers: servers,
+                feature: servers.reduce(into: ServerFeature.zero, { $0.insert($1.feature) })
             )
         }.sorted {
             // First go gateways (sorted by name), then countries (sorted by name)
