@@ -51,6 +51,7 @@ class CountriesSectionViewController: NSViewController {
         case server = "ServerItemCellView"
         case header = "CountriesSectionHeaderView"
         case profile = "ProfileItemView"
+        case banner = "BannerCellView"
         
         var identifier: NSUserInterfaceItemIdentifier { NSUserInterfaceItemIdentifier(self.rawValue) }
         var nib: NSNib? { NSNib(nibNamed: NSNib.Name(self.rawValue), bundle: nil) }
@@ -388,13 +389,16 @@ extension CountriesSectionViewController: NSTableViewDataSource {
 }
 
 extension CountriesSectionViewController: NSTableViewDelegate {
-    
+
+    // todo: would be better to change this to autosize, because banners may have different heights
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
         switch viewModel.cellModel(forRow: row) {
         case .country:
             return 48
         case .header:
             return 32
+        case .banner:
+            return 100
         default:
             return 40
         }
@@ -425,6 +429,10 @@ extension CountriesSectionViewController: NSTableViewDelegate {
         case .profile(let profileModel):
             let cell = tableView.makeView(withIdentifier: Cell.profile.identifier, owner: nil) as! ProfileItemView
             cell.updateView(withModel: profileModel, hideSeparator: true)
+            return cell
+        case .banner(let viewModel):
+            let cell = tableView.makeView(withIdentifier: Cell.banner.identifier, owner: nil) as! BannerCellView
+            cell.updateView(withModel: viewModel)
             return cell
         }
     }
