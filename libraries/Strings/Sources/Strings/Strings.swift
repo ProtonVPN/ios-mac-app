@@ -249,6 +249,8 @@ public enum Localizable {
   public static var connectionTimedOut: String { return Localizable.tr("Localizable", "_connection_timed_out", fallback: "Connection timed out") }
   /// Text that should be bold in _connection_timed_out string
   public static var connectionTimedOutBold: String { return Localizable.tr("Localizable", "_connection_timed_out_bold", fallback: "timed out") }
+  /// Header before the list of connections available for free users (in the country list)
+  public static var connectionsFree: String { return Localizable.tr("Localizable", "_connections_free", fallback: "Free connections") }
   /// Text addressing to contact costumer support on several sites of the app
   public static var contactOurSupport: String { return Localizable.tr("Localizable", "_contact_our_support", fallback: "Contact our support") }
   /// Continue
@@ -632,14 +634,14 @@ public enum Localizable {
   public static var localAgentServerErrorTitle: String { return Localizable.tr("Localizable", "_local_agent_server_error_title", fallback: "Server error") }
   /// iOS status view
   public static var location: String { return Localizable.tr("Localizable", "_location", fallback: "Location") }
-  /// All Locations
-  public static var locationsAll: String { return Localizable.tr("Localizable", "_locations_all", fallback: "All Locations") }
-  /// Free Locations
-  public static var locationsFree: String { return Localizable.tr("Localizable", "_locations_free", fallback: "Free Locations") }
+  /// All locations
+  public static var locationsAll: String { return Localizable.tr("Localizable", "_locations_all", fallback: "All locations") }
+  /// Free locations
+  public static var locationsFree: String { return Localizable.tr("Localizable", "_locations_free", fallback: "Free locations") }
   /// Gateways
   public static var locationsGateways: String { return Localizable.tr("Localizable", "_locations_gateways", fallback: "Gateways") }
-  /// Plus Locations
-  public static var locationsPlus: String { return Localizable.tr("Localizable", "_locations_plus", fallback: "Plus Locations") }
+  /// Plus locations
+  public static var locationsPlus: String { return Localizable.tr("Localizable", "_locations_plus", fallback: "Plus locations") }
   /// iOS: Login button in several places
   public static var logIn: String { return Localizable.tr("Localizable", "_log_in", fallback: "Sign in") }
   /// iOS widget: text for not-logged-in user

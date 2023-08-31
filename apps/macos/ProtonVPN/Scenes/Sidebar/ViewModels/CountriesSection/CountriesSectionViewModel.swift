@@ -26,6 +26,7 @@ import LegacyCommon
 import VPNShared
 import Dependencies
 import Strings
+import AppKit
 
 enum CellModel {
     case header(CountriesServersHeaderViewModelProtocol)
@@ -81,7 +82,7 @@ class CountriesSectionViewModel {
     var secureCoreChange: ((Bool) -> Void)?
     var displayStreamingServices: ((String, [VpnStreamingOption], PropertiesManagerProtocol) -> Void)?
     var displayPremiumServices: (() -> Void)?
-    var displayFreeServices: (() -> Void)?
+    var displayFreeServicesOverlay: (() -> Void)? // Old behaviour, before free rescope
     var displayGatewaysServices: (() -> Void)?
     let contentSwitch = Notification.Name("CountriesSectionViewModelContentSwitch")
     
@@ -120,6 +121,38 @@ class CountriesSectionViewModel {
         }
 
         return FreeFeaturesOverlayViewModel(featureViewModels: [FreeServersFeatureCellViewModel()] + featuresViewModels + partnersViewModels)
+    }
+
+    /// Show information about free plan.
+    /// Depending on a feature flag it's either an overlay (old) or a modal (new)
+    public func displayFreeServices() {
+        @Dependency(\.featureFlagProvider) var featureFlagProvider
+        if !featureFlagProvider[\.showNewFreePlan] { // old
+            displayFreeServicesOverlay?()
+        } else { // new
+            displayFreeServicesModal()
+        }
+    }
+
+    private func displayFreeServicesModal() {
+        alertService.push(alert: FreeConnectionsAlert(countries: freeCountries))
+    }
+
+    private var freeCountries: [(String, NSImage)] {
+        return serverGroups.compactMap { (serverGroup: ServerGroup) -> (String, NSImage)? in
+            switch serverGroup.kind {
+            case .country(let countryModel):
+                guard countryModel.lowestTier == 0 else {
+                    return nil
+                }
+                return (
+                    LocalizationUtility.default.countryName(forCode: countryModel.countryCode) ?? LocalizedString.unavailable,
+                    AppTheme.Icon.flag(countryCode: countryModel.countryCode)!
+                )
+            case .gateway:
+                return nil
+            }
+        }
     }
     
     // MARK: - QuickSettings presenters
@@ -480,7 +513,7 @@ class CountriesSectionViewModel {
                 }
         } else { // new
             // Free part
-            let headerFreeVM = CountryHeaderViewModel(LocalizedString.connectionsFree, totalCountries: 1, buttonType: nil, countriesViewModel: self)
+            let headerFreeVM = CountryHeaderViewModel(LocalizedString.connectionsFree, totalCountries: 1, buttonType: .freeConnections, countriesViewModel: self)
             freePart = [
                 .header(headerFreeVM),
                 .profile(FastestConnectionViewModel(

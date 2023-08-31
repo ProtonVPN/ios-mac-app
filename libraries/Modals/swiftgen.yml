@@ -3,3 +3,5 @@ xcassets:
   outputs:
     templateName: swift5
     output: Sources/Modals/Assets/Assets.swift
+    params:
+      publicAccess: true

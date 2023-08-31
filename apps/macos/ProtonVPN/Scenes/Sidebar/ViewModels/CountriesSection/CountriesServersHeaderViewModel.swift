@@ -49,6 +49,10 @@ class CountryHeaderViewModel: CountriesServersHeaderViewModelProtocol {
                 didTapInfoBtn = {
                     countriesViewModel.displayGatewaysServices?()
                 }
+            case .freeConnections:
+                didTapInfoBtn = {
+                    countriesViewModel.displayFreeServices()
+                }
             }
         }
     }
@@ -56,6 +60,7 @@ class CountryHeaderViewModel: CountriesServersHeaderViewModelProtocol {
     enum InfoButtonType {
         case premium
         case gateway
+        case freeConnections
     }
 }
 
@@ -66,7 +71,7 @@ class ServerHeaderViewModel: CountriesServersHeaderViewModelProtocol {
     init( _ sectionHeader: String, totalServers: Int, serverGroup: ServerGroup, tier: Int, propertiesManager: PropertiesManagerProtocol, countriesViewModel: CountriesSectionViewModel) {
         title = sectionHeader + " (\(totalServers))"
         guard tier != CoreAppConstants.VpnTiers.free else {
-            didTapInfoBtn = { countriesViewModel.displayFreeServices?() }
+            didTapInfoBtn = { countriesViewModel.displayFreeServices() }
             return
         }
         guard case .country(let country) = serverGroup.kind,

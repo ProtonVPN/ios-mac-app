@@ -28,6 +28,7 @@ import Theme
 import Ergonomics
 import Home
 import Strings
+import Dependencies
 
 class QuickSettingsStack: NSStackView {
 
@@ -263,8 +264,10 @@ class CountriesSectionViewController: NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(scrolled(_:)), name: NSView.boundsDidChangeNotification, object: serverListScrollView.contentView)
         viewModel.contentChanged = { [weak self] change in self?.contentChanged(change) }
         viewModel.displayPremiumServices = { self.presentAsSheet(FeaturesOverlayViewController(viewModel: PremiumFeaturesOverlayViewModel())) }
-        let freeFeaturesOverlayViewModel = viewModel.freeFeaturesOverlayViewModel()
-        viewModel.displayFreeServices = { self.presentAsSheet(FeaturesOverlayViewController(viewModel: freeFeaturesOverlayViewModel)) }
+        viewModel.displayFreeServicesOverlay = {
+            let freeFeaturesOverlayViewModel = self.viewModel.freeFeaturesOverlayViewModel()
+            self.presentAsSheet(FeaturesOverlayViewController(viewModel: freeFeaturesOverlayViewModel))
+        }
         viewModel.displayStreamingServices = { self.presentAsSheet(StreamingServicesOverlayViewController(viewModel: StreamingServicesOverlayViewModel(country: $0, streamServices: $1, propertiesManager: $2))) }
         viewModel.displayGatewaysServices = { self.presentAsSheet(FeaturesOverlayViewController(viewModel: GatewayFeaturesOverlayViewModel())) }
     }
@@ -477,7 +480,7 @@ extension CountriesSectionViewController: CountriesSettingsDelegate {
 
 extension CountriesSectionViewController: ServerItemCellViewDelegate {
     func userDidClickOnPartnerIcon() {
-        viewModel.displayFreeServices?()
+        viewModel.displayFreeServices()
     }
 
     func userDidRequestStreamingInfo(server: ServerItemViewModel) {

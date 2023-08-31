@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner">
+            <connections>
+                <outlet property="countryNameField" destination="V98-aP-1Q3" id="xjF-2Q-SC4"/>
+                <outlet property="flagImageView" destination="6l4-LW-Yun" id="ib3-bI-exr"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="194" height="33"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Azw-ff-X18">
+                    <rect key="frame" x="0.0" y="0.0" width="194" height="33"/>
+                    <subviews>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6l4-LW-Yun">
+                            <rect key="frame" x="0.0" y="9" width="24" height="16"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="24" id="18o-qP-qpV"/>
+                                <constraint firstAttribute="height" constant="16" id="bod-Ii-hHu"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="flags-LR" id="HUX-1C-1RG"/>
+                        </imageView>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" translatesAutoresizingMaskIntoConstraints="NO" id="V98-aP-1Q3">
+                            <rect key="frame" x="26" y="9" width="170" height="16"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" title="_Country name_" id="Tjb-eI-Usg">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                    </subviews>
+                    <visibilityPriorities>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                    </visibilityPriorities>
+                    <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                    </customSpacing>
+                </stackView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Azw-ff-X18" secondAttribute="trailing" id="IzV-g3-gXn"/>
+                <constraint firstAttribute="bottom" secondItem="Azw-ff-X18" secondAttribute="bottom" id="L8b-7q-EHd"/>
+                <constraint firstItem="Azw-ff-X18" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="hh8-4f-aON"/>
+                <constraint firstItem="Azw-ff-X18" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="ntM-at-XEa"/>
+            </constraints>
+            <point key="canvasLocation" x="-60" y="-155.5"/>
+        </customView>
+        <customObject id="iQZ-e2-tw5" customClass="CountryCellView" customModule="Modals_macOS">
+            <connections>
+                <outlet property="countryNameField" destination="V98-aP-1Q3" id="cwp-5s-JFy"/>
+                <outlet property="flagImageView" destination="6l4-LW-Yun" id="g6j-SF-add"/>
+                <outlet property="view" destination="c22-O7-iKe" id="jjl-MN-NA4"/>
+            </connections>
+        </customObject>
+    </objects>
+    <resources>
+        <image name="flags-LR" width="32" height="32"/>
+    </resources>
+</document>
