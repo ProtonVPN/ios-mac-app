@@ -21,13 +21,15 @@
 //
 
 import Cocoa
+import Dependencies
 import LegacyCommon
 import VPNShared
 import Theme
 import Strings
 
-protocol HeaderViewModelDelegate: class {
+protocol HeaderViewModelDelegate: AnyObject {
     func bitrateUpdated(with attributedString: NSAttributedString)
+    func changeServerStateUpdated(to state: ServerChangeViewState)
 }
 
 protocol HeaderViewModelFactory {
@@ -35,6 +37,8 @@ protocol HeaderViewModelFactory {
 }
 
 final class HeaderViewModel {
+    @Dependency(\.featureFlagProvider) var featureFlags
+    @Dependency(\.credentialsProvider) var credentials
     
     public typealias Factory = AnnouncementManagerFactory & AppStateManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & ProfileManagerFactory & NavigationServiceFactory & VpnGatewayFactory & AnnouncementsViewModelFactory
     private let factory: Factory
@@ -48,8 +52,33 @@ final class HeaderViewModel {
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var announcementManager: AnnouncementManager = factory.makeAnnouncementManager()
     private lazy var announcementsViewModel: AnnouncementsViewModel = factory.makeAnnouncementsViewModel()
-    
+
+    private var serverChangeTimer: Timer?
+
     var contentChanged: (() -> Void)?
+
+    var shouldShowChangeServer: Bool {
+        isConnected && featureFlags[\.showNewFreePlan] && credentials.tier == CoreAppConstants.VpnTiers.free
+    }
+
+    private var lastChangeServerAvailableState: ServerChangeAuthorizer.ServerChangeAvailability?
+
+    var canChangeServer: ServerChangeAuthorizer.ServerChangeAvailability {
+        if let lastState = lastChangeServerAvailableState, case .unavailable(let until) = lastState, until.isFuture {
+            // Don't re-calculate server change availability if we know we don't need to
+            // (if we are already in time-out, this won't change unless we upgrade)
+            return lastState
+        }
+
+        @Dependency(\.serverChangeAuthorizer) var authorizer
+        let freshState = authorizer.isServerChangeAvailable()
+
+        if case .unavailable = freshState, serverChangeTimer == nil {
+            serverChangeTimer = .scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerTicked), userInfo: nil, repeats: true)
+        }
+        lastChangeServerAvailableState = freshState
+        return freshState
+    }
     
     var statistics: NetworkStatistics?
     weak var delegate: HeaderViewModelDelegate? {
@@ -122,6 +151,19 @@ final class HeaderViewModel {
             NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
             log.debug("Connect requested by selecting Quick connect", category: .connectionConnect, event: .trigger)
             vpnGateway.quickConnect(trigger: .quick)
+        }
+    }
+
+    func changeServerAction() {
+        vpnGateway.connectTo(profile: ProfileConstants.randomProfile(connectionProtocol: propertiesManager.connectionProtocol, defaultProfileAccessTier: 0))
+    }
+
+    @objc private func timerTicked() {
+        let viewState = ServerChangeViewState.from(state: canChangeServer)
+        delegate?.changeServerStateUpdated(to: viewState)
+        if case .available = viewState {
+            serverChangeTimer?.invalidate()
+            serverChangeTimer = nil
         }
     }
     

@@ -35,6 +35,10 @@ public extension TimeInterval {
         Self(days) * .hours(24)
     }
 
+    init(days: Int = 0, hours: Int = 0, minutes: Int = 0, seconds: Int = 0) {
+        self.init(.days(days) + .hours(hours) + .minutes(minutes) + Double(seconds))
+    }
+
     // swiftlint:disable large_tuple
     var components: (days: Int, hours: Int, minutes: Int, seconds: Int) {
         let days = Int(self) / (60 * 60 * 24)
@@ -47,13 +51,58 @@ public extension TimeInterval {
     // swiftlint:enable large_tuple
 
     var asColonSeparatedString: String {
-        let time = components
-        if time.days > 0 {
-            return String(format: "%02i:%02i:%02i:%02i",
-                          time.days, time.hours, time.minutes, time.seconds)
-        } else {
-            return String(format: "%02i:%02i:%02i",
-                          time.hours, time.minutes, time.seconds)
+        return self.asColonSeparatedString(maxUnit: .day, minUnit: .hour)
+    }
+
+    private func components(largestUnit: Self.Unit, smallestUnit: Self.Unit) -> [Int] {
+        var totalSeconds: Int = Int(self)
+        var previousUnit: Self.Unit?
+        let components: [Int] = Unit.allCases
+            .reduce(
+                into: [],
+                { result, unit in
+                    if unit <= largestUnit {
+                        var value = totalSeconds / unit.seconds
+                        if let previousUnit {
+                            value = value % previousUnit.seconds
+                        }
+
+                        if value > 0 || unit <= smallestUnit {
+                            result.append(value)
+                            totalSeconds -= value * unit.seconds
+                            previousUnit = unit
+                        }
+                    }
+                }
+            )
+        assert(totalSeconds == 0)
+        return components
+    }
+
+    enum Unit: CaseIterable, Comparable {
+        case day
+        case hour
+        case minute
+        case second
+
+        var seconds: Int {
+            switch self {
+            case .second: return 1
+            case .minute: return 60
+            case .hour: return 60 * 60
+            case .day: return 60 * 60 * 24
+            }
         }
+
+        public static func < (lhs: Self, rhs: Self) -> Bool {
+            lhs.seconds < rhs.seconds
+        }
+    }
+
+
+    func asColonSeparatedString(maxUnit: Self.Unit, minUnit: Self.Unit) -> String {
+        components(largestUnit: maxUnit, smallestUnit: minUnit)
+            .map { String(format: "%02i", $0) }
+            .joined(separator: ":")
     }
 }

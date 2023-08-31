@@ -99,6 +99,7 @@
 		667E0E922A4EE2DF00EE83ED /* SSOWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 667E0E912A4EE2DF00EE83ED /* SSOWebViewController.xib */; };
 		7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7518A5EF1EEF362900E1EB2B /* libc++.tbd */; };
 		AD8130FF2A85360800729E03 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FE2A85360800729E03 /* LiveDependencies.swift */; };
+		AD5EB4152AA1298100432BCE /* ChangeServerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5EB4142AA1298100432BCE /* ChangeServerButton.swift */; };
 		AD8C78AE29898403008AC0B5 /* AppSessionManagerImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8C78AD29898403008AC0B5 /* AppSessionManagerImplementationTests.swift */; };
 		ADA1A03E2A95E34000F9A6B6 /* Verifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1A03D2A95E34000F9A6B6 /* Verifier.swift */; };
 		ADE590CC2A616E4B00089165 /* ProtocolDeprecatedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE590CB2A616E4B00089165 /* ProtocolDeprecatedViewController.swift */; };
@@ -633,6 +634,7 @@
 		9FDB93D66CF4A7DB23EE7AA8 /* AnnouncementFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnouncementFeatureView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Announcement/Views/AnnouncementFeatureView.swift; sourceTree = "<group>"; };
 		A1E54F86CCDE59E21DC60F9A /* SysexGuideWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SysexGuideWindowController.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Windows/SysexGuideWindowController.swift; sourceTree = "<group>"; };
 		AD8130FE2A85360800729E03 /* LiveDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveDependencies.swift; sourceTree = "<group>"; };
+		AD5EB4142AA1298100432BCE /* ChangeServerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeServerButton.swift; sourceTree = "<group>"; };
 		AD8C78AD29898403008AC0B5 /* AppSessionManagerImplementationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionManagerImplementationTests.swift; sourceTree = "<group>"; };
 		ADA1A03D2A95E34000F9A6B6 /* Verifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Verifier.swift; sourceTree = "<group>"; };
 		ADE590CB2A616E4B00089165 /* ProtocolDeprecatedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolDeprecatedViewController.swift; sourceTree = "<group>"; };
@@ -2533,6 +2535,7 @@
 				E180D1472124955B00F4D1C7 /* UpsellPrimaryActionButton.swift */,
 				4CFFC94327E0C0AE0035969B /* CancellationButton.swift */,
 				E15A8690202738A1009B9C83 /* ZoomButton.swift */,
+				AD5EB4142AA1298100432BCE /* ChangeServerButton.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -3399,6 +3402,7 @@
 				EED534851EEC112000013607 /* AppDelegate.swift in Sources */,
 				E1C1399C2114399700B88658 /* SwitchButton.swift in Sources */,
 				EEE3B5F31F53F44100E86CFA /* CountryAnnotationViewModel.swift in Sources */,
+				AD5EB4152AA1298100432BCE /* ChangeServerButton.swift in Sources */,
 				EE98CFE31F15167D000D6688 /* NSWindow+Extension.swift in Sources */,
 				EEB493CF1F20EA3400A979DC /* VerticalScrollView.swift in Sources */,
 				EE69C8DB1F5D9F8500C3065C /* SidebarWindowController.swift in Sources */,

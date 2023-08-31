@@ -35,7 +35,9 @@ final class HeaderViewController: NSViewController {
     @IBOutlet private weak var loadLabel: NSTextField!
     @IBOutlet private weak var loadIcon: LoadCircle!
     @IBOutlet private weak var speedLabel: NSTextField!
+    @IBOutlet private weak var spacerView: NSView!
     @IBOutlet private weak var connectButton: LargeConnectButton!
+    @IBOutlet private weak var changeServerView: ChangeServerView!
     @IBOutlet private weak var announcementsButton: NSButton!
     @IBOutlet private weak var loadLineHorizontalConstraint1: NSLayoutConstraint!
     @IBOutlet private weak var loadLineHorizontalConstraint2: NSLayoutConstraint!
@@ -93,6 +95,8 @@ final class HeaderViewController: NSViewController {
                 
         connectButton.target = self
         connectButton.action = #selector(quickConnectButtonAction)
+
+        changeServerView.handler = changeServerButtonAction
     }
     
     private func setupEphemeralView() {
@@ -105,7 +109,7 @@ final class HeaderViewController: NSViewController {
         setupProtocol()
         setupBitrate()
         
-        connectButton.isConnected = viewModel.isConnected
+        setupButtons()
     }
     
     private func setupFlagView() {
@@ -151,9 +155,25 @@ final class HeaderViewController: NSViewController {
             speedLabel.isHidden = true
         }
     }
+
+    private func setupButtons(with state: ServerChangeViewState? = nil) {
+        connectButton.isConnected = viewModel.isConnected
+        let shouldShowChangeServer = viewModel.shouldShowChangeServer
+        if shouldShowChangeServer {
+            let viewState = state ?? ServerChangeViewState.from(state: viewModel.canChangeServer)
+            changeServerView.state = viewState
+        }
+
+        changeServerView.isHidden = !shouldShowChangeServer
+        spacerView.isHidden = shouldShowChangeServer
+    }
     
     @objc private func quickConnectButtonAction() {
         viewModel.quickConnectAction()
+    }
+
+    @objc private func changeServerButtonAction() {
+        viewModel.changeServerAction()
     }
     
     // MARK: Announcements
@@ -237,6 +257,10 @@ final class HeaderViewController: NSViewController {
 }
 
 extension HeaderViewController: HeaderViewModelDelegate {
+    func changeServerStateUpdated(to state: ServerChangeViewState) {
+        setupButtons(with: state)
+    }
+
     func bitrateUpdated(with attributedString: NSAttributedString) {
         speedLabel.attributedStringValue = attributedString
     }

@@ -42,28 +42,39 @@ public enum ProfileConstants {
         @Dependency(\.featureFlagProvider) var featureFlagProvider
         let defaultProfileAccessTier = featureFlagProvider[\.showNewFreePlan] ? 1 : 0
         return [
-            Profile(
-                id: fastestId,
-                accessTier: defaultProfileAccessTier,
-                profileIcon: .image(IconProvider.bolt),
-                profileType: .system,
-                serverType: .unspecified,
-                serverOffering: .fastest(nil),
-                name: Localizable.fastest,
-                connectionProtocol: connectionProtocol
-            ),
-            Profile(
-                id: randomId,
-                accessTier: 0,
-                profileIcon: .image(IconProvider.arrowsSwapRight),
-                profileType: .system,
-                serverType: .unspecified,
-                serverOffering: .random(nil),
-                name: Localizable.random,
-                connectionProtocol: connectionProtocol
-            )
+            fastestProfile(connectionProtocol: connectionProtocol, defaultProfileAccessTier: defaultProfileAccessTier),
+            randomProfile(connectionProtocol: connectionProtocol, defaultProfileAccessTier: defaultProfileAccessTier),
         ]
     }
+
+    /// Profile that connects to the fastest server based on the score field
+    public static func fastestProfile(connectionProtocol: ConnectionProtocol, defaultProfileAccessTier: Int) -> Profile {
+        Profile(
+            id: fastestId,
+            accessTier: defaultProfileAccessTier,
+            profileIcon: .image(IconProvider.bolt),
+            profileType: .system,
+            serverType: .unspecified,
+            serverOffering: .fastest(nil),
+            name: Localizable.fastest,
+            connectionProtocol: connectionProtocol
+        )
+    }
+
+    // Profile that selects country and server randomly
+    public static func randomProfile(connectionProtocol: ConnectionProtocol, defaultProfileAccessTier: Int) -> Profile {
+        Profile(
+            id: randomId,
+            accessTier: 0,
+            profileIcon: .image(IconProvider.arrowsSwapRight),
+            profileType: .system,
+            serverType: .unspecified,
+            serverOffering: .random(nil),
+            name: Localizable.random,
+            connectionProtocol: connectionProtocol
+        )
+    }
+
 
 #if canImport(UIKit)
     public typealias ProfileColors = [UIColor]
