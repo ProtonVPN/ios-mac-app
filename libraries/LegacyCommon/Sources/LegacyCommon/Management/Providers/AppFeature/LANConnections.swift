@@ -57,7 +57,10 @@ extension ExcludeLocalNetworks: ProvidableFeature {
         userTier: Int,
         featureFlags: FeatureFlags
     ) -> ExcludeLocalNetworks {
-        .off
+        if featureFlags.showNewFreePlan && userTier < CoreAppConstants.VpnTiers.basic {
+            return .off
+        }
+        return .on
     }
 
     public static var storageKey: String { "excludeLocalNetworks" }
