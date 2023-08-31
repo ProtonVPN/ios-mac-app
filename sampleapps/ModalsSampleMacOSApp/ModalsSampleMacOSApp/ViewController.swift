@@ -26,22 +26,16 @@ class ViewController: NSViewController {
         case upsell(UpsellType)
         case discourageSecureCore
         case whatsNew
+        case freeConnections([(String, Image)])
     }
 
     let modals: [(type: Modal, title: String)] = [
         (.whatsNew, "What's new"),
-        (.upsell(.allCountries(
-            numberOfServers: 1300,
-            numberOfCountries: 61)
-        ), "All countries"),
-        (.upsell(
-            .country(
-               countryFlag: NSImage(named: "Flag")!,
-               numberOfDevices: 10,
-               numberOfCountries: 61
-           )),
-           "Countries"
-        ),
+        (.upsell(.allCountries(numberOfServers: 1300,
+                               numberOfCountries: 61)), "All countries"),
+        (.upsell(.country(country: "PL",
+                          numberOfDevices: 10,
+                          numberOfCountries: 61)), "Countries"),
         (.upsell(.secureCore), "Secure Core"),
         (.upsell(.netShield), "Net Shield"),
         (.upsell(.safeMode), "Safe Mode"),
@@ -59,7 +53,14 @@ class ViewController: NSViewController {
             before: Date().addingTimeInterval(10),
             duration: 10,
             longSkip: true)
-        ), "Server Roulette (Too many skips)")
+        ), "Server Roulette (Too many skips)"),
+        (.freeConnections([
+            ("Japan", Asset.flagsJP.image),
+            ("Netherlands", Asset.flagsNL.image),
+            ("Romania", Asset.flagsRO.image),
+            ("United States", Asset.flagsUS.image),
+            ("Poland", Asset.flagsPL.image),
+        ]), "Feee servers"),
     ]
 
     @IBOutlet weak var tableView: NSTableView! {
@@ -78,7 +79,11 @@ extension ViewController: NSTableViewDelegate {
         case .upsell(let type):
             viewController = ModalsFactory.upsellViewController(upsellType: type, upgradeAction: { }, continueAction: { })
         case .discourageSecureCore:
-            viewController = ModalsFactory.discourageSecureCoreViewController(onDontShowAgain: nil, onActivate: nil, onCancel: nil, onLearnMore: nil)
+            viewController = factory.discourageSecureCoreViewController(onDontShowAgain: nil, onActivate: nil, onCancel: nil, onLearnMore: nil)
+        case .freeConnections(let countries):
+            viewController = factory.freeConnectionsViewController(countries: countries, upgradeAction: {
+                debugPrint(".freeConnections pressed")
+            })
         case .whatsNew:
             viewController = ModalsFactory.whatsNewViewController()
         }

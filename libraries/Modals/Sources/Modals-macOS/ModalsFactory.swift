@@ -45,4 +45,11 @@ public struct ModalsFactory {
         discourageSecureCoreViewController.onLearnMore = onLearnMore
         return discourageSecureCoreViewController
     }
+
+    public func freeConnectionsViewController(countries: [(String, Image)], upgradeAction: (() -> Void)?) -> NSViewController {
+        let controller = FreeConnectionsViewController()
+        controller.onBannerPress = upgradeAction
+        controller.countries = countries
+        return controller
+    }
 }

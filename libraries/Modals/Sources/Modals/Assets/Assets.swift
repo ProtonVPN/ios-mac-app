@@ -14,53 +14,61 @@
 
 // Deprecated typealiases
 @available(*, deprecated, renamed: "ImageAsset.Image", message: "This typealias will be removed in SwiftGen 7.0")
-internal typealias AssetImageTypeAlias = ImageAsset.Image
+public typealias AssetImageTypeAlias = ImageAsset.Image
 
 // swiftlint:disable superfluous_disable_command file_length implicit_return
 
 // MARK: - Asset Catalogs
 
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
-internal enum Asset {
-  internal static let blockAds = ImageAsset(name: "BlockAds")
-  internal static let checkmarkCircle = ImageAsset(name: "CheckmarkCircle")
-  internal static let closeButton = ImageAsset(name: "CloseButton")
-  internal static let flatIllustration = ImageAsset(name: "Flat illustration")
-  internal static let highSpeedIcon = ImageAsset(name: "HighSpeedIcon")
-  internal static let moderateNAT = ImageAsset(name: "ModerateNAT")
-  internal static let netshieldIcon = ImageAsset(name: "NetshieldIcon")
-  internal static let noLogs = ImageAsset(name: "NoLogs")
-  internal static let plusCountries = ImageAsset(name: "PlusCountries")
-  internal static let protectFromAttacks = ImageAsset(name: "ProtectFromAttacks")
-  internal static let routeSecureServers = ImageAsset(name: "RouteSecureServers")
-  internal static let safeModeIOS = ImageAsset(name: "SafeMode-iOS")
-  internal static let safeModeMacOS = ImageAsset(name: "SafeMode-macOS")
-  internal static let secureCore = ImageAsset(name: "SecureCore")
-  internal static let secureCoreDiscourage = ImageAsset(name: "SecureCoreDiscourage")
-  internal static let streamingIcon = ImageAsset(name: "StreamingIcon")
-  internal static let customisation = ImageAsset(name: "customisation")
-  internal static let maximumDeviceLimitUpsell = ImageAsset(name: "maximum-device-limit-upsell")
-  internal static let maximumDeviceLimitWarning = ImageAsset(name: "maximum-device-limit-warning")
-  internal static let netshieldIOS = ImageAsset(name: "netshield-iOS")
-  internal static let netshieldMacOS = ImageAsset(name: "netshield-macOS")
-  internal static let profiles = ImageAsset(name: "profiles")
-  internal static let speed = ImageAsset(name: "speed")
+public enum Asset {
+  public static let addLayer = ImageAsset(name: "AddLayer")
+  public static let blockAds = ImageAsset(name: "BlockAds")
+  public static let checkmarkCircle = ImageAsset(name: "CheckmarkCircle")
+  public static let closeButton = ImageAsset(name: "CloseButton")
+  public static let flagsJP = ImageAsset(name: "flags_JP")
+  public static let flagsNL = ImageAsset(name: "flags_NL")
+  public static let flagsPL = ImageAsset(name: "flags_PL")
+  public static let flagsRO = ImageAsset(name: "flags_RO")
+  public static let flagsUS = ImageAsset(name: "flags_US")
+  public static let flatIllustration = ImageAsset(name: "Flat illustration")
+  public static let highSpeedIcon = ImageAsset(name: "HighSpeedIcon")
+  public static let moderateNAT = ImageAsset(name: "ModerateNAT")
+  public static let netshieldIcon = ImageAsset(name: "NetshieldIcon")
+  public static let noLogs = ImageAsset(name: "NoLogs")
+  public static let plusCountries = ImageAsset(name: "PlusCountries")
+  public static let protectFromAttacks = ImageAsset(name: "ProtectFromAttacks")
+  public static let routeSecureServers = ImageAsset(name: "RouteSecureServers")
+  public static let safeModeIOS = ImageAsset(name: "SafeMode-iOS")
+  public static let safeModeMacOS = ImageAsset(name: "SafeMode-macOS")
+  public static let secureCore = ImageAsset(name: "SecureCore")
+  public static let secureCoreDiscourage = ImageAsset(name: "SecureCoreDiscourage")
+  public static let streamingIcon = ImageAsset(name: "StreamingIcon")
+  public static let customisation = ImageAsset(name: "customisation")
+  public static let icLocks = ImageAsset(name: "ic-locks")
+  public static let maximumDeviceLimitUpsell = ImageAsset(name: "maximum-device-limit-upsell")
+  public static let maximumDeviceLimitWarning = ImageAsset(name: "maximum-device-limit-warning")
+  public static let netshieldIOS = ImageAsset(name: "netshield-iOS")
+  public static let netshieldMacOS = ImageAsset(name: "netshield-macOS")
+  public static let profiles = ImageAsset(name: "profiles")
+  public static let speed = ImageAsset(name: "speed")
+  public static let worldwideCoverage = ImageAsset(name: "worldwide-coverage")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
 // MARK: - Implementation Details
 
-internal struct ImageAsset {
-  internal fileprivate(set) var name: String
+public struct ImageAsset {
+  public fileprivate(set) var name: String
 
   #if os(macOS)
-  internal typealias Image = NSImage
+  public typealias Image = NSImage
   #elseif os(iOS) || os(tvOS) || os(watchOS)
-  internal typealias Image = UIImage
+  public typealias Image = UIImage
   #endif
 
   @available(iOS 8.0, tvOS 9.0, watchOS 2.0, macOS 10.7, *)
-  internal var image: Image {
+  public var image: Image {
     let bundle = BundleToken.bundle
     #if os(iOS) || os(tvOS)
     let image = Image(named: name, in: bundle, compatibleWith: nil)
@@ -78,7 +86,7 @@ internal struct ImageAsset {
 
   #if os(iOS) || os(tvOS)
   @available(iOS 8.0, tvOS 9.0, *)
-  internal func image(compatibleWith traitCollection: UITraitCollection) -> Image {
+  public func image(compatibleWith traitCollection: UITraitCollection) -> Image {
     let bundle = BundleToken.bundle
     guard let result = Image(named: name, in: bundle, compatibleWith: traitCollection) else {
       fatalError("Unable to load image asset named \(name).")
@@ -89,13 +97,13 @@ internal struct ImageAsset {
 
   #if canImport(SwiftUI)
   @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
-  internal var swiftUIImage: SwiftUI.Image {
+  public var swiftUIImage: SwiftUI.Image {
     SwiftUI.Image(asset: self)
   }
   #endif
 }
 
-internal extension ImageAsset.Image {
+public extension ImageAsset.Image {
   @available(iOS 8.0, tvOS 9.0, watchOS 2.0, *)
   @available(macOS, deprecated,
     message: "This initializer is unsafe on macOS, please use the ImageAsset.image property")
@@ -113,7 +121,7 @@ internal extension ImageAsset.Image {
 
 #if canImport(SwiftUI)
 @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
-internal extension SwiftUI.Image {
+public extension SwiftUI.Image {
   init(asset: ImageAsset) {
     let bundle = BundleToken.bundle
     self.init(asset.name, bundle: bundle)

@@ -239,6 +239,9 @@ extension MacAlertService: CoreAlertService {
                 upsellType: .cantSkip(before: alert.until, duration: alert.duration, longSkip: alert.longSkip)
             )
 
+        case let alert as FreeConnectionsAlert:
+            show(alert)
+
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")
@@ -380,5 +383,19 @@ extension MacAlertService: CoreAlertService {
     private func show(_ alert: ProtocolDeprecatedAlert) {
         let vc = ProtocolDeprecatedViewController(viewModel: WarningPopupViewModel(alert: alert))
         windowService.presentKeyModal(viewController: vc)
+    }
+
+    private func show(_ alert: FreeConnectionsAlert) {
+        let factory = ModalsFactory(colors: UpsellColors())
+        let upgradeAction: (() -> Void) = { [weak self] in
+            Task { [weak self] in
+                guard let url = await self?.sessionService.getPlanSession(mode: .upgrade) else {
+                    return
+                }
+                SafariService.openLink(url: url)
+            }
+        }
+        let upsellViewController = factory.freeConnectionsViewController(countries: alert.countries, upgradeAction: upgradeAction)
+        windowService.presentKeyModal(viewController: upsellViewController)
     }
 }

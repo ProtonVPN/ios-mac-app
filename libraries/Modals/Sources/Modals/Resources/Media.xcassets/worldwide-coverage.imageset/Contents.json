@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "worldwide-coverage.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
