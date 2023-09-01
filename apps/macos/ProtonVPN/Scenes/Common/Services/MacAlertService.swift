@@ -233,8 +233,11 @@ extension MacAlertService: CoreAlertService {
         case is ConnectingWithBadLANAlert:
             showDefaultSystemAlert(alert)
 
-        case is ConnectionCooldownAlert:
-            showDefaultSystemAlert(alert)
+        case let alert as ConnectionCooldownAlert:
+            show(
+                alert: alert,
+                upsellType: .cantSkip(before: alert.until, duration: alert.duration, longSkip: alert.longSkip)
+            )
 
         default:
             #if DEBUG
@@ -334,7 +337,13 @@ extension MacAlertService: CoreAlertService {
                 SafariService.openLink(url: url)
             }
         }
-        let upsellViewController = ModalsFactory.upsellViewController(upsellType: upsellType, upgradeAction: upgradeAction)
+
+        let upsellViewController = ModalsFactory.upsellViewController(
+            upsellType: upsellType,
+            upgradeAction: upgradeAction,
+            continueAction: alert.continueAction
+        )
+
         windowService.presentKeyModal(viewController: upsellViewController)
     }
 

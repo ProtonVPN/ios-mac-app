@@ -10,10 +10,10 @@
             <connections>
                 <outlet property="borderView" destination="TPL-gp-SZD" id="Upc-Qf-9Mj"/>
                 <outlet property="descriptionLabel" destination="jid-dT-2nn" id="Y02-pu-KJz"/>
+                <outlet property="featureArtView" destination="53f-me-QcG" id="CQd-Lr-ATk"/>
                 <outlet property="featuresStackView" destination="H0z-3s-Avf" id="DCE-nh-gI9"/>
                 <outlet property="flagView" destination="X1m-QP-NON" id="Tz7-yU-rc3"/>
                 <outlet property="gradientView" destination="hsR-jv-VGx" id="6cd-VC-5FM"/>
-                <outlet property="imageView" destination="53f-me-QcG" id="ZXg-Tb-5iB"/>
                 <outlet property="titleLabel" destination="K5y-4F-OTE" id="d6g-uS-SeN"/>
                 <outlet property="upgradeButton" destination="xIg-oV-oUX" id="o9a-GN-HJ3"/>
                 <outlet property="view" destination="A27-85-7le" id="0W6-md-r2A"/>
@@ -51,14 +51,13 @@
                         <action selector="upgrade:" target="-2" id="zaV-oV-1LG"/>
                     </connections>
                 </button>
-                <imageView autoresizesSubviews="NO" horizontalHuggingPriority="1000" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="53f-me-QcG">
+                <customView autoresizesSubviews="NO" horizontalHuggingPriority="1000" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="53f-me-QcG">
                     <rect key="frame" x="60" y="310" width="400" height="184"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="184" id="5ur-kg-plb"/>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="350" id="bJB-0q-st6"/>
                     </constraints>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="PlusCountries" id="XMA-Lx-eBS"/>
-                </imageView>
+                </customView>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="X1m-QP-NON">
                     <rect key="frame" x="236" y="378" width="48" height="48"/>
                     <constraints>
@@ -146,7 +145,4 @@
             <point key="canvasLocation" x="279" y="295.5"/>
         </customView>
     </objects>
-    <resources>
-        <image name="PlusCountries" width="320" height="180"/>
-    </resources>
 </document>

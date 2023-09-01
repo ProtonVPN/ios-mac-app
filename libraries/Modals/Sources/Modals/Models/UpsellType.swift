@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Strings
+import SwiftUI
 
 public enum UpsellType {
     case netShield
@@ -29,6 +30,7 @@ public enum UpsellType {
     case vpnAccelerator
     case customization
     case profiles
+    case cantSkip(before: Date, duration: TimeInterval, longSkip: Bool)
 
     public func upsellFeature() -> UpsellFeature {
         UpsellFeature(
@@ -37,10 +39,9 @@ public enum UpsellType {
             boldSubtitleElements: boldSubtitleElements(),
             features: features(),
             moreInformation: moreInformation(),
-            artImage: artImage(),
-            flagImage: flagImage()
+            artImage: artImage()
         )
-}
+    }
 
     private func moreInformation() -> Feature? {
         switch self {
@@ -73,6 +74,12 @@ public enum UpsellType {
             return Localizable.upsellCustomizationTitle
         case .profiles:
             return Localizable.upsellProfilesTitle
+        case let .cantSkip(_, _, longSkip):
+            if longSkip {
+                return Localizable.upsellSpecificLocationTitle
+            } else {
+                return ""
+            }
         }
     }
 
@@ -98,6 +105,8 @@ public enum UpsellType {
             return nil
         case .profiles:
             return Localizable.upsellProfilesSubtitle
+        case .cantSkip:
+            return Localizable.upsellSpecificLocationSubtitle
         }
     }
     private func boldSubtitleElements() -> [String] {
@@ -133,46 +142,69 @@ public enum UpsellType {
             return [.accessLAN, .profiles, .quickConnect]
         case .profiles:
             return [.location, .profilesProtocols, .autoConnect]
+        case .cantSkip:
+            return []
         }
     }
 
-    private func artImage() -> Image {
+    public func artImage() -> any View {
         switch self {
         case .netShield:
 #if os(iOS)
-            return Asset.netshieldIOS.image
+            return Asset.netshieldIOS.swiftUIImage
 #else
-            return Asset.netshieldMacOS.image
+            return Asset.netshieldMacOS.swiftUIImage
 #endif
         case .secureCore:
-            return Asset.secureCore.image
+            return Asset.secureCore.swiftUIImage
         case .allCountries:
-            return Asset.plusCountries.image
+            return Asset.plusCountries.swiftUIImage
         case .safeMode:
 #if os(iOS)
-            return Asset.safeModeIOS.image
+            return Asset.safeModeIOS.swiftUIImage
 #else
-            return Asset.safeModeMacOS.image
+            return Asset.safeModeMacOS.swiftUIImage
 #endif
         case .moderateNAT:
-            return Asset.moderateNAT.image
+            return Asset.moderateNAT.swiftUIImage
         case .noLogs:
-            return Asset.noLogs.image
+            return Asset.noLogs.swiftUIImage
         case .vpnAccelerator:
-            return Asset.speed.image
+            return Asset.speed.swiftUIImage
         case .customization:
-            return Asset.customisation.image
+            return Asset.customisation.swiftUIImage
         case .profiles:
-            return Asset.profiles.image
-        case .country:
-            return Asset.flatIllustration.image
+            return Asset.profiles.swiftUIImage
+        case let .country(country, _, _):
+            return ZStack {
+                Asset.flatIllustration.swiftUIImage
+                country.swiftUIImage
+                    .resizable(resizingMode: .stretch)
+                    .frame(width: 48, height: 48)
+            }
+        case let .cantSkip(beforeDate, timeInterval, _):
+            return ReconnectCountdown(
+                dateFinished: beforeDate,
+                timeInterval: timeInterval
+            )
         }
     }
 
-    private func flagImage() -> Image? {
+    public var showUpgradeButton: Bool {
         switch self {
-        case .country(let country, _, _):
-            return country
+        case .noLogs:
+            return false
+        case let .cantSkip(until, _, _):
+            return Date().timeIntervalSince(until) < 0
+        default:
+            return true
+        }
+    }
+
+    public var changeDate: Date? {
+        switch self {
+        case let .cantSkip(until, _, _):
+            return until
         default:
             return nil
         }

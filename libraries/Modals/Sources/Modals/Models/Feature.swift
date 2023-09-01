@@ -19,13 +19,26 @@
 import Foundation
 import Strings
 import Theme
+import SwiftUI
 
 #if os(macOS)
 import AppKit
 public typealias Image = NSImage
+
+extension Image {
+    var swiftUIImage: SwiftUI.Image {
+        SwiftUI.Image(nsImage: self)
+    }
+}
 #else
 import UIKit
 public typealias Image = UIImage
+
+extension Image {
+    var swiftUIImage: SwiftUI.Image {
+        SwiftUI.Image(uiImage: self)
+    }
+}
 #endif
 
 public enum Feature {

@@ -1083,13 +1083,13 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
                 $0.featureFlagProvider = .constant(flags: .allEnabled)
 
                 // Now add a bunch of connections to the stack, we should get the longer delay
-                let limit = $0.serverChangeStorage.config.changeServerAttemptLimit - 1
-                for i in 0...limit {
+                let limit = $0.serverChangeStorage.config.changeServerAttemptLimit
+                for i in 0..<limit {
                     $0.serverChangeStorage.push(
                         intent: .random,
                         date: date
                             .addingTimeInterval(TimeInterval(
-                                -i *
+                                -(limit - i - 1) *
                                  serverChangeStorage
                                     .config
                                     .changeServerShortDelayInSeconds
@@ -1108,11 +1108,14 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         let longUntilDate = until?.timeIntervalSince1970 ?? 0
         let expectedLongUntilDate = date
             .addingTimeInterval(TimeInterval(serverChangeStorage.config.changeServerLongDelayInSeconds))
-            .addingTimeInterval(TimeInterval(
-                -(serverChangeStorage.config.changeServerAttemptLimit - 1) *
-                    serverChangeStorage.config.changeServerShortDelayInSeconds))
             .timeIntervalSince1970
-        XCTAssertLessThan(abs(longUntilDate - expectedLongUntilDate), epsilon)
+
+        let diff = abs(longUntilDate - expectedLongUntilDate)
+        XCTAssertLessThan(
+            diff,
+            epsilon,
+            "\(longUntilDate) is not equal to expected value \(expectedLongUntilDate) (difference of \(diff))"
+        )
 
         CredentialsProvider.testValue = oldCredentialsProvider
         AuthKeychainHandleDependencyKey.testValue = oldAuthKeychain

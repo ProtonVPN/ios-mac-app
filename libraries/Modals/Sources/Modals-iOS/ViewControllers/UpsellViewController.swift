@@ -18,24 +18,27 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 import Modals
 import Strings
 import Theme
 
 public protocol UpsellViewControllerDelegate: AnyObject {
-    func userDidRequestPlus()
+    func userDidRequestPlus(upsell: UpsellViewController?)
 
     /// This method exists to allow the parent to decide whether the view controller should dismiss itself or not.
     ///
     /// - Returns: A `Bool` value indicating whether the view controller should dismiss itself.
     ///
     /// - Note: In the onboarding module the parent dismisses the upsell modal. `IosAlertService` allows the upsell to dismiss itself.
-    func shouldDismissUpsell() -> Bool
-    func userDidDismissUpsell()
-    func userDidTapNext()
+    func shouldDismissUpsell(upsell: UpsellViewController?) -> Bool
+    func userDidDismissUpsell(upsell: UpsellViewController?)
+    func userDidTapNext(upsell: UpsellViewController?)
+    func upsellDidDisappear(upsell: UpsellViewController?)
 }
 
-public final class UpsellViewController: UIViewController {
+public final class UpsellViewController: UIViewController, Identifiable {
+    public let id = UUID()
 
     // MARK: Outlets
 
@@ -55,7 +58,7 @@ public final class UpsellViewController: UIViewController {
     @IBOutlet private weak var featuresStackView: UIStackView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subtitleLabel: UILabel!
-    @IBOutlet private weak var featureArtImageView: UIImageView!
+    @IBOutlet private weak var featureArtView: UIView!
 
     // MARK: Properties
 
@@ -71,6 +74,11 @@ public final class UpsellViewController: UIViewController {
         setupFeatures()
     }
 
+    public override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        delegate?.upsellDidDisappear(upsell: self)
+    }
+
     private func setupUI() {
         addGradient()
         baseViewStyle(view)
@@ -78,24 +86,34 @@ public final class UpsellViewController: UIViewController {
         actionTextButtonStyle(useFreeButton)
         titleStyle(titleLabel)
         subtitleStyle(subtitleLabel)
-        switch upsellType {
-        case .noLogs:
-            getPlusButton.setTitle(Localizable.modalsCommonNext, for: .normal)
-        default:
+
+        if upsellType?.showUpgradeButton == false {
+            useFreeButton.isHidden = true
+            switch upsellType {
+            case .noLogs:
+                getPlusButton.setTitle(Localizable.modalsCommonNext, for: .normal)
+            case .cantSkip:
+                getPlusButton.setTitle(Localizable.upsellSpecificLocationChangeServerButtonTitle, for: .normal)
+            default:
+                break
+            }
+        } else {
             getPlusButton.setTitle(Localizable.modalsGetPlus, for: .normal)
         }
         useFreeButton.setTitle(Localizable.modalsUpsellStayFree, for: .normal)
 
-        switch upsellType {
-        case .noLogs:
-            useFreeButton.isHidden = true
-        default:
-            break
-        }
-
         useFreeButton.accessibilityIdentifier = "UseFreeButton"
         getPlusButton.accessibilityIdentifier = "GetPlusButton"
         titleLabel.accessibilityIdentifier = "TitleLabel"
+
+        if let timeInterval = upsellType?
+            .changeDate?
+            .timeIntervalSince(Date()),
+           timeInterval > 0 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + timeInterval) { [weak self] in
+                self?.setupUI()
+            }
+        }
     }
 
     func addGradient() {
@@ -117,8 +135,8 @@ public final class UpsellViewController: UIViewController {
         } else {
             subtitleLabel.isHidden = true
         }
-        featureArtImageView.image = upsellFeature.artImage
-        featureArtImageView.image = featureArtImageView.image?.mergedOnTop(with: upsellFeature.flagImage)
+
+        applyArtView(feature: upsellFeature)
 
         borderView.isHidden = upsellFeature.features.isEmpty
 
@@ -150,30 +168,60 @@ public final class UpsellViewController: UIViewController {
     // MARK: Actions
 
     @IBAction private func getPlusTapped(_ sender: Any) {
-        switch upsellType {
-        case .noLogs:
-            delegate?.userDidTapNext()
-        default:
-            delegate?.userDidRequestPlus()
+        if upsellType?.showUpgradeButton == false {
+            delegate?.userDidTapNext(upsell: self)
+        } else {
+            delegate?.userDidRequestPlus(upsell: self)
         }
     }
 
     @IBAction private func useFreeTapped(_ sender: Any) {
-        guard delegate?.shouldDismissUpsell() == true else {
+        guard delegate?.shouldDismissUpsell(upsell: self) == true else {
             return
         }
         presentingViewController?.dismiss(animated: true, completion: { [weak self] in
-            self?.delegate?.userDidDismissUpsell()
+            self?.delegate?.userDidDismissUpsell(upsell: self)
         })
     }
 
     @objc private func closeTapped() {
-        guard delegate?.shouldDismissUpsell() == true else {
+        guard delegate?.shouldDismissUpsell(upsell: self) == true else {
             return
         }
         presentingViewController?.dismiss(animated: true, completion: { [weak self] in
-            self?.delegate?.userDidDismissUpsell()
+            self?.delegate?.userDidDismissUpsell(upsell: self)
         })
+    }
+
+    private func applyArtView(feature: UpsellFeature) {
+        var artImage = feature.artImage
+        if var reconnectCountdown = artImage as? ReconnectCountdown {
+            let frameSize = min(featureArtView.frame.width, featureArtView.frame.height)
+
+            reconnectCountdown.apply(colors: .iOS, font: .system(size: 20))
+            artImage = reconnectCountdown
+                .frame(width: frameSize, height: frameSize)
+        }
+
+        let childView = UIHostingController(rootView: AnyView(artImage))
+        addChild(childView)
+        childView.view.frame = featureArtView.bounds
+        childView.view.backgroundColor = .clear
+        featureArtView.addSubview(childView.view)
+        childView.view.centerXAnchor.constraint(equalTo: featureArtView.centerXAnchor).isActive = true
+        childView.view.centerYAnchor.constraint(equalTo: featureArtView.centerYAnchor).isActive = true
+        childView.didMove(toParent: self)
+    }
+}
+
+extension ReconnectCountdown.Colors {
+    static var iOS: Self {
+        Self(
+            text: Color(colors.text),
+            weak: Color(colors.weakInteraction),
+            interactive: Color(colors.brand),
+            success: Color(colors.success)
+        )
     }
 }
 

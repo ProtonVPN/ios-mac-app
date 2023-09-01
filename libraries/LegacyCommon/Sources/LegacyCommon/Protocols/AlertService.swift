@@ -770,6 +770,8 @@ public class UpsellAlert: SystemAlert {
     public let isError = false
     public var dismiss: (() -> Void)?
 
+    public func continueAction() { }
+
     public init() { }
 
 }
@@ -921,24 +923,31 @@ public class ConnectingWithBadLANAlert: SystemAlert {
     }
 }
 
-public class ConnectionCooldownAlert: SystemAlert {
-    public var actions: [AlertAction] = []
-    public var isError = true
-    public var dismiss: (() -> Void)?
+public class ConnectionCooldownAlert: UpsellAlert {
+    public let until: Date
+    public let duration: TimeInterval
+    public let longSkip: Bool
 
-    public var title: String? = "Cooldown Alert"
-    public var message: String?
-
-    var until: Date
-
-    init(until: Date) {
+    init(
+        until: Date,
+        duration: TimeInterval,
+        longSkip: Bool,
+        reconnectClosure: @escaping (() -> Void)
+    ) {
         self.until = until
-        self.message = "Stop doing that until \(until)"
-        
-        actions.append(contentsOf: [
-            .init(title: "These walls can't hold me", style: .confirmative, handler: {
-                kill(getpid(), SIGQUIT)
-            })
-        ])
+        self.duration = duration
+        self.longSkip = longSkip
+
+        super.init()
+        actions = [.init(
+            title: "Reconnect",
+            style: .confirmative,
+            handler: reconnectClosure
+        )]
+    }
+
+    override public func continueAction() {
+        actions.first(where: { $0.style == .confirmative })?
+            .handler?()
     }
 }

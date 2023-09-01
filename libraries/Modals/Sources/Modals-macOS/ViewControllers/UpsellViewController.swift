@@ -21,10 +21,10 @@
 //
 
 import Cocoa
+import SwiftUI
 import Modals
 import Ergonomics
 import Strings
-import SwiftUI
 import Theme
 
 public final class UpsellViewController: NSViewController {
@@ -40,17 +40,22 @@ public final class UpsellViewController: NSViewController {
             borderView.layer?.borderWidth = 1
         }
     }
+
     @IBOutlet private weak var gradientView: NSView!
-    @IBOutlet private weak var imageView: NSImageView!
     @IBOutlet private weak var flagView: NSImageView!
+    @IBOutlet private weak var featureArtView: NSView!
     @IBOutlet private weak var titleLabel: NSTextField!
     @IBOutlet private weak var descriptionLabel: NSTextField!
     @IBOutlet private weak var upgradeButton: UpsellPrimaryActionButton!
     @IBOutlet private weak var featuresStackView: NSStackView!
 
     var upsellType: UpsellType?
+    private var upsellFeature: UpsellFeature? {
+        upsellType?.upsellFeature()
+    }
 
     var upgradeAction: (() -> Void)?
+    var continueAction: (() -> Void)?
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -71,7 +76,7 @@ public final class UpsellViewController: NSViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         addGradient()
-        upgradeButton.title = Localizable.modalsGetPlus
+        setupText()
         setupSubviews()
         setupFeatures()
         upgradeButton.setAccessibilityIdentifier("ModalUpgradeButton")
@@ -90,12 +95,21 @@ public final class UpsellViewController: NSViewController {
 
         titleLabel.setAccessibilityIdentifier("TitleLabel")
         descriptionLabel.setAccessibilityIdentifier("DescriptionLabel")
-
     }
 
-    func setupFeatures() {
-        guard let upsellType = upsellType else { return }
-        let upsellFeature = upsellType.upsellFeature()
+    @objc func setupText() {
+        if upsellType?.showUpgradeButton == false {
+            switch upsellType {
+            case .cantSkip:
+                upgradeButton.title = Localizable.upsellSpecificLocationChangeServerButtonTitle
+            default:
+                break
+            }
+        } else {
+            upgradeButton.title = Localizable.modalsGetPlus
+        }
+
+        guard let upsellFeature else { return }
         titleLabel.stringValue = upsellFeature.title
         if let subtitle = upsellFeature.subtitle {
             descriptionLabel.attributedStringValue = subtitle.attributedString(size: 17,
@@ -105,8 +119,39 @@ public final class UpsellViewController: NSViewController {
         } else {
             descriptionLabel.isHidden = true
         }
-        imageView.image = upsellFeature.artImage
-        flagView.image = upsellFeature.flagImage
+
+        if let timeInterval = upsellType?
+            .changeDate?
+            .timeIntervalSince(Date()),
+           timeInterval > 0 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + timeInterval) { [weak self] in
+                self?.setupText()
+            }
+        }
+    }
+
+    func setupArt(feature: UpsellFeature) {
+        var artImage = feature.artImage
+        if var reconnectCountdown = artImage as? ReconnectCountdown {
+            let frameSize = min(featureArtView.frame.width, featureArtView.frame.height)
+
+            reconnectCountdown.apply(colors: .macOS, font: .system(size: 20))
+            artImage = reconnectCountdown
+                .frame(width: frameSize, height: frameSize)
+        }
+
+        let childView = NSHostingController(rootView: AnyView(artImage))
+        addChild(childView)
+        childView.view.frame = featureArtView.bounds
+        childView.view.layer?.backgroundColor = .clear
+        featureArtView.addSubview(childView.view)
+        childView.view.centerXAnchor.constraint(equalTo: featureArtView.centerXAnchor).isActive = true
+        childView.view.centerYAnchor.constraint(equalTo: featureArtView.centerYAnchor).isActive = true
+    }
+
+    func setupFeatures() {
+        guard let upsellFeature else { return }
+        setupArt(feature: upsellFeature)
 
         for view in featuresStackView.arrangedSubviews {
             view.removeFromSuperview()
@@ -130,7 +175,11 @@ public final class UpsellViewController: NSViewController {
     }
 
     @IBAction private func upgrade(_ sender: Any) {
-        upgradeAction?()
+        if upsellType?.showUpgradeButton == false {
+            continueAction?()
+        } else {
+            upgradeAction?()
+        }
         dismiss(nil)
     }
 }
@@ -148,5 +197,15 @@ private extension CAGradientLayer {
                                 alpha: 1).cgColor]
         layer.frame = frame
         return layer
+    }
+}
+
+extension ReconnectCountdown.Colors {
+    static var macOS: Self {
+        .init(
+            text: Color(.text),
+            weak: Color(.text, .weak),
+            interactive: Color(.text, .interactive),
+            success: Color(.background, .success))
     }
 }

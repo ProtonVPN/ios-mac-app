@@ -41,7 +41,10 @@ class IosAlertService {
 
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var modalsFactory: ModalsFactory = ModalsFactory()
-    
+
+    @ConcurrentlyReadable
+    private var upsellAlerts: [UUID: UpsellAlert] = [:]
+
     init(_ factory: Factory) {
         self.factory = factory
     }
@@ -168,37 +171,45 @@ extension IosAlertService: CoreAlertService {
         case let discourageAlert as DiscourageSecureCoreAlert:
             show(discourageAlert)
             
-        case is SafeModeUpsellAlert:
-            show(upsellType: .safeMode)
+        case let safeModeUpsell as SafeModeUpsellAlert:
+            show(alert: safeModeUpsell, upsellType: .safeMode)
 
-        case is NetShieldUpsellAlert:
-            show(upsellType: .netShield)
+        case let netShieldUpsell as NetShieldUpsellAlert:
+            show(alert: netShieldUpsell, upsellType: .netShield)
 
-        case is SecureCoreUpsellAlert:
-            show(upsellType: .secureCore)
+        case let secureCoreUpsell as SecureCoreUpsellAlert:
+            show(alert: secureCoreUpsell, upsellType: .secureCore)
 
-        case is ModerateNATUpsellAlert:
-            show(upsellType: .moderateNAT)
+        case let moderateNatUpsell as ModerateNATUpsellAlert:
+            show(alert: moderateNatUpsell, upsellType: .moderateNAT)
 
-        case is AllCountriesUpsellAlert:
+        case let allCountriesUpsell as AllCountriesUpsellAlert:
             let plus = AccountPlan.plus
-            let allCountriesUpsell = UpsellType.allCountries(numberOfServers: plus.serversCount, numberOfCountries: planService.countriesCount)
-            show(upsellType: allCountriesUpsell)
+            let allCountriesUpsellType = UpsellType.allCountries(
+                numberOfServers: plus.serversCount,
+                numberOfCountries: planService.countriesCount
+            )
+            show(alert: allCountriesUpsell, upsellType: allCountriesUpsellType)
 
-        case is ProfilesUpsellAlert:
-            show(upsellType: .profiles)
+        case let profilesUpsell as ProfilesUpsellAlert:
+            show(alert: profilesUpsell, upsellType: .profiles)
 
-        case is VPNAcceleratorUpsellAlert:
-            show(upsellType: .vpnAccelerator)
+        case let vpnAcceleratorUpsell as VPNAcceleratorUpsellAlert:
+            show(alert: vpnAcceleratorUpsell, upsellType: .vpnAccelerator)
 
-        case is CustomizationUpsellAlert:
-            show(upsellType: .customization)
+        case let customizationUpsell as CustomizationUpsellAlert:
+            show(alert: customizationUpsell, upsellType: .customization)
 
-        case let countryAlert as CountryUpsellAlert:
+        case let countryUpsell as CountryUpsellAlert:
             let plus = AccountPlan.plus
-            show(upsellType: .country(countryFlag: countryAlert.countryFlag,
-                                      numberOfDevices: plus.devicesCount,
-                                      numberOfCountries: planService.countriesCount))
+            show(
+                alert: countryUpsell,
+                upsellType: .country(
+                    countryFlag: countryUpsell.countryFlag,
+                    numberOfDevices: AccountPlan.plus.devicesCount,
+                    numberOfCountries: planService.countriesCount
+                )
+            )
             
         case is LocalAgentSystemErrorAlert:
             showDefaultSystemAlert(alert)
@@ -212,8 +223,15 @@ extension IosAlertService: CoreAlertService {
         case is ConnectingWithBadLANAlert:
             showDefaultSystemAlert(alert)
 
-        case is ConnectionCooldownAlert:
-            showDefaultSystemAlert(alert)
+        case let cooldownUpsell as ConnectionCooldownAlert:
+            show(
+                alert: cooldownUpsell,
+                upsellType: .cantSkip(
+                    before: cooldownUpsell.until,
+                    duration: cooldownUpsell.duration,
+                    longSkip: cooldownUpsell.longSkip
+                )
+            )
             
         default:
             #if DEBUG
@@ -265,8 +283,11 @@ extension IosAlertService: CoreAlertService {
         self.windowService.present(modal: viewController)
     }
 
-    private func show(upsellType: Modals.UpsellType) {
+    private func show(alert: UpsellAlert, upsellType: Modals.UpsellType) {
         let upsellViewController = modalsFactory.upsellViewController(upsellType: upsellType)
+
+        upsellAlerts[upsellViewController.id] = alert
+
         upsellViewController.delegate = self
         windowService.present(modal: upsellViewController)
     }
@@ -358,21 +379,33 @@ extension IosAlertService: CoreAlertService {
 }
 
 extension IosAlertService: UpsellViewControllerDelegate {
-    func shouldDismissUpsell() -> Bool {
+    func shouldDismissUpsell(upsell: UpsellViewController?) -> Bool {
         return true
     }
 
-    func userDidRequestPlus() {
+    func userDidRequestPlus(upsell: UpsellViewController?) {
         windowService.dismissModal { [weak self] in
             self?.planService.presentPlanSelection()
         }
     }
 
-    func userDidDismissUpsell() {
+    func userDidDismissUpsell(upsell: UpsellViewController?) {
         windowService.dismissModal { }
     }
 
-    func userDidTapNext() { }
+    func userDidTapNext(upsell: UpsellViewController?) {
+        windowService.dismissModal { [weak self] in
+            if let id = upsell?.id, let alert = self?.upsellAlerts[id] {
+                alert.continueAction()
+            }
+        }
+    }
+
+    func upsellDidDisappear(upsell: UpsellViewController?) {
+        if let id = upsell?.id {
+            upsellAlerts.removeValue(forKey: id)
+        }
+    }
 }
 
 fileprivate extension ReconnectInfo {

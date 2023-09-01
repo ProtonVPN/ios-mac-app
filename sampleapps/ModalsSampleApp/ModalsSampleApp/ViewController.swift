@@ -32,7 +32,9 @@ class ViewController: UITableViewController {
         (.noLogs, "No Logs"),
         (.vpnAccelerator, "VPN Accelerator"),
         (.customization, "Customization"),
-        (.profiles, "Profiles")]
+        (.profiles, "Profiles"),
+        (.cantSkip(before: Date().addingTimeInterval(10), duration: 10, longSkip: false), "Server Roulette"),
+        (.cantSkip(before: Date().addingTimeInterval(15), duration: 15, longSkip: true), "Server Roulette (Too many skips)")]
     let upgrades: [(type: UserAccountUpdateViewModel, title: String)] = [
         (.subscriptionDowngradedReconnecting(numberOfCountries: 63,
                                              numberOfDevices: 5,
@@ -114,20 +116,24 @@ class ViewController: UITableViewController {
 }
 
 extension ViewController: UpsellViewControllerDelegate {
-    func userDidTapNext() {
+    func userDidTapNext(upsell: UpsellViewController?) {
         dismiss(animated: true, completion: nil)
     }
 
-    func shouldDismissUpsell() -> Bool {
+    func shouldDismissUpsell(upsell: UpsellViewController?) -> Bool {
         true
     }
 
-    func userDidRequestPlus() {
+    func userDidRequestPlus(upsell: UpsellViewController?) {
         dismiss(animated: true, completion: nil)
     }
     
-    func userDidDismissUpsell() {
+    func userDidDismissUpsell(upsell: UpsellViewController?) {
         dismiss(animated: true, completion: nil)
+    }
+
+    func upsellDidDisappear(upsell: UpsellViewController?) {
+
     }
 }
 
@@ -140,6 +146,7 @@ struct Colors: ModalsColors {
     var brand: UIColor
     var weakText: UIColor
     var weakInteraction: UIColor
+    var success: UIColor
 
     init() {
         background = UIColor(red: 0.11, green: 0.106, blue: 0.141, alpha: 1)
@@ -150,5 +157,6 @@ struct Colors: ModalsColors {
         brand = UIColor(red: 0.427451, green: 0.290196, blue: 1, alpha: 1)
         weakText = UIColor(red: 0.654902, green: 0.643137, blue: 0.709804, alpha: 1)
         weakInteraction = UIColor(red: 59 / 255, green: 55 / 255, blue: 71 / 255, alpha: 1)
+        success = UIColor(red: 0.106, green: 0.592, blue: 0.471, alpha: 1)
     }
 }

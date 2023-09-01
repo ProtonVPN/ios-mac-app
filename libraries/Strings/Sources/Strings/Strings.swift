@@ -1909,6 +1909,12 @@ public enum Localizable {
   public static var upsellProfilesSubtitleBold: String { return Localizable.tr("Localizable", "upsell_profiles_subtitle_bold", fallback: "profiles") }
   /// Title of Profiles upsell modal
   public static var upsellProfilesTitle: String { return Localizable.tr("Localizable", "upsell_profiles_title", fallback: "Get quick access to your frequent connections") }
+  /// The button text that will appear when the user has waited for the countdown and can proceed without upgrading.
+  public static var upsellSpecificLocationChangeServerButtonTitle: String { return Localizable.tr("Localizable", "upsell_specific_location_change_server_button_title", fallback: "Change server") }
+  /// Displayed when the user clicks "Connect to Random Server" after they've just clicked it.
+  public static var upsellSpecificLocationSubtitle: String { return Localizable.tr("Localizable", "upsell_specific_location_subtitle", fallback: "Get unlimited changes with VPN Plus") }
+  /// Displayed when the user clicks "Connect to Random Server" too many times in a given time interval.
+  public static var upsellSpecificLocationTitle: String { return Localizable.tr("Localizable", "upsell_specific_location_title", fallback: "You've reached the maximum number of Free server changes for now.") }
   /// Feature of VPN Accelerator upsell modal
   public static var upsellVpnAcceleratorDistantServers: String { return Localizable.tr("Localizable", "upsell_vpn_accelerator_distant_servers", fallback: "Improved speed and stability when connected to distant servers.") }
   /// Feature of VPN Accelerator upsell modal
