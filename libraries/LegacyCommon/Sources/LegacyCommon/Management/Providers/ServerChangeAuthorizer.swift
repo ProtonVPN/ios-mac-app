@@ -39,28 +39,22 @@ extension ServerChangeAuthorizer: DependencyKey {
 
             let skips = storage.connectionStack.filter { $0.intent == .random }
 
-            let maxReconnects = storage.config.changeServerAttemptLimit
-            let maxSkipsDelay = TimeInterval(storage.config.changeServerLongDelayInSeconds)
-            let reconnects = skips.filter {
-                now.timeIntervalSince($0.date) < maxSkipsDelay
-            }
-
-            guard reconnects.count < maxReconnects else {
-                let first = reconnects
-                    .map(\.date)
-                    .min() ?? now
-                let until = first.addingTimeInterval(maxSkipsDelay)
-                return .unavailable(until: until)
-            }
-
-            guard let lastConnection = skips.first?.date else {
+            guard let lastConnection = skips.first else {
                 return .available
             }
 
-            let reconnectDelay = TimeInterval(storage.config.changeServerShortDelayInSeconds)
-            guard now.timeIntervalSince(lastConnection) > reconnectDelay else {
+            let reconnectDelay = TimeInterval(
+                lastConnection.upsellNext ? storage.config.changeServerLongDelayInSeconds :
+                    storage.config.changeServerShortDelayInSeconds
+            )
+
+            let connectionDate = lastConnection.date
+
+            guard now.timeIntervalSince(connectionDate) > reconnectDelay else {
                 return .unavailable(
-                    until: lastConnection.addingTimeInterval(reconnectDelay)
+                    until: connectionDate.addingTimeInterval(reconnectDelay),
+                    duration: reconnectDelay,
+                    exhaustedSkips: lastConnection.upsellNext
                 )
             }
 
@@ -70,7 +64,7 @@ extension ServerChangeAuthorizer: DependencyKey {
 
     public enum ServerChangeAvailability: Equatable {
         case available
-        case unavailable(until: Date)
+        case unavailable(until: Date, duration: TimeInterval, exhaustedSkips: Bool)
     }
 
     #if DEBUG
@@ -94,7 +88,7 @@ public enum ServerChangeViewState {
         case .available:
             return .available
 
-        case .unavailable(let until):
+        case let .unavailable(until, _, _):
             @Dependency(\.date) var date
             let formattedDuration = until.timeIntervalSince(date.now)
                 .asColonSeparatedString(maxUnit: .hour, minUnit: .minute)

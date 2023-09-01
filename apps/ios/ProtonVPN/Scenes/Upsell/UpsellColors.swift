@@ -28,6 +28,7 @@ struct UpsellColors: ModalsColors {
     var brand: UIColor
     var weakText: UIColor
     var weakInteraction: UIColor
+    var success: UIColor
 
     init() {
         background = UIColor.backgroundColor()
@@ -38,5 +39,6 @@ struct UpsellColors: ModalsColors {
         brand = UIColor.brandColor()
         weakText = UIColor.weakTextColor()
         weakInteraction = UIColor.weakInteractionColor()
+        success = UIColor.notificationOKColor()
     }
 }

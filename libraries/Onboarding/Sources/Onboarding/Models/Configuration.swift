@@ -33,6 +33,7 @@ public struct Colors {
     public let secondaryBackground: UIColor
     let textInverted: UIColor
     let notification: UIColor
+    public let success: UIColor
 
     public init() {
         self.background = .color(.background)
@@ -46,6 +47,7 @@ public struct Colors {
         self.textInverted = .color(.text, .inverted)
         self.notification = .color(.background, .info)
         self.weakInteraction = .color(.background, [.interactive, .weak])
+        self.success = .color(.background, .success)
     }
 }
 

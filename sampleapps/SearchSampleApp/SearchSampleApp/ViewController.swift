@@ -154,19 +154,19 @@ extension ViewController: SearchCoordinatorDelegate {
 }
 
 extension ViewController: UpsellViewControllerDelegate {
-    func userDidTapNext() {
+    func userDidTapNext(upsell: UpsellViewController?) {
 
     }
 
-    func userDidDismissUpsell() {
+    func userDidDismissUpsell(upsell: UpsellViewController?) {
         
     }
 
-    func shouldDismissUpsell() -> Bool {
+    func shouldDismissUpsell(upsell: UpsellViewController?) -> Bool {
         return true
     }
 
-    func userDidRequestPlus() {
+    func userDidRequestPlus(upsell: UpsellViewController?) {
         coordinator.reload(data: createData(forceTier: .plus), mode: createMode())
         navigationController?.dismiss(animated: true, completion: nil)
     }

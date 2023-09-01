@@ -415,10 +415,16 @@ public class VpnGateway: VpnGatewayProtocol {
             // VPNAPPL-1851: Show specific country upsell modal
             log.info("User is not authorized to connect to specific countries (\(countryCode))")
             return
-        case .failure(.serverChangeUnavailable(let date)):
-            // VPNAPPL-1870: Show cooldown modal
+        case .failure(let .serverChangeUnavailable(date, duration, longSkip)):
             log.info("Change server requested, but random connection is still on cooldown until \(date)")
-            alertService?.push(alert: ConnectionCooldownAlert(until: date))
+            alertService?.push(alert: ConnectionCooldownAlert(
+                until: date,
+                duration: duration,
+                longSkip: longSkip,
+                reconnectClosure: { [weak self, request] in
+                    self?.connect(with: request)
+                }
+            ))
             return
         case .success:
             break

@@ -16,14 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import SwiftUI
+
 public struct UpsellFeature {
     public let title: String
     public let subtitle: String?
     public let boldSubtitleElements: [String]
     public let features: [Feature]
     public let moreInformation: Feature?
-    public let artImage: Image
-    public let flagImage: Image?
+    public let artImage: any View
 }
 
 public extension UpsellFeature {

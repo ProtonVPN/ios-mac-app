@@ -30,6 +30,7 @@ public protocol ModalsColors {
     var brand: UIColor { get }
     var weakText: UIColor { get }
     var weakInteraction: UIColor { get }
+    var success: UIColor { get }
 }
 
 public struct Colors {
@@ -41,6 +42,7 @@ public struct Colors {
     public let brand: UIColor
     public let weakText: UIColor
     public let weakInteraction: UIColor
+    public let success: UIColor
 
     public init() {
         self.background = .color(.background)
@@ -51,6 +53,7 @@ public struct Colors {
         self.brand = Asset.mobileBrandNorm.color
         self.weakText = .color(.text, .weak)
         self.weakInteraction = .color(.background, [.interactive, .weak])
+        self.success = .color(.background, .success)
     }
 }
 

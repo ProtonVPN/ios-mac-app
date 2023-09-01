@@ -216,7 +216,7 @@ extension OnboardingCoordinator: ConnectionViewControllerDelegate {
 // MARK: Upsell screen delegate
 
 extension OnboardingCoordinator: UpsellViewControllerDelegate {
-    public func shouldDismissUpsell() -> Bool {
+    public func shouldDismissUpsell(upsell: UpsellViewController?) -> Bool {
         if onboardingFinished {
             delegate?.onboardingCoordinatorDidFinish(requiresConnection: false)
             return false
@@ -226,16 +226,19 @@ extension OnboardingCoordinator: UpsellViewControllerDelegate {
         return false
     }
 
-    public func userDidDismissUpsell() {
+    public func userDidDismissUpsell(upsell: UpsellViewController?) {
 
     }
 
-    public func userDidRequestPlus() {
+    public func userDidRequestPlus(upsell: UpsellViewController?) {
         showGetPlus()
     }
 
-    public func userDidTapNext() {
+    public func userDidTapNext(upsell: UpsellViewController?) {
         showConnectionSetup()
+    }
+
+    public func upsellDidDisappear(upsell: UpsellViewController?) {
     }
 }
 

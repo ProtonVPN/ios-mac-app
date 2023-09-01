@@ -30,7 +30,7 @@ public struct ConnectionAuthorizer {
 public typealias ConnectionAuthorizationResult = Result<None, ConnectionAuthorizationFailureReason>
 
 public enum ConnectionAuthorizationFailureReason: Error, Equatable {
-    case serverChangeUnavailable(until: Date)
+    case serverChangeUnavailable(until: Date, duration: TimeInterval, exhaustedSkips: Bool)
     case specificCountryUnavailable(countryCode: String)
 }
 
@@ -57,8 +57,12 @@ extension ConnectionAuthorizer: DependencyKey {
                 switch serverChangeAuthorizer.isServerChangeAvailable() {
                 case .available:
                     return .success
-                case .unavailable(let date):
-                    return .failure(.serverChangeUnavailable(until: date))
+                case let .unavailable(date, duration, exhaustedSkips):
+                    return .failure(.serverChangeUnavailable(
+                        until: date,
+                        duration: duration,
+                        exhaustedSkips: exhaustedSkips
+                    ))
                 }
             case .city(let countryCode, _), .country(let countryCode, _):
                 guard isNewFreePlanActive() else {

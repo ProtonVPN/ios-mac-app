@@ -30,11 +30,18 @@ class ViewController: NSViewController {
 
     let modals: [(type: Modal, title: String)] = [
         (.whatsNew, "What's new"),
-        (.upsell(.allCountries(numberOfServers: 1300,
-                               numberOfCountries: 61)), "All countries"),
-        (.upsell(.country(countryFlag: NSImage(named: "Flag")!,
-                          numberOfDevices: 10,
-                          numberOfCountries: 61)), "Countries"),
+        (.upsell(.allCountries(
+            numberOfServers: 1300,
+            numberOfCountries: 61)
+        ), "All countries"),
+        (.upsell(
+            .country(
+               countryFlag: NSImage(named: "Flag")!,
+               numberOfDevices: 10,
+               numberOfCountries: 61
+           )),
+           "Countries"
+        ),
         (.upsell(.secureCore), "Secure Core"),
         (.upsell(.netShield), "Net Shield"),
         (.upsell(.safeMode), "Safe Mode"),
@@ -42,7 +49,18 @@ class ViewController: NSViewController {
         (.upsell(.vpnAccelerator), "VPN Accelerator"),
         (.upsell(.customization), "Customization"),
         (.upsell(.profiles), "Profiles"),
-        (.discourageSecureCore, "Discourage Secure Core")]
+        (.discourageSecureCore, "Discourage Secure Core"),
+        (.upsell(.cantSkip(
+            before: Date().addingTimeInterval(10),
+            duration: 10,
+            longSkip: false)
+        ), "Server Roulette"),
+        (.upsell(.cantSkip(
+            before: Date().addingTimeInterval(10),
+            duration: 10,
+            longSkip: true)
+        ), "Server Roulette (Too many skips)")
+    ]
 
     @IBOutlet weak var tableView: NSTableView! {
         didSet {
@@ -58,7 +76,7 @@ extension ViewController: NSTableViewDelegate {
         let viewController: NSViewController
         switch modal.type {
         case .upsell(let type):
-            viewController = ModalsFactory.upsellViewController(upsellType: type, upgradeAction: { })
+            viewController = ModalsFactory.upsellViewController(upsellType: type, upgradeAction: { }, continueAction: { })
         case .discourageSecureCore:
             viewController = ModalsFactory.discourageSecureCoreViewController(onDontShowAgain: nil, onActivate: nil, onCancel: nil, onLearnMore: nil)
         case .whatsNew:

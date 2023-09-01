@@ -21,9 +21,12 @@ import Dependencies
 import NetworkExtension
 
 public class ServerChangeStorage {
+    private static let maximumStackCount = 64
+
     public struct ConnectionStackItem: Codable {
         public let intent: ConnectionRequestType
         public let date: Date
+        public let upsellNext: Bool
     }
 
     var getConfig: () -> ServerChangeConfig
@@ -46,7 +49,22 @@ public class ServerChangeStorage {
     }
 
     public func push(intent: ConnectionRequestType, date: Date) {
-        connectionStack.insert(.init(intent: intent, date: date), at: 0)
+        let recentlyUpsold = connectionStack
+            .filter { $0.intent == intent }
+            .prefix(config.changeServerAttemptLimit)
+            .contains(where: \.upsellNext)
+
+        let item = ConnectionStackItem(
+            intent: intent,
+            date: date,
+            upsellNext: connectionStack.count >= config.changeServerAttemptLimit &&
+                !recentlyUpsold
+        )
+        connectionStack.insert(item, at: 0)
+
+        while connectionStack.count > Self.maximumStackCount {
+            connectionStack.removeLast()
+        }
     }
 
     public var config: ServerChangeConfig {
