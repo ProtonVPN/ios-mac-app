@@ -24,8 +24,14 @@ public struct FeatureFlagProvider: DependencyKey {
     var setFeatureFlags: (FeatureFlags) -> Void
 
     public static var liveValue: FeatureFlagProvider = FeatureFlagProvider(
-        getFeatureFlags: { PropertiesManager().featureFlags },
-        setFeatureFlags: { PropertiesManager().featureFlags = $0 }
+        getFeatureFlags: {
+            @Dependency(\.propertiesManager) var propertiesManager
+            return propertiesManager.featureFlags
+        },
+        setFeatureFlags: {
+            @Dependency(\.propertiesManager) var propertiesManager
+            propertiesManager.featureFlags = $0
+        }
     )
 
     #if DEBUG

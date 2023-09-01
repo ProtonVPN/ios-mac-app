@@ -174,6 +174,8 @@ public class VpnGateway: VpnGatewayProtocol {
 
     private let connectionIntercepts: [VpnConnectionInterceptPolicyItem]
 
+    @Dependency(\.notificationCenter) var notificationCenter
+
     public typealias Factory = VpnApiServiceFactory &
         AppStateManagerFactory &
         CoreAlertServiceFactory &
@@ -251,22 +253,30 @@ public class VpnGateway: VpnGatewayProtocol {
             changeActiveServerType(activeServer.serverType)
         }
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(appStateChanged),
-                                               name: .AppStateManager.stateChange,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(userPlanChanged),
-                                               name: type(of: vpnKeychain).vpnPlanChanged,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(userBecameDelinquent),
-                                               name: type(of: vpnKeychain).vpnUserDelinquent,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(reconnectOnNotification),
-                                               name: Self.needsReconnectNotification,
-                                               object: nil)
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(appStateChanged),
+            name: .AppStateManager.stateChange,
+            object: nil
+        )
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(userPlanChanged),
+            name: type(of: vpnKeychain).vpnPlanChanged,
+            object: nil
+        )
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(userBecameDelinquent),
+            name: type(of: vpnKeychain).vpnUserDelinquent,
+            object: nil
+        )
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(reconnectOnNotification),
+            name: Self.needsReconnectNotification,
+            object: nil
+        )
     }
     
     public func userTier() throws -> Int {
@@ -283,7 +293,10 @@ public class VpnGateway: VpnGatewayProtocol {
                 return
             }
 
-            NotificationCenter.default.post(name: VpnGateway.activeServerTypeChanged, object: self.connection)
+            notificationCenter.post(
+                name: VpnGateway.activeServerTypeChanged,
+                object: self.connection
+            )
         }
     }
     
@@ -383,7 +396,15 @@ public class VpnGateway: VpnGatewayProtocol {
         propertiesManager.lastConnectionRequest = request
         
         guard let request else {
-            gatherParametersAndConnect(with: `protocol`, server: appStateManager.activeConnection()?.server, netShieldType: netShieldType, natType: natType, safeMode: safeMode)
+            gatherParametersAndConnect(
+                requestId: UUID(),
+                with: `protocol`,
+                server: appStateManager.activeConnection()?.server,
+                netShieldType: netShieldType,
+                natType: natType,
+                safeMode: safeMode,
+                intent: nil
+            )
             return
         }
 
@@ -397,12 +418,21 @@ public class VpnGateway: VpnGatewayProtocol {
         case .failure(.serverChangeUnavailable(let date)):
             // VPNAPPL-1870: Show cooldown modal
             log.info("Change server requested, but random connection is still on cooldown until \(date)")
+            alertService?.push(alert: ConnectionCooldownAlert(until: date))
             return
         case .success:
             break
         }
         
-        gatherParametersAndConnect(with: `protocol`, server: selectServer(connectionRequest: request), netShieldType: request.netShieldType, natType: natType, safeMode: safeMode)
+        gatherParametersAndConnect(
+            requestId: request.id,
+            with: `protocol`,
+            server: selectServer(connectionRequest: request),
+            netShieldType: request.netShieldType,
+            natType: natType,
+            safeMode: safeMode,
+            intent: request.connectionType
+        )
     }
     
     private func selectServer(connectionRequest: ConnectionRequest) -> ServerModel? {
@@ -437,7 +467,10 @@ public class VpnGateway: VpnGatewayProtocol {
     }
     
     public func stopConnecting(userInitiated: Bool) {
-        NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.abort)
+        notificationCenter.post(
+            name: .userInitiatedVPNChange,
+            object: UserInitiatedVPNChange.abort
+        )
         log.info("Connecting cancelled, userInitiated: \(userInitiated)", category: .connectionConnect)
         connectionPreparer = nil
         appStateManager.cancelConnectionAttempt()
@@ -504,7 +537,15 @@ public class VpnGateway: VpnGatewayProtocol {
     /// Gathers the connection protocol (including smart protocol details) and kill switch setting. According to these set values and the
     /// configuration of the hardware, the options specified in `VpnConnectionInterceptPolicyItem` may change this configuration fetched
     /// from settings, possibly according to alerts displayed to the user whether they want to proceed with their normal settings.
-    private func gatherParametersAndConnect(with connectionProtocol: ConnectionProtocol, server: ServerModel?, netShieldType: NetShieldType, natType: NATType, safeMode: Bool?) {
+    private func gatherParametersAndConnect(
+        requestId: UUID,
+        with connectionProtocol: ConnectionProtocol,
+        server: ServerModel?,
+        netShieldType: NetShieldType,
+        natType: NATType,
+        safeMode: Bool?,
+        intent: ConnectionRequestType?
+    ) {
         guard let server else {
             return
         }
@@ -520,30 +561,55 @@ public class VpnGateway: VpnGatewayProtocol {
         }
 
         DispatchQueue.global(qos: .userInitiated).async {
+            for policy in self.connectionIntercepts {
+                guard !self.applyInterceptPolicy(
+                    policy: policy,
+                    connectionProtocol: &connectionProtocol,
+                    smartProtocolConfig: &smartProtocolConfig,
+                    killSwitch: killSwitch
+                ) else {
+                    break
+                }
+            }
+
             self.propertiesManager.lastPreparedServer = server
             let availabilityCheckerResolver = self.availabilityCheckerResolverFactory
-                .makeAvailabilityCheckerResolver(openVpnConfig: self.propertiesManager.openVpnConfig,
-                                                 wireguardConfig: self.propertiesManager.wireguardConfig)
+                .makeAvailabilityCheckerResolver(
+                    openVpnConfig: self.propertiesManager.openVpnConfig,
+                    wireguardConfig: self.propertiesManager.wireguardConfig
+                )
 
-            self.connectionPreparer = VpnConnectionPreparer(appStateManager: self.appStateManager,
-                                                            serverTierChecker: self.serverTierChecker,
-                                                            availabilityCheckerResolver: availabilityCheckerResolver,
-                                                            smartProtocolConfig: smartProtocolConfig,
-                                                            openVpnConfig: self.propertiesManager.openVpnConfig,
-                                                            wireguardConfig: self.propertiesManager.wireguardConfig)
+            self.connectionPreparer = VpnConnectionPreparer(
+                appStateManager: self.appStateManager,
+                serverTierChecker: self.serverTierChecker,
+                availabilityCheckerResolver: availabilityCheckerResolver,
+                smartProtocolConfig: smartProtocolConfig,
+                openVpnConfig: self.propertiesManager.openVpnConfig,
+                wireguardConfig: self.propertiesManager.wireguardConfig
+            )
 
             DispatchQueue.main.async {
                 self.appStateManager.prepareToConnect()
-                self.connectionPreparer?.determineServerParametersAndConnect(with: connectionProtocol, to: server, netShieldType: netShieldType, natType: natType, safeMode: safeMode)
+                self.connectionPreparer?.determineServerParametersAndConnect(
+                    requestId: requestId,
+                    with: connectionProtocol,
+                    to: server,
+                    netShieldType: netShieldType,
+                    natType: natType,
+                    safeMode: safeMode,
+                    intent: intent
+                )
             }
         }
     }
 
     /// - Returns: Whether or not the given policy changed connection settings.
-    private func applyInterceptPolicy(policy: VpnConnectionInterceptPolicyItem,
-                                      connectionProtocol: inout ConnectionProtocol,
-                                      smartProtocolConfig: inout SmartProtocolConfig,
-                                      killSwitch: Bool) -> Bool {
+    private func applyInterceptPolicy(
+        policy: VpnConnectionInterceptPolicyItem,
+        connectionProtocol: inout ConnectionProtocol,
+        smartProtocolConfig: inout SmartProtocolConfig,
+        killSwitch: Bool
+    ) -> Bool {
         let group = DispatchGroup()
         group.enter()
 
@@ -578,9 +644,11 @@ public class VpnGateway: VpnGatewayProtocol {
                 return
             }
 
-            NotificationCenter.default.post(name: VpnGateway.connectionChanged,
-                                            object: self.connection,
-                                            userInfo: [AppState.appStateKey: self.appStateManager.state])
+            notificationCenter.post(
+                name: VpnGateway.connectionChanged,
+                object: self.connection,
+                userInfo: [AppState.appStateKey: self.appStateManager.state]
+            )
         }
     }
     
@@ -691,7 +759,15 @@ fileprivate extension VpnGateway {
         
         guard let toServer = selector.selectServer(connectionRequest: request) else { return nil }
         propertiesManager.lastConnectionRequest = request
-        self.gatherParametersAndConnect(with: request.connectionProtocol, server: toServer, netShieldType: request.netShieldType, natType: request.natType, safeMode: request.safeMode)
+        self.gatherParametersAndConnect(
+            requestId: request.id,
+            with: request.connectionProtocol,
+            server: toServer,
+            netShieldType: request.netShieldType,
+            natType: request.natType,
+            safeMode: request.safeMode,
+            intent: request.connectionType
+        )
         return ReconnectInfo(fromServer: .init(name: previousServer.name,
                                                image: .flag(countryCode: previousServer.countryCode) ?? Image()),
                              toServer: .init(name: toServer.name,

@@ -197,7 +197,7 @@ public class VpnCredentials: NSObject, NSSecureCoding {
             hasPaymentMethod: aDecoder.decodeBool(forKey: CoderKey.hasPaymentMethod),
             planName: planName,
             subscribed: subscribed,
-            needConnectionAllocation: aDecoder.decodeObject(forKey: CoderKey.needConnectionAllocation) as? Bool ?? false
+            needConnectionAllocation: aDecoder.decodeBool(forKey: CoderKey.needConnectionAllocation)
         )
     }
 

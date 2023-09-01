@@ -181,7 +181,7 @@ public class NEVPNConnectionMock: NEVPNConnectionWrapper {
             }
 
             self.queue.sync { self.status = .connecting }
-            NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: nil, userInfo: nil)
+            NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: self, userInfo: nil)
             NotificationCenter.default.post(name: Self.tunnelStateChangeNotification, object: NEVPNStatus.connecting)
         }
 
@@ -193,7 +193,7 @@ public class NEVPNConnectionMock: NEVPNConnectionWrapper {
             self.queue.sync { self.status = .connected }
             self.connectedDate = Date()
 
-            NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: nil, userInfo: nil)
+            NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: self, userInfo: nil)
             NotificationCenter.default.post(name: Self.tunnelStateChangeNotification, object: NEVPNStatus.connected)
         }
     }
@@ -214,7 +214,7 @@ public class NEVPNConnectionMock: NEVPNConnectionWrapper {
 
             self.connectedDate = nil
             self.queue.sync { self.status = .disconnecting }
-            NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: nil, userInfo: nil)
+            NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: self, userInfo: nil)
             NotificationCenter.default.post(name: Self.tunnelStateChangeNotification, object: NEVPNStatus.disconnecting)
         }
 
@@ -224,7 +224,7 @@ public class NEVPNConnectionMock: NEVPNConnectionWrapper {
             }
 
             self.queue.sync { self.status = .disconnected }
-            NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: nil, userInfo: nil)
+            NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: self, userInfo: nil)
             NotificationCenter.default.post(name: Self.tunnelStateChangeNotification, object: NEVPNStatus.disconnected)
         }
     }

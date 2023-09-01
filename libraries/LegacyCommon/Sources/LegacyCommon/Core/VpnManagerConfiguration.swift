@@ -43,10 +43,11 @@ public enum VpnManagerClientConfiguration {
     }
 }
 
-public struct VpnManagerConfiguration {
+public struct VpnManagerConfiguration: Identifiable {
     
     public static let configConcatChar: Character = "+"
-    
+
+    public let id: UUID
     public let hostname: String
     public let serverId: String
     public let ipId: String
@@ -64,8 +65,30 @@ public struct VpnManagerConfiguration {
     public let serverPublicKey: String?
     public let natType: NATType
     public let safeMode: Bool?
+    public let intent: ConnectionRequestType?
     
-    public init(hostname: String, serverId: String, ipId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, clientPrivateKey: String?, vpnProtocol: VpnProtocol, netShield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType, safeMode: Bool?, ports: [Int], serverPublicKey: String?) {
+    public init(
+        id: UUID,
+        hostname: String,
+        serverId: String,
+        ipId: String,
+        entryServerAddress: String,
+        exitServerAddress: String,
+        username: String,
+        password: String,
+        passwordReference: Data,
+        clientPrivateKey: String?,
+        vpnProtocol: VpnProtocol,
+        netShield: NetShieldType,
+        vpnAccelerator: Bool,
+        bouncing: String?,
+        natType: NATType,
+        safeMode: Bool?,
+        ports: [Int],
+        serverPublicKey: String?,
+        intent: ConnectionRequestType?
+    ) {
+        self.id = id
         self.hostname = hostname
         self.serverId = serverId
         self.ipId = ipId
@@ -83,6 +106,7 @@ public struct VpnManagerConfiguration {
         self.natType = natType
         self.safeMode = safeMode
         self.serverPublicKey = serverPublicKey
+        self.intent = intent
     }
 }
 
@@ -126,23 +150,26 @@ public class VpnManagerConfigurationPreparer {
             @Dependency(\.appFeaturePropertyProvider) var appFeaturePropertyProvider
             let vpnAcceleratorEnabled = appFeaturePropertyProvider.getValue(for: VPNAccelerator.self)
             
-            return VpnManagerConfiguration(hostname: connectionConfig.serverIp.domain,
-                                           serverId: connectionConfig.server.id,
-                                           ipId: connectionConfig.serverIp.id,
-                                           entryServerAddress: entryServer,
-                                           exitServerAddress: exitServer,
-                                           username: vpnCredentials.name + self.extraConfiguration(with: connectionConfig),
-                                           password: vpnCredentials.password,
-                                           passwordReference: passwordRef,
-                                           clientPrivateKey: clientPrivateKey?.base64X25519Representation,
-                                           vpnProtocol: connectionConfig.vpnProtocol,
-                                           netShield: connectionConfig.netShieldType,
-                                           vpnAccelerator: vpnAcceleratorEnabled == .on,
-                                           bouncing: connectionConfig.serverIp.label,
-                                           natType: connectionConfig.natType,
-                                           safeMode: connectionConfig.safeMode,
-                                           ports: connectionConfig.ports,
-                                           serverPublicKey: connectionConfig.serverIp.x25519PublicKey
+            return VpnManagerConfiguration(
+                id: connectionConfig.id,
+                hostname: connectionConfig.serverIp.domain,
+                serverId: connectionConfig.server.id,
+                ipId: connectionConfig.serverIp.id,
+                entryServerAddress: entryServer,
+                exitServerAddress: exitServer,
+                username: vpnCredentials.name + self.extraConfiguration(with: connectionConfig),
+                password: vpnCredentials.password,
+                passwordReference: passwordRef,
+                clientPrivateKey: clientPrivateKey?.base64X25519Representation,
+                vpnProtocol: connectionConfig.vpnProtocol,
+                netShield: connectionConfig.netShieldType,
+                vpnAccelerator: vpnAcceleratorEnabled == .on,
+                bouncing: connectionConfig.serverIp.label,
+                natType: connectionConfig.natType,
+                safeMode: connectionConfig.safeMode,
+                ports: connectionConfig.ports,
+                serverPublicKey: connectionConfig.serverIp.x25519PublicKey,
+                intent: connectionConfig.intent
             )
         } catch {
             // issues retrieving vpn keychain item

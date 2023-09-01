@@ -92,11 +92,14 @@ public class VpnGateway2: VpnGatewayProtocol2 {
         DispatchQueue.main.async {
             self.appStateManager.prepareToConnect()
             connectionPreparer.determineServerParametersAndConnect(
+                requestId: UUID(),
                 with: connectionProtocol,
                 to: server,
                 netShieldType: self.netShieldType,
                 natType: self.natType,
-                safeMode: self.safeMode)
+                safeMode: self.safeMode,
+                intent: intent.connectionRequestType
+            )
         }
     }
 

@@ -23,6 +23,7 @@
 import LegacyCommon
 import UIKit
 import Foundation
+import Dependencies
 import Search
 import Review
 import VPNShared
@@ -299,6 +300,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 self.propertiesManager.featureFlags = properties.clientConfig.featureFlags
                 self.propertiesManager.ratingSettings = properties.clientConfig.ratingSettings
                 self.review.update(configuration: Configuration(settings: properties.clientConfig.ratingSettings))
+                @Dependency(\.serverChangeStorage) var storage
+                storage.config = properties.clientConfig.serverChangeConfig
                 if self.propertiesManager.featureFlags.pollNotificationAPI {
                     self.announcementRefresher.tryRefreshing()
                 }

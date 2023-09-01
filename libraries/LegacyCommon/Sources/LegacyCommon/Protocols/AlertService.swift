@@ -920,3 +920,25 @@ public class ConnectingWithBadLANAlert: SystemAlert {
         ])
     }
 }
+
+public class ConnectionCooldownAlert: SystemAlert {
+    public var actions: [AlertAction] = []
+    public var isError = true
+    public var dismiss: (() -> Void)?
+
+    public var title: String? = "Cooldown Alert"
+    public var message: String?
+
+    var until: Date
+
+    init(until: Date) {
+        self.until = until
+        self.message = "Stop doing that until \(until)"
+        
+        actions.append(contentsOf: [
+            .init(title: "These walls can't hold me", style: .confirmative, handler: {
+                kill(getpid(), SIGQUIT)
+            })
+        ])
+    }
+}

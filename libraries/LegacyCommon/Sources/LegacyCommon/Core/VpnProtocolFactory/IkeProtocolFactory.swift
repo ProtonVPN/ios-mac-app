@@ -37,7 +37,7 @@ public class IkeProtocolFactory: VpnProtocolFactory {
     
     public func create(_ configuration: VpnManagerConfiguration) throws -> NEVPNProtocol {
         let config = NEVPNProtocolIKEv2()
-        
+
         config.localIdentifier = configuration.username // makes it easier to troubleshoot connection issues server-side
         config.remoteIdentifier = configuration.hostname
         config.serverAddress = configuration.entryServerAddress

@@ -49,23 +49,27 @@ class VpnManagerTests: BaseConnectionTestCase {
             removedFromPreferences: XCTestExpectation(description: "remove configurations from prefs")
         )
 
-        let wgConfig = VpnManagerConfiguration(hostname: "wireguard.protonvpn.ch",
-                                               serverId: "abcde",
-                                               ipId: "fghij",
-                                               entryServerAddress: "127.0.0.1",
-                                               exitServerAddress: "127.0.0.2",
-                                               username: "",
-                                               password: "",
-                                               passwordReference: Data(),
-                                               clientPrivateKey: "clientPrivateKey",
-                                               vpnProtocol: .wireGuard(.udp),
-                                               netShield: .level1,
-                                               vpnAccelerator: true,
-                                               bouncing: "0",
-                                               natType: .moderateNAT,
-                                               safeMode: true,
-                                               ports: [15213],
-                                               serverPublicKey: "serverPublicKey")
+        let wgConfig = VpnManagerConfiguration(
+            id: UUID(),
+            hostname: "wireguard.protonvpn.ch",
+            serverId: "abcde",
+            ipId: "fghij",
+            entryServerAddress: "127.0.0.1",
+            exitServerAddress: "127.0.0.2",
+            username: "",
+            password: "",
+            passwordReference: Data(),
+            clientPrivateKey: "clientPrivateKey",
+            vpnProtocol: .wireGuard(.udp),
+            netShield: .level1,
+            vpnAccelerator: true,
+            bouncing: "0",
+            natType: .moderateNAT,
+            safeMode: true,
+            ports: [15213],
+            serverPublicKey: "serverPublicKey",
+            intent: .fastest
+        )
 
         var dateConnectionEstablished: Date?
 
@@ -121,8 +125,10 @@ class VpnManagerTests: BaseConnectionTestCase {
             }
         }
 
-        await fulfillment(of: [expectations.wireguardTunnelStarted,
-                   expectations.vpnManagerWireguardConnect], timeout: expectationTimeout)
+        await fulfillment(
+            of: [expectations.wireguardTunnelStarted,
+            expectations.vpnManagerWireguardConnect], timeout: expectationTimeout
+        )
 
         XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.udp))
         XCTAssertEqual(container.neTunnelProviderFactory.tunnelProviderPreferencesData.count, 1)
@@ -142,24 +148,27 @@ class VpnManagerTests: BaseConnectionTestCase {
         container.propertiesManager.killSwitch = !container.propertiesManager.killSwitch
 
         let transport: OpenVpnTransport = .tcp
-
-        let ovpnConfig = VpnManagerConfiguration(hostname: "openvpn.protonvpn.ch",
-                                                 serverId: "fghij",
-                                                 ipId: "klmnk",
-                                                 entryServerAddress: "127.0.0.3",
-                                                 exitServerAddress: "127.0.0.4",
-                                                 username: "openVpnUser",
-                                                 password: "openVpnPassword",
-                                                 passwordReference: Data(),
-                                                 clientPrivateKey: "",
-                                                 vpnProtocol: .openVpn(transport),
-                                                 netShield: .level2,
-                                                 vpnAccelerator: true,
-                                                 bouncing: "0",
-                                                 natType: .strictNAT,
-                                                 safeMode: false,
-                                                 ports: [15410],
-                                                 serverPublicKey: "")
+        let ovpnConfig = VpnManagerConfiguration(
+            id: UUID(),
+            hostname: "openvpn.protonvpn.ch",
+            serverId: "fghij",
+            ipId: "klmnk",
+            entryServerAddress: "127.0.0.3",
+            exitServerAddress: "127.0.0.4",
+            username: "openVpnUser",
+            password: "openVpnPassword",
+            passwordReference: Data(),
+            clientPrivateKey: "",
+            vpnProtocol: .openVpn(.tcp),
+            netShield: .level2,
+            vpnAccelerator: true,
+            bouncing: "0",
+            natType: .strictNAT,
+            safeMode: false,
+            ports: [15410],
+            serverPublicKey: "",
+            intent: .fastest
+        )
 
         dateConnectionEstablished = nil
         var didDisconnectWireGuard = false
@@ -241,23 +250,27 @@ class VpnManagerTests: BaseConnectionTestCase {
         // from preferences instead of observing the configuration of the vpn configuration object
         container.propertiesManager.killSwitch = !container.propertiesManager.killSwitch
 
-        let ikeConfig = VpnManagerConfiguration(hostname: "ike.protonvpn.ch",
-                                                serverId: "klmnop",
-                                                ipId: "fghij",
-                                                entryServerAddress: "127.0.0.5",
-                                                exitServerAddress: "127.0.0.6",
-                                                username: "ikeUser",
-                                                password: "ikePassword",
-                                                passwordReference: Data(),
-                                                clientPrivateKey: "",
-                                                vpnProtocol: .ike,
-                                                netShield: .off,
-                                                vpnAccelerator: true,
-                                                bouncing: "0",
-                                                natType: .moderateNAT,
-                                                safeMode: true,
-                                                ports: [15112],
-                                                serverPublicKey: "")
+        let ikeConfig = VpnManagerConfiguration(
+            id: UUID(),
+            hostname: "ike.protonvpn.ch",
+            serverId: "klmnop",
+            ipId: "fghij",
+            entryServerAddress: "127.0.0.5",
+            exitServerAddress: "127.0.0.6",
+            username: "ikeUser",
+            password: "ikePassword",
+            passwordReference: Data(),
+            clientPrivateKey: "",
+            vpnProtocol: .ike,
+            netShield: .off,
+            vpnAccelerator: true,
+            bouncing: "0",
+            natType: .moderateNAT,
+            safeMode: true,
+            ports: [15112],
+            serverPublicKey: "",
+            intent: .fastest
+        )
 
         statusChanged = { status in
             guard status == .connected else {

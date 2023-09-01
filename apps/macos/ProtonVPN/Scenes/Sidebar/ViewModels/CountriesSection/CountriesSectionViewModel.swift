@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import Dependencies
 import LegacyCommon
 import VPNShared
 import Strings
@@ -129,13 +130,14 @@ class CountriesSectionViewModel {
         return KillSwitchDropdownPresenter(factory)
     }
     
+    @Dependency(\.notificationCenter) var notificationCenter
     private var secureCoreState: Bool
     private var serverGroups: [ServerGroup] = []
     private var data: [CellModel] = []
     private var servers: [String: [CellModel]] = [:]
     private var userTier: Int = CoreAppConstants.VpnTiers.free {
         didSet {
-            NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: serverManager.contentChanged, object: nil)
+            notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: serverManager.contentChanged, object: nil)
         }
     }
 
@@ -172,16 +174,16 @@ class CountriesSectionViewModel {
             self.connectedServer = appStateManager.activeConnection()?.server
         }
 
-        NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged), name: type(of: vpnGateway).activeServerTypeChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged), name: type(of: vpnGateway).connectionChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: type(of: propertiesManager).killSwitchNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: VPNAccelerator.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: type(of: netShieldPropertyProvider).netShieldNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: propertiesManager).smartProtocolNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnPlanChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnUserDelinquent, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: serverManager.contentChanged, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(vpnConnectionChanged), name: type(of: vpnGateway).activeServerTypeChanged, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(vpnConnectionChanged), name: type(of: vpnGateway).connectionChanged, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(updateSettings), name: type(of: propertiesManager).killSwitchNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(updateSettings), name: VPNAccelerator.notificationName, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(updateSettings), name: type(of: netShieldPropertyProvider).netShieldNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: propertiesManager).smartProtocolNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnPlanChanged, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnUserDelinquent, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: serverManager.contentChanged, object: nil)
         updateState()
     }
         
@@ -242,7 +244,7 @@ class CountriesSectionViewModel {
     
     // MARK: - Private functions
     private func setTier() {
-        NotificationCenter.default.removeObserver(self, name: serverManager.contentChanged, object: nil) // Resubscription happens after userTier is set
+        notificationCenter.removeObserver(self, name: serverManager.contentChanged, object: nil) // Resubscription happens after userTier is set
         do {
             if (try vpnKeychain.fetch()).isDelinquent {
                 userTier = CoreAppConstants.VpnTiers.free
@@ -327,7 +329,8 @@ class CountriesSectionViewModel {
         self.contentChanged?(contentChange)
         self.secureCoreChange?(propertiesManager.secureCoreToggle)
         self.updateSettings()
-        NotificationCenter.default.post(name: self.contentSwitch, object: nil)
+
+        notificationCenter.post(name: self.contentSwitch, object: nil)
     }
     
     @objc private func vpnConnectionChanged() {
