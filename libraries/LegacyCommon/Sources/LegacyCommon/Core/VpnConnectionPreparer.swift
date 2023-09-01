@@ -34,7 +34,14 @@ class VpnConnectionPreparer {
     private var smartProtocol: SmartProtocol?
     private var smartPortSelector: SmartPortSelector?
     
-    init(appStateManager: AppStateManager, serverTierChecker: ServerTierChecker, availabilityCheckerResolver: AvailabilityCheckerResolver, smartProtocolConfig: SmartProtocolConfig, openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig) {
+    init(
+        appStateManager: AppStateManager,
+        serverTierChecker: ServerTierChecker,
+        availabilityCheckerResolver: AvailabilityCheckerResolver,
+        smartProtocolConfig: SmartProtocolConfig,
+        openVpnConfig: OpenVpnConfig,
+        wireguardConfig: WireguardConfig
+    ) {
         self.appStateManager = appStateManager
         self.serverTierChecker = serverTierChecker
         self.availabilityCheckerResolver = availabilityCheckerResolver
@@ -43,40 +50,64 @@ class VpnConnectionPreparer {
         self.wireguardConfig = wireguardConfig
     }
     
-    func determineServerParametersAndConnect(with connectionProtocol: ConnectionProtocol,
-                                             to server: ServerModel,
-                                             netShieldType: NetShieldType,
-                                             natType: NATType,
-                                             safeMode: Bool?) {
+    func determineServerParametersAndConnect(
+        requestId: UUID,
+        with connectionProtocol: ConnectionProtocol,
+        to server: ServerModel,
+        netShieldType: NetShieldType,
+        natType: NATType,
+        safeMode: Bool?,
+        intent: ConnectionRequestType?
+    ) {
         guard let serverIp = selectServerIp(server: server, connectionProtocol: connectionProtocol) else {
             return
         }
         
         selectVpnProtocol(for: connectionProtocol, toIP: serverIp) { (vpnProtocol, ports) in
             let entryIp = serverIp.entryIp(using: vpnProtocol) ?? serverIp.entryIp
-            log.info("Connecting with \(vpnProtocol) to \(server.name) via \(entryIp ?? "-"):\(ports)",
-                     category: .connectionConnect)
-            self.formConfigurationWithParametersAndConnect(withProtocol: vpnProtocol,
-                                                           server: server,
-                                                           serverIp: serverIp,
-                                                           netShieldType: netShieldType,
-                                                           natType: natType,
-                                                           safeMode: safeMode,
-                                                           ports: ports)
+            log.info(
+                "Connecting with \(vpnProtocol) to \(server.name) via \(String(describing: entryIp)):\(ports)",
+                 category: .connectionConnect
+            )
+            self.formConfigurationWithParametersAndConnect(
+                requestId: requestId,
+                withProtocol: vpnProtocol,
+                server: server,
+                serverIp: serverIp,
+                netShieldType: netShieldType,
+                natType: natType,
+                safeMode: safeMode,
+                ports: ports,
+                intent: intent
+            )
         }
     }
     
     // MARK: - Private functions
 
     // swiftlint:disable:next function_parameter_count
-    private func formConfigurationWithParametersAndConnect(withProtocol vpnProtocol: VpnProtocol,
-                                                           server: ServerModel,
-                                                           serverIp: ServerIp,
-                                                           netShieldType: NetShieldType,
-                                                           natType: NATType,
-                                                           safeMode: Bool?,
-                                                           ports: [Int]) {
-        guard let configuration = formConfiguration(withProtocol: vpnProtocol, fromServer: server, serverIp: serverIp, netShieldType: netShieldType, natType: natType, safeMode: safeMode, ports: ports) else {
+    private func formConfigurationWithParametersAndConnect(
+        requestId: UUID,
+        withProtocol vpnProtocol: VpnProtocol,
+        server: ServerModel,
+        serverIp: ServerIp,
+        netShieldType: NetShieldType,
+        natType: NATType,
+        safeMode: Bool?,
+        ports: [Int],
+        intent: ConnectionRequestType?
+    ) {
+        guard let configuration = formConfiguration(
+            requestId: requestId,
+            withProtocol: vpnProtocol,
+            fromServer: server,
+            serverIp: serverIp,
+            netShieldType: netShieldType,
+            natType: natType,
+            safeMode: safeMode,
+            ports: ports,
+            intent: intent
+        ) else {
             return
         }
 
@@ -128,12 +159,31 @@ class VpnConnectionPreparer {
     }
 
     // swiftlint:disable:next function_parameter_count
-    private func formConfiguration(withProtocol vpnProtocol: VpnProtocol, fromServer server: ServerModel, serverIp: ServerIp, netShieldType: NetShieldType, natType: NATType, safeMode: Bool?, ports: [Int]) -> ConnectionConfiguration? {
-        
+    private func formConfiguration(
+        requestId: UUID,
+        withProtocol vpnProtocol: VpnProtocol,
+        fromServer server: ServerModel,
+        serverIp: ServerIp,
+        netShieldType: NetShieldType,
+        natType: NATType,
+        safeMode: Bool?,
+        ports: [Int],
+        intent: ConnectionRequestType?
+    ) -> ConnectionConfiguration? {
         if let requiresUpgrade = serverTierChecker.serverRequiresUpgrade(server), requiresUpgrade {
             return nil
         }
         
-        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: vpnProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, ports: ports)
+        return ConnectionConfiguration(
+            id: requestId,
+            server: server,
+            serverIp: serverIp,
+            vpnProtocol: vpnProtocol,
+            netShieldType: netShieldType,
+            natType: natType,
+            safeMode: safeMode,
+            ports: ports,
+            intent: intent
+        )
     }
 }

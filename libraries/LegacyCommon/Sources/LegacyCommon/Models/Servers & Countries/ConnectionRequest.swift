@@ -68,7 +68,8 @@ extension ConnectionProtocol: CustomStringConvertible {
     }
 }
 
-public struct ConnectionRequest {
+public struct ConnectionRequest: Identifiable {
+    public let id = UUID()
     public let serverType: ServerType
     public let connectionType: ConnectionRequestType
     public let connectionProtocol: ConnectionProtocol

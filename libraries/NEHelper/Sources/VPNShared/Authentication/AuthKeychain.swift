@@ -47,6 +47,10 @@ public struct AuthKeychainHandleDependencyKey: DependencyKey {
     public static var liveValue: AuthKeychainHandle {
         AuthKeychain.default
     }
+
+    #if DEBUG
+    public static var testValue = liveValue
+    #endif
 }
 
 extension DependencyValues {

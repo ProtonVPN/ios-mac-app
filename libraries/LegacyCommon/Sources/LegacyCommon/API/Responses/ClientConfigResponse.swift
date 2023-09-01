@@ -66,8 +66,17 @@ extension ClientConfigResponse: Codable {
 
         let smartProtocolConfig = try container.decode(SmartProtocolConfig.self, forKey: .smartProtocol)
         let ratingSettings = try container.decodeIfPresent(RatingSettings.self, forKey: .ratingSettings) ?? RatingSettings()
+        let serverChangeConfig = (try? ServerChangeConfig(from: decoder)) ?? ServerChangeConfig()
 
-        clientConfig = ClientConfig(openVPNConfig: openVpnConfig, featureFlags: featureFlags, serverRefreshInterval: serverRefreshInterval, wireGuardConfig: wireguardConfig, smartProtocolConfig: smartProtocolConfig, ratingSettings: ratingSettings)
+        clientConfig = ClientConfig(
+            openVPNConfig: openVpnConfig,
+            featureFlags: featureFlags,
+            serverRefreshInterval: serverRefreshInterval,
+            wireGuardConfig: wireguardConfig,
+            smartProtocolConfig: smartProtocolConfig,
+            ratingSettings: ratingSettings,
+            serverChangeConfig: serverChangeConfig
+        )
     }
 
     func encode(to encoder: Encoder) throws {

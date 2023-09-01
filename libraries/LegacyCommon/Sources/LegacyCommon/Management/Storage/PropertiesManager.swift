@@ -110,6 +110,7 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var smartProtocolConfig: SmartProtocolConfig { get set }
 
     var ratingSettings: RatingSettings { get set }
+    var serverChangeConfig: ServerChangeConfig { get set }
 
     var lastConnectionIntent: ConnectionSpec { get set }
 
@@ -146,7 +147,6 @@ extension PropertiesManagerProtocol {
 
 public class PropertiesManager: PropertiesManagerProtocol {
     internal enum Keys: String, CaseIterable {
-        
         case autoConnect = "AutoConnect"
         case blockOneTimeAnnouncement = "BlockOneTimeAnnouncement"
         case blockUpdatePrompt = "BlockUpdatePrompt"
@@ -213,6 +213,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         case smartProtocolConfig = "SmartProtocolConfig"
         case ratingSettings = "RatingSettings"
         case lastConnectionIntent = "LastConnectionIntent"
+        case serverChangeConfig = "ServerChangeConfig"
 
         case telemetryUsageData = "TelemetryUsageData"
         case telemetryCrashReports = "TelemetryCrashReports"
@@ -353,6 +354,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     @InitializedProperty(.smartProtocolConfig) public var smartProtocolConfig: SmartProtocolConfig
     @InitializedProperty(.ratingSettings) public var ratingSettings: RatingSettings
     @InitializedProperty(.lastConnectionIntent) public var lastConnectionIntent: ConnectionSpec
+    @InitializedProperty(.serverChangeConfig) public var serverChangeConfig: ServerChangeConfig
 
     #if os(macOS)
     @BoolProperty(.forceExtensionUpgrade) public var forceExtensionUpgrade: Bool
@@ -430,7 +432,9 @@ public class PropertiesManager: PropertiesManagerProtocol {
     @Dependency(\.storage) var storage
 
     let defaults: UserDefaults
-        
+
+    static let `default` = PropertiesManager()
+
     public init() {
         @Dependency(\.defaultsProvider) var defaultsProvider
         self.defaults = defaultsProvider.getDefaults()
@@ -473,6 +477,23 @@ public class PropertiesManager: PropertiesManagerProtocol {
     
     public func setValue(_ value: Bool, forKey key: String) {
         storage.setValue(value, forKey: key)
+    }
+}
+
+public enum PropertiesManagerDependencyKey: DependencyKey {
+    public static var liveValue: PropertiesManagerProtocol {
+        PropertiesManager.default
+    }
+
+    #if DEBUG
+    public static var testValue: PropertiesManagerProtocol = liveValue
+    #endif
+}
+
+extension DependencyValues {
+    public var propertiesManager: PropertiesManagerProtocol {
+        get { self[PropertiesManagerDependencyKey.self] }
+        set { self[PropertiesManagerDependencyKey.self] = newValue }
     }
 }
 

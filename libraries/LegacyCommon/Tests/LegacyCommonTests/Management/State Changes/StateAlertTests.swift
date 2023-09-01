@@ -26,7 +26,27 @@ import VPNSharedTesting
 
 class StateAlertTests: XCTestCase {
 
-    let vpnConfig = VpnManagerConfiguration(hostname: "", serverId: "", ipId: "", entryServerAddress: "", exitServerAddress: "", username: "", password: "", passwordReference: Data(), clientPrivateKey: nil, vpnProtocol: .ike, netShield: .off, vpnAccelerator: true, bouncing: nil, natType: .default, safeMode: true, ports: [500], serverPublicKey: nil)
+    let vpnConfig = VpnManagerConfiguration(
+        id: UUID(),
+        hostname: "",
+        serverId: "",
+        ipId: "",
+        entryServerAddress: "",
+        exitServerAddress: "",
+        username: "",
+        password: "",
+        passwordReference: Data(),
+        clientPrivateKey: nil,
+        vpnProtocol: .ike,
+        netShield: .off,
+        vpnAccelerator: true,
+        bouncing: nil,
+        natType: .default,
+        safeMode: true,
+        ports: [500],
+        serverPublicKey: nil,
+        intent: .fastest
+    )
     let networking = NetworkingMock()
     let vpnKeychain = VpnKeychainMock()
     
@@ -114,13 +134,17 @@ extension ConnectionConfiguration {
                                 exitIp: "",
                                 domain: "",
                                 status: 0)
-        return ConnectionConfiguration(server: server,
-                                       serverIp: serverIp,
-                                       vpnProtocol: .ike,
-                                       netShieldType: .off,
-                                       natType: .default,
-                                       safeMode: true,
-                                       ports: [500])
+        return ConnectionConfiguration(
+            id: UUID(),
+            server: server,
+            serverIp: serverIp,
+            vpnProtocol: .ike,
+            netShieldType: .off,
+            natType: .default,
+            safeMode: true,
+            ports: [500],
+            intent: .fastest
+        )
     }
 
     static var connectionConfig2: ConnectionConfiguration {
@@ -145,12 +169,16 @@ extension ConnectionConfiguration {
                                 exitIp: "",
                                 domain: "",
                                 status: 0)
-        return ConnectionConfiguration(server: server,
-                                       serverIp: serverIp,
-                                       vpnProtocol: .ike,
-                                       netShieldType: .off,
-                                       natType: .default,
-                                       safeMode: true,
-                                       ports: [500])
+        return ConnectionConfiguration(
+            id: UUID(),
+            server: server,
+            serverIp: serverIp,
+            vpnProtocol: .ike,
+            netShieldType: .off,
+            natType: .default,
+            safeMode: true,
+            ports: [500],
+            intent: .country("CZ", .fastest)
+        )
     }
 }

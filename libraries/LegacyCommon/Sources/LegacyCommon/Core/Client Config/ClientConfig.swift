@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import VPNShared
 
 public struct ClientConfig {
     public let openVPNConfig: OpenVpnConfig
@@ -29,17 +30,67 @@ public struct ClientConfig {
     public let wireGuardConfig: WireguardConfig
     public let smartProtocolConfig: SmartProtocolConfig
     public let ratingSettings: RatingSettings
+    public let serverChangeConfig: ServerChangeConfig
 
-    public init(openVPNConfig: OpenVpnConfig, featureFlags: FeatureFlags, serverRefreshInterval: Int, wireGuardConfig: WireguardConfig, smartProtocolConfig: SmartProtocolConfig, ratingSettings: RatingSettings) {
+    public init(
+        openVPNConfig: OpenVpnConfig,
+        featureFlags: FeatureFlags,
+        serverRefreshInterval: Int,
+        wireGuardConfig: WireguardConfig,
+        smartProtocolConfig: SmartProtocolConfig,
+        ratingSettings: RatingSettings,
+        serverChangeConfig: ServerChangeConfig
+    ) {
         self.openVPNConfig = openVPNConfig
         self.featureFlags = featureFlags
         self.serverRefreshInterval = serverRefreshInterval
         self.wireGuardConfig = wireGuardConfig
         self.smartProtocolConfig = smartProtocolConfig
         self.ratingSettings = ratingSettings
+        self.serverChangeConfig = serverChangeConfig
     }
 
     public init() {
-        self.init(openVPNConfig: OpenVpnConfig(), featureFlags: FeatureFlags(), serverRefreshInterval: CoreAppConstants.Maintenance.defaultMaintenanceCheckTime, wireGuardConfig: WireguardConfig(), smartProtocolConfig: SmartProtocolConfig(), ratingSettings: RatingSettings())
+        self.init(
+            openVPNConfig: OpenVpnConfig(),
+            featureFlags: FeatureFlags(),
+            serverRefreshInterval: CoreAppConstants.Maintenance.defaultMaintenanceCheckTime,
+            wireGuardConfig: WireguardConfig(),
+            smartProtocolConfig: SmartProtocolConfig(),
+            ratingSettings: RatingSettings(),
+            serverChangeConfig: ServerChangeConfig()
+        )
+    }
+}
+
+public struct ServerChangeConfig: Codable, DefaultableProperty {
+    let changeServerAttemptLimit: Int
+    let changeServerShortDelayInSeconds: Int
+    let changeServerLongDelayInSeconds: Int
+
+    public init(
+        changeServerAttemptLimit: Int,
+        changeServerShortDelayInSeconds: Int,
+        changeServerLongDelayInSeconds: Int
+    ) {
+        self.changeServerAttemptLimit = changeServerAttemptLimit
+        self.changeServerShortDelayInSeconds = changeServerShortDelayInSeconds
+        self.changeServerLongDelayInSeconds = changeServerLongDelayInSeconds
+    }
+
+    public init() {
+        self.init(
+            changeServerAttemptLimit: 4,
+            changeServerShortDelayInSeconds: 90,
+            changeServerLongDelayInSeconds: 1200
+        )
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        changeServerAttemptLimit = try container.decode(Int.self, forKey: .changeServerAttemptLimit)
+        changeServerShortDelayInSeconds = try container.decode(Int.self, forKey: .changeServerShortDelayInSeconds)
+        changeServerLongDelayInSeconds = try container.decode(Int.self, forKey: .changeServerLongDelayInSeconds)
     }
 }

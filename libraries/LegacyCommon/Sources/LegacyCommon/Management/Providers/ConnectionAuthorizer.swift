@@ -39,6 +39,7 @@ extension ConnectionAuthorizer: DependencyKey {
         authorize: { request in
             @Dependency(\.credentialsProvider) var credentials
             @Dependency(\.featureFlagProvider) var featureFlags
+            @Dependency(\.serverChangeAuthorizer) var serverChangeAuthorizer
 
             let isNewFreePlanActive: () -> Bool = {
                 credentials.tier == CoreAppConstants.VpnTiers.free && featureFlags[\.showNewFreePlan]
@@ -49,20 +50,28 @@ extension ConnectionAuthorizer: DependencyKey {
                 return .success
 
             case .random:
-                // VPNAPPL-1870: Check if new free plan is active, calculate if change server is on cooldown
-                return .success
-
-            case .city(let countryCode, _), .country(let countryCode, _):
-                if isNewFreePlanActive() {
-                    return .failure(.specificCountryUnavailable(countryCode: countryCode))
+                guard isNewFreePlanActive() else {
+                    return .success
                 }
-                return .success
+
+                switch serverChangeAuthorizer.isServerChangeAvailable() {
+                case .available:
+                    return .success
+                case .unavailable(let date):
+                    return .failure(.serverChangeUnavailable(until: date))
+                }
+            case .city(let countryCode, _), .country(let countryCode, _):
+                guard isNewFreePlanActive() else {
+                    return .success
+                }
+
+                return .failure(.specificCountryUnavailable(countryCode: countryCode))
             }
         }
     )
 
     #if DEBUG
-    public static var testValue: ConnectionAuthorizer = ConnectionAuthorizer { request in .success }
+    public static var testValue: ConnectionAuthorizer = liveValue
     #endif
 }
 

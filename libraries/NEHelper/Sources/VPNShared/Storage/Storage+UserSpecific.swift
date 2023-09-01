@@ -23,7 +23,9 @@ extension Storage {
     private var username: String? {
         @Dependency(\.authKeychain) var authKeychain
 
-        return authKeychain.fetch()?.username
+        let username = authKeychain.fetch()?.username
+        log.info("username: \(username)")
+        return username
     }
 
     @discardableResult

@@ -109,6 +109,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var smartProtocolConfig: SmartProtocolConfig = SmartProtocolConfig()
     public var ratingSettings: RatingSettings = RatingSettings()
     public var lastConnectionIntent: ConnectionSpec = ConnectionSpec()
+    public var serverChangeConfig: ServerChangeConfig = ServerChangeConfig()
 
 #if os(macOS)
     public var forceExtensionUpgrade: Bool = false

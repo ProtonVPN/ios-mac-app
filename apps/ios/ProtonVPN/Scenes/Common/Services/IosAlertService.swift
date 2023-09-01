@@ -211,6 +211,9 @@ extension IosAlertService: CoreAlertService {
 
         case is ConnectingWithBadLANAlert:
             showDefaultSystemAlert(alert)
+
+        case is ConnectionCooldownAlert:
+            showDefaultSystemAlert(alert)
             
         default:
             #if DEBUG

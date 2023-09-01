@@ -170,6 +170,9 @@ public class VpnManager: VpnManagerProtocol {
     }
     let serverStorage: ServerStorage // Used to find new server/ip in case NE had to reconnect to another server
 
+    @Dependency(\.notificationCenter) var notificationCenter
+    private var tokens: [UUID: NotificationToken] = [:]
+
     public typealias Factory = IkeProtocolFactoryCreator
         & OpenVpnProtocolFactoryCreator
         & WireguardProtocolFactoryCreator
@@ -370,7 +373,7 @@ public class VpnManager: VpnManagerProtocol {
     
     public func refreshManagers() {
         // Stop recieving status updates until the manager is prepared
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.NEVPNStatusDidChange, object: nil)
+        notificationCenter.removeObserver(self, name: NSNotification.Name.NEVPNStatusDidChange, object: nil)
         
         prepareManagers()
     }
@@ -444,7 +447,7 @@ public class VpnManager: VpnManagerProtocol {
             }
 
             guard let vpnManager = vpnManager else { return }
-            
+
             do {
                 let protocolConfiguration = try currentVpnProtocolFactory
                     .create(configuration)
@@ -453,7 +456,7 @@ public class VpnManager: VpnManagerProtocol {
                 
                 credentialsConfigurator.prepareCredentials(for: protocolConfiguration, configuration: configuration) { protocolConfigurationWithCreds in
                     self.configureConnection(forProtocol: protocolConfigurationWithCreds, vpnManager: vpnManager) {
-                        self.startConnection(completion: completion)
+                        self.startConnection(requestId: configuration.id, originalIntent: configuration.intent, completion: completion)
                     }
                 }
                 
@@ -515,7 +518,7 @@ public class VpnManager: VpnManagerProtocol {
                 
     }
     
-    private func startConnection(completion: @escaping () -> Void) {
+    private func startConnection(requestId: UUID, originalIntent: ConnectionRequestType?, completion: @escaping () -> Void) {
         guard connectAllowed, let currentVpnProtocolFactory = currentVpnProtocolFactory else {
             return
         }
@@ -534,6 +537,37 @@ public class VpnManager: VpnManagerProtocol {
             guard self.connectAllowed else { return }
             do {
                 log.info("Starting VPN tunnel", category: .connectionConnect)
+
+                // If we have the original intent, add a notification listener which will wait for the connection
+                // status to change before removing itself. This listener is keyed off of the connection request id, so
+                // it should be unique to a given connection request. A better way to do this would be to save the UUID
+                // on the actual `NEVPNConnection` object, but only `NETunnelProviderProtocol`s have dictionaries that
+                // we can save arbitrary data to. If the notification handler's function is called, it is *not
+                // guaranteed* that it was as a result of the connection request with the `requestId` UUID.
+                if let originalIntent {
+                    tokens[requestId] = notificationCenter.addObserver(
+                        for: .NEVPNStatusDidChange,
+                        object: nil,
+                        handler: { [weak self] notification in
+                            guard let connection = notification.object as? NEVPNConnectionWrapper,
+                                  connection.status != .connecting else {
+                                return
+                            }
+
+                            defer {
+                                self?.tokens.removeValue(forKey: requestId)
+                            }
+
+                            guard connection.status == .connected, let date = connection.connectedDate else {
+                                return
+                            }
+
+                            @Dependency(\.serverChangeStorage) var serverChangeStorage
+                            serverChangeStorage.push(intent: originalIntent, date: date)
+                        }
+                    )
+                }
+
                 try vpnManager.vpnConnection.startVPNTunnel()
                 completion()
             } catch {
@@ -723,9 +757,17 @@ public class VpnManager: VpnManagerProtocol {
             self.currentVpnProtocol = vpnProtocol
             self.setState()
 
-            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.NEVPNStatusDidChange, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(self.vpnStatusChanged),
-                                                   name: NSNotification.Name.NEVPNStatusDidChange, object: nil)
+            notificationCenter.removeObserver(
+                self,
+                name: NSNotification.Name.NEVPNStatusDidChange,
+                object: nil
+            )
+            notificationCenter.addObserver(
+                self,
+                selector: #selector(self.vpnStatusChanged),
+                name: NSNotification.Name.NEVPNStatusDidChange,
+                object: nil
+            )
 
             if forSetup {
                 self.readyGroup?.leave()

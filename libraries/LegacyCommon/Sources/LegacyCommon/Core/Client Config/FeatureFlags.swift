@@ -112,4 +112,14 @@ public struct FeatureFlags: Codable, DefaultableProperty {
     private mutating func disable(_ keyPath: WritableKeyPath<FeatureFlags, Bool>) {
         self[keyPath: keyPath] = false
     }
+
+    public func enabling(_ keyPath: WritableKeyPath<FeatureFlags, Bool>) -> Self {
+        var copy = self
+        copy.enable(keyPath)
+        return copy
+    }
+
+    private mutating func enable(_ keyPath: WritableKeyPath<FeatureFlags, Bool>) {
+        self[keyPath: keyPath] = true
+    }
 }

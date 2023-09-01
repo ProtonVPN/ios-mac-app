@@ -233,6 +233,9 @@ extension MacAlertService: CoreAlertService {
         case is ConnectingWithBadLANAlert:
             showDefaultSystemAlert(alert)
 
+        case is ConnectionCooldownAlert:
+            showDefaultSystemAlert(alert)
+
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")

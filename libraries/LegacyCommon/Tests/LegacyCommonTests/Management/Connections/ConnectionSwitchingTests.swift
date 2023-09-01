@@ -949,4 +949,172 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         wait(for: [expectations.disconnections[1]], timeout: expectationTimeout)
     }
+
+    func testFreeUserImmediateReconnectsAreThrottledAccordingToClientConfig() async { // swiftlint:disable:this function_body_length
+        container.authKeychain.setMockUsername("user")
+        container.vpnKeychain.setVpnCredentials(with: .free, maxTier: CoreAppConstants.VpnTiers.free)
+
+        let oldAuthKeychain = AuthKeychainHandleDependencyKey.testValue
+        AuthKeychainHandleDependencyKey.testValue = container.authKeychain
+        let oldCredentialsProvider = CredentialsProvider.testValue
+        CredentialsProvider.testValue = .constant(credentials: .plan(.free))
+
+        var until: Date?
+        var observedStatuses: [NEVPNStatus] = []
+        var nAlerts = 0
+        var nConnections = 0
+        var nDisconnections = 0
+        let totalAlerts = 2
+        let totalConnections = 1
+        let totalDisconnections = totalConnections
+
+        let expectations = (
+            alerts: (1...totalAlerts).map {
+                XCTestExpectation(description: "Alert \($0)/\(totalAlerts)")
+            },
+            connections: (1...totalConnections).map {
+                XCTestExpectation(description: "Connection \($0)/\(totalConnections)")
+            },
+            disconnections: (1...totalConnections).map {
+                XCTestExpectation(description: "Disconnection \($0)/\(totalConnections)")
+            }
+        )
+
+        container.alertService.alertAdded = {
+            guard let alert = $0 as? ConnectionCooldownAlert else {
+                return
+            }
+
+            guard nAlerts < totalAlerts else {
+                XCTFail("Didn't expect that many (\(nAlerts + 1)) alerts displayed")
+                return
+            }
+
+            until = alert.until
+            expectations.alerts[nAlerts].fulfill()
+            nAlerts += 1
+        }
+
+        statusChanged = { vpnStatus in
+            defer { observedStatuses.append(vpnStatus) }
+
+            switch vpnStatus {
+            case .connected:
+                defer { nConnections += 1 }
+                guard nConnections < totalConnections else {
+                    XCTFail("Didn't expect that many (\(nConnections + 1)) connection transitions - " +
+                            "previous statuses \(observedStatuses.map { $0.description })")
+                    return
+                }
+                expectations.connections[nConnections].fulfill()
+            case .disconnected:
+                defer { nDisconnections += 1 }
+                guard nDisconnections < totalDisconnections else {
+                    XCTFail("Didn't expect that many (\(nDisconnections + 1)) disconnection transitions - " +
+                            "previous statuses \(observedStatuses.map { $0.description })")
+                    return
+                }
+                expectations.disconnections[nDisconnections].fulfill()
+            default:
+                break
+            }
+
+        }
+
+        // We want to create a different one every time so the request UUID can change.
+        let randomConnectionRequest = {
+            ConnectionRequest(
+                serverType: .standard,
+                connectionType: .random,
+                connectionProtocol: .smartProtocol,
+                netShieldType: .off,
+                natType: .moderateNAT,
+                safeMode: false,
+                profileId: nil,
+                trigger: nil
+            )
+        }
+
+        await MainActor.run {
+            withDependencies {
+                $0.date = .constant(Date())
+                $0.featureFlagProvider = .constant(flags: .allEnabled)
+            } operation: {
+                container.vpnGateway.connect(
+                    with: randomConnectionRequest()
+                )
+            }
+        }
+
+        await fulfillment(of: [expectations.connections[0]], timeout: expectationTimeout)
+        XCTAssertEqual(nConnections, 1)
+
+        container.vpnGateway.disconnect()
+        await fulfillment(of: [expectations.disconnections[0]], timeout: expectationTimeout)
+        XCTAssertEqual(nConnections, 1)
+        XCTAssertEqual(nDisconnections, 1)
+
+        let date = Date()
+        await MainActor.run {
+            withDependencies {
+                $0.date = .constant(date)
+                $0.featureFlagProvider = .constant(flags: .allEnabled)
+            } operation: {
+                container.vpnGateway.connect(
+                    with: randomConnectionRequest()
+                )
+            }
+        }
+        await fulfillment(of: [expectations.alerts[0]], timeout: expectationTimeout)
+        // We shouldn't have connected, and we should have received a cooldown alert
+        XCTAssertEqual(nConnections, 1)
+
+        @Dependency(\.serverChangeStorage) var serverChangeStorage
+        let epsilon: TimeInterval = 1
+        let untilDate = until?.timeIntervalSince1970 ?? 0
+        let expectedUntilDate = date
+            .addingTimeInterval(TimeInterval(serverChangeStorage.config.changeServerShortDelayInSeconds))
+            .timeIntervalSince1970
+        XCTAssertLessThan(abs(untilDate - expectedUntilDate), epsilon)
+
+        await MainActor.run {
+            withDependencies {
+                $0.date = .constant(date)
+                $0.featureFlagProvider = .constant(flags: .allEnabled)
+
+                // Now add a bunch of connections to the stack, we should get the longer delay
+                let limit = $0.serverChangeStorage.config.changeServerAttemptLimit - 1
+                for i in 0...limit {
+                    $0.serverChangeStorage.push(
+                        intent: .random,
+                        date: date
+                            .addingTimeInterval(TimeInterval(
+                                -i *
+                                 serverChangeStorage
+                                    .config
+                                    .changeServerShortDelayInSeconds
+                            ))
+                    )
+                }
+            } operation: {
+                container.vpnGateway.connect(
+                    with: randomConnectionRequest()
+                )
+            }
+        }
+
+        await fulfillment(of: [expectations.alerts[1]], timeout: expectationTimeout)
+
+        let longUntilDate = until?.timeIntervalSince1970 ?? 0
+        let expectedLongUntilDate = date
+            .addingTimeInterval(TimeInterval(serverChangeStorage.config.changeServerLongDelayInSeconds))
+            .addingTimeInterval(TimeInterval(
+                -(serverChangeStorage.config.changeServerAttemptLimit - 1) *
+                    serverChangeStorage.config.changeServerShortDelayInSeconds))
+            .timeIntervalSince1970
+        XCTAssertLessThan(abs(longUntilDate - expectedLongUntilDate), epsilon)
+
+        CredentialsProvider.testValue = oldCredentialsProvider
+        AuthKeychainHandleDependencyKey.testValue = oldAuthKeychain
+    }
 }

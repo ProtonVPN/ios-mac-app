@@ -250,14 +250,15 @@ public struct MockTestData {
                               gatewayName: nil
     )
 
-    public var defaultClientConfig = ClientConfig(openVPNConfig: .init(defaultTcpPorts: [1234, 5678],
-                                                                defaultUdpPorts: [2345, 6789]),
-                                           featureFlags: .allEnabled,
-                                           serverRefreshInterval: 2 * 60,
-                                           wireGuardConfig: .init(defaultUdpPorts: [12345, 65432],
-                                                                  defaultTcpPorts: [12346, 65433]),
-                                           smartProtocolConfig: .init(),
-                                           ratingSettings: .init())
+    public var defaultClientConfig = ClientConfig(
+        openVPNConfig: .init(defaultTcpPorts: [1234, 5678], defaultUdpPorts: [2345, 6789]),
+        featureFlags: .allEnabled,
+        serverRefreshInterval: 2 * 60,
+        wireGuardConfig: .init(defaultUdpPorts: [12345, 65432], defaultTcpPorts: [12346, 65433]),
+        smartProtocolConfig: .init(),
+        ratingSettings: .init(),
+        serverChangeConfig: ServerChangeConfig()
+    )
 
     public lazy var clientConfigNoWireGuardTls = defaultClientConfig.with(featureFlags: .wireGuardTlsDisabled)
 }
@@ -270,7 +271,8 @@ extension ClientConfig {
             serverRefreshInterval: serverRefreshInterval,
             wireGuardConfig: wireGuardConfig,
             smartProtocolConfig: smartProtocolConfig ?? self.smartProtocolConfig,
-            ratingSettings: ratingSettings
+            ratingSettings: ratingSettings,
+            serverChangeConfig: ServerChangeConfig()
         )
     }
 }
