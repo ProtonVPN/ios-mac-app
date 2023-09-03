@@ -46,7 +46,7 @@ extension ServerChangeAuthorizer: DependencyKey {
             }
 
             guard reconnects.count < maxReconnects else {
-                let first = skips
+                let first = reconnects
                     .map(\.date)
                     .min() ?? now
                 let until = first.addingTimeInterval(maxSkipsDelay)

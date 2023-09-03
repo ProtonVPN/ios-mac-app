@@ -24,7 +24,6 @@ extension Storage {
         @Dependency(\.authKeychain) var authKeychain
 
         let username = authKeychain.fetch()?.username
-        log.info("username: \(username)")
         return username
     }
 
