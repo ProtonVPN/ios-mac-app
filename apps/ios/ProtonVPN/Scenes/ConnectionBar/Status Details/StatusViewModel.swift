@@ -159,10 +159,12 @@ class StatusViewModel {
         switch appStateManager.displayState {
         case .connected:
             sections.append(technicalDetailsSectionConnected)
+            // Save the index path of the cell so we can update it. Last (fourth) cell of the technicalDetails section
             timeCellIndexPath = IndexPath(row: 3, section: sections.count - 1)
 
             if shouldShowChangeServer {
                 sections.append(TableViewSection(title: "", cells: [changeServerCell]))
+                // Save the index path of the cell so we can update it. First (and the only) cell of this section
                 serverChangeCellIndexPath = IndexPath(row: 0, section: sections.count - 1)
             } else {
                 sections.append(TableViewSection(title: "", cells: [saveAsProfileCell]))
@@ -376,12 +378,12 @@ class StatusViewModel {
     }
 
     @objc private func serverChangeTimerFired() {
-        guard shouldShowChangeServer else { return }
         let viewState = ServerChangeViewState.from(state: canChangeServer)
         if case .available = viewState {
             serverChangeTimer?.invalidate()
             serverChangeTimer = nil
         }
+        guard shouldShowChangeServer else { return }
         updateServerChangeCell()
     }
 

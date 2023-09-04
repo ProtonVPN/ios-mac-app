@@ -22,8 +22,9 @@
 
 import Cocoa
 import Ergonomics
+import LegacyCommon
 
-protocol StatusMenuViewControllerProtocol: class {
+protocol StatusMenuViewControllerProtocol: AnyObject {
     var secureCoreSwitch: SwitchButton! { get }
 }
 
@@ -34,17 +35,16 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
     let viewModel: StatusMenuViewModel
     
     @IBOutlet private weak var backgroundView: NSView!
-    @IBOutlet private weak var contentView: NSStackView!
     @IBOutlet private weak var dynamicContentView: NSStackView!
     @IBOutlet private weak var loginLabel: NSTextField!
     @IBOutlet private weak var upgradeView: NSStackView!
     @IBOutlet private weak var upgradeLabel: NSTextField!
     
-    @IBOutlet private weak var headerView: NSView!
     @IBOutlet private weak var connectionLabel: NSTextField!
     @IBOutlet private weak var ipLabel: NSTextField!
     @IBOutlet private weak var connectButton: StatusBarAppConnectButton!
     @IBOutlet private weak var profileDropDown: StatusBarAppProfileDropdownButton!
+    @IBOutlet private weak var changeServerView: ChangeServerView!
     
     @IBOutlet weak var secureCoreSwitch: SwitchButton!
     @IBOutlet private weak var secureCoreLabel: NSTextField!
@@ -75,6 +75,10 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
         
         viewModel.contentChanged = { [weak self] in
             self?.contentChanged()
+        }
+
+        viewModel.changeServerStateChanged = { [weak self] state in
+            self?.setupHeaderButtons(with: state)
         }
         
         viewModel.disconnectWarning = { [weak self] viewModel in
@@ -126,6 +130,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
         upgradeText.append(viewModel.upgradeForSecureCoreLabel)
         upgradeLabel.attributedStringValue = upgradeText
         upgradeLabel.addGestureRecognizer(NSClickGestureRecognizer(target: self, action: #selector(upgrade)))
+        changeServerView.handler = viewModel.changeServerAction
         
         updateViewLayout()
     }
@@ -230,6 +235,8 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
             } else {
                 upgradeView.isHidden = true
             }
+
+            self.setupHeaderButtons()
         } else {
             dynamicContentView.isHidden = true
             loadingViewContainer.isHidden = true
@@ -248,16 +255,23 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
             
             self.connectionLabel.attributedStringValue = self.viewModel.connectionLabel
             self.ipLabel.attributedStringValue = self.viewModel.ipAddress
-            
+
             self.updateViewLayout()
-            
-            self.connectButton.isConnected = self.viewModel.isConnected
-            self.profileDropDown.isConnected = self.viewModel.isConnected
-            
+            setupHeaderButtons(with: .from(state: viewModel.canChangeServer))
+
             self.secureCoreSwitch.setState(self.viewModel.serverType == .secureCore ? .on : .off)
             
             self.countryCollection.reloadData()
         }
+    }
+
+    private func setupHeaderButtons(with state: ServerChangeViewState? = nil) {
+        profileDropDown.isHidden = !self.viewModel.shouldShowProfileDropdown
+        changeServerView.isHidden = !self.viewModel.shouldShowChangeServer
+
+        self.connectButton.isConnected = self.viewModel.isConnected
+        self.profileDropDown.isConnected = self.viewModel.isConnected
+        self.changeServerView.state = .from(state: viewModel.canChangeServer)
     }
     
     @objc private func countriesScrolled() {

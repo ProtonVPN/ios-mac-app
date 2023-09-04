@@ -79,9 +79,15 @@ class StatusBarAppConnectButton: LargeDropdownButton {
         context.addPath(path)
         context.drawPath(using: .fillStroke)
 
-        let buttonTitle = self.style(isConnected ? Localizable.disconnect : Localizable.quickConnect)
+        let buttonTitle = self.style(isConnected ? Localizable.disconnect : Localizable.quickConnect, font: .themeFont(.heading4))
         let textHeight = buttonTitle.size().height
-        buttonTitle.draw(in: CGRect(x: bounds.height/2, y: (bounds.height - textHeight) / 2, width: bounds.width - bounds.height/2, height: textHeight))
+        let textWidth = buttonTitle.size().width
+        buttonTitle.draw(in: CGRect(
+            x: 0,
+            y: (bounds.height - textHeight) / 2,
+            width: bounds.width,
+            height: textHeight
+        ))
     }
 }
 // swiftlint:enable operator_usage_whitespace
