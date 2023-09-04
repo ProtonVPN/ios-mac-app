@@ -80,6 +80,7 @@ class StatusViewModel {
     private lazy var isNetShieldStatsEnabled: Bool = { featureFlags[\.netShieldStats] }()
     @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
     @Dependency(\.featureFlagProvider) var featureFlags
+    @Dependency(\.credentialsProvider) var credentials
 
     private lazy var netShieldTypeAuthorizer = featureAuthorizerProvider.authorizer(forSubFeatureOf: NetShieldType.self)
 
@@ -95,6 +96,7 @@ class StatusViewModel {
     private var netShieldStats: NetShieldModel = .init(trackers: 0, ads: 0, data: 0, enabled: false)
     private var connectedDate = Date()
     private var timeCellIndexPath: IndexPath?
+    private var serverChangeCellIndexPath: IndexPath?
 
     private var currentTime: String {
         let time: TimeInterval
@@ -103,6 +105,26 @@ class StatusViewModel {
         }
         time = Date().timeIntervalSince(connectedDate)
         return time.asColonSeparatedString
+    }
+
+    private var serverChangeTimer: Timer?
+    private var lastChangeServerAvailableState: ServerChangeAuthorizer.ServerChangeAvailability?
+
+    var canChangeServer: ServerChangeAuthorizer.ServerChangeAvailability {
+        if let lastState = lastChangeServerAvailableState, case .unavailable(let until) = lastState, until.isFuture {
+            // Don't re-calculate server change availability if we know we don't need to
+            // (if we are already in time-out, this won't change unless we upgrade)
+            return lastState
+        }
+
+        @Dependency(\.serverChangeAuthorizer) var authorizer
+        let freshState = authorizer.isServerChangeAvailable()
+
+        if case .unavailable = freshState, serverChangeTimer == nil {
+            serverChangeTimer = .scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(serverChangeTimerFired), userInfo: nil, repeats: true)
+        }
+        lastChangeServerAvailableState = freshState
+        return freshState
     }
 
     private var notificationTokens: [NotificationToken] = []
@@ -131,20 +153,28 @@ class StatusViewModel {
             sections.append(netShieldV1Section)
         }
 
+        timeCellIndexPath = nil
+        serverChangeCellIndexPath = nil
+
         switch appStateManager.displayState {
         case .connected:
             sections.append(technicalDetailsSectionConnected)
             timeCellIndexPath = IndexPath(row: 3, section: sections.count - 1)
-            sections.append(saveAsProfileSection)
+
+            if shouldShowChangeServer {
+                sections.append(TableViewSection(title: "", cells: [changeServerCell]))
+                serverChangeCellIndexPath = IndexPath(row: 0, section: sections.count - 1)
+            } else {
+                sections.append(TableViewSection(title: "", cells: [saveAsProfileCell]))
+            }
+
         case .connecting:
             sections.append(technicalDetailsSectionConnecting)
-            timeCellIndexPath = nil
+
         case .loadingConnectionInfo:
             sections.append(technicalDetailsSectionLoadingConnectionInfo)
-            timeCellIndexPath = nil
         default:
             sections.append(technicalDetailsSectionDisconnected)
-            timeCellIndexPath = nil
         }
         
         return sections
@@ -170,6 +200,10 @@ class StatusViewModel {
         case .disconnected:
             return .textWithActivityCell(title: Localizable.notConnected, textColor: .notificationErrorColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: false)
         }
+    }
+
+    private func changeServer() {
+        vpnGateway.connectTo(profile: ProfileConstants.randomProfile(connectionProtocol: propertiesManager.connectionProtocol, defaultProfileAccessTier: 0))
     }
     
     private var connectionCountryString: String {
@@ -238,32 +272,66 @@ class StatusViewModel {
             trigger: nil
         )
     }
+
+    private var isConnected: Bool { appStateManager.state.isConnected }
+
+    var shouldShowChangeServer: Bool {
+        isConnected && featureFlags[\.showNewFreePlan] && credentials.tier == CoreAppConstants.VpnTiers.free
+    }
     
-    private var saveAsProfileSection: TableViewSection {
-        let cell: TableViewCellModel
+    private var saveAsProfileCell: TableViewCellModel {
         // same condition as on the Profiles screen to be consistent
         let contains = profileManager.customProfiles.contains { profile in
             connectionRequest(for: profile) == vpnGateway.lastConnectionRequest
         }
         if contains {
-            cell = .button(title: Localizable.deleteProfile,
+            return .button(title: Localizable.deleteProfile,
                            accessibilityIdentifier: "Delete Profile",
                            color: .notificationErrorColor(),
                            handler: { [deleteProfile] in
                 deleteProfile()
             })
         } else {
-            cell = .button(title: Localizable.saveAsProfile,
+            return .button(title: Localizable.saveAsProfile,
                            accessibilityIdentifier: "Save as Profile",
                            color: .normalTextColor(),
                            handler: { [saveAsProfile] in
                 saveAsProfile()
             })
         }
-        
-        return TableViewSection(title: "", cells: [cell])
     }
-    
+
+    private var changeServerCell: TableViewCellModel {
+        let viewState = ServerChangeViewState.from(state: canChangeServer)
+        switch viewState {
+        case .available:
+            return TableViewCellModel.button(
+                title: Localizable.changeServer,
+                accessibilityIdentifier: "Change Server",
+                color: .normalTextColor(),
+                handler: { [weak self] in self?.changeServer() }
+            )
+        case .unavailable(let duration):
+            let serverChangeString = Localizable.changeServer
+                .attributed(withColor: .normalTextColor(), font: .systemFont(ofSize: 15))
+            return TableViewCellModel.attributedKeyValue(
+                key: serverChangeString,
+                value: changeServerTimerString(for: duration),
+                handler: { [weak self] in self?.changeServer() }
+            )
+        }
+    }
+
+    private func changeServerTimerString(for duration: String) -> NSAttributedString {
+        let hourglassIcon = NSAttributedString.imageAttachment(
+            image: Theme.Asset.icHourglass.image.withTintColor(.normalTextColor()),
+            baselineOffset: -2.5,
+            size: CGSize(width: 16, height: 16)
+        )
+        let durationString = " \(duration)".attributed(withColor: .normalTextColor(), font: .systemFont(ofSize: 15))
+        return NSAttributedString.concatenate(hourglassIcon, durationString)
+    }
+
     private func saveAsProfile() {
         guard let server = appStateManager.activeConnection()?.server,
               profileManager.profile(withServer: server) == nil else {
@@ -306,14 +374,30 @@ class StatusViewModel {
     private func runTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(self.timerFired)), userInfo: nil, repeats: true)
     }
-    
+
+    @objc private func serverChangeTimerFired() {
+        guard shouldShowChangeServer else { return }
+        let viewState = ServerChangeViewState.from(state: canChangeServer)
+        if case .available = viewState {
+            serverChangeTimer?.invalidate()
+            serverChangeTimer = nil
+        }
+        updateServerChangeCell()
+    }
+
     @objc private func timerFired() {
         updateTimeCell()
     }
-    
+
     private func updateTimeCell() {
         guard let timeCellIndexPath = timeCellIndexPath else { return } // No time cell in the view
         rowsUpdated?([timeCellIndexPath: timeCell])
+    }
+
+    private func updateServerChangeCell() {
+        guard let indexPath = serverChangeCellIndexPath else { return }
+        guard shouldShowChangeServer else { return }
+        rowsUpdated?([indexPath: changeServerCell])
     }
     
     // MARK: - Connection status changes
@@ -367,13 +451,6 @@ class StatusViewModel {
     }
 
     private var netShieldV1Cells: [TableViewCellModel] {
-        let isConnected: Bool
-        switch appStateManager.state {
-        case .connected:
-            isConnected = true
-        default:
-            isConnected = false
-        }
         let activeConnection = appStateManager.activeConnection()
         let currentNetShieldType = isConnected ? activeConnection?.netShieldType : netShieldPropertyProvider.netShieldType
         let isNetShieldOn = currentNetShieldType != .off
@@ -476,8 +553,6 @@ class StatusViewModel {
     }
 
     private var netShieldV2SelectionCell: TableViewCellModel {
-        let isConnected: Bool = appStateManager.state.isConnected
-
         let activeConnection = appStateManager.activeConnection()
         let currentNetShieldType = (isConnected ? activeConnection?.netShieldType : netShieldPropertyProvider.netShieldType) ?? .off
 

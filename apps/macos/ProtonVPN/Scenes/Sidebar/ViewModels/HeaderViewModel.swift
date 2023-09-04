@@ -53,14 +53,13 @@ final class HeaderViewModel {
     private lazy var announcementManager: AnnouncementManager = factory.makeAnnouncementManager()
     private lazy var announcementsViewModel: AnnouncementsViewModel = factory.makeAnnouncementsViewModel()
 
-    private var serverChangeTimer: Timer?
-
     var contentChanged: (() -> Void)?
 
     var shouldShowChangeServer: Bool {
         isConnected && featureFlags[\.showNewFreePlan] && credentials.tier == CoreAppConstants.VpnTiers.free
     }
 
+    private var serverChangeTimer: Timer?
     private var lastChangeServerAvailableState: ServerChangeAuthorizer.ServerChangeAvailability?
 
     var canChangeServer: ServerChangeAuthorizer.ServerChangeAvailability {
