@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Dependencies
 import LegacyCommon
 import Theme
 import Strings
@@ -43,7 +44,11 @@ final class StatusMenuViewModel {
         & VpnGatewayFactory
 
     private let factory: Factory
-    
+    @Dependency(\.profileAuthorizer) private var profileAuthorizer
+    @Dependency(\.featureFlagProvider) private var featureFlags
+    @Dependency(\.credentialsProvider) private var credentials
+    @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
+
     private let maxCharCount = 20
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
@@ -56,13 +61,39 @@ final class StatusMenuViewModel {
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
 
     var contentChanged: (() -> Void)?
+    var changeServerStateChanged: ((ServerChangeViewState) -> Void)?
     var disconnectWarning: ((WarningPopupViewModel) -> Void)?
     var unsecureWiFiWarning: ((WarningPopupViewModel) -> Void)?
     
     var serverType: ServerType = .standard
     var standardCountries: [ServerGroup]?
     var secureCoreCountries: [ServerGroup]?
-    
+
+    var shouldShowProfileDropdown: Bool { profileAuthorizer.canUseProfiles }
+    var shouldShowChangeServer: Bool {
+        isConnected && featureFlags[\.showNewFreePlan] && credentials.tier == CoreAppConstants.VpnTiers.free
+    }
+
+    private var serverChangeTimer: Timer?
+    private var lastChangeServerAvailableState: ServerChangeAuthorizer.ServerChangeAvailability?
+
+    var canChangeServer: ServerChangeAuthorizer.ServerChangeAvailability {
+        if let lastState = lastChangeServerAvailableState, case .unavailable(let until) = lastState, until.isFuture {
+            // Don't re-calculate server change availability if we know we don't need to
+            // (if we are already in time-out, this won't change unless we upgrade)
+            return lastState
+        }
+
+        @Dependency(\.serverChangeAuthorizer) var authorizer
+        let freshState = authorizer.isServerChangeAvailable()
+
+        if case .unavailable = freshState, serverChangeTimer == nil {
+            serverChangeTimer = .scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(serverChangeTimerFired), userInfo: nil, repeats: true)
+        }
+        lastChangeServerAvailableState = freshState
+        return freshState
+    }
+
     weak var viewController: StatusMenuViewControllerProtocol?
 
     private var profileManager: ProfileManager?
@@ -162,6 +193,10 @@ final class StatusMenuViewModel {
             log.debug("Connect requested by pressing Quick connect", category: .connectionConnect, event: .trigger)
             vpnGateway.quickConnect(trigger: .tray)
         }
+    }
+
+    func changeServerAction() {
+        vpnGateway.connectTo(profile: ProfileConstants.randomProfile(connectionProtocol: propertiesManager.connectionProtocol, defaultProfileAccessTier: 0))
     }
 
     // MARK: - General section
@@ -267,6 +302,16 @@ final class StatusMenuViewModel {
                                                name: type(of: propertiesManager).hasConnectedNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handlePlanChange),
                                                name: VpnKeychain.vpnPlanChanged, object: nil)
+    }
+
+    @objc private func serverChangeTimerFired() {
+        let viewState = ServerChangeViewState.from(state: canChangeServer)
+        if case .available = viewState {
+            serverChangeTimer?.invalidate()
+            serverChangeTimer = nil
+        }
+        guard shouldShowChangeServer else { return }
+        changeServerStateChanged?(viewState)
     }
     
     private func sessionChanged(data: SessionChanged.T) {
