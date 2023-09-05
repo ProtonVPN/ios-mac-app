@@ -24,7 +24,7 @@ class ViewController: UITableViewController {
     
     let upsells: [(type: UpsellType, title: String)] = [
         (.allCountries(numberOfServers: 1300, numberOfCountries: 61), "All countries"),
-        (.country(country: "PL", numberOfDevices: 10, numberOfCountries: 61), "Countries"),
+        (.country(countryFlag: UIImage(named: "Flag")!, numberOfDevices: 10, numberOfCountries: 61), "Countries"),
         (.secureCore, "Secure Core"),
         (.netShield, "Net Shield"),
         (.safeMode, "Safe Mode"),

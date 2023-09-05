@@ -28,6 +28,7 @@ import Strings
 public final class UpsellViewController: NSViewController {
 
     @IBOutlet private weak var imageView: NSImageView!
+    @IBOutlet private weak var flagView: NSImageView!
     @IBOutlet private weak var titleLabel: NSTextField!
     @IBOutlet private weak var descriptionLabel: NSTextField!
     @IBOutlet private weak var upgradeButton: UpsellPrimaryActionButton!
@@ -36,7 +37,6 @@ public final class UpsellViewController: NSViewController {
     var upsellType: UpsellType?
 
     var upgradeAction: (() -> Void)?
-    var learnMoreAction: (() -> Void)?
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -81,6 +81,7 @@ public final class UpsellViewController: NSViewController {
             descriptionLabel.isHidden = true
         }
         imageView.image = upsellFeature.artImage
+        flagView.image = upsellFeature.flagImage
 
         for view in featuresStackView.arrangedSubviews {
             view.removeFromSuperview()
@@ -106,9 +107,5 @@ public final class UpsellViewController: NSViewController {
     @IBAction private func upgrade(_ sender: Any) {
         upgradeAction?()
         dismiss(nil)
-    }
-
-    @IBAction private func learnMore(_ sender: Any) {
-        learnMoreAction?()
     }
 }

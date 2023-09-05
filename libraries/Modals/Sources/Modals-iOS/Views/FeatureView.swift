@@ -22,6 +22,10 @@ import UIKit
 
 final class FeatureView: UIView {
 
+    static let moneyGuaranteeGreen = UIColor(red: 39/255.0,
+                                             green: 221/255.0,
+                                             blue: 177/255.0,
+                                             alpha: 1.0)
     // MARK: Outlets
 
     @IBOutlet private weak var iconImageView: UIImageView!
@@ -35,7 +39,12 @@ final class FeatureView: UIView {
 
     var feature: Feature? {
         didSet {
-            iconImageView.tintColor = colors.textAccent
+            if feature == .moneyGuarantee {
+                iconImageView.tintColor = Self.moneyGuaranteeGreen
+                titleLabel.textColor = Self.moneyGuaranteeGreen
+            } else {
+                iconImageView.tintColor = colors.textAccent
+            }
             iconImageView.image = feature?.image
             titleLabel.text = feature?.title()
         }

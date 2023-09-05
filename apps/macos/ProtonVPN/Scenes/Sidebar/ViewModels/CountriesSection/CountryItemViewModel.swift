@@ -153,7 +153,7 @@ class CountryItemViewModel {
     }
     
     func upgradeAction() {
-        countriesSectionViewModel.displayUpgradeMessage(nil)
+        countriesSectionViewModel.displayCountryUpsell(countryCode: countryCode)
     }
     
     func changeCellState() {

@@ -59,6 +59,8 @@ public enum Feature {
     case moneyGuarantee
 }
 
+extension Feature: Equatable { }
+
 extension Feature {
     // swiftlint:disable:next cyclomatic_complexity
     public func title() -> String {
@@ -136,7 +138,7 @@ extension Feature {
         case .streaming:
             return Asset.streamingIcon.image
         case .multipleDevices:
-            return Asset.multipleDevicesIcon.image
+            return Theme.Asset.icLocks.image
         case .blockAds:
             return Asset.blockAds.image
         case .protectFromMalware:

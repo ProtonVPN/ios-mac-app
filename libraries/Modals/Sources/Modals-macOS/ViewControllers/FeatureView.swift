@@ -24,6 +24,11 @@ import SwiftUI
 
 final class FeatureView: NSView {
 
+    static let moneyGuaranteeGreen = NSColor(red: 39/255.0,
+                                             green: 221/255.0,
+                                             blue: 177/255.0,
+                                             alpha: 1.0)
+
     // MARK: Outlets
 
     @IBOutlet private weak var titleLabel: NSTextField! {
@@ -63,7 +68,13 @@ final class FeatureView: NSView {
 
     var feature: Feature? {
         didSet {
-            iconImageView.contentTintColor = .color(.icon, .interactive)
+            if feature == .moneyGuarantee {
+                iconImageView.contentTintColor = Self.moneyGuaranteeGreen
+                titleLabel.textColor = Self.moneyGuaranteeGreen
+            } else {
+                iconImageView.contentTintColor = .color(.icon, .interactive)
+            }
+
             iconImageView.image = feature?.image
             titleLabel.stringValue = feature?.title() ?? ""
         }

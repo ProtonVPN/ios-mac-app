@@ -101,6 +101,21 @@ extension MacAlertService: CoreAlertService {
         case let alert as NetShieldUpsellAlert:
             show(alert: alert, upsellType: .netShield)
 
+        case let alert as ProfilesUpsellAlert:
+            show(alert: alert, upsellType: .profiles)
+
+        case let alert as VPNAcceleratorUpsellAlert:
+            show(alert: alert, upsellType: .vpnAccelerator)
+
+        case let alert as CustomizationUpsellAlert:
+            show(alert: alert, upsellType: .customization)
+
+        case let alert as CountryUpsellAlert:
+            let plus = AccountPlan.plus
+            show(alert: alert, upsellType: .country(countryFlag: alert.countryFlag,
+                                                    numberOfDevices: plus.devicesCount,
+                                                    numberOfCountries: planService.countriesCount))
+
         case let alert as DiscourageSecureCoreAlert:
             show(alert)
 
@@ -316,7 +331,7 @@ extension MacAlertService: CoreAlertService {
                 SafariService.openLink(url: url)
             }
         }
-        let upsellViewController = ModalsFactory.upsellViewController(upsellType: upsellType, upgradeAction: upgradeAction, learnMoreAction: alert.learnMore)
+        let upsellViewController = ModalsFactory.upsellViewController(upsellType: upsellType, upgradeAction: upgradeAction)
         windowService.presentKeyModal(viewController: upsellViewController)
     }
 

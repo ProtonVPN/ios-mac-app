@@ -10,6 +10,7 @@
             <connections>
                 <outlet property="descriptionLabel" destination="jid-dT-2nn" id="Y02-pu-KJz"/>
                 <outlet property="featuresStackView" destination="H0z-3s-Avf" id="DCE-nh-gI9"/>
+                <outlet property="flagView" destination="X1m-QP-NON" id="Tz7-yU-rc3"/>
                 <outlet property="imageView" destination="53f-me-QcG" id="ZXg-Tb-5iB"/>
                 <outlet property="titleLabel" destination="K5y-4F-OTE" id="d6g-uS-SeN"/>
                 <outlet property="upgradeButton" destination="xIg-oV-oUX" id="o9a-GN-HJ3"/>
@@ -47,7 +48,15 @@
                         <constraint firstAttribute="height" constant="184" id="5ur-kg-plb"/>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="350" id="bJB-0q-st6"/>
                     </constraints>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="top" imageScaling="proportionallyDown" image="PlusCountries" id="XMA-Lx-eBS"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="PlusCountries" id="XMA-Lx-eBS"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="X1m-QP-NON">
+                    <rect key="frame" x="236" y="346" width="48" height="48"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="5og-rB-dUj"/>
+                        <constraint firstAttribute="width" constant="48" id="EwM-k9-a18"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="ZVM-Ix-EXa"/>
                 </imageView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="K5y-4F-OTE">
                     <rect key="frame" x="58" y="218" width="404" height="52"/>
@@ -92,6 +101,7 @@
                 </stackView>
             </subviews>
             <constraints>
+                <constraint firstItem="X1m-QP-NON" firstAttribute="centerX" secondItem="53f-me-QcG" secondAttribute="centerX" id="19b-zY-rQk"/>
                 <constraint firstItem="xIg-oV-oUX" firstAttribute="centerX" secondItem="A27-85-7le" secondAttribute="centerX" id="9Du-SK-vkB"/>
                 <constraint firstItem="jid-dT-2nn" firstAttribute="centerX" secondItem="K5y-4F-OTE" secondAttribute="centerX" id="DqN-WB-Da9"/>
                 <constraint firstItem="jid-dT-2nn" firstAttribute="top" secondItem="K5y-4F-OTE" secondAttribute="bottom" constant="8" id="DsS-XJ-WNj"/>
@@ -108,6 +118,7 @@
                 <constraint firstItem="xIg-oV-oUX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="A27-85-7le" secondAttribute="leading" constant="100" id="m8E-NF-6pq"/>
                 <constraint firstItem="H0z-3s-Avf" firstAttribute="centerX" secondItem="jid-dT-2nn" secondAttribute="centerX" id="onU-b9-MbI"/>
                 <constraint firstItem="xIg-oV-oUX" firstAttribute="top" secondItem="H0z-3s-Avf" secondAttribute="bottom" priority="999" constant="32" id="qK7-D2-8kp"/>
+                <constraint firstItem="X1m-QP-NON" firstAttribute="centerY" secondItem="53f-me-QcG" secondAttribute="centerY" id="qwx-2W-bdr"/>
                 <constraint firstItem="jid-dT-2nn" firstAttribute="width" secondItem="K5y-4F-OTE" secondAttribute="width" id="uUe-bx-Bxz"/>
                 <constraint firstItem="H0z-3s-Avf" firstAttribute="top" secondItem="jid-dT-2nn" secondAttribute="bottom" constant="32" id="wsz-SR-9kT"/>
                 <constraint firstItem="K5y-4F-OTE" firstAttribute="width" secondItem="53f-me-QcG" secondAttribute="width" id="ypP-4r-k9k"/>

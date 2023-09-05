@@ -184,6 +184,21 @@ extension IosAlertService: CoreAlertService {
             let plus = AccountPlan.plus
             let allCountriesUpsell = UpsellType.allCountries(numberOfServers: plus.serversCount, numberOfCountries: planService.countriesCount)
             show(upsellType: allCountriesUpsell)
+
+        case is ProfilesUpsellAlert:
+            show(upsellType: .profiles)
+
+        case is VPNAcceleratorUpsellAlert:
+            show(upsellType: .vpnAccelerator)
+
+        case is CustomizationUpsellAlert:
+            show(upsellType: .customization)
+
+        case let countryAlert as CountryUpsellAlert:
+            let plus = AccountPlan.plus
+            show(upsellType: .country(countryFlag: countryAlert.countryFlag,
+                                      numberOfDevices: plus.devicesCount,
+                                      numberOfCountries: planService.countriesCount))
             
         case is LocalAgentSystemErrorAlert:
             showDefaultSystemAlert(alert)

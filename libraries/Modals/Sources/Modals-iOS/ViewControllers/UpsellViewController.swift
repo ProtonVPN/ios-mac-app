@@ -46,7 +46,6 @@ public final class UpsellViewController: UIViewController {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subtitleLabel: UILabel!
     @IBOutlet private weak var featureArtImageView: UIImageView!
-    @IBOutlet private weak var featureArtImageViewHeight: NSLayoutConstraint!
 
     // MARK: Properties
 
@@ -98,8 +97,7 @@ public final class UpsellViewController: UIViewController {
             subtitleLabel.isHidden = true
         }
         featureArtImageView.image = upsellFeature.artImage
-        let imageSize = upsellFeature.artImage.size
-        featureArtImageViewHeight.constant = (imageSize.height * featureArtImageView.bounds.width) / imageSize.width
+        featureArtImageView.image = featureArtImageView.image?.mergedOnTop(with: upsellFeature.flagImage)
 
         for view in featuresStackView.arrangedSubviews {
             view.removeFromSuperview()
@@ -153,5 +151,21 @@ public final class UpsellViewController: UIViewController {
         presentingViewController?.dismiss(animated: true, completion: { [weak self] in
             self?.delegate?.userDidDismissUpsell()
         })
+    }
+}
+
+private extension UIImage {
+    func mergedOnTop(with otherImage: UIImage?) -> UIImage? {
+        guard let otherImage else { return self }
+        let flagSize = CGSize(width: 48, height: 48)
+        let origin = CGPoint(x: ((size.width - flagSize.width) / 2), y: ((size.height - flagSize.height) / 2))
+        let bounds = CGRect(origin: origin, size: flagSize)
+
+        UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
+        self.draw(in: CGRect(origin: .zero, size: size))
+        otherImage.draw(in: bounds)
+        let mergedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return mergedImage
     }
 }

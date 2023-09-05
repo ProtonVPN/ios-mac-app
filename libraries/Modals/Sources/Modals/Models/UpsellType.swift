@@ -22,7 +22,7 @@ public enum UpsellType {
     case netShield
     case secureCore
     case allCountries(numberOfServers: Int, numberOfCountries: Int)
-    case country(country: String, numberOfDevices: Int, numberOfCountries: Int)
+    case country(countryFlag: Image, numberOfDevices: Int, numberOfCountries: Int)
     case safeMode
     case moderateNAT
     case noLogs
@@ -35,7 +35,8 @@ public enum UpsellType {
                       subtitle: subtitle(),
                       features: features(),
                       moreInformation: moreInformation(),
-                      artImage: artImage())
+                      artImage: artImage(),
+                      flagImage: flagImage())
     }
 
     private func moreInformation() -> Feature? {
@@ -150,9 +151,17 @@ public enum UpsellType {
             return Asset.customisation.image
         case .profiles:
             return Asset.profiles.image
-        case .country(let country, _, _):
-            // todo: Select correct flag based on country code
+        case .country:
             return Asset.flatIllustration.image
+        }
+    }
+
+    private func flagImage() -> Image? {
+        switch self {
+        case .country(let country, _, _):
+            return country
+        default:
+            return nil
         }
     }
 }
