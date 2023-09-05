@@ -24,11 +24,10 @@ public struct ModalsFactory {
 
     // MARK: Properties
 
-    static public func upsellViewController(upsellType: UpsellType, upgradeAction: (() -> Void)?, learnMoreAction: (() -> Void)?) -> NSViewController {
+    static public func upsellViewController(upsellType: UpsellType, upgradeAction: (() -> Void)?) -> NSViewController {
         let upsell = UpsellViewController()
         upsell.upsellType = upsellType
         upsell.upgradeAction = upgradeAction
-        upsell.learnMoreAction = learnMoreAction
         return upsell
     }
 

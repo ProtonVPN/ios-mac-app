@@ -188,6 +188,10 @@ class CountriesSectionViewModel {
     func displayUpgradeMessage( _ serverModel: ServerModel? ) {
         alertService.push(alert: AllCountriesUpsellAlert())
     }
+
+    func displayCountryUpsell(countryCode: String) {
+        alertService.push(alert: CountryUpsellAlert(countryFlag: .flag(countryCode: countryCode)!))
+    }
     
     func toggleCountryCell(for countryViewModel: CountryItemViewModel) {
         guard let index = data.firstIndex(where: {

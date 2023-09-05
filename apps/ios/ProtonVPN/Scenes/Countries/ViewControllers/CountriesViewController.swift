@@ -145,8 +145,9 @@ final class CountriesViewController: UIViewController {
     }
 
     func showCountry(cellModel: CountryItemViewModel) {
-        if cellModel.isUsersTierTooLow {
-            viewModel.presentAllCountriesUpsell()
+        if cellModel.isUsersTierTooLow,
+           let flag = UIImage.flag(countryCode: cellModel.countryCode) {
+            viewModel.presentUpsell(forCountryFlag: flag)
             return
         }
 

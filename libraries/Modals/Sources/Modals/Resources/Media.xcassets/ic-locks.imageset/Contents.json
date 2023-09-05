@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Stars.pdf",
+      "filename" : "ic-locks.pdf",
       "idiom" : "universal"
     }
   ],
@@ -10,7 +10,6 @@
     "version" : 1
   },
   "properties" : {
-    "preserves-vector-representation" : true,
-    "template-rendering-intent" : "original"
+    "template-rendering-intent" : "template"
   }
 }

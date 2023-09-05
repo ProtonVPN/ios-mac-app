@@ -769,10 +769,23 @@ public class UpsellAlert: SystemAlert {
     public var actions = [AlertAction]()
     public let isError = false
     public var dismiss: (() -> Void)?
-    public func learnMore() { }
 
     public init() { }
 
+}
+
+public class ProfilesUpsellAlert: UpsellAlert { }
+
+public class VPNAcceleratorUpsellAlert: UpsellAlert { }
+
+public class CustomizationUpsellAlert: UpsellAlert { }
+
+public class CountryUpsellAlert: UpsellAlert {
+    public let countryFlag: Image
+
+    public init(countryFlag: Image) {
+        self.countryFlag = countryFlag
+    }
 }
 
 public class AllCountriesUpsellAlert: UpsellAlert { }
@@ -781,17 +794,9 @@ public class NetShieldUpsellAlert: UpsellAlert { }
 
 public class SecureCoreUpsellAlert: UpsellAlert { }
 
-public class SafeModeUpsellAlert: UpsellAlert {
-    override public func learnMore() {
-        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.safeMode)
-    }
-}
+public class SafeModeUpsellAlert: UpsellAlert { }
 
-public class ModerateNATUpsellAlert: UpsellAlert {
-    override public func learnMore() {
-        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.moderateNAT)
-    }
-}
+public class ModerateNATUpsellAlert: UpsellAlert { }
 
 public class SubuserWithoutConnectionsAlert: SystemAlert {
     public var title: String?

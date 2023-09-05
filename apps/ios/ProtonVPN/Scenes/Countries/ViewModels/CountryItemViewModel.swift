@@ -319,7 +319,7 @@ class CountryItemViewModel {
         
         if isUsersTierTooLow {
             log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
-            alertService.push(alert: AllCountriesUpsellAlert())
+            alertService.push(alert: CountryUpsellAlert(countryFlag: .flag(countryCode: countryCode)!))
         } else if underMaintenance {
             log.debug("Connect rejected because server is in maintenance", category: .connectionConnect, event: .trigger)
             alertService.push(alert: MaintenanceAlert(countryName: countryName))

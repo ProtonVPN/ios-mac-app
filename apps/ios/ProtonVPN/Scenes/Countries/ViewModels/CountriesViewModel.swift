@@ -136,6 +136,10 @@ class CountriesViewModel: SecureCoreToggleHandler {
     func presentAllCountriesUpsell() {
         alertService.push(alert: AllCountriesUpsellAlert())
     }
+
+    func presentUpsell(forCountryFlag countryFlag: Image) {
+        alertService.push(alert: CountryUpsellAlert(countryFlag: countryFlag))
+    }
     
     var enableViewToggle: Bool {
         return vpnGateway.connection != .connecting

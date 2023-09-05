@@ -29,7 +29,6 @@ internal enum Asset {
   internal static let flatIllustration = ImageAsset(name: "Flat illustration")
   internal static let highSpeedIcon = ImageAsset(name: "HighSpeedIcon")
   internal static let moderateNAT = ImageAsset(name: "ModerateNAT")
-  internal static let multipleDevicesIcon = ImageAsset(name: "MultipleDevicesIcon")
   internal static let netshieldIcon = ImageAsset(name: "NetshieldIcon")
   internal static let noLogs = ImageAsset(name: "NoLogs")
   internal static let plusCountries = ImageAsset(name: "PlusCountries")

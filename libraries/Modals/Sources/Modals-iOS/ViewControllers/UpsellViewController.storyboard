@@ -23,11 +23,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GBb-Hz-STb">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="342"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="382" placeholderIntrinsicHeight="184" translatesAutoresizingMaskIntoConstraints="NO" id="ZLz-VF-2hg">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="382" placeholderIntrinsicHeight="184" translatesAutoresizingMaskIntoConstraints="NO" id="ZLz-VF-2hg">
                                                 <rect key="frame" x="16" y="0.0" width="382" height="184"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="184" id="qOo-cy-pNo"/>
-                                                </constraints>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9Jg-ku-cxb">
                                                 <rect key="frame" x="16" y="208" width="382" height="81.5"/>
@@ -120,7 +117,6 @@
                     </view>
                     <connections>
                         <outlet property="featureArtImageView" destination="ZLz-VF-2hg" id="dqd-Xg-f0V"/>
-                        <outlet property="featureArtImageViewHeight" destination="qOo-cy-pNo" id="TxU-Mv-dvT"/>
                         <outlet property="featureView" destination="GBb-Hz-STb" id="aiH-3H-eTb"/>
                         <outlet property="featuresStackView" destination="9q6-jr-eNp" id="m22-36-frb"/>
                         <outlet property="getPlusButton" destination="FHs-vS-yIf" id="N2g-2z-GV5"/>

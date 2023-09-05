@@ -22,6 +22,7 @@ public struct UpsellFeature {
     public let features: [Feature]
     public let moreInformation: Feature?
     public let artImage: Image
+    public let flagImage: Image?
 }
 
 public extension UpsellFeature {

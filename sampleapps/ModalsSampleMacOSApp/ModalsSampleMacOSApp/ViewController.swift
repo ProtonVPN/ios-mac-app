@@ -29,7 +29,7 @@ class ViewController: NSViewController {
 
     let modals: [(type: Modal, title: String)] = [(.upsell(.allCountries(numberOfServers: 1300,
                                                                          numberOfCountries: 61)), "All countries"),
-                                                  (.upsell(.country(country: "PL",
+                                                  (.upsell(.country(countryFlag: NSImage(named: "Flag")!,
                                                                     numberOfDevices: 10,
                                                                     numberOfCountries: 61)), "Countries"),
                                                   (.upsell(.secureCore), "Secure Core"),
@@ -55,7 +55,7 @@ extension ViewController: NSTableViewDelegate {
         let viewController: NSViewController
         switch modal.type {
         case .upsell(let type):
-            viewController = ModalsFactory.upsellViewController(upsellType: type, upgradeAction: { }, learnMoreAction: { })
+            viewController = ModalsFactory.upsellViewController(upsellType: type, upgradeAction: { })
         case .discourageSecureCore:
             viewController = ModalsFactory.discourageSecureCoreViewController(onDontShowAgain: nil, onActivate: nil, onCancel: nil, onLearnMore: nil)
         }
