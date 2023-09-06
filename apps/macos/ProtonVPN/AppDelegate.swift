@@ -66,6 +66,7 @@ class AppDelegate: NSObject {
 #else
 class AppDelegate: NSObject {
     @Dependency(\.defaultsProvider) var provider
+    public private(set) static var wasRecentlyActive = false
     let container = DependencyContainer()
     lazy var navigationService = container.makeNavigationService()
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
