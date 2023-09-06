@@ -25,27 +25,27 @@ import CoreLocation
 
 // abstract superclass
 class AnnotationView: UIView {
-    
+
     var coordinate: CLLocationCoordinate2D {
         return CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
     }
-    
+
     var available: Bool {
         return false
     }
-    
+
     var selected: Bool {
         return false
     }
-    
+
     var connectedState: Bool {
         return false
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
     }

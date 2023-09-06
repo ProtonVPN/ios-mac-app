@@ -40,6 +40,10 @@ class CountryAnnotation: AnnotationView {
     override var coordinate: CLLocationCoordinate2D {
         return viewModel.coordinate
     }
+
+    override var connectedState: Bool {
+        return viewModel.connectedUiState
+    }
     
     var maxHeight: CGFloat {
         return viewModel.maxPinHeight + viewModel.labelHeight
