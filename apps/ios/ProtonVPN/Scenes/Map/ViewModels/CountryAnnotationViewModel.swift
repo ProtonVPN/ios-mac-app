@@ -103,10 +103,10 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     }
     
     var outlineColor: UIColor {
-        if requiresUpgrade || underMaintenance {
-            return .weakInteractionColor()
-        } else if connectedUiState {
+        if connectedUiState {
             return .brandColor()
+        } else if requiresUpgrade || underMaintenance {
+            return .weakInteractionColor()
         } else {
             return .normalTextColor()
         }
@@ -142,15 +142,15 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     }
     
     var connectIcon: UIImage? {
-        if requiresUpgrade {
+        if connectedUiState {
+            return Asset.connect.image.withRenderingMode(.alwaysTemplate)
+        } else if requiresUpgrade {
             switch viewState {
             case .idle:
                 return nil
             case .selected:
                 return Asset.locked.image
             }
-        } else if connectedUiState {
-            return Asset.connect.image.withRenderingMode(.alwaysTemplate)
         } else {
             switch viewState {
             case .idle:
