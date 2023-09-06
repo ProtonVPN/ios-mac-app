@@ -45,6 +45,7 @@ class FooterItemView: NSView {
     
     func updateView(withModel viewModel: ProfilesSectionViewModel) {
         self.viewModel = viewModel
+        manageProfilesButton.isHidden = !viewModel.canUseProfiles
     }
     
     @objc private func createNewProfileButtonAction(_ sender: NSButton) {
