@@ -9,12 +9,14 @@ public struct ModalsFactory {
     private let upsellStoryboard: UIStoryboard
     private let discourageStoryboard: UIStoryboard
     private let userAccountUpdateStoryboard: UIStoryboard
+    private let freeConnectionsViewStoryboard: UIStoryboard
 
     public init() {
         upsellStoryboard = UIStoryboard(name: "UpsellViewController", bundle: Bundle.module)
         discourageStoryboard = UIStoryboard(name: "DiscourageSecureCoreViewController", bundle: Bundle.module)
         userAccountUpdateStoryboard = UIStoryboard(name: "UserAccountUpdateViewController", bundle: Bundle.module)
-    }
+        freeConnectionsViewStoryboard = UIStoryboard(name: "FreeConnectionsViewController", bundle: Bundle.module)
+   }
 
     public func upsellViewController(upsellType: UpsellType) -> UpsellViewController {
         let upsell = upsellStoryboard.instantiate(controllerType: UpsellViewController.self)
@@ -40,6 +42,13 @@ public struct ModalsFactory {
         userAccountUpdateViewController.viewModel = viewModel
         userAccountUpdateViewController.onPrimaryButtonTap = onPrimaryButtonTap
         return userAccountUpdateViewController
+    }
+
+    public func freeConnectionsViewController(countries: [(String, Modals.Image?)], upgradeAction: (() -> Void)?) -> UIViewController {
+        let controller = freeConnectionsViewStoryboard.instantiate(controllerType: FreeConnectionsViewController.self)
+        controller.onBannerPress = upgradeAction
+        controller.countries = countries
+        return controller
     }
 }
 

@@ -26,13 +26,13 @@ final class FreeConnectionsViewController: NSViewController {
     @IBOutlet private weak var subTitleLabel: NSTextField!
     @IBOutlet private weak var bannerLabel: NSTextField!
     @IBOutlet private weak var bannerImageView: NSImageView!
-    @IBOutlet private weak var bannerShevronView: NSImageView!
+    @IBOutlet private weak var bannerChevronView: NSImageView!
     @IBOutlet private weak var roundedBackgroundView: NSView!
     @IBOutlet private weak var countriesList: NSCollectionView!
     @IBOutlet private weak var countriesListLayout: NSCollectionViewFlowLayout!
 
     var onBannerPress: (() -> Void)?
-    var countries: [(String, Image)]?
+    var countries: [(String, Image?)]?
 
     /// Used for calculating size of country cells
     private var _viewForSizing: CountryCellView?
@@ -85,7 +85,7 @@ final class FreeConnectionsViewController: NSViewController {
         roundedBackgroundView.layer?.backgroundColor = colors.backgroundWeak.cgColor
 
         bannerImageView.image = Modals.Asset.worldwideCoverage.image
-        bannerShevronView.image = NSImage(systemSymbolName: "chevron.right", accessibilityDescription: nil)
+        bannerChevronView.image = NSImage(systemSymbolName: "chevron.right", accessibilityDescription: nil)
     }
 
     private func setupTranslations() {

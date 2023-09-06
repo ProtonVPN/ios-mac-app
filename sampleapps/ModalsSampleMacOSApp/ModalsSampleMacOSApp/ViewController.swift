@@ -26,7 +26,7 @@ class ViewController: NSViewController {
         case upsell(UpsellType)
         case discourageSecureCore
         case whatsNew
-        case freeConnections([(String, Image)])
+        case freeConnections([(String, Image?)])
     }
 
     let modals: [(type: Modal, title: String)] = [

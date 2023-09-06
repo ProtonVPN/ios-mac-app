@@ -232,7 +232,10 @@ extension IosAlertService: CoreAlertService {
                     longSkip: cooldownUpsell.longSkip
                 )
             )
-            
+
+        case let alert as FreeConnectionsAlert:
+            show(alert)
+
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")
@@ -375,6 +378,17 @@ extension IosAlertService: CoreAlertService {
         controller.role = alert.role
         controller.safariServiceFactory = factory
         windowService.present(modal: controller)
+    }
+    
+    private func show(_ alert: FreeConnectionsAlert) {
+        let upgradeAction: (() -> Void) = { [weak self] in
+            self?.windowService.dismissModal {
+                self?.planService.presentPlanSelection()
+            }
+        }
+
+        let upsellViewController = modalsFactory.freeConnectionsViewController(countries: alert.countries, upgradeAction: upgradeAction)
+        windowService.present(modal: upsellViewController)
     }
 }
 

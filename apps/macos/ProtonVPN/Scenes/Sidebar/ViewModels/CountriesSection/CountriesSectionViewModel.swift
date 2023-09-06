@@ -138,8 +138,8 @@ class CountriesSectionViewModel {
         alertService.push(alert: FreeConnectionsAlert(countries: freeCountries))
     }
 
-    private var freeCountries: [(String, NSImage)] {
-        return serverGroups.compactMap { (serverGroup: ServerGroup) -> (String, NSImage)? in
+    private var freeCountries: [(String, NSImage?)] {
+        return serverGroups.compactMap { (serverGroup: ServerGroup) -> (String, NSImage?)? in
             switch serverGroup.kind {
             case .country(let countryModel):
                 guard countryModel.lowestTier == 0 else {
@@ -147,7 +147,7 @@ class CountriesSectionViewModel {
                 }
                 return (
                     LocalizationUtility.default.countryName(forCode: countryModel.countryCode) ?? LocalizedString.unavailable,
-                    AppTheme.Icon.flag(countryCode: countryModel.countryCode)!
+                    AppTheme.Icon.flag(countryCode: countryModel.countryCode)
                 )
             case .gateway:
                 return nil

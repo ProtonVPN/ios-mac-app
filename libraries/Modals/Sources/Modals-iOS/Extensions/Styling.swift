@@ -90,3 +90,19 @@ let footerStyle = concat(baseTextStyle, and: {
 let featureTextStyle = concat(baseTextStyle, and: {
     $0.font = .systemFont(ofSize: 15, weight: .regular)
 })
+
+let closeButtonStyle: (UIButton) -> Void = {
+    $0.titleLabel?.text = ""
+    $0.setTitleColor(colors.textAccent, for: .normal)
+    $0.tintColor = colors.text
+}
+
+let shevronStyle: (UIImageView) -> Void = {
+    $0.image = UIImage(systemName: "chevron.right")
+    $0.tintColor = colors.weakText
+}
+
+let smallFlagStyle: (UIImageView) -> Void = {
+    $0.layer.cornerRadius = 4
+    $0.layer.masksToBounds = true
+}

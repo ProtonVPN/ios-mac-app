@@ -1,5 +1,5 @@
 //
-//  Created on 2023-09-04.
+//  Created on 2023-09-06.
 //
 //  Copyright (c) 2023 Proton AG
 //
@@ -16,19 +16,27 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Cocoa
+import Foundation
+import UIKit
 import Modals
 
-class CountryCellView: NSCollectionViewItem {
+class CountryCellView: UICollectionViewCell {
 
-    @IBOutlet private weak var flagImageView: NSImageView!
-    @IBOutlet private weak var countryNameField: NSTextField!
+    static var identifier: String { return String(describing: self) }
 
-    static let cellIdentifier = NSUserInterfaceItemIdentifier("CountryCellView")
-    static let nib = NSNib.Name("CountryCellView")
+    @IBOutlet private weak var flagImageView: UIImageView!
+    @IBOutlet private weak var countryNameField: UILabel!
 
     public func setCountry(_ country: String, image: Image?) {
-        countryNameField.stringValue = country
+        countryNameField.text = country
         flagImageView.image = image
     }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        labelStyle(countryNameField)
+        smallFlagStyle(flagImageView)
+    }
+
 }

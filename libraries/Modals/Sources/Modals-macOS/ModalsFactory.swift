@@ -46,7 +46,7 @@ public struct ModalsFactory {
         return discourageSecureCoreViewController
     }
 
-    public func freeConnectionsViewController(countries: [(String, Image)], upgradeAction: (() -> Void)?) -> NSViewController {
+    public func freeConnectionsViewController(countries: [(String, Image?)], upgradeAction: (() -> Void)?) -> NSViewController {
         let controller = FreeConnectionsViewController()
         controller.onBannerPress = upgradeAction
         controller.countries = countries

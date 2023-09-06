@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="FreeConnectionsViewController" customModule="Modals_macOS">
             <connections>
+                <outlet property="bannerChevronView" destination="XKd-eM-NaW" id="EIs-nC-8Y1"/>
                 <outlet property="bannerImageView" destination="MGz-4V-h1c" id="PHS-Y5-abU"/>
                 <outlet property="bannerLabel" destination="4YX-to-Lwn" id="3qL-dF-Jla"/>
-                <outlet property="bannerShevronView" destination="XKd-eM-NaW" id="EIs-nC-8Y1"/>
                 <outlet property="countriesList" destination="od1-sm-9dG" id="bTv-kG-JIL"/>
                 <outlet property="countriesListLayout" destination="Nqn-0j-3ni" id="KiT-en-3SV"/>
                 <outlet property="descriptionLabel" destination="7yg-vE-lp5" id="g0t-5k-ndA"/>
@@ -125,7 +124,7 @@
                             <rect key="frame" x="16" y="104" width="368" height="48"/>
                             <clipView key="contentView" copiesOnScroll="NO" id="XSf-ix-2Te">
                                 <rect key="frame" x="0.0" y="0.0" width="368" height="48"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <collectionView id="od1-sm-9dG">
                                         <rect key="frame" x="0.0" y="0.0" width="368" height="158"/>

@@ -26,9 +26,9 @@ import AppKit
 public class FreeConnectionsAlert: SystemAlert {
 
     #if canImport(UIKit)
-    public typealias FreeCountriesArray = [(String, UIImage)]
+    public typealias FreeCountriesArray = [(String, UIImage?)]
     #elseif canImport(AppKit)
-    public typealias FreeCountriesArray = [(String, NSImage)]
+    public typealias FreeCountriesArray = [(String, NSImage?)]
     #endif
 
     public var title: String?
