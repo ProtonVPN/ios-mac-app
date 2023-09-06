@@ -186,7 +186,7 @@ final class ConnectionSettingsViewModel {
     // MARK: - Item counts
     
     var autoConnectItemCount: Int {
-        return availableProfiles.count + 1
+        return availableProfiles.count + 1 // Add one to account for the 'disabled' option
     }
     
     var quickConnectItemCount: Int {
@@ -481,6 +481,10 @@ final class ConnectionSettingsViewModel {
     }
 
     private func profileString(for index: Int) -> NSAttributedString {
+        guard availableProfiles.indices.contains(index) else {
+            log.error("Profile index (\(index)) out of bounds of available profiles array (\(availableProfiles.count).")
+            return .init()
+        }
         let profile = availableProfiles[index]
         let enabled = profile.accessTier <= userTier
         return concatenated(imageString: profile.profileIcon.attributedAttachment(), with: profile.name, enabled: enabled)
