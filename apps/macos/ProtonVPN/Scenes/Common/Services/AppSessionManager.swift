@@ -196,6 +196,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         propertiesManager.featureFlags = properties.clientConfig.featureFlags
         propertiesManager.maintenanceServerRefreshIntereval = properties.clientConfig.serverRefreshInterval
         propertiesManager.ratingSettings = properties.clientConfig.ratingSettings
+        @Dependency(\.serverChangeStorage) var storage
+        storage.config = properties.clientConfig.serverChangeConfig
         if propertiesManager.featureFlags.pollNotificationAPI {
             DispatchQueue.main.async { self.announcementRefresher.tryRefreshing() }
         }
