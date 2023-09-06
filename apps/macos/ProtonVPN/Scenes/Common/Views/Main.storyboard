@@ -167,18 +167,18 @@
                                         <rect key="frame" x="0.0" y="0.0" width="340" height="600"/>
                                         <subviews>
                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="PUh-5c-b8S">
-                                                <rect key="frame" x="0.0" y="0.0" width="340" height="326"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="340" height="350"/>
                                             </customView>
                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="0TS-Fg-7cD">
-                                                <rect key="frame" x="0.0" y="326" width="340" height="50"/>
+                                                <rect key="frame" x="0.0" y="350" width="340" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="t7J-Po-vJA"/>
                                                 </constraints>
                                             </customView>
                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="N6y-fY-SzI">
-                                                <rect key="frame" x="0.0" y="376" width="340" height="224"/>
+                                                <rect key="frame" x="0.0" y="400" width="340" height="200"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="224" id="rEx-Kr-Uoo"/>
+                                                    <constraint firstAttribute="height" constant="200" placeholder="YES" id="ZQy-jy-FKr"/>
                                                 </constraints>
                                             </customView>
                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="NYr-4L-3gi">

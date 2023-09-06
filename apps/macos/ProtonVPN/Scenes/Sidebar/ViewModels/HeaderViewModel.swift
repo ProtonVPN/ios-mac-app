@@ -312,7 +312,7 @@ final class HeaderViewModel {
         guard let server = appStateManager.activeConnection()?.server else {
             return nil
         }
-        return (short ? "\(server.load)%" : " \(Localizable.serverLoadPercentage(server.load))")
+        return (short ? "\(server.load)%" : Localizable.serverLoadPercentage(server.load))
             .styled(font: .themeFont(.small), alignment: .right)
     }
 }

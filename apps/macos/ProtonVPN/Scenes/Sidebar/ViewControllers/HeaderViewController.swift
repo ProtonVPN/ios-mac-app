@@ -35,22 +35,18 @@ final class HeaderViewController: NSViewController {
     @IBOutlet private weak var loadLabel: NSTextField!
     @IBOutlet private weak var loadIcon: LoadCircle!
     @IBOutlet private weak var speedLabel: NSTextField!
-    @IBOutlet private weak var spacerView: NSView!
     @IBOutlet private weak var connectButton: LargeConnectButton!
     @IBOutlet private weak var changeServerView: ChangeServerView!
+    @IBOutlet private weak var announcementsContainer: NSView!
     @IBOutlet private weak var announcementsButton: NSButton!
-    @IBOutlet private weak var loadLineHorizontalConstraint1: NSLayoutConstraint!
-    @IBOutlet private weak var loadLineHorizontalConstraint2: NSLayoutConstraint!
-    @IBOutlet private weak var loadLineHorizontalConstraint3: NSLayoutConstraint!
-    @IBOutlet private weak var loadLineHorizontalConstraint4: NSLayoutConstraint!
     @IBOutlet private weak var protocolLabel: NSTextField!
     @IBOutlet private weak var badgeView: NSView!
 
+    @IBOutlet private weak var loadLabelLoadCircleHorizontalSpacing: NSLayoutConstraint!
+    @IBOutlet private weak var ipLabelLoadLabelHorizontalSpacing: NSLayoutConstraint!
+    @IBOutlet private weak var ipLoadRowContainer: NSView!
+
     var announcementsButtonPressed: (() -> Void)?
-    
-    private var loadLineHorizontalConstraints: [NSLayoutConstraint] {
-        return [loadLineHorizontalConstraint1, loadLineHorizontalConstraint2, loadLineHorizontalConstraint3, loadLineHorizontalConstraint4]
-    }
     
     private var viewModel: HeaderViewModel!
     
@@ -119,15 +115,25 @@ final class HeaderViewController: NSViewController {
             flagView.backgroundImage = nil
         }
     }
+
+    private var horizontalSpaceAvailableForLoadLabel: CGFloat {
+        let widthOfOtherElements = ipLabel.intrinsicContentSize.width + loadIcon.intrinsicContentSize.width
+        let padding = ipLabelLoadLabelHorizontalSpacing.constant + loadLabelLoadCircleHorizontalSpacing.constant
+
+        return ipLoadRowContainer.bounds.width - widthOfOtherElements - padding
+    }
     
     private func setupLoad() {
         if viewModel.isConnected, let loadDescription = viewModel.loadLabel, let loadDescriptionShort = viewModel.loadLabelShort, let loadPercentage = viewModel.loadPercentage {
-            loadLabel.attributedStringValue = loadDescription // Preset with full description for `loadLineType` to work correctly
-            loadLabel.toolTip = ""
-            if loadLineType == .short {
+
+            if horizontalSpaceAvailableForLoadLabel < 10 + loadDescription.size().width {
                 loadLabel.attributedStringValue = loadDescriptionShort
                 loadLabel.toolTip = loadDescription.string
+            } else {
+                loadLabel.attributedStringValue = loadDescription
+                loadLabel.toolTip = ""
             }
+
             loadLabel.isHidden = false
             loadIcon.load = loadPercentage
             loadIcon.toolTip = loadDescription.string
@@ -165,7 +171,6 @@ final class HeaderViewController: NSViewController {
         }
 
         changeServerView.isHidden = !shouldShowChangeServer
-        spacerView.isHidden = shouldShowChangeServer
     }
     
     @objc private func quickConnectButtonAction() {
@@ -236,24 +241,6 @@ final class HeaderViewController: NSViewController {
     @IBAction private func announcementsButtonTapped(_ sender: Any) {
         announcementsButtonPressed?()
     }
-    
-    // MARK: Load line
-    
-    private enum LineType {
-        case full
-        case short
-    }
-    
-    private var loadLineType: LineType {
-        let margins = loadLineHorizontalConstraints.reduce(0.0) { $0 + $1.constant }
-        let width = margins + ipLabel.intrinsicContentSize.width + loadLabel.intrinsicContentSize.width + loadIcon.frame.width
-        
-        if width + 10 > self.view.frame.width {
-            return .short
-        }
-        return .full
-    }
-    
 }
 
 extension HeaderViewController: HeaderViewModelDelegate {
