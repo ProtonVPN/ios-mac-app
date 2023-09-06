@@ -2288,7 +2288,7 @@
 "upsell_vpn_accelerator_faster_servers" = "Access faster, less crowded servers.";
 
 /* Feature of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_increase_connection_speeds" = "Increase connection speeds by up to 400% with VPN Accelerator.";
+"upsell_vpn_accelerator_increase_connection_speeds" = "Increase connection speeds by up to 400%% with VPN Accelerator.";
 
 /* Feature of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_distant_servers" = "Improved speed and stability when connected to distant servers.";
@@ -2333,7 +2333,7 @@
 "upsell_countries_connect_to" = "Connect to %d countries";
 
 /* Feature of Country upsell modal */
-"upsell_countries_higher_speeds" = "Higher speeds (10 Gbps)";
+"upsell_countries_higher_speeds" = "Even higher VPN speed";
 
 /* Feature of Country upsell modal */
 "upsell_countries_money_back" = "30-day money back guarantee";
