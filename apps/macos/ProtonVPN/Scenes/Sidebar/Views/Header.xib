@@ -9,6 +9,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="HeaderViewController" customModule="ProtonVPN" customModuleProvider="target">
             <connections>
                 <outlet property="announcementsButton" destination="fAR-4v-fna" id="kns-tF-12g"/>
+                <outlet property="announcementsContainer" destination="TXs-PU-0oe" id="Dy9-md-q5V"/>
                 <outlet property="backgroundView" destination="DrJ-qH-FYo" id="TpY-7s-kjP"/>
                 <outlet property="badgeView" destination="xCw-cC-csI" id="FRC-SR-dwo"/>
                 <outlet property="changeServerView" destination="lM8-lh-NMo" id="RGe-eM-WRd"/>
@@ -16,14 +17,12 @@
                 <outlet property="flagView" destination="vZZ-88-17K" id="WiM-sj-Klm"/>
                 <outlet property="headerLabel" destination="8Rp-H8-tLg" id="3oY-yH-QrC"/>
                 <outlet property="ipLabel" destination="pHx-RQ-OMh" id="my1-mJ-i88"/>
+                <outlet property="ipLabelLoadLabelHorizontalSpacing" destination="X6o-5R-Nck" id="jcZ-q0-e61"/>
+                <outlet property="ipLoadRowContainer" destination="e1a-PB-Lwb" id="STt-uL-PoR"/>
                 <outlet property="loadIcon" destination="6Yt-JV-yHv" id="VZh-BN-j3N"/>
                 <outlet property="loadLabel" destination="OVs-pX-cwh" id="2lZ-W8-PDd"/>
-                <outlet property="loadLineHorizontalConstraint1" destination="LHV-JP-8bX" id="pfZ-m2-zqh"/>
-                <outlet property="loadLineHorizontalConstraint2" destination="eHN-FP-7sk" id="YNI-ck-46k"/>
-                <outlet property="loadLineHorizontalConstraint3" destination="VW3-Je-f0W" id="Nsy-FS-ofv"/>
-                <outlet property="loadLineHorizontalConstraint4" destination="Msp-Lg-Nn9" id="PZ9-db-PIk"/>
+                <outlet property="loadLabelLoadCircleHorizontalSpacing" destination="0hj-cB-hn0" id="dQ0-Cy-E0d"/>
                 <outlet property="protocolLabel" destination="7kf-gM-FN1" id="A4p-HK-Vs0"/>
-                <outlet property="spacerView" destination="oML-3w-WSJ" id="XJy-Wj-GS9"/>
                 <outlet property="speedLabel" destination="fcs-WH-EAh" id="qjT-Ap-JeE"/>
                 <outlet property="view" destination="c22-O7-iKe" id="zXf-hO-kwe"/>
             </connections>
@@ -31,66 +30,19 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="360" height="200"/>
+            <rect key="frame" x="0.0" y="0.0" width="432" height="224"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="DrJ-qH-FYo">
-                    <rect key="frame" x="0.0" y="0.0" width="360" height="200"/>
+                    <rect key="frame" x="0.0" y="0.0" width="432" height="224"/>
                     <subviews>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="vZZ-88-17K" customClass="FlagView" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="360" height="200"/>
+                            <rect key="frame" x="0.0" y="0.0" width="432" height="224"/>
                             <subviews>
-                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="lCW-hX-bS7">
-                                    <rect key="frame" x="0.0" y="0.0" width="360" height="200"/>
+                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="TXs-PU-0oe" userLabel="Announcements Button Container">
+                                    <rect key="frame" x="368" y="180" width="24" height="24"/>
                                     <subviews>
-                                        <textField horizontalHuggingPriority="248" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Rp-H8-tLg">
-                                            <rect key="frame" x="38" y="164" width="238" height="16"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Header label" id="C8N-wC-xAL">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pHx-RQ-OMh">
-                                            <rect key="frame" x="38" y="133" width="48" height="16"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="IP label" id="hF7-wr-klG">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="6Yt-JV-yHv" customClass="LoadCircle" customModule="ProtonVPN" customModuleProvider="target">
-                                            <rect key="frame" x="305" y="134" width="15" height="15"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="15" id="7qZ-W6-69f"/>
-                                                <constraint firstAttribute="height" constant="15" id="cje-p0-uMt"/>
-                                            </constraints>
-                                        </customView>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="fcs-WH-EAh">
-                                            <rect key="frame" x="246" y="105" width="76" height="16"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Speed label" id="5mN-MQ-Tgo">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="7kf-gM-FN1" userLabel="Protocol label">
-                                            <rect key="frame" x="38" y="105" width="88" height="16"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Protocol label" id="SYX-Qg-gCB" userLabel="Protocol label">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OVs-pX-cwh">
-                                            <rect key="frame" x="236" y="133" width="66" height="16"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Load label" id="jml-MJ-Fs6">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fAR-4v-fna" customClass="HoverDetectionButton" customModule="ProtonVPN" customModuleProvider="target">
-                                            <rect key="frame" x="287" y="153" width="38" height="36"/>
+                                        <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fAR-4v-fna" userLabel="Announcements Button" customClass="HoverDetectionButton" customModule="ProtonVPN" customModuleProvider="target">
+                                            <rect key="frame" x="-7" y="-7" width="38" height="36"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="24" id="SXN-7w-IkL"/>
                                                 <constraint firstAttribute="width" constant="24" id="Uno-Zf-iU5"/>
@@ -103,32 +55,140 @@
                                                 <action selector="announcementsButtonTapped:" target="-2" id="U92-dZ-uNt"/>
                                             </connections>
                                         </button>
-                                        <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xCw-cC-csI">
-                                            <rect key="frame" x="312" y="178" width="6" height="6"/>
+                                        <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xCw-cC-csI" userLabel="Badge View">
+                                            <rect key="frame" x="18" y="18" width="6" height="6"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="6" id="VKy-PG-iXE"/>
                                                 <constraint firstAttribute="width" constant="6" id="k6U-nK-p7Q"/>
                                             </constraints>
                                         </customView>
-                                        <stackView distribution="equalSpacing" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6hL-ew-rus">
-                                            <rect key="frame" x="40" y="5" width="280" height="88"/>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="xCw-cC-csI" firstAttribute="top" secondItem="TXs-PU-0oe" secondAttribute="top" id="CLh-Kk-7Qv"/>
+                                        <constraint firstAttribute="trailing" secondItem="fAR-4v-fna" secondAttribute="trailing" id="F8o-aK-Pk2"/>
+                                        <constraint firstAttribute="bottom" secondItem="fAR-4v-fna" secondAttribute="bottom" id="Pem-qy-SXa"/>
+                                        <constraint firstItem="fAR-4v-fna" firstAttribute="top" secondItem="TXs-PU-0oe" secondAttribute="top" id="d3J-nj-1Oi"/>
+                                        <constraint firstItem="fAR-4v-fna" firstAttribute="leading" secondItem="TXs-PU-0oe" secondAttribute="leading" id="mhy-rk-BcS"/>
+                                        <constraint firstAttribute="trailing" secondItem="xCw-cC-csI" secondAttribute="trailing" id="tpk-P0-SFI"/>
+                                    </constraints>
+                                </customView>
+                                <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AQL-gh-PKS" userLabel="Content Stack">
+                                    <rect key="frame" x="40" y="24" width="352" height="176"/>
+                                    <subviews>
+                                        <textField horizontalHuggingPriority="248" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Rp-H8-tLg">
+                                            <rect key="frame" x="-2" y="160" width="356" height="16"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Header label" id="C8N-wC-xAL">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k4L-AJ-zsC" userLabel="Info Stack">
+                                            <rect key="frame" x="0.0" y="104" width="352" height="40"/>
                                             <subviews>
-                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="oML-3w-WSJ" userLabel="Spacer View">
-                                                    <rect key="frame" x="140" y="88" width="0.0" height="0.0"/>
+                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="e1a-PB-Lwb" userLabel="Row Container">
+                                                    <rect key="frame" x="0.0" y="24" width="352" height="16"/>
+                                                    <subviews>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pHx-RQ-OMh">
+                                                            <rect key="frame" x="-2" y="0.0" width="48" height="16"/>
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="IP label" id="hF7-wr-klG">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OVs-pX-cwh">
+                                                            <rect key="frame" x="269" y="0.0" width="66" height="16"/>
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Load label" id="jml-MJ-Fs6">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="6Yt-JV-yHv" customClass="LoadCircle" customModule="ProtonVPN" customModuleProvider="target">
+                                                            <rect key="frame" x="337" y="1" width="15" height="15"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="15" id="7qZ-W6-69f"/>
+                                                                <constraint firstAttribute="height" constant="15" id="cje-p0-uMt"/>
+                                                            </constraints>
+                                                        </customView>
+                                                    </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" id="DBv-w7-2iL"/>
-                                                        <constraint firstAttribute="width" id="fmI-vI-KVb"/>
+                                                        <constraint firstItem="6Yt-JV-yHv" firstAttribute="leading" secondItem="OVs-pX-cwh" secondAttribute="trailing" constant="4" id="0hj-cB-hn0"/>
+                                                        <constraint firstAttribute="trailing" secondItem="6Yt-JV-yHv" secondAttribute="trailing" id="GrO-kd-d0P"/>
+                                                        <constraint firstAttribute="height" constant="16" id="Oqs-YA-FcO"/>
+                                                        <constraint firstItem="OVs-pX-cwh" firstAttribute="firstBaseline" secondItem="pHx-RQ-OMh" secondAttribute="firstBaseline" id="RhT-q0-8DU"/>
+                                                        <constraint firstItem="OVs-pX-cwh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pHx-RQ-OMh" secondAttribute="trailing" constant="4" id="X6o-5R-Nck"/>
+                                                        <constraint firstAttribute="bottom" secondItem="pHx-RQ-OMh" secondAttribute="bottom" id="XoE-WL-xjr"/>
+                                                        <constraint firstItem="pHx-RQ-OMh" firstAttribute="leading" secondItem="e1a-PB-Lwb" secondAttribute="leading" id="bOZ-Wc-H7R"/>
+                                                        <constraint firstItem="OVs-pX-cwh" firstAttribute="centerY" secondItem="6Yt-JV-yHv" secondAttribute="centerY" id="gGl-jc-eiS"/>
+                                                        <constraint firstItem="pHx-RQ-OMh" firstAttribute="top" secondItem="e1a-PB-Lwb" secondAttribute="top" id="mdL-rQ-j5P"/>
                                                     </constraints>
                                                 </customView>
+                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="RxP-I6-enJ" userLabel="Row Container">
+                                                    <rect key="frame" x="0.0" y="0.0" width="352" height="16"/>
+                                                    <subviews>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="7kf-gM-FN1" userLabel="Protocol label">
+                                                            <rect key="frame" x="-2" y="0.0" width="88" height="16"/>
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Protocol label" id="SYX-Qg-gCB" userLabel="Protocol label">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="fcs-WH-EAh">
+                                                            <rect key="frame" x="278" y="0.0" width="76" height="16"/>
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Speed label" id="5mN-MQ-Tgo">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="fcs-WH-EAh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="7kf-gM-FN1" secondAttribute="trailing" id="0vc-p3-mZt"/>
+                                                        <constraint firstAttribute="height" constant="16" id="67S-hb-miV"/>
+                                                        <constraint firstAttribute="trailing" secondItem="fcs-WH-EAh" secondAttribute="trailing" id="8vt-x7-iAm"/>
+                                                        <constraint firstItem="fcs-WH-EAh" firstAttribute="firstBaseline" secondItem="7kf-gM-FN1" secondAttribute="firstBaseline" id="GcD-RW-3lo"/>
+                                                        <constraint firstAttribute="bottom" secondItem="7kf-gM-FN1" secondAttribute="bottom" id="Mfj-eB-yNx"/>
+                                                        <constraint firstItem="7kf-gM-FN1" firstAttribute="top" secondItem="RxP-I6-enJ" secondAttribute="top" id="V1o-t7-NBZ"/>
+                                                        <constraint firstItem="7kf-gM-FN1" firstAttribute="leading" secondItem="RxP-I6-enJ" secondAttribute="leading" id="aD2-Fj-1k6"/>
+                                                    </constraints>
+                                                </customView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="e1a-PB-Lwb" secondAttribute="trailing" id="2V3-kF-3ut"/>
+                                                <constraint firstItem="e1a-PB-Lwb" firstAttribute="leading" secondItem="k4L-AJ-zsC" secondAttribute="leading" id="agZ-H1-unG"/>
+                                                <constraint firstItem="RxP-I6-enJ" firstAttribute="leading" secondItem="k4L-AJ-zsC" secondAttribute="leading" id="qMw-Oj-h3S"/>
+                                                <constraint firstAttribute="trailing" secondItem="RxP-I6-enJ" secondAttribute="trailing" id="yAc-K7-izd"/>
+                                            </constraints>
+                                            <visibilityPriorities>
+                                                <integer value="1000"/>
+                                                <integer value="1000"/>
+                                            </visibilityPriorities>
+                                            <customSpacing>
+                                                <real value="3.4028234663852886e+38"/>
+                                                <real value="3.4028234663852886e+38"/>
+                                            </customSpacing>
+                                        </stackView>
+                                        <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6hL-ew-rus" userLabel="Button Stack">
+                                            <rect key="frame" x="0.0" y="0.0" width="352" height="88"/>
+                                            <subviews>
+                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SOe-d7-1zi" userLabel="Quick Connect Button" customClass="LargeConnectButton" customModule="ProtonVPN" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="48" width="352" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="AEa-pU-xkl"/>
+                                                    </constraints>
+                                                    <buttonCell key="cell" type="bevel" title="Quick Connect" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="ZLJ-8p-gOe">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                </button>
                                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="lM8-lh-NMo" userLabel="Change Server View" customClass="ChangeServerView" customModule="ProtonVPN" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="48" width="280" height="32"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="352" height="40"/>
                                                     <subviews>
                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qHN-fG-6F5" userLabel="Change Server Button" customClass="ChangeServerButton" customModule="ProtonVPN" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="280" height="40"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="40" id="lvg-Va-FbR"/>
-                                                                <constraint firstAttribute="width" constant="280" id="u21-z4-x4h"/>
-                                                            </constraints>
+                                                            <rect key="frame" x="0.0" y="0.0" width="352" height="40"/>
                                                             <buttonCell key="cell" type="bevel" title="Change Server" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="1n5-0Z-y1h">
                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="system"/>
@@ -138,7 +198,7 @@
                                                             </connections>
                                                         </button>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bPy-Tx-9Dg" userLabel="Change Server Label">
-                                                            <rect key="frame" x="22" y="8" width="37" height="16"/>
+                                                            <rect key="frame" x="22" y="12" width="37" height="16"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="Jko-3s-FMy">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -146,7 +206,7 @@
                                                             </textFieldCell>
                                                         </textField>
                                                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4YB-eA-43C">
-                                                            <rect key="frame" x="199" y="8" width="16" height="16"/>
+                                                            <rect key="frame" x="271" y="12" width="16" height="16"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="Wgp-86-xFL"/>
                                                                 <constraint firstAttribute="width" constant="16" id="kgW-aY-t2M"/>
@@ -154,7 +214,7 @@
                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="VWU-qA-1IX"/>
                                                         </imageView>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Fu-NR-lBW" userLabel="Timer Label">
-                                                            <rect key="frame" x="221" y="8" width="37" height="16"/>
+                                                            <rect key="frame" x="293" y="12" width="37" height="16"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="p8m-Le-XQy">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -163,14 +223,16 @@
                                                         </textField>
                                                     </subviews>
                                                     <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="7gC-Zb-u30"/>
+                                                        <constraint firstItem="qHN-fG-6F5" firstAttribute="leading" secondItem="lM8-lh-NMo" secondAttribute="leading" id="8P8-wb-tfl"/>
                                                         <constraint firstItem="4YB-eA-43C" firstAttribute="centerY" secondItem="lM8-lh-NMo" secondAttribute="centerY" id="Cig-4O-XxF"/>
                                                         <constraint firstItem="bPy-Tx-9Dg" firstAttribute="centerY" secondItem="lM8-lh-NMo" secondAttribute="centerY" id="D3L-lN-SpZ"/>
+                                                        <constraint firstItem="qHN-fG-6F5" firstAttribute="top" secondItem="lM8-lh-NMo" secondAttribute="top" id="KC4-gA-CE7"/>
                                                         <constraint firstAttribute="trailing" secondItem="0Fu-NR-lBW" secondAttribute="trailing" constant="24" id="Sqg-lj-605"/>
                                                         <constraint firstAttribute="trailing" secondItem="qHN-fG-6F5" secondAttribute="trailing" id="VZh-c6-5Bg"/>
                                                         <constraint firstAttribute="bottom" secondItem="qHN-fG-6F5" secondAttribute="bottom" id="X5M-L6-wuL"/>
                                                         <constraint firstItem="bPy-Tx-9Dg" firstAttribute="leading" secondItem="lM8-lh-NMo" secondAttribute="leading" constant="24" id="bhe-nE-gZG"/>
                                                         <constraint firstItem="0Fu-NR-lBW" firstAttribute="centerY" secondItem="lM8-lh-NMo" secondAttribute="centerY" id="dLJ-vK-Mpq"/>
-                                                        <constraint firstItem="qHN-fG-6F5" firstAttribute="leading" secondItem="lM8-lh-NMo" secondAttribute="leading" id="hZm-vA-RsN"/>
                                                         <constraint firstItem="4YB-eA-43C" firstAttribute="trailing" secondItem="0Fu-NR-lBW" secondAttribute="leading" constant="-8" id="kQc-qv-tte"/>
                                                     </constraints>
                                                     <connections>
@@ -180,66 +242,48 @@
                                                         <outlet property="timerLabel" destination="0Fu-NR-lBW" id="oAa-FX-5bt"/>
                                                     </connections>
                                                 </customView>
-                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SOe-d7-1zi" userLabel="Quick Connect Button" customClass="LargeConnectButton" customModule="ProtonVPN" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="280" height="40"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="AEa-pU-xkl"/>
-                                                        <constraint firstAttribute="width" constant="280" id="SCJ-89-bLh"/>
-                                                    </constraints>
-                                                    <buttonCell key="cell" type="bevel" title="Quick Connect" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="ZLJ-8p-gOe">
-                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                        <font key="font" metaFont="system"/>
-                                                    </buttonCell>
-                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="88" id="8z6-tY-s6U"/>
+                                                <constraint firstAttribute="trailing" secondItem="SOe-d7-1zi" secondAttribute="trailing" id="8um-tT-sI9"/>
+                                                <constraint firstItem="SOe-d7-1zi" firstAttribute="leading" secondItem="6hL-ew-rus" secondAttribute="leading" id="PAJ-kg-owe"/>
+                                                <constraint firstAttribute="trailing" secondItem="lM8-lh-NMo" secondAttribute="trailing" id="SX4-GS-8CQ"/>
+                                                <constraint firstItem="lM8-lh-NMo" firstAttribute="leading" secondItem="6hL-ew-rus" secondAttribute="leading" id="tzZ-oq-NY0"/>
                                             </constraints>
                                             <visibilityPriorities>
-                                                <integer value="1000"/>
                                                 <integer value="1000"/>
                                                 <integer value="1000"/>
                                             </visibilityPriorities>
                                             <customSpacing>
                                                 <real value="3.4028234663852886e+38"/>
                                                 <real value="3.4028234663852886e+38"/>
-                                                <real value="3.4028234663852886e+38"/>
                                             </customSpacing>
                                         </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="xCw-cC-csI" firstAttribute="top" secondItem="fAR-4v-fna" secondAttribute="top" id="3B7-xc-bI6"/>
-                                        <constraint firstItem="OVs-pX-cwh" firstAttribute="centerY" secondItem="6Yt-JV-yHv" secondAttribute="centerY" id="3zp-b3-6YK"/>
-                                        <constraint firstItem="fcs-WH-EAh" firstAttribute="top" secondItem="OVs-pX-cwh" secondAttribute="bottom" constant="12" id="6N3-m3-ac2"/>
-                                        <constraint firstItem="7kf-gM-FN1" firstAttribute="centerY" secondItem="fcs-WH-EAh" secondAttribute="centerY" id="6j3-n3-g09"/>
-                                        <constraint firstItem="6hL-ew-rus" firstAttribute="top" secondItem="fcs-WH-EAh" secondAttribute="bottom" constant="12" id="DXq-la-6ub"/>
-                                        <constraint firstItem="7kf-gM-FN1" firstAttribute="leading" secondItem="pHx-RQ-OMh" secondAttribute="leading" id="HE9-sf-HP4"/>
-                                        <constraint firstItem="fAR-4v-fna" firstAttribute="leading" secondItem="8Rp-H8-tLg" secondAttribute="trailing" constant="20" id="Hfz-CV-4u0"/>
-                                        <constraint firstItem="fAR-4v-fna" firstAttribute="centerY" secondItem="8Rp-H8-tLg" secondAttribute="centerY" id="Ig1-au-MQr"/>
-                                        <constraint firstItem="8Rp-H8-tLg" firstAttribute="leading" secondItem="lCW-hX-bS7" secondAttribute="leading" constant="40" id="LHV-JP-8bX"/>
-                                        <constraint firstAttribute="trailing" secondItem="6Yt-JV-yHv" secondAttribute="trailing" constant="40" id="Msp-Lg-Nn9"/>
-                                        <constraint firstItem="6hL-ew-rus" firstAttribute="centerX" secondItem="lCW-hX-bS7" secondAttribute="centerX" id="NGw-bg-glw"/>
-                                        <constraint firstItem="pHx-RQ-OMh" firstAttribute="leading" secondItem="8Rp-H8-tLg" secondAttribute="leading" id="Rk2-u5-rkE"/>
-                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="8Rp-H8-tLg" secondAttribute="trailing" constant="40" id="VLa-dI-8bW"/>
-                                        <constraint firstItem="6Yt-JV-yHv" firstAttribute="leading" secondItem="OVs-pX-cwh" secondAttribute="trailing" constant="5" id="VW3-Je-f0W"/>
-                                        <constraint firstItem="fcs-WH-EAh" firstAttribute="trailing" secondItem="6hL-ew-rus" secondAttribute="trailing" id="YaP-fj-Fas"/>
-                                        <constraint firstItem="OVs-pX-cwh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pHx-RQ-OMh" secondAttribute="trailing" constant="5" id="eHN-FP-7sk"/>
-                                        <constraint firstItem="pHx-RQ-OMh" firstAttribute="top" secondItem="8Rp-H8-tLg" secondAttribute="bottom" constant="15" id="gjN-4O-sjH"/>
-                                        <constraint firstItem="fcs-WH-EAh" firstAttribute="trailing" secondItem="6Yt-JV-yHv" secondAttribute="trailing" id="hzV-kK-3gA"/>
-                                        <constraint firstItem="8Rp-H8-tLg" firstAttribute="top" secondItem="lCW-hX-bS7" secondAttribute="top" constant="20" id="mbb-Ev-QQp"/>
-                                        <constraint firstItem="6Yt-JV-yHv" firstAttribute="centerY" secondItem="pHx-RQ-OMh" secondAttribute="centerY" id="sro-hK-daz"/>
-                                        <constraint firstAttribute="trailing" secondItem="fAR-4v-fna" secondAttribute="trailing" constant="42" id="vL9-Em-rHF"/>
-                                        <constraint firstItem="xCw-cC-csI" firstAttribute="trailing" secondItem="fAR-4v-fna" secondAttribute="trailing" id="zyA-MX-m1Z"/>
+                                        <constraint firstItem="6hL-ew-rus" firstAttribute="leading" secondItem="AQL-gh-PKS" secondAttribute="leading" id="06L-nE-iKz"/>
+                                        <constraint firstItem="k4L-AJ-zsC" firstAttribute="leading" secondItem="AQL-gh-PKS" secondAttribute="leading" id="2Q8-j1-hyo"/>
+                                        <constraint firstAttribute="trailing" secondItem="6hL-ew-rus" secondAttribute="trailing" id="8Px-Mb-sBr"/>
+                                        <constraint firstAttribute="trailing" secondItem="k4L-AJ-zsC" secondAttribute="trailing" id="MZq-vz-zeg"/>
                                     </constraints>
-                                </customView>
+                                    <visibilityPriorities>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
+                                    </visibilityPriorities>
+                                    <customSpacing>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                    </customSpacing>
+                                </stackView>
                             </subviews>
                             <constraints>
-                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="340" id="6fG-F1-YDD"/>
-                                <constraint firstAttribute="bottom" secondItem="lCW-hX-bS7" secondAttribute="bottom" id="EfZ-Vm-wyi"/>
-                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="NKH-9d-jyx"/>
-                                <constraint firstItem="lCW-hX-bS7" firstAttribute="top" secondItem="vZZ-88-17K" secondAttribute="top" id="iIU-z4-iPF"/>
-                                <constraint firstItem="lCW-hX-bS7" firstAttribute="leading" secondItem="vZZ-88-17K" secondAttribute="leading" id="xTm-hK-bmB"/>
-                                <constraint firstAttribute="trailing" secondItem="lCW-hX-bS7" secondAttribute="trailing" id="zVq-a0-tps"/>
+                                <constraint firstItem="AQL-gh-PKS" firstAttribute="top" secondItem="vZZ-88-17K" secondAttribute="top" constant="24" id="0zK-Zm-dXX"/>
+                                <constraint firstAttribute="bottom" secondItem="AQL-gh-PKS" secondAttribute="bottom" constant="24" id="9NW-k7-C57"/>
+                                <constraint firstItem="TXs-PU-0oe" firstAttribute="top" secondItem="AQL-gh-PKS" secondAttribute="top" constant="-4" id="LkD-Lx-aRN"/>
+                                <constraint firstItem="AQL-gh-PKS" firstAttribute="trailing" secondItem="TXs-PU-0oe" secondAttribute="trailing" id="gXP-gp-M5H"/>
+                                <constraint firstAttribute="trailing" secondItem="AQL-gh-PKS" secondAttribute="trailing" constant="40" id="rLc-5s-9bj"/>
+                                <constraint firstItem="AQL-gh-PKS" firstAttribute="leading" secondItem="vZZ-88-17K" secondAttribute="leading" constant="40" id="syO-Cb-BhW"/>
                             </constraints>
                         </customView>
                     </subviews>
@@ -257,7 +301,7 @@
                 <constraint firstAttribute="trailing" secondItem="DrJ-qH-FYo" secondAttribute="trailing" id="iMt-W2-kjd"/>
                 <constraint firstItem="DrJ-qH-FYo" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="l1Q-im-NpL"/>
             </constraints>
-            <point key="canvasLocation" x="140" y="134"/>
+            <point key="canvasLocation" x="224" y="-153"/>
         </customView>
     </objects>
 </document>
