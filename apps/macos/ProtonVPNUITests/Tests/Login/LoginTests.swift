@@ -33,7 +33,7 @@ class LoginTests: ProtonVPNUITests {
     func testLoginWithIncorrectCredentials() {
         let username = "wrong_username"
         let userpassword = "wrong_password"
-        let errorMessage = "Incorrect login credentials. Please try again."
+        let errorMessage = "The password is not correct. Please try again with a different password."
             
         loginRobot
             .withEmptyFields()
