@@ -24,7 +24,7 @@ class ViewController: UITableViewController {
     
     let upsells: [(type: UpsellType, title: String)] = [
         (.allCountries(numberOfServers: 1300, numberOfCountries: 61), "All countries"),
-        (.country(countryFlag: UIImage(named: "Flag")!, numberOfDevices: 10, numberOfCountries: 61), "Countries"),
+        (.country(countryFlag: Asset.flagsUS.image, numberOfDevices: 10, numberOfCountries: 61), "Countries"),
         (.secureCore, "Secure Core"),
         (.netShield, "Net Shield"),
         (.safeMode, "Safe Mode"),
@@ -46,8 +46,8 @@ class ViewController: UITableViewController {
         (.pendingInvoicesReconnecting(fromServer: fromServer, toServer: toServer), "Pending Invoices Reconnecting"),
         (.pendingInvoices, "Pending Invoices")]
 
-    static let fromServer = ("US-CA#63", UIImage(named: "Flag")!)
-    static let toServer = ("US-CA#78", UIImage(named: "Flag")!)
+    static let fromServer = ("US-CA#63", Asset.flagsUS.image)
+    static let toServer = ("US-CA#78", Asset.flagsUS.image)
 
     let modalsFactory = ModalsFactory()
 
@@ -62,7 +62,7 @@ class ViewController: UITableViewController {
         case 3:
             return upgrades.count
         default:
-            return 1
+            return 2
         }
     }
     
@@ -75,9 +75,16 @@ class ViewController: UITableViewController {
         } else if indexPath.section == 1 {
             title = upsells[indexPath.row].title
         } else if indexPath.section == 2 {
-            title = "Discourage Secure Core"
+            if indexPath.row == 0 {
+                title = "Discourage Secure Core"
+            } else if indexPath.row == 1 {
+                title = "Free connections"
+            } else {
+                title = "-"
+            }
         } else if indexPath.section == 3 {
             title = upgrades[indexPath.row].title
+
         } else {
             title = ""
         }
@@ -98,11 +105,30 @@ class ViewController: UITableViewController {
             modalVC.delegate = self
             viewController = modalVC
         } else if indexPath.section == 2 {
-            let modalVC = modalsFactory.discourageSecureCoreViewController(onDontShowAgain: nil,
-                                                                           onActivate: nil,
-                                                                           onCancel: nil,
-                                                                           onLearnMore: nil)
-            viewController = modalVC
+            if indexPath.row == 0 {
+                let modalVC = modalsFactory.discourageSecureCoreViewController(
+                    onDontShowAgain: nil,
+                    onActivate: nil,
+                    onCancel: nil,
+                    onLearnMore: nil
+                )
+                viewController = modalVC
+            } else if indexPath.row == 1 {
+                viewController = modalsFactory.freeConnectionsViewController(
+                    countries: [
+                        ("Japan", Asset.flagsJP.image),
+                        ("Netherlands", Asset.flagsNL.image),
+                        ("Romania", Asset.flagsRO.image),
+                        ("United States", Asset.flagsUS.image),
+                        ("Poland", Asset.flagsPL.image),
+                    ],
+                    upgradeAction: {
+                        debugPrint("freeConnectionsViewController")
+                    }
+                )
+            } else {
+                fatalError()
+            }
         } else if indexPath.section == 3 {
             let modalVC = modalsFactory.userAccountUpdateViewController(viewModel: upgrades[indexPath.row].type,
                                                                         onPrimaryButtonTap: nil)
