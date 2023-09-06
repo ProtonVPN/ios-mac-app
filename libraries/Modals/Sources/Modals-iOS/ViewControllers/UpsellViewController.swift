@@ -38,6 +38,7 @@ public final class UpsellViewController: UIViewController {
 
     // MARK: Outlets
 
+    @IBOutlet private weak var gradientView: UIView!
     @IBOutlet private weak var featureView: UIView!
     @IBOutlet private weak var scrollView: CenteringScrollView!
     @IBOutlet private weak var getPlusButton: UIButton!
@@ -62,6 +63,7 @@ public final class UpsellViewController: UIViewController {
     }
 
     private func setupUI() {
+        addGradient()
         baseViewStyle(view)
         actionButtonStyle(getPlusButton)
         actionTextButtonStyle(useFreeButton)
@@ -85,6 +87,13 @@ public final class UpsellViewController: UIViewController {
         useFreeButton.accessibilityIdentifier = "UseFreeButton"
         getPlusButton.accessibilityIdentifier = "GetPlusButton"
         titleLabel.accessibilityIdentifier = "TitleLabel"
+    }
+
+    func addGradient() {
+        guard upsellType?.shouldAddGradient() ?? false else { return }
+        let gradientLayer = CAGradientLayer.gradientLayer(in: gradientView.frame)
+        gradientLayer.opacity = 0.4
+        gradientView.layer.addSublayer(gradientLayer)
     }
 
     func setupFeatures() {
@@ -167,5 +176,21 @@ private extension UIImage {
         let mergedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return mergedImage
+    }
+}
+
+private extension CAGradientLayer {
+    static func gradientLayer(in frame: CGRect) -> Self {
+        let layer = Self()
+        layer.colors = [UIColor(red: 17.0/255.0,
+                                green: 216.0/255.0,
+                                blue: 204.0/255.0,
+                                alpha: 1).cgColor,
+                        UIColor(red: 110.0/255.0,
+                                green: 75.0/255.0,
+                                blue: 255.0/255.0,
+                                alpha: 0).cgColor]
+        layer.frame = frame
+        return layer
     }
 }

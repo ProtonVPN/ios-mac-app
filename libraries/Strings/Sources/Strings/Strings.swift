@@ -1858,7 +1858,7 @@ public enum Localizable {
   /// Feature of Countries upsell modal
   public static var upsellCountriesGeoblockedContent: String { return Localizable.tr("Localizable", "upsell_countries_geoblocked_content", fallback: "Access geoblocked content") }
   /// Feature of Country upsell modal
-  public static var upsellCountriesHigherSpeeds: String { return Localizable.tr("Localizable", "upsell_countries_higher_speeds", fallback: "Higher speeds (10 Gbps)") }
+  public static var upsellCountriesHigherSpeeds: String { return Localizable.tr("Localizable", "upsell_countries_higher_speeds", fallback: "Even higher VPN speed") }
   /// Feature of Country upsell modal
   public static var upsellCountriesMoneyBack: String { return Localizable.tr("Localizable", "upsell_countries_money_back", fallback: "30-day money back guarantee") }
   /// Feature of Country upsell modal
@@ -1890,7 +1890,7 @@ public enum Localizable {
   /// Feature of VPN Accelerator upsell modal
   public static var upsellVpnAcceleratorFasterServers: String { return Localizable.tr("Localizable", "upsell_vpn_accelerator_faster_servers", fallback: "Access faster, less crowded servers.") }
   /// Feature of VPN Accelerator upsell modal
-  public static var upsellVpnAcceleratorIncreaseConnectionSpeeds: String { return Localizable.tr("Localizable", "upsell_vpn_accelerator_increase_connection_speeds", fallback: "Increase connection speeds by up to 400% with VPN Accelerator.") }
+  public static var upsellVpnAcceleratorIncreaseConnectionSpeeds: String { return Localizable.tr("Localizable", "upsell_vpn_accelerator_increase_connection_speeds", fallback: "Increase connection speeds by up to 400%% with VPN Accelerator.") }
   /// Title of VPN Accelerator upsell modal
   public static var upsellVpnAcceleratorTitle: String { return Localizable.tr("Localizable", "upsell_vpn_accelerator_title", fallback: "Browse at even higher speeds (up to 10 Gbps)") }
   /// Use coupon

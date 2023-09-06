@@ -27,6 +27,7 @@ import Strings
 
 public final class UpsellViewController: NSViewController {
 
+    @IBOutlet var gradientView: NSView!
     @IBOutlet private weak var imageView: NSImageView!
     @IBOutlet private weak var flagView: NSImageView!
     @IBOutlet private weak var titleLabel: NSTextField!
@@ -56,10 +57,19 @@ public final class UpsellViewController: NSViewController {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
+        addGradient()
         upgradeButton.title = Localizable.modalsGetPlus
         setupSubviews()
         setupFeatures()
         upgradeButton.setAccessibilityIdentifier("ModalUpgradeButton")
+    }
+
+    func addGradient() {
+        guard upsellType?.shouldAddGradient() ?? false else { return }
+        let gradientLayer = CAGradientLayer.gradientLayer(in: gradientView.bounds)
+        gradientLayer.opacity = 0.4
+        gradientView.wantsLayer = true
+        gradientView.layer?.addSublayer(gradientLayer)
     }
 
     func setupSubviews() {
@@ -107,5 +117,21 @@ public final class UpsellViewController: NSViewController {
     @IBAction private func upgrade(_ sender: Any) {
         upgradeAction?()
         dismiss(nil)
+    }
+}
+
+private extension CAGradientLayer {
+    static func gradientLayer(in frame: CGRect) -> Self {
+        let layer = Self()
+        layer.colors = [NSColor(red: 110.0/255.0,
+                                green: 75.0/255.0,
+                                blue: 255.0/255.0,
+                                alpha: 0).cgColor,
+                        NSColor(red: 17.0/255.0,
+                                green: 216.0/255.0,
+                                blue: 204.0/255.0,
+                                alpha: 1).cgColor]
+        layer.frame = frame
+        return layer
     }
 }

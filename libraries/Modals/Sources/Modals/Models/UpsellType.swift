@@ -164,4 +164,13 @@ public enum UpsellType {
             return nil
         }
     }
+
+    public func shouldAddGradient() -> Bool {
+        switch self {
+        case .noLogs:
+            return false
+        default:
+            return true
+        }
+    }
 }
