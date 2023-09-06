@@ -63,6 +63,10 @@ public struct ClientConfig {
     }
 }
 
+/// Encapsulates the three server change config properties.
+///
+/// - Note: The response for `vpn/v2/clientconfig` does not encapsulate these properties, so it should be decoded directly
+/// without using a container.
 public struct ServerChangeConfig: Codable, DefaultableProperty {
     let changeServerAttemptLimit: Int
     let changeServerShortDelayInSeconds: Int
@@ -84,13 +88,5 @@ public struct ServerChangeConfig: Codable, DefaultableProperty {
             changeServerShortDelayInSeconds: 90,
             changeServerLongDelayInSeconds: 1200
         )
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        changeServerAttemptLimit = try container.decode(Int.self, forKey: .changeServerAttemptLimit)
-        changeServerShortDelayInSeconds = try container.decode(Int.self, forKey: .changeServerShortDelayInSeconds)
-        changeServerLongDelayInSeconds = try container.decode(Int.self, forKey: .changeServerLongDelayInSeconds)
     }
 }

@@ -66,6 +66,7 @@ extension ClientConfigResponse: Codable {
 
         let smartProtocolConfig = try container.decode(SmartProtocolConfig.self, forKey: .smartProtocol)
         let ratingSettings = try container.decodeIfPresent(RatingSettings.self, forKey: .ratingSettings) ?? RatingSettings()
+        // decoded directly from the parent object without a container. See `ServerChangeConfig` docs for more info
         let serverChangeConfig = (try? ServerChangeConfig(from: decoder)) ?? ServerChangeConfig()
 
         clientConfig = ClientConfig(
@@ -86,6 +87,8 @@ extension ClientConfigResponse: Codable {
         try container.encode(clientConfig.serverRefreshInterval, forKey: .serverRefreshInterval)
         try container.encode(clientConfig.smartProtocolConfig, forKey: .smartProtocol)
         try container.encode(clientConfig.ratingSettings, forKey: .ratingSettings)
+        // encoded directly into the parent object without a container. See `ServerChangeConfig` docs for more info
+        try clientConfig.serverChangeConfig.encode(to: encoder)
 
         let defaultPorts = [
             ProtocolType.WireGuard: [
