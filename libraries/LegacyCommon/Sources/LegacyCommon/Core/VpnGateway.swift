@@ -174,7 +174,7 @@ public class VpnGateway: VpnGatewayProtocol {
 
     private let connectionIntercepts: [VpnConnectionInterceptPolicyItem]
 
-    @Dependency(\.notificationCenter) var notificationCenter
+    var notificationCenter: NotificationCenter = .default
 
     public typealias Factory = VpnApiServiceFactory &
         AppStateManagerFactory &
@@ -538,6 +538,7 @@ public class VpnGateway: VpnGatewayProtocol {
         serverTierChecker.notifyResolutionUnavailable(forSpecificCountry: forSpecificCountry, type: type, reason: reason)
     }
 
+    // swiftlint:disable function_body_length function_parameter_count
     /// Determine all of the different features we want to use for the connection, and then go on to the next connection step.
     ///
     /// Gathers the connection protocol (including smart protocol details) and kill switch setting. According to these set values and the
@@ -608,6 +609,7 @@ public class VpnGateway: VpnGatewayProtocol {
             }
         }
     }
+    // swiftlint:enable function_body_length function_parameter_count
 
     /// - Returns: Whether or not the given policy changed connection settings.
     private func applyInterceptPolicy(
