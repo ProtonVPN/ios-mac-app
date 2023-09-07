@@ -26,7 +26,6 @@ public struct ConnectionConfiguration: Codable, Identifiable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.id = try container.decode(UUID.self, forKey: CodingKeys.id)
         self.server = try container.decode(ServerModel.self, forKey: CodingKeys.server)
         self.serverIp = try container.decode(ServerIp.self, forKey: CodingKeys.serverIp)
         self.vpnProtocol = try container.decode(VpnProtocol.self, forKey: CodingKeys.vpnProtocol)
@@ -34,6 +33,7 @@ public struct ConnectionConfiguration: Codable, Identifiable {
         self.ports = try container.decode([Int].self, forKey: CodingKeys.ports)
         self.safeMode = try container.decodeIfPresent(Bool.self, forKey: CodingKeys.safeMode)
         // This can be missing from JSON if config was saved with older app version. Set it to default in that case.
+        self.id = (try container.decodeIfPresent(UUID.self, forKey: CodingKeys.id)) ?? UUID()
         self.natType = try container.decodeIfPresent(NATType.self, forKey: .natType) ?? NATType.default
         self.intent = try container.decodeIfPresent(ConnectionRequestType.self, forKey: CodingKeys.intent)
     }
