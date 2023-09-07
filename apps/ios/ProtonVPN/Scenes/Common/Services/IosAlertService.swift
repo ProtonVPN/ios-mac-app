@@ -393,11 +393,10 @@ extension IosAlertService: UpsellViewControllerDelegate {
         windowService.dismissModal { }
     }
 
-    func userDidTapNext(upsell: UpsellViewController?) {
-        windowService.dismissModal { [weak self] in
-            if let id = upsell?.id, let alert = self?.upsellAlerts[id] {
-                alert.continueAction()
-            }
+    func userDidTapNext(upsell: UpsellViewController) {
+        let alert = upsellAlerts[upsell.id] // Hold onto alert reference before its removed from `upsellAlerts` on disappear
+        windowService.dismissModal { [alert] in
+            alert?.continueAction()
         }
     }
 

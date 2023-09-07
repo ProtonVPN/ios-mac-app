@@ -234,7 +234,7 @@ extension OnboardingCoordinator: UpsellViewControllerDelegate {
         showGetPlus()
     }
 
-    public func userDidTapNext(upsell: UpsellViewController?) {
+    public func userDidTapNext(upsell: UpsellViewController) {
         showConnectionSetup()
     }
 
