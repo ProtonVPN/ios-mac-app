@@ -1,5 +1,6 @@
 import Modals
 import UIKit
+import SwiftUI
 
 public struct ModalsFactory {
 
@@ -19,6 +20,10 @@ public struct ModalsFactory {
         let upsell = upsellStoryboard.instantiate(controllerType: UpsellViewController.self)
         upsell.upsellType = upsellType
         return upsell
+    }
+
+    public func whatsNewViewController() -> UIViewController {
+        UIHostingController(rootView: WhatsNewView())
     }
 
     public func discourageSecureCoreViewController(onDontShowAgain: ((Bool) -> Void)?, onActivate: (() -> Void)?, onCancel: (() -> Void)?, onLearnMore: (() -> Void)?) -> UIViewController {

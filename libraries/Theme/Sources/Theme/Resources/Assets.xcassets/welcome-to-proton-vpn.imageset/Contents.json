@@ -1,0 +1,20 @@
+{
+  "images" : [
+    {
+      "filename" : "welcome-to-proton-vpn.svg",
+      "idiom" : "universal"
+    },
+    {
+      "filename" : "welcome-to-proton-vpn.pdf",
+      "idiom" : "mac"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true,
+    "template-rendering-intent" : "original"
+  }
+}

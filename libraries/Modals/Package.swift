@@ -24,7 +24,8 @@ let package = Package(
         .package(path: "../Strings"),
         .package(name: "Overture", url: "https://github.com/pointfreeco/swift-overture", .exact("0.5.0")),
         .package(path: "../Theme"),
-        .package(path: "../Ergonomics")
+        .package(path: "../Ergonomics"),
+        .package(path: "../SharedViews")
     ],
     targets: [
         .target(
@@ -40,12 +41,12 @@ let package = Package(
         ),
         .target(
             name: "Modals-iOS",
-            dependencies: ["Modals", "Theme", "Ergonomics"],
+            dependencies: ["Modals", "Theme", "Ergonomics", "SharedViews"],
             resources: []
         ),
         .target(
             name: "Modals-macOS",
-            dependencies: ["Modals", "Theme", "Ergonomics"],
+            dependencies: ["Modals", "Theme", "Ergonomics", "SharedViews"],
             resources: []
         ),
         .testTarget(

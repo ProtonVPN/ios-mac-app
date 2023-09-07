@@ -26,6 +26,8 @@ import SwiftUI
 import BugReport
 import AppKit
 import PMLogger
+import Strings
+import Modals_macOS
 
 protocol WindowServiceFactory {
     func makeWindowService() -> WindowService
@@ -49,6 +51,7 @@ protocol WindowService: WindowControllerDelegate {
     func openSettingsWindow(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, accountViewModel: AccountViewModel, couponViewModel: CouponViewModel)
     func openProfilesWindow(viewModel: ProfilesContainerViewModel)
     func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService)
+    func openWhatsNewWindow()
     func openSystemExtensionGuideWindow(cancelledHandler: @escaping () -> Void)
     func openSubuserAlertWindow(alert: SubuserWithoutConnectionsAlert)
     
@@ -215,6 +218,17 @@ class WindowServiceImplementation: WindowService {
         activeWindowControllers.insert(windowController)
         windowController.showWindow(self)
     }
+
+    func openWhatsNewWindow() {
+        let viewController = ModalsFactory.whatsNewViewController() { [weak self] in
+            self?.closeWindow(withController: ModalWindowController.self)
+        }
+
+        let windowController = ModalWindowController(viewController: viewController)
+        windowController.delegate = self
+        activeWindowControllers.insert(windowController)
+        windowController.showWindow(self)
+    }
     
     func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService) {
         NSApp.setActivationPolicy(.regular)
@@ -224,11 +238,12 @@ class WindowServiceImplementation: WindowService {
         
         let vc = bugReportCreator.createBugReportViewController(delegate: manager, colors: Colors())
         manager.closeBugReportHandler = { [weak self] in
-            self?.closeWindow(withController: ReportBugWindowController.self)
+            self?.closeWindow(withController: ModalWindowController.self)
         }
         viewController = vc
+        viewController.title = Localizable.reportBug
 
-        let windowController = ReportBugWindowController(viewController: viewController)
+        let windowController = ModalWindowController(viewController: viewController)
         windowController.delegate = self
         activeWindowControllers.insert(windowController)
         windowController.showWindow(self)

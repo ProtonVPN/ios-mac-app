@@ -701,6 +701,7 @@ public enum Asset {
   public static let disconnected = ImageAsset(name: "disconnected")
   public static let emptyIcon = ImageAsset(name: "empty_icon")
   public static let idle = ImageAsset(name: "idle")
+  public static let welcomeToProtonVpn = ImageAsset(name: "welcome-to-proton-vpn")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 

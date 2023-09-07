@@ -2344,6 +2344,21 @@
 /* Feature of Country upsell modal */
 "upsell_country_feature_subtitle" =  "Unlock country selection with VPN Plus";
 
+/* Title of the "What's new" screen */
+"modals_whats_new" = "What’s new";
+
+/* Title of the first section of the "What's new" screen */
+"modals_free_countries" = "New Free countries";
+
+/* Description of the first section of the "What's new" screen */
+"modals_new_servers" = "There are now Free servers in Poland and Romania.";
+
+/* Title of the second section of the "What's new" screen */
+"modals_server_selection" = "Changes to server selection";
+
+/* Description of the second section of the "What's new" screen */
+"modals_server_crowding" = "To prevent server crowding and ensure that everyone has access to fast and secure browsing, we removed manual country selection and made major improvements to automatic server selection.";
+
 // MARK: Onboarding
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */

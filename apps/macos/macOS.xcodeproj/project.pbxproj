@@ -140,7 +140,7 @@
 		D57597C123B10C2E002D6631 /* WindowMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57597C023B10C2E002D6631 /* WindowMenuController.swift */; };
 		D5906F1222D36035001BC074 /* AccountPlan+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5906F1122D36035001BC074 /* AccountPlan+Extension.swift */; };
 		D5911709229F9574005829DA /* ProtonVPNUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5911708229F9574005829DA /* ProtonVPNUITests.swift */; };
-		D5A8813722CF282E009B63D1 /* ReportBugWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8813522CF282E009B63D1 /* ReportBugWindowController.swift */; };
+		D5A8813722CF282E009B63D1 /* ModalWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8813522CF282E009B63D1 /* ModalWindowController.swift */; };
 		D5AC137A23794B2900244066 /* text-template.html in Resources */ = {isa = PBXBuildFile; fileRef = D5AC137923794B2900244066 /* text-template.html */; };
 		D5AC137C23795B8100244066 /* AcknowledgementsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AC137B23795B8100244066 /* AcknowledgementsWindowController.swift */; };
 		D5AC137E23795BD100244066 /* AcknowledgementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AC137D23795BD100244066 /* AcknowledgementsViewController.swift */; };
@@ -678,7 +678,7 @@
 		D5911706229F9574005829DA /* ProtonVPNmacOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtonVPNmacOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5911708229F9574005829DA /* ProtonVPNUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNUITests.swift; sourceTree = "<group>"; };
 		D591170A229F9574005829DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D5A8813522CF282E009B63D1 /* ReportBugWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBugWindowController.swift; sourceTree = "<group>"; };
+		D5A8813522CF282E009B63D1 /* ModalWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalWindowController.swift; sourceTree = "<group>"; };
 		D5AC137923794B2900244066 /* text-template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "text-template.html"; sourceTree = "<group>"; };
 		D5AC137B23795B8100244066 /* AcknowledgementsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsWindowController.swift; sourceTree = "<group>"; };
 		D5AC137D23795BD100244066 /* AcknowledgementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsViewController.swift; sourceTree = "<group>"; };
@@ -2432,7 +2432,7 @@
 		F36ECE3A2611E17B0089B898 /* Windows */ = {
 			isa = PBXGroup;
 			children = (
-				D5A8813522CF282E009B63D1 /* ReportBugWindowController.swift */,
+				D5A8813522CF282E009B63D1 /* ModalWindowController.swift */,
 			);
 			path = Windows;
 			sourceTree = "<group>";
@@ -3031,7 +3031,6 @@
 				E187021E20E26201000521AC /* StatusMenuProfileViewItem.xib in Resources */,
 				EEF7814B1F1A701900E77B59 /* CountriesSection.xib in Resources */,
 				667E0E922A4EE2DF00EE83ED /* SSOWebViewController.xib in Resources */,
-				D557D580264AC337007E4396 /* Intents.strings in Resources */,
 				EE343B791F33AF080052C6C4 /* SecureCoreWarning.xib in Resources */,
 				F3021DA925E9508500EF73A1 /* TroubleshootingRowItem.xib in Resources */,
 				42BEF97126319ADC009180A7 /* StreamingServicesOverlayViewController.xib in Resources */,
@@ -3328,7 +3327,7 @@
 				E1420A71209B56A600697461 /* ConnectionSettingsViewController.swift in Sources */,
 				EE5CF7721F4DE7E80002BBF3 /* FirstLaunchRoutine.swift in Sources */,
 				E5FF89662A810046002B4A49 /* SideBarItemView.swift in Sources */,
-				D5A8813722CF282E009B63D1 /* ReportBugWindowController.swift in Sources */,
+				D5A8813722CF282E009B63D1 /* ModalWindowController.swift in Sources */,
 				EE2FE5951F5ED5BF00ABA7DE /* DisablingView.swift in Sources */,
 				4CA7BA4F2965788B0001C7E7 /* PopUpButtonItemViewModel.swift in Sources */,
 				E9E5F98427C667170068309F /* AppCertificateRefreshManager.swift in Sources */,
