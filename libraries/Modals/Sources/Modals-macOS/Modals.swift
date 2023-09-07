@@ -19,6 +19,7 @@
 import Foundation
 import Modals
 import AppKit
+import SwiftUI
 
 public struct ModalsFactory {
 
@@ -29,6 +30,10 @@ public struct ModalsFactory {
         upsell.upsellType = upsellType
         upsell.upgradeAction = upgradeAction
         return upsell
+    }
+
+    static public func whatsNewViewController(dismiss: @escaping () -> Void) -> NSViewController {
+        NSHostingController(rootView: WhatsNewView(dismiss: dismiss))
     }
 
     static public func discourageSecureCoreViewController(onDontShowAgain: ((Bool) -> Void)?, onActivate: (() -> Void)?, onCancel: (() -> Void)?, onLearnMore: (() -> Void)?) -> NSViewController {

@@ -17,7 +17,9 @@ let package = Package(
     ],
     dependencies: [
         // Local
+        .package(path: "../../external/protoncore"),
         .package(path: "../Theme"),
+        .package(path: "../Ergonomics"),
         .package(path: "../NEHelper"),
         .package(path: "../Strings"),
         
@@ -31,7 +33,9 @@ let package = Package(
         .target(
             name: "SharedViews",
             dependencies: [
+                .core(module: "Utilities"),
                 "Theme",
+                "Ergonomics",
                 "Strings",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
@@ -42,3 +46,9 @@ let package = Package(
         ),
     ]
 )
+
+extension PackageDescription.Target.Dependency {
+    static func core(module: String) -> Self {
+        .product(name: "ProtonCore\(module)", package: "protoncore")
+    }
+}

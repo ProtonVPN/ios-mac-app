@@ -1713,8 +1713,12 @@ public enum Localizable {
   public static var modalsDiscourageSecureCoreSubtitle: String { return Localizable.tr("Localizable", "modals_discourage_secure_core_subtitle", fallback: "Secure Core offers the highest level of security and privacy, but it may reduce your internet speed. If you need more performance, you can disable Secure Core.") }
   /// Title of the Secure Core discouragement screen
   public static var modalsDiscourageSecureCoreTitle: String { return Localizable.tr("Localizable", "modals_discourage_secure_core_title", fallback: "A note about speed...") }
+  /// Title of the first section of the "What's new" screen
+  public static var modalsFreeCountries: String { return Localizable.tr("Localizable", "modals_free_countries", fallback: "New Free countries") }
   /// Upgrade plan button title
   public static var modalsGetPlus: String { return Localizable.tr("Localizable", "modals_get_plus", fallback: "Upgrade") }
+  /// Description of the first section of the "What's new" screen
+  public static var modalsNewServers: String { return Localizable.tr("Localizable", "modals_new_servers", fallback: "There are now Free servers in Poland and Romania.") }
   /// Learn more of the No Logs screen
   public static var modalsNoLogsExternalAudit: String { return Localizable.tr("Localizable", "modals_no_logs_external_audit", fallback: "Proton VPN's strict no-log policy is certified by an external audit.") }
   /// Feature of the No Logs screen
@@ -1725,6 +1729,10 @@ public enum Localizable {
   public static var modalsNoLogsThirdParties: String { return Localizable.tr("Localizable", "modals_no_logs_third_parties", fallback: "We do not share any data with third parties") }
   /// Title of the No Logs screen
   public static var modalsNoLogsTitle: String { return Localizable.tr("Localizable", "modals_no_logs_title", fallback: "No logs and Swiss-based") }
+  /// Description of the second section of the "What's new" screen
+  public static var modalsServerCrowding: String { return Localizable.tr("Localizable", "modals_server_crowding", fallback: "To prevent server crowding and ensure that everyone has access to fast and secure browsing, we removed manual country selection and made major improvements to automatic server selection.") }
+  /// Title of the second section of the "What's new" screen
+  public static var modalsServerSelection: String { return Localizable.tr("Localizable", "modals_server_selection", fallback: "Changes to server selection") }
   /// Feature of the All Countries upsell screen
   public static var modalsUpsellAllCountriesFeatureHighSpeed: String { return Localizable.tr("Localizable", "modals_upsell_all_countries_feature_highSpeed", fallback: "Browse at the highest speeds (10 Gbps)") }
   /// Plural format key: "%#@VARIABLE@"
@@ -1771,6 +1779,8 @@ public enum Localizable {
   public static var modalsUpsellSecureCoreTitle: String { return Localizable.tr("Localizable", "modals_upsell_secure_core_title", fallback: "Double the encryption with Secure Core") }
   /// Dismiss upsell screen button title
   public static var modalsUpsellStayFree: String { return Localizable.tr("Localizable", "modals_upsell_stay_free", fallback: "Not now") }
+  /// Title of the "What's new" screen
+  public static var modalsWhatsNew: String { return Localizable.tr("Localizable", "modals_whats_new", fallback: "What’s new") }
   /// The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked
   public static var netshieldStatsHintAds: String { return Localizable.tr("Localizable", "netshield_stats_hint_ads", fallback: "Advertisement websites use cookies and trackers to target you.") }
   /// The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved

@@ -180,11 +180,16 @@ class NavigationService {
     func handleSilentLoginFailure() {
         showLogIn()
     }
-    
+
     func showReportBug() {
-        windowService.closeIfPresent(windowController: ReportBugWindowController.self)
+        windowService.closeIfPresent(windowController: ModalWindowController.self)
         let viewModel = factory.makeReportBugViewModel()
         windowService.openReportBugWindow(viewModel: viewModel, alertService: alertService)
+    }
+
+    func showWhatsNew() {
+        windowService.closeIfPresent(windowController: ModalWindowController.self)
+        windowService.openWhatsNewWindow()
     }
 }
 
