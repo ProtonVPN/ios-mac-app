@@ -130,7 +130,7 @@ class CountriesSectionViewModel {
         return KillSwitchDropdownPresenter(factory)
     }
     
-    @Dependency(\.notificationCenter) var notificationCenter
+    var notificationCenter: NotificationCenter = .default
     private var secureCoreState: Bool
     private var serverGroups: [ServerGroup] = []
     private var data: [CellModel] = []

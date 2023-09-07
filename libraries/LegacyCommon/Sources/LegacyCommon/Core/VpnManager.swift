@@ -170,7 +170,7 @@ public class VpnManager: VpnManagerProtocol {
     }
     let serverStorage: ServerStorage // Used to find new server/ip in case NE had to reconnect to another server
 
-    @Dependency(\.notificationCenter) var notificationCenter
+    var notificationCenter: NotificationCenter = .default
     private var tokens: [UUID: NotificationToken] = [:]
 
     public typealias Factory = IkeProtocolFactoryCreator
