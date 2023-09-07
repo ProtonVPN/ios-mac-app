@@ -118,7 +118,7 @@ class StatusViewModel {
         }
 
         @Dependency(\.serverChangeAuthorizer) var authorizer
-        let freshState = authorizer.isServerChangeAvailable()
+        let freshState = authorizer.serverChangeAvailability()
 
         if case .unavailable = freshState, serverChangeTimer == nil {
             serverChangeTimer = .scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(serverChangeTimerFired), userInfo: nil, repeats: true)

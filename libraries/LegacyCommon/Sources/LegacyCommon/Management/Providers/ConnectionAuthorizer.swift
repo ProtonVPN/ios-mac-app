@@ -54,7 +54,7 @@ extension ConnectionAuthorizer: DependencyKey {
                     return .success
                 }
 
-                switch serverChangeAuthorizer.isServerChangeAvailable() {
+                switch serverChangeAuthorizer.serverChangeAvailability() {
                 case .available:
                     return .success
                 case let .unavailable(date, duration, exhaustedSkips):

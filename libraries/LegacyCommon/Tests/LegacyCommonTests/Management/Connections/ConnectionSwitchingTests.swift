@@ -1083,17 +1083,16 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
                 $0.featureFlagProvider = .constant(flags: .allEnabled)
 
                 // Now add a bunch of connections to the stack, we should get the longer delay
-                let limit = $0.serverChangeStorage.config.changeServerAttemptLimit
-                for i in 0..<limit {
-                    $0.serverChangeStorage.push(
-                        intent: .random,
-                        date: date
-                            .addingTimeInterval(TimeInterval(
-                                -(limit - i - 1) *
-                                 serverChangeStorage
-                                    .config
-                                    .changeServerShortDelayInSeconds
-                            ))
+                // We already have one server change in the stack, so add one less than the limit
+                let connectionsToAdd = $0.serverChangeStorage.config.changeServerAttemptLimit - 1
+                for i in 0..<connectionsToAdd {
+                    $0.serverChangeAuthorizer.registerServerChange(connectedAt: date
+                        .addingTimeInterval(TimeInterval(
+                            -(connectionsToAdd - i - 1) *
+                             serverChangeStorage
+                                .config
+                                .changeServerShortDelayInSeconds
+                        ))
                     )
                 }
             } operation: {

@@ -18,12 +18,13 @@
 
 import Foundation
 import Dependencies
+import XCTestDynamicOverlay
 import NetworkExtension
 
-public class ServerChangeStorage {
+public class ServerChangeStorage: DependencyKey {
     private static let maximumStackCount = 64
 
-    public struct ConnectionStackItem: Codable {
+    public struct ConnectionStackItem: Codable, Equatable {
         public let intent: ConnectionRequestType
         public let date: Date
         public let upsellNext: Bool
@@ -34,38 +35,36 @@ public class ServerChangeStorage {
     var getConnectionStack: () -> [ConnectionStackItem]
     var setConnectionStack: ([ConnectionStackItem]) -> Void
 
-    var token: NotificationToken?
-
     public init(
-        getConfig: @escaping () -> ServerChangeConfig,
-        setConfig: @escaping (ServerChangeConfig) -> Void,
-        getConnectionStack: @escaping () -> [ConnectionStackItem],
-        setConnectionStack: @escaping ([ConnectionStackItem]) -> Void
+        getConfig: @escaping () -> ServerChangeConfig = unimplemented(placeholder: .init()),
+        setConfig: @escaping (ServerChangeConfig) -> Void = unimplemented(),
+        getConnectionStack: @escaping () -> [ConnectionStackItem] = unimplemented(placeholder: []),
+        setConnectionStack: @escaping ([ConnectionStackItem]) -> Void = unimplemented()
     ) {
         self.getConfig = getConfig
         self.setConfig = setConfig
         self.getConnectionStack = getConnectionStack
         self.setConnectionStack = setConnectionStack
     }
+}
 
-    public func push(intent: ConnectionRequestType, date: Date) {
-        let recentConnections = connectionStack
-            .prefix(max(0, config.changeServerAttemptLimit - 1))
-            .filter { $0.intent == intent }
+extension DependencyValues {
+    public var serverChangeStorage: ServerChangeStorage {
+        get { self[ServerChangeStorage.self] }
+        set { self[ServerChangeStorage.self] = newValue }
+    }
+}
 
-        let recentlyUpsold = recentConnections.contains(where: \.upsellNext)
+extension ServerChangeStorage {
 
-        let item = ConnectionStackItem(
-            intent: intent,
-            date: date,
-            upsellNext: recentConnections.count >= (config.changeServerAttemptLimit - 1) &&
-                !recentlyUpsold
-        )
-        connectionStack.insert(item, at: 0)
+    public func push(item: ConnectionStackItem) {
+        var connectionStackCopy = connectionStack
+        connectionStackCopy.insert(item, at: 0)
 
-        while connectionStack.count > Self.maximumStackCount {
-            connectionStack.removeLast()
+        while connectionStackCopy.count > Self.maximumStackCount {
+            connectionStackCopy.removeLast()
         }
+        setConnectionStack(connectionStackCopy)
     }
 
     public var config: ServerChangeConfig {
@@ -79,7 +78,7 @@ public class ServerChangeStorage {
     }
 }
 
-extension ServerChangeStorage: DependencyKey {
+extension ServerChangeStorage {
     public static var liveValue: ServerChangeStorage = ServerChangeStorage(
         getConfig: {
             @Dependency(\.propertiesManager) var propertiesManager
@@ -118,11 +117,4 @@ extension ServerChangeStorage: DependencyKey {
     #if DEBUG
     public static let testValue = liveValue
     #endif
-}
-
-extension DependencyValues {
-    public var serverChangeStorage: ServerChangeStorage {
-        get { self[ServerChangeStorage.self] }
-        set { self[ServerChangeStorage.self] = newValue }
-    }
 }
