@@ -33,7 +33,7 @@ public protocol UpsellViewControllerDelegate: AnyObject {
     /// - Note: In the onboarding module the parent dismisses the upsell modal. `IosAlertService` allows the upsell to dismiss itself.
     func shouldDismissUpsell(upsell: UpsellViewController?) -> Bool
     func userDidDismissUpsell(upsell: UpsellViewController?)
-    func userDidTapNext(upsell: UpsellViewController?)
+    func userDidTapNext(upsell: UpsellViewController)
     func upsellDidDisappear(upsell: UpsellViewController?)
 }
 

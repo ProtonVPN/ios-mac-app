@@ -116,7 +116,7 @@ class ViewController: UITableViewController {
 }
 
 extension ViewController: UpsellViewControllerDelegate {
-    func userDidTapNext(upsell: UpsellViewController?) {
+    func userDidTapNext(upsell: UpsellViewController) {
         dismiss(animated: true, completion: nil)
     }
 

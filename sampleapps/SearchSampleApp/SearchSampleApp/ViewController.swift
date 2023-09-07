@@ -154,7 +154,11 @@ extension ViewController: SearchCoordinatorDelegate {
 }
 
 extension ViewController: UpsellViewControllerDelegate {
-    func userDidTapNext(upsell: UpsellViewController?) {
+    func upsellDidDisappear(upsell: UpsellViewController?) {
+
+    }
+
+    func userDidTapNext(upsell: UpsellViewController) {
 
     }
 
