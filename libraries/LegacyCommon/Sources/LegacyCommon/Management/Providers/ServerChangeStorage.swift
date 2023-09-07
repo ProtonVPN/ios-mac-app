@@ -49,15 +49,16 @@ public class ServerChangeStorage {
     }
 
     public func push(intent: ConnectionRequestType, date: Date) {
-        let recentlyUpsold = connectionStack
+        let recentConnections = connectionStack
+            .prefix(max(0, config.changeServerAttemptLimit - 1))
             .filter { $0.intent == intent }
-            .prefix(config.changeServerAttemptLimit)
-            .contains(where: \.upsellNext)
+
+        let recentlyUpsold = recentConnections.contains(where: \.upsellNext)
 
         let item = ConnectionStackItem(
             intent: intent,
             date: date,
-            upsellNext: connectionStack.count >= config.changeServerAttemptLimit &&
+            upsellNext: recentConnections.count >= (config.changeServerAttemptLimit - 1) &&
                 !recentlyUpsold
         )
         connectionStack.insert(item, at: 0)
