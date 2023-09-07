@@ -20,52 +20,27 @@ import Foundation
 import Dependencies
 
 public struct ServerChangeAuthorizer {
-    public var isServerChangeAvailable: () -> ServerChangeAvailability
-}
+    public var serverChangeAvailability: () -> ServerChangeAvailability
+    private var registerServerChangeAtDate: (Date) -> Void
 
-extension ServerChangeAuthorizer: DependencyKey {
-    public static var liveValue: Self = ServerChangeAuthorizer(
-        isServerChangeAvailable: {
-            @Dependency(\.credentialsProvider) var credentials
-            @Dependency(\.featureFlagProvider) var featureFlags
-
-            guard credentials.tier == CoreAppConstants.VpnTiers.free && featureFlags[\.showNewFreePlan] else {
-                return .available
-            }
-
-            @Dependency(\.serverChangeStorage) var storage
-            @Dependency(\.date) var date
-            let now = date.now
-
-            let skips = storage.connectionStack.filter { $0.intent == .random }
-
-            guard let lastConnection = skips.first else {
-                return .available
-            }
-
-            let reconnectDelay = TimeInterval(
-                lastConnection.upsellNext ? storage.config.changeServerLongDelayInSeconds :
-                    storage.config.changeServerShortDelayInSeconds
-            )
-
-            let connectionDate = lastConnection.date
-
-            guard now.timeIntervalSince(connectionDate) > reconnectDelay else {
-                return .unavailable(
-                    until: connectionDate.addingTimeInterval(reconnectDelay),
-                    duration: reconnectDelay,
-                    exhaustedSkips: lastConnection.upsellNext
-                )
-            }
-
-            return .available
-        }
-    )
+    public func registerServerChange(connectedAt connectionDate: Date) {
+        registerServerChangeAtDate(connectionDate)
+    }
 
     public enum ServerChangeAvailability: Equatable {
         case available
         case unavailable(until: Date, duration: TimeInterval, exhaustedSkips: Bool)
     }
+}
+
+extension ServerChangeAuthorizer: DependencyKey {
+    public static var liveValue: Self = {
+        let authorizer = ServerChangeAuthorizerImplementation()
+        return ServerChangeAuthorizer(
+            serverChangeAvailability: authorizer.serverChangeAvailability,
+            registerServerChangeAtDate: authorizer.registerServerChange
+        )
+    }()
 
     #if DEBUG
     public static let testValue: ServerChangeAuthorizer = liveValue

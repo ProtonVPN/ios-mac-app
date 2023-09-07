@@ -561,9 +561,10 @@ public class VpnManager: VpnManagerProtocol {
                             guard connection.status == .connected, let date = connection.connectedDate else {
                                 return
                             }
-
-                            @Dependency(\.serverChangeStorage) var serverChangeStorage
-                            serverChangeStorage.push(intent: originalIntent, date: date)
+                            if originalIntent == .random {
+                                @Dependency(\.serverChangeAuthorizer) var serverChangeAuthorizer
+                                serverChangeAuthorizer.registerServerChange(connectedAt: date)
+                            }
                         }
                     )
                 }
