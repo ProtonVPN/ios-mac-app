@@ -1425,6 +1425,12 @@
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
 "_netshield_upsell_subtitle" = "Blocați reclame, urmăritori și malware pe pagini web și aplicații";
 
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_business_upsell_title" = "Blocați reclamele cu NetShield";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_business_upsell_subtitle" = "Dacă treceți la VPN Business";
+
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
 
@@ -1942,32 +1948,29 @@ Detalii";
 /* Dismiss upsell screen button title */
 "modals_upsell_stay_free" = "Nu acum";
 
-/* Footer of the All Countries upsell screen */
-"modals_upsell_features_footer" = "Și multe alte funcții speciale";
-
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
-"modals_upsell_features_subtitle" = "Când treceți la VPN Plus";
+"modals_upsell_features_subtitle" = "Când treceți la Plus";
 
 /* Subtitle of the Safe Mode upsell screen */
 "modals_upsell_features_safe_mode_subtitle" = "Aveți nevoi avansate sau profesionale de utilizare care necesită porturi non-standard?\n\nTreceți la VPN Plus pentru a le accesa și a avea alte funcții premium.";
-
-/* Learn more button title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_learn_more" = "Detalii";
-
-/* Subtitle of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_subtitle" = "NAT moderat, cunoscut și ca NAT tip 2, vă poate îmbunătăți experiența online pentru diferite aplicații și jocuri video online.\n\nObțineți-l alături și de alte funcții cu planul Plus.";
 
 /* Title of the Safe Mode upsell screen */
 "modals_upsell_safe_mode_title" = "Permitere trafic la porturile nonstandard";
 
 /* Title of the Moderate NAT upsell screen */
-"modals_upsell_moderate_nat_title" = "Activare NAT moderat";
+"modals_upsell_moderate_nat_title" = "Îmbunătățiți-vă experiența din jocuri";
 
-/* Learn more button title of the Moderate NAT upsell screen */
-"modals_upsell_moderate_nat_learn_more" = "Ce este NAT moderat?";
+/* Subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle" = "Deblocați NAT de tip 2 cu VPN Plus";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_gaming" = "Îmbunătățiți performanța jocurilor online și a apelurilor video";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_direct_connections" = "NAT de tip 2 (moderat) optimizează viteza și stabilitatea permițând conexiuni directe între dispozitive";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_streaming" = "Accesați serviciile globale de transmisii în flux";
+"modals_upsell_all_countries_feature_streaming" = "Vizionați filmele preferate";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_highSpeed" = "Navigați cu viteză maximă (10 Gbps)";
@@ -2049,3 +2052,66 @@ Detalii";
 
 /* Description of user account update screen */
 "maximum_device_limit" = "Deconectați un alt dispozitiv pentru a-l conecta pe acesta.";
+
+/* Title of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_title" = "Navigați pe web la viteze și mai mari (până la 10 Gbps)";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_faster_servers" = "Accesați servere mai rapide, mai puțin aglomerate.";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds" = "Increase connection speeds by up to 400%% with VPN Accelerator.";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_distant_servers" = "Viteză și stabilitate îmbunătățite pentru conexiunile la servere la mare distanță.";
+
+/* Title of Customization upsell modal */
+"upsell_customization_title" = "Deblocați personalizarea avansată pentru VPN";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_access_LAN" = "Accesați dispozitive din rețeaua locală (LAN)";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_profiles" = "Salvați conexiunile frecvent utilizate ca profiluri";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_quick_connect" = "Obțineți acces mai rapid la profiluri prin funcția „Conectarea rapidă”";
+
+/* Title of Profiles upsell modal */
+"upsell_profiles_title" = "Obțineți acces rapid la conexiunile frecvent utilizate";
+
+/* Subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle" = "Deblocați profilurile cu VPN Plus";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_location" = "Salvați serverul, orașul sau țara favorită.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_protocols" = "Setați protocoale personale și funcții VPN premium.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_auto_connect" = "Activați autoconectarea pentru acces și mai rapid.";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_any_location" = "Alegeți orice țară";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_even_higher_speed" = "Viteze VPN chiar mai mari";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_geoblocked_content" = "Accesați conținutul blocat geografic";
+
+/* Feature of Country upsell modal */
+"upsell_countries_connect_to" = "Conectați-vă la %d țări";
+
+/* Feature of Country upsell modal */
+"upsell_countries_higher_speeds" = "Even higher VPN speed";
+
+/* Feature of Country upsell modal */
+"upsell_countries_money_back" = "Garantarea returnării banilor în 30 de zile";
+
+/* Feature of Country upsell modal */
+"upsell_country_feature_title" = "Doriți să alegeți o anumită țară?";
+
+/* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
+"_available_with_vpn_business_tooltip" = "Disponibil cu VPN Business.";

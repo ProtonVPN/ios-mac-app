@@ -11,7 +11,7 @@
 
 "onboarding_beprotected_subtitle" = "Proton VPN підтримує всі пристрої, включно з Windows, macOS і багатьма іншими.";
 
-"onboarding_unblockstreaming_title" = "Розблокувати стримінг";
+"onboarding_unblockstreaming_title" = "Розблокувати потокову трансляцію";
 
 "onboarding_unblockstreaming_subtitle" = "Безпечний доступ до улюбленого вмісту з інших країн, тепер і на Android TV.";
 
@@ -49,7 +49,7 @@
 
 "onboarding_not_connected_subtitle" = "Все готово для перегляду в інтернеті.";
 
-"onboarding_not_connected_error" = "Не вдалося встановити з'єднання. Повторіть спробу пізніше у застосунку.";
+"onboarding_not_connected_error" = "Не вдалося встановити з'єднання. Спробуйте знову пізніше у програмі.";
 
 "onboarding_continue" = "Продовжити";
 

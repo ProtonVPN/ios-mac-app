@@ -901,7 +901,7 @@
 "_kill_switch_disable" = "Désactiver Arrêt d'urgence (kill switch)";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
-"_kill_switch_enable" = "Activer l'arrêt d'urgence (kill switch)";
+"_kill_switch_enable" = "Activer Arrêt d'urgence (kill switch)";
 
 /* MacOS: Settings screen title */
 "_preferences" = "Préférences";
@@ -1425,6 +1425,12 @@
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
 "_netshield_upsell_subtitle" = "Bloquez les publicités, les traqueurs et les logiciels malveillants sur les sites internet et les applications.";
 
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_business_upsell_title" = "Bloquer les publicités avec NetShield";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_business_upsell_subtitle" = "En passant à l'abonnement VPN Business";
+
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
 
@@ -1840,13 +1846,13 @@
 "_alert_protocol_deprecated_title" = "Protocole non disponible";
 
 /* Body of the deprecated protocol alert on MacOS. Shown when the user attempts to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
-"_alert_protocol_deprecated_body_macos" = "Ce profil utilise un protocole obsolète qui n'est plus pris en charge. Cliquez sur «·Mettre à jour·» pour passer à Smart Protocol par défaut. En savoir plus";
+"_alert_protocol_deprecated_body_macos" = "Ce profil utilise un protocole obsolète qui n'est plus pris en charge. Cliquez sur « Mettre à jour » pour passer à Smart Protocol par défaut. En savoir plus";
 
 /* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
 "_alert_protocol_deprecated_link_text" = "En savoir plus";
 
 /* Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
-"_alert_protocol_deprecated_body_ios" = "Ce profil utilise un protocole obsolète qui n'est plus pris en charge. Cliquez sur «·Mettre à jour·» pour passer à Smart Protocol par défaut.";
+"_alert_protocol_deprecated_body_ios" = "Ce profil utilise un protocole obsolète qui n'est plus pris en charge. Cliquez sur « Mettre à jour » pour passer à Smart Protocol par défaut.";
 
 /* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
 "_alert_protocol_deprecated_enable_smart" = "Mettre à jour";
@@ -1861,7 +1867,7 @@
 "_bad_interface_ip_range_alert_title" = "Mauvaise interface réseau";
 
 /* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
-"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Votre réseau local peut ne pas être sûr (l'interface %@ dispose de l'IP et du préfixe %@). Vos données peuvent être envoyées sans chiffrement sur votre réseau local. En activant l'arrêt d'urgence (kill switch), vous bloquez ce trafic. Les connexions aux périphériques locaux seront interrompues.";
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Votre réseau local n'est peut-être pas sûr (l'interface %@ dispose de l'IP et du préfixe %@). Vos données peuvent être envoyées sans chiffrement sur votre réseau local. En activant la fonctionnalité Arrêt d'urgence (kill switch), vous bloquez ce trafic. Les connexions aux périphériques locaux seront interrompues.";
 
 /* Title of the search screen */
 "search_title" = "Rechercher";
@@ -1941,32 +1947,29 @@
 /* Dismiss upsell screen button title */
 "modals_upsell_stay_free" = "Pas maintenant";
 
-/* Footer of the All Countries upsell screen */
-"modals_upsell_features_footer" = "Et bien plus de fonctionnalités premium";
-
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
-"modals_upsell_features_subtitle" = "En passant à l'abonnement VPN Plus";
+"modals_upsell_features_subtitle" = "En passant à l'abonnement Plus";
 
 /* Subtitle of the Safe Mode upsell screen */
 "modals_upsell_features_safe_mode_subtitle" = "Vous avez des besoins informatiques avancés ou professionnels qui nécessitent des ports non standard ?\n\nPassez à VPN Plus pour accéder à cette fonctionnalité et à d'autres fonctionnalités premium.";
-
-/* Learn more button title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_learn_more" = "En savoir plus";
-
-/* Subtitle of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_subtitle" = "Le NAT modéré, aussi connu comme NAT Type 2, peut améliorer votre expérience en ligne avec différentes applications et jeux vidéos en ligne.\n\nActivez cette fonctionnalité et d'autres avec un abonnement Plus.";
 
 /* Title of the Safe Mode upsell screen */
 "modals_upsell_safe_mode_title" = "Autoriser le trafic vers les ports non standard";
 
 /* Title of the Moderate NAT upsell screen */
-"modals_upsell_moderate_nat_title" = "Activer le NAT modéré";
+"modals_upsell_moderate_nat_title" = "Améliorez votre expérience de jeu";
 
-/* Learn more button title of the Moderate NAT upsell screen */
-"modals_upsell_moderate_nat_learn_more" = "Qu'est-ce que le NAT modéré ?";
+/* Subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle" = "Utilisez le NAT de type 2 en passant à VPN Plus.";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_gaming" = "Améliorez les performances des jeux en ligne et des appels vidéo.";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_direct_connections" = "Le NAT de type 2 (modéré) optimise la vitesse et la stabilité en permettant des connexions directes entre les appareils.";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_streaming" = "Accéder aux services de streaming internationaux";
+"modals_upsell_all_countries_feature_streaming" = "Regardez vos films préférés en streaming.";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_highSpeed" = "Naviguez aux vitesses les plus élevées (10 Gbit/s)";
@@ -2048,3 +2051,66 @@
 
 /* Description of user account update screen */
 "maximum_device_limit" = "Déconnectez un autre appareil pour pouvoir connecter celui-ci.";
+
+/* Title of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_title" = "Naviguez à des vitesses encore plus élevées (jusqu'à 10 Gbit/s)";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_faster_servers" = "Accédez à des serveurs plus rapides et moins occupés.";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds" = "Augmentez la vitesse de connexion jusqu'à 400 %% avec VPN Accelerator.";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_distant_servers" = "Amélioration de la vitesse et de la stabilité lors de la connexion à des serveurs distants.";
+
+/* Title of Customization upsell modal */
+"upsell_customization_title" = "Accédez à la personnalisation avancée du VPN";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_access_LAN" = "Accédez aux appareils sur votre réseau local (LAN).";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_profiles" = "Enregistrez dans des profils les connexions que vous utilisez souvent.";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_quick_connect" = "Accédez plus rapidement à vos profils avec la Connexion rapide.";
+
+/* Title of Profiles upsell modal */
+"upsell_profiles_title" = "Accédez rapidement aux connexions que vous utilisez souvent";
+
+/* Subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle" = "Accédez aux profils en passant à VPN Plus.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_location" = "Enregistrez le serveur, la ville ou le pays que vous préférez.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_protocols" = "Définissez des protocoles personnalisés et des fonctions VPN premium.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_auto_connect" = "Configurez la connexion automatique pour un accès encore plus rapide.";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_any_location" = "Choisissez n'importe quel emplacement.";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_even_higher_speed" = "Vitesse VPN encore plus élevée";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_geoblocked_content" = "Accédez à des contenus bloqués géographiquement.";
+
+/* Feature of Country upsell modal */
+"upsell_countries_connect_to" = "Connectez-vous à %d pays.";
+
+/* Feature of Country upsell modal */
+"upsell_countries_higher_speeds" = "Vitesse VPN encore plus élevée";
+
+/* Feature of Country upsell modal */
+"upsell_countries_money_back" = "Garantie satisfait ou remboursé pendant 30 jours";
+
+/* Feature of Country upsell modal */
+"upsell_country_feature_title" = "Vous voulez choisir un pays en particulier ?";
+
+/* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
+"_available_with_vpn_business_tooltip" = "Disponible avec VPN Business.";

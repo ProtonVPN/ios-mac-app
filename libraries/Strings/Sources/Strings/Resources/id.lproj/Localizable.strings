@@ -36,9 +36,9 @@
 "_unavailable" = "Tidak tersedia";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
-"_expand_list_of_servers" = "Perbesar daftar server";
+"_expand_list_of_servers" = "Lebarkan daftar server";
 
-"_collapse_list_of_servers" = "Tutup daftar server";
+"_collapse_list_of_servers" = "Ciutkan daftar server";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Peringatan";
@@ -47,7 +47,7 @@
 "_upgrade" = "Tingkatkan";
 
 /* iOS: Plan selection during plan upgarde, button insettings screen */
-"_upgrade_subscription" = "Tingkatkan Jenis Akun";
+"_upgrade_subscription" = "Tingkatkan Langganan";
 
 /* MacOS: Settings -> Account. Button leading to web interface. */
 "_manage_subscription" = "Kelola Langganan";
@@ -67,7 +67,7 @@
 "_quit" = "Keluar";
 
 /* MacOS: alert show before quitting app if VPN is connected */
-"_quit_warning" = "Keluar dari aplikasi akan memutus koneksi VPN yang sedang aktif. Apakah Anda ingin melanjutkan?";
+"_quit_warning" = "Dengan keluar dari aplikasi, koneksi VPN yang sedang aktif akan terputus. Apakah Anda ingin melanjutkan?";
 
 /* Common word */
 "_enabled" = "Diaktifkan";
@@ -282,7 +282,7 @@
 "_switch_side_button_off" = "MATI";
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
-"_timeout_ks_ike_descritpion" = "Terdapat aplikasi lain yang diduga mengganggu kinerja kill switch. Untuk menyelesaikan masalah ini, berpindahlah ke protokol OpenVPN atau nonaktifkan kill switch dan coba lagi.";
+"_timeout_ks_ike_descritpion" = "Aplikasi lain mungkin mengganggu kinerja kill switch. Untuk menyelesaikan masalah ini, berpindahlah ke protokol OpenVPN atau nonaktifkan kill switch dan coba lagi.";
 
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Beralih ke OpenVPN dan coba kembali";
@@ -784,7 +784,7 @@
 "_delinquent_user_title" = "Tagihan belum dibayar";
 
 /* Delinquent user alert */
-"_delinquent_user_description" = "Akun Anda memiliki tagihan yang telah melewati tanggal jatuh tempo. Silakan bayar seluruh tagihan yang belum lunas di account.protonvpn.com";
+"_delinquent_user_description" = "Akun Anda memiliki tagihan yang tertunggak. Silakan bayar seluruh tagihan yang belum lunas pada account.protonvpn.com";
 
 /* Generic sign in error */
 "_error_sign_in_again" = "Maaf, terdapat sesuatu yang salah. Silakan masuk kembali.";
@@ -972,7 +972,7 @@
 "_dns_leak_protection" = "Perlindungan Kebocoran DNS";
 
 /* MacOS: Settings -> Connection: description. */
-"_dns_leak_protection_tooltip" = "Cegah detail kebocoran kueri DNS ke pihak ke-tiga. Selalu aktif.";
+"_dns_leak_protection_tooltip" = "Mencegah agar rincian kueri DNS Anda tidak bocor ke pihak ketiga. Selalu aktif.";
 
 /* iOS Settings: table section header */
 "_security_options" = "Opsi Keamanan";
@@ -1424,6 +1424,12 @@
 
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
 "_netshield_upsell_subtitle" = "Blokir iklan, pelacak, dan malware pada berbagai situs web dan aplikasi";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_business_upsell_title" = "Blokir iklan dengan NetShield";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_business_upsell_subtitle" = "Ketika Anda meningkatkan ke VPN Business";
 
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
@@ -1941,32 +1947,29 @@
 /* Dismiss upsell screen button title */
 "modals_upsell_stay_free" = "Tidak sekarang";
 
-/* Footer of the All Countries upsell screen */
-"modals_upsell_features_footer" = "Dan berbagai fitur premium lainnya";
-
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
-"modals_upsell_features_subtitle" = "Pada saat Anda meningkatkan akun Anda ke VPN Plus";
+"modals_upsell_features_subtitle" = "Pada saat Anda meningkatkan ke Plus";
 
 /* Subtitle of the Safe Mode upsell screen */
 "modals_upsell_features_safe_mode_subtitle" = "Memiliki keperluan tertentu yang memerlukan penggunaan port non-standar?\n\nTingkatkan akun Anda ke VPN Plus untuk menggunakan fitur ini dan berbagai fitur premium lainnya.";
-
-/* Learn more button title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_learn_more" = "Pelajari Lebih Lanjut";
-
-/* Subtitle of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_subtitle" = "NAT Moderat, yang juga dikenal sebagai NAT Type 2, merupakan sebuah fitur yang dapat memperkaya pengalaman online Anda dalam berbagai aplikasi dan permainan online.\n\nNikmati fitur ini dan berbagai fitur lainnya dengan akun Plus.";
 
 /* Title of the Safe Mode upsell screen */
 "modals_upsell_safe_mode_title" = "Izinkan lalu lintas data melalui port non-standar";
 
 /* Title of the Moderate NAT upsell screen */
-"modals_upsell_moderate_nat_title" = "Aktifkan NAT Moderat";
+"modals_upsell_moderate_nat_title" = "Bawa pengalaman gaming Anda ke level selanjutnya";
 
-/* Learn more button title of the Moderate NAT upsell screen */
-"modals_upsell_moderate_nat_learn_more" = "Apa itu NAT Moderat?";
+/* Subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle" = "Akses NAT Type 2 dengan VPN Plus";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_gaming" = "Tingkatkan performa permainan online dan panggilan video Anda";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_direct_connections" = "NAT Type 2 (moderat) mengoptimalkan kecepatan dan stabilitas koneksi Anda dengan mengukuhkan koneksi langsung antar perangkat";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_streaming" = "Akses berbagai layanan streaming global";
+"modals_upsell_all_countries_feature_streaming" = "Streaming film kesayangan Anda";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_highSpeed" = "Jelajahi internet pada kecepatan tertinggi (10 Gbps)";
@@ -2048,3 +2051,66 @@
 
 /* Description of user account update screen */
 "maximum_device_limit" = "Mohon putuskan perangkat lain agar perangkat ini dapat terhubung.";
+
+/* Title of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_title" = "Jelajahi internet pada kecepatan yang bahkan lebih tinggi lagi (10 Gbps)";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_faster_servers" = "Akses server yang lebih cepat dan lengang.";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds" = "Increase connection speeds by up to 400%% with VPN Accelerator.";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_distant_servers" = "Koneksi yang lebih cepat dan stabil pada saat terhubung ke server yang berjarak jauh.";
+
+/* Title of Customization upsell modal */
+"upsell_customization_title" = "Akses opsi kustomisasi VPN lanjutan";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_access_LAN" = "Akses perangkat pada jaringan LAN Anda";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_profiles" = "Simpan koneksi yang sering Anda gunakan dengan profil";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_quick_connect" = "Dapatkan akses yang lebih cepat ke profil Anda dengan Quick Connect";
+
+/* Title of Profiles upsell modal */
+"upsell_profiles_title" = "Dapatkan akses kilat ke profil koneksi yang sering Anda gunakan";
+
+/* Subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle" = "Akses profil dengan VPN Plus";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_location" = "Simpan server, kota, atau negara yang sering Anda gunakan.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_protocols" = "Atur protokol khusus dan berbagai fitur VPN premium.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_auto_connect" = "Atur koneksi otomatis untuk akses VPN yang lebih cepat.";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_any_location" = "Pilih lokasi mana pun";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_even_higher_speed" = "Kecepatan VPN yang jauh lebih tinggi";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_geoblocked_content" = "Akses konten yang terblokir wilayah";
+
+/* Feature of Country upsell modal */
+"upsell_countries_connect_to" = "Hubungkan ke %d negara";
+
+/* Feature of Country upsell modal */
+"upsell_countries_higher_speeds" = "Even higher VPN speed";
+
+/* Feature of Country upsell modal */
+"upsell_countries_money_back" = "Jaminan 30 hari uang kembali";
+
+/* Feature of Country upsell modal */
+"upsell_country_feature_title" = "Ingin memilih negara tertentu?";
+
+/* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
+"_available_with_vpn_business_tooltip" = "Tersedia dengan VPN Business.";

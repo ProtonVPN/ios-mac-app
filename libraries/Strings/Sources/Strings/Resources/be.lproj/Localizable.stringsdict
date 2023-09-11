@@ -9,17 +9,17 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Падключайце %d прыладу адначасова</string>
+        <string>Абараняйце да %d прылады</string>
         <key>few</key>
-        <string>Падключайце %d прылады адначасова</string>
+        <string>Абараняйце да %d прылад</string>
         <key>many</key>
-        <string>Падключайце %d прылад адначасова</string>
+        <string>Абараняйце да %d прылад</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Падключайце %d прылад адначасова</string>
+        <string>Абараняйце да %d прылад</string>
       </dict>
     </dict>
     <key>modals_upsell_all_countries_title</key>

@@ -9,15 +9,15 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Conectați %d dispozitiv</string>
+        <string>Protejați până la %d dispozitiv</string>
         <key>few</key>
-        <string>Conectați maxim %d dispozitive simultan</string>
+        <string>Protejați până la %d dispozitive</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Conectați maxim %d de dispozitive simultan</string>
+        <string>Protejați până la %d de dispozitive</string>
       </dict>
     </dict>
     <key>modals_upsell_all_countries_title</key>

@@ -13,7 +13,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Sambungkan hingga %d perangkat secara bersamaan</string>
+        <string>Lindungi hingga %d perangkat</string>
       </dict>
     </dict>
     <key>modals_upsell_all_countries_title</key>
