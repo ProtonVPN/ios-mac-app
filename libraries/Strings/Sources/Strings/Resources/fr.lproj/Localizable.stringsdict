@@ -9,13 +9,13 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Connectez %d appareil</string>
+        <string>Protégez %d appareil.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Connectez jusqu'à %d appareils en même temps</string>
+        <string>Protégez jusqu’à %d appareils.</string>
       </dict>
     </dict>
     <key>modals_upsell_all_countries_title</key>

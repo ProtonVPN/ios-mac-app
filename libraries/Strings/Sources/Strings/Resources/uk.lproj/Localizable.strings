@@ -842,7 +842,7 @@
 
 "_update_required" = "Необхідне оновлення";
 
-"_update_required_no_longer_supported" = "Ця версія Proton VPN більше не підтримується. Щоб продовжити користуватися застосунком оновіть його.";
+"_update_required_no_longer_supported" = "Ця версія Proton VPN більше не підтримується. Оновіть програму, щоб і надалі користуватися нею.";
 
 /* Secondary button title in the App update required alert  */
 "_update_required_support" = "Зв'язатися з підтримкою";
@@ -889,19 +889,19 @@
 "_upgrade_unavailable_title" = "Зміна тарифного плану недоступна в програмі";
 
 /* Plan upgrade unavailable alert */
-"_upgrade_unavailable_body" = "Вашу передплату Proton VPN неможливо змінити в застосунку. Для цього перейдіть на account.protonvpn.com.";
+"_upgrade_unavailable_body" = "Вашу передплату Proton VPN неможливо змінити в програмі. Для цього перейдіть на account.protonvpn.com.";
 
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_title" = "Очистити дані програми";
 
 /* MacOS: clear application data alert */
-"_delete_application_data_popup_body" = "Усі дані Proton VPN будуть видалені та виконається вихід із застосунку. Бажаєте продовжити?";
+"_delete_application_data_popup_body" = "Усі дані Proton VPN будуть видалені та виконається вихід із програми. Бажаєте продовжити?";
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Вимкнути Kill Switch";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
-"_kill_switch_enable" = "Ввімкнути Kill Switch";
+"_kill_switch_enable" = "Увімкнути Kill Switch";
 
 /* MacOS: Settings screen title */
 "_preferences" = "Параметри";
@@ -1110,7 +1110,7 @@
 "_feature_connections" = "Одночасних VPN-з'єднань";
 
 /* iOS plan feature */
-"_feature_secure_streaming" = "Захищений стримінг";
+"_feature_secure_streaming" = "Захищена потокова трансляція";
 
 /* iOS plan feature */
 "_feature_tor" = "Tor через VPN";
@@ -1185,10 +1185,10 @@
 "_multiple_servers_description" = "Сотні серверів\nпо всьому світу";
 
 /* MacOS: \Trial about to expire\ screen */
-"_secure_streaming_title" = "Захищений стримінг";
+"_secure_streaming_title" = "Захищена потокова трансляція";
 
 /* MacOS: \Trial about to expire\ screen */
-"_secure_streaming_description" = "Безпечний стримінг ваших\nулюблених матеріалів";
+"_secure_streaming_description" = "Безпечна потокова трансляція ваших\nулюблених матеріалів";
 
 /* MacOS app tour: quick connect title */
 "_quick_connect_tour_title" = "Швидке з'єднання";
@@ -1307,7 +1307,7 @@
 "_report_field_placeholder" = "Почніть вводити...";
 
 /* Mag bug report: attach logs checkbox */
-"_report_attachments_checkbox" = "Долучити журнали програм та системні дані";
+"_report_attachments_checkbox" = "Долучити журнали програми та системні дані";
 
 /* Main mac app menu item */
 "_menu_about" = "Про Proton VPN";
@@ -1424,6 +1424,12 @@
 
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
 "_netshield_upsell_subtitle" = "Блокуйте рекламу, стеження та зловмисні програми на вебсайтах і в програмах";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_business_upsell_title" = "Блокувати рекламу за допомогою NetShield";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_business_upsell_subtitle" = "Доступно в тарифному плані VPN Business";
 
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
@@ -1600,7 +1606,7 @@
 
 "_smart_routing_title" = "Smart Routing";
 
-"_streaming_title" = "Стримінг";
+"_streaming_title" = "Потокова трансляція";
 
 "_p2p_title" = "P2P/BitTorrent";
 
@@ -1610,9 +1616,9 @@
 
 "_dw-partner-2022_partners_title" = "Наші партнери";
 
-"_streaming_servers_description" = "З'єднайтеся із сервером Plus у цій країні, щоб розпочати стримінг.";
+"_streaming_servers_description" = "З'єднайтеся з сервером Plus у цій країні, щоб розпочати потокову трансляцію.";
 
-"_streaming_servers_note" = "Примітка: вимкніть службу розташування та очистьте кеш стримінгових програм, щоб упевнитися, що з'являються нові матеріали.";
+"_streaming_servers_note" = "Примітка: вимкніть службу розташування та очистьте кеш програм потокової трансляції, щоб упевнитися, що з'являються нові матеріали.";
 
 "_streaming_servers_extra" = "та інше";
 
@@ -1622,7 +1628,7 @@
 
 "_feature_smart_routing_description" = "Ця технологія дозволяє Proton VPN забезпечити вищу швидкість та безпеку у країнах з ускладненим обслуговуванням.";
 
-"_feature_streaming_description" = "Сервери PLUS підтримують стримінг (Netflix, Disney+ тощо) звідусіль у світі.";
+"_feature_streaming_description" = "Сервери Plus підтримують потокову трансляцію (Netflix, Disney+ та ін.) звідусіль у світі.";
 
 "_feature_p2p_description" = "Ці сервери забезпечують найкращу швидкодію для BitTorrent та обміну файлами.";
 
@@ -1644,13 +1650,13 @@
 
 "_locations_plus" = "Розташування Plus";
 
-"_locations_gateways" = "Шлюзи";
+"_locations_gateways" = "Мережеві шлюзи";
 
 /* Gateways info modals title (both iOS and macOS) */
-"_gateways_modal_title" = "Що таке шлюз?";
+"_gateways_modal_title" = "Що таке мережевий шлюз?";
 
 /* Gateways info modals text (both iOS and macOS) */
-"_gateways_modal_text" = "VPN шлюз - це безпечне з'єднання, яке забезпечує контрольований доступ до даних і послуг вашої компанії через виділені сервери";
+"_gateways_modal_text" = "VPN-шлюз – це захищене з'єднання, що забезпечує контрольований доступ до даних і сервісів вашої компанії через спеціалізовані сервери";
 
 "_vpn_accelerator_title" = "VPN Accelerator";
 
@@ -1686,7 +1692,7 @@
 
 "_force_upgrade_title" = "Необхідно покращити програму";
 
-"_force_upgrade_message" = "Версія застосунку Proton VPN, якою ви зараз користуєтесь, більше не підтримується. Будь ласка, оновіть його до найновішої версії.";
+"_force_upgrade_message" = "Версія програми Proton VPN, якою ви зараз користуєтесь, більше не підтримується. Будь ласка, оновіть її до останньої версії.";
 
 "login_fetch_vpn_data" = "Налаштування доступу до VPN";
 
@@ -1718,7 +1724,7 @@
 "_moderate_nat_title" = "Помірне NAT";
 
 /* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "Помірна NAT вимикає рандомізацію мапінгу локальних адрес. Це може дещо знизити рівень вашої безпеки, але дає змогу користуватися одноранговими застосунками, як-от онлайн-ігри для встановлення прямих з'єднань.\nДокладніше";
+"_moderate_nat_explanation" = "Помірна NAT вимикає рандомізацію мапінгу локальних адрес. Це може дещо знизити рівень вашої безпеки, але дає змогу користуватися одноранговими програмами, як-от онлайн-ігри, для встановлення прямих з'єднань.\nДокладніше";
 
 /* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
 "_moderate_nat_explanation_link" = "Докладніше";
@@ -1766,7 +1772,7 @@
 "_non_standard_ports_change_title" = "Увімкнути нестандартні порти";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
-"proton_website_unreachable" = "Вебсайт Proton VPN може бути тимчасово недоступний через мережеві обмеження. Скористайтеся мобільним застосунком, щоб створити новий обліковий запис Proton.";
+"proton_website_unreachable" = "Вебсайт Proton VPN може бути тимчасово недоступний через мережеві обмеження. Скористайтеся програмою для мобільних пристроїв, щоб створити новий обліковий запис Proton.";
 
 /* Title of the Use coupon button in Settings */
 "use_coupon" = "Використати купон";
@@ -1805,7 +1811,7 @@
 "login_unsupported_state" = "Неправильний метод входу. Зв'яжіться з підтримкою.";
 
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
-"vpn_feature_cannot_be_set_error" = "Налаштування %@ не може бути змінено. Повторіть спробу пізніше або під'єднайтеся до іншого сервера";
+"vpn_feature_cannot_be_set_error" = "Не можна змінити налаштування %@. Повторіть спробу пізніше або під'єднайтеся до іншого сервера";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
 "netshield_stats_hint_ads" = "Рекламні вебсайти використовують куки та елементи стеження, щоб персоналізувати вас.";
@@ -1840,13 +1846,13 @@
 "_alert_protocol_deprecated_title" = "Протокол недоступний";
 
 /* Body of the deprecated protocol alert on MacOS. Shown when the user attempts to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
-"_alert_protocol_deprecated_body_macos" = "Цей профіль використовує застарілий протокол, який більше не підтримується. Натисніть \"Оновити\", щоб перемикнутися на використання протоколу Smart за замовчуванням. Докладніше";
+"_alert_protocol_deprecated_body_macos" = "Цей профіль використовує застарілий протокол, який більше не підтримується. Натисніть \"Оновити\", щоб перемикнутися на використання типового протоколу Smart. Докладніше";
 
 /* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
 "_alert_protocol_deprecated_link_text" = "Докладніше";
 
 /* Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
-"_alert_protocol_deprecated_body_ios" = "Цей профіль використовує застарілий протокол, який більше не підтримується. Натисніть \"Оновити\", щоб перемкнутися на використання протоколу Smart за замовчуванням.";
+"_alert_protocol_deprecated_body_ios" = "Цей профіль використовує застарілий протокол, який більше не підтримується. Натисніть \"Оновити\", щоб перемикнутися на використання типового протоколу Smart.";
 
 /* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
 "_alert_protocol_deprecated_enable_smart" = "Оновити";
@@ -1861,7 +1867,7 @@
 "_bad_interface_ip_range_alert_title" = "Поганий мережевий інтерфейс";
 
 /* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
-"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Ваша локальна мережа може бути небезпечною (інтерфейс «%@» має IP і префікс «%@»). Ваші дані можуть надсилатися незашифрованими через локальну мережу. Ввімкнення Kill Switch заблокує цей трафік. Підключення до локальних периферійних пристроїв буде перервано.";
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Ваша локальна мережа може бути небезпечною (інтерфейс \"%@\" має IP і префікс \"%@\"). Ваші дані можуть надсилатися незашифрованими через локальну мережу. Ввімкнення Kill Switch заблокує цей трафік. З'єднання з локальними периферійними пристроями буде перервано.";
 
 /* Title of the search screen */
 "search_title" = "Пошук";
@@ -1941,32 +1947,29 @@
 /* Dismiss upsell screen button title */
 "modals_upsell_stay_free" = "Не зараз";
 
-/* Footer of the All Countries upsell screen */
-"modals_upsell_features_footer" = "Та багато інших преміумфункцій";
-
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
-"modals_upsell_features_subtitle" = "У разі оновлення до тарифного плану VPN Plus";
+"modals_upsell_features_subtitle" = "Доступно в тарифному плані Plus";
 
 /* Subtitle of the Safe Mode upsell screen */
 "modals_upsell_features_safe_mode_subtitle" = "Маєте додаткові чи професійні обчислювальні потреби, які потребують нестандартних портів?\n\nПередплатіть VPN Plus, щоб отримати доступ до цієї та інших преміумфункцій.";
-
-/* Learn more button title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_learn_more" = "Докладніше";
-
-/* Subtitle of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_subtitle" = "Помірне NAT, також відоме як Nat Type 2, може вдосконалити вашу роботу онлайн із різними програмами та онлайн-відеоіграми.\n\nОтримайте доступ до цих та інших функцій, передплативши тарифний план Plus.";
 
 /* Title of the Safe Mode upsell screen */
 "modals_upsell_safe_mode_title" = "Дозволити трафік до нестандартних портів";
 
 /* Title of the Moderate NAT upsell screen */
-"modals_upsell_moderate_nat_title" = "Увімкнути помірне NAT";
+"modals_upsell_moderate_nat_title" = "Перейдіть на новий ігровий рівень";
 
-/* Learn more button title of the Moderate NAT upsell screen */
-"modals_upsell_moderate_nat_learn_more" = "Що таке помірне NAT?";
+/* Subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle" = "Отримайте доступ до NAT Type 2 з VPN Plus";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_gaming" = "Вдоскональте режим гри онлайн та якість відеовикликів";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_direct_connections" = "NAT Type 2 (помірний) оптимізує швидкість і стабільність, дозволяючи прямі з'єднання між пристроями";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_streaming" = "Отримайте доступ до глобальних стримінгових сервісів";
+"modals_upsell_all_countries_feature_streaming" = "Дивіться трансляції улюблених фільмів";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_highSpeed" = "Користуйтеся інтернетом із найвищою швидкістю (10 Гбіт/с)";
@@ -2048,3 +2051,66 @@
 
 /* Description of user account update screen */
 "maximum_device_limit" = "Від'єднайте інший пристрій, щоб під'єднатися до цього.";
+
+/* Title of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_title" = "Користуйтеся інтернетом із ще вищою швидкістю (10 Гбіт/с)";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_faster_servers" = "Користуйтеся швидшими, менш навантаженими серверами";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds" = "Increase connection speeds by up to 400%% with VPN Accelerator.";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_distant_servers" = "Вдосконалена швидкість і стабільність під час з'єднання з віддаленими серверами.";
+
+/* Title of Customization upsell modal */
+"upsell_customization_title" = "Отримайте доступ до розширених налаштувань VPN";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_access_LAN" = "Отримуйте доступ до пристроїв у своїй локальній мережі (LAN)";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_profiles" = "Зберігайте профілі для з'єднань, якими ви часто користуєтесь";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_quick_connect" = "Використовуйте свій профіль для швидкого з'єднання";
+
+/* Title of Profiles upsell modal */
+"upsell_profiles_title" = "Отримуйте швидкий доступ до з'єднань, якими ви часто користуєтесь";
+
+/* Subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle" = "Розблокуйте профілі з тарифним планом VPN Plus";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_location" = "Збережіть бажаний сервер, місто або країну.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_protocols" = "Налаштуйте бажані протоколи та преміумфункції VPN.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_auto_connect" = "Налаштуйте автоматичне з'єднання для ще швидшого доступу.";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_any_location" = "Обирайте будь-яке розташування";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_even_higher_speed" = "Ще вища швидкість VPN";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_geoblocked_content" = "Отримуйте доступ до географічно заблокованих матеріалів";
+
+/* Feature of Country upsell modal */
+"upsell_countries_connect_to" = "Під'єднуйтеся до %d країн";
+
+/* Feature of Country upsell modal */
+"upsell_countries_higher_speeds" = "Even higher VPN speed";
+
+/* Feature of Country upsell modal */
+"upsell_countries_money_back" = "Гарантія повернення коштів протягом 30 днів";
+
+/* Feature of Country upsell modal */
+"upsell_country_feature_title" = "Хочете вибрати певну країну?";
+
+/* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
+"_available_with_vpn_business_tooltip" = "Доступно для VPN Business.";

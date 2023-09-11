@@ -1425,6 +1425,12 @@
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
 "_netshield_upsell_subtitle" = "Siteler ile uygulamalarda bulunabilecek reklamları, izleyicileri ve kötü amaçlı yazılımları engelleyin";
 
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_business_upsell_title" = "NetShield ile reklamları engelleyin";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_business_upsell_subtitle" = "VPN Business tarifesine yükselttiğinizde";
+
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
 
@@ -1941,32 +1947,29 @@
 /* Dismiss upsell screen button title */
 "modals_upsell_stay_free" = "Şimdi değil";
 
-/* Footer of the All Countries upsell screen */
-"modals_upsell_features_footer" = "Ve pek çok diğer ücretli özellikler";
-
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
-"modals_upsell_features_subtitle" = "VPN Plus tarifesine yükselttiğinizde";
+"modals_upsell_features_subtitle" = "Plus tarifesine yükselttiğinizde";
 
 /* Subtitle of the Safe Mode upsell screen */
 "modals_upsell_features_safe_mode_subtitle" = "Standart olmayan bağlantı noktaları kullanmanızı gerektiren gelişmiş veya profesyonel bilgi işlem gereksinimleriniz mi var? \n\nBu ve diğer ücretli özelliklere erişmek için VPN Plus tarifesine yükseltin.";
-
-/* Learn more button title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_learn_more" = "Ayrıntılı bilgi alın";
-
-/* Subtitle of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_subtitle" = "Ilımlı NAT, 2. tür NAT olarak da bilinir ve çeşitli uygulamalar ve çevrim içi video oyunlarıyla ilgili çevrim içi deneyiminizi iyileştirebilir.\n\nPlus tarifesi ile bu ve başka özellikleri kullanabilirsiniz.";
 
 /* Title of the Safe Mode upsell screen */
 "modals_upsell_safe_mode_title" = "Standart olmayan bağlantı noktalarından trafik geçebilsin";
 
 /* Title of the Moderate NAT upsell screen */
-"modals_upsell_moderate_nat_title" = "Ilımlı NAT özelliğini açabilirsiniz";
+"modals_upsell_moderate_nat_title" = "Oyun deneyiminizi üst düzeye çıkarın";
 
-/* Learn more button title of the Moderate NAT upsell screen */
-"modals_upsell_moderate_nat_learn_more" = "Ilımlı NAT nedir?";
+/* Subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle" = "VPN Plus tarifesi ile NAT Type 2 özelliğini edinin";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_gaming" = "Çevrim içi oyun ve görüntülü görüşme başarımını artırın";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_direct_connections" = "NAT Type 2 (ortalama) aygıtlar arasında doğrudan bağlantı kurulmasını sağlayarak hız ve kararlılığı iyileştirir";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_streaming" = "Tüm dünyaradaki yayın akışı hizmetlerine erişin";
+"modals_upsell_all_countries_feature_streaming" = "Sevdiğiniz filmleri izleyin";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_highSpeed" = "En yüksek hızlarda gezinin (10 Gb/sn)";
@@ -2048,3 +2051,66 @@
 
 /* Description of user account update screen */
 "maximum_device_limit" = "Lütfen bu aygıtı bağlayabilmek için başka bir aygıtın bağlantısını kesin.";
+
+/* Title of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_title" = "Daha da yüksek hızlarda gezinin (10 Gb/sn değerine varan)";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_faster_servers" = "Daha hızlı ve daha az kalabalık sunuculara erişin";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds" = "Increase connection speeds by up to 400%% with VPN Accelerator.";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_distant_servers" = "Uzak sunucularla bağlantı kurarken daha iyi hız ve kararlılık elde edin";
+
+/* Title of Customization upsell modal */
+"upsell_customization_title" = "Gelişmiş VPN özelleştirmelerine erişin";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_access_LAN" = "Yerel ağınızdaki (LAN) aygıtlara erişin";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_profiles" = "Profiller ile sık kullanılan bağlantıları kaydedin";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_quick_connect" = "Hızlı bağlan özelliği ile profillerinize daha hızlı erişin";
+
+/* Title of Profiles upsell modal */
+"upsell_profiles_title" = "Sık kullandığınız bağlantılara hızla erişin";
+
+/* Subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle" = "VPN Plus tarifesi ile profiiller özelliğini edinin";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_location" = "Yeğlediğiniz sunucuyu, ili ve ülkeyi kaydedin.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_protocols" = "Özel iletişim kuralları ayarlayın ve ücretli VPN özelliklerine erişin.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_auto_connect" = "Daha hızlı erişim için otomatik bağlantı kurun.";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_any_location" = "İstediğiniz konumu seçin";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_even_higher_speed" = "Daha yüksek VPN hızı";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_geoblocked_content" = "Bölgenizde engellenen içeriğe erişin";
+
+/* Feature of Country upsell modal */
+"upsell_countries_connect_to" = "%d ülkeden bağlantı kurun";
+
+/* Feature of Country upsell modal */
+"upsell_countries_higher_speeds" = "Even higher VPN speed";
+
+/* Feature of Country upsell modal */
+"upsell_countries_money_back" = "30 gün içinde ücret iade garantisi";
+
+/* Feature of Country upsell modal */
+"upsell_country_feature_title" = "Belirli bir ülke seçmek ister misiniz?";
+
+/* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
+"_available_with_vpn_business_tooltip" = "VPN Business ile kullanılabilir.";

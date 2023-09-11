@@ -9,17 +9,17 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Під'єднайте %d пристрій</string>
+        <string>Захистіть %d пристрій</string>
         <key>few</key>
-        <string>Під'єднайте до %d пристроїв одночасно</string>
+        <string>Захистіть до %d пристроїв</string>
         <key>many</key>
-        <string>Під'єднайте до %d пристроїв одночасно</string>
+        <string>Захистіть до %d пристроїв</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Під'єднайте до %d пристроїв одночасно</string>
+        <string>Захистіть до %d пристроїв</string>
       </dict>
     </dict>
     <key>modals_upsell_all_countries_title</key>
@@ -194,7 +194,7 @@
         <key>many</key>
         <string>%d країн</string>
         <key>other</key>
-        <string>%d країна</string>
+        <string>%d країн</string>
       </dict>
     </dict>
     <key>_plans_connections</key>
@@ -276,13 +276,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d дні</string>
+        <string>%d днів</string>
         <key>one</key>
         <string>%d день</string>
         <key>few</key>
-        <string>%d днів</string>
-        <key>many</key>
         <string>%d дні</string>
+        <key>many</key>
+        <string>%d днів</string>
       </dict>
     </dict>
     <key>_session_length_days_and_hours</key>
@@ -296,13 +296,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d дні</string>
+        <string>%d днів</string>
         <key>one</key>
         <string>%d день</string>
         <key>few</key>
-        <string>%d днів</string>
-        <key>many</key>
         <string>%d дні</string>
+        <key>many</key>
+        <string>%d днів</string>
       </dict>
       <key>HOURS</key>
       <dict>

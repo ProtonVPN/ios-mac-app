@@ -1425,6 +1425,12 @@
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
 "_netshield_upsell_subtitle" = "Blocca pubblicità, trackers e malware su siti web e applicazioni";
 
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_business_upsell_title" = "Blocca gli annunci con NetShield";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_business_upsell_subtitle" = "Quando effettui l'upgrade a VPN Business";
+
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
 
@@ -1941,32 +1947,29 @@
 /* Dismiss upsell screen button title */
 "modals_upsell_stay_free" = "Non ora";
 
-/* Footer of the All Countries upsell screen */
-"modals_upsell_features_footer" = "E molte altre funzionalità premium";
-
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
-"modals_upsell_features_subtitle" = "Quando esegui l'upgrade a VPN Plus";
+"modals_upsell_features_subtitle" = "Quando effettui l'upgrade a Plus";
 
 /* Subtitle of the Safe Mode upsell screen */
 "modals_upsell_features_safe_mode_subtitle" = "Hai esigenze di elaborazione avanzate o professionali che richiedono porte non standard? \n\nEsegui l'upgrade a VPN Plus per accedere a questa e ad altre funzionalità premium.";
-
-/* Learn more button title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_learn_more" = "Per saperne di più";
-
-/* Subtitle of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_subtitle" = "Il NAT Moderato, anche noto come Nat di Tipo 2, può migliorare la tua esperienza online con varie applicazioni e videogiochi online.\n\nSblocca questa e altre funzionalità con un piano Plus.";
 
 /* Title of the Safe Mode upsell screen */
 "modals_upsell_safe_mode_title" = "Consenti il ​​traffico verso porte non standard";
 
 /* Title of the Moderate NAT upsell screen */
-"modals_upsell_moderate_nat_title" = "Abilita NAT Moderato";
+"modals_upsell_moderate_nat_title" = "Migliora la tua esperienza di gioco";
 
-/* Learn more button title of the Moderate NAT upsell screen */
-"modals_upsell_moderate_nat_learn_more" = "Cos'è il NAT Moderato?";
+/* Subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle" = "Sblocca NAT di tipo 2 con VPN Plus";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_gaming" = "Migliora le prestazioni dei giochi online e delle videochiamate";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_direct_connections" = "NAT di tipo 2 (moderato) ottimizza velocità e stabilità abilitando le connessioni dirette tra i dispositivi";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_streaming" = "Accedi ai servizi di streaming globali";
+"modals_upsell_all_countries_feature_streaming" = "Guarda in streaming i tuoi film preferiti";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_highSpeed" = "Naviga alla massima velocità (10 Gbps)";
@@ -2048,3 +2051,66 @@
 
 /* Description of user account update screen */
 "maximum_device_limit" = "Disconnetti un altro dispositivo per connettere questo.";
+
+/* Title of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_title" = "Naviga a velocità ancora più elevate (fino a 10 Gbps)";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_faster_servers" = "Accedi più velocemente, server meno affollati.";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds" = "Aumenta le velocità di connessione fino al 400%% con VPN Accelerator.";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_distant_servers" = "Velocità e stabilità migliorate quando sei connesso a server distanti.";
+
+/* Title of Customization upsell modal */
+"upsell_customization_title" = "Sblocca personalizzazioni VPN avanzate";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_access_LAN" = "Accedi ai dispositivi sulla tua rete locale (LAN)";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_profiles" = "Salva le connessioni usate frequentemente con i profili";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_quick_connect" = "Ottieni un accesso più veloce ai tuoi profili con la Connessione rapida";
+
+/* Title of Profiles upsell modal */
+"upsell_profiles_title" = "Ottieni un accesso rapido alle tue connessioni frequenti";
+
+/* Subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle" = "Sblocca i profili con VPN Plus";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_location" = "Salva il tuo server, città o paese preferito.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_protocols" = "Imposta protocolli personalizzati e funzionalità VPN premium.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_auto_connect" = "Imposta la connessione automatica per un accesso ancora più veloce.";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_any_location" = "Scegli qualsiasi località";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_even_higher_speed" = "Velocità VPN ancora più elevata";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_geoblocked_content" = "Accedi ai contenuti geograficamente bloccati";
+
+/* Feature of Country upsell modal */
+"upsell_countries_connect_to" = "Connettiti a %d paesi";
+
+/* Feature of Country upsell modal */
+"upsell_countries_higher_speeds" = "Velocità VPN ancora più elevata";
+
+/* Feature of Country upsell modal */
+"upsell_countries_money_back" = "Rimborso garantito entro 30 giorni";
+
+/* Feature of Country upsell modal */
+"upsell_country_feature_title" = "Vuoi scegliere un paese specifico?";
+
+/* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
+"_available_with_vpn_business_tooltip" = "Disponibile con VPN Business.";
