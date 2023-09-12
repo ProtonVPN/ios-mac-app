@@ -56,7 +56,7 @@ public enum UpsellType {
             return Localizable.modalsUpsellSecureCoreTitle
         case .allCountries(let numberOfServers, let numberOfCountries):
             return Localizable.modalsUpsellAllCountriesTitle(numberOfServers, numberOfCountries)
-        case .country(let country, _, _):
+        case .country:
             return Localizable.upsellCountryFeatureTitle
         case .safeMode:
             return Localizable.modalsUpsellSafeModeTitle
