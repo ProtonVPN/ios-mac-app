@@ -1687,6 +1687,16 @@ public enum Localizable {
   public static var couponAppliedPlanNotUpgradedYet: String { return Localizable.tr("Localizable", "coupon_applied_plan_not_upgraded_yet", fallback: "Coupon has been applied successfully. Your subscription will be upgraded within a few minutes.") }
   /// Coupon code
   public static var couponCode: String { return Localizable.tr("Localizable", "coupon_code", fallback: "Coupon code") }
+  /// Modal that lists countries in which servers are available to free users: banner with CTA
+  public static var freeConnectionsModalBanner: String { return Localizable.tr("Localizable", "free_connections_modal_banner", fallback: "Get worldwide coverage with VPN Plus") }
+  /// Modal that lists countries in which servers are available to free users: Description
+  public static var freeConnectionsModalDescription: String { return Localizable.tr("Localizable", "free_connections_modal_description", fallback: "Proton Free automatically connects you to the fastest available server. This will normally be the closest server to your location.") }
+  /// Plural format key: "%#@VARIABLE@"
+  public static func freeConnectionsModalSubtitle(_ p1: Int) -> String {
+    return Localizable.tr("Localizable", "free_connections_modal_subtitle", p1, fallback: "Plural format key: \"%#@VARIABLE@\"")
+  }
+  /// Modal that lists countries in which servers are available to free users: Title
+  public static var freeConnectionsModalTitle: String { return Localizable.tr("Localizable", "free_connections_modal_title", fallback: "Free connections") }
   /// Configuring your VPN access
   public static var loginFetchVpnData: String { return Localizable.tr("Localizable", "login_fetch_vpn_data", fallback: "Configuring your VPN access") }
   /// Start using Proton VPN

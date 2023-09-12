@@ -33,7 +33,7 @@ class ViewController: NSViewController {
         (.whatsNew, "What's new"),
         (.upsell(.allCountries(numberOfServers: 1300,
                                numberOfCountries: 61)), "All countries"),
-        (.upsell(.country(country: "PL",
+        (.upsell(.country(countryFlag: Asset.flagsPL.image,
                           numberOfDevices: 10,
                           numberOfCountries: 61)), "Countries"),
         (.upsell(.secureCore), "Secure Core"),
@@ -79,9 +79,9 @@ extension ViewController: NSTableViewDelegate {
         case .upsell(let type):
             viewController = ModalsFactory.upsellViewController(upsellType: type, upgradeAction: { }, continueAction: { })
         case .discourageSecureCore:
-            viewController = factory.discourageSecureCoreViewController(onDontShowAgain: nil, onActivate: nil, onCancel: nil, onLearnMore: nil)
+            viewController = ModalsFactory.discourageSecureCoreViewController(onDontShowAgain: nil, onActivate: nil, onCancel: nil, onLearnMore: nil)
         case .freeConnections(let countries):
-            viewController = factory.freeConnectionsViewController(countries: countries, upgradeAction: {
+            viewController = ModalsFactory.freeConnectionsViewController(countries: countries, upgradeAction: {
                 debugPrint(".freeConnections pressed")
             })
         case .whatsNew:
