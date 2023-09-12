@@ -18,6 +18,8 @@
 
 import Cocoa
 import Modals
+import Strings
+import Ergonomics
 
 final class FreeConnectionsViewController: NSViewController {
 
@@ -48,14 +50,18 @@ final class FreeConnectionsViewController: NSViewController {
     override public func awakeFromNib() {
         super.awakeFromNib()
         view.wantsLayer = true
-        view.layer?.backgroundColor = colors.background.cgColor
+        DarkAppearance {
+            view.layer?.backgroundColor = .cgColor(.background)
+        }
     }
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-        setupFonts()
-        setupImagesAndColors()
-        setupCollection()
+        DarkAppearance {
+            setupFonts()
+            setupImagesAndColors()
+            setupCollection()
+        }
     }
 
     override public func viewWillAppear() {
@@ -67,39 +73,39 @@ final class FreeConnectionsViewController: NSViewController {
 
     private func setupFonts() {
         titleLabel.font = .systemFont(ofSize: 22, weight: .regular)
-        titleLabel.textColor = colors.text
+        titleLabel.textColor = .color(.text)
 
         descriptionLabel.font = .systemFont(ofSize: 17, weight: .regular)
-        descriptionLabel.textColor = colors.weakText
+        descriptionLabel.textColor = .color(.text, [.weak])
 
         subTitleLabel.font = .systemFont(ofSize: 13, weight: .bold)
-        subTitleLabel.textColor = colors.text
+        subTitleLabel.textColor = .color(.text)
 
         bannerLabel.font = .systemFont(ofSize: 13, weight: .regular)
-        bannerLabel.textColor = colors.text
+        bannerLabel.textColor = .color(.text)
     }
 
     private func setupImagesAndColors() {
         roundedBackgroundView.wantsLayer = true
         roundedBackgroundView.layer?.cornerRadius = 8
-        roundedBackgroundView.layer?.backgroundColor = colors.backgroundWeak.cgColor
+        roundedBackgroundView.layer?.backgroundColor = .cgColor(.background, [.weak])
 
         bannerImageView.image = Modals.Asset.worldwideCoverage.image
         bannerChevronView.image = NSImage(systemSymbolName: "chevron.right", accessibilityDescription: nil)
     }
 
     private func setupTranslations() {
-        titleLabel.stringValue = LocalizedString.freeConnectionsModalTitle
-        descriptionLabel.stringValue = LocalizedString.freeConnectionsModalDescription
-        bannerLabel.stringValue = LocalizedString.freeConnectionsModalBanner
-        subTitleLabel.stringValue = LocalizedString.freeConnectionsModalSubtitle(countries?.count ?? 0)
+        titleLabel.stringValue = Localizable.freeConnectionsModalTitle
+        descriptionLabel.stringValue = Localizable.freeConnectionsModalDescription
+        bannerLabel.stringValue = Localizable.freeConnectionsModalBanner
+        subTitleLabel.stringValue = Localizable.freeConnectionsModalSubtitle(countries?.count ?? 0)
     }
 
     private func setupCollection() {
         countriesList.register(NSNib(nibNamed: CountryCellView.nib, bundle: .module), forItemWithIdentifier: CountryCellView.cellIdentifier)
         countriesList.delegate = self
         countriesList.dataSource = self
-        countriesList.backgroundColors = [colors.background]
+        countriesList.backgroundColors = [.color(.background)]
         countriesListLayout.estimatedItemSize = NSSize(width: 80, height: 16)
     }
 
