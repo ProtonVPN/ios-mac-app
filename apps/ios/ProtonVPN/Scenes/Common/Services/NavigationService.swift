@@ -28,6 +28,8 @@ import BugReport
 import VPNShared
 import Onboarding
 import Strings
+import Dependencies
+import Modals_iOS
 
 // MARK: Country Service
 
@@ -179,6 +181,19 @@ final class NavigationService {
 
     private func presentMainInterface() {
         setupTabs()
+        showInitialModals()
+    }
+
+    func showInitialModals() {
+        @Dependency(\.featureFlagProvider) var featureFlags
+        let isFreeRescopeEnabled: Bool = featureFlags[\.showNewFreePlan]
+        guard isFreeRescopeEnabled, // Only show the what's new modal once the free plans have been activated
+              propertiesManager.showWhatsNewModal else {
+            return
+        }
+        propertiesManager.showWhatsNewModal = false
+
+        tabBarController?.present(ModalsFactory().whatsNewViewController(), animated: true)
     }
     
     @objc private func sessionChanged(_ notification: Notification) {
