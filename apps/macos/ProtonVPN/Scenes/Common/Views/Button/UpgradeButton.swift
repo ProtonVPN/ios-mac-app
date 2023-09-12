@@ -24,6 +24,7 @@ class UpgradeButton: HoverDetectionImageButton {
     override func awakeFromNib() {
         imageMain = CoreAsset.vpnSubscriptionBadge.image
         imageHovered = CoreAsset.vpnSubscriptionBadgeHover.image
+        toolTip = LocalizedString.upgradeToPlus
         super.awakeFromNib()
     }
 }
