@@ -68,6 +68,7 @@ class AppSessionRefreshTimerTests: XCTestCase {
         networkingDelegate = nil
         apiService = nil
         vpnKeychain = nil
+        appSessionRefresher.didAttemptLogin = nil // Prevents crashes in other tests
         appSessionRefresher = nil
         timerFactory = nil
         appSessionRefreshTimer = nil
