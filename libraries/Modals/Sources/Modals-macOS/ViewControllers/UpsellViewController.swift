@@ -74,7 +74,6 @@ public final class UpsellViewController: NSViewController {
 
     func setupSubviews() {
         titleLabel.textColor = .color(.text)
-        descriptionLabel.textColor = .color(.text, .weak)
 
         titleLabel.setAccessibilityIdentifier("TitleLabel")
         descriptionLabel.setAccessibilityIdentifier("DescriptionLabel")
@@ -86,7 +85,10 @@ public final class UpsellViewController: NSViewController {
         let upsellFeature = upsellType.upsellFeature()
         titleLabel.stringValue = upsellFeature.title
         if let subtitle = upsellFeature.subtitle {
-            descriptionLabel.stringValue = subtitle
+            descriptionLabel.attributedStringValue = subtitle.attributedString(size: 17,
+                                                                               color: .color(.text, .weak),
+                                                                               boldStrings: upsellFeature.boldSubtitleElements,
+                                                                               alignment: .center)
         } else {
             descriptionLabel.isHidden = true
         }

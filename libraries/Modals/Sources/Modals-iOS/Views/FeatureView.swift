@@ -19,34 +19,31 @@
 import Modals
 import Foundation
 import UIKit
+import Theme
 
 final class FeatureView: UIView {
 
-    static let moneyGuaranteeGreen = UIColor(red: 39/255.0,
-                                             green: 221/255.0,
-                                             blue: 177/255.0,
-                                             alpha: 1.0)
     // MARK: Outlets
-
     @IBOutlet private weak var iconImageView: UIImageView!
-    @IBOutlet private weak var titleLabel: UILabel! {
-        didSet {
-            featureTextStyle(titleLabel)
-        }
-    }
+    @IBOutlet private weak var titleLabel: UILabel!
 
     // MARK: Properties
 
     var feature: Feature? {
         didSet {
+            guard let feature else { return }
+            var textColor = UIColor.color(.text)
             if feature == .moneyGuarantee {
-                iconImageView.tintColor = Self.moneyGuaranteeGreen
-                titleLabel.textColor = Self.moneyGuaranteeGreen
+                iconImageView.tintColor = UIColor.color(.icon, .success)
+                textColor = UIColor.color(.text, .success)
             } else {
-                iconImageView.tintColor = colors.textAccent
+                iconImageView.tintColor = UIColor.color(.icon, .interactive)
             }
-            iconImageView.image = feature?.image
-            titleLabel.text = feature?.title()
+            iconImageView.image = feature.image
+
+            titleLabel.attributedText = feature.title().attributedString(size: 15,
+                                                                         color: textColor,
+                                                                         boldStrings: feature.boldTitleElements())
         }
     }
 }

@@ -101,7 +101,10 @@ public final class UpsellViewController: UIViewController {
         let upsellFeature = upsellType.upsellFeature()
         titleLabel.text = upsellFeature.title
         if let subtitle = upsellFeature.subtitle {
-            subtitleLabel.text = subtitle
+            subtitleLabel.attributedText =
+            subtitle.attributedString(size: 17,
+                                      color: UIColor.color(.text, .weak),
+                                      boldStrings: upsellFeature.boldSubtitleElements)
         } else {
             subtitleLabel.isHidden = true
         }
