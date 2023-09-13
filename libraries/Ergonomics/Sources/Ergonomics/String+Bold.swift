@@ -1,5 +1,5 @@
 //
-//  Created on 13/09/2023.
+//  Created on 14/09/2023.
 //
 //  Copyright (c) 2023 Proton AG
 //
@@ -16,7 +16,27 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
+#if os(iOS)
+import UIKit
+
+public extension String {
+    func attributedString(size: CGFloat, color: UIColor, boldStrings: [String]) -> NSAttributedString {
+        let attrs: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: size, weight: .regular),
+            .foregroundColor: color
+        ]
+        let attributedText = NSMutableAttributedString(string: self, attributes: attrs)
+        for boldText in boldStrings {
+            let range = (self as NSString).range(of: boldText)
+            let attrsBold: [NSAttributedString.Key: Any] = [
+                .font : UIFont.systemFont(ofSize: size, weight: .bold)
+            ]
+            attributedText.addAttributes(attrsBold, range: range)
+        }
+        return attributedText
+    }
+}
+#elseif os(macOS)
 import AppKit
 
 public extension String {
@@ -40,3 +60,4 @@ public extension String {
         return attributedText
     }
 }
+#endif
