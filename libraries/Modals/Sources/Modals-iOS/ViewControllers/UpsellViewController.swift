@@ -20,6 +20,7 @@ import Foundation
 import UIKit
 import Modals
 import Strings
+import Theme
 
 public protocol UpsellViewControllerDelegate: AnyObject {
     func userDidRequestPlus()
@@ -38,6 +39,14 @@ public final class UpsellViewController: UIViewController {
 
     // MARK: Outlets
 
+    @IBOutlet private weak var borderView: UIView! {
+        didSet {
+            borderView.backgroundColor = .clear
+            borderView.layer.borderColor = UIColor.color(.border).cgColor
+            borderView.layer.cornerRadius = .themeRadius12
+            borderView.layer.borderWidth = 1
+        }
+    }
     @IBOutlet private weak var gradientView: UIView!
     @IBOutlet private weak var featureView: UIView!
     @IBOutlet private weak var scrollView: CenteringScrollView!
@@ -110,6 +119,8 @@ public final class UpsellViewController: UIViewController {
         }
         featureArtImageView.image = upsellFeature.artImage
         featureArtImageView.image = featureArtImageView.image?.mergedOnTop(with: upsellFeature.flagImage)
+
+        borderView.isHidden = upsellFeature.features.isEmpty
 
         for view in featuresStackView.arrangedSubviews {
             view.removeFromSuperview()

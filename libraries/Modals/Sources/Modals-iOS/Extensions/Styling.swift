@@ -90,21 +90,3 @@ let footerStyle = concat(baseTextStyle, and: {
 let featureTextStyle = concat(baseTextStyle, and: {
     $0.font = .systemFont(ofSize: 15, weight: .regular)
 })
-
-public extension String {
-    func attributedString(size: CGFloat, color: UIColor, boldStrings: [String]) -> NSAttributedString {
-        let attrs: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: size, weight: .regular),
-            .foregroundColor: color
-        ]
-        let attributedText = NSMutableAttributedString(string: self, attributes: attrs)
-        for boldText in boldStrings {
-            let range = (self as NSString).range(of: boldText)
-            let attrsBold: [NSAttributedString.Key: Any] = [
-                .font : UIFont.systemFont(ofSize: size, weight: .bold)
-            ]
-            attributedText.addAttributes(attrsBold, range: range)
-        }
-        return attributedText
-    }
-}

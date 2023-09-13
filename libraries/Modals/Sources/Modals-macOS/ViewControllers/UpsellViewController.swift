@@ -24,10 +24,23 @@ import Cocoa
 import Modals
 import Ergonomics
 import Strings
+import SwiftUI
+import Theme
 
 public final class UpsellViewController: NSViewController {
 
-    @IBOutlet var gradientView: NSView!
+    @IBOutlet private weak var borderView: NSView! {
+        didSet {
+            borderView.wantsLayer = true
+            borderView.layer?.backgroundColor = .clear
+            DarkAppearance {
+                borderView.layer?.borderColor = NSColor.color(.border).cgColor
+            }
+            borderView.layer?.cornerRadius = .themeRadius12
+            borderView.layer?.borderWidth = 1
+        }
+    }
+    @IBOutlet private weak var gradientView: NSView!
     @IBOutlet private weak var imageView: NSImageView!
     @IBOutlet private weak var flagView: NSImageView!
     @IBOutlet private weak var titleLabel: NSTextField!
