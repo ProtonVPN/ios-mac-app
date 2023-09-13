@@ -74,6 +74,8 @@ private extension AppTheme.Style {
             return Asset.mobileBackgroundSecondary.color
         } else if contains(.strong) {
             return Asset.mobileBackgroundDeep.color
+        } else if contains(.success) {
+            return Asset.protonVpnGreen.color
         } else {
             return Asset.mobileBackgroundNorm.color
         }
@@ -92,6 +94,8 @@ private extension AppTheme.Style {
             return Asset.mobileTextInverted.color
         } else if contains(.interactive) {
             return Asset.mobileTextAccent.color
+        } else if contains(.success) {
+            return Asset.protonVpnGreen.color
         } else {
             return Asset.mobileTextNorm.color
         }

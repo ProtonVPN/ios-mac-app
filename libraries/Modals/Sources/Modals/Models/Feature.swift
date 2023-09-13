@@ -124,6 +124,23 @@ extension Feature {
         }
     }
 
+    public func boldTitleElements() -> [String] {
+        switch self {
+        case .gaming:
+            return [Localizable.modalsUpsellModerateNatSubtitleBold]
+        case .increaseConnectionSpeeds:
+            return [Localizable.upsellVpnAcceleratorIncreaseConnectionSpeedsBold]
+        case .profiles:
+            return [Localizable.upsellCustomizationProfilesBold]
+        case .quickConnect:
+            return [Localizable.upsellCustomizationQuickConnectBold]
+        case .accessLAN:
+            return [Localizable.upsellCustomizationAccessLANBold]
+        default:
+            return []
+        }
+    }
+
     public var linkImage: Image? {
         switch self {
         case .externalAudit:
@@ -148,7 +165,7 @@ extension Feature {
         case .routeSecureServers:
             return Asset.routeSecureServers.image
         case .addLayer:
-            return Asset.addLayer.image
+            return Theme.Asset.icLocks.image
         case .protectFromAttacks:
             return Asset.protectFromAttacks.image
         case .privacyFirst, .activityLogging, .noThirdParties:

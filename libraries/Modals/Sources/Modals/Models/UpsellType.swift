@@ -31,13 +31,16 @@ public enum UpsellType {
     case profiles
 
     public func upsellFeature() -> UpsellFeature {
-        UpsellFeature(title: title(),
-                      subtitle: subtitle(),
-                      features: features(),
-                      moreInformation: moreInformation(),
-                      artImage: artImage(),
-                      flagImage: flagImage())
-    }
+        UpsellFeature(
+            title: title(),
+            subtitle: subtitle(),
+            boldSubtitleElements: boldSubtitleElements(),
+            features: features(),
+            moreInformation: moreInformation(),
+            artImage: artImage(),
+            flagImage: flagImage()
+        )
+}
 
     private func moreInformation() -> Feature? {
         switch self {
@@ -95,6 +98,16 @@ public enum UpsellType {
             return nil
         case .profiles:
             return Localizable.upsellProfilesSubtitle
+        }
+    }
+    private func boldSubtitleElements() -> [String] {
+        switch self {
+        case .profiles:
+            return [Localizable.upsellProfilesSubtitleBold]
+        case .country:
+            return [Localizable.upsellCountryFeatureSubtitleBold]
+        default:
+            return []
         }
     }
 
