@@ -16,8 +16,8 @@ fileprivate let newProfileSuccessMessage = "New Profile saved"
 fileprivate let editProfileSuccessMessage = "Profile updated"
 fileprivate let buttonConnect = "ic power off"
 fileprivate let buttonDisconnect = "ic power off"
-fileprivate let fastestProfile = "Fastest Connection"
-fileprivate let randomProfile = "Random Connection"
+fileprivate let fastestProfile = "Fastest"
+fileprivate let randomProfile = "Random"
 
 class ProfileRobot: CoreElements {
     
