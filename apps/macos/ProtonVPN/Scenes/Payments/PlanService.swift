@@ -81,11 +81,12 @@ final class CorePlanService: PlanService {
     }
 
     private func updateCountriesCount(completion: @escaping (Result<Int, Error>) -> Void) {
-        if let counts = payments.planService.countriesCount {
+        guard case .left(let planService) = payments.planService else { return }
+        if let counts = planService.countriesCount {
             return completion(.success(counts.maxCountries()))
         }
-        payments.planService.updateCountriesCount { [weak self] in
-            if let count = self?.payments.planService.countriesCount?.maxCountries() {
+        planService.updateCountriesCount {
+            if let count = planService.countriesCount?.maxCountries() {
                 return completion(.success(count))
             }
             return completion(.failure(CountriesCountError.internalError))
