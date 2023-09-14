@@ -407,11 +407,11 @@ final class ConnectionSettingsViewModel {
     // MARK: - Upsell Modals
 
     func showLANConnectionUpsell() {
-        alertService.push(alert: ModerateNATUpsellAlert()) // VPNAPPL-1851 Show new LAN Connections upsell modal
+        alertService.push(alert: CustomizationUpsellAlert())
     }
 
     func showVPNAcceleratorUpsell() {
-        alertService.push(alert: ModerateNATUpsellAlert()) // VPNAPPL-1851 Show VPNAccelerator upsell modal
+        alertService.push(alert: VPNAcceleratorUpsellAlert())
     }
     
     // MARK: - Item
