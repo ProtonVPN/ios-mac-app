@@ -291,7 +291,7 @@ final class SettingsViewModel {
             .upsellableToggle(
                 title: Localizable.vpnAcceleratorTitle,
                 state: { [unowned self] in self.displayState(for: VPNAccelerator.self) },
-                upsell: { [weak self] in self?.alertService.push(alert: ModerateNATUpsellAlert()) }, // TODO: show VPN Accelerator upsell modal VPNAPPL-1851
+                upsell: { [weak self] in self?.alertService.push(alert: VPNAcceleratorUpsellAlert()) },
                 handler: { (toggleOn, callback)  in
                     self.vpnStateConfiguration.getInfo { info in
                         switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
@@ -334,7 +334,7 @@ final class SettingsViewModel {
             .upsellableToggle(
                 title: Localizable.allowLanTitle,
                 state: { [unowned self] in self.displayState(for: ExcludeLocalNetworks.self) },
-                upsell: { [weak self] in self?.alertService.push(alert: ModerateNATUpsellAlert()) }, // TODO: show Allow LAN Connections upsell modal VPNAPPL-1851
+                upsell: { [weak self] in self?.alertService.push(alert: CustomizationUpsellAlert()) },
                 handler: self.switchLANCallback()
             ),
             .tooltip(text: Localizable.allowLanInfo)
@@ -358,7 +358,7 @@ final class SettingsViewModel {
             .upsellableToggle(
                 title: Localizable.moderateNatTitle,
                 state: { [unowned self] in self.moderateNATState },
-                upsell: { [weak self] in self?.alertService.push(alert: ModerateNATUpsellAlert()) }, // TODO: show new upsell modal VPNAPPL-1851
+                upsell: { [weak self] in self?.alertService.push(alert: ModerateNATUpsellAlert()) },
                 handler: { [weak self] (toggleOn, callback) in
                     let natType = toggleOn ? NATType.moderateNAT : NATType.strictNAT
 

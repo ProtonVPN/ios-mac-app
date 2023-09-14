@@ -115,11 +115,11 @@ final class AdvancedSettingsViewModel {
     // MARK: - Upsell Modals
 
     func showNATUpsell() {
-        alertService.push(alert: ModerateNATUpsellAlert()) // VPNAPPL-1851 Show LANConnections upsell modal
+        alertService.push(alert: ModerateNATUpsellAlert())
     }
 
     func showSafeModeUpsell() {
-        alertService.push(alert: SafeModeUpsellAlert()) // VPNAPPL-1851 Show new Safe Mode upsell modal
+        alertService.push(alert: SafeModeUpsellAlert())
     }
 
     // MARK: - Setters
