@@ -107,11 +107,12 @@ final class CorePlanService: PlanService {
     }
 
     private func updateCountriesCount(completion: @escaping (Result<Int, Error>) -> Void) {
-        if let counts = payments.planService.countriesCount {
+        guard case .left(let planService) = payments.planService else { return }
+        if let counts = planService.countriesCount {
             return completion(.success(counts.maxCountries()))
         }
-        payments.planService.updateCountriesCount { [weak self] in
-            if let count = self?.payments.planService.countriesCount?.maxCountries() {
+        planService.updateCountriesCount {
+            if let count = planService.countriesCount?.maxCountries() {
                 return completion(.success(count))
             }
             return completion(.failure(CountriesCountError.internalError))
@@ -132,8 +133,9 @@ final class CorePlanService: PlanService {
                 completion(.failure(error))
                 return
             }
-
-            self?.payments.planService.updateServicePlans(success: { completion(.success) }, failure: { error in completion(.failure(error)) })
+            
+            guard case .left(let planService) = self?.payments.planService else { return }
+            planService.updateServicePlans(success: { completion(.success) }, failure: { error in completion(.failure(error)) })
         }
     }
 
