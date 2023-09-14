@@ -604,7 +604,7 @@
 "_fastest_available_server" = "Fastest available server";
 
 /* iOS: Predefined profile with fastest connection */
-"_fastest_connection" = "Fastest Connection";
+"_fastest_connection" = "Fastest";
 
 /* Profile create/change form and other places describing profile */
 "_random" = "Random";
@@ -613,7 +613,7 @@
 "_random_available_server" = "Random available server";
 
 /* iOS: Predefined profile with random server */
-"_random_connection" = "Random Connection";
+"_random_connection" = "Random";
 
 /* Profile create/change form */
 "_different_server_each_time" = "Different server each time";
