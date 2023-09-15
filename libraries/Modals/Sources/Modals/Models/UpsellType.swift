@@ -74,12 +74,11 @@ public enum UpsellType {
             return Localizable.upsellCustomizationTitle
         case .profiles:
             return Localizable.upsellProfilesTitle
-        case let .cantSkip(_, _, longSkip):
-            if longSkip {
-                return Localizable.upsellSpecificLocationTitle
-            } else {
-                return ""
+        case let .cantSkip(before, _, longSkip):
+            if before.timeIntervalSinceNow > 0 && longSkip { // hide the title after timer runs out
+                return Localizable.upsellCustomizationTitle
             }
+            return ""
         }
     }
 
@@ -105,10 +104,14 @@ public enum UpsellType {
             return nil
         case .profiles:
             return Localizable.upsellProfilesSubtitle
-        case .cantSkip:
-            return Localizable.upsellSpecificLocationSubtitle
+        case let .cantSkip(before, _, _):
+            if before.timeIntervalSinceNow > 0 { // hide the subtitle after timer runs out
+                return Localizable.upsellSpecificLocationSubtitle
+            }
+            return nil
         }
     }
+
     private func boldSubtitleElements() -> [String] {
         switch self {
         case .profiles:
