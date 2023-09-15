@@ -143,8 +143,7 @@ class DefaultProfileViewModel {
         
         if !authorizer.canUseProfiles {
             log.debug("Connect to profile rejected because user is on free plan", category: .connectionConnect, event: .trigger)
-            // show profiles upsell modal VPNAPPL-1851
-            alertService.push(alert: AllCountriesUpsellAlert())
+            alertService.push(alert: ProfilesUpsellAlert())
         } else if isConnecting {
             NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.abort)
             log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)

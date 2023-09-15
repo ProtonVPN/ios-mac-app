@@ -432,8 +432,7 @@ public class VpnGateway: VpnGatewayProtocol {
         @Dependency(\.connectionAuthorizer) var authorizer
         switch authorizer.authorize(request: request) {
         case .failure(.specificCountryUnavailable(let countryCode)):
-            alertService?.push(alert: AllCountriesUpsellAlert())
-            // VPNAPPL-1851: Show specific country upsell modal
+            alertService?.push(alert: CountryUpsellAlert(countryFlag: .flag(countryCode: countryCode)!))
             log.info("User is not authorized to connect to specific countries (\(countryCode))")
             return
         case .failure(let .serverChangeUnavailable(date, duration, longSkip)):

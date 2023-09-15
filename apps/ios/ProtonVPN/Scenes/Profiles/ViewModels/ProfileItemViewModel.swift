@@ -159,8 +159,7 @@ final class ProfileItemViewModel {
 
         if !authorizer.canUseProfiles {
             log.debug("Connect to profile rejected because user is on free plan", category: .connectionConnect, event: .trigger)
-            // show profiles upsell modal VPNAPPL-1851
-            alertService.push(alert: AllCountriesUpsellAlert())
+            alertService.push(alert: ProfilesUpsellAlert())
         } else if !authorizer.canUseProfile(ofTier: lowestServerTier) {
             // The user is on a paid plan, but this profile requires a higher user tier
             // This shouldn't really happen unless the user is on the basic plan, or the profile requires visionary tier

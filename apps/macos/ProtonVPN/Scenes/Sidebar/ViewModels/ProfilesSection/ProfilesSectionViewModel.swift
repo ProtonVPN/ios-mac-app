@@ -84,8 +84,7 @@ class ProfilesSectionViewModel {
     var canUseProfiles: Bool { authorizer.canUseProfiles }
 
     private func showProfilesUpsellAlert() {
-        // show profiles upsell modal VPNAPPL-1851
-        alertService.push(alert: AllCountriesUpsellAlert())
+        alertService.push(alert: ProfilesUpsellAlert())
     }
     
     func createNewProfileAction() {
