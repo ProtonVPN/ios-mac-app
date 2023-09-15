@@ -57,11 +57,9 @@ final class FreeConnectionsViewController: NSViewController {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-        DarkAppearance {
-            setupFonts()
-            setupImagesAndColors()
-            setupCollection()
-        }
+        setupFonts()
+        setupImagesAndColors()
+        setupCollection()
     }
 
     override public func viewWillAppear() {
@@ -88,7 +86,7 @@ final class FreeConnectionsViewController: NSViewController {
     private func setupImagesAndColors() {
         roundedBackgroundView.wantsLayer = true
         roundedBackgroundView.layer?.cornerRadius = 8
-        roundedBackgroundView.layer?.backgroundColor = .cgColor(.background, [.weak])
+        DarkAppearance { roundedBackgroundView.layer?.backgroundColor = .cgColor(.background, [.weak]) }
 
         bannerImageView.image = Modals.Asset.worldwideCoverage.image
         bannerChevronView.image = NSImage(systemSymbolName: "chevron.right", accessibilityDescription: nil)

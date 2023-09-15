@@ -33,7 +33,7 @@ class ViewController: NSViewController {
         (.whatsNew, "What's new"),
         (.upsell(.allCountries(numberOfServers: 1300,
                                numberOfCountries: 61)), "All countries"),
-        (.upsell(.country(countryFlag: Asset.flagsPL.image,
+        (.upsell(.country(countryFlag: NSImage(named: "flags_PL")!,
                           numberOfDevices: 10,
                           numberOfCountries: 61)), "Countries"),
         (.upsell(.secureCore), "Secure Core"),
@@ -55,11 +55,11 @@ class ViewController: NSViewController {
             longSkip: true)
         ), "Server Roulette (Too many skips)"),
         (.freeConnections([
-            ("Japan", Asset.flagsJP.image),
-            ("Netherlands", Asset.flagsNL.image),
-            ("Romania", Asset.flagsRO.image),
-            ("United States", Asset.flagsUS.image),
-            ("Poland", Asset.flagsPL.image),
+            ("Japan", NSImage(named: "flags_JP")!),
+            ("Netherlands", NSImage(named: "flags_NL")!),
+            ("Romania", NSImage(named: "flags_RO")!),
+            ("United States", NSImage(named: "flags_US")!),
+            ("Poland", NSImage(named: "flags_PL")!),
         ]), "Feee servers"),
     ]
 

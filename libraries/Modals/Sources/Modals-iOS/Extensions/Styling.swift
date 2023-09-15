@@ -97,7 +97,7 @@ let closeButtonStyle: (UIButton) -> Void = {
     $0.tintColor = colors.text
 }
 
-let shevronStyle: (UIImageView) -> Void = {
+let chevronStyle: (UIImageView) -> Void = {
     $0.image = UIImage(systemName: "chevron.right")
     $0.tintColor = colors.weakText
 }

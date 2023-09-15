@@ -27,7 +27,7 @@ class BannerViewCell: UITableViewCell {
     @IBOutlet weak var roundedBackgroundView: UIView!
     @IBOutlet weak var leftImageView: UIImageView!
     @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var rightShevron: UIImageView!
+    @IBOutlet weak var rightChevron: UIImageView!
     
     var viewModel: BannerViewModel? {
         didSet {
@@ -43,8 +43,8 @@ class BannerViewCell: UITableViewCell {
         label.textColor = .normalTextColor()
         label.font = .systemFont(ofSize: 13)
 
-        rightShevron.image = UIImage(systemName: "chevron.right")
-        rightShevron.tintColor = .iconHint()
+        rightChevron.image = UIImage(systemName: "chevron.right")
+        rightChevron.tintColor = .iconHint()
 
         roundedBackgroundView.backgroundColor = .secondaryBackgroundColor()
         roundedBackgroundView.layer.cornerRadius = 12

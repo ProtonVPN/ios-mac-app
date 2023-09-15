@@ -24,7 +24,7 @@ class ViewController: UITableViewController {
     
     let upsells: [(type: UpsellType, title: String)] = [
         (.allCountries(numberOfServers: 1300, numberOfCountries: 61), "All countries"),
-        (.country(countryFlag: Asset.flagsUS.image, numberOfDevices: 10, numberOfCountries: 61), "Countries"),
+        (.country(countryFlag: UIImage(named: "flags_US")!, numberOfDevices: 10, numberOfCountries: 61), "Countries"),
         (.secureCore, "Secure Core"),
         (.netShield, "Net Shield"),
         (.safeMode, "Safe Mode"),
@@ -46,8 +46,8 @@ class ViewController: UITableViewController {
         (.pendingInvoicesReconnecting(fromServer: fromServer, toServer: toServer), "Pending Invoices Reconnecting"),
         (.pendingInvoices, "Pending Invoices")]
 
-    static let fromServer = ("US-CA#63", Asset.flagsUS.image)
-    static let toServer = ("US-CA#78", Asset.flagsUS.image)
+    static let fromServer = ("US-CA#63", UIImage(named: "flags_US")!)
+    static let toServer = ("US-CA#78", UIImage(named: "flags_US")!)
 
     let modalsFactory = ModalsFactory()
 
@@ -116,11 +116,11 @@ class ViewController: UITableViewController {
             } else if indexPath.row == 1 {
                 viewController = modalsFactory.freeConnectionsViewController(
                     countries: [
-                        ("Japan", Asset.flagsJP.image),
-                        ("Netherlands", Asset.flagsNL.image),
-                        ("Romania", Asset.flagsRO.image),
-                        ("United States", Asset.flagsUS.image),
-                        ("Poland", Asset.flagsPL.image),
+                        ("Japan", UIImage(named: "flags_JP")),
+                        ("Netherlands", UIImage(named: "flags_NL")),
+                        ("Romania", UIImage(named: "flags_RO")),
+                        ("United States", UIImage(named: "flags_US")),
+                        ("Poland", UIImage(named: "flags_PL")),
                     ],
                     upgradeAction: {
                         debugPrint("freeConnectionsViewController")
