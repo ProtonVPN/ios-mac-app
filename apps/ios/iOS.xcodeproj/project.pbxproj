@@ -275,6 +275,9 @@
 		D55F10F0297FD1DF00EAF2AB /* LocalFeatureFlags in Frameworks */ = {isa = PBXBuildFile; productRef = D55F10EF297FD1DF00EAF2AB /* LocalFeatureFlags */; };
 		D563A7502A5C279B00908254 /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = D563A74F2A5C279B00908254 /* Strings */; };
 		D563A7562A5D260C00908254 /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = D563A7552A5D260C00908254 /* Strings */; };
+		D572E56D2AB487C200CBD2B7 /* BannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D572E56C2AB487C200CBD2B7 /* BannerViewModel.swift */; };
+		D572E5702AB487D900CBD2B7 /* BannerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D572E56E2AB487D900CBD2B7 /* BannerViewCell.xib */; };
+		D572E5712AB487D900CBD2B7 /* BannerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D572E56F2AB487D900CBD2B7 /* BannerViewCell.swift */; };
 		D573D114264A70980033CE19 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D573D113264A70980033CE19 /* UIKit.framework */; };
 		D580AB8224518567003C34B9 /* TroubleshootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB8024518567003C34B9 /* TroubleshootViewController.swift */; };
 		D580AB8324518567003C34B9 /* TroubleshootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D580AB8124518567003C34B9 /* TroubleshootViewController.xib */; };
@@ -766,6 +769,9 @@
 		D555C48D297E78FF000593EF /* OVPNLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OVPNLogger.swift; sourceTree = "<group>"; };
 		D555C48E297E78FF000593EF /* PacketTunnelProvider+Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PacketTunnelProvider+Logging.swift"; sourceTree = "<group>"; };
 		D55B36CF2458003100D8B0B9 /* TroubleshootCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootCoordinatorMock.swift; sourceTree = "<group>"; };
+		D572E56C2AB487C200CBD2B7 /* BannerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerViewModel.swift; sourceTree = "<group>"; };
+		D572E56E2AB487D900CBD2B7 /* BannerViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BannerViewCell.xib; sourceTree = "<group>"; };
+		D572E56F2AB487D900CBD2B7 /* BannerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerViewCell.swift; sourceTree = "<group>"; };
 		D573D113264A70980033CE19 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D580AB8024518567003C34B9 /* TroubleshootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootViewController.swift; sourceTree = "<group>"; };
 		D580AB8124518567003C34B9 /* TroubleshootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TroubleshootViewController.xib; sourceTree = "<group>"; };
@@ -1391,6 +1397,7 @@
 		79C5598A20AC309C00E6D3F6 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				D572E56C2AB487C200CBD2B7 /* BannerViewModel.swift */,
 				79848BAB20D1B9DC00EF6F9F /* CountriesViewModel.swift */,
 				79F17EF920A5570C004D2696 /* CountryItemViewModel.swift */,
 				F3082A6E27E2293D001A83DF /* CityItemViewModel.swift */,
@@ -1947,6 +1954,8 @@
 		F36ECC862611C5050089B898 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D572E56F2AB487D900CBD2B7 /* BannerViewCell.swift */,
+				D572E56E2AB487D900CBD2B7 /* BannerViewCell.xib */,
 				796BD1D021144D49003D6B8D /* ServersHeaderView.swift */,
 				796BD1D221144D63003D6B8D /* ServersHeaderView.xib */,
 			);
@@ -2773,6 +2782,7 @@
 				E1D187EA2301A20700C5F492 /* VpnProtocol.xib in Resources */,
 				E1EB9E7722FF096A009E704F /* LogSelection.xib in Resources */,
 				4CF2981F2A7D3B8E00DEB23F /* es.lproj in Resources */,
+				D572E5702AB487D900CBD2B7 /* BannerViewCell.xib in Resources */,
 				AD37FAC329B63E1100D4DE4E /* NetShieldStatsItemView.xib in Resources */,
 				4CF298192A7D3B8E00DEB23F /* ja.lproj in Resources */,
 				428DF979262EFCDE00944379 /* ServersStreamingFeaturesVC.xib in Resources */,
@@ -3075,7 +3085,6 @@
 				E532A8AD29252FFD00096D2D /* InformationTableViewCell.swift in Sources */,
 				F348C9D327D7B63300622584 /* CountriesViewController+Search.swift in Sources */,
 				F330F01627FC85AE00C3AA33 /* CouponViewController.swift in Sources */,
-				F314141E27B174C5007424E9 /* PaidFeature.swift in Sources */,
 				ADE5E6642A83BC6100AC8523 /* LiveDependencies.swift in Sources */,
 				428DF98B262F031600944379 /* ServersStreamingFeaturesViewModel.swift in Sources */,
 				E134558921889EC500FEEECE /* Data+Extension.swift in Sources */,
@@ -3100,6 +3109,7 @@
 				7995FCDC20908E6F0030E1EB /* UIConstants.swift in Sources */,
 				796BD1D121144D49003D6B8D /* ServersHeaderView.swift in Sources */,
 				E1D21AB121831039000C389B /* AnnotationView.swift in Sources */,
+				D572E56D2AB487C200CBD2B7 /* BannerViewModel.swift in Sources */,
 				D594A958227C0E470041D423 /* UIView+nib.swift in Sources */,
 				79312B832119924400E79D09 /* SelectionViewController.swift in Sources */,
 				4C3474932A93C25B008BDE78 /* ImageSubtitleImageTableViewCell.swift in Sources */,
@@ -3151,6 +3161,7 @@
 				E1C2EAA121EF931500353A63 /* StandardTableViewCell.swift in Sources */,
 				7904DA3F20E47F47008A4FCB /* CreateProfileViewController.swift in Sources */,
 				791DE5DD208DDA3000A29EA5 /* AppDelegate.swift in Sources */,
+				D572E5712AB487D900CBD2B7 /* BannerViewCell.swift in Sources */,
 				42066E8F2630240F001F86DB /* ServersFeaturesInformationVC.swift in Sources */,
 				F316A07026DFB05E00669386 /* UserCachedStatus.swift in Sources */,
 				D5C1FE542A3C4D8C0049AF18 /* SimulatorVPN.swift in Sources */,
