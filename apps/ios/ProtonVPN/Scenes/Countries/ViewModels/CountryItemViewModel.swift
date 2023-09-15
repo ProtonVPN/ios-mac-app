@@ -28,6 +28,7 @@ import VPNShared
 import Dependencies
 import VPNAppCore
 import Strings
+import Theme
 
 class CountryItemViewModel {
     /// Contains information about the region such as the country code, the tier the
@@ -70,7 +71,7 @@ class CountryItemViewModel {
         switch serversGroup.kind {
         case .country(let countryModel):
             @Dependency(\.featureFlagProvider) var featureFlagProvider
-            if featureFlagProvider.showNewFreePlan {
+            if featureFlagProvider[\.showNewFreePlan] {
                 return userTier < 1 // No countries are shown as available to free users
             } else {
                 return userTier < countryModel.lowestTier
@@ -162,7 +163,7 @@ class CountryItemViewModel {
     
     var connectIcon: UIImage? {
         if isUsersTierTooLow {
-            return CoreAsset.vpnSubscriptionBadge.image
+            return Theme.Asset.vpnSubscriptionBadge.image
         } else if underMaintenance {
             return IconProvider.wrench
         } else {

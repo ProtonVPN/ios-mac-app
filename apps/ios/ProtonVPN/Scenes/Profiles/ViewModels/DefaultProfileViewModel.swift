@@ -27,22 +27,38 @@ import LegacyCommon
 import Strings
 import Theme
 
+/// Special case of `DefaultProfileViewModel`, used for free users, that have profiles disabled
+/// but have this special `Fastest` connection type in countries list.
+///
+/// Differences:
+/// - Doesn't check users tier for UI purposes
+/// - Doesn't check `authorizer` during connection attempt
+class FastestConnectionViewModel: DefaultProfileViewModel {
+    override var isUsersTierTooLow: Bool { false }
+
+    override func connectAction() {
+        log.debug("Connect requested by selecting default profile in countries list.", category: .connectionConnect, event: .trigger)
+
+        authorizedConnectAction()
+    }
+}
+
 class DefaultProfileViewModel {
 
     @Dependency(\.profileAuthorizer) var authorizer
-    private let alertService: AlertService
+    fileprivate let alertService: AlertService
     
-    private let serverOffering: ServerOffering
-    private let vpnGateway: VpnGatewayProtocol
-    private let propertiesManager: PropertiesManagerProtocol
-    private let connectionStatusService: ConnectionStatusService
-    private let netShieldPropertyProvider: NetShieldPropertyProvider
-    private let natTypePropertyProvider: NATTypePropertyProvider
-    private let safeModePropertyProvider: SafeModePropertyProvider
+    fileprivate let serverOffering: ServerOffering
+    fileprivate let vpnGateway: VpnGatewayProtocol
+    fileprivate let propertiesManager: PropertiesManagerProtocol
+    fileprivate let connectionStatusService: ConnectionStatusService
+    fileprivate let netShieldPropertyProvider: NetShieldPropertyProvider
+    fileprivate let natTypePropertyProvider: NATTypePropertyProvider
+    fileprivate let safeModePropertyProvider: SafeModePropertyProvider
 
     private let defaultAccessTier: Int
 
-    private var profile: Profile {
+    fileprivate var profile: Profile {
         switch serverOffering {
         case .random:
             return Profile(id: "st_r",
@@ -72,7 +88,7 @@ class DefaultProfileViewModel {
         return false
     }
     
-    private var isConnecting: Bool {
+    fileprivate var isConnecting: Bool {
         if let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting {
             return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode, trigger: .profile)
         }
@@ -83,7 +99,7 @@ class DefaultProfileViewModel {
         return isConnected || isConnecting
     }
 
-    private var isUsersTierTooLow: Bool {
+    fileprivate var isUsersTierTooLow: Bool {
         return !authorizer.canUseProfile(ofTier: defaultAccessTier)
     }
     
@@ -141,10 +157,16 @@ class DefaultProfileViewModel {
     func connectAction() {
         log.debug("Connect requested by selecting default profile.", category: .connectionConnect, event: .trigger)
         
-        if !authorizer.canUseProfiles {
+        guard authorizer.canUseProfiles else {
             log.debug("Connect to profile rejected because user is on free plan", category: .connectionConnect, event: .trigger)
             alertService.push(alert: ProfilesUpsellAlert())
-        } else if isConnecting {
+            return
+        }
+        authorizedConnectAction()
+    }
+
+    fileprivate func authorizedConnectAction() {
+        if isConnecting {
             NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.abort)
             log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.stopConnecting(userInitiated: true)

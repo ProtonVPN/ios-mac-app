@@ -493,6 +493,8 @@ public enum Localizable {
   public static var forgotUsername: String { return Localizable.tr("Localizable", "_forgot_username", fallback: "Forgot Username") }
   /// Used instead of price for free plans.
   public static var free: String { return Localizable.tr("Localizable", "_free", fallback: "Free") }
+  /// Text on upsell banner in country list
+  public static var freeBannerText: String { return Localizable.tr("Localizable", "_free_banner_text", fallback: "Get worldwide coverage with VPN Plus") }
   /// Account plan description
   public static var freeCountries: String { return Localizable.tr("Localizable", "_free_countries", fallback: "3 Countries") }
   /// Section header in search

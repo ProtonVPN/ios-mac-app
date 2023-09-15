@@ -26,6 +26,7 @@ import Search
 import ProtonCoreUIFoundations
 import AlamofireImage
 import Strings
+import Theme
 
 class ServerItemViewModel: ServerItemViewModelCore {
 
@@ -91,7 +92,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
     
     var connectIcon: UIImage? {
         if isUsersTierTooLow {
-            return CoreAsset.vpnSubscriptionBadge.image
+            return Theme.Asset.vpnSubscriptionBadge.image
         } else if underMaintenance {
             return IconProvider.wrench
         } else {

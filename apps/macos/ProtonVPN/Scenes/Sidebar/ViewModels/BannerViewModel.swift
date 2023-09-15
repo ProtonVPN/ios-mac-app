@@ -17,10 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import vpncore
+import Modals
 
 struct BannerViewModel {
-    var leftIcon: vpncore.ImageAsset
+    var leftIcon: Modals.ImageAsset
     var text: String
     var action: () -> Void
     var separatorTop: Bool

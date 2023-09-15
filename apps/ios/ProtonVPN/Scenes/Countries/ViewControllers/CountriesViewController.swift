@@ -50,10 +50,7 @@ final class CountriesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.contentChanged = { [weak self] in
-            self?.contentChanged()
-            self?.reloadSearch()
-        }
+        viewModel.delegate = self
         setupView()
         setupConnectionBar()
         setupSecureCoreBar()
@@ -116,6 +113,7 @@ final class CountriesViewController: UIViewController {
         tableView.backgroundColor = .backgroundColor()
         tableView.register(CountryCell.nib, forCellReuseIdentifier: CountryCell.identifier)
         tableView.register(ServersHeaderView.nib, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)
+        tableView.register(DefaultProfileTableViewCell.nib, forCellReuseIdentifier: DefaultProfileTableViewCell.identifier)
     }
     
     private func setupNavigationBar() {
@@ -126,13 +124,6 @@ final class CountriesViewController: UIViewController {
     
     @objc private func displayServicesInfo() {
         let viewModel = ServersFeaturesInformationViewModelImplementation.servicesInfo
-        let vc = ServersFeaturesInformationVC(viewModel)
-        vc.modalPresentationStyle = .overFullScreen
-        present(vc, animated: true, completion: nil)
-    }
-
-    private func displayGatewayInfo() {
-        let viewModel = ServersFeaturesInformationViewModelImplementation.gatewaysInfo
         let vc = ServersFeaturesInformationVC(viewModel)
         vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: true, completion: nil)
@@ -159,6 +150,8 @@ final class CountriesViewController: UIViewController {
     }
 }
 
+// MARK: - UITableViewDataSource, UITableViewDelegate
+
 extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.numberOfSections()
@@ -174,7 +167,7 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         headerView.setName(name: viewModel.titleFor(section: section) ?? "")
-        headerView.callback = viewModel.isGateways(section: section) ? displayGatewayInfo : nil
+        headerView.callback = viewModel.callback(forSection: section)
 
         return headerView
     }
@@ -189,20 +182,60 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellModel = viewModel.cellModel(for: indexPath.row, in: indexPath.section)
-        guard let countryCell = tableView.dequeueReusableCell(withIdentifier: CountryCell.identifier) as? CountryCell else {
-            return UITableViewCell()
-        }
+        switch cellModel {
+        case .serverGroup(let viewModel):
+            guard let countryCell = tableView.dequeueReusableCell(withIdentifier: CountryCell.identifier) as? CountryCell else {
+                return UITableViewCell()
+            }
+            countryCell.viewModel = viewModel
+            return countryCell
 
-        countryCell.viewModel = cellModel
-        return countryCell
+        case .profile(let viewModel):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: DefaultProfileTableViewCell.identifier) as? DefaultProfileTableViewCell else {
+                return UITableViewCell()
+            }
+            cell.viewModel = viewModel
+            return cell
+        }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cellModel = viewModel.cellModel(for: indexPath.row, in: indexPath.section)
-        showCountry(cellModel: cellModel)
+        switch cellModel {
+        case .serverGroup(let viewModel):
+            showCountry(cellModel: viewModel)
+
+        case .profile:
+            // Default profile cell used atm intercepts clicks and handles them inside `DefaultProfileViewModel`.
+            break
+
+//        case .banner(_):
+//            <#code#>
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.1
+    }
+}
+
+// MARK: - CountriesVMDelegate
+
+extension CountriesViewController: CountriesVMDelegate {
+
+    func onContentChange() {
+        contentChanged()
+        reloadSearch()
+    }
+
+    func displayFastestConnectionInfo() {
+
+    }
+
+    func displayGatewayInfo() {
+        let viewModel = ServersFeaturesInformationViewModelImplementation.gatewaysInfo
+        let vc = ServersFeaturesInformationVC(viewModel)
+        vc.modalPresentationStyle = .overFullScreen
+        present(vc, animated: true, completion: nil)
     }
 }

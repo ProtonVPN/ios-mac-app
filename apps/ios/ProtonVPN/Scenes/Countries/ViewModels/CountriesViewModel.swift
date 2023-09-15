@@ -25,13 +25,14 @@ import UIKit
 import LegacyCommon
 import Search
 import Dependencies
+import Strings
 
 typealias Row = RowViewModel
 
 enum RowViewModel {
     case serverGroup(CountryItemViewModel)
     case profile(DefaultProfileViewModel)
-    case banner(BannerViewModel)
+//    case banner(BannerViewModel)
 }
 
 private enum Section {
@@ -59,6 +60,7 @@ private enum Section {
 protocol CountriesVMDelegate: AnyObject {
     func onContentChange()
     func displayGatewayInfo()
+    func displayFastestConnectionInfo()
 }
 
 class CountriesViewModel: SecureCoreToggleHandler {
@@ -167,7 +169,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                     return nil
                 }
                 return (
-                    LocalizationUtility.default.countryName(forCode: countryModel.countryCode) ?? LocalizedString.unavailable,
+                    LocalizationUtility.default.countryName(forCode: countryModel.countryCode) ?? Localizable.unavailable,
                     UIImage.flag(countryCode: countryModel.countryCode)
                 )
             case .gateway:
@@ -332,7 +334,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
             }
         if !gatewayContent.isEmpty {
             newTableData.append(Section.gateways(
-                title: LocalizedString.locationsGateways,
+                title: Localizable.locationsGateways,
                 rows: gatewayContent,
                 serversFilter: gatewaysServersFilter
             ))
@@ -366,7 +368,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                             ))
                         }
                     newTableData.append(.countries(
-                        title: "\(LocalizedString.locationsFree) (\(rows.count))",
+                        title: "\(Localizable.locationsFree) (\(rows.count))",
                         rows: rows,
                         serversFilter: defaultServersFilter,
                         showFeatureIcons: true
@@ -384,7 +386,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                             ))
                         }
                     newTableData.append(.countries(
-                        title: "\(LocalizedString.locationsPlus) (\(rows.count))",
+                        title: "\(Localizable.locationsPlus) (\(rows.count))",
                         rows: rows,
                         serversFilter: defaultServersFilter,
                         showFeatureIcons: true
@@ -404,16 +406,18 @@ class CountriesViewModel: SecureCoreToggleHandler {
                     ))
                 ]
                 newTableData.append(.profiles(
-                    title: "\(LocalizedString.connectionsFree) (\(rowsFree.count))",
+                    title: "\(Localizable.connectionsFree) (\(rowsFree.count))",
                     rows: rowsFree
                 ))
-                let rows = [RowViewModel.banner(BannerViewModel(
-                    leftIcon: CoreAsset.vpnWorldwideCoverage,
-                    text: LocalizedString.freeBannerText,
-                    action: { [weak self] in
-                        self?.presentAllCountriesUpsell()
-                    }
-                ))]
+                let rows = [
+//                    RowViewModel.banner(BannerViewModel(
+//                        leftIcon: CoreAsset.vpnWorldwideCoverage,
+//                        text: Localizable.freeBannerText,
+//                        action: { [weak self] in
+//                            self?.presentAllCountriesUpsell()
+//                        }
+//                    ))
+                ]
                 + currentContent.map {
                     RowViewModel.serverGroup(countryCellModel(
                         serversGroup: $0,
@@ -423,7 +427,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                     ))
                 }
                 newTableData.append(.countries(
-                    title: "\(LocalizedString.locationsPlus) (\(rows.count))",
+                    title: "\(Localizable.locationsPlus) (\(rows.count))",
                     rows: rows,
                     serversFilter: defaultServersFilter,
                     showFeatureIcons: true
@@ -441,7 +445,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                     ))
                 }
             newTableData.append(.countries(
-                title: "\(LocalizedString.locationsAll) (\(rows.count))",
+                title: "\(Localizable.locationsAll) (\(rows.count))",
                 rows: rows,
                 serversFilter: defaultServersFilter,
                 showFeatureIcons: true
@@ -457,7 +461,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                     ))
                 }
             newTableData.append(.countries(
-                title: "\(LocalizedString.locationsAll) (\(rows.count))",
+                title: "\(Localizable.locationsAll) (\(rows.count))",
                 rows: rows,
                 serversFilter: defaultServersFilter,
                 showFeatureIcons: true

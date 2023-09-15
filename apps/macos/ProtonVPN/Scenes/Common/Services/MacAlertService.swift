@@ -386,7 +386,6 @@ extension MacAlertService: CoreAlertService {
     }
 
     private func show(_ alert: FreeConnectionsAlert) {
-        let factory = ModalsFactory(colors: UpsellColors())
         let upgradeAction: (() -> Void) = { [weak self] in
             Task { [weak self] in
                 guard let url = await self?.sessionService.getPlanSession(mode: .upgrade) else {
@@ -395,7 +394,7 @@ extension MacAlertService: CoreAlertService {
                 SafariService.openLink(url: url)
             }
         }
-        let upsellViewController = factory.freeConnectionsViewController(countries: alert.countries, upgradeAction: upgradeAction)
+        let upsellViewController = ModalsFactory.freeConnectionsViewController(countries: alert.countries, upgradeAction: upgradeAction)
         windowService.presentKeyModal(viewController: upsellViewController)
     }
 }
