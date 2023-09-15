@@ -26,13 +26,14 @@ import LegacyCommon
 import Search
 import Dependencies
 import Strings
+import Modals
 
 typealias Row = RowViewModel
 
 enum RowViewModel {
     case serverGroup(CountryItemViewModel)
     case profile(DefaultProfileViewModel)
-//    case banner(BannerViewModel)
+    case banner(BannerViewModel)
 }
 
 private enum Section {
@@ -410,13 +411,13 @@ class CountriesViewModel: SecureCoreToggleHandler {
                     rows: rowsFree
                 ))
                 let rows = [
-//                    RowViewModel.banner(BannerViewModel(
-//                        leftIcon: CoreAsset.vpnWorldwideCoverage,
-//                        text: Localizable.freeBannerText,
-//                        action: { [weak self] in
-//                            self?.presentAllCountriesUpsell()
-//                        }
-//                    ))
+                    RowViewModel.banner(BannerViewModel(
+                        leftIcon: Modals.Asset.worldwideCoverage,
+                        text: Localizable.freeBannerText,
+                        action: { [weak self] in
+                            self?.presentAllCountriesUpsell()
+                        }
+                    ))
                 ]
                 + currentContent.map {
                     RowViewModel.serverGroup(countryCellModel(

@@ -1,5 +1,5 @@
 //
-//  Created on 2023-09-06.
+//  Created on 2023-08-29.
 //
 //  Copyright (c) 2023 Proton AG
 //
@@ -17,29 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-#if canImport(UIKit)
-import UIKit
-#elseif canImport(AppKit)
-import AppKit
-#endif
+import Modals
 
-public class FreeConnectionsAlert: SystemAlert {
-
-    #if canImport(UIKit)
-    public typealias FreeCountriesArray = [(String, UIImage?)]
-    #elseif canImport(AppKit)
-    public typealias FreeCountriesArray = [(String, NSImage?)]
-    #endif
-
-    public var title: String?
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError = false
-    public var dismiss: (() -> Void)?
-    public var countries = FreeCountriesArray()
-
-    public init(countries: FreeCountriesArray) {
-        self.countries = countries
-    }
+struct BannerViewModel {
+    var leftIcon: Modals.ImageAsset
+    var text: String
+    var action: () -> Void
 
 }

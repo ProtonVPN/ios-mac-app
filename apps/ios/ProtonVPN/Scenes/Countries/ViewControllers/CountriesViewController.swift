@@ -114,6 +114,7 @@ final class CountriesViewController: UIViewController {
         tableView.register(CountryCell.nib, forCellReuseIdentifier: CountryCell.identifier)
         tableView.register(ServersHeaderView.nib, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)
         tableView.register(DefaultProfileTableViewCell.nib, forCellReuseIdentifier: DefaultProfileTableViewCell.identifier)
+        tableView.register(BannerViewCell.nib, forCellReuseIdentifier: BannerViewCell.identifier)
     }
     
     private func setupNavigationBar() {
@@ -196,6 +197,13 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
             }
             cell.viewModel = viewModel
             return cell
+
+        case .banner(let viewModel):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: BannerViewCell.identifier) as? BannerViewCell else {
+                return UITableViewCell()
+            }
+            cell.viewModel = viewModel
+            return cell
         }
     }
 
@@ -209,8 +217,8 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
             // Default profile cell used atm intercepts clicks and handles them inside `DefaultProfileViewModel`.
             break
 
-//        case .banner(_):
-//            <#code#>
+        case .banner(let viewModel):
+            viewModel.action()
         }
     }
     
