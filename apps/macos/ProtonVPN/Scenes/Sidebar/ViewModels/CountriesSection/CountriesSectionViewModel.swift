@@ -27,6 +27,9 @@ import VPNShared
 import Dependencies
 import Strings
 import AppKit
+import Theme
+import VPNAppCore
+import Modals
 
 enum CellModel {
     case header(CountriesServersHeaderViewModelProtocol)
@@ -146,7 +149,7 @@ class CountriesSectionViewModel {
                     return nil
                 }
                 return (
-                    LocalizationUtility.default.countryName(forCode: countryModel.countryCode) ?? LocalizedString.unavailable,
+                    LocalizationUtility.default.countryName(forCode: countryModel.countryCode) ?? Localizable.unavailable,
                     AppTheme.Icon.flag(countryCode: countryModel.countryCode)
                 )
             case .gateway:
@@ -499,11 +502,11 @@ class CountriesSectionViewModel {
         var plusBanner = [CellModel]()
 
         @Dependency(\.featureFlagProvider) var featureFlagProvider
-        if !featureFlagProvider.showNewFreePlan { // old
+        if !featureFlagProvider[\.showNewFreePlan] { // old
             let freeLocations = countries.filter { $0.kind.lowestTier == 0 }
             plusLocations = countries.filter { $0.kind.lowestTier != 0 }
 
-            let headerFreeVM = CountryHeaderViewModel(LocalizedString.locationsFree, totalCountries: freeLocations.count, buttonType: nil, countriesViewModel: self)
+            let headerFreeVM = CountryHeaderViewModel(Localizable.locationsFree, totalCountries: freeLocations.count, buttonType: nil, countriesViewModel: self)
             freePart = [ .header(headerFreeVM) ]
                 + freeLocations.enumerated().compactMap { index, group -> CellModel? in
                     if let filter = defaultServersFilter, !group.servers.contains(where: filter) {
@@ -513,7 +516,7 @@ class CountriesSectionViewModel {
                 }
         } else { // new
             // Free part
-            let headerFreeVM = CountryHeaderViewModel(LocalizedString.connectionsFree, totalCountries: 1, buttonType: .freeConnections, countriesViewModel: self)
+            let headerFreeVM = CountryHeaderViewModel(Localizable.connectionsFree, totalCountries: 1, buttonType: .freeConnections, countriesViewModel: self)
             freePart = [
                 .header(headerFreeVM),
                 .profile(FastestConnectionViewModel(
@@ -530,8 +533,8 @@ class CountriesSectionViewModel {
             // Upsell part
             plusLocations = countries
             plusBanner.append(.banner(BannerViewModel(
-                leftIcon: CoreAsset.vpnWorldwideCoverage,
-                text: LocalizedString.freeBannerText,
+                leftIcon: Modals.Asset.worldwideCoverage,
+                text: Localizable.freeBannerText,
                 action: { [weak self] in
                     self?.displayUpgradeMessage(nil)
                 },
@@ -540,7 +543,7 @@ class CountriesSectionViewModel {
             )))
         }
 
-        let headerPlusVM = CountryHeaderViewModel(LocalizedString.locationsPlus, totalCountries: plusLocations.count, buttonType: .premium, countriesViewModel: self)
+        let headerPlusVM = CountryHeaderViewModel(Localizable.locationsPlus, totalCountries: plusLocations.count, buttonType: .premium, countriesViewModel: self)
         let plusCells = plusLocations.enumerated().compactMap { index, group -> CellModel? in
             if let filter = defaultServersFilter, !group.servers.contains(where: filter) {
                 return nil

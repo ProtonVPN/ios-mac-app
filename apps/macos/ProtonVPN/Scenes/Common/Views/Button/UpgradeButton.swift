@@ -17,14 +17,15 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import vpncore
+import Strings
+import Theme
 
 /// Upgrade button. Essentially `HoverDetectionImageButton` but with pre-set images.
 class UpgradeButton: HoverDetectionImageButton {
     override func awakeFromNib() {
-        imageMain = CoreAsset.vpnSubscriptionBadge.image
-        imageHovered = CoreAsset.vpnSubscriptionBadgeHover.image
-        toolTip = LocalizedString.upgradeToPlus
+        imageMain = Theme.Asset.vpnSubscriptionBadge.image
+        imageHovered = Theme.Asset.vpnSubscriptionBadgeHover.image
+        toolTip = Localizable.upgradeToPlus
         super.awakeFromNib()
     }
 }

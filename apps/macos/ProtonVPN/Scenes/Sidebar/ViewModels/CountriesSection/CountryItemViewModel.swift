@@ -21,11 +21,11 @@
 //
 
 import Cocoa
-import vpncore
 import LegacyCommon
 import VPNShared
 import VPNAppCore
 import Strings
+import Dependencies
 
 class CountryItemViewModel {
     /// Contains information about the region such as the country code, the tier the
@@ -128,7 +128,7 @@ class CountryItemViewModel {
         self.countriesSectionViewModel = countriesSectionViewModel
         
         @Dependency(\.featureFlagProvider) var featureFlagProvider
-        if featureFlagProvider.showNewFreePlan {
+        if featureFlagProvider[\.showNewFreePlan] {
             self.isTierTooLow = userTier < 1 // No countries are shown as available to free users
         } else {
             self.isTierTooLow = userTier < serversGroup.kind.lowestTier

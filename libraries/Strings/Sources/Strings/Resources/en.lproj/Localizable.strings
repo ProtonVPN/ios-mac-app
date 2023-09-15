@@ -2408,3 +2408,8 @@
 
 /* Modal that lists countries in which servers are available to free users: banner with CTA */
 "free_connections_modal_banner" =  "Get worldwide coverage with VPN Plus";
+
+// MARK: Country list banner
+
+/* Text on upsell banner in country list */
+"_free_banner_text" = "Get worldwide coverage with VPN Plus";

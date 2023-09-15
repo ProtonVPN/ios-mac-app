@@ -22,6 +22,7 @@ import Search
 import LegacyCommon
 import ProtonCoreUIFoundations
 import Strings
+import Theme
 
 final class CityItemViewModel: CityViewModel {
 
@@ -51,7 +52,7 @@ final class CityItemViewModel: CityViewModel {
 
     var connectIcon: UIImage? {
         if isUsersTierTooLow {
-            return CoreAsset.vpnSubscriptionBadge.image
+            return Theme.Asset.vpnSubscriptionBadge.image
         } else if underMaintenance {
             return IconProvider.wrench
         } else {

@@ -21,8 +21,8 @@
 //
 
 import Cocoa
-import vpncore
-import ProtonCore_UIFoundations
+import LegacyCommon
+import Theme
 
 final class BannerCellView: NSView {
     
