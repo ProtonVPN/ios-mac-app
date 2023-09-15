@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -99,7 +98,7 @@
             <connections>
                 <outlet property="label" destination="G1h-UU-uE9" id="k3o-4U-H5e"/>
                 <outlet property="leftImage" destination="DXF-3R-Tyw" id="8mn-TJ-aNL"/>
-                <outlet property="rightShevron" destination="R4d-h4-Ty0" id="oID-g5-Hff"/>
+                <outlet property="rightChevron" destination="R4d-h4-Ty0" id="oID-g5-Hff"/>
                 <outlet property="roundedBackgroundView" destination="y1t-Cw-HsQ" id="SGd-9p-zFk"/>
                 <outlet property="separatorViewBottom" destination="Xpy-4s-tWh" id="r9e-hG-2Wf"/>
                 <outlet property="separatorViewTop" destination="iz4-kg-3lt" id="pAL-8K-Lwr"/>

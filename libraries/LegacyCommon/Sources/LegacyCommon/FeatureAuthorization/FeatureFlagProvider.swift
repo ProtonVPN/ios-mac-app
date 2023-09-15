@@ -48,10 +48,7 @@ public struct FeatureFlagProvider: DependencyKey {
 
 extension FeatureFlagProvider {
     public subscript(_ keyPath: KeyPath<FeatureFlags, Bool>) -> Bool {
-        if keyPath == \.showNewFreePlan {
-            return true
-        }
-        return getFeatureFlags()[keyPath: keyPath]
+        getFeatureFlags()[keyPath: keyPath]
     }
 }
 

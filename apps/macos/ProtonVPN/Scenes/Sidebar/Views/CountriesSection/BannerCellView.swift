@@ -27,7 +27,7 @@ import Theme
 final class BannerCellView: NSView {
     
     @IBOutlet private weak var leftImage: NSImageView!
-    @IBOutlet private weak var rightShevron: NSImageView!
+    @IBOutlet private weak var rightChevron: NSImageView!
     @IBOutlet private weak var roundedBackgroundView: NSView!
     @IBOutlet private weak var label: NSTextField!
     @IBOutlet private weak var separatorViewTop: NSView!
@@ -45,7 +45,7 @@ final class BannerCellView: NSView {
         label.wantsLayer = true
         label.textColor = .color(.text, [.normal])
 
-        rightShevron.image = NSImage(systemSymbolName: "chevron.right", accessibilityDescription: nil)?.colored(.weak)
+        rightChevron.image = NSImage(systemSymbolName: "chevron.right", accessibilityDescription: nil)?.colored(.weak)
 
         [separatorViewTop, separatorViewBottom].forEach {
             $0.wantsLayer = true

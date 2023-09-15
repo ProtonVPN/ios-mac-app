@@ -55,7 +55,7 @@ class FreeConnectionsViewController: UIViewController {
 
         // Banner
         bannerTextStyle(bannerLabel)
-        shevronStyle(bannerChevronView)
+        chevronStyle(bannerChevronView)
 
         bannerImageView.image = Modals.Asset.worldwideCoverage.image
 
