@@ -99,11 +99,8 @@ public final class UpsellViewController: NSViewController {
 
     @objc func setupText() {
         if upsellType?.showUpgradeButton == false {
-            switch upsellType {
-            case .cantSkip:
+            if case .cantSkip = upsellType {
                 upgradeButton.title = Localizable.upsellSpecificLocationChangeServerButtonTitle
-            default:
-                break
             }
         } else {
             upgradeButton.title = Localizable.modalsGetPlus

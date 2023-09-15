@@ -72,6 +72,7 @@ public final class UpsellViewController: UIViewController, Identifiable {
         super.viewDidLoad()
         setupUI()
         setupFeatures()
+        setupTitleLabels()
     }
 
     public override func viewDidDisappear(_ animated: Bool) {
@@ -111,6 +112,7 @@ public final class UpsellViewController: UIViewController, Identifiable {
             .timeIntervalSince(Date()),
            timeInterval > 0 {
             DispatchQueue.main.asyncAfter(deadline: .now() + timeInterval) { [weak self] in
+                self?.setupTitleLabels()
                 self?.setupUI()
             }
         }
@@ -123,7 +125,7 @@ public final class UpsellViewController: UIViewController, Identifiable {
         gradientView.layer.addSublayer(gradientLayer)
     }
 
-    func setupFeatures() {
+    func setupTitleLabels() {
         guard let upsellType = upsellType else { return }
         let upsellFeature = upsellType.upsellFeature()
         titleLabel.text = upsellFeature.title
@@ -135,6 +137,11 @@ public final class UpsellViewController: UIViewController, Identifiable {
         } else {
             subtitleLabel.isHidden = true
         }
+    }
+
+    func setupFeatures() {
+        guard let upsellType = upsellType else { return }
+        let upsellFeature = upsellType.upsellFeature()
 
         applyArtView(feature: upsellFeature)
 
