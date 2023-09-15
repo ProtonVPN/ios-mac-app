@@ -142,7 +142,7 @@ final class ViewController: UIViewController {
 
 extension ViewController: SearchCoordinatorDelegate {
     func userDidRequestPlanPurchase() {
-        let upsell = UpsellType.allCountries(numberOfDevices: 10, numberOfServers: 1600, numberOfCountries: 61)
+        let upsell = UpsellType.allCountries(numberOfServers: 1600, numberOfCountries: 61)
         let upsellViewController = modals.upsellViewController(upsellType: upsell)
         upsellViewController.delegate = self
         navigationController?.present(upsellViewController, animated: true, completion: nil)

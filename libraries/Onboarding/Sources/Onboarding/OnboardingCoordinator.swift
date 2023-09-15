@@ -149,10 +149,6 @@ public final class OnboardingCoordinator {
     }
 }
 
-// MARK: Modals Colors
-
-extension Colors: ModalsColors { }
-
 // MARK: Welcome screen delegate
 
 extension OnboardingCoordinator: WelcomeViewControllerDelegate {
