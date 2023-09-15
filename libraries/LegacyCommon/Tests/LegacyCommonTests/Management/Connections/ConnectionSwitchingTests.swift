@@ -801,7 +801,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
             connections: (1...totalConnections).map { XCTestExpectation(description: "connection \($0)") },
             appStateConnectedTransitions: (1...totalConnections).map { XCTestExpectation(description: "app state transition -> connected \($0)") },
             disconnections: (1...totalDisconnections).map { XCTestExpectation(description: "disconnection \($0)") },
-            serverSaves: (1...totalConnections).map { XCTestExpectation(description: "server list store \($0)") },
+            serverSaves: (1...totalConnections + 1).map { XCTestExpectation(description: "server list store \($0)") },
             upgradeNotification: XCTestExpectation(description: "notify upgrade state"),
             refreshLogicalsAfterPlanUpgrade: XCTestExpectation(description: "refresh logicals after plan upgrade")
         )
