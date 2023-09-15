@@ -90,12 +90,11 @@ class ProfilesViewModel {
     var canUseProfiles: Bool { profileAuthorizer.canUseProfiles }
 
     func showProfilesUpsellAlert() {
-        // show profiles upsell modal VPNAPPL-1851
         if canUseProfiles {
             log.error("Tried to show profiles upsell modal, but profiles are usable", category: .userPlan)
             return
         }
-        alertService.push(alert: AllCountriesUpsellAlert())
+        alertService.push(alert: ProfilesUpsellAlert())
     }
     
     func cellCount(for section: Int) -> Int {
