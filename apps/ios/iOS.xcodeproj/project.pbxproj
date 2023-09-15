@@ -389,7 +389,6 @@
 		E58974782A81297D0017987D /* OHHTTPStubsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E58974772A81297D0017987D /* OHHTTPStubsSwift */; };
 		E589747A2A812A870017987D /* OHHTTPStubsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E58974792A812A870017987D /* OHHTTPStubsSwift */; };
 		E58E5AB42A4AD33000891B77 /* InitialStateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58E5AB32A4AD33000891B77 /* InitialStateProvider.swift */; };
-		E593B97127BA7DC100AFCA8C /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B97027BA7DC100AFCA8C /* UpsellColors.swift */; };
 		E59C7A9029229A940034E56F /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = D16ECAECC9861A6ED5EDA4F2 /* Modals */; };
 		E59C7A9129229A940034E56F /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 2DC3E67F6A25A4AD4DFCF448 /* NEHelper */; };
 		E59C7A932923B1650034E56F /* ServersInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59C7A922923B1650034E56F /* ServersInformationViewController.swift */; };
@@ -871,7 +870,6 @@
 		E551EB0329AF570E00B6612D /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		E551EB0429AF583D00B6612D /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		E58E5AB32A4AD33000891B77 /* InitialStateProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialStateProvider.swift; sourceTree = "<group>"; };
-		E593B97027BA7DC100AFCA8C /* UpsellColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpsellColors.swift; path = ../../../../ios/ProtonVPN/Scenes/Upsell/UpsellColors.swift; sourceTree = "<group>"; };
 		E59C7A922923B1650034E56F /* ServersInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServersInformationViewController.swift; sourceTree = "<group>"; };
 		E59C7A962923B1BB0034E56F /* ServersInformationViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ServersInformationViewController.storyboard; sourceTree = "<group>"; };
 		E5B3049C28BF628E0093517A /* AnnouncementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementViewController.swift; sourceTree = "<group>"; };
@@ -1616,7 +1614,6 @@
 		D580AB8F2452CA08003C34B9 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				E593B96D27BA7DA100AFCA8C /* Upsell */,
 				F3BC5348278598A5009E49B4 /* LoginAndSignup */,
 				F3F36CE026DFAAA4008AD48B /* Payments */,
 				791DE5E2208DDA3000A29EA5 /* Main.storyboard */,
@@ -1823,14 +1820,6 @@
 			path = Shared;
 			sourceTree = "<group>";
 		};
-		E593B96D27BA7DA100AFCA8C /* Upsell */ = {
-			isa = PBXGroup;
-			children = (
-				E593B97027BA7DC100AFCA8C /* UpsellColors.swift */,
-			);
-			path = Upsell;
-			sourceTree = "<group>";
-		};
 		E93FA881FDA6B22F74CCE93F /* Subuser alert */ = {
 			isa = PBXGroup;
 			children = (
@@ -1921,14 +1910,6 @@
 				E9DBA50C27917C150010E3BD /* BugReport */,
 			);
 			name = Packages;
-			sourceTree = "<group>";
-		};
-		F314141C27B174BF007424E9 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				F314141D27B174C5007424E9 /* PaidFeature.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		F31E911E2758F5F900140B2E /* vpncore */ = {
@@ -3072,7 +3053,6 @@
 				7905995F212AE0A400C0E401 /* DefaultProfileTableViewCell.swift in Sources */,
 				F3747C0F26D4F25700EF2F00 /* EnvironmentsViewController.swift in Sources */,
 				E5FFB24429F80185000C65A9 /* ProtonVPNApp.swift in Sources */,
-				E593B97127BA7DC100AFCA8C /* UpsellColors.swift in Sources */,
 				F3BC534D278598E4009E49B4 /* OnboardingService.swift in Sources */,
 				79312B782118823B00E79D09 /* SwitchTableViewCell.swift in Sources */,
 				E1EB9E7B23015FF2009E704F /* LogsViewModel.swift in Sources */,

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="dqS-16-vVf" customClass="CenteringScrollView" customModule="Modals_iOS">
-                                <rect key="frame" x="0.0" y="48" width="414" height="722"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="770"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VMo-ck-BmY">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="414"/>
@@ -78,17 +78,12 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-<!-- HEAD -->
                                             <constraint firstItem="aOJ-Nc-UUL" firstAttribute="top" secondItem="9Jg-ku-cxb" secondAttribute="bottom" constant="24" id="48S-7f-U6D"/>
-                                            <!-- <constraint firstItem="ZLz-VF-2hg" firstAttribute="leading" secondItem="GBb-Hz-STb" secondAttribute="leading" constant="16" id="8wq-JT-AIr"/> -->
-                                            <constraint firstAttribute="bottom" secondItem="aOJ-Nc-UUL" secondAttribute="bottom" constant="24" id="Itd-k8-zQR"/>
-                                            <!-- <constraint firstAttribute="trailing" secondItem="ZLz-VF-2hg" secondAttribute="trailing" constant="16" id="K5L-hO-Wsj"/> -->
-<!-- ==== -->
                                             <constraint firstItem="9q6-jr-eNp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="GBb-Hz-STb" secondAttribute="leading" constant="16" id="8Wg-Ky-rgG"/>
                                             <constraint firstItem="ZLz-VF-2hg" firstAttribute="leading" secondItem="GBb-Hz-STb" secondAttribute="leading" priority="999" constant="16" id="8wq-JT-AIr"/>
+                                            <constraint firstAttribute="bottom" secondItem="aOJ-Nc-UUL" secondAttribute="bottom" constant="24" id="Itd-k8-zQR"/>
                                             <constraint firstAttribute="trailing" secondItem="ZLz-VF-2hg" secondAttribute="trailing" priority="999" constant="16" id="K5L-hO-Wsj"/>
                                             <constraint firstItem="ZLz-VF-2hg" firstAttribute="centerX" secondItem="GBb-Hz-STb" secondAttribute="centerX" id="Pnp-zr-4Wa"/>
-<!-- d77d4a2ba (feature: reconnect countdown timer) -->
                                             <constraint firstItem="9Jg-ku-cxb" firstAttribute="leading" secondItem="GBb-Hz-STb" secondAttribute="leading" constant="16" id="QZW-bG-Zmz"/>
                                             <constraint firstAttribute="trailing" secondItem="9Jg-ku-cxb" secondAttribute="trailing" constant="16" id="T4Y-IC-3Bd"/>
                                             <constraint firstItem="ZLz-VF-2hg" firstAttribute="top" secondItem="GBb-Hz-STb" secondAttribute="top" id="aRf-P4-vO5"/>
@@ -141,7 +136,7 @@
                             <constraint firstItem="Oow-8b-WVq" firstAttribute="trailing" secondItem="dK9-Gz-Kpq" secondAttribute="trailing" constant="16" id="1FS-g6-Hzu"/>
                             <constraint firstItem="dK9-Gz-Kpq" firstAttribute="topMargin" secondItem="dqS-16-vVf" secondAttribute="bottom" constant="8" id="6Ed-Bd-wv2"/>
                             <constraint firstItem="dqS-16-vVf" firstAttribute="leading" secondItem="Oow-8b-WVq" secondAttribute="leading" id="6Oo-xx-sqH"/>
-                            <constraint firstItem="dqS-16-vVf" firstAttribute="top" secondItem="Oow-8b-WVq" secondAttribute="top" id="FLi-gE-XOg"/>
+                            <constraint firstItem="dqS-16-vVf" firstAttribute="top" secondItem="n0X-8h-XkL" secondAttribute="top" id="FLi-gE-XOg"/>
                             <constraint firstItem="Oow-8b-WVq" firstAttribute="trailing" secondItem="dqS-16-vVf" secondAttribute="trailing" id="POL-9H-9aD"/>
                             <constraint firstItem="dK9-Gz-Kpq" firstAttribute="leading" secondItem="Oow-8b-WVq" secondAttribute="leading" constant="16" id="d9y-tX-xAq"/>
                             <constraint firstItem="Oow-8b-WVq" firstAttribute="bottom" secondItem="dK9-Gz-Kpq" secondAttribute="bottom" constant="16" id="g2V-bl-IZD"/>
@@ -149,11 +144,8 @@
                         </constraints>
                     </view>
                     <connections>
-<!-- HEAD -->
                         <outlet property="borderView" destination="aOJ-Nc-UUL" id="uFc-df-7aQ"/>
-<!-- ==== -->
                         <outlet property="featureArtView" destination="ZLz-VF-2hg" id="dqd-Xg-f0V"/>
-<!-- d77d4a2ba (feature: reconnect countdown timer) -->
                         <outlet property="featureView" destination="GBb-Hz-STb" id="aiH-3H-eTb"/>
                         <outlet property="featuresStackView" destination="9q6-jr-eNp" id="m22-36-frb"/>
                         <outlet property="getPlusButton" destination="FHs-vS-yIf" id="N2g-2z-GV5"/>

@@ -22,6 +22,7 @@ import Cocoa
 import ProtonCoreUIFoundations
 import Strings
 import Theme
+import Ergonomics
 
 /// Uses text fields and an image view to display the `unavailable` state, because I went mad trying to implement an
 /// NSButton subclass with multiple strings aligned to different edges, with padding and an image
@@ -87,9 +88,11 @@ class ChangeServerButton: HoverDetectionButton {
 
         wantsLayer = true
         layer?.borderWidth = 2
-        layer?.borderColor = self.cgColor(.border)
         layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
-        layer?.backgroundColor = self.cgColor(.background)
+        DarkAppearance {
+            layer?.borderColor = self.cgColor(.border)
+            layer?.backgroundColor = self.cgColor(.background)
+        }
     }
 }
 

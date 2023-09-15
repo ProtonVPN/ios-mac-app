@@ -112,8 +112,10 @@ let footerStyle = concat(baseTextStyle, and: {
 })
 
 let navigationStyle: (UINavigationController) -> Void = {
-    $0.navigationBar.backgroundColor = colors.background
-    $0.navigationBar.isTranslucent = false
+    $0.navigationBar.backgroundColor = .clear
+    $0.navigationBar.setBackgroundImage(UIImage(), for: .default)
+    $0.navigationBar.shadowImage = UIImage()
+    $0.navigationBar.isTranslucent = true
     $0.modalPresentationStyle = .fullScreen
 }
 

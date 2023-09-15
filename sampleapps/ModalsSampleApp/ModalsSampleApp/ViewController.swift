@@ -136,27 +136,3 @@ extension ViewController: UpsellViewControllerDelegate {
 
     }
 }
-
-struct Colors: ModalsColors {
-    var background: UIColor
-    var secondaryBackground: UIColor
-    var buttonTitle: UIColor
-    var text: UIColor
-    var textAccent: UIColor
-    var brand: UIColor
-    var weakText: UIColor
-    var weakInteraction: UIColor
-    var success: UIColor
-
-    init() {
-        background = UIColor(red: 0.11, green: 0.106, blue: 0.141, alpha: 1)
-        secondaryBackground = UIColor(red: 37/255, green: 39/255, blue: 44/255, alpha: 1)
-        buttonTitle = .white
-        text = .white
-        textAccent = UIColor(red: 138 / 255, green: 110 / 255, blue: 255 / 255, alpha: 1)
-        brand = UIColor(red: 0.427451, green: 0.290196, blue: 1, alpha: 1)
-        weakText = UIColor(red: 0.654902, green: 0.643137, blue: 0.709804, alpha: 1)
-        weakInteraction = UIColor(red: 59 / 255, green: 55 / 255, blue: 71 / 255, alpha: 1)
-        success = UIColor(red: 0.106, green: 0.592, blue: 0.471, alpha: 1)
-    }
-}
