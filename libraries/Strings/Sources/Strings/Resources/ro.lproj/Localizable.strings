@@ -164,6 +164,9 @@
 /* Several places in both iOS and Mac apps */
 "_quick_connect" = "Conectare rapidă";
 
+/* Title of the change server button */
+"_change_server" = "Schimbare server";
+
 /* Used in many places in MacOS app */
 "_secure_core" = "Secure Core";
 
@@ -589,7 +592,7 @@
 "_fastest_available_server" = "Cel mai rapid server disponibil";
 
 /* iOS: Predefined profile with fastest connection */
-"_fastest_connection" = "Viteza maximă";
+"_fastest_connection" = "Cel mai rapid";
 
 /* Profile create/change form and other places describing profile */
 "_random" = "Aleator";
@@ -598,7 +601,7 @@
 "_random_available_server" = "Server aleator disponibil";
 
 /* iOS: Predefined profile with random server */
-"_random_connection" = "Conexiune aleatoare";
+"_random_connection" = "Aleator";
 
 /* Profile create/change form */
 "_different_server_each_time" = "Server diferit de fiecare dată";
@@ -804,11 +807,11 @@
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Toate serverele din această țară sunt în întreținere. Conectați-vă la altă țară.";
 
-"_unsecure_wifi" = "S-a detectat o conexiune WiFi nesigură";
+"_unsecure_wifi" = "S-a detectat o conexiune Wi-Fi nesigură";
 
 "_unsecure_wifi_learn_more" = "Detalii";
 
-"_unsecure_wifi_title" = "Conexiune WiFi nesigură";
+"_unsecure_wifi_title" = "Conexiune Wi-Fi nesigură";
 
 "_maintenance_on_server_detected_title" = "Serverul VPN este în mentenanță";
 
@@ -1642,15 +1645,16 @@
 
 "_performance_load_high" = "Mare";
 
-"_locations_all" = "Toate țările";
+"_locations_all" = "All locations";
 
-"_locations_free" = "Locurile gratuite";
+"_locations_free" = "Free locations";
 
-"_locations_plus" = "Locuri Plus";
-
-"_locations_plus" = "Locuri Plus";
+"_locations_plus" = "Plus locations";
 
 "_locations_gateways" = "Porți de acces";
+
+/* Header before the list of connections available for free users (in the country list) */
+"_connections_free" = "Free connections";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Ce este o poartă de acces?";
@@ -1963,6 +1967,9 @@ Detalii";
 /* Subtitle of Moderate NAT upsell screens */
 "modals_upsell_moderate_nat_subtitle" = "Deblocați NAT de tip 2 cu VPN Plus";
 
+/* Bold part of the subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle_bold" = "NAT tip 2";
+
 /* Feature of the Moderate NAT upsell screen */
 "modals_upsell_features_moderate_nat_gaming" = "Îmbunătățiți performanța jocurilor online și a apelurilor video";
 
@@ -2060,7 +2067,10 @@ Detalii";
 "upsell_vpn_accelerator_faster_servers" = "Accesați servere mai rapide, mai puțin aglomerate.";
 
 /* Feature of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_increase_connection_speeds" = "Increase connection speeds by up to 400%% with VPN Accelerator.";
+"upsell_vpn_accelerator_increase_connection_speeds" = "Măriți viteza conexiunii cu până la 400%% cu VPN Accelerator.";
+
+/* Bold part of the feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds_bold" = "VPN Accelerator.";
 
 /* Feature of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_distant_servers" = "Viteză și stabilitate îmbunătățite pentru conexiunile la servere la mare distanță.";
@@ -2071,17 +2081,29 @@ Detalii";
 /* Feature of Customization upsell modal */
 "upsell_customization_access_LAN" = "Accesați dispozitive din rețeaua locală (LAN)";
 
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_access_LAN_bold" = "rețea locală (LAN)";
+
 /* Feature of Customization upsell modal */
 "upsell_customization_profiles" = "Salvați conexiunile frecvent utilizate ca profiluri";
 
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_profiles_bold" = "profiluri";
+
 /* Feature of Customization upsell modal */
 "upsell_customization_quick_connect" = "Obțineți acces mai rapid la profiluri prin funcția „Conectarea rapidă”";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_quick_connect_bold" = "Conectare rapidă";
 
 /* Title of Profiles upsell modal */
 "upsell_profiles_title" = "Obțineți acces rapid la conexiunile frecvent utilizate";
 
 /* Subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle" = "Deblocați profilurile cu VPN Plus";
+
+/* Bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold" = "profiluri";
 
 /* Feature of Profiles upsell modal */
 "upsell_profiles_feature_location" = "Salvați serverul, orașul sau țara favorită.";
@@ -2105,7 +2127,7 @@ Detalii";
 "upsell_countries_connect_to" = "Conectați-vă la %d țări";
 
 /* Feature of Country upsell modal */
-"upsell_countries_higher_speeds" = "Even higher VPN speed";
+"upsell_countries_higher_speeds" = "Viteze VPN chiar mai mari";
 
 /* Feature of Country upsell modal */
 "upsell_countries_money_back" = "Garantarea returnării banilor în 30 de zile";
@@ -2113,5 +2135,38 @@ Detalii";
 /* Feature of Country upsell modal */
 "upsell_country_feature_title" = "Doriți să alegeți o anumită țară?";
 
+/* Feature of Country upsell modal */
+"upsell_country_feature_subtitle" = "Deblocați selectarea țării cu VPN Plus";
+
+/* Bold part of the feature of Country upsell modal */
+"upsell_country_feature_subtitle_bold" = "selectare țară";
+
+/* Title of the "What's new" screen */
+"modals_whats_new" = "Ce este nou";
+
+/* Title of the first section of the "What's new" screen */
+"modals_free_countries" = "Țări noi gratuite";
+
+/* Description of the first section of the "What's new" screen */
+"modals_new_servers" = "Acum există servere gratuite în Polonia și România.";
+
+/* Title of the second section of the "What's new" screen */
+"modals_server_selection" = "Modificări la selectarea serverului";
+
+/* Description of the second section of the "What's new" screen */
+"modals_server_crowding" = "Pentru a preveni aglomerarea serverelor și pentru a ne asigura că toată lumea are acces la navigarea rapidă și sigură, am eliminat selectarea manuală a țării și am adus îmbunătățiri majore selectării automate a serverului.";
+
+/* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
+"upsell_specific_location_subtitle" = "Obțineți modificări nelimitate cu VPN Plus";
+
+/* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
+"upsell_specific_location_title" = "Ați atins numărul maxim de schimbări de servere gratuite pentru moment.";
+
+/* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
+"upsell_specific_location_change_server_button_title" = "Schimbare server";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Disponibil cu VPN Business.";
+
+/* Text on upsell banner in country list */
+"_free_banner_text" = "Get worldwide coverage with VPN Plus";

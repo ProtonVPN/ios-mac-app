@@ -164,6 +164,9 @@
 /* Several places in both iOS and Mac apps */
 "_quick_connect" = "Хуткае падключэнне";
 
+/* Title of the change server button */
+"_change_server" = "Пераключыць сервер";
+
 /* Used in many places in MacOS app */
 "_secure_core" = "Secure Core";
 
@@ -589,7 +592,7 @@
 "_fastest_available_server" = "Найхутчэйшы даступны сервер";
 
 /* iOS: Predefined profile with fastest connection */
-"_fastest_connection" = "Найхутчэйшае падключэнне";
+"_fastest_connection" = "Найхутчэйшы";
 
 /* Profile create/change form and other places describing profile */
 "_random" = "Выпадковы";
@@ -598,7 +601,7 @@
 "_random_available_server" = "Выпадковы даступны сервер";
 
 /* iOS: Predefined profile with random server */
-"_random_connection" = "Выпадковае падключэнне";
+"_random_connection" = "Выпадковы";
 
 /* Profile create/change form */
 "_different_server_each_time" = "Кожны раз іншы сервер";
@@ -1642,15 +1645,16 @@
 
 "_performance_load_high" = "Высокая";
 
-"_locations_all" = "Усе размяшчэнні";
+"_locations_all" = "All locations";
 
-"_locations_free" = "Размяшчэнні FREE";
+"_locations_free" = "Free locations";
 
-"_locations_plus" = "Размяшчэнні PLUS";
-
-"_locations_plus" = "Размяшчэнні PLUS";
+"_locations_plus" = "Plus locations";
 
 "_locations_gateways" = "Шлюзы";
+
+/* Header before the list of connections available for free users (in the country list) */
+"_connections_free" = "Free connections";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Што такое шлюз?";
@@ -1962,6 +1966,9 @@
 /* Subtitle of Moderate NAT upsell screens */
 "modals_upsell_moderate_nat_subtitle" = "Атрымайце доступ да NAT Type 2 з VPN Plus";
 
+/* Bold part of the subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle_bold" = "NAT Type 2";
+
 /* Feature of the Moderate NAT upsell screen */
 "modals_upsell_features_moderate_nat_gaming" = "Палепшыце прадукцыйнасць сеткавых гульняў і відэазванкоў";
 
@@ -2061,6 +2068,9 @@
 /* Feature of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_increase_connection_speeds" = "Павялічце хуткасць падключэння да 400%% з дапамогай VPN Accelerator.";
 
+/* Bold part of the feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds_bold" = "VPN Accelerator.";
+
 /* Feature of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_distant_servers" = "Палепшаная хуткасць і стабільнасць пры падключэнні да аддаленых сервераў.";
 
@@ -2070,17 +2080,29 @@
 /* Feature of Customization upsell modal */
 "upsell_customization_access_LAN" = "Атрымайце доступ да прылад у сваёй лакальнай сетцы (LAN)";
 
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_access_LAN_bold" = "лакальная сетка (LAN)";
+
 /* Feature of Customization upsell modal */
 "upsell_customization_profiles" = "Захоўвайце профілі з падключэннямі, якімі часта карыстаецеся";
 
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_profiles_bold" = "профілі";
+
 /* Feature of Customization upsell modal */
 "upsell_customization_quick_connect" = "Атрымлівайце доступ да сваіх профіляў з хуткім падключэннем";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_quick_connect_bold" = "Хуткае падлучэнне";
 
 /* Title of Profiles upsell modal */
 "upsell_profiles_title" = "Атрымайце хуткі доступ да падключэнняў, якімі часта карыстаецеся";
 
 /* Subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle" = "Разблакіруйце профілі з тарыфным планам VPN Plus";
+
+/* Bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold" = "профілі";
 
 /* Feature of Profiles upsell modal */
 "upsell_profiles_feature_location" = "Захоўвайце свае пажаданыя серверы, гарады або краіны.";
@@ -2112,5 +2134,38 @@
 /* Feature of Country upsell modal */
 "upsell_country_feature_title" = "Вам неабходна нейкая пэўная краіна?";
 
+/* Feature of Country upsell modal */
+"upsell_country_feature_subtitle" = "Разблакіраваць выбар краіны з VPN Plus";
+
+/* Bold part of the feature of Country upsell modal */
+"upsell_country_feature_subtitle_bold" = "выбар краіны";
+
+/* Title of the "What's new" screen */
+"modals_whats_new" = "Што новага";
+
+/* Title of the first section of the "What's new" screen */
+"modals_free_countries" = "Новыя бясплатныя краіны";
+
+/* Description of the first section of the "What's new" screen */
+"modals_new_servers" = "Цяпер ёсць бясплатныя серверы ў Польшчы і Румыніі";
+
+/* Title of the second section of the "What's new" screen */
+"modals_server_selection" = "Змяненні ў выбары сервера";
+
+/* Description of the second section of the "What's new" screen */
+"modals_server_crowding" = "Для таго, каб пазбегнуць перагрузкі сервера і забяспечыць кожнаму доступ да хуткага і бяспечнага прагляду старонак у інтэрнэце, мы выдалілі магчымасць выбару краіны ўручную і значна палепшылі аўтаматычны выбар сервера.";
+
+/* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
+"upsell_specific_location_subtitle" = "Атрымайце неабмежаваную колькасць пераключэнняў з VPN Plus";
+
+/* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
+"upsell_specific_location_title" = "На дадзены момант вы дасягнулі максімальнай колькасці пераключэнняў на бясплатных серверах.";
+
+/* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
+"upsell_specific_location_change_server_button_title" = "Пераключыць сервер";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Даступна з VPN Business.";
+
+/* Text on upsell banner in country list */
+"_free_banner_text" = "Get worldwide coverage with VPN Plus";

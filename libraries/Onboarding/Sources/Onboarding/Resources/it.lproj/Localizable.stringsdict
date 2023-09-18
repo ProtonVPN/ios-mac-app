@@ -32,7 +32,7 @@
     <key>onboarding_upsell_title</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Accedi a tutti %#@NUM_SERVERS@ in %#@NUM_COUNTRIES@ con Plus</string>
+      <string>Accedi a tutti i %#@NUM_SERVERS@ in %#@NUM_COUNTRIES@ con Plus</string>
       <key>NUM_COUNTRIES</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -75,7 +75,7 @@
     <key>onboarding_upsell_feature_multipleDevices</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Collega %#@NUM_DEVICES@ contemporaneamente</string>
+      <string>Connetti %#@NUM_DEVICES@ contemporaneamente</string>
       <key>NUM_DEVICES</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>

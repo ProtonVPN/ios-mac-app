@@ -164,6 +164,9 @@
 /* Several places in both iOS and Mac apps */
 "_quick_connect" = "Быстрое подключение";
 
+/* Title of the change server button */
+"_change_server" = "Change server";
+
 /* Used in many places in MacOS app */
 "_secure_core" = "Secure Core";
 
@@ -523,7 +526,7 @@
 "_p2p" = "P2P";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
-"_tor" = "TOR";
+"_tor" = "Tor";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_p2p_server" = "P2P сервер";
@@ -589,7 +592,7 @@
 "_fastest_available_server" = "Самый быстрый доступный сервер";
 
 /* iOS: Predefined profile with fastest connection */
-"_fastest_connection" = "Самое быстрое подключение";
+"_fastest_connection" = "Fastest";
 
 /* Profile create/change form and other places describing profile */
 "_random" = "Случайный";
@@ -598,7 +601,7 @@
 "_random_available_server" = "Случайный доступный сервер";
 
 /* iOS: Predefined profile with random server */
-"_random_connection" = "Случайное подключение";
+"_random_connection" = "Random";
 
 /* Profile create/change form */
 "_different_server_each_time" = "Каждый раз разный сервер";
@@ -1642,15 +1645,16 @@
 
 "_performance_load_high" = "Высокая";
 
-"_locations_all" = "Все местоположения";
+"_locations_all" = "All locations";
 
-"_locations_free" = "Местоположения Free";
+"_locations_free" = "Free locations";
 
-"_locations_plus" = "Местоположения Plus";
-
-"_locations_plus" = "Местоположения Plus";
+"_locations_plus" = "Plus locations";
 
 "_locations_gateways" = "Gateways";
+
+/* Header before the list of connections available for free users (in the country list) */
+"_connections_free" = "Free connections";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "What's a gateway?";
@@ -1962,6 +1966,9 @@
 /* Subtitle of Moderate NAT upsell screens */
 "modals_upsell_moderate_nat_subtitle" = "Unlock NAT type 2 with VPN Plus";
 
+/* Bold part of the subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle_bold" = "NAT type 2";
+
 /* Feature of the Moderate NAT upsell screen */
 "modals_upsell_features_moderate_nat_gaming" = "Improve online gaming and video call performance";
 
@@ -2061,6 +2068,9 @@
 /* Feature of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_increase_connection_speeds" = "Increase connection speeds by up to 400%% with VPN Accelerator.";
 
+/* Bold part of the feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds_bold" = "VPN Accelerator.";
+
 /* Feature of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_distant_servers" = "Improved speed and stability when connected to distant servers.";
 
@@ -2070,17 +2080,29 @@
 /* Feature of Customization upsell modal */
 "upsell_customization_access_LAN" = "Access devices on your local area network (LAN)";
 
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_access_LAN_bold" = "local area network (LAN)";
+
 /* Feature of Customization upsell modal */
 "upsell_customization_profiles" = "Save frequently used connections with profiles";
 
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_profiles_bold" = "profiles";
+
 /* Feature of Customization upsell modal */
 "upsell_customization_quick_connect" = "Get faster access to your profiles with Quick Connect";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_quick_connect_bold" = "Quick Connect";
 
 /* Title of Profiles upsell modal */
 "upsell_profiles_title" = "Get quick access to your frequent connections";
 
 /* Subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle" = "Unlock profiles with VPN Plus";
+
+/* Bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold" = "profiles";
 
 /* Feature of Profiles upsell modal */
 "upsell_profiles_feature_location" = "Save your preferred server, city, or country.";
@@ -2112,5 +2134,38 @@
 /* Feature of Country upsell modal */
 "upsell_country_feature_title" = "Want to choose a specific country?";
 
+/* Feature of Country upsell modal */
+"upsell_country_feature_subtitle" = "Unlock country selection with VPN Plus";
+
+/* Bold part of the feature of Country upsell modal */
+"upsell_country_feature_subtitle_bold" = "country selection";
+
+/* Title of the "What's new" screen */
+"modals_whats_new" = "What’s new";
+
+/* Title of the first section of the "What's new" screen */
+"modals_free_countries" = "New Free countries";
+
+/* Description of the first section of the "What's new" screen */
+"modals_new_servers" = "There are now Free servers in Poland and Romania.";
+
+/* Title of the second section of the "What's new" screen */
+"modals_server_selection" = "Changes to server selection";
+
+/* Description of the second section of the "What's new" screen */
+"modals_server_crowding" = "To prevent server crowding and ensure that everyone has access to fast and secure browsing, we removed manual country selection and made major improvements to automatic server selection.";
+
+/* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
+"upsell_specific_location_subtitle" = "Get unlimited changes with VPN Plus";
+
+/* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
+"upsell_specific_location_title" = "You've reached the maximum number of Free server changes for now.";
+
+/* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
+"upsell_specific_location_change_server_button_title" = "Change server";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Available with VPN Business.";
+
+/* Text on upsell banner in country list */
+"_free_banner_text" = "Get worldwide coverage with VPN Plus";

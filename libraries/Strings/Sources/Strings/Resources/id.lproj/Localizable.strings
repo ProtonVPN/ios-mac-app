@@ -164,6 +164,9 @@
 /* Several places in both iOS and Mac apps */
 "_quick_connect" = "Quick Connect";
 
+/* Title of the change server button */
+"_change_server" = "Ubah server";
+
 /* Used in many places in MacOS app */
 "_secure_core" = "Secure Core";
 
@@ -589,7 +592,7 @@
 "_fastest_available_server" = "Server tercepat yang tersedia";
 
 /* iOS: Predefined profile with fastest connection */
-"_fastest_connection" = "Sambungan Tercepat";
+"_fastest_connection" = "Tercepat";
 
 /* Profile create/change form and other places describing profile */
 "_random" = "Acak";
@@ -598,7 +601,7 @@
 "_random_available_server" = "Server acak yang tersedia";
 
 /* iOS: Predefined profile with random server */
-"_random_connection" = "Sambungan Acak";
+"_random_connection" = "Acak";
 
 /* Profile create/change form */
 "_different_server_each_time" = "Server berbeda tiap waktu";
@@ -1642,15 +1645,16 @@
 
 "_performance_load_high" = "Tinggi";
 
-"_locations_all" = "Semua lokasi";
+"_locations_all" = "All locations";
 
-"_locations_free" = "Lokasi Free";
+"_locations_free" = "Free locations";
 
-"_locations_plus" = "Lokasi Plus";
-
-"_locations_plus" = "Lokasi Plus";
+"_locations_plus" = "Plus locations";
 
 "_locations_gateways" = "Gateway";
+
+/* Header before the list of connections available for free users (in the country list) */
+"_connections_free" = "Free connections";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Apa itu gateway?";
@@ -1962,6 +1966,9 @@
 /* Subtitle of Moderate NAT upsell screens */
 "modals_upsell_moderate_nat_subtitle" = "Akses NAT Type 2 dengan VPN Plus";
 
+/* Bold part of the subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle_bold" = "NAT tipe 2";
+
 /* Feature of the Moderate NAT upsell screen */
 "modals_upsell_features_moderate_nat_gaming" = "Tingkatkan performa permainan online dan panggilan video Anda";
 
@@ -2059,7 +2066,10 @@
 "upsell_vpn_accelerator_faster_servers" = "Akses server yang lebih cepat dan lengang.";
 
 /* Feature of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_increase_connection_speeds" = "Increase connection speeds by up to 400%% with VPN Accelerator.";
+"upsell_vpn_accelerator_increase_connection_speeds" = "Tingkatkan kecepatan koneksi VPN hingga 400%% dengan VPN Accelerator.";
+
+/* Bold part of the feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds_bold" = "VPN Accelerator.";
 
 /* Feature of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_distant_servers" = "Koneksi yang lebih cepat dan stabil pada saat terhubung ke server yang berjarak jauh.";
@@ -2070,17 +2080,29 @@
 /* Feature of Customization upsell modal */
 "upsell_customization_access_LAN" = "Akses perangkat pada jaringan LAN Anda";
 
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_access_LAN_bold" = "jaringan area lokal (LAN)";
+
 /* Feature of Customization upsell modal */
 "upsell_customization_profiles" = "Simpan koneksi yang sering Anda gunakan dengan profil";
 
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_profiles_bold" = "profil";
+
 /* Feature of Customization upsell modal */
 "upsell_customization_quick_connect" = "Dapatkan akses yang lebih cepat ke profil Anda dengan Quick Connect";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_quick_connect_bold" = "Sambungkan Cepat";
 
 /* Title of Profiles upsell modal */
 "upsell_profiles_title" = "Dapatkan akses kilat ke profil koneksi yang sering Anda gunakan";
 
 /* Subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle" = "Akses profil dengan VPN Plus";
+
+/* Bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold" = "profil";
 
 /* Feature of Profiles upsell modal */
 "upsell_profiles_feature_location" = "Simpan server, kota, atau negara yang sering Anda gunakan.";
@@ -2104,7 +2126,7 @@
 "upsell_countries_connect_to" = "Hubungkan ke %d negara";
 
 /* Feature of Country upsell modal */
-"upsell_countries_higher_speeds" = "Even higher VPN speed";
+"upsell_countries_higher_speeds" = "Kecepatan VPN yang jauh lebih tinggi";
 
 /* Feature of Country upsell modal */
 "upsell_countries_money_back" = "Jaminan 30 hari uang kembali";
@@ -2112,5 +2134,38 @@
 /* Feature of Country upsell modal */
 "upsell_country_feature_title" = "Ingin memilih negara tertentu?";
 
+/* Feature of Country upsell modal */
+"upsell_country_feature_subtitle" = "Akses fitur pemilihan negara dengan VPN Plus";
+
+/* Bold part of the feature of Country upsell modal */
+"upsell_country_feature_subtitle_bold" = "pemilihan negara";
+
+/* Title of the "What's new" screen */
+"modals_whats_new" = "Apa yang baru";
+
+/* Title of the first section of the "What's new" screen */
+"modals_free_countries" = "Negara Gratis baru";
+
+/* Description of the first section of the "What's new" screen */
+"modals_new_servers" = "Sekarang tersedia server Gratis di Polandia dan Romania.";
+
+/* Title of the second section of the "What's new" screen */
+"modals_server_selection" = "Perubahan terhadap pemilihan server";
+
+/* Description of the second section of the "What's new" screen */
+"modals_server_crowding" = "Untuk mencegah server yang terlalu berkerumun dan memastikan bahwa semua orang memiliki akses ke internet yang cepat dan aman, kami telah menghapus opsi pemilihan negara secara manual dan melakukan peningkatan terhadap mekanisme pemilihan server otomatis kami.";
+
+/* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
+"upsell_specific_location_subtitle" = "Ubah server tanpa batas dengan VPN Plus";
+
+/* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
+"upsell_specific_location_title" = "Anda telah mencapai batas jumlah perubahan server Free yang diperkenankan untuk saat ini.";
+
+/* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
+"upsell_specific_location_change_server_button_title" = "Ubah server";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Tersedia dengan VPN Business.";
+
+/* Text on upsell banner in country list */
+"_free_banner_text" = "Get worldwide coverage with VPN Plus";

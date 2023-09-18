@@ -164,6 +164,9 @@
 /* Several places in both iOS and Mac apps */
 "_quick_connect" = "Ligação rápida";
 
+/* Title of the change server button */
+"_change_server" = "Change server";
+
 /* Used in many places in MacOS app */
 "_secure_core" = "Secure Core";
 
@@ -589,7 +592,7 @@
 "_fastest_available_server" = "Servidor mais rápido disponível";
 
 /* iOS: Predefined profile with fastest connection */
-"_fastest_connection" = "Ligação mais rápida";
+"_fastest_connection" = "Fastest";
 
 /* Profile create/change form and other places describing profile */
 "_random" = "Aleatória";
@@ -598,7 +601,7 @@
 "_random_available_server" = "Servidor disponível aleatório";
 
 /* iOS: Predefined profile with random server */
-"_random_connection" = "Ligação aleatória";
+"_random_connection" = "Random";
 
 /* Profile create/change form */
 "_different_server_each_time" = "Servidor diferente de cada vez";
@@ -1426,10 +1429,10 @@
 "_netshield_upsell_subtitle" = "Bloqueia anúncios, rastreadores e malware em sítios web e aplicações";
 
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
-"_netshield_business_upsell_title" = "Block ads with NetShield";
+"_netshield_business_upsell_title" = "Bloqueie anúncios com NetShield";
 
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
-"_netshield_business_upsell_subtitle" = "When you upgrade to VPN Business";
+"_netshield_business_upsell_subtitle" = "Quando fizer \"upgrade\" para a VPN Business";
 
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
@@ -1642,15 +1645,16 @@
 
 "_performance_load_high" = "Alta";
 
-"_locations_all" = "Todas as localizações";
+"_locations_all" = "All locations";
 
-"_locations_free" = "Localizações Free";
+"_locations_free" = "Free locations";
 
-"_locations_plus" = "Localizações PLUS";
-
-"_locations_plus" = "Localizações PLUS";
+"_locations_plus" = "Plus locations";
 
 "_locations_gateways" = "Gateways";
+
+/* Header before the list of connections available for free users (in the country list) */
+"_connections_free" = "Free connections";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "O que é um gateway?";
@@ -1867,7 +1871,7 @@
 "_bad_interface_ip_range_alert_title" = "Interface de rede incorrecta";
 
 /* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
-"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Your local network might be unsafe (the interface '%@' has the IP and prefix '%@'). Your data may be sent unencrypted over the local network. Enabling Kill Switch will block this traffic. Connections to local peripherals will be interrupted.";
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "A sua rede local deve ser insegura (a ‘interface’ '%@' tem o IP e o prefixo '%@'). Os seus dados podem ser enviados sem encriptação através da rede local. Ao ativar o 'kill switch' irá bloquear este tráfego. Ligações aos periféricos locais serão interrompidas.";
 
 /* Title of the search screen */
 "search_title" = "Pesquisar";
@@ -1948,7 +1952,7 @@
 "modals_upsell_stay_free" = "Agora não";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
-"modals_upsell_features_subtitle" = "When you upgrade to Plus";
+"modals_upsell_features_subtitle" = "Quando fizer \"upgrade\" para o Plus";
 
 /* Subtitle of the Safe Mode upsell screen */
 "modals_upsell_features_safe_mode_subtitle" = "Tem necessidades informáticas avançadas ou profissionais que requerem portas não standard?\n\nActualize para o VPN Plus para aceder a esta e outras funcionalidades premium.";
@@ -1957,19 +1961,22 @@
 "modals_upsell_safe_mode_title" = "Permitir tráfego em portas incomuns";
 
 /* Title of the Moderate NAT upsell screen */
-"modals_upsell_moderate_nat_title" = "Level up your gaming experience";
+"modals_upsell_moderate_nat_title" = "Suba de nível a sua experiência \"gaming\"";
 
 /* Subtitle of Moderate NAT upsell screens */
-"modals_upsell_moderate_nat_subtitle" = "Unlock NAT type 2 with VPN Plus";
+"modals_upsell_moderate_nat_subtitle" = "Desbloqueie o NAT tipo 2 com a VPN Plus";
+
+/* Bold part of the subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle_bold" = "NAT type 2";
 
 /* Feature of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_gaming" = "Improve online gaming and video call performance";
+"modals_upsell_features_moderate_nat_gaming" = "Melhore o desempenho de jogos ‘online’ e chamadas de vídeo";
 
 /* Feature of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_direct_connections" = "NAT type 2 (moderate) optimizes speed and stability by enabling direct connections between devices";
+"modals_upsell_features_moderate_nat_direct_connections" = "O NAT tipo 2 (moderado) otimiza a velocidade e a estabilidade ao permitir ligações diretas entre dispositivos";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_streaming" = "Stream your favorite movies";
+"modals_upsell_all_countries_feature_streaming" = "Faça 'stream' dos seus filmes favoritos";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_highSpeed" = "Navegue na velocidade máxima (10 Gbps)";
@@ -2053,64 +2060,112 @@
 "maximum_device_limit" = "Desligue outro dispositivo para ligar a este.";
 
 /* Title of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_title" = "Browse at even higher speeds (up to 10 Gbps)";
+"upsell_vpn_accelerator_title" = "Navegue a velocidades ainda mais elevadas (até 10 Gbps)";
 
 /* Feature of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_faster_servers" = "Access faster, less crowded servers.";
+"upsell_vpn_accelerator_faster_servers" = "Aceda mais rapidamente, servidores menos lotados";
 
 /* Feature of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_increase_connection_speeds" = "Increase connection speeds by up to 400%% with VPN Accelerator.";
+"upsell_vpn_accelerator_increase_connection_speeds" = "Aumente a velocidade de ligação em até 400%% com a VPN Accelerator.";
+
+/* Bold part of the feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds_bold" = "VPN Accelerator.";
 
 /* Feature of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_distant_servers" = "Improved speed and stability when connected to distant servers.";
+"upsell_vpn_accelerator_distant_servers" = "Velocidade e estabilidade melhorada quando ligado a servidores distantes";
 
 /* Title of Customization upsell modal */
-"upsell_customization_title" = "Unlock advanced VPN customization";
+"upsell_customization_title" = "Desbloqueie personalizações avançadas da VPN";
 
 /* Feature of Customization upsell modal */
-"upsell_customization_access_LAN" = "Access devices on your local area network (LAN)";
+"upsell_customization_access_LAN" = "Aceda a dispositivos na sua rede local (LAN)";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_access_LAN_bold" = "local area network (LAN)";
 
 /* Feature of Customization upsell modal */
-"upsell_customization_profiles" = "Save frequently used connections with profiles";
+"upsell_customization_profiles" = "Guarde ligações usadas frequentemente com perfis";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_profiles_bold" = "profiles";
 
 /* Feature of Customization upsell modal */
-"upsell_customization_quick_connect" = "Get faster access to your profiles with Quick Connect";
+"upsell_customization_quick_connect" = "Obtenha acesso mais rápido aos seus perfis com o \"Quick Connect\"";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_quick_connect_bold" = "Quick Connect";
 
 /* Title of Profiles upsell modal */
-"upsell_profiles_title" = "Get quick access to your frequent connections";
+"upsell_profiles_title" = "Obtenha acesso rápido às suas ligações frequentes";
 
 /* Subtitle of Profiles upsell modal */
-"upsell_profiles_subtitle" = "Unlock profiles with VPN Plus";
+"upsell_profiles_subtitle" = "Desbloqueie perfis com a VPN Plus";
+
+/* Bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold" = "profiles";
 
 /* Feature of Profiles upsell modal */
-"upsell_profiles_feature_location" = "Save your preferred server, city, or country.";
+"upsell_profiles_feature_location" = "Guarde o seu servidor, cidade ou país preferido.";
 
 /* Feature of Profiles upsell modal */
-"upsell_profiles_feature_protocols" = "Set custom protocols and premium VPN features.";
+"upsell_profiles_feature_protocols" = "Configure protocolos personalizados e funcionalidades \"premium\" da VPN.";
 
 /* Feature of Profiles upsell modal */
-"upsell_profiles_feature_auto_connect" = "Set up auto-connect for even faster access.";
+"upsell_profiles_feature_auto_connect" = "Configure uma ligação automática para um acesso ainda mais rápido";
 
 /* Feature of Countries upsell modal */
-"upsell_countries_any_location" = "Choose any location";
+"upsell_countries_any_location" = "Escolher qualquer localização";
 
 /* Feature of Countries upsell modal */
-"upsell_countries_even_higher_speed" = "Even higher VPN speed";
+"upsell_countries_even_higher_speed" = "Velocidade da VPN ainda mais rápida";
 
 /* Feature of Countries upsell modal */
-"upsell_countries_geoblocked_content" = "Access geoblocked content";
+"upsell_countries_geoblocked_content" = "Aceda a conteúdos bloqueados geograficamente";
 
 /* Feature of Country upsell modal */
-"upsell_countries_connect_to" = "Connect to %d countries";
+"upsell_countries_connect_to" = "Ligue-se a %d países";
 
 /* Feature of Country upsell modal */
-"upsell_countries_higher_speeds" = "Even higher VPN speed";
+"upsell_countries_higher_speeds" = "Velocidade da VPN ainda mais rápida";
 
 /* Feature of Country upsell modal */
-"upsell_countries_money_back" = "30-day money back guarantee";
+"upsell_countries_money_back" = "Garantia de reembolso durante 30 dias";
 
 /* Feature of Country upsell modal */
-"upsell_country_feature_title" = "Want to choose a specific country?";
+"upsell_country_feature_title" = "Pretende escolher um país específico?";
+
+/* Feature of Country upsell modal */
+"upsell_country_feature_subtitle" = "Unlock country selection with VPN Plus";
+
+/* Bold part of the feature of Country upsell modal */
+"upsell_country_feature_subtitle_bold" = "country selection";
+
+/* Title of the "What's new" screen */
+"modals_whats_new" = "O que há de novo";
+
+/* Title of the first section of the "What's new" screen */
+"modals_free_countries" = "Novos países gratuitos";
+
+/* Description of the first section of the "What's new" screen */
+"modals_new_servers" = "Agora há servidores gratuitos na Polónia e Roménia.";
+
+/* Title of the second section of the "What's new" screen */
+"modals_server_selection" = "Mudanças na seleção do servidor";
+
+/* Description of the second section of the "What's new" screen */
+"modals_server_crowding" = "Para prevenir a lotação do servidor e garantir que todas as pessoas têm acesso rápido e seguro enquanto navegam, removemos a seleção manual do país e fizemos grandes melhorias à seleção automática do servidor.";
+
+/* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
+"upsell_specific_location_subtitle" = "Get unlimited changes with VPN Plus";
+
+/* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
+"upsell_specific_location_title" = "You've reached the maximum number of Free server changes for now.";
+
+/* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
+"upsell_specific_location_change_server_button_title" = "Change server";
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
-"_available_with_vpn_business_tooltip" = "Available with VPN Business.";
+"_available_with_vpn_business_tooltip" = "Disponível com a VPN Business.";
+
+/* Text on upsell banner in country list */
+"_free_banner_text" = "Get worldwide coverage with VPN Plus";

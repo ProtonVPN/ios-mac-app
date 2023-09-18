@@ -9,13 +9,13 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Protect up to %d devices</string>
+        <string>Proteção até %d dispositivo</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Protect up to %d devices</string>
+        <string>Proteção até %d dispositivos</string>
       </dict>
     </dict>
     <key>modals_upsell_all_countries_title</key>
@@ -377,6 +377,22 @@ parados</string>
         <string>d</string>
         <key>other</key>
         <string>Passo %d</string>
+      </dict>
+    </dict>
+    <key>free_connections_modal_subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>one</key>
+        <string>Free server locations (%d)</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Free server locations (%d)</string>
       </dict>
     </dict>
   </dict>
