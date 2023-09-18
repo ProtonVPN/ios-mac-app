@@ -381,5 +381,21 @@ fermati</string>
         <string>Passaggio %d</string>
       </dict>
     </dict>
+    <key>free_connections_modal_subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>one</key>
+        <string>Località dei server gratuiti (%d)</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Località dei server gratuiti (%d)</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

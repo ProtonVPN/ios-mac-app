@@ -117,7 +117,7 @@
 "_change_protocol_disconnect_warning" = "İletişim kurallarını değiştirmek, var olan VPN oturumunuzu sonlandıracak.";
 
 /* Slogan text under the logo in may places in iOS and MacOS apps */
-"_loading_screen_slogan" = "Her yerde güvenli internet";
+"_loading_screen_slogan" = "Her yerde güvenli İnternet";
 
 /* Main mac app menu item */
 "_report_an_issue" = "Bir sorun bildirin...";
@@ -163,6 +163,9 @@
 
 /* Several places in both iOS and Mac apps */
 "_quick_connect" = "Hızlı bağlan";
+
+/* Title of the change server button */
+"_change_server" = "Sunucu değiştir";
 
 /* Used in many places in MacOS app */
 "_secure_core" = "Secure Core";
@@ -589,7 +592,7 @@
 "_fastest_available_server" = "Kullanılabilecek en hızlı sunucu";
 
 /* iOS: Predefined profile with fastest connection */
-"_fastest_connection" = "En hızlı bağlantı";
+"_fastest_connection" = "En hızlı";
 
 /* Profile create/change form and other places describing profile */
 "_random" = "Rastgele";
@@ -598,7 +601,7 @@
 "_random_available_server" = "Rastgele kullanılabilecek sunucu";
 
 /* iOS: Predefined profile with random server */
-"_random_connection" = "Rastgele bağlantı";
+"_random_connection" = "Rastgele";
 
 /* Profile create/change form */
 "_different_server_each_time" = "Her seferinde farklı sunucu";
@@ -804,11 +807,11 @@
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Bu ülkedeki tüm sunuculara bakım yapılıyor. Lütfen başka bir ülkeye bağlanın.";
 
-"_unsecure_wifi" = "Güvenli olmayan WiFi bağlantısı algılandı";
+"_unsecure_wifi" = "Güvenli olmayan Wi-Fi bağlantısı algılandı";
 
 "_unsecure_wifi_learn_more" = "Ayrıntılı bilgi alın";
 
-"_unsecure_wifi_title" = "Güvenli olmayan WiFi algılandı";
+"_unsecure_wifi_title" = "Güvenli olmayan Wi-Fi algılandı";
 
 "_maintenance_on_server_detected_title" = "VPN sunucusunda bakım yapılıyor";
 
@@ -854,9 +857,9 @@
 
 "_error_mitm_title" = "Güvenli olmayan bağlantı";
 
-"_error_mitm_description" = "Proton VPN API hizmeti ile bağlantı kurulmaya çalışılırken TLS sertifikası doğrulanamadı. Geçerli internet bağlantınız izlenebilir. Verilerinizi güvende tutmak için, uygulamanın Proton VPN API hizmetine erişmesini engelliyoruz.\nOturum açmak veya hesabınıza erişmek için başka bir ağa geçin ve yeniden bağlanmayı deneyin.";
+"_error_mitm_description" = "Proton VPN API hizmeti ile bağlantı kurulmaya çalışılırken TLS sertifikası doğrulanamadı. Geçerli İnternet bağlantınız izlenebilir. Verilerinizi güvende tutmak için, uygulamanın Proton VPN API hizmetine erişmesini engelliyoruz.\nOturum açmak veya hesabınıza erişmek için başka bir ağa geçin ve yeniden bağlanmayı deneyin.";
 
-"_error_mitm_vpn_description" = "VPN sunucusuna bağlanmaya çalışılırken TLS sertifikası doğrulanamadı. Geçerli internet bağlantınız izlenebilir. Verilerinizi güvende tutmak için, uygulamanın bu VPN sunucusuna erişmesini engelliyoruz.\nLütfen başka bir sunucu seçin.";
+"_error_mitm_vpn_description" = "VPN sunucusuna bağlanmaya çalışılırken TLS sertifikası doğrulanamadı. Geçerli İnternet bağlantınız izlenebilir. Verilerinizi güvende tutmak için, uygulamanın bu VPN sunucusuna erişmesini engelliyoruz.\nLütfen başka bir sunucu seçin.";
 
 /* Internal error message when there is a problem with initializing tls and connection cannot be established. */
 "_error_tls_initialisation" = "TLS başlatma sorunu";
@@ -927,7 +930,7 @@
 /* MacOS: Settings -> Account: name of field. */
 "_account_plan" = "Hesap tarifesi";
 
-"_manage_subscription_on_web" = "Web kontrol panosundan aboneliğinizi yönetin";
+"_manage_subscription_on_web" = "İnternet panosundan aboneliğinizi yönetin";
 
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Bağlantı kesici";
@@ -1218,7 +1221,7 @@
 "_quick_settings_tour_feature_1" = "Secure Core ile ek bir güvenlik katmanı ekleyin.";
 
 /* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "NetShield ile kötü amaçlı yazılımlar ve reklamlar olmadan internette özgürce gezinin.";
+"_quick_settings_tour_feature_2" = "NetShield ile kötü amaçlı yazılımlar ve reklamlar olmadan İnternet üzerinde özgürce gezinin.";
 
 /* MacOS app tour: quick settings kill switch */
 "_quick_settings_tour_feature_3" = "Bağlantı kesiciyi açarak IP adresinizin açığa çıkmasını önleyin.";
@@ -1230,10 +1233,10 @@
 "_end_tour" = "Turu bitir";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Daha iyi bir internete hoş geldiniz";
+"_ios_onboarding_page1_title" = "Daha iyi bir İnternet'e hoş geldiniz";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Proton Mail uygulamasını yaratan bilim insanları ve mühendislerin sunduğu, daha güvenli ve gizli bir internete hoş geldiniz.";
+"_ios_onboarding_page1_description" = "Proton Mail uygulamasını yaratan bilim insanları ve mühendislerin sunduğu, daha güvenli ve gizli bir İnternet fikrine hoş geldiniz.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page2_title" = "İnternetin özgür olması gerektiğine inanıyoruz";
@@ -1363,7 +1366,7 @@
 
 "_troubleshoot_item_nointernet_title" = "İnternet bağlantısı yok";
 
-"_troubleshoot_item_nointernet_description" = "Lütfen internet bağlantınızın çalıştığından emin olun.";
+"_troubleshoot_item_nointernet_description" = "Lütfen İnternet bağlantınızın çalıştığından emin olun.";
 
 "_troubleshoot_item_isp_title" = "İnternet hizmeti sağlayıcı (ISP) sorunu";
 
@@ -1464,7 +1467,7 @@
 
 "_quick_settings_netShield_description" = "İnternette reklamlar ve kötü amaçlı yazılımlar olmadan gezinin.";
 
-"_quick_settings_killSwitch_description" = "VPN bağlantısı kesildiğinde IP adresinizin isteğiniz dışında sızmasını engellemek için interneti kapatır.";
+"_quick_settings_killSwitch_description" = "VPN bağlantısı kesildiğinde IP adresinizin isteğiniz dışında sızmasını engellemek için İnternet erişimini kapatır.";
 
 "_quick_settings_secureCore_note" = "Secure Core, VPN hızını azaltabilir";
 
@@ -1494,7 +1497,7 @@
 "_kill_switch_reconnection_header" = "Bağlantı kesici IP adresinizi koruyor";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Proton VPN sunucu ile yeniden bağlantı kurduğunda internet bağlantınız açılacak.\nVPN ve bağlantı kesici koruması olmadan internet kullanmak için, yeniden bağlanmayı iptal edin.";
+"_kill_switch_reconnection" = "Proton VPN sunucu ile yeniden bağlantı kurduğunda İnternet bağlantınız açılacak.\nVPN ve bağlantı kesici koruması olmadan İnternet kullanmak için, yeniden bağlanmayı iptal edin.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "olmadan";
@@ -1545,7 +1548,7 @@
 
 "_sysex_enabled_title" = "Yapılandırma tamamlandı";
 
-"_sysex_enabled_description" = "Yapılandırma tamamlandı. Artık internet üzerinde en iyi VPN teknolojilerini kullanarak daha hızlı gezinebilirsiniz.";
+"_sysex_enabled_description" = "Yapılandırma tamamlandı. Artık İnternet üzerinde en iyi VPN teknolojilerini kullanarak daha hızlı gezinebilirsiniz.";
 
 "_sysex_cannot_enable" = "Sistem eklentisi kullanıma alınamadı";
 
@@ -1642,15 +1645,16 @@
 
 "_performance_load_high" = "Yüksek";
 
-"_locations_all" = "Tüm konumlar";
+"_locations_all" = "All locations";
 
-"_locations_free" = "Free konumları";
+"_locations_free" = "Free locations";
 
-"_locations_plus" = "Plus konumları";
-
-"_locations_plus" = "Plus konumları";
+"_locations_plus" = "Plus locations";
 
 "_locations_gateways" = "Ağ geçitleri";
+
+/* Header before the list of connections available for free users (in the country list) */
+"_connections_free" = "Free connections";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Ağ geçidi nedir?";
@@ -1962,6 +1966,9 @@
 /* Subtitle of Moderate NAT upsell screens */
 "modals_upsell_moderate_nat_subtitle" = "VPN Plus tarifesi ile NAT Type 2 özelliğini edinin";
 
+/* Bold part of the subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle_bold" = "NAT Type 2";
+
 /* Feature of the Moderate NAT upsell screen */
 "modals_upsell_features_moderate_nat_gaming" = "Çevrim içi oyun ve görüntülü görüşme başarımını artırın";
 
@@ -2020,7 +2027,7 @@
 "modals_discourage_secure_core_title" = "Hız hakkında bir not...";
 
 /* Subtitle of the Secure Core discouragement screen */
-"modals_discourage_secure_core_subtitle" = "Secure Core, en yüksek düzeyde güvenlik ve gizlilik sunar. Ancak internet hızınızı düşürebilir. Başarımı yükseltmeye gerek duyuyorsanız, Secure Core özelliğini kapatabilirsiniz.";
+"modals_discourage_secure_core_subtitle" = "Secure Core, en yüksek düzeyde güvenlik ve gizlilik sunar. Ancak İnternet hızınızı düşürebilir. Başarımı yükseltmeye gerek duyuyorsanız, Secure Core özelliğini kapatabilirsiniz.";
 
 /* Turn off Secure Core discouragement screen */
 "modals_discourage_secure_core_dont_show" = "Bir daha gösterme";
@@ -2032,7 +2039,7 @@
 "new_plans_brand_title" = "Güncellenmiş Proton, birleşik koruma";
 
 /* Subtitle of the New Brand screen */
-"new_plans_brand_subtitle" = "Yenilenmiş Proton böyle görünüyor. \nBirçok hizmet, tek amaç. Gizliliğe odaklanmış bir internet fikrine hoş geldiniz.";
+"new_plans_brand_subtitle" = "Yenilenmiş Proton böyle görünüyor. \nBirçok hizmet, tek amaç. Gizliliğe odaklanmış bir İnternet fikrine hoş geldiniz.";
 
 /* Title of "done" button in New Brand screen */
 "new_plans_brand_got_it" = "Anladım";
@@ -2059,7 +2066,10 @@
 "upsell_vpn_accelerator_faster_servers" = "Daha hızlı ve daha az kalabalık sunuculara erişin";
 
 /* Feature of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_increase_connection_speeds" = "Increase connection speeds by up to 400%% with VPN Accelerator.";
+"upsell_vpn_accelerator_increase_connection_speeds" = "VPN Accelerator ile bağlantı hızlarını %%400 oranında artırın.";
+
+/* Bold part of the feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds_bold" = "VPN Accelerator.";
 
 /* Feature of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_distant_servers" = "Uzak sunucularla bağlantı kurarken daha iyi hız ve kararlılık elde edin";
@@ -2070,17 +2080,29 @@
 /* Feature of Customization upsell modal */
 "upsell_customization_access_LAN" = "Yerel ağınızdaki (LAN) aygıtlara erişin";
 
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_access_LAN_bold" = "yerel alan ağı (LAN)";
+
 /* Feature of Customization upsell modal */
 "upsell_customization_profiles" = "Profiller ile sık kullanılan bağlantıları kaydedin";
 
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_profiles_bold" = "profiller";
+
 /* Feature of Customization upsell modal */
 "upsell_customization_quick_connect" = "Hızlı bağlan özelliği ile profillerinize daha hızlı erişin";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_quick_connect_bold" = "Hızlı bağlan";
 
 /* Title of Profiles upsell modal */
 "upsell_profiles_title" = "Sık kullandığınız bağlantılara hızla erişin";
 
 /* Subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle" = "VPN Plus tarifesi ile profiiller özelliğini edinin";
+
+/* Bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold" = "profiller";
 
 /* Feature of Profiles upsell modal */
 "upsell_profiles_feature_location" = "Yeğlediğiniz sunucuyu, ili ve ülkeyi kaydedin.";
@@ -2104,13 +2126,46 @@
 "upsell_countries_connect_to" = "%d ülkeden bağlantı kurun";
 
 /* Feature of Country upsell modal */
-"upsell_countries_higher_speeds" = "Even higher VPN speed";
+"upsell_countries_higher_speeds" = "Daha yüksek VPN hızı";
 
 /* Feature of Country upsell modal */
-"upsell_countries_money_back" = "30 gün içinde ücret iade garantisi";
+"upsell_countries_money_back" = "30 gün içinde ücreti geri ödeme garantisi";
 
 /* Feature of Country upsell modal */
 "upsell_country_feature_title" = "Belirli bir ülke seçmek ister misiniz?";
 
+/* Feature of Country upsell modal */
+"upsell_country_feature_subtitle" = "VPN Plus tarifesi ile tüm ülkelerden seçim yapın";
+
+/* Bold part of the feature of Country upsell modal */
+"upsell_country_feature_subtitle_bold" = "ülke seçimi";
+
+/* Title of the "What's new" screen */
+"modals_whats_new" = "Yenilikler";
+
+/* Title of the first section of the "What's new" screen */
+"modals_free_countries" = "Yeni Free ülkeleri";
+
+/* Description of the first section of the "What's new" screen */
+"modals_new_servers" = "Artık Polonya ve Romanya'da Free sunucuları var.";
+
+/* Title of the second section of the "What's new" screen */
+"modals_server_selection" = "Sunucu seçimindeki değişiklikler";
+
+/* Description of the second section of the "What's new" screen */
+"modals_server_crowding" = "Sunucu kalabalığını önlemek ve herkesin hızlı ve güvenli gezinmeye erişmesini sağlamak için el ile ülke seçimini kaldırdık ve otomatik sunucu seçiminde önemli iyileştirmeler yaptık.";
+
+/* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
+"upsell_specific_location_subtitle" = "VPN Plus tarifesi ile sınırsız değişim sayısı edinin";
+
+/* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
+"upsell_specific_location_title" = "Yapabileceğiniz en fazla Free sunucu değişikliği sayısına ulaştınız.";
+
+/* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
+"upsell_specific_location_change_server_button_title" = "Sunucu değiştir";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "VPN Business ile kullanılabilir.";
+
+/* Text on upsell banner in country list */
+"_free_banner_text" = "Get worldwide coverage with VPN Plus";

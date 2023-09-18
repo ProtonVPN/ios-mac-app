@@ -47,7 +47,7 @@
 "_upgrade" = "Effettua l'upgrade";
 
 /* iOS: Plan selection during plan upgarde, button insettings screen */
-"_upgrade_subscription" = "Aggiorna Abbonamento";
+"_upgrade_subscription" = "Aggiorna abbonamento";
 
 /* MacOS: Settings -> Account. Button leading to web interface. */
 "_manage_subscription" = "Gestisci abbonamento";
@@ -58,7 +58,7 @@
 /* MacOS: voice over indication for a country or server on maintenance*/ */
 "_on_maintenance" = "In manutenzione";
 
-"_reconnection_required" = "Riconnessione Richiesta";
+"_reconnection_required" = "Riconnessione richiesta";
 
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "Manutenzione";
@@ -67,10 +67,10 @@
 "_quit" = "Chiudi";
 
 /* MacOS: alert show before quitting app if VPN is connected */
-"_quit_warning" = "L'uscita dall'applicazione disconnetterà la connessione VPN attiva. Vuoi continuare?";
+"_quit_warning" = "Chiudere l'applicazione disconnetterà la connessione VPN attiva. Vuoi continuare?";
 
 /* Common word */
-"_enabled" = "Abilitata";
+"_enabled" = "Abilitato";
 
 /* Common word */
 "_disabled" = "Disabilitato";
@@ -87,7 +87,7 @@
 "_continue" = "Continua";
 
 /* Button in some alerts */
-"_show_instructions" = "Visualizzare guida";
+"_show_instructions" = "Visualizza guida";
 
 /* iOS: quick connect widget */
 "_network_unreachable" = "Rete non raggiungibile";
@@ -99,22 +99,22 @@
 "_vpn_connection_active" = "Connessione VPN attiva";
 
 /* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
-"_vpn_protocol_not_supported_title" = "Protocollo VPN Non Supportato";
+"_vpn_protocol_not_supported_title" = "Protocollo VPN non supportato";
 
 /* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
 "_vpn_protocol_not_supported_text" = "Il protocollo VPN non è disponibile per la connessione selezionata. Per connetterti, prova a cambiare il protocollo o il server.";
 
 /* iOS: button in settings screen */
-"_log_out" = "Disconnettiti";
+"_log_out" = "Disconnetti";
 
 /* iOS: Logout alert */
-"_log_out_warning" = "L'uscita terminerà la sessione VPN.";
+"_log_out_warning" = "La disconnessione terminerà la sessione VPN.";
 
 /* MacOS: Logout alert */
-"_log_out_warning_long" = "Uscendo dall'applicazione, tutte le connessioni VPN attive verranno chiuse. Continuare?";
+"_log_out_warning_long" = "La disconnessione dall'applicazione terminerà la connessione VPN attiva. Vuoi continuare?";
 
 /* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
-"_change_protocol_disconnect_warning" = "Cambiando protocolli verrà terminata la sessione VPN attuale.";
+"_change_protocol_disconnect_warning" = "Il cambio del protocollo terminerà la sessione VPN attuale.";
 
 /* Slogan text under the logo in may places in iOS and MacOS apps */
 "_loading_screen_slogan" = "Internet sicuro ovunque";
@@ -126,7 +126,7 @@
 "_help" = "Aiuto";
 
 /* MacOS: link in login screen */
-"_learn_more" = "Per saperne di più";
+"_learn_more" = "Scopri di più";
 
 /* iOS: Status view */
 "_ip" = "IP";
@@ -141,7 +141,7 @@
 "_get_plus_for_feature" = "Ottieni Proton VPN Plus per sbloccare questa e altre funzionalità.";
 
 /* Display more information */
-"_more_info" = "Per saperne di più";
+"_more_info" = "Scopri di più";
 
 /* Display less information */
 "_less_info" = "Meno info";
@@ -164,6 +164,9 @@
 /* Several places in both iOS and Mac apps */
 "_quick_connect" = "Connessione rapida";
 
+/* Title of the change server button */
+"_change_server" = "Cambia server";
+
 /* Used in many places in MacOS app */
 "_secure_core" = "Secure Core";
 
@@ -179,7 +182,7 @@
 "_clear_application_data" = "Cancella dati applicazione";
 
 /* Main mac app menu item */
-"_system_extension_tutorial_menu_item" = "Tutorial sull'estensione del sistema";
+"_system_extension_tutorial_menu_item" = "Tutorial sull'estensione di sistema";
 
 /* MacOS: connecting overlay */
 "_preparing_connection" = "Controllo disponibilità server";
@@ -196,10 +199,10 @@
 "_countries_premium" = "Paesi premium";
 
 /* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
-"_connecting_vpn" = "Connettendo %@";
+"_connecting_vpn" = "Connessione %@";
 
 /* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
-"_connecting_to" = "Connettendo a %@";
+"_connecting_to" = "Connessione a %@";
 
 "_reconnecting_to" = "Riconnessione a %@";
 
@@ -589,7 +592,7 @@
 "_fastest_available_server" = "Server più veloce disponibile";
 
 /* iOS: Predefined profile with fastest connection */
-"_fastest_connection" = "Connessione più veloce";
+"_fastest_connection" = "Più veloce";
 
 /* Profile create/change form and other places describing profile */
 "_random" = "Casuale";
@@ -598,7 +601,7 @@
 "_random_available_server" = "Server casuale disponibile";
 
 /* iOS: Predefined profile with random server */
-"_random_connection" = "Connessione casuale";
+"_random_connection" = "Casuale";
 
 /* Profile create/change form */
 "_different_server_each_time" = "Server diverso ogni volta";
@@ -1328,7 +1331,7 @@
 "_menu_show_all" = "Mostra tutto";
 
 /* Main mac app menu item */
-"_menu_logout" = "Disconnettiti";
+"_menu_logout" = "Disconnetti";
 
 /* Main mac app menu item */
 "_menu_quit" = "Chiudi Proton VPN";
@@ -1494,7 +1497,7 @@
 "_kill_switch_reconnection_header" = "Kill switch sta proteggendo il tuo IP";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "La tua connessione internet riprenderà non appena ProtonVPN si riconnetterà a un server.\nPer utilizzare Internet senza protezione VPN e kill switch annullare la riconnessione al server.";
+"_kill_switch_reconnection" = "La tua connessione internet riprenderà non appena ProtonVPN si riconnetterà a un server.\nPer utilizzare Internet senza protezione VPN e kill switch, annulla la riconnessione al server.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "senza";
@@ -1578,7 +1581,7 @@
 "_maximum_device_reached_description" = "Disconnetti un altro dispositivo per connettere questo.";
 
 /* Description of user account update screen part 1 */
-"maximum_device_plan_limit_part_1" = "Scollega un altro dispositivo per connetterti a questo o esegui l'upgrade a %@";
+"maximum_device_plan_limit_part_1" = "Disconnetti un altro dispositivo per connetterti a questo o effettua l'upgrade a %@";
 
 "_reconnect_title" = "Ci stiamo riconnettendo al server più veloce disponibile.";
 
@@ -1642,15 +1645,16 @@
 
 "_performance_load_high" = "Alto";
 
-"_locations_all" = "Tutte le Località";
+"_locations_all" = "Tutte le località";
 
-"_locations_free" = "Località Gratuite";
-
-"_locations_plus" = "Località Plus";
+"_locations_free" = "Località gratuite";
 
 "_locations_plus" = "Località Plus";
 
 "_locations_gateways" = "Gateway";
+
+/* Header before the list of connections available for free users (in the country list) */
+"_connections_free" = "Connessioni gratuite";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Cos'è un gateway?";
@@ -1962,6 +1966,9 @@
 /* Subtitle of Moderate NAT upsell screens */
 "modals_upsell_moderate_nat_subtitle" = "Sblocca NAT di tipo 2 con VPN Plus";
 
+/* Bold part of the subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle_bold" = "NAT di tipo 2";
+
 /* Feature of the Moderate NAT upsell screen */
 "modals_upsell_features_moderate_nat_gaming" = "Migliora le prestazioni dei giochi online e delle videochiamate";
 
@@ -2047,7 +2054,7 @@
 "modals_common_next" = "Prossimo";
 
 /* Description of user account update screen part 1*/ */
-"maximum_device_plan_limit_part_1" = "Scollega un altro dispositivo per connetterti a questo o esegui l'upgrade a %@";
+"maximum_device_plan_limit_part_1" = "Disconnetti un altro dispositivo per connetterti a questo o effettua l'upgrade a %@";
 
 /* Description of user account update screen */
 "maximum_device_limit" = "Disconnetti un altro dispositivo per connettere questo.";
@@ -2061,6 +2068,9 @@
 /* Feature of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_increase_connection_speeds" = "Aumenta le velocità di connessione fino al 400%% con VPN Accelerator.";
 
+/* Bold part of the feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds_bold" = "VPN Accelerator.";
+
 /* Feature of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_distant_servers" = "Velocità e stabilità migliorate quando sei connesso a server distanti.";
 
@@ -2070,17 +2080,29 @@
 /* Feature of Customization upsell modal */
 "upsell_customization_access_LAN" = "Accedi ai dispositivi sulla tua rete locale (LAN)";
 
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_access_LAN_bold" = "rete locale (LAN)";
+
 /* Feature of Customization upsell modal */
 "upsell_customization_profiles" = "Salva le connessioni usate frequentemente con i profili";
 
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_profiles_bold" = "profili";
+
 /* Feature of Customization upsell modal */
 "upsell_customization_quick_connect" = "Ottieni un accesso più veloce ai tuoi profili con la Connessione rapida";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_quick_connect_bold" = "Connessione rapida";
 
 /* Title of Profiles upsell modal */
 "upsell_profiles_title" = "Ottieni un accesso rapido alle tue connessioni frequenti";
 
 /* Subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle" = "Sblocca i profili con VPN Plus";
+
+/* Bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold" = "profili";
 
 /* Feature of Profiles upsell modal */
 "upsell_profiles_feature_location" = "Salva il tuo server, città o paese preferito.";
@@ -2112,5 +2134,38 @@
 /* Feature of Country upsell modal */
 "upsell_country_feature_title" = "Vuoi scegliere un paese specifico?";
 
+/* Feature of Country upsell modal */
+"upsell_country_feature_subtitle" = "Sblocca la selezione del paese con VPN Plus";
+
+/* Bold part of the feature of Country upsell modal */
+"upsell_country_feature_subtitle_bold" = "selezione del paese";
+
+/* Title of the "What's new" screen */
+"modals_whats_new" = "Cosa c'è di nuovo";
+
+/* Title of the first section of the "What's new" screen */
+"modals_free_countries" = "Nuovi paesi gratuiti";
+
+/* Description of the first section of the "What's new" screen */
+"modals_new_servers" = "Ora sono disponibili server gratuiti in Polonia e Romania.";
+
+/* Title of the second section of the "What's new" screen */
+"modals_server_selection" = "Modifiche alla selezione del server";
+
+/* Description of the second section of the "What's new" screen */
+"modals_server_crowding" = "Per evitare il sovraffollamento dei server e garantire che tutti abbiano accesso a una navigazione veloce e sicura, abbiamo rimosso la selezione manuale del paese e abbiamo apportato notevoli miglioramenti alla selezione automatica del server.";
+
+/* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
+"upsell_specific_location_subtitle" = "Ottieni cambi illimitati con VPN Plus";
+
+/* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
+"upsell_specific_location_title" = "Hai raggiunto il numero massimo di cambi gratuiti del server per ora.";
+
+/* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
+"upsell_specific_location_change_server_button_title" = "Cambia server";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Disponibile con VPN Business.";
+
+/* Text on upsell banner in country list */
+"_free_banner_text" = "Ottieni una copertura mondiale con VPN Plus";

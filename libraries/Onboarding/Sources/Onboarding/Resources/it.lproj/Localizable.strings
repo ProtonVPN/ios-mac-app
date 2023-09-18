@@ -25,15 +25,15 @@
 
 "onboarding_establish_title" = "Esegui la tua prima connessione";
 
-"onboarding_establish_note" = "Ti collegheremo al server più veloce e stabile in base alla tua posizione.";
+"onboarding_establish_note" = "Ti connetteremo al server più veloce e stabile in base alla tua posizione.";
 
-"onboarding_establish_connect_now" = "Collegati adesso";
+"onboarding_establish_connect_now" = "Connettiti adesso";
 
 "onboarding_done" = "Completato";
 
 "onboarding_connected_title" = "Congratulazioni";
 
-"onboarding_connected_subtitle" = "La tua connessione è protetta e sei pronto per navigare sul Web.";
+"onboarding_connected_subtitle" = "La tua connessione è protetta e sei pronto per navigare sul web.";
 
 "onboarding_connected_note" = "In sicurezza.";
 
@@ -59,10 +59,10 @@
 
 "onboarding_usage_stats_description" = "I dati sull'utilizzo ci aiutano a superare i blocchi VPN e a migliorare le prestazioni delle app.";
 
-"onboarding_crash_reports_title" = "Condividi report anonimi sugli arresti anomali";
+"onboarding_crash_reports_title" = "Condividi segnalazioni anonime sugli arresti anomali";
 
-"onboarding_crash_reports_description" = "I report sugli arresti anomali ci aiutano a correggere bug, rilevare firewall ed evitare blocchi VPN.";
+"onboarding_crash_reports_description" = "Le segnalazioni sugli arresti anomali ci aiutano a correggere bug, rilevare firewall ed evitare blocchi VPN.";
 
-"onboarding_footer" = "Queste statistiche non contengono il tuo indirizzo IP e non possono essere utilizzate per identificarti. Non li condivideremo mai con terze parti.";
+"onboarding_footer" = "Queste statistiche non contengono il tuo indirizzo IP e non possono essere utilizzate per identificarti. Non le condivideremo mai con terze parti.";
 
-"onboarding_footer_learn_more" = "Per saperne di più";
+"onboarding_footer_learn_more" = "Scopri di più";

@@ -164,6 +164,9 @@
 /* Several places in both iOS and Mac apps */
 "_quick_connect" = "Conexão rápida";
 
+/* Title of the change server button */
+"_change_server" = "Alterar servidor";
+
 /* Used in many places in MacOS app */
 "_secure_core" = "Secure Core";
 
@@ -590,7 +593,7 @@ Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill sw
 "_fastest_available_server" = "Servidor mais rápido disponível";
 
 /* iOS: Predefined profile with fastest connection */
-"_fastest_connection" = "Conexão mais rápida";
+"_fastest_connection" = "Mais rápido";
 
 /* Profile create/change form and other places describing profile */
 "_random" = "Aleatório";
@@ -599,7 +602,7 @@ Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill sw
 "_random_available_server" = "Servidor aleatório disponível";
 
 /* iOS: Predefined profile with random server */
-"_random_connection" = "Conexão aleatória";
+"_random_connection" = "Aleatório";
 
 /* Profile create/change form */
 "_different_server_each_time" = "Servidor diferente a cada conexão";
@@ -1643,15 +1646,16 @@ Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill sw
 
 "_performance_load_high" = "Alta";
 
-"_locations_all" = "Todos os Locais";
+"_locations_all" = "Todas as localizações";
 
 "_locations_free" = "Localizações Free";
 
 "_locations_plus" = "Localizações Plus";
 
-"_locations_plus" = "Localizações Plus";
-
 "_locations_gateways" = "Gateways";
+
+/* Header before the list of connections available for free users (in the country list) */
+"_connections_free" = "Conexões gratuitas";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "O que é um gateway?";
@@ -1963,6 +1967,9 @@ Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill sw
 /* Subtitle of Moderate NAT upsell screens */
 "modals_upsell_moderate_nat_subtitle" = "Desbloqueie o NAT Tipo 2 com VPN Plus";
 
+/* Bold part of the subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle_bold" = "NAT tipo 2";
+
 /* Feature of the Moderate NAT upsell screen */
 "modals_upsell_features_moderate_nat_gaming" = "Aprimore a performance de jogos online e chamadas de vídeo";
 
@@ -2062,6 +2069,9 @@ Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill sw
 /* Feature of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_increase_connection_speeds" = "Aumente a velocidade de conexão em até 400%% com o VPN Accelerator.";
 
+/* Bold part of the feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds_bold" = "VPN Accelerator.";
+
 /* Feature of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_distant_servers" = "Velocidade e estabilidade aprimoradas ao conectar a servidores distantes";
 
@@ -2071,17 +2081,29 @@ Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill sw
 /* Feature of Customization upsell modal */
 "upsell_customization_access_LAN" = "Acesse dispositivos em sua rede local (LAN)";
 
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_access_LAN_bold" = "rede de área local (LAN)";
+
 /* Feature of Customization upsell modal */
 "upsell_customization_profiles" = "Salve conexões usadas com frequência com diferentes perfis";
 
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_profiles_bold" = "perfis";
+
 /* Feature of Customization upsell modal */
 "upsell_customization_quick_connect" = "Obtenha um acesso mais rápido aos seus perfis com Quick Connect";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_quick_connect_bold" = "Conexão rápida";
 
 /* Title of Profiles upsell modal */
 "upsell_profiles_title" = "Obtenha acesso rápido às suas conexões frequentes";
 
 /* Subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle" = "Desbloqueie perfis com VPN Plus";
+
+/* Bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold" = "perfis";
 
 /* Feature of Profiles upsell modal */
 "upsell_profiles_feature_location" = "Salve seu servidor, cidade ou país preferidos.";
@@ -2113,5 +2135,38 @@ Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill sw
 /* Feature of Country upsell modal */
 "upsell_country_feature_title" = "Quer escolher um país específico?";
 
+/* Feature of Country upsell modal */
+"upsell_country_feature_subtitle" = "Desbloqueie a seleção de país com VPN Plus";
+
+/* Bold part of the feature of Country upsell modal */
+"upsell_country_feature_subtitle_bold" = "seleção de país";
+
+/* Title of the "What's new" screen */
+"modals_whats_new" = "Novidades";
+
+/* Title of the first section of the "What's new" screen */
+"modals_free_countries" = "Novos países gratuitos";
+
+/* Description of the first section of the "What's new" screen */
+"modals_new_servers" = "Agora há servidores grátis na polônia e romania.";
+
+/* Title of the second section of the "What's new" screen */
+"modals_server_selection" = "Mudanças na seleção de servidor";
+
+/* Description of the second section of the "What's new" screen */
+"modals_server_crowding" = "Para prevenir a lotação de servidores e garantir que todos tenham acesso a uma navegação rápida e segura, nós removemos a seleção manual de países e fizemos grandes melhorias na seleção automática de servidores.";
+
+/* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
+"upsell_specific_location_subtitle" = "Obtenha alterações ilimitadas com VPN Plus";
+
+/* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
+"upsell_specific_location_title" = "Por enquanto, você alcançou o número máximo de mudanças de servidor grátis.";
+
+/* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
+"upsell_specific_location_change_server_button_title" = "Alterar servidor";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Disponível com VPN Business.";
+
+/* Text on upsell banner in country list */
+"_free_banner_text" = "Obtenha cobertura global com o VPN Plus";

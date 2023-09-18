@@ -33,7 +33,7 @@
 
 "onboarding_connected_title" = "Tebrikler";
 
-"onboarding_connected_subtitle" = "Bağlantınız korunmaya başladı ve web üzerinde gezinebilirsiniz.";
+"onboarding_connected_subtitle" = "Bağlantınız korunmaya başladı şimdi İnternet üzerinde gezinebilirsiniz.";
 
 "onboarding_connected_note" = "Güvenle.";
 
@@ -47,7 +47,7 @@
 
 "onboarding_get_plus" = "Plus edinin";
 
-"onboarding_not_connected_subtitle" = "Web üzerinde gezinmeye hazırsınız.";
+"onboarding_not_connected_subtitle" = "İnternet üzerinde gezinmeye hazırsınız.";
 
 "onboarding_not_connected_error" = "Bir bağlantı kurulamadı. Lütfen bir süre sonra uygulama içinden yeniden deneyin.";
 
