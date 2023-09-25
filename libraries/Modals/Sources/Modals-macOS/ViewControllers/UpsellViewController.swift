@@ -98,9 +98,15 @@ public final class UpsellViewController: NSViewController {
     }
 
     @objc func setupText() {
-        if upsellType?.showUpgradeButton == false {
-            if case .cantSkip = upsellType {
+        guard let upsellType else { return }
+        if upsellType.showUpgradeButton == false {
+            switch upsellType {
+            case .welcomeFallback, .welcomeUnlimited, .welcomePlus:
+                upgradeButton.title = Localizable.modalsCommonGetStarted
+            case .cantSkip:
                 upgradeButton.title = Localizable.upsellSpecificLocationChangeServerButtonTitle
+            default:
+                upgradeButton.title = Localizable.modalsGetPlus
             }
         } else {
             upgradeButton.title = Localizable.modalsGetPlus
@@ -117,7 +123,7 @@ public final class UpsellViewController: NSViewController {
             descriptionLabel.isHidden = true
         }
 
-        if let timeInterval = upsellType?
+        if let timeInterval = upsellType
             .changeDate?
             .timeIntervalSince(Date()),
            timeInterval > 0 {

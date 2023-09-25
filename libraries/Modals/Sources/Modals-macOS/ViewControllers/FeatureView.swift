@@ -64,7 +64,7 @@ final class FeatureView: NSView {
                 iconImageView.contentTintColor = NSColor.color(.icon, .success)
                 textColor = NSColor.color(.text, .success)
             } else {
-                iconImageView.contentTintColor = .color(.icon, .interactive)
+                iconImageView.contentTintColor = .color(.icon, [.interactive, .active])
             }
 
             iconImageView.image = feature.image
