@@ -218,7 +218,8 @@ extension IosAlertService: CoreAlertService {
                     numberOfCountries: planService.countriesCount
                 )
             )
-            
+        case let alert as WelcomeScreenAlert:
+            showWelcomeScreen(welcomeScreenAlert: alert)
         case is LocalAgentSystemErrorAlert:
             showDefaultSystemAlert(alert)
 
@@ -290,6 +291,22 @@ extension IosAlertService: CoreAlertService {
 
         let viewController = modalsFactory.userAccountUpdateViewController(viewModel: viewModel,
                                                                            onPrimaryButtonTap: onPrimaryButtonTap)
+        viewController.modalPresentationStyle = .overFullScreen
+        self.windowService.present(modal: viewController)
+    }
+
+    private func showWelcomeScreen(welcomeScreenAlert: WelcomeScreenAlert) {
+        let viewController: UIViewController
+        switch welcomeScreenAlert.plan {
+        case .fallback:
+            viewController = modalsFactory.upsellViewController(upsellType: .welcomeFallback)
+        case .unlimited:
+            viewController = modalsFactory.upsellViewController(upsellType: .welcomeUnlimited)
+        case let .plus(numberOfServers, numberOfDevices, numberOfCountries):
+            viewController = modalsFactory.upsellViewController(upsellType: .welcomePlus(numberOfServers: numberOfServers,
+                                                                                         numberOfDevices: numberOfDevices,
+                                                                                         numberOfCountries: numberOfCountries))
+        }
         viewController.modalPresentationStyle = .overFullScreen
         self.windowService.present(modal: viewController)
     }
