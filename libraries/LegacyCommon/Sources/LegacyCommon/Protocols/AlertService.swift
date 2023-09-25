@@ -784,6 +784,19 @@ public class UpsellAlert: SystemAlert {
 
 }
 
+public class WelcomeScreenAlert: UpsellAlert {
+    public enum Plan {
+        case plus(numberOfServers: Int, numberOfDevices: Int, numberOfCountries: Int)
+        case unlimited
+        case fallback
+    }
+    public let plan: Plan
+
+    public init(plan: Plan) {
+        self.plan = plan
+    }
+}
+
 public class ProfilesUpsellAlert: UpsellAlert {
     override public var modalSource: UpsellEvent.ModalSource { .profiles }
 }

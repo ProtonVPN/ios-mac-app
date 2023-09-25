@@ -181,6 +181,7 @@ final class CorePlanService: PlanService {
                 completion(.planPurchased)
                 DispatchQueue.main.async { [weak self] in
                     self?.delegate?.paymentTransactionDidFinish(modalSource: nil, newPlanName: plan.protonName)
+                    self?.presentWelcomeScreen(plan: plan)
                 }
             case let .planPurchaseProcessingInProgress(accountPlan: plan):
                 log.debug("Purchasing \(plan.protonName)", category: .iap)
@@ -190,6 +191,20 @@ final class CorePlanService: PlanService {
                log.error("\(message)", category: .connection, metadata: ["error": "\(error)"])
             }
         }
+    }
+
+    func presentWelcomeScreen(plan: InAppPurchasePlan) {
+        let newPlan: WelcomeScreenAlert.Plan
+        if plan.isUnlimitedPlan {
+            newPlan = .unlimited
+        } else if plan.isPlusPlan {
+            newPlan = .plus(numberOfServers: AccountPlan.plus.serversCount,
+                            numberOfDevices: AccountPlan.plus.devicesCount,
+                            numberOfCountries: AccountPlan.plus.countriesCount)
+        } else {
+            newPlan = .fallback
+        }
+        alertService.push(alert: WelcomeScreenAlert(plan: newPlan))
     }
 
     func clear() {
