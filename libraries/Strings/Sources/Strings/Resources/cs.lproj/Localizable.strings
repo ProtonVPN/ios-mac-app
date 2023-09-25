@@ -2072,7 +2072,7 @@
 "upsell_vpn_accelerator_increase_connection_speeds_bold" = "VPN Accelerator.";
 
 /* Feature of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_distant_servers" = "Improved speed and stability when connected to distant servers.";
+"upsell_vpn_accelerator_distant_servers" = "Vyšší rychlost a stabilita při připojení ke vzdáleným serverům.";
 
 /* Title of Customization upsell modal */
 "upsell_customization_title" = "Unlock advanced VPN customization";
@@ -2087,7 +2087,7 @@
 "upsell_customization_profiles" = "Save frequently used connections with profiles";
 
 /* Bold part of the feature of Customization upsell modal */
-"upsell_customization_profiles_bold" = "profiles";
+"upsell_customization_profiles_bold" = "profily";
 
 /* Feature of Customization upsell modal */
 "upsell_customization_quick_connect" = "Get faster access to your profiles with Quick Connect";
@@ -2096,13 +2096,13 @@
 "upsell_customization_quick_connect_bold" = "Quick Connect";
 
 /* Title of Profiles upsell modal */
-"upsell_profiles_title" = "Get quick access to your frequent connections";
+"upsell_profiles_title" = "Získejte rychlý přístup ke svým častým připojením";
 
 /* Subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle" = "Unlock profiles with VPN Plus";
 
 /* Bold part of the subtitle of Profiles upsell modal */
-"upsell_profiles_subtitle_bold" = "profiles";
+"upsell_profiles_subtitle_bold" = "profily";
 
 /* Feature of Profiles upsell modal */
 "upsell_profiles_feature_location" = "Save your preferred server, city, or country.";
@@ -2126,7 +2126,7 @@
 "upsell_countries_connect_to" = "Connect to %d countries";
 
 /* Feature of Country upsell modal */
-"upsell_countries_higher_speeds" = "Even higher VPN speed";
+"upsell_countries_higher_speeds" = "Ještě vyšší rychlost VPN";
 
 /* Feature of Country upsell modal */
 "upsell_countries_money_back" = "30denní záruka na vrácení peněz";
@@ -2135,16 +2135,16 @@
 "upsell_country_feature_title" = "Chcete si vybrat konkrétní zemi?";
 
 /* Feature of Country upsell modal */
-"upsell_country_feature_subtitle" = "Unlock country selection with VPN Plus";
+"upsell_country_feature_subtitle" = "Odemkněte výběr země s VPN Plus";
 
 /* Bold part of the feature of Country upsell modal */
-"upsell_country_feature_subtitle_bold" = "country selection";
+"upsell_country_feature_subtitle_bold" = "výběr země";
 
 /* Title of the "What's new" screen */
-"modals_whats_new" = "What’s new";
+"modals_whats_new" = "Co je nového";
 
 /* Title of the first section of the "What's new" screen */
-"modals_free_countries" = "New Free countries";
+"modals_free_countries" = "Nové Free země";
 
 /* Description of the first section of the "What's new" screen */
 "modals_new_servers" = "There are now Free servers in Poland and Romania.";

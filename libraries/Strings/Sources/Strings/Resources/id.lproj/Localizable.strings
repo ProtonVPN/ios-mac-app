@@ -1645,16 +1645,16 @@
 
 "_performance_load_high" = "Tinggi";
 
-"_locations_all" = "All locations";
+"_locations_all" = "Seluruh lokasi";
 
-"_locations_free" = "Free locations";
+"_locations_free" = "Lokasi Free";
 
-"_locations_plus" = "Plus locations";
+"_locations_plus" = "Lokasi Plus";
 
 "_locations_gateways" = "Gateway";
 
 /* Header before the list of connections available for free users (in the country list) */
-"_connections_free" = "Free connections";
+"_connections_free" = "Koneksi Free";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Apa itu gateway?";
@@ -2144,13 +2144,13 @@
 "modals_whats_new" = "Apa yang baru";
 
 /* Title of the first section of the "What's new" screen */
-"modals_free_countries" = "Negara Gratis baru";
+"modals_free_countries" = "Negara Free baru";
 
 /* Description of the first section of the "What's new" screen */
-"modals_new_servers" = "Sekarang tersedia server Gratis di Polandia dan Romania.";
+"modals_new_servers" = "Server Free kini tersedia di Polandia dan Romania.";
 
 /* Title of the second section of the "What's new" screen */
-"modals_server_selection" = "Perubahan terhadap pemilihan server";
+"modals_server_selection" = "Perubahan terhadap mekanisme pemilihan server";
 
 /* Description of the second section of the "What's new" screen */
 "modals_server_crowding" = "Untuk mencegah server yang terlalu berkerumun dan memastikan bahwa semua orang memiliki akses ke internet yang cepat dan aman, kami telah menghapus opsi pemilihan negara secara manual dan melakukan peningkatan terhadap mekanisme pemilihan server otomatis kami.";
@@ -2168,4 +2168,4 @@
 "_available_with_vpn_business_tooltip" = "Tersedia dengan VPN Business.";
 
 /* Text on upsell banner in country list */
-"_free_banner_text" = "Get worldwide coverage with VPN Plus";
+"_free_banner_text" = "Dapatkan cakupan server di seluruh dunia dengan VPN Plus";

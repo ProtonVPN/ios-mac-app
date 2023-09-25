@@ -388,7 +388,7 @@ blockiert</string>
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Free server locations (%d)</string>
+        <string>Kostenlose Server Standorte (%d)</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
