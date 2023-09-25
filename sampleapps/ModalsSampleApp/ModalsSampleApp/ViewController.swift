@@ -23,6 +23,9 @@ import UIKit
 class ViewController: UITableViewController {
     
     let upsells: [(type: UpsellType, title: String)] = [
+        (.welcomePlus(numberOfServers: 1300, numberOfDevices: 10, numberOfCountries: 61), "Welcome Plus"),
+        (.welcomeUnlimited, "Welcome Unlimited"),
+        (.welcomeFallback, "Welcome Fallback"),
         (.allCountries(numberOfServers: 1300, numberOfCountries: 61), "All countries"),
         (.country(countryFlag: UIImage(named: "flags_US")!, numberOfDevices: 10, numberOfCountries: 61), "Countries"),
         (.secureCore, "Secure Core"),
@@ -59,10 +62,12 @@ class ViewController: UITableViewController {
         switch section {
         case 1:
             return upsells.count
+        case 2:
+            return 2
         case 3:
             return upgrades.count
         default:
-            return 2
+            return 1
         }
     }
     

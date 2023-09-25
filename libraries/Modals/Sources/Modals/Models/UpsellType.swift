@@ -24,6 +24,9 @@ public enum UpsellType {
     case secureCore
     case allCountries(numberOfServers: Int, numberOfCountries: Int)
     case country(countryFlag: Image, numberOfDevices: Int, numberOfCountries: Int)
+    case welcomePlus(numberOfServers: Int, numberOfDevices: Int, numberOfCountries: Int)
+    case welcomeUnlimited
+    case welcomeFallback
     case safeMode
     case moderateNAT
     case noLogs
@@ -79,6 +82,12 @@ public enum UpsellType {
                 return Localizable.upsellCustomizationTitle
             }
             return ""
+        case .welcomePlus:
+            return Localizable.welcomeUpgradeTitlePlus
+        case .welcomeUnlimited:
+            return Localizable.welcomeUpgradeTitleUnlimited
+        case .welcomeFallback:
+            return Localizable.welcomeUpgradeTitleFallback
         }
     }
 
@@ -109,6 +118,12 @@ public enum UpsellType {
                 return Localizable.upsellSpecificLocationSubtitle
             }
             return nil
+        case .welcomePlus:
+            return Localizable.welcomeUpgradeSubtitlePlus
+        case .welcomeUnlimited:
+            return Localizable.welcomeUpgradeSubtitleUnlimited
+        case .welcomeFallback:
+            return Localizable.welcomeUpgradeSubtitleFallback
         }
     }
 
@@ -118,6 +133,8 @@ public enum UpsellType {
             return [Localizable.upsellProfilesSubtitleBold]
         case .country:
             return [Localizable.upsellCountryFeatureSubtitleBold]
+        case .welcomeUnlimited:
+            return [Localizable.welcomeUpgradeSubtitleUnlimitedBold]
         default:
             return []
         }
@@ -131,8 +148,13 @@ public enum UpsellType {
             return [.routeSecureServers, .addLayer, .protectFromAttacks]
         case .allCountries:
             return [.anyLocation, .higherSpeed, .geoblockedContent, .streaming]
-        case .country(_, let numberOfDevices, let numberOfCountries):
-            return [.multipleCountries(numberOfCountries), .higherSpeed, .streaming, .multipleDevices(numberOfDevices), .moneyGuarantee]
+        case let .country(_, numberOfDevices, numberOfCountries):
+            return [
+                .multipleCountries(numberOfCountries),
+                .higherSpeed,
+                .streaming,
+                .multipleDevices(numberOfDevices),
+                .moneyGuarantee]
         case .safeMode:
             return []
         case .moderateNAT:
@@ -147,27 +169,29 @@ public enum UpsellType {
             return [.location, .profilesProtocols, .autoConnect]
         case .cantSkip:
             return []
+        case let .welcomePlus(numberOfServers, numberOfDevices, numberOfCountries):
+            return [
+                .welcomeNewServersCountries(numberOfServers, numberOfCountries),
+                .welcomeAdvancedFeatures,
+                .welcomeDevices(numberOfDevices)
+            ]
+        case .welcomeUnlimited:
+            return []
+        case .welcomeFallback:
+            return []
         }
     }
 
     public func artImage() -> any View {
         switch self {
         case .netShield:
-#if os(iOS)
-            return Asset.netshieldIOS.swiftUIImage
-#else
-            return Asset.netshieldMacOS.swiftUIImage
-#endif
+            return Asset.netshield.swiftUIImage
         case .secureCore:
             return Asset.secureCore.swiftUIImage
         case .allCountries:
             return Asset.plusCountries.swiftUIImage
         case .safeMode:
-#if os(iOS)
-            return Asset.safeModeIOS.swiftUIImage
-#else
-            return Asset.safeModeMacOS.swiftUIImage
-#endif
+            return Asset.safeMode.swiftUIImage
         case .moderateNAT:
             return Asset.moderateNAT.swiftUIImage
         case .noLogs:
@@ -190,12 +214,18 @@ public enum UpsellType {
                 dateFinished: beforeDate,
                 timeInterval: timeInterval
             )
+        case .welcomePlus:
+            return Asset.welcomePlus.swiftUIImage
+        case .welcomeUnlimited:
+            return Asset.welcomeUnlimited.swiftUIImage
+        case .welcomeFallback:
+            return Asset.welcomeFallback.swiftUIImage
         }
     }
 
     public var showUpgradeButton: Bool {
         switch self {
-        case .noLogs:
+        case .noLogs, .welcomeFallback, .welcomeUnlimited, .welcomePlus:
             return false
         case let .cantSkip(until, _, _):
             return Date().timeIntervalSince(until) < 0

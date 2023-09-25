@@ -1,8 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "non-standard-ports.pdf",
+      "filename" : "netshield.pdf",
       "idiom" : "universal"
+    },
+    {
+      "filename" : "netshield-desktop.pdf",
+      "idiom" : "mac"
     }
   ],
   "info" : {
