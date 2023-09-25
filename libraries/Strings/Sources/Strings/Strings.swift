@@ -1724,6 +1724,8 @@ public enum Localizable {
   /// Common button title
   public static var modalsCommonCancel: String { return Localizable.tr("Localizable", "modals_common_cancel", fallback: "Cancel") }
   /// Common button title
+  public static var modalsCommonGetStarted: String { return Localizable.tr("Localizable", "modals_common_get_started", fallback: "Get started") }
+  /// Common button title
   public static var modalsCommonLearnMore: String { return Localizable.tr("Localizable", "modals_common_learn_more", fallback: "Learn more") }
   /// Common button title
   public static var modalsCommonNext: String { return Localizable.tr("Localizable", "modals_common_next", fallback: "Next") }
@@ -1955,6 +1957,30 @@ public enum Localizable {
   public static func vpnFeatureCannotBeSetError(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "vpn_feature_cannot_be_set_error", String(describing: p1), fallback: "%@ setting could not be changed. Please try again later or connect to a different server")
   }
+  /// Plural format key: "Protect up to %#@VARIABLE@"
+  public static func welcomeScreenFeatureDevices(_ p1: Int) -> String {
+    return Localizable.tr("Localizable", "welcome_screen_feature_devices", p1, fallback: "Plural format key: \"Protect up to %#@VARIABLE@\"")
+  }
+  /// Plural format key: "%#@num_servers@ in %#@num_countries@"
+  public static func welcomeScreenFeatureServersCountries(_ p1: Int, _ p2: Int) -> String {
+    return Localizable.tr("Localizable", "welcome_screen_feature_servers_countries", p1, p2, fallback: "Plural format key: \"%#@num_servers@ in %#@num_countries@\"")
+  }
+  /// The name of one of the features in the Welcome screen that the user sees after upgrading
+  public static var welcomeUpgradeAdvancedFeatures: String { return Localizable.tr("Localizable", "welcome_upgrade_advanced_features", fallback: "Advanced security features") }
+  /// The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan
+  public static var welcomeUpgradeSubtitleFallback: String { return Localizable.tr("Localizable", "welcome_upgrade_subtitle_fallback", fallback: "You've upgraded your subscription. Enjoy advanced privacy features and next-level performance.") }
+  /// The subtitle of the Welcome screen when user upgrades to VPN Plus
+  public static var welcomeUpgradeSubtitlePlus: String { return Localizable.tr("Localizable", "welcome_upgrade_subtitle_plus", fallback: "Enjoy extra privacy features, supercharged performance, and next-level VPN customization.") }
+  /// The subtitle of the Welcome screen when user upgrades to VPN Unlimited
+  public static var welcomeUpgradeSubtitleUnlimited: String { return Localizable.tr("Localizable", "welcome_upgrade_subtitle_Unlimited", fallback: "Congratulations! You unlocked premium security and performance features on all Proton services, plus 500 GB total storage.\n\nEnjoy the best of Proton privacy.") }
+  /// The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited
+  public static var welcomeUpgradeSubtitleUnlimitedBold: String { return Localizable.tr("Localizable", "welcome_upgrade_subtitle_Unlimited_bold", fallback: "500 GB") }
+  /// The title of the Welcome screen when user upgrades, but we couldn't determine to what plan
+  public static var welcomeUpgradeTitleFallback: String { return Localizable.tr("Localizable", "welcome_upgrade_title_fallback", fallback: "Congratulations!") }
+  /// The title of the Welcome screen when user upgrades to VPN Plus
+  public static var welcomeUpgradeTitlePlus: String { return Localizable.tr("Localizable", "welcome_upgrade_title_plus", fallback: "Welcome to VPN Plus") }
+  /// The title of the Welcome screen when user upgrades to VPN Unlimited
+  public static var welcomeUpgradeTitleUnlimited: String { return Localizable.tr("Localizable", "welcome_upgrade_title_unlimited", fallback: "Welcome to Proton Unlimited") }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces

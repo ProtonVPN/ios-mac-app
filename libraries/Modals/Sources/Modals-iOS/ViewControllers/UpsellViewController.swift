@@ -91,6 +91,8 @@ public final class UpsellViewController: UIViewController, Identifiable {
         if upsellType?.showUpgradeButton == false {
             useFreeButton.isHidden = true
             switch upsellType {
+            case .welcomePlus, .welcomeUnlimited, .welcomeFallback:
+                getPlusButton.setTitle(Localizable.modalsCommonGetStarted, for: .normal)
             case .noLogs:
                 getPlusButton.setTitle(Localizable.modalsCommonNext, for: .normal)
             case .cantSkip:

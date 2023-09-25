@@ -70,6 +70,9 @@ public enum Feature {
     case geoblockedContent
     case multipleCountries(Int)
     case moneyGuarantee
+    case welcomeNewServersCountries(Int, Int)
+    case welcomeAdvancedFeatures
+    case welcomeDevices(Int)
 }
 
 extension Feature: Equatable { }
@@ -134,6 +137,12 @@ extension Feature {
             return Localizable.upsellCountriesConnectTo(countries)
         case .moneyGuarantee:
             return Localizable.upsellCountriesMoneyBack
+        case let .welcomeNewServersCountries(servers, countries):
+            return Localizable.welcomeScreenFeatureServersCountries(servers, countries)
+        case .welcomeAdvancedFeatures:
+            return Localizable.welcomeUpgradeAdvancedFeatures
+        case .welcomeDevices(let devices):
+            return Localizable.welcomeScreenFeatureDevices(devices)
         }
     }
 
@@ -217,6 +226,12 @@ extension Feature {
             return Theme.Asset.icGlobe.image
         case .moneyGuarantee:
             return Theme.Asset.icShieldFilled.image
+        case .welcomeNewServersCountries:
+            return Theme.Asset.icGlobe.image
+        case .welcomeAdvancedFeatures:
+            return Theme.Asset.icSliders.image
+        case .welcomeDevices:
+            return Theme.Asset.icLocks.image
         }
     }
 }
