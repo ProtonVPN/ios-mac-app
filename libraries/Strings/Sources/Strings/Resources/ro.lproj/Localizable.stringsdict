@@ -440,15 +440,15 @@ blocate</string>
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Free server locations (%d)</string>
+        <string>Locuri servere gratuite (%d)</string>
         <key>few</key>
-        <string>Free server locations (%d)</string>
+        <string>Locuri servere gratuite (%d)</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Free server locations (%d)</string>
+        <string>Locuri servere gratuite (%d)</string>
       </dict>
     </dict>
   </dict>

@@ -446,7 +446,7 @@
 "_data_disclaimer_title" = "Per la tua protezione online. Sempre.";
 
 /* iOS: data disclaimer screen */
-"_data_disclaimer_text" = "Proton VPN è impegnato a proteggere e rispettare la tua privacy. È la nostra politica raccogliere il minor numero possibile di dati utente per garantire un'esperienza utente privata e anonima nell'uso dell'app, nello specifico:\n\n%@ – per accedere, per recuperare una password persa e inviare importanti aggiornamenti di servizio.\n\n%@ – solo per i report di crash ed errori.\n\nL'app Proton VPN non elabora alcuna informazione utente oltre a questi dati. Non registriamo la tua attività online né alcuna informazione personale identificabile. Tutti i dati elencati sopra sono memorizzati ed elaborati nel sistema di Proton VPN, senza che terze parti abbiano accesso a questo sistema.";
+"_data_disclaimer_text" = "Proton VPN è impegnato a proteggere e rispettare la tua privacy. È la nostra politica raccogliere il minor numero possibile di dati utente per garantire un'esperienza utente privata e anonima nell'uso dell'app, nello specifico:\n\n%@ – per accedere, per recuperare una password persa e inviare importanti aggiornamenti di servizio.\n\n%@ – solo per segnalazioni di arresti anomali ed errori.\n\nL'app Proton VPN non elabora alcuna informazione dell'utente oltre a questi dati. Non registriamo la tua attività online né alcuna informazione personale identificabile. Tutti i dati elencati sopra sono archiviati ed elaborati nel proprio sistema di Proton VPN, senza che terze parti ne abbiano l'accesso.";
 
 /* iOS: data disclaimer screen */
 "_data_disclaimer_user_details" = "Nome utente, indirizzo email";
@@ -664,7 +664,7 @@
 "_current_selection_will_be_lost" = "Continuando, la selezione corrente verrà persa. Vuoi continuare?";
 
 /* iOS: new profkle can't be created because not all required fields are filled */
-"_check_if_fields_present" = "Per favore controlla che tutti i campi siano riempiti";
+"_check_if_fields_present" = "Per favore controlla che tutti i campi siano compilati";
 
 /* MacOS: profile deletion warning */
 "_delete_profile_header" = "Elimina Profilo";
@@ -809,7 +809,7 @@
 
 "_unsecure_wifi" = "Rilevata connessione WiFi non sicura";
 
-"_unsecure_wifi_learn_more" = "Per saperne di più";
+"_unsecure_wifi_learn_more" = "Scopri di più";
 
 "_unsecure_wifi_title" = "Rilevato WiFi non sicuro";
 
@@ -1277,7 +1277,7 @@
 "_report_logs" = "Log VPN";
 
 /* iOS bug report: description of log selection switch */
-"_report_logs_description" = "Abilitando questo aggiungerai i log del lato client della VPN a questo report";
+"_report_logs_description" = "Abilitando questo aggiungerai i log del lato client della VPN a questa segnalazione";
 
 /* iOS bug report: Title before report bug form */
 "_report_report" = "Segnala messaggio";
@@ -1289,7 +1289,7 @@
 "_report_placeholder_message" = "Il tuo messaggio...";
 
 /* Bug report: Send report button text */
-"_report_send" = "Invia report";
+"_report_send" = "Invia segnalazione";
 
 /* Bug report: Success message after report was sent */
 "_report_success" = "Grazie per la segnalazione";
@@ -1360,9 +1360,9 @@
 
 "_troubleshoot_item_alt_title" = "Consenti routing alternativo";
 
-"_troubleshoot_item_alt_description" = "Nel caso in cui i siti Proton siano bloccati, questa impostazione consente all'app di provare l'instradamento di rete alternativo per raggiungere Proton, che può essere utile per aggirare i firewall o problemi di rete. Consigliamo di mantenere questa impostazione per una maggiore affidabilità.\n[Per saperne di più]";
+"_troubleshoot_item_alt_description" = "Nel caso in cui i siti Proton siano bloccati, questa impostazione consente all'app di provare percorsi di rete alternativi per raggiungere Proton, che può essere utile per aggirare i firewall o i problemi di rete. Consigliamo di mantenere questa impostazione per una maggiore affidabilità. \nScopri di più";
 
-"_troubleshoot_item_alt_link1" = "Per saperne di più";
+"_troubleshoot_item_alt_link1" = "Scopri di più";
 
 "_troubleshoot_item_nointernet_title" = "Nessuna connessione Internet";
 
@@ -1420,7 +1420,7 @@
 "_netshield_feature_description" = "Proteggiti da pubblicità, malware e tracker su siti Web e app. Se i siti web non si caricano, prova a disabilitare NetShield.\nPer saperne di più";
 
 /* Link with more info in the NetShield Feature description */
-"_netshield_feature_description_alt_link" = "Per saperne di più";
+"_netshield_feature_description_alt_link" = "Scopri di più";
 
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
 "_netshield_upsell_title" = "Naviga senza annunci pubblicitari con NetShield";
@@ -1670,7 +1670,7 @@
 "_vpn_accelerator_description" = "VPN Accelerator abilita una serie di tecnologie uniche di miglioramento delle prestazioni che possono aumentare la velocità della VPN fino al 400%%.\n[Per saperne di più]";
 
 /* Link with more info in the VPN Accelerator description */
-"_vpn_accelerator_description_alt_link" = "Per saperne di più";
+"_vpn_accelerator_description_alt_link" = "Scopri di più";
 
 "_action_requires_reconnect" = "La tua connessione dev'essere riavviata per applicare questa modifica";
 
@@ -1731,7 +1731,7 @@
 "_moderate_nat_explanation" = "Il NAT moderato disabilita la randomizzazione della mappatura degli indirizzi locali. Ciò può ridurre leggermente la tua sicurezza, ma consente alle applicazioni peer-to-peer come i giochi online di stabilire connessioni dirette.\nPer saperne di più";
 
 /* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
-"_moderate_nat_explanation_link" = "Per saperne di più";
+"_moderate_nat_explanation_link" = "Scopri di più";
 
 /* Title for alert shown when enabling Moderate NAT requires reconnection */
 "_moderate_nat_enable_title" = "Abilita NAT Moderato";
@@ -1740,7 +1740,7 @@
 "_moderate_nat_change_title" = "Abilita NAT Moderato";
 
 /* Clickable label title in the onboarding screen for mac */
-"_settings_mac_telemetry_learn_more" = "Per saperne di più";
+"_settings_mac_telemetry_learn_more" = "Scopri di più";
 
 /* Telemetry label in the onboarding screen for mac next to a toggle */
 "_onboarding_mac_usage_stats" = "Condividi statistiche di utilizzo anonime. Questo ci aiuta a superare i blocchi VPN e migliorare le prestazioni dell'app.";
@@ -1755,10 +1755,10 @@
 "_settings_mac_usage_stats_tooltip" = "I dati sull'utilizzo ci aiutano a superare i blocchi VPN e a migliorare le prestazioni delle app.";
 
 /* Telemetry label in the settings window for mac */
-"_settings_mac_crash_reports_title" = "Condividi report anonimi sugli arresti anomali";
+"_settings_mac_crash_reports_title" = "Condividi segnalazioni anonime sugli arresti anomali";
 
 /* Telemetry tooltip in the settings window for mac */
-"_settings_mac_crash_reports_tooltip" = "I report sugli arresti anomali ci aiutano a correggere bug, rilevare firewall ed evitare blocchi VPN.";
+"_settings_mac_crash_reports_tooltip" = "Le segnalazioni sugli arresti anomali ci aiutano a correggere bug, rilevare firewall ed evitare blocchi VPN.";
 
 /* Section title in Settings */
 "_advanced" = "Avanzate";
@@ -1767,10 +1767,10 @@
 "_non_standard_ports_title" = "Porte non standard";
 
 /* Explanation for the Non-standard ports feature shown next to the feature in Settings */
-"_non_standard_ports_explanation" = "Usa Proton VPN per qualsiasi esigenza speciale consentendo il traffico verso porte non standard attraverso la rete VPN.\n[Per saperne di più]";
+"_non_standard_ports_explanation" = "Usa Proton VPN per qualsiasi esigenza speciale consentendo il traffico verso porte non standard attraverso la rete VPN. \nScopri di più";
 
 /* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
-"_non_standard_ports_explanation_link" = "Per saperne di più";
+"_non_standard_ports_explanation_link" = "Scopri di più";
 
 /* Title for alert shown when enabling Non-standard ports requires reconnection */
 "_non_standard_ports_change_title" = "Abilita porte non standard";
@@ -1812,7 +1812,7 @@
 "authenticate" = "Autentica";
 
 /* Error message shown when tryng to log in with an unsupported method */
-"login_unsupported_state" = "Metodo di accesso non valido. Si prega di contattare l'assistenza.";
+"login_unsupported_state" = "Metodo di accesso non valido. Contatta l'assistenza.";
 
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "Impossibile modificare l'impostazione %@. Riprova più tardi o connettiti a un altro server";
@@ -1862,7 +1862,7 @@
 "_alert_protocol_deprecated_enable_smart" = "Aggiornamento";
 
 /* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser*/ */
-"_alert_protocol_deprecated_learn_more" = "Per saperne di più";
+"_alert_protocol_deprecated_learn_more" = "Scopri di più";
 
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Chiudi";
@@ -2048,7 +2048,7 @@
 "modals_common_cancel" = "Annulla";
 
 /* Common button title */
-"modals_common_learn_more" = "Per saperne di più";
+"modals_common_learn_more" = "Scopri di più";
 
 /* Common button title */
 "modals_common_next" = "Prossimo";
@@ -2129,7 +2129,7 @@
 "upsell_countries_higher_speeds" = "Velocità VPN ancora più elevata";
 
 /* Feature of Country upsell modal */
-"upsell_countries_money_back" = "Rimborso garantito entro 30 giorni";
+"upsell_countries_money_back" = "Garanzia di rimborso entro 30 giorni";
 
 /* Feature of Country upsell modal */
 "upsell_country_feature_title" = "Vuoi scegliere un paese specifico?";

@@ -1645,16 +1645,16 @@
 
 "_performance_load_high" = "Высокая";
 
-"_locations_all" = "All locations";
+"_locations_all" = "Усе размяшчэнні";
 
-"_locations_free" = "Free locations";
+"_locations_free" = "Бясплатныя размяшчэнні";
 
-"_locations_plus" = "Plus locations";
+"_locations_plus" = "Размяшчэнні сервераў Plus";
 
 "_locations_gateways" = "Шлюзы";
 
 /* Header before the list of connections available for free users (in the country list) */
-"_connections_free" = "Free connections";
+"_connections_free" = "Бясплатныя падключэнні";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Што такое шлюз?";
@@ -2168,4 +2168,4 @@
 "_available_with_vpn_business_tooltip" = "Даступна з VPN Business.";
 
 /* Text on upsell banner in country list */
-"_free_banner_text" = "Get worldwide coverage with VPN Plus";
+"_free_banner_text" = "VPN Plus забяспечвае пакрыццё ўсяго свету";

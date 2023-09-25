@@ -1654,7 +1654,7 @@
 "_locations_gateways" = "Gateways";
 
 /* Header before the list of connections available for free users (in the country list) */
-"_connections_free" = "Free connections";
+"_connections_free" = "Kostenlose Verbindungen";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Was ist ein Gateway?";
@@ -2093,7 +2093,7 @@
 "upsell_customization_quick_connect" = "Erhalte schnelleren Zugriff auf deine Profile mit Quick Connect";
 
 /* Bold part of the feature of Customization upsell modal */
-"upsell_customization_quick_connect_bold" = "Quick Connect";
+"upsell_customization_quick_connect_bold" = "Schnellverbindung";
 
 /* Title of Profiles upsell modal */
 "upsell_profiles_title" = "Erhalte schnellen Zugriff auf deine häufigen Verbindungen";

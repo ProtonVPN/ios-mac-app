@@ -1645,16 +1645,16 @@
 
 "_performance_load_high" = "Mare";
 
-"_locations_all" = "All locations";
+"_locations_all" = "Toate locurile";
 
-"_locations_free" = "Free locations";
+"_locations_free" = "Locurile gratuite";
 
-"_locations_plus" = "Plus locations";
+"_locations_plus" = "Locuri Plus";
 
 "_locations_gateways" = "Porți de acces";
 
 /* Header before the list of connections available for free users (in the country list) */
-"_connections_free" = "Free connections";
+"_connections_free" = "Conexiuni gratuite";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Ce este o poartă de acces?";
@@ -2169,4 +2169,4 @@ Detalii";
 "_available_with_vpn_business_tooltip" = "Disponibil cu VPN Business.";
 
 /* Text on upsell banner in country list */
-"_free_banner_text" = "Get worldwide coverage with VPN Plus";
+"_free_banner_text" = "Obțineți acoperire la nivel mondial cu VPN Plus";

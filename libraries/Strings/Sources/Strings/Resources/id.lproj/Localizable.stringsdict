@@ -340,7 +340,7 @@ dihentikan</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Free server locations (%d)</string>
+        <string>Lokasi server Free (%d)</string>
       </dict>
     </dict>
   </dict>

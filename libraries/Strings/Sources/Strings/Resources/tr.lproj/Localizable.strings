@@ -1645,16 +1645,16 @@
 
 "_performance_load_high" = "Yüksek";
 
-"_locations_all" = "All locations";
+"_locations_all" = "Tüm konumlar";
 
-"_locations_free" = "Free locations";
+"_locations_free" = "Free konumları";
 
-"_locations_plus" = "Plus locations";
+"_locations_plus" = "Plus konumları";
 
 "_locations_gateways" = "Ağ geçitleri";
 
 /* Header before the list of connections available for free users (in the country list) */
-"_connections_free" = "Free connections";
+"_connections_free" = "Free bağlantıları";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Ağ geçidi nedir?";
@@ -2168,4 +2168,4 @@
 "_available_with_vpn_business_tooltip" = "VPN Business ile kullanılabilir.";
 
 /* Text on upsell banner in country list */
-"_free_banner_text" = "Get worldwide coverage with VPN Plus";
+"_free_banner_text" = "VPN Plus tarifesi ile tüm Dünya'ya erişin";
