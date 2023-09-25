@@ -30,6 +30,9 @@ class ViewController: NSViewController {
     }
 
     let modals: [(type: Modal, title: String)] = [
+        (.upsell(.welcomePlus(numberOfServers: 1300, numberOfDevices: 10, numberOfCountries: 61)), "Welcome Plus"),
+        (.upsell(.welcomeUnlimited), "Welcome Unlimited"),
+        (.upsell(.welcomeFallback), "Welcome Fallback"),
         (.whatsNew, "What's new"),
         (.upsell(.allCountries(numberOfServers: 1300,
                                numberOfCountries: 61)), "All countries"),

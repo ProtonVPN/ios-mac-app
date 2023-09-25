@@ -5,7 +5,7 @@
 	<key>welcome_screen_feature_devices</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>Protect up to %#@VARIABLE@</string>
+		<string>Up to %#@VARIABLE@ at once</string>
 		<key>VARIABLE</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
