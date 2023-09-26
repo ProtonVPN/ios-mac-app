@@ -23,8 +23,20 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VMo-ck-BmY">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="414"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="VMo-ck-BmY" secondAttribute="height" id="aGn-R8-e9q"/>
+                                            <constraint firstAttribute="width" secondItem="VMo-ck-BmY" secondAttribute="height" multiplier="2" id="aGn-R8-e9q"/>
+                                            <constraint firstAttribute="width" secondItem="VMo-ck-BmY" secondAttribute="height" multiplier="1:1" id="uPE-fX-3Ik"/>
                                         </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="uPE-fX-3Ik"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular-widthClass=compact">
+                                            <mask key="constraints">
+                                                <exclude reference="aGn-R8-e9q"/>
+                                                <include reference="uPE-fX-3Ik"/>
+                                            </mask>
+                                        </variation>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GBb-Hz-STb">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="390"/>
@@ -97,12 +109,12 @@
                                 <constraints>
                                     <constraint firstItem="GBb-Hz-STb" firstAttribute="width" secondItem="qbl-gt-UXf" secondAttribute="width" id="5wl-VU-gP3"/>
                                     <constraint firstItem="VMo-ck-BmY" firstAttribute="top" secondItem="qbl-gt-UXf" secondAttribute="top" id="6r7-yJ-52f"/>
-                                    <constraint firstItem="qbl-gt-UXf" firstAttribute="trailing" secondItem="VMo-ck-BmY" secondAttribute="trailing" id="Fn3-z7-BGw"/>
+                                    <constraint firstAttribute="trailing" secondItem="VMo-ck-BmY" secondAttribute="trailing" id="Fn3-z7-BGw"/>
                                     <constraint firstItem="GBb-Hz-STb" firstAttribute="top" secondItem="4DP-w6-2q8" secondAttribute="top" id="XM8-MT-cyc"/>
                                     <constraint firstItem="GBb-Hz-STb" firstAttribute="centerX" secondItem="dqS-16-vVf" secondAttribute="centerX" id="aG8-5c-I4t"/>
                                     <constraint firstItem="GBb-Hz-STb" firstAttribute="bottom" secondItem="4DP-w6-2q8" secondAttribute="bottom" id="cvK-5E-7eZ"/>
                                     <constraint firstItem="GBb-Hz-STb" firstAttribute="trailing" secondItem="4DP-w6-2q8" secondAttribute="trailing" id="hvs-ik-Hqw"/>
-                                    <constraint firstItem="VMo-ck-BmY" firstAttribute="leading" secondItem="qbl-gt-UXf" secondAttribute="leading" id="m3C-GJ-lFa"/>
+                                    <constraint firstItem="VMo-ck-BmY" firstAttribute="leading" secondItem="dqS-16-vVf" secondAttribute="leading" id="m3C-GJ-lFa"/>
                                     <constraint firstItem="GBb-Hz-STb" firstAttribute="leading" secondItem="4DP-w6-2q8" secondAttribute="leading" id="vJT-Mj-3Ke"/>
                                 </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="4DP-w6-2q8"/>
