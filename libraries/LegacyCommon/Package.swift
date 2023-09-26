@@ -55,6 +55,7 @@ let package = Package(
         .github("pointfreeco", repo: "swiftui-navigation", exact: "1.0.0"),
         .github("SDWebImage", repo: "SDWebImage", .upTo("5.16.0")),
         .github("ProtonMail", repo: "TrustKit", revision: "d107d7cc825f38ae2d6dc7c54af71d58145c3506"),
+        .github("almazrafi", repo: "DictionaryCoder", exact: "1.1.0"),
 //        .github("realm", repo: "SwiftLint", exact: "0.52.4"),
     ],
     targets: [
@@ -107,6 +108,7 @@ let package = Package(
                 .product(name: "TrustKit", package: "TrustKit"),
                 .product(name: "TunnelKit", package: "TunnelKit"),
                 .product(name: "TunnelKitOpenVPN", package: "TunnelKit"),
+                .product(name: "DictionaryCoder", package: "DictionaryCoder")
             ],
             plugins: [
 //                .plugin(name: "SwiftLintPlugin", package: "SwiftLint")

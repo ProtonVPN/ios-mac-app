@@ -39,11 +39,14 @@ class AnnouncementTests: XCTestCase {
         let offer = Offer(label: "",
                           icon: "",
                           panel: offerPanel)
-        let sut = Announcement(notificationID: "someID",
-                               startTime: .distantPast,
-                               endTime: .distantFuture,
-                               type: .default,
-                               offer: offer)
+        let sut = Announcement(
+            notificationID: "someID",
+            startTime: .distantPast,
+            endTime: .distantFuture,
+            type: .default,
+            offer: offer,
+            reference: nil
+        )
 
         // Recognizes that it is a full screen image mode
         XCTAssertNotNil(sut.fullScreenImage)
@@ -56,7 +59,7 @@ class AnnouncementTests: XCTestCase {
         if isPrefetched {
             e.fulfill()
         }
-        await waitForExpectations(timeout: 0.1)
+        await fulfillment(of: [e], timeout: 0.1)
 
         let e2 = expectation(description: "Correctly reports not prefetched assets")
         ImageCacheMock.completionBlockParameterValue = false
@@ -64,6 +67,6 @@ class AnnouncementTests: XCTestCase {
         if !isPrefetched {
             e2.fulfill()
         }
-        await waitForExpectations(timeout: 0.1)
+        await fulfillment(of: [e2], timeout: 0.1)
     }
 }

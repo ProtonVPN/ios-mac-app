@@ -27,7 +27,6 @@ import Alamofire
 import ProtonCoreUIFoundations
 
 final class AnnouncementDetailViewController: AnnouncementViewController {
-
     @IBOutlet private weak var closeButton: UIButton!
     @IBOutlet private weak var actionButton: UIButton!
     @IBOutlet private weak var pageFooterLabel: UILabel!

@@ -17,60 +17,54 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import DictionaryCoder
 
-public struct ConnectionEvent: TelemetryEvent {
+public struct ConnectionEvent: TelemetryEvent, Encodable {
+    public typealias CodingKeys = TelemetryKeys
+
     public var measurementGroup: String = "vpn.any.connection"
-    let event: ConnectionEventType
-    public let dimensions: TelemetryDimensions
+    public let event: Event
+    public let dimensions: ConnectionDimensions
 
-    public init(event: ConnectionEventType, dimensions: TelemetryDimensions) {
-        self.event = event
-        self.dimensions = dimensions
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(measurementGroup, forKey: .measurementGroup)
-        try container.encode(event.rawValue, forKey: .event)
-        try container.encode(dimensions, forKey: .dimensions)
-        try container.encode(event.values, forKey: .values)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case measurementGroup = "MeasurementGroup"
-        case event = "Event"
-        case values = "Values"
-        case dimensions = "Dimensions"
-    }
-
-    public func toJSONDictionary() -> JSONDictionary {
-        guard let encoded = try? JSONEncoder().encode(self),
-              let dict = encoded.jsonDictionary else { return [:] }
-        return dict
-    }
-}
-
-// swiftlint:disable nesting
-
-public enum ConnectionEventType: Codable {
-    case vpnConnection(timeToConnection: TimeInterval)
-    case vpnDisconnection(sessionLength: TimeInterval)
-
-    var rawValue: String {
-        switch self {
-        case .vpnConnection:
-            return Self.CodingKeys.vpnConnection.rawValue
-        case .vpnDisconnection:
-            return Self.CodingKeys.vpnDisconnection.rawValue
+    public var values: Values {
+        switch event {
+        case .vpnConnection(let timeToConnection):
+            return .init(timeToConnection: timeToConnection)
+        case .vpnDisconnection(let sessionLength):
+            return .init(sessionLength: sessionLength)
         }
     }
 
-    enum CodingKeys: String, CodingKey {
-        case vpnConnection = "vpn_connection"
-        case vpnDisconnection = "vpn_disconnection"
+    public init(event: Event, dimensions: ConnectionDimensions) {
+        self.event = event
+        self.dimensions = dimensions
+    }
+    
+    public enum Event: Encodable {
+        case vpnConnection(timeToConnection: TimeInterval)
+        case vpnDisconnection(sessionLength: TimeInterval)
+
+        var rawValue: String {
+            switch self {
+            case .vpnConnection:
+                return Self.CodingKeys.vpnConnection.rawValue
+            case .vpnDisconnection:
+                return Self.CodingKeys.vpnDisconnection.rawValue
+            }
+        }
+
+        public func encode(to encoder: Encoder) throws {
+            var container = encoder.singleValueContainer()
+            try container.encode(rawValue)
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case vpnConnection = "vpn_connection"
+            case vpnDisconnection = "vpn_disconnection"
+        }
     }
 
-    struct Value: Encodable {
+    public struct Values: Encodable {
         let timeToConnection: Int? // milliseconds
         let sessionLength: Int? // milliseconds
 
@@ -89,15 +83,4 @@ public enum ConnectionEventType: Codable {
             return Int(timeInterval * 1000)
         }
     }
-
-    var values: Value {
-        switch self {
-        case .vpnConnection(let timeToConnection):
-            return .init(timeToConnection: timeToConnection)
-        case .vpnDisconnection(let sessionLength):
-            return .init(sessionLength: sessionLength)
-        }
-    }
 }
-
-// swiftlint:enable nesting

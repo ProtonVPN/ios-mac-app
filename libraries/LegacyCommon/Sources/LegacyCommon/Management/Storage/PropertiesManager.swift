@@ -76,7 +76,9 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var intentionallyDisconnected: Bool { get set }
     var userLocation: UserLocation? { get set }
     var userDataDisclaimerAgreed: Bool { get set }
-    
+    var userRole: UserRole { get set }
+    var userAccountCreationDate: Date? { get set }
+
     var trialWelcomed: Bool { get set }
     var warnedTrialExpiring: Bool { get set }
     var warnedTrialExpired: Bool { get set }
@@ -100,7 +102,6 @@ public protocol PropertiesManagerProtocol: AnyObject {
 
     var streamingServices: StreamingDictServices { get set }
     var partnerTypes: [PartnerType] { get set }
-    var userRole: UserRole { get set }
     var streamingResourcesUrl: String? { get set }
 
     var connectionProtocol: ConnectionProtocol { get }
@@ -161,8 +162,12 @@ public class PropertiesManager: PropertiesManagerProtocol {
         case quickConnectProfile = "QuickConnect_"
         case secureCoreToggle = "SecureCoreToggle"
         case intentionallyDisconnected = "IntentionallyDisconnected"
+
+        case userRole = "userRole"
         case userLocation = "UserLocation"
         case userDataDisclaimerAgreed = "UserDataDisclaimerAgreed"
+        case userAccountCreationDate = "UserAccountCreationDate"
+
         case lastBugReportEmail = "LastBugReportEmail"
 
         // Subscriptions
@@ -206,7 +211,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
         case smartProtocol = "smartProtocol"
         case streamingServices = "streamingServices"
         case partnerTypes = "partnerTypes"
-        case userRole = "userRole"
         case streamingResourcesUrl = "streamingResourcesUrl"
 
         case wireguardConfig = "WireguardConfig"
@@ -374,15 +378,8 @@ public class PropertiesManager: PropertiesManagerProtocol {
         set { _lastAppVersion = newValue }
     }
     
-    public var lastTimeForeground: Date? {
-        get {
-            guard let timeSince1970 = defaults.value(forKey: Keys.lastTimeForeground.rawValue) as? Double else { return nil }
-            return Date(timeIntervalSince1970: timeSince1970)
-        }
-        set {
-            storage.setValue(newValue?.timeIntervalSince1970, forKey: Keys.lastTimeForeground.rawValue)
-        }
-    }
+    @DateProperty(.lastTimeForeground) public var lastTimeForeground
+    @DateProperty(.userAccountCreationDate) public var userAccountCreationDate
 
     @InitializedProperty(.featureFlags,
                          notifyChangesWith: PropertiesManager.featureFlagsNotification)
@@ -639,6 +636,36 @@ public class StringProperty {
         }
         set {
             storage.setValue(newValue, forKey: key.rawValue)
+            if let notification {
+                executeOnUIThread {
+                    NotificationCenter.default.post(name: notification, object: newValue)
+                }
+            }
+        }
+    }
+
+    init(_ key: PropertiesManager.Keys,
+         notifyChangesWith notification: Notification.Name? = nil) {
+        self.key = key
+        self.notification = notification
+    }
+}
+
+@propertyWrapper
+public class DateProperty {
+    @Dependency(\.storage) var storage
+
+    let key: PropertiesManager.Keys
+    let notification: Notification.Name?
+
+    public var wrappedValue: Date? {
+        get {
+            @Dependency(\.defaultsProvider) var provider
+            guard let value = provider.getDefaults().value(forKey: key.rawValue) as? Double else { return nil }
+            return Date(timeIntervalSince1970: value)
+        }
+        set {
+            storage.setValue(newValue?.timeIntervalSince1970, forKey: key.rawValue)
             if let notification {
                 executeOnUIThread {
                     NotificationCenter.default.post(name: notification, object: newValue)

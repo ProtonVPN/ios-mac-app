@@ -19,6 +19,8 @@
 import Foundation
 import LocalFeatureFlags
 import ProtonCoreNetworking
+import Dependencies
+import Ergonomics
 import VPNShared
 import XCTest
 @testable import LegacyCommon
@@ -70,7 +72,7 @@ class TelemetryTimerMock: TelemetryTimer {
     func updateConnectionStarted(_ date: Date?) { }
     func markStartedConnecting() { }
     func markFinishedConnecting() { }
-    func markConnectionStoped() { }
+    func markConnectionStopped() { }
     var connectionDuration: TimeInterval {
         reportedConnectionDuration
     }
@@ -95,8 +97,21 @@ class TelemetryServiceTests: XCTestCase {
 
     override static func setUp() {
         super.setUp()
-        setLocalFeatureFlagOverrides([TelemetryFeature.telemetryOptIn.category: [TelemetryFeature.telemetryOptIn.feature: true,
-                                                                                 TelemetryFeature.useBuffer.feature: true]])
+        setLocalFeatureFlagOverrides([
+            TelemetryFeature.telemetryOptIn.category: [
+                TelemetryFeature.telemetryOptIn.feature: true,
+                TelemetryFeature.useBuffer.feature: true
+            ]
+        ])
+    }
+
+    override func invokeTest() {
+        withDependencies { values in
+            values.date = .constant(.now)
+            values.dataManager = .mock(data: nil)
+        } operation: {
+            super.invokeTest()
+        }
     }
 
     override static func tearDown() {
@@ -110,5 +125,22 @@ class TelemetryServiceTests: XCTestCase {
         appStateManager.mockActiveConnection = ConnectionConfiguration.connectionConfig2
         container = TelemetryMockFactory(appStateManager: appStateManager)
         service = await TelemetryServiceImplementation(factory: container, timer: timer, buffer: .init(retrievingFromStorage: true))
+    }
+
+    @available(iOS 16.0, macOS 13.0, *)
+    func testValueTimeouts() async throws {
+        let impl = service as! TelemetryServiceImplementation
+        impl.setValueTimeout(0.5)
+
+        impl.previousModalSource = .changeServer
+        impl.previousOfferReference = "foo bar"
+
+        XCTAssertEqual(impl.previousModalSource, .changeServer)
+        XCTAssertEqual(impl.previousOfferReference, "foo bar")
+
+        try await Task.sleep(for: .seconds(1))
+
+        XCTAssertNil(impl.previousModalSource)
+        XCTAssertNil(impl.previousOfferReference)
     }
 }

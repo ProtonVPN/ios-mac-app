@@ -21,7 +21,7 @@
 
 import Foundation
 
-public enum AccountPlan: String {
+public enum AccountPlan: String, Encodable {
     
     case free = "free"
     case basic = "vpnbasic"

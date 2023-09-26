@@ -30,6 +30,7 @@ public struct Announcement: Codable {
     public let endTime: Date
     public let type: NotificationType
     public let offer: Offer?
+    public let reference: String?
     
     // Is set from the app, NOT api
     public var isRead: Bool? = false

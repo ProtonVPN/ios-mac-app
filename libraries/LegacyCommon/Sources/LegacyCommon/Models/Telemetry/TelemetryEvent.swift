@@ -17,9 +17,39 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import DictionaryCoder
+fileprivate let encoder = DictionaryEncoder()
 
 public protocol TelemetryEvent: Encodable {
-    var dimensions: TelemetryDimensions { get }
+    associatedtype Event: Encodable
+    associatedtype Dimensions: Encodable
+    associatedtype Values: Encodable
+    
+    var measurementGroup: String { get }
+    var event: Event { get }
+    var values: Values { get }
+    var dimensions: Dimensions { get }
+}
 
-    func toJSONDictionary() -> JSONDictionary
+public enum TelemetryKeys: String, CodingKey {
+    case measurementGroup = "MeasurementGroup"
+    case event = "Event"
+    case values = "Values"
+    case dimensions = "Dimensions"
+}
+
+extension TelemetryEvent {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: TelemetryKeys.self)
+
+        try container.encode(measurementGroup, forKey: .measurementGroup)
+        try container.encode(values, forKey: .values)
+        try container.encode(event, forKey: .event)
+        try container.encode(dimensions, forKey: .dimensions)
+    }
+
+    public func toJSONDictionary() -> JSONDictionary {
+        let result = (try? encoder.encode(self)) ?? [:]
+        return result.mapValues { $0 as AnyObject }
+    }
 }

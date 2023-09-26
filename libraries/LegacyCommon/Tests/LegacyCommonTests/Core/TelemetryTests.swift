@@ -77,4 +77,64 @@ class TelemetryTests: XCTestCase {
         XCTAssertEqual(dimensions["port"] as? String, "5678")
         XCTAssertEqual(dimensions["isp"] as? String, "Netia")
     }
+
+    func testUpsellEventParameters() {
+        do {
+            let request = TelemetryRequest(UpsellEvent.upsellEventDisplayMock.toJSONDictionary())
+            checkUpsellEventDimensions(request: request, event: .display, upgradedUserPlan: nil)
+        }
+
+        do {
+            let request = TelemetryRequest(UpsellEvent.upsellEventUpgradeMock.toJSONDictionary())
+            checkUpsellEventDimensions(request: request, event: .upgradeAttempt, upgradedUserPlan: nil)
+        }
+
+        do {
+            let request = TelemetryRequest(UpsellEvent.upsellEventSuccessMock.toJSONDictionary())
+            checkUpsellEventDimensions(request: request, event: .success, upgradedUserPlan: "plus")
+        }
+    }
+
+    func checkUpsellEventDimensions(request: TelemetryRequest, event: UpsellEvent.Event, upgradedUserPlan: String?) {
+        guard let sut = request.parameters,
+                  let values = sut["Values"] as? [String: Any],
+                  let dimensions = sut["Dimensions"] as? [String: Any] else {
+                XCTFail("Parameters not in the expected type")
+                return
+        }
+
+        XCTAssertEqual(sut["MeasurementGroup"] as? String, "vpn.any.upsell")
+        XCTAssertEqual(sut["Event"] as? String, event.rawValue)
+        XCTAssertEqual(values.count, 0)
+        XCTAssertEqual(dimensions["modal_source"] as? String, "change_server")
+        XCTAssertEqual(dimensions["user_plan"] as? String, "free")
+        XCTAssertEqual(dimensions["vpn_status"] as? String, "off")
+        XCTAssertEqual(dimensions["user_country"] as? String, "ZZ")
+        XCTAssertEqual(dimensions["new_free_plan_ui"] as? String, "yes")
+        XCTAssertEqual(dimensions["days_since_account_creation"] as? String, "8-14")
+        XCTAssertEqual(dimensions["upgraded_user_plan"] as? String?, upgradedUserPlan)
+    }
+
+    func testUpsellAccountBuckets() {
+        typealias Bucket = UpsellEvent.AccountCreationRangeBucket
+
+        XCTAssertEqual(Bucket(intValue: -1)?.rawValue, nil)
+        XCTAssertEqual(Bucket(intValue: 0)?.rawValue, "0")
+        XCTAssertEqual(Bucket(intValue: 1)?.rawValue, "1-3")
+        XCTAssertEqual(Bucket(intValue: 2)?.rawValue, "1-3")
+        XCTAssertEqual(Bucket(intValue: 3)?.rawValue, "1-3")
+        XCTAssertEqual(Bucket(intValue: 4)?.rawValue, "4-7")
+        XCTAssertEqual(Bucket(intValue: 5)?.rawValue, "4-7")
+        XCTAssertEqual(Bucket(intValue: 6)?.rawValue, "4-7")
+        XCTAssertEqual(Bucket(intValue: 7)?.rawValue, "4-7")
+        XCTAssertEqual(Bucket(intValue: 8)?.rawValue, "8-14")
+        XCTAssertEqual(Bucket(intValue: 9)?.rawValue, "8-14")
+        XCTAssertEqual(Bucket(intValue: 10)?.rawValue, "8-14")
+        XCTAssertEqual(Bucket(intValue: 11)?.rawValue, "8-14")
+        XCTAssertEqual(Bucket(intValue: 12)?.rawValue, "8-14")
+        XCTAssertEqual(Bucket(intValue: 13)?.rawValue, "8-14")
+        XCTAssertEqual(Bucket(intValue: 14)?.rawValue, "8-14")
+        XCTAssertEqual(Bucket(intValue: 15)?.rawValue, ">14")
+        XCTAssertEqual(Bucket(intValue: 1024)?.rawValue, ">14")
+    }
 }

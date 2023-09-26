@@ -20,6 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Foundation
 import ProtonCoreDataModel
 
 public struct VpnProperties {
@@ -29,6 +30,7 @@ public struct VpnProperties {
     public let location: UserLocation?
     public let clientConfig: ClientConfig
     public let userRole: UserRole
+    public let userCreateTime: Date?
 
     public init(serverModels: [ServerModel], vpnCredentials: VpnCredentials?, location: UserLocation?, clientConfig: ClientConfig?, user: User?) {
         self.serverModels = serverModels
@@ -36,5 +38,11 @@ public struct VpnProperties {
         self.location = location
         self.clientConfig = clientConfig ?? ClientConfig()
         self.userRole = .init(rawValue: user?.role ?? 0) ?? .noOrganization
+        
+        if let createTime = user?.createTime {
+            self.userCreateTime = Date(timeIntervalSince1970: createTime)
+        } else {
+            self.userCreateTime = nil
+        }
     }
 }

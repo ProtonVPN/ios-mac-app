@@ -26,13 +26,13 @@ extension ConnectionEvent {
                                                     dimensions: .disconnectionSuccessMock1)
 }
 
-extension ConnectionEventType.Value {
-    public static let connectionMock1 = ConnectionEventType.Value(timeToConnection: 123)
-    public static let disconnectionMock1 = ConnectionEventType.Value(sessionLength: 123)
+extension ConnectionEvent.Values {
+    public static let connectionMock1 = ConnectionEvent.Values(timeToConnection: 123)
+    public static let disconnectionMock1 = ConnectionEvent.Values(sessionLength: 123)
 }
 
-extension TelemetryDimensions {
-    public static let connectionSuccessMock1 = TelemetryDimensions(
+extension ConnectionDimensions {
+    public static let connectionSuccessMock1 = ConnectionDimensions(
         outcome: .success,
         userTier: .free,
         vpnStatus: .on,
@@ -48,7 +48,7 @@ extension TelemetryDimensions {
         isServerFree: false
     )
     
-    public static let disconnectionSuccessMock1 = TelemetryDimensions(
+    public static let disconnectionSuccessMock1 = ConnectionDimensions(
         outcome: .success,
         userTier: .paid,
         vpnStatus: .off,
@@ -62,6 +62,36 @@ extension TelemetryDimensions {
         port: "5678",
         isp: "Netia",
         isServerFree: true
+    )
+}
+
+extension UpsellEvent {
+    static let upsellEventDisplayMock: Self = .init(event: .display, dimensions: .upsellEventDimensionsMock1)
+    static let upsellEventUpgradeMock: Self = .init(event: .upgradeAttempt, dimensions: .upsellEventDimensionsMock1)
+    static let upsellEventSuccessMock: Self = .init(event: .success, dimensions: .upsellEventDimensionsMock2)
+}
+
+extension UpsellEvent.Dimensions {
+    public static let upsellEventDimensionsMock1: Self = .init(
+        modalSource: .changeServer,
+        userPlan: .free,
+        vpnStatus: .off,
+        userCountry: "ZZ",
+        newFreePlanUi: true,
+        daysSinceAccountCreation: 12,
+        upgradedUserPlan: nil,
+        reference: nil
+    )
+
+    public static let upsellEventDimensionsMock2: Self = .init(
+        modalSource: .changeServer,
+        userPlan: .free,
+        vpnStatus: .off,
+        userCountry: "ZZ",
+        newFreePlanUi: true,
+        daysSinceAccountCreation: 12,
+        upgradedUserPlan: "plus",
+        reference: nil
     )
 }
 #endif

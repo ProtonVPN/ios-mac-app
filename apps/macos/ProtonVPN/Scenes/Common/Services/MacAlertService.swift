@@ -332,14 +332,19 @@ extension MacAlertService: CoreAlertService {
     }
 
     private func show(alert: UpsellAlert, upsellType: UpsellType) {
+        let modalSource = alert.modalSource
+
         let upgradeAction: (() -> Void) = { [weak self] in
             Task { [weak self] in
                 guard let url = await self?.sessionService.getPlanSession(mode: .upgrade) else {
                     return
                 }
+                NotificationCenter.default.post(name: .userEngagedWithUpsellAlert, object: modalSource)
                 SafariService.openLink(url: url)
             }
         }
+        
+        NotificationCenter.default.post(name: .upsellAlertWasDisplayed, object: modalSource)
 
         let upsellViewController = ModalsFactory.upsellViewController(
             upsellType: upsellType,
@@ -360,7 +365,11 @@ extension MacAlertService: CoreAlertService {
         case .legacy(let legacyPanel):
             vc = AnnouncementDetailViewController(legacyPanel)
         case .image(let imagePanel):
-            vc = AnnouncementImageViewController(data: imagePanel, sessionService: sessionService)
+            vc = AnnouncementImageViewController(
+                data: imagePanel,
+                offerReference: alert.offerReference,
+                sessionService: sessionService
+            )
         }
 
         windowService.presentKeyModal(viewController: vc)

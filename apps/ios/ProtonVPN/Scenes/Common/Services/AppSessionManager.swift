@@ -292,6 +292,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                     self.serverStorage.store(properties.serverModels)
                 }
                 self.propertiesManager.userRole = properties.userRole
+                self.propertiesManager.userAccountCreationDate = properties.userCreateTime
                 self.propertiesManager.userLocation = properties.location
                 self.propertiesManager.openVpnConfig = properties.clientConfig.openVPNConfig
                 self.propertiesManager.wireguardConfig = properties.clientConfig.wireGuardConfig
@@ -473,10 +474,13 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
 // MARK: - Plan change
 extension AppSessionManagerImplementation: PlanServiceDelegate {
-    func paymentTransactionDidFinish() {
+    func paymentTransactionDidFinish(modalSource: UpsellEvent.ModalSource?, newPlanName: String?) {
         guard authKeychain.fetch() != nil else {
             return
         }
+
+        // Note: Do not async this part, we don't want it to race with retrieving the new properties below.
+        NotificationCenter.default.post(name: .userCompletedUpsellAlertJourney, object: (modalSource, newPlanName))
 
         log.debug("Reloading data after plan purchase", category: .app)
         retrievePropertiesAndLogIn(success: { [dataReloaded] in

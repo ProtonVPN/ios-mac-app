@@ -83,6 +83,8 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
 
     private var notificationCenter: NotificationCenter = .default
 
+    private var observation: NotificationToken?
+
     public typealias Factory = VpnApiServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & CoreAlertServiceFactory
         
     public init(factory: Factory) {
@@ -92,11 +94,12 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
         serverStorage = factory.makeServerStorage()
         alertService = factory.makeCoreAlertService()
 
-        notificationCenter.addObserver(
-            self,
-            selector: #selector(userPlanChanged),
-            name: type(of: vpnKeychain).vpnPlanChanged,
-            object: nil
+        observation = notificationCenter.addObserver(
+            for: type(of: vpnKeychain).vpnPlanChanged,
+            object: nil,
+            handler: { [weak self] in
+                self?.userPlanChanged($0)
+            }
         )
     }
     
@@ -189,7 +192,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     }
 
     /// After user plan changes, feature flags may also change, so we have to reload them
-    @objc func userPlanChanged(_ notification: Notification) {
+    open func userPlanChanged(_ notification: Notification) {
         refreshData()
     }
 
