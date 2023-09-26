@@ -36,7 +36,7 @@ class ConnectionTimer: TelemetryTimer {
         startedConnectionDate = Date()
     }
 
-    func markConnectionStoped() {
+    func markConnectionStopped() {
         stoppedConnectionDate = Date()
     }
 

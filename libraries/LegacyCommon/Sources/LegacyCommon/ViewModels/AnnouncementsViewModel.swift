@@ -89,7 +89,7 @@ public class AnnouncementsViewModel {
             log.warning("Tried opening an announcement, but there was no offer panel available", category: .app)
             return
         }
-        alertService.push(alert: AnnouncementOfferAlert(data: data))
+        alertService.push(alert: AnnouncementOfferAlert(data: data, offerReference: announcement.reference))
     }
         
     // MARK: - Data

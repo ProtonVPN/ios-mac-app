@@ -44,17 +44,13 @@ class AnnouncementStorageUserDefaultsTests: XCTestCase {
     
     func testStoreAndFetchWorks() {
         XCTAssertFalse(storage.fetch().containsAnnouncement(withId: "id"))
-        storage.store([Announcement(notificationID: "id", startTime: Date(), endTime: Date(), type: .default, offer: nil)])
+        storage.store([Announcement.mock(id: "id")])
         userDefaults.synchronize()
         XCTAssert(storage.fetch().containsAnnouncement(withId: "id"))
     }
     
     func testStoringPreservesIsReadFlag() {
-        var announcements = [
-            Announcement(notificationID: "1", startTime: Date(), endTime: Date(), type: .default, offer: nil),
-            Announcement(notificationID: "2", startTime: Date(), endTime: Date(), type: .default, offer: nil),
-            Announcement(notificationID: "3", startTime: Date(), endTime: Date(), type: .default, offer: nil),
-        ]
+        var announcements = ["1", "2", "3"].map(Announcement.mock(id:))
         storage.store(announcements)
         
         XCTAssertFalse(announcements[0].wasRead)
@@ -81,6 +77,12 @@ class AnnouncementStorageUserDefaultsTests: XCTestCase {
         expectationNotificationFired.fulfill()
     }
     
+}
+
+fileprivate extension Announcement {
+    static func mock(id: String) -> Self {
+        Self(notificationID: id, startTime: Date(), endTime: Date(), type: .default, offer: nil, reference: nil)
+    }
 }
 
 fileprivate class StaticKeyNameProvider: KeyNameProvider {

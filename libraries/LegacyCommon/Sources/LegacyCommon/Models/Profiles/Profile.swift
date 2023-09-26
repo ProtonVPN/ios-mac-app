@@ -67,7 +67,7 @@ public class Profile: NSObject, NSCoding, Identifiable {
         ProfileConstants.defaultIds.contains(id)
     }
 
-    public func connectionRequest(withDefaultNetshield netShield: NetShieldType, withDefaultNATType natType: NATType, withDefaultSafeMode safeMode: Bool?, trigger: TelemetryDimensions.VPNTrigger?) -> ConnectionRequest {
+    public func connectionRequest(withDefaultNetshield netShield: NetShieldType, withDefaultNATType natType: NATType, withDefaultSafeMode safeMode: Bool?, trigger: ConnectionDimensions.VPNTrigger?) -> ConnectionRequest {
         switch serverOffering {
         case let .fastest(countryCode):
             let connectionType: ConnectionRequestType = countryCode.flatMap({ ConnectionRequestType.country($0, .fastest) }) ?? ConnectionRequestType.fastest

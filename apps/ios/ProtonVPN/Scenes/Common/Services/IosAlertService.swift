@@ -30,7 +30,15 @@ import Strings
 
 class IosAlertService {
         
-    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & SettingsServiceFactory & TroubleshootCoordinatorFactory & SafariServiceFactory & PlanServiceFactory & SessionServiceFactory
+    typealias Factory = UIAlertServiceFactory &
+        AppSessionManagerFactory &
+        WindowServiceFactory &
+        SettingsServiceFactory &
+        TroubleshootCoordinatorFactory &
+        SafariServiceFactory &
+        PlanServiceFactory &
+        SessionServiceFactory
+
     private let factory: Factory
     
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
@@ -293,6 +301,7 @@ extension IosAlertService: CoreAlertService {
 
         upsellViewController.delegate = self
         windowService.present(modal: upsellViewController)
+        NotificationCenter.default.post(name: .upsellAlertWasDisplayed, object: alert.modalSource)
     }
 
     private func show(_ alert: DiscourageSecureCoreAlert) {
@@ -368,6 +377,10 @@ extension IosAlertService: CoreAlertService {
         }
         announcement.urlRequested = { [weak self] url in
             self?.safariService.open(url: url)
+
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: .userEngagedWithAnnouncement, object: alert.offerReference)
+            }
         }
         windowService.present(modal: announcement)
     }
@@ -398,8 +411,15 @@ extension IosAlertService: UpsellViewControllerDelegate {
     }
 
     func userDidRequestPlus(upsell: UpsellViewController?) {
+        // Hold onto alert reference before its removed from `upsellAlerts` on disappear
+        var modalSource: UpsellEvent.ModalSource?
+        if let upsell, let alert = upsellAlerts[upsell.id] {
+            modalSource = alert.modalSource
+            NotificationCenter.default.post(name: .userEngagedWithUpsellAlert, object: modalSource)
+        }
+
         windowService.dismissModal { [weak self] in
-            self?.planService.presentPlanSelection()
+            self?.planService.presentPlanSelection(modalSource: modalSource)
         }
     }
 

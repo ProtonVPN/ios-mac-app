@@ -48,7 +48,7 @@ class AnnouncementsViewModelTests: XCTestCase {
     func testTakesDataFromTheStorage() {
         XCTAssert(viewModel.items.isEmpty)
         
-        storage.store([Announcement(notificationID: "1", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: .default, offer: .empty)])
+        storage.store([.mock])
         
         XCTAssert(viewModel.items.count == 1)
     }
@@ -59,7 +59,7 @@ class AnnouncementsViewModelTests: XCTestCase {
             expectationViewRefreshed.fulfill()
         }
         
-        storage.store([Announcement(notificationID: "1", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: .default, offer: .empty)])
+        storage.store([.mock])
         
         wait(for: [expectationViewRefreshed], timeout: 0.2)
     }
@@ -112,4 +112,15 @@ fileprivate class AnnouncementManagerImplementationFactoryMock: AnnouncementMana
     func makeAnnouncementStorage() -> AnnouncementStorage {
         return announcementStorage
     }
+}
+
+fileprivate extension Announcement {
+    static let mock: Self = .init(
+        notificationID: "1",
+        startTime: Date(),
+        endTime: Date(timeIntervalSinceNow: 888),
+        type: .default,
+        offer: .empty,
+        reference: nil
+    )
 }

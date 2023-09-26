@@ -28,14 +28,16 @@ final class AnnouncementImageViewController: NSViewController {
     @IBOutlet private weak var actionButton: PrimaryActionButton!
 
     private let data: OfferPanel.ImagePanel
+    private let offerReference: String?
     private let sessionService: SessionService
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(data: OfferPanel.ImagePanel, sessionService: SessionService) {
+    init(data: OfferPanel.ImagePanel, offerReference: String?, sessionService: SessionService) {
         self.data = data
+        self.offerReference = offerReference
         self.sessionService = sessionService
         super.init(nibName: NSNib.Name(String(describing: AnnouncementImageViewController.self)), bundle: nil)
     }
@@ -83,6 +85,10 @@ final class AnnouncementImageViewController: NSViewController {
         guard data.button.action == .openURL else {
             log.warning("Announcement does not contain <OpenURL> action. Action is <\(data.button.action?.rawValue ?? "nil")>, url: <\(data.button.url)>")
             return
+        }
+
+        DispatchQueue.main.async { [weak self] in
+            NotificationCenter.default.post(name: .userEngagedWithAnnouncement, object: self?.offerReference)
         }
 
         guard data.button.behaviors?.contains(.autoLogin) == true else {

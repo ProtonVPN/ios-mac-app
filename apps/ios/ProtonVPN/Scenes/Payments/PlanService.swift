@@ -32,7 +32,7 @@ protocol PlanServiceFactory {
 }
 
 protocol PlanServiceDelegate: AnyObject {
-    func paymentTransactionDidFinish()
+    func paymentTransactionDidFinish(modalSource: UpsellEvent.ModalSource?, newPlanName: String?)
 }
 
 enum PlusPlanUIResult {
@@ -45,12 +45,18 @@ protocol PlanService {
     var countriesCount: Int { get }
     var delegate: PlanServiceDelegate? { get set }
 
-    func presentPlanSelection()
+    func presentPlanSelection(modalSource: UpsellEvent.ModalSource?)
     func presentSubscriptionManagement()
     func updateServicePlans(completion: @escaping (Result<(), Error>) -> Void)
     func createPlusPlanUI(completion: @escaping (PlusPlanUIResult) -> Void)
 
     func clear()
+}
+
+extension PlanService {
+    func presentPlanSelection() {
+        presentPlanSelection(modalSource: nil)
+    }
 }
 
 final class CorePlanService: PlanService {
@@ -139,7 +145,7 @@ final class CorePlanService: PlanService {
         }
     }
 
-    func presentPlanSelection() {
+    func presentPlanSelection(modalSource: UpsellEvent.ModalSource?) {
         guard userCachedStatus.paymentsBackendStatusAcceptsIAP else {
             alertService.push(alert: UpgradeUnavailableAlert())
             return
@@ -147,14 +153,14 @@ final class CorePlanService: PlanService {
 
         paymentsUI = createPaymentsUI()
         paymentsUI?.showUpgradePlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true) { [weak self] response in
-            self?.handlePaymentsResponse(response: response)
+            self?.handlePaymentsResponse(response: response, modalSource: modalSource)
         }
     }
 
     func presentSubscriptionManagement() {
         paymentsUI = createPaymentsUI()
         paymentsUI?.showCurrentPlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true) { [weak self] response in
-            self?.handlePaymentsResponse(response: response)
+            self?.handlePaymentsResponse(response: response, modalSource: nil)
         }
     }
 
@@ -174,7 +180,7 @@ final class CorePlanService: PlanService {
                 log.debug("Purchased plan: \(plan.protonName)", category: .iap)
                 completion(.planPurchased)
                 DispatchQueue.main.async { [weak self] in
-                    self?.delegate?.paymentTransactionDidFinish()
+                    self?.delegate?.paymentTransactionDidFinish(modalSource: nil, newPlanName: plan.protonName)
                 }
             case let .planPurchaseProcessingInProgress(accountPlan: plan):
                 log.debug("Purchasing \(plan.protonName)", category: .iap)
@@ -200,12 +206,12 @@ final class CorePlanService: PlanService {
                           customization: .init(inAppTheme: { .dark }))
     }
 
-    private func handlePaymentsResponse(response: PaymentsUIResultReason) {
+    private func handlePaymentsResponse(response: PaymentsUIResultReason, modalSource: UpsellEvent.ModalSource?) {
         switch response {
         case let .purchasedPlan(accountPlan: plan):
             log.debug("Purchased plan: \(plan.protonName)", category: .iap)
             DispatchQueue.main.async { [weak self] in
-                self?.delegate?.paymentTransactionDidFinish()
+                self?.delegate?.paymentTransactionDidFinish(modalSource: modalSource, newPlanName: plan.protonName)
             }
         case let .open(vc: _, opened: opened):
             assert(opened == true)

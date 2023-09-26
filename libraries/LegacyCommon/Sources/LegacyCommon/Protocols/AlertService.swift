@@ -741,10 +741,13 @@ public class AnnouncementOfferAlert: SystemAlert {
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
-    public let data: OfferPanel
 
-    public init(data: OfferPanel) {
+    public let data: OfferPanel
+    public let offerReference: String?
+
+    public init(data: OfferPanel, offerReference: String?) {
         self.data = data
+        self.offerReference = offerReference
     }
 }
 
@@ -769,6 +772,11 @@ public class UpsellAlert: SystemAlert {
     public var actions = [AlertAction]()
     public let isError = false
     public var dismiss: (() -> Void)?
+    public var modalSource: UpsellEvent.ModalSource? {
+        assertionFailure("Not implemented")
+
+        return nil
+    }
 
     public func continueAction() { }
 
@@ -776,13 +784,21 @@ public class UpsellAlert: SystemAlert {
 
 }
 
-public class ProfilesUpsellAlert: UpsellAlert { }
+public class ProfilesUpsellAlert: UpsellAlert {
+    override public var modalSource: UpsellEvent.ModalSource { .profiles }
+}
 
-public class VPNAcceleratorUpsellAlert: UpsellAlert { }
+public class VPNAcceleratorUpsellAlert: UpsellAlert {
+    public override var modalSource: UpsellEvent.ModalSource? { .vpnAccelerator }
+}
 
-public class CustomizationUpsellAlert: UpsellAlert { }
+public class CustomizationUpsellAlert: UpsellAlert {
+    public override var modalSource: UpsellEvent.ModalSource? { .allowLan }
+}
 
 public class CountryUpsellAlert: UpsellAlert {
+    public override var modalSource: UpsellEvent.ModalSource? { .countries }
+
     public let countryFlag: Image
 
     public init(countryFlag: Image) {
@@ -790,15 +806,25 @@ public class CountryUpsellAlert: UpsellAlert {
     }
 }
 
-public class AllCountriesUpsellAlert: UpsellAlert { }
+public class AllCountriesUpsellAlert: UpsellAlert {
+    public override var modalSource: UpsellEvent.ModalSource? { .countries }
+}
 
-public class NetShieldUpsellAlert: UpsellAlert { }
+public class NetShieldUpsellAlert: UpsellAlert {
+    public override var modalSource: UpsellEvent.ModalSource? { .netShield }
+}
 
-public class SecureCoreUpsellAlert: UpsellAlert { }
+public class SecureCoreUpsellAlert: UpsellAlert {
+    public override var modalSource: UpsellEvent.ModalSource? { .secureCore }
+}
 
-public class SafeModeUpsellAlert: UpsellAlert { }
+public class SafeModeUpsellAlert: UpsellAlert {
+    public override var modalSource: UpsellEvent.ModalSource? { .safeMode }
+}
 
-public class ModerateNATUpsellAlert: UpsellAlert { }
+public class ModerateNATUpsellAlert: UpsellAlert {
+    public override var modalSource: UpsellEvent.ModalSource? { .moderateNat }
+}
 
 public class SubuserWithoutConnectionsAlert: SystemAlert {
     public var title: String?
@@ -924,6 +950,8 @@ public class ConnectingWithBadLANAlert: SystemAlert {
 }
 
 public class ConnectionCooldownAlert: UpsellAlert {
+    public override var modalSource: UpsellEvent.ModalSource? { .changeServer }
+
     public let until: Date
     public let duration: TimeInterval
     public let longSkip: Bool

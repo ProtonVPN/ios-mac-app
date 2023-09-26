@@ -20,7 +20,9 @@ import Foundation
 import VPNShared
 import VPNAppCore
 
-public struct TelemetryDimensions: Encodable {
+public struct ConnectionDimensions: Encodable {
+    public typealias VPNStatus = CommonTelemetryDimensions.VPNStatus
+
     let outcome: Outcome
     let userTier: UserTier
     let vpnStatus: VPNStatus // This refers to whether a vpn connection is already ongoing when the connection action is triggered
@@ -116,6 +118,8 @@ public struct TelemetryDimensions: Encodable {
         case server = "server"
         case port = "port"
         case isp = "isp"
+        case modalSource = "modal_source"
+        case newFreePlanUi = "new_free_plan_ui"
     }
 
     enum Outcome: String, Encodable {
@@ -129,11 +133,6 @@ public struct TelemetryDimensions: Encodable {
         case free
         case `internal`
         case nonPaid = "non-paid"
-    }
-
-    enum VPNStatus: String, Encodable {
-        case on
-        case off
     }
 
     public enum VPNTrigger: String, Codable {
@@ -154,4 +153,5 @@ public struct TelemetryDimensions: Encodable {
         case mobile
         case other
     }
+
 }

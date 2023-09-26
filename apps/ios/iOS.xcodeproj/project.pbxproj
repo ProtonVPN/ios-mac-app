@@ -33,6 +33,9 @@
 		4C05E56A2A71699D009102EB /* LegacyCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 4C05E5692A71699D009102EB /* LegacyCommon */; };
 		4C05E56C2A7169A2009102EB /* LegacyCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 4C05E56B2A7169A2009102EB /* LegacyCommon */; };
 		4C3474932A93C25B008BDE78 /* ImageSubtitleImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3474922A93C25B008BDE78 /* ImageSubtitleImageTableViewCell.swift */; };
+		4C4E98312AC1BFFF00B7B285 /* DictionaryCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 4C4E98302AC1BFFF00B7B285 /* DictionaryCoder */; };
+		4C4E98332AC1C00700B7B285 /* DictionaryCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 4C4E98322AC1C00700B7B285 /* DictionaryCoder */; };
+		4C4E98352AC1C07E00B7B285 /* DictionaryCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 4C4E98342AC1C07E00B7B285 /* DictionaryCoder */; };
 		4C506BD72A716BE6005895E6 /* ProtonCorePaymentsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4C506BD62A716BE6005895E6 /* ProtonCorePaymentsUI */; };
 		4C506BD92A716BEE005895E6 /* ProtonCorePayments in Frameworks */ = {isa = PBXBuildFile; productRef = 4C506BD82A716BEE005895E6 /* ProtonCorePayments */; };
 		4C74D3292A0B9D67004F8528 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 4C74D3282A0B9D67004F8528 /* PMLogger */; };
@@ -973,6 +976,7 @@
 				4C7D404E2A60244C00ACDBED /* Alamofire in Frameworks */,
 				4CB776D22A1F6250004CA127 /* PMLogger in Frameworks */,
 				4C8C31562A73BAB9006AD628 /* GoLibsCryptoVPNPatchedGo in Frameworks */,
+				4C4E98312AC1BFFF00B7B285 /* DictionaryCoder in Frameworks */,
 				4C7D40642A60282D00ACDBED /* AlamofireImage in Frameworks */,
 				D573D114264A70980033CE19 /* UIKit.framework in Frameworks */,
 				4C9754FA2A6018040035A61B /* GSMessages in Frameworks */,
@@ -1021,6 +1025,7 @@
 				4C506BD92A716BEE005895E6 /* ProtonCorePayments in Frameworks */,
 				4C506BD72A716BE6005895E6 /* ProtonCorePaymentsUI in Frameworks */,
 				D554556422805539006574F9 /* NetworkExtension.framework in Frameworks */,
+				4C4E98352AC1C07E00B7B285 /* DictionaryCoder in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1062,6 +1067,7 @@
 				4C05E56A2A71699D009102EB /* LegacyCommon in Frameworks */,
 				D563A7502A5C279B00908254 /* Strings in Frameworks */,
 				E547D2F529EE9F67008FB760 /* Theme in Frameworks */,
+				4C4E98332AC1C00700B7B285 /* DictionaryCoder in Frameworks */,
 				E148AE4021C141B0007AB65A /* NotificationCenter.framework in Frameworks */,
 				D555C49D297EE245000593EF /* LocalFeatureFlags in Frameworks */,
 				E148AE5421C1684F007AB65A /* NetworkExtension.framework in Frameworks */,
@@ -2376,6 +2382,7 @@
 				4C8C31572A73BAB9006AD628 /* ProtonCoreCryptoVPNPatchedGoImplementation */,
 				4C8571D62A7CEC250057FED6 /* TrustKit */,
 				E58974792A812A870017987D /* OHHTTPStubsSwift */,
+				4C4E98302AC1BFFF00B7B285 /* DictionaryCoder */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -2431,6 +2438,7 @@
 				4C506BD62A716BE6005895E6 /* ProtonCorePaymentsUI */,
 				4C506BD82A716BEE005895E6 /* ProtonCorePayments */,
 				E5FD25C72A73AD8600D9BDC0 /* ProtonCoreCryptoVPNPatchedGoImplementation */,
+				4C4E98342AC1C07E00B7B285 /* DictionaryCoder */,
 			);
 			productName = "Siri Shortcut Handler";
 			productReference = D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */;
@@ -2515,6 +2523,7 @@
 				4C05E5692A71699D009102EB /* LegacyCommon */,
 				4CCDCB5C2A717A7500979877 /* ProtonCoreUIFoundations */,
 				E5FD25C52A73AD7200D9BDC0 /* ProtonCoreCryptoVPNPatchedGoImplementation */,
+				4C4E98322AC1C00700B7B285 /* DictionaryCoder */,
 			);
 			productName = "Quick Connect Widget";
 			productReference = E148AE3E21C141B0007AB65A /* Quick Connect Widget.appex */;
@@ -4555,6 +4564,21 @@
 		4C13B9812A742387008A04C2 /* SwiftLintPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "plugin:SwiftLintPlugin";
+		};
+		4C4E98302AC1BFFF00B7B285 /* DictionaryCoder */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E5DEF05D2A7399EC006FC9DC /* XCRemoteSwiftPackageReference "DictionaryCoder" */;
+			productName = DictionaryCoder;
+		};
+		4C4E98322AC1C00700B7B285 /* DictionaryCoder */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E5DEF05D2A7399EC006FC9DC /* XCRemoteSwiftPackageReference "DictionaryCoder" */;
+			productName = DictionaryCoder;
+		};
+		4C4E98342AC1C07E00B7B285 /* DictionaryCoder */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E5DEF05D2A7399EC006FC9DC /* XCRemoteSwiftPackageReference "DictionaryCoder" */;
+			productName = DictionaryCoder;
 		};
 		4C506BD62A716BE6005895E6 /* ProtonCorePaymentsUI */ = {
 			isa = XCSwiftPackageProductDependency;

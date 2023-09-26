@@ -36,31 +36,46 @@ class AnnouncementManagerImplementationTests: XCTestCase {
         super.setUp()
         
         storage.store([
-            Announcement(notificationID: "1-no-offer",
-                         startTime: Date(),
-                         endTime: .distantFuture,
-                         type: .default,
-                         offer: nil),
-            Announcement(notificationID: "2-with-offer",
-                         startTime: Date(),
-                         endTime: .distantFuture,
-                         type: .default,
-                         offer: Offer.empty),
-            Announcement(notificationID: "2-with-offer-one-time",
-                         startTime: Date(),
-                         endTime: .distantFuture,
-                         type: .oneTime,
-                         offer: Offer.empty),
-            Announcement(notificationID: "3-ended",
-                         startTime: Date(),
-                         endTime: .distantPast,
-                         type: .default,
-                         offer: Offer.empty),
-            Announcement(notificationID: "3-future",
-                         startTime: .distantFuture,
-                         endTime: .distantFuture,
-                         type: .default,
-                         offer: Offer.empty),
+            Announcement(
+                notificationID: "1-no-offer",
+                startTime: Date(),
+                endTime: .distantFuture,
+                type: .default,
+                offer: nil,
+                reference: nil
+            ),
+            Announcement(
+                notificationID: "2-with-offer",
+                startTime: Date(),
+                endTime: .distantFuture,
+                type: .default,
+                offer: Offer.empty,
+                reference: nil
+            ),
+            Announcement(
+                notificationID: "2-with-offer-one-time",
+                startTime: Date(),
+                endTime: .distantFuture,
+                type: .oneTime,
+                offer: Offer.empty,
+                reference: nil
+            ),
+            Announcement(
+                notificationID: "3-ended",
+                startTime: Date(),
+                endTime: .distantPast,
+                type: .default,
+                offer: Offer.empty,
+                reference: nil
+            ),
+            Announcement(
+                notificationID: "3-future",
+                startTime: .distantFuture,
+                endTime: .distantFuture,
+                type: .default,
+                offer: Offer.empty,
+                reference: nil
+            ),
         ])
         
         manager = AnnouncementManagerImplementation(factory: AnnouncementStorageFactoryMock(storage))

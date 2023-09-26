@@ -77,9 +77,9 @@ public struct ConnectionRequest: Identifiable {
     public let natType: NATType
     public let safeMode: Bool?
     public let profileId: String?
-    public let trigger: TelemetryDimensions.VPNTrigger?
+    public let trigger: ConnectionDimensions.VPNTrigger?
 
-    public init(serverType: ServerType, connectionType: ConnectionRequestType, connectionProtocol: ConnectionProtocol, netShieldType: NetShieldType, natType: NATType, safeMode: Bool?, profileId: String?, trigger: TelemetryDimensions.VPNTrigger?) {
+    public init(serverType: ServerType, connectionType: ConnectionRequestType, connectionProtocol: ConnectionProtocol, netShieldType: NetShieldType, natType: NATType, safeMode: Bool?, profileId: String?, trigger: ConnectionDimensions.VPNTrigger?) {
         self.serverType = serverType
         self.connectionType = connectionType
         self.connectionProtocol = connectionProtocol
@@ -142,7 +142,7 @@ extension ConnectionRequest: Codable {
         }
 
         safeMode = try container.decodeIfPresent(Bool.self, forKey: .safeMode)
-        trigger = try container.decodeIfPresent(TelemetryDimensions.VPNTrigger.self, forKey: .trigger)
+        trigger = try container.decodeIfPresent(ConnectionDimensions.VPNTrigger.self, forKey: .trigger)
     }
 }
 

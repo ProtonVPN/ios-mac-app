@@ -76,9 +76,9 @@ public protocol VpnGatewayProtocol: AnyObject {
     func userTier() throws -> Int
     func changeActiveServerType(_ serverType: ServerType)
     func autoConnect()
-    func quickConnect(trigger: TelemetryDimensions.VPNTrigger)
-    func quickConnectConnectionRequest(trigger: TelemetryDimensions.VPNTrigger) -> ConnectionRequest
-    func connectTo(country countryCode: String, ofType serverType: ServerType, trigger: TelemetryDimensions.VPNTrigger)
+    func quickConnect(trigger: ConnectionDimensions.VPNTrigger)
+    func quickConnectConnectionRequest(trigger: ConnectionDimensions.VPNTrigger) -> ConnectionRequest
+    func connectTo(country countryCode: String, ofType serverType: ServerType, trigger: ConnectionDimensions.VPNTrigger)
     func connectTo(country countryCode: String, city: String)
     func connectTo(server: ServerModel)
     func connectTo(profile: Profile)
@@ -317,11 +317,11 @@ public class VpnGateway: VpnGatewayProtocol {
         }
     }
     
-    public func quickConnect(trigger: TelemetryDimensions.VPNTrigger) {
+    public func quickConnect(trigger: ConnectionDimensions.VPNTrigger) {
         connect(with: quickConnectConnectionRequest(trigger: trigger))
     }
     
-    public func quickConnectConnectionRequest(trigger: TelemetryDimensions.VPNTrigger) -> ConnectionRequest {
+    public func quickConnectConnectionRequest(trigger: ConnectionDimensions.VPNTrigger) -> ConnectionRequest {
         let defaultQCConnectionRequest = ConnectionRequest(
             serverType: serverTypeToggle,
             connectionType: .fastest,
@@ -351,7 +351,7 @@ public class VpnGateway: VpnGatewayProtocol {
         )
     }
     
-    public func connectTo(country countryCode: String, ofType serverType: ServerType, trigger: TelemetryDimensions.VPNTrigger = .country) {
+    public func connectTo(country countryCode: String, ofType serverType: ServerType, trigger: ConnectionDimensions.VPNTrigger = .country) {
         let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(countryCode, .fastest), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: nil, trigger: trigger)
         
         connect(with: connectionRequest)
