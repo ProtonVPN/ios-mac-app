@@ -50,6 +50,8 @@ public final class UpsellViewController: UIViewController, Identifiable {
             borderView.layer.borderWidth = 1
         }
     }
+
+    let gradientLayer = CAGradientLayer.gradientLayer()
     @IBOutlet private weak var gradientView: UIView!
     @IBOutlet private weak var featureView: UIView!
     @IBOutlet private weak var scrollView: CenteringScrollView!
@@ -80,8 +82,11 @@ public final class UpsellViewController: UIViewController, Identifiable {
         delegate?.upsellDidDisappear(upsell: self)
     }
 
+    public override func viewDidLayoutSubviews() {
+        layoutGradient()
+    }
+
     private func setupUI() {
-        addGradient()
         baseViewStyle(view)
         actionButtonStyle(getPlusButton)
         actionTextButtonStyle(useFreeButton)
@@ -120,10 +125,12 @@ public final class UpsellViewController: UIViewController, Identifiable {
         }
     }
 
-    func addGradient() {
-        guard upsellType?.shouldAddGradient() ?? false else { return }
-        let gradientLayer = CAGradientLayer.gradientLayer(in: gradientView.frame)
-        gradientLayer.opacity = 0.4
+    func layoutGradient() {
+        guard upsellType?.shouldAddGradient() == true else { return }
+        guard gradientView.layer.sublayers?.contains(gradientLayer) != true else {
+            gradientLayer.frame = gradientView.frame
+            return
+        }
         gradientView.layer.addSublayer(gradientLayer)
     }
 
@@ -251,8 +258,9 @@ private extension UIImage {
 }
 
 private extension CAGradientLayer {
-    static func gradientLayer(in frame: CGRect) -> Self {
+    static func gradientLayer() -> Self {
         let layer = Self()
+        layer.opacity = 0.4
         layer.colors = [UIColor(red: 17.0/255.0,
                                 green: 216.0/255.0,
                                 blue: 204.0/255.0,
@@ -261,7 +269,6 @@ private extension CAGradientLayer {
                                 green: 75.0/255.0,
                                 blue: 255.0/255.0,
                                 alpha: 0).cgColor]
-        layer.frame = frame
         return layer
     }
 }
