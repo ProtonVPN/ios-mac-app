@@ -33,5 +33,3 @@ extension NSError {
         self.init(domain: errorDomain, code: code, userInfo: userInfo)
     }
 }
-
-extension String: Error {}

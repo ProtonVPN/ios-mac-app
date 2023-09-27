@@ -38,6 +38,8 @@
 		4C4E98352AC1C07E00B7B285 /* DictionaryCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 4C4E98342AC1C07E00B7B285 /* DictionaryCoder */; };
 		4C506BD72A716BE6005895E6 /* ProtonCorePaymentsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4C506BD62A716BE6005895E6 /* ProtonCorePaymentsUI */; };
 		4C506BD92A716BEE005895E6 /* ProtonCorePayments in Frameworks */ = {isa = PBXBuildFile; productRef = 4C506BD82A716BEE005895E6 /* ProtonCorePayments */; };
+		4C5B79B52ADFEFB50048C9CD /* VPNCrypto in Frameworks */ = {isa = PBXBuildFile; productRef = 4C5B79B42ADFEFB50048C9CD /* VPNCrypto */; };
+		4C5B79B72ADFEFBA0048C9CD /* VPNAppCore in Frameworks */ = {isa = PBXBuildFile; productRef = 4C5B79B62ADFEFBA0048C9CD /* VPNAppCore */; };
 		4C74D3292A0B9D67004F8528 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 4C74D3282A0B9D67004F8528 /* PMLogger */; };
 		4C78F5F52A6E8C0F0099DA1A /* TunnelKitOpenVPNAppExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 4C78F5F42A6E8C0F0099DA1A /* TunnelKitOpenVPNAppExtension */; };
 		4C78F5F72A6E8C380099DA1A /* TunnelKitOpenVPN in Frameworks */ = {isa = PBXBuildFile; productRef = 4C78F5F62A6E8C380099DA1A /* TunnelKitOpenVPN */; };
@@ -73,6 +75,7 @@
 		4CCB4C5E2A6ED114002D4204 /* ProtonCoreUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = 4CCB4C5D2A6ED114002D4204 /* ProtonCoreUtilities */; };
 		4CCB4C602A6ED15B002D4204 /* ProtonCoreCryptoGoInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 4CCB4C5F2A6ED15B002D4204 /* ProtonCoreCryptoGoInterface */; };
 		4CCDCB5D2A717A7500979877 /* ProtonCoreUIFoundations in Frameworks */ = {isa = PBXBuildFile; productRef = 4CCDCB5C2A717A7500979877 /* ProtonCoreUIFoundations */; };
+		4CD71C612AC73B16007979C0 /* SecureDeepLinkGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD71C602AC73B16007979C0 /* SecureDeepLinkGenerator.swift */; };
 		4CDC8AB62A74554B004F2537 /* WireguardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC8AB52A74554B004F2537 /* WireguardConfig.swift */; };
 		4CEF8EB22A6EEA52000FBC01 /* TunnelKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4CEF8EB12A6EEA52000FBC01 /* TunnelKit */; };
 		4CF297FD2A7D39F700DEB23F /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 4CF297FC2A7D39F700DEB23F /* Intents.intentdefinition */; };
@@ -613,6 +616,7 @@
 		4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRobot.swift; sourceTree = "<group>"; };
 		4C3474922A93C25B008BDE78 /* ImageSubtitleImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSubtitleImageTableViewCell.swift; sourceTree = "<group>"; };
 		4C8C31452A73B9F4006AD628 /* VPNLaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = VPNLaunchScreen.storyboard; path = "../../../../../external/protoncore/libraries/UIFoundations/Resources-iOS/Resources-iOS/LaunchScreenStoryboards/VPNLaunchScreen.storyboard"; sourceTree = "<group>"; };
+		4CD71C602AC73B16007979C0 /* SecureDeepLinkGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecureDeepLinkGenerator.swift; sourceTree = "<group>"; };
 		4CDC8AB52A74554B004F2537 /* WireguardConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WireguardConfig.swift; path = "../../LegacyCommon/Sources/LegacyCommon/Core/Client Config/WireguardConfig.swift"; sourceTree = "<group>"; };
 		4CF297FC2A7D39F700DEB23F /* Intents.intentdefinition */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		4CF297FE2A7D3B8D00DEB23F /* id.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = id.lproj; sourceTree = "<group>"; };
@@ -1063,8 +1067,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C5B79B52ADFEFB50048C9CD /* VPNCrypto in Frameworks */,
 				4CCDCB5D2A717A7500979877 /* ProtonCoreUIFoundations in Frameworks */,
 				4C05E56A2A71699D009102EB /* LegacyCommon in Frameworks */,
+				4C5B79B72ADFEFBA0048C9CD /* VPNAppCore in Frameworks */,
 				D563A7502A5C279B00908254 /* Strings in Frameworks */,
 				E547D2F529EE9F67008FB760 /* Theme in Frameworks */,
 				4C4E98332AC1C00700B7B285 /* DictionaryCoder in Frameworks */,
@@ -1787,6 +1793,7 @@
 				42BB5E5C247FFD7F0002DA8A /* ViewControllers */,
 				42BB5E5A247FFD7F0002DA8A /* ViewModels */,
 				E1A28FAF21E8F73A00E1C33C /* WidgetFactory.swift */,
+				4CD71C602AC73B16007979C0 /* SecureDeepLinkGenerator.swift */,
 			);
 			path = "Quick Connect Widget";
 			sourceTree = "<group>";
@@ -2524,6 +2531,8 @@
 				4CCDCB5C2A717A7500979877 /* ProtonCoreUIFoundations */,
 				E5FD25C52A73AD7200D9BDC0 /* ProtonCoreCryptoVPNPatchedGoImplementation */,
 				4C4E98322AC1C00700B7B285 /* DictionaryCoder */,
+				4C5B79B42ADFEFB50048C9CD /* VPNCrypto */,
+				4C5B79B62ADFEFBA0048C9CD /* VPNAppCore */,
 			);
 			productName = "Quick Connect Widget";
 			productReference = E148AE3E21C141B0007AB65A /* Quick Connect Widget.appex */;
@@ -3320,6 +3329,7 @@
 				D5A8CD742456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */,
 				D5209C7526CBCB3D00AD14EA /* OVPNiOSCredentialsConfigurator.swift in Sources */,
 				D5209C7926CBD7C000AD14EA /* WGiOSVpnCredentialsConfigurator.swift in Sources */,
+				4CD71C612AC73B16007979C0 /* SecureDeepLinkGenerator.swift in Sources */,
 				E14C2AA521E4E72400E8578E /* ProtonButton.swift in Sources */,
 				AD8010802AC6CEAE000DB179 /* LiveDependencies.swift in Sources */,
 				E17A259E2295670100D78C19 /* ExtensionAlertService.swift in Sources */,
@@ -4578,6 +4588,14 @@
 		4C506BD82A716BEE005895E6 /* ProtonCorePayments */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCorePayments;
+		};
+		4C5B79B42ADFEFB50048C9CD /* VPNCrypto */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = VPNCrypto;
+		};
+		4C5B79B62ADFEFBA0048C9CD /* VPNAppCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = VPNAppCore;
 		};
 		4C74D3282A0B9D67004F8528 /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;

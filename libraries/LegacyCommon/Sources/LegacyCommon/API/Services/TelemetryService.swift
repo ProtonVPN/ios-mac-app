@@ -20,6 +20,7 @@ import Foundation
 import LocalFeatureFlags
 import Ergonomics
 import Reachability
+import Ergonomics
 import VPNShared
 
 public enum UserInitiatedVPNChange {

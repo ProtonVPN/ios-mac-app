@@ -71,6 +71,7 @@ let package = Package(
                 "BugReport",
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
+                .product(name: "VPNCrypto", package: "NEHelper"),
 
                 // Todo: move these to LegacyCommonTestSupport, if we ever can
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
