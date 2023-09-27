@@ -209,7 +209,6 @@ extension IosAlertService: CoreAlertService {
             show(alert: customizationUpsell, upsellType: .customization)
 
         case let countryUpsell as CountryUpsellAlert:
-            let plus = AccountPlan.plus
             show(
                 alert: countryUpsell,
                 upsellType: .country(
@@ -218,8 +217,10 @@ extension IosAlertService: CoreAlertService {
                     numberOfCountries: planService.countriesCount
                 )
             )
+            
         case let alert as WelcomeScreenAlert:
             showWelcomeScreen(welcomeScreenAlert: alert)
+
         case is LocalAgentSystemErrorAlert:
             showDefaultSystemAlert(alert)
 
@@ -296,19 +297,20 @@ extension IosAlertService: CoreAlertService {
     }
 
     private func showWelcomeScreen(welcomeScreenAlert: WelcomeScreenAlert) {
-        let viewController: UIViewController
+        let upsellType: UpsellType
         switch welcomeScreenAlert.plan {
         case .fallback:
-            viewController = modalsFactory.upsellViewController(upsellType: .welcomeFallback)
+            upsellType = .welcomeFallback
         case .unlimited:
-            viewController = modalsFactory.upsellViewController(upsellType: .welcomeUnlimited)
+            upsellType = .welcomeUnlimited
         case let .plus(numberOfServers, numberOfDevices, numberOfCountries):
-            viewController = modalsFactory.upsellViewController(upsellType: .welcomePlus(numberOfServers: numberOfServers,
-                                                                                         numberOfDevices: numberOfDevices,
-                                                                                         numberOfCountries: numberOfCountries))
+            upsellType = .welcomePlus(numberOfServers: numberOfServers,
+                                      numberOfDevices: numberOfDevices,
+                                      numberOfCountries: numberOfCountries)
         }
+        let viewController = modalsFactory.modalViewController(upsellType: upsellType)
         viewController.modalPresentationStyle = .overFullScreen
-        self.windowService.present(modal: viewController)
+        windowService.present(modal: viewController)
     }
 
     private func show(alert: UpsellAlert, upsellType: Modals.UpsellType) {

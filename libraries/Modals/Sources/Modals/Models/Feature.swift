@@ -25,7 +25,7 @@ import SwiftUI
 import AppKit
 public typealias Image = NSImage
 
-extension Image {
+public extension Image {
     var swiftUIImage: SwiftUI.Image {
         SwiftUI.Image(nsImage: self)
     }
@@ -34,14 +34,16 @@ extension Image {
 import UIKit
 public typealias Image = UIImage
 
-extension Image {
+public extension Image {
     var swiftUIImage: SwiftUI.Image {
         SwiftUI.Image(uiImage: self)
     }
 }
 #endif
 
-public enum Feature {
+public enum Feature: Hashable, Identifiable {
+    public var id: Self { self }
+
     case streaming
     case multipleDevices(Int)
     case blockAds

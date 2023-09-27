@@ -106,9 +106,17 @@ class ViewController: UITableViewController {
         if indexPath.section == 0 {
             viewController = modalsFactory.whatsNewViewController()
         } else if indexPath.section == 1 {
-            let modalVC = modalsFactory.upsellViewController(upsellType: upsells[indexPath.row].type)
-            modalVC.delegate = self
-            viewController = modalVC
+            let type = upsells[indexPath.row].type
+            switch type {
+            case .welcomeFallback, .welcomeUnlimited, .welcomePlus:
+                viewController = modalsFactory.modalViewController(upsellType: type) {
+                    self.dismiss(animated: true)
+                }
+            default:
+                let modalVC = modalsFactory.upsellViewController(upsellType: type)
+                modalVC.delegate = self
+                viewController = modalVC
+            }
         } else if indexPath.section == 2 {
             if indexPath.row == 0 {
                 let modalVC = modalsFactory.discourageSecureCoreViewController(

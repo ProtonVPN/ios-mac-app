@@ -194,6 +194,14 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     /// After user plan changes, feature flags may also change, so we have to reload them
     open func userPlanChanged(_ notification: Notification) {
         refreshData()
+        presentWelcomeScreen(notification)
+    }
+
+    private func presentWelcomeScreen(_ notification: Notification) {
+        guard let info = notification.object as? VpnDowngradeInfo else { return }
+        if let plan = WelcomeScreenAlert.Plan(info: info) {
+            alertService.push(alert: WelcomeScreenAlert(plan: plan))
+        }
     }
 
     // MARK: - Override

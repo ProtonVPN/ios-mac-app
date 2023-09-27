@@ -28,6 +28,12 @@ public struct ModalsFactory {
         UIHostingController(rootView: WhatsNewView())
     }
 
+    // This method uses the new `ModalView` and eventually all upsell modals should be migrated to this one
+    // For now, only the welcome(plus/unlimited/fallback) modals use it.
+    public func modalViewController(upsellType: UpsellType, gotItAction: (() -> Void)? = nil) -> UIViewController {
+        UIHostingController(rootView: ModalView(upsellType: upsellType, gotItAction: gotItAction))
+    }
+
     public func discourageSecureCoreViewController(onDontShowAgain: ((Bool) -> Void)?, onActivate: (() -> Void)?, onCancel: (() -> Void)?, onLearnMore: (() -> Void)?) -> UIViewController {
         let discourageSecureCoreViewController = discourageStoryboard.instantiate(controllerType: DiscourageSecureCoreViewController.self)
         discourageSecureCoreViewController.onDontShowAgain = onDontShowAgain

@@ -162,7 +162,6 @@ class AppSessionRefreshTimerTests: XCTestCase {
         wait(for: [expectations.updateServers[1], expectations.displayAlert], timeout: 10)
         checkForSuccessfulServerUpdate()
 
-        XCTAssertEqual(alertService.alerts.count, 1, "Should have only displayed one alert")
         guard let alert = alertService.alerts.last as? AppUpdateRequiredAlert else {
             XCTFail("Displayed wrong kind of alert during app info refresh")
             return
