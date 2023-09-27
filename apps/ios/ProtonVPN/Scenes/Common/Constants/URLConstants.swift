@@ -27,8 +27,9 @@ struct URLConstants {
     private init () { }
     
     // MARK: - DeepLinking
-    
-    static let deepLinkBaseUrl = "protonvpn://"
+
+    static let deepLinkScheme = "protonvpn"
+    static let deepLinkBaseUrl = "\(deepLinkScheme)://"
     
     static let deepLinkConnectAction = "connect"
     

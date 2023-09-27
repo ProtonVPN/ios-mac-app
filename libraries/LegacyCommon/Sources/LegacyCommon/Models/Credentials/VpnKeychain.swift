@@ -22,8 +22,12 @@
 import Foundation
 import KeychainAccess
 import Logging
-import VPNShared
 import Dependencies
+import Ergonomics
+
+import VPNShared
+import VPNCrypto
+import VPNAppCore
 
 public typealias VpnDowngradeInfo = (from: VpnCredentials, to: VpnCredentials)
 
@@ -43,6 +47,10 @@ public protocol VpnKeychainProtocol {
     func fetchWireguardConfigurationReference() throws -> Data
     func fetchWireguardConfiguration() throws -> String?
     func clear()
+
+    #if os(iOS)
+    func fetchWidgetPublicKey() throws -> CryptoService.Key
+    #endif
 }
 
 extension VpnKeychainProtocol {
@@ -59,16 +67,18 @@ internal enum KeychainEnvironment {
     static var secItemAdd = SecItemAdd
     static var secItemDelete = SecItemDelete
     static var secItemCopyMatching = SecItemCopyMatching
+    static var secKeyCreateWithData = SecKeyCreateWithData
+    static var secKeyVerifySignature = SecKeyVerifySignature
 }
 
 public class VpnKeychain: VpnKeychainProtocol {
-    
     private struct StorageKey {
         static let vpnCredentials = "vpnCredentials"
         static let openVpnPassword_old = "openVpnPassword"
         static let vpnServerPassword = "ProtonVPN-Server-Password"
         static let serverCertificate = "ProtonVPN_ike_root"
         static let wireguardSettings = "ProtonVPN_wg_settings"
+        static let widgetPublicKey = "ch.proton.vpn.widget.public_key"
     }
     
     private let appKeychain = Keychain(service: KeychainConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly)
@@ -150,6 +160,7 @@ public class VpnKeychain: VpnKeychainProtocol {
     public func clear() {
         cached = nil
         appKeychain[data: StorageKey.vpnCredentials] = nil
+        appKeychain[data: StorageKey.widgetPublicKey] = nil
         deleteServerCertificate()
         do {
             try clearPassword(forKey: StorageKey.vpnServerPassword)
@@ -308,4 +319,20 @@ public class VpnKeychain: VpnKeychainProtocol {
             return nil
         }
     }
+
+    // MARK: - Widget
+    #if os(iOS)
+    public func fetchWidgetPublicKey() throws -> CryptoService.Key {
+        guard let data = try appKeychain.getData(StorageKey.widgetPublicKey) else {
+            throw "Keychain error: widget public key not found"
+        }
+
+        return try CryptoService.Key(
+            data: data,
+            keyType: CryptoConstants.widgetChallengeKeyType,
+            keyClass: .publicKey,
+            keySize: CryptoConstants.widgetChallengeKeyWidth
+        )
+    }
+    #endif
 }

@@ -42,6 +42,7 @@ import LegacyCommon
 import Logging
 import PMLogger
 import VPNShared
+import VPNAppCore
 import ProtonCoreCryptoVPNPatchedGoImplementation
 
 public let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
@@ -49,9 +50,14 @@ public let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 #if !REDESIGN
 @UIApplicationMain
 class AppDelegate: UIResponder {
+    private static let acceptedDeepLinkChallengeInterval: TimeInterval = 10
+
     @Dependency(\.defaultsProvider) var defaultsProvider
+    @Dependency(\.cryptoService) var cryptoService
+
     private let container = DependencyContainer.shared
     private lazy var vpnManager: VpnManagerProtocol = container.makeVpnManager()
+    private lazy var vpnKeychain: VpnKeychainProtocol = container.makeVpnKeychain()
     private lazy var navigationService: NavigationService = container.makeNavigationService()
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
     private lazy var appStateManager: AppStateManager = container.makeAppStateManager()
@@ -59,9 +65,14 @@ class AppDelegate: UIResponder {
 }
 #else
 class AppDelegate: UIResponder {
+    private static let acceptedDeepLinkChallengeInterval: TimeInterval = 10
+
     @Dependency(\.defaultsProvider) var defaultsProvider
+    @Dependency(\.cryptoService) var cryptoService
+
     private let container = DependencyContainer.shared
     private lazy var vpnManager: VpnManagerProtocol = container.makeVpnManager()
+    private lazy var vpnKeychain: VpnKeychainProtocol = container.makeVpnKeychain()
     private lazy var navigationService: NavigationService = container.makeNavigationService()
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
     private lazy var appStateManager: AppStateManager = container.makeAppStateManager()
@@ -124,17 +135,57 @@ extension AppDelegate: UIApplicationDelegate {
         }
         
         let action = String(userActivity.activityType.dropFirst(prefix.count))
-        
-        return handleAction(action)
+
+        // We know the action is verified because the user activity has our prefix.
+        let verified = true
+        return handleAction(action, verified: verified)
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        guard let action = url.host else {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+              let host = components.host else {
             log.error("Invalid URL", category: .app)
             return false
         }
-        
-        return handleAction(action)
+
+        let verified = isVerifiedUrl(components)
+        return handleAction(host, verified: verified)
+    }
+
+    func isVerifiedUrl(_ components: URLComponents) -> Bool {
+        guard let queryItems = components.queryItems,
+              let t = queryItems.first(where: { $0.name == "t" })?.value,
+              var timestamp = Int(t) else {
+            return false
+        }
+
+        let timestampDate = Date(timeIntervalSince1970: TimeInterval(timestamp))
+        let interval = Date().timeIntervalSince(timestampDate)
+        guard interval < Self.acceptedDeepLinkChallengeInterval else {
+            return false
+        }
+
+        let algorithm = CryptoConstants.widgetChallengeAlgorithm
+        guard let s = queryItems.first(where: { $0.name == "s" })?.value?.data(using: .utf8),
+           let a = queryItems.first(where: { $0.name == "a" })?.value,
+               a == algorithm.stringValue,
+           let signature = Data(base64Encoded: s) else {
+            return false
+        }
+
+        let challenge = withUnsafeBytes(of: &timestamp) { Data($0) }
+
+        do {
+            let publicKey = try vpnKeychain.fetchWidgetPublicKey()
+            if try cryptoService.verify(signature: signature, of: challenge, with: publicKey, using: algorithm) {
+                return true
+            }
+        } catch {
+            log.error("Couldn't verify url: \(error)")
+        }
+
+        log.error("Verification of url failed: \(components)")
+        return false
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -181,7 +232,7 @@ fileprivate extension AppDelegate {
     
     // MARK: - Private
 
-    func handleAction(_ action: String) -> Bool {
+    func handleAction(_ action: String, verified: Bool = false) -> Bool {
         switch action {
             
         case URLConstants.deepLinkLoginAction:
@@ -190,12 +241,18 @@ fileprivate extension AppDelegate {
             }
             
         case URLConstants.deepLinkConnectAction:
+            // Action may only come from a trusted source
+            guard verified else { return false }
+
             // Extensions requesting a connection should set a connection request first
             navigationService.vpnGateway.quickConnect(trigger: .widget)
             NotificationCenter.default.addObserver(self, selector: #selector(stateDidUpdate), name: VpnGateway.connectionChanged, object: nil)
             navigationService.presentStatusViewController()
             
         case URLConstants.deepLinkDisconnectAction:
+            // Action may only come from a trusted source
+            guard verified else { return false }
+
             NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect(.widget))
             navigationService.vpnGateway.disconnect {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {

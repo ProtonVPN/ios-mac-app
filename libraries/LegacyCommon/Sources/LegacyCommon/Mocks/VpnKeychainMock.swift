@@ -21,6 +21,8 @@
 
 #if DEBUG
 import Foundation
+import Ergonomics
+import VPNCrypto
 
 public class VpnKeychainMock: VpnKeychainProtocol {
     public var didStoreCredentials: ((VpnCredentials) -> Void)?
@@ -139,6 +141,9 @@ public class VpnKeychainMock: VpnKeychainProtocol {
     public func fetchWireguardConfiguration() throws -> String? {
         return nil
     }
-    
+
+    public func fetchWidgetPublicKey() throws -> CryptoService.Key {
+        throw "Key not found"
+    }
 }
 #endif

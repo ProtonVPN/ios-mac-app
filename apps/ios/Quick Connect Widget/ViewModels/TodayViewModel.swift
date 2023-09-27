@@ -43,6 +43,7 @@ protocol TodayViewModelDelegate: AnyObject {
 final class TodayViewModel {
     private var reachability: Reachability?
     private let vpnStateConfiguration: VpnStateConfiguration
+    private let secureDeepLinkGenerator = SecureDeepLinkGenerator()
 
     weak var delegate: TodayViewModelDelegate?
     
@@ -61,23 +62,31 @@ final class TodayViewModel {
 
     func connect() {
         vpnStateConfiguration.getInfo { [weak self] info in
+            var components = URLComponents()
+            components.scheme = URLConstants.deepLinkScheme
+            components.host = ""
+
             guard info.hasConnected else {
-                if let url = URL(string: URLConstants.deepLinkBaseUrl) {
-                    self?.delegate?.didRequestUrl(url: url)
-                }
+                guard let url = components.url else { return }
+
+                // Just protonvpn://
+                self?.delegate?.didRequestUrl(url: url)
                 return
             }
 
+            let action: String
             switch info.state {
             case .connected, .connecting:
-                if let url = URL(string: URLConstants.deepLinkDisconnectUrl) {
-                    self?.delegate?.didRequestUrl(url: url)
-                }
+                action = URLConstants.deepLinkDisconnectAction
             default:
-                if let url = URL(string: URLConstants.deepLinkConnectUrl) {
-                    self?.delegate?.didRequestUrl(url: url)
-                }
+                action = URLConstants.deepLinkConnectAction
             }
+
+            components.host = action
+            components.queryItems = try? self?.secureDeepLinkGenerator.makeSecureQuery()
+
+            guard let url = components.url else { return }
+            self?.delegate?.didRequestUrl(url: url)
         }
     }
     

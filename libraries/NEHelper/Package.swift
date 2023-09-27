@@ -13,6 +13,7 @@ let package = Package(
         .library(name: "NEHelper", targets: ["NEHelper"]),
         .library(name: "VPNAppCore", targets: ["VPNAppCore"]),
         .library(name: "VPNShared", targets: ["VPNShared"]),
+        .library(name: "VPNCrypto", targets: ["VPNCrypto"]),
         .library(name: "VPNSharedTesting", targets: ["VPNSharedTesting"]),
     ],
     dependencies: [
@@ -54,8 +55,15 @@ let package = Package(
             name: "VPNAppCore",
             dependencies: [
                 "VPNShared",
+                "VPNCrypto",
                 "Strings",
                 .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay")
+            ]
+        ),
+        .target(
+            name: "VPNCrypto",
+            dependencies: [
+                .product(name: "Dependencies", package: "swift-dependencies")
             ]
         ),
         .target(
