@@ -121,7 +121,11 @@ public enum UpsellType {
         case .welcomePlus:
             return Localizable.welcomeUpgradeSubtitlePlus
         case .welcomeUnlimited:
+#if os(iOS)
+            return Localizable.welcomeUpgradeSubtitleUnlimitedMarkdown
+#else
             return Localizable.welcomeUpgradeSubtitleUnlimited
+#endif
         case .welcomeFallback:
             return Localizable.welcomeUpgradeSubtitleFallback
         }
@@ -182,44 +186,45 @@ public enum UpsellType {
         }
     }
 
-    public func artImage() -> any View {
+    @ViewBuilder
+    public func artImage() -> some View {
         switch self {
         case .netShield:
-            return Asset.netshield.swiftUIImage
+            Asset.netshield.swiftUIImage
         case .secureCore:
-            return Asset.secureCore.swiftUIImage
+            Asset.secureCore.swiftUIImage
         case .allCountries:
-            return Asset.plusCountries.swiftUIImage
+            Asset.plusCountries.swiftUIImage
         case .safeMode:
-            return Asset.safeMode.swiftUIImage
+            Asset.safeMode.swiftUIImage
         case .moderateNAT:
-            return Asset.moderateNAT.swiftUIImage
+            Asset.moderateNAT.swiftUIImage
         case .noLogs:
-            return Asset.noLogs.swiftUIImage
+            Asset.noLogs.swiftUIImage
         case .vpnAccelerator:
-            return Asset.speed.swiftUIImage
+            Asset.speed.swiftUIImage
         case .customization:
-            return Asset.customisation.swiftUIImage
+            Asset.customisation.swiftUIImage
         case .profiles:
-            return Asset.profiles.swiftUIImage
+            Asset.profiles.swiftUIImage
         case let .country(country, _, _):
-            return ZStack {
+            ZStack {
                 Asset.flatIllustration.swiftUIImage
                 country.swiftUIImage
                     .resizable(resizingMode: .stretch)
                     .frame(width: 48, height: 48)
             }
         case let .cantSkip(beforeDate, timeInterval, _):
-            return ReconnectCountdown(
+            ReconnectCountdown(
                 dateFinished: beforeDate,
                 timeInterval: timeInterval
             )
         case .welcomePlus:
-            return Asset.welcomePlus.swiftUIImage
+            Asset.welcomePlus.swiftUIImage
         case .welcomeUnlimited:
-            return Asset.welcomeUnlimited.swiftUIImage
+            Asset.welcomeUnlimited.swiftUIImage
         case .welcomeFallback:
-            return Asset.welcomeFallback.swiftUIImage
+            Asset.welcomeFallback.swiftUIImage
         }
     }
 

@@ -785,6 +785,8 @@ public class UpsellAlert: SystemAlert {
 }
 
 public class WelcomeScreenAlert: UpsellAlert {
+    /// This enum is used to narrow down the possible types of this alert. Theoretically we could just allow to use the `UpsellType`
+    /// but we don't want to use this alert (for now) for anything else than welcome alerts.
     public enum Plan {
         case plus(numberOfServers: Int, numberOfDevices: Int, numberOfCountries: Int)
         case unlimited
@@ -794,6 +796,22 @@ public class WelcomeScreenAlert: UpsellAlert {
 
     public init(plan: Plan) {
         self.plan = plan
+    }
+}
+
+public extension WelcomeScreenAlert.Plan {
+    init?(info: VpnDowngradeInfo) {
+        if info.to.accountPlan == .vpnPlus || info.to.accountPlan == .plus {
+            self = .plus(numberOfServers: AccountPlan.plus.serversCount,
+                            numberOfDevices: AccountPlan.plus.devicesCount,
+                            numberOfCountries: AccountPlan.plus.countriesCount)
+        } else if info.to.accountPlan == .unlimited {
+            self = .unlimited
+        } else if info.to.maxTier > info.from.maxTier {
+            self = .fallback
+        } else {
+            return nil
+        }
     }
 }
 

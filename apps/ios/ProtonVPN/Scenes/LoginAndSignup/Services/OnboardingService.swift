@@ -118,15 +118,10 @@ extension OnboardingModuleService: OnboardingCoordinatorDelegate {
         }
     }
 
-    func onboardingCoordinatorDidFinish(requiresConnection: Bool) {
+    func onboardingCoordinatorDidFinish() {
         log.debug("Onboarding finished", category: .app)
 
         delegate?.onboardingServiceDidFinish()
-
-        if requiresConnection {
-            log.debug("Doing quick connect required by finished onboarding", category: .app)
-            vpnGateway.quickConnect(trigger: .auto)
-        }
     }
 
     func userDidRequestConnection(completion: @escaping OnboardingConnectionRequestCompletion) {

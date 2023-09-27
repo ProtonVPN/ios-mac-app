@@ -25,7 +25,7 @@ public typealias OnboardingConnectionRequestCompletion = (Country?) -> Void
 public typealias OnboardingPlanPurchaseCompletion = (PlanPurchaseAction) -> Void
 
 public protocol OnboardingCoordinatorDelegate: AnyObject {
-    func onboardingCoordinatorDidFinish(requiresConnection: Bool)
+    func onboardingCoordinatorDidFinish()
     func userDidRequestConnection(completion: @escaping OnboardingConnectionRequestCompletion)
     func userDidRequestPlanPurchase(completion: @escaping OnboardingPlanPurchaseCompletion)
     func preferenceChangeUsageData(telemetryUsageData: Bool)
@@ -133,19 +133,9 @@ public final class OnboardingCoordinator {
                     self?.popOverNavigationController?.pushViewController(getPlusViewController, animated: true)
                 }
             case .planPurchased:
-                executeOnUIThread { [weak self] in
-                    self?.showConnectToPlusServer()
-                }
+                delegate?.onboardingCoordinatorDidFinish()
             }
         }
-    }
-
-    private func showConnectToPlusServer() {
-        let connectToPlusServerViewController = storyboard.instantiate(controllerType: ConnectToPlusServerViewController.self)
-        connectToPlusServerViewController.constants = configuration.constants
-        connectToPlusServerViewController.delegate = self
-        navigationController.pushViewController(connectToPlusServerViewController, animated: false)
-        popOverNavigationController?.dismiss(animated: true)
     }
 }
 
@@ -214,7 +204,7 @@ extension OnboardingCoordinator: ConnectionViewControllerDelegate {
 extension OnboardingCoordinator: UpsellViewControllerDelegate {
     public func shouldDismissUpsell(upsell: UpsellViewController?) -> Bool {
         if onboardingFinished {
-            delegate?.onboardingCoordinatorDidFinish(requiresConnection: false)
+            delegate?.onboardingCoordinatorDidFinish()
             return false
         }
 
@@ -235,18 +225,6 @@ extension OnboardingCoordinator: UpsellViewControllerDelegate {
     }
 
     public func upsellDidDisappear(upsell: UpsellViewController?) {
-    }
-}
-
-// MARK: Connect to Plus screen delegate
-
-extension OnboardingCoordinator: ConnectToPlusServerViewControllerDelegate {
-    func userDidRequestSkipConnectToPlus() {
-        delegate?.onboardingCoordinatorDidFinish(requiresConnection: false)
-    }
-
-    func userDidRequestConnectToPlus() {
-        delegate?.onboardingCoordinatorDidFinish(requiresConnection: true)
     }
 }
 

@@ -83,6 +83,9 @@ extension MacAlertService: CoreAlertService {
         case let refreshTokenExpiredAlert as RefreshTokenExpiredAlert:
             show(refreshTokenExpiredAlert)
 
+        case let alert as WelcomeScreenAlert:
+            show(alert: alert, upsellType: welcomeScreenType(plan: alert.plan))
+
         case let alert as AllCountriesUpsellAlert:
             let plus = AccountPlan.plus
             let countriesCount = planService.countriesCount
@@ -405,5 +408,18 @@ extension MacAlertService: CoreAlertService {
         }
         let upsellViewController = ModalsFactory.freeConnectionsViewController(countries: alert.countries, upgradeAction: upgradeAction)
         windowService.presentKeyModal(viewController: upsellViewController)
+    }
+
+    private func welcomeScreenType(plan: WelcomeScreenAlert.Plan) -> UpsellType {
+        switch plan {
+        case .fallback:
+            return .welcomeFallback
+        case .unlimited:
+            return .welcomeUnlimited
+        case let .plus(numberOfServers, numberOfDevices, numberOfCountries):
+            return .welcomePlus(numberOfServers: numberOfServers,
+                                numberOfDevices: numberOfDevices,
+                                numberOfCountries: numberOfCountries)
+        }
     }
 }

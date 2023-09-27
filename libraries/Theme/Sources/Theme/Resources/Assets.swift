@@ -157,6 +157,8 @@ public enum Asset {
   public static let cloud = ColorAsset(name: "Cloud")
   public static let ebb = ColorAsset(name: "Ebb")
   public static let white = ColorAsset(name: "White")
+  public static let upsellGradientBottom = ColorAsset(name: "UpsellGradientBottom")
+  public static let upsellGradientTop = ColorAsset(name: "UpsellGradientTop")
   public enum Flags {
     public static let ad = ImageAsset(name: "Flags/AD")
     public static let ae = ImageAsset(name: "Flags/AE")

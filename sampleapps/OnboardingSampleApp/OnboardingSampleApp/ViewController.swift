@@ -80,7 +80,7 @@ extension ViewController: OnboardingCoordinatorDelegate {
         }
     }
 
-    func onboardingCoordinatorDidFinish(requiresConnection: Bool) {
+    func onboardingCoordinatorDidFinish() {
         coordinator = nil
         dismiss(animated: true, completion: nil)
     }
