@@ -285,10 +285,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         let activationAttemptId = options?["activationAttemptId"] as? String
         let errorNotifier = ErrorNotifier(activationAttemptId: activationAttemptId)
 
-        // TODO: **Really** make sure that we **always** use the live dependency defined in the app target.
-        // Use shared defaults to get cert features that were set in the app
-        // storage.setSpecificDefaults(UserDefaults(suiteName: AppConstants.AppGroups.main)!, largeDataStorage: nil)
-
         setDataTaskFactoryAccordingToKillSwitchSettings()
 
         #if FREQUENT_AUTH_CERT_REFRESH
