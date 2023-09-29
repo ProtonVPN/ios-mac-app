@@ -2413,3 +2413,11 @@
 
 /* Text on upsell banner in country list */
 "_free_banner_text" = "Get worldwide coverage with VPN Plus";
+
+// MARK: Wrong country banner
+
+/* Title if banner shown on iOS and macOS apps to upsell users who want to select a country */
+"_wrong_country_banner_title" = "Not the country you wanted?";
+
+/* Subtitle if banner shown on iOS and macOS apps to upsell users who want to select a country */
+"_wrong_country_banner_subtitle" = "Upgrade to choose any server";

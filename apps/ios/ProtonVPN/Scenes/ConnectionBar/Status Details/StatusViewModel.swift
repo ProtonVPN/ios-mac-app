@@ -97,6 +97,7 @@ class StatusViewModel {
     private var connectedDate = Date()
     private var timeCellIndexPath: IndexPath?
     private var serverChangeCellIndexPath: IndexPath?
+    private var bannerCellIndexPath: IndexPath?
 
     private var currentTime: String {
         let time: TimeInterval
@@ -183,8 +184,14 @@ class StatusViewModel {
     }
     
     private var connectionStatusSection: TableViewSection {
+        let viewState = ServerChangeViewState.from(state: canChangeServer)
+        let showChangeServerBanner = shouldShowChangeServer && viewState.isUnavailable
         let cells = [connectionStatusCell]
-            .appending({ netShieldV2Cells }, if: shouldShowNetShieldV2)
+            .appending({ changeCountryBannerCell }, if: showChangeServerBanner)
+            .appending({ netShieldV2Cells }, if: !showChangeServerBanner && shouldShowNetShieldV2)
+
+        // Save indexpath of a banner if any of them was added
+        bannerCellIndexPath = cells.count > 1 ? IndexPath(row: 1, section: 0) : nil
 
         return TableViewSection(title: "", showHeader: false, cells: cells)
     }
@@ -383,6 +390,7 @@ class StatusViewModel {
             serverChangeTimer?.invalidate()
             serverChangeTimer = nil
         }
+        updateBannerCell()
         guard shouldShowChangeServer else { return }
         updateServerChangeCell()
     }
@@ -400,6 +408,19 @@ class StatusViewModel {
         guard let indexPath = serverChangeCellIndexPath else { return }
         guard shouldShowChangeServer else { return }
         rowsUpdated?([indexPath: changeServerCell])
+    }
+
+    private func updateBannerCell() {
+        guard let indexPath = bannerCellIndexPath else { return }
+
+        let viewState = ServerChangeViewState.from(state: canChangeServer)
+        let showChangeServerBanner = shouldShowChangeServer && viewState.isUnavailable
+
+        if showChangeServerBanner {
+            rowsUpdated?([indexPath: changeCountryBannerCell])
+        } else if !showChangeServerBanner && shouldShowNetShieldV2 {
+            rowsUpdated?([indexPath: netShieldV2UpsellBannerCell])
+        }
     }
     
     // MARK: - Connection status changes
@@ -602,5 +623,16 @@ class StatusViewModel {
                 completion(true)
             }
         }
+    }
+
+    // MARK: Upsell
+
+    private var changeCountryBannerCell: TableViewCellModel {
+        return .imageSubtitle(
+            title: Localizable.wrongCountryBannerTitle,
+            subtitle: Localizable.wrongCountryBannerSubtitle,
+            image: Theme.Asset.wrongCountry.image,
+            handler: { [weak self] in self?.alertService.push(alert: AllCountriesUpsellAlert()) }
+        )
     }
 }
