@@ -17,10 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Modals
+import AppKit
 
 struct BannerViewModel {
-    var leftIcon: Modals.ImageAsset
+    var leftIcon: NSImage
     var text: String
     var action: () -> Void
     var separatorTop: Bool

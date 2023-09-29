@@ -61,7 +61,7 @@ final class BannerCellView: NSView {
         self.viewModel = viewModel
 
         label.stringValue = viewModel.text
-        leftImage.image = viewModel.leftIcon.image
+        leftImage.image = viewModel.leftIcon
 
         separatorViewTop.isHidden = !viewModel.separatorTop
         separatorViewBottom.isHidden = !viewModel.separatorBottom

@@ -2416,8 +2416,11 @@
 
 // MARK: Wrong country banner
 
-/* Title if banner shown on iOS and macOS apps to upsell users who want to select a country */
+/* Title of banner shown on iOS apps to upsell users who want to select a country */
 "_wrong_country_banner_title" = "Not the country you wanted?";
 
-/* Subtitle if banner shown on iOS and macOS apps to upsell users who want to select a country */
+/* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
 "_wrong_country_banner_subtitle" = "Upgrade to choose any server";
+
+/* Text of banner shown on macOS apps to upsell users who want to select a country */
+"_wrong_country_banner_text" = "Not the country you wanted? Upgrade to choose any server";

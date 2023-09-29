@@ -54,6 +54,9 @@ final class HeaderViewModel {
     private lazy var announcementsViewModel: AnnouncementsViewModel = factory.makeAnnouncementsViewModel()
 
     var contentChanged: (() -> Void)?
+    /// It's the same as delegates `changeServerStateUpdated(to:)` method, but is used by a parent view, to connect
+    /// this VM with a countries VM, that has to change the banner in case there is a change server timer running.
+    var changeServerStateUpdated: ((ServerChangeViewState) -> Void)?
 
     var shouldShowChangeServer: Bool {
         isConnected && featureFlags[\.showNewFreePlan] && credentials.tier == CoreAppConstants.VpnTiers.free
@@ -160,6 +163,7 @@ final class HeaderViewModel {
     @objc private func timerTicked() {
         let viewState = ServerChangeViewState.from(state: canChangeServer)
         delegate?.changeServerStateUpdated(to: viewState)
+        changeServerStateUpdated?(viewState)
         if case .available = viewState {
             serverChangeTimer?.invalidate()
             serverChangeTimer = nil

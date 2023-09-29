@@ -532,15 +532,7 @@ class CountriesSectionViewModel {
             ]
             // Upsell part
             plusLocations = countries
-            plusBanner.append(.banner(BannerViewModel(
-                leftIcon: Modals.Asset.worldwideCoverage,
-                text: Localizable.freeBannerText,
-                action: { [weak self] in
-                    self?.displayUpgradeMessage(nil)
-                },
-                separatorTop: false,
-                separatorBottom: true
-            )))
+            plusBanner.append(freeUserBannerCellModel)
         }
 
         let headerPlusVM = CountryHeaderViewModel(Localizable.locationsPlus, totalCountries: plusLocations.count, buttonType: .premium, countriesViewModel: self)
@@ -590,5 +582,57 @@ class CountriesSectionViewModel {
             netshield: netShieldPropertyProvider.netShieldType,
             killSwitch: propertiesManager.killSwitch
         )
+    }
+
+    // MARK: - Wrong country banner
+
+    /// Called when HeaderViewModel update its `ServerChangeViewState` and changes free user banner accordingly
+    public func changeServerStateUpdated(to state: ServerChangeViewState) {
+        switch state {
+        case .unavailable:
+            showWrongCountryBanner = true
+        default:
+            showWrongCountryBanner = false
+        }
+        updateState()
+        if let bannerIndex = freeUserBannerIndex {
+            contentChanged?(ContentChange(reload: [bannerIndex]))
+        }
+    }
+
+    private var freeUserBannerIndex: Int? {
+        data.firstIndex(where: { row in
+            switch row {
+            case .banner:
+                return true
+            default:
+                return false
+            }
+        })
+    }
+
+    private var showWrongCountryBanner = false
+
+    private var freeUserBannerCellModel: CellModel {
+        if showWrongCountryBanner {
+            return .banner(BannerViewModel(
+                leftIcon: Theme.Asset.wrongCountry.image,
+                text: Localizable.wrongCountryBannerText,
+                action: { [weak self] in
+                    self?.displayUpgradeMessage(nil)
+                },
+                separatorTop: false,
+                separatorBottom: true
+            ))
+        }
+        return .banner(BannerViewModel(
+            leftIcon: Modals.Asset.worldwideCoverage.image,
+            text: Localizable.freeBannerText,
+            action: { [weak self] in
+                self?.displayUpgradeMessage(nil)
+            },
+            separatorTop: false,
+            separatorBottom: true
+        ))
     }
 }
