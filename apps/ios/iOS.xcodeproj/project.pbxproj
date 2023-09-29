@@ -98,10 +98,6 @@
 		4CF2982E2A7D3B8E00DEB23F /* hr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298152A7D3B8E00DEB23F /* hr.lproj */; };
 		4CF2982F2A7D3B8E00DEB23F /* fr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298162A7D3B8E00DEB23F /* fr.lproj */; };
 		4CF298302A7D406A00DEB23F /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 4CF297FC2A7D39F700DEB23F /* Intents.intentdefinition */; };
-		4CF065C02A8E389700AFD748 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE5E6632A83BC6100AC8523 /* LiveDependencies.swift */; };
-		4CF065C12A8E389700AFD748 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE5E6632A83BC6100AC8523 /* LiveDependencies.swift */; };
-		4CF065C22A8E389800AFD748 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE5E6632A83BC6100AC8523 /* LiveDependencies.swift */; };
-		4CF065C32A8E389900AFD748 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE5E6632A83BC6100AC8523 /* LiveDependencies.swift */; };
 		572DD1FF28EAD6E60051DB1A /* credentials_bf22.plist in Resources */ = {isa = PBXBuildFile; fileRef = 572DD1FE28EAD6E60051DB1A /* credentials_bf22.plist */; };
 		57E3438E28E573D60012B2DF /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438D28E573D60012B2DF /* PlanTests.swift */; };
 		57E3439028E576A70012B2DF /* SubscriptionsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438F28E576A70012B2DF /* SubscriptionsRobot.swift */; };
@@ -186,6 +182,10 @@
 		AD6099FB299B2343007E46BC /* ImageSubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6099FA299B2343007E46BC /* ImageSubtitleTableViewCell.swift */; };
 		AD609A03299B89C0007E46BC /* ImageSubtitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD609A02299B89C0007E46BC /* ImageSubtitleTableViewCell.xib */; };
 		AD609A05299D1120007E46BC /* ImageSubtitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD609A02299B89C0007E46BC /* ImageSubtitleTableViewCell.xib */; };
+		AD80107E2AC6CEAD000DB179 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* LiveDependencies.swift */; };
+		AD80107F2AC6CEAE000DB179 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* LiveDependencies.swift */; };
+		AD8010802AC6CEAE000DB179 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* LiveDependencies.swift */; };
+		AD8010812AC6CEAF000DB179 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* LiveDependencies.swift */; };
 		AD8130FD2A852E4F00729E03 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* LiveDependencies.swift */; };
 		AD8131002A853E2100729E03 /* StringBundleIdTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E82FA82820273600D9EFBB /* StringBundleIdTests.swift */; };
 		AD8131012A853E2100729E03 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C182285918C0002C095 /* AlertService.swift */; };
@@ -199,7 +199,6 @@
 		AD8131092A853E2C00729E03 /* CreateOrEditProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05322E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift */; };
 		AD81310A2A853E2C00729E03 /* XCTestExpectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BF950F23559AAF00C7D1E7 /* XCTestExpectation.swift */; };
 		AD81310B2A853E2C00729E03 /* MapViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E129C66922A8E8EA00D8437E /* MapViewModelTests.swift */; };
-		AD81310C2A853E2C00729E03 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		AD81310D2A853E2C00729E03 /* AlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A7E6F2374C150008A0DA0 /* AlertTests.swift */; };
 		AD81310E2A853E2C00729E03 /* CountryAnnotationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C1222858D0B0002C095 /* CountryAnnotationViewModelTests.swift */; };
 		AD81310F2A853E2C00729E03 /* CountryItemViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C942285AEA10002C095 /* CountryItemViewModelTests.swift */; };
@@ -312,7 +311,6 @@
 		D5F56899232620C600795953 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F56898232620C600795953 /* DependencyContainer.swift */; };
 		D5F5689B23263C7D00795953 /* IosAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F5689A23263C7D00795953 /* IosAlertService.swift */; };
 		D5F65F9828A149BC0062CF85 /* Timer in Frameworks */ = {isa = PBXBuildFile; productRef = D5F65F9728A149BC0062CF85 /* Timer */; };
-		D92A295D47C56CEE2650AA70 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		DA0FAF1A5F1E32A1ABAEEA4C /* SubuserAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E9637CD83510D2FCE5F039 /* SubuserAlertViewController.swift */; };
 		DE0AD1BB435AE75C8DD9BDB4 /* Environments.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2087AA9678CFB84779ED67E7 /* Environments.storyboard */; };
 		E10EA9CA21DA8162006D5F0E /* Quick Connect Widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E148AE3E21C141B0007AB65A /* Quick Connect Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -3085,7 +3083,6 @@
 				E532A8AD29252FFD00096D2D /* InformationTableViewCell.swift in Sources */,
 				F348C9D327D7B63300622584 /* CountriesViewController+Search.swift in Sources */,
 				F330F01627FC85AE00C3AA33 /* CouponViewController.swift in Sources */,
-				ADE5E6642A83BC6100AC8523 /* LiveDependencies.swift in Sources */,
 				428DF98B262F031600944379 /* ServersStreamingFeaturesViewModel.swift in Sources */,
 				E134558921889EC500FEEECE /* Data+Extension.swift in Sources */,
 				79AFDA9420DB3809002F8751 /* ProfileItemViewModel.swift in Sources */,
@@ -3193,7 +3190,6 @@
 				AD81310E2A853E2C00729E03 /* CountryAnnotationViewModelTests.swift in Sources */,
 				AD8131112A853E2C00729E03 /* LogSelectionViewModelTests.swift in Sources */,
 				AD8131072A853E2100729E03 /* ProtocolServiceMock.swift in Sources */,
-				AD81310C2A853E2C00729E03 /* (null) in Sources */,
 				AD8131102A853E2C00729E03 /* ColorPickerViewModelTests.swift in Sources */,
 				AD8131022A853E2100729E03 /* PlanServiceMock.swift in Sources */,
 				AD8131082A853E2100729E03 /* AppSessionManagerMock.swift in Sources */,
@@ -3236,8 +3232,8 @@
 				F316A07226DFB0D900669386 /* iOSNetworkingDelegate.swift in Sources */,
 				D5136C9722895C3A0002C095 /* ExtensionAlertService.swift in Sources */,
 				F3747C0226D4E1A900EF2F00 /* URLConstants.swift in Sources */,
-				4CF065C32A8E389900AFD748 /* LiveDependencies.swift in Sources */,
 				D5209C7226CBBE1900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift in Sources */,
+				AD8010812AC6CEAF000DB179 /* LiveDependencies.swift in Sources */,
 				D5209C7626CBCB3D00AD14EA /* OVPNiOSCredentialsConfigurator.swift in Sources */,
 				4CF297FD2A7D39F700DEB23F /* Intents.intentdefinition in Sources */,
 				D554556222804DF2006574F9 /* SiriHandlerViewModel.swift in Sources */,
@@ -3283,7 +3279,6 @@
 				F3B783FA26E6428C006768A8 /* CountryListRobot.swift in Sources */,
 				F377836E26E644BC00392958 /* ProfilesTests.swift in Sources */,
 				F377837026E644BC00392958 /* SignupTests.swift in Sources */,
-				D92A295D47C56CEE2650AA70 /* (null) in Sources */,
 				B2FCF5442940E91300EAC786 /* TokenRefreshTests.swift in Sources */,
 				F377836C26E644BC00392958 /* ConnectionTests.swift in Sources */,
 				E5CF14862949E68700AF6912 /* QuarkCommands+Async.swift in Sources */,
@@ -3298,13 +3293,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CF065C02A8E389700AFD748 /* LiveDependencies.swift in Sources */,
 				D555C491297E78FF000593EF /* PacketTunnelProvider+Logging.swift in Sources */,
 				E14414FA22EF38ED00894DD0 /* PacketTunnelProvider.swift in Sources */,
 				D555C488297E75E1000593EF /* ObfuscatedConstants.swift in Sources */,
 				D555C48A297E75ED000593EF /* OpenVPNConstants.swift in Sources */,
 				D555C490297E78FF000593EF /* OVPNLogger.swift in Sources */,
 				D555C48F297E78FF000593EF /* OVPNLogFormatter.swift in Sources */,
+				AD80107E2AC6CEAD000DB179 /* LiveDependencies.swift in Sources */,
 				E9492ED82669178000500E7D /* AppConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3318,10 +3313,10 @@
 				D5209C7526CBCB3D00AD14EA /* OVPNiOSCredentialsConfigurator.swift in Sources */,
 				D5209C7926CBD7C000AD14EA /* WGiOSVpnCredentialsConfigurator.swift in Sources */,
 				E14C2AA521E4E72400E8578E /* ProtonButton.swift in Sources */,
+				AD8010802AC6CEAE000DB179 /* LiveDependencies.swift in Sources */,
 				E17A259E2295670100D78C19 /* ExtensionAlertService.swift in Sources */,
 				D5209C7126CBBE1800AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift in Sources */,
 				E1C983B921E4D77400C81666 /* UIKitString+Extension.swift in Sources */,
-				4CF065C22A8E389800AFD748 /* LiveDependencies.swift in Sources */,
 				42BB5E5F247FFD7F0002DA8A /* TodayViewController.swift in Sources */,
 				E1C983B821E4BEB700C81666 /* UIColor+Extension.swift in Sources */,
 				42BB5E5E247FFD7F0002DA8A /* TodayViewModel.swift in Sources */,
@@ -3342,7 +3337,6 @@
 				E9445D6226528A790075FD31 /* PacketTunnelProvider.swift in Sources */,
 				E99799A926A6FE0C0083D61E /* ringlogger.c in Sources */,
 				F31E91202758F5F900140B2E /* WGLogger.swift in Sources */,
-				4CF065C12A8E389700AFD748 /* LiveDependencies.swift in Sources */,
 				E99799A526A6FE0C0083D61E /* NotificationToken.swift in Sources */,
 				E997998626A6FA870083D61E /* WGConstants.swift in Sources */,
 				E99799A726A6FE0C0083D61E /* NETunnelProviderProtocol+Extension.swift in Sources */,
@@ -3352,6 +3346,7 @@
 				E99799A626A6FE0C0083D61E /* TunnelConfiguration+WgQuickConfig.swift in Sources */,
 				E99799AA26A6FE0C0083D61E /* Logger.swift in Sources */,
 				E99799A326A6FE0C0083D61E /* FileManager+Extension.swift in Sources */,
+				AD80107F2AC6CEAE000DB179 /* LiveDependencies.swift in Sources */,
 				E99799A826A6FE0C0083D61E /* String+ArrayConversion.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
