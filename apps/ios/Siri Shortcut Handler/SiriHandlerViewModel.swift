@@ -98,10 +98,8 @@ class SiriHandlerViewModel {
          doh: DoHVPN,
          serverStorage: ServerStorage,
          availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory) {
-        setUpNSCoding(withModuleName: "ProtonVPN")
         SiriHelper.disconnectIntent = DisconnectIntent()
         SiriHelper.quickConnectIntent = QuickConnectIntent()
-
         self.doh = doh
         self.profileManager = profileManager
         self.networking = networking
