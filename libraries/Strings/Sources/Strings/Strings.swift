@@ -1671,6 +1671,10 @@ public enum Localizable {
   public static var wireguardLogs: String { return Localizable.tr("Localizable", "_wireguard_logs", fallback: "WireGuard Logs") }
   /// Settings -> Protocol: WireGuard TLS Option called "Stealth". Should not be translated.
   public static var wireguardTls: String { return Localizable.tr("Localizable", "_wireguard_tls", fallback: "Stealth") }
+  /// Subtitle if banner shown on iOS and macOS apps to upsell users who want to select a country
+  public static var wrongCountryBannerSubtitle: String { return Localizable.tr("Localizable", "_wrong_country_banner_subtitle", fallback: "Upgrade to choose any server") }
+  /// Title if banner shown on iOS and macOS apps to upsell users who want to select a country
+  public static var wrongCountryBannerTitle: String { return Localizable.tr("Localizable", "_wrong_country_banner_title", fallback: "Not the country you wanted?") }
   /// MacOS: text in main window
   public static var youAreNotConnected: String { return Localizable.tr("Localizable", "_you_are_not_connected", fallback: "You are not connected") }
   /// Apply

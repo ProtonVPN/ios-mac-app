@@ -70,4 +70,14 @@ public enum ServerChangeViewState {
             return .unavailable(duration: formattedDuration)
         }
     }
+
+    /// Little helper to use more elegant code
+    public var isUnavailable: Bool {
+        switch self {
+        case .unavailable:
+            return true
+        default:
+            return false
+        }
+    }
 }
