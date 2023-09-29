@@ -33,7 +33,8 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
     
     override init() { // swiftlint:disable:this function_body_length
         AppContext.default = .siriIntentHandler
-        
+
+        setUpNSCoding(withModuleName: "ProtonVPN")
         injectDefaultCryptoImplementation()
         let dependencyFactory = SiriIntentHandlerDependencyFactory()
         let doh = DoHVPN(apiHost: "", verifyHost: "", alternativeRouting: false, appState: .disconnected)
