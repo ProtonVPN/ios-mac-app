@@ -76,7 +76,14 @@ class CountryAnnotationViewModelTests: XCTestCase {
         )
         let authKeychain = MockAuthKeychain()
         let vpnKeychain = VpnKeychainMock()
-        let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()), appInfo: AppInfoImplementation(), doh: .mock, authKeychain: authKeychain, unauthKeychain: UnauthKeychainMock())
+        let networking = CoreNetworking(
+            delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()),
+            appInfo: AppInfoImplementation(),
+            doh: .mock,
+            authKeychain: authKeychain,
+            unauthKeychain: UnauthKeychainMock(),
+            pinApiEndpoints: false
+        )
         let vpnApiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation(), authKeychain: authKeychain)
         let configurationPreparer = VpnManagerConfigurationPreparer(
             vpnKeychain: vpnKeychain,
