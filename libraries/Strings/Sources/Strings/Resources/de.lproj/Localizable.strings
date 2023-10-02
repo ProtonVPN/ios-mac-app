@@ -446,7 +446,7 @@
 "_data_disclaimer_title" = "Schütze dich online";
 
 /* iOS: data disclaimer screen */
-"_data_disclaimer_text" = "Proton VPN ist verpflichtet, deine Privatsphäre zu schützen und zu respektieren. Es ist unsere übergeordnete Richtlinie, so wenig Benutzerdaten wie nur möglich zu erheben, um eine private und anonyme Benutzererfahrung in unserer Anwendung zu gewährleisten. Folgende Informationen werden gesammelt:\n\n%@ – Für die Anmeldung, Passwortzurücksetzung und das Senden wichtiger Service‐Updates.\n\n%@ – Nur für Absturzberichte und Fehler.\n\nDie Proton VPN-App verarbeitet keine Benutzerinformationen neben diesen Daten. Weder protokollieren wir deine Onlineaktivität, noch irgendwelche persönlichen, identifizierbaren Informationen. Alle oben genannten Daten werden ausschließlich in Proton VPN‐Systemen gespeichert und verarbeitet, ohne Zugriff von Dritten.";
+"_data_disclaimer_text" = "Proton VPN ist verpflichtet, deine Privatsphäre zu schützen und zu respektieren. Es ist unsere übergeordnete Richtlinie, so wenig Benutzerdaten wie nur möglich zu erheben, um eine private und anonyme Benutzererfahrung in unserer Anwendung zu gewährleisten. Folgende Informationen werden gesammelt:\n\n%@ – Für die Anmeldung, Passwortzurücksetzung und das Senden wichtiger Service‐Updates.\n\n%@ – Nur für Absturzberichte und Fehler.\n\nDie Proton VPN-App verarbeitet keine Benutzerinformationen abgesehen von diesen Daten. Weder protokollieren wir deine Onlineaktivität, noch irgendwelche persönlichen, identifizierbaren Informationen. Alle oben genannten Daten werden ausschließlich in Proton VPN‐Systemen gespeichert und verarbeitet, ohne Zugriff von Dritten.";
 
 /* iOS: data disclaimer screen */
 "_data_disclaimer_user_details" = "Benutzername und E‐Mail‐Adresse";
@@ -1159,7 +1159,7 @@
 "_free_trial_expired_title" = "Deine kostenlose Testphase ist %@";
 
 /* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "Dein Konto wurde auf Proton VPN Free gedowngradet.\nFolgendes wird dir von %@ fehlen:";
+"_free_trial_expired_description" = "Dein Konto wurde auf Proton VPN Free herabgestuft.\nFolgendes wird dir von %@ fehlen:";
 
 /* Cancel button in trial modals used in both iOS and MacOS */
 "_maybe_later" = "Vielleicht später";
@@ -2081,7 +2081,7 @@
 "upsell_customization_access_LAN" = "Greife auf Geräte in deinem lokalen Netzwerk (LAN) zu";
 
 /* Bold part of the feature of Customization upsell modal */
-"upsell_customization_access_LAN_bold" = "local area network (LAN)";
+"upsell_customization_access_LAN_bold" = "Lokales Netzwerk (LAN)";
 
 /* Feature of Customization upsell modal */
 "upsell_customization_profiles" = "Speichere häufig verwendete Verbindungen mit Profilen";
@@ -2169,3 +2169,12 @@
 
 /* Text on upsell banner in country list */
 "_free_banner_text" = "Erhalte weltweite Abdeckung mit VPN Plus";
+
+/* Title of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_title" = "Nicht das Land, das du wolltest?";
+
+/* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_subtitle" = "Upgrade, um einen beliebigen Server auszuwählen";
+
+/* Text of banner shown on macOS apps to upsell users who want to select a country */
+"_wrong_country_banner_text" = "Nicht das gewünschte Land? Upgrade, um einen beliebigen Server auszuwählen";

@@ -2069,7 +2069,7 @@
 "upsell_vpn_accelerator_increase_connection_speeds" = "Zwiększ prędkość połączenia nawet o 400%% dzięki funkcji VPN Accelerator.";
 
 /* Bold part of the feature of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_increase_connection_speeds_bold" = "VPN Accelerator.";
+"upsell_vpn_accelerator_increase_connection_speeds_bold" = "VPN Accelerator";
 
 /* Feature of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_distant_servers" = "Zwiększona prędkość i stabilność połączenia z odległymi serwerami.";
@@ -2081,13 +2081,13 @@
 "upsell_customization_access_LAN" = "Dostęp do urządzeń w sieci lokalnej (LAN)";
 
 /* Bold part of the feature of Customization upsell modal */
-"upsell_customization_access_LAN_bold" = "local area network (LAN)";
+"upsell_customization_access_LAN_bold" = "sieć lokalna (LAN)";
 
 /* Feature of Customization upsell modal */
 "upsell_customization_profiles" = "Zapisz często używane połączenia za pomocą profili";
 
 /* Bold part of the feature of Customization upsell modal */
-"upsell_customization_profiles_bold" = "profiles";
+"upsell_customization_profiles_bold" = "profile";
 
 /* Feature of Customization upsell modal */
 "upsell_customization_quick_connect" = "Uzyskaj szybszy dostęp do profili dzięki szybkiemu połączeniowi";
@@ -2138,7 +2138,7 @@
 "upsell_country_feature_subtitle" = "Odblokuj wybór krajów w planie VPN Plus";
 
 /* Bold part of the feature of Country upsell modal */
-"upsell_country_feature_subtitle_bold" = "country selection";
+"upsell_country_feature_subtitle_bold" = "wybór krajów";
 
 /* Title of the "What's new" screen */
 "modals_whats_new" = "Co nowego";
@@ -2169,3 +2169,12 @@
 
 /* Text on upsell banner in country list */
 "_free_banner_text" = "Plan VPN Plus zapewnia zasięg na całym świecie";
+
+/* Title of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_title" = "Chcesz wybrać inny kraj?";
+
+/* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_subtitle" = "Ulepsz konto, aby wybrać inny serwer";
+
+/* Text of banner shown on macOS apps to upsell users who want to select a country */
+"_wrong_country_banner_text" = "Chcesz wybrać inny kraj? Ulepsz plan, aby wybrać inny serwer";
