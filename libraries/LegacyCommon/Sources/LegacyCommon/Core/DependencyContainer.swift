@@ -42,23 +42,28 @@ open class Container: PropertiesToOverride {
         public let accessGroup: String
         public let openVpnExtensionBundleIdentifier: String
         public let wireguardVpnExtensionBundleIdentifier: String
+        public let pinApiEndpoints: Bool
 
         public var osVersion: String {
             ProcessInfo.processInfo.operatingSystemVersionString
         }
 
-        public init(os: String,
-                    appIdentifierPrefix: String,
-                    appGroup: String,
-                    accessGroup: String,
-                    openVpnExtensionBundleIdentifier: String,
-                    wireguardVpnExtensionBundleIdentifier: String) {
+        public init(
+            os: String,
+            appIdentifierPrefix: String,
+            appGroup: String,
+            accessGroup: String,
+            openVpnExtensionBundleIdentifier: String,
+            wireguardVpnExtensionBundleIdentifier: String,
+            pinApiEndpoints: Bool
+        ) {
             self.os = os
             self.appIdentifierPrefix = appIdentifierPrefix
             self.appGroup = appGroup
             self.accessGroup = accessGroup
             self.openVpnExtensionBundleIdentifier = openVpnExtensionBundleIdentifier
             self.wireguardVpnExtensionBundleIdentifier = wireguardVpnExtensionBundleIdentifier
+            self.pinApiEndpoints = pinApiEndpoints
         }
     }
 
@@ -73,7 +78,7 @@ open class Container: PropertiesToOverride {
     private lazy var authKeychain: AuthKeychainHandle = AuthKeychain.default
     private lazy var unauthKeychain: UnauthKeychainHandle = UnauthKeychain()
     private lazy var profileManager = ProfileManager(self)
-    private lazy var networking = CoreNetworking(self)
+    private lazy var networking = CoreNetworking(self, pinApiEndpoints: config.pinApiEndpoints)
     private lazy var ikeFactory = IkeProtocolFactory(factory: self)
     private lazy var vpnAuthenticationKeychain = VpnAuthenticationKeychain(accessGroup: config.accessGroup,
                                                                            vpnKeysGenerator: CoreVPNKeysGenerator())

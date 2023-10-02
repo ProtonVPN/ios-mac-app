@@ -32,6 +32,13 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
     let siriHandlerViewModel: SiriHandlerViewModel
     
     override init() { // swiftlint:disable:this function_body_length
+        #if TLS_PIN_DISABLE
+        let pin = false
+        #else
+        let pin = true
+        #endif
+
+
         AppContext.default = .siriIntentHandler
 
         setUpNSCoding(withModuleName: "ProtonVPN")
@@ -43,7 +50,8 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
             appInfo: dependencyFactory.makeAppInfo(),
             doh: doh,
             authKeychain: dependencyFactory.makeAuthKeychainHandle(),
-            unauthKeychain: dependencyFactory.makeUnauthKeychainHandle()
+            unauthKeychain: dependencyFactory.makeUnauthKeychainHandle(),
+            pinApiEndpoints: pin
         )
         let openVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.openVpn
         let wireguardVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.wireguard

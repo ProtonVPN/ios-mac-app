@@ -64,7 +64,14 @@ class CountryItemViewModelTests: XCTestCase {
         let country = CountryModel(serverModel: self.serverModel(withStatus: 22))
         let group: ServerGroup = ServerGroup(kind: .country(country), servers: servers)
         let vpnKeychain = VpnKeychainMock()
-        let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()), appInfo: AppInfoImplementation(), doh: .mock, authKeychain: MockAuthKeychain(), unauthKeychain: UnauthKeychainMock())
+        let networking = CoreNetworking(
+            delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()),
+            appInfo: AppInfoImplementation(),
+            doh: .mock,
+            authKeychain: MockAuthKeychain(),
+            unauthKeychain: UnauthKeychainMock(),
+            pinApiEndpoints: false
+        )
         let vpnApiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation(), authKeychain: MockAuthKeychain())
         let configurationPreparer = VpnManagerConfigurationPreparer(
             vpnKeychain: vpnKeychain,

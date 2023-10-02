@@ -82,13 +82,22 @@ final class DependencyContainer: Container {
     init() {
         let prefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
 
+        #if TLS_PIN_DISABLE
+        let pin = false
+        #else
+        let pin = true
+        #endif
+
         super.init(
-            Config(os: "iOS",
-                   appIdentifierPrefix: prefix,
-                   appGroup: AppConstants.AppGroups.main,
-                   accessGroup: "\(prefix)prt.ProtonVPN",
-                   openVpnExtensionBundleIdentifier: AppConstants.NetworkExtensions.openVpn,
-                   wireguardVpnExtensionBundleIdentifier: AppConstants.NetworkExtensions.wireguard)
+            Config(
+                os: "iOS",
+                appIdentifierPrefix: prefix,
+                appGroup: AppConstants.AppGroups.main,
+                accessGroup: "\(prefix)prt.ProtonVPN",
+                openVpnExtensionBundleIdentifier: AppConstants.NetworkExtensions.openVpn,
+                wireguardVpnExtensionBundleIdentifier: AppConstants.NetworkExtensions.wireguard,
+                pinApiEndpoints: pin
+            )
         )
 
         // Some classes depend on shared container from vpncore directly

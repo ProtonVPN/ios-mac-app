@@ -62,26 +62,37 @@ public final class CoreNetworking: Networking {
         AuthKeychainHandleFactory &
         UnauthKeychainHandleFactory
 
-    public convenience init(_ factory: Factory) {
-        self.init(delegate: factory.makeNetworkingDelegate(),
-                  appInfo: factory.makeAppInfo(),
-                  doh: factory.makeDoHVPN(),
-                  authKeychain: factory.makeAuthKeychainHandle(),
-                  unauthKeychain: factory.makeUnauthKeychainHandle())
+    public convenience init(_ factory: Factory, pinApiEndpoints: Bool) {
+        self.init(
+            delegate: factory.makeNetworkingDelegate(),
+            appInfo: factory.makeAppInfo(),
+            doh: factory.makeDoHVPN(),
+            authKeychain: factory.makeAuthKeychainHandle(),
+            unauthKeychain: factory.makeUnauthKeychainHandle(),
+            pinApiEndpoints: pinApiEndpoints
+        )
     }
 
-    public init(delegate: NetworkingDelegate,
-                appInfo: AppInfo,
-                doh: DoHVPN,
-                authKeychain: AuthKeychainHandle,
-                unauthKeychain: UnauthKeychainHandle) {
+    public init(
+        delegate: NetworkingDelegate,
+        appInfo: AppInfo,
+        doh: DoHVPN,
+        authKeychain: AuthKeychainHandle,
+        unauthKeychain: UnauthKeychainHandle,
+        pinApiEndpoints: Bool
+    ) {
         self.delegate = delegate
         self.appInfo = appInfo
         self.doh = doh
         self.authKeychain = authKeychain
         self.unauthKeychain = unauthKeychain
 
-        Self.setupTrustKit()
+        if pinApiEndpoints {
+            Self.setupTrustKit()
+        } else {
+            PMAPIService.noTrustKit = true
+            PMAPIService.trustKit = nil
+        }
 
         #if os(iOS)
         let challengeParametersProvider: ChallengeParametersProvider = .forAPIService(clientApp: .vpn, challenge: PMChallenge())
@@ -109,15 +120,10 @@ public final class CoreNetworking: Networking {
 
     private static func setupTrustKit() {
         // FUTUREDO: When we adopt a Core version >= 3.25.1, move to TrustKitWrapper
-        #if TLS_PIN_DISABLE
-        PMAPIService.trustKit = nil
-        PMAPIService.noTrustKit = true
-        #else
         let config = TrustKitWrapper.configuration(hardfail: true)
         let instance = TrustKit(configuration: config)
         PMAPIService.trustKit = instance
         PMAPIService.noTrustKit = false
-        #endif
     }
 
     public func request(_ route: Request, completion: @escaping (_ result: Result<VPNShared.JSONDictionary, Error>) -> Void) {
