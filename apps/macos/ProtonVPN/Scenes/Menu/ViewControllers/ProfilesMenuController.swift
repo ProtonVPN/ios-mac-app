@@ -70,5 +70,7 @@ class ProfilesMenuController: NSObject {
 
     private func setupEphemeralView() {
         profilesMenuItem.isHidden = !viewModel.areProfilesEnabled
+        overviewItem.isEnabled = viewModel.areProfilesEnabled
+        createNewProfileItem.isEnabled = viewModel.areProfilesEnabled
     }
 }
