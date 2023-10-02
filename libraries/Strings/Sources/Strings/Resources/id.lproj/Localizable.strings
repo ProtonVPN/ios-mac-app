@@ -366,7 +366,7 @@
 "_warning_vpn_session_is_active" = "Terdapat sesi Proton VPN milik pengguna lain yang sedang aktif pada perangkat ini. Apabila Anda masuk, sesi ini akan berakhir secara otomatis. Apakah Anda ingin melanjutkan?";
 
 /* iOS: placeholder for email field in signup and email verification screens */
-"_enter_email_address" = "Masukkan alamat email";
+"_enter_email_address" = "Masukkan alamat surel";
 
 /* iOS: placeholder in phone verification screen */
 "_phone_country_code_placeholder" = "Kode";
@@ -384,7 +384,7 @@
 "_already_have_account" = "Saya sudah memiliki akun";
 
 /* iOS: Button in email verification screen */
-"_get_verification_email" = "Dapatkan email verifikasi";
+"_get_verification_email" = "Dapatkan surel verifikasi";
 
 /* iOS: Button in SMS verification screen */
 "_get_verification_sms" = "Dapatkan SMS verifikasi";
@@ -399,7 +399,7 @@
 "_use_captcha_verification" = "Verifikasi dengan CAPTCHA";
 
 /* iOS: human verification option select button */
-"_use_other_email_address" = "Verifikasi dengan email";
+"_use_other_email_address" = "Verifikasi dengan surel";
 
 "_use_sms_verification" = "Verifikasi dengan SMS";
 
@@ -449,7 +449,7 @@
 "_data_disclaimer_text" = "Proton VPN berkomitmen untuk melindungi dan menghormati privasi Anda. Ini merupakan kebijakan utama kami untuk mengumpulkan data pengguna sesedikit mungkin untuk memastikan pengalaman pengguna yang pribadi dan anonim dalam penggunaan Aplikasi, khususnya:\n\n%@ – untuk masuk, membantu memulihkan kata sandi yang hilang, dan mengirimkan pembaruan layanan penting.\n\n%@ – untuk laporan kerusakan dan kesalahan saja.\n\nAplikasi Proton VPN tidak memproses informasi pengguna apa pun selain data ini. Kami tidak mencatat aktivitas daring Anda atau informasi pribadi apa pun yang dapat diidentifikasi. Semua data yang tercantum di atas disimpan dan diproses di sistem Proton VPN sendiri, tanpa ada pihak ketiga yang dapat mengaksesnya.";
 
 /* iOS: data disclaimer screen */
-"_data_disclaimer_user_details" = "Nama pengguna, alamat email";
+"_data_disclaimer_user_details" = "Nama pengguna, alamat surel";
 
 /* iOS: data disclaimer screen */
 "_data_disclaimer_device_details" = "Versi Sistem Operasi dan model perangkat Anda";
@@ -701,7 +701,7 @@
 /* Form validation error */
 "_error_field_required" = "Kolom ini wajib diisi";
 
-"_error_field_email_wrong_format" = "Alamat email tidak ditulis dalam format yang benar";
+"_error_field_email_wrong_format" = "Alamat surel tidak ditulis dalam format yang benar";
 
 "_error_field_passwords_dont_match" = "Sandi tidak sama";
 
@@ -712,7 +712,7 @@
 "_error_decode" = "Gagal mendekode data yang diarsipkan di kelas: %@";
 
 /* Internal application error */
-"_error_email_verification_disabled" = "Verifikasi email dinonaktifkan sementara";
+"_error_email_verification_disabled" = "Verifikasi surel dinonaktifkan sementara";
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton tidak dapat berkomunikasi dengan perangkat Anda. Coba lagi nanti.";
@@ -1283,7 +1283,7 @@
 "_report_report" = "Laporkan pesan";
 
 /* iOS bug report: Placeholder for email form field */
-"_report_placeholder_email" = "Email kontak";
+"_report_placeholder_email" = "Surel kontak";
 
 /* Bug report: Placeholder for text form field */
 "_report_placeholder_message" = "Pesan Anda...";
@@ -1298,7 +1298,7 @@
 "_report_description" = "Apabila Anda melampirkan berkas-berkas berikut, tim kami akan dapat mengenali dan menyelesaikan masalah yang Anda hadapi dengan lebih cepat dan akurat:\n• Berkas log Proton VPN\n• Berkas log Open VPN \n• Berkas log WireGuard";
 
 /* Mac bug report: email field label */
-"_report_field_email" = "Email:";
+"_report_field_email" = "Surel:";
 
 /* Mac bug report: feedback field label */
 "_report_field_feedback" = "Apa yang salah?";
@@ -1396,11 +1396,11 @@
 
 "_troubleshoot_item_other_title" = "Masih belum menemukan solusi";
 
-"_troubleshoot_item_other_description" = "Hubungin kami secara langsung melalui formulir layanan dukungan, email (%@), atau akun Twitter kami.";
+"_troubleshoot_item_other_description" = "Hubungin kami secara langsung melalui formulir layanan dukungan, surel (%@), atau akun Twitter kami.";
 
 "_troubleshoot_item_other_link1" = "formulir dukungan";
 
-"_troubleshoot_item_other_link2" = "email";
+"_troubleshoot_item_other_link2" = "surel";
 
 "_troubleshoot_item_other_link3" = "Twitter";
 
@@ -2169,3 +2169,12 @@
 
 /* Text on upsell banner in country list */
 "_free_banner_text" = "Dapatkan cakupan server di seluruh dunia dengan VPN Plus";
+
+/* Title of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_title" = "Not the country you wanted?";
+
+/* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_subtitle" = "Upgrade to choose any server";
+
+/* Text of banner shown on macOS apps to upsell users who want to select a country */
+"_wrong_country_banner_text" = "Not the country you wanted? Upgrade to choose any server";

@@ -2169,3 +2169,12 @@
 
 /* Text on upsell banner in country list */
 "_free_banner_text" = "VPN Plus забяспечвае пакрыццё ўсяго свету";
+
+/* Title of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_title" = "Не тая краіна, якую хацелі?";
+
+/* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_subtitle" = "Палепшыць, каб выбіраць любы сервер";
+
+/* Text of banner shown on macOS apps to upsell users who want to select a country */
+"_wrong_country_banner_text" = "Не тая краіна, якую хацелі? Палепшыце, каб выбраць любы сервер";

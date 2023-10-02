@@ -2069,7 +2069,7 @@
 "upsell_vpn_accelerator_increase_connection_speeds" = "Augmentez la vitesse de connexion jusqu'à 400 %% avec VPN Accelerator.";
 
 /* Bold part of the feature of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_increase_connection_speeds_bold" = "VPN Accelerator.";
+"upsell_vpn_accelerator_increase_connection_speeds_bold" = "VPN Accelerator";
 
 /* Feature of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_distant_servers" = "Amélioration de la vitesse et de la stabilité lors de la connexion à des serveurs distants.";
@@ -2138,7 +2138,7 @@
 "upsell_country_feature_subtitle" = "Accédez à la sélection de pays en passant à VPN Plus.";
 
 /* Bold part of the feature of Country upsell modal */
-"upsell_country_feature_subtitle_bold" = "sélection du pays";
+"upsell_country_feature_subtitle_bold" = "sélection de pays";
 
 /* Title of the "What's new" screen */
 "modals_whats_new" = "Nouveautés";
@@ -2169,3 +2169,12 @@
 
 /* Text on upsell banner in country list */
 "_free_banner_text" = "Profitez d'une couverture mondiale en passant à VPN Plus.";
+
+/* Title of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_title" = "Ce n'est pas le pays que vous vouliez ?";
+
+/* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_subtitle" = "Changez d'abonnement pour choisir n'importe quel serveur.";
+
+/* Text of banner shown on macOS apps to upsell users who want to select a country */
+"_wrong_country_banner_text" = "Ce n'est pas le pays que vous vouliez ? Changez d'abonnement pour choisir n'importe quel serveur.";

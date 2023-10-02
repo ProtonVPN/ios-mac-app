@@ -905,7 +905,7 @@ Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill sw
 "_kill_switch_disable" = "Desativar kill switch";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
-"_kill_switch_enable" = "Ativar Kill Switch";
+"_kill_switch_enable" = "Ativar kill switch";
 
 /* MacOS: Settings screen title */
 "_preferences" = "Preferências";
@@ -1175,7 +1175,7 @@ Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill sw
 "_free_trial_about_to_expire_title" = "Sua avaliação gratuita está prestes a expirar!";
 
 /* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
-"_free_trial_about_to_expire_description" = "Atualize para %@ e continue a desfrutar desses recursos:";
+"_free_trial_about_to_expire_description" = "Faça upgrade para %@ e continue a desfrutar desses recursos:";
 
 "_5_connections_description" = "Conecte até 5 dispositivos\nat ao mesmo tempo";
 
@@ -1345,7 +1345,7 @@ Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill sw
 
 "_subscription_will_expire" = "O plano atual irá expirar em %@.";
 
-"_subscription_will_renew" = "O plano actual será automaticamente renovado em %@.";
+"_subscription_will_renew" = "O plano atual será automaticamente renovado em %@.";
 
 "_subscription_description" = "Você pode comprar mais créditos para estender automaticamente o seu plano atual. No final do período da sua assinatura, estes créditos serão aplicados para prolongar o seu plano.";
 
@@ -1361,7 +1361,7 @@ Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill sw
 
 "_troubleshoot_item_alt_title" = "Permitir redirecionamento alternativo";
 
-"_troubleshoot_item_alt_description" = "Caso os sites do Proton sejam bloqueados, essa configuração permite que o aplicativo tente um roteamento de rede alternativo para se conectar ao Proton, o que pode ser útil para contornar firewalls ou problemas de rede. Recomendamos manter essa configuração ativada para maior confiabilidade. \nSaiba mais";
+"_troubleshoot_item_alt_description" = "Caso os sites da Proton sejam bloqueados, essa configuração permite que o aplicativo tente um roteamento de rede alternativo para se conectar ao Proton, o que pode ser útil para contornar firewalls ou problemas de rede. Recomendamos manter essa configuração ativada para maior confiabilidade. \nSaiba mais";
 
 "_troubleshoot_item_alt_link1" = "Saiba mais";
 
@@ -1430,10 +1430,10 @@ Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill sw
 "_netshield_upsell_subtitle" = "Bloqueia anúncios, rastreadores e malware em sites e aplicativos";
 
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
-"_netshield_business_upsell_title" = "Bloqueadores de anúncios com NetShield";
+"_netshield_business_upsell_title" = "Bloqueie anúncios com NetShield";
 
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
-"_netshield_business_upsell_subtitle" = "Quando você atualiza para a VPN Business";
+"_netshield_business_upsell_subtitle" = "Quando você fazer upgrade para a VPN Business";
 
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
@@ -1450,7 +1450,7 @@ Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill sw
 "_netshield_level1" = "Bloqueio de malware";
 
 /* Settings -> Netshield: Block malware, ads, trackers */
-"_netshield_level2" = "Bloqueio de malware, anúncios e rastreadores";
+"_netshield_level2" = "Bloquear malware, anúncios e rastreadores";
 
 "_netshield_alert_reconnect_description_on" = "Sua conexão será reiniciada para alterar o modo NetShield.\nObs.: Se alguns sites não carregarem, tente desativar o NetShield.";
 
@@ -1490,7 +1490,7 @@ Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill sw
 
 "_quick_settings_netshield_option_level1" = "Bloquear apenas malware";
 
-"_quick_settings_netshield_option_level2" = "Bloqueio de malware, anúncios e rastreadores";
+"_quick_settings_netshield_option_level2" = "Bloquear malware, anúncios e rastreadores";
 
 "_upgrade_required_securecore_description" = "O Secure Core está disponível no plano Plus. Faça agora o upgrade para direcionar o tráfego através dos nossos servidores mais seguros em países amigos da privacidade.";
 
@@ -1540,7 +1540,7 @@ Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill sw
 "_sysex_set_up_proton_vpn" = "Configurar Proton VPN";
 
 /* Default action in the system extension wizard in mac. Pre-macOS Ventura */
-"_sysex_open_system_settings" = "Abrir Configurações do Sistema";
+"_sysex_open_system_settings" = "Abrir configurações do sistema";
 
 /* Default action in the system extension wizard in mac. macOS Ventura */
 "_sysex_open_security_preferences" = "Abrir preferências de segurança";
@@ -1592,7 +1592,7 @@ Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill sw
 
 "_subscription_expired_reconnection_description" = "Sua assinatura foi rebaixada, então estamos reconectando para o servidor mais rápido disponível.";
 
-"_subscription_upgrade_title" = "Faça o Upgrade novamente para aproveitar todos os recursos:";
+"_subscription_upgrade_title" = "Faça o upgrade novamente para aproveitar todos os recursos:";
 
 "_subscription_upgrade_option3" = "Recursos avançados: NetShield, Secure Core, Tor, P2P";
 
@@ -1851,13 +1851,13 @@ Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill sw
 "_alert_protocol_deprecated_title" = "Protocolo indisponível";
 
 /* Body of the deprecated protocol alert on MacOS. Shown when the user attempts to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
-"_alert_protocol_deprecated_body_macos" = "Este perfil usa um protocolo desatualizado e não é mais suportado. Clique em \"Atualizar\" para alternar para o Protocolo Inteligente padrão. Saiba mais";
+"_alert_protocol_deprecated_body_macos" = "Este perfil usa um protocolo desatualizado e não é mais suportado. Clique em \"Atualizar\" para alternar para o Smart Protocol padrão. Saiba mais";
 
 /* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
 "_alert_protocol_deprecated_link_text" = "Saiba mais";
 
 /* Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
-"_alert_protocol_deprecated_body_ios" = "Este perfil usa um protocolo desatualizado e não é mais compatível. Clique em \"Atualizar\" para alternar para o Protocolo Inteligente padrão.";
+"_alert_protocol_deprecated_body_ios" = "Este perfil usa um protocolo desatualizado e não é mais compatível. Clique em \"Atualizar\" para alternar para o Smart Protocol padrão.";
 
 /* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
 "_alert_protocol_deprecated_enable_smart" = "Atualizar";
@@ -1953,7 +1953,7 @@ Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill sw
 "modals_upsell_stay_free" = "Agora não";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
-"modals_upsell_features_subtitle" = "Ao atualizar para o Plus";
+"modals_upsell_features_subtitle" = "Ao fazer upgrade para o Plus";
 
 /* Subtitle of the Safe Mode upsell screen */
 "modals_upsell_features_safe_mode_subtitle" = "Tem necessidades de computação avançada ou profissional que exigem portas não padrão?\n\nAtualize para a VPN Plus para acessar este e outros recursos premium.";
@@ -2170,3 +2170,12 @@ Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill sw
 
 /* Text on upsell banner in country list */
 "_free_banner_text" = "Obtenha cobertura global com o VPN Plus";
+
+/* Title of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_title" = "Não é o país que você queria?";
+
+/* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_subtitle" = "Faça upgrade para escolher qualquer servidor";
+
+/* Text of banner shown on macOS apps to upsell users who want to select a country */
+"_wrong_country_banner_text" = "Não é o país que você queria? Atualize seu plano para escolher qualquer servidor";

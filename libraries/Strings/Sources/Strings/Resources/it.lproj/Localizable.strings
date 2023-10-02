@@ -841,7 +841,7 @@
 "_vpn_stuck_disconnecting_title" = "Errore di connessione";
 
 /* VPN stuck alert */
-"_vpn_stuck_disconnecting_body" = "Il dispositivo non è riuscito a terminare una sessione VPN precedente. Sarà necessario riavviare il dispositivo prima di poter stabilire una nuova connessione VPN.";
+"_vpn_stuck_disconnecting_body" = "Il dispositivo non è riuscito a terminare una sessione VPN precedente. Dovrai riavviare il dispositivo prima di poter stabilire una nuova connessione VPN.";
 
 "_update_required" = "Aggiornamento richiesto";
 
@@ -857,9 +857,9 @@
 
 "_error_mitm_title" = "Connessione non sicura";
 
-"_error_mitm_description" = "La convalida del certificato TLS non è riuscita nel tentativo di connettersi all'API Proton VPN. La tua connessione internet attuale potrebbe essere monitorata. Per mantenere i tuoi dati al sicuro, stiamo impedendo all'app di accedere all'API Proton VPN.\nPer accedere al tuo account, passa a una nuova rete e prova a connetterti di nuovo.";
+"_error_mitm_description" = "La convalida del certificato TLS non è riuscita nel tentativo di connettersi all'API di Proton VPN. La tua connessione internet attuale potrebbe essere monitorata. Per mantenere i tuoi dati al sicuro, stiamo impedendo all'app di accedere all'API di Proton VPN.\nPer accedere al tuo account, passa a una nuova rete e riprova a connetterti.";
 
-"_error_mitm_vpn_description" = "La convalida del certificato TLS non è riuscita nel tentativo di connettersi al server VPN. La tua connessione internet attuale potrebbe essere monitorata. Per mantenere i tuoi dati al sicuro, stiamo impedendo all'app di accedere a questo server VPN.\nPer favore seleziona un altro server.";
+"_error_mitm_vpn_description" = "La convalida del certificato TLS non è riuscita nel tentativo di connettersi al server VPN. La tua connessione internet attuale potrebbe essere monitorata. Per mantenere i tuoi dati al sicuro, stiamo impedendo all'app di accedere a questo server VPN.\nSeleziona un altro server.";
 
 /* Internal error message when there is a problem with initializing tls and connection cannot be established. */
 "_error_tls_initialisation" = "Errore di inizializzazione TLS";
@@ -1015,16 +1015,16 @@
 "_view_logs" = "Visualizza i Log";
 
 /* iOS logs screen title */
-"_logs" = "Registri";
+"_logs" = "Log";
 
 /* iOS Settings: applications logs row */
-"_application_logs" = "Registri dell'applicazione";
+"_application_logs" = "Log dell'applicazione";
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "Log OpenVPN";
 
 /* iOS Settings: WireGuard logs row */
-"_wireguard_logs" = "Registri di WireGuard";
+"_wireguard_logs" = "Log di WireGuard";
 
 /* iOS widget help screen: title */
 "_activate_widget" = "Attiva Widget";
@@ -1295,7 +1295,7 @@
 "_report_success" = "Grazie per la segnalazione";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Fornendo i seguenti dettagli, il nostro team può identificare il tuo problema e una possibile soluzione con maggiori possibilità e tempi più brevi:\n• Registri dell'app Proton VPN\n• Registri OpenVPN\n• Registri WireGuard";
+"_report_description" = "Fornendo i seguenti dettagli, il nostro team può identificare il tuo problema e una possibile soluzione con maggiori possibilità e tempi più brevi:\n• Log dell'app Proton VPN\n• Log di OpenVPN\n• Log di WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Email:";
@@ -1483,7 +1483,7 @@
 
 "_ip_will_not_be_exposed" = "Il tuo IP non sarà esposto.";
 
-"_cancel_reconnection" = "Questo annullerà qualsiasi tentativo di ri-connessione e ti lascerà disconnesso";
+"_cancel_reconnection" = "Questo annullerà qualsiasi tentativo di riconnessone e ti lascerà disconnesso";
 
 "_quick_settings_netshield_option_off" = "Non bloccare";
 
@@ -1621,7 +1621,7 @@
 
 "_streaming_servers_description" = "Connettiti a un server Plus in questo paese per avviare lo streaming.";
 
-"_streaming_servers_note" = "Nota: Disattiva il Servizio di Localizzazione ed elimina la cache delle app di streaming per assicurare che i nuovi contenuti compaiano.";
+"_streaming_servers_note" = "Nota: Disattiva il Servizio di Localizzazione e cancella la cache delle app di streaming per assicurare che i nuovi contenuti compaiano.";
 
 "_streaming_servers_extra" = "e altro";
 
@@ -1676,7 +1676,7 @@
 
 "_local_agent_server_error_title" = "Errore del server";
 
-"_local_agent_server_error_message" = "Si è verificato un errore sul server. Sei pregato di connetterti a un altro server.";
+"_local_agent_server_error_message" = "Si è verificato un errore sul server. Connettiti a un altro server.";
 
 "_local_agent_policy_violation_error_title" = "Violazione della politica";
 
@@ -1696,7 +1696,7 @@
 
 "_force_upgrade_title" = "È necessario l'aggiornamento dell'applicazione";
 
-"_force_upgrade_message" = "La versione dell'applicazione Proton VPN attualmente in uso non è più supportata. Si prega di aggiornare all'ultima versione.";
+"_force_upgrade_message" = "La versione dell'applicazione Proton VPN attualmente in uso non è più supportata. Aggiornala all'ultima versione.";
 
 "login_fetch_vpn_data" = "Configurazione del tuo accesso VPN";
 
@@ -1913,7 +1913,7 @@
 "search_recent_header" = "Visualizzato recentemente";
 
 /* Button to clear recent searches history */
-"search_recent_clear" = "Elimina";
+"search_recent_clear" = "Cancella";
 
 /* Title for the alert asking for confirmation before deleting recent searches */
 "search_recent_clear_title" = "La tua cronologia delle ricerche andrà persa. Continuare?";
@@ -2009,7 +2009,7 @@
 "modals_upsell_secure_core_attacks" = "Proteggiti dagli attacchi di rete";
 
 /* Title of the No Logs screen */
-"modals_no_logs_title" = "Nessun registro e con sede in Svizzera";
+"modals_no_logs_title" = "Nessun log e con sede in Svizzera";
 
 /* Feature of the No Logs screen */
 "modals_no_logs_privacy_first" = "Proton VPN mette la privacy al primo posto";
@@ -2169,3 +2169,12 @@
 
 /* Text on upsell banner in country list */
 "_free_banner_text" = "Ottieni una copertura mondiale con VPN Plus";
+
+/* Title of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_title" = "Non è il paese che vuoi?";
+
+/* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_subtitle" = "Effettua l’upgrade per scegliere qualsiasi server";
+
+/* Text of banner shown on macOS apps to upsell users who want to select a country */
+"_wrong_country_banner_text" = "Non è il paese che vuoi? Effettua l'upgrade per scegliere qualsiasi server";

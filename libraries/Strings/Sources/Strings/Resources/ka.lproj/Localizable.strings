@@ -1,0 +1,2180 @@
+/* Common word */
+
+"_cancel" = "გაუქმება";
+
+/* Common word */
+"_connect" = "დაკავშირება";
+
+/* Common word */
+"_connected" = "დაკავშირებულია";
+
+/* Common word */
+"_delete" = "წაშლა";
+
+/* Common word */
+"_disconnect" = "გათიშვა";
+
+/* Common word */
+"_disconnected" = "გათიშულია";
+
+/* Status of VPN connection reported by Siri */
+"_disconnecting" = "გათიშვა";
+
+/* Common word */
+"_done" = "მზადაა";
+
+/* Common word */
+"_edit" = "ჩასწორება";
+
+/* Common word */
+"_ok" = "დიახ";
+
+/* Common word */
+"_save" = "შენახვა";
+
+/* Common word */
+"_unavailable" = "ხელმიუწვდომელია";
+
+/* Description of the expand/collapse button used by accessibility Voice Over */
+"_expand_list_of_servers" = "სერვერების სიის ამოკეცვა";
+
+"_collapse_list_of_servers" = "სერვერების სიის ჩაკეცვა";
+
+/* Used as a title in alerts/modals */
+"_warning" = "გაფრთხილება";
+
+/* Button in many places in both iOS and MacOS apps */
+"_upgrade" = "ტარიფის აწევა";
+
+/* iOS: Plan selection during plan upgarde, button insettings screen */
+"_upgrade_subscription" = "გამოწერის გაუმჯობესება";
+
+/* MacOS: Settings -> Account. Button leading to web interface. */
+"_manage_subscription" = "გამოწერის მართვა";
+
+/* iOS & MacOS: text near country or server; MacOS: title of several alerts */
+"_upgrade_required" = "აუცილებელია განახლება";
+
+/* MacOS: voice over indication for a country or server on maintenance*/ */
+"_on_maintenance" = "შესაკეთებლადაა";
+
+"_reconnection_required" = "საჭიროა თავიდან მიერთება";
+
+/* Server status in many places in iOS and MacOS apps */
+"_maintenance" = "ტექმომსახურება";
+
+/* MacOS: quit application button in custom status menu */
+"_quit" = "გასვლა";
+
+/* MacOS: alert show before quitting app if VPN is connected */
+"_quit_warning" = "აპლიკაციიდან გასვლა VPN-ის აქტიურ სესიას გათიშავს. გნებავთ, გააგრძელოთ?";
+
+/* Common word */
+"_enabled" = "ჩართულია";
+
+/* Common word */
+"_disabled" = "გათიშულია";
+
+/* Button in some alerts */
+"_disable" = "გათიშვა";
+
+/* Button in Kill switch error alert */
+"_report" = "ანგარიში";
+
+/* Button in Kill switch error alert */
+"_ignore" = "იგნორი";
+
+"_continue" = "გაგრძელება";
+
+/* Button in some alerts */
+"_show_instructions" = "ინსტრუქციების ჩვენება";
+
+/* iOS: quick connect widget */
+"_network_unreachable" = "ქსელი მიუწვდომელია";
+
+/* Title in no internet alert */
+"_not_connected_to_the_internet" = "VPN კავშირის დამყარება შეუძლებელია. ინტერნეტთან მიერთებული არ ბრძანდებით.";
+
+/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
+"_vpn_connection_active" = "VPN შეერთება აქტიურია";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
+"_vpn_protocol_not_supported_title" = "VPN პროტოკოლი მხარდაჭერილი არაა";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
+"_vpn_protocol_not_supported_text" = "VPN პროტოკოლი მიუწვდომელია თქვენი შეერთებისთვის. შეცვალეთ პროტოკოლი ან სერვერი.";
+
+/* iOS: button in settings screen */
+"_log_out" = "გასვლა";
+
+/* iOS: Logout alert */
+"_log_out_warning" = "გასვლა VPN-ის თქვენს სესიას დაასრულებს.";
+
+/* MacOS: Logout alert */
+"_log_out_warning_long" = "აპლიკაციიდან გასვლა VPN-ის აქტიურ სესიას გათიშავს. გნებავთ, გააგრძელოთ?";
+
+/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
+"_change_protocol_disconnect_warning" = "პროტოკოლის ცვლილება VPN-ის მიმდინარე სესიას გათიშავს.";
+
+/* Slogan text under the logo in may places in iOS and MacOS apps */
+"_loading_screen_slogan" = "უსაფრთხო ინტერნეტი ყველგან";
+
+/* Main mac app menu item */
+"_report_an_issue" = "პრობლემის ანგარიშის გადაგზავნა...";
+
+/* Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page. */
+"_help" = "დახმარება";
+
+/* MacOS: link in login screen */
+"_learn_more" = "მეტის ნახვა";
+
+/* iOS: Status view */
+"_ip" = "IP";
+
+/* Common word */
+"_close" = "დახურვა";
+
+/* Changing settings title */
+"_change_settings" = "პარამეტრების შეცვლა";
+
+/* Suggest the user to upgrade account for new features */
+"_get_plus_for_feature" = "გადმოწერეთ Proton VPN Plus და მიღეთ ეს და სხვა ფუნქციები.";
+
+/* Display more information */
+"_more_info" = "გაიგეთ მეტი";
+
+/* Display less information */
+"_less_info" = "ნაკლები ინფორმაცია";
+
+/* Text addressing to contact costumer support on several sites of the app */
+"_contact_our_support" = "კონტაქტი მხარდაჭერის გუნდთან";
+
+"_turn_on" = "ჩართვა";
+
+"_not_now" = "არა ახლა";
+
+"_allow" = "ნების დართვა";
+
+/* %@ is an IP address e.g. IP: 123.45.67.890 */
+"_ip_value" = "IP: %@";
+
+/* %@ is an IP address e.g. Public IP: 123.45.67.890 */
+"_public_ip" = "საჯარო IP: %@";
+
+/* Several places in both iOS and Mac apps */
+"_quick_connect" = "სწრაფი მიერთება";
+
+/* Title of the change server button */
+"_change_server" = "სერვერის შეცვლა";
+
+/* Used in many places in MacOS app */
+"_secure_core" = "Secure Core";
+
+/* %@ is a country e.g. Secure Core Switzerland */
+"_secure_core_country" = "Secure Core %@";
+
+/* Profile create/edit menu */
+"_country" = "ქვეყანა";
+
+"_show_protonvpn" = "Proton VPN-ის ჩვენება";
+
+/* Main mac app menu item */
+"_clear_application_data" = "აპლიკაციის მონაცემების გასუფთავება";
+
+/* Main mac app menu item */
+"_system_extension_tutorial_menu_item" = "სისტემური გაფართოების სახელმძღვანელო";
+
+/* MacOS: connecting overlay */
+"_preparing_connection" = "სერვერის წვდომადობის შემოწმება";
+
+/* iOS: main button in tabbar during connecting to vpn phase */
+"_connecting" = "დაკავშირება";
+
+"_connectingDotDotDot" = "მიერთება...";
+
+/* iOS: countries list section header */
+"_countries_free" = "უფასო ქვეყნები";
+
+/* iOS: countries list section header */
+"_countries_premium" = "Premium ქვეყნები";
+
+/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
+"_connecting_vpn" = "მიერთება %@";
+
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
+"_connecting_to" = "%@-სთან დაკავშირება";
+
+"_reconnecting_to" = "%@-სთან დაკავშირება";
+
+/* iOS status view */
+"_connected_to" = "დაკავშირებულია";
+
+/* macOS: Text on connection overlay shown after connection timed out */
+"_connection_timed_out" = "დაკავშირების დრო ამოიწურა";
+
+/* Text that should be bold in _connection_timed_out string */
+"_connection_timed_out_bold" = "დრო ამოიწურა";
+
+/* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
+"_connected_to_vpn" = "დაკავშირებულია %@-სთან";
+
+/* iOS: connection bar; Main mac app menu item; */
+"_not_connected" = "მიერთებული არაა";
+
+/* MacOS: text in main window */
+"_you_are_not_connected" = "მიერთებული არ ბრძანდებით";
+
+/* MacOS: button in connecting overlay */
+"_try_again" = "კიდევ ცდა";
+
+"_try_again_without_killswitch" = "გამორთეთ Kill Switch-ი და თვიდან სცადეთ";
+
+/* Button in some alerts */
+"_retry" = "თავიდან";
+
+/* iOS: section header in countries list */
+"_free_servers" = "უფასო სერვერები";
+
+/* iOS: section header in countries list */
+"_plus_servers" = "Plus სერვერები";
+
+/* iOS: section header in countries list */
+"_test_servers" = "სატესტო სერვერები";
+
+/* MacOS: connecting overlay */
+"_initializing_connection" = "შეერთების ინიციალიზაცია...";
+
+/* MacOS: connecting overlay */
+"_successfully_connected" = "შეერთბა წარმატებულია";
+
+/* MacOS: connecting overlay */
+"_failed" = "წარუმატებელი";
+
+/* Connection error translation. iOS quick connect widget: text shown on error. */
+"_connection_failed" = "შეერთების შეცდომა";
+
+/* iOS status view */
+"_security" = "უსაფრთხოება";
+
+/* iOS status view */
+"_status" = "სტატუსი";
+
+/* iOS status view */
+"_session_time" = "სესიის დრო";
+
+/* iOS status view */
+"_location" = "მდებარეობა";
+
+/* iOS status view */
+"_city" = "ქალაქი";
+
+/* iOS status view */
+"_technical_details" = "ტექნიკური დეტალები";
+
+/* Main mac app menu item */
+"_open_app_to_log_in" = "Proton VPN-ის ჩვენება, შესვლისთვის...";
+
+/* Main mac app menu item */
+"_upgrade_to_plus" = "Plus-მდე აწევა";
+
+/* Main mac app menu item */
+"_upgrade_for_secure_core" = "secure Core-ის გამოსაყენებლად";
+
+"_switch_side_button_on" = "ჩართული";
+
+"_switch_side_button_off" = "გამორთულია";
+
+/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
+"_timeout_ks_ike_descritpion" = "Kill Switch-ს შეიძლება სხვა აპლიკაცია უშლის ხელს. პრობლემის მოსაგვარებლად გადაერთეთ OpenVPN პროტოკოლზე ან Kill Switch გამორთეთ.";
+
+/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
+"_timeout_ks_ike_switch_protocol" = "გადაერთეთ OpenVPN-ზე და თავიდან სცადეთ";
+
+/* Disconnect notification */
+"_kill_switch_blocking_connection" = "Kill Switch -ი ყველა შეერთებას ბლოკავს";
+
+/* Disconnect notification */
+"_always_on_will_reconnect" = "ყოველთვის-ჩართული VPN-ი თავიდან თვითონ დაუკავშირდება";
+
+/* MacOS: About window title */
+"_about" = "შესახებ";
+
+/* iOS setting: after this word actual version and build number are appended */
+"_version" = "ვერსია";
+
+/* MacOS: About window */
+"_version_current" = "მიმდინარე ვერსია:";
+
+/* MacOS: About window */
+"_release_date" = "რელიზის თარიღი:";
+
+/* MacOS: About window */
+"_changelog" = "ცვლილებების სია";
+
+/* MacOS: About window */
+"_acknowledgements" = "მადლიერება";
+
+/* Used in sign-in, sign-up and in settings */
+"_username" = "მომხმარებლის სახელი";
+
+/* Used in sign-in, sign-up */
+"_password" = "პაროლი";
+
+/* Sign-up form */
+"_password_confirm" = "პაროლის დადასტურება";
+
+/* Show/hide password switch */
+"_show" = "ჩვენება";
+
+/* Show/hide password switch */
+"_hide" = "დამალვა";
+
+/* MacOS: Login button */
+"_login" = "შესვლა";
+
+/* iOS: Login button in several places */
+"_log_in" = "შესვლა";
+
+/* MacOS: label in login and settings screens */
+"_remember_login" = "მომხმარებლის დამახსოვრება";
+
+/* MacOS: label in login and settings screens */
+"_start_on_boot" = "ჩატვირთვისას გაშვება";
+
+/* MacOS: button in login screen */
+"_create_account" = "ანგარიშის შექმნა";
+
+/* MacOS: button in login screen */
+"_need_help" = "დახმარება გჭირდებათ?";
+
+/* MacOS: button in login screen */
+"_reset_password" = "პაროლის თავიდან დაყენება";
+
+/* MacOS: button in login screen */
+"_common_issues" = "შესვლის ზოგადი პრობლემები";
+
+/* MacOS: button in login screen */
+"_forgot_username" = "დაგავიწყდათ თქვენი მომხმარებლის სახელი";
+
+/* iOS: button in login screen */
+"_forgot_password" = "დაგავიწყდათ პაროლი?";
+
+/* iOS: button in login and onboarding screens */
+"_sign_up" = "რეგისტრაცია";
+
+/* MacOS: alert shown during login if already connected to VPN */
+"_warning_vpn_session_is_active" = "ამ მოწყობილობაზე Proton VPN-ის სესია უკვე გაშვებულია, მაგრამ სხვა მომხმარებლით. შესვლა მიმდინარე სესიას გათიშავს. გნებავთ გააგრძელოთ?";
+
+/* iOS: placeholder for email field in signup and email verification screens */
+"_enter_email_address" = "შეიყვანეთ ელფოსტის მისამართი";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_country_code_placeholder" = "კოდი";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_number_placeholder" = "შეიყვანეთ ტელეფონის ნომერი";
+
+/* iOS: title of phone country code selection screen */
+"_select_phone_country_code" = "შეიყვანეთ ქვეყნის კოდი";
+
+/* iOS: placeholder in phone country code selection screen */
+"_search_phone_country_code_placeholder" = "ქვეყნის ძებნა";
+
+/* iOS: button for switching from sign-up to sign-in screen */
+"_already_have_account" = "ანგარიში უკვე მაქვს";
+
+/* iOS: Button in email verification screen */
+"_get_verification_email" = "შემოწმების ელ-ფოსტის მიღება";
+
+/* iOS: Button in SMS verification screen */
+"_get_verification_sms" = "შემოწმების SMS-ის მიღება";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option" = "გასაგრძელებლად აირჩიეთ შემოწმების ვარიანტი:";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option_top_message" = "სერვერების გადატვირთვის თავიდან ასაცილებლად უნდა დაამტკიცოთ, რომ ადამიანი ბრძანდებით.";
+
+/* iOS: human verification option select button */
+"_use_captcha_verification" = "CAPTCHA-ით შემოწმება";
+
+/* iOS: human verification option select button */
+"_use_other_email_address" = "ელფოსტით გადამოწმება";
+
+"_use_sms_verification" = "SMS-ით შემოწმება";
+
+/* iOS: human verification option select button */
+"_request_invitation" = "ხელით აქტივაციის მოთხოვნა";
+
+/* iOS: placeholder for code in human verification code form */
+"_enter_verification_code" = "123 456";
+
+/* iOS: button in human verification code form */
+"_submit_verification_code" = "გადაცემა";
+
+/* iOS: button in human verification code form */
+"_resend_no_code" = "კოდი არ მიგიღიათ?";
+
+/* iOS: button in human verification code form */
+"_resend_code" = "ახალი კოდის გამოთხოვა";
+
+/* iOS: message after human verification code resending */
+"_resend_success" = "ახალი კოდი მოთხოვნილია";
+
+/* iOS: link inside text under sign-up form */
+"_terms_and_conditions" = "პირობები და წესები";
+
+/* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
+"_terms_and_conditions_disclaimer" = "Proton VPN-ის გამოყენებით თქვენ ეთანხმებით ჩვენს \n%@-ს და %@-ს";
+
+/* iOS: link inside text under sign-up form */
+"_privacy_policy" = "პირადულობის დაცვა";
+
+/* iOS: text in human verification code form */
+"_verification_instructions" = "გამოგიგზავნეთ შემოწმების კოდი. შეიყვანეთ ის აქ.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete" = "მორგება დასრულებულია";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_free" = "გამოწერილი გაქვთ Proton VPN-ის უფასო გეგმა. დასაწყისისთვის ისიამოვნეთ Proton VPN Plus-ით შვიდი დღის განმავლობაში.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_plus" = "თქვენი შეძენა წარმატებულია. Proton VPN Plus-ის სატარიფო გეგმა ახლა აქტიურია.";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_title" = "დაიცავით თქვენი თავი ონლაინ";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_text" = "Proton VPN მოწოდებულია, დაიცვას და პატივი სცეს თქვენს კონფიდენციალობას. ეს არის ჩვენი უმთავრესი პოლიტიკა: მომხმარებლებზე, რაც შეიძლება, ცოტა მონაცემი შევაგროვოთ, რათა უზრუნველყოფილი იყოს აპის გამოყენების კერძო და ანონიმური მომხმარებლის გამოცდილება, კონკრეტულად:\n\n%@ - დაგეხმაროთ შესვლაში, დაგეხმაროთ აღადგინოთ დაკარგული პაროლი და გამოგეგზავნოთ მნიშვნელოვანი მომსახურების განახლება.\n\n%@ - მხოლოდ, ავარიის ანგარიშები და შეცდომები.\n\nProton VPN აპლიკაცია არ ამუშავებს მომხმარებლის ინფორმაციას ამ მონაცემების გარდა. ჩვენ არ ვინახავთ თქვენს ონლაინ ქმედებებს და არც რაიმე მაიდენტიფიცირებელ ინფორმაციას. ზემოთ ჩამოთვლილი ყველა მონაცემი ინახება და მუშავდება Proton VPN-ის პირად სისტემაში, მასზე წვდომა მესამე მხარეს არ აქვს.";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_user_details" = "მომხმარებელი, ელფოსტის მისამართი";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_device_details" = "თქვენი მოწყობილობის მოდელი და ოს-ის ვერსია";
+
+/* iOS: data disclaimer screen button */
+"_data_disclaimer_agree" = "დათანხმება და გაგრძელება";
+
+/* iOS: Map screen title and tabbar item */
+"_map" = "რუკა";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_show" = "რუკის ჩვენება";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_hide" = "რუკის დამალვა";
+
+/* Description shown together with server info icon */
+"_tor_description" = "TOR ქსელთან მიერთება";
+
+/* Description shown together with server info icon */
+"_p2p_description" = "P2P ტრაფიკის მხარდაჭერა";
+
+/* Description shown together with server info icon */
+"_premium_description" = "სერვერი Premium";
+
+/* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
+"_via_country" = "%@-ის გავლით";
+
+/* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
+"_via" = "გავლით";
+
+/* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
+"_server_load_percentage" = "%@%% ჩატვირთვა";
+
+/* iOS: Home screen title, tab bar item title; MacOS: TabBar tab title; */
+"_home" = "მთავარი";
+
+/* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
+"_countries" = "ქვეყნები";
+
+"_no_servers_to_show" = "ამჟამად საჩვენებელი სერვერების გარეშე.";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_plan_does_not_include_secure_core" = "თქვენი სატარიფო გეგმა Secure Core-ის ფუნქციებს არ შეიცავს.";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_learn_more_about_secure_core" = "გაიგეთ მეტი Secur Core-ის შესახებ";
+
+/* MacOS: placeholder for country search */
+"_search_for_country" = "ქვეყნის ძებნა";
+
+/* MacOS: secure core tooltip */
+"_secure_core_info" = "ტრაფიკის ჩვენს დაცულ ქსელში რაუტინგის საშუალებით VPN სერვერის გატეხვისგან დამატებითი დაცვა";
+
+/* Text in warning screen before actions that will disconnect VPN */
+"_view_toggle_will_cause_disconnect" = "Secure Core-ის გადართვა გაწყვეტს მიმდინარე შეერთებას.";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_load" = "სერვერის დატვირთვა:";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_ip" = "სერვერის IP:";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_auto_assigned" = "ენიჭება ავტომატურად";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_premium_server" = "სერვერი Premium";
+
+/* MacOS profile form: feature selection value */
+"_standard" = "სტანდარტული";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_p2p" = "P2P";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_tor" = "Tor";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_p2p_server" = "P2P სერვერი";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_tor_server" = "Tor სერვერი";
+
+/* MacOS Profiles Overview: Table column header */
+"_profile" = "პროფილი";
+
+/* MacOS: menu item, profiles window main header, sidebar tab title; iOS: Profiles screen title and tabbar item title; */
+"_profiles" = "პროფილები";
+
+/* iOS: table header section in profiles screen */
+"_recommended" = "რეკომენდებულია";
+
+/* iOS: table header section in profiles screen */
+"_my_profiles" = "ჩემი პროფილები";
+
+/* Button */
+"_save_as_profile" = "პროფილად შენახვა";
+
+/* Button */
+"_delete_profile" = "პროფილის წაშლა";
+
+/* iOS: Success message on profile deletion */
+"_profile_deleted_successfully" = "პროფილი წაიშალა";
+
+/* iOS: Error message if profile can't be deleted */
+"_profile_deletion_failed" = "პროფილის წაშლის შეცდომა";
+
+/* MacOS: Buttons in several places; iOS: profile creation screen title */
+"_create_new_profile" = "პროფილის შექმნა";
+
+/* MacOS: button in profiles tab in main window */
+"_manage_profiles" = "პროფილების მართვა";
+
+/* MacOS: profiles window title */
+"_profiles_overview" = "პროფილების გადახედვა";
+
+/* iOS: success message after profile is saved */
+"_profile_created_successfully" = "ახალი პროფილი შენახულია";
+
+/* iOS: failure message after profile is saved */
+"_profile_creation_failed" = "პროფილის შექმნის შეცდომა";
+
+/* iOS: success message after profile is saved */
+"_profile_edited_successfully" = "პროფილი განახლდა";
+
+/* MacOS menu item; MacOS Profiles tab title; */
+"_overview" = "გადახედვა";
+
+/* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
+"_connection" = "კავშირი";
+
+/* MacOS Profiles Overview: Table header for buttons column */
+"_action" = "ქმედება";
+
+/* Used for both profile description when fastest server option is selected and Plan speed description */
+"_fastest" = "ყველაზე სწრაფი";
+
+/* Profile create/change form */
+"_fastest_available_server" = "უსწრაფესი ხელმისაწვდომი სერვერებიდან";
+
+/* iOS: Predefined profile with fastest connection */
+"_fastest_connection" = "უსწრაფესი";
+
+/* Profile create/change form and other places describing profile */
+"_random" = "შემთხვევითი";
+
+/* Profile create/change form */
+"_random_available_server" = "შემთხვევითი ხელმისაწვდომი სერვერი";
+
+/* iOS: Predefined profile with random server */
+"_random_connection" = "შემთხვევითი";
+
+/* Profile create/change form */
+"_different_server_each_time" = "სხვა სერვერი ყოველ ჯერზე";
+
+/* Text used when no active server information is available */
+"_no_description_available" = "აღწერის გარეშე";
+
+"_create_profile" = "პროფილის შექმნა";
+
+/* Profile create/change form */
+"_profile_settings" = "პროფილის მორგება";
+
+/* Profile create/change form */
+"_connection_settings" = "შეერთების მორგება";
+
+/* Profile create/change form */
+"_name" = "სახელი";
+
+/* Profile create/change form */
+"_enter_profile_name" = "შეიყვანეთ პროფილის სახელი";
+
+/* Profile create/change form */
+"_color" = "ფერი";
+
+/* Profile create/change form */
+"_make_default_profile" = "ნაგულისხმებად გამოყენება";
+
+/* Profile create/change form */
+"_default_profile_tooltip" = "\"სწრაფი შეეერთების\" ღილაკი ნაგულისხმებ პროფილს იყენებს.\n";
+
+"_feature" = "ფუნქცია";
+
+/* Profile create/change form */
+"_use_secure_core" = "Secure Core";
+
+/* Profile create/change form */
+"_select_country" = "აირჩიეთ ქვეყანა";
+
+/* Profile create/change form */
+"_server" = "სერვერი";
+
+/* Profile create/change form */
+"_select_server" = "აირჩიეთ სერვერი";
+
+/* Error in profile create/change form */
+"_profile_name_is_required" = "შეიყვანეთ სახელი";
+
+/* Error in profile create/change form */
+"_profile_name_is_too_long" = "პროფილის სახელის მაქსიმალური სიგრძე 25 სიმბოლოა";
+
+/* Error when user hasn't selected profile country */
+"_country_selection_is_required" = "აირჩიეთ ქვეყანა";
+
+/* Error when user hasn't selected profile server */
+"_server_selection_is_required" = "აირჩეთ სერვერი";
+
+"_profile_name_needs_to_be_unique" = "პროფილი ამ სახელით უკვე არსებობს";
+
+/* MacOS: profile creation cancel alert text */
+"_current_selection_will_be_lost" = "თუ გააგრძელებთ, მიმდინარე მონიშნული დაგეკარგებათ. გნებავთ გააგრძელოთ?";
+
+/* iOS: new profkle can't be created because not all required fields are filled */
+"_check_if_fields_present" = "დარწმუნდით, რომ ყველა ველი შევსებულია";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_header" = "პროფილის წაშლა";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_warning" = "პროფილი სამუდამოდ წაიშლება. გნებავთ გაგრძელება?";
+
+/* iOS: new profile screen */
+"_select_profile_color" = "აირჩიეთ პროფილის ფერი";
+
+/* Plan speed */
+"_plan_speed_medium" = "საშუალო სიჩქარე";
+
+/* Plan speed */
+"_plan_speed_high" = "მაღალი სიჩქარე";
+
+"_plan_speed_fastest" = "უსწრაფესი სიჩქარე";
+
+/* Unknown error that has no better description */
+"_error_internal_error" = "API-ის შიდა შეცდომა";
+
+/* VPN session is active error */
+"_error_vpn_session_is_active" = "Proton VPN-ის სესია აქტიურია";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_missing" = "ავტორიზაციის დეტალები შეყვანილი არაა. შესვლა შეუძლებელია";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_expired" = "მომხმარებლის სესიის ვადა გავიდა. თავიდან შედით";
+
+/* VPN credentials can't be loaded error */
+"_error_vpn_credentials_missing" = "გასაღებების ბრელოკში VPN-ის მომხმარებელი და პაროლი მითითებული არაა";
+
+/* Form validation error */
+"_error_field_required" = "ეს ველი აუცილებელია";
+
+"_error_field_email_wrong_format" = "ელფოსტის მისამართს არასწორი ფორმატი";
+
+"_error_field_passwords_dont_match" = "პაროლები არ ემთხვევა";
+
+/* Human validation failed */
+"_error_user_failed_human_validation" = "ჩვენ ვერ შევამოწმეთ, ბრძანდებით თუ არა ადამიანი. თავიდან სცადეთ ან შეიძინეთ პრემიუმ ტარიფი.";
+
+/* Error decoding an object */
+"_error_decode" = "დაარქივებული მონაცემების გაშიფვრის შეცდომა კლასში: %@";
+
+/* Internal application error */
+"_error_email_verification_disabled" = "ელფოსტით შემოწმება დროებით გათიშულია";
+
+/* Error writing to system keychain */
+"_error_keychain_write" = "Proton-ი თქვენს მოწყობილობას ვერ უკავშირდება. თავიდან სცადეთ.";
+
+/* Error when try to parse modulus signature */
+"_error_modulus_signature" = "ფანჯრის ხელმოწერა ცარიელია";
+
+/* Error when generate srp clint */
+"_error_generate_srp" = "SRP-ის გენერაციის შეცდომა";
+
+/* Error when try to hash password */
+"_error_hash_password" = "მომხმარებლის პაროლის ჰეშირების შეცდომა";
+
+/* Error try to restore user from the session */
+"_error_fetch_session" = "მომხმარებელი ამ სესიიდან ვერ ვიპოვე";
+
+/* Network error */
+"_ne_request_timed_out" = "ქსელური მოთხოვნის ვადა გავიდა";
+
+/* Network error */
+"_ne_unable_to_connect_to_host" = "სერვისი მიუწვდომელია";
+
+/* Network error */
+"_ne_network_connection_lost" = "ქსელთან შეერთება დაიკარგა";
+
+/* Network error */
+"_ne_not_connected_to_the_internet" = "ინტერნეტთან მიერთების გარეშე";
+
+/* Network error */
+"_ne_couldnt_reach_server" = "Proton-ის სერვერები მიუწვდომელია";
+
+/* API error */
+"_ae_wrong_login_credentials" = "არასწორი მომხმარებელი და პაროლი";
+
+/* API error */
+"_ae_vpn_info_not_received" = "VPN-ის ინფორმაციის მიღება შეუძლებელია";
+
+/* Error when try to parse the server info */
+"_error_server_info_parser" = "სერვერების ინფორმაციის დამუშავების შეცდომა";
+
+/* Error when try to parse the partner info */
+"_error_partner_info_parser" = "პარტნიორის ინფორმაციის დამუშავების შეცდომა";
+
+/* Default error when vpn properties fetch failed */
+"_error_vpn_properties" = "VPN-ის თვისებების გამოთხოვის შეცდომა!";
+
+/* Parsing error */
+"_error_session_count_parser" = "სესიების რაოდენობის დამუშავების პრობლემა";
+
+/* Parsing error */
+"_error_loads" = "სერვერის დატვირთვის განახლების შეცდომა";
+
+/* API error */
+"_error_api_offline" = "Proton VPN API ამჟამად გამორთულია";
+
+/* Error when try to parse subscription info */
+"_error_subscription_parser" = "გამოწერის ინფორმაციის დამუშავების შეცდომა";
+
+/* Error when try to parse verification methods */
+"_error_verification_methods_parser" = "გადამოწმების მეთოდების დამუშავების შეცდომა";
+
+/* Keychain error */
+"_error_keychain_fetch" = "გასაღებების ბრელოკის შეცდომა.";
+
+/* Error when the app fails to create a user */
+"_error_user_creation" = "ანგარიშის შექმნის შეცდომა";
+
+/* General title for several error alerts */
+"_error_unknown_title" = "უცნობი შეცდომა";
+
+/* Delinquent user alert */
+"_delinquent_user_title" = "გადაუხდელი ინვოისი";
+
+/* Delinquent user alert */
+"_delinquent_user_description" = "თქვენს ანგარიშში გადაუხდელი ინვოისია. გადაიხადეთ ყველა ინვოისი მისამართზე accounts.protonvpn.com";
+
+/* Generic sign in error */
+"_error_sign_in_again" = "რაღაც არასწორად წავიდა. თავიდან სცადეთ.";
+
+"_p2p_detected_popup_title" = "ამ სერვერზე P2P ტრაფიკი დაუშვებელია";
+
+"_p2p_detected_popup_body" = "თქვენი შეერთება გათიშულია, რადგან იყენებთ სერვერს, რომელსაც P2P ტრაფიკის მხარდაჭერა არ გააჩნია. P2P მხარდაუჭერელია უფასო სერვერებზე, რომლის ნომერიც100-ზე მეტია.";
+
+"_p2p_forwarded_popup_title" = "შეერთების რაუტი შეიცვალა";
+
+/* Under maintenance alert */
+"_server_under_maintenance" = "სერვერი ტექმომსახურებაშია";
+
+/* macOS: plan upgrade required alert */
+"_upgrade_plan_to_access_server" = "გამოწერის თქვენი დონისთვის ეს სერვერი მიუწვდომელია. თუ გნებავთ მეტ სერვერთან წვდომა, დაფიქრდით თქვენი გამოწერის ამაღლების შესახებ.";
+
+/* Under maintenance alert */
+"_all_servers_in_country_under_maintenance" = "ამ ქვეყანაში მდებარე ყველა სერვერი ტექმომსახურებაშია. დაუკავშირდით სხვა ქვეყანას.";
+
+"_unsecure_wifi" = "WiFi შეერთება დაუცველია";
+
+"_unsecure_wifi_learn_more" = "გაიგეთ მეტი";
+
+"_unsecure_wifi_title" = "ნაპოვნია დაუცველი WiFi";
+
+"_maintenance_on_server_detected_title" = "VPN სერვერი ტექმომსახურებაზეა";
+
+"_maintenance_on_server_detected_subtitle" = "სერვერი, რომელთანაც მიერთებული ბრძანდებოდით, ტექმომსახურებაზეა";
+
+"_maintenance_on_server_detected_description" = "თავიდან შეერთება ხელმისაწვდომი სერვერებიდან უსწრაფესთან.";
+
+/* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
+"_reconnect_on_settings_change_body" = "ამ ცვლილების ძალაში შესასვლელად საჭიროა კავშირის თავიდან დამყარება.";
+
+/* Under maintenance alert */
+"_country_servers_under_maintenance" = "%@ სერვერი ტექმომსახურებაშია";
+
+/* Under maintenance alert */
+"_all_servers_in_profile_under_maintenance" = "პროფილის სერვერ(ებ) ი ტექმომსახურებაშია";
+
+/* Under maintenance alert */
+"_all_servers_under_maintenance" = "ყველა სერვერი ტექმომსახურების ქვეშაა. ეს, ჩვეულებრივ, ნიშნავს, რომ ან არის ტექნიკური სირთულეები Proton VPN-ის მხარეს, ან თქვენი ქსელი შეზღუდულია.";
+
+"_p2p_forwarded_popup_body" = "თქვენი შეერთება ავტომატურად გადამსამართდა სხვა სერვერზე, იმიტომ, რომ P2P-ის მხარდაჭერა ყველა სერვერს არ გააჩნია. ამან შეიძლება, ინტერნეტის შეერთების სიჩქარე შეგიმციროთ. გადამისამართების თავიდან ასარიდებლად გამოიყენეთ სერვერები P2P ჭდით.";
+
+"_p2p_forwarded_popup_body_p1" = "თქვენი შეერთება ავტომატურად გადამსამართდა სხვა სერვერზე, იმიტომ, რომ P2P-ის მხარდაჭერა ყველა სერვერს არ გააჩნია. ამან შეიძლება, ინტერნეტის შეერთების სიჩქარე შეგიმციროთ. გამოიყენეთ სერვერები";
+
+"_p2p_forwarded_popup_body_p2" = "ხატულა ტრაფიკის რერაუტინგის თავიდან ასაცილებლად.";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_title" = "შეერთების შეცდომა";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_body" = "შეცდომა თქვენს მოწყობილობაზე VPN-ის წინა სესიის შეწყვეტისას. ახლიდან მისაერთებლად საჭიროა მოწყობილობის გადატვირთვა.";
+
+"_update_required" = "აუცილებელია განახლება";
+
+"_update_required_no_longer_supported" = "Proton VPN-ის ეს ვერსია უკვე მხარდაჭერილი აღარაა. იმისათვის, რომ გამოიყენოთ, განაახლეთ ის აპლიკაციების მაღაზიიდან.";
+
+/* Secondary button title in the App update required alert  */
+"_update_required_support" = "კონტაქტი მხარდაჭერის გუნდთან";
+
+/* Primary button title in the App update required alert  */
+"_update_required_update" = "განახლება";
+
+"_invalid_refresh_token_please_login" = "კარგა ხანია, Proton VPN არ გამოგიყენებიათ. საჭიროა, შეხვიდეთ.";
+
+"_error_mitm_title" = "დაუცველი კავშირი";
+
+"_error_mitm_description" = "Proton VPN API-სთან დაკავშირების მცდელობისას TLS სერტიფიკატის ვალიდაცია ვერ მოხერხდა. თქვენს მიმდინარე ინტერნეტ კავშირს შეიძლება, თვალყურს ადევნებდნენ. თქვენი მონაცემების დაცულობის შესანარჩუნებლად ჩვენ ვუკრძალავთ აპს Proton VPN API-ზე წვდომას.\nთქვენს ანგარიშში შესასვლელად ან წვდომისთვის, გადაერთეთ ახალ ქსელზე და სცადეთ ხელახლა დაკავშირება.";
+
+"_error_mitm_vpn_description" = "Proton VPN -თან დაკავშირების მცდელობისას TLS სერტიფიკატის ვალიდაცია ვერ მოხერხდა. თქვენს მიმდინარე ინტერნეტკავშირს შეიძლება თვალყურს ადევნებდნენ. თქვენი მონაცემების დაცულობის შესანარჩუნებლად ჩვენ აპს Proton VPN API-ზე წვდომას ვუკრძალავთ.\nაირჩიეთ სხვა სერვერი.";
+
+/* Internal error message when there is a problem with initializing tls and connection cannot be established. */
+"_error_tls_initialisation" = "TLS-ის ინიციალიზაციის შეცდომა";
+
+/* Internal error message when there is a problem with server certificate and connection cannot be established. */
+"_error_tls_server_verification" = "სერვერის სერტიფიკატის შემოწმება შეუძლებელია.";
+
+/* Mac: neagent help screen */
+"_neagent_description" = "Proton VPN-თან შეერთებისას\nშეიძლება, გთხოვოთ თქვენი %@-ის შეყვანა. თუ ფანჯარა გამოჩნდა,\nშეიყვანეთ თქვენი %@%@ და დააწკაპუნეთ '%@' %@-ზე.";
+
+/* Mac: neagent help screen */
+"_neagent_password" = "კომპიუტერის ანგარიშის პაროლი";
+
+/* Mac: neagent help screen */
+"_mac_password" = "Mac-ის პაროლი";
+
+/* Mac: neagent help screen */
+"_neagent_first_step" = "(1)";
+
+/* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
+"_neagent_always_allow" = "ნების ყოველთვის დართვა";
+
+/* Mac: neagent help screen */
+"_neagent_second_step" = "(2)";
+
+/* Button in several different alerts */
+"_got_it" = "გავიგე!";
+
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_title" = "აპში განახლება მიუწვდომელია";
+
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_body" = "Proton VPN-ის თქვენი გამოწერის ტარიფის აპიდან აწევა შეუძლებელია. ასაწევად ეწვიეთ ვებგვერდს account.protonvpn.com.";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_title" = "აპლიკაციის მონაცემების გასუფთავება";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_body" = "Proton VPN-ის ყველა მონაცემი წაიშლება და აპლიკაცია დაასრულებს მუშაობას. გნებავთ, გააგრძელოთ?";
+
+/* MacOS: killswitch blocking alert button */
+"_kill_switch_disable" = "Kill Switch-ის გამორთვა";
+
+/* iOS and macOS: Enable kill switch on badly-routed networks */
+"_kill_switch_enable" = "Kill Switch-ის ჩართვა";
+
+/* MacOS: Settings screen title */
+"_preferences" = "მორგება";
+
+/* iOS: Settings screen title and tab title */
+"_settings" = "მორგება";
+
+/* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
+"_account" = "ანგარიში";
+
+/* Alert title for account deletion error */
+"_account_deletion_error" = "შეცდომა";
+
+/* iOS: Message explaining that deleting account closes the VPN connection */
+"_account_deletion_connection_warning" = "ანგარიშის წაშლა VPN-ის თქვენს სესიას დაასრულებს.";
+
+/* MacOS: General tab in setting window */
+"_general" = "საერთო";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_type" = "ანგარიშის ტიპი";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_plan" = "სატარიფო გეგმა";
+
+"_manage_subscription_on_web" = "მართეთ თქვენი გამოწერები ვების სამუშაო მაგიდიდან";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_kill_switch" = "Kill switch";
+
+/* MacOS: Settings -> Connection. Kill switch functionality description. */
+"_kill_switch_tooltip" = "VPN გვირაბის გათიშვისას ქსელის ტრაფიკის სრულად დაბლოკვა.";
+
+/* iOS Settings: toggle name */
+"_always_on_vpn" = "ყოველთვის-ჩართული VPN";
+
+/* iOS Settinsg screen: always-on description under the switch */
+"_always_on_vpn_tooltip_ios" = "ყოველთვის-ჩართული VPN პრობლემების შემთხვევაში შეერთებას სწრაფადვე დაამყარებს თავიდან. თქვენი უსაფრთხოებისთვის ეს პარამეტრი ყოველთვის ჩართულია.";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_auto_connect" = "ავტომატური შეერთება";
+
+/* MacOS: Settings -> Connection: description. */
+"_auto_connect_tooltip" = "აპლიკაციის გაშვებისას არჩეულ პროფილს შეუერთდებით";
+
+/* MacOS: Settings -> Connection: description. */
+"_quick_connect_tooltip" = "სწრაფი მიერთების ღილაკი არჩეულ პროფილთან მიგაერთებთ";
+
+/* MacOS: Settings -> General: name of field. */
+"_start_minimized" = "ჩაკეცილი გაშვება";
+
+/* MacOS: Settings -> General: name of field. */
+"_system_notifications" = "სისტემური გაფრთხილებები";
+
+/* MacOS: Settings -> General: name of field. */
+"_early_access" = "ადრეული წვდომა";
+
+/* MacOS: Settings -> General: description. */
+"_early_access_tooltip" = "იყავით პირველი, ვინც ბოლო განახლებებს მიიღებს. დაიმახსოვრეთ, რომ ადრეული ვერსიები ნაკლებად სტაბილური შეიძლება იყოს.";
+
+/* MacOS: Settings -> General: name of field. */
+"_unprotected_network" = "გაფრთხლება დაუცველ ქსელში მუშაობისას";
+
+/* MacOS: Settings -> General: description */
+"_unprotected_network_tooltip" = "შეტყობინების მიღება, როცა Proton VPN აღმოაჩენს, რომ დაუცველ ქსელთან ხართ მიერთებული.";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_dns_leak_protection" = "DNS გაპარებისგან დაცვა";
+
+/* MacOS: Settings -> Connection: description. */
+"_dns_leak_protection_tooltip" = "DNS მოთხოვნების მესამე პირების ხელში ჩავარდნის თავიდან აცილება. ყოველთვის ჩართულია.";
+
+/* iOS Settings: table section header */
+"_security_options" = "უსაფრთხოების პარამეტრები";
+
+/* iOS Settings -> Connection: name of field. */
+"_subscription_plan" = "გამოწერის გეგმა";
+
+/* iOS plan selection: header */
+"_choose_plan" = "გამოწერის არჩევა";
+
+"_protocol" = "პროტოკოლი";
+
+/* iOS Settings -> Protocol: screen title */
+"_vpn_protocol" = "VPN პროტოკოლი";
+
+"_openvpn" = "OpenVPN";
+
+/* iOS Settings -> Protocol: IKEv2 option */
+"_ikev2" = "IKEv2";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: TCP option */
+"_tcp" = "TCP";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: UDP option */
+"_udp" = "UDP";
+
+/* iOS Settings -> Protocol -> WireGuard: TLS option */
+"_tls" = "TLS";
+
+/* iOS Settings -> Protocol: WireGuard option */
+"_wireguard" = "WireGuard";
+
+/* Settings -> Protocol: WireGuard TLS Option called "Stealth". Should not be translated. */
+"_wireguard_tls" = "Stealth";
+
+/* MacOS menu item; iOS setting screen item */
+"_view_logs" = "ჟურნალის ნახვა";
+
+/* iOS logs screen title */
+"_logs" = "ჟურნალი";
+
+/* iOS Settings: applications logs row */
+"_application_logs" = "აპლიკაციის ჟურნალი";
+
+/* iOS Settings: OpenVPN logs row */
+"_open_vpn_logs" = "OpenVPN -ის ჟურნალი";
+
+/* iOS Settings: WireGuard logs row */
+"_wireguard_logs" = "WireGuard -ის ჟურნალი";
+
+/* iOS widget help screen: title */
+"_activate_widget" = "ვიჯეტის გააქტიურება";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_1" = "ვიჯეტებთან წვდომისთვის საწყის ეკრანზე, მარცხნივ თითქმის ბოლომდე გადაუსვით.";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_2" = "ბოლომდე დაქაჩეთ და ჩასწორების ღილაკზე დაატყაპუნეთ.";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_3" = "Proton VPN-ის ვიჯეტის აქტიური ვიჯეტების სიაში დამატება.";
+
+/* Report bug screen title; iOS settings screen: item; */
+"_report_bug" = "პრობლემის ანგარიშის გადაგზავნა";
+
+"_allow_lan_title" = "LAN შეერთებების ნების დართვა";
+
+"_allow_lan_info" = "საშუალებას გაძლევთ გადაახტეთ VPN-ს და ლოკალურ ქსელში არსებული მოწყობილობები გამოიყენოთ.";
+
+"_allow_lan_description" = "LAN-ზე წვდომის ჩასართავად Kill Switch-ის გამორთვაა საჭირო.\n\nგავაგრძელო?";
+
+"_allow_lan_note" = "ამ ცვლილების ძალაში შესასვლელად საჭიროა კავშირის თავიდან დამყარება";
+
+/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_title" = "ჩავრთო Kill Switch?";
+
+/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_description" = "თუ ჩართავთ Kill Switch-ს, მოწყობილობებს ლოკალურ ქსელში ვეღარ დაინახავთ. \n\nგავაგრძელო?";
+
+/* %@ is a plan name e.g. Get Plus Plan */
+"_get_plan" = "%@ ტარიფის მიღება";
+
+/* Account plan description */
+"_free_countries" = "3 ქვეყანა";
+
+/* Account plan description */
+"_all_countries" = "60+ ქვეყანა";
+
+/* %@ is a speed description e.g. Speed: Highest */
+"_speed" = "%@ სიჩქარე";
+
+/* Value of speed in _speed */
+"_medium" = "საშუალო";
+
+/* Value of speed in _speed */
+"_high" = "მაღალი";
+
+/* Value of speed in _speed */
+"_highest" = "უმაღლესი";
+
+/* Features of account plan */
+"_plus_plan_features" = "Plus სერვერები\nSecure Core\nTor სერვერები";
+
+/* Used instead of price for free plans. */
+"_free" = "უფასო";
+
+/* Alert message during In App Purchase */
+"_do_you_want_to_activate_subscription_for" = "თქვენ გნებავთ შეძენილი გამოწერის აქტივაცია ";
+
+/* Label in Plan information */
+"_most_popular" = "ყველაზე პოპულარული";
+
+/* Button in plan selection */
+"_select_plan" = "აირჩიეთ გეგმა";
+
+/* Plan information */
+"_advanced_features" = "+ დამატებით ფუნქციები";
+
+/* Plan information */
+"_adblocker_netshield_feature" = "Adblocker (NetShield)";
+
+/* Text description in plan selection screen */
+"_plans_footer" = "როგორც კი ფასიანი ტარიფის შეძენა დადასტურდება, iTunes-ის თქვენი ანგარიშიდან ჩამოგეჭრებათ ნაჩვენები თანხა, რაც ბაჟს და დღგ-საც შეიცავს (რომელიც Proton-მდე ვერ აღწევს). შეძენის დასრულების შემდეგ თქვენი ანგარიში ავტომატურად განახლდება არჩეული გეგმისთვის ერთწლიანი პერიოდით, რომლის გასვლის შემდეგაც თქვენ შეგიძლიათ, გააგრძელოთ ის ან გააუქმოთ. ამის გაკეთება ონლაინ და iOS-ის აპშიც შეგიძლიათ.";
+
+/* Per year. Appended to plan price. */
+"_per_year_short" = "/ წ";
+
+/* iOS plan feature */
+"_feature_server_count" = "მისაერთებელი სერვერების მდებარეობა";
+
+/* iOS plan feature */
+"_feature_speed" = "სიჩქარე";
+
+/* iOS plan feature */
+"_feature_connections" = "ერთდროული VPN შეერთება";
+
+/* iOS plan feature */
+"_feature_secure_streaming" = "დაცული სტრიმინგი";
+
+/* iOS plan feature */
+"_feature_tor" = "Tor VPN-ის ზემოდან";
+
+/* iOS plan feature */
+"_feature_secure_core" = "Secure Core";
+
+/* iOS plan feature */
+"_feature_blocked_content" = "მიუწვდომელი შიგთავსი";
+
+"_feature_bt" = "BitTorrent/ფაილების გაზიარების მხარდაჭერა";
+
+/* MacOS welcome screen: title */
+"_welcome_title" = "კეთილი იყოს თქვენი მობრძანება!";
+
+/* MacOS welcome screen: description */
+"_welcome_description" = "მადლობა Proton VPN-ის გამოყენებისთვის. თვალი გადაავლეთ\nაპის მთავარ ფუნქციებს.";
+
+/* MacOS welcome screen: cancel button */
+"_no_thanks" = "არა, მადლობა";
+
+/* MacOS welcome screen: skip button */
+"_skip" = "გამოტოვება";
+
+/* MacOS welcome screen: take a tour button */
+"_take_tour" = "გასაცნობი ტური";
+
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "პლუსი";
+
+/* MacOS: Used ir trial welcome and trial expired screens */
+"_p2p_servers" = "P2P სერვერები";
+
+"_5_connections" = "5 მიერთება";
+
+/* Mac: Used in several Trial screens */
+"_multiple_countries" = "ბევრი ქვეყანა";
+
+/* MAC: is inserted into _free_trial_expired_title insteadof %@ */
+"_expired" = "ვადაგასულია";
+
+/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
+"_free_trial_expired_title" = "თქვენი უფასო გამოსაცდელი პერიოდი %@";
+
+/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "თქვენი ანგარიშის სატარიფო გეგმა ჩამოიწია Proton VPN Free-მდე.\nსხვაობა %@-სთან შედარებით:";
+
+/* Cancel button in trial modals used in both iOS and MacOS */
+"_maybe_later" = "მოგვიანებით";
+
+/* Upgrade button in trial modals used in both iOS and MacOS */
+"_upgrade_now" = "ახლა გაუმჯობესება";
+
+/* MacOS: Button in Upgrade screen */
+"_upgrade_my_plan" = "ტარიფის გაუმჯობესება";
+
+/* MacOS: \Trial about to expire\ screen title */
+"_free_trial_about_to_expire_title" = "თქვენს უფასო საცდელ ვერსიას მალე ვადა გაუვა!";
+
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
+"_free_trial_about_to_expire_description" = "განახლდით %@-მდე და გააგრძელეთ სიამოვნება შემდეგი ფუნქციებით:";
+
+"_5_connections_description" = "მიუერთეთ ერთდროულად\n5 მოწყობილობამდე";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_core_description" = "ჩვენთან დაჰოსტილი\nზედაცული სერვერები";
+
+/* MacOS: \Trial about to expire\ screen */
+"_multiple_servers_title" = "ბევრი სერვერი";
+
+/* MacOS: \Trial about to expire\ screen */
+"_multiple_servers_description" = "ასობით სერვერი\nმთელს დედამიწაზე";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_title" = "დაცული სტრიმინგი";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_description" = "დაიცავით თქვენი საყვარელი\nვიდეოს სტრიმი";
+
+/* MacOS app tour: quick connect title */
+"_quick_connect_tour_title" = "სწრაფი მიერთება";
+
+/* MacOS app tour: quick connect description */
+"_quick_connect_tour_description" = "ავტომატურად დაგაკავშირებთ სერვერთან, რომელიც ყველაზე სწრაფ შეერთებას უზრუნველყოფს.";
+
+/* MacOS app tour: profiles title */
+"_profiles_tour_title" = "პროფილები";
+
+/* MacOS app tour: profiles description */
+"_profiles_tour_description" = "შეინახეთ თქვენი პარამეტრები და სერვერები მომავალში გამოსაყენებლად.";
+
+/* MacOS app tour: countries list title */
+"_countries_tour_title" = "ქვეყნები";
+
+/* MacOS app tour: countries list description */
+"_countries_tour_description" = "აირჩიეთ, თქვენი საბოლოო IP მისამართისთვის, რომელი ქვეყანა და სერვერი გნებავთ, გამოიყენოთ.";
+
+/* MacOS app tour: quick settings title */
+"_quick_settings_tour_title" = "სწრაფი პარამეტრები";
+
+/* MacOS app tour: quick settings description */
+"_quick_settings_tour_description" = "გაზარდეთ თქვენი უსაფრთხოება ერთი წკაპით:";
+
+/* MacOS app tour: quick settings secure core */
+"_quick_settings_tour_feature_1" = "დაამატეთ უსაფრთხოების კიდევ ერთი დონე Secure Core-სთან ერთად.";
+
+/* MacOS app tour: quick settings net shield */
+"_quick_settings_tour_feature_2" = "იმუშავეთ არასასურველი პროგრამებისა და რეკლამებისგან თავისუფალ ინტერნეტში NetShield-თან ერთად.";
+
+/* MacOS app tour: quick settings kill switch */
+"_quick_settings_tour_feature_3" = "დაიცავით თავი თქვენი IP-ის გამოაშკარავებისგან Kill Switch-ის ჩართვით.";
+
+/* MacOS app tour: next tip button */
+"_next_tip" = "შემდეგი მინიშნება";
+
+/* MacOS app tour: end tour button */
+"_end_tour" = "ტურის დასრულება";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page1_title" = "მოგესალმებით უკეთეს ინტერნეტში";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page1_description" = "მეცნიერებისა და ინჟინრებისგან, რომლებმაც Proton Mail-ი შექმნეს: მოგესალმებით უფრო დაცულ და კონფიდენციალურ ინტერნეტში.";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page2_title" = "ჩვენ გვჯერა, რომ ინტერნეტი უფასო უნდა იყოს";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page2_description" = "გაიმარჯვეთ ცენზურასა და რეგიონულ შეზღუდვებზე. ჩვენ არ გვაქვს რეკლამა და სიჩქარის შეზღუდვები და არც თქვენს მონაცემებს ვყიდით.";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page3_title" = "თქვენი უსაფრთხოება ჩვენი პრიორიტეტია";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page3_description" = "ჩვენი კომპანიის პროდუქტი უსაფრთხოებაა. იქნება ეს ჩვენი Secure Core-ის არქიტექტურა თუ დამატებითი დაშიფვრა, უსაფრთხოება პირველ რიგშია.";
+
+/* iOS onboarding next item button */
+"_next" = "შემდეგი";
+
+/* iOS onboarding button to check app without logging in */
+"_discover_the_app" = "აპის აღმოჩენა";
+
+/* iOS: Table header in settings screen */
+"_extensions" = "გაფართოებები";
+
+/* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
+"_widget" = "iOS-ის ვიჯეტი";
+
+/* Menu point in settings screen */
+"_usage_statistics" = "გამოყენების სტატისტიკა";
+
+/* iOS widget: text for not-logged-in user */
+"_log_in_to_use_widget" = "დასაწყებად ჯერ შესვლაა საჭირო";
+
+"_vpnstatus_not_loggedin" = "Proton VPN-ში შესული არ ბრძანდებით. გახსენით Proton VPN-ის აპი და შედით.";
+
+/* Bug report attachments */
+"_report_attachments" = "მიმაგრებები";
+
+/* iOS bug report: header before logs description */
+"_report_logs" = "VPN-ის ჟურნალი";
+
+/* iOS bug report: description of log selection switch */
+"_report_logs_description" = "თუ ჩართავთ, ამ ანგარიშში ასევე ჩართული იქნება VPN-ის კლიენტის მხრის ჟურნალიც";
+
+/* iOS bug report: Title before report bug form */
+"_report_report" = "ანგარიშის კომენტარი";
+
+/* iOS bug report: Placeholder for email form field */
+"_report_placeholder_email" = "საკონტაქტო ელფოსტა";
+
+/* Bug report: Placeholder for text form field */
+"_report_placeholder_message" = "თქვენი შეტყობინება...";
+
+/* Bug report: Send report button text */
+"_report_send" = "ანგარიშის გაგზავნა";
+
+/* Bug report: Success message after report was sent */
+"_report_success" = "მადლობა ანგარიშისთვის";
+
+/* Mac bug report: description text before bug report form */
+"_report_description" = "შემდეგი დეტალების დართვით, ჩვენი გუნდი უფრო სწრაფად და დიდი შანსით შეძლებს თქვენი პრობლემის აღმოჩენას და აღმოფხვრას:\n• Proton VPN აპის ჟურნალი\n• OpenVPN-ის ჟურნალი\n• WireGuard-ის ჟურნალი";
+
+/* Mac bug report: email field label */
+"_report_field_email" = "ელფოსტა:";
+
+/* Mac bug report: feedback field label */
+"_report_field_feedback" = "რა გაფუჭდა?";
+
+/* Mac bug report: steps field label */
+"_report_field_steps" = "ზუსტად რომელი ნაბიჯები შეასრულეთ?";
+
+/* Mag bug report: textfields placeholder */
+"_report_field_placeholder" = "დაიწყეთ აკრეფა...";
+
+/* Mag bug report: attach logs checkbox */
+"_report_attachments_checkbox" = "აპის ჟურნალისა და სისტემის დეტალების ჩასმა";
+
+/* Main mac app menu item */
+"_menu_about" = "Proton VPN-ის შესახებ";
+
+/* Main mac app menu item */
+"_menu_check_updates" = "განახლების შემოწმება...";
+
+/* Main mac app menu item */
+"_menu_preferences" = "მორგება";
+
+/* Main mac app menu item */
+"_menu_hide_self" = "Proton VPN-ის დამალვა";
+
+/* Main mac app menu item */
+"_menu_hide_others" = "სხვების დამალვა";
+
+/* Main mac app menu item */
+"_menu_show_all" = "ყველას ჩვენება";
+
+/* Main mac app menu item */
+"_menu_logout" = "გასვლა";
+
+/* Main mac app menu item */
+"_menu_quit" = "Proton VPN-დან გასვლა";
+
+/* Main mac app menu item */
+"_menu_window" = "ფანჯარა";
+
+/* Main mac app menu item */
+"_menu_minimize" = "ჩაკეცვა";
+
+"_subscription_will_expire" = "მიმდინარე ტარიფის ამოწურვის ვადაა %@.";
+
+"_subscription_will_renew" = "მიმდინარე გეგმის ავტომატური განახლების თარიღია %@.";
+
+"_subscription_description" = "მიმდინარე სატარიფო გეგმის ავტომატურად გასაგრძელებლად შეგიძლიათ, კრედიტები შეიძინოთ. გამოწერის მიმდინარე ტარიფის დასრულებისას გაგრძელების საფასურს ამ კრედიტებით ავტომატურად გადაიხდით.";
+
+"_subscription_button" = "გეგმის 1 წლით გაგრძელება \n%@.";
+
+"_subscription_extended_success" = "მიმდინარე სატარიფო გეგმის გასაგრძელებელი კრედიტები წარმატებით შეიძინეთ.";
+
+/* Button on alert after a problem with internet connection */
+"_ne_troubleshoot" = "შეცდომების გასწორება";
+
+/* Title of connection troubleshooting screen */
+"_troubleshoot_title" = "შეცდომების გასწორება";
+
+"_troubleshoot_item_alt_title" = "ალტერნატიული რაუტინგის ჩართვა";
+
+"_troubleshoot_item_alt_description" = "იმ შემთხვევაში, თუ Proton-ის საიტები დაბლოკილია, ეს პარამეტრი აპს საშუალებას აძლევს, Proton-მდე მისასვლელად ქსელის ალტერნატიული რაუტინგი სცადოს, რაც შეიძლება, სასარგებლო იყოს ბრანდმაუერის ან ქსელის პრობლემების გვერდის ავლით. მეტი საიმედოობისთვის გირჩევთ, ჩართოთ ეს პარამეტრი.\nგაიგეთ მეტი";
+
+"_troubleshoot_item_alt_link1" = "მეტის ნახვა";
+
+"_troubleshoot_item_nointernet_title" = "ინტერნეტი არ გაქვთ";
+
+"_troubleshoot_item_nointernet_description" = "დარწმუნდით, რომ ინტერნეტი გაქვთ.";
+
+"_troubleshoot_item_isp_title" = "ინტერნეტ სერვის პროვაიდერის (ISP) პრობლემა";
+
+"_troubleshoot_item_isp_description" = "სცადეთ, მიუერთდეთ Proton-ს სხვა ქსელიდან (ან Tor).";
+
+"_troubleshoot_item_isp_link1" = "Tor";
+
+"_troubleshoot_item_gov_title" = "მთავრობის ბლოკი";
+
+"_troubleshoot_item_gov_description" = "შესაძლოა, თქვენი ქვეყანაში Proton-ზე წვდომა დაბლოკილია. Proton-თან წვდომისთვის სცადეთ, Tor-ი გამოიყენოთ.";
+
+"_troubleshoot_item_gov_link1" = "Tor";
+
+"_troubleshoot_item_antivirus_title" = "ანტივირუსის ჩარევა";
+
+"_troubleshoot_item_antivirus_description" = "დროებით გამორთეთ ან წაშალეთ ანტივირუსი.";
+
+"_troubleshoot_item_proxy_title" = "პროქსის/ბრანდმაუერის მიერ გამოწვეული პრობლემები";
+
+"_troubleshoot_item_proxy_description" = "გამორთეთ ყველა პროქსი ან ბრანდმაუერი, ან დაუკავშირდით თქვენი ქსელის ადმინისტრატორს.";
+
+"_troubleshoot_item_proton_title" = "Proton-ი გათიშულია";
+
+"_troubleshoot_item_proton_description" = "ჩვენი სისტემის სტატუსის გასაგებად შეამოწმეთ Proton-ის მდგომარეობა.";
+
+"_troubleshoot_item_proton_link1" = "Proton-ის სტატუსი";
+
+"_troubleshoot_item_other_title" = "გადაწყვეტა ჯერ კიდევ ვერ ვიპოვე";
+
+"_troubleshoot_item_other_description" = "დაგვიკავშირდით პირდაპირ მხარდაჭერის ფორმით, ელ-ფოსტით(%@) ან ტვიტერით.";
+
+"_troubleshoot_item_other_link1" = "მხარდაჭერის ფორმა";
+
+"_troubleshoot_item_other_link2" = "ელფოსტა";
+
+"_troubleshoot_item_other_link3" = "Twitter";
+
+/* iOS settings -> Battery usage; Title of battery usage screen; */
+"_battery_title" = "ელემენტის გამოყენება";
+
+/* Battery usages screen description */
+"_battery_description" = "თქვენს ტელეფონზე ყველა ტრაფიკი იმართება OpenVPN-ის საშუალებით, ამიტომ iOS-ი სხვა აპების ბატარეის გამოყენებას Proton VPN-სთვის გამოყოფს.";
+
+/* Battery usage More info button text */
+"_battery_more" = "გნებავთ, მეტი გაიგოთ?";
+
+/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved"*/ */
+"_netshield_stats_data_saved" = "მინაცემები\nშენახულია";
+
+/* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
+"_netshield_feature_description" = "დაიცავით თავი რეკლამებისგან, ბოროტი პროგრამებისგან და ტრეკერებისგან, რომლებიც ვებგვერდებზე და აპებშია ჩაშენებული. თუ ვვებგვერდი არ იტვირთება, სცადეთ, NetSheld-ი გამორთოთ. \nგაიგეთ მეტი";
+
+/* Link with more info in the NetShield Feature description */
+"_netshield_feature_description_alt_link" = "გაიგეთ მეტი";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_upsell_title" = "იმუშავეთ ინტერნეტში რეკლამების გარეშე NetShield-თან ერთად";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_upsell_subtitle" = "დაბლოკეთ რეკლამები, ტრეკერები და საზიანო პროგრამები ვებგვერდებზე და აპებში";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_business_upsell_title" = "დაბლოკეთ რეკლამები NetShield-ით";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_business_upsell_subtitle" = "როცა ტარიფს VPN Business-ზე აწევთ";
+
+/* Settings -> Netshield: name of field. */
+"_netshield_title" = "NetShield";
+
+"_netshield_title_tooltip" = "დაბლოკეთ რეკლამები, ტრეკერები და არასასურველი პროგრამები";
+
+/* Settings -> Netshield, Status -> NetShield: Off */
+"_netshield_off" = "გამორთული";
+
+/* Status -> Netshield: On */
+"_netshield_on" = "ჩართ";
+
+/* Settings -> Netshield: Block malware */
+"_netshield_level1" = "Malware-ის დაბლოკვა";
+
+/* Settings -> Netshield: Block malware, ads, trackers */
+"_netshield_level2" = "დაბლოკეთ მავნე პროგრამები, რეკლამები და ტრეკერები";
+
+"_netshield_alert_reconnect_description_on" = "NetShield-ის რეჟიმის შესაცვლელად შეერთება თავიდან დამყარდება.\nშენიშვნა: თუ ზოგიერთი საიტი არ იტვირთება, სცადეთ გამორთოთ NetShield-ი.";
+
+"_netshield_alert_reconnect_description_off" = "NetShield-ის რეჟიმის შესაცვლელად შეერთება თავიდან დამყარდება.";
+
+"_netshield_alert_upgrade_description" = "NetShield რეკლამებისა და ტრეკერების დაბლოკვით თქვენს კონფიდენციალობას ზრდის.";
+
+/* Netshield section title in iOS connection screen */
+"_netshield_section_title" = "ცუდი პროგრამებისა და რეკლამების მბლოკავი";
+
+/* Title of the screen with news and offers. */
+"_news_title" = "სიახლეები";
+
+"_quick_settings_secureCore_description" = "დაარაუტეთ თქვენი ყველაზე მგრძნობიარე მონაცემები ჩვენი ყველაზე დაცული სერვერების გავლით.";
+
+"_quick_settings_netShield_description" = "ათვალიერეთ ვებგვერდები რეკლამებისა და არასასურველი პროგრამების გარეშე.";
+
+"_quick_settings_killSwitch_description" = "IP-ის გაჟონვის თავიდან ასაცილებლად VPN შეერთების გათიშვის შემთხვევაში ინტერნეტის გამორთვა.";
+
+"_quick_settings_secureCore_note" = "Secure Core -მა შეიძლება VPN -ის სიჩქარე შეამციროს";
+
+"_quick_settings_netShield_note" = "თუ გვერდი არ იტვირთება, სცადეთ NetShield-ი გათიშოთ";
+
+"_quick_settings_killSwitch_note" = "თუ ვერ უკავშირდებით მოწყობილობებს ლოკალურ ქსელში, სცადეთ Kill Switch-ი გამორთოთ.";
+
+"_quick_settings_get_plus" = "Plus-ის მიღება";
+
+"_applying_settings_" = "პარამეტრების გადატარება";
+
+"_reestablish_vpn_connection_" = "VPN შეერთების თავიდან დამყარება.";
+
+"_ip_will_not_be_exposed" = "თქვენი IP არ გამოჩნდება.";
+
+"_cancel_reconnection" = "გააუქმებს თავიდან მიერთების მცდელობებს და გამოერთებულს დაგტოვებთ";
+
+"_quick_settings_netshield_option_off" = "არ დაბლოკო";
+
+"_quick_settings_netshield_option_level1" = "მხოლოდ malware-ის დაბლოკვა";
+
+"_quick_settings_netshield_option_level2" = "დაბლოკეთ მავნე პროგრამები, რეკლამები და ტრეკერები";
+
+"_upgrade_required_securecore_description" = "Secure Core-ი Plus ტარიფთან ერთადაა მხარდაჭერილი. გააუმჯობესეთ თქვენი ტრაფიკი ახლა და გადაამისამართეთ ის ჩვენს დაცულ სერვერებზე, რომლებიც კონფიდენციალობის დამცველ ქვეყნებშია განლაგებული.";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection_header" = "Kill Switch იცავს თქვენს IP-ს";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection" = "ინტერნეტთან შეერთება განახლდება მაშინვე, როცა Proton VPN თავიდან მიუერთდება სერვერს.\nინტერნეტის VPN-ის და Kill Switch-ის გარეშე გამოსაყენებლად გამორთეთ სერვერთან თავიდან დაკავშირება.";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold1" = "გარეშე";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold2" = "Kill Switch-ით დაცვა";
+
+/* MacOS: connection screen - cancel button */
+"_kill_switch_reconnection_cancel" = "თავიდან მიერთების გაუქმება";
+
+/* Title for Smart Protocol in Settings */
+"_smart_protocol_title" = "Smart Protocol";
+
+/* Shortened title for Smart Protocol on Settings configuration */
+"_smart_title" = "ჭკვიანი";
+
+/* Description for Smart Protocol in Settings */
+"_smart_protocol_description" = "ჩართეთ Smart Protocol ავტომატურად გამოიყენოს პროტოკოლი და პორტი, რომელიც გთავაზობთ საუკეთესო კავშირს.";
+
+/* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
+"_smart_protocol_reconnect_modal_title" = "საჭიროა თავიდან მიერთება";
+
+/* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
+"_smart_protocol_reconnect_modal_body" = "ჭკვიანი პროტოკოლის რეჟიმის შესაცვლელად შეერთება თავიდან დამყარდება.";
+
+/* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
+"_sysex_description_1" = "Proton VPN-ის გამოსაყენებლად თქვენს Mac-ზე **custom VPN Protocols**-ის ჩართვაა საჭირო.";
+
+/* Part 2 of the description of the system extension wizard in mac */
+"_sysex_description_2" = "ხელით მორგებული პროტოკოლები უფრო სწრაფი და უფრო დაცული მიერთებების განხორციელებას უზრუნველყოფენ და Proton VPN-ის სერვერების უმრავლესობაზე მისაერთებლად მათი ჩართვა აუცილებელია.";
+
+/* Part 3 of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
+"_sysex_description_3" = "გასაგრძელებლად დააწკაპუნეთ **სისტემის პარამეტრების გახსნას**, შემდეგ კი ეკრანზე ვიდეოინსტრუქციებს მიყევით.";
+
+/* Alternative for Part 3 for pre-ventura of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
+"_sysex_description_4" = "გასაგრძელებლად დააწკაპუნეთ **უსაფრთხოების პარამეტრების გახსნას**, შემდეგ კი ეკრანზე ვიდეოინსტრუქციებს მიყევით.";
+
+/* Title of the system extension wizard in mac */
+"_sysex_set_up_proton_vpn" = "Proton VPN-ის მორგება";
+
+/* Default action in the system extension wizard in mac. Pre-macOS Ventura */
+"_sysex_open_system_settings" = "სისტემის პარამეტრების გახსნა";
+
+/* Default action in the system extension wizard in mac. macOS Ventura */
+"_sysex_open_security_preferences" = "უსაფრთხოების პარამეტრების გახსნა";
+
+"_sysex_settings_description" = "ჭკვიანი პროტოკოლის, OpenVPN-ის და WireGuard-ის გამოსაყენებლად Proton VPN-ს სისტემური გაფართოების ჩატვირთვა სჭირდება.";
+
+"_sysex_enabled_title" = "მორგება დასრულდა";
+
+"_sysex_enabled_description" = "კონფიგურაცია დასრულებულია. ახლა ინტერნეტის დაცულად, საუკეთესო VPN ტექნოლოგიებით გამოყენება შეგიძლიათ.";
+
+"_sysex_cannot_enable" = "სისტემური გაფართოების ჩართვის შეცდომა";
+
+"_sysex_error_description" = "სისტემური გაფართოების დაყენების შეცდომა.\nთავიდან დააყენეთ Proton VPN, დარწმუნდით, რომ ის Applications საქაღალდეშია მოთავსებული ან მხარდაჭერის ჩვენი გუნდს დაუკავშირდით.";
+
+"_vpnauth_certfail_title" = "ავთენტიკაციის შეცდომა";
+
+"_vpnauth_certfail_description" = "VPN-ის სერტიფიკატის განახლების შეცდომა. შეამოწმეთ თქვენი შეერთება";
+
+"_vpnauth_too_many_certs_title" = "ავთენტიკაციის შეცდომა";
+
+"_vpnauth_too_many_certs_description" = "თქვენ მიაღწიეთ პარამეტრების ცვლილებების მაქსიმალურ რაოდენობას. გთხოვთ, სცადოთ ხელახლა რამდენიმე წუთში";
+
+"_from_server_title" = "სერვერიდან:";
+
+"_to_server_title" = "სერვერამდე:";
+
+"_update_billing" = "ჩემი გადახდების განახლება";
+
+"_upgrade_again" = "კიდევ გაუმჯობესება";
+
+"_delinquent_title" = "VPN-ის თქვენს ანგარიშზე გადაუხდელი ინვოისებია დარჩენილი";
+
+"_delinquent_description" = "გადახდის შემდეგ ფასიან ფუნქციებთან წვდომა ისევ გექნებათ.";
+
+"_delinquent_reconnection_description" = "ფასიან ფუნქციებთან წვდომა ინვოსების გადახდის შემდეგ გექნებათ. ჯერჯერობით კი უსწრაფეს უფასო სერვერთან მიგაერთებთ.";
+
+"_maximum_device_title" = "მიაღწიეთ მოწყობილობების რაოდენობის ლიმიტს";
+
+"_maximum_device_reached_description" = "ამ მოწყობილობით შესასვლელად გამორთეთ სხვა, ჩართული მოწყობილობა.";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "ამ მოწყობილობით შესასვლელად გამორთეთ სხვა, ჩართული მოწყობილობა, ან გააუმჯობესეთ პაკეტი %@-მდე";
+
+"_reconnect_title" = "მიმდინარეობს უსწრაფეს ხელმისაწვდომ სერვერთან თავიდან შეერთება.";
+
+"_subscription_expired_title" = "VPN-ის თქვენს გამოწერის გეგმას ვადა გაუვიდა";
+
+"_subscription_expired_description" = "თქვენი გამოწერის დონე დაწეულია.";
+
+"_subscription_expired_reconnection_description" = "გადახვედით უფრო იაფიან გადმოწერაზე, ამიტომ გადაგრთავთ ყველაზე სწრაფ წვდომად სერვერზე.";
+
+"_subscription_upgrade_title" = "ყველა ფუნქციის მისაღებად გთხოვთ განახლდეთ კიდევ ერთხელ:";
+
+"_subscription_upgrade_option3" = "დამატებითი ფუნქციები: NetShield, Secure Core, Tor, P2P";
+
+"_tier_free" = "უფასო";
+
+"_tier_plus" = "პლუსი";
+
+"_tier_visionary" = "Visionary";
+
+"_information_title" = "ინფორმაცია";
+
+"_features_title" = "ფუნქციები";
+
+"_performance_title" = "წარმადობა";
+
+"_smart_routing_title" = "Smart Routing";
+
+"_streaming_title" = "სტრიმინგი";
+
+"_p2p_title" = "P2P/BitTorrent";
+
+"_tor_title" = "Tor";
+
+"_server_load_title" = "სერვერის დატვირთვა";
+
+"_dw-partner-2022_partners_title" = "ჩვენი პარტნიორები";
+
+"_streaming_servers_description" = "სტრიმინგის დასაწყებად მიუერთდით ამ ქვეყანაში მდებარე Plus სერვერს.";
+
+"_streaming_servers_note" = "შენიშვნა: ახალი შემცველობის გამოსაჩენად გამორთეთ მდებარეობის სერვისი და ქეში გაწმინდეთ.";
+
+"_streaming_servers_extra" = "და სხვა";
+
+"_feature_free_servers" = "უფასო სერვერები";
+
+"_feature_free_servers_description" = "უსაფრთხოება და კონფიდენციალობა ყველასთვის. უფასო სერვერებს მონაცემების ლიმიტი არ გააჩნია და ჩვენ არ ვაპირებთ წინასწარგანზრახულად შეგინელოთ ინტერნეტის სიჩქარე.";
+
+"_feature_smart_routing_description" = "ეს ტექნოლოგია საშუალებას აძლევს Proton VPN-ს, მოგაწოდოთ უფრო მეტი სიჩქარე და უსაფრთხოება ძნელად მისაწვდომ ქვეყნებშიც კი.";
+
+"_feature_streaming_description" = "Plus სერვერებს სტრიმინგის (Netflix, Disney+, და ა. შ.) მხარდაჭერა მთელი მსოფლიოდან აქვს.";
+
+"_feature_p2p_description" = "ეს სერვერები საუკეთესო წარმადობას BitTorrent-სთვის და ფაილის გასაზიარებლად იძლევიან.";
+
+"_feature_tor_description" = "გადაამისამართეთ თქვენი ინტერნეტ-ტრაფიკი Tor-ის ქსელში. ის ოდნავ ნელია, მაგრამ უფრო დაცული.";
+
+"_performance_load_description" = "სერვერები მაღალი დატვირთვით უფრო ნელია, ვიდრე სერვერები დაბალი დატვირთვით.";
+
+"_performance_load_low" = "დაბალი";
+
+"_performance_load_medium" = "საშუალო";
+
+"_performance_load_high" = "მაღალი";
+
+"_locations_all" = "ყველა მდებარეობა";
+
+"_locations_free" = "უფასო მდებარეობები";
+
+"_locations_plus" = "Plus მდებარეობები";
+
+"_locations_gateways" = "Gateways";
+
+/* Header before the list of connections available for free users (in the country list) */
+"_connections_free" = "უფასო მიერთებები";
+
+/* Gateways info modals title (both iOS and macOS) */
+"_gateways_modal_title" = "რა არის Gateway?";
+
+/* Gateways info modals text (both iOS and macOS) */
+"_gateways_modal_text" = "VPN კარიბჭე დაცული მიერთებაა, რომელიც, თქვენი კომპანიის მონაცემებზე და სერვისებზე გამოყოფილი სერვერების გავლით გაძლევთ წვდომას.";
+
+"_vpn_accelerator_title" = "VPN Accelerator";
+
+"_vpn_accelerator_change_title" = "VPN ამაჩქარებლის შეცვლა";
+
+/* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
+"_vpn_accelerator_description" = "VPN-ის ამაჩქარებელი ჩართავს წარმადობის გაზრდის უნიკალურ ტექნოლოგიებს, რომლებსაც VPN-ის სიჩქარის 400%%-მდე გაზრდა შეუძლიათ.\nგაიგეთ მეტი";
+
+/* Link with more info in the VPN Accelerator description */
+"_vpn_accelerator_description_alt_link" = "მეტის ნახვა";
+
+"_action_requires_reconnect" = "ამ ცვლილების ძალაში შესასვლელად საჭიროა კავშირის თავიდან დამყარება";
+
+"_local_agent_server_error_title" = "სერვერის შეცდომა";
+
+"_local_agent_server_error_message" = "სერვერის შეცდომა. სხვა სერვერს მიუერთდით.";
+
+"_local_agent_policy_violation_error_title" = "წესების დარღვევა";
+
+"_local_agent_policy_violation_error_message" = "სერვერთან მიერთების უფლება არ გაქვთ. აირჩიეთ სხვა სერვერი ან აწიეთ სატარიფო გეგმა.";
+
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info" = "შეერთების ინფორმაციის ჩატვირთვა";
+
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info_for" = "შეერთების ინფორმაციის ჩატვირთვა %@-სთვის";
+
+/* Shown on the Welcome screen as the screen headline */
+"_welcome_headline" = "დაიცავით თქვენი თავი ონლაინ";
+
+/* Shown on the Welcome screen as the longer screen text */
+"_welcome_body" = "ჩქაროსნული შვეიცარიული VPN-ი, რომელიც იცავს თქვენს კონფიდენციალობას თქვენი ინტერნეტთან შეერთების დაშიფვრის საშუალებით.";
+
+"_force_upgrade_title" = "საჭიროა აპლიკაციის განახლება";
+
+"_force_upgrade_message" = "Proton VPN-ის ვერსია რომელსაც ამჟამად იყენებთ, მხარდაჭერილი აღარაა. გთხოვთ განაახლოთ.";
+
+"login_fetch_vpn_data" = "თქვენი VPN წვდომის მორგება";
+
+"login_summary_button" = "Proton VPN-ის გამოყენების დაწყება";
+
+"_wgks_ks_off" = "Kill Switch-ის გამორთვა";
+
+"_neks_t2_title" = "Kill Switch-ის სტაბილურობის გაფრთხილება";
+
+"_neks_t2_hyperlink" = "უსაფრთხოების ჩიპი T2";
+
+"_neks_t2_description" = "თქვენს მოწყობილობას აქვს T2 უსაფრთხოების ჩიპი, რომელსაც სისტემის სტაბილურობის პრობლემების გამოწვევა შეუძლია,\n\nთუ Proton VPN-ი macOS-ზე Kill Switch-ს იყენებს.";
+
+"_neks_t2_connect" = "მაინც ჩართვა";
+
+"_subuser_alert_title" = "მადლობა Business/Visionary-ზე განახლებისთვის";
+
+"_subuser_alert_description1" = "Proton VPN-ში მოგზაურობის დასაწყებად გთხოვთ, თქვენს ანგარიშს ან ნებისმიერ ქვეანგარიშს VPN შეერთება მიანიჭოთ.";
+
+"_subuser_alert_description2" = "ამ ნაბიჯს სულ რამდენიმე წუთი დასჭირდება. ამის შემდეგ თქვენ შეძლებთ, შეხვიდეთ სისტემაში და დაიცვათ თქვენი ყველა მოწყობილობა.";
+
+"_subuser_alert_description3" = "ამ ანგარიშისთვის ამჟამად VPN შეერთებები ჩართული არაა. Proton VPN-ის გამოყენების დასაწყებად დაუკავშირდით თქვენს ადმინისტრატორს.";
+
+"_subuser_alert_enable_connections_button" = "VPN შეერთებების ჩართვა";
+
+"_subuser_alert_login_button" = "თავიდან შესვლა";
+
+/* Moderate NAT feature title in Settings */
+"_moderate_nat_title" = "საშუალო NAT-ი";
+
+/* Explanation for the Moderate NAT feature shown next to the feature in Settings */
+"_moderate_nat_explanation" = "შუალედური NAT-ი თიშავს ლოკალური მისამართების მიმაგრებებს. ამას შეუძლია, ოდნავ შეამციროს თქვენი უსაფრთხოება, მაგრამ უფლებას აძლევს გამჭოლი კავშირების მქონე პროგრამებს, როგორებიც თამაშებია, იმუშაონ. \nგაიგეთ მეტი";
+
+/* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
+"_moderate_nat_explanation_link" = "გაიგეთ მეტი";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_enable_title" = "საშუალო NAT-ის ჩართვა";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_change_title" = "საშუალო NAT-ის ჩართვა";
+
+/* Clickable label title in the onboarding screen for mac */
+"_settings_mac_telemetry_learn_more" = "გაიგეთ მეტი";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_usage_stats" = "გაგვიზიარეთ პროგრამის გამოყენება ანონიმურად. ეს VPN-ის დაბლოკვის თავიდან აცილებში და აპის წარმადობის გაუმჯობესებაში გვეხმარება.";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_crash_reports" = "ავარიის ანგარიშების გაზიარებით შეცდომების გამოსწორებაში, ფეიერვოლების აღმოჩენაში და VPN ბლოკების თავიდან აცილებაში გვეხმარებით.";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_usage_stats_title" = "გამოყენების ანონიმური სტატისტიკის გაზიარება";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_usage_stats_tooltip" = "გამოყენების მონაცემები გვეხმარება VPN ბლოკების დაძლევაში და აპლიკაციის მუშაობის გაუმჯობესებაში.";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_crash_reports_title" = "ავარიის ანონიმური ანგარიშების გაზიარება";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_crash_reports_tooltip" = "ავარიის ანგარიშები გვეხმარება შეცდომების გამოსწორებაში, ფეიერვოლების აღმოჩენაში და VPN ბლოკების თავიდან აცილებაში.";
+
+/* Section title in Settings */
+"_advanced" = "დამატებით";
+
+/* Non-standard ports feature title in Settings */
+"_non_standard_ports_title" = "არასტანდარტული პორტები";
+
+/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
+"_non_standard_ports_explanation" = "გამოიყენეთ Proton VPN ნებისმიერი განსაკუთრებული მოთხოვნის მქონე ამოცანისთვის VPN ქსელში არასტანდარტული პორტების ჩართვის საშუალებით.\nგაიგეთ მეტი";
+
+/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
+"_non_standard_ports_explanation_link" = "გაიგეთ მეტი";
+
+/* Title for alert shown when enabling Non-standard ports requires reconnection */
+"_non_standard_ports_change_title" = "არასტანდარტული პორტების ჩართვა";
+
+/* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
+"proton_website_unreachable" = "Proton VPN-ის ვებსატი დროებით მიუწვდომელია ქსელური შეზღუდვების გამო. Proton-ის ახალი ანგარიშის შესაქმნელა მობილური აპლიკაციიდან სცადეთ.";
+
+/* Title of the Use coupon button in Settings */
+"use_coupon" = "კუპონის გამოყენება";
+
+/* Title of the screen to apply a coupon */
+"coupon_code" = "კუპონის კოდი";
+
+/* Button to apply coupon */
+"apply_coupon" = "გადატარება";
+
+/* Banner shown after coupon is applied */
+"coupon_applied" = "კუპონი წარმატებით გადატარდა.";
+
+/* Banner shown after coupon is applied but the plan is not yet upgraded */
+"coupon_applied_plan_not_upgraded_yet" = "კუპონი წარმატებით გამოვიყენე. თქვენი გამოწერა რამდენიმე წუთში განახლდება.";
+
+/* Title for the Two-factor authentication screen */
+"two_factor_authentication" = "2FA";
+
+/* Placeholder for the Two Factor text field */
+"two_factor_code" = "2FA კოდი";
+
+/* Title for the button to switch to entering two-factor code */
+"use_two_factor_code" = "2FA კოდის გამოყენება";
+
+/* Placeholder for the Recovery code text field */
+"recovery_code" = "აღდგენის კოდი";
+
+/* Title for the button to switch to entering recovery code */
+"use_recovery_code" = "აღდგენის კოდის გამოყენება";
+
+/* Button to confirm two-factor or recovery code in login */
+"authenticate" = "ავთენტიკაცია";
+
+/* Error message shown when tryng to log in with an unsupported method */
+"login_unsupported_state" = "შესვლის არასწორი მეთოდი. დაუკავშირდით მხარდაჭერის გუნდს.";
+
+/* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
+"vpn_feature_cannot_be_set_error" = "%@ პარამეტრის შეცვლა შეუძლებელია. მოგვიანებით სცადეთ ან სხვა სერვერს დაუკავშირდით";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
+"netshield_stats_hint_ads" = "რეკლამის ვებგვერდები ტრეკერებს და ქუქიებს თქვენს საპოვნელად იყენებენ.";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
+"netshield_stats_hint_trackers" = "ტრეკერები მესამე პირების ვებგვერდებია, რომლებიც აგროვებენ და ყიდიან ინფორმაციას თქვენი ვებ-აქტივობების შესახებ.";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
+"netshield_stats_hint_data" = "NetShield-ის მიერ დაბლოკილი რეკლამების, ტრეკერებისა და არასასურველი პროგრამებს დაახლოებითი ზომა.";
+
+"_netshield_stats_data_saved" = "მინაცემები\nშენახულია";
+
+/* The count of trackers/ads blocked in thousands */
+"_netshield_stats_blocked_K" = "%@ კ";
+
+/* The count of trackers/ads blocked in millions */
+"_netshield_stats_blocked_M" = "%@ მ";
+
+/* The count of trackers/ads blocked in billions */
+"_netshield_stats_blocked_G" = "%@ გ";
+
+/* The count of trackers/ads blocked in trillions */
+"_netshield_stats_blocked_T" = "%@ ტ";
+
+/* The count of trackers/ads blocked in quadrillions */
+"_netshield_stats_blocked_P" = "%@ პ";
+
+/* The count of trackers/ads blocked in sextillions */
+"_netshield_stats_blocked_E" = "%@ ე";
+
+/* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
+"_alert_protocol_deprecated_title" = "პროტოკოლი ხელმიუწვდომელია";
+
+/* Body of the deprecated protocol alert on MacOS. Shown when the user attempts to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
+"_alert_protocol_deprecated_body_macos" = "პროფილი იყენებს პროტოკოლს, რომელიც მოძველებულია და მხარდაჭერილი აღარაა. ნაგულისხმევ, ჭკვიან პროტოკოლზე გადასართავად \"განახლებას\" დააწექით. გაიგეთ მეტი";
+
+/* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
+"_alert_protocol_deprecated_link_text" = "გაიგეთ მეტი";
+
+/* Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
+"_alert_protocol_deprecated_body_ios" = "პროფილი იყენებს პროტოკოლს, რომელიც მძველებულია და მხარდაჭერილი აღარაა. ნაგულისხმევ ჭკვიან პროტოკოლზე გადასართავად \"განახლებას\" დააწექით.";
+
+/* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
+"_alert_protocol_deprecated_enable_smart" = "განახლება";
+
+/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser*/ */
+"_alert_protocol_deprecated_learn_more" = "გაიგეთ მეტი";
+
+/* Text for the 'Close' action of the deprecated protocol alert. */
+"_alert_protocol_deprecated_close" = "დახურვა";
+
+/* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
+"_bad_interface_ip_range_alert_title" = "არასწორი ქსელის ინტერფეისი";
+
+/* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "თქვენი ლოკალური ქსელი შეიძლება, უსაფრთხო არ იყოს (ინტერფეისს '%@' აქვს IP და პრეფიქსი '%@'.). თქვენი მონაცემები ლოკალურ ქსელში შეიძლება, დაუშიფრავად გადაიცემოდეს. Kill Switch-ის ჩართვამ შეიძლება, ტრაფიკი დაბლოკოს. ლოკალურ პერიფერიულ მოწყობილობებთან კავშირი შეწყდება.";
+
+/* Title of the search screen */
+"search_title" = "ძებნა";
+
+/* Title of the Search screen infographic */
+"search_subtitle" = "ძებნა ნებისმიერ მდებარეობაზე";
+
+/* Section header in search */
+"search_countries" = "ქვეყნები";
+
+/* Sample countries the user can search for */
+"search_countries_sample" = "შვეიცარია, შეერთებული შტატები, იტალია...";
+
+/* Section header in search */
+"search_cities" = "ქალაქები";
+
+/* Sample cities the user can search for */
+"search_cities_sample" = "ნიუ იორკი, ლონდონი, ტოკიო...";
+
+/* Section header in Search */
+"search_servers" = "სერვერები";
+
+/* Sample servers the user can search for */
+"search_servers_sample" = "JP#50, CA#3, IT#14...";
+
+/* Section header in search */
+"search_us_regions" = "აშშ-ის რეგიონები";
+
+/* Sample US regions the user can search for */
+"search_us_regions_sample" = "კალიფორნია, ფლორიდა, კოლორადო...";
+
+/* Title shown when nothing is found in search */
+"search_no_results_title" = "შედეგების გარეშე";
+
+/* Subtitle shown when nothing is found in search */
+"search_no_results_subtitle" = "სცადეთსხვა სიტყვა";
+
+/* Header for the recent searches section in search */
+"search_recent_header" = "ახლახან ნანახი";
+
+/* Button to clear recent searches history */
+"search_recent_clear" = "გასუფთავება";
+
+/* Title for the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_title" = "ძებნის თქვენი ისტორია დაიკარგება. გავაგრძელო?";
+
+/* Cancel button title in the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_cancel" = "გაუქმება";
+
+/* Confirmation button title in alert asking for confirmation before deleting recent searches */
+"search_recent_clear_continue" = "გაგრძელება";
+
+/* Placeholder text showing in the search bar on the search screen */
+"search_bar_placeholder" = "ქვეყანა, ქალაქი ან სერვერი";
+
+/* Subtitle for the upsell banner shown to free users in search */
+"search_upsell_subtitle" = "მეტი მდებარეობა = მეტი განბლოკილი შემცველობა + დამატებითი უსაფრთხოება + მეტი სიჩქარე";
+
+/* Section header in search */
+"search_secure_core_countries" = "Secure Core-ის ქვეყნები";
+
+/* Section header in search */
+"search_results_countries" = "ქვეყნები";
+
+/* Section header in search */
+"search_results_cities" = "ქალაქები";
+
+/* Section header in search */
+"_free_servers" = "უფასო სერვერები";
+
+/* Section header in search */
+"_plus_servers" = "Plus სერვერები";
+
+/* Upgrade plan button title */
+"modals_get_plus" = "ტარიფის აწევა";
+
+/* Dismiss upsell screen button title */
+"modals_upsell_stay_free" = "არა ახლა";
+
+/* Subtitle of All Countries, NetShield and Secure Core upsell screens */
+"modals_upsell_features_subtitle" = "როცა Plus-ზე განახლდებით";
+
+/* Subtitle of the Safe Mode upsell screen */
+"modals_upsell_features_safe_mode_subtitle" = "გაქვთ დამატებითი ან პროფესიული გამოთვლითი საჭიროებები, რომლებსაც არასტანდარტულ პორტები სჭირდება? \n\nამ და სხვა ფასიანი ფუნქციების მისაღებად განახლდით VPN Plus-ზე.";
+
+/* Title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_title" = "არასტანდარტულ პორტებზე ტრაფიკის ნების დართვა";
+
+/* Title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_title" = "ასწიეთ თქვენი თამაშის გამოცდილება";
+
+/* Subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle" = "განბლოკეთ მეორე ტიპის NAT-ი VPN Plus-თან ერთად";
+
+/* Bold part of the subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle_bold" = "მეორე ტიპის NAT";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_gaming" = "გააუმჯობესეთ ონლაინ-თამაშების და ვიდეოზარების წარმადობა";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_direct_connections" = "მეორე ტიპის NAT (საშუალო) სტაბილურობისა და სიჩქარის ოპტიმიზაციას ახდენს მოწყობილობებს შორის პირდაპირი მიერთების დაშვებით";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_streaming" = "დასტრიმეთ თქვენი რჩეული ფილმები";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_highSpeed" = "საიტების უსწრაფესად დათვალეირება (10 გბ/წმ)";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_netshield" = "დაბლოკეთ რეკლამა და არასასურველი პროგრამები NetShield-ით";
+
+/* Title of the NetShield upsell screen */
+"modals_upsell_net_shield_title" = "ისიამოვნეთ ურეკლამო ინტერნეტით NetShield-თან ერთად";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_ads" = "დაბლოკეთ რეკლამები და ტრეკერები";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_malware" = "დაიცავით თქვენი მოწყობილობა მავნე პროგრამებისგან";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_highSpeed" = "საიტების უსწრაფესად დათვალეირება";
+
+/* Title of the Secure Core upsell screen */
+"modals_upsell_secure_core_title" = "გააორმაგეთ შიფრაცია Secure Core-სთან ერთად";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_route" = "დააროუტეთ თქვენი ტრაფიკი ჩვენს ზედაცულ სერვერებზე, რომლებიც შვეიცარიაში, შვედეთში და ისლანდიაში მდებარეობს";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_layer" = "დაამატეთ თქვენს VPN-ს უსაფრთხოების კიდევ ერთი დონე";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_attacks" = "დაიცავით თავი ქსელური შეტევებისგან";
+
+/* Title of the No Logs screen */
+"modals_no_logs_title" = "ჟურნალის გარეშე, შვეიცარიაში";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_privacy_first" = "Proton VPN ჯერ კონფიდენციალობაა, უპირველეს ყოვლისა";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_log_activity" = "ჩვენ არ ვინახავთ, რას აკეთებთ ინტერნეტში";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_third_parties" = "ჩვენ არ ვუზიარებთ მონაცემებს მესამე პირებს";
+
+/* Learn more of the No Logs screen */
+"modals_no_logs_external_audit" = "Proton VPN-ის ჟურნალის-არ-შენახვის პოლიტიკა გარე აუდიტის მიწერ მოწმდება.";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "შენიშვნა სიჩქარის შესახებ...";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "Secure Core უსაფრთხოებისა და კონფიდენციალობის უმაღლეს დონეს გთავაზობთ, მაგრამ მან ასევე საგრძნობლად შეიძლება, შეამციროს ინტერნეტის სიჩქარე. თუ გესაჭიროებათ მეტი წარმადობა, შეგიძლიათ, სცადოთ გამორთოთ ის.";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "აღარ მაჩვენო";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "Secure Core-ის აქტივაცია";
+
+/* Title of the New Brand screen */
+"new_plans_brand_title" = "განახლებული Proton-ი, გაერთიანებული დაცვა";
+
+/* Subtitle of the New Brand screen */
+"new_plans_brand_subtitle" = "წარმოგიდგენთ Proton-ის განახლებულ გარეგნობას.\nბევრი სერვისი, ერთი მისია. მოგესალმებით ინტერნეტში, სადაც კონფიდენციალობა ნაგულისხმებია.";
+
+/* Title of "done" button in New Brand screen */
+"new_plans_brand_got_it" = "გავიგე";
+
+/* Common button title */
+"modals_common_cancel" = "გაუქმება";
+
+/* Common button title */
+"modals_common_learn_more" = "გაიგეთ მეტი";
+
+/* Common button title */
+"modals_common_next" = "შემდეგი";
+
+/* Description of user account update screen part 1*/ */
+"maximum_device_plan_limit_part_1" = "ამ მოწყობილობით შესასვლელად გამორთეთ სხვა, ჩართული მოწყობილობა, ან გააუმჯობესეთ პაკეტი %@-მდე";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "ამ მოწყობილობით შესასვლელად გამორთეთ სხვა, ჩართული მოწყობილობა.";
+
+/* Title of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_title" = "იმუშავეთ კიდევ უფრო სწრაფად (10 გბ/წმ-მდე)";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_faster_servers" = "იქონიეთ წვდომა უფრო სწრაფ, ნაკლებად დატვირთულ სერვერებთან.";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds" = "გაზარდეთ მიერთების სიჩქარე 400%%-მდე VPN-ის ამაჩქარებელთან ერთად.";
+
+/* Bold part of the feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds_bold" = "VPN Accelerator.";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_distant_servers" = "გააუმჯობესეთ სიჩქარე და სტაბილურობა, როცა ძალიან შორს მყოფ სერვერს უკავშირდებით.";
+
+/* Title of Customization upsell modal */
+"upsell_customization_title" = "განბლოკეთ VPN-ის დამატებითი პარამეტრები";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_access_LAN" = "იქონიეთ წვდომა თქვენს ლოკალურ ქსელში (LAN) არსებულ მოწყობილობებზე";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_access_LAN_bold" = "ლოკალური ქსელი (LAN)";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_profiles" = "შეინახეთ ხშირად გამოყენებული მიერთებები პროფილებით";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_profiles_bold" = "პროფილები";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_quick_connect" = "მიიღეთ სწრაფი წვდომა თქვენს პროფილებთან სწრაფი მიერთებით";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_quick_connect_bold" = "სწრაფი მიერთება";
+
+/* Title of Profiles upsell modal */
+"upsell_profiles_title" = "მიიღეთ სწრაფი წვდომა თქვენს ხშირ მიერთებებთან";
+
+/* Subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle" = "განბლოკეთ პროფილები VPN Plus-თან ერთად";
+
+/* Bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold" = "პროფილები";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_location" = "შეინახეთ რჩეული სერვერი, ქალაქი ან ქვეყანა.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_protocols" = "დააყენეთ მომხმარებლის პროტოკოლები და ფასიანი VPN-ის ფუნქციები.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_auto_connect" = "მოირგეთ ავტომატური მიერთება კიდევ უფრო სწრაფი წვდომისთვის.";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_any_location" = "აირჩიეთ ნებისმიერი მდებარეობა";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_even_higher_speed" = "კიდევ უფრო სწრაფი VPN";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_geoblocked_content" = "იქონიეთ წვდომა გეოგრაფიულად დაბლოკილ შემცველობასთან";
+
+/* Feature of Country upsell modal */
+"upsell_countries_connect_to" = "მიერთდით %d ქვეყანას";
+
+/* Feature of Country upsell modal */
+"upsell_countries_higher_speeds" = "კიდევ უფრო სწრაფი VPN";
+
+/* Feature of Country upsell modal */
+"upsell_countries_money_back" = "30 დღიანი გარანტირებული ფულის დაბრუნება";
+
+/* Feature of Country upsell modal */
+"upsell_country_feature_title" = "გნებავთ მითითებული ქვეყნის არჩევა?";
+
+/* Feature of Country upsell modal */
+"upsell_country_feature_subtitle" = "განბლოკეთ ქვეყნის არჩევანი VPN Plus-თან ერთად";
+
+/* Bold part of the feature of Country upsell modal */
+"upsell_country_feature_subtitle_bold" = "ქვეყნის არჩევა";
+
+/* Title of the "What's new" screen */
+"modals_whats_new" = "სიახლეები";
+
+/* Title of the first section of the "What's new" screen */
+"modals_free_countries" = "ახალი უფასო ქვეყნები";
+
+/* Description of the first section of the "What's new" screen */
+"modals_new_servers" = "ახლა უფასო სერვერები პოლონეთში და რუმინეთშიც გვაქვს.";
+
+/* Title of the second section of the "What's new" screen */
+"modals_server_selection" = "სერვერის არჩევანის ცვლილება";
+
+/* Description of the second section of the "What's new" screen */
+"modals_server_crowding" = "იმისათვის, რომ თავიდან ავიცილოთ სერვერის გადატვირთვა და დავრწმუნდეთ, რომ სწრაფ და უსაფრთხო ქსელთან ყველას აქვს წვდომა, ჩვენ მოვაცილეთ ქვეყნის ხელით არჩევის პარამეტი და დიდი ნაბიჯი გადავდგით ავტომატური სერვერის არჩევის ალგორითმში.";
+
+/* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
+"upsell_specific_location_subtitle" = "მიიღეთ განუსაზღვრელი ცვლილებები VPN Plus-თან ერთად";
+
+/* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
+"upsell_specific_location_title" = "მიაღწიეთ ამ დროისთვის დაშვებული უფასო სერვერების ცვლილების მაქსიმალურ რაოდენობას.";
+
+/* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
+"upsell_specific_location_change_server_button_title" = "სერვერის შეცვლა";
+
+/* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
+"_available_with_vpn_business_tooltip" = "ხელმისაწვდომია VPN Business-თან ერთად.";
+
+/* Text on upsell banner in country list */
+"_free_banner_text" = "იქონიეთ წვდომა ყველაფერზე VPN Plus-თან ერთად";
+
+/* Title of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_title" = "Not the country you wanted?";
+
+/* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_subtitle" = "Upgrade to choose any server";
+
+/* Text of banner shown on macOS apps to upsell users who want to select a country */
+"_wrong_country_banner_text" = "Not the country you wanted? Upgrade to choose any server";
