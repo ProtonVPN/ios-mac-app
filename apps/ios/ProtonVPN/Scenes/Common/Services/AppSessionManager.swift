@@ -294,15 +294,17 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 self.propertiesManager.userRole = properties.userRole
                 self.propertiesManager.userAccountCreationDate = properties.userCreateTime
                 self.propertiesManager.userLocation = properties.location
-                self.propertiesManager.openVpnConfig = properties.clientConfig.openVPNConfig
-                self.propertiesManager.wireguardConfig = properties.clientConfig.wireGuardConfig
-                self.propertiesManager.smartProtocolConfig = properties.clientConfig.smartProtocolConfig
-                self.propertiesManager.maintenanceServerRefreshIntereval = properties.clientConfig.serverRefreshInterval
-                self.propertiesManager.featureFlags = properties.clientConfig.featureFlags
-                self.propertiesManager.ratingSettings = properties.clientConfig.ratingSettings
-                self.review.update(configuration: Configuration(settings: properties.clientConfig.ratingSettings))
-                @Dependency(\.serverChangeStorage) var storage
-                storage.config = properties.clientConfig.serverChangeConfig
+                if let clientConfig = properties.clientConfig {
+                    self.propertiesManager.openVpnConfig = clientConfig.openVPNConfig
+                    self.propertiesManager.wireguardConfig = clientConfig.wireGuardConfig
+                    self.propertiesManager.smartProtocolConfig = clientConfig.smartProtocolConfig
+                    self.propertiesManager.maintenanceServerRefreshIntereval = clientConfig.serverRefreshInterval
+                    self.propertiesManager.featureFlags = clientConfig.featureFlags
+                    self.propertiesManager.ratingSettings = clientConfig.ratingSettings
+                    self.review.update(configuration: Configuration(settings: clientConfig.ratingSettings))
+                    @Dependency(\.serverChangeStorage) var storage
+                    storage.config = clientConfig.serverChangeConfig
+                }
                 if self.propertiesManager.featureFlags.pollNotificationAPI {
                     self.announcementRefresher.tryRefreshing()
                 }

@@ -189,15 +189,17 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         if await appState.isDisconnected {
             propertiesManager.userLocation = properties.location
         }
-        propertiesManager.openVpnConfig = properties.clientConfig.openVPNConfig
-        propertiesManager.wireguardConfig = properties.clientConfig.wireGuardConfig
-        propertiesManager.smartProtocolConfig = properties.clientConfig.smartProtocolConfig
         propertiesManager.userRole = properties.userRole
-        propertiesManager.featureFlags = properties.clientConfig.featureFlags
-        propertiesManager.maintenanceServerRefreshIntereval = properties.clientConfig.serverRefreshInterval
-        propertiesManager.ratingSettings = properties.clientConfig.ratingSettings
-        @Dependency(\.serverChangeStorage) var storage
-        storage.config = properties.clientConfig.serverChangeConfig
+        if let clientConfig = properties.clientConfig {
+            propertiesManager.openVpnConfig = clientConfig.openVPNConfig
+            propertiesManager.wireguardConfig = clientConfig.wireGuardConfig
+            propertiesManager.smartProtocolConfig = clientConfig.smartProtocolConfig
+            propertiesManager.featureFlags = clientConfig.featureFlags
+            propertiesManager.maintenanceServerRefreshIntereval = clientConfig.serverRefreshInterval
+            propertiesManager.ratingSettings = clientConfig.ratingSettings
+            @Dependency(\.serverChangeStorage) var storage
+            storage.config = clientConfig.serverChangeConfig
+        }
         if propertiesManager.featureFlags.pollNotificationAPI {
             DispatchQueue.main.async { self.announcementRefresher.tryRefreshing() }
         }
