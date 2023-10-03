@@ -427,8 +427,8 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
                 return
             }
 
-            self?.container.propertiesManager.featureFlags = vpnProperties.clientConfig.featureFlags
-            self?.container.propertiesManager.smartProtocolConfig = vpnProperties.clientConfig.smartProtocolConfig
+            self?.container.propertiesManager.featureFlags = vpnProperties.clientConfig!.featureFlags
+            self?.container.propertiesManager.smartProtocolConfig = vpnProperties.clientConfig!.smartProtocolConfig
         }
 
         wait(for: [expectation], timeout: expectationTimeout)
