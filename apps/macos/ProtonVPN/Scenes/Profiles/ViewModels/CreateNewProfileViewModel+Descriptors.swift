@@ -49,7 +49,7 @@ extension CreateNewProfileViewModel {
             imageAttributedString = AppTheme.Icon.flag(countryCode: country.countryCode)?.asAttachment(size: .profileIconSize) ?? NSAttributedString(string: "")
             countryString = "  " + country.country
         case .gateway(let name):
-            imageAttributedString = IconProvider.servers.asAttachment(style: .normal, size: .profileIconSize)
+            imageAttributedString = Theme.Asset.icServers.image.asAttachment(style: .normal, size: .profileIconSize)
             countryString = "  " + name
         }
 
@@ -81,9 +81,9 @@ extension CreateNewProfileViewModel {
         case .custom(let serverWrapper):
             return serverDescriptor(for: serverWrapper.server)
         case .fastest:
-            return defaultServerDescriptor(image: AppTheme.Icon.bolt, name: Localizable.fastest)
+            return defaultServerDescriptor(image: Theme.Asset.icBolt.image, name: Localizable.fastest)
         case .random:
-            return defaultServerDescriptor(image: AppTheme.Icon.arrowsSwapRight, name: Localizable.random)
+            return defaultServerDescriptor(image: Theme.Asset.icArrowsSwapRight.image, name: Localizable.random)
         }
     }
     
