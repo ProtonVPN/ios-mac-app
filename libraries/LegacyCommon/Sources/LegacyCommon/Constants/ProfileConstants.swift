@@ -24,11 +24,12 @@ import UIKit
 #elseif canImport(Cocoa)
 import Cocoa
 #endif
+
 import Dependencies
 import ProtonCoreUIFoundations
 import VPNAppCore
 import Strings
-import Dependencies
+import Theme
 
 
 public enum ProfileConstants {
@@ -53,7 +54,7 @@ public enum ProfileConstants {
         Profile(
             id: fastestId,
             accessTier: defaultProfileAccessTier,
-            profileIcon: .image(IconProvider.bolt),
+            profileIcon: .image(Theme.Asset.icBolt.image),
             profileType: .system,
             serverType: .unspecified,
             serverOffering: .fastest(nil),
@@ -67,7 +68,7 @@ public enum ProfileConstants {
         Profile(
             id: randomId,
             accessTier: 0,
-            profileIcon: .image(IconProvider.arrowsSwapRight),
+            profileIcon: .image(Theme.Asset.icArrowsSwapRight.image),
             profileType: .system,
             serverType: .unspecified,
             serverOffering: .random(nil),
