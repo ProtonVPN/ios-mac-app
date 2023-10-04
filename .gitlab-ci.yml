@@ -18,6 +18,11 @@ variables:
   RELEASE_GITHUB_REPOSITORY: git@github.com:ProtonVPN/ios-mac-app.git
   GIT_SUBMODULE_FORCE_HTTPS: "true"
 
+default:
+  image: harbor.protontech.ch/docker.io/library/alpine:3.18
+  tags:
+    - shared-small
+
 workflow:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event" || 
