@@ -49,7 +49,10 @@ class SidebarWindowController: WindowController {
         window.title = "Proton VPN"
         window.appearance = NSAppearance(named: .darkAqua)
         window.backgroundColor = .color(.background, .weak)
-        
+        window.styleMask.insert(.resizable)
+        window.styleMask.insert(.closable)
+        window.styleMask.insert(.miniaturizable)
+
         if !AppLaunchRoutine.launchedBefore {
             let initialWidth: CGFloat = 1200
             let initialHeight: CGFloat = 600
