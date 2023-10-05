@@ -34,12 +34,13 @@ public struct UserProperties {
     public let challenge: [String: Any]?
     
     public var description: String {
-        return
-        "Username: \(username)\n" +
-        "ModulusID: \(modulusID)\n" +
-        "Salt: \(salt)\n" +
-        "Verifier: \(verifier)\n" +
-        "HasAppleToken: \(appleToken == nil ? "No" : "Yes")\n"
+        return """
+            Username: \(username)
+            ModulusID: \(modulusID)
+            Salt: \(salt)
+            Verifier: \(verifier)
+            HasAppleToken: \(appleToken != nil)\n
+            """
     }
     
     public init(email: String, username: String, modulusID: String, salt: String, verifier: String, appleToken: Data?, challenge: [String: Any]?) {

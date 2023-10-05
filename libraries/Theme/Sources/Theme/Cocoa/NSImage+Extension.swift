@@ -23,6 +23,7 @@
 #if canImport(Cocoa)
 import Cocoa
 import AppKit
+import Ergonomics
 
 public extension NSImage {
     func resize(newWidth width: Int, newHeight height: Int) -> NSImage {
@@ -63,15 +64,17 @@ public extension NSImage {
     }
     
     func colored(_ color: NSColor) -> NSImage {
-        guard let cgImage = self.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
-            return self
-        }
-        
         return NSImage(size: size, flipped: false) { bounds in
-            guard let context = NSGraphicsContext.current?.cgContext else { return false }
-            color.set()
-            context.clip(to: bounds, mask: cgImage)
-            context.fill(bounds)
+            DarkAppearance {
+                color.set()
+                bounds.fill()
+                self.draw(
+                    in: bounds,
+                    from: .init(origin: .zero, size: self.size),
+                    operation: .destinationIn,
+                    fraction: 1.0
+                )
+            }
             return true
         }
     }
