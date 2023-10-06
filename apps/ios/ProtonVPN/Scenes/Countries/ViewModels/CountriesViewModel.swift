@@ -353,12 +353,20 @@ class CountriesViewModel: SecureCoreToggleHandler {
             }
         }
 
+        let banner = RowViewModel.banner(BannerViewModel(
+            leftIcon: Modals.Asset.worldwideCoverage,
+            text: Localizable.freeBannerText,
+            action: { [weak self] in
+                self?.presentAllCountriesUpsell()
+            }
+        ))
+
         switch userTier {
         case 0: // Free
             @Dependency(\.featureFlagProvider) var featureFlagProvider
             if !featureFlagProvider[\.showNewFreePlan] { // old
                 do { // First section
-                    let rows = currentContent
+                    let rows = [banner] + currentContent
                         .filter { $0.kind.lowestTier == 0 }
                         .map {
                             RowViewModel.serverGroup(countryCellModel(
@@ -410,16 +418,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                     title: "\(Localizable.connectionsFree) (\(rowsFree.count))",
                     rows: rowsFree
                 ))
-                let rows = [
-                    RowViewModel.banner(BannerViewModel(
-                        leftIcon: Modals.Asset.worldwideCoverage,
-                        text: Localizable.freeBannerText,
-                        action: { [weak self] in
-                            self?.presentAllCountriesUpsell()
-                        }
-                    ))
-                ]
-                + currentContent.map {
+                let rows = [banner] + currentContent.map {
                     RowViewModel.serverGroup(countryCellModel(
                         serversGroup: $0,
                         serversFilter: defaultServersFilter,
