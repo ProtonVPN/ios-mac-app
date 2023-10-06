@@ -19,22 +19,25 @@
 import SwiftUI
 
 struct TelemetryTogglesView: View {
-
     @Binding var usageStatisticsOn: Bool
     @Binding var crashReportsOn: Bool
 
     var body: some View {
         VStack(spacing: 0) {
             VStack(spacing: 0) {
-                TelemetryCellView(title: LocalizedString.onboardingUsageStatsTitle,
-                                  description: LocalizedString.onboardingUsageStatsDescription,
-                                  isOn: $usageStatisticsOn)
+                TelemetryCellView(
+                    title: LocalizedString.onboardingUsageStatsTitle,
+                    description: LocalizedString.onboardingUsageStatsDescription,
+                    isOn: $usageStatisticsOn
+                )
                 Divider()
                     .background(Color(.border))
                     .padding(.leading)
-                TelemetryCellView(title: LocalizedString.onboardingCrashReportsTitle,
-                                  description: LocalizedString.onboardingCrashReportsDescription,
-                                  isOn: $crashReportsOn)
+                TelemetryCellView(
+                    title: LocalizedString.onboardingCrashReportsTitle,
+                    description: LocalizedString.onboardingCrashReportsDescription,
+                    isOn: $crashReportsOn
+                )
             }
             .background(Color(.background))
             OnboardingFooter()
