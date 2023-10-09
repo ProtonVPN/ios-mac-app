@@ -190,6 +190,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             propertiesManager.userLocation = properties.location
         }
         propertiesManager.userRole = properties.userRole
+        propertiesManager.userAccountCreationDate = properties.userCreateTime
         if let clientConfig = properties.clientConfig {
             propertiesManager.openVpnConfig = clientConfig.openVPNConfig
             propertiesManager.wireguardConfig = clientConfig.wireGuardConfig
