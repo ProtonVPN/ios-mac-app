@@ -126,8 +126,13 @@ class HelpMenuViewModel {
             // app data
             if let bundleIdentifier = Bundle.main.bundleIdentifier {
                 @Dependency(\.defaultsProvider) var provider
-                provider.getDefaults().removePersistentDomain(forName: bundleIdentifier)
-                provider.getDefaults().synchronize()
+                let defaults = provider.getDefaults()
+                if let domain = defaults.persistentDomain(forName: bundleIdentifier) {
+                    for key in domain.keys {
+                        defaults.removeObject(forKey: key)
+                    }
+                    defaults.removePersistentDomain(forName: bundleIdentifier)
+                }
             }
 
             // Delete Caches folder
