@@ -502,7 +502,7 @@
 "_search_for_country" = "Búsqueda por país";
 
 /* MacOS: secure core tooltip */
-"_secure_core_info" = "Proporciona protección adicional contra el compromiso del servidor VPN mediante el enrutamiento del tráfico a través de nuestra red de Secure Core";
+"_secure_core_info" = "Proporciona protección adicional contra el compromiso del servidor VPN con el enrutamiento del tráfico a través de nuestra red de Secure Core";
 
 /* Text in warning screen before actions that will disconnect VPN */
 "_view_toggle_will_cause_disconnect" = "Si se activa Secure Core, se pondrá fin a su conexión actual.";
@@ -1660,7 +1660,7 @@
 "_gateways_modal_title" = "¿Qué es una puerta de enlace?";
 
 /* Gateways info modals text (both iOS and macOS) */
-"_gateways_modal_text" = "Una puerta de enlace VPN es una conexión segura que proporciona acceso controlado a los datos y servicios de tu empresa mediante servidores dedicados";
+"_gateways_modal_text" = "Una puerta de enlace VPN es una conexión segura que proporciona acceso controlado a los datos y servicios de tu empresa con servidores dedicados";
 
 "_vpn_accelerator_title" = "VPN Accelerator";
 
@@ -2053,6 +2053,9 @@
 /* Common button title */
 "modals_common_next" = "Siguiente";
 
+/* Common button title */
+"modals_common_get_started" = "Comenzar";
+
 /* Description of user account update screen part 1*/ */
 "maximum_device_plan_limit_part_1" = "Desconecta otro dispositivo para conectar éste o actualiza a %@";
 
@@ -2163,6 +2166,33 @@
 
 /* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
 "upsell_specific_location_change_server_button_title" = "Cambiar servidor";
+
+/* The name of one of the features in the Welcome screen that the user sees after upgrading */
+"welcome_upgrade_advanced_features" = "Funciones de seguridad avanzadas";
+
+/* The title of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_title_plus" = "Te damos la bienvenida a VPN Plus";
+
+/* The title of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_title_unlimited" = "Te damos la bienvenida a Proton Unlimited";
+
+/* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_title_fallback" = "¡Enhorabuena!";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_subtitle_plus" = "Disfruta de funciones de privacidad adicionales, rendimiento recargado y una personalización VPN de otro nivel.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited" = "¡Felicitaciones! Has desbloqueado seguridad prémium y funciones de rendimiento en todos los servicios de Proton además de 500 GB de almacenamiento total.\n\nDisfruta lo mejor de la privacidad de Proton.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
+"welcome_upgrade_subtitle_Unlimited_markdown" = "¡Felicitaciones! Has desbloqueado seguridad prémium y funciones de rendimiento en todos los servicios de Proton además de **500 GB** de almacenamiento total.\n\nDisfruta lo mejor de la privacidad de Proton.";
+
+/* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
+
+/* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_subtitle_fallback" = "Has mejorado tu suscripción. Disfruta funciones de privacidad avanzadas y rendimiento de otro nivel.";
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Disponible con VPN Business.";

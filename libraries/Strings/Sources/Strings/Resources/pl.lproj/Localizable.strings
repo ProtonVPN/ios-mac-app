@@ -2053,6 +2053,9 @@
 /* Common button title */
 "modals_common_next" = "Dalej";
 
+/* Common button title */
+"modals_common_get_started" = "Rozpocznij";
+
 /* Description of user account update screen part 1*/ */
 "maximum_device_plan_limit_part_1" = "Aby połączyć się, rozłącz inne urządzenie lub ulepsz konto do planu %@";
 
@@ -2163,6 +2166,33 @@
 
 /* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
 "upsell_specific_location_change_server_button_title" = "Zmień serwer";
+
+/* The name of one of the features in the Welcome screen that the user sees after upgrading */
+"welcome_upgrade_advanced_features" = "Zaawansowane funkcje bezpieczeństwa";
+
+/* The title of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_title_plus" = "Witaj w planie VPN Plus";
+
+/* The title of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_title_unlimited" = "Witaj w planie Proton Unlimited";
+
+/* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_title_fallback" = "Gratulacje!";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_subtitle_plus" = "Ciesz się dodatkowymi funkcjami prywatności, zwiększoną wydajnością i dostosowaniem VPN na wyższym poziomie.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited" = "Gratulacje! Odblokowano funkcje premium bezpieczeństwa i wydajności we wszystkich usługach Proton oraz 500 GB przestrzeni dyskowej.\n\n Ciesz się tym, co najlepsze w prywatności Proton.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
+"welcome_upgrade_subtitle_Unlimited_markdown" = "Gratulacje! Odblokowano funkcje premium bezpieczeństwa i wydajności we wszystkich usługach Proton oraz **500 GB** przestrzeni dyskowej.\n\n Ciesz się tym, co najlepsze w prywatności Proton.";
+
+/* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
+
+/* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_subtitle_fallback" = "Subskrypcja została ulepszona. Ciesz się zaawansowanymi funkcjami prywatności i wydajnością na wyższym poziomie.";
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Funkcja dostępna w planie VPN Business.";

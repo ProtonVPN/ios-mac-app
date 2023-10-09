@@ -2,6 +2,49 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
+    <key>welcome_screen_feature_devices</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Jusqu'à %#@VARIABLE@ en même temps</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 appareil</string>
+        <key>other</key>
+        <string>%d appareils</string>
+      </dict>
+    </dict>
+    <key>welcome_screen_feature_servers_countries</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@num_servers@ dans %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d pays</string>
+        <key>other</key>
+        <string>%d pays</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d nouveau serveur</string>
+        <key>other</key>
+        <string>Plus de %d nouveaux serveurs</string>
+      </dict>
+    </dict>
     <key>modals_upsell_all_countries_feature_multipleDevices</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

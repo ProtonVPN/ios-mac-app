@@ -592,7 +592,7 @@
 "_fastest_available_server" = "Самый быстрый доступный сервер";
 
 /* iOS: Predefined profile with fastest connection */
-"_fastest_connection" = "Fastest";
+"_fastest_connection" = "Самый быстрый";
 
 /* Profile create/change form and other places describing profile */
 "_random" = "Случайный";
@@ -601,7 +601,7 @@
 "_random_available_server" = "Случайный доступный сервер";
 
 /* iOS: Predefined profile with random server */
-"_random_connection" = "Random";
+"_random_connection" = "Случайный";
 
 /* Profile create/change form */
 "_different_server_each_time" = "Каждый раз разный сервер";
@@ -904,7 +904,7 @@
 "_kill_switch_disable" = "Отключить Kill Switch";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
-"_kill_switch_enable" = "Enable Kill Switch";
+"_kill_switch_enable" = "Включить Kill Switch";
 
 /* MacOS: Settings screen title */
 "_preferences" = "Настройки";
@@ -1429,7 +1429,7 @@
 "_netshield_upsell_subtitle" = "Блокирует рекламу, трекеры и вредоносные программы на веб-сайтах и в приложениях";
 
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
-"_netshield_business_upsell_title" = "Block ads with NetShield";
+"_netshield_business_upsell_title" = "Блокировать рекламу c NetShield";
 
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
 "_netshield_business_upsell_subtitle" = "When you upgrade to VPN Business";
@@ -1862,7 +1862,7 @@
 "_alert_protocol_deprecated_enable_smart" = "Update";
 
 /* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser*/ */
-"_alert_protocol_deprecated_learn_more" = "Learn more";
+"_alert_protocol_deprecated_learn_more" = "Подробнее";
 
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Закрыть";
@@ -2053,6 +2053,9 @@
 /* Common button title */
 "modals_common_next" = "Далее";
 
+/* Common button title */
+"modals_common_get_started" = "Начать";
+
 /* Description of user account update screen part 1*/ */
 "maximum_device_plan_limit_part_1" = "Отключите другое устройство, чтобы подключиться к этому, или перейдите на %@";
 
@@ -2087,7 +2090,7 @@
 "upsell_customization_profiles" = "Save frequently used connections with profiles";
 
 /* Bold part of the feature of Customization upsell modal */
-"upsell_customization_profiles_bold" = "profiles";
+"upsell_customization_profiles_bold" = "профили";
 
 /* Feature of Customization upsell modal */
 "upsell_customization_quick_connect" = "Get faster access to your profiles with Quick Connect";
@@ -2102,7 +2105,7 @@
 "upsell_profiles_subtitle" = "Unlock profiles with VPN Plus";
 
 /* Bold part of the subtitle of Profiles upsell modal */
-"upsell_profiles_subtitle_bold" = "profiles";
+"upsell_profiles_subtitle_bold" = "профили";
 
 /* Feature of Profiles upsell modal */
 "upsell_profiles_feature_location" = "Save your preferred server, city, or country.";
@@ -2164,6 +2167,33 @@
 /* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
 "upsell_specific_location_change_server_button_title" = "Сменить сервер";
 
+/* The name of one of the features in the Welcome screen that the user sees after upgrading */
+"welcome_upgrade_advanced_features" = "Advanced security features";
+
+/* The title of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_title_plus" = "Welcome to VPN Plus";
+
+/* The title of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_title_unlimited" = "Welcome to Proton Unlimited";
+
+/* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_title_fallback" = "Congratulations!";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_subtitle_plus" = "Enjoy extra privacy features, supercharged performance, and next-level VPN customization.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited" = "Congratulations! You unlocked premium security and performance features on all Proton services, plus 500 GB total storage.\n\nEnjoy the best of Proton privacy.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
+"welcome_upgrade_subtitle_Unlimited_markdown" = "Congratulations! You unlocked premium security and performance features on all Proton services, plus **500 GB** total storage.\n\nEnjoy the best of Proton privacy.";
+
+/* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
+
+/* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_subtitle_fallback" = "You've upgraded your subscription. Enjoy advanced privacy features and next-level performance.";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Available with VPN Business.";
 
@@ -2171,10 +2201,10 @@
 "_free_banner_text" = "Get worldwide coverage with VPN Plus";
 
 /* Title of banner shown on iOS apps to upsell users who want to select a country */
-"_wrong_country_banner_title" = "Not the country you wanted?";
+"_wrong_country_banner_title" = "Не та страна, которую вы хотели?";
 
 /* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
-"_wrong_country_banner_subtitle" = "Upgrade to choose any server";
+"_wrong_country_banner_subtitle" = "Улучшите для выбора любого сервера";
 
 /* Text of banner shown on macOS apps to upsell users who want to select a country */
-"_wrong_country_banner_text" = "Not the country you wanted? Upgrade to choose any server";
+"_wrong_country_banner_text" = "Не та страна, которую вы хотели? Улучшите для выбора любого сервера";

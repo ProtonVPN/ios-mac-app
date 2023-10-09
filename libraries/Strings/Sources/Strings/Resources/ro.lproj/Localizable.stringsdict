@@ -2,6 +2,55 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
+    <key>welcome_screen_feature_devices</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Up to %#@VARIABLE@ at once</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 device</string>
+        <key>few</key>
+        <string>%d devices</string>
+        <key>other</key>
+        <string>%d devices</string>
+      </dict>
+    </dict>
+    <key>welcome_screen_feature_servers_countries</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@num_servers@ în %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d țară</string>
+        <key>few</key>
+        <string>%d țări</string>
+        <key>other</key>
+        <string>%d de țări</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Peste %d server nou</string>
+        <key>few</key>
+        <string>Peste %d servere noi</string>
+        <key>other</key>
+        <string>Peste %d de servere noi</string>
+      </dict>
+    </dict>
     <key>modals_upsell_all_countries_feature_multipleDevices</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

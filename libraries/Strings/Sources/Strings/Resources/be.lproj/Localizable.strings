@@ -2053,6 +2053,9 @@
 /* Common button title */
 "modals_common_next" = "Далей";
 
+/* Common button title */
+"modals_common_get_started" = "Пачаць працу";
+
 /* Description of user account update screen part 1*/ */
 "maximum_device_plan_limit_part_1" = "Адключыце іншую прыладу для падключэння гэтай або палепшыце да %@";
 
@@ -2163,6 +2166,33 @@
 
 /* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
 "upsell_specific_location_change_server_button_title" = "Пераключыць сервер";
+
+/* The name of one of the features in the Welcome screen that the user sees after upgrading */
+"welcome_upgrade_advanced_features" = "Пашыраныя функцыі бяспекі";
+
+/* The title of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_title_plus" = "Вітаем вас у VPN Plus";
+
+/* The title of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_title_unlimited" = "Вітаем вас у Proton Unlimited";
+
+/* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_title_fallback" = "Віншуем!";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_subtitle_plus" = "Атрымлівайце асалоду ад дадатковых функцый прыватнасці, палепшанай прадукцыйнасці і больш гнуткага наладжвання вашага падключэння да VPN.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited" = "Віншуем! Вы разблакіравалі прэміяльныя функцыі бяспекі і прадукцыйнасці ва ўсіх сэрвісах Proton, а таксама 500 ГБ дыскавай прасторы ў сховішчы.\n\n\nАтрымлівайце асалоду ад палепшанай прыватнасці Proton.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
+"welcome_upgrade_subtitle_Unlimited_markdown" = "Віншуем! Вы разблакіравалі прэміяльныя функцыі бяспекі і прадукцыйнасці ва ўсіх сэрвісах Proton, а таксама **500 ГБ** дыскавай прасторы ў сховішчы.\n\n\nАтрымлівайце асалоду ад палепшанай прыватнасці Proton.";
+
+/* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited_bold" = "500 ГБ";
+
+/* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_subtitle_fallback" = "Вы палепшылі сваю падпіску. Атрымлівайце асалоду ад пашыраных функцый прыватнасці і новага ўзроўню прадукцыйнасці.";
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Даступна з VPN Business.";
