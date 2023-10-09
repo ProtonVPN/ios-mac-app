@@ -1973,7 +1973,7 @@
 "modals_upsell_features_moderate_nat_gaming" = "Verbessere die Leistung von Online-Spielen und Videoanrufen";
 
 /* Feature of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_direct_connections" = "NAT-Typ 2 (moderat) optimiert die Geschwindigkeit und Stabilität, indem es direkte Verbindungen zwischen Geräten ermöglicht";
+"modals_upsell_features_moderate_nat_direct_connections" = "NAT-Typ 2 (moderat) optimiert die Geschwindigkeit und Stabilität, indem es direkte Verbindungen zwischen Geräten ermöglicht.";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_streaming" = "Streame deine Lieblingsfilme";
@@ -2052,6 +2052,9 @@
 
 /* Common button title */
 "modals_common_next" = "Weiter";
+
+/* Common button title */
+"modals_common_get_started" = "Los geht's";
 
 /* Description of user account update screen part 1*/ */
 "maximum_device_plan_limit_part_1" = "Bitte trenne zuerst die Verbindung auf einem anderen Gerät, um dich mit diesem zu verbinden, oder führe ein Upgrade auf %@ durch";
@@ -2163,6 +2166,33 @@
 
 /* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
 "upsell_specific_location_change_server_button_title" = "Server wechseln";
+
+/* The name of one of the features in the Welcome screen that the user sees after upgrading */
+"welcome_upgrade_advanced_features" = "Advanced security features";
+
+/* The title of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_title_plus" = "Welcome to VPN Plus";
+
+/* The title of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_title_unlimited" = "Welcome to Proton Unlimited";
+
+/* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_title_fallback" = "Congratulations!";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_subtitle_plus" = "Enjoy extra privacy features, supercharged performance, and next-level VPN customization.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited" = "Congratulations! You unlocked premium security and performance features on all Proton services, plus 500 GB total storage.\n\nEnjoy the best of Proton privacy.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
+"welcome_upgrade_subtitle_Unlimited_markdown" = "Congratulations! You unlocked premium security and performance features on all Proton services, plus **500 GB** total storage.\n\nEnjoy the best of Proton privacy.";
+
+/* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
+
+/* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_subtitle_fallback" = "You've upgraded your subscription. Enjoy advanced privacy features and next-level performance.";
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Verfügbar mit VPN Business.";

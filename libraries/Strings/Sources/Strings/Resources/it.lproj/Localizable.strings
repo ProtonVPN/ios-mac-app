@@ -144,7 +144,7 @@
 "_more_info" = "Scopri di più";
 
 /* Display less information */
-"_less_info" = "Meno info";
+"_less_info" = "Meno informazioni";
 
 /* Text addressing to contact costumer support on several sites of the app */
 "_contact_our_support" = "Contatta il nostro supporto";
@@ -496,7 +496,7 @@
 "_plan_does_not_include_secure_core" = "Il tuo piano non include la funzionalità Secure Core.";
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
-"_learn_more_about_secure_core" = "Ulteriori informazioni su Secure Core";
+"_learn_more_about_secure_core" = "Scopri di più su Secure Core";
 
 /* MacOS: placeholder for country search */
 "_search_for_country" = "Cerca paese";
@@ -796,7 +796,7 @@
 
 "_p2p_detected_popup_body" = "La tua connessione è stata disattivata perché stai utilizzando un server che non supporta il traffico peer-to-peer (P2P). Il P2P non è supportato su server gratuiti o server che sono numerati oltre al 100.";
 
-"_p2p_forwarded_popup_title" = "Connessione reinstradata";
+"_p2p_forwarded_popup_title" = "Connessione reindirizzata";
 
 /* Under maintenance alert */
 "_server_under_maintenance" = "Server in manutenzione";
@@ -831,11 +831,11 @@
 /* Under maintenance alert */
 "_all_servers_under_maintenance" = "Tutti i server sono in manutenzione. Solitamente ciò significa che vi sono difficoltà tecniche dal lato di Proton VPN o che la tua rete è limitata.";
 
-"_p2p_forwarded_popup_body" = "La tua connessione è stata automaticamente reinstradato attraverso un altro server perché alcuni server non supportano il traffico P2P. Questo potrebbe ridurre la velocità di connessione. Per favore utilizza i server con l'etichetta P2P per evitare il reinstradamento.";
+"_p2p_forwarded_popup_body" = "La tua connessione è stata automaticamente reindirizzata attraverso un altro server perché alcuni server non supportano il traffico P2P. Questo potrebbe ridurre la velocità di connessione. Usa i server con l'etichetta P2P per evitare il reindirizzamento.";
 
-"_p2p_forwarded_popup_body_p1" = "La tua connessione è stata automaticamente reinstradata attraverso un altro server perché alcuni server non supportano il traffico P2P. Questo potrebbe ridurre la velocità di connessione. Per favore utilizza i server con l'";
+"_p2p_forwarded_popup_body_p1" = "La tua connessione è stata automaticamente reindirizzata attraverso un altro server perché alcuni server non supportano il traffico P2P. Questo potrebbe ridurre la velocità di connessione. Usa i server con l'";
 
-"_p2p_forwarded_popup_body_p2" = "icona per evitare il reinstradamento del traffico.";
+"_p2p_forwarded_popup_body_p2" = "icona per evitare il reindirizzamento del traffico.";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_title" = "Errore di connessione";
@@ -1043,7 +1043,7 @@
 
 "_allow_lan_title" = "Consenti le connessioni LAN";
 
-"_allow_lan_info" = "Consente di bypassare la VPN e connettersi ai dispositivi sulla tua rete locale, come la tua stampante.";
+"_allow_lan_info" = "Consente di ignorare la VPN e connettersi ai dispositivi sulla tua rete locale, come ad esempio la tua stampante.";
 
 "_allow_lan_description" = "Per consentire l'accesso LAN, kill switch dev'essere disattivato.\n\nContinuare?";
 
@@ -1358,9 +1358,9 @@
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "Risoluzione problemi";
 
-"_troubleshoot_item_alt_title" = "Consenti routing alternativo";
+"_troubleshoot_item_alt_title" = "Consenti percorso alternativo";
 
-"_troubleshoot_item_alt_description" = "Nel caso in cui i siti Proton siano bloccati, questa impostazione consente all'app di provare percorsi di rete alternativi per raggiungere Proton, che può essere utile per aggirare i firewall o i problemi di rete. Consigliamo di mantenere questa impostazione per una maggiore affidabilità. \nScopri di più";
+"_troubleshoot_item_alt_description" = "Nel caso in cui i siti di Proton siano bloccati, questa impostazione consente all'app di provare l'indirizzamento di rete alternativo per raggiungere Proton, che potrebbe esser utile per evitare firewall o problemi di rete. Consigliamo di mantenere questa impostazione attiva per una maggiore affidabilità. \nScopri di più";
 
 "_troubleshoot_item_alt_link1" = "Scopri di più";
 
@@ -1491,7 +1491,7 @@
 
 "_quick_settings_netshield_option_level2" = "Blocca malware, annunci e tracker";
 
-"_upgrade_required_securecore_description" = "Secure Core è disponibile con un piano Plus. Aggiorna ora per instradare il traffico attraverso i nostri server più sicuri in paesi rispettosi della privacy.";
+"_upgrade_required_securecore_description" = "Secure Core è disponibile con un piano Plus. Effettua l'upgrade ora per instradare il traffico attraverso i nostri server più sicuri in paesi rispettosi della privacy.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
 "_kill_switch_reconnection_header" = "Kill switch sta proteggendo il tuo IP";
@@ -2053,6 +2053,9 @@
 /* Common button title */
 "modals_common_next" = "Prossimo";
 
+/* Common button title */
+"modals_common_get_started" = "Inizia ora";
+
 /* Description of user account update screen part 1*/ */
 "maximum_device_plan_limit_part_1" = "Disconnetti un altro dispositivo per connetterti a questo o effettua l'upgrade a %@";
 
@@ -2163,6 +2166,33 @@
 
 /* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
 "upsell_specific_location_change_server_button_title" = "Cambia server";
+
+/* The name of one of the features in the Welcome screen that the user sees after upgrading */
+"welcome_upgrade_advanced_features" = "Funzionalità di sicurezza avanzate";
+
+/* The title of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_title_plus" = "Benvenuto in VPN Plus";
+
+/* The title of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_title_unlimited" = "Benvenuto in Proton Unlimited";
+
+/* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_title_fallback" = "Congratulazioni!";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_subtitle_plus" = "Goditi funzionalità extra per la privacy, prestazioni potenziate e personalizzazione VPN di livello superiore.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited" = "Congratulazioni! Hai sbloccato funzionalità premium di sicurezza e prestazioni su tutti i servizi Proton, oltre a 500 GB di spazio di archiviazione totale.\n\nGoditi il ​​meglio della privacy di Proton.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
+"welcome_upgrade_subtitle_Unlimited_markdown" = "Congratulazioni! Hai sbloccato funzionalità premium di sicurezza e prestazioni su tutti i servizi Proton, oltre a **500 GB** di spazio di archiviazione totale.\n\nGoditi il ​​meglio della privacy di Proton.";
+
+/* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
+
+/* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_subtitle_fallback" = "Hai aggiornato il tuo abbonamento. Goditi funzionalità di privacy avanzate e prestazioni di livello superiore.";
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Disponibile con VPN Business.";

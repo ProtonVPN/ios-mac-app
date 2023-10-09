@@ -2054,6 +2054,9 @@ Detalii";
 /* Common button title */
 "modals_common_next" = "Înainte";
 
+/* Common button title */
+"modals_common_get_started" = "Să începem";
+
 /* Description of user account update screen part 1*/ */
 "maximum_device_plan_limit_part_1" = "Deconectați un alt dispozitiv pentru a-l conecta pe acesta sau treceți la %@.";
 
@@ -2165,6 +2168,33 @@ Detalii";
 /* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
 "upsell_specific_location_change_server_button_title" = "Schimbare server";
 
+/* The name of one of the features in the Welcome screen that the user sees after upgrading */
+"welcome_upgrade_advanced_features" = "Funcții avansate de securitate";
+
+/* The title of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_title_plus" = "Bun venit la VPN Plus";
+
+/* The title of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_title_unlimited" = "Bun venit la Proton Unlimited";
+
+/* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_title_fallback" = "Felicitări!";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_subtitle_plus" = "Bucurați-vă de funcții suplimentare de confidențialitate, performanță îmbunătățită și personalizare pentru VPN la nivelul superior.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited" = "Felicitări! Ați deblocat funcții premium de securitate și performanță pentru toate serviciile Proton, plus 500 GiB spațiu de stocare total.\n\nBucurați-vă de cea mai bună confidențialitate Proton.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
+"welcome_upgrade_subtitle_Unlimited_markdown" = "Felicitări! Ați deblocat funcții premium de securitate și performanță pentru toate serviciile Proton, plus **500 GiB** spațiu de stocare total.\n\nBucurați-vă de cea mai bună confidențialitate Proton.";
+
+/* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited_bold" = "500 GiB";
+
+/* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_subtitle_fallback" = "V-ați modificat abonamentul. Bucurați-vă de funcțiile de confidențialitate și performanță de nivel superior.";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Disponibil cu VPN Business.";
 
@@ -2172,10 +2202,10 @@ Detalii";
 "_free_banner_text" = "Obțineți acoperire la nivel mondial cu VPN Plus";
 
 /* Title of banner shown on iOS apps to upsell users who want to select a country */
-"_wrong_country_banner_title" = "Not the country you wanted?";
+"_wrong_country_banner_title" = "Nu este țara pe care o doriți?";
 
 /* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
-"_wrong_country_banner_subtitle" = "Upgrade to choose any server";
+"_wrong_country_banner_subtitle" = "Schimbați planul abonamentului pentru alege orice server";
 
 /* Text of banner shown on macOS apps to upsell users who want to select a country */
-"_wrong_country_banner_text" = "Not the country you wanted? Upgrade to choose any server";
+"_wrong_country_banner_text" = "Nu e țara pe care ați vrut-o? Alegeți alt plan cu plată pentru a alege orice server.";

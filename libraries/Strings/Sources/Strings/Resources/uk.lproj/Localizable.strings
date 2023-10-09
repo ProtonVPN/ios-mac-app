@@ -592,7 +592,7 @@
 "_fastest_available_server" = "Найшвидший доступний сервер";
 
 /* iOS: Predefined profile with fastest connection */
-"_fastest_connection" = "Найшвидші";
+"_fastest_connection" = "Найшвидший";
 
 /* Profile create/change form and other places describing profile */
 "_random" = "Випадковий";
@@ -601,7 +601,7 @@
 "_random_available_server" = "Випадковий доступний сервер";
 
 /* iOS: Predefined profile with random server */
-"_random_connection" = "Випадкові";
+"_random_connection" = "Випадковий";
 
 /* Profile create/change form */
 "_different_server_each_time" = "Щоразу інший сервер";
@@ -1967,7 +1967,7 @@
 "modals_upsell_moderate_nat_subtitle" = "Отримайте доступ до NAT Type 2 з VPN Plus";
 
 /* Bold part of the subtitle of Moderate NAT upsell screens */
-"modals_upsell_moderate_nat_subtitle_bold" = "NAT type 2";
+"modals_upsell_moderate_nat_subtitle_bold" = "NAT Type 2";
 
 /* Feature of the Moderate NAT upsell screen */
 "modals_upsell_features_moderate_nat_gaming" = "Вдоскональте режим гри онлайн та якість відеовикликів";
@@ -2053,6 +2053,9 @@
 /* Common button title */
 "modals_common_next" = "Далі";
 
+/* Common button title */
+"modals_common_get_started" = "Розпочати";
+
 /* Description of user account update screen part 1*/ */
 "maximum_device_plan_limit_part_1" = "Від'єднайте інший пристрій, щоб під'єднатися до цього, або передплатіть %@";
 
@@ -2135,7 +2138,7 @@
 "upsell_country_feature_title" = "Хочете вибрати певну країну?";
 
 /* Feature of Country upsell modal */
-"upsell_country_feature_subtitle" = "Розблокуйте вибір країни за допомогою VPN Plus";
+"upsell_country_feature_subtitle" = "Розблокуйте вибір країни, передплативши VPN Plus";
 
 /* Bold part of the feature of Country upsell modal */
 "upsell_country_feature_subtitle_bold" = "вибір країни";
@@ -2153,28 +2156,55 @@
 "modals_server_selection" = "Зміни у виборі сервера";
 
 /* Description of the second section of the "What's new" screen */
-"modals_server_crowding" = "Для запобігання переповнення серверу та забезпечення усім доступу до швидкого та безпечного перегляду сторінок, ми вилучили можливість вибору країни вручну та зробили суттєві покращення автоматичного вибору сервера.";
+"modals_server_crowding" = "Щоб запобігти перевантаженню серверів та гарантувати всім швидкий і безпечний доступ до інтернету, ми вилучили можливість ручного вибору країни та зробили суттєві покращення автоматичного вибору сервера.";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
-"upsell_specific_location_subtitle" = "Отримайте необмежену кількість замін сервера з VPN Plus";
+"upsell_specific_location_subtitle" = "Змінюйте сервери без обмежень з VPN Plus";
 
 /* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
-"upsell_specific_location_title" = "На цей час ви досягли максимальної кількості змін безплатних серверів.";
+"upsell_specific_location_title" = "Ви досягли максимальної кількості змін безплатних серверів.";
 
 /* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
 "upsell_specific_location_change_server_button_title" = "Змінити сервер";
+
+/* The name of one of the features in the Welcome screen that the user sees after upgrading */
+"welcome_upgrade_advanced_features" = "Розширені функції безпеки";
+
+/* The title of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_title_plus" = "Вітаємо у VPN Plus";
+
+/* The title of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_title_unlimited" = "Вітаємо у Proton Unlimited";
+
+/* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_title_fallback" = "Вітаємо!";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_subtitle_plus" = "Оцініть додаткові функції приватності, вдосконалену продуктивність та налаштування VPN нового рівня.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited" = "Вітаємо! Ви розблокували функції безпеки й продуктивності рівня преміум у всіх службах Proton, а також отримали 500 ГБ обсягу сховища.\n\nНасолоджуйтеся найкращими функціями захисту приватності від Proton.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
+"welcome_upgrade_subtitle_Unlimited_markdown" = "Вітаємо! Ви розблокували функції безпеки й продуктивності рівня преміум у всіх службах Proton, а також отримали **500 ГБ** обсягу сховища.\n\nНасолоджуйтеся найкращими функціями захисту приватності від Proton.";
+
+/* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited_bold" = "500 ГБ";
+
+/* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_subtitle_fallback" = "Ви оновили свій тарифний план. Оцініть переваги розширених функцій безпеки й продуктивності нового рівня.";
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Доступно для VPN Business.";
 
 /* Text on upsell banner in country list */
-"_free_banner_text" = "Отримайте покриття усього світу з VPN Plus";
+"_free_banner_text" = "Користуйтеся світовим покриттям з VPN Plus";
 
 /* Title of banner shown on iOS apps to upsell users who want to select a country */
-"_wrong_country_banner_title" = "Not the country you wanted?";
+"_wrong_country_banner_title" = "Не та країна яку хотіли?";
 
 /* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
-"_wrong_country_banner_subtitle" = "Upgrade to choose any server";
+"_wrong_country_banner_subtitle" = "Покращте, щоб обирати будь-який сервер";
 
 /* Text of banner shown on macOS apps to upsell users who want to select a country */
-"_wrong_country_banner_text" = "Not the country you wanted? Upgrade to choose any server";
+"_wrong_country_banner_text" = "Хочете під'єднатися до іншої країни? Передплатіть тарифний план, щоб вибирати будь-який сервер";
