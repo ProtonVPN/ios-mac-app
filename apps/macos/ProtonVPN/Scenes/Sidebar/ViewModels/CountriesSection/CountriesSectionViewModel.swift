@@ -501,7 +501,7 @@ class CountriesSectionViewModel {
         // FREE
         let plusLocations: [ServerGroup]
         let freePart: [CellModel]
-        var plusBanner = [CellModel]()
+        var plusBanner = [freeUserBannerCellModel]
 
         @Dependency(\.featureFlagProvider) var featureFlagProvider
         if !featureFlagProvider[\.showNewFreePlan] { // old
@@ -534,7 +534,6 @@ class CountriesSectionViewModel {
             ]
             // Upsell part
             plusLocations = countries
-            plusBanner.append(freeUserBannerCellModel)
         }
 
         let headerPlusVM = CountryHeaderViewModel(Localizable.locationsPlus, totalCountries: plusLocations.count, buttonType: .premium, countriesViewModel: self)
