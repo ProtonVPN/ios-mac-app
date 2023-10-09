@@ -366,7 +366,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
             @Dependency(\.featureFlagProvider) var featureFlagProvider
             if !featureFlagProvider[\.showNewFreePlan] { // old
                 do { // First section
-                    let rows = [banner] + currentContent
+                    let rows = currentContent
                         .filter { $0.kind.lowestTier == 0 }
                         .map {
                             RowViewModel.serverGroup(countryCellModel(
@@ -384,7 +384,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                     ))
                 }
                 do { // Second section
-                    let rows = currentContent
+                    let rows = [banner] + currentContent
                         .filter { $0.kind.lowestTier > 0 }
                         .map {
                             RowViewModel.serverGroup(countryCellModel(
