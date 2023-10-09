@@ -797,6 +797,10 @@ public class WelcomeScreenAlert: UpsellAlert {
     public init(plan: Plan) {
         self.plan = plan
     }
+
+    public override var modalSource: UpsellEvent.ModalSource? {
+        return nil
+    }
 }
 
 public extension WelcomeScreenAlert.Plan {
