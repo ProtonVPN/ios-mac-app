@@ -84,6 +84,7 @@ class UserAccountUpdateViewController: NSViewController {
         DarkAppearance {
             view.layer?.backgroundColor = .cgColor(.background, .weak)
             serversView.layer?.backgroundColor = .cgColor(.background, .weak)
+            fromToArrow.image = AppTheme.Icon.arrowRight.colored(.weak)
         }
         serversView.layer?.cornerRadius = 8
 
@@ -95,7 +96,6 @@ class UserAccountUpdateViewController: NSViewController {
 
         titleLbl.stringValue = alert.title ?? ""
         descriptionLbl.stringValue = alert.message ?? ""
-        fromToArrow.image = AppTheme.Icon.arrowRight.colored(.weak)
         
         setupFeatures()
         setupActions()
