@@ -591,7 +591,7 @@ class CountriesSectionViewModel {
     public func changeServerStateUpdated(to state: ServerChangeViewState) {
         switch state {
         case .unavailable:
-            showWrongCountryBanner = true
+            showWrongCountryBanner = isConnected // Don't show if not connected
         default:
             showWrongCountryBanner = false
         }
@@ -599,6 +599,10 @@ class CountriesSectionViewModel {
         if let bannerIndex = freeUserBannerIndex {
             contentChanged?(ContentChange(reload: [bannerIndex]))
         }
+    }
+
+    private var isConnected: Bool {
+        return vpnGateway.connection == .connected
     }
 
     private var freeUserBannerIndex: Int? {
