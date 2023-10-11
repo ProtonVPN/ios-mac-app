@@ -9,16 +9,73 @@
 #
 #     https://docs.fastlane.tools/plugins/available-plugins
 #
+# Environment variables used:
+# CI_KEYCHAIN_NAME - name of the keychain to use in scripts
+# CI_COMMIT_SHORT_SHA - current commit short sha (automatically set by Gitlab CI)
+# DERIVED_DATA_TTL - How much time DerivedData folder is cached (also see $derived_data_ttl below)
+# 
 
-# Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
-
-$derived_data_path = "DerivedData"
 $keychain_name = ENV["CI_KEYCHAIN_NAME"]
 
 # Prevents timeouts during builds. More info: https://github.com/fastlane/fastlane/issues/10131
 ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "180"
 ENV["FASTLANE_XCODE_LIST_TIMEOUT"] = "180"
+
+# -------------------------- Updated lanes (late 2023): --------------------------
+
+## Set variables used throughout the file
+
+# Get short commit sha from gitlab CI or from git directly. Gitlab uses first 8 characters, so we also set --short=8
+$commit_sha = ENV["CI_COMMIT_SHORT_SHA"] || `git rev-parse --short=8 HEAD`.strip
+
+# Derived data and other build artifacts are stored in a place where other jobs can (re)use it
+$build_root_path = `echo $HOME`.strip + "/build/" + $commit_sha
+$derived_data_path = $build_root_path + "/DerivedData"
+$build_path = $build_root_path + "/Build"
+$buildlog_path = $build_root_path + "/BuildLog"
+
+# After this amount of time DerivedData folder will be deleted.
+# More info about possible values can be found in `man find` `-atime` part.
+$derived_data_ttl = ENV["DERIVED_DATA_TTL"] || "72h" # 72 = 24 * 3 days
+
+# Build paths
+$output_folder = "build/"
+$output_folder_mac = $output_folder + "macos/"
+$output_folder_ios = $output_folder + "ios/"
+
+
+## Lanes
+
+desc "Build mac app and test bundles"
+lane :mac_build_debug do
+
+    # Delete old DerivedData folders
+    cleanup_derived_data
+
+    configuration = "Debug"
+    scheme = "ProtonVPN-macOS"
+    export_method = "mac-application"
+
+    build_mac_app(
+      build_path: $build_path,
+      derived_data_path: $derived_data_path,
+      buildlog_path: $buildlog_path,
+      configuration: configuration,
+      scheme: scheme,
+      clean: false, # No need for a clean: we create new DerivedData folder for each commit
+      output_directory: $output_folder_mac + configuration + "/",
+      export_method: export_method,
+      disable_package_automatic_updates: true,
+      skip_codesigning: true
+    )
+end
+
+# Delete DerivedData folders older than `$derived_data_ttl` ago
+def cleanup_derived_data
+    puts `find /opt/gitlab/builds/* -type d -maxdepth 0 -ctime +#{$derived_data_ttl} | xargs rm -rf`
+end
+
+## -------------------------- Old lanes. To be refactored --------------------------
 
 desc "Run all iOS app unit tests"
 lane :ios_app_unit_test_all do

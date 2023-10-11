@@ -1,6 +1,23 @@
 # Jobs for linting/testing/etc. Proton VPN macOS app.
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
-    
+
+
+build:app:macos:
+  extends: .mac_job_template
+  dependencies: []
+  stage: build
+  script:
+    - fastlane mac_build_debug
+  rules:
+    - when: manual
+  tags:
+    - vpn-apple-builds
+  artifacts:
+    when: always
+    paths:
+      - build/
+    expire_in: 3 days
+
     
 test:unit:app:macos:
   extends: .mac_job_template

@@ -4109,7 +4109,7 @@
 				OTHER_LDFLAGS = "";
 				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WG_BUILD_PATH = "${BUILD_DIR}/../../SourcePackages/checkouts/wireguard-apple/Sources/WireGuardKitGo";
+				WG_BUILD_PATH = "${BUILD_DIR}/../../../../../SourcePackages/checkouts/wireguard-apple/Sources/WireGuardKitGo";
 			};
 			name = Debug;
 		};

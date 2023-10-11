@@ -2,6 +2,7 @@ stages:
   - i18n
   - github
   - linting
+  - build
   - test
   - deploy
   - test_ui

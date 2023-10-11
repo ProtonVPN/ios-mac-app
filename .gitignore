@@ -34,3 +34,5 @@ apps/ios/ProtonVPNUITests/credentials_bf22.plist
 
 # CI for linting and releases
 .gitlab/ci-env
+
+build/
