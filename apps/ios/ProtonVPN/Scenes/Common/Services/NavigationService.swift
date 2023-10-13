@@ -187,7 +187,10 @@ final class NavigationService {
     func showInitialModals() {
         @Dependency(\.featureFlagProvider) var featureFlags
         let isFreeRescopeEnabled: Bool = featureFlags[\.showNewFreePlan]
-        guard isFreeRescopeEnabled, // Only show the what's new modal once the free plans have been activated
+        let freeRescopeReleaseDate = CoreAppConstants.WatershedEvent.freeRescopeReleaseDate
+        guard let accountCreationDate = propertiesManager.userAccountCreationDate,
+              accountCreationDate < freeRescopeReleaseDate,
+              isFreeRescopeEnabled, // Only show the what's new modal once the free plans have been activated
               propertiesManager.showWhatsNewModal else {
             return
         }
