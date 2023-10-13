@@ -154,11 +154,11 @@
 		D5AC137E23795BD100244066 /* AcknowledgementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AC137D23795BD100244066 /* AcknowledgementsViewController.swift */; };
 		D5AC138023796B8800244066 /* Acknowledgements.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5AC137F23796B8800244066 /* Acknowledgements.xib */; };
 		D5ADA9CC228C4325004B0891 /* OsxUiAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADA9CB228C4325004B0891 /* OsxUiAlertService.swift */; };
-		D5CA559626A59A9A001E9284 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = D5CA559526A59A9A001E9284 /* WireGuardKit */; };
 		D5D298AC25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D298AB25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift */; };
 		D5D298B825B5BD27000FBD74 /* UpdateFileSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D298B725B5BD27000FBD74 /* UpdateFileSelector.swift */; };
 		D5D6A94A230D296400A432D1 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D6A949230D296400A432D1 /* DependencyContainer.swift */; };
 		D5E02A7E2996378700362621 /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = D5E02A7D2996378700362621 /* NEHelper */; };
+		D5EE412F2AD9539A00ECC064 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = D5EE412E2AD9539A00ECC064 /* WireGuardKit */; };
 		D5F45D7C262EC16A00FB13E4 /* NSStackView+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F45D7B262EC16A00FB13E4 /* NSStackView+Children.swift */; };
 		D5F65F9E28A14E190062CF85 /* Timer in Frameworks */ = {isa = PBXBuildFile; productRef = D5F65F9D28A14E190062CF85 /* Timer */; };
 		E1144E3E22E8D4770087A685 /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1144E3D22E8D4770087A685 /* ObfuscatedConstants.swift */; };
@@ -241,7 +241,7 @@
 		E57B263229C3188D00533B7C /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E57B263129C3188D00533B7C /* AVKit.framework */; };
 		E59447542A86217A00E1E241 /* ProtonCoreLoginUI in Frameworks */ = {isa = PBXBuildFile; productRef = E59447532A86217A00E1E241 /* ProtonCoreLoginUI */; };
 		E5C00F0B2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F0A2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift */; };
-		E5C00F0D2A15FC6E0030076F /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		E5C00F0D2A15FC6E0030076F /* (null) in Sources */ = {isa = PBXBuildFile; };
 		E5C00F152A1612950030076F /* NavigationRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F142A1612950030076F /* NavigationRobot.swift */; };
 		E5C4EF3B29B611C20013ACB2 /* SystemExtensionGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3A29B611C20013ACB2 /* SystemExtensionGuideViewController.swift */; };
 		E5C4EF3D29B882AF0013ACB2 /* LinkButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3C29B882AF0013ACB2 /* LinkButtonStyle.swift */; };
@@ -1069,8 +1069,8 @@
 			files = (
 				D50B8021295DC3F900D85D29 /* NEHelper in Frameworks */,
 				E93C4F1C26A1C1F30006680C /* NetworkExtension.framework in Frameworks */,
+				D5EE412F2AD9539A00ECC064 /* WireGuardKit in Frameworks */,
 				E9D2553428E5B77500DEFFB5 /* PMLogger in Frameworks */,
-				D5CA559626A59A9A001E9284 /* WireGuardKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2650,7 +2650,7 @@
 			buildPhases = (
 			);
 			buildToolPath = /usr/bin/make;
-			buildWorkingDirectory = "$(WG_BUILD_PATH)";
+			buildWorkingDirectory = "$(PROJECT_DIR)/../../external/wireguard-apple/Sources/WireGuardKitGo";
 			dependencies = (
 			);
 			name = WireGuardGoBridgemacOS;
@@ -2756,9 +2756,9 @@
 			);
 			name = "ProtonVPN WireGuard";
 			packageProductDependencies = (
-				D5CA559526A59A9A001E9284 /* WireGuardKit */,
 				E9D2553328E5B77500DEFFB5 /* PMLogger */,
 				D50B8020295DC3F900D85D29 /* NEHelper */,
+				D5EE412E2AD9539A00ECC064 /* WireGuardKit */,
 			);
 			productName = "ProtonVPN OpenVPN";
 			productReference = E93C4F2526A1C1F30006680C /* ch.protonvpn.mac.WireGuard-Extension.systemextension */;
@@ -2941,16 +2941,15 @@
 			);
 			mainGroup = EED534781EEC112000013607;
 			packageReferences = (
-				D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */,
 				E93533D929CAEE2C005E3A59 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				4C1C07A92A39C937009DE875 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
-				E5A4AD222A3B369E00CC91D7 /* XCRemoteSwiftPackageReference "swiftui-navigation.git" */,
-				E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log.git" */,
-				E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */,
-				4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP.git" */,
+				E5A4AD222A3B369E00CC91D7 /* XCRemoteSwiftPackageReference "swiftui-navigation" */,
+				E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log" */,
+				E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
+				4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP" */,
 				4C7D40572A60251700ACDBED /* XCRemoteSwiftPackageReference "SDWebImage" */,
-				4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability.swift" */,
-				4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder.git" */,
+				4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability" */,
+				4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder" */,
 				4C2599922A7AA25800A31895 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */,
 				4C8571DA2A7CEC5B0057FED6 /* XCRemoteSwiftPackageReference "TrustKit" */,
 			);
@@ -3242,7 +3241,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5C00F0D2A15FC6E0030076F /* BuildFile in Sources */,
+				E5C00F0D2A15FC6E0030076F /* (null) in Sources */,
 				E5C00F0B2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift in Sources */,
 				E5C00F152A1612950030076F /* NavigationRobot.swift in Sources */,
 			);
@@ -4109,7 +4108,6 @@
 				OTHER_LDFLAGS = "";
 				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WG_BUILD_PATH = "${BUILD_DIR}/../../../../../SourcePackages/checkouts/wireguard-apple/Sources/WireGuardKitGo";
 			};
 			name = Debug;
 		};
@@ -4129,7 +4127,6 @@
 				OTHER_LDFLAGS = "";
 				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WG_BUILD_PATH = "${BUILD_DIR}/../../../../../SourcePackages/checkouts/wireguard-apple/Sources/WireGuardKitGo";
 			};
 			name = Release;
 		};
@@ -4149,7 +4146,6 @@
 				OTHER_LDFLAGS = "";
 				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WG_BUILD_PATH = "${BUILD_DIR}/../../../../../SourcePackages/checkouts/wireguard-apple/Sources/WireGuardKitGo";
 			};
 			name = Staging;
 		};
@@ -4637,7 +4633,7 @@
 				minimumVersion = 0.0.0;
 			};
 		};
-		4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability.swift" */ = {
+		4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
 			requirement = {
@@ -4653,7 +4649,7 @@
 				revision = d107d7cc825f38ae2d6dc7c54af71d58145c3506;
 			};
 		};
-		4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP.git" */ = {
+		4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/lachlanbell/SwiftOTP.git";
 			requirement = {
@@ -4662,7 +4658,7 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder.git" */ = {
+		4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/almazrafi/DictionaryCoder.git";
 			requirement = {
@@ -4670,15 +4666,7 @@
 				minimumVersion = 1.1.0;
 			};
 		};
-		D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ProtonVPN/wireguard-apple.git";
-			requirement = {
-				kind = revision;
-				revision = 026d18ae27fe83b32a661fbfa1ee698f67ba2221;
-			};
-		};
-		E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */ = {
+		E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-dependencies.git";
 			requirement = {
@@ -4686,7 +4674,7 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		E5A4AD222A3B369E00CC91D7 /* XCRemoteSwiftPackageReference "swiftui-navigation.git" */ = {
+		E5A4AD222A3B369E00CC91D7 /* XCRemoteSwiftPackageReference "swiftui-navigation" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swiftui-navigation.git";
 			requirement = {
@@ -4694,7 +4682,7 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log.git" */ = {
+		E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-log.git";
 			requirement = {
@@ -4740,7 +4728,7 @@
 		};
 		4C25999B2A7AA29800A31895 /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */;
+			package = E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
 			productName = Dependencies;
 		};
 		4C74D32A2A0B9D7F004F8528 /* PMLogger */ = {
@@ -4758,7 +4746,7 @@
 		};
 		4C7D40762A60298C00ACDBED /* Reachability */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability.swift" */;
+			package = 4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability" */;
 			productName = Reachability;
 		};
 		4C8571DB2A7CEC5B0057FED6 /* TrustKit */ = {
@@ -4768,7 +4756,7 @@
 		};
 		4C9754F62A60173C0035A61B /* SwiftOTP */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP.git" */;
+			package = 4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP" */;
 			productName = SwiftOTP;
 		};
 		4CD1F77F2A72BDF800E8AB01 /* TunnelKitOpenVPN */ = {
@@ -4797,7 +4785,7 @@
 		};
 		4CD1F7962A72DF2700E8AB01 /* DictionaryCoder */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder.git" */;
+			package = 4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder" */;
 			productName = DictionaryCoder;
 		};
 		4CD1F79D2A72E57F00E8AB01 /* LegacyCommon */ = {
@@ -4808,14 +4796,13 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = NEHelper;
 		};
-		D5CA559526A59A9A001E9284 /* WireGuardKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */;
-			productName = WireGuardKit;
-		};
 		D5E02A7D2996378700362621 /* NEHelper */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NEHelper;
+		};
+		D5EE412E2AD9539A00ECC064 /* WireGuardKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WireGuardKit;
 		};
 		D5F65F9D28A14E190062CF85 /* Timer */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -4860,7 +4847,7 @@
 		};
 		E5E48D022A4C3D7100B09111 /* Logging */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log.git" */;
+			package = E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log" */;
 			productName = Logging;
 		};
 		E93533DA29CAEE2C005E3A59 /* Sparkle */ = {
