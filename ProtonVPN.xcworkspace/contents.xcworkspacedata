@@ -8,6 +8,9 @@
          location = "container:"
          name = "External">
          <FileRef
+            location = "group:external/wireguard-apple">
+         </FileRef>
+         <FileRef
             location = "group:external/protoncore">
          </FileRef>
          <FileRef

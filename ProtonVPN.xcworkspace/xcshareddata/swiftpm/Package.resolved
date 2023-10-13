@@ -344,15 +344,6 @@
         }
       },
       {
-        "package": "WireGuardKit",
-        "repositoryURL": "https://github.com/ProtonVPN/wireguard-apple.git",
-        "state": {
-          "branch": null,
-          "revision": "026d18ae27fe83b32a661fbfa1ee698f67ba2221",
-          "version": null
-        }
-      },
-      {
         "package": "xctest-dynamic-overlay",
         "repositoryURL": "https://github.com/pointfreeco/xctest-dynamic-overlay",
         "state": {
