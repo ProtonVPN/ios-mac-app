@@ -97,7 +97,11 @@ public class CoreAppConstants {
         // P2P (need to move to LocalAgent for this)
         public static let p2pBlockedRefreshTime: TimeInterval = 90 // 90 seconds
     }
-    
+
+    public struct WatershedEvent {
+        public static let freeRescopeReleaseDate = Date(timeIntervalSince1970: 1_694_044_799) // 6th September 2023, 23:59:59
+    }
+
     public struct Maintenance {
         public static let defaultMaintenanceCheckTime: Int = 10 // Minutes
     }
