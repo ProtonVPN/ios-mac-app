@@ -5,7 +5,7 @@
     <key>welcome_screen_feature_devices</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Up to %#@VARIABLE@ at once</string>
+      <string>ერთდროულად მაქს. %#@VARIABLE@</string>
       <key>VARIABLE</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -13,9 +13,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 device</string>
+        <string>1 მოწყობილობა</string>
         <key>other</key>
-        <string>%d devices</string>
+        <string>%d მოწყობილობა</string>
       </dict>
     </dict>
     <key>welcome_screen_feature_servers_countries</key>

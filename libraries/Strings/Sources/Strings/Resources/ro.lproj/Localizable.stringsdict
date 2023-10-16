@@ -5,7 +5,7 @@
     <key>welcome_screen_feature_devices</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Up to %#@VARIABLE@ at once</string>
+      <string>Până la %#@VARIABLE@ simultan</string>
       <key>VARIABLE</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -13,7 +13,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 device</string>
+        <string>un dispozitiv</string>
         <key>few</key>
         <string>%d devices</string>
         <key>other</key>

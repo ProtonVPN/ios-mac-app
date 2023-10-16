@@ -2184,16 +2184,16 @@ Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill sw
 "welcome_upgrade_subtitle_plus" = "Aproveite recursos extras de privacidade, desempenho aprimorado e customização de VPN de próximo nível.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "Congratulations! You unlocked premium security and performance features on all Proton services, plus 500 GB total storage.\n\nEnjoy the best of Proton privacy.";
+"welcome_upgrade_subtitle_Unlimited" = "Parabéns! Você desbloqueou recursos premium de segurança e desempenho em todos os serviços da Proton, além de 500 GB de armazenamento total.\n\nAproveite o melhor da privacidade da Proton.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "Congratulations! You unlocked premium security and performance features on all Proton services, plus **500 GB** total storage.\n\nEnjoy the best of Proton privacy.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "Parabéns! Você desbloqueou recursos premium de segurança e desempenho em todos os serviços da Proton, além de **500 GB** de armazenamento total.\n\nAproveite o melhor da privacidade da Proton.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
 
 /* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
-"welcome_upgrade_subtitle_fallback" = "You've upgraded your subscription. Enjoy advanced privacy features and next-level performance.";
+"welcome_upgrade_subtitle_fallback" = "Você fez o upgrade da sua assinatura. Desfrute dos recursos avançados de privacidade e do desempenho de próximo nível.";
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Disponível com VPN Business.";

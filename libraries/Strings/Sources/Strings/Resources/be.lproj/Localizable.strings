@@ -2183,10 +2183,10 @@
 "welcome_upgrade_subtitle_plus" = "Атрымлівайце асалоду ад дадатковых функцый прыватнасці, палепшанай прадукцыйнасці і больш гнуткага наладжвання вашага падключэння да VPN.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "Віншуем! Вы разблакіравалі прэміяльныя функцыі бяспекі і прадукцыйнасці ва ўсіх сэрвісах Proton, а таксама 500 ГБ дыскавай прасторы ў сховішчы.\n\n\nАтрымлівайце асалоду ад палепшанай прыватнасці Proton.";
+"welcome_upgrade_subtitle_Unlimited" = "Віншуем! Вы разблакіравалі прэміяльныя функцыі бяспекі і прадукцыйнасці ва ўсіх сэрвісах Proton, а таксама 500 ГБ дыскавай прасторы ў сховішчы.\n\nАтрымлівайце асалоду ад палепшанай прыватнасці Proton.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "Віншуем! Вы разблакіравалі прэміяльныя функцыі бяспекі і прадукцыйнасці ва ўсіх сэрвісах Proton, а таксама **500 ГБ** дыскавай прасторы ў сховішчы.\n\n\nАтрымлівайце асалоду ад палепшанай прыватнасці Proton.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "Віншуем! Вы разблакіравалі прэміяльныя функцыі бяспекі і прадукцыйнасці ва ўсіх сэрвісах Proton, а таксама **500 ГБ** дыскавай прасторы ў сховішчы.\n\nАтрымлівайце асалоду ад палепшанай прыватнасці Proton.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 ГБ";

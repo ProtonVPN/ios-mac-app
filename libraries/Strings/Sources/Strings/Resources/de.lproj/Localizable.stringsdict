@@ -5,7 +5,7 @@
     <key>welcome_screen_feature_devices</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Up to %#@VARIABLE@ at once</string>
+      <string>Bis zu %#@VARIABLE@ auf einmal</string>
       <key>VARIABLE</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -13,9 +13,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 device</string>
+        <string>1 Gerät</string>
         <key>other</key>
-        <string>%d devices</string>
+        <string>%d Geräte</string>
       </dict>
     </dict>
     <key>welcome_screen_feature_servers_countries</key>
@@ -29,9 +29,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d country</string>
+        <string>%d Land</string>
         <key>other</key>
-        <string>%d countries</string>
+        <string>%d Ländern</string>
       </dict>
       <key>num_servers</key>
       <dict>
@@ -40,9 +40,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d+ new server</string>
+        <string>%d+ neuer Server</string>
         <key>other</key>
-        <string>%d+ new servers</string>
+        <string>%d+ neue Server</string>
       </dict>
     </dict>
     <key>modals_upsell_all_countries_feature_multipleDevices</key>
