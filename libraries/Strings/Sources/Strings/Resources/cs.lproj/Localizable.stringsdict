@@ -5,7 +5,7 @@
     <key>welcome_screen_feature_devices</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Up to %#@VARIABLE@ at once</string>
+      <string>Až %#@VARIABLE@ najednou</string>
       <key>VARIABLE</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -13,19 +13,19 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 device</string>
+        <string>1 zařízení</string>
         <key>few</key>
-        <string>%d devices</string>
+        <string>%d zařízení</string>
         <key>many</key>
-        <string>%d devices</string>
+        <string>%d zařízení</string>
         <key>other</key>
-        <string>%d devices</string>
+        <string>%d zařízení</string>
       </dict>
     </dict>
     <key>welcome_screen_feature_servers_countries</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>%#@num_servers@ in %#@num_countries@</string>
+      <string>%#@num_servers@ v(e) %#@num_countries@</string>
       <key>num_countries</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -33,13 +33,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d country</string>
+        <string>%d zemi</string>
         <key>few</key>
-        <string>%d countries</string>
+        <string>%d zemích</string>
         <key>many</key>
-        <string>%d countries</string>
+        <string>%d zemích</string>
         <key>other</key>
-        <string>%d countries</string>
+        <string>%d zemích</string>
       </dict>
       <key>num_servers</key>
       <dict>
@@ -48,13 +48,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d+ new server</string>
+        <string>%d+ nový server</string>
         <key>few</key>
-        <string>%d+ new servers</string>
+        <string>%d+ nové servery</string>
         <key>many</key>
-        <string>%d+ new servers</string>
+        <string>%d+ nových serverů</string>
         <key>other</key>
-        <string>%d+ new servers</string>
+        <string>%d+ nových serverů</string>
       </dict>
     </dict>
     <key>modals_upsell_all_countries_feature_multipleDevices</key>
@@ -64,17 +64,17 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Protect up to %d devices</string>
+        <string>Chraňte až %d zařízení</string>
         <key>few</key>
-        <string>Protect up to %d devices</string>
+        <string>Chraňte až %d zařízení</string>
         <key>many</key>
-        <string>Protect up to %d devices</string>
+        <string>Chraňte až %d zařízení</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Protect up to %d devices</string>
+        <string>Chraňte až %d zařízení</string>
       </dict>
     </dict>
     <key>modals_upsell_all_countries_title</key>
@@ -547,17 +547,17 @@ zastaveno</string>
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Free server locations (%d)</string>
+        <string>Umístění serverů Free (%d)</string>
         <key>few</key>
-        <string>Free server locations (%d)</string>
+        <string>Umístění serverů Free (%d)</string>
         <key>many</key>
-        <string>Free server locations (%d)</string>
+        <string>Umístění serverů Free (%d)</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Free server locations (%d)</string>
+        <string>Umístění serverů Free (%d)</string>
       </dict>
     </dict>
   </dict>

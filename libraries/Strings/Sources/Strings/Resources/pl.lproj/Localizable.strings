@@ -1344,7 +1344,7 @@
 
 "_subscription_will_expire" = "Obecny plan wygaśnie %@.";
 
-"_subscription_will_renew" = "Obecny plan zostanie automatycznie odnowiony %@.";
+"_subscription_will_renew" = "Twój plan odnowi się automatycznie %@.";
 
 "_subscription_description" = "Możesz kupić więcej środków, aby automatycznie przedłużyć obecny plan. Pod koniec okresu obecnej subskrypcji środki te zostaną wykorzystane do kontynuacji planu.";
 

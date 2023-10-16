@@ -5,33 +5,29 @@
     <key>welcome_screen_feature_devices</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Bir kerede %#@VARIABLE@ kadar</string>
+      <string>한 번에 최대 %#@VARIABLE@</string>
       <key>VARIABLE</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>1 aygıt</string>
         <key>other</key>
-        <string>%d aygıt</string>
+        <string>%d개 기기</string>
       </dict>
     </dict>
     <key>welcome_screen_feature_servers_countries</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>%#@num_countries@ ülkede %#@num_servers@</string>
+      <string>%#@num_countries@ 국가에서 %#@num_servers@</string>
       <key>num_countries</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d ülkede</string>
         <key>other</key>
-        <string>%d ülkede</string>
+        <string>%d개 국가</string>
       </dict>
       <key>num_servers</key>
       <dict>
@@ -39,10 +35,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d+ yeni sunucu</string>
         <key>other</key>
-        <string>%d+ yeni sunucu</string>
+        <string>%d개 이상 새로운 서버</string>
       </dict>
     </dict>
     <key>modals_upsell_all_countries_feature_multipleDevices</key>
@@ -51,105 +45,91 @@
       <string>%#@VARIABLE@</string>
       <key>VARIABLE</key>
       <dict>
-        <key>one</key>
-        <string>%d aygıta kadar koruyun</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d aygıta kadar koruyun</string>
+        <string>최대 %d개 장치 보호</string>
       </dict>
     </dict>
     <key>modals_upsell_all_countries_title</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Plus tarifesi ile %#@num_countries@ bulunan %#@num_servers@ erişin</string>
+      <string>%#@num_countries@에서 %#@num_servers@에 접근</string>
       <key>num_countries</key>
       <dict>
-        <key>one</key>
-        <string>%d ülkede</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d ülkede</string>
+        <string>%d개 국가</string>
       </dict>
       <key>num_servers</key>
       <dict>
-        <key>one</key>
-        <string>%d güvenli sunucuya</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d güvenli sunucuya</string>
+        <string>보안 서버 %d개</string>
       </dict>
     </dict>
     <key>subscription_upgrade_option1</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>%#@num_countries@ yüzlerce sunucu</string>
+      <string>%#@num_countries@ 에 수백 개의 서버</string>
       <key>num_countries</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d ülkede</string>
         <key>other</key>
-        <string>%d ülkede</string>
+        <string>%d개 국가</string>
       </dict>
     </dict>
     <key>subscription_upgrade_option2</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Aynı anda %#@num_devices@ ile bağlanabilirsiniz</string>
+      <string>동시에 최대 %#@num_devices@개까지 연결하세요</string>
       <key>num_devices</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d aygıt</string>
         <key>other</key>
-        <string>%d aygıt</string>
+        <string>%d개 기기</string>
       </dict>
     </dict>
     <key>maximum_device_plan_limit_part_2</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string> aynı anda %#@num_devices@ ile bağlanın.</string>
+      <string> 동시에 최대 %#@num_devices@개의 기기에서 연결하세요.</string>
       <key>num_devices</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d aygıt</string>
         <key>other</key>
-        <string>%d aygıt</string>
+        <string>%d개 기기</string>
       </dict>
     </dict>
     <key>search_upsell_title</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>%#@num_countries@ tümüne erişim</string>
+      <string>%#@num_countries@ 모두 엑세스</string>
       <key>num_countries</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d ülkenin</string>
         <key>other</key>
-        <string>%d ülkenin</string>
+        <string>%d개 국가</string>
       </dict>
     </dict>
     <key>_vpnauth_too_many_certs_retry_after</key>
@@ -160,12 +140,10 @@
       <dict>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Belirli bir sürede yapılabilecek en fazla ayar değişikliği sayısı sınırına ulaştınız. %d dakika sonra yeniden deneyebilirsiniz.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>other</key>
-        <string>Belirli bir sürede yapılabilecek en fazla ayar değişikliği sayısı sınırına ulaştınız. %d dakika sonra yeniden deneyebilirsiniz.</string>
+        <string>최대 설정 변경 횟수에 도달했습니다. 최소 %d분 뒤에 다시 시도해 주십시오.</string>
       </dict>
     </dict>
     <key>_countries_count_plus</key>
@@ -178,10 +156,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d+ ülke</string>
         <key>other</key>
-        <string>%d+ ülke</string>
+        <string>%d개 이상 국가</string>
       </dict>
     </dict>
     <key>_countries_count</key>
@@ -194,10 +170,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d ülke</string>
         <key>other</key>
-        <string>%d ülke</string>
+        <string>%d개 국가</string>
       </dict>
     </dict>
     <key>_plans_connections</key>
@@ -210,10 +184,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d bağlantı</string>
         <key>other</key>
-        <string>%d bağlantı</string>
+        <string>%d개 연결</string>
       </dict>
     </dict>
     <key>_netshield_stats_ads_blocked</key>
@@ -226,12 +198,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Engellenen
-reklam</string>
         <key>other</key>
-        <string>Engellenen
-reklam</string>
+        <string>광고가 차단됨</string>
       </dict>
     </dict>
     <key>_netshield_stats_trackers_stopped</key>
@@ -244,12 +212,8 @@ reklam</string>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Durdurulan
-izleyici</string>
         <key>other</key>
-        <string>Durdurulan
-izleyici</string>
+        <string>트래커가 멈춤</string>
       </dict>
     </dict>
     <key>_session_length_days</key>
@@ -263,9 +227,7 @@ izleyici</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d gün</string>
-        <key>one</key>
-        <string>%d gün</string>
+        <string>%d 일</string>
       </dict>
     </dict>
     <key>_session_length_days_and_hours</key>
@@ -279,20 +241,16 @@ izleyici</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d gün</string>
-        <key>one</key>
-        <string>%d gün</string>
+        <string>%d 일</string>
       </dict>
       <key>HOURS</key>
       <dict>
-        <key>one</key>
-        <string>%d sa</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d sa</string>
+        <string>%d시간</string>
       </dict>
     </dict>
     <key>_session_length_hours_and_minutes</key>
@@ -301,25 +259,21 @@ izleyici</string>
       <string>%#@HOURS@ %#@MINUTES@</string>
       <key>MINUTES</key>
       <dict>
-        <key>one</key>
-        <string>%d dk</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d dk</string>
+        <string>%d 분</string>
       </dict>
       <key>HOURS</key>
       <dict>
-        <key>one</key>
-        <string>%d sa</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d sa</string>
+        <string>%d시간</string>
       </dict>
     </dict>
     <key>_session_length_hours</key>
@@ -328,14 +282,12 @@ izleyici</string>
       <string>%#@HOURS@</string>
       <key>HOURS</key>
       <dict>
-        <key>one</key>
-        <string>%d sa</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d sa</string>
+        <string>%d시간</string>
       </dict>
     </dict>
     <key>_session_length_minutes_and_seconds</key>
@@ -344,25 +296,21 @@ izleyici</string>
       <string>%#@MINUTES@ %#@SECONDS@</string>
       <key>MINUTES</key>
       <dict>
-        <key>one</key>
-        <string>%d dk</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d dk</string>
+        <string>%d 분</string>
       </dict>
       <key>SECONDS</key>
       <dict>
-        <key>one</key>
-        <string>%d sn</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d sn</string>
+        <string>%d초</string>
       </dict>
     </dict>
     <key>_session_length_minutes</key>
@@ -371,14 +319,12 @@ izleyici</string>
       <string>%#@MINUTES@</string>
       <key>MINUTES</key>
       <dict>
-        <key>one</key>
-        <string>%d dk</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d dk</string>
+        <string>%d 분</string>
       </dict>
     </dict>
     <key>_session_length_seconds</key>
@@ -387,14 +333,12 @@ izleyici</string>
       <string>%#@SECONDS@</string>
       <key>SECONDS</key>
       <dict>
-        <key>one</key>
-        <string>%d sn</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d sn</string>
+        <string>%d초</string>
       </dict>
     </dict>
     <key>_step_of</key>
@@ -403,25 +347,21 @@ izleyici</string>
       <string>%#@STEP@ %#@STEPS@</string>
       <key>STEPS</key>
       <dict>
-        <key>one</key>
-        <string>/ %d</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>/ %d</string>
+        <string>의 %d</string>
       </dict>
       <key>STEP</key>
       <dict>
-        <key>one</key>
-        <string>%d. adım</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d. adım</string>
+        <string>%d 단계</string>
       </dict>
     </dict>
     <key>free_connections_modal_subtitle</key>
@@ -430,14 +370,12 @@ izleyici</string>
       <string>%#@VARIABLE@</string>
       <key>VARIABLE</key>
       <dict>
-        <key>one</key>
-        <string>Free sunucuları konumları (%d)</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Free sunucuları konumları (%d)</string>
+        <string>무료 서버 지역 (%d개)</string>
       </dict>
     </dict>
   </dict>

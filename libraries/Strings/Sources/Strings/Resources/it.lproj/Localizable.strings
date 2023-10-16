@@ -321,7 +321,7 @@
 "_password" = "Password";
 
 /* Sign-up form */
-"_password_confirm" = "Conferma password";
+"_password_confirm" = "Conferma la password";
 
 /* Show/hide password switch */
 "_show" = "MOSTRA";
@@ -1251,7 +1251,7 @@
 "_ios_onboarding_page3_description" = "Siamo una società di sicurezza. Che si tratti della nostra architettura del Secure Core o di una crittografia avanzata, la sicurezza viene sempre al primo posto.";
 
 /* iOS onboarding next item button */
-"_next" = "Prossimo";
+"_next" = "Avanti";
 
 /* iOS onboarding button to check app without logging in */
 "_discover_the_app" = "Scopri l'app";
@@ -2051,7 +2051,7 @@
 "modals_common_learn_more" = "Scopri di più";
 
 /* Common button title */
-"modals_common_next" = "Prossimo";
+"modals_common_next" = "Avanti";
 
 /* Common button title */
 "modals_common_get_started" = "Inizia ora";

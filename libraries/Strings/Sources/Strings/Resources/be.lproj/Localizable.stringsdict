@@ -5,7 +5,7 @@
     <key>welcome_screen_feature_devices</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Up to %#@VARIABLE@ at once</string>
+      <string>Да %#@VARIABLE@ аднаразова</string>
       <key>VARIABLE</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -13,13 +13,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 device</string>
+        <string>1 прылада</string>
         <key>few</key>
-        <string>%d devices</string>
+        <string>%d прылады</string>
         <key>many</key>
-        <string>%d devices</string>
+        <string>%d прылад</string>
         <key>other</key>
-        <string>%d devices</string>
+        <string>%d прылад</string>
       </dict>
     </dict>
     <key>welcome_screen_feature_servers_countries</key>
@@ -48,13 +48,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Больш за %d сервер</string>
+        <string>Больш за %d новы сервер</string>
         <key>few</key>
-        <string>Больш за %d серверы</string>
+        <string>Больш за %d новыя серверы</string>
         <key>many</key>
-        <string>Больш за %d сервераў</string>
+        <string>Больш за %d новых сервераў</string>
         <key>other</key>
-        <string>Больш за %d сервераў</string>
+        <string>Больш за %d новых сервераў</string>
       </dict>
     </dict>
     <key>modals_upsell_all_countries_feature_multipleDevices</key>

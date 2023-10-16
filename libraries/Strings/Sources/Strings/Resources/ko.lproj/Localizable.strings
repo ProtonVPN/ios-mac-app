@@ -1,0 +1,2216 @@
+/* Common word */
+
+"_cancel" = "취소";
+
+/* Common word */
+"_connect" = "연결";
+
+/* Common word */
+"_connected" = "연결됨";
+
+/* Common word */
+"_delete" = "삭제";
+
+/* Common word */
+"_disconnect" = "연결 해제";
+
+/* Common word */
+"_disconnected" = "연결 해제됨";
+
+/* Status of VPN connection reported by Siri */
+"_disconnecting" = "연결을 끊는 중";
+
+/* Common word */
+"_done" = "완료";
+
+/* Common word */
+"_edit" = "편집";
+
+/* Common word */
+"_ok" = "확인";
+
+/* Common word */
+"_save" = "저장";
+
+/* Common word */
+"_unavailable" = "사용할 수 없음";
+
+/* Description of the expand/collapse button used by accessibility Voice Over */
+"_expand_list_of_servers" = "서버 목록 펼치기";
+
+"_collapse_list_of_servers" = "서버 목록 접기";
+
+/* Used as a title in alerts/modals */
+"_warning" = "경고";
+
+/* Button in many places in both iOS and MacOS apps */
+"_upgrade" = "업그레이드";
+
+/* iOS: Plan selection during plan upgarde, button insettings screen */
+"_upgrade_subscription" = "구독 업그레이드";
+
+/* MacOS: Settings -> Account. Button leading to web interface. */
+"_manage_subscription" = "구독 관리";
+
+/* iOS & MacOS: text near country or server; MacOS: title of several alerts */
+"_upgrade_required" = "업그레이드 필요";
+
+/* MacOS: voice over indication for a country or server on maintenance*/ */
+"_on_maintenance" = "점검 중";
+
+"_reconnection_required" = "재연결 권장됨";
+
+/* Server status in many places in iOS and MacOS apps */
+"_maintenance" = "유지 보수";
+
+/* MacOS: quit application button in custom status menu */
+"_quit" = "나가기";
+
+/* MacOS: alert show before quitting app if VPN is connected */
+"_quit_warning" = "앱을 종료하면 현재 VPN 연결이 끊어집니다. 계속하시겠습니까?";
+
+/* Common word */
+"_enabled" = "활성화됨";
+
+/* Common word */
+"_disabled" = "비활성화됨";
+
+/* Button in some alerts */
+"_disable" = "비활성화";
+
+/* Button in Kill switch error alert */
+"_report" = "신고";
+
+/* Button in Kill switch error alert */
+"_ignore" = "무시";
+
+"_continue" = "계속";
+
+/* Button in some alerts */
+"_show_instructions" = "안내 보기";
+
+/* iOS: quick connect widget */
+"_network_unreachable" = "네트워크 연결 불가";
+
+/* Title in no internet alert */
+"_not_connected_to_the_internet" = "VPN 연결을 구성할 수 없습니다. 인터넷에 연결되지 않았습니다.";
+
+/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
+"_vpn_connection_active" = "VPN 연결 활성화";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
+"_vpn_protocol_not_supported_title" = "VPN 프로토콜 지원되지 않음";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
+"_vpn_protocol_not_supported_text" = "선택한 연결에서 VPN 프로토콜을 사용하실 수 없습니다. 연결하려면, 프로토콜 변경 및 다른 서버로 연결하세요.";
+
+/* iOS: button in settings screen */
+"_log_out" = "로그아웃";
+
+/* iOS: Logout alert */
+"_log_out_warning" = "로그아웃하면 VPN 세션이 종료됩니다.";
+
+/* MacOS: Logout alert */
+"_log_out_warning_long" = "앱에서 로그아웃하면 현재 VPN 연결이 끊어집니다. 계속하시겠습니까?";
+
+/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
+"_change_protocol_disconnect_warning" = "프로토콜을 변경하면 현재 VPN 연결이 해제됩니다.";
+
+/* Slogan text under the logo in may places in iOS and MacOS apps */
+"_loading_screen_slogan" = "어디에서나 안전하게 연결";
+
+/* Main mac app menu item */
+"_report_an_issue" = "문제 제보하기...";
+
+/* Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page. */
+"_help" = "도움말";
+
+/* MacOS: link in login screen */
+"_learn_more" = "자세히 알아보기";
+
+/* iOS: Status view */
+"_ip" = "IP";
+
+/* Common word */
+"_close" = "닫기";
+
+/* Changing settings title */
+"_change_settings" = "설정 변경";
+
+/* Suggest the user to upgrade account for new features */
+"_get_plus_for_feature" = "이 기능과 다른 기능들을 잠금 해제하기 위해 Proton VPN Plus를 얻으세요.";
+
+/* Display more information */
+"_more_info" = "자세히 알아보기";
+
+/* Display less information */
+"_less_info" = "요약 정보";
+
+/* Text addressing to contact costumer support on several sites of the app */
+"_contact_our_support" = "고객센터 문의";
+
+"_turn_on" = "켜기";
+
+"_not_now" = "다음에";
+
+"_allow" = "허용";
+
+/* %@ is an IP address e.g. IP: 123.45.67.890 */
+"_ip_value" = "아이피: %@";
+
+/* %@ is an IP address e.g. Public IP: 123.45.67.890 */
+"_public_ip" = "공개 IP: %@";
+
+/* Several places in both iOS and Mac apps */
+"_quick_connect" = "빠른 연결";
+
+/* Title of the change server button */
+"_change_server" = "서버 번경";
+
+/* Used in many places in MacOS app */
+"_secure_core" = "Secure Core";
+
+/* %@ is a country e.g. Secure Core Switzerland */
+"_secure_core_country" = "Secure Core %@";
+
+/* Profile create/edit menu */
+"_country" = "국가";
+
+"_show_protonvpn" = "Proton VPN 보기";
+
+/* Main mac app menu item */
+"_clear_application_data" = "어플리케이션 데이터 삭제";
+
+/* Main mac app menu item */
+"_system_extension_tutorial_menu_item" = "시스템 확장 튜토리얼";
+
+/* MacOS: connecting overlay */
+"_preparing_connection" = "서버 가용성을 확인하는 중";
+
+/* iOS: main button in tabbar during connecting to vpn phase */
+"_connecting" = "연결 중";
+
+"_connectingDotDotDot" = "연결 중...";
+
+/* iOS: countries list section header */
+"_countries_free" = "무료 국가";
+
+/* iOS: countries list section header */
+"_countries_premium" = "Premium 국가";
+
+/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
+"_connecting_vpn" = "연결 중 %@";
+
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
+"_connecting_to" = "%@에 연결 중";
+
+"_reconnecting_to" = "%@에 다시 연결 중";
+
+/* iOS status view */
+"_connected_to" = "연결됨";
+
+/* macOS: Text on connection overlay shown after connection timed out */
+"_connection_timed_out" = "연결 시간 초과";
+
+/* Text that should be bold in _connection_timed_out string */
+"_connection_timed_out_bold" = "시간 초과";
+
+/* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
+"_connected_to_vpn" = "%@ 에 연결됨";
+
+/* iOS: connection bar; Main mac app menu item; */
+"_not_connected" = "연결되지 않음";
+
+/* MacOS: text in main window */
+"_you_are_not_connected" = "연결되어 있지 않음";
+
+/* MacOS: button in connecting overlay */
+"_try_again" = "다시 시도";
+
+"_try_again_without_killswitch" = "킬 스위치 비활성화 및 재시도";
+
+/* Button in some alerts */
+"_retry" = "재시도";
+
+/* iOS: section header in countries list */
+"_free_servers" = "무료 서버";
+
+/* iOS: section header in countries list */
+"_plus_servers" = "Plus 서버";
+
+/* iOS: section header in countries list */
+"_test_servers" = "TEST 서버";
+
+/* MacOS: connecting overlay */
+"_initializing_connection" = "연결을 구성하는 중...";
+
+/* MacOS: connecting overlay */
+"_successfully_connected" = "연결 성공";
+
+/* MacOS: connecting overlay */
+"_failed" = "실패함";
+
+/* Connection error translation. iOS quick connect widget: text shown on error. */
+"_connection_failed" = "연결 실패";
+
+/* iOS status view */
+"_security" = "보안";
+
+/* iOS status view */
+"_status" = "상태";
+
+/* iOS status view */
+"_session_time" = "세션 시간";
+
+/* iOS status view */
+"_location" = "위치";
+
+/* iOS status view */
+"_city" = "시";
+
+/* iOS status view */
+"_technical_details" = "기술 상세";
+
+/* Main mac app menu item */
+"_open_app_to_log_in" = "로그인 하기 위해 Proton VPN을 표시...";
+
+/* Main mac app menu item */
+"_upgrade_to_plus" = "Plus로 업그레이드";
+
+/* Main mac app menu item */
+"_upgrade_for_secure_core" = "Secure Core 사용";
+
+"_switch_side_button_on" = "켜기";
+
+"_switch_side_button_off" = "끄기";
+
+/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
+"_timeout_ks_ike_descritpion" = "타 애플리케이션이 킬 스위치를 간섭할 수 있습니다. 문제를 해결하려면, OpenVPN 프로토콜으로 변경하거나, 킬 스위치를 해제한 뒤 재시도하세요.";
+
+/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
+"_timeout_ks_ike_switch_protocol" = "OpenVPN으로 전환하고 재시도";
+
+/* Disconnect notification */
+"_kill_switch_blocking_connection" = "킬 스위치가 모든 연결을 차단하고 있습니다";
+
+/* Disconnect notification */
+"_always_on_will_reconnect" = "상시 VPN이 자동으로 VPN에 다시 연결해줍니다";
+
+/* MacOS: About window title */
+"_about" = "소개";
+
+/* iOS setting: after this word actual version and build number are appended */
+"_version" = "버전";
+
+/* MacOS: About window */
+"_version_current" = "현재 버전:";
+
+/* MacOS: About window */
+"_release_date" = "릴리즈 날짜:";
+
+/* MacOS: About window */
+"_changelog" = "변경 내역";
+
+/* MacOS: About window */
+"_acknowledgements" = "승인서";
+
+/* Used in sign-in, sign-up and in settings */
+"_username" = "사용자 이름";
+
+/* Used in sign-in, sign-up */
+"_password" = "비밀번호";
+
+/* Sign-up form */
+"_password_confirm" = "비밀번호 확인";
+
+/* Show/hide password switch */
+"_show" = "보기";
+
+/* Show/hide password switch */
+"_hide" = "숨기기";
+
+/* MacOS: Login button */
+"_login" = "로그인";
+
+/* iOS: Login button in several places */
+"_log_in" = "로그인";
+
+/* MacOS: label in login and settings screens */
+"_remember_login" = "로그인 정보 기억하기";
+
+/* MacOS: label in login and settings screens */
+"_start_on_boot" = "부팅할 때 시작";
+
+/* MacOS: button in login screen */
+"_create_account" = "계정 만들기";
+
+/* MacOS: button in login screen */
+"_need_help" = "도움이 필요하신가요?";
+
+/* MacOS: button in login screen */
+"_reset_password" = "비밀번호 재설정";
+
+/* MacOS: button in login screen */
+"_common_issues" = "일반적인 로그인 문제";
+
+/* MacOS: button in login screen */
+"_forgot_username" = "사용자 이름을 잊으셨나요";
+
+/* iOS: button in login screen */
+"_forgot_password" = "비밀번호를 잊으셨나요?";
+
+/* iOS: button in login and onboarding screens */
+"_sign_up" = "회원가입";
+
+/* MacOS: alert shown during login if already connected to VPN */
+"_warning_vpn_session_is_active" = "다른 사용자의 Proton VPN 세션이 이 디바이스에서 활성화된 상태입니다. 로그인을 계속하면 현재 세션이 종료됩니다. 정말 계속하시겠습니까?";
+
+/* iOS: placeholder for email field in signup and email verification screens */
+"_enter_email_address" = "이메일 주소 입력";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_country_code_placeholder" = "코드";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_number_placeholder" = "전화번호 입력";
+
+/* iOS: title of phone country code selection screen */
+"_select_phone_country_code" = "국가 번호 선택하기";
+
+/* iOS: placeholder in phone country code selection screen */
+"_search_phone_country_code_placeholder" = "국가 검색";
+
+/* iOS: button for switching from sign-up to sign-in screen */
+"_already_have_account" = "이미 계정이 있습니다";
+
+/* iOS: Button in email verification screen */
+"_get_verification_email" = "인증 메일 받기";
+
+/* iOS: Button in SMS verification screen */
+"_get_verification_sms" = "인증 문자 받기";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option" = "계속하기 위해 인증 옵션을 선택하십시오:";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option_top_message" = "악용 신고를 시작하려면, 사람인지 인증이 필요합니다.";
+
+/* iOS: human verification option select button */
+"_use_captcha_verification" = "CAPTCHA 인증";
+
+/* iOS: human verification option select button */
+"_use_other_email_address" = "이메일로 인증";
+
+"_use_sms_verification" = "SMS로 인증";
+
+/* iOS: human verification option select button */
+"_request_invitation" = "수동 활성화 요청";
+
+/* iOS: placeholder for code in human verification code form */
+"_enter_verification_code" = "123 456";
+
+/* iOS: button in human verification code form */
+"_submit_verification_code" = "제출";
+
+/* iOS: button in human verification code form */
+"_resend_no_code" = "코드를 받지 못하셨나요?";
+
+/* iOS: button in human verification code form */
+"_resend_code" = "새 코드 요청";
+
+/* iOS: message after human verification code resending */
+"_resend_success" = "새 코드 필요함";
+
+/* iOS: link inside text under sign-up form */
+"_terms_and_conditions" = "이용 약관";
+
+/* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
+"_terms_and_conditions_disclaimer" = "Proton VPN을 사용함으로서, \n%@ 와 %@ 에 동의하는 것으로 간주합니다.";
+
+/* iOS: link inside text under sign-up form */
+"_privacy_policy" = "개인정보취급방침";
+
+/* iOS: text in human verification code form */
+"_verification_instructions" = "인증 코드를 전송해 드렸습니다, 아래에 입력해주세요.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete" = "설정 완료";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_free" = "Proton VPN 무료 요금제로 로그인 하셨습니다. 시작 할때, Proton VPN Plus 요금제를 7일 동안 무료로 사용해 보세요.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_plus" = "구매를 성공했습니다. Proton VPN Plus 요금제가 이제 활성화 되었습니다.";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_title" = "온라인에서도 자신을 지키세요";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_text" = "Proton VPN은 당신의 사생활을 보호하고 존중하기 위해 최선을 다하고 있습니다. 앱 사용 시 개인적이고 익명의 사용자 경험을 보장하기 위해 가능한 한 적은 사용자 데이터를 수집하는 것이 최우선 정책입니다.
+
+\n\n%@ - 로그인하고, 잃어버린 비밀번호를 복구하고, 중요한 서비스 업데이트를 보냅니다.
+
+\n\n%@ - 오류 보고서 전송과 오류만 보냅니다.
+
+\n\nProton VPN 앱은 이 데이터 이외의 사용자 정보를 처리하지 않습니다. 당사는 당신의 온라인 활동이나 개인 식별 정보를 기록하지 않습니다. 위에 나열된 모든 데이터는 Proton VPN의 자체 시스템에 저장 및 처리되며, 제3자는 액세스할 수 없습니다.";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_user_details" = "사용자 이름, 이메일 주소";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_device_details" = "기기 모델과 OS 버전";
+
+/* iOS: data disclaimer screen button */
+"_data_disclaimer_agree" = "동의하고 계속하기";
+
+/* iOS: Map screen title and tabbar item */
+"_map" = "지도";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_show" = "지도 표시";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_hide" = "지도 숨기기";
+
+/* Description shown together with server info icon */
+"_tor_description" = "TOR 네트워크에 연결";
+
+/* Description shown together with server info icon */
+"_p2p_description" = "P2P 트래픽 지원";
+
+/* Description shown together with server info icon */
+"_premium_description" = "Premium 서버";
+
+/* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
+"_via_country" = "%@ 경유";
+
+/* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
+"_via" = "경유";
+
+/* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
+"_server_load_percentage" = "%@%% 로드";
+
+/* iOS: Home screen title, tab bar item title; MacOS: TabBar tab title; */
+"_home" = "홈";
+
+/* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
+"_countries" = "국가";
+
+"_no_servers_to_show" = "현재 여기에 표시할 서버가 없습니다.";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_plan_does_not_include_secure_core" = "사용자의 플랜이 Secure Core 기능을 포함하지 않습니다.";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_learn_more_about_secure_core" = "Secure Core에 대해 더 알아보기";
+
+/* MacOS: placeholder for country search */
+"_search_for_country" = "국가 검색";
+
+/* MacOS: secure core tooltip */
+"_secure_core_info" = "보안 네트워크를 통해 트래픽을 라우팅하여 VPN 서버 손상에 대한 추가 보호 제공";
+
+/* Text in warning screen before actions that will disconnect VPN */
+"_view_toggle_will_cause_disconnect" = "보안 코어를 전환하면 현재 연결이 종료됩니다.";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_load" = "서버 부하율:";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_ip" = "서버 IP:";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_auto_assigned" = "자동 할당";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_premium_server" = "Premium 서버";
+
+/* MacOS profile form: feature selection value */
+"_standard" = "표준";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_p2p" = "P2P";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_tor" = "TOR";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_p2p_server" = "P2P 서버";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_tor_server" = "Tor 서버";
+
+/* MacOS Profiles Overview: Table column header */
+"_profile" = "프로필";
+
+/* MacOS: menu item, profiles window main header, sidebar tab title; iOS: Profiles screen title and tabbar item title; */
+"_profiles" = "프로필";
+
+/* iOS: table header section in profiles screen */
+"_recommended" = "추천";
+
+/* iOS: table header section in profiles screen */
+"_my_profiles" = "내 프로필";
+
+/* Button */
+"_save_as_profile" = "프로필 저장";
+
+/* Button */
+"_delete_profile" = "프로필 삭제";
+
+/* iOS: Success message on profile deletion */
+"_profile_deleted_successfully" = "프로필 삭제됨";
+
+/* iOS: Error message if profile can't be deleted */
+"_profile_deletion_failed" = "프로파일을 지울 수 없음";
+
+/* MacOS: Buttons in several places; iOS: profile creation screen title */
+"_create_new_profile" = "프로필 생성";
+
+/* MacOS: button in profiles tab in main window */
+"_manage_profiles" = "프로필 관리";
+
+/* MacOS: profiles window title */
+"_profiles_overview" = "프로필 개요";
+
+/* iOS: success message after profile is saved */
+"_profile_created_successfully" = "새 프로필 저장됨";
+
+/* iOS: failure message after profile is saved */
+"_profile_creation_failed" = "프로필을 생성할 수 없음";
+
+/* iOS: success message after profile is saved */
+"_profile_edited_successfully" = "프로필 업데이트됨";
+
+/* MacOS menu item; MacOS Profiles tab title; */
+"_overview" = "한눈에 보기";
+
+/* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
+"_connection" = "연결";
+
+/* MacOS Profiles Overview: Table header for buttons column */
+"_action" = "동작";
+
+/* Used for both profile description when fastest server option is selected and Plan speed description */
+"_fastest" = "가장 빠른";
+
+/* Profile create/change form */
+"_fastest_available_server" = "연결 가능한 가장 빠른 서버";
+
+/* iOS: Predefined profile with fastest connection */
+"_fastest_connection" = "가장 빠른";
+
+/* Profile create/change form and other places describing profile */
+"_random" = "랜덤";
+
+/* Profile create/change form */
+"_random_available_server" = "무작위 사용 가능한 서버";
+
+/* iOS: Predefined profile with random server */
+"_random_connection" = "무작위";
+
+/* Profile create/change form */
+"_different_server_each_time" = "매번 다른 서버";
+
+/* Text used when no active server information is available */
+"_no_description_available" = "사용 가능한 정보 없음";
+
+"_create_profile" = "프로필 생성";
+
+/* Profile create/change form */
+"_profile_settings" = "프로필 설정";
+
+/* Profile create/change form */
+"_connection_settings" = "연결 설정";
+
+/* Profile create/change form */
+"_name" = "이름";
+
+/* Profile create/change form */
+"_enter_profile_name" = "프로필 이름을 입력하세요";
+
+/* Profile create/change form */
+"_color" = "색상";
+
+/* Profile create/change form */
+"_make_default_profile" = "기본 프로필 생성";
+
+/* Profile create/change form */
+"_default_profile_tooltip" = "\"빠른 연결\" 버튼은 기본 프로필을 사용합니다.\n";
+
+"_feature" = "특징";
+
+/* Profile create/change form */
+"_use_secure_core" = "Secure Core";
+
+/* Profile create/change form */
+"_select_country" = "국가 선택";
+
+/* Profile create/change form */
+"_server" = "서버";
+
+/* Profile create/change form */
+"_select_server" = "서버 선택";
+
+/* Error in profile create/change form */
+"_profile_name_is_required" = "이름을 입력하세요";
+
+/* Error in profile create/change form */
+"_profile_name_is_too_long" = "최대 프로필 이름 허용 길이는 25자입니다";
+
+/* Error when user hasn't selected profile country */
+"_country_selection_is_required" = "국가를 선택하여 주십시오";
+
+/* Error when user hasn't selected profile server */
+"_server_selection_is_required" = "서버를 선택해 주세요";
+
+"_profile_name_needs_to_be_unique" = "같은 이름의 프로필이 이미 존재합니다";
+
+/* MacOS: profile creation cancel alert text */
+"_current_selection_will_be_lost" = "계속하면, 현재 섹션을 잃습니다. 계속하시겠습니까?";
+
+/* iOS: new profkle can't be created because not all required fields are filled */
+"_check_if_fields_present" = "모든 필드가 채워져 있는지 확인해 주세요";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_header" = "프로필 삭제";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_warning" = "이 프로필이 영구적으로 삭제됩니다. 계속하시겠습니까?";
+
+/* iOS: new profile screen */
+"_select_profile_color" = "프로필 색상 선택";
+
+/* Plan speed */
+"_plan_speed_medium" = "일반 속도";
+
+/* Plan speed */
+"_plan_speed_high" = "높은 속도";
+
+"_plan_speed_fastest" = "최고 속도";
+
+/* Unknown error that has no better description */
+"_error_internal_error" = "내부 API 오류";
+
+/* VPN session is active error */
+"_error_vpn_session_is_active" = "Proton VPN 세션이 활성화되어 있습니다";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_missing" = "사용자 자격증명 없음. 로그인할 수 없음";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_expired" = "사용자 자격 증명 만료됨. 로그인해 주세요";
+
+/* VPN credentials can't be loaded error */
+"_error_vpn_credentials_missing" = "키체인의 VPN 자격 증명이 없습니다";
+
+/* Form validation error */
+"_error_field_required" = "필수 항목";
+
+"_error_field_email_wrong_format" = "올바른 형식의 이메일 주소가 아닙니다";
+
+"_error_field_passwords_dont_match" = "비밀번호가 일치하지 않습니다";
+
+/* Human validation failed */
+"_error_user_failed_human_validation" = "사용자가 사람인지 인증할 수 없습니다. 다시 시도하거나 프리미엄 플랜을 구입해 주십시오.";
+
+/* Error decoding an object */
+"_error_decode" = "클래스에서 보관된 데이터를 디코딩하지 못했습니다: %@";
+
+/* Internal application error */
+"_error_email_verification_disabled" = "이메일 인증 일시 비활성화됨";
+
+/* Error writing to system keychain */
+"_error_keychain_write" = "Proton이 기기와 통신할 수 없습니다. 잠시 후 다시 시도하십시오.";
+
+/* Error when try to parse modulus signature */
+"_error_modulus_signature" = "모듈 서명이 비었습니다";
+
+/* Error when generate srp clint */
+"_error_generate_srp" = "SRP 생성 실패";
+
+/* Error when try to hash password */
+"_error_hash_password" = "비밀번호를 해싱할 수 없습니다";
+
+/* Error try to restore user from the session */
+"_error_fetch_session" = "세션으로 부터 사용자를 찾을 수 없음";
+
+/* Network error */
+"_ne_request_timed_out" = "네트워크 요청 시간 초과됨";
+
+/* Network error */
+"_ne_unable_to_connect_to_host" = "서비스에 도달할 수 없음";
+
+/* Network error */
+"_ne_network_connection_lost" = "네트워크 연결 끊어짐";
+
+/* Network error */
+"_ne_not_connected_to_the_internet" = "인터넷에 연결되지 않음";
+
+/* Network error */
+"_ne_couldnt_reach_server" = "Proton 서버에 도달할 수 없습니다";
+
+/* API error */
+"_ae_wrong_login_credentials" = "잘못된 사용자 이름 또는 비밀번호";
+
+/* API error */
+"_ae_vpn_info_not_received" = "VPN 정보를 수집할 수 없습니다";
+
+/* Error when try to parse the server info */
+"_error_server_info_parser" = "서버 정보를 분석할 수 없습니다";
+
+/* Error when try to parse the partner info */
+"_error_partner_info_parser" = "파트너 정보를 불러올 수 없음";
+
+/* Default error when vpn properties fetch failed */
+"_error_vpn_properties" = "VPN 속성을 가져올 수 없음!";
+
+/* Parsing error */
+"_error_session_count_parser" = "세션 수를 분석할 수 없습니다";
+
+/* Parsing error */
+"_error_loads" = "서버 로드를 업데이트 할 수 없음";
+
+/* API error */
+"_error_api_offline" = "Proton VPN API는 현재 오프라인입니다";
+
+/* Error when try to parse subscription info */
+"_error_subscription_parser" = "구독 정보를 분석할 수 없음";
+
+/* Error when try to parse verification methods */
+"_error_verification_methods_parser" = "인증 방법을 분석할 수 없음";
+
+/* Keychain error */
+"_error_keychain_fetch" = "키체인 오류";
+
+/* Error when the app fails to create a user */
+"_error_user_creation" = "계정 생성 실패";
+
+/* General title for several error alerts */
+"_error_unknown_title" = "알 수 없는 오류";
+
+/* Delinquent user alert */
+"_delinquent_user_title" = "미지급 청구서";
+
+/* Delinquent user alert */
+"_delinquent_user_description" = "귀하의 계정에 현재 연체된 금액이 있습니다. account.protonvpn.com에서 연체된 금액을 지불해주세요.";
+
+/* Generic sign in error */
+"_error_sign_in_again" = "죄송합니다. 문제가 발생했습니다. 다시 로그인해주세요.";
+
+"_p2p_detected_popup_title" = "P2P 트래픽이 이 서버에서 허용되지 않습니다";
+
+"_p2p_detected_popup_body" = "사용 중인 서버가 P2P 트래픽을 지원하지 않아 연결이 해제되었습니다. P2P는 무료 서버에서 지원되지 않습니다. P2P는 무료 서버나 100 이상의 서버에서 지원되지 않습니다.";
+
+"_p2p_forwarded_popup_title" = "연결이 다시 라우팅됨";
+
+/* Under maintenance alert */
+"_server_under_maintenance" = "서버가 점검 중입니다";
+
+/* macOS: plan upgrade required alert */
+"_upgrade_plan_to_access_server" = "죄송합니다, 이 서버는 사용자의 구독 티어에서 사용하실 수 없습니다. 더 많은 서버에 접근하고 싶으시다면, 구독을 업그레이드 하는 것을 고려해 보세요.";
+
+/* Under maintenance alert */
+"_all_servers_in_country_under_maintenance" = "이 국가의 모든 서버가 점검 중입니다. 다른 국가로 연결해 주십시오.";
+
+"_unsecure_wifi" = "감지된 보안 WiFi 연결";
+
+"_unsecure_wifi_learn_more" = "자세히 알아보기";
+
+"_unsecure_wifi_title" = "안전하지 않은 WiFi 감지됨";
+
+"_maintenance_on_server_detected_title" = "VPN 서버가 점검 중입니다";
+
+"_maintenance_on_server_detected_subtitle" = "연결했던 서버가 점검 중입니다";
+
+"_maintenance_on_server_detected_description" = "가능한 가장 빠른 서버를 재연결 하고 있습니다.";
+
+/* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
+"_reconnect_on_settings_change_body" = "이 변경을 적용하려면 다시 연결해야 합니다.";
+
+/* Under maintenance alert */
+"_country_servers_under_maintenance" = "%@개 서버가 점검 중입니다";
+
+/* Under maintenance alert */
+"_all_servers_in_profile_under_maintenance" = "프로필 서버가 점검 중입니다";
+
+/* Under maintenance alert */
+"_all_servers_under_maintenance" = "모든 서버가 현재 점검 중입니다. 이는 보통 Proton VPN 측에 기술적인 문제가 있음을 뜻하거나, 사용자의 네트워크가 제한되었음을 의미합니다.";
+
+"_p2p_forwarded_popup_body" = "특정 서버가 P2P 트래픽을 지원하지 않기 때문에 연결이 다른 서버를 통해 자동으로 다시 라우팅되었습니다. 이는 사용자의 연결 속도를 저하시킬 수 있습니다. 다시 라우팅 되는 일을 피하기 위해 P2P 라벨이 있는 서버를 사용하세요.";
+
+"_p2p_forwarded_popup_body_p1" = "특정 서버가 P2P 트래픽을 지원하지 않기 때문에 연결이 다른 서버를 통해 자동으로 다시 라우팅되었습니다. 이는 사용자의 연결 속도를 저하시킬 수 있습니다.";
+
+"_p2p_forwarded_popup_body_p2" = "아이콘이 있는 서버를 사용해서 트래픽 재라우팅을 방지해주세요.";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_title" = "연결 오류";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_body" = "사용자의 장치가 이전 VPN 세션을 종료하지 못했습니다. 새로운 VPN 연결을 설정하기 전에 장치를 다시 시작해야 합니다.";
+
+"_update_required" = "업데이트가 필요합니다";
+
+"_update_required_no_longer_supported" = "이 버전의 Proton VPN은 더 이상 지원되지 않습니다. 계속 사용하려면 업데이트하세요.";
+
+/* Secondary button title in the App update required alert  */
+"_update_required_support" = "문의하기";
+
+/* Primary button title in the App update required alert  */
+"_update_required_update" = "업데이트";
+
+"_invalid_refresh_token_please_login" = "마지막으로 Proton VPN 앱을 사용한 지 오래되었습니다. 다시 로그인해 주세요.";
+
+"_error_mitm_title" = "안전하지 않은 연결";
+
+"_error_mitm_description" = "Proton VPN API에 연결하려고 할 때 TLS 인증서 유효성 검사가 실패했습니다. 현재 인터넷 연결이 모니터링될 수 있습니다. 데이터를 안전하게 유지하기 위해, 앱이 Proton VPN API에 접근하는 것을 차단하고 있습니다.\n로그인하거나 계정에 액세스하려면, 새 네트워크로 전환하고 다시 연결해 보십시오.";
+
+"_error_mitm_vpn_description" = "VPN 서버 API에 연결하려고 할 때 TLS 인증서 유효성 검사가 실패했습니다. 현재 인터넷 연결이 모니터링될 수 있습니다. 데이터를 안전하게 유지하기 위해, 앱이 Proton VPN API에 접근하는 것을 차단하고 있습니다.\n다른 서버를 선택해 주십시오.";
+
+/* Internal error message when there is a problem with initializing tls and connection cannot be established. */
+"_error_tls_initialisation" = "TLS 초기화 오류";
+
+/* Internal error message when there is a problem with server certificate and connection cannot be established. */
+"_error_tls_server_verification" = "서버의 인증서를 확인할 수 없습니다.";
+
+/* Mac: neagent help screen */
+"_neagent_description" = "Proton VPN 서비스에 연결하기 위해 %@\n 을(를) 제공하라는 요구가 나타날 수 있습니다. 만약 이가 나타날 시,\n%@ %@ 을(를) 입력하고 '%@' %@ 을(를) 입력하십시오.";
+
+/* Mac: neagent help screen */
+"_neagent_password" = "컴퓨터 계정 비밀번호";
+
+/* Mac: neagent help screen */
+"_mac_password" = "Mac 암호";
+
+/* Mac: neagent help screen */
+"_neagent_first_step" = "(1)";
+
+/* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
+"_neagent_always_allow" = "항상 허용";
+
+/* Mac: neagent help screen */
+"_neagent_second_step" = "(2)";
+
+/* Button in several different alerts */
+"_got_it" = "알겠습니다!";
+
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_title" = "앱에서 업그레이드 불가";
+
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_body" = "사용자의 Proton VPN 구독을 앱에서 업그레이드 할 수 없습니다, 업그레이드를 위해 account.protonvpn.com에 방문하십시오.";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_title" = "어플리케이션 데이터 삭제";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_body" = "모든 Proton VPN 데이터가 삭제되고 어플리케이션이 종료됩니다. 계속하시겠습니까?";
+
+/* MacOS: killswitch blocking alert button */
+"_kill_switch_disable" = "킬 스위치 비활성화";
+
+/* iOS and macOS: Enable kill switch on badly-routed networks */
+"_kill_switch_enable" = "킬 스위치 활성화";
+
+/* MacOS: Settings screen title */
+"_preferences" = "설정";
+
+/* iOS: Settings screen title and tab title */
+"_settings" = "설정";
+
+/* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
+"_account" = "계정";
+
+/* Alert title for account deletion error */
+"_account_deletion_error" = "오류";
+
+/* iOS: Message explaining that deleting account closes the VPN connection */
+"_account_deletion_connection_warning" = "계정을 삭제하면 VPN 세션이 삭제됩니다.";
+
+/* MacOS: General tab in setting window */
+"_general" = "일반";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_type" = "계정 유형";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_plan" = "계정 플랜";
+
+"_manage_subscription_on_web" = "웹 대시보드에서 구독을 관리하세요";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_kill_switch" = "킬 스위치";
+
+/* MacOS: Settings -> Connection. Kill switch functionality description. */
+"_kill_switch_tooltip" = "VPN 터널이 끊기면 모든 네트워크 트래픽을 차단합니다.";
+
+/* iOS Settings: toggle name */
+"_always_on_vpn" = "VPN 항상 켜기";
+
+/* iOS Settinsg screen: always-on description under the switch */
+"_always_on_vpn_tooltip_ios" = "항상 VPN은 안전한 VPN 연결을 신속하고 자동으로 다시 설정합니다. 보안을 위해, 이 기능은 항상 켜져 있습니다.";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_auto_connect" = "자동 연결";
+
+/* MacOS: Settings -> Connection: description. */
+"_auto_connect_tooltip" = "앱이 시작되면 선택한 프로필에 연결됩니다";
+
+/* MacOS: Settings -> Connection: description. */
+"_quick_connect_tooltip" = "빠른 연결 버튼을 누르면 선택한 프로필에 연결됩니다";
+
+/* MacOS: Settings -> General: name of field. */
+"_start_minimized" = "최소화 상태로 시작";
+
+/* MacOS: Settings -> General: name of field. */
+"_system_notifications" = "시스템 알림";
+
+/* MacOS: Settings -> General: name of field. */
+"_early_access" = "얼리 액세스";
+
+/* MacOS: Settings -> General: description. */
+"_early_access_tooltip" = "가장 먼저 최신 업데이트를 받아 보세요. 이른 버전은 덜 안정적일 수 있다는 점을 상기해 주세요.";
+
+/* MacOS: Settings -> General: name of field. */
+"_unprotected_network" = "보호되지 않은 네트워크 알리기";
+
+/* MacOS: Settings -> General: description */
+"_unprotected_network_tooltip" = "Proton VPN이 보호되지 않은 네트워크에 연결했음을 감지했을때 알림을 받게 됩니다.";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_dns_leak_protection" = "DNS 유출 방지";
+
+/* MacOS: Settings -> Connection: description. */
+"_dns_leak_protection_tooltip" = "제3자에게 DNS 쿼리 정보가 누출되는 것을 방지합니다. 항상 켜져 있습니다.";
+
+/* iOS Settings: table section header */
+"_security_options" = "보안 설정";
+
+/* iOS Settings -> Connection: name of field. */
+"_subscription_plan" = "구독 요금제";
+
+/* iOS plan selection: header */
+"_choose_plan" = "요금제를 선택하세요";
+
+"_protocol" = "프로토콜";
+
+/* iOS Settings -> Protocol: screen title */
+"_vpn_protocol" = "VPN 프로토콜";
+
+"_openvpn" = "OpenVPN";
+
+/* iOS Settings -> Protocol: IKEv2 option */
+"_ikev2" = "IKEv2";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: TCP option */
+"_tcp" = "TCP";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: UDP option */
+"_udp" = "UDP";
+
+/* iOS Settings -> Protocol -> WireGuard: TLS option */
+"_tls" = "TLS";
+
+/* iOS Settings -> Protocol: WireGuard option */
+"_wireguard" = "WireGuard";
+
+/* Settings -> Protocol: WireGuard TLS Option called "Stealth". Should not be translated. */
+"_wireguard_tls" = "Stealth";
+
+/* MacOS menu item; iOS setting screen item */
+"_view_logs" = "로그 보기";
+
+/* iOS logs screen title */
+"_logs" = "로그";
+
+/* iOS Settings: applications logs row */
+"_application_logs" = "어플리케이션 로그";
+
+/* iOS Settings: OpenVPN logs row */
+"_open_vpn_logs" = "OpenVPN 로그";
+
+/* iOS Settings: WireGuard logs row */
+"_wireguard_logs" = "WireGuard 로그";
+
+/* iOS widget help screen: title */
+"_activate_widget" = "위젯 활성화";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_1" = "홈스크린에서 화면 끝자락에서 왼쪽으로 스와이프하여 위젯에 빠르게 접근하세요.";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_2" = "아래로 스크롤하고 편집 버튼을 누르세요.";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_3" = "활성 위젯 목록에 Proton VPN 위젯을 추가하세요.";
+
+/* Report bug screen title; iOS settings screen: item; */
+"_report_bug" = "문제 보고하기";
+
+"_allow_lan_title" = "LAN 연결 허용";
+
+"_allow_lan_info" = "VPN을 우회하고 프린터와 같은 로컬 네트워크의 장치에 연결할 수 있습니다.";
+
+"_allow_lan_description" = "LAN 접근을 허용하려면, 킬 스위치가 꺼져 있어야 합니다.\n\n계속하시겠습니까?";
+
+"_allow_lan_note" = "이 설정을 적용하려면 다시 연결해야 합니다";
+
+/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_title" = "킬 스위치 켜기?";
+
+/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_description" = "킬 스위치를 활성화 하면, 로컬 네트워크에 연결하지 못할 수 있습니다. \n\n계속 하시겠습니까?";
+
+/* %@ is a plan name e.g. Get Plus Plan */
+"_get_plan" = "%@ 플랜 얻기";
+
+/* Account plan description */
+"_free_countries" = "3 국가";
+
+/* Account plan description */
+"_all_countries" = "60+ 국가";
+
+/* %@ is a speed description e.g. Speed: Highest */
+"_speed" = "%@ 속도";
+
+/* Value of speed in _speed */
+"_medium" = "중간";
+
+/* Value of speed in _speed */
+"_high" = "높음";
+
+/* Value of speed in _speed */
+"_highest" = "최고";
+
+/* Features of account plan */
+"_plus_plan_features" = "Plus 서버\nSecure Core\nTor 서버";
+
+/* Used instead of price for free plans. */
+"_free" = "무료";
+
+/* Alert message during In App Purchase */
+"_do_you_want_to_activate_subscription_for" = "구독하는 서비스 플랜을 활성화 하시겠습니까 ";
+
+/* Label in Plan information */
+"_most_popular" = "가장 인기";
+
+/* Button in plan selection */
+"_select_plan" = "플랜 선택";
+
+/* Plan information */
+"_advanced_features" = "+ 고급 기능";
+
+/* Plan information */
+"_adblocker_netshield_feature" = "광고 차단기 (NetShield)";
+
+/* Text description in plan selection screen */
+"_plans_footer" = "유료 요금제 구매를 확인하면, iTunes 계정에 세금과 추가 플랫폼 수수료(Proton이 직접 청구하지 않음) 가 포함된 표시된 금액이 청구됩니다. 구매 후, 1년 동안 선택한 플랜으로 자동으로 업그레이드되며, 그 후 온라인 또는 iOS 앱을 통해 갱신하거나 취소할 수 있습니다.";
+
+/* Per year. Appended to plan price. */
+"_per_year_short" = "/ 년";
+
+/* iOS plan feature */
+"_feature_server_count" = "서버에 연결";
+
+/* iOS plan feature */
+"_feature_speed" = "속도";
+
+/* iOS plan feature */
+"_feature_connections" = "동시 VPN 연결";
+
+/* iOS plan feature */
+"_feature_secure_streaming" = "보안 스트리밍";
+
+/* iOS plan feature */
+"_feature_tor" = "VPN을 통한 Tor";
+
+/* iOS plan feature */
+"_feature_secure_core" = "Secure Core";
+
+/* iOS plan feature */
+"_feature_blocked_content" = "차단된 콘텐츠에 접속";
+
+"_feature_bt" = "BitTorrent/파일 공유 지원";
+
+/* MacOS welcome screen: title */
+"_welcome_title" = "환영합니다!";
+
+/* MacOS welcome screen: description */
+"_welcome_description" = "Proton VPN를 사용해 주셔서 감사합니다. 주요한 앱 기능을 빠르게 살펴봅시다.\n";
+
+/* MacOS welcome screen: cancel button */
+"_no_thanks" = "괜찮습니다";
+
+/* MacOS welcome screen: skip button */
+"_skip" = "건너뛰기";
+
+/* MacOS welcome screen: take a tour button */
+"_take_tour" = "둘러보기";
+
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Plus";
+
+/* MacOS: Used ir trial welcome and trial expired screens */
+"_p2p_servers" = "P2P 서버";
+
+"_5_connections" = "5 연결";
+
+/* Mac: Used in several Trial screens */
+"_multiple_countries" = "다중 국가";
+
+/* MAC: is inserted into _free_trial_expired_title insteadof %@ */
+"_expired" = "만료됨";
+
+/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
+"_free_trial_expired_title" = "무료 체험 %@";
+
+/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "최근 Proton VPN 무료 버전으로 다운그레이드 하셨습니다.\n%@ 에서 잃게 되는 혜택들 입니다:";
+
+/* Cancel button in trial modals used in both iOS and MacOS */
+"_maybe_later" = "다음에";
+
+/* Upgrade button in trial modals used in both iOS and MacOS */
+"_upgrade_now" = "지금 업그레이드";
+
+/* MacOS: Button in Upgrade screen */
+"_upgrade_my_plan" = "내 플랜을 업그레이드";
+
+/* MacOS: \Trial about to expire\ screen title */
+"_free_trial_about_to_expire_title" = "무료 체험이 곧 만료됩니다!";
+
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
+"_free_trial_about_to_expire_description" = "%@ 으로 업그레이드 하고 계속 이 기능들을 즐겨보세요:";
+
+"_5_connections_description" = "동시에 최대 5개의\n기기에서 연결하세요";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_core_description" = "저희가 호스팅하는\n엄청나게 안전한 서버";
+
+/* MacOS: \Trial about to expire\ screen */
+"_multiple_servers_title" = "다중 서버";
+
+/* MacOS: \Trial about to expire\ screen */
+"_multiple_servers_description" = "전 세계에 있는\n수백 개의 서버";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_title" = "보안 스트리밍";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_description" = "좋아하는 콘텐츠를 안전하게\n스트리밍 하세요";
+
+/* MacOS app tour: quick connect title */
+"_quick_connect_tour_title" = "빠른 연결";
+
+/* MacOS app tour: quick connect description */
+"_quick_connect_tour_description" = "가장 빠른 연결을 제공하는 서버에 자동으로 연결합니다.";
+
+/* MacOS app tour: profiles title */
+"_profiles_tour_title" = "프로필";
+
+/* MacOS app tour: profiles description */
+"_profiles_tour_description" = "나중에 사용할 수 있도록 원하는 설정과 서버를 저장하세요.";
+
+/* MacOS app tour: countries list title */
+"_countries_tour_title" = "국가";
+
+/* MacOS app tour: countries list description */
+"_countries_tour_description" = "최종 IP 주소에 사용할 국가와 서버를 선택하세요.";
+
+/* MacOS app tour: quick settings title */
+"_quick_settings_tour_title" = "간편 설정";
+
+/* MacOS app tour: quick settings description */
+"_quick_settings_tour_description" = "한 번의 클릭으로 보안을 향상하세요:";
+
+/* MacOS app tour: quick settings secure core */
+"_quick_settings_tour_feature_1" = "Secure Core로 보안 층을 하나 더 추가하세요.";
+
+/* MacOS app tour: quick settings net shield */
+"_quick_settings_tour_feature_2" = "NetShield와 함께 멀웨어 및 광고로 부터 자유롭게 웹을 탐색하세요.";
+
+/* MacOS app tour: quick settings kill switch */
+"_quick_settings_tour_feature_3" = "Kill switch를 활성화 하여 IP가 노출되는 것을 방지하세요.";
+
+/* MacOS app tour: next tip button */
+"_next_tip" = "다음 팁";
+
+/* MacOS app tour: end tour button */
+"_end_tour" = "끝내기";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page1_title" = "더 나은 인터넷에 오신 것을 환영합니다";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page1_description" = "ProtonMail을 개발한 과학자와 엔지니어로 부터: 더 안전하고 프라이빗한 인터넷 세계에 오신 것을 환엽합니다.";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page2_title" = "우리는 인터넷이 자유로워야 한다고 생각합니다";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page2_description" = "검열과 지역 제한을 극복하세요. Proton VPN은 광고도 없고, 대역폭 제한도 없으며, 당신의 데이터를 판매하지도 않습니다.";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page3_title" = "저희는 당신의 보안을 가장 중요시합니다.";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page3_description" = "우리는 보안 회사입니다. 그러기에, 보안 코어 아키텍처이든 고급 암호화이든, 보안이 항상 최우선입니다.";
+
+/* iOS onboarding next item button */
+"_next" = "다음";
+
+/* iOS onboarding button to check app without logging in */
+"_discover_the_app" = "앱을 탐색해보세요";
+
+/* iOS: Table header in settings screen */
+"_extensions" = "확장 프로그램";
+
+/* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
+"_widget" = "iOS 위젯";
+
+/* Menu point in settings screen */
+"_usage_statistics" = "사용 통계";
+
+/* iOS widget: text for not-logged-in user */
+"_log_in_to_use_widget" = "시작하려면 로그인해 주세요";
+
+"_vpnstatus_not_loggedin" = "Proton VPN에 로그인하지 않았습니다. Proton VPN 앱을 열고 로그인하세요.";
+
+/* Bug report attachments */
+"_report_attachments" = "첨부 파일";
+
+/* iOS bug report: header before logs description */
+"_report_logs" = "VPN 로그";
+
+/* iOS bug report: description of log selection switch */
+"_report_logs_description" = "이 항목을 활성화 하시면 VPN 클라이언트의 로그가 첨부됩니다.";
+
+/* iOS bug report: Title before report bug form */
+"_report_report" = "메시지 신고";
+
+/* iOS bug report: Placeholder for email form field */
+"_report_placeholder_email" = "연락처 이메일";
+
+/* Bug report: Placeholder for text form field */
+"_report_placeholder_message" = "내 메시지...";
+
+/* Bug report: Send report button text */
+"_report_send" = "신고 보내기";
+
+/* Bug report: Success message after report was sent */
+"_report_success" = "보고해주셔서 감사합니다";
+
+/* Mac bug report: description text before bug report form */
+"_report_description" = "다음 정보를 제공하면, 저희 팀이 높은 확률로 더 짧은 시간 안에 문제를 파악하고 가능한 해결책을 제공할 수 있습니다:\n• Proton VPN 앱 로그\n• OpenVPN 로그\n• WireGuard 로그";
+
+/* Mac bug report: email field label */
+"_report_field_email" = "이메일:";
+
+/* Mac bug report: feedback field label */
+"_report_field_feedback" = "무엇이 잘못됐나요?";
+
+/* Mac bug report: steps field label */
+"_report_field_steps" = "당신이 실행한 작업이 정확히 무엇입니까?";
+
+/* Mag bug report: textfields placeholder */
+"_report_field_placeholder" = "입력 시작...";
+
+/* Mag bug report: attach logs checkbox */
+"_report_attachments_checkbox" = "앱 로그 및 시스템 상세 정보 포함";
+
+/* Main mac app menu item */
+"_menu_about" = "Proton VPN에 관하여";
+
+/* Main mac app menu item */
+"_menu_check_updates" = "업데이트 확인...";
+
+/* Main mac app menu item */
+"_menu_preferences" = "환경 설정";
+
+/* Main mac app menu item */
+"_menu_hide_self" = "Proton VPN 숨기기";
+
+/* Main mac app menu item */
+"_menu_hide_others" = "나머지 숨기기";
+
+/* Main mac app menu item */
+"_menu_show_all" = "모두 보기";
+
+/* Main mac app menu item */
+"_menu_logout" = "로그아웃";
+
+/* Main mac app menu item */
+"_menu_quit" = "Proton VPN 종료";
+
+/* Main mac app menu item */
+"_menu_window" = "창";
+
+/* Main mac app menu item */
+"_menu_minimize" = "최소화";
+
+"_subscription_will_expire" = "현재 요금제가 %@ 에 만료됩니다.";
+
+"_subscription_will_renew" = "현재 요금제가 자동으로 %@개월 뒤 갱신됩니다.";
+
+"_subscription_description" = "현재 요금제를 자동으로 연장하기 위해 더 많은 크레딧을 구매할 수 있습니다. 현재 구독 기간이 끝나면, 크레딧이 요금제를 지속적으로 구매하기 위해 적용될 것입니다.";
+
+"_subscription_button" = "플랜을 1년 연장하십시오 \n%@.";
+
+"_subscription_extended_success" = "성공적으로 현재 요금제를 크레딧으로 구입하여 연장하였습니다.";
+
+/* Button on alert after a problem with internet connection */
+"_ne_troubleshoot" = "문제 해결";
+
+/* Title of connection troubleshooting screen */
+"_troubleshoot_title" = "문제 해결";
+
+"_troubleshoot_item_alt_title" = "대체 라우팅 허용";
+
+"_troubleshoot_item_alt_description" = "Proton 사이트가 차단되었을 경우, 이 설정을 통하여 대체 네트워크 라우팅으로 방화벽을 우회하거나 네트워크 문제가 발생했을 때 Proton에 접근할 수 있습니다. 더 나은 안정성을 위해 이 설정을 계속 켜두는 것을 권장합니다.\n더 알아보기";
+
+"_troubleshoot_item_alt_link1" = "자세히 알아보기";
+
+"_troubleshoot_item_nointernet_title" = "인터넷에 연결되지 않음";
+
+"_troubleshoot_item_nointernet_description" = "인터넷 연결이 잘 작동하는지 확인하세요.";
+
+"_troubleshoot_item_isp_title" = "인터넷 서비스 제공사업자 (ISP) 문제";
+
+"_troubleshoot_item_isp_description" = "다른 네트워크에서 Proton에 연결해 보세요 (혹은 Tor 사용).";
+
+"_troubleshoot_item_isp_link1" = "Tor";
+
+"_troubleshoot_item_gov_title" = "정부 차단";
+
+"_troubleshoot_item_gov_description" = "당신의 국가는 Proton 서비스를 사용하는 것을 막고 있을 지도 모릅니다. Proton 서비스를 사용하기 위하여 Tor를 사용해보세요.";
+
+"_troubleshoot_item_gov_link1" = "Tor";
+
+"_troubleshoot_item_antivirus_title" = "안티바이러스의 방해";
+
+"_troubleshoot_item_antivirus_description" = "일시적으로 안티바이러스 소프트웨어를 비활성화하거나 제거하세요";
+
+"_troubleshoot_item_proxy_title" = "프록시/방화벽의 방해";
+
+"_troubleshoot_item_proxy_description" = "프록시와 방화벽을 비활성화 하시거나, 당신의 네트워크 관리자에 문의하세요.";
+
+"_troubleshoot_item_proton_title" = "Proton에 접속할 수 없음";
+
+"_troubleshoot_item_proton_description" = "Proton Status에서 시스템 상태를 확인하세요.";
+
+"_troubleshoot_item_proton_link1" = "Proton 상태";
+
+"_troubleshoot_item_other_title" = "아직 해결책을 찾지 못했습니다.";
+
+"_troubleshoot_item_other_description" = "이메일 (%@), 혹은 Twitter를 통해 직접 문의하세요.";
+
+"_troubleshoot_item_other_link1" = "지원 양식";
+
+"_troubleshoot_item_other_link2" = "이메일";
+
+"_troubleshoot_item_other_link3" = "Twitter";
+
+/* iOS settings -> Battery usage; Title of battery usage screen; */
+"_battery_title" = "배터리 사용";
+
+/* Battery usages screen description */
+"_battery_description" = "스마트폰의 모든 트래픽이 OpenVPN에 의해 관리됩니다. 따라서 iOS의 다른 앱의 배터리 사용량이 Proton VPN에 할당되게 됩니다.";
+
+/* Battery usage More info button text */
+"_battery_more" = "더 알아보시겠습니까?";
+
+/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved"*/ */
+"_netshield_stats_data_saved" = "데이터\n절약";
+
+/* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
+"_netshield_feature_description" = "자신을 광고, 멀웨어, 그리고 트래커와 웹사이트 및 앱으로 부터 보호하세요. 웹사이트를 불러올 수 없다면, NetShield 해제를 시도해 보세요.\n자세히 알아보기";
+
+/* Link with more info in the NetShield Feature description */
+"_netshield_feature_description_alt_link" = "자세히 알아보기";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_upsell_title" = "NetShield로 광고 없이 브라우징";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_upsell_subtitle" = "웹사이트 및 앱에서 광고, 트래커와 멀웨어를 차단하세요";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_business_upsell_title" = "NetShield로 광고를 차단하세요";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_business_upsell_subtitle" = "VPN Business 요금제로 업그레이드하면";
+
+/* Settings -> Netshield: name of field. */
+"_netshield_title" = "NetShield";
+
+"_netshield_title_tooltip" = "광고, 트래커, 그리고 멀웨어를 차단하세요";
+
+/* Settings -> Netshield, Status -> NetShield: Off */
+"_netshield_off" = "끄기";
+
+/* Status -> Netshield: On */
+"_netshield_on" = "켜기";
+
+/* Settings -> Netshield: Block malware */
+"_netshield_level1" = "멀웨어 차단";
+
+/* Settings -> Netshield: Block malware, ads, trackers */
+"_netshield_level2" = "멀웨어, 광고 및 추적기 차단";
+
+"_netshield_alert_reconnect_description_on" = "연결이 NetShield 모드로 변경하기 위해 재시작됩니다.\n경고: 일부 사이트를 못 불러올 시, NetShield 해제를 시도하세요.";
+
+"_netshield_alert_reconnect_description_off" = "연결이 NetShield 모드로 변경되기 위해 재시작됩니다.";
+
+"_netshield_alert_upgrade_description" = "NetShield가 광고, 트래커를 차단하여 프라이버시를 한층 더 보호합니다.";
+
+/* Netshield section title in iOS connection screen */
+"_netshield_section_title" = "멀웨어 및 광고 차단기";
+
+/* Title of the screen with news and offers. */
+"_news_title" = "뉴스";
+
+"_quick_settings_secureCore_description" = "개인 정보 보호 친화적인 국가에 있는 가장 안전한 서버를 통해 가장 민감한 데이터를 라우팅하세요.";
+
+"_quick_settings_netShield_description" = "광고와 멀웨어 없이 인터넷을 즐깁니다.";
+
+"_quick_settings_killSwitch_description" = "VPN 연결이 해제될 경우 IP 유출을 막기 위해 인터넷을 끕니다.";
+
+"_quick_settings_secureCore_note" = "Secure Core는 VPN 속도를 느리게 할 수 있습니다";
+
+"_quick_settings_netShield_note" = "웹사이트가 로드되지 않는다면, NetShield를 비활성화해 보세요";
+
+"_quick_settings_killSwitch_note" = "디바이스가 로컬 네트워크에 연결할 수 없다면, 킬 스위치 해제를 시도하세요.";
+
+"_quick_settings_get_plus" = "Plus 요금제 얻기";
+
+"_applying_settings_" = "설정 적용 중";
+
+"_reestablish_vpn_connection_" = "다시 연결을 시도합니다.";
+
+"_ip_will_not_be_exposed" = "IP 주소가 노출되지 않습니다.";
+
+"_cancel_reconnection" = "이는 재연결 시도를 취소하고 연결이 끊어질 것입니다";
+
+"_quick_settings_netshield_option_off" = "차단하지 않기";
+
+"_quick_settings_netshield_option_level1" = "멀웨어만 차단";
+
+"_quick_settings_netshield_option_level2" = "멀웨어, 광고 및 추적기 차단";
+
+"_upgrade_required_securecore_description" = "Secure Core은 Plus 요금제에서 사용 가능합니다. 개인 정보 보호 친화적인 국가에서 가장 안전한 서버를 통해 트래픽을 라우팅하려면 지금 업그레이드하세요.";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection_header" = "킬 스위치가 IP 주소를 보호하고 있습니다";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection" = "Proton VPN이 서버에 연결하는데로 인터넷 연결이 재게될 것입니다.\nKill switch 와 VPN의 보호 없이 인터넷을 사용하려면, 이 서버로의 재연결을 취소하십시오.";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold1" = "없이";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold2" = "킬 스위치 보호";
+
+/* MacOS: connection screen - cancel button */
+"_kill_switch_reconnection_cancel" = "재연결 취소";
+
+/* Title for Smart Protocol in Settings */
+"_smart_protocol_title" = "Smart Protocol";
+
+/* Shortened title for Smart Protocol on Settings configuration */
+"_smart_title" = "Smart";
+
+/* Description for Smart Protocol in Settings */
+"_smart_protocol_description" = "가장 좋은 연결을 제공하는 프로토콜과 포트를 자동으로 사용하려면 Smart Protocol을 활성화하세요.";
+
+/* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
+"_smart_protocol_reconnect_modal_title" = "재연결 권장됨";
+
+/* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
+"_smart_protocol_reconnect_modal_body" = "연결이 Smart Protocol 모드로 변경되기 위해 재시작 됩니다.";
+
+/* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
+"_sysex_description_1" = "Proton VPN을 사용하기 위해서, **커스텀 VPN 프로토콜** 을 Mac에서 활성화 해야합니다.";
+
+/* Part 2 of the description of the system extension wizard in mac */
+"_sysex_description_2" = "커스텀 프로토콜은 빠른 속도와 더 안전한 연결을 제공해주며, 더 많은 Proton VPN 서버에 연결할 수 있도록 해줍니다.";
+
+/* Part 3 of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
+"_sysex_description_3" = "계속하려면, **시스템 설정을 열고**, 이 스크린의 영상 설명을 따르세요.";
+
+/* Alternative for Part 3 for pre-ventura of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
+"_sysex_description_4" = "계속하려면, **보안 설정을 열고**, 이 스크린의 영상 설명을 따르세요.";
+
+/* Title of the system extension wizard in mac */
+"_sysex_set_up_proton_vpn" = "Proton VPN 설정";
+
+/* Default action in the system extension wizard in mac. Pre-macOS Ventura */
+"_sysex_open_system_settings" = "시스템 설정 열기";
+
+/* Default action in the system extension wizard in mac. macOS Ventura */
+"_sysex_open_security_preferences" = "보안 기본 설정 열기";
+
+"_sysex_settings_description" = "Proton VPN이 Smart Protocol, OpenVPN 및 WireGuard를 활용하기 위해 시스템 확장 로드가 필요합니다.";
+
+"_sysex_enabled_title" = "구성 완료";
+
+"_sysex_enabled_description" = "구성 완료됨. 이제 최고의 VPN 기술로 쾌적하게 인터넷을 즐기실 수 있습니다.";
+
+"_sysex_cannot_enable" = "시스템 확장을 활성화 할 수 없음";
+
+"_sysex_error_description" = "시스템 확장을 설치하는데 오류가 발생했습니다.\n이 문제를 해결하기 위해 Proton VPN을 재설치하고, 애플리케이션 폴더에 위치하도록 하세요. 혹은, 고객 지원에 연락하세요.";
+
+"_vpnauth_certfail_title" = "인증 오류";
+
+"_vpnauth_certfail_description" = "VPN 인증서 새로고침 실패, 연결을 확인하십시오";
+
+"_vpnauth_too_many_certs_title" = "인증 오류";
+
+"_vpnauth_too_many_certs_description" = "최대 설정 변경 횟수에 도달했습니다. 몇 분 뒤에 다시 시도해 주십시오";
+
+"_from_server_title" = "서버에서:";
+
+"_to_server_title" = "서버로:";
+
+"_update_billing" = "내 청구서 업데이트";
+
+"_upgrade_again" = "다시 업그레이드";
+
+"_delinquent_title" = "귀하의 Proton VPN 계정에 보류 중인 청구서가 있습니다.";
+
+"_delinquent_description" = "금액이 결제된 후 프리미엄 기능에 다시 접근할 수 있습니다.";
+
+"_delinquent_reconnection_description" = "금액이 결제된 후 프리미엄 기능에 다시 접근할 수 있습니다. 지금은 사용 가능한 가장 빠른 무료 요금제 서버로 다시 연결합니다.";
+
+"_maximum_device_title" = "기기를 연결할 수 있는 최대 개수에 도달했습니다.";
+
+"_maximum_device_reached_description" = "이 기기에서 연결하려면 다른 기기의 연결을 끊어주세요.";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "이 기기에서 연결하려면 다른 기기의 연결을 끊거나 %@ 로 업그레이드 하세요";
+
+"_reconnect_title" = "가능한 가장 빠른 서버를 연결하고 있습니다.";
+
+"_subscription_expired_title" = "VPN 구독이 만료되었습니다";
+
+"_subscription_expired_description" = "당신의 구독 단계가 하락되었습니다.";
+
+"_subscription_expired_reconnection_description" = "당신의 구독 단계가 하락되었습니다, 그래서 이용 가능한 가장 빠른 서버로 재연결 하겠습니다.";
+
+"_subscription_upgrade_title" = "다시 업그레이드하고 모든 기능들을 즐기세요:";
+
+"_subscription_upgrade_option3" = "고급 기능: NetShield, Secure Core, Tor, P2P";
+
+"_tier_free" = "무료";
+
+"_tier_plus" = "Plus";
+
+"_tier_visionary" = "Visionary";
+
+"_information_title" = "정보";
+
+"_features_title" = "특징";
+
+"_performance_title" = "속도";
+
+"_smart_routing_title" = "Smart Routing";
+
+"_streaming_title" = "스트리밍 서비스";
+
+"_p2p_title" = "P2P/BitTorrent";
+
+"_tor_title" = "Tor";
+
+"_server_load_title" = "서버 부하율";
+
+"_dw-partner-2022_partners_title" = "우리의 파트너들";
+
+"_streaming_servers_description" = "스트리밍을 시작하기 위해 Plus 서버 연결";
+
+"_streaming_servers_note" = "참고: 위치 서비스를 끄고 스트리밍 앱의 캐시를 지워 새로운 콘텐츠가 나타나도록 하십시오.";
+
+"_streaming_servers_extra" = "그리고 더";
+
+"_feature_free_servers" = "무료 서버";
+
+"_feature_free_servers_description" = "모두를 위한 보안과 개인정보 보호 제공. 무료 서버는 데이터 제한이 없으며 저희는 일부러 인터넷 속도를 느리게 하지 않습니다.";
+
+"_feature_smart_routing_description" = "이 기술을 통해 Proton VPN은 서비스를 제공하기 어려운 국가에서 더 빠른 속도와 보안을 제공할 수 있습니다.";
+
+"_feature_streaming_description" = "Plus 서버는 전 세계 어디서나 스트리밍 서비스 (넷플릭스, 디즈니+, 등) 을 지원합니다.";
+
+"_feature_p2p_description" = "이 서버들은 BitTorrent 및 파일 공유에 최고의 성능을 제공합니다.";
+
+"_feature_tor_description" = "Tor 네트워크로 트래픽을 경유하세요. 느리지만 더 안전합니다.";
+
+"_performance_load_description" = "부하가 높은 서버는 부하가 낮은 서버보다 느립니다.";
+
+"_performance_load_low" = "낮음";
+
+"_performance_load_medium" = "중간";
+
+"_performance_load_high" = "높음";
+
+"_locations_all" = "모든 지역";
+
+"_locations_free" = "무료 지역";
+
+"_locations_plus" = "Plus 지역";
+
+"_locations_gateways" = "게이트웨이";
+
+/* Header before the list of connections available for free users (in the country list) */
+"_connections_free" = "무료 연결";
+
+/* Gateways info modals title (both iOS and macOS) */
+"_gateways_modal_title" = "게이트웨이가 무엇인가요?";
+
+/* Gateways info modals text (both iOS and macOS) */
+"_gateways_modal_text" = "VPN 게이트웨이는 전용 서버를 통하여 사용자 회사의 데이터나 서비스에 안전하게 연결할 수 있는 서비스입니다";
+
+"_vpn_accelerator_title" = "VPN Accelerator";
+
+"_vpn_accelerator_change_title" = "VPN Accelerator 변경";
+
+/* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
+"_vpn_accelerator_description" = "VPN Accelerator는 특별한 성능 향상 기술을 활성화 시켜 VPN 속도를 최대 400%% 상승시킵니다.\n더 알아보기";
+
+/* Link with more info in the VPN Accelerator description */
+"_vpn_accelerator_description_alt_link" = "자세히 알아보기";
+
+"_action_requires_reconnect" = "이 변경을 적용하려면 다시 연결해야 합니다";
+
+"_local_agent_server_error_title" = "서버 오류";
+
+"_local_agent_server_error_message" = "서버에 오류가 발생했습니다. 다른 서버에 연결해 주세요.";
+
+"_local_agent_policy_violation_error_title" = "정책 위반";
+
+"_local_agent_policy_violation_error_message" = "연결할 수 없는 서버입니다. 다른 서버를 선택하거나 요금제를 업그레이드하세요.";
+
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info" = "연결 정보 가져오기 중";
+
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info_for" = "%@의 연결 정보 가져오기 중";
+
+/* Shown on the Welcome screen as the screen headline */
+"_welcome_headline" = "온라인에서도 자신을 지키세요";
+
+/* Shown on the Welcome screen as the longer screen text */
+"_welcome_body" = "빠른 속도의 스위스 VPN은 인터넷 연결 암호화를 통해 사생활을 보호해 줍니다.";
+
+"_force_upgrade_title" = "애플리케이션 업그레이드 필요";
+
+"_force_upgrade_message" = "현재 사용 중이신 Proton VPN 애플리케이션 버전은 더 이상 지원되지 않습니다. 최신 버전으로 업데이트 해주세요.";
+
+"login_fetch_vpn_data" = "VPN 접근 구성하기";
+
+"login_summary_button" = "Proton VPN 사용 시작";
+
+"_wgks_ks_off" = "킬 스위치 비활성화";
+
+"_neks_t2_title" = "Kill switch 안전성 경고";
+
+"_neks_t2_hyperlink" = "T2 보안 칩";
+
+"_neks_t2_description" = "이 디바이스에서는 킬 스위치의 사용이 불안정 합니다.\n\n사용자의 기기가 T2 보안 칩이 내장되어 있으며, macOS의 킬 스위치 기능이 Proton VPN에서 사용되는 경우 시스템 안정성 문제가 발생할 수 있습니다.";
+
+"_neks_t2_connect" = "활성화";
+
+"_subuser_alert_title" = "Business/Visionary로 업그레이드해 주셔서 감사합니다";
+
+"_subuser_alert_description1" = "Proton VPN에서의 여정을 시작하려면 계정이나 다른 하위 계정에 VPN 연결을 할당하십시오.";
+
+"_subuser_alert_description2" = "이 작업은 몇 분 정도 소요됩니다. 이후 로그인하여 모든 장치들을 보호할 수 있습니다.";
+
+"_subuser_alert_description3" = "현재 이 계정에 대해서 활성화된 VPN 연결이 없습니다. Proton VPN와 함께 여정을 시작하려면 관리자에게 문의해주세요.";
+
+"_subuser_alert_enable_connections_button" = "VPN 연결 활성화";
+
+"_subuser_alert_login_button" = "다시 로그인";
+
+/* Moderate NAT feature title in Settings */
+"_moderate_nat_title" = "일반형 NAT";
+
+/* Explanation for the Moderate NAT feature shown next to the feature in Settings */
+"_moderate_nat_explanation" = "일반형 NAT는 로컬 주소 매핑의 무작위화를 비활성화합니다. 이는은 보안을 약간 감소시킬 수 있지만, 온라인 게임과 같은 P2P 애플리케이션이 직접 연결을 설정할 수 있도록 해줍니다. \n자세히 알아보기";
+
+/* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
+"_moderate_nat_explanation_link" = "자세히 알아보기";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_enable_title" = "일반형 NAT 활성화";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_change_title" = "일반형 NAT 활성화";
+
+/* Clickable label title in the onboarding screen for mac */
+"_settings_mac_telemetry_learn_more" = "자세히 알아보기";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_usage_stats" = "익명으로 사용 통계를 공유하세요. 이는 VPN 차단을 무력화하고, 앱 성능 향상에 도움을 줍니다.";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_crash_reports" = "익명으로 버그 리포트를 공유하세요. 이는 버그를 고치고, 방화벽을 감지하며, VPN 차단을 우회하는데 도움이 됩니다.";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_usage_stats_title" = "익명 사용 통계 공유";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_usage_stats_tooltip" = "사용 데이터는 VPN 차단을 무력화하고 앱 성능을 개선하는 데 도움이 됩니다.";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_crash_reports_title" = "익명 충돌 보고서 공유";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_crash_reports_tooltip" = "충돌 보고서는 버그를 수정하고 방화벽을 감지하며 VPN 차단을 방지하는 데 도움이 됩니다.";
+
+/* Section title in Settings */
+"_advanced" = "고급";
+
+/* Non-standard ports feature title in Settings */
+"_non_standard_ports_title" = "비표준 포트";
+
+/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
+"_non_standard_ports_explanation" = "VPN 네트워크를 통해 비표준 포트로의 트래픽을 허용하여 특별한 필요에 따라 Proton VPN을 사용하세요. \n자세히 알아보기";
+
+/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
+"_non_standard_ports_explanation_link" = "자세히 알아보기";
+
+/* Title for alert shown when enabling Non-standard ports requires reconnection */
+"_non_standard_ports_change_title" = "비표준 포트 활성화";
+
+/* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
+"proton_website_unreachable" = "Proton VPN 웹사이트가 네트워크 제한으로 인해 일시적으로 접속할 수 없을 수 있습니다. 모바일 앱을 사용하여 새 Proton 계정을 만드세요.";
+
+/* Title of the Use coupon button in Settings */
+"use_coupon" = "쿠폰 사용";
+
+/* Title of the screen to apply a coupon */
+"coupon_code" = "쿠폰 코드";
+
+/* Button to apply coupon */
+"apply_coupon" = "적용";
+
+/* Banner shown after coupon is applied */
+"coupon_applied" = "쿠폰이 성공적으로 적용되었습니다.";
+
+/* Banner shown after coupon is applied but the plan is not yet upgraded */
+"coupon_applied_plan_not_upgraded_yet" = "쿠폰이 성공적으로 적용되었습니다. 구독이 몇 분 내로 업그레이드됩니다.";
+
+/* Title for the Two-factor authentication screen */
+"two_factor_authentication" = "2단계 인증";
+
+/* Placeholder for the Two Factor text field */
+"two_factor_code" = "2단계 인증 코드";
+
+/* Title for the button to switch to entering two-factor code */
+"use_two_factor_code" = "2단계 인증 코드 사용";
+
+/* Placeholder for the Recovery code text field */
+"recovery_code" = "복구 코드";
+
+/* Title for the button to switch to entering recovery code */
+"use_recovery_code" = "복구 코드 사용";
+
+/* Button to confirm two-factor or recovery code in login */
+"authenticate" = "인증";
+
+/* Error message shown when tryng to log in with an unsupported method */
+"login_unsupported_state" = "유효하지 않은 로그인 방법. 고객센터에 문의하십시오.";
+
+/* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
+"vpn_feature_cannot_be_set_error" = "%@ 설정이 변경되지 않을 수 있습니다. 나중에 다시 시도하거나 다른 서버로 연결하십시오";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
+"netshield_stats_hint_ads" = "광고 웹사이트는 당신을 대상으로 쿠키와 추적기를 사용합니다.";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
+"netshield_stats_hint_trackers" = "트래커는 당신의 웹 활동에 대한 정보를 수집, 저장 및 판매하는 제3자 웹사이트입니다.";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
+"netshield_stats_hint_data" = "NetShield가 차단한 광고 트래커, 멀웨어의 예상 크기입니다.";
+
+"_netshield_stats_data_saved" = "데이터\n절약";
+
+/* The count of trackers/ads blocked in thousands */
+"_netshield_stats_blocked_K" = "%@ K";
+
+/* The count of trackers/ads blocked in millions */
+"_netshield_stats_blocked_M" = "%@ M";
+
+/* The count of trackers/ads blocked in billions */
+"_netshield_stats_blocked_G" = "%@ G";
+
+/* The count of trackers/ads blocked in trillions */
+"_netshield_stats_blocked_T" = "%@ T";
+
+/* The count of trackers/ads blocked in quadrillions */
+"_netshield_stats_blocked_P" = "%@ P";
+
+/* The count of trackers/ads blocked in sextillions */
+"_netshield_stats_blocked_E" = "%@ E";
+
+/* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
+"_alert_protocol_deprecated_title" = "프로토콜을 사용할 수 없음";
+
+/* Body of the deprecated protocol alert on MacOS. Shown when the user attempts to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
+"_alert_protocol_deprecated_body_macos" = "이 프로파일은 만료되고 더 이상 지원되지 않는 프로토콜을 사용합니다. 업데이트를 클릭하여 기본 Smart Protocol로 전환하세요. 자세히 알아보기";
+
+/* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
+"_alert_protocol_deprecated_link_text" = "자세히 알아보기";
+
+/* Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
+"_alert_protocol_deprecated_body_ios" = "이 프로파일은 만료되고 더 이상 지원되지 않는 프로토콜을 사용합니다. 업데이트를 클릭하여 기본 Smart Protocol로 전환하세요.";
+
+/* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
+"_alert_protocol_deprecated_enable_smart" = "업데이트";
+
+/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser*/ */
+"_alert_protocol_deprecated_learn_more" = "자세히 알아보기";
+
+/* Text for the 'Close' action of the deprecated protocol alert. */
+"_alert_protocol_deprecated_close" = "닫기";
+
+/* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
+"_bad_interface_ip_range_alert_title" = "나쁜 네트워크 환경";
+
+/* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "사용자의 로컬 네트워크가 안전하지 않을 수 있습니다(인터페이스 '%@'에 IP와 접두사 '%@'가 있음). 사용자 데이터가 암호화되지 않은 상태로 로컬 네트워크에 전송될 수 있습니다. 킬 스위치를 사용하면 이 트래픽을 차단할 수 있습니다. 로컬 네트워크 주변 장치에 대한 연결이 중단됩니다.";
+
+/* Title of the search screen */
+"search_title" = "검색";
+
+/* Title of the Search screen infographic */
+"search_subtitle" = "어떤 장소든 검색하세요";
+
+/* Section header in search */
+"search_countries" = "국가";
+
+/* Sample countries the user can search for */
+"search_countries_sample" = "스위스, 미국, 이탈리아...";
+
+/* Section header in search */
+"search_cities" = "도시";
+
+/* Sample cities the user can search for */
+"search_cities_sample" = "뉴욕, 런던, 도쿄...";
+
+/* Section header in Search */
+"search_servers" = "서버";
+
+/* Sample servers the user can search for */
+"search_servers_sample" = "JP#50, CA#3, IT#14...";
+
+/* Section header in search */
+"search_us_regions" = "미국 지역";
+
+/* Sample US regions the user can search for */
+"search_us_regions_sample" = "캘리포니아, 플로리다, 콜로라도...";
+
+/* Title shown when nothing is found in search */
+"search_no_results_title" = "결과를 찾을 수 없음";
+
+/* Subtitle shown when nothing is found in search */
+"search_no_results_subtitle" = "다른 키워드를 입력해주세요";
+
+/* Header for the recent searches section in search */
+"search_recent_header" = "최근에 봄";
+
+/* Button to clear recent searches history */
+"search_recent_clear" = "제거";
+
+/* Title for the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_title" = "검색 기록이 지워집니다. 계속하시겠어요?";
+
+/* Cancel button title in the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_cancel" = "취소";
+
+/* Confirmation button title in alert asking for confirmation before deleting recent searches */
+"search_recent_clear_continue" = "계속";
+
+/* Placeholder text showing in the search bar on the search screen */
+"search_bar_placeholder" = "국가, 도시, 서버";
+
+/* Subtitle for the upsell banner shown to free users in search */
+"search_upsell_subtitle" = "많은 위치 = 제한 없는 더 많은 콘텐츠 + 더 강력한 보안 + 더 빨라진 속도";
+
+/* Section header in search */
+"search_secure_core_countries" = "Secure Core 도시";
+
+/* Section header in search */
+"search_results_countries" = "국가";
+
+/* Section header in search */
+"search_results_cities" = "도시들";
+
+/* Section header in search */
+"_free_servers" = "무료 서버";
+
+/* Section header in search */
+"_plus_servers" = "Plus 서버";
+
+/* Upgrade plan button title */
+"modals_get_plus" = "업그레이드";
+
+/* Dismiss upsell screen button title */
+"modals_upsell_stay_free" = "다음에";
+
+/* Subtitle of All Countries, NetShield and Secure Core upsell screens */
+"modals_upsell_features_subtitle" = "Plus 요금제로 업그레이드하면";
+
+/* Subtitle of the Safe Mode upsell screen */
+"modals_upsell_features_safe_mode_subtitle" = "비표준 포트가 필요한 고급 또는 전문 컴퓨팅 요구 사항이 있나요?\n\nVPN Plus로 업그레이드하여 이것과 다른 프리미엄 기능들에 접근하세요.";
+
+/* Title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_title" = "비표준 포트의 트래픽 허용";
+
+/* Title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_title" = "게이밍 경험을 극대화 하세요";
+
+/* Subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle" = "VPN Plus로 NAT Type 2를 활성화 하세요";
+
+/* Bold part of the subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle_bold" = "NAT Type 2";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_gaming" = "온라인 게이밍과 영상 통화 안정성을 향상하세요.";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_direct_connections" = "NAT type 2 (일반형)은 기기 간의 직접 연결을 통한 안전성과 속도의 두 마리 토끼를 다 잡아줍니다.";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_streaming" = "좋아하는 영화를 시청하세요.";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_highSpeed" = "가장 빠른 속도로 브라우징하세요 (10 Gbps)";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_netshield" = "NetShield로 광고와 멀웨어를 차단하세요";
+
+/* Title of the NetShield upsell screen */
+"modals_upsell_net_shield_title" = "NetShield로 광고 없는 브라우징을 즐기세요";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_ads" = "광고 및 추적기 차단";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_malware" = "멀웨어로부터 기기를 보호하세요";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_highSpeed" = "가장 빠른 속도에서 브라우징하세요";
+
+/* Title of the Secure Core upsell screen */
+"modals_upsell_secure_core_title" = "Secure Core과 함께 이중으로 암호화하세요";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_route" = "스위스, 스웨덴과 아이슬란드의 아주 안전한 서버를 통해 라우팅하세요";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_layer" = "VPN 연결에 암호화 계층을 추가하세요";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_attacks" = "네트워크 공격으로부터 당신을 보호하세요";
+
+/* Title of the No Logs screen */
+"modals_no_logs_title" = "기록이 없고 스위스에 위치";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_privacy_first" = "Proton VPN 은 보안이 먼저입니다";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_log_activity" = "우리는 인터넷 활동을 하는 동안 기록을 남기지 않습니다";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_third_parties" = "우리는 어떠한 데이터를 제 3자에게 제공하지 않습니다";
+
+/* Learn more of the No Logs screen */
+"modals_no_logs_external_audit" = "Proton VPN의 엄격한 기록이 없는 정책은 외부 심사를 통해 인증되었습니다.";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "속도에 대한 참고 사항...";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "Secure Core은 최고의 보안과 개인 정보 보호를 제공하지만, 인터넷 속도를 느리게 할 수 있습니다. 더 좋은 성능을 원하신다면, Secure Core를 비활성화할 수 있습니다.";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "다음부터 표시하지 않음";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "Secure Core 활성화";
+
+/* Title of the New Brand screen */
+"new_plans_brand_title" = "업데이트된 Proton, 통일된 보호";
+
+/* Subtitle of the New Brand screen */
+"new_plans_brand_subtitle" = "Proton의 새로운 디자인을 소개합니다.\n많은 서비스, 하나의 미션. 사생활이 기본인 인터넷에 오신 것을 환영합니다.";
+
+/* Title of "done" button in New Brand screen */
+"new_plans_brand_got_it" = "알겠습니다";
+
+/* Common button title */
+"modals_common_cancel" = "취소";
+
+/* Common button title */
+"modals_common_learn_more" = "자세히 알아보기";
+
+/* Common button title */
+"modals_common_next" = "다음";
+
+/* Common button title */
+"modals_common_get_started" = "시작하기";
+
+/* Description of user account update screen part 1*/ */
+"maximum_device_plan_limit_part_1" = "이 기기에서 연결하려면 다른 기기의 연결을 끊거나 %@ 로 업그레이드 하세요";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "이 기기에서 연결하려면 다른 기기의 연결을 끊어주세요.";
+
+/* Title of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_title" = "가장 빠른 속도로 브라우징하세요 (최대 10 Gbps)";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_faster_servers" = "빠르고, 더 여유있는 서버에 접근하세요.";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds" = "VPN Accelerator로 연결 속도가 최대 400%% 향상됩니다.";
+
+/* Bold part of the feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds_bold" = "VPN Accelerator.";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_distant_servers" = "원격 서버에 연결하면 속도와 안정성이 향상됩니다.";
+
+/* Title of Customization upsell modal */
+"upsell_customization_title" = "향상된 VPN 사용자화를 잠금 해제하세요";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_access_LAN" = "사용자의 LAN에 디바이스를 접근하세요.";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_access_LAN_bold" = "LAN (local area network)";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_profiles" = "자주 사용하는 연결을 프로파일로 저장하세요.";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_profiles_bold" = "프로파일";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_quick_connect" = "빠른 연결을 통해 프로파일에 더 빠르게 연결하세요.";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_quick_connect_bold" = "빠른 연결";
+
+/* Title of Profiles upsell modal */
+"upsell_profiles_title" = "자주 연결하는 연결에 더 빠르게 접근하세요.";
+
+/* Subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle" = "프로파일을 VPN Plus로 잠금 해제하세요.";
+
+/* Bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold" = "프로파일";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_location" = "선호하는 서버, 도시 및 국가를 저장하세요.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_protocols" = "프로토콜을 사용자화 하고 프리미엄 VPN 기능을 누려보세요.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_auto_connect" = "더 빠른 연결을 위해 자동 연결을 설정하세요.";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_any_location" = "지역을 선택하세요.";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_even_higher_speed" = "더 빠른 VPN 속도";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_geoblocked_content" = "차단된 콘텐츠에 접근하세요";
+
+/* Feature of Country upsell modal */
+"upsell_countries_connect_to" = "%d개 국가에 연결하세요.";
+
+/* Feature of Country upsell modal */
+"upsell_countries_higher_speeds" = "더 빠른 VPN 속도";
+
+/* Feature of Country upsell modal */
+"upsell_countries_money_back" = "30일 환불 보장";
+
+/* Feature of Country upsell modal */
+"upsell_country_feature_title" = "다른 특정 국가를 선택하고 싶으세요?";
+
+/* Feature of Country upsell modal */
+"upsell_country_feature_subtitle" = "국가 선택을 VPN Plus로 잠금 해제";
+
+/* Bold part of the feature of Country upsell modal */
+"upsell_country_feature_subtitle_bold" = "국가 선택";
+
+/* Title of the "What's new" screen */
+"modals_whats_new" = "새로운 소식";
+
+/* Title of the first section of the "What's new" screen */
+"modals_free_countries" = "새로운 무료 서버 국가";
+
+/* Description of the first section of the "What's new" screen */
+"modals_new_servers" = "이제 폴란드와 루마니아의 무료 서버가 개설되었습니다.";
+
+/* Title of the second section of the "What's new" screen */
+"modals_server_selection" = "서버 선택 변경 사항";
+
+/* Description of the second section of the "What's new" screen */
+"modals_server_crowding" = "서버 혼잡을 방지하고 모든 사용자가 빠르고 안전한 인터넷에 접근할 수 있도록, 수동 국가 선택을 제거하고 자동 서버 선택을 크게 개선했습니다.";
+
+/* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
+"upsell_specific_location_subtitle" = "VPN Plus로 무제한 변경 기능 사용";
+
+/* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
+"upsell_specific_location_title" = "현재 무료 서버 최대 변경 횟수에 도달했습니다.";
+
+/* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
+"upsell_specific_location_change_server_button_title" = "서버 번경";
+
+/* The name of one of the features in the Welcome screen that the user sees after upgrading */
+"welcome_upgrade_advanced_features" = "고급 제어 기능";
+
+/* The title of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_title_plus" = "VPN Plus에 오신 것을 환영합니다";
+
+/* The title of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_title_unlimited" = "Proton Unlimited에 오신 것을 환영합니다";
+
+/* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_title_fallback" = "축하합니다!";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_subtitle_plus" = "더 많은 개인정보 보호 기능과 강력한 성능, 그리고 한 차원 높은 VPN 사용자화를 사용해 보세요.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited" = "축하합니다! 500GB 총 저장 공간을 포함한 프리미엄 보안과 성능 기능을 모든 Proton 서비스에서 사용하실 수 있습니다.\n\n강력한 Proton 개인정보 보호 기능을 누려보세요.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
+"welcome_upgrade_subtitle_Unlimited_markdown" = "축하합니다! **500GB** 총 저장 공간을 포함한 프리미엄 보안과 성능 기능을 모든 Proton 서비스에서 사용하실 수 있습니다.\n\n강력한 Proton 개인정보 보호 기능을 누려보세요.";
+
+/* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
+
+/* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_subtitle_fallback" = "구독을 업그레이드 했습니다. 한 차원 높은 개인정보 보호 기능과 성능을 즐겨보세요.";
+
+/* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
+"_available_with_vpn_business_tooltip" = "VPN Business에서 사용 가능합니다.";
+
+/* Text on upsell banner in country list */
+"_free_banner_text" = "전세계 커버리지를 VPN Plus로 누리세요";
+
+/* Title of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_title" = "원하신 국가가 아닌가요?";
+
+/* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_subtitle" = "모든 서버에 접근하기 위해 업그레이드";
+
+/* Text of banner shown on macOS apps to upsell users who want to select a country */
+"_wrong_country_banner_text" = "원하는 국가가 아닌가요? 업그레이드해서 모든 서버를 선택할 수 있어요";
