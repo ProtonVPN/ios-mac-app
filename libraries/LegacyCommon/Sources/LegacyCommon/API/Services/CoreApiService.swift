@@ -53,7 +53,8 @@ public class CoreApiServiceImplementation: CoreApiService {
 
                     completion(.success(result))
                 } catch let error {
-                    completion(.failure(error))
+                    log.error("Error parsing announcements, not retrying", category: .api, metadata: ["error": "\(error)"])
+                    completion(.success(.init(notifications: [])))
                 }
             case let .failure(error):
                 completion(.failure(error))
