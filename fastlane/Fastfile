@@ -16,6 +16,7 @@
 # 
 
 $keychain_name = ENV["CI_KEYCHAIN_NAME"]
+$derived_data_path_old = "DerivedData"
 
 # Prevents timeouts during builds. More info: https://github.com/fastlane/fastlane/issues/10131
 ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "180"
@@ -124,7 +125,7 @@ lane :ios_bugreport_ui_test do
     simulator_name = ENV["CI_JOB_ID"]
     scan(
       scheme: "BugReportSampleiOSApp",
-      derived_data_path: $derived_data_path,
+      derived_data_path: $derived_data_path_old,
       clean: true,
       result_bundle: true,
       skip_slack: true,
@@ -136,7 +137,7 @@ desc "Run BugReport on mac UI tests"
 lane :macos_bugreport_ui_test do
     scan(
       scheme: "BugReportSampleMacOSApp",
-      derived_data_path: $derived_data_path,
+      derived_data_path: $derived_data_path_old,
       clean: true,
       result_bundle: true,
       skip_slack: true
@@ -197,7 +198,7 @@ lane :onboarding_test do
     simulator_name = ENV["CI_JOB_ID"]
     scan(
       scheme: "OnboardingSampleApp",
-      derived_data_path: $derived_data_path,
+      derived_data_path: $derived_data_path_old,
       clean: true,
       result_bundle: true,
       skip_slack: true,
@@ -210,7 +211,7 @@ lane :modals_ios_test do
     simulator_name = ENV["CI_JOB_ID"]
     scan(
       scheme: "ModalsSampleApp",
-      derived_data_path: $derived_data_path,
+      derived_data_path: $derived_data_path_old,
       clean: true,
       result_bundle: true,
       skip_slack: true,
@@ -223,7 +224,7 @@ lane :modals_macos_test do
     simulator_name = ENV["CI_JOB_ID"]
     scan(
       scheme: "ModalsSampleMacOSApp",
-      derived_data_path: $derived_data_path,
+      derived_data_path: $derived_data_path_old,
       clean: true,
       result_bundle: true,
       skip_slack: true
@@ -235,7 +236,7 @@ lane :ios_search_test do
   simulator_name = ENV["CI_JOB_ID"]
   scan(scheme: "Search",    
     result_bundle: true,
-    derived_data_path: $derived_data_path,
+    derived_data_path: $derived_data_path_old,
     skip_slack: true,
     code_coverage: true,
     devices: [simulator_name],
@@ -247,7 +248,7 @@ lane :wireguard_networkextension_tests do
     simulator_name = ENV["CI_JOB_ID"]
     scan(
       scheme: "WireGuardNetworkExtensionTests",
-      derived_data_path: $derived_data_path,
+      derived_data_path: $derived_data_path_old,
       clean: true,
       result_bundle: true,
       skip_slack: true,
@@ -260,7 +261,7 @@ lane :ios_modals_test do
   simulator_name = ENV["CI_JOB_ID"]
   scan(scheme: "Modals",    
     result_bundle: true,
-    derived_data_path: $derived_data_path,
+    derived_data_path: $derived_data_path_old,
     skip_slack: true,
     devices: [simulator_name],
     clean: true)
@@ -357,7 +358,7 @@ def self.runIOSTests(params)
   simulator_name = ENV["CI_JOB_ID"]
   scan(
     scheme: "ProtonVPN-iOS",
-    derived_data_path: $derived_data_path,
+    derived_data_path: $derived_data_path_old,
     clean: true,
     result_bundle: true,
     skip_slack: true,
@@ -371,7 +372,7 @@ def self.runMacOSTests(params)
   scan(
     scheme: "ProtonVPN-macOS",
     clean: true,
-    derived_data_path: $derived_data_path,
+    derived_data_path: $derived_data_path_old,
     result_bundle: true,
     skip_slack: true,
     number_of_retries: 1,
