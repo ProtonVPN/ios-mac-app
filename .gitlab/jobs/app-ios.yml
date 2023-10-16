@@ -7,6 +7,9 @@ test:unit:app:ios:
     - .mr_job_template
     - .ios_job_template
   stage: test
+  needs: # This lets us skip waiting for a build phase that is not needed (and is manual) ATM
+    - job: linting:code-quality
+      artifacts: false
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
@@ -32,6 +35,9 @@ test:ui:app:ios:smoke:
     - .ios_job_template
     - .ui_smoke_tests_template
   stage: test_ui
+  needs: # This lets us skip waiting for a build phase that is not needed (and is manual) ATM
+    - job: test:unit:app:ios
+      artifacts: false
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../

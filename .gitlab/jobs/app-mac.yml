@@ -20,8 +20,13 @@ build:app:macos:
 
     
 test:unit:app:macos:
-  extends: .mac_job_template
-  dependencies: []
+  extends:
+    - .mr_job_template
+    - .mac_job_template
+  needs: # This lets us skip waiting for a build phase that is not needed (and is manual) ATM
+    - job: linting:code-quality
+      artifacts: false
+  dependencies: [] # Don't download any artifacts
   stage: test
   script:
     - fastlane macos_app_unit_test_all
@@ -64,7 +69,10 @@ test:ui:app:macos:smoke:
   extends:
     - .mac_job_template
     - .ui_smoke_tests_template
-  dependencies: []
+  needs: # This lets us skip waiting for a build phase that is not needed (and is manual) ATM
+    - job: test:unit:app:macos
+      artifacts: false
+  dependencies: [] # Don't download any artifacts
   stage: test_ui
   script:
     - fastlane macos_app_ui_test_smoke
