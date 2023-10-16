@@ -56,6 +56,7 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
            Date().timeIntervalSince(lastRefresh) < minRefreshInterval {
             return
         }
+        lastRefreshDate = Date()
         refresh()
     }
 
@@ -63,7 +64,6 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
         coreApiService.getApiNotifications { [weak self] result in
             switch result {
             case let .success(announcementsResponse):
-                self?.lastRefreshDate = Date()
                 self?.announcementStorage.store(announcementsResponse.notifications)
             case let .failure(error):
                 log.error("Error getting announcements", category: .api, metadata: ["error": "\(error)"])
