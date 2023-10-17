@@ -38,6 +38,7 @@ class LoadingAnimationView: NSView {
     }
 
     private func setup() {
+        clipToBounds()
         gifView = GIFView(frame: frame, pngDirectoryString: Self.loadingAnimationSubdirectory)
         gifView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(gifView)

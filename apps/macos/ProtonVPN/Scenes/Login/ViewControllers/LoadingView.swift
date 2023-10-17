@@ -32,6 +32,7 @@ class LoadingView: NSView {
     override func awakeFromNib() {
         super.awakeFromNib()
         isHidden = true
+        clipToBounds()
     }
 
     func animate(_ animate: Bool) {

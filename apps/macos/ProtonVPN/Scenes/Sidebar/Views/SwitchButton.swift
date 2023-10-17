@@ -108,7 +108,8 @@ class SwitchButton: NSView, CAAnimationDelegate {
     
     override open func awakeFromNib() {
         super.awakeFromNib()
-        
+        clipToBounds()
+
         let trackingArea = NSTrackingArea(rect: bounds,
                                           options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeAlways],
                                           owner: self,
