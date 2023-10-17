@@ -2218,7 +2218,7 @@
 /* Common button title */
 "modals_common_next" = "Siguiente";
 
-/* Description of user account update screen part 1*/ */
+/* Description of user account update screen part 1 */
 "maximum_device_plan_limit_part_1" = "Desconecta otro dispositivo para conectar éste o actualiza a %@";
 
 /* Description of user account update screen */
