@@ -231,6 +231,7 @@
 		E50B623D28B4D2FE004D533B /* AnnouncementImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50B623C28B4D2FE004D533B /* AnnouncementImageViewController.swift */; };
 		E50B623F28B4D30F004D533B /* AnnouncementImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E50B623E28B4D30F004D533B /* AnnouncementImageViewController.xib */; };
 		E51122DC27D0B6780088FCAC /* XCUIElement+forceClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51122DB27D0B6780088FCAC /* XCUIElement+forceClick.swift */; };
+		E5316EE32ADE8EC800380430 /* NSView+ClipToBounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5316EE22ADE8EC800380430 /* NSView+ClipToBounds.swift */; };
 		E53D64C3281169880060C463 /* Modals-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C2281169880060C463 /* Modals-macOS */; };
 		E53D7457291925380006E499 /* FeatureRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E53D7456291925380006E499 /* FeatureRowView.xib */; };
 		E551EB0829AF7C1300B6612D /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0729AF7C1300B6612D /* Assets.swift */; };
@@ -782,6 +783,7 @@
 		E524A0F82A60015A003DB5D8 /* LoginFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFeature.swift; sourceTree = "<group>"; };
 		E524A0FA2A60119D003DB5D8 /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
 		E52B8BAD29FBB7E700517FFC /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		E5316EE22ADE8EC800380430 /* NSView+ClipToBounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+ClipToBounds.swift"; sourceTree = "<group>"; };
 		E53CB3A92A43275E00D58D20 /* InitialStateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialStateProvider.swift; sourceTree = "<group>"; };
 		E53D7456291925380006E499 /* FeatureRowView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeatureRowView.xib; sourceTree = "<group>"; };
 		E551EB0629AF7B7B00B6612D /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
@@ -2369,6 +2371,7 @@
 				42BDA8AF251A40A4009A0C96 /* NSTextField+RealSizing.swift */,
 				D5F45D7B262EC16A00FB13E4 /* NSStackView+Children.swift */,
 				42082650256BB78600A621EC /* NSView+Children.swift */,
+				E5316EE22ADE8EC800380430 /* NSView+ClipToBounds.swift */,
 				F34AC17827F345BB0007FF93 /* NSProgressIndicator+Extensions.swift */,
 				4C7CADE3280060C90008778E /* CGMutablePath+Extension.swift */,
 				E5CFAACD29E92E8300C36735 /* AppTheme+Icons.swift */,
@@ -3419,6 +3422,7 @@
 				EEA556401F1F777A0061F43F /* ColorPickerViewModel.swift in Sources */,
 				EE491A541F5B25FB0008C1DC /* HoverDetectionPopUpButton.swift in Sources */,
 				E5FF89642A810046002B4A49 /* ProfileButtonView.swift in Sources */,
+				E5316EE32ADE8EC800380430 /* NSView+ClipToBounds.swift in Sources */,
 				EED534851EEC112000013607 /* AppDelegate.swift in Sources */,
 				E1C1399C2114399700B88658 /* SwitchButton.swift in Sources */,
 				EEE3B5F31F53F44100E86CFA /* CountryAnnotationViewModel.swift in Sources */,

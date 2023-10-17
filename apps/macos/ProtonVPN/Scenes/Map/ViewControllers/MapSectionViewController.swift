@@ -49,7 +49,8 @@ class MapSectionViewController: NSViewController {
 
         logoImageView.image = Theme.Asset.vpnWordmarkAlwaysDark.image
         view.autoresizingMask = [NSView.AutoresizingMask.width, NSView.AutoresizingMask.height]
-        
+        view.clipToBounds()
+
         setupHeader()
         setupMapView()
     }
