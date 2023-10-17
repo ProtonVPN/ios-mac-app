@@ -55,7 +55,7 @@
 /* iOS & MacOS: text near country or server; MacOS: title of several alerts */
 "_upgrade_required" = "업그레이드 필요";
 
-/* MacOS: voice over indication for a country or server on maintenance*/ */
+/* MacOS: voice over indication for a country or server on maintenance */
 "_on_maintenance" = "점검 중";
 
 "_reconnection_required" = "재연결 권장됨";
@@ -1419,7 +1419,7 @@
 /* Battery usage More info button text */
 "_battery_more" = "더 알아보시겠습니까?";
 
-/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved"*/ */
+/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
 "_netshield_stats_data_saved" = "데이터\n절약";
 
 /* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
@@ -1867,7 +1867,7 @@
 /* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
 "_alert_protocol_deprecated_enable_smart" = "업데이트";
 
-/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser*/ */
+/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser */
 "_alert_protocol_deprecated_learn_more" = "자세히 알아보기";
 
 /* Text for the 'Close' action of the deprecated protocol alert. */
@@ -2062,7 +2062,7 @@
 /* Common button title */
 "modals_common_get_started" = "시작하기";
 
-/* Description of user account update screen part 1*/ */
+/* Description of user account update screen part 1 */
 "maximum_device_plan_limit_part_1" = "이 기기에서 연결하려면 다른 기기의 연결을 끊거나 %@ 로 업그레이드 하세요";
 
 /* Description of user account update screen */
