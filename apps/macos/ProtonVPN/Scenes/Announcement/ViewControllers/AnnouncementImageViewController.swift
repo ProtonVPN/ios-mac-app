@@ -64,20 +64,30 @@ final class AnnouncementImageViewController: NSViewController {
         imageView.cell?.setAccessibilityElement(true)
         imageView.setAccessibilityLabel(data.fullScreenImage.alternativeText)
 
-        guard let imageURL = data.fullScreenImage.firstURL else {
-            // This case should not happen, we're preloading the image before we allow the user to open the announcement
+        configureImage()
+    }
+
+    func configureImage() {
+        guard let source = data.fullScreenImage.source.first,
+              let imageURL = URL(string: source.url) else {
             log.warning("Couldn't retrieve image URL from data: \(data)")
             view.window?.close()
             return
         }
+
         imageView.sd_setImage(with: imageURL) { [weak self] image, error, cacheType, url in
-            guard error == nil else {
+            guard error == nil,
+                  let image,
+                  let self else {
                 self?.view.window?.close()
                 log.warning("Couldn't retrieve image from URL: \(imageURL)")
                 return
             }
-            self?.progressIndicator.stopAnimation(nil)
-            self?.actionButton.isHidden = false
+            self.progressIndicator.stopAnimation(nil)
+            self.actionButton.isHidden = false
+            let scale = 1 / (NSScreen.main?.backingScaleFactor ?? 1)
+            self.imageViewWidth.constant = CGFloat(source.width ?? image.size.width) * scale
+            self.imageViewHeight.constant = CGFloat(source.height ?? image.size.height) * scale
         }
     }
 
