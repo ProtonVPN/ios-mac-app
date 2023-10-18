@@ -290,6 +290,7 @@ extension AppDelegate {
 
         #if DEBUG
         FeatureFactory.shared.enable(&.ssoSignIn)
+        FeatureFactory.shared.enable(&.dynamicPlans)
         #endif
 
         let apiService = container.makeNetworking().apiService
