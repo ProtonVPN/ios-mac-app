@@ -32,8 +32,8 @@ public struct FullScreenImage: Codable {
     public struct Source: Codable {
         public let url: String
         public let type: String
-        public let width: Int?
-        public let height: Int?
+        public let width: CGFloat?
+        public let height: CGFloat?
 
         enum CodingKeys: String, CodingKey { // swiftlint:disable:this nesting
             case type

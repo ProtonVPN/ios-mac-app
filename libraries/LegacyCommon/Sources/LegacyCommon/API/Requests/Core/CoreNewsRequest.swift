@@ -56,7 +56,7 @@ final class CoreApiNotificationsRequest {
 #if canImport(UIKit)
         let size = UIScreen.main.sizeInPixels()
 #elseif canImport(AppKit)
-        let size = NSScreen.sizeInPixels()
+        let size = NSScreen.availableSizeInPixels()
 #endif
         return size
     }
@@ -105,10 +105,25 @@ extension UIScreen {
 #elseif canImport(AppKit)
 
 extension NSScreen {
-    static func sizeInPixels() -> CGSize {
-        let screen = NSApplication.shared.mainWindow?.screen
-        let size = screen?.visibleFrame.size ?? CGSize(width: 1920, height: 1080) // fullHD
-        return size.scaled(by: screen?.backingScaleFactor ?? 1)
+    static func availableSizeInPixels() -> CGSize {
+        guard let screen = NSApplication.shared.mainWindow?.screen else {
+            return CGSize(width: 1920, height: 1080) // fullHD
+        }
+        let isNotch: Bool
+        if #available(macOS 12.0, *),
+           let top = NSScreen.main?.safeAreaInsets.top {
+            isNotch = top != 0
+        } else {
+            isNotch = false
+        }
+        let menuBarHeight = NSApplication.shared.mainMenu?.menuBarHeight ??  24
+        let appTitleBarHeight: CGFloat = 28
+        let notchAdditionalHeight: CGFloat = isNotch ? 12 : 0
+        let buttonAndPaddingHeight: CGFloat = 40 + 2 * 32
+        let occupiedHeight = menuBarHeight + notchAdditionalHeight + buttonAndPaddingHeight + appTitleBarHeight
+        let visibleFrameSize = screen.visibleFrame.size
+        let scaled = visibleFrameSize.scaled(by: screen.backingScaleFactor)
+        return .init(width: scaled.width, height: scaled.height - occupiedHeight)
     }
 }
 

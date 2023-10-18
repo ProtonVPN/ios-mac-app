@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22154" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22154"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -10,6 +10,8 @@
             <connections>
                 <outlet property="actionButton" destination="PIL-Yz-icj" id="r7e-Ys-5bu"/>
                 <outlet property="imageView" destination="wYo-jg-x61" id="8wK-NQ-CUn"/>
+                <outlet property="imageViewHeight" destination="2ig-cm-al4" id="che-Do-ooQ"/>
+                <outlet property="imageViewWidth" destination="JaA-Fc-Yd2" id="AET-1r-FgR"/>
                 <outlet property="progressIndicator" destination="Uua-av-HPk" id="Gaj-X4-Qt3"/>
                 <outlet property="view" destination="c22-O7-iKe" id="t1Z-9g-uOU"/>
             </connections>
@@ -52,6 +54,10 @@
                                 <subviews>
                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="20" placeholderIntrinsicHeight="20" translatesAutoresizingMaskIntoConstraints="NO" id="wYo-jg-x61">
                                         <rect key="frame" x="0.0" y="0.0" width="528" height="300"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="300" id="2ig-cm-al4"/>
+                                            <constraint firstAttribute="width" constant="528" id="JaA-Fc-Yd2"/>
+                                        </constraints>
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="9bS-wQ-FPm"/>
                                     </imageView>
                                 </subviews>
