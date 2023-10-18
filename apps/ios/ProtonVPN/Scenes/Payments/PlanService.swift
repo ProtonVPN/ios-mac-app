@@ -23,6 +23,7 @@ import Foundation
 import ProtonCoreDataModel
 import ProtonCorePayments
 import ProtonCorePaymentsUI
+import ProtonCoreFeatureSwitch
 import LegacyCommon
 import UIKit
 import VPNShared
@@ -134,15 +135,7 @@ final class CorePlanService: PlanService {
     func updateServicePlans(completion: @escaping (Result<(), Error>) -> Void) {
         payments.storeKitManager.delegate = self
         payments.storeKitManager.subscribeToPaymentQueue()
-        payments.storeKitManager.updateAvailableProductsList { [weak self] error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            
-            guard case .left(let planService) = self?.payments.planService else { return }
-            planService.updateServicePlans(success: { completion(.success) }, failure: { error in completion(.failure(error)) })
-        }
+        payments.updateService(completion: completion)
     }
 
     func presentPlanSelection(modalSource: UpsellEvent.ModalSource?) {
