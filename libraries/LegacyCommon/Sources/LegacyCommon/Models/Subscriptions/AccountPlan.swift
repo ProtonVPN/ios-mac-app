@@ -36,7 +36,8 @@ public enum AccountPlan: String, Encodable {
     case enterprise2022 = "enterprise2022"
     case vpnpro2023 = "vpnpro2023" // VPN Essential
     case vpnbiz2023 = "vpnbiz2023" // VPN Business
-    
+    case vpnpass2023 = "vpnpass2023"
+
     public var paid: Bool {
         switch self {
         case .free, .trial:
@@ -72,12 +73,14 @@ public enum AccountPlan: String, Encodable {
             return "VPN Essentials"
         case .vpnbiz2023:
             return "VPN Business"
+        case .vpnpass2023:
+            return "VPN and Pass bundle"
         }
     }
     
     public var devicesCount: Int {
         switch self {
-        case .plus, .visionary, .vpnPlus, .unlimited, .visionary2022, .family, .bundlePro, .enterprise2022, .vpnpro2023, .vpnbiz2023:
+        case .plus, .visionary, .vpnPlus, .unlimited, .visionary2022, .family, .bundlePro, .enterprise2022, .vpnpro2023, .vpnbiz2023, .vpnpass2023:
             return 10
         case .basic:
             return 2
@@ -88,7 +91,7 @@ public enum AccountPlan: String, Encodable {
 
     public var countriesCount: Int {
         switch self {
-        case .plus, .visionary, .vpnPlus, .unlimited, .visionary2022, .family, .bundlePro, .enterprise2022, .vpnpro2023, .vpnbiz2023:
+        case .plus, .visionary, .vpnPlus, .unlimited, .visionary2022, .family, .bundlePro, .enterprise2022, .vpnpro2023, .vpnbiz2023, .vpnpass2023:
             return 63
         case .basic:
             return 40
@@ -99,7 +102,7 @@ public enum AccountPlan: String, Encodable {
 
     public var serversCount: Int {
         switch self {
-        case .plus, .visionary, .vpnPlus, .unlimited, .visionary2022, .family, .bundlePro, .enterprise2022, .vpnpro2023, .vpnbiz2023:
+        case .plus, .visionary, .vpnPlus, .unlimited, .visionary2022, .family, .bundlePro, .enterprise2022, .vpnpro2023, .vpnbiz2023, .vpnpass2023:
             return 1600
         case .basic:
             return 400
@@ -114,7 +117,7 @@ public enum AccountPlan: String, Encodable {
             return CoreAppConstants.VpnTiers.free
         case .basic:
             return CoreAppConstants.VpnTiers.basic
-        case .plus, .vpnPlus, .family, .bundlePro, .enterprise2022, .vpnpro2023, .vpnbiz2023:
+        case .plus, .vpnPlus, .family, .bundlePro, .enterprise2022, .vpnpro2023, .vpnbiz2023, .vpnpass2023:
             return CoreAppConstants.VpnTiers.plus
         case .visionary, .unlimited, .visionary2022:
             return CoreAppConstants.VpnTiers.visionary
