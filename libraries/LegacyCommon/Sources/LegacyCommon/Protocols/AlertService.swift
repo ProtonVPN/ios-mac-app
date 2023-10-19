@@ -154,8 +154,8 @@ public class AppUpdateRequiredAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
     
-    public init(_ apiError: ApiError) {
-        message = apiError.localizedDescription
+    public init(_ error: Error) {
+        message = error.localizedDescription
     }
 }
 
@@ -324,7 +324,7 @@ public class ProtocolNotAvailableForServerAlert: SystemAlert {
                                        handler: confirmHandler))
         }
         let dismissText = confirmHandler == nil ? Localizable.ok : Localizable.cancel
-        actions.append(AlertAction(title: Localizable.cancel,
+        actions.append(AlertAction(title: dismissText,
                                    style: .cancel,
                                    handler: cancelHandler ?? dismiss))
     }

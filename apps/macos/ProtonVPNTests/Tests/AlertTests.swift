@@ -23,6 +23,7 @@
 import XCTest
 import LegacyCommon
 import VPNShared
+import ProtonCoreNetworking
 @testable import ProtonVPN
 
 fileprivate let navigationService = NavigationService(DependencyContainer())
@@ -49,10 +50,10 @@ class AlertTests: XCTestCase {
         alertService.push(alert: MITMAlert())
         XCTAssert(windowService.displayCount == 1)
         
-        alertService.push(alert: AppUpdateRequiredAlert(ApiError.unknownError))
+        alertService.push(alert: AppUpdateRequiredAlert(ResponseError.unknownError))
         XCTAssert(windowService.displayCount == 2)
         
-        alertService.push(alert: AppUpdateRequiredAlert(ApiError.unknownError))
+        alertService.push(alert: AppUpdateRequiredAlert(ResponseError.unknownError))
         XCTAssert(windowService.displayCount == 2)
     }
     

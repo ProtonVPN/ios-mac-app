@@ -119,11 +119,11 @@ public final class CoreNetworking: Networking {
     }
 
     private static func setupTrustKit() {
-        // FUTUREDO: When we adopt a Core version >= 3.25.1, move to TrustKitWrapper
-        let config = TrustKitWrapper.configuration(hardfail: true)
-        let instance = TrustKit(configuration: config)
-        PMAPIService.trustKit = instance
-        PMAPIService.noTrustKit = false
+        TrustKitWrapper.setUp()
+        let tk = TrustKitWrapper.current
+
+        PMAPIService.trustKit = tk
+        PMAPIService.noTrustKit = (tk == nil)
     }
 
     public func request(_ route: Request, completion: @escaping (_ result: Result<VPNShared.JSONDictionary, Error>) -> Void) {

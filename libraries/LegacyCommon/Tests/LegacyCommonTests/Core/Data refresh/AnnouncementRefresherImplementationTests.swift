@@ -21,6 +21,7 @@
 //
 
 import XCTest
+import ProtonCoreNetworking
 @testable import LegacyCommon
 
 class AnnouncementRefresherImplementationTests: XCTestCase {
@@ -121,7 +122,7 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
         
         let coreApiService = CoreApiServiceMock()
         coreApiService.callbackGetApiNotificationsCallback = { success, failure in
-            failure(ApiError.unknownError)
+            failure(ResponseError.unknownError)
         }
         let factory = AnnouncementRefresherImplementationFactory(coreApiService: coreApiService, announcementStorage: storage)
         let refresher = AnnouncementRefresherImplementation(factory: factory, minRefreshTime: 0)

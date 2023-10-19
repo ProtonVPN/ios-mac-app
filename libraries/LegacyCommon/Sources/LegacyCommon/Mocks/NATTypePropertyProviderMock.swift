@@ -18,7 +18,6 @@
 
 #if DEBUG
 import Foundation
-import LegacyCommon
 import VPNShared
 
 public final class NATTypePropertyProviderMock: NATTypePropertyProvider {

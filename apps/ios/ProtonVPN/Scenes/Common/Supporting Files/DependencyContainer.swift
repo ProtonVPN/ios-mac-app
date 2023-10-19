@@ -68,8 +68,17 @@ final class DependencyContainer: Container {
     private lazy var planService = CorePlanService(networking: makeNetworking(), alertService: makeCoreAlertService(), authKeychain: makeAuthKeychainHandle())
     private lazy var doh: DoHVPN = {
         let propertiesManager = makePropertiesManager()
-        let doh = DoHVPN(alternativeRouting: propertiesManager.alternativeRouting,
-                         customHost: propertiesManager.apiEndpoint)
+
+        #if DEBUG || STAGING
+        let customHost = propertiesManager.apiEndpoint
+        #else
+        let customHost: String? = nil
+        #endif
+
+        let doh = DoHVPN(
+            alternativeRouting: propertiesManager.alternativeRouting,
+            customHost: customHost
+        )
 
         propertiesManager.onAlternativeRoutingChange = { alternativeRouting in
             doh.alternativeRouting = alternativeRouting

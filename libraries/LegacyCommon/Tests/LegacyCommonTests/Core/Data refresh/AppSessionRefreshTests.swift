@@ -22,6 +22,7 @@ import XCTest
 import Timer
 import TimerMock
 import VPNSharedTesting
+import ProtonCoreNetworking
 import ProtonCoreTestingToolkitUnitTestsCore
 
 class AppSessionRefreshTimerTests: XCTestCase {
@@ -154,9 +155,12 @@ class AppSessionRefreshTimerTests: XCTestCase {
         networkingDelegate.apiCredentials = nil
 
         let message = "Your app is really, really old"
-        appSessionRefresher.loginError = ApiError(httpStatusCode: 400,
-                                                  code: ApiErrorCode.appVersionBad,
-                                                  localizedDescription: message)
+        appSessionRefresher.loginError = ResponseError(
+            httpCode: 400,
+            responseCode: ApiErrorCode.apiVersionBad,
+            userFacingMessage: message,
+            underlyingError: nil
+        )
 
         timerFactory.runRepeatingTimers()
         wait(for: [expectations.updateServers[1], expectations.displayAlert], timeout: 10)

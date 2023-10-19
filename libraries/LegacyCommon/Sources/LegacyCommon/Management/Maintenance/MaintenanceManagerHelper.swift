@@ -58,7 +58,7 @@ public class MaintenanceManagerHelper {
         
         let time = TimeInterval(propertiesManager.maintenanceServerRefreshIntereval * 60)
         let jitter = (TimeInterval(Self.randomJitterPercentage) / 100) * time
-        maintenanceManager.observeCurrentServerState(every: time, repeats: true, completion: { [weak self] isMaintenance in
+        maintenanceManager.observeCurrentServerState(every: time + jitter, repeats: true, completion: { [weak self] isMaintenance in
             guard isMaintenance else {
                 return
             }

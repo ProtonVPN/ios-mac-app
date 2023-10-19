@@ -24,6 +24,7 @@ import XCTest
 import GSMessages
 import PMLogger
 import Onboarding
+import ProtonCoreNetworking
 @testable import LegacyCommon
 @testable import ProtonVPN
 
@@ -49,10 +50,10 @@ class AlertTests: XCTestCase {
         alertService.push(alert: MITMAlert())
         XCTAssertEqual(windowService.displayCount, 1)
         
-        alertService.push(alert: AppUpdateRequiredAlert(ApiError.unknownError))
+        alertService.push(alert: AppUpdateRequiredAlert(ResponseError.unknownError))
         XCTAssertEqual(windowService.displayCount, 2)
         
-        alertService.push(alert: AppUpdateRequiredAlert(ApiError.unknownError))
+        alertService.push(alert: AppUpdateRequiredAlert(ResponseError.unknownError))
         XCTAssertEqual(windowService.displayCount, 2)
     }
     

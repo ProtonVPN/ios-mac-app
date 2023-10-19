@@ -201,7 +201,7 @@ public class FullNetworkingMockDelegate: NetworkingMockDelegate {
         case .vpn:
             // for fetching client credentials
             guard let apiCredentials = apiCredentials else {
-                return .failure(ApiError(httpStatusCode: 400, code: 2000))
+                return .failure(ResponseError(httpCode: 400, responseCode: 2000, userFacingMessage: nil, underlyingError: nil))
             }
 
             let data = try JSONSerialization.data(withJSONObject: apiCredentials.asDict)
