@@ -21,7 +21,6 @@
 
 #if DEBUG
 import Foundation
-import LegacyCommon
 import ProtonCoreNetworking
 
 public class UnauthKeychainMock: UnauthKeychainHandle {

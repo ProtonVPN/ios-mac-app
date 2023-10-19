@@ -25,7 +25,7 @@ final class OVPNiOSCredentialsConfigurator: VpnCredentialsConfigurator {
         guard isEnabled(OpenVPNFeature.iosCertificates) else { // Old flow
             protocolConfig.username = configuration.username
             let storage = TunnelKit.Keychain(group: AppConstants.AppGroups.main)
-            try? storage.set(password: configuration.password, for: configuration.username, context: AppConstants.NetworkExtensions.openVpn)
+            _ = try? storage.set(password: configuration.password, for: configuration.username, context: AppConstants.NetworkExtensions.openVpn)
             completionHandler(protocolConfig)
             return
         }

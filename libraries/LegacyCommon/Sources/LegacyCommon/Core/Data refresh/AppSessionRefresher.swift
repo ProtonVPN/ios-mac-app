@@ -112,10 +112,9 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
             case let .failure(error):
                 log.error("Failed to refresh vpn credentials", category: .app, metadata: ["error": "\(error)"])
 
-                let error = error as NSError
-                switch error.code {
+                switch error.responseCode {
                 case ApiErrorCode.apiVersionBad, ApiErrorCode.appVersionBad:
-                    self?.alertService.push(alert: AppUpdateRequiredAlert(error as! ApiError))
+                    self?.alertService.push(alert: AppUpdateRequiredAlert(error))
                 default:
                     break // ignore failures
                 }

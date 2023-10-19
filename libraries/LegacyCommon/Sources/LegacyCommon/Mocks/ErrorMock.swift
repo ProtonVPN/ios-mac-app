@@ -1,7 +1,7 @@
 //
-//  Created on 18.02.2022.
+//  Created on 19.10.23.
 //
-//  Copyright (c) 2022 Proton AG
+//  Copyright (c) 2023 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,21 +16,19 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if DEBUG
 import Foundation
-import VPNShared
+import Strings
+import ProtonCoreNetworking
 
-public final class NATTypePropertyProviderMock: NATTypePropertyProvider {
-    public static var natTypeNotification: Notification.Name = NSNotification.Name("")
+#if DEBUG
 
-    public var natType: NATType = .default
-
-    public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
-        if tier <= CoreAppConstants.VpnTiers.free {
-            natType = .default
-        }
-    }
-
-    public init() {}
+public extension ResponseError {
+    static let unknownError: Self = .init(
+        httpCode: HttpStatusCode.internalServerError,
+        responseCode: ApiErrorCode.apiOffline,
+        userFacingMessage: Localizable.errorInternalError,
+        underlyingError: nil
+    )
 }
+
 #endif
