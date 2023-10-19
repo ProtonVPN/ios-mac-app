@@ -33,6 +33,7 @@ final class AnnouncementImageViewController: AnnouncementViewController {
     @IBOutlet private weak var progressIndicator: UIActivityIndicatorView!
 
     private let data: OfferPanel.ImagePanel
+    private let offerReference: String?
 
     var didShowTheWholeModal = false
 
@@ -42,8 +43,9 @@ final class AnnouncementImageViewController: AnnouncementViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(data: OfferPanel.ImagePanel, sessionService: SessionService) {
+    init(data: OfferPanel.ImagePanel, offerReference: String?, sessionService: SessionService) {
         self.data = data
+        self.offerReference = offerReference
         self.sessionService = sessionService
         super.init(nibName: String(describing: AnnouncementImageViewController.self), bundle: nil)
     }
@@ -94,6 +96,13 @@ final class AnnouncementImageViewController: AnnouncementViewController {
             }
             self?.progressIndicator.stopAnimating()
             self?.actionButton.isHidden = false
+            self?.didPresentOffer()
+        }
+    }
+
+    func didPresentOffer() {
+        DispatchQueue.main.async { [offerReference] in
+            NotificationCenter.default.post(name: .userWasDisplayedAnnouncement, object: offerReference)
         }
     }
 
@@ -126,6 +135,10 @@ final class AnnouncementImageViewController: AnnouncementViewController {
             log.warning("Announcement does not contain <OpenURL> action. Action is <\(data.button.action?.rawValue ?? "nil")>, url: <\(data.button.url)>")
             cancelled?()
             return
+        }
+        
+        DispatchQueue.main.async { [offerReference] in
+            NotificationCenter.default.post(name: .userEngagedWithAnnouncement, object: offerReference)
         }
 
         guard data.button.behaviors?.contains(.autoLogin) == true else {
