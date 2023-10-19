@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22154" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22154"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -11,9 +11,6 @@
                 <outlet property="accountPlanLabel" destination="fte-CR-OG1" id="d8q-Sl-w6u"/>
                 <outlet property="accountPlanSeparator" destination="E7f-qz-dkT" id="6P6-Uv-ARw"/>
                 <outlet property="accountPlanValue" destination="bHC-2m-Qdn" id="foe-9C-Qu5"/>
-                <outlet property="accountTypeLabel" destination="6Hk-MM-Z8s" id="Ham-rv-DaU"/>
-                <outlet property="accountTypeSeparator" destination="fUm-bc-cEP" id="YQg-ho-RZo"/>
-                <outlet property="accountTypeValue" destination="4xy-J4-IYv" id="Dc5-gF-24b"/>
                 <outlet property="manageSubscriptionButton" destination="KP6-ou-7qP" id="qp3-9A-Xhg"/>
                 <outlet property="useCouponButton" destination="CjQ-Jp-Ar9" id="vTq-kH-QUz"/>
                 <outlet property="usernameLabel" destination="KwT-jo-bPa" id="s5E-BI-LPm"/>
@@ -28,12 +25,12 @@
             <rect key="frame" x="0.0" y="0.0" width="511" height="286"/>
             <subviews>
                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xis-sl-bQz">
-                    <rect key="frame" x="0.0" y="96" width="511" height="190"/>
+                    <rect key="frame" x="0.0" y="146" width="511" height="140"/>
                     <subviews>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="hWK-Vl-tD1">
-                            <rect key="frame" x="0.0" y="130" width="511" height="50"/>
+                            <rect key="frame" x="0.0" y="80" width="511" height="50"/>
                             <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KwT-jo-bPa" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KwT-jo-bPa" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="40" y="17" width="99" height="16"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Username label" id="WzL-0y-Uwm">
                                         <font key="font" metaFont="system"/>
@@ -41,7 +38,7 @@
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UhW-14-BIc" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UhW-14-BIc" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="369" y="17" width="102" height="16"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Username value" id="mO1-hF-cWe">
                                         <font key="font" metaFont="system"/>
@@ -71,50 +68,10 @@
                                 <constraint firstItem="UhW-14-BIc" firstAttribute="centerY" secondItem="KwT-jo-bPa" secondAttribute="centerY" id="s7n-7N-Nqh"/>
                             </constraints>
                         </customView>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="DQU-jw-QuT">
-                            <rect key="frame" x="0.0" y="80" width="511" height="50"/>
-                            <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6Hk-MM-Z8s" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="40" y="17" width="117" height="16"/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Account type label" id="Lqd-ca-STO">
-                                        <font key="font" metaFont="system"/>
-                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                </textField>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4xy-J4-IYv" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="351" y="17" width="120" height="16"/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Account type value" id="BGv-NH-lat">
-                                        <font key="font" metaFont="system"/>
-                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                </textField>
-                                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="fUm-bc-cEP">
-                                    <rect key="frame" x="42" y="0.0" width="427" height="1"/>
-                                    <view key="contentView" id="sXg-Jf-kwq">
-                                        <rect key="frame" x="0.0" y="0.0" width="427" height="1"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    </view>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="1" id="FZx-O7-8y0"/>
-                                    </constraints>
-                                </box>
-                            </subviews>
-                            <constraints>
-                                <constraint firstAttribute="bottom" secondItem="fUm-bc-cEP" secondAttribute="bottom" id="3iw-j6-G9H"/>
-                                <constraint firstItem="4xy-J4-IYv" firstAttribute="centerY" secondItem="6Hk-MM-Z8s" secondAttribute="centerY" id="8Fx-45-wOD"/>
-                                <constraint firstAttribute="height" constant="50" id="JLB-wd-FVl"/>
-                                <constraint firstAttribute="trailing" secondItem="4xy-J4-IYv" secondAttribute="trailing" constant="42" id="Qky-yq-Yy1"/>
-                                <constraint firstItem="6Hk-MM-Z8s" firstAttribute="centerY" secondItem="DQU-jw-QuT" secondAttribute="centerY" id="RUE-NK-G96"/>
-                                <constraint firstItem="fUm-bc-cEP" firstAttribute="leading" secondItem="6Hk-MM-Z8s" secondAttribute="leading" id="d5S-pe-RZg"/>
-                                <constraint firstItem="fUm-bc-cEP" firstAttribute="trailing" secondItem="4xy-J4-IYv" secondAttribute="trailing" id="gQg-u0-08i"/>
-                            </constraints>
-                        </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="GMR-hD-caz">
                             <rect key="frame" x="0.0" y="30" width="511" height="50"/>
                             <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fte-CR-OG1" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fte-CR-OG1" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="40" y="17" width="116" height="16"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Account plan label" id="Pbc-S6-9xn">
                                         <font key="font" metaFont="system"/>
@@ -122,7 +79,7 @@
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bHC-2m-Qdn" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bHC-2m-Qdn" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="352" y="17" width="119" height="16"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Account plan value" id="cZe-d4-enr">
                                         <font key="font" metaFont="system"/>
@@ -143,6 +100,8 @@
                             </subviews>
                             <constraints>
                                 <constraint firstItem="fte-CR-OG1" firstAttribute="centerY" secondItem="GMR-hD-caz" secondAttribute="centerY" id="1BA-qo-0l0"/>
+                                <constraint firstAttribute="trailing" secondItem="E7f-qz-dkT" secondAttribute="trailing" constant="42" id="3Ox-z4-qhO"/>
+                                <constraint firstItem="E7f-qz-dkT" firstAttribute="leading" secondItem="GMR-hD-caz" secondAttribute="leading" constant="42" id="Jsl-BV-gIh"/>
                                 <constraint firstAttribute="height" constant="50" id="VnW-S0-QVK"/>
                                 <constraint firstAttribute="trailing" secondItem="bHC-2m-Qdn" secondAttribute="trailing" constant="42" id="fDN-4r-hNV"/>
                                 <constraint firstItem="E7f-qz-dkT" firstAttribute="leading" secondItem="fte-CR-OG1" secondAttribute="leading" id="lmU-sS-98T"/>
@@ -153,24 +112,17 @@
                         </customView>
                     </subviews>
                     <edgeInsets key="edgeInsets" left="0.0" right="0.0" top="10" bottom="30"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="190" id="4II-wC-GOr"/>
-                        <constraint firstItem="fte-CR-OG1" firstAttribute="leading" secondItem="6Hk-MM-Z8s" secondAttribute="leading" id="igl-Qr-Nmh"/>
-                        <constraint firstItem="6Hk-MM-Z8s" firstAttribute="leading" secondItem="KwT-jo-bPa" secondAttribute="leading" id="qQW-tj-Z3x"/>
-                    </constraints>
                     <visibilityPriorities>
-                        <integer value="1000"/>
                         <integer value="1000"/>
                         <integer value="1000"/>
                     </visibilityPriorities>
                     <customSpacing>
                         <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
-                        <real value="3.4028234663852886e+38"/>
                     </customSpacing>
                 </stackView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="x6P-lQ-byj">
-                    <rect key="frame" x="0.0" y="0.0" width="511" height="96"/>
+                    <rect key="frame" x="0.0" y="0.0" width="511" height="146"/>
                     <subviews>
                         <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sUs-v0-wfZ">
                             <rect key="frame" x="0.0" y="28" width="511" height="48"/>

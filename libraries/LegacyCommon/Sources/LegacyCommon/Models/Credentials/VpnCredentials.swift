@@ -278,14 +278,4 @@ extension CachedVpnCredentials {
     public var isDelinquent: Bool {
         return delinquent > 2
     }
-
-    public var serviceName: String {
-        var name = Localizable.unavailable
-        if services & 0b100 != 0 {
-            name = "Proton VPN"
-        } else if services & 0b001 != 0 {
-            name = "Proton Mail"
-        }
-        return name
-    }
 }
