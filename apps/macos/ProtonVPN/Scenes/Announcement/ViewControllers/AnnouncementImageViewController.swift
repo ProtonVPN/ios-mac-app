@@ -88,6 +88,13 @@ final class AnnouncementImageViewController: NSViewController {
             let scale = 1 / (NSScreen.main?.backingScaleFactor ?? 1)
             self.imageViewWidth.constant = CGFloat(source.width ?? image.size.width) * scale
             self.imageViewHeight.constant = CGFloat(source.height ?? image.size.height) * scale
+            self.didPresentOffer()
+        }
+    }
+
+    func didPresentOffer() {
+        DispatchQueue.main.async { [offerReference] in
+            NotificationCenter.default.post(name: .userWasDisplayedAnnouncement, object: offerReference)
         }
     }
 
@@ -97,8 +104,8 @@ final class AnnouncementImageViewController: NSViewController {
             return
         }
 
-        DispatchQueue.main.async { [weak self] in
-            NotificationCenter.default.post(name: .userEngagedWithAnnouncement, object: self?.offerReference)
+        DispatchQueue.main.async { [offerReference] in
+            NotificationCenter.default.post(name: .userEngagedWithAnnouncement, object: offerReference)
         }
 
         guard data.button.behaviors?.contains(.autoLogin) == true else {

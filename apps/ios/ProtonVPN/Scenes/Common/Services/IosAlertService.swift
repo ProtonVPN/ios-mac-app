@@ -388,7 +388,7 @@ extension IosAlertService: CoreAlertService {
             announcement = AnnouncementDetailViewController(legacyPanel)
             announcement.modalPresentationStyle = .fullScreen
         case .image(let imagePanel):
-            announcement = AnnouncementImageViewController(data: imagePanel, sessionService: factory.makeSessionService())
+            announcement = AnnouncementImageViewController(data: imagePanel, offerReference: alert.offerReference, sessionService: factory.makeSessionService())
             announcement.modalPresentationStyle = UIDevice.current.isIpad ? .pageSheet : .overFullScreen
         }
         announcement.cancelled = { [weak self] in

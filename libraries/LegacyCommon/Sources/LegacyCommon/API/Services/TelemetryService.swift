@@ -36,6 +36,8 @@ public extension Notification.Name {
     static let userInitiatedVPNChange = Notification.Name("UserInitiatedVPNChange")
     /// An upsell alert was displayed due to a user clicking on a feature reserved for paid users.
     static let upsellAlertWasDisplayed: Self = .init("UpsellAlertWasDisplayed")
+    /// A user was displayed a announcement.
+    static let userWasDisplayedAnnouncement: Self = .init("UserWasDisplayedAnnouncement")
     /// A user was redirected to a payment portal through a notification.
     static let userEngagedWithAnnouncement: Self = .init("UserEngagedWithAnnouncement")
     /// A user was upsold by clicking on a paid feature, and proceeded to the "Upgrade" step.

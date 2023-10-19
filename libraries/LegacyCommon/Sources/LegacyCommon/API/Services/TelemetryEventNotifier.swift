@@ -71,6 +71,12 @@ public class TelemetryEventNotifier {
             .map { $0.object as? String }
             .sink(receiveValue: announcementEngaged)
             .store(in: &cancellables)
+
+        NotificationCenter.default
+            .publisher(for: .userWasDisplayedAnnouncement)
+            .map { $0.object as? String }
+            .sink(receiveValue: announcementDisplayed)
+            .store(in: &cancellables)
     }
 
     private func reachabilityChanged(_ notification: Notification) {
@@ -116,9 +122,16 @@ public class TelemetryEventNotifier {
         }
     }
 
-    private func announcementEngaged(_ offerReference: String?) {
+    private func announcementDisplayed(_ offerReference: String?) {
         do {
             try telemetryService?.upsellEvent(.display, modalSource: .promoOffer, newPlanName: nil, offerReference: offerReference)
+        } catch {
+            log.debug("No telemetry event triggered for announcement offer: \(String(describing: offerReference)), error: \(error)", category: .telemetry)
+        }
+    }
+
+    private func announcementEngaged(_ offerReference: String?) {
+        do {
             try telemetryService?.upsellEvent(.upgradeAttempt, modalSource: .promoOffer, newPlanName: nil, offerReference: offerReference)
         } catch {
             log.debug("No telemetry event triggered for announcement offer: \(String(describing: offerReference)), error: \(error)", category: .telemetry)
