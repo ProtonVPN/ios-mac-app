@@ -28,7 +28,6 @@ import Strings
 final class AccountViewModel {
     
     private(set) var username: String
-    private(set) var accountType: String
     private(set) var accountPlan: AccountPlan?
 
     var canUsePromo: Bool {
@@ -52,7 +51,6 @@ final class AccountViewModel {
         self.authKeychain = authKeychain
 
         username = Localizable.unavailable
-        accountType = Localizable.unavailable
         accountPlan = nil
 
         reload()
@@ -70,15 +68,12 @@ final class AccountViewModel {
             username = authCredentials.username
             do {
                 let vpnCredentials = try vpnKeychain.fetchCached()
-                accountType = vpnCredentials.serviceName
                 accountPlan = vpnCredentials.accountPlan
             } catch {
-                accountType = Localizable.unavailable
                 accountPlan = nil
             }
         } else {
             username = Localizable.unavailable
-            accountType = Localizable.unavailable
             accountPlan = nil
         }
 

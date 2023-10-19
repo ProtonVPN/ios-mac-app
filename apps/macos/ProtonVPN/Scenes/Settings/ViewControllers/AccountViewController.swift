@@ -32,10 +32,6 @@ final class AccountViewController: NSViewController {
     @IBOutlet private weak var usernameValue: PVPNTextField!
     @IBOutlet private weak var usernameSeparator: NSBox!
     
-    @IBOutlet private weak var accountTypeLabel: PVPNTextField!
-    @IBOutlet private weak var accountTypeValue: PVPNTextField!
-    @IBOutlet private weak var accountTypeSeparator: NSBox!
-    
     @IBOutlet private weak var accountPlanLabel: PVPNTextField!
     @IBOutlet private weak var accountPlanValue: PVPNTextField!
     @IBOutlet private weak var accountPlanSeparator: NSBox!
@@ -83,10 +79,6 @@ final class AccountViewController: NSViewController {
         usernameValue.attributedStringValue = viewModel.username.styled(.weak, font: .themeFont(.heading4), alignment: .right)
         usernameSeparator.fillColor = .color(.border, .weak)
         
-        accountTypeLabel.attributedStringValue = Localizable.accountType.styled(font: .themeFont(.heading4), alignment: .left)
-        accountTypeValue.attributedStringValue = viewModel.accountType.styled(.weak, font: .themeFont(.heading4), alignment: .right)
-        accountTypeSeparator.fillColor = .color(.border, .weak)
-        
         accountPlanLabel.attributedStringValue = Localizable.accountPlan.styled(font: .themeFont(.heading4), alignment: .left)
         accountPlanSeparator.fillColor = .color(.border, .weak)
         
@@ -124,7 +116,6 @@ final class AccountViewController: NSViewController {
     
     private func setupData() {
         usernameValue.attributedStringValue = viewModel.username.styled(.weak, font: .themeFont(.heading4), alignment: .right)
-        accountTypeValue.attributedStringValue = viewModel.accountType.styled(.weak, font: .themeFont(.heading4), alignment: .right)
 
         if let accountPlan = viewModel.accountPlan {
             accountPlanValue.attributedStringValue = accountPlan.description.styled(accountPlan.styleForUI, font: .themeFont(.heading4), alignment: .right)
