@@ -255,6 +255,13 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
         }
     }
 
+    override public func start(completion: @escaping (() -> Void)) {
+        super.start { [weak self] in
+            self?.operationQueue.isSuspended = false
+            completion()
+        }
+    }
+
     override func stopTimer() {
         operationQueue.cancelAllOperations()
         super.stopTimer()
