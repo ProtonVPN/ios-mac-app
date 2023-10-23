@@ -30,10 +30,11 @@ ENV["FASTLANE_XCODE_LIST_TIMEOUT"] = "180"
 $commit_sha = ENV["CI_COMMIT_SHORT_SHA"] || `git rev-parse --short=8 HEAD`.strip
 
 # Derived data and other build artifacts are stored in a place where other jobs can (re)use it
-$build_root_path = `echo $HOME`.strip + "/build/" + $commit_sha
-$derived_data_path = $build_root_path + "/DerivedData"
-$build_path = $build_root_path + "/Build"
-$buildlog_path = $build_root_path + "/BuildLog"
+$build_root_parent_path = `echo $HOME`.strip + "/build/"
+$build_root_path = $build_root_parent_path + $commit_sha
+$derived_data_path = $build_root_path + "/DerivedData/"
+$build_path = $build_root_path + "/Build/"
+$buildlog_path = $build_root_path + "/BuildLog/"
 
 # After this amount of time DerivedData folder will be deleted.
 # More info about possible values can be found in `man find` `-atime` part.
@@ -44,10 +45,25 @@ $output_folder = "build/"
 $output_folder_mac = $output_folder + "macos/"
 $output_folder_ios = $output_folder + "ios/"
 
+# Signing
+$team_id_ios = "2SB5Z68H26"
+
+# GIT settings for storing certificates and PPs
+$match_git_branch_ios = "ios/vpn"
+$match_keychain_name = "fastlane.keychain" # Fastlane match will save secure stuff here
+# env['MATCH_GIT_URL'] must be set on the server to a repo where PPs are saved
+
+# App identifiers
+$APP_ID_IOS_APP = "ch.protonmail.vpn"
+$APP_ID_IOS_OVPN = "ch.protonmail.vpn.OpenVPN-Extension"
+$APP_ID_IOS_WG = "ch.protonmail.vpn.WireGuardiOS-Extension"
+$APP_ID_IOS_WIDGET = "ch.protonmail.vpn.widget"
+$APP_ID_IOS_SIRI = "ch.protonmail.vpn.Siri-Shortcut-Handler"
+
 
 ## Lanes
 
-desc "Build mac app and test bundles"
+desc "Build mac app (debug)"
 lane :mac_build_debug do
 
     # Delete old DerivedData folders
@@ -71,9 +87,122 @@ lane :mac_build_debug do
     )
 end
 
+desc "Prepare certificates and provisioning profiles for ios app (debug)"
+lane:ios_prepare_certificates_develop do
+    # Separate keychain is created if needed
+    match_keychain_create
+
+    # Prepare API key for contacting Apple APIs
+    get_app_store_api_key
+
+    # Download current certs and PPs from git or crate them on appstore portal
+    # and save to git repo (env['MATCH_GIT_URL']) for later use.
+    match(
+          type: "development",
+          team_id: $team_id_ios,
+          git_branch: $match_git_branch_ios,
+          keychain_name: $match_keychain_name,
+          app_identifier: [
+              $APP_ID_IOS_APP,
+              $APP_ID_IOS_OVPN,
+              $APP_ID_IOS_WG,
+              $APP_ID_IOS_WIDGET,
+              $APP_ID_IOS_SIRI
+          ],
+    )
+end
+
+desc "Build ios app (debug)"
+lane :ios_build_debug do
+
+    begin
+
+        # Delete old DerivedData folders
+        cleanup_derived_data
+
+        # Download develop certificats and PPs from a special repo or recreate them on apple dev portal
+        ios_prepare_certificates_develop
+
+        # Setup for debug build
+        configuration = "Debug"
+        scheme = "ProtonVPN-iOS"
+        export_method = "development"
+
+        # Update project settings to use manual PPs
+        $ppPrefix = "match " + export_method.capitalize + " "
+        provisioningProfilesByName = {
+            'ProtonVPN' => $ppPrefix + $APP_ID_IOS_APP,
+            'OpenVPN Extension' => $ppPrefix + $APP_ID_IOS_OVPN,
+            'WireGuardiOS Extension' => $ppPrefix + $APP_ID_IOS_WG,
+            'Quick Connect Widget' => $ppPrefix + $APP_ID_IOS_WIDGET,
+            'Siri Shortcut Handler' => $ppPrefix + $APP_ID_IOS_SIRI,
+        }
+        provisioningProfilesByName.each do |target_identifier, target_pp|
+            update_code_signing_settings(
+                path: "apps/ios/iOS.xcodeproj",
+                targets: target_identifier,
+                profile_name: target_pp,
+                use_automatic_signing: false,
+                build_configurations: configuration
+            )
+        end
+
+        # Finally build the app
+        build_ios_app(
+          build_path: $build_path,
+          derived_data_path: $derived_data_path,
+          buildlog_path: $buildlog_path,
+          configuration: configuration,
+          scheme: scheme,
+          clean: false, # No need for a clean: we create new DerivedData folder for each commit
+          output_directory: $output_folder_ios + configuration + "/",
+          export_method: export_method,
+          export_team_id: $team_id_ios,
+        )
+    ensure
+
+        # Delete the keychain to not leave the signing scertificate
+        match_keychain_delete
+
+        # Copy build logs into folder being uploaded into artfacts
+        copyLogsIntoArtifacts
+    end
+end
+
 # Delete DerivedData folders older than `$derived_data_ttl` ago
 def cleanup_derived_data
-    puts `find /opt/gitlab/builds/* -type d -maxdepth 0 -ctime +#{$derived_data_ttl} | xargs rm -rf`
+    cmd_find = "find #{$build_root_parent_path}* -type d -maxdepth 0 -ctime +#{$derived_data_ttl}"
+    cmd_delete = "xargs rm -rf"
+    puts "Will delete old derived data:" 
+    puts `#{cmd_find}`
+    puts `#{cmd_find} | #{cmd_delete}`
+end
+
+# Create a keychain that will be used for signing
+def match_keychain_create
+  create_keychain(
+      name: $match_keychain_name,
+      password: ENV["MATCH_KEYCHAIN_PASSWORD"],
+      default_keychain: false,
+      add_to_search_list: true,
+      unlock: true,
+      lock_when_sleeps: false,
+      lock_after_timeout: false,
+      timeout: 1800
+  )
+end
+
+# Delete keychain created in `match_keychain_create`
+def match_keychain_delete
+      delete_keychain(
+        name: $match_keychain_name
+      )
+end
+
+# Move build logs into a folder that will be uploaded as artifact
+def copyLogsIntoArtifacts
+    # Adding "../" to the output folder, because otherwise its root is `fastlane/` folder
+    FileUtils.cp_r $buildlog_path, "../" + $output_folder
 end
 
 ## -------------------------- Old lanes. To be refactored --------------------------

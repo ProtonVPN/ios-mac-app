@@ -51,6 +51,9 @@ test:ui:app:macos:all:
     - .mac_job_template
     - .ui_full_tests_template
   dependencies: []
+  needs: # Without this job doesn't start automatically (on develop branch)
+    - job: test:unit:app:macos
+      artifacts: false
   stage: test_ui
   script:
     - fastlane macos_app_ui_test_all

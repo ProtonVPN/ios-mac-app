@@ -2,6 +2,22 @@
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
     
 
+build:app:ios:
+  extends: .ios_job_template
+  dependencies: []
+  stage: build
+  script:
+    - fastlane ios_build_debug
+  rules:
+    - when: manual
+  tags:
+    - vpn-apple-builds
+  artifacts:
+    when: always
+    paths:
+      - build/
+    expire_in: 3 days
+
 test:unit:app:ios:
   extends:
     - .mr_job_template
@@ -62,6 +78,9 @@ test:ui:app:ios:all:
     - .ios_job_template
     - .ui_full_tests_template
   stage: test_ui
+  needs: # Without this job doesn't start automatically (on develop branch)
+    - job: test:unit:app:ios
+      artifacts: false
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
