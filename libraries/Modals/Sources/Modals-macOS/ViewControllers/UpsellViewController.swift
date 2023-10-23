@@ -134,16 +134,7 @@ public final class UpsellViewController: NSViewController {
     }
 
     func setupArt(feature: UpsellFeature) {
-        var artImage = feature.artImage
-        if var reconnectCountdown = artImage as? ReconnectCountdown {
-            let frameSize = min(featureArtView.frame.width, featureArtView.frame.height)
-
-            reconnectCountdown.apply(colors: .macOS, font: .system(size: 20))
-            artImage = reconnectCountdown
-                .frame(width: frameSize, height: frameSize)
-        }
-
-        let childView = NSHostingController(rootView: AnyView(artImage))
+        let childView = NSHostingController(rootView: AnyView(feature.artImage))
         addChild(childView)
         childView.view.frame = featureArtView.bounds
         childView.view.layer?.backgroundColor = .clear
@@ -200,15 +191,5 @@ private extension CAGradientLayer {
                                 alpha: 1).cgColor]
         layer.frame = frame
         return layer
-    }
-}
-
-extension ReconnectCountdown.Colors {
-    static var macOS: Self {
-        .init(
-            text: Color(.text),
-            weak: Color(.text, .weak),
-            interactive: Color(.text, .interactive),
-            success: Color(.background, .success))
     }
 }

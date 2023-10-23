@@ -208,16 +208,7 @@ public final class UpsellViewController: UIViewController, Identifiable {
     }
 
     private func applyArtView(feature: UpsellFeature) {
-        var artImage = feature.artImage
-        if var reconnectCountdown = artImage as? ReconnectCountdown {
-            let frameSize = min(featureArtView.frame.width, featureArtView.frame.height)
-
-            reconnectCountdown.apply(colors: .iOS, font: .system(size: 20))
-            artImage = reconnectCountdown
-                .frame(width: frameSize, height: frameSize)
-        }
-
-        let childView = UIHostingController(rootView: AnyView(artImage))
+        let childView = UIHostingController(rootView: AnyView(feature.artImage))
         addChild(childView)
         childView.view.frame = featureArtView.bounds
         childView.view.backgroundColor = .clear
@@ -225,17 +216,6 @@ public final class UpsellViewController: UIViewController, Identifiable {
         childView.view.centerXAnchor.constraint(equalTo: featureArtView.centerXAnchor).isActive = true
         childView.view.centerYAnchor.constraint(equalTo: featureArtView.centerYAnchor).isActive = true
         childView.didMove(toParent: self)
-    }
-}
-
-extension ReconnectCountdown.Colors {
-    static var iOS: Self {
-        Self(
-            text: Color(colors.text),
-            weak: Color(colors.weakInteraction),
-            interactive: Color(colors.brand),
-            success: Color(colors.success)
-        )
     }
 }
 
