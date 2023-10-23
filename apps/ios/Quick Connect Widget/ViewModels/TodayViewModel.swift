@@ -24,6 +24,7 @@ import Foundation
 import Reachability
 import LegacyCommon
 import Strings
+import os.log
 
 enum TodayViewModelState {
     case blank
@@ -83,7 +84,11 @@ final class TodayViewModel {
             }
 
             components.host = action
-            components.queryItems = try? self?.secureDeepLinkGenerator.makeSecureQuery()
+            do {
+                components.queryItems = try self?.secureDeepLinkGenerator.makeSecureQuery()
+            } catch {
+                os_log(.error, "Could not generate secure deeplink: %{public}s", String(describing: error))
+            }
 
             guard let url = components.url else { return }
             self?.delegate?.didRequestUrl(url: url)
