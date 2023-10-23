@@ -18,35 +18,12 @@
 
 import Foundation
 import SwiftUI
+import Theme
 
 public struct ReconnectCountdown: View {
     static let timerQuantum = 0.1
 
     @State private var currentTime: Date = Date()
-
-    public struct Colors {
-        let text: Color
-        let weak: Color
-        let interactive: Color
-        let success: Color
-
-        public static let `default`: Self = .init(
-            text: .black,
-            weak: .gray,
-            interactive: .purple,
-            success: .green
-        )
-
-        public init(text: Color, weak: Color, interactive: Color, success: Color) {
-            self.text = text
-            self.weak = weak
-            self.interactive = interactive
-            self.success = success
-        }
-    }
-
-    var colors: Colors = .default
-    var font: Font = .body
 
     /// The time when the timer should finish.
     let dateFinished: Date
@@ -96,19 +73,19 @@ public struct ReconnectCountdown: View {
         ZStack {
             Circle()
                 .stroke(style: .countdown)
-                .foregroundColor(colors.weak)
+                .foregroundColor(Color(.background, [.interactive, .weak]))
             Circle()
                 .trim(from: 0, to: ratioWaited)
                 .rotation(.degrees(270))
                 .stroke(style: .countdown)
-                .foregroundColor(colors.interactive)
+                .foregroundColor(Color(.icon, [.interactive, .active]))
                 .animation(.linear(duration: Self.timerQuantum).delay(Self.timerQuantum * 2), value: timeSince)
             Circle()
                 .trim(from: 0, to: checkmarkStrokeRatio)
                 .stroke(style: .countdown)
                 .rotation3DEffect(.degrees(180), axis: (x: 1, y: 0, z: 0))
                 .rotationEffect(.degrees(270))
-                .foregroundColor(colors.success)
+                .foregroundColor(Color(.icon, .success))
                 .animation(.linear(duration: Self.timerQuantum).delay(Self.timerQuantum * 2), value: timeSince)
         }
     }
@@ -131,7 +108,7 @@ public struct ReconnectCountdown: View {
             .trim(from: 0, to: checkmarkStrokeRatio)
             .stroke(style: .countdown)
             .animation(.linear(duration: 0.1).delay(Self.timerQuantum * 2), value: timeSince)
-            .foregroundColor(colors.text)
+            .foregroundColor(Color(.text))
         }
     }
 
@@ -140,8 +117,12 @@ public struct ReconnectCountdown: View {
             ZStack {
                 if !isFinished {
                     Text(displayTimeRemaining.timerString)
-                        .font(font)
-                        .foregroundColor(colors.text)
+                    #if os(iOS)
+                        .themeFont(.body1(.bold))
+                    #elseif os(macOS)
+                        .themeFont(.title2(emphasised: true))
+                    #endif
+                        .foregroundColor(Color(.text))
                         .position(.center(of: geometry.size))
                 }
                 checkmark
@@ -150,15 +131,11 @@ public struct ReconnectCountdown: View {
             }
         }
         .overlay(progressCircles)
-        .padding()
+        .frame(width: 88, height: 88)
+        .padding(StrokeStyle.countdown.lineWidth / 2)
         .onReceive(timer) { _ in
             currentTime = Date()
         }
-    }
-
-    public mutating func apply(colors: Colors = .default, font: Font = .body) {
-        self.colors = colors
-        self.font = font
     }
 }
 
@@ -216,7 +193,7 @@ fileprivate extension View {
 }
 
 fileprivate extension StrokeStyle {
-    static let countdown: Self = .init(lineWidth: 6, lineCap: .round, lineJoin: .round)
+    static let countdown: Self = .init(lineWidth: 10, lineCap: .square, lineJoin: .miter)
 }
 
 struct RotationTimer_Previews: PreviewProvider {
@@ -228,6 +205,6 @@ struct RotationTimer_Previews: PreviewProvider {
             dateFinished: date.addingTimeInterval(duration),
             timeInterval: duration
         )
-        .frame(width: 100, height: 100)
+        .frame(width: 86, height: 86)
     }
 }
