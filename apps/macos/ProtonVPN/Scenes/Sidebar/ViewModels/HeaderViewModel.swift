@@ -176,7 +176,7 @@ final class HeaderViewModel {
         guard propertiesManager.featureFlags.pollNotificationAPI else {
             return false
         }
-        return announcementManager.fetchCurrentAnnouncementsFromStorage().contains(where: { $0.type == .default })
+        return announcementManager.fetchCurrentAnnouncementsFromStorage().contains(where: { $0.knownType == .default })
     }
     
     var hasUnreadAnnouncements: Bool {

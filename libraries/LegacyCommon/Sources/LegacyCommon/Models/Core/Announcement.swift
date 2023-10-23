@@ -28,7 +28,10 @@ public struct Announcement: Codable {
     public let notificationID: String
     public let startTime: Date
     public let endTime: Date
-    public let type: NotificationType
+    let type: Int
+    public var knownType: NotificationType? {
+        .init(rawValue: type)
+    }
     public let offer: Offer?
     public let reference: String?
     

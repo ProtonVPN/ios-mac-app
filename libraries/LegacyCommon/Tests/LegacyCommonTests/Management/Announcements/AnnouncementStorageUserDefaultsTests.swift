@@ -81,7 +81,7 @@ class AnnouncementStorageUserDefaultsTests: XCTestCase {
 
 fileprivate extension Announcement {
     static func mock(id: String) -> Self {
-        Self(notificationID: id, startTime: Date(), endTime: Date(), type: .default, offer: nil, reference: nil)
+        Self(notificationID: id, startTime: Date(), endTime: Date(), type: Announcement.NotificationType.default.rawValue, offer: nil, reference: nil)
     }
 }
 

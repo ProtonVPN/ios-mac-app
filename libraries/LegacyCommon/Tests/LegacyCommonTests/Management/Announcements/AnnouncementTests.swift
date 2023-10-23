@@ -43,7 +43,7 @@ class AnnouncementTests: XCTestCase {
             notificationID: "someID",
             startTime: .distantPast,
             endTime: .distantFuture,
-            type: .default,
+            type: Announcement.NotificationType.default.rawValue,
             offer: offer,
             reference: nil
         )

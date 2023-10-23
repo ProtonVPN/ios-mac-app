@@ -40,7 +40,7 @@ class AnnouncementManagerImplementationTests: XCTestCase {
                 notificationID: "1-no-offer",
                 startTime: Date(),
                 endTime: .distantFuture,
-                type: .default,
+                type: Announcement.NotificationType.default.rawValue,
                 offer: nil,
                 reference: nil
             ),
@@ -48,7 +48,7 @@ class AnnouncementManagerImplementationTests: XCTestCase {
                 notificationID: "2-with-offer",
                 startTime: Date(),
                 endTime: .distantFuture,
-                type: .default,
+                type: Announcement.NotificationType.default.rawValue,
                 offer: Offer.empty,
                 reference: nil
             ),
@@ -56,7 +56,7 @@ class AnnouncementManagerImplementationTests: XCTestCase {
                 notificationID: "2-with-offer-one-time",
                 startTime: Date(),
                 endTime: .distantFuture,
-                type: .oneTime,
+                type: Announcement.NotificationType.oneTime.rawValue,
                 offer: Offer.empty,
                 reference: nil
             ),
@@ -64,7 +64,7 @@ class AnnouncementManagerImplementationTests: XCTestCase {
                 notificationID: "3-ended",
                 startTime: Date(),
                 endTime: .distantPast,
-                type: .default,
+                type: Announcement.NotificationType.default.rawValue,
                 offer: Offer.empty,
                 reference: nil
             ),
@@ -72,7 +72,7 @@ class AnnouncementManagerImplementationTests: XCTestCase {
                 notificationID: "3-future",
                 startTime: .distantFuture,
                 endTime: .distantFuture,
-                type: .default,
+                type: Announcement.NotificationType.default.rawValue,
                 offer: Offer.empty,
                 reference: nil
             ),

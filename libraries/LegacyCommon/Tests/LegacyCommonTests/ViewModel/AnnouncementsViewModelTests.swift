@@ -119,7 +119,7 @@ fileprivate extension Announcement {
         notificationID: "1",
         startTime: Date(),
         endTime: Date(timeIntervalSinceNow: 888),
-        type: .default,
+        type: Announcement.NotificationType.default.rawValue,
         offer: .empty,
         reference: nil
     )

@@ -86,8 +86,12 @@ final class AnnouncementImageViewController: NSViewController {
             self.progressIndicator.stopAnimation(nil)
             self.actionButton.isHidden = false
             let scale = 1 / (NSScreen.main?.backingScaleFactor ?? 1)
-            self.imageViewWidth.constant = CGFloat(source.width ?? image.size.width) * scale
-            self.imageViewHeight.constant = CGFloat(source.height ?? image.size.height) * scale
+            let maxWidth = NSScreen.availableSizeInPixels().width
+            let maxHeight = NSScreen.availableSizeInPixels().height
+            let desiredWidth = CGFloat(source.width ?? image.size.width) * scale
+            let desiredHeight = CGFloat(source.height ?? image.size.height) * scale
+            self.imageViewWidth.constant = min(desiredWidth, maxWidth)
+            self.imageViewHeight.constant = min(desiredHeight, maxHeight)
             self.didPresentOffer()
         }
     }
