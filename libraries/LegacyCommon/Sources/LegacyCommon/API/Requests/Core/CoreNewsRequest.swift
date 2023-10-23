@@ -105,7 +105,7 @@ extension UIScreen {
 #elseif canImport(AppKit)
 
 extension NSScreen {
-    static func availableSizeInPixels() -> CGSize {
+    public static func availableSizeInPixels() -> CGSize {
         guard let screen = NSApplication.shared.mainWindow?.screen else {
             return CGSize(width: 1920, height: 1080) // fullHD
         }

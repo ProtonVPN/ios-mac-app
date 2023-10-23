@@ -48,7 +48,7 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
     }
 
     public func shouldShowAnnouncementsIcon() -> Bool {
-        fetchCurrentAnnouncementsFromStorage().contains(where: { $0.type == .default })
+        fetchCurrentAnnouncementsFromStorage().contains(where: { $0.knownType == .default })
     }
     
     public func fetchCurrentAnnouncementsFromStorage() -> [Announcement] {
@@ -58,7 +58,7 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
     }
 
     public var hasUnreadAnnouncements: Bool {
-        return fetchCurrentAnnouncementsFromStorage().contains(where: { !$0.wasRead && $0.type == .default })
+        return fetchCurrentAnnouncementsFromStorage().contains(where: { !$0.wasRead && $0.knownType == .default })
     }
     
     public func markAsRead(announcement: Announcement) {
