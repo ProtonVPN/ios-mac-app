@@ -49,7 +49,7 @@ class SecureDeepLinkGenerator {
     }
 
     private func ensureKeys() throws -> Key {
-        if missingPublicKey(), let privateKey = try? getPrivateKey() {
+        if !missingPublicKey(), let privateKey = try? getPrivateKey() {
             return privateKey
         }
 
