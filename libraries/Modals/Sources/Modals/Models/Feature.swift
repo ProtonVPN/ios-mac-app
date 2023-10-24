@@ -177,23 +177,23 @@ extension Feature {
     public var image: Image {
         switch self {
         case .streaming:
-            return Asset.streamingIcon.image
+            return Theme.Asset.icPlay.image
         case .multipleDevices:
             return Theme.Asset.icLocks.image
         case .blockAds:
-            return Asset.blockAds.image
+            return Theme.Asset.icCircleSlash.image
         case .protectFromMalware:
-            return Asset.netshieldIcon.image
+            return Theme.Asset.icShield.image
         case .highSpeedNetshield:
-            return Asset.highSpeedIcon.image
+            return Theme.Asset.icRocket.image
         case .routeSecureServers:
-            return Asset.routeSecureServers.image
+            return Theme.Asset.icServers.image
         case .addLayer:
             return Theme.Asset.icLocks.image
         case .protectFromAttacks:
-            return Asset.protectFromAttacks.image
+            return Theme.Asset.icAlias.image
         case .privacyFirst, .activityLogging, .noThirdParties:
-            return Asset.checkmarkCircle.image
+            return Theme.Asset.icCheckmarkCircleFilled.image
         case .externalAudit:
             return Theme.Asset.icLightbulb.image
         case .gaming:

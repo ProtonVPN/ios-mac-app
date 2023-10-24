@@ -22,21 +22,13 @@ public typealias AssetImageTypeAlias = ImageAsset.Image
 
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 public enum Asset {
-  public static let blockAds = ImageAsset(name: "BlockAds")
-  public static let checkmarkCircle = ImageAsset(name: "CheckmarkCircle")
-  public static let closeButton = ImageAsset(name: "CloseButton")
   public static let flatIllustration = ImageAsset(name: "Flat illustration")
-  public static let highSpeedIcon = ImageAsset(name: "HighSpeedIcon")
   public static let moderateNAT = ImageAsset(name: "ModerateNAT")
-  public static let netshieldIcon = ImageAsset(name: "NetshieldIcon")
   public static let noLogs = ImageAsset(name: "NoLogs")
   public static let plusCountries = ImageAsset(name: "PlusCountries")
-  public static let protectFromAttacks = ImageAsset(name: "ProtectFromAttacks")
-  public static let routeSecureServers = ImageAsset(name: "RouteSecureServers")
   public static let safeMode = ImageAsset(name: "SafeMode")
   public static let secureCore = ImageAsset(name: "SecureCore")
   public static let secureCoreDiscourage = ImageAsset(name: "SecureCoreDiscourage")
-  public static let streamingIcon = ImageAsset(name: "StreamingIcon")
   public static let welcomeFallback = ImageAsset(name: "WelcomeFallback")
   public static let welcomePlus = ImageAsset(name: "WelcomePlus")
   public static let welcomeUnlimited = ImageAsset(name: "WelcomeUnlimited")
