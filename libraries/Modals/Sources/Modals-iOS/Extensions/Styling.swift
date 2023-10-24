@@ -27,31 +27,10 @@ let baseButtonStyle: (UIButton) -> Void = {
     $0.setTitleColor(.color(.text, .primary), for: .normal)
 }
 
-let brandStyle: (UIView) -> Void = {
+let actionButtonStyle: (UIView) -> Void = {
     $0.backgroundColor = .color(.background, .interactive)
-}
-
-let brandStyleOnTint: (UISwitch) -> Void = {
-    $0.onTintColor = .color(.background, .interactive)
-}
-
-let labelStyle: (UILabel) -> Void = {
-    $0.font = .systemFont(ofSize: 15, weight: .regular)
-    $0.textColor = .color(.text)
-}
-
-let smallLabelStyle: (UILabel) -> Void = {
-    $0.font = .systemFont(ofSize: 11, weight: .regular)
-    $0.textColor = .color(.text)
-}
-
-let baseViewStyle: (UIView) -> Void = {
-    $0.backgroundColor = .color(.background)
-}
-
-let actionButtonStyle = concat(baseButtonStyle, brandStyle, and: {
     $0.heightAnchor.constraint(equalToConstant: 48).isActive = true
-})
+}
 
 let textButtonStyle: (UIButton) -> Void = {
     $0.titleLabel?.font = .systemFont(ofSize: 17)
@@ -79,30 +58,11 @@ let titleStyle = concat(centeredTextStyle, and: {
 
 let subtitleStyle = concat(centeredTextStyle, and: {
     $0.font = .systemFont(ofSize: 17, weight: .regular)
-    $0.textColor = colors.weakText
-})
-
-let footerStyle = concat(baseTextStyle, and: {
     $0.textColor = .color(.text, .weak)
-    $0.font = .systemFont(ofSize: 13)
-})
-
-let featureTextStyle = concat(baseTextStyle, and: {
-    $0.font = .systemFont(ofSize: 15, weight: .regular)
 })
 
 let closeButtonStyle: (UIButton) -> Void = {
     $0.titleLabel?.text = ""
-    $0.setTitleColor(colors.textAccent, for: .normal)
-    $0.tintColor = colors.text
-}
-
-let chevronStyle: (UIImageView) -> Void = {
-    $0.image = UIImage(systemName: "chevron.right")
-    $0.tintColor = colors.weakText
-}
-
-let smallFlagStyle: (UIImageView) -> Void = {
-    $0.layer.cornerRadius = 4
-    $0.layer.masksToBounds = true
+    $0.setTitleColor(Asset.mobileTextAccent.color, for: .normal)
+    $0.tintColor = .color(.text)
 }

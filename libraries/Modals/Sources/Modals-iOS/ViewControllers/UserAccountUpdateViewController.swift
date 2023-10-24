@@ -22,6 +22,7 @@
 
 import UIKit
 import Modals
+import Theme
 
 class UserAccountUpdateViewController: UIViewController {
 
@@ -68,27 +69,35 @@ class UserAccountUpdateViewController: UIViewController {
         primaryActionBtn.setTitle(nil, for: .normal)
         secondActionBtn.setTitle(nil, for: .normal)
 
-        serversView.layer.cornerRadius = 8
+        serversView.layer.cornerRadius = .themeRadius8
         serversView.layer.borderWidth = 1
-        serversView.layer.borderColor = colors.weakInteraction.cgColor
+        serversView.layer.borderColor = UIColor.color(.background, [.interactive, .weak]).cgColor
+
         titleLbl.text = viewModel.title
         descriptionLbl.text = viewModel.subtitle
 
-        baseViewStyle(view)
+        view.backgroundColor = .color(.background)
         titleStyle(titleLbl)
         subtitleStyle(descriptionLbl)
         actionButtonStyle(primaryActionBtn)
         actionTextButtonStyle(secondActionBtn)
         baseTextStyle(featuresTitleLbl)
 
-        smallLabelStyle(fromServerTitleLbl)
-        labelStyle(fromServerLbl)
-        smallLabelStyle(toServerTitleLbl)
-        labelStyle(toServerLbl)
+        fromServerTitleLbl.font = .systemFont(ofSize: 11, weight: .regular)
+        fromServerTitleLbl.textColor = .color(.text)
 
-        featureTextStyle(feature1Lbl)
-        featureTextStyle(feature2Lbl)
-        featureTextStyle(feature3Lbl)
+        fromServerLbl.font = .systemFont(ofSize: 15, weight: .regular)
+        fromServerLbl.textColor = .color(.text)
+
+        toServerTitleLbl.font = .systemFont(ofSize: 11, weight: .regular)
+        toServerTitleLbl.textColor = .color(.text)
+
+        toServerLbl.font = .systemFont(ofSize: 15, weight: .regular)
+        toServerLbl.textColor = .color(.text)
+
+        feature1Lbl.font = .systemFont(ofSize: 15, weight: .regular)
+        feature2Lbl.font = .systemFont(ofSize: 15, weight: .regular)
+        feature3Lbl.font = .systemFont(ofSize: 15, weight: .regular)
 
          if let image = viewModel.image {
              imageView.image = image

@@ -87,7 +87,7 @@ public final class UpsellViewController: UIViewController, Identifiable {
     }
 
     private func setupUI() {
-        baseViewStyle(view)
+        view.backgroundColor = .color(.background)
         actionButtonStyle(getPlusButton)
         actionTextButtonStyle(useFreeButton)
         titleStyle(titleLabel)

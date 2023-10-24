@@ -21,6 +21,7 @@ import UIKit
 import Modals
 import Overture
 import Strings
+import Theme
 
 class FreeConnectionsViewController: UIViewController {
 
@@ -46,21 +47,25 @@ class FreeConnectionsViewController: UIViewController {
     }
 
     private func setupDesign() {
-        baseViewStyle(view)
+        view.backgroundColor = .color(.background)
         closeButtonStyle(closeButton)
         topTitleStyle(titleLabel)
         middleSubtitleStyle(subTitleLabel)
-        labelStyle(descriptionLabel)
+        
+        descriptionLabel.font = .systemFont(ofSize: 15, weight: .regular)
+        descriptionLabel.textColor = .color(.text)
+        
         bannerButton.setTitle("", for: .normal)
 
         // Banner
         bannerTextStyle(bannerLabel)
-        chevronStyle(bannerChevronView)
+        bannerChevronView.image = UIImage(systemName: "chevron.right")
+        bannerChevronView.tintColor = .color(.text, .weak)
 
         bannerImageView.image = Modals.Asset.worldwideCoverage.image
 
-        roundedBackgroundView.backgroundColor = colors.secondaryBackground
-        roundedBackgroundView.layer.cornerRadius = 12
+        roundedBackgroundView.backgroundColor = .color(.background, .weak)
+        roundedBackgroundView.layer.cornerRadius = .themeRadius12
     }
 
     private func setupTranslations() {
