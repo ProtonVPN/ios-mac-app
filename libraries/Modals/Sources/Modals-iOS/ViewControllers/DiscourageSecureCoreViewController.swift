@@ -54,14 +54,16 @@ final class DiscourageSecureCoreViewController: UIViewController {
     }
 
     private func setupOutlets() {
-        baseViewStyle(view)
+        view.backgroundColor = .color(.background)
         actionButtonStyle(activateButton)
         actionTextButtonStyle(cancelButton)
         titleStyle(titleLabel)
         subtitleStyle(subtitleLabel)
         actionTextButtonStyle(learnMoreButton)
-        brandStyleOnTint(dontShowAgainSwitch)
-        labelStyle(dontShowAgainLabel)
+        dontShowAgainSwitch.onTintColor = .color(.background, .interactive)
+
+        dontShowAgainLabel.font = .systemFont(ofSize: 15, weight: .regular)
+        dontShowAgainLabel.textColor = .color(.text)
 
         featureArtImageView.image = feature.artImage
     }

@@ -19,6 +19,7 @@
 import Modals
 import Foundation
 import UIKit
+import Theme
 
 final class MoreInformationView: UIView {
 
@@ -43,8 +44,8 @@ final class MoreInformationView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        contentView.layer.cornerRadius = 12
-        contentView.backgroundColor = colors.secondaryBackground
+        contentView.layer.cornerRadius = .themeRadius12
+        contentView.backgroundColor = .color(.background, .weak)
         button.setTitle("", for: .normal)
     }
 

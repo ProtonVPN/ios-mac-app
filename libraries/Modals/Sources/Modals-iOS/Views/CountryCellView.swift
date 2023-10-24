@@ -35,8 +35,10 @@ class CountryCellView: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        labelStyle(countryNameField)
-        smallFlagStyle(flagImageView)
+        countryNameField.font = .systemFont(ofSize: 15, weight: .regular)
+        countryNameField.textColor = .color(.text)
+        flagImageView.layer.cornerRadius = .themeRadius4
+        flagImageView.layer.masksToBounds = true
     }
 
 }
