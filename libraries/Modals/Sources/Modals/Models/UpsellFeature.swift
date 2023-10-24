@@ -26,9 +26,3 @@ public struct UpsellFeature {
     public let moreInformation: Feature?
     public let artImage: any View
 }
-
-public extension UpsellFeature {
-    static func closeButton() -> Image {
-        Asset.closeButton.image
-    }
-}

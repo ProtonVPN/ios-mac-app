@@ -173,8 +173,8 @@ public final class UpsellViewController: UIViewController, Identifiable {
             }
         }
 
-        let closeButtonImage = UpsellFeature.closeButton()
-        let closeButton = UIBarButtonItem(image: closeButtonImage, style: .plain, target: self, action: #selector(closeTapped))
+        let closeButton = UIBarButtonItem(image: Theme.Asset.icCross.image, style: .plain, target: self, action: #selector(closeTapped))
+        closeButton.tintColor = .white
         closeButton.accessibilityIdentifier = "CloseButton"
         navigationItem.leftBarButtonItem = closeButton
     }

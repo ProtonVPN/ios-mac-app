@@ -98,6 +98,7 @@ class UserAccountUpdateViewController: UIViewController {
 
         checkmarks.forEach {
             $0.image = viewModel.checkmark
+            $0.tintColor = .color(.background, .interactive)
         }
 
         setupFeatures()

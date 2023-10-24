@@ -18,6 +18,7 @@
 
 import Foundation
 import Strings
+import Theme
 
 public enum UserAccountUpdateViewModel {
     case subscriptionDowngradedReconnecting(numberOfCountries: Int, numberOfDevices: Int, fromServer: (String, Image), toServer: (String, Image))
@@ -106,7 +107,7 @@ extension UserAccountUpdateViewModel {
     }
 
     public var checkmark: Image? {
-        Asset.checkmarkCircle.image
+        Theme.Asset.icCheckmarkCircleFilled.image
     }
 
     public var fromServer: (String, Image)? {
