@@ -23,6 +23,7 @@ import ComposableArchitecture
 import Strings
 import Theme
 import SharedViews
+import ProtonCoreUIFoundations
 
 struct RecentsSectionView: View {
 
@@ -39,9 +40,8 @@ struct RecentsSectionView: View {
             } label: {
                 HStack(spacing: .themeSpacing4) {
                     (recentsHidden
-                     ? Asset.icChevronRightFilled
-                     : Asset.icChevronDownFilled)
-                    .swiftUIImage
+                     ? IconProvider.chevronRightFilled
+                     : IconProvider.chevronDownFilled)
                     .resizable()
                     .frame(.square(16))
                     Text(Localizable.homeRecentsRecentSection)

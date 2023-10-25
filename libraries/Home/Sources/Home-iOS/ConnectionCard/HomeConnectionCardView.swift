@@ -27,6 +27,7 @@ import Theme
 import Strings
 import VPNAppCore
 import SharedViews
+import ProtonCoreUIFoundations
 
 struct HomeConnectionCardView: View {
     @Dependency(\.locale) private var locale
@@ -51,8 +52,7 @@ struct HomeConnectionCardView: View {
             Text(Localizable.actionHelp)
                 .themeFont(.caption(emphasised: true))
                 .styled(.weak)
-            Theme.Asset.icQuestionCircle
-                .swiftUIImage
+            IconProvider.questionCircle
                 .resizable()
                 .styled(.weak)
                 .frame(.square(16))
@@ -83,7 +83,7 @@ struct HomeConnectionCardView: View {
                     Button(action: {
                         sendAction(.showConnectionDetails)
                     }, label: {
-                        Asset.icChevronUp.swiftUIImage
+                        IconProvider.chevronUp
                     })
                     .foregroundColor(Color(.icon, .weak))
                 }

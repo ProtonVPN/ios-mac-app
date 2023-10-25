@@ -20,6 +20,7 @@ import Home
 import SwiftUI
 import Strings
 import Theme
+import ProtonCoreUIFoundations
 
 public extension View {
     func settingsTabItem() -> some View {
@@ -28,7 +29,7 @@ public extension View {
                 Label {
                     Text(Localizable.settingsTab)
                 } icon: {
-                    Theme.Asset.icCogWheel.swiftUIImage
+                    IconProvider.cogWheel
                 }
             }
     }
@@ -39,7 +40,7 @@ public extension View {
                 Label {
                     Text(Localizable.countriesTab)
                 } icon: {
-                    Theme.Asset.icEarth.swiftUIImage
+                    IconProvider.earth
                 }
             }
     }
@@ -50,7 +51,7 @@ public extension View {
                 Label {
                     Text(Localizable.homeTab)
                 } icon: {
-                    Theme.Asset.icHouseFilled.swiftUIImage
+                    IconProvider.houseFilled
                 }
             }
     }

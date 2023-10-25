@@ -25,6 +25,7 @@ import Home_macOS
 import ConnectionDetails_macOS
 import ConnectionDetails
 import ComposableArchitecture
+import ProtonCoreUIFoundations
 
 public struct SideBarView: View {
 
@@ -82,7 +83,7 @@ public struct SideBarView: View {
                 Button(action: {
                     toggleSidebar()
                 }, label: {
-                    Theme.Asset.icSidePanelLeft.swiftUIImage
+                    IconProvider.sidePanelLeft
                         .resizable()
                         .foregroundColor(Color(.text, .weak))
                         .frame(width: 16, height: 16)

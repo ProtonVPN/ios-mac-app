@@ -21,6 +21,7 @@ let package = Package(
             targets: ["Modals-iOS"])
     ],
     dependencies: [
+        .package(path: "../../external/protoncore"),
         .package(path: "../Strings"),
         .package(name: "Overture", url: "https://github.com/pointfreeco/swift-overture", .exact("0.5.0")),
         .package(path: "../Theme"),
@@ -31,6 +32,7 @@ let package = Package(
         .target(
             name: "Modals",
             dependencies: [
+                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 "Overture",
                 "Strings",
                 "Theme"

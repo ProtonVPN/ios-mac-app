@@ -26,6 +26,7 @@ import Strings
 import Theme
 import VPNAppCore
 import SharedViews
+import ProtonCoreUIFoundations
 
 public struct RecentsSectionView: View {
     let items: [RecentConnection]
@@ -234,20 +235,16 @@ extension HomeFeature.Action {
     }
 
     var icon: Image? {
-        let image: Theme.ImageAsset
-
         switch self {
         case .pin:
-            image = Theme.Asset.icPinFilled
+            return IconProvider.pinFilled
         case .unpin:
-            image = Theme.Asset.icPinSlashFilled
+            return IconProvider.pinSlashFilled
         case .remove:
-            image = Theme.Asset.icTrash
+            return IconProvider.trash
         default:
             return nil
         }
-
-        return image.swiftUIImage
     }
 
     var color: Color? {

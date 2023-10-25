@@ -22,6 +22,7 @@ import Home
 import SwiftUI
 import Strings
 import Theme
+import ProtonCoreUIFoundations
 
 enum SideBarTab: Hashable, CaseIterable {
     case home
@@ -53,11 +54,11 @@ enum SideBarTab: Hashable, CaseIterable {
     var image: SwiftUI.Image {
         switch self {
         case .home:
-            return Theme.Asset.icHouse.swiftUIImage
+            return IconProvider.house
         case .countries:
-            return Theme.Asset.icEarth.swiftUIImage
+            return IconProvider.earth
         case .settings:
-            return Theme.Asset.icCogWheel.swiftUIImage
+            return IconProvider.cogWheel
         }
     }
 }

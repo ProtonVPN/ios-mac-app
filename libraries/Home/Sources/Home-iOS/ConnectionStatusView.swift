@@ -23,6 +23,7 @@ import Theme
 import SwiftUI
 import Strings
 import VPNShared
+import ProtonCoreUIFoundations
 
 import Dependencies
 
@@ -79,13 +80,11 @@ public struct ConnectionStatusView: View {
         HStack(alignment: .bottom) {
             switch protectionState {
             case .protected:
-                Theme.Asset.icLockFilled
-                    .swiftUIImage
+                IconProvider.lockFilled
                     .foregroundColor(Color(.background, .success))
                 protectedText
             case .protectedSecureCore:
-                Theme.Asset.icLocksFilled
-                    .swiftUIImage
+                IconProvider.locksFilled
                     .foregroundColor(Color(.background, .success))
                 protectedText
             case .protecting:
@@ -93,8 +92,7 @@ public struct ConnectionStatusView: View {
                     .controlSize(.regular)
                     .tint(.white)
             case .unprotected:
-                Theme.Asset.icLockOpenFilled2
-                    .swiftUIImage
+                IconProvider.lockOpenFilled2
                     .styled(.danger)
             }
         }

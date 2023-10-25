@@ -15,12 +15,14 @@ let package = Package(
         )
     ],
     dependencies: [
+        .package(path: "../../external/protoncore"),
         .package(path: "../Ergonomics")
     ],
     targets: [
         .target(
             name: "Theme",
             dependencies: [
+                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 "Ergonomics",
             ],
             resources: [],

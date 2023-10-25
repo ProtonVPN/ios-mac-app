@@ -24,6 +24,7 @@ import VPNAppCore
 import Theme
 import SharedViews
 import VPNShared
+import ProtonCoreUIFoundations
 
 public struct ConnectionScreenFeature: Reducer {
 
@@ -195,7 +196,7 @@ public struct ConnectionScreenView: View {
                     Button(action: {
                         viewStore.send(.close)
                     }, label: {
-                        Asset.icCross.swiftUIImage
+                        IconProvider.cross
                             .resizable().frame(width: closeButtonSize, height: closeButtonSize)
                             .foregroundColor(Color(.icon, .weak))
                     })

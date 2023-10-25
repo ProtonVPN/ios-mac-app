@@ -12,6 +12,7 @@ let package = Package(
         .library(name: "Settings-macOS", targets: ["Settings-macOS"])
     ],
     dependencies: [
+        .package(path: "../../external/protoncore"),
         .package(path: "../Theme"),
         .package(path: "../Strings"),
         .package(path: "../NEHelper"),
@@ -23,6 +24,7 @@ let package = Package(
         .target(
             name: "Settings",
             dependencies: [
+                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 "Theme",
                 "Strings",
                 .product(name: "VPNAppCore", package: "NEHelper"),

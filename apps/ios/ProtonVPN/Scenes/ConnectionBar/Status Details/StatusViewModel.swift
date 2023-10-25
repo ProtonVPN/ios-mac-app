@@ -333,7 +333,7 @@ class StatusViewModel {
 
     private func changeServerTimerString(for duration: String) -> NSAttributedString {
         let hourglassIcon = NSAttributedString.imageAttachment(
-            image: Theme.Asset.icHourglass.image.withTintColor(.normalTextColor()),
+            image: IconProvider.hourglass.withTintColor(.normalTextColor()),
             baselineOffset: -2.5,
             size: CGSize(width: 16, height: 16)
         )

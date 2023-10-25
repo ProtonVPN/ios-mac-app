@@ -20,6 +20,7 @@ import Foundation
 import Strings
 import Theme
 import SwiftUI
+import ProtonCoreUIFoundations
 
 #if os(macOS)
 import AppKit
@@ -168,7 +169,7 @@ extension Feature {
     public var linkImage: Image? {
         switch self {
         case .externalAudit:
-            return Theme.Asset.icArrowOutSquare.image
+            return IconProvider.arrowOutSquare
         default:
             return nil
         }
@@ -177,63 +178,63 @@ extension Feature {
     public var image: Image {
         switch self {
         case .streaming:
-            return Theme.Asset.icPlay.image
+            return IconProvider.play
         case .multipleDevices:
-            return Theme.Asset.icLocks.image
+            return IconProvider.locks
         case .blockAds:
-            return Theme.Asset.icCircleSlash.image
+            return IconProvider.circleSlash
         case .protectFromMalware:
-            return Theme.Asset.icShield.image
+            return IconProvider.shield
         case .highSpeedNetshield:
-            return Theme.Asset.icRocket.image
+            return IconProvider.rocket
         case .routeSecureServers:
-            return Theme.Asset.icServers.image
+            return IconProvider.servers
         case .addLayer:
-            return Theme.Asset.icLocks.image
+            return IconProvider.locks
         case .protectFromAttacks:
-            return Theme.Asset.icAlias.image
+            return IconProvider.alias
         case .privacyFirst, .activityLogging, .noThirdParties:
-            return Theme.Asset.icCheckmarkCircleFilled.image
+            return IconProvider.checkmarkCircleFilled
         case .externalAudit:
-            return Theme.Asset.icLightbulb.image
+            return IconProvider.lightbulb
         case .gaming:
-            return Theme.Asset.icMagicWand.image
+            return IconProvider.magicWand
         case .directConnection:
-            return Theme.Asset.icArrowsLeftRight.image
+            return IconProvider.arrowsLeftRight
         case .fasterServers:
-            return Theme.Asset.icServers.image
+            return IconProvider.servers
         case .increaseConnectionSpeeds:
-            return Theme.Asset.icBolt.image
+            return IconProvider.bolt
         case .distantServers:
-            return Theme.Asset.icChartLine.image
+            return IconProvider.chartLine
         case .accessLAN:
-            return Theme.Asset.icPrinter.image
+            return IconProvider.printer
         case .profiles:
-            return Theme.Asset.icPowerOff.image
+            return IconProvider.powerOff
         case .quickConnect:
-            return Theme.Asset.icBolt.image
+            return IconProvider.bolt
         case .location:
-            return Theme.Asset.icGlobe.image
+            return IconProvider.globe
         case .profilesProtocols:
-            return Theme.Asset.icSliders.image
+            return IconProvider.sliders
         case .autoConnect:
-            return Theme.Asset.icRocket.image
+            return IconProvider.rocket
         case .anyLocation:
-            return Theme.Asset.icGlobe.image
+            return IconProvider.globe
         case .higherSpeed:
-            return Theme.Asset.icRocket.image
+            return IconProvider.rocket
         case .geoblockedContent:
-            return Theme.Asset.icLockOpen.image
+            return IconProvider.lockOpen
         case .multipleCountries:
-            return Theme.Asset.icGlobe.image
+            return IconProvider.globe
         case .moneyGuarantee:
-            return Theme.Asset.icShieldFilled.image
+            return IconProvider.shieldFilled
         case .welcomeNewServersCountries:
-            return Theme.Asset.icGlobe.image
+            return IconProvider.globe
         case .welcomeAdvancedFeatures:
-            return Theme.Asset.icSliders.image
+            return IconProvider.sliders
         case .welcomeDevices:
-            return Theme.Asset.icLocks.image
+            return IconProvider.locks
         }
     }
 }
