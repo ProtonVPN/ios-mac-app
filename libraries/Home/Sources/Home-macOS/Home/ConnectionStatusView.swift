@@ -21,6 +21,7 @@ import Home
 import Theme
 import Strings
 import ComposableArchitecture
+import ProtonCoreUIFoundations
 
 @available(macOS 12.0, *)
 struct ConnectionStatusView: View {
@@ -57,15 +58,13 @@ struct ConnectionStatusView: View {
         HStack(alignment: .bottom, spacing: .themeSpacing8) {
             switch protectionState {
             case .protected:
-                Theme.Asset.icLockFilled
-                    .swiftUIImage
+                IconProvider.lockFilled
                     .foregroundColor(Color(.background, .success))
                 Text(Localizable.connectionStatusProtected)
                     .themeFont(.title2(emphasised: true))
                     .foregroundColor(Color(.text, .success))
             case .protectedSecureCore:
-                Theme.Asset.icLocksFilled
-                    .swiftUIImage
+                    IconProvider.locksFilled
                     .foregroundColor(Color(.background, .success))
                 Text(Localizable.connectionStatusProtected)
                     .themeFont(.title2(emphasised: true))
@@ -73,8 +72,7 @@ struct ConnectionStatusView: View {
             case .protecting:
                 ProgressView()
             case .unprotected:
-                Theme.Asset.icLockOpenFilled2
-                    .swiftUIImage
+                IconProvider.lockOpenFilled2
                     .styled(.danger)
             }
         }

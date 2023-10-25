@@ -20,10 +20,11 @@
 
 import SwiftUI
 import Theme
+import ProtonCoreUIFoundations
 
 struct ProfileButtonView: View {
     var body: some View {
-        Theme.Asset.icUserCircle.swiftUIImage
+        IconProvider.userCircle
             .resizable()
             .frame(width: 16, height: 16)
             .tint(Color(.text))

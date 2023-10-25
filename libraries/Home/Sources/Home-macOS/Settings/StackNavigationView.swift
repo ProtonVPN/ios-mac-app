@@ -19,6 +19,8 @@
 import SwiftUI
 import Theme
 
+import ProtonCoreUIFoundations
+
 struct StackNavigationView<RootContent>: View where RootContent: View {
     @Binding var currentSubview: AnyView?
     @Binding var subviewTitle: String
@@ -47,7 +49,7 @@ struct StackNavigationView<RootContent>: View where RootContent: View {
                             currentSubview = nil
                         }
                     }, label: {
-                        Asset.icChevronLeft.swiftUIImage
+                        IconProvider.chevronLeft
                             .resizable()
                             .foregroundColor(Color(.text))
                             .frame(width: 16, height: 16)

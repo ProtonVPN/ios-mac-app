@@ -20,6 +20,7 @@ import SwiftUI
 
 import Settings
 import Theme
+import ProtonCoreUIFoundations
 
 struct SettingsCell: View {
     private let icon: Image
@@ -124,24 +125,24 @@ struct SettingsCell_Previews: PreviewProvider {
         List {
             Section {
                 SettingsCell(
-                    icon: Theme.Asset.icUser,
+                    icon: IconProvider.user,
                     content: .multiline(title: "Eric Norbert", subtitle: "eric.norbert@proton.me"),
                     accessory: .disclosure
                 )
             }
             Section {
                 SettingsCell(
-                    icon: Theme.Asset.icGift,
+                    icon: IconProvider.gift,
                     content: .standard(title: "NetShield", value: NetShieldType.on.localizedDescription),
                     accessory: .disclosure
                 )
                 SettingsCell(
-                    icon: Theme.Asset.icLifeRing,
+                    icon: IconProvider.lifeRing,
                     content: .standard(title: "Support Center", value: NetShieldType.on.localizedDescription),
                     accessory: .externalLink
                 )
                 SettingsCell(
-                    icon: Theme.Asset.icArrowInToRectangle,
+                    icon: IconProvider.arrowInToRectangle,
                     content: .standard(title: "Sign Out", value: nil),
                     accessory: .none
                 )

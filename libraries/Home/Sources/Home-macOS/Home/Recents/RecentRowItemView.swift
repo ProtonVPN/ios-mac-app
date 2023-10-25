@@ -23,6 +23,7 @@ import ComposableArchitecture
 import Strings
 import Theme
 import SharedViews
+import ProtonCoreUIFoundations
 
 struct RecentRowItemView: View {
 
@@ -88,7 +89,7 @@ struct RecentRowItemView: View {
                 .lineLimit(1)
 
                 if item.underMaintenance {
-                    Asset.icWrench.swiftUIImage
+                    IconProvider.wrench
                         .resizable()
                         .frame(.square(infoIconSize))
                         .foregroundColor(.init(.icon, .weak))

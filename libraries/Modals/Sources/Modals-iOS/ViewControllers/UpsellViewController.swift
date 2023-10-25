@@ -22,6 +22,7 @@ import SwiftUI
 import Modals
 import Strings
 import Theme
+import ProtonCoreUIFoundations
 
 public protocol UpsellViewControllerDelegate: AnyObject {
     func userDidRequestPlus(upsell: UpsellViewController?)
@@ -173,7 +174,7 @@ public final class UpsellViewController: UIViewController, Identifiable {
             }
         }
 
-        let closeButton = UIBarButtonItem(image: Theme.Asset.icCross.image, style: .plain, target: self, action: #selector(closeTapped))
+        let closeButton = UIBarButtonItem(image: IconProvider.cross, style: .plain, target: self, action: #selector(closeTapped))
         closeButton.tintColor = .white
         closeButton.accessibilityIdentifier = "CloseButton"
         navigationItem.leftBarButtonItem = closeButton

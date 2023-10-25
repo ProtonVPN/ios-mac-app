@@ -25,6 +25,7 @@ import ComposableArchitecture
 import Theme
 import VPNShared
 import VPNAppCore
+import ProtonCoreUIFoundations
 
 import CasePaths
 
@@ -189,9 +190,9 @@ public struct HomeFeature: Reducer {
 extension RecentConnection {
     public var icon: Image {
         if pinned {
-            return Theme.Asset.icPinFilled.swiftUIImage
+            return IconProvider.pinFilled
         } else {
-            return Theme.Asset.icClockRotateLeft.swiftUIImage
+            return IconProvider.clockRotateLeft
         }
     }
 }

@@ -26,6 +26,7 @@ let package = Package(
     ],
     dependencies: [
         // Local
+        .package(path: "../../external/protoncore"),
         .package(path: "../Theme"),
         .package(path: "../SharedViews"),
         .package(path: "../Strings"),
@@ -39,6 +40,7 @@ let package = Package(
             name: "ConnectionDetails",
             dependencies: [
                 "Strings",
+                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),

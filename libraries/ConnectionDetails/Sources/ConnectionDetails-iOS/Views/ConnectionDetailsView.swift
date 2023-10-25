@@ -21,6 +21,7 @@ import Theme
 import ComposableArchitecture
 import Strings
 import ConnectionDetails
+import ProtonCoreUIFoundations
 
 public struct ConnectionDetailsFeature: Reducer {
 
@@ -167,7 +168,7 @@ struct ConnectionDetailsView: View {
                     .themeFont(.body1())
 
                 if case titleType = TitleType.info {
-                    Asset.icInfoCircle.swiftUIImage.resizable().frame(width: infoIconSize, height: infoIconSize)
+                    IconProvider.infoCircle.resizable().frame(width: infoIconSize, height: infoIconSize)
                 }
             }.foregroundColor(Color(.text, .weak))
         }

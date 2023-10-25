@@ -20,10 +20,11 @@ import SwiftUI
 import Theme
 import VPNAppCore
 import Strings
+import ProtonCoreUIFoundations
 
 struct FeatureInfoView: View {
 
-    let icon: ImageAsset
+    let icon: Image
     let title: String
     let text: String
 
@@ -32,7 +33,7 @@ struct FeatureInfoView: View {
 
     var body: some View {
         HStack(alignment: .top) {
-            icon.swiftUIImage
+            icon
                 .resizable().frame(width: mainIconSize, height: mainIconSize)
                 .foregroundColor(Color(.text, .normal))
 
@@ -48,7 +49,7 @@ struct FeatureInfoView: View {
                         .font(.themeFont(.caption(emphasised: true)))
                         .foregroundColor(Color(.text, .weak))
 
-                    Asset.icInfoCircle.swiftUIImage
+                    IconProvider.infoCircle
                         .resizable().frame(width: infoIconSize, height: infoIconSize)
                         .foregroundColor(Color(.text, .weak))
                 }
@@ -71,34 +72,34 @@ extension FeatureInfoView {
     init(for feature: ConnectionSpec.Feature) {
         switch feature {
         case .tor:
-            icon = Asset.icBrandTor
+            icon = IconProvider.brandTor
             title = Localizable.connectionDetailsFeatureTitleTor
             text = Localizable.connectionDetailsFeatureDescriptionTor
 
         case .p2p:
-            icon = Asset.icArrowRightArrowLeft
+            icon = IconProvider.arrowRightArrowLeft
             title = Localizable.connectionDetailsFeatureTitleP2p
             text = Localizable.connectionDetailsFeatureDescriptionP2p
 
         case .smart:
-            icon = Asset.icGlobe
+            icon = IconProvider.globe
             title = Localizable.connectionDetailsFeatureTitleSmartRouting
             text = Localizable.connectionDetailsFeatureDescriptionSmartRouting
 
         case .streaming:
-            icon = Asset.icArrowRightArrowLeft
+            icon = IconProvider.arrowRightArrowLeft
             title = Localizable.connectionDetailsFeatureTitleStreaming
             text = Localizable.connectionDetailsFeatureDescriptionStreaming
 
         case .partner:
-            icon = Asset.icQuestionCircle
+            icon = IconProvider.questionCircle
             title = "No such screen"
             text = "No such screen"
         }
     }
 
     init(secureCore: Bool) {
-        icon = Asset.icLockLayers
+        icon = IconProvider.lockLayers
         title = Localizable.connectionDetailsFeatureTitleSecureCore
         text = Localizable.connectionDetailsFeatureDescriptionSecureCore
     }

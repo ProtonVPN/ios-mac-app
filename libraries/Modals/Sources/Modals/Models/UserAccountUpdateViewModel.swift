@@ -19,6 +19,7 @@
 import Foundation
 import Strings
 import Theme
+import ProtonCoreUIFoundations
 
 public enum UserAccountUpdateViewModel {
     case subscriptionDowngradedReconnecting(numberOfCountries: Int, numberOfDevices: Int, fromServer: (String, Image), toServer: (String, Image))
@@ -107,7 +108,7 @@ extension UserAccountUpdateViewModel {
     }
 
     public var checkmark: Image? {
-        Theme.Asset.icCheckmarkCircleFilled.image
+        IconProvider.checkmarkCircleFilled
     }
 
     public var fromServer: (String, Image)? {

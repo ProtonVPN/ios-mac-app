@@ -21,6 +21,7 @@ import Strings
 import Theme
 import VPNAppCore
 import Home
+import ProtonCoreUIFoundations
 
 struct RecentConnectionOptionsButton: View {
     let item: RecentConnection
@@ -36,8 +37,7 @@ struct RecentConnectionOptionsButton: View {
             Button {
                 self.isPresented.toggle()
             } label: {
-                Asset.icThreeDotsVertical
-                    .swiftUIImage
+                IconProvider.threeDotsVertical
                     .resizable()
                     .frame(.square(16))
                     .padding(.themeSpacing8)
@@ -78,14 +78,14 @@ private extension RecentConnectionOptionsButton {
         let role: Role
         let action: () -> Void
 
-        var image: Theme.ImageAsset {
+        var image: Image {
             switch role {
             case .pin(let isPinned):
                 return (isPinned
-                        ? Asset.icPinSlashFilled
-                        : Asset.icPinFilled)
+                        ? IconProvider.pinSlashFilled
+                        : IconProvider.pinFilled)
             case .remove:
-                return Asset.icTrashCross
+                return IconProvider.trashCross
             }
         }
         var text: Text {
@@ -105,7 +105,6 @@ private extension RecentConnectionOptionsButton {
             } label: {
                 HStack(spacing: .themeSpacing4) {
                     image
-                        .swiftUIImage
                         .resizable()
                         .frame(.square(16))
                     text

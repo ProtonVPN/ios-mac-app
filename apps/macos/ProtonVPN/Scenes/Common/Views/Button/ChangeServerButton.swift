@@ -43,7 +43,7 @@ class ChangeServerView: NSView {
     }
 
     private func updateView() {
-        hourglassImageView.image = Theme.Asset.icHourglass.image
+        hourglassImageView.image = IconProvider.hourglass
         hourglassImageView.contentTintColor = .color(.text, .normal)
 
         switch state {

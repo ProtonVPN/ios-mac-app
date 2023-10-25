@@ -21,6 +21,7 @@ import Theme
 import ConnectionDetails
 import ComposableArchitecture
 import Strings
+import ProtonCoreUIFoundations
 
 public struct IPView: View {
 
@@ -46,9 +47,9 @@ public struct IPView: View {
                             Button(action: {
                                 viewStore.send(.changeIPVisibility)
                             }, label: {
-                                Image(asset: viewStore.localIpHidden
-                                      ? Asset.icEye
-                                      : Asset.icEyeSlash)
+                                (viewStore.localIpHidden
+                                 ? IconProvider.eye
+                                 : IconProvider.eyeSlash)
                                 .resizable().frame(width: buttonSize, height: buttonSize)
                                 .foregroundColor(Color(.text, .weak))
                             })
@@ -63,7 +64,7 @@ public struct IPView: View {
 
             })
 
-            Image(asset: Asset.icArrowRight)
+            IconProvider.arrowRight
                 .foregroundColor(Color(.text, .weak))
 
             VStack {

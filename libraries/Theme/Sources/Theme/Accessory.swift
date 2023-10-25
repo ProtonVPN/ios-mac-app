@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+import ProtonCoreUIFoundations
 
 public struct Accessory: View {
     private let style: Style
@@ -59,11 +60,11 @@ public struct Accessory: View {
         var image: Image? {
             switch self {
             case .disclosure:
-                return Image(asset: Asset.icChevronRight)
+                return IconProvider.chevronRight
             case .externalLink:
-                return Image(asset: Asset.icArrowOutSquare)
+                return IconProvider.arrowOutSquare
             case .checkmark(let isActive):
-                return Image(asset: isActive ? Asset.icCheckmarkCircleFilled : Asset.icEmptyCircle)
+                return isActive ? IconProvider.checkmarkCircleFilled : IconProvider.emptyCircle
             case .none:
                 return nil
             }

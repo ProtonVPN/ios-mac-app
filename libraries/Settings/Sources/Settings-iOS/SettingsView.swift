@@ -24,6 +24,7 @@ import SwiftUINavigation
 import Settings
 import Strings
 import Theme
+import ProtonCoreUIFoundations
 
 public struct SettingsView: View {
     typealias DestinationViewStore = ViewStore<SettingsFeature.Destination?, SettingsFeature.Action>
@@ -38,7 +39,7 @@ public struct SettingsView: View {
     }
 
     struct ChildFeature {
-        let icon: Theme.ImageAsset
+        let icon: Image
         let title: String
         let accessory: Accessory.Style
     }
@@ -57,27 +58,27 @@ public struct SettingsView: View {
     }
 
     let features = (
-        netShield: ChildFeature(icon: Theme.Asset.icNetshield, title: Localizable.settingsTitleNetshield, accessory: .disclosure),
-        killSwitch: ChildFeature(icon: Theme.Asset.icKillswitch, title: Localizable.settingsTitleKillSwitch, accessory: .disclosure),
+        netShield: ChildFeature(icon: Theme.Asset.icNetshield.swiftUIImage, title: Localizable.settingsTitleNetshield, accessory: .disclosure),
+        killSwitch: ChildFeature(icon: Theme.Asset.icKillswitch.swiftUIImage, title: Localizable.settingsTitleKillSwitch, accessory: .disclosure),
 
-        vpnProtocol: ChildFeature(icon: Theme.Asset.icServers, title: Localizable.settingsTitleProtocol, accessory: .disclosure),
-        vpnAccelerator: ChildFeature(icon: Theme.Asset.icRocket, title: Localizable.settingsTitleVpnAccelerator, accessory: .disclosure),
-        advanced: ChildFeature(icon: Theme.Asset.icSliders, title: Localizable.settingsTitleAdvanced, accessory: .disclosure),
+        vpnProtocol: ChildFeature(icon: IconProvider.servers, title: Localizable.settingsTitleProtocol, accessory: .disclosure),
+        vpnAccelerator: ChildFeature(icon: IconProvider.rocket, title: Localizable.settingsTitleVpnAccelerator, accessory: .disclosure),
+        advanced: ChildFeature(icon: IconProvider.sliders, title: Localizable.settingsTitleAdvanced, accessory: .disclosure),
 
-        theme: ChildFeature(icon: Theme.Asset.icCircleHalfFilled, title: Localizable.settingsTitleTheme, accessory: .disclosure),
-        betaAccess: ChildFeature(icon: Theme.Asset.icKeySkeleton, title: Localizable.settingsTitleBetaAccess, accessory: .disclosure),
-        widget: ChildFeature(icon: Theme.Asset.icGrid2, title: Localizable.settingsTitleWidget, accessory: .disclosure),
+        theme: ChildFeature(icon: IconProvider.circleHalfFilled, title: Localizable.settingsTitleTheme, accessory: .disclosure),
+        betaAccess: ChildFeature(icon: IconProvider.keySkeleton, title: Localizable.settingsTitleBetaAccess, accessory: .disclosure),
+        widget: ChildFeature(icon: IconProvider.grid2, title: Localizable.settingsTitleWidget, accessory: .disclosure),
 
-        supportCenter: ChildFeature(icon: Theme.Asset.icLifeRing, title: Localizable.settingsTitleSupportCenter, accessory: .externalLink),
-        reportAnIssue: ChildFeature(icon: Theme.Asset.icBug, title: Localizable.settingsTitleReportIssue, accessory: .disclosure),
-        debugLogs: ChildFeature(icon: Theme.Asset.icCode, title: Localizable.settingsTitleDebugLogs, accessory: .disclosure),
+        supportCenter: ChildFeature(icon: IconProvider.lifeRing, title: Localizable.settingsTitleSupportCenter, accessory: .externalLink),
+        reportAnIssue: ChildFeature(icon: IconProvider.bug, title: Localizable.settingsTitleReportIssue, accessory: .disclosure),
+        debugLogs: ChildFeature(icon: IconProvider.code, title: Localizable.settingsTitleDebugLogs, accessory: .disclosure),
 
-        censorship: ChildFeature(icon: Theme.Asset.icUsers, title: Localizable.settingsTitleCensorship, accessory: .externalLink),
-        rateProtonVPN: ChildFeature(icon: Theme.Asset.icStar, title: Localizable.settingsTitleRate, accessory: .disclosure),
+        censorship: ChildFeature(icon: IconProvider.users, title: Localizable.settingsTitleCensorship, accessory: .externalLink),
+        rateProtonVPN: ChildFeature(icon: IconProvider.star, title: Localizable.settingsTitleRate, accessory: .disclosure),
 
-        restoreDefault: ChildFeature(icon: Theme.Asset.icArrowRotateRight, title: Localizable.settingsTitleRestoreDefaultSettings, accessory: .none),
+        restoreDefault: ChildFeature(icon: IconProvider.arrowRotateRight, title: Localizable.settingsTitleRestoreDefaultSettings, accessory: .none),
 
-        signOut: ChildFeature(icon: Theme.Asset.icArrowInToRectangle, title: Localizable.settingsTitleSignOut, accessory: .none)
+        signOut: ChildFeature(icon: IconProvider.arrowInToRectangle, title: Localizable.settingsTitleSignOut, accessory: .none)
     )
 
     public var body: some View {
