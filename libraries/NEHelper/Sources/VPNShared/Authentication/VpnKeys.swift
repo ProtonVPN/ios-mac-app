@@ -38,7 +38,13 @@ public struct PublicKey: Codable, CustomStringConvertible, CustomDebugStringConv
         self.derRepresentation = derRepresentation
     }
 
-    public var description: String { "{fingerprint: \(Data(rawRepresentation).fingerprint)}" }
+    public var description: String {
+    #if DEBUG
+        return "PublicKey(fingerprint: '\(Data(rawRepresentation).fingerprint)', base64: '\(Data(rawRepresentation).base64EncodedString())')"
+    #else
+        return "PublicKey(fingerprint: '\(Data(rawRepresentation).fingerprint)')"
+    #endif
+    }
 
     public var debugDescription: String { description }
 }
@@ -62,7 +68,13 @@ public struct PrivateKey: Codable, CustomStringConvertible, CustomDebugStringCon
         self.base64X25519Representation = base64X25519Representation
     }
 
-    public var description: String { "<redacted>" }
+    public var description: String {
+    #if DEBUG
+        return "PrivateKey(fingerprint: '\(Data(rawRepresentation).fingerprint)')"
+    #else
+        return "PrivateKey(<redacted>)"
+    #endif
+    }
 
     public var debugDescription: String  { description }
 }
