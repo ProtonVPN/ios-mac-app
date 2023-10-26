@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import Logging
 
 public struct VpnCertificate {
     public let certificate: String // PEM representation
@@ -93,9 +94,10 @@ extension VpnCertificate: Codable {
 extension VpnCertificate: CustomStringConvertible, CustomDebugStringConvertible {
     public var description: String {
         let properties = [
-            "publicKeyFingerprint: \(publicKey?.fingerprint ?? "nil")",
-            "validUntil: \(validUntil)",
-            "refreshTime: \(refreshTime)"
+            "certificateFingerprint: '\(certificate.fingerprint)'",
+            "publicKeyFingerprint: '\(publicKey?.fingerprint ?? "nil")'",
+            "validUntil: '\(validUntil)'",
+            "refreshTime: '\(refreshTime)'"
         ]
 
         return "VPNCertificate(\(properties.joined(separator: ", ")))"
@@ -114,8 +116,9 @@ public struct VpnCertificateWithFeatures {
     }
 }
 
-
 enum CertificateEncoding {
+    /// Parses the textual representation of a PEM encoded certificate, according to the format defined by RFC-7468
+    /// https://www.rfc-editor.org/rfc/rfc7468#section-5.1
     static func derRepresentation(ofPEMEncodedCertificate pem: String) -> Data? {
         let regex = try! NSRegularExpression(pattern: "-----(BEGIN|END) CERTIFICATE-----")
         let range = NSRange(location: 0, length: pem.count)
@@ -125,19 +128,31 @@ enum CertificateEncoding {
 
     static func publicKey(ofDEREncodedCertificate der: Data) -> Data? {
         guard let secCertificate = SecCertificateCreateWithData(nil, der as CFData) else {
-            log.error("Failed to parse certificate - is it a valid DER-encoded X.509 certificate?", category: .userCert)
+            logError("Failed to parse certificate - is it a valid DER-encoded X.509 certificate?", data: der)
             return nil
         }
         guard let publicKey = SecCertificateCopyKey(secCertificate) else {
-            log.error("Failed to copy public key - possible encoding issue or unsupported algorithm", category: .userCert)
+            logError("Failed to copy public key - possible encoding issue or unsupported algorithm", data: der)
             return nil
         }
 
         var error: Unmanaged<CFError>?
         guard let publicKeyData = SecKeyCopyExternalRepresentation(publicKey, &error) else {
-            log.error("Failed to export public key", category: .userCert, metadata: ["error": "\(String(describing: error))"])
+            logError("Failed to export public key", data: der, error: error?.takeRetainedValue())
             return nil
         }
         return publicKeyData as Data
+    }
+
+    private static func logError(_ message: String, data: Data, error: CFError? = nil) {
+    #if DEBUG
+        let metadata: Logging.Logger.Metadata = [
+            "base64EncodedData": "\(data.base64EncodedString())",
+            "error": "\(String(describing: error))"
+        ]
+    #else
+        let metadata = ["error": "\(String(describing: error))"]
+    #endif
+        log.error("\(message)", category: .userCert, metadata: metadata)
     }
 }

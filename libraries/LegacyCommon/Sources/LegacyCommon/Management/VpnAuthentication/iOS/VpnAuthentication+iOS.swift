@@ -53,28 +53,32 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
         connectionProvider = provider
     }
 
-    public func loadAuthenticationData(features: VPNConnectionFeatures? = nil, completion: @escaping AuthenticationDataCompletion) {
-        @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
-        let safeModeAuthorizer = featureAuthorizerProvider.authorizer(for: SafeModeFeature.self)
-
-        // keys are generated, certificate is stored, use it
-        if let keys = authenticationStorage.getStoredKeys(),
-           let existingCertificate = authenticationStorage.getStoredCertificate(),
-           features == nil || features?.equals(
-               other: authenticationStorage.getStoredCertificateFeatures(),
-               safeModeFeatureEnabled: safeModeAuthorizer().isAllowed
-           ) == true {
-            log.debug("Loading stored vpn authentication data", category: .userCert)
-            if existingCertificate.isExpired {
-                log.info("Stored vpn authentication certificate is expired (\(existingCertificate.validUntil)), the local agent will connect but certificate refresh will be needed", category: .userCert, event: .newCertificate)
-            }
-            completion(.success(VpnAuthenticationData(clientKey: keys.privateKey,
-                                                      clientCertificate: existingCertificate.certificate)))
+    public func loadAuthenticationData(
+        features: VPNConnectionFeatures? = nil,
+        completion: @escaping AuthenticationDataCompletion
+    ) {
+        if let fullAuthData = loadStoredAuthenticationData(), !needsRefresh(fullAuthData, features: features) {
+            let vpnAuthData = VpnAuthenticationData(
+                clientKey: fullAuthData.keys.privateKey,
+                clientCertificate: fullAuthData.certificate.certificate
+            )
+            log.debug(
+                "Stored VPN auth data does not need refreshing",
+                category: .userCert,
+                metadata: ["vpnAuthData": "\(fullAuthData)"]
+            )
+            completion(.success(vpnAuthData))
             return
         }
 
         // certificate is missing or no longer valid, refresh it and use
         self.refreshCertificates(features: features, completion: { result in
+            switch result {
+            case .success:
+                log.info("Refreshed certificate", category: .userCert)
+            case .failure(let error):
+                log.error("Failed to refresh certificate: \(error)", category: .userCert)
+            }
             executeOnUIThread { completion(result) }
         })
     }
@@ -107,7 +111,11 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
                         return
                     }
 
-                    log.info("Certificate retrieved from extension. Expires on \(certificate.validUntil), should refresh before \(certificate.refreshTime)", category: .userCert)
+                    log.info(
+                        "Certificate retrieved from extension",
+                        category: .userCert,
+                        metadata: ["certificate": "\(certificate)"]
+                    )
                     completionHandler(.success(VpnAuthenticationData(clientKey: keys.privateKey,
                                                                      clientCertificate: certificate.certificate)))
                     return
@@ -256,14 +264,106 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
         }
     }
 
+    /// As this calls getKeys(), instead of getStoredKeys(), it can generate a new keypair if one does not exist
     public func loadClientPrivateKey() -> PrivateKey {
         return authenticationStorage.getKeys().privateKey
     }
 
-    public var shouldIgnoreFeatureChanges: Bool {
-        // Allow new certificate to be fetched on feature changes. On iOS, the NE can be launched by the system without
-        // the app being present. Due to this edge case, the saved certificate must specify features, so that they can
-        // be applied on connection without relying on LocalAgent.
-        false
+    /// Allow new certificate to be fetched on feature changes. On iOS, the NE can be launched by the system without
+    /// the app being present. Due to this edge case, the saved certificate must specify features, so that they can
+    /// be applied on connection without relying on LocalAgent.
+    public let shouldIgnoreFeatureChanges: Bool = false
+
+    // MARK: Certificate loading and validation implemenetation details
+
+    /// Contains a bit more information than VpnAuthenticationData.
+    /// Used within this class to allow additional verification
+    private struct FullAuthData {
+        let keys: VpnKeys
+        let certificate: VpnCertificate
+    }
+
+    private func loadStoredAuthenticationData() -> FullAuthData? {
+        log.debug("Loading stored VPN auth data", category: .userCert)
+
+        // Check whether we have an existing certificate saved first, to detect the edge case where we have a
+        // certificate but no keys
+        guard let certificate = authenticationStorage.getStoredCertificate() else {
+            log.debug("No stored VPN certificate found", category: .userCert)
+            return nil
+        }
+        log.debug("Fetched stored VPN auth certificate", category: .userCert, metadata: ["certificate": "\(certificate)"])
+
+        // If we have a leftover certificate, but no keys, they will have to be regenerated, and the certificate will
+        // be unusable
+        guard let keys = authenticationStorage.getStoredKeys() else {
+            log.error("Missing VPN keys, deleting stored certificate", category: .userCert)
+            authenticationStorage.deleteCertificate()
+            return nil
+        }
+        log.debug("Fetched stored VPN keys", category: .userCert, metadata: ["keys": "\(keys)"])
+
+        return FullAuthData(keys: keys, certificate: certificate)
+    }
+
+    private func isValid(authData: FullAuthData) -> Bool {
+        let publicKey = Data(authData.keys.publicKey.rawRepresentation)
+        guard let certificatePublicKey = authData.certificate.publicKey else {
+            log.error("Failed to extract certificate's public key, skipping verification", category: .userCert)
+            // We couldn't verify that the certificate was generated against our current public key, but we might still
+            // be able to connect with it if it's just a problem with Sec functions. Return true and give LocalAgent a
+            // chance
+            return true
+        }
+
+        // Verify that the certificate was generated against our current keys. This ensures we can recover when an old
+        // certificate is left over after plan change/logout. The underlying issue is caused by data races during
+        // certificate generation/clearing keys
+        // Otherwise, LocalAgent will choke when attempting to connect, and it cannot recover until a new certificate is
+        // generated
+        guard certificatePublicKey == publicKey else {
+            log.error(
+                "Deleting stored certificate as its public key does not match our current keys",
+                category: .userCert,
+                metadata: [
+                    "publicKeyFingerprint": "\(publicKey.fingerprint)",
+                    "certificatePublicKeyFingerprint": "\(certificatePublicKey.fingerprint)"
+                ]
+            )
+            authenticationStorage.deleteCertificate()
+            return false
+        }
+
+        return true
+    }
+
+    private func needsRefresh(_ authData: FullAuthData, features: VPNConnectionFeatures?) -> Bool {
+        guard isValid(authData: authData) else {
+            return true
+        }
+
+        if authData.certificate.isExpired || authData.certificate.shouldBeRefreshed {
+            log.info(
+                "Stored certificate is either expired or almost expired. Local agent will connect but certificate refresh will be needed",
+                category: .userCert,
+                event: .newCertificate,
+                metadata: ["validUntil": "\(authData.certificate.validUntil)"]
+            )
+        }
+
+        @Dependency(\.featureFlagProvider) var featureFlagProvider
+        let safeModeFeatureEnabled = featureFlagProvider[\.safeMode]
+
+        let storedFeatures = authenticationStorage.getStoredCertificateFeatures()
+        if let features, !features.equals(other: storedFeatures, safeModeFeatureEnabled: safeModeFeatureEnabled) {
+            log.info(
+                "Current features are different from saved certificate's features - certificate needs refresh.",
+                category: .userCert,
+                metadata: ["currentFeatures": "\(features)", "savedFeatures": "\(String(describing: storedFeatures))"]
+            )
+            return true
+        }
+
+        return false
     }
 }

@@ -61,15 +61,6 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
             keys = existingKeys
         } else {
             log.info("No vpn auth keys, generating and storing", category: .userCert)
-            // If we don't have keys, it's a good idea to check whether there is an old certificate left over and remove
-            // it, because it won't be compatible with new keys. There is a similar check when loading auth data.
-            if let certificate = getStoredCertificate() {
-                log.error(
-                    "Encountered leftover certificate (most likely generated against different set of keys)",
-                    category: .userCert,
-                    metadata: ["certificate": "\(certificate)"]
-                )
-            }
             keys = vpnKeysGenerator.generateKeys()
             log.info("Storing new VPN keys", category: .userCert, metadata: ["keys": "\(keys)"])
             self.store(keys: keys)
@@ -132,7 +123,7 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
                 "Certificate with features saved",
                 category: .userCert,
                 metadata: [
-                    "certificateFingerprint": "\(certificate.certificate.certificate.fingerprint)",
+                    "certificate": "\(certificate)",
                     "features": "\(String(describing: certificate.features))"
                 ]
             )
