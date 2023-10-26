@@ -68,8 +68,8 @@ final class CoreApiNotificationsRequest {
     private func queryItems() -> [URLQueryItem] {
         [
             queryItem(.formats, value: supportedImageFormats),
-            queryItem(.width, value: "\(screenSize.width)"),
-            queryItem(.height, value: "\(screenSize.height)")
+            queryItem(.width, value: "\(Int(screenSize.width))"),
+            queryItem(.height, value: "\(Int(screenSize.height))")
         ]
     }
 }
@@ -106,9 +106,26 @@ extension UIScreen {
 
 extension NSScreen {
     public static func availableSizeInPixels() -> CGSize {
-        guard let screen = NSApplication.shared.mainWindow?.screen else {
+        guard let screen = NSScreen.main else {
             return CGSize(width: 1920, height: 1080) // fullHD
         }
+
+        let visibleFrameSize = screen.visibleFrame.size
+        let scaled = visibleFrameSize.scaled(by: screen.backingScaleFactor) // in pixels
+        let fitting: CGSize
+        if scaled.width > scaled.height {
+            // If the frame * scale is higher than 4K, dial it down to 4K.
+            fitting = scaled.fitting(CGSize(width: 3840, height: 2160))
+        } else {
+            fitting = scaled.fitting(CGSize(width: 2160, height: 3840))
+        }
+        let freeSpace = CGSize(width: fitting.width,
+                               height: fitting.height - occupiedHeight(screen))
+        return freeSpace
+    }
+
+    /// Height in pixels that we need to subtract because it's occupied by system.
+    private static func occupiedHeight(_ screen: NSScreen) -> CGFloat {
         let isNotch: Bool
         if #available(macOS 12.0, *),
            let top = NSScreen.main?.safeAreaInsets.top {
@@ -116,14 +133,13 @@ extension NSScreen {
         } else {
             isNotch = false
         }
+
         let menuBarHeight = NSApplication.shared.mainMenu?.menuBarHeight ??  24
         let appTitleBarHeight: CGFloat = 28
         let notchAdditionalHeight: CGFloat = isNotch ? 12 : 0
         let buttonAndPaddingHeight: CGFloat = 40 + 2 * 32
-        let occupiedHeight = menuBarHeight + notchAdditionalHeight + buttonAndPaddingHeight + appTitleBarHeight
-        let visibleFrameSize = screen.visibleFrame.size
-        let scaled = visibleFrameSize.scaled(by: screen.backingScaleFactor)
-        return .init(width: scaled.width, height: scaled.height - occupiedHeight)
+        return screen.backingScaleFactor * 
+        (menuBarHeight + notchAdditionalHeight + buttonAndPaddingHeight + appTitleBarHeight)
     }
 }
 

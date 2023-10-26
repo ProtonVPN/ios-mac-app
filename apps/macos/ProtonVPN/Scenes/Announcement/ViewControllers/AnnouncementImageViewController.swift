@@ -19,6 +19,7 @@
 import AppKit
 import LegacyCommon
 import SDWebImage
+import Ergonomics
 
 final class AnnouncementImageViewController: NSViewController {
     @IBOutlet private weak var imageView: NSImageView!
@@ -85,13 +86,18 @@ final class AnnouncementImageViewController: NSViewController {
             }
             self.progressIndicator.stopAnimation(nil)
             self.actionButton.isHidden = false
+            /// Usually `scale` would be 0.5
             let scale = 1 / (NSScreen.main?.backingScaleFactor ?? 1)
-            let maxWidth = NSScreen.availableSizeInPixels().width
-            let maxHeight = NSScreen.availableSizeInPixels().height
-            let desiredWidth = CGFloat(source.width ?? image.size.width) * scale
-            let desiredHeight = CGFloat(source.height ?? image.size.height) * scale
-            self.imageViewWidth.constant = min(desiredWidth, maxWidth)
-            self.imageViewHeight.constant = min(desiredHeight, maxHeight)
+
+            let desiredSize = CGSize(width: CGFloat(source.width ?? image.size.width),
+                                     height: CGFloat(source.height ?? image.size.height)) // pixel values
+
+            let imageViewSize = desiredSize.fitting(NSScreen.availableSizeInPixels()) // still in pixels
+
+            // multiply by scale to get point values
+            self.imageViewWidth.constant = imageViewSize.width * scale
+            self.imageViewHeight.constant = imageViewSize.height * scale
+
             self.didPresentOffer()
         }
     }
