@@ -42,6 +42,7 @@ extension Logger {
         case persistence
         // Custom ios (please add to confluence)
         case sysex // System Extension
+        case ipc // Network Extension/Host app communication
         case review
         case core
         case telemetry

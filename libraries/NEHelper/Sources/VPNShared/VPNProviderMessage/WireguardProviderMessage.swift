@@ -281,3 +281,29 @@ extension Data {
         return (try? JSONSerialization.jsonObject(with: self, options: .mutableContainers)) as? JSONDictionary
     }
 }
+
+extension WireguardProviderRequest: CustomStringConvertible, CustomDebugStringConvertible {
+    /// Custom implementation to obfuscate session cookie and API selector for `setApiSelector` case
+    public var description: String {
+        switch self {
+        case .cancelRefreshes:
+            return "cancelRefreshes"
+        case .flushLogsToFile:
+            return "flushLogsToFile"
+        case .getRuntimeTunnelConfiguration:
+            return "getRuntimeTunnelConfiguration"
+        case .setApiSelector:
+            return "setApiSelector"
+        case .refreshCertificate(let features):
+            return "refreshCertificate(features: \(String(describing: features))"
+        case .restartRefreshes:
+            return "restartRefreshes"
+        case .getCurrentLogicalAndServerId:
+            return "getCurrentLogicalAndServerId"
+        }
+    }
+
+    public var debugDescription: String {
+        description
+    }
+}

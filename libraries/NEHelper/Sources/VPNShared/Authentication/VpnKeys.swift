@@ -25,23 +25,28 @@ import Foundation
 /**
  Ed25519 public key
  */
-public struct PublicKey: Codable {
+public struct PublicKey: Codable, CustomStringConvertible, CustomDebugStringConvertible {
+
     // 32 byte Ed25519 key
     public let rawRepresentation: [UInt8]
 
     // ASN.1 DER
-    public let  derRepresentation: String
+    public let derRepresentation: String
     
     public init(rawRepresentation: [UInt8], derRepresentation: String) {
         self.rawRepresentation = rawRepresentation
         self.derRepresentation = derRepresentation
     }
+
+    public var description: String { "{fingerprint: \(Data(rawRepresentation).fingerprint)}" }
+
+    public var debugDescription: String { description }
 }
 
 /**
  Ed25519 private key
  */
-public struct PrivateKey: Codable {
+public struct PrivateKey: Codable, CustomStringConvertible, CustomDebugStringConvertible {
     // 32 byte Ed25519 key
     public let rawRepresentation: [UInt8]
 
@@ -56,6 +61,10 @@ public struct PrivateKey: Codable {
         self.derRepresentation = derRepresentation
         self.base64X25519Representation = base64X25519Representation
     }
+
+    public var description: String { "<redacted>" }
+
+    public var debugDescription: String  { description }
 }
 
 /**

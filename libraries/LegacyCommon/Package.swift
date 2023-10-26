@@ -33,6 +33,7 @@ let package = Package(
         // Local packages
         .package(path: "../BugReport"),
         .package(path: "../ConnectionDetails"),
+        .package(path: "../Ergonomics"),
         .package(path: "../Modals"),
         .package(path: "../Home"),
         .package(path: "../LocalFeatureFlags"),
