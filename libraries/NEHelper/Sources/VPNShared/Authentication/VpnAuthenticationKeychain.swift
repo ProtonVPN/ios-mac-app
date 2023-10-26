@@ -19,6 +19,7 @@
 import Foundation
 import Dependencies
 import KeychainAccess
+import Ergonomics
 import PMLogger
 
 public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
@@ -60,7 +61,17 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
             keys = existingKeys
         } else {
             log.info("No vpn auth keys, generating and storing", category: .userCert)
+            // If we don't have keys, it's a good idea to check whether there is an old certificate left over and remove
+            // it, because it won't be compatible with new keys. There is a similar check when loading auth data.
+            if let certificate = getStoredCertificate() {
+                log.error(
+                    "Encountered leftover certificate (most likely generated against different set of keys)",
+                    category: .userCert,
+                    metadata: ["certificate": "\(certificate)"]
+                )
+            }
             keys = vpnKeysGenerator.generateKeys()
+            log.info("Storing new VPN keys", category: .userCert, metadata: ["keys": "\(keys)"])
             self.store(keys: keys)
         }
 
@@ -117,7 +128,14 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
         do {
             try store(certificate: certificate.certificate)
             try storage.set(certificate.features, forKey: DefaultsStorageKey.vpnCertificateFeatures)
-            log.debug("Cert with features saved: \(String(describing: certificate.features))", category: .userCert)
+            log.debug(
+                "Certificate with features saved",
+                category: .userCert,
+                metadata: [
+                    "certificateFingerprint": "\(certificate.certificate.certificate.fingerprint)",
+                    "features": "\(String(describing: certificate.features))"
+                ]
+            )
             delegate?.certificateStored(certificate.certificate)
         } catch {
             log.error("Saving VPN certificate failed with error: \(error)", category: .userCert)

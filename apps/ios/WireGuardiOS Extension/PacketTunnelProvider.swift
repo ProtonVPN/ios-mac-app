@@ -66,6 +66,9 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
 
         super.init()
 
+        setupLogging()
+        wg_log(.info, message: "PacketTunnelProvider init (processID: \(ProcessInfo().processIdentifier))")
+
         self.timerFactory = TimerFactoryImplementation()
 
         killSwitchSettingObservation = observe(\.protocolConfiguration.includeAllNetworks) { [unowned self] _, _ in
@@ -89,11 +92,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
 
         apiService.delegate = self
         serverStatusRefreshManager.delegate = self
-        setupLogging()
     }
     
     deinit {
-        wg_log(.info, message: "PacketTunnelProvider deinited")
+        wg_log(.info, message: "PacketTunnelProvider deinited (processID: \(ProcessInfo().processIdentifier))")
     }
 
     /// NetworkExtension appears to have a bug where connections sent through the tunnel time out
@@ -183,7 +185,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
             self.connectedIpId = server.id
 
             // Update certificate features after connection is established
-            var currentFeatures = self.vpnAuthenticationStorage.getStoredCertificateFeatures()
+            let currentFeatures = self.vpnAuthenticationStorage.getStoredCertificateFeatures()
             let newVpnCertificateFeatures = currentFeatures?.copyWithChanged(bouncing: server.label)
 
             self.startTunnelWithStoredConfig(errorNotifier: errorNotifier, newVpnCertificateFeatures: newVpnCertificateFeatures) { error in

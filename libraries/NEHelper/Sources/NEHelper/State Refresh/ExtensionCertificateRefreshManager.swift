@@ -96,7 +96,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
                                            forceRefreshDueToExpiredSession: Bool = false,
                                            completion: @escaping CertificateRefreshCompletion) {
         if operationQueue.isSuspended {
-            log.error("Adding certificate refresh operation to stopped refresh manager", category: .userCert)
+            log.error("Adding certificate refresh operation to suspended refresh manager", category: .userCert)
         }
         operationQueue.addOperation(CertificateRefreshAsyncOperation(features: features,
                                                                      userInitiated: userInitiated,
@@ -170,7 +170,11 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
 
         // and the certificate isn't going to expire anytime soon, then...
         guard Date() < storedCert.refreshTime.addingTimeInterval(Self.intervals.refreshEarlierBy) else {
-            log.info("Certificate might expire soon or has already expired, refreshing.", category: .userCert)
+            log.info(
+                "Certificate might expire soon or has already expired, refreshing.",
+                category: .userCert,
+                metadata: ["certificateExpiry": "\(storedCert.validUntil)"]
+            )
             return true
         }
 

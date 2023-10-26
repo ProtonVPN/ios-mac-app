@@ -113,6 +113,14 @@ extension NETunnelProviderSessionWrapper {
 
     private func send<R>(_ message: R, maxRetries: Int, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?) where R: ProviderRequest {
         do {
+            log.debug(
+                "NETunnelProviderSessionWrapper sending provider message",
+                category: .ipc,
+                metadata: [
+                    "message": "\(message)",
+                    "request": "\(String(describing: message as? WireguardProviderRequest))"
+                ]
+            )
             try sendProviderMessage(message.asData) { [weak self] maybeData in
                 guard let data = maybeData else {
                     // From documentation: "If this method can’t start sending the message it throws an error. If an
@@ -126,8 +134,12 @@ extension NETunnelProviderSessionWrapper {
                         return
                     }
 
+                    log.debug(
+                        "NETunnelProviderSessionWrapper encountered xpc error, retrying in 1 second",
+                        category: .ipc,
+                        metadata: ["retries": "\(maxRetries)"]
+                    )
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                        log.debug("NETunnelProviderSessionWrapper try sending provider message after 1 second, maxRetries: \(maxRetries)", category: .connection)
                         self?.send(message, maxRetries: maxRetries - 1, completion: completion)
                     }
                     return
@@ -135,13 +147,18 @@ extension NETunnelProviderSessionWrapper {
 
                 do {
                     let response = try R.Response.decode(data: data)
+                    log.debug(
+                        "NETunnelProviderSessionWrapper received provider message response",
+                        category: .ipc,
+                        metadata: ["reponse": "\(String(describing: response))"]
+                    )
                     completion?(.success(response))
                 } catch {
                     completion?(.failure(.decodingError))
                 }
             }
         } catch {
-            log.error("Received error while attempting to send provider message: \(error)", category: .connection)
+            log.error("Received error while attempting to send provider message: \(error)", category: .ipc)
             completion?(.failure(.sendingError))
         }
     }

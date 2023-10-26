@@ -189,7 +189,11 @@ final class LocalAgentImplementation: LocalAgent {
     weak var delegate: LocalAgentDelegate?
 
     func connect(data: VpnAuthenticationData, configuration: LocalAgentConfiguration) {
-        log.debug("Local agent connecting to \(configuration.hostname)", category: .localAgent, metadata: ["config": "\(configuration)"])
+        log.debug(
+            "Local agent connecting to \(configuration.hostname)",
+            category: .localAgent,
+            metadata: ["config": "\(configuration)"]
+        )
 
         do {
             agent = try agentConnectionFactory.makeLocalAgentConnection(clientCertPEM: data.clientCertificate,

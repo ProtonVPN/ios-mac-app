@@ -44,17 +44,21 @@ public class RefreshManager {
     }
 
     public func start(completion: @escaping (() -> Void)) {
+        log.debug("Starting refresh manager...", category: .userCert)
         workQueue.async { [weak self] in
             self?.state = .running
             self?.startTimer()
+            log.debug("Refresh manager started!", category: .userCert)
             completion()
         }
     }
 
     public func stop(completion: @escaping (() -> Void)) {
+        log.debug("Stopping refresh manager...", category: .userCert)
         workQueue.async { [weak self] in
             self?.stopTimer()
             self?.state = .stopped
+            log.debug("Refresh manager stopped!", category: .userCert)
             completion()
         }
     }
