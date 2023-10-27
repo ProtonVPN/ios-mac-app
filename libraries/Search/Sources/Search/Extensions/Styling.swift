@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import Overture
+import Theme
 
 var colors = Colors()
 
@@ -69,11 +70,11 @@ let upsellViewStyle: (UIView) -> Void = {
 }
 
 let iconWeakStyle: (UIView) -> Void = {
-    $0.tintColor = UIColor(red: 167 / 255, green: 164 / 255, blue: 181 / 255, alpha: 1) // colors.iconWeak
+    $0.tintColor = UIColor.color(.icon, .weak)
 }
 
 let iconHintStyle: (UIView) -> Void = {
-    $0.tintColor = UIColor(red: 109 / 255, green: 105 / 255, blue: 125 / 255, alpha: 1) // colors.iconHint
+    $0.tintColor = UIColor.color(.icon, .hint)
 }
 
 let upsellSubtitleStyle = concat(baseTextStyle, and: {

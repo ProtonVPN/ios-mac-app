@@ -27,10 +27,10 @@ let baseButtonStyle: (UIButton) -> Void = {
     $0.setTitleColor(.color(.text, .primary), for: .normal)
 }
 
-let actionButtonStyle: (UIView) -> Void = {
+let actionButtonStyle = concat(baseButtonStyle, and: {
     $0.backgroundColor = .color(.background, .interactive)
     $0.heightAnchor.constraint(equalToConstant: 48).isActive = true
-}
+})
 
 let textButtonStyle: (UIButton) -> Void = {
     $0.titleLabel?.font = .systemFont(ofSize: 17)
