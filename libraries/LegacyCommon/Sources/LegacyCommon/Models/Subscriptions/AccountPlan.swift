@@ -23,6 +23,7 @@ import Foundation
 
 public enum AccountPlan: String, Encodable {
     
+    case unknown
     case free = "free"
     case basic = "vpnbasic"
     case plus = "vpnplus"
@@ -75,6 +76,8 @@ public enum AccountPlan: String, Encodable {
             return "VPN Business"
         case .vpnpass2023:
             return "VPN and Pass bundle"
+        case .unknown:
+            return "Proton VPN"
         }
     }
     
@@ -84,7 +87,7 @@ public enum AccountPlan: String, Encodable {
             return 10
         case .basic:
             return 2
-        case .free, .trial:
+        case .free, .trial, .unknown:
             return 1
         }
     }
@@ -95,7 +98,7 @@ public enum AccountPlan: String, Encodable {
             return 63
         case .basic:
             return 40
-        case .free, .trial:
+        case .free, .trial, .unknown:
             return 3
         }
     }
@@ -106,14 +109,14 @@ public enum AccountPlan: String, Encodable {
             return 1600
         case .basic:
             return 400
-        case .free, .trial:
+        case .free, .trial, .unknown:
             return 24
         }
     }
 
     public var defaultTier: Int {
         switch self {
-        case .free, .trial:
+        case .free, .trial, .unknown:
             return CoreAppConstants.VpnTiers.free
         case .basic:
             return CoreAppConstants.VpnTiers.basic

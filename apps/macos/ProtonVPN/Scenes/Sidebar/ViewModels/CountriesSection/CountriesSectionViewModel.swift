@@ -288,9 +288,9 @@ class CountriesSectionViewModel {
     
     // MARK: - Private functions
     private func setTier() {
-        notificationCenter.removeObserver(self, name: serverManager.contentChanged, object: nil) // Resubscription happens after userTier is set
+        notificationCenter.removeObserver(self, name: serverManager.contentChanged, object: nil) // Re-subscription happens after userTier is set
         do {
-            if (try vpnKeychain.fetch()).isDelinquent {
+            if (try? vpnKeychain.fetch())?.isDelinquent == true {
                 userTier = CoreAppConstants.VpnTiers.free
                 return
             }
