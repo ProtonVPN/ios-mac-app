@@ -106,7 +106,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
 
     var accountPlan: AccountPlan {
-        return (try? keychain.fetchCached().accountPlan) ?? .free
+        return (try? keychain.fetchCached().accountPlan) ?? .unknown
     }
 
     public typealias Factory = AppStateManagerFactory

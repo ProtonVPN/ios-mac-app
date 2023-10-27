@@ -106,7 +106,7 @@ public class VpnCredentials: NSObject, NSSecureCoding {
             accountPlan = plan
             self.planName = planName
         } else {
-            accountPlan = AccountPlan.free
+            accountPlan = AccountPlan.unknown // affects only plan name in settings
             self.planName = nil
         }
         self.accountPlan = accountPlan
