@@ -1,0 +1,68 @@
+
+"onboarding_take_tour" = "Katso esittely";
+
+"onboarding_skip" = "Ohita";
+
+"onboarding_welcome_title" = "Tervetuloa Proton VPN:ään";
+
+"onboarding_welcome_subtitle" = "Lue miten otat Proton VPN:stä kaiken irti vain muutamassa sekunnissa";
+
+"onboarding_beprotected_title" = "Pysy turvassa kaikkialla";
+
+"onboarding_beprotected_subtitle" = "Proton VPN tukee kaikkia laitteita, mukaanlukien mm. Windows- ja macOS-laitteet.";
+
+"onboarding_unblockstreaming_title" = "Vapauta suoratoisto";
+
+"onboarding_unblockstreaming_subtitle" = "Turvallinen pääsy muiden maiden suosikkisisältöösi - Nyt myös Android TV:llä.";
+
+"onboarding_netshield_title" = "Estä mainoksia ja paljon muuta";
+
+"onboarding_netshield_subtitle" = "Estä haittaohjelmat, mainokset ja seuranta selaimissa sekä muissa sovelluksissa.";
+
+"onboarding_next" = "Seuraava";
+
+"onboarding_plus_only" = "Käytettävissä Plus-tilauksella";
+
+"onboarding_establish_title" = "Muodosta ensimmäinen yhteytesi";
+
+"onboarding_establish_note" = "Yhteys muodostetaan sijaintisi perusteella nopeimpaan ja vakaimpaan palvelimeen.";
+
+"onboarding_establish_connect_now" = "Yhdistä nyt";
+
+"onboarding_done" = "Valmis";
+
+"onboarding_connected_title" = "Onnittelut";
+
+"onboarding_connected_subtitle" = "Yhteytesi on suojattu ja olet valmis selaamaan verkkoa.";
+
+"onboarding_connected_note" = "Turvallisesti.";
+
+"onboarding_connected_connected_to" = "Yhdistetty palvelimeen:";
+
+"onboarding_connected_connect_to_plus" = "Yhdistä Plus-palvelimeen";
+
+"onboarding_congratulations" = "Onnittelut";
+
+"onboarding_purchased_note" = "Nauti yksityisyyden maailmasta.";
+
+"onboarding_get_plus" = "Hanki Plus";
+
+"onboarding_not_connected_subtitle" = "Olet valmis selaamaan verkkoa.";
+
+"onboarding_not_connected_error" = "Yhteyttä ei voida muodostaa. Yritä sovelluksessa myöhemmin uudelleen.";
+
+"onboarding_continue" = "Jatka";
+
+"onboarding_telemetry_title" = "Auta meitä taistelemaan sensuuria vastaan";
+
+"onboarding_usage_stats_title" = "Jaa nimettömiä käyttötilastoja";
+
+"onboarding_usage_stats_description" = "Käyttötilastot auttavat meitä kiertämään VPN-estoja ja parantamaan sovelluksen suorituskykyä.";
+
+"onboarding_crash_reports_title" = "Jaa nimettömiä kaatumisilmoituksia";
+
+"onboarding_crash_reports_description" = "Kaatumisilmoitukset auttavat meitä korjaaman vikoja, tunnistamaan palomuureja ja kiertämään VPN-estoja.";
+
+"onboarding_footer" = "Nämä tilastot eivät sisällä IP-osoitettasi, eikä sinua ole mahdollista tunnistaa niiden perusteella. Emme koskaa jaa niitä ulkopuolisille tahoille.";
+
+"onboarding_footer_learn_more" = "Lue lisää";

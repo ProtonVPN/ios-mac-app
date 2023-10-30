@@ -21,7 +21,7 @@
 "_disconnecting" = "Disconnessione in corso";
 
 /* Common word */
-"_done" = "Completato";
+"_done" = "Fatto";
 
 /* Common word */
 "_edit" = "Modifica";
@@ -55,7 +55,7 @@
 /* iOS & MacOS: text near country or server; MacOS: title of several alerts */
 "_upgrade_required" = "Upgrade richiesto";
 
-/* MacOS: voice over indication for a country or server on maintenance */
+/* MacOS: voice over indication for a country or server on maintenance*/ */
 "_on_maintenance" = "In manutenzione";
 
 "_reconnection_required" = "Riconnessione richiesta";
@@ -363,7 +363,7 @@
 "_sign_up" = "Iscrizione";
 
 /* MacOS: alert shown during login if already connected to VPN */
-"_warning_vpn_session_is_active" = "La sessione Proton VPN di un altro utente è attiva su questo dispositivo. Continuando con l'accesso terminerai la sessione corrente. Vuoi continuare?";
+"_warning_vpn_session_is_active" = "La sessione Proton VPN di un altro utente è attiva su questo dispositivo. Continuando con l'accesso terminerai la sessione attuale. Vuoi continuare?";
 
 /* iOS: placeholder for email field in signup and email verification screens */
 "_enter_email_address" = "Inserisci l'indirizzo email";
@@ -541,7 +541,7 @@
 "_profiles" = "Profili";
 
 /* iOS: table header section in profiles screen */
-"_recommended" = "Raccomandato";
+"_recommended" = "Consigliato";
 
 /* iOS: table header section in profiles screen */
 "_my_profiles" = "I miei profili";
@@ -556,7 +556,7 @@
 "_profile_deleted_successfully" = "Il profilo è stato eliminato";
 
 /* iOS: Error message if profile can't be deleted */
-"_profile_deletion_failed" = "Il profilo non può essere eliminato";
+"_profile_deletion_failed" = "Impossibile eliminare il profilo";
 
 /* MacOS: Buttons in several places; iOS: profile creation screen title */
 "_create_new_profile" = "Crea profilo";
@@ -571,7 +571,7 @@
 "_profile_created_successfully" = "Nuovo profilo salvato";
 
 /* iOS: failure message after profile is saved */
-"_profile_creation_failed" = "Il profilo non può essere creato";
+"_profile_creation_failed" = "Impossibile creare il profilo";
 
 /* iOS: success message after profile is saved */
 "_profile_edited_successfully" = "Profilo aggiornato";
@@ -805,7 +805,7 @@
 "_upgrade_plan_to_access_server" = "Spiacenti, questo server non è disponibile per il tuo abbonamento. Se desideri accedere a più server, considera l'upgrade del tuo abbonamento.";
 
 /* Under maintenance alert */
-"_all_servers_in_country_under_maintenance" = "Tutti i server in questo paese sono in manutenzione. Sei pregato di connetterti a un altro paese.";
+"_all_servers_in_country_under_maintenance" = "Tutti i server in questo paese sono in manutenzione. Connettiti a un altro paese.";
 
 "_unsecure_wifi" = "Rilevata connessione WiFi non sicura";
 
@@ -1168,7 +1168,7 @@
 "_upgrade_now" = "Effettua l'upgrade ora";
 
 /* MacOS: Button in Upgrade screen */
-"_upgrade_my_plan" = "Migliora il mio piano";
+"_upgrade_my_plan" = "Effettua l'upgrade del mio piano";
 
 /* MacOS: \Trial about to expire\ screen title */
 "_free_trial_about_to_expire_title" = "La tua prova gratuita sta per scadere!";
@@ -1405,7 +1405,7 @@
 "_troubleshoot_item_other_link3" = "Twitter";
 
 /* iOS settings -> Battery usage; Title of battery usage screen; */
-"_battery_title" = "Utilizzo batteria";
+"_battery_title" = "Utilizzo della batteria";
 
 /* Battery usages screen description */
 "_battery_description" = "Tutto il traffico sul tuo telefono sarà gestito tramite OpenVPN, quindi iOS assegnerà l'utilizzo della batteria di altre app a Proton VPN.";
@@ -1413,7 +1413,7 @@
 /* Battery usage More info button text */
 "_battery_more" = "Vuoi saperne di più?";
 
-/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
+/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved"*/ */
 "_netshield_stats_data_saved" = "dati\nsalvati";
 
 /* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
@@ -1440,7 +1440,7 @@
 "_netshield_title_tooltip" = "Blocca pubblicità, tracker e malware";
 
 /* Settings -> Netshield, Status -> NetShield: Off */
-"_netshield_off" = "Disattivo";
+"_netshield_off" = "Inattivo";
 
 /* Status -> Netshield: On */
 "_netshield_on" = "Attivo";
@@ -1631,7 +1631,7 @@
 
 "_feature_smart_routing_description" = "Questa tecnologia consente a Proton VPN di fornire maggiore velocità e sicurezza in paesi difficili da servire.";
 
-"_feature_streaming_description" = "I server Plus supportano lo streaming (Netflix, Disney+, etc) da qualsiasi parte del mondo.";
+"_feature_streaming_description" = "I server Plus supportano lo streaming (Netflix, Disney+, ecc.) da qualsiasi parte del mondo.";
 
 "_feature_p2p_description" = "Questi server offrono le migliori prestazioni per BitTorrent e la condivisione di file.";
 
@@ -1776,10 +1776,10 @@
 "_non_standard_ports_change_title" = "Abilita porte non standard";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
-"proton_website_unreachable" = "Il sito Web di Proton VPN potrebbe essere temporaneamente irraggiungibile a causa di restrizioni di rete. Utilizza l'app mobile per creare un nuovo account Proton.";
+"proton_website_unreachable" = "Il sito web di Proton VPN potrebbe essere temporaneamente irraggiungibile a causa di restrizioni di rete. Usa l'app mobile per creare un nuovo account Proton.";
 
 /* Title of the Use coupon button in Settings */
-"use_coupon" = "Utilizza coupon";
+"use_coupon" = "Usa un coupon";
 
 /* Title of the screen to apply a coupon */
 "coupon_code" = "Codice coupon";
@@ -1800,13 +1800,13 @@
 "two_factor_code" = "Codice a due fattori";
 
 /* Title for the button to switch to entering two-factor code */
-"use_two_factor_code" = "Utilizza autenticazione in due passaggi";
+"use_two_factor_code" = "Usa il codice del secondo fattore";
 
 /* Placeholder for the Recovery code text field */
 "recovery_code" = "Codice di recupero";
 
 /* Title for the button to switch to entering recovery code */
-"use_recovery_code" = "Utilizza un codice di recupero";
+"use_recovery_code" = "Usa un codice di recupero";
 
 /* Button to confirm two-factor or recovery code in login */
 "authenticate" = "Autentica";
@@ -1861,7 +1861,7 @@
 /* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
 "_alert_protocol_deprecated_enable_smart" = "Aggiornamento";
 
-/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser */
+/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser*/ */
 "_alert_protocol_deprecated_learn_more" = "Scopri di più";
 
 /* Text for the 'Close' action of the deprecated protocol alert. */
@@ -1955,7 +1955,7 @@
 "modals_upsell_features_subtitle" = "Quando effettui l'upgrade a Plus";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Hai esigenze di elaborazione avanzate o professionali che richiedono porte non standard? \n\nEsegui l'upgrade a VPN Plus per accedere a questa e ad altre funzionalità premium.";
+"modals_upsell_features_safe_mode_subtitle" = "Hai esigenze di elaborazione avanzate o professionali che richiedono porte non standard?\n\nEffettua l'upgrade a VPN Plus per accedere a questa e ad altre funzionalità premium.";
 
 /* Title of the Safe Mode upsell screen */
 "modals_upsell_safe_mode_title" = "Consenti il ​​traffico verso porte non standard";
@@ -2042,7 +2042,7 @@
 "new_plans_brand_subtitle" = "Ti presentiamo il nuovo look di Proton.\nMolti servizi, una sola missione: una nuova versione di internet, dove la privacy è la regola.";
 
 /* Title of "done" button in New Brand screen */
-"new_plans_brand_got_it" = "OK";
+"new_plans_brand_got_it" = "Ho capito";
 
 /* Common button title */
 "modals_common_cancel" = "Annulla";
@@ -2056,7 +2056,7 @@
 /* Common button title */
 "modals_common_get_started" = "Inizia ora";
 
-/* Description of user account update screen part 1 */
+/* Description of user account update screen part 1*/ */
 "maximum_device_plan_limit_part_1" = "Disconnetti un altro dispositivo per connetterti a questo o effettua l'upgrade a %@";
 
 /* Description of user account update screen */

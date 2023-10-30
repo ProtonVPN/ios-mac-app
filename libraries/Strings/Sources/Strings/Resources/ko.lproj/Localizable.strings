@@ -55,7 +55,7 @@
 /* iOS & MacOS: text near country or server; MacOS: title of several alerts */
 "_upgrade_required" = "업그레이드 필요";
 
-/* MacOS: voice over indication for a country or server on maintenance */
+/* MacOS: voice over indication for a country or server on maintenance*/ */
 "_on_maintenance" = "점검 중";
 
 "_reconnection_required" = "재연결 권장됨";
@@ -601,7 +601,7 @@
 "_fastest_connection" = "가장 빠른";
 
 /* Profile create/change form and other places describing profile */
-"_random" = "랜덤";
+"_random" = "무작위";
 
 /* Profile create/change form */
 "_random_available_server" = "무작위 사용 가능한 서버";
@@ -1242,7 +1242,7 @@
 "_ios_onboarding_page1_title" = "더 나은 인터넷에 오신 것을 환영합니다";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "ProtonMail을 개발한 과학자와 엔지니어로 부터: 더 안전하고 프라이빗한 인터넷 세계에 오신 것을 환엽합니다.";
+"_ios_onboarding_page1_description" = "Proton Mail을 개발한 과학자와 엔지니어로 부터: 더 안전하고 프라이빗한 인터넷 세계에 오신 것을 환영합니다.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page2_title" = "우리는 인터넷이 자유로워야 한다고 생각합니다";
@@ -1419,7 +1419,7 @@
 /* Battery usage More info button text */
 "_battery_more" = "더 알아보시겠습니까?";
 
-/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
+/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved"*/ */
 "_netshield_stats_data_saved" = "데이터\n절약";
 
 /* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
@@ -1867,7 +1867,7 @@
 /* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
 "_alert_protocol_deprecated_enable_smart" = "업데이트";
 
-/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser */
+/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser*/ */
 "_alert_protocol_deprecated_learn_more" = "자세히 알아보기";
 
 /* Text for the 'Close' action of the deprecated protocol alert. */
@@ -1958,7 +1958,7 @@
 "modals_upsell_stay_free" = "다음에";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
-"modals_upsell_features_subtitle" = "Plus 요금제로 업그레이드하면";
+"modals_upsell_features_subtitle" = "Plus 요금제로 업그레이드하세요";
 
 /* Subtitle of the Safe Mode upsell screen */
 "modals_upsell_features_safe_mode_subtitle" = "비표준 포트가 필요한 고급 또는 전문 컴퓨팅 요구 사항이 있나요?\n\nVPN Plus로 업그레이드하여 이것과 다른 프리미엄 기능들에 접근하세요.";
@@ -2009,10 +2009,10 @@
 "modals_upsell_secure_core_route" = "스위스, 스웨덴과 아이슬란드의 아주 안전한 서버를 통해 라우팅하세요";
 
 /* Feature of the Secure Core upsell screen */
-"modals_upsell_secure_core_layer" = "VPN 연결에 암호화 계층을 추가하세요";
+"modals_upsell_secure_core_layer" = "VPN 연결에 암호화 계층 추가";
 
 /* Feature of the Secure Core upsell screen */
-"modals_upsell_secure_core_attacks" = "네트워크 공격으로부터 당신을 보호하세요";
+"modals_upsell_secure_core_attacks" = "네트워크 공격으로부터의 보호";
 
 /* Title of the No Logs screen */
 "modals_no_logs_title" = "기록이 없고 스위스에 위치";
@@ -2062,7 +2062,7 @@
 /* Common button title */
 "modals_common_get_started" = "시작하기";
 
-/* Description of user account update screen part 1 */
+/* Description of user account update screen part 1*/ */
 "maximum_device_plan_limit_part_1" = "이 기기에서 연결하려면 다른 기기의 연결을 끊거나 %@ 로 업그레이드 하세요";
 
 /* Description of user account update screen */

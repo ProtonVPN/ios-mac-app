@@ -1,0 +1,68 @@
+
+"onboarding_take_tour" = "Absolvujte prehliadku";
+
+"onboarding_skip" = "Preskočiť";
+
+"onboarding_welcome_title" = "Víta vás Proton VPN";
+
+"onboarding_welcome_subtitle" = "Naučte sa ako v priebehu niekoľkých sekúnd vyťažiť z Proton VPN maximum.";
+
+"onboarding_beprotected_title" = "Buďte chránení všade";
+
+"onboarding_beprotected_subtitle" = "Proton VPN podporuje všetky zariadenia, vrátane Windows, macOS a mnohých ďalších.";
+
+"onboarding_unblockstreaming_title" = "Odblokujte streamovanie";
+
+"onboarding_unblockstreaming_subtitle" = "Zabezpečený prístup k obľúbenému obsahu z iných krajín - Teraz už aj pre Android TV.";
+
+"onboarding_netshield_title" = "Blokujte reklamy a mnoho ďalšieho";
+
+"onboarding_netshield_subtitle" = "Blokovanie malvéru, reklám a trackerov v prehliadači a vo všetkých aplikáciách.";
+
+"onboarding_next" = "Ďalej";
+
+"onboarding_plus_only" = "Dostupné s Plus";
+
+"onboarding_establish_title" = "Nadviažte prvé pripojenie";
+
+"onboarding_establish_note" = "Pripojíme vás k najrýchlejšiemu a najstabilnejšiemu serveru v závislosti od vašej polohy.";
+
+"onboarding_establish_connect_now" = "Pripojiť teraz";
+
+"onboarding_done" = "Hotovo";
+
+"onboarding_connected_title" = "Gratulujeme";
+
+"onboarding_connected_subtitle" = "Vaše pripojenie je chránené a ste pripravení na prezeranie webu.";
+
+"onboarding_connected_note" = "Bezpečne.";
+
+"onboarding_connected_connected_to" = "Pripojené ku:";
+
+"onboarding_connected_connect_to_plus" = "Pripojiť k Plus serveru";
+
+"onboarding_congratulations" = "Gratulujeme";
+
+"onboarding_purchased_note" = "Užívajte si svet súkromia.";
+
+"onboarding_get_plus" = "Zakúpiť Plus";
+
+"onboarding_not_connected_subtitle" = "Môžete začať prechádzať web.";
+
+"onboarding_not_connected_error" = "Nie je možné nadviazať spojenie. Skúste to prosím neskôr v aplikácii.";
+
+"onboarding_continue" = "Pokračovať";
+
+"onboarding_telemetry_title" = "Pomôžte nám bojovať s cenzúrou";
+
+"onboarding_usage_stats_title" = "Zdieľanie anonymných štatistík používania";
+
+"onboarding_usage_stats_description" = "Údaje o používaní nám pomáhajú obchádzať blokovanie VPN a vylepšovať výkon aplikácie.";
+
+"onboarding_crash_reports_title" = "Zdieľať anonymné hlásenia o zlyhaní";
+
+"onboarding_crash_reports_description" = "Hlásenia o pádoch nám pomáhajú opravovať chyby, detekovať firewally a vyhýbať sa blokovaniu VPN.";
+
+"onboarding_footer" = "Tieto štatistiky neobsahujú vašu IP adresu a nemôžu byť použité na vašu identifikáciu. Nikdy ich nebudeme zdieľať s tretími stranami.";
+
+"onboarding_footer_learn_more" = "Zistiť viac";

@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>welcome_screen_feature_devices</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@ saman aikaisesti</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 laite</string>
+        <key>other</key>
+        <string>%d laitetta</string>
+      </dict>
+    </dict>
+    <key>welcome_screen_feature_servers_countries</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@num_servers@ %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d maassa</string>
+        <key>other</key>
+        <string>%d maassa</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d+ uusi palvelin</string>
+        <key>other</key>
+        <string>%d+ uutta palvelinta</string>
+      </dict>
+    </dict>
+    <key>modals_upsell_all_countries_feature_multipleDevices</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>one</key>
+        <string>Suojaa jopa %d laite</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Suojaa jopa %d laitetta</string>
+      </dict>
+    </dict>
+    <key>modals_upsell_all_countries_title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Käytä yli %#@num_servers@ %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>one</key>
+        <string>%d maasta</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d maasta</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>one</key>
+        <string>%d turvallista palvelinta</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d turvallista palvelinta</string>
+      </dict>
+    </dict>
+    <key>subscription_upgrade_option1</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Satoja palvelimia %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d maa</string>
+        <key>other</key>
+        <string>%d maata</string>
+      </dict>
+    </dict>
+    <key>subscription_upgrade_option2</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Yhdistä samanaikaisesti jopa %#@num_devices@ laitetta</string>
+      <key>num_devices</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d laite</string>
+        <key>other</key>
+        <string>%d laitetta</string>
+      </dict>
+    </dict>
+    <key>maximum_device_plan_limit_part_2</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string> yhdistääksesi samanaikaisesti jopa %#@num_devices@ laitetta.</string>
+      <key>num_devices</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d laite</string>
+        <key>other</key>
+        <string>%d laitetta</string>
+      </dict>
+    </dict>
+    <key>search_upsell_title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Käytä kaikkia %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d maa</string>
+        <key>other</key>
+        <string>%d maa</string>
+      </dict>
+    </dict>
+    <key>_vpnauth_too_many_certs_retry_after</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Saavutit asetusmuutosten enimmäismäärän. Yritä uudelleen vähintään %d minuutin kuluttua.</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>other</key>
+        <string>Saavutit asetusmuutosten enimmäismäärän. Yritä uudelleen vähintään %d minuutin kuluttua.</string>
+      </dict>
+    </dict>
+    <key>_countries_count_plus</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d+ maa</string>
+        <key>other</key>
+        <string>%d+ maata</string>
+      </dict>
+    </dict>
+    <key>_countries_count</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d maa</string>
+        <key>other</key>
+        <string>%d maa</string>
+      </dict>
+    </dict>
+    <key>_plans_connections</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d yhteys</string>
+        <key>other</key>
+        <string>%d yhteyttä</string>
+      </dict>
+    </dict>
+    <key>_netshield_stats_ads_blocked</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Mainos
+estetty</string>
+        <key>other</key>
+        <string>Mainosta
+estetty</string>
+      </dict>
+    </dict>
+    <key>_netshield_stats_trackers_stopped</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Seuraaja
+estetty</string>
+        <key>other</key>
+        <string>Seurantaa
+estetty</string>
+      </dict>
+    </dict>
+    <key>_session_length_days</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@DAYS@</string>
+      <key>DAYS</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d päivää</string>
+        <key>one</key>
+        <string>%d päivä</string>
+      </dict>
+    </dict>
+    <key>_session_length_days_and_hours</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@DAYS@ %#@HOURS@</string>
+      <key>DAYS</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d päivää</string>
+        <key>one</key>
+        <string>%d päivä</string>
+      </dict>
+      <key>HOURS</key>
+      <dict>
+        <key>one</key>
+        <string>%d t</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d t</string>
+      </dict>
+    </dict>
+    <key>_session_length_hours_and_minutes</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@HOURS@ %#@MINUTES@</string>
+      <key>MINUTES</key>
+      <dict>
+        <key>one</key>
+        <string>%d min</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d min</string>
+      </dict>
+      <key>HOURS</key>
+      <dict>
+        <key>one</key>
+        <string>%d t</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d t</string>
+      </dict>
+    </dict>
+    <key>_session_length_hours</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@HOURS@</string>
+      <key>HOURS</key>
+      <dict>
+        <key>one</key>
+        <string>%d t</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d t</string>
+      </dict>
+    </dict>
+    <key>_session_length_minutes_and_seconds</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@MINUTES@ %#@SECONDS@</string>
+      <key>MINUTES</key>
+      <dict>
+        <key>one</key>
+        <string>%d min</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d min</string>
+      </dict>
+      <key>SECONDS</key>
+      <dict>
+        <key>one</key>
+        <string>%d s</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d s</string>
+      </dict>
+    </dict>
+    <key>_session_length_minutes</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@MINUTES@</string>
+      <key>MINUTES</key>
+      <dict>
+        <key>one</key>
+        <string>%d min</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d min</string>
+      </dict>
+    </dict>
+    <key>_session_length_seconds</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@SECONDS@</string>
+      <key>SECONDS</key>
+      <dict>
+        <key>one</key>
+        <string>%d s</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d s</string>
+      </dict>
+    </dict>
+    <key>_step_of</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@STEP@ %#@STEPS@</string>
+      <key>STEPS</key>
+      <dict>
+        <key>one</key>
+        <string>/%d</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>/%d</string>
+      </dict>
+      <key>STEP</key>
+      <dict>
+        <key>one</key>
+        <string>Vaihe %d</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Vaihe %d</string>
+      </dict>
+    </dict>
+    <key>free_connections_modal_subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>one</key>
+        <string>Ilmaiset palvelinsijainnnit (%d)</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Ilmaiset palvelinsijainnnit (%d)</string>
+      </dict>
+    </dict>
+  </dict>
+</plist>

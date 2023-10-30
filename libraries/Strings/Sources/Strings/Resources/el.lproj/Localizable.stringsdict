@@ -1,70 +1,444 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>search_upsell_title</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>Access all %#@num_countries@</string>
-		<key>num_countries</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d country</string>
-			<key>other</key>
-			<string>%d countries</string>
-		</dict>
-	</dict>
-	<key>_countries_count</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d χώρα</string>
-			<key>other</key>
-			<string>%d χώρες</string>
-		</dict>
-	</dict>
-	<key>_countries_count_plus</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d+ χώρα</string>
-			<key>other</key>
-			<string>%d+ χώρες</string>
-		</dict>
-	</dict>
-	<key>_plans_connections</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d σύνδεση</string>
-			<key>other</key>
-			<string>%d συνδέσεις</string>
-		</dict>
-	</dict>
-</dict>
+  <dict>
+    <key>welcome_screen_feature_devices</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Έως και %#@VARIABLE@ ταυτόχρονα</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 συσκευή</string>
+        <key>other</key>
+        <string>%d συσκευές</string>
+      </dict>
+    </dict>
+    <key>welcome_screen_feature_servers_countries</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@num_servers@ σε %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d χώρα</string>
+        <key>other</key>
+        <string>%d χώρες</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d+ νέος διακομιστής</string>
+        <key>other</key>
+        <string>%d+ νέοι διακομιστές</string>
+      </dict>
+    </dict>
+    <key>modals_upsell_all_countries_feature_multipleDevices</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>one</key>
+        <string>Προστατέψτε έως και %d συσκευή</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Προστατέψτε έως και %d συσκευές</string>
+      </dict>
+    </dict>
+    <key>modals_upsell_all_countries_title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Έχετε πρόσβαση σε πάνω από %#@num_servers@ σε %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>one</key>
+        <string>%d χώρες</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d χώρες</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>one</key>
+        <string>%d διασφαλισμένος διακομιστής</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d διασφαλισμένοι διακομιστές</string>
+      </dict>
+    </dict>
+    <key>subscription_upgrade_option1</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Εκατοντάδες διακομιστές σε %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d χώρα</string>
+        <key>other</key>
+        <string>%d χώρες</string>
+      </dict>
+    </dict>
+    <key>subscription_upgrade_option2</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Συνδέστε έως και %#@num_devices@ ταυτόχρονα</string>
+      <key>num_devices</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d συσκευή</string>
+        <key>other</key>
+        <string>%d συσκευές</string>
+      </dict>
+    </dict>
+    <key>maximum_device_plan_limit_part_2</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string> για απόκτηση έως και %#@num_devices@ συνδεδεμένες ταυτόχρονα.</string>
+      <key>num_devices</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d συσκευή</string>
+        <key>other</key>
+        <string>%d συσκευές</string>
+      </dict>
+    </dict>
+    <key>search_upsell_title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Πρόσβαση στο σύνολο των %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d χώρα</string>
+        <key>other</key>
+        <string>%d χώρες</string>
+      </dict>
+    </dict>
+    <key>_vpnauth_too_many_certs_retry_after</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Φτάσατε τον μέγιστο αριθμό αλλαγών ρυθμίσεων. Παρακαλούμε δοκιμάστε ξανά μετά από τουλάχιστον %d λεπτό.</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>other</key>
+        <string>Φτάσατε τον μέγιστο αριθμό αλλαγών ρυθμίσεων. Παρακαλούμε δοκιμάστε ξανά μετά από τουλάχιστον %d λεπτά.</string>
+      </dict>
+    </dict>
+    <key>_countries_count_plus</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d+ χώρα</string>
+        <key>other</key>
+        <string>%d+ χώρες</string>
+      </dict>
+    </dict>
+    <key>_countries_count</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d χώρα</string>
+        <key>other</key>
+        <string>%d χώρες</string>
+      </dict>
+    </dict>
+    <key>_plans_connections</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d σύνδεση</string>
+        <key>other</key>
+        <string>%d συνδέσεις</string>
+      </dict>
+    </dict>
+    <key>_netshield_stats_ads_blocked</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Διαφήμιση
+αποκλείστηκε</string>
+        <key>other</key>
+        <string>Διαφημίσεις
+αποκλείστηκαν</string>
+      </dict>
+    </dict>
+    <key>_netshield_stats_trackers_stopped</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Ιχνηλάτης
+σταματήθηκε</string>
+        <key>other</key>
+        <string>Ιχνηλάτες
+σταματήθηκαν</string>
+      </dict>
+    </dict>
+    <key>_session_length_days</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@DAYS@</string>
+      <key>DAYS</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d ημέρες</string>
+        <key>one</key>
+        <string>%d ημέρα</string>
+      </dict>
+    </dict>
+    <key>_session_length_days_and_hours</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@DAYS@ %#@HOURS@</string>
+      <key>DAYS</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d ημέρες</string>
+        <key>one</key>
+        <string>%d ημέρα</string>
+      </dict>
+      <key>HOURS</key>
+      <dict>
+        <key>one</key>
+        <string>%d ώρα</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d ώρες</string>
+      </dict>
+    </dict>
+    <key>_session_length_hours_and_minutes</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@HOURS@ %#@MINUTES@</string>
+      <key>MINUTES</key>
+      <dict>
+        <key>one</key>
+        <string>%d λεπτό</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d λεπτό</string>
+      </dict>
+      <key>HOURS</key>
+      <dict>
+        <key>one</key>
+        <string>%d ώρα</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d ώρες</string>
+      </dict>
+    </dict>
+    <key>_session_length_hours</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@HOURS@</string>
+      <key>HOURS</key>
+      <dict>
+        <key>one</key>
+        <string>%d ώρα</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d ώρες</string>
+      </dict>
+    </dict>
+    <key>_session_length_minutes_and_seconds</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@MINUTES@ %#@SECONDS@</string>
+      <key>MINUTES</key>
+      <dict>
+        <key>one</key>
+        <string>%d λεπτό</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d λεπτό</string>
+      </dict>
+      <key>SECONDS</key>
+      <dict>
+        <key>one</key>
+        <string>%d δλ</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d δλ</string>
+      </dict>
+    </dict>
+    <key>_session_length_minutes</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@MINUTES@</string>
+      <key>MINUTES</key>
+      <dict>
+        <key>one</key>
+        <string>%d λεπτό</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d λεπτό</string>
+      </dict>
+    </dict>
+    <key>_session_length_seconds</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@SECONDS@</string>
+      <key>SECONDS</key>
+      <dict>
+        <key>one</key>
+        <string>%d δλ</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d δλ</string>
+      </dict>
+    </dict>
+    <key>_step_of</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@STEP@ %#@STEPS@</string>
+      <key>STEPS</key>
+      <dict>
+        <key>one</key>
+        <string>από %d</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>από %d</string>
+      </dict>
+      <key>STEP</key>
+      <dict>
+        <key>one</key>
+        <string>Βήμα %d</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Βήμα %d</string>
+      </dict>
+    </dict>
+    <key>free_connections_modal_subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>one</key>
+        <string>Τοποθεσίες δωρεάν διακομιστών (%d)</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Τοποθεσίες δωρεάν διακομιστών (%d)</string>
+      </dict>
+    </dict>
+  </dict>
 </plist>

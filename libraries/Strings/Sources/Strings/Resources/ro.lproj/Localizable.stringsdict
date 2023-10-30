@@ -15,9 +15,9 @@
         <key>one</key>
         <string>un dispozitiv</string>
         <key>few</key>
-        <string>%d devices</string>
+        <string>%d dispozitive</string>
         <key>other</key>
-        <string>%d devices</string>
+        <string>%d de dispozitive</string>
       </dict>
     </dict>
     <key>welcome_screen_feature_servers_countries</key>
