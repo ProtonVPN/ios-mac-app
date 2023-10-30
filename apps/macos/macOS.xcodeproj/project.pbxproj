@@ -2912,10 +2912,9 @@
 			};
 			buildConfigurationList = EED5347C1EEC112000013607 /* Build configuration list for PBXProject "macOS" */;
 			compatibilityVersion = "Xcode 10.0";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 				fr,
@@ -2941,6 +2940,12 @@
 				ro,
 				"be-BY",
 				be,
+				sv,
+				sk,
+				ko,
+				fi,
+				"zh-Hant",
+				ka,
 			);
 			mainGroup = EED534781EEC112000013607;
 			packageReferences = (
