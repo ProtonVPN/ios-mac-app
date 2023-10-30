@@ -1,0 +1,68 @@
+
+"onboarding_take_tour" = "Ta en rundtur";
+
+"onboarding_skip" = "Hoppa över";
+
+"onboarding_welcome_title" = "Välkommen till Proton VPN";
+
+"onboarding_welcome_subtitle" = "Lär dig hur du får ut det mesta av Proton VPN på bara några sekunder";
+
+"onboarding_beprotected_title" = "Var skyddad överallt";
+
+"onboarding_beprotected_subtitle" = "Proton VPN stöder alla enheter, inklusive Windows, macOS och många andra.";
+
+"onboarding_unblockstreaming_title" = "Avblockera streaming";
+
+"onboarding_unblockstreaming_subtitle" = "Säker åtkomst till ditt favoritinnehåll från andra länder — Nu tillgängligt på Android TV.";
+
+"onboarding_netshield_title" = "Blockera annonser och mycket mer";
+
+"onboarding_netshield_subtitle" = "Blockera skadlig programvara, annonser och spårare i webbläsaren och i alla appar.";
+
+"onboarding_next" = "Nästa";
+
+"onboarding_plus_only" = "Tillgängligt med Plus";
+
+"onboarding_establish_title" = "Etablera din första anslutning";
+
+"onboarding_establish_note" = "Vi kommer att ansluta dig till den snabbaste och mest stabila servern beroende på din plats.";
+
+"onboarding_establish_connect_now" = "Anslut nu";
+
+"onboarding_done" = "Klar";
+
+"onboarding_connected_title" = "Grattis";
+
+"onboarding_connected_subtitle" = "Din anslutning är skyddad och du är redo att surfa på webben.";
+
+"onboarding_connected_note" = "Säkert.";
+
+"onboarding_connected_connected_to" = "Ansluten till:";
+
+"onboarding_connected_connect_to_plus" = "Anslut till en Plus-server";
+
+"onboarding_congratulations" = "Grattis";
+
+"onboarding_purchased_note" = "Njut av en värld av integritet.";
+
+"onboarding_get_plus" = "Skaffa Plus";
+
+"onboarding_not_connected_subtitle" = "Du är redo att surfa på webben.";
+
+"onboarding_not_connected_error" = "Kan inte upprätta en anslutning. Försök igen senare i appen.";
+
+"onboarding_continue" = "Fortsätt";
+
+"onboarding_telemetry_title" = "Hjälp oss att bekämpa censur";
+
+"onboarding_usage_stats_title" = "Dela anonym användningsstatistik";
+
+"onboarding_usage_stats_description" = "Användningsdata hjälper oss att övervinna VPN-blockeringar och förbättra appens prestanda.";
+
+"onboarding_crash_reports_title" = "Dela anonyma kraschrapporter";
+
+"onboarding_crash_reports_description" = "Kraschrapporter hjälper oss att åtgärda fel, upptäcka brandväggar och undvika VPN-blockeringar.";
+
+"onboarding_footer" = "Denna statistik innehåller inte din IP-adress och den kan inte användas för att identifiera dig. Vi kommer aldrig att dela den med tredje part.";
+
+"onboarding_footer_learn_more" = "Lär dig mer";

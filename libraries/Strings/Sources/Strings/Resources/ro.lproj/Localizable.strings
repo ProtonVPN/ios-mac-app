@@ -55,7 +55,7 @@
 /* iOS & MacOS: text near country or server; MacOS: title of several alerts */
 "_upgrade_required" = "Modificare necesară";
 
-/* MacOS: voice over indication for a country or server on maintenance */
+/* MacOS: voice over indication for a country or server on maintenance*/ */
 "_on_maintenance" = "În întreținere";
 
 "_reconnection_required" = "Reconectare necesară";
@@ -1413,7 +1413,7 @@
 /* Battery usage More info button text */
 "_battery_more" = "Doriți să aflați mai multe?";
 
-/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
+/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved"*/ */
 "_netshield_stats_data_saved" = "Date\nsalvate";
 
 /* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
@@ -1611,7 +1611,7 @@
 
 "_streaming_title" = "Transmisie în flux";
 
-"_p2p_title" = "P2P / BitTorrent";
+"_p2p_title" = "P2P/BitTorrent";
 
 "_tor_title" = "Tor";
 
@@ -1712,7 +1712,7 @@
 
 "_neks_t2_connect" = "Activare așa";
 
-"_subuser_alert_title" = "Vă mulțumim că ați trecut la planul Business / Visionary";
+"_subuser_alert_title" = "Vă mulțumim că ați trecut la planul Business/Visionary";
 
 "_subuser_alert_description1" = "Pentru a începe utilizarea Proton VPN activați conexiunile VPN. Același lucru trebuie făcut pentru oricare utilizator din organizație.";
 
@@ -1862,7 +1862,7 @@ Detalii";
 /* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
 "_alert_protocol_deprecated_enable_smart" = "Actualizare";
 
-/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser */
+/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser*/ */
 "_alert_protocol_deprecated_learn_more" = "Detalii";
 
 /* Text for the 'Close' action of the deprecated protocol alert. */
@@ -2057,7 +2057,7 @@ Detalii";
 /* Common button title */
 "modals_common_get_started" = "Să începem";
 
-/* Description of user account update screen part 1 */
+/* Description of user account update screen part 1*/ */
 "maximum_device_plan_limit_part_1" = "Deconectați un alt dispozitiv pentru a-l conecta pe acesta sau treceți la %@.";
 
 /* Description of user account update screen */

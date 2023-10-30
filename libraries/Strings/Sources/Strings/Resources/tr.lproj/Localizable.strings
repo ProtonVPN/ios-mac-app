@@ -6,7 +6,7 @@
 "_connect" = "Bağlan";
 
 /* Common word */
-"_connected" = "Bağlandı";
+"_connected" = "Bağlı";
 
 /* Common word */
 "_delete" = "Sil";
@@ -15,7 +15,7 @@
 "_disconnect" = "Bağlantıyı kes";
 
 /* Common word */
-"_disconnected" = "Bağlantı kesildi";
+"_disconnected" = "Bağlı değil";
 
 /* Status of VPN connection reported by Siri */
 "_disconnecting" = "Bağlantı kesiliyor";
@@ -55,7 +55,7 @@
 /* iOS & MacOS: text near country or server; MacOS: title of several alerts */
 "_upgrade_required" = "Yükseltme gerekli";
 
-/* MacOS: voice over indication for a country or server on maintenance */
+/* MacOS: voice over indication for a country or server on maintenance*/ */
 "_on_maintenance" = "Bakım yapılıyor";
 
 "_reconnection_required" = "Yeniden bağlantı kurmak gerekli";
@@ -1413,7 +1413,7 @@
 /* Battery usage More info button text */
 "_battery_more" = "Ayrıntılı bilgi almak ister misiniz?";
 
-/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
+/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved"*/ */
 "_netshield_stats_data_saved" = "Kazanılan\nveri";
 
 /* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
@@ -1518,7 +1518,7 @@
 "_smart_protocol_description" = "Otomatik olarak en iyi bağlantıyı sunan iletişim kuralı ve bağlantı noktasının kullanılması için Smart Protocol özelliğini açın.";
 
 /* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
-"_smart_protocol_reconnect_modal_title" = "Yeniden bağlantı kurmak gerekli";
+"_smart_protocol_reconnect_modal_title" = "Yeniden bağlantı kurulması gerekli";
 
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "Smart Protocol kipini değiştirmek için bağlantınız yeniden başlatılacak.";
@@ -1861,7 +1861,7 @@
 /* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
 "_alert_protocol_deprecated_enable_smart" = "Güncelle";
 
-/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser */
+/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser*/ */
 "_alert_protocol_deprecated_learn_more" = "Ayrıntılı bilgi alın";
 
 /* Text for the 'Close' action of the deprecated protocol alert. */
@@ -2056,7 +2056,7 @@
 /* Common button title */
 "modals_common_get_started" = "Başlayalım";
 
-/* Description of user account update screen part 1 */
+/* Description of user account update screen part 1*/ */
 "maximum_device_plan_limit_part_1" = "Lütfen bu aygıtı bağlayabilmek için başka bir aygıtın bağlantısını kesin ya da %@ tarifesine yükseltin";
 
 /* Description of user account update screen */
