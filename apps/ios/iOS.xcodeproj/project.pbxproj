@@ -2689,6 +2689,13 @@
 				ro,
 				"be-BY",
 				be,
+				sk,
+				"el-GR",
+				fi,
+				sv,
+				"zh-Hant",
+				ka,
+				ko,
 			);
 			mainGroup = 791DE5D0208DDA3000A29EA5;
 			packageReferences = (
