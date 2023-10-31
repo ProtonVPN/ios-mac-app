@@ -20,28 +20,29 @@ import Foundation
 import VPNShared
 import Dependencies
 
+#if os(iOS)
 public final class VpnAuthenticationRemoteClient: VpnAuthentication {
     private var connectionProvider: ProviderMessageSender?
     private let sessionService: SessionService
     private let authenticationStorage: VpnAuthenticationStorage
-    private let safeModePropertyProvider: SafeModePropertyProvider
 
     public typealias Factory = SessionServiceFactory &
         VpnAuthenticationStorageFactory &
         SafeModePropertyProviderFactory
 
     public convenience init(_ factory: Factory) {
-        self.init(sessionService: factory.makeSessionService(),
-                  authenticationStorage: factory.makeVpnAuthenticationStorage(),
-                  safeModePropertyProvider: factory.makeSafeModePropertyProvider())
+        self.init(
+            sessionService: factory.makeSessionService(),
+            authenticationStorage: factory.makeVpnAuthenticationStorage()
+        )
     }
 
-    public init(sessionService: SessionService,
-                authenticationStorage: VpnAuthenticationStorage,
-                safeModePropertyProvider: SafeModePropertyProvider) {
+    public init(
+        sessionService: SessionService,
+        authenticationStorage: VpnAuthenticationStorage
+    ) {
         self.sessionService = sessionService
         self.authenticationStorage = authenticationStorage
-        self.safeModePropertyProvider = safeModePropertyProvider
 
         NotificationCenter.default.addObserver(forName: VpnKeychain.vpnPlanChanged, object: nil, queue: nil,
                                                using: userDowngradedPlanOrBecameDelinquent(_:))
@@ -57,18 +58,23 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
         features: VPNConnectionFeatures? = nil,
         completion: @escaping AuthenticationDataCompletion
     ) {
-        if let fullAuthData = loadStoredAuthenticationData(), !needsRefresh(fullAuthData, features: features) {
-            let vpnAuthData = VpnAuthenticationData(
-                clientKey: fullAuthData.keys.privateKey,
-                clientCertificate: fullAuthData.certificate.certificate
-            )
-            log.debug(
-                "Stored VPN auth data does not need refreshing",
-                category: .userCert,
-                metadata: ["vpnAuthData": "\(fullAuthData)"]
-            )
-            completion(.success(vpnAuthData))
-            return
+        if let fullAuthData = loadStoredAuthenticationData() {
+            if !isValid(authData: fullAuthData) {
+                log.warning("Deleting invalid certificate from storage", category: .userCert)
+                authenticationStorage.deleteCertificate()
+            } else if !needsRefresh(fullAuthData, features: features) {
+                let vpnAuthData = VpnAuthenticationData(
+                    clientKey: fullAuthData.keys.privateKey,
+                    clientCertificate: fullAuthData.certificate.certificate
+                )
+                log.debug(
+                    "Stored VPN auth data does not need refreshing",
+                    category: .userCert,
+                    metadata: ["vpnAuthData": "\(fullAuthData)"]
+                )
+                completion(.success(vpnAuthData))
+                return
+            }
         }
 
         // certificate is missing or no longer valid, refresh it and use
@@ -307,41 +313,48 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
     }
 
     private func isValid(authData: FullAuthData) -> Bool {
+        @Dependency(\.featureFlagProvider) var featureFlags
+        guard featureFlags[\.mismatchedCertificateRecovery] else {
+            log.debug("Skipping certificate validation, Mismatched Certificate Recovery is off", category: .userCert)
+            return true
+        }
+
         let publicKey = Data(authData.keys.publicKey.rawRepresentation)
-        guard let certificatePublicKey = authData.certificate.publicKey else {
-            log.error("Failed to extract certificate's public key, skipping verification", category: .userCert)
+        do {
+            let certificatePublicKey = try authData.certificate.getPublicKey()
+
+            // Verify that the certificate was generated against our current keys. This ensures we can recover when an old
+            // certificate is left over after plan change/logout. The underlying issue is caused by data races during
+            // certificate generation/clearing keys
+            // Otherwise, LocalAgent will choke when attempting to connect, and it cannot recover until a new certificate is
+            // generated
+            guard certificatePublicKey == publicKey else {
+                log.error(
+                    "Stored certificate as its public key does not match our current keys",
+                    category: .userCert,
+                    metadata: [
+                        "publicKeyFingerprint": "\(publicKey.fingerprint)",
+                        "certificatePublicKeyFingerprint": "\(certificatePublicKey.fingerprint)"
+                    ]
+                )
+                return false
+            }
+        } catch {
+            log.error(
+                "Could not verify certificate's public key matches our current keys",
+                category: .userCert,
+                metadata: ["error": "\(error)"]
+            )
             // We couldn't verify that the certificate was generated against our current public key, but we might still
             // be able to connect with it if it's just a problem with Sec functions. Return true and give LocalAgent a
             // chance
-            return false
-        }
-
-        // Verify that the certificate was generated against our current keys. This ensures we can recover when an old
-        // certificate is left over after plan change/logout. The underlying issue is caused by data races during
-        // certificate generation/clearing keys
-        // Otherwise, LocalAgent will choke when attempting to connect, and it cannot recover until a new certificate is
-        // generated
-        guard certificatePublicKey == publicKey else {
-            log.error(
-                "Deleting stored certificate as its public key does not match our current keys",
-                category: .userCert,
-                metadata: [
-                    "publicKeyFingerprint": "\(publicKey.fingerprint)",
-                    "certificatePublicKeyFingerprint": "\(certificatePublicKey.fingerprint)"
-                ]
-            )
-            authenticationStorage.deleteCertificate()
-            return false
+            return true
         }
 
         return true
     }
 
     private func needsRefresh(_ authData: FullAuthData, features: VPNConnectionFeatures?) -> Bool {
-        guard isValid(authData: authData) else {
-            return true
-        }
-
         if authData.certificate.isExpired || authData.certificate.shouldBeRefreshed {
             log.info(
                 "Stored certificate is either expired or almost expired. Local agent will connect but certificate refresh will be needed",
@@ -367,3 +380,4 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
         return false
     }
 }
+#endif

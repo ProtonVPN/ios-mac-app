@@ -19,6 +19,7 @@
 import Foundation
 import VPNShared
 
+#if os(macOS)
 /// MacOS implementation of Certificate Refresh management
 public final class VpnAuthenticationManager: VpnAuthentication {
     private let operationDispatchQueue = DispatchQueue(label: "ch.protonvpn.mac.async_cert_refresh",
@@ -105,3 +106,4 @@ public final class VpnAuthenticationManager: VpnAuthentication {
         true // Ignore feature changes. LA is guaranteed to be present on MacOS,
     }
 }
+#endif

@@ -22,13 +22,13 @@ import VPNShared
 public class MockVpnAuthenticationStorage: VpnAuthenticationStorage {
     public var certAndFeaturesStored: ((VpnCertificateWithFeatures) -> ())?
     public var keysStored: ((VpnKeys) -> ())?
+    public var certDeleted: (() -> Void)?
 
     public var keys: VpnKeys?
     public var cert: VpnCertificate?
     public var features: VPNConnectionFeatures?
     
-    public init(){
-    }
+    public init() { }
 
     public func deleteKeys() {
         keys = nil
@@ -37,6 +37,7 @@ public class MockVpnAuthenticationStorage: VpnAuthenticationStorage {
 
     public func deleteCertificate() {
         cert = nil
+        certDeleted?()
         delegate?.certificateDeleted()
     }
 

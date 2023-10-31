@@ -19,6 +19,8 @@
 #if DEBUG
 import Foundation
 import NetworkExtension
+import VPNShared
+import XCTestDynamicOverlay
 
 public enum NEMockError: Error {
     case invalidProviderConfiguration
@@ -238,6 +240,35 @@ public class NETunnelProviderSessionMock: NEVPNConnectionMock, NETunnelProviderS
 
         if let responseHandler = responseHandler {
             responseHandler(response)
+        }
+    }
+}
+
+public class WireguardProviderMessageSenderMock: ProviderMessageSender {
+    public typealias Response = Result<WireguardProviderRequest.Response, ProviderMessageError>
+
+    public var wireguardRequestSent: ((WireguardProviderRequest) -> Response)?
+
+    public func send<R>(_ message: R, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?) where R : ProviderRequest {
+        guard let request = message as? WireguardProviderRequest else {
+            XCTFail("\(self): received incorrect message type: \(message)")
+            return
+        }
+
+        guard let response = wireguardRequestSent?(request) else {
+            XCTFail("\(self): request not handled: \(request)")
+            return
+        }
+
+        switch response {
+        case .success(let wireguardResponse):
+            guard let genericResponse = wireguardResponse as? R.Response else {
+                assertionFailure("This shouldn't be possible because `message` is a `WireguardProviderRequest`")
+                return
+            }
+            completion?(.success(genericResponse))
+        case .failure(let providerError):
+            completion?(.failure(providerError))
         }
     }
 }

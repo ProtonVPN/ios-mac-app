@@ -29,10 +29,6 @@ public struct VpnCertificate {
     public let validUntil: Date
     public let refreshTime: Date
 
-    // Derived properties, not present in payload
-    public let derRepresentation: Data?
-    public let publicKey: Data?
-
     public var isExpired: Bool {
         return Date() > validUntil
     }
@@ -52,19 +48,16 @@ public struct VpnCertificate {
         self.validUntil = validUntil
         self.refreshTime = refreshTime
 
-        do {
-            @Dependency(\.certificateCryptoService) var crypto
-            let derRepresentation = try crypto.derRepresentation(ofPEMEncodedCertificate: certificate)
-            let publicKey = try crypto.publicKey(ofDEREncodedCertificate: derRepresentation)
-            self.derRepresentation = derRepresentation
-            self.publicKey = publicKey
-        } catch {
-            log.error("Failed to calculate derived certificate properties", category: .userCert, metadata: ["error": "\(error)"])
-            assertionFailure("Failed to derive properties of certificate: '\(certificate)' with error: '\(error)'")
-            self.derRepresentation = nil
-            self.publicKey = nil
-        }
     }
+
+    #if os(iOS)
+    // Not implemented on MacOS, see CertificateCryptoService
+    public func getPublicKey() throws -> Data {
+        @Dependency(\.certificateCryptoService) var crypto
+        let derRepresentation = try crypto.derRepresentation(ofPEMEncodedCertificate: certificate)
+        return try crypto.publicKey(ofDEREncodedCertificate: derRepresentation)
+    }
+    #endif
 }
 
 public extension VpnCertificate {
@@ -99,12 +92,18 @@ extension VpnCertificate: Codable {
 
 extension VpnCertificate: CustomStringConvertible, CustomDebugStringConvertible {
     public var description: String {
-        let properties = [
+        var properties = [
             "certificateFingerprint: '\(certificate.fingerprint)'",
-            "publicKeyFingerprint: '\(publicKey?.fingerprint ?? "nil")'",
             "validUntil: '\(validUntil)'",
             "refreshTime: '\(refreshTime)'"
         ]
+        #if os(iOS) && DEBUG
+        // On release builds, let's avoid the costly process of parsing the certificate every time we want to log it
+        properties.append(contentsOf: [
+            "certificatePublicKeyFingerprint: '\(try! getPublicKey().fingerprint)'",
+            "certificatePublicKey: '\(try! getPublicKey().base64EncodedString())'"
+        ])
+        #endif
 
         return "VPNCertificate(\(properties.joined(separator: ", ")))"
     }
