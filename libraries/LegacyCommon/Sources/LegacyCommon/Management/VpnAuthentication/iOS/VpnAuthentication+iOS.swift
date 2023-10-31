@@ -313,7 +313,7 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
             // We couldn't verify that the certificate was generated against our current public key, but we might still
             // be able to connect with it if it's just a problem with Sec functions. Return true and give LocalAgent a
             // chance
-            return true
+            return false
         }
 
         // Verify that the certificate was generated against our current keys. This ensures we can recover when an old

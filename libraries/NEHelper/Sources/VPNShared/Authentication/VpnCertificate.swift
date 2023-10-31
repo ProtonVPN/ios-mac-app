@@ -21,7 +21,8 @@
 //
 
 import Foundation
-import Logging
+import Dependencies
+import VPNCrypto
 
 public struct VpnCertificate {
     public let certificate: String // PEM representation
@@ -50,11 +51,17 @@ public struct VpnCertificate {
         self.certificate = certificate
         self.validUntil = validUntil
         self.refreshTime = refreshTime
-        if let der = CertificateEncoding.derRepresentation(ofPEMEncodedCertificate: certificate) {
-            self.derRepresentation = der
-            self.publicKey = CertificateEncoding.publicKey(ofDEREncodedCertificate: der)
-        } else {
-            log.error("Failed to derive a DER representation for this certificate", category: .userCert)
+
+        @Dependency(\.certificateService) var certificateService
+
+        do {
+            let derRepresentation = try certificateService.derRepresentation(ofPEMEncodedCertificate: certificate)
+            let publicKey = try certificateService.publicKey(ofDEREncodedCertificate: derRepresentation)
+            self.derRepresentation = derRepresentation
+            self.publicKey = publicKey
+        } catch {
+            log.error("Failed to calculate derived certificate properties", category: .userCert, metadata: ["error": "\(error)"])
+            assertionFailure("Failed to derive properties of certificate: '\(certificate)' with error: '\(error)'")
             self.derRepresentation = nil
             self.publicKey = nil
         }
@@ -113,46 +120,5 @@ public struct VpnCertificateWithFeatures {
     public init(certificate: VpnCertificate, features: VPNConnectionFeatures?) {
         self.certificate = certificate
         self.features = features
-    }
-}
-
-enum CertificateEncoding {
-    /// Parses the textual representation of a PEM encoded certificate, according to the format defined by RFC-7468
-    /// https://www.rfc-editor.org/rfc/rfc7468#section-5.1
-    static func derRepresentation(ofPEMEncodedCertificate pem: String) -> Data? {
-        let regex = try! NSRegularExpression(pattern: "-----(BEGIN|END) CERTIFICATE-----")
-        let range = NSRange(location: 0, length: pem.count)
-        let pemWithoutHeaderAndFooter = regex.stringByReplacingMatches(in: pem, range: range, withTemplate: "")
-        return Data(base64Encoded: pemWithoutHeaderAndFooter.replacingOccurrences(of: "\n", with: ""))
-    }
-
-    static func publicKey(ofDEREncodedCertificate der: Data) -> Data? {
-        guard let secCertificate = SecCertificateCreateWithData(nil, der as CFData) else {
-            logError("Failed to parse certificate - is it a valid DER-encoded X.509 certificate?", data: der)
-            return nil
-        }
-        guard let publicKey = SecCertificateCopyKey(secCertificate) else {
-            logError("Failed to copy public key - possible encoding issue or unsupported algorithm", data: der)
-            return nil
-        }
-
-        var error: Unmanaged<CFError>?
-        guard let publicKeyData = SecKeyCopyExternalRepresentation(publicKey, &error) else {
-            logError("Failed to export public key", data: der, error: error?.takeRetainedValue())
-            return nil
-        }
-        return publicKeyData as Data
-    }
-
-    private static func logError(_ message: String, data: Data, error: CFError? = nil) {
-    #if DEBUG
-        let metadata: Logging.Logger.Metadata = [
-            "base64EncodedData": "\(data.base64EncodedString())",
-            "error": "\(String(describing: error))"
-        ]
-    #else
-        let metadata = ["error": "\(String(describing: error))"]
-    #endif
-        log.error("\(message)", category: .userCert, metadata: metadata)
     }
 }
