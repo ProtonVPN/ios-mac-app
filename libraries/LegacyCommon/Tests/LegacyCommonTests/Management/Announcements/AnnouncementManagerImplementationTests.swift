@@ -53,6 +53,14 @@ class AnnouncementManagerImplementationTests: XCTestCase {
                 reference: nil
             ),
             Announcement(
+                notificationID: "3-with-offer",
+                startTime: Date(),
+                endTime: .distantFuture,
+                type: Announcement.NotificationType.default.rawValue,
+                offer: Offer.empty,
+                reference: nil
+            ),
+            Announcement(
                 notificationID: "2-with-offer-one-time",
                 startTime: Date(),
                 endTime: .distantFuture,
@@ -62,7 +70,7 @@ class AnnouncementManagerImplementationTests: XCTestCase {
             ),
             Announcement(
                 notificationID: "3-ended",
-                startTime: Date(),
+                startTime: .distantPast,
                 endTime: .distantPast,
                 type: Announcement.NotificationType.default.rawValue,
                 offer: Offer.empty,
@@ -85,7 +93,7 @@ class AnnouncementManagerImplementationTests: XCTestCase {
         let filtered = manager.fetchCurrentAnnouncementsFromStorage()
         XCTAssert(filtered.containsAnnouncement(withId: "2-with-offer"))
         XCTAssert(filtered.containsAnnouncement(withId: "2-with-offer-one-time"))
-        XCTAssertEqual(filtered.count, 2)
+        XCTAssertEqual(filtered.count, 3)
         XCTAssertFalse(filtered.containsAnnouncement(withId: "1-no-offer"))
         XCTAssertFalse(filtered.containsAnnouncement(withId: "3-ended"))
         XCTAssertFalse(filtered.containsAnnouncement(withId: "3-future"))
@@ -106,5 +114,20 @@ class AnnouncementManagerImplementationTests: XCTestCase {
             manager.markAsRead(announcement: $0)
         }
         XCTAssertFalse(manager.hasUnreadAnnouncements)
+    }
+
+    func testShowsOnlyFirstAnnouncement() {
+        XCTAssertTrue(manager.hasUnreadAnnouncements)
+        XCTAssertTrue(manager.shouldShowAnnouncementsIcon())
+        // read the first one
+        let announcements = manager.fetchCurrentAnnouncementsFromStorage()
+        let active = announcements.filter { $0.knownType == .default && !$0.wasRead }
+        XCTAssertTrue(active.count > 1)
+        let first = announcements.first {
+            $0.knownType == .default
+        }!
+        manager.markAsRead(announcement: first)
+        XCTAssertFalse(manager.hasUnreadAnnouncements)
+        XCTAssertTrue(manager.shouldShowAnnouncementsIcon())
     }
 }

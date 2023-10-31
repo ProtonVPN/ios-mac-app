@@ -44,8 +44,7 @@ public class AnnouncementsViewModel {
     private(set) var items: [Announcement] = []
 
     public var currentItem: Announcement? {
-        let firstUnread = items.first { $0.knownType == .default && $0.isRead == false }
-        return firstUnread ?? items.first { $0.knownType == .default }
+        items.first { $0.knownType == .default }
     }
 
     public var oneTimeAnnouncement: Announcement? {

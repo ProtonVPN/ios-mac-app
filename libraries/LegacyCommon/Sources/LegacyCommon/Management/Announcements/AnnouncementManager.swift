@@ -54,11 +54,17 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
     public func fetchCurrentAnnouncementsFromStorage() -> [Announcement] {
         announcementStorage.fetch().filter {
             $0.startTime.isPast && $0.endTime.isFuture && $0.offer != nil
+        }.sorted { // sorting is needed because we only want to consider the first announcement
+            $0.startTime < $1.startTime
         }
     }
 
     public var hasUnreadAnnouncements: Bool {
-        return fetchCurrentAnnouncementsFromStorage().contains(where: { !$0.wasRead && $0.knownType == .default })
+        let announcement = fetchCurrentAnnouncementsFromStorage()
+            .filter { $0.knownType == .default }
+            .first
+        guard let announcement else { return false }
+        return !announcement.wasRead
     }
     
     public func markAsRead(announcement: Announcement) {
