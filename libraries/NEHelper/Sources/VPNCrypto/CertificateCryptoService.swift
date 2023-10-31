@@ -16,9 +16,20 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+#if os(iOS)
+
 import Foundation
+import Security
+
 import Dependencies
 
+/// At the moment this is only implemented for iOS, as we don't need to validate certificates on MacOS, where
+/// certificate refresh functionality is not as susceptible to a data race as the process is not distributed among
+/// multiple processes.
+///
+/// If a MacOS implementation is required, it should use `<Security/SecImportExport.h>` since `SecCertificateCopyKey`
+/// does not work on MacOS.
+/// More info: https://developer.apple.com/forums/thread/104753?answerId=317856022#317856022
 public struct CertificateCryptoService {
     var derRepresentation: (String) throws -> Data
     var publicKey: (Data) throws -> Data
@@ -45,12 +56,15 @@ extension CertificateCryptoService: DependencyKey {
     )
 
     #if DEBUG
-    public static var testValue: CertificateCryptoService = liveValue
+    public static var testValue: CertificateCryptoService = .mock()
 
-    public static func mock(derRepresentation: Data = Data(), publicKey: Data = Data()) -> CertificateCryptoService {
+    public static func mock(
+        derRepresentation: @escaping (String) -> Data = { _ in Data() },
+        publicKey: @escaping (Data) -> Data = { _ in Data() }
+    ) -> CertificateCryptoService {
        return CertificateCryptoService(
-            derRepresentation: { _ in derRepresentation},
-            publicKey: { _ in publicKey }
+            derRepresentation: derRepresentation,
+            publicKey: publicKey
         )
     }
     #endif
@@ -109,3 +123,4 @@ enum CertificateServiceImplementation {
         case keyExport(internalError: CFError?)
     }
 }
+#endif

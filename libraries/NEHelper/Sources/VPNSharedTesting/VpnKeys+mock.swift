@@ -20,9 +20,21 @@ import Foundation
 import VPNShared
 
 public extension VpnKeys {
-    static func mock() -> VpnKeys {
-        VpnKeys(privateKey: PrivateKey(rawRepresentation: [], derRepresentation: String.random(8), base64X25519Representation: String.random(8)),
-                  publicKey: PublicKey(rawRepresentation: [], derRepresentation: String.random(8)))
+    static func mock(
+        privateKey: Data = Data(),
+        publicKey: Data = Data()
+    ) -> VpnKeys {
+        VpnKeys(
+            privateKey: PrivateKey(
+                rawRepresentation: [UInt8](privateKey),
+                derRepresentation: String.random(8),
+                base64X25519Representation: String.random(8)
+            ),
+            publicKey: PublicKey(
+                rawRepresentation: [UInt8](publicKey),
+                derRepresentation: String.random(8)
+            )
+        )
     }
 }
 

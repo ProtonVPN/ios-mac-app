@@ -81,8 +81,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
 
         let remoteClient = VpnAuthenticationRemoteClient(
             sessionService: sessionService,
-            authenticationStorage: vpnAuthKeychain,
-            safeModePropertyProvider: safeModePropertyProvider
+            authenticationStorage: vpnAuthKeychain
         )
 
         let vpnManager = VpnManager(
@@ -101,8 +100,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
                     vpnKeychain: vpnKeychain,
                     vpnAuthentication: VpnAuthenticationRemoteClient(
                         sessionService: sessionService,
-                        authenticationStorage: vpnAuthKeychain,
-                        safeModePropertyProvider: safeModePropertyProvider
+                        authenticationStorage: vpnAuthKeychain
                     )
                 ),
             localAgentConnectionFactory: LocalAgentConnectionFactoryImplementation(),

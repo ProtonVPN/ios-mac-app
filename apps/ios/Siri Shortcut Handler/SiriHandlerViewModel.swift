@@ -50,23 +50,26 @@ class SiriHandlerViewModel {
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
         let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN",
                                                         vpnKeysGenerator: ExtensionVPNKeysGenerator())
-        return AppStateManagerImplementation(vpnApiService: vpnApiService,
-                                             vpnManager: vpnManager,
-                                             networking: networking,
-                                             alertService: alertService,
-                                             timerFactory: TimerFactoryImplementation(),
-                                             propertiesManager: propertiesManager,
-                                             vpnKeychain: vpnKeychain,
-                                             configurationPreparer: configurationPreparer,
-                                             vpnAuthentication: VpnAuthenticationRemoteClient(sessionService: sessionService,
-                                                                                              authenticationStorage: vpnAuthKeychain,
-                                                                                              safeModePropertyProvider: safeModePropertyProvider),
-                                             doh: doh,
-                                             serverStorage: serverStorage,
-                                             natTypePropertyProvider: natTypePropertyProvider,
-                                             netShieldPropertyProvider: netShieldPropertyProvider,
-                                             safeModePropertyProvider: safeModePropertyProvider)
-        }()
+        return AppStateManagerImplementation(
+            vpnApiService: vpnApiService,
+            vpnManager: vpnManager,
+            networking: networking,
+            alertService: alertService,
+            timerFactory: TimerFactoryImplementation(),
+            propertiesManager: propertiesManager,
+            vpnKeychain: vpnKeychain,
+            configurationPreparer: configurationPreparer,
+            vpnAuthentication: VpnAuthenticationRemoteClient(
+                sessionService: sessionService,
+                authenticationStorage: vpnAuthKeychain
+            ),
+            doh: doh,
+            serverStorage: serverStorage,
+            natTypePropertyProvider: natTypePropertyProvider,
+            netShieldPropertyProvider: netShieldPropertyProvider,
+            safeModePropertyProvider: safeModePropertyProvider
+        )
+    }()
 
     lazy var vpnGateway: VpnGatewayProtocol = {
         VpnGateway(vpnApiService: vpnApiService,

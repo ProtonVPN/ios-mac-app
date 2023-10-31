@@ -295,6 +295,7 @@ extension FeatureFlags {
         enforceDeprecatedProtocols: false,
         showNewFreePlan: false,
         unsafeLanWarnings: false,
+        mismatchedCertificateRecovery: false,
         localOverrides: nil
     )
     public static let allEnabled: Self = .init(
@@ -314,28 +315,12 @@ extension FeatureFlags {
         enforceDeprecatedProtocols: true,
         showNewFreePlan: true,
         unsafeLanWarnings: true,
+        mismatchedCertificateRecovery: true,
         localOverrides: nil
     )
 
-    public static let wireGuardTlsDisabled: Self = .init(
-        smartReconnect: true,
-        vpnAccelerator: true,
-        netShield: true,
-        netShieldStats: true,
-        streamingServicesLogos: true,
-        portForwarding: true,
-        moderateNAT: true,
-        pollNotificationAPI: true,
-        serverRefresh: true,
-        guestHoles: true,
-        safeMode: true,
-        promoCode: true,
-        wireGuardTls: false,
-        enforceDeprecatedProtocols: true,
-        showNewFreePlan: true,
-        unsafeLanWarnings: true,
-        localOverrides: nil
-    )
+    public static let wireGuardTlsDisabled: Self = .allEnabled
+        .disabling(\.wireGuardTls)
 }
 
 extension PartnerType {

@@ -16,6 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+#if os(iOS) // CertificateServiceImplementation is only available on iOS because of shortcomings in the Security framework
+
 import Foundation
 import XCTest
 @testable import VPNCrypto
@@ -46,3 +48,5 @@ final class CertificateCryptoTests: XCTestCase {
         XCTAssertNotEqual(certificatePublicKey, Data(base64Encoded: incorrectPubKeyBase64), "Should not match unrelated public key - false positive")
     }
 }
+
+#endif
