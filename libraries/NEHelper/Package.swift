@@ -32,6 +32,7 @@ let package = Package(
         .target(
             name: "VPNShared",
             dependencies: [
+                "VPNCrypto",
                 .product(name: "Ergonomics", package: "Ergonomics"),
                 .product(name: "Timer", package: "Timer"),
                 .product(name: "Logging", package: "swift-log"),
