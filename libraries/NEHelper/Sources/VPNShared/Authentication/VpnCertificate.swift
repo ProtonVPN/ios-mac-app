@@ -52,11 +52,10 @@ public struct VpnCertificate {
         self.validUntil = validUntil
         self.refreshTime = refreshTime
 
-        @Dependency(\.certificateService) var certificateService
-
         do {
-            let derRepresentation = try certificateService.derRepresentation(ofPEMEncodedCertificate: certificate)
-            let publicKey = try certificateService.publicKey(ofDEREncodedCertificate: derRepresentation)
+            @Dependency(\.certificateCryptoService) var crypto
+            let derRepresentation = try crypto.derRepresentation(ofPEMEncodedCertificate: certificate)
+            let publicKey = try crypto.publicKey(ofDEREncodedCertificate: derRepresentation)
             self.derRepresentation = derRepresentation
             self.publicKey = publicKey
         } catch {

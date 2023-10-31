@@ -19,12 +19,12 @@
 import Foundation
 import Dependencies
 
-public struct CertificateService {
+public struct CertificateCryptoService {
     var derRepresentation: (String) throws -> Data
     var publicKey: (Data) throws -> Data
 }
 
-extension CertificateService {
+extension CertificateCryptoService {
     /// Parses the textual representation of a PEM encoded certificate, according to the format defined by RFC-7468
     /// https://www.rfc-editor.org/rfc/rfc7468#section-5.1
     public func derRepresentation(ofPEMEncodedCertificate pem: String) throws -> Data {
@@ -38,17 +38,17 @@ extension CertificateService {
     }
 }
 
-extension CertificateService: DependencyKey {
-    public static let liveValue: CertificateService = CertificateService(
+extension CertificateCryptoService: DependencyKey {
+    public static let liveValue: CertificateCryptoService = CertificateCryptoService(
         derRepresentation: CertificateServiceImplementation.derRepresentation,
         publicKey: CertificateServiceImplementation.publicKey
     )
 
     #if DEBUG
-    public static var testValue: CertificateService = liveValue
+    public static var testValue: CertificateCryptoService = liveValue
 
-    public static func mock(derRepresentation: Data = Data(), publicKey: Data = Data()) -> CertificateService {
-       return CertificateService(
+    public static func mock(derRepresentation: Data = Data(), publicKey: Data = Data()) -> CertificateCryptoService {
+       return CertificateCryptoService(
             derRepresentation: { _ in derRepresentation},
             publicKey: { _ in publicKey }
         )
@@ -57,15 +57,15 @@ extension CertificateService: DependencyKey {
 }
 
 extension DependencyValues {
-    public var certificateService: CertificateService {
-        get { self[CertificateService.self] }
-        set { self[CertificateService.self] = newValue }
+    public var certificateCryptoService: CertificateCryptoService {
+        get { self[CertificateCryptoService.self] }
+        set { self[CertificateCryptoService.self] = newValue }
     }
 }
 
-private enum CertificateServiceImplementation {
-    public static func derRepresentation(ofPEMEncodedCertificate pem: String) throws -> Data {
-        let regex = try! NSRegularExpression(pattern: "-----(BEGIN|END) CERTIFICATE-----")
+enum CertificateServiceImplementation {
+    static func derRepresentation(ofPEMEncodedCertificate pem: String) throws -> Data {
+        let regex = try NSRegularExpression(pattern: "-----(BEGIN|END) (CERTIFICATE|(PUBLIC|PRIVATE KEY))-----")
         let range = NSRange(location: 0, length: pem.count)
         let pemWithoutHeaderAndFooter = regex.stringByReplacingMatches(in: pem, range: range, withTemplate: "")
         guard let der = Data(base64Encoded: pemWithoutHeaderAndFooter.replacingOccurrences(of: "\n", with: "")) else {
@@ -74,7 +74,7 @@ private enum CertificateServiceImplementation {
         return der
     }
 
-    public static func publicKey(ofDEREncodedCertificate der: Data) throws -> Data {
+    static func publicKey(ofDEREncodedCertificate der: Data) throws -> Data {
         guard let secCertificate = SecCertificateCreateWithData(nil, der as CFData) else {
             throw CertificateCodingError.invalidBase64
         }
