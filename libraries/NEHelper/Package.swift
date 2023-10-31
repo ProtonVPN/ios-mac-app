@@ -64,6 +64,7 @@ let package = Package(
         .target(
             name: "VPNCrypto",
             dependencies: [
+                "Ergonomics",
                 .product(name: "Dependencies", package: "swift-dependencies")
             ]
         ),
@@ -73,6 +74,7 @@ let package = Package(
         ),
         .testTarget(name: "VPNSharedTests", dependencies: ["VPNShared"]),
         .testTarget(name: "NEHelperTests", dependencies: ["NEHelper", "VPNSharedTesting"]),
+        .testTarget(name: "VPNCryptoTests", dependencies: ["VPNCrypto"])
     ]
 )
 
