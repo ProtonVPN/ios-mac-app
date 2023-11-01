@@ -47,7 +47,7 @@ extension CreateNewProfileViewModel {
         switch group.kind {
         case .country(let country):
             imageAttributedString = AppTheme.Icon.flag(countryCode: country.countryCode)?.asAttachment(size: .profileIconSize) ?? NSAttributedString(string: "")
-            countryString = "  " + country.country
+            countryString = "  " + country.countryName
         case .gateway(let name):
             imageAttributedString = IconProvider.servers.asAttachment(style: .normal, size: .profileIconSize)
             countryString = "  " + name

@@ -41,10 +41,17 @@ public class CountryModel: Comparable, Hashable {
             "Lowest tier: \(lowestTier)\n" +
             "Feature: \(feature)\n"
     }
-    
-    public var country: String {
-        return LocalizationUtility.default.countryName(forCode: countryCode) ?? ""
-    }
+
+    public lazy var countryName: String = {
+        LocalizationUtility.default.countryName(forCode: countryCode) ?? ""
+    }()
+
+    private lazy var countrySearchName: String = {
+        countryName
+            .folding(options: [.caseInsensitive, .diacriticInsensitive], locale: .current)
+            .replacingOccurrences(of: "ł", with: "l")
+    }()
+
     // FUTURETODO: need change to load from server response. right not the response didnt in used
     public var location: CLLocationCoordinate2D {
         return LocationUtility.coordinate(forCountry: countryCode)
@@ -57,7 +64,7 @@ public class CountryModel: Comparable, Hashable {
     }
     
     public func matches(searchQuery: String) -> Bool {
-        return country.contains(searchQuery)
+        return countrySearchName.contains(searchQuery)
     }
     
     // MARK: - Private setup functions

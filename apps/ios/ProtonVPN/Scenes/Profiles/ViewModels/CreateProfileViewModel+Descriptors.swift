@@ -41,7 +41,7 @@ extension CreateOrEditProfileViewModel {
         switch group.kind {
         case .country(let country):
             imageAttributedString = embededImageIcon(image: UIImage.flag(countryCode: country.countryCode))
-            countryString = "  " + country.country
+            countryString = "  " + country.countryName
         case .gateway(let name):
             imageAttributedString = embededImageIcon(image: IconProvider.servers)
             countryString = "  " + name

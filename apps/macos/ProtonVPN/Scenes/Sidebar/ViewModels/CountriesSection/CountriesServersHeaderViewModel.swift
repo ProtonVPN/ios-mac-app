@@ -84,7 +84,7 @@ class ServerHeaderViewModel: CountriesServersHeaderViewModelProtocol {
         }
 
         didTapInfoBtn = {
-            countriesViewModel.displayStreamingServices?(country.country, streamServices, propertiesManager)
+            countriesViewModel.displayStreamingServices?(country.countryName, streamServices, propertiesManager)
         }
     }
 }
