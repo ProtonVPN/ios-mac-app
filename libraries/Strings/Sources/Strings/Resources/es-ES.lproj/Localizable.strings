@@ -1612,9 +1612,7 @@
 /* System extension wizard in mac: Step nr.1 description (for case when the system has already shown 'Open Security Preferences', and won't show this dialog again) */
 "_sysex_wizard_step1_description_go_to_system_preferences" = "Abra las Preferencias del Sistema: haga clic aquí.\nA continuación, vaya al panel \"Seguridad & privacidad\" panel.";
 
-/* System extension wizard in mac: Step nr.1 text that will have a link to System Preferences system app.
-   The string must occur _only once_ in both the `_sysex_wizard_step1_description' and
-   `_sysex_wizard_step1_description_1' localized strings. */
+/* System extension wizard in mac: Step nr.1 text that will have a link to System Preferences system app. The string must occur _only once_ in both the `_sysex_wizard_step1_description' and `_sysex_wizard_step1_description_1' localized strings. */
 "_sysex_wizard_step1_description_link" = "haz clic aquí";
 
 /* System extension wizard in mac: Step nr.1 title (for case with more than one system extension) */

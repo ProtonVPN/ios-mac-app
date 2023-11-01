@@ -1728,8 +1728,7 @@
 "_moderate_nat_title" = "NAT moderat";
 
 /* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "NAT moderat dezactivează alocarea aleatoare a adreselor locale. Acest lucru vă poate reduce ușor securitatea, dar permite aplicațiilor persoană-la-persoană, cum ar fi jocurile online, să stabilească direct conexiuni.\n 
-Detalii";
+"_moderate_nat_explanation" = "NAT moderat dezactivează alocarea aleatoare a adreselor locale. Acest lucru vă poate reduce ușor securitatea, dar permite aplicațiilor persoană-la-persoană, cum ar fi jocurile online, să stabilească direct conexiuni.\nDetalii";
 
 /* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
 "_moderate_nat_explanation_link" = "Detalii";
