@@ -73,7 +73,6 @@ linting:commit-quality:
 linting:code-quality:
   extends:
     - .mr_job_template
-    - .ios_job_template
   stage: linting
   artifacts:
     paths:
@@ -82,6 +81,18 @@ linting:code-quality:
       codequality: codequality_report.json
   script:    
     - scripts/code_quality.sh
+  tags:
+    - iOS_vpn 
+  rules:
+
+linting:strings-files:
+  extends:
+    - .mr_job_template
+  stage: linting
+  script:
+    - scripts/lint_translations.sh
+  tags:
+    - macOS_vpn
   rules:
 
 # Reenable when/if we have a license
