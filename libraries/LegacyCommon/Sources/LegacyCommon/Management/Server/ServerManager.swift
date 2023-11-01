@@ -169,7 +169,7 @@ public class ServerManagerImplementation: ServerManager {
             case (.gateway(let gatewayName0), .gateway(let gatewayName1)):
                 return gatewayName0 < gatewayName1
             case (.country(let country0), .country(let country1)):
-                return country0.country < country1.country
+                return country0.countryName < country1.countryName
             case (.gateway, .country):
                 return true
             case (.country, .gateway):
