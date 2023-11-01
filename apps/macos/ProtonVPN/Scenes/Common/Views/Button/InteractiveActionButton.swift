@@ -26,10 +26,6 @@ import Theme
 import Ergonomics
 
 class InteractiveActionButton: HoverDetectionButton {
-    override var intrinsicContentSize: NSSize {
-        return attributedTitle.size()
-    }
-
     var fontSize: AppTheme.FontSize = .small {
         didSet {
             setAttributedTitle()
