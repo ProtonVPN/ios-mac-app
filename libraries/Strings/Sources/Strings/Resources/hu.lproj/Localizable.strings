@@ -1602,7 +1602,7 @@
 
 // Downgrade
 
-/* Description of user account update screen part 1*/
+/* Description of user account update screen part 1 */
 "maximum_device_plan_limit_part_1" = "Please disconnect another device to connect to this one or upgrade to %@";
 
 /* Description of user account update screen */

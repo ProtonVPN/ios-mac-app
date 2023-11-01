@@ -58,12 +58,12 @@
 "_upgrade_subscription" = "Upgrade Subscription";
 
 /* MacOS: Settings -> Account. Button leading to web interface. */
-"_manage_subscription" = "Manage Subscription" ;
+"_manage_subscription" = "Manage Subscription";
 
 /* iOS & MacOS: text near country or server; MacOS: title of several alerts */
 "_upgrade_required" = "Upgrade Required";
 
-/* MacOS: voice over indication for a country or server on maintenance*/
+/* MacOS: voice over indication for a country or server on maintenance */
 "_on_maintenance" = "On maintenance";
 
 /* iOS & MacOS: text that requires restart connection */
@@ -1428,7 +1428,7 @@
 
 // Netshield stats
 
-/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved"*/
+/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
 "_netshield_stats_data_saved" = "Data\nsaved";
 
 // Netshield
@@ -1959,7 +1959,7 @@
 "_alert_protocol_deprecated_body_ios" = "This profile uses a protocol that is outdated and no longer supported. Click \"Update\" to switch to using the default Smart protocol.";
 /* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
 "_alert_protocol_deprecated_enable_smart" = "Update";
-/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser*/
+/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser */
 "_alert_protocol_deprecated_learn_more" = "Learn more";
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Close";
@@ -2283,7 +2283,7 @@
 
 // Downgrade
 
-/* Description of user account update screen part 1*/
+/* Description of user account update screen part 1 */
 "maximum_device_plan_limit_part_1" = "Please disconnect another device to connect to this one or upgrade to %@";
 
 /* Description of user account update screen */
