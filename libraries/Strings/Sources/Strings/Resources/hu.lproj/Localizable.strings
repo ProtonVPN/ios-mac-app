@@ -1252,10 +1252,7 @@
 /* (No Comment) */
 "_trial_popup_enjoy" = "Élvezd a biztonságos internet teljes előnyeit bárhol a Proton VPN segítségével";
 
-/* Final text:
- 
- As a welcome gift, you have access to a full Proton VPN subscription, including advanced features for the first few days! Your welcome trial ends in
- 1 day, 2 hours, 30 minutes */
+/* Final text: As a welcome gift, you have access to a full Proton VPN subscription, including advanced features for the first few days! Your welcome trial ends in 1 day, 2 hours, 30 minutes */
 "_trial_popup_explanation" = "Üdvözlő ajándékként hozzáférhetsz a %@ csomagunkhoz, beleértve az összes prémium szoláltatásunkat. A próbaverzió lejárati ideje";
 
 /* (No Comment) */
@@ -1264,9 +1261,7 @@
 /* (No Comment) */
 "_trial_popup_full_subscription" = "teljes Proton VPN előfizetés";
 
-/* Final text:
- 
- We have given you a free upgrade to Proton VPN Plus, which includes more servers and additional features. Your Proton VPN Plus trial ends in 7 days. */
+/* Final text: We have given you a free upgrade to Proton VPN Plus, which includes more servers and additional features. Your Proton VPN Plus trial ends in 7 days. */
 "_trial_popup_introduction" = "Kaptál tőlünk egy %@-t, mely több szervert és szolgáltatást tartalmaz. A Proton VPN Plus próbaverzió ideje 7 nap.";
 
 /* (No Comment) */

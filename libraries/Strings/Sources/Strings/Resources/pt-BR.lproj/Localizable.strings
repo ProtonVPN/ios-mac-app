@@ -1,5 +1,4 @@
 /* Common word */
-
 "_cancel" = "Cancelar";
 
 /* Common word */
@@ -285,8 +284,7 @@
 "_switch_side_button_off" = "DESATIVADO";
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
-"_timeout_ks_ike_descritpion" = "Outra aplicação pode estar interferindo com o kill switch.
-Para resolver este problema, mude para o protocolo OpenVPN ou desative o kill switch e tente novamente.";
+"_timeout_ks_ike_descritpion" = "Outra aplicação pode estar interferindo com o kill switch.\nPara resolver este problema, mude para o protocolo OpenVPN ou desative o kill switch e tente novamente.";
 
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Troque para o OpenVPN e tente novamente";

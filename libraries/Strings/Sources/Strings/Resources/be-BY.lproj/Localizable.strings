@@ -1630,9 +1630,7 @@
 /* System extension wizard in mac: Step nr.1 description (for case when the system has already shown 'Open Security Preferences', and won't show this dialog again) */
 "_sysex_wizard_step1_description_go_to_system_preferences" = "Откройте \"Системные настройки\": нажмите здесь.\nЗатем перейдите на панель \"Безопасность и конфиденциальность\".";
 
-/* System extension wizard in mac: Step nr.1 text that will have a link to System Preferences system app.
-   The string must occur _only once_ in both the `_sysex_wizard_step1_description' and
-   `_sysex_wizard_step1_description_1' localized strings. */
+/* System extension wizard in mac: Step nr.1 text that will have a link to System Preferences system app. The string must occur _only once_ in both the `_sysex_wizard_step1_description' and _sysex_wizard_step1_description_1' localized strings. */
 "_sysex_wizard_step1_description_link" = "нажмите здесь";
 
 /* System extension wizard in mac: Step nr.1 title (for case with more than one system extension) */
@@ -1752,10 +1750,7 @@
 /* (No Comment) */
 "_trial_popup_enjoy" = "Пользуйтесь полными преимуществами безопасного Интернета где угодно с Proton VPN";
 
-/* Final text:
-
- As a welcome gift, you have access to a full Proton VPN subscription, including advanced features for the first few days! Your welcome trial ends in
- 1 day, 2 hours, 30 minutes */
+/* Final text: "As a welcome gift, you have access to a full Proton VPN subscription, including advanced features for the first few days! Your welcome trial ends in 1 day, 2 hours, 30 minutes" */
 "_trial_popup_explanation" = "В качестве приветственного подарка у вас есть доступ к %@, включая расширенные функции в течение первых дней! Ваша пробная версия заканчивается";
 
 /* (No Comment) */
@@ -1764,9 +1759,7 @@
 /* (No Comment) */
 "_trial_popup_full_subscription" = "полная подписка на Proton VPN";
 
-/* Final text:
-
- We have given you a free upgrade to Proton VPN Plus, which includes more servers and additional features. Your Proton VPN Plus trial ends in 7 days. */
+/* Final text: We have given you a free upgrade to Proton VPN Plus, which includes more servers and additional features. Your Proton VPN Plus trial ends in 7 days. */
 "_trial_popup_introduction" = "Мы дали вам %@, в котором больше серверов и дополнительных функций. Пробный период Proton VPN Plus заканчивается через 7 дней.";
 
 /* (No Comment) */
