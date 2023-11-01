@@ -1,0 +1,15 @@
+only_rules:
+  - custom_rules
+
+included: doesn't seem to work, so these input files have to be passed during the swiftlint invocation
+  - Sources/Strings/Resources/*/Localizable.strings
+
+custom_rules:
+  malformed_entry:
+    regex: '^(?!($|(\/\* [^\n]* \*\/$)|(\"[^\n]*\" = \"[^\n]*\";$)|(\/\/)))'
+    message: "Each line should be either a comment or translation"
+    severity: error
+  leaky_block_comment:
+    regex: '^\/\*[^\n]*\*\/[^\n]'
+    message: "Block comments should not have any characters after the closing brace"
+    severity: error
