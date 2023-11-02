@@ -15,7 +15,7 @@ test:unit:modals:
     - fastlane ios_modals_test
     - scripts/print-coverage.sh fastlane/test_output/Modals.xcresult Modals 1
     - xcrun xccov view --report --json fastlane/test_output/Modals.xcresult > coverage.json
-    - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
+    - mint run xcodecoverageconverter coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
   after_script:
     - xcrun simctl delete $CI_JOB_ID
   artifacts:

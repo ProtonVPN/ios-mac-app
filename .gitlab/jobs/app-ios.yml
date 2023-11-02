@@ -33,7 +33,7 @@ test:unit:app:ios:
     - fastlane ios_app_unit_test_all
     - scripts/print-coverage.sh fastlane/test_output/ProtonVPN-iOS.xcresult ProtonVPN.app
     - xcrun xccov view --report --json fastlane/test_output/ProtonVPN-iOS.xcresult > coverage.json
-    - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages ProtonVPNTests
+    - mint run xcodecoverageconverter generate coverage.json fastlane/test_output cobertura-xml --exclude-packages ProtonVPNTests
   after_script:
     - xcrun simctl delete $CI_JOB_ID
     - rm apps/ios/ProtonVPNUITests/credentials_bf22.plist

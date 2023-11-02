@@ -22,8 +22,8 @@ test:unit:LegacyCommon:ios:
     - cd ../..
     - scripts/print-coverage.sh "$RESULT_BUNDLE_PATH" LegacyCommon
     - xcrun xccov view --report --json "$RESULT_BUNDLE_PATH" > coverage.json
-    - mint run twittemb/XcodeCoverageConverter generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
-    - mint run a7ex/xcresultparser -o junit "$RESULT_BUNDLE_PATH" > fastlane/test_output/report.junit
+    - mint run xcodecoverageconverter generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
+    - mint run -s xcresultparser -o junit "$RESULT_BUNDLE_PATH" > fastlane/test_output/report.junit
   after_script:
     - xcrun simctl delete $CI_JOB_ID
   artifacts:
@@ -51,8 +51,8 @@ test:unit:LegacyCommon:macos:
     - xcodebuild -quiet -workspace ProtonVPN.xcworkspace -scheme LegacyCommon -enableCodeCoverage YES -derivedDataPath DerivedData -sdk macosx -destination "platform=OS X" -resultBundlePath "$RESULT_BUNDLE_PATH" test
     - scripts/print-coverage.sh "$RESULT_BUNDLE_PATH" LegacyCommon
     - xcrun xccov view --report --json "$RESULT_BUNDLE_PATH" > coverage.json
-    - mint run twittemb/XcodeCoverageConverter generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
-    - mint run a7ex/xcresultparser -o junit "$RESULT_BUNDLE_PATH" > fastlane/test_output/report.junit
+    - mint run xcodecoverageconverter generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
+    - mint run -s xcresultparser -o junit "$RESULT_BUNDLE_PATH" > fastlane/test_output/report.junit
   artifacts:
     paths:
       - "$RESULT_BUNDLE_PATH"
