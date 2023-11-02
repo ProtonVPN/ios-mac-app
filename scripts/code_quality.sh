@@ -7,7 +7,7 @@ function process() {
     echo "---------- Linting $name ----------"
     
     cd $path
-    swiftlint --strict --reporter codeclimate --config ../../.swiftlint.yml > codequality_report.json
+    mint run -s swiftlint --strict --reporter codeclimate --config ../../.swiftlint.yml > codequality_report.json
 
     pattern="\"path\" : \""
     replacement="\"path\" : \"$1\/$name\/"
