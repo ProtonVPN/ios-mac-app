@@ -1,0 +1,52 @@
+bodyMaxLineLength: 72
+projectPrefix: VPNAPPL-
+projectIdTrailerName: Jira-Id
+branchNameLinting:
+  projectIdsInBranches: commitsMustMatch
+  projectIdRegexes:
+  - '[A-Z]{2,10}-[0-9]{2,5}'
+  - (^|[^\.\-\_0-9A-Z])([0-9]{3,5})
+commitCategories:
+- name: feat
+  description: Implements a new feature.
+  increment:
+    minor: {}
+- name: fix
+  description: Fixes an issue.
+- name: test
+  description: Fixes or implements a test.
+- name: refactor
+  description: Changes code, but does not implement a fix or feature.
+- name: build
+  description: Changes the build system or external dependencies.
+- name: ci
+  description: Fixes or implements a continuous integration feature.
+- name: doc
+  description: Corrects/updates documentation for a feature or architectural decision.
+- name: chore
+  description: A recurring task that doesn't fit into any of the above categories.
+trains:
+- name: ProtonVPN-macOS
+  displayName: mac
+  tagPrefix: mac/
+  replace:
+    - key: CFBundleVersion
+      file: 'apps/macos/ProtonVPN/Info.plist'
+      item: version
+      format: plist
+    - key: CFBundleShortVersionString
+      file: 'apps/macos/ProtonVPN/Info.plist'
+      item: fullVersion
+      format: plist
+- name: ProtonVPN-iOS
+  displayName: ios
+  tagPrefix: ios/
+  replace:
+    - key: CFBundleVersion
+      file: 'apps/ios/ProtonVPN/Info.plist'
+      item: version
+      format: plist
+    - key: CFBundleShortVersionString
+      file: 'apps/ios/ProtonVPN/Info.plist'
+      item: fullVersion
+      format: plist

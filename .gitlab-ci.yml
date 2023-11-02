@@ -55,15 +55,15 @@ include:
   # Include all jobs from all the files on `.gitlab/jobs/` folder
   - local: '.gitlab/jobs/*.yml'
 
-
 linting:commit-quality:
+  extends:
+    - .mr_job_template
   stage: linting
-  image: protonjohn/commitlint-docker:latest
+  tags:
+    - vpn-apple-builds # Temporary: change this to macOS_vpn when libssh2 and libgit2 is installed globally
   interruptible: true
   script:
-    - export NO_VIRTUALENV="YES"
-    - scripts/git-cz setup
-    - scripts/git-cz lintci
+    - mint run gluon lint --verbose
   rules:
 
 # Runs a script that goes through all out apps and lib folders and lints them if .swiftlint file is available.
