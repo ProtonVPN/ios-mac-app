@@ -27,6 +27,9 @@ commitCategories:
   description: A recurring task that doesn't fit into any of the above categories.
 - name: i18n
   description: Changes that update localization data.
+- name: release
+  excludeFromChangelog: true
+  description: Updates version files in preparation for a software release.
 trains:
 - name: ProtonVPN-macOS
   displayName: mac
