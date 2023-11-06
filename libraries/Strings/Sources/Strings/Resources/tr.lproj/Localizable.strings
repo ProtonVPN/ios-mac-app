@@ -867,7 +867,7 @@
 /* Internal error message when there is a problem with server certificate and connection cannot be established. */
 "_error_tls_server_verification" = "Sunucu sertifikası doğrulanamadı.";
 
-/* Mac: neagent help screen */
+/* Mac: neagent help screen. The numbers refer to a text field and button in an image displayed above this text. Final string with filled in variables looks like this: "You may be asked to provide your computer account password\nto connect to the Proton VPN service. If this request appears,\nenter your Mac password (1) and click ‘Always Allow’ (2)." */
 "_neagent_description" = "Proton VPN hizmetine bağlanmak için\n%@ yazmanız istenebilir. Bu istek görüntülenirse,\n%@%@ yazın ve ‘%@’ %@ üzerine tıklayın.";
 
 /* Mac: neagent help screen */
@@ -2196,6 +2196,15 @@
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "VPN Business ile kullanılabilir.";
+
+/* Modal that lists countries in which servers are available to free users: Title */
+"free_connections_modal_title" = "Free connections";
+
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_description" = "Proton Free automatically connects you to the fastest available server. This will normally be the closest server to your location.";
+
+/* Modal that lists countries in which servers are available to free users: banner with CTA */
+"free_connections_modal_banner" = "Get worldwide coverage with VPN Plus";
 
 /* Text on upsell banner in country list */
 "_free_banner_text" = "VPN Plus tarifesi ile tüm Dünya'ya erişin";

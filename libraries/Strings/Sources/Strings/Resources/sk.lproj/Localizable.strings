@@ -867,7 +867,7 @@
 /* Internal error message when there is a problem with server certificate and connection cannot be established. */
 "_error_tls_server_verification" = "Certifikát servera nie je možné overiť.";
 
-/* Mac: neagent help screen */
+/* Mac: neagent help screen. The numbers refer to a text field and button in an image displayed above this text. Final string with filled in variables looks like this: "You may be asked to provide your computer account password\nto connect to the Proton VPN service. If this request appears,\nenter your Mac password (1) and click ‘Always Allow’ (2)." */
 "_neagent_description" = "Na pripojenie k službe Proton VPN môžete byť požiadaní o zadanie vášho %@\n. Ak sa zobrazí táto požiadavka,\nzadajte vaše %@ %@ a kliknite na '%@' %@.";
 
 /* Mac: neagent help screen */
@@ -2196,6 +2196,15 @@
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Dostupné s VPN Business.";
+
+/* Modal that lists countries in which servers are available to free users: Title */
+"free_connections_modal_title" = "Bezplatné pripojenia";
+
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_description" = "Proton Free vás automaticky pripojí k najrýchlejšiemu dostupnému serveru. Zvyčajne je to server, ktorý je najbližšie k vašej polohe.";
+
+/* Modal that lists countries in which servers are available to free users: banner with CTA */
+"free_connections_modal_banner" = "Získajte celosvetové pokrytie s VPN Plus";
 
 /* Text on upsell banner in country list */
 "_free_banner_text" = "Získajte celosvetové pokrytie s VPN Plus";

@@ -867,7 +867,7 @@
 /* Internal error message when there is a problem with server certificate and connection cannot be established. */
 "_error_tls_server_verification" = "Sertifikat server tidak dapat diverifikasi.";
 
-/* Mac: neagent help screen */
+/* Mac: neagent help screen. The numbers refer to a text field and button in an image displayed above this text. Final string with filled in variables looks like this: "You may be asked to provide your computer account password\nto connect to the Proton VPN service. If this request appears,\nenter your Mac password (1) and click ‘Always Allow’ (2)." */
 "_neagent_description" = "Anda mungkin akan diminta untuk menyediakan %@\nagar Anda dapat terhubung ke layanan Proton VPN. Apabila permintaan ini muncul,\nmasukkan %@ %@ dan klik ‘%@’ %@.";
 
 /* Mac: neagent help screen */
@@ -1449,7 +1449,7 @@
 "_netshield_level1" = "Blokir malware";
 
 /* Settings -> Netshield: Block malware, ads, trackers */
-"_netshield_level2" = "Blokir malware, iklan, & program pelacak";
+"_netshield_level2" = "Blokir perangkat lunak jahat, iklan, & program pelacak";
 
 "_netshield_alert_reconnect_description_on" = "Sambungan Anda akan dimulai ulang untuk mengubah mode NetShield yang aktif.\nCatatan: Apabila beberapa situs tidak dapat dimuat, cobalah untuk menonaktifkan NetShield.";
 
@@ -1458,7 +1458,7 @@
 "_netshield_alert_upgrade_description" = "NetShield meningkatkan privasi Anda dengan memblokir iklan dan pelacak.";
 
 /* Netshield section title in iOS connection screen */
-"_netshield_section_title" = "Pemblokir Malware & Iklan";
+"_netshield_section_title" = "Pemblokir Perangkat Lunak Jahat & Iklan";
 
 /* Title of the screen with news and offers. */
 "_news_title" = "Berita";
@@ -1489,7 +1489,7 @@
 
 "_quick_settings_netshield_option_level1" = "Blokir malware saja";
 
-"_quick_settings_netshield_option_level2" = "Blokir malware, iklan, & program pelacak";
+"_quick_settings_netshield_option_level2" = "Blokir perangkat lunak jahat, iklan, & program pelacak";
 
 "_upgrade_required_securecore_description" = "Secure Core tersedia di paket Plus. Tingkatkan sekarang untuk mengalihkan trafik lewat server teraman kami di negara ramah privasi.";
 
@@ -2196,6 +2196,15 @@
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Tersedia dengan VPN Business.";
+
+/* Modal that lists countries in which servers are available to free users: Title */
+"free_connections_modal_title" = "Koneksi Free";
+
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_description" = "Proton Free akan menghubungkan Anda secara otomatis ke server tercepat yang tersedia. Pada umumnya, server ini adalah server yang terletak paling dekat dengan lokasi Anda.";
+
+/* Modal that lists countries in which servers are available to free users: banner with CTA */
+"free_connections_modal_banner" = "Dapatkan cakupan server di seluruh dunia dengan VPN Plus";
 
 /* Text on upsell banner in country list */
 "_free_banner_text" = "Dapatkan cakupan server di seluruh dunia dengan VPN Plus";

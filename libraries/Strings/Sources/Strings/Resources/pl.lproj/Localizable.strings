@@ -1,4 +1,5 @@
 /* Common word */
+
 "_cancel" = "Anuluj";
 
 /* Common word */
@@ -866,7 +867,7 @@
 /* Internal error message when there is a problem with server certificate and connection cannot be established. */
 "_error_tls_server_verification" = "Certyfikat serwera nie może zostać zweryfikowany.";
 
-/* Mac: neagent help screen */
+/* Mac: neagent help screen. The numbers refer to a text field and button in an image displayed above this text. Final string with filled in variables looks like this: "You may be asked to provide your computer account password\nto connect to the Proton VPN service. If this request appears,\nenter your Mac password (1) and click ‘Always Allow’ (2)." */
 "_neagent_description" = "Możesz zostać poproszony o wpisanie swojego %@,\naby połączyć się z usługą Proton VPN. Jeśli ta prośba się pojawi,\nwpisz swoje %@ %@ i kliknij przycisk ‘%@’ %@.";
 
 /* Mac: neagent help screen */
@@ -2195,6 +2196,15 @@
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Funkcja dostępna w planie VPN Business.";
+
+/* Modal that lists countries in which servers are available to free users: Title */
+"free_connections_modal_title" = "Bezpłatne połączenia";
+
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_description" = "Plan Proton Free automatycznie łączy użytkownika z najszybszym dostępnym serwerem. Zazwyczaj będzie to serwer znajdujący się najbliżej lokalizacji użytkownika.";
+
+/* Modal that lists countries in which servers are available to free users: banner with CTA */
+"free_connections_modal_banner" = "Plan VPN Plus zapewnia zasięg na całym świecie";
 
 /* Text on upsell banner in country list */
 "_free_banner_text" = "Plan VPN Plus zapewnia zasięg na całym świecie";
