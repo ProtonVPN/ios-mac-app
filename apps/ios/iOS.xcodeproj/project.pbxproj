@@ -88,7 +88,6 @@
 		4CF2981D2A7D3B8E00DEB23F /* cs.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298042A7D3B8D00DEB23F /* cs.lproj */; };
 		4CF2981E2A7D3B8E00DEB23F /* ru.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298052A7D3B8D00DEB23F /* ru.lproj */; };
 		4CF2981F2A7D3B8E00DEB23F /* es.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298062A7D3B8E00DEB23F /* es.lproj */; };
-		4CF298202A7D3B8E00DEB23F /* en-US.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298072A7D3B8E00DEB23F /* en-US.lproj */; };
 		4CF298212A7D3B8E00DEB23F /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298082A7D3B8E00DEB23F /* en.lproj */; };
 		4CF298222A7D3B8E00DEB23F /* ro.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298092A7D3B8E00DEB23F /* ro.lproj */; };
 		4CF298232A7D3B8E00DEB23F /* de.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF2980A2A7D3B8E00DEB23F /* de.lproj */; };
@@ -628,7 +627,6 @@
 		4CF298042A7D3B8D00DEB23F /* cs.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cs.lproj; sourceTree = "<group>"; };
 		4CF298052A7D3B8D00DEB23F /* ru.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ru.lproj; sourceTree = "<group>"; };
 		4CF298062A7D3B8E00DEB23F /* es.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = es.lproj; sourceTree = "<group>"; };
-		4CF298072A7D3B8E00DEB23F /* en-US.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "en-US.lproj"; sourceTree = "<group>"; };
 		4CF298082A7D3B8E00DEB23F /* en.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = en.lproj; sourceTree = "<group>"; };
 		4CF298092A7D3B8E00DEB23F /* ro.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ro.lproj; sourceTree = "<group>"; };
 		4CF2980A2A7D3B8E00DEB23F /* de.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = de.lproj; sourceTree = "<group>"; };
@@ -1366,7 +1364,6 @@
 				4CF298042A7D3B8D00DEB23F /* cs.lproj */,
 				4CF2980A2A7D3B8E00DEB23F /* de.lproj */,
 				4CF298122A7D3B8E00DEB23F /* el.lproj */,
-				4CF298072A7D3B8E00DEB23F /* en-US.lproj */,
 				4CF298082A7D3B8E00DEB23F /* en.lproj */,
 				4CF298102A7D3B8E00DEB23F /* es-419.lproj */,
 				4CF297FF2A7D3B8D00DEB23F /* es-ES.lproj */,
@@ -2748,7 +2745,6 @@
 				4CF2981E2A7D3B8E00DEB23F /* ru.lproj in Resources */,
 				79312B792118823B00E79D09 /* SwitchTableViewCell.xib in Resources */,
 				4CF2982C2A7D3B8E00DEB23F /* tr.lproj in Resources */,
-				4CF298202A7D3B8E00DEB23F /* en-US.lproj in Resources */,
 				7950441D211850710022ED35 /* ColorPickerItem.xib in Resources */,
 				4CF2982B2A7D3B8E00DEB23F /* el.lproj in Resources */,
 				4C8C31462A73B9F4006AD628 /* VPNLaunchScreen.storyboard in Resources */,
