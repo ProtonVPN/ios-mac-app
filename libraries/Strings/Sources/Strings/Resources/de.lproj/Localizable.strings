@@ -867,7 +867,7 @@
 /* Internal error message when there is a problem with server certificate and connection cannot be established. */
 "_error_tls_server_verification" = "Server-Zertifikat konnte nicht verifiziert werden.";
 
-/* Mac: neagent help screen */
+/* Mac: neagent help screen. The numbers refer to a text field and button in an image displayed above this text. Final string with filled in variables looks like this: "You may be asked to provide your computer account password\nto connect to the Proton VPN service. If this request appears,\nenter your Mac password (1) and click ‘Always Allow’ (2)." */
 "_neagent_description" = "Möglicherweise wirst du aufgefordert, dein %@ anzugeben,\num dich mit dem Proton VPN‐Dienst zu verbinden. Wenn diese Anfrage angezeigt wird,\ngib dein %@ %@ ein und klicke auf „%@“ %@.";
 
 /* Mac: neagent help screen */
@@ -2196,6 +2196,15 @@
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Verfügbar mit VPN Business.";
+
+/* Modal that lists countries in which servers are available to free users: Title */
+"free_connections_modal_title" = "Kostenlose Verbindungen";
+
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_description" = "Proton Free verbindet dich automatisch mit dem schnellsten verfügbaren Server. Dies ist normalerweise der Server, der deinem Standort am nächsten ist.";
+
+/* Modal that lists countries in which servers are available to free users: banner with CTA */
+"free_connections_modal_banner" = "Erhalte weltweite Abdeckung mit VPN Plus";
 
 /* Text on upsell banner in country list */
 "_free_banner_text" = "Erhalte weltweite Abdeckung mit VPN Plus";

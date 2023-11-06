@@ -867,7 +867,7 @@
 /* Internal error message when there is a problem with server certificate and connection cannot be established. */
 "_error_tls_server_verification" = "Немагчыма праверыць сертыфікат сервера.";
 
-/* Mac: neagent help screen */
+/* Mac: neagent help screen. The numbers refer to a text field and button in an image displayed above this text. Final string with filled in variables looks like this: "You may be asked to provide your computer account password\nto connect to the Proton VPN service. If this request appears,\nenter your Mac password (1) and click ‘Always Allow’ (2)." */
 "_neagent_description" = "Вас могуць папрасіць увесці свой %@\nдля падключэння да сэрвісу Proton VPN. Калі вы атрымалі такі запыт,\nувядзіце ваш %@ %@ і націсніце ‘%@’ %@.";
 
 /* Mac: neagent help screen */
@@ -1633,7 +1633,7 @@
 
 "_feature_streaming_description" = "Серверы Plus падтрымліваюць трансляцыю (Netflix, Disney+ і іншыя) з любой краіны ў свеце.";
 
-"_feature_p2p_description" = "Гэтыя серверы даюць найлепшую прадукцыйнасць для BitTorrent і абагулення файла.";
+"_feature_p2p_description" = "Гэтыя серверы даюць найлепшую прадукцыйнасць для BitTorrent і абагулення файлаў.";
 
 "_feature_tor_description" = "Перанакіроўвае ўвесь ваш трафік праз сетку Tor. Павольна, але больш бяспечна.";
 
@@ -1749,13 +1749,13 @@
 "_onboarding_mac_crash_reports" = "Абагульваць ананімныя справаздачы пра збоі. Гэта дапамагае нам выпраўляць памылкі, вызначаць міжсеткавыя экраны, а таксама пазбягаць блакіровак VPN.";
 
 /* Telemetry label in the settings window for mac */
-"_settings_mac_usage_stats_title" = "Абагульванне ананімнай статыстыкі выкарыстання";
+"_settings_mac_usage_stats_title" = "Абагульваць ананімную статыстыку выкарыстання";
 
 /* Telemetry tooltip in the settings window for mac */
 "_settings_mac_usage_stats_tooltip" = "Даныя аб выкарыстанні дапамагаюць нам пераадольваць блакіроўкі VPN і паляпшаць прадукцыйнасць праграмы.";
 
 /* Telemetry label in the settings window for mac */
-"_settings_mac_crash_reports_title" = "Абагульванне ананімных справаздач пра збоі";
+"_settings_mac_crash_reports_title" = "Абагульваць ананімныя справаздачы пра збоі";
 
 /* Telemetry tooltip in the settings window for mac */
 "_settings_mac_crash_reports_tooltip" = "Справаздачы пра збоі дапамагаюць нам выпраўляць памылкі, вызначаць міжсеткавыя экраны, а таксама пазбягаць блакіровак VPN.";
@@ -2196,6 +2196,15 @@
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Даступна з VPN Business.";
+
+/* Modal that lists countries in which servers are available to free users: Title */
+"free_connections_modal_title" = "Бясплатныя падключэнні";
+
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_description" = "Proton Free аўтаматычна падключае вас да самага хуткага з даступных сервераў. Звычайна гэта самы блізкі сервер адносна вашага месцазнаходжання.";
+
+/* Modal that lists countries in which servers are available to free users: banner with CTA */
+"free_connections_modal_banner" = "Тарыфны план VPN Plus забяспечвае пакрыццё ўсяго свету";
 
 /* Text on upsell banner in country list */
 "_free_banner_text" = "VPN Plus забяспечвае пакрыццё ўсяго свету";

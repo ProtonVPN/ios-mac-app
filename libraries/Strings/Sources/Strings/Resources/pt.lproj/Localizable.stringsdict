@@ -13,9 +13,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 device</string>
+        <string>1 dispositivo</string>
         <key>other</key>
-        <string>%d devices</string>
+        <string>%d dispositivos</string>
       </dict>
     </dict>
     <key>welcome_screen_feature_servers_countries</key>
@@ -29,9 +29,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d country</string>
+        <string>%d país</string>
         <key>other</key>
-        <string>%d countries</string>
+        <string>%d países</string>
       </dict>
       <key>num_servers</key>
       <dict>
