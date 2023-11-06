@@ -26,12 +26,12 @@ import XCTest
 @testable import LegacyCommon
 
 actor TelemetryAPIImplementationMock: TelemetryAPI {
-    func flushEvents(events: [String: Any]) async throws {
+    func flushEvents(events: [String: Any], isBusiness: Bool) async throws {
 
     }
 
     var events = [[String: Any]]()
-    func flushEvent(event: [String: Any]) async throws {
+    func flushEvent(event: [String: Any], isBusiness: Bool) async throws {
         events.append(event)
     }
 }
@@ -124,7 +124,8 @@ class TelemetryServiceTests: XCTestCase {
         timer = TelemetryTimerMock()
         appStateManager.mockActiveConnection = ConnectionConfiguration.connectionConfig2
         container = TelemetryMockFactory(appStateManager: appStateManager)
-        service = await TelemetryServiceImplementation(factory: container, timer: timer, buffer: .init(retrievingFromStorage: true))
+        service = await TelemetryServiceImplementation(factory: container,
+                                                       timer: timer)
     }
 
     @available(iOS 16.0, macOS 13.0, *)

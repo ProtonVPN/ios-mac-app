@@ -20,14 +20,16 @@ import ProtonCoreNetworking
 
 final class TelemetryRequestMultiple: Request {
 
-    let events: [String: Any]
+    var parameters: [String: Any]?
+    let isBusiness: Bool
 
-    init( _ events: [String: Any]) {
-        self.events = events
+    init( _ events: [String: Any], isBusiness: Bool) {
+        self.parameters = events
+        self.isBusiness = isBusiness
     }
 
     var path: String {
-        return "/data/v1/stats/multiple"
+        isBusiness ? "/vpn/v1/business/events/multiple" : "/data/v1/stats/multiple"
     }
 
     var method: HTTPMethod = .post
@@ -38,9 +40,5 @@ final class TelemetryRequestMultiple: Request {
 
     var retryPolicy: ProtonRetryPolicy.RetryMode {
         .background // We can repeat this one as we're sending all available events in the same request
-    }
-
-    var parameters: [String: Any]? {
-        events
     }
 }

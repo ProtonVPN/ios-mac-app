@@ -23,7 +23,7 @@ import XCTest
 
 class TelemetryTests: XCTestCase {
     func testConnectionEventParameters() {
-        let request = TelemetryRequest(ConnectionEvent.connectionMock1.toJSONDictionary())
+        let request = TelemetryRequest(ConnectionEvent.connectionMock1.toJSONDictionary(), isBusiness: false)
         guard let sut = request.parameters,
               let values = sut["Values"] as? [String: Any],
               let dimensions = sut["Dimensions"] as? [String: Any] else {
@@ -51,7 +51,7 @@ class TelemetryTests: XCTestCase {
     }
 
     func testDisconnectionEventParameters() {
-        let request = TelemetryRequest(ConnectionEvent.disconnectionMock1.toJSONDictionary())
+        let request = TelemetryRequest(ConnectionEvent.disconnectionMock1.toJSONDictionary(), isBusiness: false)
         guard let sut = request.parameters,
               let values = sut["Values"] as? [String: Any],
               let dimensions = sut["Dimensions"] as? [String: Any] else {
@@ -80,17 +80,17 @@ class TelemetryTests: XCTestCase {
 
     func testUpsellEventParameters() {
         do {
-            let request = TelemetryRequest(UpsellEvent.upsellEventDisplayMock.toJSONDictionary())
+            let request = TelemetryRequest(UpsellEvent.upsellEventDisplayMock.toJSONDictionary(), isBusiness: false)
             checkUpsellEventDimensions(request: request, event: .display, upgradedUserPlan: nil)
         }
 
         do {
-            let request = TelemetryRequest(UpsellEvent.upsellEventUpgradeMock.toJSONDictionary())
+            let request = TelemetryRequest(UpsellEvent.upsellEventUpgradeMock.toJSONDictionary(), isBusiness: false)
             checkUpsellEventDimensions(request: request, event: .upgradeAttempt, upgradedUserPlan: nil)
         }
 
         do {
-            let request = TelemetryRequest(UpsellEvent.upsellEventSuccessMock.toJSONDictionary())
+            let request = TelemetryRequest(UpsellEvent.upsellEventSuccessMock.toJSONDictionary(), isBusiness: false)
             checkUpsellEventDimensions(request: request, event: .success, upgradedUserPlan: "plus")
         }
     }
