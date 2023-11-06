@@ -52,9 +52,9 @@ class OnboardingPaymentRobot {
         return OnboardingConnectionRobot(app: app)
     }
     
-    func plusPlanIsPurchased() -> OnboardingPaymentRobot {
+    func plusPlanIsPurchased() -> OnboardingMainRobot {
         app.buttons[plusPurchased].tap()
-        return OnboardingPaymentRobot(app: app)
+        return OnboardingMainRobot(app: app)
     }
     
     func connectToAPlusServer() -> OnboardingMainRobot {
