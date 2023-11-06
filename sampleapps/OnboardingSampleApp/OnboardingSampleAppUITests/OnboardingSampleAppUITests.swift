@@ -57,8 +57,6 @@ final class OnboardingSampleAppUITests: XCTestCase {
             .verify.accessAllCountriesScreenIsShown()
             .getPlus()
             .plusPlanIsPurchased()
-            .verify.congratulationsScreenIsShown()
-            .connectToAPlusServer()
             .verify.onboardingScreen()
     }
 
@@ -83,8 +81,6 @@ final class OnboardingSampleAppUITests: XCTestCase {
             .verify.accessAllCountriesScreenIsShown()
             .getPlus()
             .plusPlanIsPurchased()
-            .verify.congratulationsScreenIsShown()
-            .skip()
             .verify.onboardingScreen()
     }
 
