@@ -25,6 +25,8 @@ commitCategories:
   description: Corrects/updates documentation for a feature or architectural decision.
 - name: chore
   description: A recurring task that doesn't fit into any of the above categories.
+- name: i18n
+  description: Changes that update localization data.
 trains:
 - name: ProtonVPN-macOS
   displayName: mac
