@@ -295,7 +295,8 @@ extension FeatureFlags {
         enforceDeprecatedProtocols: false,
         showNewFreePlan: false,
         unsafeLanWarnings: false,
-        mismatchedCertificateRecovery: false,
+        mismatchedCertificateRecovery: false, 
+        businessEvents: false,
         localOverrides: nil
     )
     public static let allEnabled: Self = .init(
@@ -316,6 +317,7 @@ extension FeatureFlags {
         showNewFreePlan: true,
         unsafeLanWarnings: true,
         mismatchedCertificateRecovery: true,
+        businessEvents: true,
         localOverrides: nil
     )
 

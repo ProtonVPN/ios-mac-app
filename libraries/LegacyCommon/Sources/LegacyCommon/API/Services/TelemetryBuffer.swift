@@ -37,7 +37,15 @@ actor TelemetryBuffer {
     }()
     let decoder = JSONDecoder()
 
-    init(retrievingFromStorage: Bool) async {
+    enum BufferType: String {
+        case telemetryEvents = "TelemetryEvents"
+        case businessEvents = "BusinessEvents"
+    }
+
+    private let bufferType: BufferType
+
+    init(retrievingFromStorage: Bool, bufferType: BufferType) async {
+        self.bufferType = bufferType
         guard retrievingFromStorage else { return }
         retrieveFromStorage()
         discardOutdatedEvents()
@@ -106,7 +114,6 @@ actor TelemetryBuffer {
 
     func retrieveFromStorage() {
         do {
-
             let encoded = try dataManager.load(fileUrl)
             let events = try decoder.decode([BufferedEvent].self, from: encoded)
             self.events = events
@@ -116,9 +123,9 @@ actor TelemetryBuffer {
         }
     }
 
-    var fileUrl: URL = {
+    lazy var fileUrl: URL = {
         FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!
-            .appendingPathComponent("TelemetryEvents", isDirectory: false)
+            .appendingPathComponent(bufferType.rawValue, isDirectory: false)
     }()
 }
 

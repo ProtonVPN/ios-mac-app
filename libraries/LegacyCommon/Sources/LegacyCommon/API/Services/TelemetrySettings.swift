@@ -35,6 +35,10 @@ open class TelemetrySettings {
         propertiesManager.getTelemetryUsageData(for: authKeychain.fetch()?.username)
     }
 
+    public var businessEvents: Bool {
+        propertiesManager.featureFlags.businessEvents
+    }
+
     public func updateTelemetryUsageData(isOn: Bool) {
         guard let username = authKeychain.fetch()?.username else { return }
         propertiesManager.setTelemetryUsageData(for: username, enabled: isOn)

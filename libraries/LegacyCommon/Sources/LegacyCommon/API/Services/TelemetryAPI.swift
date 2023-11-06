@@ -20,8 +20,8 @@ import Foundation
 import ProtonCoreUtilities
 
 public protocol TelemetryAPI {
-    func flushEvent(event: [String: Any]) async throws
-    func flushEvents(events: [String: Any]) async throws
+    func flushEvent(event: [String: Any], isBusiness: Bool) async throws
+    func flushEvents(events: [String: Any], isBusiness: Bool) async throws
 }
 
 public protocol TelemetryAPIFactory {
@@ -36,35 +36,11 @@ class TelemetryAPIImplementation: TelemetryAPI {
         self.networking = networking
     }
 
-    func flushEvent(event: [String: Any]) async throws {
-        let request = TelemetryRequest(event)
-        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) -> Void in
-            self.networking.apiService.perform(request: request) { task, result in
-                switch result {
-                case .success:
-                    continuation.resume()
-                    log.debug("Telemetry event was sent")
-                case .failure(let error):
-                    continuation.resume(throwing: error)
-                    log.debug("Failed to send a Telemetry event with error: \(error.localizedDescription)")
-                }
-            }
-        }
+    func flushEvent(event: [String: Any], isBusiness: Bool) async throws {
+        _ = try await networking.apiService.perform(request: TelemetryRequest(event, isBusiness: isBusiness))
     }
 
-    func flushEvents(events: [String: Any]) async throws {
-        let request = TelemetryRequestMultiple(events)
-        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) -> Void in
-            self.networking.apiService.perform(request: request) { task, result in
-                switch result {
-                case .success:
-                    continuation.resume()
-                    log.debug("Telemetry events were sent")
-                case .failure(let error):
-                    continuation.resume(throwing: error)
-                    log.debug("Failed to send a Telemetry events with error: \(error.localizedDescription)")
-                }
-            }
-        }
+    func flushEvents(events: [String: Any], isBusiness: Bool) async throws {
+        _ = try await networking.apiService.perform(request: TelemetryRequestMultiple(events, isBusiness: isBusiness))
     }
 }
