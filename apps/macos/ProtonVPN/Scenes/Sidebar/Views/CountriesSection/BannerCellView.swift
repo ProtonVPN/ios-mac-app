@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Ergonomics
 import LegacyCommon
 import Theme
 
@@ -40,16 +41,20 @@ final class BannerCellView: NSView {
 
         roundedBackgroundView.wantsLayer = true
         roundedBackgroundView.layer?.cornerRadius = 8
-        roundedBackgroundView.layer?.backgroundColor = .cgColor(.background, [.strong])
+        DarkAppearance {
+            roundedBackgroundView.layer?.backgroundColor = .cgColor(.background, [.strong])
+        }
 
         label.wantsLayer = true
         label.textColor = .color(.text, [.normal])
 
         rightChevron.image = NSImage(systemSymbolName: "chevron.right", accessibilityDescription: nil)?.colored(.weak)
 
-        [separatorViewTop, separatorViewBottom].forEach {
-            $0.wantsLayer = true
-            $0.layer?.backgroundColor = .cgColor(.border, .weak)
+        DarkAppearance {
+            [separatorViewTop, separatorViewBottom].forEach {
+                $0.wantsLayer = true
+                $0.layer?.backgroundColor = .cgColor(.border, .weak)
+            }
         }
 
         let trackingFrame = NSRect(origin: roundedBackgroundView.frame.origin, size: CGSize(width: roundedBackgroundView.frame.size.width, height: roundedBackgroundView.frame.size.height))
