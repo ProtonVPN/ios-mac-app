@@ -38,7 +38,7 @@ final class CountryItemCellView: NSView {
     @IBOutlet private weak var p2pIV: NSImageView!
     @IBOutlet private weak var torIV: NSImageView!
     @IBOutlet private weak var separatorView: NSView!
-    @IBOutlet private weak var upgradeBtn: NSButton!
+    @IBOutlet private weak var upgradeBtn: UpgradeButton!
     @IBOutlet private weak var maintenanceBtn: NSButton!
     
     private var viewModel: CountryItemViewModel!
@@ -99,6 +99,8 @@ final class CountryItemCellView: NSView {
     
     override func mouseExited(with event: NSEvent) {
         expandButton.isEnabled = !disabled
+        expandButton.isHovered = false
+        upgradeBtn.isHovered = false
         connectButton.isHidden = isConnectButtonHidden(mouseHover: false)
         configureFeatures()
         removeCursorRect(frame, cursor: .pointingHand)
