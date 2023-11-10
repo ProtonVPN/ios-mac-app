@@ -44,5 +44,5 @@ The CI is set to run a linting step with `SwiftLint`, to make sure your code wil
 
 ## Testing
 
-The project contains a unit tests target that you can run directly from Xcode or from Fastlane with `fastlane ios_search_test`. 
+The project contains a unit tests target that you can run directly from Xcode. It is also run from an app unit tests testplan duing testing on CI. 
 

@@ -58,6 +58,7 @@ let package = Package(
                 "VPNShared",
                 "VPNCrypto",
                 "Strings",
+                .product(name: "ProtonCoreUtilities", package: "protoncore"),
                 .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay")
             ]
         ),
