@@ -8,7 +8,7 @@ test:ui:onboarding:ios:
     - .ios_job_template
   stage: test_ui
   needs:
-    - job: linting:code-quality
+    - job: lint:code-quality
       artifacts: false
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`

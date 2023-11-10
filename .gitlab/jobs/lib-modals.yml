@@ -1,31 +1,6 @@
 # Jobs for linting/testing/etc. Modals library.
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
 
-    
-test:unit:modals:
-  extends:
-    - .mr_job_template
-    - .ios_job_template
-  stage: test
-  needs:
-    - job: linting:code-quality
-      artifacts: false
-  script:
-    - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
-    - fastlane ios_modals_test
-    - scripts/print-coverage.sh fastlane/test_output/Modals.xcresult Modals 1
-    - xcrun xccov view --report --json fastlane/test_output/Modals.xcresult > coverage.json
-    - mint run xcodecoverageconverter coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
-  after_script:
-    - xcrun simctl delete $CI_JOB_ID
-  artifacts:
-    reports:
-      junit:
-        - fastlane/test_output/report.junit
-      coverage_report:
-        coverage_format: cobertura
-        path: fastlane/test_output/cobertura.xml
-
 
 test:ui:modals:ios:
   extends:
@@ -33,7 +8,7 @@ test:ui:modals:ios:
     - .ios_job_template
   stage: test_ui
   needs:
-    - job: test:unit:modals
+    - job: test:unit:app:ios
       artifacts: false
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`

@@ -36,3 +36,6 @@ apps/ios/ProtonVPNUITests/credentials_bf22.plist
 .gitlab/ci-env
 
 build/
+DerivedData_Temporary/
+output_directory/
+fastlane/coverage.json

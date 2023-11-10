@@ -31,6 +31,104 @@
         "identifier" : "E15B754C20FA83CB0022C406",
         "name" : "ProtonVPNmacOSTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/BugReport",
+        "identifier" : "BugReportTests",
+        "name" : "BugReportTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/ConnectionDetails",
+        "identifier" : "ConnectionDetailsTests",
+        "name" : "ConnectionDetailsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Ergonomics",
+        "identifier" : "ErgonomicsTests",
+        "name" : "ErgonomicsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/LegacyCommon",
+        "identifier" : "LegacyCommonTests",
+        "name" : "LegacyCommonTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/LocalFeatureFlags",
+        "identifier" : "LocalFeatureFlagsTests",
+        "name" : "LocalFeatureFlagsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Modals",
+        "identifier" : "ModalsTests",
+        "name" : "ModalsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/NEHelper",
+        "identifier" : "NEHelperTests",
+        "name" : "NEHelperTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/NEHelper",
+        "identifier" : "VPNSharedTests",
+        "name" : "VPNSharedTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/PMLogger",
+        "identifier" : "PMLoggerTests",
+        "name" : "PMLoggerTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Review",
+        "identifier" : "ReviewTests",
+        "name" : "ReviewTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/SharedViews",
+        "identifier" : "SharedViewsTests",
+        "name" : "SharedViewsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Strings",
+        "identifier" : "StringsTests",
+        "name" : "StringsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Timer",
+        "identifier" : "TimerMockTests",
+        "name" : "TimerMockTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Timer",
+        "identifier" : "TimerTests",
+        "name" : "TimerTests"
+      }
     }
   ],
   "version" : 1

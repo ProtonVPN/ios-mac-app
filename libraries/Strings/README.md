@@ -1,3 +1,3 @@
 # Strings
 
-A description of this package.
+Module for holding all translations and similar strings.

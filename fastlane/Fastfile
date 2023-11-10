@@ -32,18 +32,26 @@ $commit_sha = ENV["CI_COMMIT_SHORT_SHA"] || `git rev-parse --short=8 HEAD`.strip
 # Derived data and other build artifacts are stored in a place where other jobs can (re)use it
 $build_root_parent_path = `echo $HOME`.strip + "/build/"
 $build_root_path = $build_root_parent_path + $commit_sha
-$derived_data_path = $build_root_path + "/DerivedData/"
 $build_path = $build_root_path + "/Build/"
 $buildlog_path = $build_root_path + "/BuildLog/"
+# Shared Derived data folder is used in cases where its results may be reused, i.e. when building
+# the app or building xctestrun for later usage.
+$derived_data_path_shared = $build_root_path + "/DerivedData/"
+# Temporary DerivedData is used in jobs that don't need it to be cached for usage in the future
+# for example when running pre-build tests (from xctestrun).
+$derived_data_path_temporary = "DerivedData_Temporary/"
+
 
 # After this amount of time DerivedData folder will be deleted.
 # More info about possible values can be found in `man find` `-atime` part.
 $derived_data_ttl = ENV["DERIVED_DATA_TTL"] || "72h" # 72 = 24 * 3 days
 
 # Build paths
-$output_folder = "build/"
-$output_folder_mac = $output_folder + "macos/"
+$output_folder = ENV["JOBS_OUTPUT_PATH"] || "build/"
+$output_folder_macos = $output_folder + "macos/"
 $output_folder_ios = $output_folder + "ios/"
+
+$fastlane_output_folder = "output_directory/"
 
 # Signing
 $team_id_ios = "2SB5Z68H26"
@@ -60,6 +68,10 @@ $APP_ID_IOS_WG = "ch.protonmail.vpn.WireGuardiOS-Extension"
 $APP_ID_IOS_WIDGET = "ch.protonmail.vpn.widget"
 $APP_ID_IOS_SIRI = "ch.protonmail.vpn.Siri-Shortcut-Handler"
 
+# When lane is run from gitlab CI, script creates a separate simulator for each run, to make 
+# it possible to run several test jobs at the same time. If running lane locally, default
+# will be used. Please update to newer device simulator as time goes.
+$ios_test_device = ENV["CI_JOB_ID"] || "iPhone 14"
 
 ## Lanes
 
@@ -75,12 +87,12 @@ lane :mac_build_debug do
 
     build_mac_app(
       build_path: $build_path,
-      derived_data_path: $derived_data_path,
+      derived_data_path: $derived_data_path_shared,
       buildlog_path: $buildlog_path,
       configuration: configuration,
       scheme: scheme,
       clean: false, # No need for a clean: we create new DerivedData folder for each commit
-      output_directory: $output_folder_mac + configuration + "/",
+      output_directory: $output_folder_macos + configuration + "/",
       export_method: export_method,
       disable_package_automatic_updates: true,
       skip_codesigning: true
@@ -150,7 +162,7 @@ lane :ios_build_debug do
         # Finally build the app
         build_ios_app(
           build_path: $build_path,
-          derived_data_path: $derived_data_path,
+          derived_data_path: $derived_data_path_shared,
           buildlog_path: $buildlog_path,
           configuration: configuration,
           scheme: scheme,
@@ -205,49 +217,161 @@ def copyLogsIntoArtifacts
     FileUtils.cp_r $buildlog_path, "../" + $output_folder
 end
 
-## -------------------------- Old lanes. To be refactored --------------------------
+# ---------- Pre-build xctestrun files ---------
 
-desc "Run all iOS app unit tests"
-lane :ios_app_unit_test_all do
-  runIOSTests(
-    testplan: "ProtonVPN-iOS-Unit-All"
-  )
-end
+desc "Build tests (unit and ui)."
+desc "Results are saved into $output_folder_X and then can be used by `run_tests` lane."
+desc ""
+desc ""
+desc "Options available:"
+desc "ios:true, macos:true - one of these should be used to select which OS we are interested in."
+desc ""
+desc ""
+desc "Usage: `fastlane build_tests ios:true` or `fastlane build_tests macos:true` to build app tests"
+lane :build_tests do |options|
 
-desc "Run all iOS app UI tests"
-lane :ios_app_ui_test_all do
-    runIOSTests(
-      testplan: "ProtonVPN-iOS-UI-All"
+    # Delete old DerivedData folders
+    cleanup_derived_data
+
+    derived_data = $derived_data_path_shared
+    puts "DerivedData folder: " + derived_data
+
+    # Magic destination values, that build for all platforms are `generic/platform=iOS Simulator` and `generic/platform=macOS`.
+    # A little more info about destinations can be found here: https://mokacoding.com/blog/xcodebuild-destination-options/
+
+    if options[:ios]
+      destination_for_xcbuild = "generic/platform=iOS Simulator"
+      output_folder_path = $output_folder_ios
+      scheme = "ProtonVPN-iOS"
+
+    elsif options[:macos]
+      destination_for_xcbuild = "generic/platform=macOS"
+      output_folder_path = $output_folder_macos
+      scheme = "ProtonVPN-macOS"
+      
+    end
+
+    run_tests(
+      build_for_testing: true,
+      scheme: scheme,
+      derived_data_path: derived_data,
+      destination: destination_for_xcbuild,
+      clean: false,
+      should_zip_build_products: true,
+      output_directory: $fastlane_output_folder,
     )
+
+    # Copy generated zip file into artifacts folder
+    FileUtils.mkdir_p "../" + output_folder_path
+    output_file = build_products_file("../" + output_folder_path, scheme)
+    puts "Moving Build Products zip to: " + output_file
+    File.rename "../" + $fastlane_output_folder + "build_products.zip", output_file
 end
 
-desc "Run only smoke iOS app UI tests"
-lane :ios_app_ui_test_smoke do
-    runIOSTests(
-      testplan: "ProtonVPN-iOS-UI-Smoke"
+
+# ---------- Run xctestrun tests (both unit and UI) ---------
+
+desc "Run tests"
+desc "This lane depends on the result of `build_tests` lane. Global variables have default values"
+desc "that should be working if lanes are run on your local machine."
+desc ""
+desc "Usage: `fastlane run_testplan icos:true testplan:ProtonVPN-iOS-Unit-All`"
+desc "Usage: `fastlane run_testplan macos:true testplan:ProtonVPN-macOS-Unit-All`"
+lane :run_testplan do |options|
+  
+    architecture = "arm64-x86_64"
+    xctestrunFolder = $derived_data_path_temporary + "Build/Products/"
+    testplan = options[:testplan]
+
+    if options[:ios]
+      destination = "iphonesimulator16.4"
+      devices = $ios_test_device
+      output_folder_path = $output_folder_ios
+      destination_xcodebuild = nil
+      scheme = "ProtonVPN-iOS"
+    
+    elsif options[:macos]
+      destination = "macosx13.3"
+      devices = nil
+      output_folder_path = $output_folder_macos
+      destination_xcodebuild = "platform=OS X"
+      scheme = "ProtonVPN-macOS"
+
+    end
+
+    # Unzip Build Products folder from artifacts
+    output_file = build_products_file(output_folder_path, scheme)
+    puts "Unzipping Build Products (" + output_file + ") into: " + xctestrunFolder
+    FileUtils.rm_rf "../" + xctestrunFolder # Delete folder before unpacking tests into it. Useful for local runs.
+    FileUtils.mkdir_p "../" + xctestrunFolder
+    `unzip "../#{output_file}" -d "../#{xctestrunFolder}"`
+
+    # Find xctestrun file. XCode generates files with different names, so a little bit of logic is required here
+    xctestrunFilename = find_xctestrun_filename("../" + xctestrunFolder, scheme, testplan, destination, architecture)
+    xctestrunPath = xctestrunFolder + xctestrunFilename
+    if xctestrunFilename == nil
+      UI.user_error!("Can't find xctestrun file at " + xctestrunFolder)
+    end
+
+    # Finally run tests
+    run_tests(
+      scheme: scheme,
+      derived_data_path: $derived_data_path_temporary,
+      test_without_building: true,
+      xctestrun: xctestrunPath,
+      clean: false,
+      skip_package_dependencies_resolution: true, # prevents fastlane from needlessly fetching all SPM dependencies before running tests
+      testplan: testplan,
+      devices: devices,
+      result_bundle: true,
+      destination: destination_xcodebuild,
     )
+
+    # Prepare coverage report
+    coverage_report_file = "test_output/coverage.json"
+    `xcrun xccov view --report --json test_output/ProtonVPN-iOS.xcresult > #{coverage_report_file}`
+
+    # Convert test coverage report to cobertura format for gitlab to understand
+    `xcc generate #{coverage_report_file} test_output cobertura-xml --exclude-packages ProtonVPNTests`
+
+    # Print test coverage to console
+    puts `jq '"Total test coverage: \\(.lineCoverage * 100 | tostring | .[0:5])%"' #{coverage_report_file}`
+
 end
 
-desc "Run all macOS app unit tests"
-lane :macos_app_unit_test_all do 
-  runMacOSTests(
-    testplan: "ProtonVPN-macOS-Unit-All"
-  )
+# Form a full path to the archive file containing xctestrun for running tests
+def build_products_file(path, scheme)
+  return path + scheme + "_build_products.zip"
 end
 
-desc "Run all macOS app UI tests"
-lane :macos_app_ui_test_all do
-  runMacOSTests(
-    testplan: "ProtonVPN-macOS-UI-All"
-  )
+# XCode generates the name of xctestrun file by unknown rules. So we check all possible invariants 
+# in order to find what we need.
+def find_xctestrun_filename(path, scheme, testplan, destination, architecture)
+  names = [
+    scheme + "_" + scheme + "_" + destination + ".xctestrun",
+    scheme + "_" + destination + ".xctestrun",
+  ]
+
+  if testplan != nil
+    full = scheme + "_" + testplan + "_" + destination + "-" + architecture + ".xctestrun"
+    names << full
+  end
+
+  names.each { |name|
+    fullPath = path + name
+    if File.exists?(fullPath)
+      puts "Found xctestrun file at " + fullPath
+      return name
+    else 
+      puts "File not found: " + fullPath
+    end
+  }
+  return nil
 end
 
-desc "Run only smoke macOS app UI tests"
-lane :macos_app_ui_test_smoke do
-  runMacOSTests(
-    testplan: "ProtonVPN-macOS-UI-Smoke"
-  )
-end
+
+## -------------------------- Old lanes. To be refactored / removed --------------------------
+
 
 desc "Run BugReport on iOS UI tests"
 lane :ios_bugreport_ui_test do
@@ -348,54 +472,6 @@ lane :modals_ios_test do
     )
 end
 
-desc "Run macOS Modals module tests"
-lane :modals_macos_test do
-    simulator_name = ENV["CI_JOB_ID"]
-    scan(
-      scheme: "ModalsSampleMacOSApp",
-      derived_data_path: $derived_data_path_old,
-      clean: true,
-      result_bundle: true,
-      skip_slack: true
-    )
-end
-
-desc "Run Search module unit tests"
-lane :ios_search_test do
-  simulator_name = ENV["CI_JOB_ID"]
-  scan(scheme: "Search",    
-    result_bundle: true,
-    derived_data_path: $derived_data_path_old,
-    skip_slack: true,
-    code_coverage: true,
-    devices: [simulator_name],
-    clean: true)
-end
-
-desc "Run WireGuard NetworkExtension tests"
-lane :wireguard_networkextension_tests do
-    simulator_name = ENV["CI_JOB_ID"]
-    scan(
-      scheme: "WireGuardNetworkExtensionTests",
-      derived_data_path: $derived_data_path_old,
-      clean: true,
-      result_bundle: true,
-      skip_slack: true,
-      devices: [simulator_name]
-    )
-end
-
-desc "Run Modals module unit tests"
-lane :ios_modals_test do
-  simulator_name = ENV["CI_JOB_ID"]
-  scan(scheme: "Modals",    
-    result_bundle: true,
-    derived_data_path: $derived_data_path_old,
-    skip_slack: true,
-    devices: [simulator_name],
-    clean: true)
-end
-
 lane :ios_internal_beta do |options|
   if !options[:changelog]
       abort("Please provide a changelog by appending`changelog:\"<Log notes>\"` to running this lane")
@@ -481,32 +557,6 @@ lane :mac_update_build_numbers do
     xcodeproj: "./apps/macos/macOS.xcodeproj"
   )
 
-end
-
-def self.runIOSTests(params)
-  simulator_name = ENV["CI_JOB_ID"]
-  scan(
-    scheme: "ProtonVPN-iOS",
-    derived_data_path: $derived_data_path_old,
-    clean: true,
-    result_bundle: true,
-    skip_slack: true,
-    number_of_retries: 2,
-    devices: [simulator_name],
-    testplan: params[:testplan]
-  )
-end
-
-def self.runMacOSTests(params)
-  scan(
-    scheme: "ProtonVPN-macOS",
-    clean: true,
-    derived_data_path: $derived_data_path_old,
-    result_bundle: true,
-    skip_slack: true,
-    number_of_retries: 1,
-    testplan: params[:testplan]
-  )  
 end
 
 def get_app_store_api_key

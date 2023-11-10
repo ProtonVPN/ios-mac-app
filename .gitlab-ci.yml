@@ -1,7 +1,7 @@
 stages:
   - i18n
   - github
-  - linting
+  - lint
   - build
   - test
   - deploy
@@ -18,6 +18,8 @@ variables:
   # We use this variable when we run publish-github jobs
   RELEASE_GITHUB_REPOSITORY: git@github.com:ProtonVPN/ios-mac-app.git
   GIT_SUBMODULE_FORCE_HTTPS: "true"
+  # Folder where jobs put their output like build binaries, test results, etc.
+  JOBS_OUTPUT_PATH: "artifacts/"
 
 default:
   image: harbor.protontech.ch/docker.io/library/alpine:3.18
@@ -54,66 +56,3 @@ include:
   
   # Include all jobs from all the files on `.gitlab/jobs/` folder
   - local: '.gitlab/jobs/*.yml'
-
-linting:commit-quality:
-  extends:
-    - .mr_job_template
-  stage: linting
-  tags:
-    - vpn-apple-builds # Temporary: change this to macOS_vpn when libssh2 and libgit2 is installed globally
-  interruptible: true
-  script:
-    - mint run gluon lint --verbose
-  rules:
-
-# Runs a script that goes through all out apps and lib folders and lints them if .swiftlint file is available.
-#
-# More info on how it works:
-# https://blog.kulman.sk/using-swiftlint-for-gitlab-code-quality/
-linting:code-quality:
-  extends:
-    - .mr_job_template
-  stage: linting
-  artifacts:
-    paths:
-      - codequality_report.json
-    reports:
-      codequality: codequality_report.json
-  script:    
-    - scripts/code_quality.sh
-  tags:
-    - iOS_vpn 
-  rules:
-
-linting:strings-files:
-  extends:
-    - .mr_job_template
-  stage: linting
-  script:
-    - scripts/lint_translations.sh
-  tags:
-    - macOS_vpn
-  rules:
-
-# Reenable when/if we have a license
-#sonarqube-check:
-#  stage: linting
-#  image:
-#    name: sonarsource/sonar-scanner-cli:latest
-#    entrypoint: [""]
-#  variables:
-#    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
-#    GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
-#  cache:
-#    key: "${CI_JOB_NAME}"
-#    paths:
-#      - .sonar/cache
-#  script:
-#    - sonar-scanner
-#  allow_failure: true
-#  rules:
-#    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-#      when: always
-#    - if: $CI_COMMIT_BRANCH == "develop"
-#      when: always
-#    - when: manual
