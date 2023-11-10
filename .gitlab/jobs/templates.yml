@@ -112,3 +112,12 @@
     - fastlane delete_macos_keychain
     - ssh-add -D # Delete all ssh private keys
   interruptible: true
+
+# Include this in artifacts part to take cobertura reports as artifacts
+.code_coverage_unit:
+  reports:
+    coverage_report:
+      coverage_format: cobertura
+      path: fastlane/test_output/cobertura.xml
+    junit:
+      - fastlane/test_output/report.junit

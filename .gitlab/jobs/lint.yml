@@ -1,0 +1,44 @@
+
+# Run all newly added commits through commit checking tool to make sure all the commit messages are properly formatted.
+lint:commit-quality:
+  extends:
+    - .mr_job_template
+  stage: lint
+  tags:
+    - vpn-apple-builds # Temporary: change this to macOS_vpn when libssh2 and libgit2 is installed globally
+  interruptible: true
+  script:
+    - mint run gluon lint --verbose
+  rules:
+
+
+# Runs a script that goes through all our apps and lib folders and lints them if .swiftlint file is available.
+#
+# More info on how it works:
+# https://blog.kulman.sk/using-swiftlint-for-gitlab-code-quality/
+lint:code-quality:
+  extends:
+    - .mr_job_template
+  stage: lint
+  artifacts:
+    paths:
+      - codequality_report.json
+    reports:
+      codequality: codequality_report.json
+  script:    
+    - scripts/code_quality.sh
+  tags:
+    - iOS_vpn 
+  rules:
+
+
+# Check that strings files are properly formatted (prevents "double comment close" issue)
+lint:strings-files:
+  extends:
+    - .mr_job_template
+  stage: lint
+  script:
+    - scripts/lint_translations.sh
+  tags:
+    - macOS_vpn
+  rules:

@@ -18,84 +18,89 @@ build:app:ios:
       - build/
     expire_in: 3 days
 
+
+build:tests:ios:
+  extends:
+    - .mr_job_template
+    - .ios_job_template
+  stage: build
+  tags:
+    - vpn-apple-builds
+  needs:
+    - job: lint:code-quality
+      artifacts: false
+  script:
+    - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
+    - fastlane build_tests ios:true
+  artifacts:
+    name: "ios-xctestrun"
+    paths:
+      - "${JOBS_OUTPUT_PATH}ios/"
+    expire_in: 1 day
+       
+
+# Parts reused across unit and UI test jobs in this file
+
+.ios_prepare_simulator: &ios_prepare_simulator
+  - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-14 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
+  - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
+  - defaults write com.apple.iphonesimulator ConnectHardwareKeyboard 0 # Fixed UI tests failing on secure field
+
+.ios_delete_simulator: &ios_delete_simulator
+  - xcrun simctl delete ${CI_JOB_ID}
+
+# ---
+
 test:unit:app:ios:
   extends:
     - .mr_job_template
     - .ios_job_template
   stage: test
-  needs: # This lets us skip waiting for a build phase that is not needed (and is manual) ATM
-    - job: linting:code-quality
-      artifacts: false
+  needs:
+    - job: build:tests:ios
+      artifacts: true
   script:
-    - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
-    - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
-    - defaults write com.apple.iphonesimulator ConnectHardwareKeyboard 0 # Fixed UI tests failing on secure field
-    - fastlane ios_app_unit_test_all
-    - scripts/print-coverage.sh fastlane/test_output/ProtonVPN-iOS.xcresult ProtonVPN.app
-    - xcrun xccov view --report --json fastlane/test_output/ProtonVPN-iOS.xcresult > coverage.json
-    - mint run xcodecoverageconverter generate coverage.json fastlane/test_output cobertura-xml --exclude-packages ProtonVPNTests
+    - *ios_prepare_simulator 
+    - fastlane run_testplan ios:true scheme:ProtonVPN-iOS testplan:ProtonVPN-iOS-Unit-All
   after_script:
-    - xcrun simctl delete $CI_JOB_ID
-    - rm apps/ios/ProtonVPNUITests/credentials_bf22.plist
+    - *ios_delete_simulator
   artifacts:
     reports:
-      coverage_report:
-        coverage_format: cobertura
-        path: fastlane/test_output/cobertura.xml
-      junit:
-        - fastlane/test_output/report.junit
+      !reference [.code_coverage_unit, reports] # Cobertura xml to artifacts
 
 
 test:ui:app:ios:smoke:
   extends:
+    - .mr_job_template
     - .ios_job_template
-    - .ui_smoke_tests_template
   stage: test_ui
-  needs: # This lets us skip waiting for a build phase that is not needed (and is manual) ATM
-    - job: test:unit:app:ios
-      artifacts: false
+  needs:
+    - job: build:tests:ios
+      artifacts: true
   script:
-    - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
-    - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
-    - defaults write com.apple.iphonesimulator ConnectHardwareKeyboard 0 # Fixed UI tests failing on secure field
-    - fastlane ios_app_ui_test_smoke
-    - scripts/print-coverage.sh fastlane/test_output/ProtonVPN-iOS.xcresult ProtonVPN.app
+    - *ios_prepare_simulator 
+    - fastlane run_testplan ios:true scheme:ProtonVPN-iOS testplan:ProtonVPN-iOS-UI-Smoke
   after_script:
-    - xcrun simctl delete $CI_JOB_ID
-    - rm apps/ios/ProtonVPNUITests/credentials_bf22.plist
+    - *ios_delete_simulator
   artifacts:
-    name: "ios-uitests-smoke-$CI_COMMIT_TAG"
-    when: always
-    paths:
-      - fastlane/test_output/
-    expire_in: 2 days
     reports:
-      junit:
-        - fastlane/test_output/report.junit
+      !reference [.code_coverage_unit, reports] # Cobertura xml to artifacts
+
 
 test:ui:app:ios:all:
   extends:
     - .ios_job_template
     - .ui_full_tests_template
   stage: test_ui
-  needs: # Without this job doesn't start automatically (on develop branch)
-    - job: test:unit:app:ios
-      artifacts: false
+  needs:
+    - job: build:tests:ios
+      artifacts: true
   script:
-    - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
-    - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
-    - defaults write com.apple.iphonesimulator ConnectHardwareKeyboard 0 # Fixed UI tests failing on secure field
-    - fastlane ios_app_ui_test_all
-    - scripts/print-coverage.sh fastlane/test_output/ProtonVPN-iOS.xcresult ProtonVPN.app
+    - *ios_prepare_simulator 
+    - fastlane run_testplan ios:true scheme:ProtonVPN-iOS testplan:ProtonVPN-iOS-UI-All
   after_script:
-    - xcrun simctl delete $CI_JOB_ID
-    - rm apps/ios/ProtonVPNUITests/credentials_bf22.plist
+    - *ios_delete_simulator
   artifacts:
-    name: "ios-uitests-all-$CI_COMMIT_TAG"
-    when: always
-    paths:
-      - fastlane/test_output/
-    expire_in: 2 days
     reports:
-      junit:
-        - fastlane/test_output/report.junit
+      !reference [.code_coverage_unit, reports] # Cobertura xml to artifacts
+

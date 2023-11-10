@@ -22,7 +22,7 @@ function setup() {
 	local git_remote="$4"
 
 	if [ -d "$repo_path" ]; then
-		echo "Credentials repo already exists at \"$existing\"; please delete it first with 'cleanup'." > /dev/stderr
+		echo "Credentials repo already exists at \"$repo_path\"; please delete it first with 'cleanup'." > /dev/stderr
 		exit 0 # To keep CI scripts from exiting early due to an error
 	elif [ "$repo_path" == "$(directory)"  ]; then
 		echo "== Cleaning up stale repo config..."

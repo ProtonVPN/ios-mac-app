@@ -49,14 +49,14 @@
       </CodeCoverageTargets>
       <TestPlans>
          <TestPlanReference
-            reference = "container:ProtonVPN-macOS-Unit-All.xctestplan">
+            reference = "container:ProtonVPN-macOS-Unit-All.xctestplan"
+            default = "YES">
          </TestPlanReference>
          <TestPlanReference
             reference = "container:ProtonVPN-macOS-UI-All.xctestplan">
          </TestPlanReference>
          <TestPlanReference
-            reference = "container:ProtonVPN-macOS-UI-Smoke.xctestplan"
-            default = "YES">
+            reference = "container:ProtonVPN-macOS-UI-Smoke.xctestplan">
          </TestPlanReference>
       </TestPlans>
       <Testables>

@@ -1,38 +1,13 @@
 # Jobs for linting/testing/etc. BugReport library.
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
 
-test:unit:bugreport:
-  extends:
-    - .mr_job_template
-    - .ios_job_template
-  stage: test
-  needs:
-    - job: linting:code-quality
-      artifacts: false
-  script:
-    - cd libraries/BugReport/
-    - swift test --enable-code-coverage
-    - mkdir -p ../../fastlane/test_output
-    - XCODE_PATH=`xcode-select -p`
-    - ARCH="$(uname -m)"
-    - $XCODE_PATH/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-cov export -instr-profile=.build/$ARCH-apple-macosx/debug/codecov/default.profdata .build/$ARCH-apple-macosx/debug/BugReportPackageTests.xctest/Contents/MacOS/BugReportPackageTests -format=lcov > ../../fastlane/test_output/BugReport.lcov
-    - cd -
-    - python3 `pip3 show lcov_cobertura | grep Location | cut -d " " -f2`/lcov_cobertura.py fastlane/test_output/BugReport.lcov -o fastlane/test_output/BugReport.xml
-    - scripts/print-coverage-cobertura.sh fastlane/test_output/BugReport.xml
-  artifacts:
-    reports:
-      coverage_report:
-        coverage_format: cobertura
-        path: fastlane/test_output/BugReport.xml
-
-
 test:ui:bugreport:ios:
   extends:
     - .ui_full_tests_template
     - .ios_job_template
   stage: test_ui
   needs:
-    - job: test:unit:bugreport
+    - job: test:unit:app:ios
       artifacts: false
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
@@ -52,7 +27,7 @@ test:ui:bugreport:macos:
     - .ui_full_tests_template
   stage: test_ui
   needs:
-    - job: test:unit:bugreport
+    - job: test:unit:app:macos
       artifacts: false
   script:
     - fastlane macos_bugreport_ui_test
