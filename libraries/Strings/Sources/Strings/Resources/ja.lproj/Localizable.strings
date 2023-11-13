@@ -1,5 +1,4 @@
 /* Common word */
-
 "_cancel" = "キャンセル";
 
 /* Common word */
@@ -2198,13 +2197,13 @@
 "_available_with_vpn_business_tooltip" = "VPN Businessでご利用いただけます。";
 
 /* Modal that lists countries in which servers are available to free users: Title */
-"free_connections_modal_title" = "Free connections";
+"free_connections_modal_title" = "無料接続";
 
 /* Modal that lists countries in which servers are available to free users: Description */
-"free_connections_modal_description" = "Proton Free automatically connects you to the fastest available server. This will normally be the closest server to your location.";
+"free_connections_modal_description" = "Proton Free は、利用可能な最速のサーバーに自動的に接続します。 通常、これはあなたの場所に最も近いサーバーになります。";
 
 /* Modal that lists countries in which servers are available to free users: banner with CTA */
-"free_connections_modal_banner" = "Get worldwide coverage with VPN Plus";
+"free_connections_modal_banner" = "VPN Plusで世界中をカバー";
 
 /* Text on upsell banner in country list */
 "_free_banner_text" = "VPN Plusで世界中をカバー";

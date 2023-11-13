@@ -1,5 +1,4 @@
 /* Common word */
-
 "_cancel" = "Anulare";
 
 /* Common word */
@@ -1728,7 +1727,7 @@
 "_moderate_nat_title" = "NAT moderat";
 
 /* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "NAT moderat dezactivează alocarea aleatoare a adreselor locale. Acest lucru vă poate reduce ușor securitatea, dar permite aplicațiilor persoană-la-persoană, cum ar fi jocurile online, să stabilească direct conexiuni.\nDetalii";
+"_moderate_nat_explanation" = "NAT moderat dezactivează alocarea aleatoare a adreselor locale. Acest lucru vă poate reduce ușor securitatea, dar permite aplicațiilor persoană-la-persoană, cum ar fi jocurile online, să stabilească direct conexiuni. \nDetalii";
 
 /* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
 "_moderate_nat_explanation_link" = "Detalii";
@@ -2198,13 +2197,13 @@
 "_available_with_vpn_business_tooltip" = "Disponibil cu VPN Business.";
 
 /* Modal that lists countries in which servers are available to free users: Title */
-"free_connections_modal_title" = "Free connections";
+"free_connections_modal_title" = "Conexiuni gratuite";
 
 /* Modal that lists countries in which servers are available to free users: Description */
-"free_connections_modal_description" = "Proton Free automatically connects you to the fastest available server. This will normally be the closest server to your location.";
+"free_connections_modal_description" = "Proton Free vă conectează automat la cel mai rapid server disponibil. Acesta va fi în mod normal cel mai apropiat server de locul de unde vă conectați.";
 
 /* Modal that lists countries in which servers are available to free users: banner with CTA */
-"free_connections_modal_banner" = "Get worldwide coverage with VPN Plus";
+"free_connections_modal_banner" = "Obțineți acoperire la nivel mondial cu VPN Plus";
 
 /* Text on upsell banner in country list */
 "_free_banner_text" = "Obțineți acoperire la nivel mondial cu VPN Plus";
