@@ -30,7 +30,7 @@ class TelemetryEventScheduler {
     private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
     private lazy var telemetryAPI: TelemetryAPI = factory.makeTelemetryAPI(networking: networking)
 
-    let encoder: JSONEncoder = {
+    private let encoder: JSONEncoder = {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
         return encoder
@@ -42,24 +42,20 @@ class TelemetryEventScheduler {
         self.buffer = await TelemetryBuffer(retrievingFromStorage: true, bufferType: isBusiness ? .businessEvents : .telemetryEvents)
     }
 
-    var telemetryUsageData: Bool {
+    private var telemetryUsageData: Bool {
         isBusiness ? telemetrySettings.businessEvents : telemetrySettings.telemetryUsageData
     }
 
     /// This should be the single point of reporting telemetry events. Before we do anything with the event,
-    /// we need to check if the user agreed to collecting telemetry data.
+    /// we need to check if the user agreed to collecting telemetry data or the B2B requires it.
     func report(event: any TelemetryEvent) throws {
         if telemetryUsageData {
             Task {
-                await sendTelemetryEvent(event)
+                await sendEvent(event)
             }
         } else {
-            throw "Didn't send Telemetry event, feature disabled"
+            throw "Didn't send \(isBusiness ? "Business" : "Telemetry") event, feature disabled"
         }
-    }
-
-    private func sendTelemetryEvent(_ event: any TelemetryEvent) async {
-        await sendEvent(event)
     }
 
     /// Sends event to API or saves to buffer for sending later.
@@ -113,7 +109,7 @@ class TelemetryEventScheduler {
             do {
                 try await telemetryAPI.flushEvents(events: events, isBusiness: isBusiness)
             } catch {
-                log.warning("Failed to send scheduled telemetry events, saving to storage: \(events)", category: .telemetry)
+                log.warning("Failed to send scheduled telemetry events, leaving in storage: \(events)", category: .telemetry)
             }
         }
     }

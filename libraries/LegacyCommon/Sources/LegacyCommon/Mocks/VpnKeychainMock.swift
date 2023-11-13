@@ -119,7 +119,8 @@ public class VpnKeychainMock: VpnKeychainProtocol {
             hasPaymentMethod: false,
             planName: accountPlan.rawValue,
             subscribed: 0,
-            needConnectionAllocation: false
+            needConnectionAllocation: false, 
+            businessEvents: false
         )
     }
     
