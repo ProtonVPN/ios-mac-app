@@ -21,11 +21,12 @@ import VPNShared
 
 open class TelemetrySettings {
 
-    public typealias Factory = PropertiesManagerFactory & AuthKeychainHandleFactory
+    public typealias Factory = PropertiesManagerFactory & AuthKeychainHandleFactory & VpnKeychainFactory
     private let factory: Factory
 
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
 
     public init(_ factory: Factory) {
         self.factory = factory
@@ -33,6 +34,10 @@ open class TelemetrySettings {
 
     public var telemetryUsageData: Bool {
         propertiesManager.getTelemetryUsageData(for: authKeychain.fetch()?.username)
+    }
+
+    public var businessEvents: Bool {
+        (try? vpnKeychain.fetchCached())?.businessEvents == true
     }
 
     public func updateTelemetryUsageData(isOn: Bool) {

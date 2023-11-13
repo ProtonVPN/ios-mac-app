@@ -56,7 +56,7 @@ class TelemetryBufferTests: XCTestCase {
             $0.dataManager = .mock(data: TelemetryBuffer.BufferedEvent.mockBufferedEvents)
             $0.date = .constant(Date())
         } operation: {
-            let buffer = await TelemetryBuffer(retrievingFromStorage: true)
+            let buffer = await TelemetryBuffer(retrievingFromStorage: true, bufferType: .telemetryEvents)
             let count = await buffer.events.count
             XCTAssertEqual(count, 1)
         }
@@ -68,7 +68,7 @@ class TelemetryBufferTests: XCTestCase {
             $0.dataManager = .mock(data: TelemetryBuffer.BufferedEvent.mockBufferedEvents)
             $0.date = .constant(Date())
         } operation: {
-            let buffer = await TelemetryBuffer(retrievingFromStorage: false)
+            let buffer = await TelemetryBuffer(retrievingFromStorage: false, bufferType: .telemetryEvents)
             let count = await buffer.events.count
             XCTAssertEqual(count, 0)
         }
@@ -82,7 +82,7 @@ class TelemetryBufferTests: XCTestCase {
                 .addingTimeInterval(TelemetryBuffer.Constants.maxStorageDuration)
                 .addingTimeInterval(1))
         } operation: {
-            let buffer = await TelemetryBuffer(retrievingFromStorage: true)
+            let buffer = await TelemetryBuffer(retrievingFromStorage: true, bufferType: .telemetryEvents)
             let count = await buffer.events.count
             XCTAssertEqual(count, 0)
         }
@@ -95,7 +95,7 @@ class TelemetryBufferTests: XCTestCase {
             $0.dataManager = dataManager
             $0.date = .constant(Date())
         } operation: {
-            let buffer = await TelemetryBuffer(retrievingFromStorage: true)
+            let buffer = await TelemetryBuffer(retrievingFromStorage: true, bufferType: .telemetryEvents)
             await buffer.save(event: .init("test".data(using: .utf8)!, id: UUID()))
             let count = await buffer.events.count
             XCTAssertEqual(count, 1)
@@ -112,7 +112,7 @@ class TelemetryBufferTests: XCTestCase {
             $0.dataManager = dataManager
             $0.date = .constant(Date())
         } operation: {
-            let buffer = await TelemetryBuffer(retrievingFromStorage: true)
+            let buffer = await TelemetryBuffer(retrievingFromStorage: true, bufferType: .telemetryEvents)
             await buffer.save(event: .init("test".data(using: .utf8)!, id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!))
             await buffer.save(event: .init("test2".data(using: .utf8)!, id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!))
             let count = await buffer.events.count
@@ -136,7 +136,7 @@ class TelemetryBufferTests: XCTestCase {
             $0.dataManager = .mock(data: data)
             $0.date = .constant(Date())
         } operation: {
-            let buffer = await TelemetryBuffer(retrievingFromStorage: true)
+            let buffer = await TelemetryBuffer(retrievingFromStorage: true, bufferType: .telemetryEvents)
             let event = await buffer.oldestEvent()
             XCTAssertEqual(event?.id, UUID(uuidString: "00000000-0000-0000-0000-000000000000")!)
         }
@@ -152,7 +152,7 @@ class TelemetryBufferTests: XCTestCase {
             $0.dataManager = .mock(data: data)
             $0.date = .constant(Date())
         } operation: {
-            let buffer = await TelemetryBuffer(retrievingFromStorage: true)
+            let buffer = await TelemetryBuffer(retrievingFromStorage: true, bufferType: .telemetryEvents)
             let count1 = await buffer.events.count
             XCTAssertEqual(count1, 101)
             await buffer.save(event: .init("test".data(using: .utf8)!, id: UUID()))

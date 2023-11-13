@@ -20,14 +20,16 @@ import ProtonCoreNetworking
 
 final class TelemetryRequest: Request {
 
-    let event: [String: Any]
+    var parameters: [String: Any]?
+    let isBusiness: Bool
 
-    init( _ event: [String: Any]) {
-        self.event = event
+    init( _ event: [String: Any], isBusiness: Bool) {
+        self.parameters = event
+        self.isBusiness = isBusiness
     }
 
     var path: String {
-        return "/data/v1/stats"
+        isBusiness ? "/vpn/v1/business/events" : "/data/v1/stats"
     }
 
     var method: HTTPMethod = .post
@@ -38,9 +40,5 @@ final class TelemetryRequest: Request {
 
     var retryPolicy: ProtonRetryPolicy.RetryMode {
         .userInitiated // do not repeat, it can cause the events to be delivered out-of order
-    }
-
-    var parameters: [String: Any]? {
-        event
     }
 }
