@@ -1,5 +1,4 @@
 /* Common word */
-
 "_cancel" = "لغو";
 
 /* Common word */
@@ -701,7 +700,7 @@
 /* Form validation error */
 "_error_field_required" = "این قسمت الزامی است";
 
-"_error_field_email_wrong_format" = "آدرس ایمیل در قالب درستی نیست";
+"_error_field_email_wrong_format" = "آدرس ایمیل در قالب درستی";
 
 "_error_field_passwords_dont_match" = "رمزهای عبور مطابقت ندارند";
 

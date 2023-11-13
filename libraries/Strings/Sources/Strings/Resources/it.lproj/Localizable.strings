@@ -1,5 +1,4 @@
 /* Common word */
-
 "_cancel" = "Annulla";
 
 /* Common word */
@@ -280,9 +279,9 @@
 /* Main mac app menu item */
 "_upgrade_for_secure_core" = "per utilizzare Secure Core";
 
-"_switch_side_button_on" = "ATTIVATO";
+"_switch_side_button_on" = "ATTIVO";
 
-"_switch_side_button_off" = "DISATTIVATO";
+"_switch_side_button_off" = "INATTIVO";
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "Un'altra applicazione potrebbe interferire con il kill switch. Per risolvere questo problema, passa al protocollo OpenVPN o disabilita il kill switch e riprova.";
@@ -482,7 +481,7 @@
 "_via" = "tramite";
 
 /* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
-"_server_load_percentage" = "Carico %@%%";
+"_server_load_percentage" = "Carico al %@%%";
 
 /* iOS: Home screen title, tab bar item title; MacOS: TabBar tab title; */
 "_home" = "Home";
@@ -763,7 +762,7 @@
 "_error_session_count_parser" = "Impossibile analizzare il conteggio delle sessioni";
 
 /* Parsing error */
-"_error_loads" = "Impossibile aggiornare il carico del server";
+"_error_loads" = "Impossibile aggiornare i carichi dei server";
 
 /* API error */
 "_error_api_offline" = "Le API di Proton VPN sono attualmente offline";
@@ -1615,7 +1614,7 @@
 
 "_tor_title" = "Tor";
 
-"_server_load_title" = "Carico del Server";
+"_server_load_title" = "Carico del server";
 
 "_dw-partner-2022_partners_title" = "I nostri partner";
 
@@ -1637,7 +1636,7 @@
 
 "_feature_tor_description" = "Convoglia tutto il traffico internet attraverso la rete Tor. Più lento, ma più privato.";
 
-"_performance_load_description" = "I server ad alto carico sono più lenti dei server a basso carico.";
+"_performance_load_description" = "I server con un alto carico sono più lenti dei server con un basso carico.";
 
 "_performance_load_low" = "Basso";
 
