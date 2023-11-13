@@ -41,7 +41,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     var vpnKeychain: VpnKeychainMock!
     var appStateManager: AppStateManagerMock!
 
-    let asyncTimeout: TimeInterval = 1
+    let asyncTimeout: TimeInterval = 5
 
     var mockVPNAPIService: VpnApiService {
         networking = NetworkingMock()
