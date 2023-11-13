@@ -138,8 +138,7 @@ private extension FeatureFlags {
             enforceDeprecatedProtocols: true,
             showNewFreePlan: true,
             unsafeLanWarnings: true,
-            mismatchedCertificateRecovery: true, 
-            businessEvents: true,
+            mismatchedCertificateRecovery: true,
             localOverrides: nil
         )
     }

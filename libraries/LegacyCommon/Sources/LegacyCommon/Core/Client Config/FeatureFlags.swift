@@ -42,7 +42,6 @@ public struct FeatureFlags: Codable, DefaultableProperty {
     @Default<Bool> public var showNewFreePlan: Bool // Free Rescope
     @Default<BoolDefaultTrue> public var unsafeLanWarnings: Bool
     @Default<BoolDefaultTrue> public var mismatchedCertificateRecovery: Bool
-    @Default<Bool> public var businessEvents: Bool
     public var localOverrides: [String: [String: Bool]]?
 
     public init(
@@ -63,7 +62,6 @@ public struct FeatureFlags: Codable, DefaultableProperty {
         showNewFreePlan: Bool,
         unsafeLanWarnings: Bool,
         mismatchedCertificateRecovery: Bool,
-        businessEvents: Bool,
         localOverrides: [String: [String: Bool]]?
     ) {
         self.smartReconnect = smartReconnect
@@ -83,7 +81,6 @@ public struct FeatureFlags: Codable, DefaultableProperty {
         self.showNewFreePlan = showNewFreePlan
         self.unsafeLanWarnings = unsafeLanWarnings
         self.mismatchedCertificateRecovery = mismatchedCertificateRecovery
-        self.businessEvents = businessEvents
         self.localOverrides = localOverrides
     }
 
@@ -106,7 +103,6 @@ public struct FeatureFlags: Codable, DefaultableProperty {
             showNewFreePlan: false,
             unsafeLanWarnings: true,
             mismatchedCertificateRecovery: true,
-            businessEvents: false,
             localOverrides: nil
         )
     }

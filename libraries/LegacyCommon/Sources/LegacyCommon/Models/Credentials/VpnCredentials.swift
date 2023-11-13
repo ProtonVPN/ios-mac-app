@@ -43,7 +43,8 @@ public class VpnCredentials: NSObject, NSSecureCoding {
     public let hasPaymentMethod: Bool
     public let subscribed: Int?
     public let needConnectionAllocation: Bool
-    
+    public let businessEvents: Bool
+
     override public var description: String {
         "Status: \(status)\n" +
         "Expiration time: \(String(describing: expirationTime))\n" +
@@ -58,7 +59,8 @@ public class VpnCredentials: NSObject, NSSecureCoding {
         "Credit: \(credit) (in \(currency))" +
         "Has Payment Method: \(hasPaymentMethod)\n" +
         "Subscribed: \(String(describing: subscribed))" +
-        "Need Connection Allocation: \(needConnectionAllocation)"
+        "Need Connection Allocation: \(needConnectionAllocation)" +
+        "BusinessEvents: \(businessEvents)"
     }
 
     public init(
@@ -77,7 +79,8 @@ public class VpnCredentials: NSObject, NSSecureCoding {
         hasPaymentMethod: Bool,
         planName: String?,
         subscribed: Int?,
-        needConnectionAllocation: Bool
+        needConnectionAllocation: Bool,
+        businessEvents: Bool
     ) {
         self.status = status
         self.expirationTime = expirationTime
@@ -95,6 +98,7 @@ public class VpnCredentials: NSObject, NSSecureCoding {
         self.planName = planName // Saving original string we got from API, because we need to know if it was null
         self.subscribed = subscribed
         self.needConnectionAllocation = needConnectionAllocation
+        self.businessEvents = businessEvents
         super.init()
     }
     
@@ -125,6 +129,7 @@ public class VpnCredentials: NSObject, NSSecureCoding {
         currency = try dic.stringOrThrow(key: "Currency")
         hasPaymentMethod = try dic.boolOrThrow(key: "HasPaymentMethod")
         subscribed = dic.int(key: "Subscribed")
+        businessEvents = vpnDic.bool(key: "BusinessEvents", or: false)
         super.init()
     }
 
@@ -141,6 +146,7 @@ public class VpnCredentials: NSObject, NSSecureCoding {
                 "Name": name,
                 "Password": password,
                 "NeedConnectionAllocation": needConnectionAllocation,
+                "BusinessEvents": businessEvents,
             ] as [String: Any],
             "Services": services,
             "Delinquent": delinquent,
@@ -170,6 +176,7 @@ public class VpnCredentials: NSObject, NSSecureCoding {
         static let hasPaymentMethod = "hasPaymentMethod"
         static let subscribed = "subscribed"
         static let needConnectionAllocation = "needConnectionAllocation"
+        static let businessEvents = "businessEvents"
     }
     
     public required convenience init?(coder aDecoder: NSCoder) {
@@ -197,7 +204,8 @@ public class VpnCredentials: NSObject, NSSecureCoding {
             hasPaymentMethod: aDecoder.decodeBool(forKey: CoderKey.hasPaymentMethod),
             planName: planName,
             subscribed: subscribed,
-            needConnectionAllocation: aDecoder.decodeBool(forKey: CoderKey.needConnectionAllocation)
+            needConnectionAllocation: aDecoder.decodeBool(forKey: CoderKey.needConnectionAllocation), 
+            businessEvents: aDecoder.decodeBool(forKey: CoderKey.businessEvents)
         )
     }
 
@@ -218,6 +226,7 @@ public class VpnCredentials: NSObject, NSSecureCoding {
         aCoder.encode(planName, forKey: CoderKey.planName)
         aCoder.encode(subscribed, forKey: CoderKey.subscribed)
         aCoder.encode(needConnectionAllocation, forKey: CoderKey.needConnectionAllocation)
+        aCoder.encode(businessEvents, forKey: CoderKey.businessEvents)
     }
 }
 
@@ -244,6 +253,7 @@ public struct CachedVpnCredentials {
     public let hasPaymentMethod: Bool
     public let subscribed: Int?
     public let needConnectionAllocation: Bool
+    public let businessEvents: Bool
 
     public var canUsePromoCode: Bool {
         return !isDelinquent && !hasPaymentMethod && credit == 0 && subscribed == 0
@@ -268,7 +278,8 @@ extension CachedVpnCredentials {
             currency: credentials.currency,
             hasPaymentMethod: credentials.hasPaymentMethod,
             subscribed: credentials.subscribed,
-            needConnectionAllocation: credentials.needConnectionAllocation
+            needConnectionAllocation: credentials.needConnectionAllocation, 
+            businessEvents: credentials.businessEvents
         )
     }
 }

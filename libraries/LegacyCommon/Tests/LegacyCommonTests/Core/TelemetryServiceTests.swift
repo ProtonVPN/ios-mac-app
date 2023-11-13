@@ -124,8 +124,7 @@ class TelemetryServiceTests: XCTestCase {
         timer = TelemetryTimerMock()
         appStateManager.mockActiveConnection = ConnectionConfiguration.connectionConfig2
         container = TelemetryMockFactory(appStateManager: appStateManager)
-        service = await TelemetryServiceImplementation(factory: container,
-                                                       timer: timer)
+        service = await TelemetryServiceImplementation(factory: container, timer: timer)
     }
 
     @available(iOS 16.0, macOS 13.0, *)
