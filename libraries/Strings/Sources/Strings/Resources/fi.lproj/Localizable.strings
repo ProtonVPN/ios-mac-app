@@ -1,5 +1,4 @@
 /* Common word */
-
 "_cancel" = "Peruuta";
 
 /* Common word */
@@ -2198,13 +2197,13 @@
 "_available_with_vpn_business_tooltip" = "Sisältyy VPN Business -tilaukseen.";
 
 /* Modal that lists countries in which servers are available to free users: Title */
-"free_connections_modal_title" = "Free connections";
+"free_connections_modal_title" = "Ilmaisyhteydet";
 
 /* Modal that lists countries in which servers are available to free users: Description */
-"free_connections_modal_description" = "Proton Free automatically connects you to the fastest available server. This will normally be the closest server to your location.";
+"free_connections_modal_description" = "Proton Free yhdistää automaattisesti nopeimpaan käytettävissä olevaan palvelimeen. Yleensä tämä on lähinnä sijaintiasi oleva palvelin.";
 
 /* Modal that lists countries in which servers are available to free users: banner with CTA */
-"free_connections_modal_banner" = "Get worldwide coverage with VPN Plus";
+"free_connections_modal_banner" = "Hanki maailmanlaajuinen kattavuus VPN Plus -tilauksella";
 
 /* Text on upsell banner in country list */
 "_free_banner_text" = "Hanki maailmanlaajuinen kattavuus VPN Plus -tilauksella";

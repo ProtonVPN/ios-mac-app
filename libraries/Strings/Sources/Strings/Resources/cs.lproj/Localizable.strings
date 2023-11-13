@@ -1,5 +1,4 @@
 /* Common word */
-
 "_cancel" = "Zrušit";
 
 /* Common word */
@@ -1417,7 +1416,7 @@
 "_netshield_stats_data_saved" = "dat\nuloženo";
 
 /* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
-"_netshield_feature_description" = "Chraňte se před reklamou, malwarem a sledovacími prvky na webových stránkách a v aplikacích. Pokud se stránky nenačítají, zkuste vypnout NetShield.\nDalší informace";
+"_netshield_feature_description" = "Chraňte se před reklamou, malware a sledovacími prvky na webových stránkách a v aplikacích. Pokud se stránky nenačítají, zkuste vypnout NetShield.\nDalší informace";
 
 /* Link with more info in the NetShield Feature description */
 "_netshield_feature_description_alt_link" = "Více informací";
@@ -1446,7 +1445,7 @@
 "_netshield_on" = "Zapnuto";
 
 /* Settings -> Netshield: Block malware */
-"_netshield_level1" = "Blokování malwaru";
+"_netshield_level1" = "Blokování malware";
 
 /* Settings -> Netshield: Block malware, ads, trackers */
 "_netshield_level2" = "Blokování malware, reklam a sledovacích prvků";
@@ -1465,7 +1464,7 @@
 
 "_quick_settings_secureCore_description" = "Směrujte vaše nejcitlivější data skrz naše nejbezpečnější servery v zemích respektujících soukromí.";
 
-"_quick_settings_netShield_description" = "Procházení internetu bez reklam a malwaru.";
+"_quick_settings_netShield_description" = "Procházení internetu bez reklam a malware.";
 
 "_quick_settings_killSwitch_description" = "Zakáže internet při přerušení VPN spojení, čímž zabrání úniku IP adresy.";
 
@@ -1824,7 +1823,7 @@
 "netshield_stats_hint_trackers" = "Sledovací prvky jsou webové stránky třetích stran, které sbírají, ukládají a prodávají informace o vaší webové aktivitě.";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
-"netshield_stats_hint_data" = "Přibližný počet reklam, sledovacích prvků a malwaru, který NetShield zablokoval.";
+"netshield_stats_hint_data" = "Přibližný počet reklam, sledovacích prvků a malware, který NetShield zablokoval.";
 
 "_netshield_stats_data_saved" = "dat\nuloženo";
 
@@ -1982,16 +1981,16 @@
 "modals_upsell_all_countries_feature_highSpeed" = "Procházení nejvyšší rychlostí (10 Gb/s)";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_netshield" = "Blokování reklam a malwaru pomocí Netshield";
+"modals_upsell_all_countries_feature_netshield" = "Blokování reklam a malware pomocí Netshield";
 
 /* Title of the NetShield upsell screen */
 "modals_upsell_net_shield_title" = "Prohlížení bez reklam díky službě NetShield";
 
 /* Feature of the NetShield upsell screen */
-"modals_upsell_net_shield_ads" = "Blokování reklam a sledovačů";
+"modals_upsell_net_shield_ads" = "Blokování reklam a sledovacích prvků";
 
 /* Feature of the NetShield upsell screen */
-"modals_upsell_net_shield_malware" = "Chraňte své zařízení před malwarem";
+"modals_upsell_net_shield_malware" = "Chraňte své zařízení před malware";
 
 /* Feature of the NetShield upsell screen */
 "modals_upsell_net_shield_highSpeed" = "Procházení nejvyšší rychlostí";

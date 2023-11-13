@@ -1,5 +1,4 @@
 /* Common word */
-
 "_cancel" = "İptal";
 
 /* Common word */
@@ -2198,13 +2197,13 @@
 "_available_with_vpn_business_tooltip" = "VPN Business ile kullanılabilir.";
 
 /* Modal that lists countries in which servers are available to free users: Title */
-"free_connections_modal_title" = "Free connections";
+"free_connections_modal_title" = "Free bağlantıları";
 
 /* Modal that lists countries in which servers are available to free users: Description */
-"free_connections_modal_description" = "Proton Free automatically connects you to the fastest available server. This will normally be the closest server to your location.";
+"free_connections_modal_description" = "Proton Free sizi otomatik olarak kullanılabilecek en hızlı sunucuya bağlar. Bu sunucu normalde konumunuza en yakın sunucudur.";
 
 /* Modal that lists countries in which servers are available to free users: banner with CTA */
-"free_connections_modal_banner" = "Get worldwide coverage with VPN Plus";
+"free_connections_modal_banner" = "VPN Plus tarifesi ile tüm Dünya'ya erişin";
 
 /* Text on upsell banner in country list */
 "_free_banner_text" = "VPN Plus tarifesi ile tüm Dünya'ya erişin";

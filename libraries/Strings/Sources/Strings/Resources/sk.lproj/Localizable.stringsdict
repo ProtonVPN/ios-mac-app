@@ -33,13 +33,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d štáte</string>
+        <string>%d krajine</string>
         <key>few</key>
-        <string>%d štátoch</string>
+        <string>%d krajiny</string>
         <key>many</key>
-        <string>%d štátoch</string>
+        <string>%d krajín</string>
         <key>other</key>
-        <string>%d štátoch</string>
+        <string>%d krajín</string>
       </dict>
       <key>num_servers</key>
       <dict>
@@ -123,13 +123,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d štát</string>
+        <string>%d krajina</string>
         <key>few</key>
-        <string>%d štáty</string>
+        <string>%d krajiny</string>
         <key>many</key>
-        <string>%d štátov</string>
+        <string>%d krajín</string>
         <key>other</key>
-        <string>%d štátov</string>
+        <string>%d krajín</string>
       </dict>
     </dict>
     <key>subscription_upgrade_option2</key>
@@ -183,13 +183,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d štát</string>
+        <string>%d krajina</string>
         <key>few</key>
-        <string>%d štáty</string>
+        <string>%d krajiny</string>
         <key>many</key>
-        <string>%d štátov</string>
+        <string>%d krajín</string>
         <key>other</key>
-        <string>%d štátov</string>
+        <string>%d krajín</string>
       </dict>
     </dict>
     <key>_vpnauth_too_many_certs_retry_after</key>
@@ -223,13 +223,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d+ štát</string>
+        <string>%d+ krajina</string>
         <key>few</key>
-        <string>%d+ štáty</string>
+        <string>%d+ krajiny</string>
         <key>many</key>
-        <string>%d+ štátov</string>
+        <string>%d+ krajín</string>
         <key>other</key>
-        <string>%d+ štátov</string>
+        <string>%d+ krajín</string>
       </dict>
     </dict>
     <key>_countries_count</key>
@@ -243,13 +243,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d štát</string>
+        <string>%d krajina</string>
         <key>few</key>
-        <string>%d štáty</string>
+        <string>%d krajiny</string>
         <key>many</key>
-        <string>%d štátov</string>
+        <string>%d krajín</string>
         <key>other</key>
-        <string>%d štátov</string>
+        <string>%d krajín</string>
       </dict>
     </dict>
     <key>_plans_connections</key>
