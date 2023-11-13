@@ -1,5 +1,4 @@
 /* Common word */
-
 "_cancel" = "Cancelar";
 
 /* Common word */
@@ -1533,7 +1532,7 @@
 "_sysex_description_3" = "Para continuar, clique em **Abrir configurações de sistema**. Em seguida, siga as instruções de vídeo nesta tela.";
 
 /* Alternative for Part 3 for pre-ventura of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
-"_sysex_description_4" = "Para continuar, clique em **Abrir preferências de segurança**. Em seguida, siga as instruções de vídeo nesta tela.";
+"_sysex_description_4" = "Para continuar, clique em **Abrir preferências de segurança**, em seguida, siga as instruções de vídeo nesta tela.";
 
 /* Title of the system extension wizard in mac */
 "_sysex_set_up_proton_vpn" = "Configurar Proton VPN";
@@ -1544,7 +1543,7 @@
 /* Default action in the system extension wizard in mac. macOS Ventura */
 "_sysex_open_security_preferences" = "Abrir preferências de segurança";
 
-"_sysex_settings_description" = "Proton VPN precisa carregar uma Extensão do Sistema para impulsionar o Smart Protocol, OpenVPN e o WireGuard.";
+"_sysex_settings_description" = "Proton VPN precisa carregar uma extensão do sistema para impulsionar o Smart Protocol, OpenVPN e o WireGuard.";
 
 "_sysex_enabled_title" = "Configuração concluída";
 
@@ -1776,7 +1775,7 @@
 "_non_standard_ports_change_title" = "Ativar portas não padrão";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
-"proton_website_unreachable" = "O site Proton VPN pode estar temporariamente inacessível devido a restrições de rede. Use o aplicativo móvel para criar uma conta Proton.";
+"proton_website_unreachable" = "O site da Proton VPN pode estar temporariamente inacessível devido a restrições de rede. Use o aplicativo móvel para criar uma conta Proton.";
 
 /* Title of the Use coupon button in Settings */
 "use_coupon" = "Usar cupom";
@@ -1970,7 +1969,7 @@
 "modals_upsell_moderate_nat_subtitle_bold" = "NAT tipo 2";
 
 /* Feature of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_gaming" = "Aprimore a performance de jogos online e chamadas de vídeo";
+"modals_upsell_features_moderate_nat_gaming" = "Aprimore a desempenho de jogos on-line e chamadas de vídeo";
 
 /* Feature of the Moderate NAT upsell screen */
 "modals_upsell_features_moderate_nat_direct_connections" = "O NAT tipo 2 (moderado) otimiza a velocidade e a estabilidade ao permitir conexões diretas entre dispositivos";
@@ -2150,7 +2149,7 @@
 "modals_free_countries" = "Novos países gratuitos";
 
 /* Description of the first section of the "What's new" screen */
-"modals_new_servers" = "Agora há servidores grátis na polônia e romania.";
+"modals_new_servers" = "Agora há servidores grátis na Polônia e Romênia.";
 
 /* Title of the second section of the "What's new" screen */
 "modals_server_selection" = "Mudanças na seleção de servidor";
@@ -2171,7 +2170,7 @@
 "welcome_upgrade_advanced_features" = "Recursos avançados de segurança";
 
 /* The title of the Welcome screen when user upgrades to VPN Plus */
-"welcome_upgrade_title_plus" = "Bem-vindo ao VPN Plus";
+"welcome_upgrade_title_plus" = "Boas-vindas ao VPN Plus";
 
 /* The title of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_title_unlimited" = "Bem-vindo a Proton Unlimited";

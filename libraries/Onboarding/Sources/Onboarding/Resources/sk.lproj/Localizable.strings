@@ -1,4 +1,3 @@
-
 "onboarding_take_tour" = "Absolvujte prehliadku";
 
 "onboarding_skip" = "Preskočiť";
@@ -13,7 +12,7 @@
 
 "onboarding_unblockstreaming_title" = "Odblokujte streamovanie";
 
-"onboarding_unblockstreaming_subtitle" = "Zabezpečený prístup k obľúbenému obsahu z iných krajín - Teraz už aj pre Android TV.";
+"onboarding_unblockstreaming_subtitle" = "Zabezpečený prístup k obľúbenému obsahu z iných krajín — Teraz už aj pre Android TV.";
 
 "onboarding_netshield_title" = "Blokujte reklamy a mnoho ďalšieho";
 
@@ -49,17 +48,17 @@
 
 "onboarding_not_connected_subtitle" = "Môžete začať prechádzať web.";
 
-"onboarding_not_connected_error" = "Nie je možné nadviazať spojenie. Skúste to prosím neskôr v aplikácii.";
+"onboarding_not_connected_error" = "Nie je možné nadviazať spojenie. Skúste to, prosím, neskôr v aplikácii.";
 
 "onboarding_continue" = "Pokračovať";
 
 "onboarding_telemetry_title" = "Pomôžte nám bojovať s cenzúrou";
 
-"onboarding_usage_stats_title" = "Zdieľanie anonymných štatistík používania";
+"onboarding_usage_stats_title" = "Zdieľajte anonymné štatistiky o používaní";
 
 "onboarding_usage_stats_description" = "Údaje o používaní nám pomáhajú obchádzať blokovanie VPN a vylepšovať výkon aplikácie.";
 
-"onboarding_crash_reports_title" = "Zdieľať anonymné hlásenia o zlyhaní";
+"onboarding_crash_reports_title" = "Zdieľajte anonymné hlásenia o zlyhaní";
 
 "onboarding_crash_reports_description" = "Hlásenia o pádoch nám pomáhajú opravovať chyby, detekovať firewally a vyhýbať sa blokovaniu VPN.";
 

@@ -1,5 +1,4 @@
 /* Common word */
-
 "_cancel" = "გაუქმება";
 
 /* Common word */
@@ -2198,13 +2197,13 @@
 "_available_with_vpn_business_tooltip" = "ხელმისაწვდომია VPN Business-თან ერთად.";
 
 /* Modal that lists countries in which servers are available to free users: Title */
-"free_connections_modal_title" = "Free connections";
+"free_connections_modal_title" = "უფასო მიერთებები";
 
 /* Modal that lists countries in which servers are available to free users: Description */
-"free_connections_modal_description" = "Proton Free automatically connects you to the fastest available server. This will normally be the closest server to your location.";
+"free_connections_modal_description" = "Proton Free ავტომატურად მიუერთდება უსწრაფეს ხელმისაწვდომ სერვერს. ეს ჩვეულებრივ თქვენს მდებარეობასთან არსებული უახლოესი სერვერია.";
 
 /* Modal that lists countries in which servers are available to free users: banner with CTA */
-"free_connections_modal_banner" = "Get worldwide coverage with VPN Plus";
+"free_connections_modal_banner" = "იქონიეთ წვდომა ყველაფერზე VPN Plus-თან ერთად";
 
 /* Text on upsell banner in country list */
 "_free_banner_text" = "იქონიეთ წვდომა ყველაფერზე VPN Plus-თან ერთად";

@@ -1,5 +1,4 @@
 /* Common word */
-
 "_cancel" = "Скасувати";
 
 /* Common word */
@@ -2198,13 +2197,13 @@
 "_available_with_vpn_business_tooltip" = "Доступно для VPN Business.";
 
 /* Modal that lists countries in which servers are available to free users: Title */
-"free_connections_modal_title" = "Free connections";
+"free_connections_modal_title" = "Безплатні з'єднання";
 
 /* Modal that lists countries in which servers are available to free users: Description */
-"free_connections_modal_description" = "Proton Free automatically connects you to the fastest available server. This will normally be the closest server to your location.";
+"free_connections_modal_description" = "Proton Free автоматично з'єднає вас із найшвидшим доступним сервером. Зазвичай – це найближчий до вашого розташування сервер.";
 
 /* Modal that lists countries in which servers are available to free users: banner with CTA */
-"free_connections_modal_banner" = "Get worldwide coverage with VPN Plus";
+"free_connections_modal_banner" = "Користуйтеся світовим покриттям з VPN Plus";
 
 /* Text on upsell banner in country list */
 "_free_banner_text" = "Користуйтеся світовим покриттям з VPN Plus";

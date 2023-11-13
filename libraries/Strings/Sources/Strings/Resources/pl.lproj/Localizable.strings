@@ -1,5 +1,4 @@
 /* Common word */
-
 "_cancel" = "Anuluj";
 
 /* Common word */
@@ -1576,7 +1575,7 @@
 
 "_delinquent_reconnection_description" = "Po zapłaceniu faktur, ponownie uzyskasz dostęp do funkcji premium. Obecnie jesteś ponownie łączony z najszybszym dostępnym serwerem planu Free.";
 
-"_maximum_device_title" = "Wykorzystano limit liczby podłączonych urządzeń";
+"_maximum_device_title" = "Osiągnięto maksymalną liczbę podłączonych urządzeń";
 
 "_maximum_device_reached_description" = "Aby połączyć się, rozłącz inne urządzenie.";
 

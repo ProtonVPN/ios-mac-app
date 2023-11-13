@@ -1,5 +1,4 @@
 /* Common word */
-
 "_cancel" = "Cancelar";
 
 /* Common word */
@@ -2171,7 +2170,7 @@
 "welcome_upgrade_advanced_features" = "Advanced security features";
 
 /* The title of the Welcome screen when user upgrades to VPN Plus */
-"welcome_upgrade_title_plus" = "Welcome to VPN Plus";
+"welcome_upgrade_title_plus" = "Boas-vindas ao VPN Plus";
 
 /* The title of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_title_unlimited" = "Welcome to Proton Unlimited";

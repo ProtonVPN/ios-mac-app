@@ -5,11 +5,11 @@
     <key>onboarding_establish_subtitle</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Bezplatná tarifa ponúka %#@num_servers@ vo %#@num_countries@</string>
+      <string>Bezplatná tarifa ponúka %#@num_servers@ v %#@num_countries@</string>
       <key>num_countries</key>
       <dict>
         <key>one</key>
-        <string>%d krajín</string>
+        <string>%d krajina</string>
         <key>few</key>
         <string>%d krajiny</string>
         <key>many</key>
