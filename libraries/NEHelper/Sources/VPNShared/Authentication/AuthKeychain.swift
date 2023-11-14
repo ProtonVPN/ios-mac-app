@@ -24,18 +24,18 @@ import KeychainAccess
 import Dependencies
 
 public protocol AuthKeychainHandle {
-    func fetch(forContext: AppContext?) -> AuthCredentials?
-    func store(_ credentials: AuthCredentials, forContext: AppContext?) throws
-    func clear()
+    func fetch(forContext: AppContext?) async -> AuthCredentials?
+    func store(_ credentials: AuthCredentials, forContext: AppContext?) async throws
+    func clear() async
 }
 
 public extension AuthKeychainHandle {
-    func fetch() -> AuthCredentials? {
-        fetch(forContext: nil)
+    func fetch() async -> AuthCredentials? {
+        await fetch(forContext: nil)
     }
 
-    func store(_ credentials: AuthCredentials) throws {
-        try store(credentials, forContext: nil)
+    func store(_ credentials: AuthCredentials) async throws {
+        try await store(credentials, forContext: nil)
     }
 }
 
@@ -74,26 +74,20 @@ public class AuthKeychain {
 
     public static let `default`: AuthKeychainHandle = AuthKeychain()
 
-    public static func fetch() -> AuthCredentials? {
-        `default`.fetch()
+    public static func fetch() async -> AuthCredentials? {
+        await `default`.fetch()
     }
 
-    public static func store(_ credentials: AuthCredentials) throws {
-        try `default`.store(credentials)
+    public static func store(_ credentials: AuthCredentials) async throws {
+        try await `default`.store(credentials)
     }
 
-    public static func clear() {
-        `default`.clear()
+    public static func clear() async {
+        await `default`.clear()
     }
+    private let keychain = KeychainActor.default
 
-    private let keychain: KeychainAccess.Keychain
     @Dependency(\.appContext) private var context
-
-    /// This is fileprivate for a reason. Please use `default`.
-    fileprivate init() {
-        self.keychain = .init(service: KeychainConstants.appKeychain)
-            .accessibility(.afterFirstUnlockThisDeviceOnly)
-    }
 }
 
 extension AuthKeychain: AuthKeychainHandle {
@@ -105,7 +99,7 @@ extension AuthKeychain: AuthKeychainHandle {
         StorageKey.contextKeys[context]
     }
 
-    public func fetch(forContext context: AppContext?) -> AuthCredentials? {
+    public func fetch(forContext context: AppContext?) async -> AuthCredentials? {
         NSKeyedUnarchiver.setClass(AuthCredentials.self, forClassName: "ProtonVPN.AuthCredentials")
         var key = defaultStorageKey
         if let context = context, let contextKey = storageKey(forContext: context) {
@@ -150,7 +144,7 @@ extension AuthKeychain: AuthKeychainHandle {
         return nil
     }
 
-    public func store(_ credentials: AuthCredentials, forContext context: AppContext?) throws {
+    public func store(_ credentials: AuthCredentials, forContext context: AppContext?) async throws {
         NSKeyedArchiver.setClassName("ProtonVPN.AuthCredentials", for: AuthCredentials.self)
 
         var key = defaultStorageKey
@@ -186,10 +180,8 @@ extension AuthKeychain: AuthKeychainHandle {
         }
     }
 
-    public func clear() {
-        for storageKey in StorageKey.contextKeys.values {
-            keychain[data: storageKey] = nil
-        }
+    public func clear() async {
+        await keychain.clear(contextValues: Array<String>(StorageKey.contextKeys.values))
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: Self.clearNotification, object: nil, userInfo: nil)
         }
