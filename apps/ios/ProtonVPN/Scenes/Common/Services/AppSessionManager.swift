@@ -13,11 +13,11 @@
 //
 //  ProtonVPN is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 //  GNU General Public License for more details.
 //
 //  You should have received a copy of the GNU General Public License
-//  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
+//  along with ProtonVPN. If not, see <https://www.gnu.org/licenses/>.
 //
 
 import LegacyCommon
@@ -27,6 +27,7 @@ import Dependencies
 import Search
 import Review
 import VPNShared
+import ProtonCoreFeatureFlags
 
 enum SessionStatus {
     
@@ -78,7 +79,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                         UnauthKeychainHandleFactory
 
     private let factory: Factory
-    
+
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private var navService: NavigationService? {
         return factory.makeNavigationService()
@@ -122,7 +123,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             DispatchQueue.main.async { completion(.failure(error)) }
         })
     }
-
+    
     func finishLogin(authCredentials: AuthCredentials, completion: @escaping (Result<(), Error>) -> Void) {
         do {
             try authKeychain.store(authCredentials)
@@ -255,7 +256,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         }
     }
 
-    // swiftlint:disable function_body_length
     private func retrievePropertiesAndLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         let group = DispatchGroup()
 
@@ -434,6 +434,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         searchStorage.clear()
         review.clear()
 
+        FeatureFlagsRepository.shared.resetFlags()
+        
         let vpnAuthenticationTimeoutInSeconds = 2
         let group = DispatchGroup()
         group.enter()
