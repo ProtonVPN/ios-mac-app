@@ -26,7 +26,7 @@ import LegacyCommon
 import ProtonCoreLogin
 import ProtonCoreNetworking
 import ProtonCoreAuthentication
-import ProtonCoreFeatureSwitch
+import ProtonCoreFeatureFlags
 import ProtonCoreServices
 import ProtonCoreObservability
 import VPNShared
@@ -124,7 +124,7 @@ final class LoginViewModel {
         loginService.login(
             username: username,
             password: password,
-            intent: FeatureFactory.shared.isEnabled(.ssoSignIn) ? .proton : .auto,
+            intent: FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.externalSSO) ? .proton : .auto,
             challenge: nil
         ) { [weak self] result in
             self?.handleLoginResult(result: result)
