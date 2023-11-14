@@ -23,7 +23,6 @@
 import Foundation
 import UIKit
 import LegacyCommon
-import KeychainAccess
 import BugReport
 import Search
 import Review
