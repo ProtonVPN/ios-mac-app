@@ -49,7 +49,7 @@ let package = Package(
         .github("apple", repo: "swift-collections", .upToNextMajor(from: "1.0.4")),
         .github("ashleymills", repo: "Reachability.swift", exact: "5.1.0"),
         .github("getsentry", repo: "sentry-cocoa", exact: "8.9.0"),
-        .github("kishikawakatsumi", repo: "KeychainAccess", exact: "3.2.1"),
+        .github("kishikawakatsumi", repo: "KeychainAccess", exact: "4.2.2"),
         .github("pointfreeco", repo: "swift-clocks", .upToNextMajor(from: "1.0.0")),
         .github("pointfreeco", repo: "swift-composable-architecture", .upToNextMajor(from: "1.0.0")),
         .github("pointfreeco", repo: "swift-dependencies", .upToNextMajor(from: "1.0.0")),
