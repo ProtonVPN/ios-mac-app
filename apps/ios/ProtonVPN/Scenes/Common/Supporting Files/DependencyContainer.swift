@@ -34,14 +34,14 @@ import Timer
 final class DependencyContainer: Container {
     
     public static var shared: DependencyContainer = DependencyContainer()
-
+    
     // Singletons
     private lazy var navigationService = NavigationService(self)
     private lazy var wireguardFactory = WireguardProtocolFactory(self, config: config)
     private lazy var openVpnFactory = OpenVpnProtocolFactory(self, config: config)
     private lazy var windowService = WindowServiceImplementation(window: UIWindow(frame: UIScreen.main.bounds))
     private lazy var appSessionManager = AppSessionManagerImplementation(factory: self)
-    private lazy var uiAlertService = IosUiAlertService(windowService: makeWindowService(), planService: makePlanService())
+    private lazy var uiAlertService = IosUiAlertService(windowService: makeWindowService())
     private lazy var iosAlertService = IosAlertService(self)
 
     // Refreshes app data at predefined time intervals

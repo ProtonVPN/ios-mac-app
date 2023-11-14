@@ -133,9 +133,9 @@ final class CorePlanService: PlanService {
     }
 
     func updateServicePlans(completion: @escaping (Result<(), Error>) -> Void) {
-        payments.storeKitManager.delegate = self
-        payments.storeKitManager.subscribeToPaymentQueue()
-        payments.updateService(completion: completion)
+        payments.activate(delegate: self) { [weak self] _ in
+            self?.payments.updateService(completion: completion)
+        }
     }
 
     func presentPlanSelection(modalSource: UpsellEvent.ModalSource?) {

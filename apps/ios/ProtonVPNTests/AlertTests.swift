@@ -30,7 +30,7 @@ import ProtonCoreNetworking
 
 fileprivate let sessionService = SessionServiceMock()
 fileprivate let windowService = WindowServiceMock()
-fileprivate let uiAlertService = IosUiAlertService(windowService: windowService, planService: nil)
+fileprivate let uiAlertService = IosUiAlertService(windowService: windowService)
 
 class AlertTests: XCTestCase {
 
