@@ -164,6 +164,7 @@ lane :ios_build_debug do
           build_path: $build_path,
           derived_data_path: $derived_data_path_shared,
           buildlog_path: $buildlog_path,
+          xcargs: arguments[:xcargs] + "-skipPackagePluginValidation",
           configuration: configuration,
           scheme: scheme,
           clean: false, # No need for a clean: we create new DerivedData folder for each commit

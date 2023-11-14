@@ -25,6 +25,7 @@ import Dependencies
 import LegacyCommon
 import VPNShared
 import ProtonCoreUtilities
+import ProtonCoreFeatureFlags
 
 enum SessionStatus {
     case notEstablished
@@ -320,6 +321,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         authKeychain.clear()
         vpnKeychain.clear()
         announcementRefresher.clear()
+
+        FeatureFlagsRepository.shared.resetFlags()
 
         let vpnAuthenticationTimeoutInSeconds = 2
         let group = DispatchGroup()
