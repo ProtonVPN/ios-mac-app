@@ -40,7 +40,7 @@ public protocol VpnKeychainProtocol {
     func fetch() throws -> VpnCredentials
     func fetchCached() throws -> CachedVpnCredentials
     func fetchOpenVpnPassword() throws -> Data
-    func store(vpnCredentials: VpnCredentials)
+    func storeAndDetectDowngrade(vpnCredentials: VpnCredentials)
     func getServerCertificate() throws -> SecCertificate
     func storeServerCertificate() throws
     func store(wireguardConfiguration: Data) throws -> Data
@@ -80,9 +80,9 @@ public class VpnKeychain: VpnKeychainProtocol {
         static let wireguardSettings = "ProtonVPN_wg_settings"
         static let widgetPublicKey = "ch.proton.vpn.widget.public_key"
     }
-    
+
     private let appKeychain = Keychain(service: KeychainConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly)
-    
+
     public static let vpnCredentialsChanged = Notification.Name("VpnKeychainCredentialsChanged")
     public static let vpnPlanChanged = Notification.Name("VpnKeychainPlanChanged")
     public static let vpnUserDelinquent = Notification.Name("VpnUserDelinquent")
@@ -93,21 +93,42 @@ public class VpnKeychain: VpnKeychainProtocol {
 
     private init() {}
 
+    private let decoder = JSONDecoder()
+    private let encoder = JSONEncoder()
+
     private var cached: CachedVpnCredentials?
-    
+
     public func fetch() throws -> VpnCredentials {
+        let data: Data
         do {
-            if let data = try appKeychain.getData(StorageKey.vpnCredentials) {
-                if let unarchivedObject = (try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [VpnCredentials.self, NSString.self, NSData.self, NSNumber.self], from: data)),
-                   let vpnCredentials = unarchivedObject as? VpnCredentials {
+            guard let keychainData = try appKeychain.getData(StorageKey.vpnCredentials) else {
+                throw "No VpnCredentials data in the keychain"
+            }
+            data = keychainData
+        } catch let error {
+            log.error("Keychain (auth) read error: \(error)", category: .keychain, metadata: ["error": "\(error)"])
+            throw ProtonVpnError.vpnCredentialsMissing
+        }
+        do {
+            return try decoder.decode(VpnCredentials.self, from: data)
+        } catch let jsonError {
+            do {
+                let unarchivedObject = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [VpnCredentials.self,
+                                                                                          NSString.self,
+                                                                                          NSData.self,
+                                                                                          NSNumber.self],
+                                                                              from: data)
+                if let vpnCredentials = unarchivedObject as? VpnCredentials {
+                    store(vpnCredentials: vpnCredentials) // store in JSON
                     cached = CachedVpnCredentials(credentials: vpnCredentials)
                     return vpnCredentials
                 }
+            } catch let coderError {
+                log.error("Keychain (vpn) read error", category: .keychain, metadata: ["error": "\(coderError)"])
             }
-        } catch let error {
-            log.error("Keychain (vpn) read error", category: .keychain, metadata: ["error": "\(error)"])
+            log.error("Keychain (vpn) read error", category: .keychain, metadata: ["error": "\(jsonError)"])
         }
-        
+
         let error = ProtonVpnError.vpnCredentialsMissing
         log.error("Error while fetching open vpn credentials from the keychain", category: .keychain, metadata: ["error": "\(error)"])
         throw error
@@ -127,7 +148,7 @@ public class VpnKeychain: VpnKeychainProtocol {
         }
     }
     
-    public func store(vpnCredentials: VpnCredentials) {
+    public func storeAndDetectDowngrade(vpnCredentials: VpnCredentials) {
         if let currentCredentials = try? fetch() {
             DispatchQueue.main.async {
                 let downgradeInfo = VpnDowngradeInfo(currentCredentials, vpnCredentials)
@@ -140,9 +161,13 @@ public class VpnKeychain: VpnKeychainProtocol {
                 }
             }
         }
+        store(vpnCredentials: vpnCredentials)
+    }
 
+    private func store(vpnCredentials: VpnCredentials) {
         do {
-            try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: vpnCredentials, requiringSecureCoding: true), key: StorageKey.vpnCredentials)
+            let data = try encoder.encode(vpnCredentials)
+            try appKeychain.set(data, key: StorageKey.vpnCredentials)
             cached = CachedVpnCredentials(credentials: vpnCredentials)
         } catch let error {
             log.error("Keychain (vpn) write error", category: .keychain, metadata: ["error": "\(error)"])
