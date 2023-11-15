@@ -63,8 +63,12 @@ public class VpnKeychainMock: VpnKeychainProtocol {
     public func fetchOpenVpnPassword() throws -> Data {
         return Data()
     }
-    
-    public func store(vpnCredentials: VpnCredentials) {
+
+    public func storeAndDetectDowngrade(vpnCredentials: VpnCredentials) {
+        store(vpnCredentials: vpnCredentials)
+    }
+
+    func store(vpnCredentials: VpnCredentials) {
         let newCredentials = vpnCredentials
         let oldCredentials = credentials
 

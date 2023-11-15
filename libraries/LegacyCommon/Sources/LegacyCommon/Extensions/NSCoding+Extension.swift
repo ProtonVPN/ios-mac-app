@@ -43,5 +43,5 @@ public func setUpNSCoding(withModuleName moduleName: String) {
     ServerIp.registerClassName(with: moduleName)
     ServerLocation.registerClassName(with: moduleName)
     ServerModel.registerClassName(with: moduleName)
-    VpnCredentials.registerClassName(with: moduleName)
+    VpnCredentials.registerClassName(with: moduleName) // Migrated to Codable
 }
