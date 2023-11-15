@@ -38,7 +38,7 @@ public extension NSCoding {
 // To be called in AppDelegate to preserve archived data
 public func setUpNSCoding(withModuleName moduleName: String) {
     AuthCredentials.registerClassName(with: moduleName)
-    Profile.registerClassName(with: moduleName)
+    Profile.registerClassName(with: moduleName) // Migrated to Codable, this line is needed to read the profiles saved by the KeyedArchiver
     ServerIp.registerClassName(with: moduleName)
     ServerLocation.registerClassName(with: moduleName)
     ServerModel.registerClassName(with: moduleName)

@@ -38,6 +38,9 @@ public class ProfileStorage {
 
     private let authKeychain: AuthKeychainHandle
 
+    private let decoder = JSONDecoder()
+    private let encoder = JSONEncoder()
+
     public typealias Factory = AuthKeychainHandleFactory
 
     public convenience init(_ factory: Factory) {
@@ -82,8 +85,14 @@ public class ProfileStorage {
     
     private func fetchFromMemory(storageKey: String) -> [Profile] {
         @Dependency(\.defaultsProvider) var provider
-        if let data = provider.getDefaults().data(forKey: storageKey),
-            let userProfiles = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Profile] {
+        guard let data = provider.getDefaults().data(forKey: storageKey) else {
+            return []
+        }
+        // Migration - try reading profiles the old way, if successful, overwrite with the new way
+        if let oldUserProfiles = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Profile] {
+            store(oldUserProfiles)
+            return fetch()
+        } else if let userProfiles = try? decoder.decode([Profile].self, from: data) {
             return userProfiles
         }
         return []
@@ -92,7 +101,7 @@ public class ProfileStorage {
     private func storeInMemory(_ profiles: [Profile], storageKey: String) {
         @Dependency(\.defaultsProvider) var provider
         provider.getDefaults().set(Self.storageVersion, forKey: Self.versionKey)
-        let archivedData = try? NSKeyedArchiver.archivedData(withRootObject: profiles, requiringSecureCoding: false)
+        let archivedData = try? encoder.encode(profiles)
         provider.getDefaults().set(archivedData, forKey: storageKey)
     }
     
