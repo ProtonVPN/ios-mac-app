@@ -308,7 +308,6 @@ extension AppDelegate {
                 completion(nil)                
             }
             .migrate { _ in
-                self.container.makeProfileManager().refreshProfiles()
                 // Migration complete
             }
     }

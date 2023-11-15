@@ -36,8 +36,9 @@ public extension NSCoding {
 }
 
 // To be called in AppDelegate to preserve archived data
+// Remove NSCoding entirely after we deprecate iOS 15/macOS 12
 public func setUpNSCoding(withModuleName moduleName: String) {
-    AuthCredentials.registerClassName(with: moduleName)
+    AuthCredentials.registerClassName(with: moduleName) // Migrated to Codable
     Profile.registerClassName(with: moduleName) // Migrated to Codable, this line is needed to read the profiles saved by the KeyedArchiver
     ServerIp.registerClassName(with: moduleName)
     ServerLocation.registerClassName(with: moduleName)

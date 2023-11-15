@@ -112,15 +112,32 @@ extension AuthKeychain: AuthKeychainHandle {
             key = contextKey
         }
 
+        let data: Data
         do {
-            if let data = try keychain.getData(key) {
-                if let unarchivedObject = (try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [AuthCredentials.self, NSString.self, NSData.self], from: data)),
-                   let authCredentials = unarchivedObject as? AuthCredentials {
-                    return authCredentials
-                }
+            guard let keychainData = try keychain.getData(key) else {
+                throw "No data in the keychain"
             }
+            data = keychainData
         } catch let error {
             log.error("Keychain (auth) read error: \(error)", category: .keychain)
+            return nil
+        }
+
+        do {
+            return try JSONDecoder().decode(AuthCredentials.self, from: data)
+        } catch {
+            do {
+                if let unarchivedObject = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [AuthCredentials.self,
+                                                                                             NSString.self,
+                                                                                             NSData.self],
+                                                                                 from: data),
+                   let authCredentials = unarchivedObject as? AuthCredentials {
+                    try? store(authCredentials, forContext: context) // store in JSON
+                    return authCredentials
+                }
+            } catch let error {
+                log.error("Keychain (auth) read error: \(error)", category: .keychain)
+            }
         }
 
         return nil
@@ -135,18 +152,21 @@ extension AuthKeychain: AuthKeychainHandle {
         }
 
         do {
-            try keychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials, requiringSecureCoding: true), key: key)
+            let data = try JSONEncoder().encode(credentials)
+            try keychain.set(data, key: key)
         } catch let error {
             log.error("Keychain (auth) write error: \(error). Will clean and retry.", category: .keychain, metadata: ["error": "\(error)"])
             do { // In case of error try to clean keychain and retry with storing data
                 clear()
-                try keychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials, requiringSecureCoding: true), key: key)
+                let data = try JSONEncoder().encode(credentials)
+                try keychain.set(data, key: key)
             } catch let error2 {
                 #if os(macOS)
                     log.error("Keychain (auth) write error: \(error2). Will lock keychain to try to recover from this error.", category: .keychain, metadata: ["error": "\(error2)"])
                     do { // Last chance. Locking/unlocking keychain sometimes helps.
                         SecKeychainLock(nil)
-                        try keychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials, requiringSecureCoding: true), key: key)
+                        let data = try JSONEncoder().encode(credentials)
+                        try keychain.set(data, key: key)
                     } catch let error3 {
                         log.error("Keychain (auth) write error. Giving up.", category: .keychain, metadata: ["error": "\(error3)"])
                         throw error3
