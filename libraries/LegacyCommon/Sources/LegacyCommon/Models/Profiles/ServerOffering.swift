@@ -24,7 +24,7 @@ import VPNAppCore
 
 // This is needed to maintain compatibility with how profiles are stored on disk
 // whilst improving them with dynamic server models
-public struct ServerWrapper {
+public struct ServerWrapper: Codable {
     
     private var _server: ServerModel
     public var server: ServerModel {
@@ -46,7 +46,7 @@ public struct ServerWrapper {
     }
 }
 
-public enum ServerOffering: Equatable {
+public enum ServerOffering: Equatable, Codable {
     
     /** Country code or undefined */
     case fastest(String?)
@@ -99,21 +99,7 @@ public enum ServerOffering: Equatable {
         }
     }
     
-    public func encode(with aCoder: NSCoder) {
-        var data = Data(count: 1)
-        switch self {
-        case .fastest(let ccode):
-            data[0] = 0
-            aCoder.encode(ccode, forKey: CoderKey.fastest)
-        case .random(let ccode):
-            data[0] = 1
-            aCoder.encode(ccode, forKey: CoderKey.random)
-        case .custom(let swrapper):
-            data[0] = 2
-            aCoder.encode(swrapper.server, forKey: CoderKey.custom)
-        }
-        aCoder.encode(data, forKey: CoderKey.serverOffering)
-    }
+    public func encode(with aCoder: NSCoder) { }
 
     public func supports(connectionProtocol: ConnectionProtocol,
                          withCountryGroup grouping: ServerGroup?,
