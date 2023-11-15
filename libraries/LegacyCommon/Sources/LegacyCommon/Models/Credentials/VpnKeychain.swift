@@ -106,32 +106,49 @@ public class VpnKeychain: VpnKeychainProtocol {
             }
             data = keychainData
         } catch let error {
-            log.error("Keychain (auth) read error: \(error)", category: .keychain, metadata: ["error": "\(error)"])
+            log.error("Keychain (auth) read error", category: .keychain, metadata: ["error": "\(error)"])
             throw ProtonVpnError.vpnCredentialsMissing
         }
         do {
-            return try decoder.decode(VpnCredentials.self, from: data)
-        } catch let jsonError {
-            do {
-                let unarchivedObject = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [VpnCredentials.self,
-                                                                                          NSString.self,
-                                                                                          NSData.self,
-                                                                                          NSNumber.self],
-                                                                              from: data)
-                if let vpnCredentials = unarchivedObject as? VpnCredentials {
-                    store(vpnCredentials: vpnCredentials) // store in JSON
-                    cached = CachedVpnCredentials(credentials: vpnCredentials)
-                    return vpnCredentials
-                }
-            } catch let coderError {
-                log.error("Keychain (vpn) read error", category: .keychain, metadata: ["error": "\(coderError)"])
+            let vpnCredentials = try decoder.decode(VpnCredentials.self, from: data)
+            cached = CachedVpnCredentials(credentials: vpnCredentials)
+            return vpnCredentials
+        } catch {
+            if let credentials = migrateVpnCredentials(data) {
+                return credentials
             }
-            log.error("Keychain (vpn) read error", category: .keychain, metadata: ["error": "\(jsonError)"])
+            log.error("Keychain (vpn) read error", category: .keychain, metadata: ["error": "\(error)"])
         }
 
         let error = ProtonVpnError.vpnCredentialsMissing
         log.error("Error while fetching open vpn credentials from the keychain", category: .keychain, metadata: ["error": "\(error)"])
         throw error
+    }
+
+    /// We tried decoding with JSON and failed, let's try to decode from NSKeyedUnarchiver
+    fileprivate func migrateVpnCredentials(_ data: Data) -> VpnCredentials? {
+        do {
+            /// First, let's remove the stored data in case the NSKeyedUnarchiver crashes.
+            /// Next time user launches the app, the credentials will be lost, but at least
+            /// we won't start a crash cycle from which the user can't recover.
+            try? appKeychain.remove(StorageKey.vpnCredentials)
+            log.info("Removed VpnCredentials storage for \(StorageKey.vpnCredentials) key before attempting to unarchive with NSKeyedUnarchiver", category: .keychain)
+            let unarchivedObject = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [VpnCredentials.self,
+                                                                                      NSString.self,
+                                                                                      NSData.self,
+                                                                                      NSNumber.self],
+                                                                          from: data)
+            if let vpnCredentials = unarchivedObject as? VpnCredentials {
+                /// Store the unarchived credentials in JSON
+                /// Next time the credentials are retrieved they will come from JSONDecoder instead of NSKeyedUnarchiver
+                store(vpnCredentials: vpnCredentials)
+                log.info("VpnCredentials storage for \(StorageKey.vpnCredentials) migration successful!", category: .keychain)
+                return vpnCredentials
+            }
+        } catch let coderError {
+            log.error("Keychain (vpn) read error", category: .keychain, metadata: ["error": "\(coderError)"])
+        }
+        return nil
     }
 
     public func fetchCached() throws -> CachedVpnCredentials {
