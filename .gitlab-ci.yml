@@ -1,4 +1,5 @@
 stages:
+  - distribute
   - i18n
   - github
   - lint
@@ -7,7 +8,6 @@ stages:
   - deploy
   - test_ui
   - cleanup
-  - distribute
 
 variables:
   GIT_SUBMODULE_STRATEGY: normal

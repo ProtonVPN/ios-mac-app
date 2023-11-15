@@ -10,6 +10,7 @@ build:app:macos:
     - fastlane mac_build_debug
   rules:
     - when: manual
+      allow_failure: true
   tags:
     - vpn-apple-builds
   artifacts:

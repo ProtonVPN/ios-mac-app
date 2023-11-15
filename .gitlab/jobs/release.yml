@@ -42,7 +42,8 @@ distribute:ios:testflight:alpha:
       when: never
     # Release after each push to develop
     - if: $CI_COMMIT_BRANCH == "develop"
-      when: on_success
+      when: manual
+      allow_failure: true # the pipeline continues running even if the manual job is not run
     # Otherwise allow manual release
     - when: manual
   variables:
@@ -72,7 +73,8 @@ distribute:mac:alpha:
       when: never
     # Release after each push to develop
     - if: $CI_COMMIT_BRANCH == "develop"
-      when: on_success
+      when: manual
+      allow_failure: true # the pipeline continues running even if the manual job is not run
     # Otherwise allow manual release
     - when: manual
   trigger:
