@@ -88,12 +88,21 @@ public class ProfileStorage {
         guard let data = provider.getDefaults().data(forKey: storageKey) else {
             return []
         }
+        if let userProfiles = try? decoder.decode([Profile].self, from: data) {
+            return userProfiles
+        } else {
+            /// We tried decoding with JSON and failed, let's try to decode from NSKeyedUnarchiver,
+            /// but first let's remove the stored data in case the NSKeyedUnarchiver crashes.
+            /// Next time user launches the app, the credentials will be lost, but at least
+            /// we won't start a crash cycle from which the user can't recover.
+            provider.getDefaults().removeObject(forKey: storageKey)
+            log.info("Removed Profile storage for \(storageKey) key before attempting to unarchive with NSKeyedUnarchiver", category: .persistence)
+        }
         // Migration - try reading profiles the old way, if successful, overwrite with the new way
         if let oldUserProfiles = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Profile] {
             store(oldUserProfiles)
+            log.info("Profile storage for \(storageKey) migration successful!", category: .persistence)
             return fetch()
-        } else if let userProfiles = try? decoder.decode([Profile].self, from: data) {
-            return userProfiles
         }
         return []
     }

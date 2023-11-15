@@ -179,7 +179,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             switch result {
             case let .success(properties):
                 if let credentials = properties.vpnCredentials {
-                    self.vpnKeychain.store(vpnCredentials: credentials)
+                    self.vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
                     self.review.update(plan: credentials.accountPlan.rawValue)
                     self.serverStorage.store(
                         properties.serverModels,
@@ -282,7 +282,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             switch result {
             case let .success(properties):
                 if let credentials = properties.vpnCredentials {
-                    self.vpnKeychain.store(vpnCredentials: credentials)
+                    self.vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
                     self.review.update(plan: credentials.accountPlan.rawValue)
                     self.serverStorage.store(
                         properties.serverModels,

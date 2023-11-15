@@ -119,7 +119,7 @@ extension AuthKeychain: AuthKeychainHandle {
             }
             data = keychainData
         } catch let error {
-            log.error("Keychain (auth) read error: \(error)", category: .keychain)
+            log.error("Keychain (auth) read error", category: .keychain, metadata: ["error": "\(error)"])
             return nil
         }
 
@@ -127,16 +127,23 @@ extension AuthKeychain: AuthKeychainHandle {
             return try JSONDecoder().decode(AuthCredentials.self, from: data)
         } catch {
             do {
+                /// We tried decoding with JSON and failed, let's try to decode from NSKeyedUnarchiver,
+                /// but first let's remove the stored data in case the NSKeyedUnarchiver crashes.
+                /// Next time user launches the app, the credentials will be lost, but at least
+                /// we won't start a crash cycle from which the user can't recover.
+                try? keychain.remove(key)
+                log.info("Removed AuthKeychain storage for \(key) key before attempting to unarchive with NSKeyedUnarchiver", category: .keychain)
                 if let unarchivedObject = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [AuthCredentials.self,
                                                                                              NSString.self,
                                                                                              NSData.self],
                                                                                  from: data),
                    let authCredentials = unarchivedObject as? AuthCredentials {
                     try? store(authCredentials, forContext: context) // store in JSON
+                    log.info("AuthKeychain storage for \(key) migration successful!", category: .keychain)
                     return authCredentials
                 }
             } catch let error {
-                log.error("Keychain (auth) read error: \(error)", category: .keychain)
+                log.error("Keychain (auth) read error", category: .keychain, metadata: ["error": "\(error)"])
             }
         }
 
