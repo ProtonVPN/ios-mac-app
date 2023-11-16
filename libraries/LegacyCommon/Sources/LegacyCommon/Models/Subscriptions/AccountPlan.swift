@@ -21,7 +21,7 @@
 
 import Foundation
 
-public enum AccountPlan: String, Encodable {
+public enum AccountPlan: String, Codable {
     
     case unknown
     case free = "free"
