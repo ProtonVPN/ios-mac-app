@@ -37,7 +37,11 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
     public typealias Factory = CoreApiServiceFactory & AnnouncementStorageFactory
     private let factory: Factory
     
-    private lazy var coreApiService: CoreApiService = factory.makeCoreApiService()
+    private var coreApiService: CoreApiService {
+        get async {
+            await factory.makeCoreApiService()
+        }
+    }
     private lazy var announcementStorage: AnnouncementStorage = factory.makeAnnouncementStorage()
     
     private var lastRefreshDate: Date?
@@ -61,12 +65,14 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
     }
 
     @objc private func refresh() {
-        coreApiService.getApiNotifications { [weak self] result in
-            switch result {
-            case let .success(announcementsResponse):
-                self?.announcementStorage.store(announcementsResponse.notifications)
-            case let .failure(error):
-                log.error("Error getting announcements", category: .api, metadata: ["error": "\(error)"])
+        Task { [weak self] in
+            await self?.coreApiService.getApiNotifications { [weak self] result in
+                switch result {
+                case let .success(announcementsResponse):
+                    self?.announcementStorage.store(announcementsResponse.notifications)
+                case let .failure(error):
+                    log.error("Error getting announcements", category: .api, metadata: ["error": "\(error)"])
+                }
             }
         }
     }

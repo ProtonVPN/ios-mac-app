@@ -56,7 +56,9 @@ public final class ReportsBugs: Request {
     }
 
     public var isAuth: Bool {
-        return authKeychain.fetch() != nil
+        get async {
+            await authKeychain.fetch() != nil
+        }
     }
 
     public var retryPolicy: ProtonRetryPolicy.RetryMode {

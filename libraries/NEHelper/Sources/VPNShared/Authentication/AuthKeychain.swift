@@ -25,16 +25,17 @@ import Dependencies
 
 public protocol AuthKeychainHandle {
     var username: String? { get }
-    func saveUsername(username: String?)
+    var userId: String? { get }
+    func saveToCache(cred: AuthCredentials?)
     func fetch(forContext: AppContext?) async -> AuthCredentials?
     func store(_ credentials: AuthCredentials, forContext: AppContext?) async throws
     func clear() async
 }
 
 public extension AuthKeychainHandle {
-    func fetch() -> AuthCredentials? {
+    func fetch() async -> AuthCredentials? {
         let cred = await fetch(forContext: nil)
-        saveUsername(username: cred?.username)
+        saveToCache(cred: cred)
         return cred
     }
 
@@ -79,6 +80,7 @@ public class AuthKeychain {
     public static let `default`: AuthKeychainHandle = AuthKeychain()
 
     public var username: String?
+    public var userId: String?
 
     public static func fetch() async -> AuthCredentials? {
         await `default`.fetch()
@@ -97,8 +99,9 @@ public class AuthKeychain {
 }
 
 extension AuthKeychain: AuthKeychainHandle {
-    public func saveUsername(username: String?) {
-        self.username = username
+    public func saveToCache(cred: AuthCredentials?) {
+        self.username = cred?.username
+        self.userId = cred?.userId
     }
     
     private var defaultStorageKey: String {
@@ -192,7 +195,7 @@ extension AuthKeychain: AuthKeychainHandle {
 
     public func clear() async {
         await keychain.clear(contextValues: Array<String>(StorageKey.contextKeys.values))
-        saveUsername(username: nil)
+        saveToCache(cred: nil)
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: Self.clearNotification, object: nil, userInfo: nil)
         }

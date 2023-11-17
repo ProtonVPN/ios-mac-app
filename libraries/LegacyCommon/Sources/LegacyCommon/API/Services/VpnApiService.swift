@@ -136,7 +136,7 @@ public class VpnApiService {
     }
 
     public func clientCredentials(completion: @escaping (Result<VpnCredentials, Error>) -> Void) {
-        guard authKeychain.fetch() != nil else {
+        guard authKeychain.username != nil else {
             completion(.failure(VpnApiServiceError.endpointRequiresAuthentication))
             return
         }

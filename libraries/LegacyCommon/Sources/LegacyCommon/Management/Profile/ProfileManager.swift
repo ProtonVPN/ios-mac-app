@@ -86,7 +86,7 @@ public class ProfileManager {
     }
 
     public var username: String? {
-        return authKeychain.fetch()?.username
+        return authKeychain.username
     }
 
     public var autoConnectProfile: Profile? {
