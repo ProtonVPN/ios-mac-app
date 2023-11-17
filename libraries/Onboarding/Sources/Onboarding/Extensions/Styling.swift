@@ -19,13 +19,14 @@
 import Foundation
 import Overture
 import UIKit
+import Theme
 
 var colors = Colors()
 
 let baseButtonStyle: (UIButton) -> Void = {
     $0.layer.cornerRadius = 8
     $0.titleLabel?.font = .systemFont(ofSize: 17)
-    $0.setTitleColor(colors.text, for: .normal)
+    $0.setTitleColor(.color(.text, .primary), for: .normal)
 }
 
 let brandStyle: (UIView) -> Void = {
@@ -77,9 +78,10 @@ let plusOnlyStyle = concat(brandStyle, and: {
     $0.layer.cornerRadius = 9
 })
 
-let plusOnlyTextStyle = concat(baseTextStyle, and: {
+let plusOnlyTextStyle: (UILabel) -> Void = {
     $0.font = .systemFont(ofSize: 11, weight: .semibold)
-})
+    $0.textColor = .color(.text, .primary)
+}
 
 let textNoteStyle = concat(baseTextStyle, centeredTextStyle, and: {
     $0.font = .systemFont(ofSize: 15)
