@@ -64,10 +64,7 @@ open class ReportBugViewModel {
         self.logContentProvider = logContentProvider
         self.logSources = logSources
         
-        var username = ""
-        if let authCredentials = authKeychain.fetch() {
-            username = authCredentials.username
-        }
+        var username = authKeychain.username ?? ""
         
         do {
             plan = try vpnKeychain.fetchCached().accountPlan

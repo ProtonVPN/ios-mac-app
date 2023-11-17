@@ -71,22 +71,17 @@ final class SettingsAccountViewModel {
     }
     
     private var accountSection: TableViewSection {
-        let username: String
+        let username = authKeychain.username ?? Localizable.unavailable
         let accountPlanName: String
         let allowUpgrade: Bool
         let allowPlanManagement: Bool
         
-        if let authCredentials = authKeychain.fetch(),
-            let vpnCredentials = try? vpnKeychain.fetch() {
-
+        if let vpnCredentials = try? vpnKeychain.fetch() {
             let accountPlan = vpnCredentials.accountPlan
-            username = authCredentials.username
             accountPlanName = vpnCredentials.accountPlan.description
             allowPlanManagement = accountPlan.paid
             allowUpgrade = planService.allowUpgrade && !allowPlanManagement
-
         } else {
-            username = Localizable.unavailable
             accountPlanName = Localizable.unavailable
             allowUpgrade = false
             allowPlanManagement = false

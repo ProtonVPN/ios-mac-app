@@ -24,14 +24,18 @@ import KeychainAccess
 import Dependencies
 
 public protocol AuthKeychainHandle {
+    var username: String? { get }
+    func saveUsername(username: String?)
     func fetch(forContext: AppContext?) async -> AuthCredentials?
     func store(_ credentials: AuthCredentials, forContext: AppContext?) async throws
     func clear() async
 }
 
 public extension AuthKeychainHandle {
-    func fetch() async -> AuthCredentials? {
-        await fetch(forContext: nil)
+    func fetch() -> AuthCredentials? {
+        let cred = await fetch(forContext: nil)
+        saveUsername(username: cred?.username)
+        return cred
     }
 
     func store(_ credentials: AuthCredentials) async throws {
@@ -74,6 +78,8 @@ public class AuthKeychain {
 
     public static let `default`: AuthKeychainHandle = AuthKeychain()
 
+    public var username: String?
+
     public static func fetch() async -> AuthCredentials? {
         await `default`.fetch()
     }
@@ -91,6 +97,10 @@ public class AuthKeychain {
 }
 
 extension AuthKeychain: AuthKeychainHandle {
+    public func saveUsername(username: String?) {
+        self.username = username
+    }
+    
     private var defaultStorageKey: String {
         storageKey(forContext: context) ?? StorageKey.authCredentials
     }
@@ -182,6 +192,7 @@ extension AuthKeychain: AuthKeychainHandle {
 
     public func clear() async {
         await keychain.clear(contextValues: Array<String>(StorageKey.contextKeys.values))
+        saveUsername(username: nil)
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: Self.clearNotification, object: nil, userInfo: nil)
         }
