@@ -46,6 +46,7 @@ final class ViewController: UIViewController {
                                                                          telemetryEnabled: true))
         coordinator.delegate = self
         let vc = coordinator.start()
+        vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
 }
