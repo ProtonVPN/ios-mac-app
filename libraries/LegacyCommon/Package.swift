@@ -86,6 +86,7 @@ let package = Package(
                 .core(module: "DataModel"),
                 .core(module: "Doh"),
                 .core(module: "Environment"),
+                .core(module: "FeatureFlags"),
                 .core(module: "FeatureSwitch"),
                 .core(module: "ForceUpgrade"),
                 .core(module: "Foundations"),

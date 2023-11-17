@@ -26,7 +26,7 @@ import Foundation
 import Theme
 import Ergonomics
 import Strings
-import ProtonCoreFeatureSwitch
+import ProtonCoreFeatureFlags
 import ProtonCoreLoginUI
 
 final class LoginViewController: NSViewController {
@@ -250,7 +250,7 @@ final class LoginViewController: NSViewController {
         loginButton.target = self
         loginButton.action = #selector(loginButtonAction)
         
-        if FeatureFactory.shared.isEnabled(.ssoSignIn) {
+        if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.externalSSO) {
             signInWithSSO.isHidden = false
             loginButtonToSSOButtonVerticalOffset.isActive = true
             signInWithSSO.title = LUITranslation.sign_in_with_sso_button.l10n
@@ -296,7 +296,7 @@ final class LoginViewController: NSViewController {
         case .protonSignin:
             viewModel.logIn(username: usernameTextField.stringValue, password: passwordEntry)
         case .ssoSignin:
-            guard FeatureFactory.shared.isEnabled(.ssoSignIn) else {
+            guard FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.externalSSO) else {
                 assertionFailure("This action should never be called if sso signin is not enabled")
                 return
             }
@@ -373,7 +373,7 @@ final class LoginViewController: NSViewController {
     }
     
     @objc private func signInWithSSOButtonAction() {
-        guard FeatureFactory.shared.isEnabled(.ssoSignIn) else {
+        guard FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.externalSSO) else {
             assertionFailure("This action should never be called if sso signin is not enabled")
             return
         }
