@@ -1,8 +1,19 @@
 {
   "images" : [
     {
-      "filename" : "worldwide-coverage.pdf",
-      "idiom" : "universal"
+      "filename" : "worldwide-coverage.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "worldwide-coverage@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "worldwide-coverage@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {
