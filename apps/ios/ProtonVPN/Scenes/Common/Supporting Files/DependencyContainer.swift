@@ -167,7 +167,7 @@ final class DependencyContainer: Container {
 
 extension DependencyContainer: AppSessionRefreshTimerDelegate {
     func canRefreshAccount() -> Bool {
-        makeAuthKeychainHandle().fetch() != nil
+        makeAuthKeychainHandle().username != nil
     }
 }
 

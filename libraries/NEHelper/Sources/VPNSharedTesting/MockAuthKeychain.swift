@@ -21,11 +21,10 @@ import VPNShared
 
 public class MockAuthKeychain: AuthKeychainHandle {
     public var username: String?
-    
-    public func saveUsername(username: String?) {
-        
-    }
-    
+    public var userId: String?
+
+    public func saveToCache(cred: VPNShared.AuthCredentials?) { }
+
     let defaultContext: AppContext
 
     var credentialsWereStored: (() -> Void)?

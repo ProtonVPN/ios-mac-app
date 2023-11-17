@@ -94,20 +94,19 @@ public final class CoreNetworking: Networking {
             PMAPIService.trustKit = nil
         }
 
-        #if os(iOS)
+#if os(iOS)
         let challengeParametersProvider: ChallengeParametersProvider = .forAPIService(clientApp: .vpn, challenge: PMChallenge())
-        #else
+#else
         let challengeParametersProvider: ChallengeParametersProvider = .empty
-        #endif
+#endif
 
-        if let sessionUID = authKeychain.fetch()?.sessionId ?? unauthKeychain.fetch()?.sessionID {
-            apiService = PMAPIService.createAPIService(
-                doh: doh, sessionUID: sessionUID, challengeParametersProvider: challengeParametersProvider
-            )
-        } else {
-            apiService = PMAPIService.createAPIServiceWithoutSession(
-                doh: doh, challengeParametersProvider: challengeParametersProvider
-            )
+        apiService = PMAPIService.createAPIServiceWithoutSession(
+            doh: doh, challengeParametersProvider: challengeParametersProvider
+        )
+        Task {
+            if let sessionUID = await authKeychain.fetch()?.sessionId ?? unauthKeychain.fetch()?.sessionID {
+                apiService.sessionUID = sessionUID
+            }
         }
 
         apiService.authDelegate = self
@@ -262,22 +261,24 @@ extension CoreNetworking: AuthDelegate {
     }
     
     public func onAdditionalCredentialsInfoObtained(sessionUID: String, password: String?, salt: String?, privateKey: String?) {
-        guard let authCredential = authCredential(sessionUID: sessionUID) else { return }
-        if let password = password {
-            authCredential.update(password: password)
-        }
-        // salt should be associated with a private key. so both need to be valid
-        if let salt = salt, let privateKey = privateKey {
-            authCredential.update(salt: salt, privateKey: privateKey)
-        }
-        do {
-            if authCredential.isForUnauthenticatedSession {
-                unauthKeychain.store(authCredential)
-            } else {
-                try authKeychain.store(AuthCredentials(.init(authCredential)))
+        Task {
+            guard let authCredential = await authCredential(sessionUID: sessionUID) else { return }
+            if let password = password {
+                authCredential.update(password: password)
             }
-        } catch {
-            log.error("Failed to save updated credentials", category: .keychain, event: .change)
+            // salt should be associated with a private key. so both need to be valid
+            if let salt = salt, let privateKey = privateKey {
+                authCredential.update(salt: salt, privateKey: privateKey)
+            }
+            do {
+                if authCredential.isForUnauthenticatedSession {
+                    unauthKeychain.store(authCredential)
+                } else {
+                    try await authKeychain.store(AuthCredentials(.init(authCredential)))
+                }
+            } catch {
+                log.error("Failed to save updated credentials", category: .keychain, event: .change)
+            }
         }
     }
 
@@ -285,7 +286,9 @@ extension CoreNetworking: AuthDelegate {
         // invalidating authenticated session should clear the unauth session as well,
         // because we should fetch a new unauth session afterwards
         unauthKeychain.clear()
-        authKeychain.clear()
+        Task {
+            await authKeychain.clear()
+        }
         delegate.onLogout()
     }
 
@@ -294,25 +297,27 @@ extension CoreNetworking: AuthDelegate {
     }
 
     public func onSessionObtaining(credential: Credential) {
-        do {
-            if credential.isForUnauthenticatedSession {
-                unauthKeychain.store(AuthCredential(credential))
-            } else {
-                try authKeychain.store(AuthCredentials(credential))
-                unauthKeychain.clear()
+        Task {
+            do {
+                if credential.isForUnauthenticatedSession {
+                    unauthKeychain.store(AuthCredential(credential))
+                } else {
+                    try await authKeychain.store(AuthCredentials(credential))
+                    unauthKeychain.clear()
+                }
+            } catch {
+                log.error("Failed to save updated credentials", category: .keychain, event: .change)
             }
-        } catch {
-            log.error("Failed to save updated credentials", category: .keychain, event: .change)
         }
     }
     
-    public func credential(sessionUID: String) -> Credential? {
-        guard let authCredential = authCredential(sessionUID: sessionUID) else { return nil }
+    public func credential(sessionUID: String) async -> Credential? {
+        guard let authCredential = await authCredential(sessionUID: sessionUID) else { return nil }
         return .init(authCredential)
     }
 
-    public func authCredential(sessionUID: String) -> AuthCredential? {
-        if let authCredentials = authKeychain.fetch() {
+    public func authCredential(sessionUID: String) async -> AuthCredential? {
+        if let authCredentials = await authKeychain.fetch() {
             // the app stores credentials in an old format for compatibility reasons, conversion is needed
             return ProtonCoreNetworking.AuthCredential(Credential(authCredentials))
         } else if let unauthCredentials = unauthKeychain.fetch() {
@@ -320,7 +325,6 @@ extension CoreNetworking: AuthDelegate {
         } else {
             return nil
         }
-
     }
 
     public func onLogout(sessionUID: String) {
@@ -329,22 +333,22 @@ extension CoreNetworking: AuthDelegate {
     }
 
     public func onUpdate(credential: Credential, sessionUID: String) {
-        do {
-            if let authCredentials = authKeychain.fetch(),
-                authCredentials.sessionId == sessionUID {
+        Task {
+            do {
+                if let authCredentials = await authKeychain.fetch(),
+                   authCredentials.sessionId == sessionUID {
 
-                try authKeychain.store(authCredentials.updatedWithAuth(auth: credential))
+                    try await authKeychain.store(authCredentials.updatedWithAuth(auth: credential))
 
-            } else if let unauthCredential = unauthKeychain.fetch(),
-                      unauthCredential.sessionID == sessionUID {
+                } else if let unauthCredential = unauthKeychain.fetch(),
+                          unauthCredential.sessionID == sessionUID {
 
-                unauthKeychain.store(AuthCredential(credential))
+                    unauthKeychain.store(AuthCredential(credential))
 
+                }
+            } catch {
+                log.error("Failed to save updated credentials", category: .keychain, event: .change)
             }
-        } catch {
-
-            log.error("Failed to save updated credentials", category: .keychain, event: .change)
-
         }
     }
     
@@ -353,7 +357,9 @@ extension CoreNetworking: AuthDelegate {
 
 extension CoreNetworking: AuthSessionInvalidatedDelegate {
     public func sessionWasInvalidated(for sessionUID: String, isAuthenticatedSession: Bool) {
-        authKeychain.clear()
+        Task {
+            await authKeychain.clear()
+        }
         if isAuthenticatedSession {
             delegate.onLogout()
         }

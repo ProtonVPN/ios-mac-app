@@ -43,7 +43,7 @@ public class DynamicBugReportManager {
         }
     }
     public var prefilledUsername: String {
-        return AuthKeychain.fetch()?.username ?? ""
+        return AuthKeychain.default.username ?? ""
     }
     
     public var closeBugReportHandler: (() -> Void)? // To not have a dependency on windowService

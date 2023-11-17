@@ -45,4 +45,9 @@ actor KeychainActor {
             keychain[data: storageKey] = nil
         }
     }
+    
+    public func remove(_ key: String, ignoringAttributeSynchronizable: Bool = true) throws {
+        try keychain.remove(key, ignoringAttributeSynchronizable: ignoringAttributeSynchronizable)
+    }
+
 }
