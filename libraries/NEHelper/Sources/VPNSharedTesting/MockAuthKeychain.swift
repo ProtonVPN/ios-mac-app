@@ -20,6 +20,12 @@ import Foundation
 import VPNShared
 
 public class MockAuthKeychain: AuthKeychainHandle {
+    public var username: String?
+    
+    public func saveUsername(username: String?) {
+        
+    }
+    
     let defaultContext: AppContext
 
     var credentialsWereStored: (() -> Void)?

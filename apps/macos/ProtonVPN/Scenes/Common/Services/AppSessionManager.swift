@@ -116,7 +116,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     // MARK: private log in implementation (async)
 
     private func attemptLogin() async throws {
-        if authKeychain.fetch() == nil {
+        guard let authCredentials = authKeychain.fetch() else {
             throw ProtonVpnError.userCredentialsMissing
         }
         try await finishLogin()
