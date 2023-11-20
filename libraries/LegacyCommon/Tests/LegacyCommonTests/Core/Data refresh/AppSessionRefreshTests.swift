@@ -55,9 +55,11 @@ class AppSessionRefreshTimerTests: XCTestCase {
         apiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation(), authKeychain: authKeychain)
         appSessionRefresher = AppSessionRefresherMock(factory: self)
         timerFactory = TimerFactoryMock()
-        appSessionRefreshTimer = AppSessionRefreshTimer(factory: self,
-                                                        refreshIntervals: (full: 30, loads: 20, account: 10, streaming: 60, partners: 60))
-        appSessionRefreshTimer.delegate = self
+        appSessionRefreshTimer = AppSessionRefreshTimerImplementation(
+            factory: self,
+            refreshIntervals: (full: 30, loads: 20, account: 10, streaming: 60, partners: 60),
+            delegate: self
+        )
     }
 
     override func tearDown() {
@@ -188,7 +190,7 @@ class AppSessionRefreshTimerTests: XCTestCase {
             XCTFail("Shouldn't call store(credentials:) in start(), timeout interval has not yet passed")
         }
         appSessionRefreshTimer.start(now: true)
-        sleep(1) // give time to make sure API isn't being hit
+        sleep(2) // give time to make sure API isn't being hit
         appSessionRefreshTimer.stop()
     }
 }

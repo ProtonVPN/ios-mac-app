@@ -184,7 +184,7 @@ fileprivate class MacAlertServiceFactoryMock: MacAlertService.Factory {
         return telemetrySettings
     }
 
-    func makeNavigationService() -> ProtonVPN.NavigationService {
+    func makeNavigationService() -> NavigationService {
         return navigationService
     }
 

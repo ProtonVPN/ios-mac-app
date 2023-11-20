@@ -48,7 +48,7 @@ final class DependencyContainer: Container {
 
     // Refreshes app data at predefined time intervals
     private lazy var refreshTimer: AppSessionRefreshTimer = {
-        let result = AppSessionRefreshTimer(
+        let result = AppSessionRefreshTimerImplementation(
             factory: self,
             refreshIntervals: (
                 full: AppConstants.Time.fullServerRefresh,
@@ -56,17 +56,19 @@ final class DependencyContainer: Container {
                 account: AppConstants.Time.userAccountRefresh,
                 streaming: AppConstants.Time.streamingInfoRefresh,
                 partners: AppConstants.Time.partnersInfoRefresh
-            )
+            ),
+            delegate: self
         )
-
-        result.delegate = self
         return result
     }()
 
     // Manages app updates
     private lazy var updateManager = UpdateManager(self)
 
-    private lazy var appCertificateRefreshManager = AppCertificateRefreshManager(appSessionManager: makeAppSessionManager(), vpnAuthenticationStorage: makeVpnAuthenticationStorage())
+    private lazy var appCertificateRefreshManager = AppCertificateRefreshManagerImplementation(
+        appSessionManager: makeAppSessionManager(),
+        vpnAuthenticationStorage: makeVpnAuthenticationStorage()
+    )
 
     private lazy var networkingDelegate: NetworkingDelegate = macOSNetworkingDelegate(alertService: macAlertService) // swiftlint:disable:this weak_delegate
 
