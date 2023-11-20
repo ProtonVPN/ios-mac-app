@@ -186,16 +186,17 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
             fatalError("Server did not change, so nothing should have happened")
         }
 
+        let originalServer = ServerStatusRequest.Logical(id: "logical-original-id",
+                                                         status: 1,
+                                                         servers: [.mock(id: "original-serverip-id", status: 1)])
+        Self.currentLogicalId = originalServer.id
+        Self.currentServerIpId = originalServer.servers.first!.id
+
         manager.updateConnectedIds(logicalId: Self.currentLogicalId, serverId: Self.currentServerIpId)
 
         manager.start { [unowned self] in
             expectations.managerStarted.fulfill()
             timerFactory.runRepeatingTimers {
-                let originalServer = ServerStatusRequest.Logical(id: "logical-original-id",
-                                                                 status: 1,
-                                                                 servers: [.mock(id: "original-serverip-id", status: 1)])
-                Self.currentLogicalId = originalServer.id
-                Self.currentServerIpId = originalServer.servers.first!.id
                 self.serverStatusCallback = self.mockEndpoint(ServerStatusRequest.self,
                                                               result: .success([\.original: originalServer]),
                                                               expectationToFulfill: expectations.secondRequestSucceed)
