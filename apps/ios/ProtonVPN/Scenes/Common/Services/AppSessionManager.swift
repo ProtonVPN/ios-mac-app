@@ -169,8 +169,10 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     func loadDataWithoutLogin(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         Task {
             let shouldRefreshServers = await shouldRefreshServersAccordingToUserTier
+            let appState = await appStateManager.stateThreadSafe
+
             vpnApiService.vpnProperties(
-                isDisconnected: appStateManager.state.isDisconnected,
+                isDisconnected: appState.isDisconnected,
                 lastKnownLocation: propertiesManager.userLocation,
                 serversAccordingToTier: shouldRefreshServers
             ) { [weak self] result in
@@ -262,12 +264,13 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     private func retrievePropertiesAndLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         Task {
             let group = DispatchGroup()
+            let appState = await appStateManager.stateThreadSafe
 
             var vpnPropertiesError: Error?
             group.enter()
             let shouldRefreshServers = await shouldRefreshServersAccordingToUserTier
             vpnApiService.vpnProperties(
-                isDisconnected: appStateManager.state.isDisconnected,
+                isDisconnected: appState.isDisconnected,
                 lastKnownLocation: propertiesManager.userLocation,
                 serversAccordingToTier: shouldRefreshServers
             ) { [weak self] result in
