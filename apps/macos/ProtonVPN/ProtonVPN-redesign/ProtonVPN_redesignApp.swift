@@ -30,7 +30,6 @@ import VPNAppCore
 
 let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 
-@main
 struct ProtonVPNApp: App {
 
     @Environment(\.scenePhase) var scenePhase
