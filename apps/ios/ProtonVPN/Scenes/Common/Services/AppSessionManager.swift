@@ -475,7 +475,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             postNotification(name: sessionChanged, object: reason)
         }
         
-        refreshTimer.start()
+        refreshTimer.start(now: false)
     }
 
     private func postNotification(name: Notification.Name, object: Any?) {

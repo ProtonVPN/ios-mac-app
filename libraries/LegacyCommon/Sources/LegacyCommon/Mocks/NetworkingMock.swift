@@ -13,6 +13,7 @@ import ProtonCoreServices
 import ProtonCoreAuthentication
 import ProtonCoreFoundations
 import VPNShared
+import ProtonCoreEnvironment
 
 public final class NetworkingMock {
     public weak var delegate: NetworkingMockDelegate?
@@ -20,9 +21,16 @@ public final class NetworkingMock {
     var apiURLString = ""
 
     public var apiService: PMAPIService {
-        PMAPIService.createAPIService(doh: DoHVPN(apiHost: "", verifyHost: "", alternativeRouting: false, appState: .disconnected),
+        TrustKitWrapper.setUp()
+        let tk = TrustKitWrapper.current
+
+        PMAPIService.trustKit = tk
+        PMAPIService.noTrustKit = (tk == nil)
+
+        return PMAPIService.createAPIService(doh: DoHVPN(apiHost: "", verifyHost: "", alternativeRouting: false, appState: .disconnected),
                                       sessionUID: "UID",
-                                      challengeParametersProvider: ChallengeParametersProvider.empty)
+                                      challengeParametersProvider: ChallengeParametersProvider.empty
+        )
     }
 
     public var requestCallback: ((URLRequest) -> Result<Data, Error>)?
