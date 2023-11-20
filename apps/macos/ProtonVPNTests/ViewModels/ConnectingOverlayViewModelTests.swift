@@ -30,8 +30,8 @@ class ConnectingOverlayViewModelTests: XCTestCase {
     var viewModel: ConnectingOverlayViewModel!
     var container: ConnectingOverlayViewModelMockFactory!
     
-    override func setUpWithError() throws {
-        try super.setUpWithError()
+    override func setUp() async throws {
+        try await super.setUp()
         container = ConnectingOverlayViewModelMockFactory(vpnGateway: VpnGatewayMock(propertiesManager: PropertiesManagerMock(), activeServerType: .unspecified, connection: .disconnected))
         viewModel = ConnectingOverlayViewModel(factory: container, cancellation: { })
     }

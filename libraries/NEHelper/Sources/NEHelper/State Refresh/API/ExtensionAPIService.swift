@@ -303,7 +303,7 @@ public final class ExtensionAPIService {
                                     handleTokenRefresh: Bool = true,
                                     usingCredentialsFrom context: AppContext = .wireGuardExtension,
                                     asPartOf operation: CertificateRefreshAsyncOperation? = nil,
-                                    retryBlock: @escaping (() -> Void),
+                                    retryBlock: @escaping (() async -> Void) ,
                                     errorHandler: @escaping ((Error) -> Void)) {
         log.error("Encountered error while processing request in \(caller): \(error)")
 
@@ -338,7 +338,9 @@ public final class ExtensionAPIService {
                 errorHandler(CertificateRefreshError.cancelled)
                 return
             }
-            retryBlock()
+            Task {
+                await retryBlock()
+            }
         }
     }
 
@@ -348,7 +350,7 @@ public final class ExtensionAPIService {
                                  handleTokenRefresh: Bool,
                                  usingCredentialsFrom context: AppContext,
                                  asPartOf operation: CertificateRefreshAsyncOperation?,
-                                 retryBlock: @escaping (() -> Void),
+                                 retryBlock: @escaping (() async -> Void),
                                  errorHandler: @escaping ((Error) -> Void)) {
         let retryAfter = { [weak self] (seconds: TimeInterval?) in
             guard let self = self else {
@@ -363,8 +365,9 @@ public final class ExtensionAPIService {
                     errorHandler(CertificateRefreshError.cancelled)
                     return
                 }
-
-                retryBlock()
+                Task {
+                    await retryBlock()
+                }
             }
         }
 
@@ -460,7 +463,9 @@ public final class ExtensionAPIService {
                         return
                     }
 
-                    retryBlock()
+                    Task {
+                        await retryBlock()
+                    }
                 }
             }
         }
@@ -478,7 +483,7 @@ public final class ExtensionAPIService {
     /// refresh the certificate because they're missing from the keychain for whatever reason (most likely an app
     /// upgrade occurred, and the user hasn't launched the app yet).
     private func fetchApiCredentials(allowUsingAppsCredentials: Bool = false) async -> (AuthCredentials, AppContext)? {
-        if let authCredentials = await keychain.fetch() {
+        if let authCredentials = await keychain.fetch() { // here
             log.info("Using extension's API session.")
             return (authCredentials, .wireGuardExtension)
         }
@@ -511,12 +516,12 @@ public final class ExtensionAPIService {
         let serverStatusRequest = ServerStatusRequest(params: .init(logicalId: logicalId, transport: transport))
         let headers: [(APIHeader, String?)] = [(.authorization, "Bearer \(authCredentials.accessToken)"),
                                                (.sessionId, authCredentials.sessionId)]
-        let retryBlock: () -> Void = {
-            Task { [self] in
+        let retryBlock: () async -> Void = {
+//            Task { [self] in
                 await self.refreshServerStatus(logicalId: logicalId,
                                                refreshApiTokenIfNeeded: false,
                                                completionHandler: completionHandler)
-            }
+//            }
         }
         request(serverStatusRequest, headers: headers) { [weak self] result in
             switch result {

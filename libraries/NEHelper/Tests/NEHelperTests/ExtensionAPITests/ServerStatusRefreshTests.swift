@@ -26,8 +26,8 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
 
     var serverDidChange: (([ServerStatusRequest.Logical]) -> ())?
 
-    override func setUpWithError() throws {
-        try super.setUpWithError()
+    override func setUp() async throws {
+        try await super.setUp()
         self.manager = ServerStatusRefreshManager(apiService: apiService,
                                                   timerFactory: timerFactory)
         self.manager.delegate = self

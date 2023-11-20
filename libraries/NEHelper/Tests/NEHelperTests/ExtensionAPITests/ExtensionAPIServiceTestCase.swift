@@ -47,7 +47,7 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
                                                           natType: .moderateNAT,
                                                           safeMode: true)
 
-    /// All callbacks are set to this in `setUpWithError()`
+    /// All callbacks are set to this in `setUp()`
     let failCallback: MockEndpointBlock = { _, _ in
         XCTFail("This test was not supposed to exercise this endpoint, or the endpoint needs to be set.")
     }
@@ -87,7 +87,7 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
         static let internalError = Self(httpError: .internalError, apiError: nil)
     }
 
-    override func setUpWithError() throws {
+    override func setUp() async throws {
         AppContext.default = .wireGuardExtension
 
         mockDataTaskFactory = MockDataTaskFactory { session, request, completionHandler in
@@ -116,13 +116,13 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
         serverStatusCallback = failCallback
 
         keychain = MockAuthKeychain()
-        try! keychain.store(AuthCredentials(username: "johnny",
-                                            accessToken: "12345",
-                                            refreshToken: "54321",
-                                            sessionId: "15213",
-                                            userId: "bravo",
-                                            expiration: Date().addingTimeInterval(60 * 20),
-                                            scopes: []))
+        try! await keychain.store(AuthCredentials(username: "johnny",
+                                                  accessToken: "12345",
+                                                  refreshToken: "54321",
+                                                  sessionId: "15213",
+                                                  userId: "bravo",
+                                                  expiration: Date().addingTimeInterval(60 * 20),
+                                                  scopes: []))
         timerFactory = TimerFactoryMock()
 
         apiService = ExtensionAPIService(timerFactory: timerFactory,

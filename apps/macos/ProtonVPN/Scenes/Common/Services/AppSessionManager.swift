@@ -116,7 +116,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     // MARK: private log in implementation (async)
 
     private func attemptLogin() async throws {
-        guard let authCredentials = authKeychain.fetch() else {
+        guard (await authKeychain.fetch()) != nil else {
             throw ProtonVpnError.userCredentialsMissing
         }
         try await finishLogin()
@@ -124,7 +124,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     private func attemptLogin(with authCredentials: AuthCredentials) async throws {
         do {
-            try authKeychain.store(authCredentials)
+            try await authKeychain.store(authCredentials)
             unauthKeychain.clear()
         } catch {
             throw ProtonVpnError.keychainWriteFailed
@@ -201,7 +201,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             storage.config = clientConfig.serverChangeConfig
         }
         if propertiesManager.featureFlags.pollNotificationAPI {
-            DispatchQueue.main.async { self.announcementRefresher.tryRefreshing() }
+            Task { @MainActor in
+                await self.announcementRefresher.tryRefreshing()
+            }
         }
 
         do {
@@ -315,8 +317,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     private func logOutCleanup() {
         appSessionRefreshTimer.stop()
-
-        authKeychain.clear()
+        Task {
+            await authKeychain.clear()
+        }
         vpnKeychain.clear()
         announcementRefresher.clear()
 
