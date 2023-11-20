@@ -35,7 +35,7 @@ class NWTCPConnectionTests: XCTestCase {
     var connectionTunnelFactory: MockConnectionTunnelFactory!
     var dataTaskFactory: ConnectionTunnelDataTaskFactory!
 
-    override func setUpWithError() throws {
+    override func setUp() async throws {
         // Clear all cookies in our namespace to reset state
         HTTPCookieStorage.shared.removeCookies(since: .init(timeIntervalSince1970: 0))
 

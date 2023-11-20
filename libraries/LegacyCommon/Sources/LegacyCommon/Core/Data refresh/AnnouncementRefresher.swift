@@ -38,9 +38,7 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
     private let factory: Factory
     
     private var coreApiService: CoreApiService {
-        get async {
-            await factory.makeCoreApiService()
-        }
+        factory.makeCoreApiService()
     }
     private lazy var announcementStorage: AnnouncementStorage = factory.makeAnnouncementStorage()
     
@@ -65,18 +63,16 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
     }
 
     @objc private func refresh() {
-        Task { [weak self] in
-            await self?.coreApiService.getApiNotifications { [weak self] result in
-                switch result {
-                case let .success(announcementsResponse):
-                    self?.announcementStorage.store(announcementsResponse.notifications)
-                case let .failure(error):
-                    log.error("Error getting announcements", category: .api, metadata: ["error": "\(error)"])
-                }
+        coreApiService.getApiNotifications { [weak self] result in
+            switch result {
+            case let .success(announcementsResponse):
+                self?.announcementStorage.store(announcementsResponse.notifications)
+            case let .failure(error):
+                log.error("Error getting announcements", category: .api, metadata: ["error": "\(error)"])
             }
         }
     }
-    
+
     public func clear() {
         lastRefreshDate = nil
         announcementStorage.clear()
@@ -85,7 +81,9 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
     @objc func featureFlagsChanged(_ notification: NSNotification) {
         guard let featureFlags = notification.object as? FeatureFlags else { return }
         if featureFlags.pollNotificationAPI {
-            tryRefreshing()
+            Task {
+                await tryRefreshing()
+            }
         } else { // Hide announcements
             clear()
         }

@@ -82,7 +82,7 @@ private class TestRefreshManager: RefreshManager {
 
     var workCallback: (() -> Void)
 
-    override internal func work() {
+    override internal func work() async {
         workCallback()
     }
 

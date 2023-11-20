@@ -108,7 +108,7 @@ class NavigationService {
             return
         }
 
-        guard let username = authKeychain.fetch()?.username else {
+        guard let username = authKeychain.username else {
             return
         }
 
@@ -132,7 +132,7 @@ class NavigationService {
             self.vpnGateway = vpnGateway
             switch appStateManager.state {
             case .disconnected, .aborted:
-                if let username = authKeychain.fetch()?.username, propertiesManager.getAutoConnect(for: username).enabled {
+                if let username = authKeychain.username, propertiesManager.getAutoConnect(for: username).enabled {
                     vpnGateway.autoConnect()
                 }
             default:
