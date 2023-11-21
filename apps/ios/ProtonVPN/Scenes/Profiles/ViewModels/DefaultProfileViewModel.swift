@@ -63,7 +63,7 @@ class DefaultProfileViewModel {
         case .random:
             return Profile(id: "st_r",
                            accessTier: defaultAccessTier,
-                           profileIcon: .image(IconProvider.arrowsSwapRight),
+                           profileIcon: .arrowsSwapRight,
                            profileType: .system,
                            serverType: propertiesManager.serverTypeToggle,
                            serverOffering: serverOffering,
@@ -72,7 +72,7 @@ class DefaultProfileViewModel {
         default:
             return Profile(id: "st_f",
                            accessTier: defaultAccessTier,
-                           profileIcon: .image(IconProvider.bolt),
+                           profileIcon: .bolt,
                            profileType: .system,
                            serverType: propertiesManager.serverTypeToggle,
                            serverOffering: serverOffering,
