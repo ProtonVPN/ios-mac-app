@@ -32,9 +32,9 @@ public struct UpsellEvent: TelemetryEvent, Encodable {
     }
 
     public enum Event: String, Encodable {
-        case display
-        case upgradeAttempt = "upgrade_attempt"
-        case success
+        case display = "upsell_display"
+        case upgradeAttempt = "upsell_upgrade_attempt"
+        case success  = "upsell_success"
     }
 
     public struct Values: Encodable {
