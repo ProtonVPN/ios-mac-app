@@ -144,7 +144,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
         self.vpnApiService.clientCredentials { result in
             switch result {
             case let .success(credentials):
-                self.vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
+                self.vpnKeychain.store(vpnCredentials: credentials)
             case let .failure(error):
                 log.error("RefreshAccount error", category: .app, metadata: ["error": "\(error)"])
             }

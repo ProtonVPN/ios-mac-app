@@ -746,7 +746,7 @@ fileprivate extension VpnGateway {
             self.vpnApiService.clientCredentials { [unowned self] result in
                 switch result {
                 case let .success(credentials):
-                    self.vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
+                    self.vpnKeychain.store(vpnCredentials: credentials)
                     
                     let reconnectInfo = self.reconnectServer(downgradeInfo, oldServer: oldServer)
                     let alert = UserBecameDelinquentAlert(reconnectInfo: reconnectInfo)

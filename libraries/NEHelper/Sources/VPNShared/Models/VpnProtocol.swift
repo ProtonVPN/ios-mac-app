@@ -33,7 +33,7 @@ public enum WireGuardTransport: String, Codable, Equatable, CaseIterable, Sendab
     public static let defaultValue: Self = .udp
 }
 
-public enum VpnProtocol: Equatable, Hashable, CaseIterable, Sendable, Codable {
+public enum VpnProtocol: Equatable, Hashable, CaseIterable, Sendable {
     public static let allCases: [VpnProtocol] = [.ike]
         + OpenVpnTransport.allCases.map(Self.openVpn)
         + WireGuardTransport.allCases.map(Self.wireGuard)

@@ -38,9 +38,6 @@ public class ProfileStorage {
 
     private let authKeychain: AuthKeychainHandle
 
-    private let decoder = JSONDecoder()
-    private let encoder = JSONEncoder()
-
     public typealias Factory = AuthKeychainHandleFactory
 
     public convenience init(_ factory: Factory) {
@@ -85,24 +82,9 @@ public class ProfileStorage {
     
     private func fetchFromMemory(storageKey: String) -> [Profile] {
         @Dependency(\.defaultsProvider) var provider
-        guard let data = provider.getDefaults().data(forKey: storageKey) else {
-            return []
-        }
-        if let userProfiles = try? decoder.decode([Profile].self, from: data) {
+        if let data = provider.getDefaults().data(forKey: storageKey),
+            let userProfiles = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Profile] {
             return userProfiles
-        } else {
-            /// We tried decoding with JSON and failed, let's try to decode from NSKeyedUnarchiver,
-            /// but first let's remove the stored data in case the NSKeyedUnarchiver crashes.
-            /// Next time user launches the app, the credentials will be lost, but at least
-            /// we won't start a crash cycle from which the user can't recover.
-            provider.getDefaults().removeObject(forKey: storageKey)
-            log.info("Removed Profile storage for \(storageKey) key before attempting to unarchive with NSKeyedUnarchiver", category: .persistence)
-        }
-        // Migration - try reading profiles the old way, if successful, overwrite with the new way
-        if let oldUserProfiles = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Profile] {
-            store(oldUserProfiles)
-            log.info("Profile storage for \(storageKey) migration successful!", category: .persistence)
-            return fetch()
         }
         return []
     }
@@ -110,7 +92,7 @@ public class ProfileStorage {
     private func storeInMemory(_ profiles: [Profile], storageKey: String) {
         @Dependency(\.defaultsProvider) var provider
         provider.getDefaults().set(Self.storageVersion, forKey: Self.versionKey)
-        let archivedData = try? encoder.encode(profiles)
+        let archivedData = try? NSKeyedArchiver.archivedData(withRootObject: profiles, requiringSecureCoding: false)
         provider.getDefaults().set(archivedData, forKey: storageKey)
     }
     
