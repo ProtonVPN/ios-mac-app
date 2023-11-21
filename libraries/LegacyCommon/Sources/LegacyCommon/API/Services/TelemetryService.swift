@@ -182,7 +182,7 @@ public class TelemetryServiceImplementation: TelemetryService {
         let daysSinceAccountCreation = Date().timeIntervalSince(accountCreationDate) / .days(1)
 
         let event = UpsellEvent(
-            event: .display,
+            event: event,
             dimensions: .init(
                 modalSource: modalSource,
                 userPlan: accountPlan,
