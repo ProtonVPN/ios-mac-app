@@ -21,7 +21,7 @@
 
 import Foundation
 
-public class AuthCredentials: NSObject, NSSecureCoding, Codable {
+public class AuthCredentials: NSObject, NSSecureCoding {
     static let VERSION: Int = 0 // Current build version.
 
     public static var supportsSecureCoding: Bool = true
@@ -100,5 +100,16 @@ public class AuthCredentials: NSObject, NSSecureCoding, Codable {
                   scopes: scopes)
     }
     
-    public func encode(with aCoder: NSCoder) { }
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(Self.VERSION, forKey: CoderKey.authCacheVersion)
+        aCoder.encode(username, forKey: CoderKey.username)
+        aCoder.encode(accessToken, forKey: CoderKey.accessToken)
+        aCoder.encode(refreshToken, forKey: CoderKey.refreshToken)
+        aCoder.encode(sessionId, forKey: CoderKey.sessionId)
+        aCoder.encode(userId, forKey: CoderKey.userId)
+        aCoder.encode(expiration, forKey: CoderKey.expiration)
+        
+        let scopesData = try? NSKeyedArchiver.archivedData(withRootObject: scopes, requiringSecureCoding: true)
+        aCoder.encode(scopesData, forKey: CoderKey.scopes)
+    }
 }

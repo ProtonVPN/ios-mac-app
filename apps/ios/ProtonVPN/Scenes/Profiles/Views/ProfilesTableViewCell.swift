@@ -39,10 +39,6 @@ class ProfilesTableViewCell: UITableViewCell {
             switch viewModel.icon {
             case .image(let name):
                 profileImage.image = name
-            case .arrowsSwapRight:
-                profileImage.image = IconProvider.arrowsSwapRight
-            case .bolt:
-                profileImage.image = IconProvider.bolt
             case .circle(let color):
                 profileImage.backgroundColor = UIColor(rgbHex: color)
                 profileImage.layer.cornerRadius = 10

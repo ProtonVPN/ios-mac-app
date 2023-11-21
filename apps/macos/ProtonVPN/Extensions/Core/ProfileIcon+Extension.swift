@@ -23,17 +23,12 @@
 import Foundation
 import LegacyCommon
 import AppKit
-import ProtonCoreUIFoundations
 
 extension ProfileIcon {
     func attributedAttachment(width: Int = 12) -> NSAttributedString {
         switch self {
         case .image(let image):
             return image.asAttachment(style: .normal, size: .square(CGFloat(width)))
-        case .arrowsSwapRight:
-            return IconProvider.arrowsSwapRight.asAttachment(style: .normal, size: .square(CGFloat(width)))
-        case .bolt:
-            return IconProvider.bolt.asAttachment(style: .normal, size: .square(CGFloat(width)))
         case .circle(let color):
             let profileCircle = ProfileCircle(frame: CGRect(x: 0, y: 0, width: width, height: width))
             profileCircle.profileColor = NSColor(rgbHex: color)
@@ -44,5 +39,10 @@ extension ProfileIcon {
             attachment.attachmentCell = attachmentCell
             return NSAttributedString(attachment: attachment)
         }
+    }
+
+    var icon: NSImage? {
+        guard case let .image(image) = self else { return nil }
+        return image
     }
 }
