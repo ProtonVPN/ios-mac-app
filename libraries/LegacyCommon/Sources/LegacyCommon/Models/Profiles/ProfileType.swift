@@ -21,7 +21,7 @@
 
 import Foundation
 
-public enum ProfileType: Equatable, Codable {
+public enum ProfileType: Equatable {
     
     case system
     case user
@@ -50,5 +50,14 @@ public enum ProfileType: Equatable, Codable {
         }
     }
     
-    public func encode(with aCoder: NSCoder) { }
+    public func encode(with aCoder: NSCoder) {
+        var data = Data(count: 1)
+        switch self {
+        case .system:
+            data[0] = 0
+        case .user:
+            data[0] = 1
+        }
+        aCoder.encode(data, forKey: CoderKey.profileType)
+    }
 }

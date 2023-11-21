@@ -54,7 +54,7 @@ public enum ProfileConstants {
         Profile(
             id: fastestId,
             accessTier: defaultProfileAccessTier,
-            profileIcon: .bolt,
+            profileIcon: .image(IconProvider.bolt),
             profileType: .system,
             serverType: .unspecified,
             serverOffering: .fastest(nil),
@@ -68,7 +68,7 @@ public enum ProfileConstants {
         Profile(
             id: randomId,
             accessTier: 0,
-            profileIcon: .arrowsSwapRight,
+            profileIcon: .image(IconProvider.arrowsSwapRight),
             profileType: .system,
             serverType: .unspecified,
             serverOffering: .random(nil),

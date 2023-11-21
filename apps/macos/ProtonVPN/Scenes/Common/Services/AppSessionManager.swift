@@ -178,7 +178,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         }
 
         if let credentials = properties.vpnCredentials {
-            vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
+            vpnKeychain.store(vpnCredentials: credentials)
             self.serverStorage.store(
                 properties.serverModels,
                 keepStalePaidServers: shouldRefreshServersAccordingToUserTier && credentials.maxTier == CoreAppConstants.VpnTiers.free
