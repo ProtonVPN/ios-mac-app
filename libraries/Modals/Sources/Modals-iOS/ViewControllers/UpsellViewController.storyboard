@@ -13,7 +13,7 @@
         <scene sceneID="L6f-7N-qhx">
             <objects>
                 <viewController storyboardIdentifier="Upsell" id="k5o-6U-yBH" customClass="UpsellViewController" customModule="Modals_iOS" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="n0X-8h-XkL">
+                    <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="n0X-8h-XkL">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -121,10 +121,10 @@
                                 <viewLayoutGuide key="frameLayoutGuide" id="qbl-gt-UXf"/>
                             </scrollView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="dK9-Gz-Kpq">
-                                <rect key="frame" x="16" y="778" width="382" height="68"/>
+                                <rect key="frame" x="20" y="778" width="374" height="68"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FHs-vS-yIf">
-                                        <rect key="frame" x="0.0" y="0.0" width="382" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="30"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Button"/>
                                         <connections>
@@ -132,7 +132,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Drn-mU-Dle">
-                                        <rect key="frame" x="0.0" y="38" width="382" height="30"/>
+                                        <rect key="frame" x="0.0" y="38" width="374" height="30"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Button"/>
                                         <connections>
@@ -145,12 +145,12 @@
                         <viewLayoutGuide key="safeArea" id="Oow-8b-WVq"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Oow-8b-WVq" firstAttribute="trailing" secondItem="dK9-Gz-Kpq" secondAttribute="trailing" constant="16" id="1FS-g6-Hzu"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="dK9-Gz-Kpq" secondAttribute="trailing" id="1FS-g6-Hzu"/>
                             <constraint firstItem="dK9-Gz-Kpq" firstAttribute="topMargin" secondItem="dqS-16-vVf" secondAttribute="bottom" constant="8" id="6Ed-Bd-wv2"/>
                             <constraint firstItem="dqS-16-vVf" firstAttribute="leading" secondItem="Oow-8b-WVq" secondAttribute="leading" id="6Oo-xx-sqH"/>
                             <constraint firstItem="dqS-16-vVf" firstAttribute="top" secondItem="n0X-8h-XkL" secondAttribute="top" id="FLi-gE-XOg"/>
                             <constraint firstItem="Oow-8b-WVq" firstAttribute="trailing" secondItem="dqS-16-vVf" secondAttribute="trailing" id="POL-9H-9aD"/>
-                            <constraint firstItem="dK9-Gz-Kpq" firstAttribute="leading" secondItem="Oow-8b-WVq" secondAttribute="leading" constant="16" id="d9y-tX-xAq"/>
+                            <constraint firstItem="dK9-Gz-Kpq" firstAttribute="leading" secondItem="n0X-8h-XkL" secondAttribute="leadingMargin" id="d9y-tX-xAq"/>
                             <constraint firstItem="Oow-8b-WVq" firstAttribute="bottom" secondItem="dK9-Gz-Kpq" secondAttribute="bottom" constant="16" id="g2V-bl-IZD"/>
                             <constraint firstItem="dqS-16-vVf" firstAttribute="centerX" secondItem="n0X-8h-XkL" secondAttribute="centerX" id="mcr-zf-Kji"/>
                         </constraints>
