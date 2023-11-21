@@ -25,25 +25,13 @@ import UIKit
 import Cocoa
 #endif
 
-public enum ProfileIcon: Codable {
-
-    case bolt
-    case arrowsSwapRight
-    case image(Image) //left for historical reasons, used for migration
+public enum ProfileIcon {
+    
+    case image(Image)
     case circle(Int) // rgb color in hexadecimal
-
-    enum CodingKeys: CodingKey {
-        case bolt
-        case arrowsSwapRight
-        case circle
-    }
-
+    
     public var description: String {
         switch self {
-        case .bolt:
-            return "Image - bolt"
-        case .arrowsSwapRight:
-            return "Image - arrowsSwapRight"
         case .image(let name):
             return "Image - \(name)"
         case .circle(let color):
@@ -74,5 +62,20 @@ public enum ProfileIcon: Codable {
         }
     }
     
-    public func encode(with aCoder: NSCoder) { }
+    public func encode(with aCoder: NSCoder) {
+        var data = Data(count: 1)
+        switch self {
+        case .image(let image):
+            data[0] = 0
+            aCoder.encode(image, forKey: CoderKey.image)
+        case .circle(let color):
+            data[0] = 1
+            #if canImport(UIKit)
+            aCoder.encode(UIColor(rgbHex: color), forKey: CoderKey.color)
+            #elseif canImport(Cocoa)
+            aCoder.encode(NSColor(rgbHex: color), forKey: CoderKey.color)
+            #endif
+        }
+        aCoder.encode(data, forKey: CoderKey.profileIcon)
+    }
 }

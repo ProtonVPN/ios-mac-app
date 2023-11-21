@@ -23,7 +23,6 @@
 import Cocoa
 import LegacyCommon
 import Strings
-import ProtonCoreUIFoundations
 
 class OverviewItemView: NSTableRowView {
     
@@ -72,14 +71,8 @@ class OverviewItemView: NSTableRowView {
     
     private func setupImage() {
         switch viewModel.icon {
-        case .image(let image):
-            profileImage.image = image.colored()
-        case .bolt:
-            profileImage.image = IconProvider.bolt.colored()
-            profileImage.isHidden = false
-            profileCircle.isHidden = true
-        case .arrowsSwapRight:
-            profileImage.image = IconProvider.arrowsSwapRight.colored()
+        case .image:
+            profileImage.image = viewModel.icon.icon?.colored()
             profileImage.isHidden = false
             profileCircle.isHidden = true
         case .circle(let color):

@@ -555,7 +555,7 @@ public class AppStateManagerImplementation: AppStateManager {
                 let accountPlan = rVpnCredentials?.accountPlan ?? vpnCredentials.accountPlan
                 self.maxSessionsReached(accountPlan: accountPlan)
             } else if let newVpnCredentials = rVpnCredentials, newVpnCredentials.password != vpnCredentials.password {
-                self.vpnKeychain.storeAndDetectDowngrade(vpnCredentials: newVpnCredentials)
+                self.vpnKeychain.store(vpnCredentials: newVpnCredentials)
                 guard let lastConfiguration = self.lastAttemptedConfiguration else {
                     return
                 }
