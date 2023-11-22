@@ -23,6 +23,7 @@ import Foundation
 import LegacyCommon
 import UIKit
 import ProtonCoreAccountDeletion
+import ProtonCoreFeatureFlags
 import ProtonCoreNetworking
 import VPNShared
 import Strings
@@ -97,7 +98,11 @@ final class SettingsAccountViewModel {
         ]
         if allowUpgrade {
             cells.append(TableViewCellModel.button(title: Localizable.upgradeSubscription, accessibilityIdentifier: "Upgrade Subscription", color: .brandColor(), handler: { [weak self] in
-                self?.buySubscriptionAction()
+                if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.dynamicPlan) {
+                    self?.manageSubscriptionAction()
+                } else {
+                    self?.buySubscriptionAction()
+                }
             }))
         }
         if allowPlanManagement {
@@ -142,7 +147,7 @@ final class SettingsAccountViewModel {
         return TableViewSection(title: "", cells: cells)
     }
     
-    /// Open modal with new plan selection (for free/trial users)
+    /// Open modal with new plan selection (for free/trial users and non-renewing plans)
     private func buySubscriptionAction() {
         planService.presentPlanSelection()
     }
