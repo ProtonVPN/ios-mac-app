@@ -354,7 +354,7 @@ extension AppDelegate {
                     try await FeatureFlagsRepository.shared.fetchFlags()
                 }
             case .failure(let error):
-                log.error("acquireSessionIfNeeded didn't succeed and therefore feature flags didn't get fetched: \(error)")
+                log.error("acquireSessionIfNeeded didn't succeed and therefore feature flags didn't get fetched", category: .api, event: .response, metadata: ["error": "\(error)"])
             default:
                 break
             }
