@@ -33,7 +33,7 @@ import ProtonCoreServices
 import ProtonCoreLog
 import ProtonCoreUIFoundations
 import ProtonCoreEnvironment
-import ProtonCoreFeatureSwitch
+import ProtonCoreFeatureFlags
 import ProtonCoreObservability
 import ProtonCoreCryptoVPNPatchedGoImplementation
 
@@ -345,8 +345,19 @@ extension AppDelegate {
         }
 
         let apiService = container.makeNetworking().apiService
-        apiService.acquireSessionIfNeeded { _ in
-            /* the result doesn't require any handling */
+        apiService.acquireSessionIfNeeded { result in
+            switch result {
+            case .success(.sessionAlreadyPresent(let authCredential)), .success(.sessionFetchedAndAvailable(let authCredential)):
+                FeatureFlagsRepository.shared.setApiService(with: apiService)
+                FeatureFlagsRepository.shared.setUserId(with: authCredential.userID)
+                Task {
+                    try await FeatureFlagsRepository.shared.fetchFlags()
+                }
+            case .failure(let error):
+                log.error("acquireSessionIfNeeded didn't succeed and therefore feature flags didn't get fetched: \(error)")
+            default:
+                break
+            }
         }
         ObservabilityEnv.current.setupWorld(requestPerformer: apiService)
     }
