@@ -16,9 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#import <Cocoa/Cocoa.h>
+// `NSApplicationMain` doesn't want to work with our redesigned app
+// (or probably with fully SwiftUI app).
+#if !REDESIGN
 
-void runAppUsingAppDelegateStub(NSString *);
+#import <Cocoa/Cocoa.h>
 
 int main(int argc, char *argv[])
 {
@@ -35,3 +37,5 @@ int main(int argc, char *argv[])
         return NSApplicationMain(argc, (const char **) argv);
     }
 }
+
+#endif
