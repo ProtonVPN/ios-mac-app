@@ -143,7 +143,6 @@ extension AppReducer.State {
 }
 
 #if REDESIGN
-@main
 struct ProtonVPNApp: App {
     /// This delegates the app lifecycle events to the old `AppDelegate`. Once we have a working redesign we can start moving away from `AppDelegate`
     /// Until then it's the safest option to keep the functionality intact.

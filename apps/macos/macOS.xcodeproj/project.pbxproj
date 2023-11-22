@@ -3951,6 +3951,10 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"REDESIGN=$(REDESIGN)",
+				);
 				INFOPLIST_FILE = ProtonVPN/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4551,6 +4555,11 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"REDESIGN=$(REDESIGN)",
+				);
 				INFOPLIST_FILE = ProtonVPN/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4594,6 +4603,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = "REDESIGN=$(REDESIGN)";
 				INFOPLIST_FILE = ProtonVPN/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
