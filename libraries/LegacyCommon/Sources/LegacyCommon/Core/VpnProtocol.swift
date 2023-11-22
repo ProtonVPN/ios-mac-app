@@ -157,17 +157,7 @@ extension VpnProtocol {
     }
     
     public func encode(with aCoder: NSCoder) {
-        var data = Data(count: 1)
-        switch self {
-        case .ike:
-            data[0] = 0
-        case .openVpn(let transportProtocol):
-            data[0] = 1
-            transportProtocol.encode(with: aCoder)
-        case .wireGuard:
-            data[0] = 2
-        }
-        aCoder.encode(data, forKey: CoderKey.vpnProtocol)
+        assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
 }
 
@@ -193,16 +183,8 @@ extension OpenVpnTransport {
     }
 
     public func encode(with aCoder: NSCoder) {
-        var data = Data(count: 1)
-        switch self {
-        case .tcp:
-            data[0] = 0
-        case .udp:
-            data[0] = 1
-        }
-        aCoder.encode(data, forKey: CoderKey.transportProtocol)
-    }
-}
+        assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
+    }}
 
 extension WireGuardTransport {
 
@@ -228,15 +210,5 @@ extension WireGuardTransport {
     }
 
     public func encode(with aCoder: NSCoder) {
-        var data = Data(count: 1)
-        switch self {
-        case .tcp:
-            data[0] = 0
-        case .udp:
-            data[0] = 1
-        case .tls:
-            data[0] = 2
-        }
-        aCoder.encode(data, forKey: CoderKey.transportProtocol)
-    }
-}
+        assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
+    }}

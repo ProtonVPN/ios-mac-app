@@ -79,7 +79,7 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
             return ConnectionRequest(serverType: serverType, connectionType: .country(serverWrapper.server.countryCode, .server(serverWrapper.server)), connectionProtocol: connectionProtocol, netShieldType: netShield, natType: natType, safeMode: safeMode, profileId: id, trigger: trigger)
         }
     }
-
+    
     public init(
         id: String,
         accessTier: Int,
@@ -179,8 +179,10 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
             lastConnectedDate: date
         )
     }
-    public func encode(with aCoder: NSCoder) { }
-
+    public func encode(with aCoder: NSCoder) {
+        assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
+    }
+    
     public func copyWith(newNetShieldType type: NetShieldType) -> Profile {
         Profile(
             id: id,

@@ -24,7 +24,7 @@ import VPNShared
 import VPNAppCore
 import Strings
 
-public class ServerModel: NSObject, Codable {
+public class ServerModel: NSObject, NSCoding, Codable {
     
     public let id: String
     public let name: String
@@ -262,6 +262,65 @@ public class ServerModel: NSObject, Codable {
         load = continuousProperties.load
         score = continuousProperties.score
         status = continuousProperties.status
+    }
+    
+    // MARK: - NSCoding
+    
+    private enum CoderKey: String, CodingKey {
+        case id = "id"
+        case name = "name"
+        case domain = "domain"
+        case load = "load"
+        case entryCountryCode = "entryCountryCode"
+        case exitCountryCode = "exitCountryCode"
+        case tier = "tier"
+        case location = "location"
+        case ips = "ips"
+        case secureCore = "secureCore"
+        case score = "score"
+        case status = "status"
+        case features = "features"
+        case city = "city"
+        case hostCountry = "hostCountry"
+        case translatedCity = "translatedCity"
+        case gatewayName = "gatewayName"
+    }
+    
+    public required convenience init(coder aDecoder: NSCoder) {
+        var ips: [ServerIp] = []
+        if let ipsData = aDecoder.decodeObject(forKey: CoderKey.ips.rawValue) as? Data {
+            ips = NSKeyedUnarchiver.unarchiveObject(with: ipsData) as? [ServerIp] ?? []
+        }
+        let feature = ServerFeature(rawValue: aDecoder.decodeInteger(forKey: CoderKey.features.rawValue))
+        
+        var location: ServerLocation = ServerLocation(lat: 0.0, long: 0.0)
+        if let locationData = aDecoder.decodeObject(forKey: CoderKey.location.rawValue) as? Data {
+            if let loc = (NSKeyedUnarchiver.unarchiveObject(with: locationData) as? ServerLocation) {
+                location = loc
+            }
+        }
+        
+        self.init(id: aDecoder.decodeObject(forKey: CoderKey.id.rawValue) as! String,
+                  name: aDecoder.decodeObject(forKey: CoderKey.name.rawValue) as! String,
+                  domain: aDecoder.decodeObject(forKey: CoderKey.domain.rawValue) as! String,
+                  load: aDecoder.decodeInteger(forKey: CoderKey.load.rawValue),
+                  entryCountryCode: aDecoder.decodeObject(forKey: CoderKey.entryCountryCode.rawValue) as! String,
+                  exitCountryCode: aDecoder.decodeObject(forKey: CoderKey.exitCountryCode.rawValue) as! String,
+                  tier: aDecoder.decodeInteger(forKey: CoderKey.tier.rawValue),
+                  feature: feature,
+                  city: aDecoder.decodeObject(forKey: CoderKey.city.rawValue) as? String,
+                  ips: ips,
+                  score: aDecoder.decodeDouble(forKey: CoderKey.score.rawValue),
+                  status: aDecoder.decodeInteger(forKey: CoderKey.status.rawValue),
+                  location: location,
+                  hostCountry: aDecoder.decodeObject(forKey: CoderKey.hostCountry.rawValue) as? String,
+                  translatedCity: aDecoder.decodeObject(forKey: CoderKey.translatedCity.rawValue) as? String,
+                  gatewayName: aDecoder.decodeObject(forKey: CoderKey.gatewayName.rawValue) as? String
+        )
+    }
+    
+    public func encode(with aCoder: NSCoder) {
+        assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
 
     // MARK: - Static functions

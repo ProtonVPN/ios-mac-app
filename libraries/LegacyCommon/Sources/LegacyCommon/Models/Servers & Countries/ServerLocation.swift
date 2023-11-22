@@ -22,8 +22,8 @@
 import Foundation
 import VPNShared
 
-public class ServerLocation: NSObject, Codable {
-
+public class ServerLocation: NSObject, NSCoding, Codable {
+    
     public let lat: Double
     public let long: Double
     
@@ -57,5 +57,14 @@ public class ServerLocation: NSObject, Codable {
     private struct CoderKey {
         static let lat = "latKey"
         static let long = "longKey"
+    }
+    
+    public required convenience init?(coder aDecoder: NSCoder) {
+        self.init(lat: aDecoder.decodeDouble(forKey: CoderKey.lat),
+                  long: aDecoder.decodeDouble(forKey: CoderKey.long))
+    }
+    
+    public func encode(with aCoder: NSCoder) {
+        assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
 }

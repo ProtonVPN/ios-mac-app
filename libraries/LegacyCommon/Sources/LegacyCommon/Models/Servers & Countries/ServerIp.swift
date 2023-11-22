@@ -23,7 +23,7 @@ import Foundation
 import VPNShared
 import VPNAppCore
 
-public class ServerIp: NSObject, Codable {
+public class ServerIp: NSObject, NSCoding, Codable {
     public let id: String // "ID": "l8vWAXHBQNSQjPrxAr-D_BCxj1X0nW70HQRmAa-rIvzmKUA=="
     public let entryIp: String? // "EntryIP": "95.215.61.163"
     public let exitIp: String // "ExitIP": "95.215.61.164"
@@ -145,7 +145,33 @@ public class ServerIp: NSObject, Codable {
         case x25519PublicKey = "x25519PublicKey"
         case protocolEntries = "entryPerProtocol"
     }
+    
+    public required convenience init?(coder aDecoder: NSCoder) {
+        guard let id = aDecoder.decodeObject(forKey: CoderKey.ID.rawValue) as? String,
+            let entryIp = aDecoder.decodeObject(forKey: CoderKey.entryIp.rawValue) as? String,
+            let exitIp = aDecoder.decodeObject(forKey: CoderKey.exitIp.rawValue) as? String,
+            let domain = aDecoder.decodeObject(forKey: CoderKey.domain.rawValue) as? String else {
+                return nil
+        }
+        let status = aDecoder.decodeInteger(forKey: CoderKey.status.rawValue)
+        let label = aDecoder.decodeObject(forKey: CoderKey.label.rawValue) as? String
+        let x25519PublicKey = aDecoder.decodeObject(forKey: CoderKey.x25519PublicKey.rawValue) as? String
+        let protocolEntries = aDecoder.decodeObject(forKey: CoderKey.protocolEntries.rawValue) as? PerProtocolEntries
 
+        self.init(id: id,
+                  entryIp: entryIp,
+                  exitIp: exitIp,
+                  domain: domain,
+                  status: status,
+                  label: label,
+                  x25519PublicKey: x25519PublicKey,
+                  protocolEntries: protocolEntries)
+    }
+    
+    public func encode(with aCoder: NSCoder) {
+        assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
+    }
+    
     public var underMaintenance: Bool {
         return status == 0
     }

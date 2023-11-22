@@ -80,9 +80,9 @@ public class VpnKeychain: VpnKeychainProtocol {
         static let wireguardSettings = "ProtonVPN_wg_settings"
         static let widgetPublicKey = "ch.proton.vpn.widget.public_key"
     }
-
+    
     private let appKeychain = Keychain(service: KeychainConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly)
-
+    
     public static let vpnCredentialsChanged = Notification.Name("VpnKeychainCredentialsChanged")
     public static let vpnPlanChanged = Notification.Name("VpnKeychainPlanChanged")
     public static let vpnUserDelinquent = Notification.Name("VpnUserDelinquent")
@@ -97,7 +97,7 @@ public class VpnKeychain: VpnKeychainProtocol {
     private let encoder = JSONEncoder()
 
     private var cached: CachedVpnCredentials?
-
+    
     public func fetch() throws -> VpnCredentials {
         let data: Data
         do {
@@ -119,7 +119,7 @@ public class VpnKeychain: VpnKeychainProtocol {
             }
             log.error("Keychain (vpn) read error", category: .keychain, metadata: ["error": "\(error)"])
         }
-
+        
         let error = ProtonVpnError.vpnCredentialsMissing
         log.error("Error while fetching open vpn credentials from the keychain", category: .keychain, metadata: ["error": "\(error)"])
         throw error
