@@ -67,24 +67,4 @@ extension NetShieldType {
             return [.netShieldLevel2]
         }
     }
-    
-    // MARK: - NSCoding
-    
-    private enum CoderKey: String, CodingKey {
-        case netShieldType = "NetShieldType"
-    }
-        
-    public func encode(with aCoder: NSCoder) {
-        var data = Data(count: 1)
-        data[0] = UInt8(self.rawValue)
-        aCoder.encode(data, forKey: CoderKey.netShieldType.rawValue)
-    }
-    
-    public static func decodeIfPresent(coder aDecoder: NSCoder) -> NetShieldType? {
-        guard let data = aDecoder.decodeObject(forKey: CoderKey.netShieldType.rawValue) as? Data else {
-            return nil
-        }
-        return NetShieldType.init(rawValue: Int(data[0]))
-    }
-    
 }

@@ -100,5 +100,7 @@ public class AuthCredentials: NSObject, NSSecureCoding, Codable {
                   scopes: scopes)
     }
     
-    public func encode(with aCoder: NSCoder) { }
+    public func encode(with aCoder: NSCoder) {
+        assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
+    }
 }
