@@ -320,43 +320,36 @@ public class ServerModel: NSObject, NSCoding, Codable {
     }
     
     public func encode(with aCoder: NSCoder) {
-        aCoder.encode(id, forKey: CoderKey.id.rawValue)
-        aCoder.encode(name, forKey: CoderKey.name.rawValue)
-        aCoder.encode(domain, forKey: CoderKey.domain.rawValue)
-        aCoder.encode(load, forKey: CoderKey.load.rawValue)
-        aCoder.encode(entryCountryCode, forKey: CoderKey.entryCountryCode.rawValue)
-        aCoder.encode(exitCountryCode, forKey: CoderKey.exitCountryCode.rawValue)
-        aCoder.encode(tier, forKey: CoderKey.tier.rawValue)
-        aCoder.encode(score, forKey: CoderKey.score.rawValue)
-        aCoder.encode(status, forKey: CoderKey.status.rawValue)
-        aCoder.encode(feature.rawValue, forKey: CoderKey.features.rawValue)
-        aCoder.encode(city, forKey: CoderKey.city.rawValue)
-        
-        let ipsData = try? NSKeyedArchiver.archivedData(withRootObject: ips, requiringSecureCoding: false)
-        let locationData = try? NSKeyedArchiver.archivedData(withRootObject: location, requiringSecureCoding: false)
-        
-        aCoder.encode(ipsData, forKey: CoderKey.ips.rawValue)
-        aCoder.encode(locationData, forKey: CoderKey.location.rawValue)
-
-        aCoder.encode(hostCountry, forKey: CoderKey.hostCountry.rawValue)
-
-        aCoder.encode(translatedCity, forKey: CoderKey.translatedCity.rawValue)
-        aCoder.encode(gatewayName, forKey: CoderKey.gatewayName.rawValue)
+        assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
     
     // MARK: - Codable
     
     public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CoderKey.self)
-        
-        let ipsData = try container.decode(Data.self, forKey: CoderKey.ips)
-        let ips: [ServerIp] = NSKeyedUnarchiver.unarchiveObject(with: ipsData) as? [ServerIp] ?? []
+
+        let ips: [ServerIp]
+        if let decodedIPs = try? container.decode([ServerIp].self, forKey: CoderKey.ips) {
+            ips = decodedIPs
+        } else if let ipsData = try? container.decode(Data.self, forKey: CoderKey.ips),
+                  let unarchivedObject = NSKeyedUnarchiver.unarchiveObject(with: ipsData) as? [ServerIp] {
+            ips = unarchivedObject
+        } else {
+            ips = []
+        }
 
         let feature = ServerFeature(rawValue: try container.decode(Int.self, forKey: CoderKey.features))
-        
-        let locationData = try container.decode(Data.self, forKey: CoderKey.location)
-        let location = (NSKeyedUnarchiver.unarchiveObject(with: locationData) as? ServerLocation) ?? ServerLocation(lat: 0, long: 0)
-        
+
+        let location: ServerLocation
+        if let decodedLocation = try? container.decode(ServerLocation.self, forKey: CoderKey.location) {
+            location = decodedLocation
+        } else if let locationData = try? container.decode(Data.self, forKey: CoderKey.location),
+                  let unarchivedObject = try? NSKeyedUnarchiver.unarchivedObject(ofClass: ServerLocation.self, from: locationData) {
+            location = unarchivedObject
+        } else {
+            location = ServerLocation(lat: 0, long: 0)
+        }
+
         self.init(id: try container.decode(String.self, forKey: CoderKey.id),
                   name: try container.decode(String.self, forKey: CoderKey.name),
                   domain: try container.decode(String.self, forKey: CoderKey.domain),
@@ -374,33 +367,6 @@ public class ServerModel: NSObject, NSCoding, Codable {
                   translatedCity: try container.decodeIfPresent(String.self, forKey: CoderKey.translatedCity),
                   gatewayName: try container.decodeIfPresent(String.self, forKey: CoderKey.gatewayName)
         )
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CoderKey.self)
-        
-        try container.encode(id, forKey: .id)
-        try container.encode(name, forKey: .name)
-        try container.encode(domain, forKey: .domain)
-        try container.encode(load, forKey: .load)
-        try container.encode(entryCountryCode, forKey: .entryCountryCode)
-        try container.encode(exitCountryCode, forKey: .exitCountryCode)
-        try container.encode(tier, forKey: .tier)
-        try container.encode(score, forKey: .score)
-        try container.encode(status, forKey: .status)
-        try container.encode(feature.rawValue, forKey: .features)
-        try container.encode(city, forKey: .city)
-        
-        let ipsData = try? NSKeyedArchiver.archivedData(withRootObject: ips, requiringSecureCoding: false)
-        let locationData = try? NSKeyedArchiver.archivedData(withRootObject: location, requiringSecureCoding: false)
-        
-        try container.encode(ipsData, forKey: .ips)
-        try container.encode(locationData, forKey: .location)
-
-        try container.encode(hostCountry, forKey: .hostCountry)
-
-        try container.encode(translatedCity, forKey: .translatedCity)
-        try container.encode(gatewayName, forKey: .gatewayName)
     }
     
     // MARK: - Static functions
