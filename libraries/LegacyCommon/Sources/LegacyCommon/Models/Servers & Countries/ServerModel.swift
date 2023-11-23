@@ -322,7 +322,53 @@ public class ServerModel: NSObject, NSCoding, Codable {
     public func encode(with aCoder: NSCoder) {
         assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
+    
+    // MARK: - Codable
+    
+    public required convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CoderKey.self)
 
+        let ips: [ServerIp]
+        if let decodedIPs = try? container.decode([ServerIp].self, forKey: CoderKey.ips) {
+            ips = decodedIPs
+        } else if let ipsData = try? container.decode(Data.self, forKey: CoderKey.ips),
+                  let unarchivedObject = NSKeyedUnarchiver.unarchiveObject(with: ipsData) as? [ServerIp] {
+            ips = unarchivedObject
+        } else {
+            ips = []
+        }
+
+        let feature = ServerFeature(rawValue: try container.decode(Int.self, forKey: CoderKey.features))
+
+        let location: ServerLocation
+        if let decodedLocation = try? container.decode(ServerLocation.self, forKey: CoderKey.location) {
+            location = decodedLocation
+        } else if let locationData = try? container.decode(Data.self, forKey: CoderKey.location),
+                  let unarchivedObject = try? NSKeyedUnarchiver.unarchivedObject(ofClass: ServerLocation.self, from: locationData) {
+            location = unarchivedObject
+        } else {
+            location = ServerLocation(lat: 0, long: 0)
+        }
+
+        self.init(id: try container.decode(String.self, forKey: CoderKey.id),
+                  name: try container.decode(String.self, forKey: CoderKey.name),
+                  domain: try container.decode(String.self, forKey: CoderKey.domain),
+                  load: try container.decode(Int.self, forKey: CoderKey.load),
+                  entryCountryCode: try container.decode(String.self, forKey: CoderKey.entryCountryCode),
+                  exitCountryCode: try container.decode(String.self, forKey: CoderKey.exitCountryCode),
+                  tier: try container.decode(Int.self, forKey: CoderKey.tier),
+                  feature: feature,
+                  city: try container.decodeIfPresent(String.self, forKey: CoderKey.city),
+                  ips: ips,
+                  score: try container.decode(Double.self, forKey: CoderKey.score),
+                  status: try container.decode(Int.self, forKey: CoderKey.status),
+                  location: location,
+                  hostCountry: try container.decodeIfPresent(String.self, forKey: CoderKey.hostCountry),
+                  translatedCity: try container.decodeIfPresent(String.self, forKey: CoderKey.translatedCity),
+                  gatewayName: try container.decodeIfPresent(String.self, forKey: CoderKey.gatewayName)
+        )
+    }
+    
     // MARK: - Static functions
     
     // swiftlint:disable nsobject_prefer_isequal
