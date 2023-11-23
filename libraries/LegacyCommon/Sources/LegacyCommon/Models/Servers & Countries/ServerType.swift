@@ -87,9 +87,7 @@ public enum ServerType: Int, Codable, CustomStringConvertible {
     }
     
     public func encode(with aCoder: NSCoder) {
-        var data = Data(count: 1)
-        data[0] = UInt8(self.rawValue)
-        aCoder.encode(data, forKey: CoderKey.serverType.rawValue)
+        assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
     
     // MARK: - Codable

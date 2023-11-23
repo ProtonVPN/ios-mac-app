@@ -23,7 +23,7 @@ import Foundation
 import VPNShared
 import Strings
 
-public class VpnCredentials: NSObject, NSSecureCoding {
+public class VpnCredentials: NSObject, NSSecureCoding, Codable {
 
     public static var supportsSecureCoding: Bool = true
 
@@ -210,23 +210,7 @@ public class VpnCredentials: NSObject, NSSecureCoding {
     }
 
     public func encode(with aCoder: NSCoder) {
-        aCoder.encode(status, forKey: CoderKey.status)
-        aCoder.encode(expirationTime, forKey: CoderKey.expirationTime)
-        accountPlan.encode(with: aCoder)
-        aCoder.encode(maxConnect, forKey: CoderKey.maxConnect)
-        aCoder.encode(maxTier, forKey: CoderKey.maxTier)
-        aCoder.encode(services, forKey: CoderKey.services)
-        aCoder.encode(groupId, forKey: CoderKey.groupId)
-        aCoder.encode(name, forKey: CoderKey.name)
-        aCoder.encode(password, forKey: CoderKey.password)
-        aCoder.encode(delinquent, forKey: CoderKey.delinquent)
-        aCoder.encode(credit, forKey: CoderKey.credit)
-        aCoder.encode(currency, forKey: CoderKey.currency)
-        aCoder.encode(hasPaymentMethod, forKey: CoderKey.hasPaymentMethod)
-        aCoder.encode(planName, forKey: CoderKey.planName)
-        aCoder.encode(subscribed, forKey: CoderKey.subscribed)
-        aCoder.encode(needConnectionAllocation, forKey: CoderKey.needConnectionAllocation)
-        aCoder.encode(businessEvents, forKey: CoderKey.businessEvents)
+        assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
 }
 

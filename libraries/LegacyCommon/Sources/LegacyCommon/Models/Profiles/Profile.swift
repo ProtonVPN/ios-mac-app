@@ -23,7 +23,7 @@ import Foundation
 import VPNShared
 import VPNAppCore
 
-public class Profile: NSObject, NSCoding, Identifiable {
+public class Profile: NSObject, NSCoding, Identifiable, Codable {
 
     public static let idLength = 20
 
@@ -179,17 +179,8 @@ public class Profile: NSObject, NSCoding, Identifiable {
             lastConnectedDate: date
         )
     }
-    
     public func encode(with aCoder: NSCoder) {
-        aCoder.encode(id, forKey: CoderKey.id)
-        aCoder.encode(accessTier, forKey: CoderKey.accessTier)
-        profileIcon.encode(with: aCoder)
-        profileType.encode(with: aCoder)
-        serverType.encode(with: aCoder)
-        serverOffering.encode(with: aCoder)
-        aCoder.encode(name, forKey: CoderKey.name)
-        aCoder.encode(connectionProtocol.codingValue, forKey: CoderKey.connectionProtocol)
-        aCoder.encode(lastConnectedDate?.timeIntervalSince1970, forKey: CoderKey.lastConnectedDate)
+        assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
     
     public func copyWith(newNetShieldType type: NetShieldType) -> Profile {
@@ -235,28 +226,6 @@ public class Profile: NSObject, NSCoding, Identifiable {
 }
 
 fileprivate extension ConnectionProtocol {
-    var codingValue: Int {
-        switch self {
-        case .smartProtocol:
-            return 0
-        case let .vpnProtocol(vpnProtocol):
-            switch vpnProtocol {
-            case .ike:
-                return 1
-            case .openVpn(.udp):
-                return 2
-            case .openVpn(.tcp):
-                return 3
-            case .wireGuard(.udp):
-                return 4
-            case .wireGuard(.tcp):
-                return 5
-            case .wireGuard(.tls):
-                return 6
-            }
-        }
-    }
-
     static func from(codingValue: Int) -> ConnectionProtocol? {
         switch codingValue {
         case 0:
@@ -266,7 +235,7 @@ fileprivate extension ConnectionProtocol {
         case 2:
             return .vpnProtocol(.openVpn(.udp))
         case 3:
-            return vpnProtocol(.openVpn(.tcp))
+            return .vpnProtocol(.openVpn(.tcp))
         case 4:
             return .vpnProtocol(.wireGuard(.udp))
         case 5:

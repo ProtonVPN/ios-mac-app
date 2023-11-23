@@ -135,8 +135,8 @@ public class ServerIp: NSObject, NSCoding, Codable {
     }
     
     // MARK: - NSCoding
-    private enum CoderKey: String, CodingKey {
-        case ID = "IDKey"
+    private enum CodingKeys: String, CodingKey {
+        case id = "IDKey"
         case entryIp = "entryIpKey"
         case exitIp = "exitIpKey"
         case domain = "domainKey"
@@ -147,16 +147,16 @@ public class ServerIp: NSObject, NSCoding, Codable {
     }
     
     public required convenience init?(coder aDecoder: NSCoder) {
-        guard let id = aDecoder.decodeObject(forKey: CoderKey.ID.rawValue) as? String,
-            let entryIp = aDecoder.decodeObject(forKey: CoderKey.entryIp.rawValue) as? String,
-            let exitIp = aDecoder.decodeObject(forKey: CoderKey.exitIp.rawValue) as? String,
-            let domain = aDecoder.decodeObject(forKey: CoderKey.domain.rawValue) as? String else {
+        guard let id = aDecoder.decodeObject(forKey: CodingKeys.id.rawValue) as? String,
+            let entryIp = aDecoder.decodeObject(forKey: CodingKeys.entryIp.rawValue) as? String,
+            let exitIp = aDecoder.decodeObject(forKey: CodingKeys.exitIp.rawValue) as? String,
+            let domain = aDecoder.decodeObject(forKey: CodingKeys.domain.rawValue) as? String else {
                 return nil
         }
-        let status = aDecoder.decodeInteger(forKey: CoderKey.status.rawValue)
-        let label = aDecoder.decodeObject(forKey: CoderKey.label.rawValue) as? String
-        let x25519PublicKey = aDecoder.decodeObject(forKey: CoderKey.x25519PublicKey.rawValue) as? String
-        let protocolEntries = aDecoder.decodeObject(forKey: CoderKey.protocolEntries.rawValue) as? PerProtocolEntries
+        let status = aDecoder.decodeInteger(forKey: CodingKeys.status.rawValue)
+        let label = aDecoder.decodeObject(forKey: CodingKeys.label.rawValue) as? String
+        let x25519PublicKey = aDecoder.decodeObject(forKey: CodingKeys.x25519PublicKey.rawValue) as? String
+        let protocolEntries = aDecoder.decodeObject(forKey: CodingKeys.protocolEntries.rawValue) as? PerProtocolEntries
 
         self.init(id: id,
                   entryIp: entryIp,
@@ -169,14 +169,7 @@ public class ServerIp: NSObject, NSCoding, Codable {
     }
     
     public func encode(with aCoder: NSCoder) {
-        aCoder.encode(id, forKey: CoderKey.ID.rawValue)
-        aCoder.encode(entryIp, forKey: CoderKey.entryIp.rawValue)
-        aCoder.encode(exitIp, forKey: CoderKey.exitIp.rawValue)
-        aCoder.encode(domain, forKey: CoderKey.domain.rawValue)
-        aCoder.encode(status, forKey: CoderKey.status.rawValue)
-        aCoder.encode(label, forKey: CoderKey.label.rawValue)
-        aCoder.encode(x25519PublicKey, forKey: CoderKey.x25519PublicKey.rawValue)
-        aCoder.encode(protocolEntries, forKey: CoderKey.protocolEntries.rawValue)
+        assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
     
     public var underMaintenance: Bool {
@@ -188,42 +181,6 @@ public class ServerIp: NSObject, NSCoding, Codable {
     // swiftlint:disable:next nsobject_prefer_isequal
     public static func == (lhs: ServerIp, rhs: ServerIp) -> Bool {
         return lhs.domain == rhs.domain
-    }
-
-    // MARK: - Codable
-    public required convenience init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CoderKey.self)
-        
-        let id = try container.decode(String.self, forKey: .ID)
-        let entryIp = try container.decode(String.self, forKey: .entryIp)
-        let exitIp = try container.decode(String.self, forKey: .exitIp)
-        let domain = try container.decode(String.self, forKey: .domain)
-        let status = try container.decode(Int.self, forKey: .status)
-        let label = try container.decodeIfPresent(String.self, forKey: .label)
-        let x25519PublicKey = try container.decodeIfPresent(String.self, forKey: .x25519PublicKey)
-        let protocolEntries = try container.decodeIfPresent(PerProtocolEntries.self, forKey: .protocolEntries)
-        
-        self.init(id: id,
-                  entryIp: entryIp,
-                  exitIp: exitIp,
-                  domain: domain,
-                  status: status,
-                  label: label,
-                  x25519PublicKey: x25519PublicKey,
-                  protocolEntries: protocolEntries)
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CoderKey.self)
-        
-        try container.encode(id, forKey: .ID)
-        try container.encode(entryIp, forKey: .entryIp)
-        try container.encode(exitIp, forKey: .exitIp)
-        try container.encode(domain, forKey: .domain)
-        try container.encode(status, forKey: .status)
-        try container.encode(label, forKey: .label)
-        try container.encode(x25519PublicKey, forKey: .x25519PublicKey)
-        try container.encode(protocolEntries, forKey: .protocolEntries)
     }
 }
 

@@ -33,7 +33,7 @@ public enum WireGuardTransport: String, Codable, Equatable, CaseIterable, Sendab
     public static let defaultValue: Self = .udp
 }
 
-public enum VpnProtocol: Equatable, Hashable, CaseIterable, Sendable {
+public enum VpnProtocol: Equatable, Hashable, CaseIterable, Sendable, Codable {
     public static let allCases: [VpnProtocol] = [.ike]
         + OpenVpnTransport.allCases.map(Self.openVpn)
         + WireGuardTransport.allCases.map(Self.wireGuard)
@@ -51,6 +51,44 @@ public enum VpnProtocol: Equatable, Hashable, CaseIterable, Sendable {
     case ike
     case openVpn(OpenVpnTransport)
     case wireGuard(WireGuardTransport)
+
+    enum Key: CodingKey {
+        case rawValue
+        case transportProtocol
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Key.self)
+        let rawValue = try container.decode(Int.self, forKey: .rawValue)
+
+        switch rawValue {
+        case 0:
+            self = .ike
+        case 1:
+            let transportProtocol = try container.decode(OpenVpnTransport.self, forKey: .transportProtocol)
+            self = .openVpn(transportProtocol)
+        case 2:
+            let transportProtocol = (try? container.decode(WireGuardTransport.self, forKey: .transportProtocol)) ?? .udp
+            self = .wireGuard(transportProtocol)
+        default:
+            throw "CodingError.unknownValue"
+        }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: Key.self)
+
+        switch self {
+        case .ike:
+            try container.encode(0, forKey: .rawValue)
+        case .openVpn(let transportProtocol):
+            try container.encode(1, forKey: .rawValue)
+            try container.encode(transportProtocol, forKey: .transportProtocol)
+        case .wireGuard(let transportProtocol):
+            try container.encode(2, forKey: .rawValue)
+            try container.encode(transportProtocol, forKey: .transportProtocol)
+        }
+    }
 }
 
 // MARK: - Default values

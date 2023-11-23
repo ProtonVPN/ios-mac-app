@@ -90,49 +90,6 @@ extension VpnProtocol { // Text for UI
     }
 }
 
-// MARK: - Codable
-
-extension VpnProtocol: Codable {
-    
-    enum Key: CodingKey {
-        case rawValue
-        case transportProtocol
-    }
-    
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: Key.self)
-        let rawValue = try container.decode(Int.self, forKey: .rawValue)
-        
-        switch rawValue {
-        case 0:
-            self = .ike
-        case 1:
-            let transportProtocol = try container.decode(OpenVpnTransport.self, forKey: .transportProtocol)
-            self = .openVpn(transportProtocol)
-        case 2:
-            let transportProtocol = (try? container.decode(WireGuardTransport.self, forKey: .transportProtocol)) ?? .udp
-            self = .wireGuard(transportProtocol)
-        default:
-            throw CodingError.unknownValue
-        }
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: Key.self)
-        
-        switch self {
-        case .ike:
-            try container.encode(0, forKey: .rawValue)
-        case .openVpn(let transportProtocol):
-            try container.encode(1, forKey: .rawValue)
-            try container.encode(transportProtocol, forKey: .transportProtocol)
-        case .wireGuard(let transportProtocol):
-            try container.encode(2, forKey: .rawValue)
-            try container.encode(transportProtocol, forKey: .transportProtocol)
-        }
-    }
-}
-
 // MARK: - NSCoding (used by Profile)
 
 extension VpnProtocol {
@@ -157,17 +114,7 @@ extension VpnProtocol {
     }
     
     public func encode(with aCoder: NSCoder) {
-        var data = Data(count: 1)
-        switch self {
-        case .ike:
-            data[0] = 0
-        case .openVpn(let transportProtocol):
-            data[0] = 1
-            transportProtocol.encode(with: aCoder)
-        case .wireGuard:
-            data[0] = 2
-        }
-        aCoder.encode(data, forKey: CoderKey.vpnProtocol)
+        assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
 }
 
@@ -193,16 +140,8 @@ extension OpenVpnTransport {
     }
 
     public func encode(with aCoder: NSCoder) {
-        var data = Data(count: 1)
-        switch self {
-        case .tcp:
-            data[0] = 0
-        case .udp:
-            data[0] = 1
-        }
-        aCoder.encode(data, forKey: CoderKey.transportProtocol)
-    }
-}
+        assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
+    }}
 
 extension WireGuardTransport {
 
@@ -228,15 +167,5 @@ extension WireGuardTransport {
     }
 
     public func encode(with aCoder: NSCoder) {
-        var data = Data(count: 1)
-        switch self {
-        case .tcp:
-            data[0] = 0
-        case .udp:
-            data[0] = 1
-        case .tls:
-            data[0] = 2
-        }
-        aCoder.encode(data, forKey: CoderKey.transportProtocol)
-    }
-}
+        assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
+    }}

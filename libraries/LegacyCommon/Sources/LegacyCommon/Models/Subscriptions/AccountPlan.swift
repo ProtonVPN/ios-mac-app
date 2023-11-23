@@ -21,7 +21,7 @@
 
 import Foundation
 
-public enum AccountPlan: String, Encodable {
+public enum AccountPlan: String, Codable {
     
     case unknown
     case free = "free"
@@ -146,6 +146,6 @@ public enum AccountPlan: String, Encodable {
     }
     
     public func encode(with aCoder: NSCoder) {
-        aCoder.encode(rawValue, forKey: CoderKey.accountPlan)
+        assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
 }
