@@ -25,6 +25,30 @@ public enum ConnectionProtocol: Equatable, Hashable, CaseIterable, Sendable, Cod
     case vpnProtocol(VpnProtocol)
     case smartProtocol
 
+    private enum Keys: CodingKey {
+        case smartProtocol
+        case vpnProtocol
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Keys.self)
+        if let vpnProtocol = try container.decodeIfPresent(VpnProtocol.self, forKey: .vpnProtocol) {
+            self = .vpnProtocol(vpnProtocol)
+        } else {
+            self = .smartProtocol
+        }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: Keys.self)
+        switch self {
+        case .smartProtocol:
+            try container.encode(true, forKey: .smartProtocol)
+        case let .vpnProtocol(vpnProtocol):
+            try container.encode(vpnProtocol, forKey: .vpnProtocol)
+        }
+    }
+
     public var vpnProtocol: VpnProtocol? {
         guard case let .vpnProtocol(vpnProtocol) = self else {
             return nil

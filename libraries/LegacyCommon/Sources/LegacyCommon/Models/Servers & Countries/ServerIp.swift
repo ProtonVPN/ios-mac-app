@@ -135,8 +135,8 @@ public class ServerIp: NSObject, NSCoding, Codable {
     }
     
     // MARK: - NSCoding
-    private enum CoderKey: String, CodingKey {
-        case ID = "IDKey"
+    private enum CodingKeys: String, CodingKey {
+        case id = "IDKey"
         case entryIp = "entryIpKey"
         case exitIp = "exitIpKey"
         case domain = "domainKey"
@@ -147,16 +147,16 @@ public class ServerIp: NSObject, NSCoding, Codable {
     }
     
     public required convenience init?(coder aDecoder: NSCoder) {
-        guard let id = aDecoder.decodeObject(forKey: CoderKey.ID.rawValue) as? String,
-            let entryIp = aDecoder.decodeObject(forKey: CoderKey.entryIp.rawValue) as? String,
-            let exitIp = aDecoder.decodeObject(forKey: CoderKey.exitIp.rawValue) as? String,
-            let domain = aDecoder.decodeObject(forKey: CoderKey.domain.rawValue) as? String else {
+        guard let id = aDecoder.decodeObject(forKey: CodingKeys.id.rawValue) as? String,
+            let entryIp = aDecoder.decodeObject(forKey: CodingKeys.entryIp.rawValue) as? String,
+            let exitIp = aDecoder.decodeObject(forKey: CodingKeys.exitIp.rawValue) as? String,
+            let domain = aDecoder.decodeObject(forKey: CodingKeys.domain.rawValue) as? String else {
                 return nil
         }
-        let status = aDecoder.decodeInteger(forKey: CoderKey.status.rawValue)
-        let label = aDecoder.decodeObject(forKey: CoderKey.label.rawValue) as? String
-        let x25519PublicKey = aDecoder.decodeObject(forKey: CoderKey.x25519PublicKey.rawValue) as? String
-        let protocolEntries = aDecoder.decodeObject(forKey: CoderKey.protocolEntries.rawValue) as? PerProtocolEntries
+        let status = aDecoder.decodeInteger(forKey: CodingKeys.status.rawValue)
+        let label = aDecoder.decodeObject(forKey: CodingKeys.label.rawValue) as? String
+        let x25519PublicKey = aDecoder.decodeObject(forKey: CodingKeys.x25519PublicKey.rawValue) as? String
+        let protocolEntries = aDecoder.decodeObject(forKey: CodingKeys.protocolEntries.rawValue) as? PerProtocolEntries
 
         self.init(id: id,
                   entryIp: entryIp,
