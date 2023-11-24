@@ -40,21 +40,8 @@ struct UserDefaultsStorage: Storage {
                     // Omit logging value we failed to decode in case it contains sensitive information
                 ]
             )
+            throw error
         }
-        // Backup for data saved in older app versions (ios: <=2.7.1, macos: <=2.2.2)
-        do {
-            return try PropertyListDecoder().decode(T.self, from: data)
-        } catch {
-            log.warning(
-                "Can't decode \(type) from PropertyList",
-                category: .settings,
-                metadata: [
-                    "error": "\(error)",
-                    "data": "\(String(data: data, encoding: .utf8) ?? "(nil)")"
-                ]
-            )
-        }
-        return nil
     }
 
     func set<T: Encodable>(_ value: T?, forKey key: String) throws {
