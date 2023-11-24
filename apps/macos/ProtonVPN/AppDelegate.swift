@@ -48,7 +48,6 @@ import Timer
 
 let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 
-@main
 class AppDelegate: NSObject {
     @Dependency(\.defaultsProvider) var provider
     public private(set) static var wasRecentlyActive = false

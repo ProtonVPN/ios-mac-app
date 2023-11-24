@@ -44,7 +44,7 @@ class GIFView: NSView {
     }
 
     init?(frame frameRect: NSRect, pngDirectoryString: String) {
-        guard let dirs = Bundle.main.urls(forResourcesWithExtension: "png", subdirectory: pngDirectoryString) else {
+        guard let dirs = Bundle(for: type(of: self)).urls(forResourcesWithExtension: "png", subdirectory: pngDirectoryString) else {
             return nil
         }
         guard let frames = Self.getPngFrames(fromURLs: dirs) else {
