@@ -48,7 +48,7 @@ protocol PlanService {
 
     func presentPlanSelection(modalSource: UpsellEvent.ModalSource?)
     func presentSubscriptionManagement()
-    func updateServicePlans(completion: @escaping (Result<(), Error>) -> Void)
+    func updateServicePlans() async throws
     func createPlusPlanUI(completion: @escaping (PlusPlanUIResult) -> Void)
 
     func clear()
@@ -132,9 +132,11 @@ final class CorePlanService: PlanService {
         case internalError
     }
 
-    func updateServicePlans(completion: @escaping (Result<(), Error>) -> Void) {
-        payments.activate(delegate: self) { [weak self] _ in
-            self?.payments.updateService(completion: completion)
+    func updateServicePlans() async throws {
+        try await withCheckedThrowingContinuation { continuation in
+            payments.activate(delegate: self) { [weak self] _ in
+                self?.payments.updateService(completion: continuation.resume(with: ))
+            }
         }
     }
 
