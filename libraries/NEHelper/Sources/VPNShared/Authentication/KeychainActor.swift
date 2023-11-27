@@ -19,14 +19,17 @@
 import Foundation
 import KeychainAccess
 
-actor KeychainActor {
+public actor KeychainActor {
 
     private let keychain: KeychainAccess.Keychain
 
-    public static let `default`: KeychainActor = KeychainActor()
+    public init(accessGroup: String) {
+        self.keychain =
+            .init(service: KeychainConstants.appKeychain, accessGroup: accessGroup)
+            .accessibility(.afterFirstUnlockThisDeviceOnly)
+    }
 
-    /// This is fileprivate for a reason. Please use `default`.
-    private init() {
+    public init() {
         self.keychain =
             .init(service: KeychainConstants.appKeychain)
             .accessibility(.afterFirstUnlockThisDeviceOnly)

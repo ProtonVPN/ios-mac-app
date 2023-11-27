@@ -33,7 +33,7 @@ public protocol TimerFactory {
                         repeating: Double?,
                         leeway: DispatchTimeInterval?,
                         queue: DispatchQueue,
-                        _ closure: @escaping (() -> Void)) -> BackgroundTimer
+                        _ closure: @escaping (() async -> Void)) -> BackgroundTimer
 
     func scheduleAfter(_ interval: DispatchTimeInterval,
                        on queue: DispatchQueue,
@@ -60,7 +60,7 @@ public extension TimerFactory {
     func scheduledTimer(runAt nextRunTime: Date,
                         repeating: Double?,
                         queue: DispatchQueue,
-                        _ closure: @escaping (() -> Void)) -> BackgroundTimer {
+                        _ closure: @escaping (() async -> Void) ) -> BackgroundTimer {
         scheduledTimer(runAt: nextRunTime, repeating: repeating, leeway: nil, queue: queue, closure)
     }
 
@@ -77,7 +77,7 @@ public class TimerFactoryImplementation: TimerFactory {
                                repeating: Double?,
                                leeway: DispatchTimeInterval?,
                                queue: DispatchQueue,
-                               _ closure: @escaping (() -> Void)) -> BackgroundTimer {
+                               _ closure: @escaping (() async -> Void)) -> BackgroundTimer {
         BackgroundTimerImplementation(runAt: nextRunTime, repeating: repeating, leeway: leeway, queue: queue, closure)
     }
 
@@ -95,7 +95,7 @@ public class BackgroundTimerImplementation: BackgroundTimer {
 
     let timerSource: DispatchSourceTimer
     private var state: State = .suspended
-    private let closure: () -> Void
+    private let closure: () async -> Void
 
     public var isValid: Bool
     public var nextTime: Date
@@ -113,7 +113,7 @@ public class BackgroundTimerImplementation: BackgroundTimer {
          repeating: Double?,
          leeway: DispatchTimeInterval?,
          queue: DispatchQueue,
-         _ closure: @escaping () -> Void) {
+         _ closure: @escaping () async -> Void) {
         self.closure = closure
         timerSource = DispatchSource.makeTimerSource(queue: queue)
 
@@ -132,7 +132,9 @@ public class BackgroundTimerImplementation: BackgroundTimer {
             if let repeating {
                 self.nextTime = self.currentDate().addingTimeInterval(repeating)
             }
-            self.closure()
+            Task {
+                await self.closure()
+            }
         }
         resume()
     }
