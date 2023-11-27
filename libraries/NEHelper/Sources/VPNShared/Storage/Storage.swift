@@ -27,7 +27,7 @@ public protocol Storage {
     // An additional benefit is that we would be able to drop generics from this interface which would allow us to use
     // the Protocol Witness pattern here, turning this into a struct could be nice for testability
     func get<T: Decodable>(_ type: T.Type, forKey key: String) throws -> T?
-    func set<T: Encodable>(_ value: T, forKey key: String) throws
+    func set<T: Encodable>(_ value: T?, forKey key: String) throws
 
     func setValue(_ value: Any?, forKey key: String)
     func getValue(forKey key: String) -> Any?

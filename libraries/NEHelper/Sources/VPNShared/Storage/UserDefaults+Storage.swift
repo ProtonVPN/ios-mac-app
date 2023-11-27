@@ -26,40 +26,45 @@ struct UserDefaultsStorage: Storage {
         guard let data = provider.getDefaults().data(forKey: key) else {
             return nil
         }
+
         do {
-            return try JSONDecoder().decode(T.self, from: data)
+            return try JSONDecoder().decode(T?.self, from: data)
         } catch {
             log.warning(
-                "Can't decode \(type) from JSON",
+                "Failed to decode ",
                 category: .settings,
                 metadata: [
                     "error": "\(error)",
-                    "data": "\(String(data: data, encoding: .utf8) ?? "(nil)")"
+                    "key": "\(key)",
+                    "type": "\(type)"
+                    // Omit logging value we failed to decode in case it contains sensitive information
                 ]
             )
+            throw error
         }
-        // Backup for data saved in older app versions (ios: <=2.7.1, macos: <=2.2.2)
-        do {
-            return try PropertyListDecoder().decode(T.self, from: data)
-        } catch {
-            log.warning(
-                "Can't decode \(type) from PropertyList",
-                category: .settings,
-                metadata: [
-                    "error": "\(error)",
-                    "data": "\(String(data: data, encoding: .utf8) ?? "(nil)")"
-                ]
-            )
-        }
-        return nil
     }
 
-    func set<T: Encodable>(_ value: T, forKey key: String) throws where T : Encodable {
+    func set<T: Encodable>(_ value: T?, forKey key: String) throws {
+        guard let value else {
+            provider.getDefaults().setValue(nil, forKey: key)
+            return
+        }
+
         do {
             let data = try JSONEncoder().encode(value)
             provider.getDefaults().setValue(data, forKey: key)
         } catch {
-            log.error("Failed to store value for key \(key)", category: .persistence, metadata: ["error": "\(error)"])
+            log.error(
+                "Failed to encode value of type \(T.self) for key \(key)",
+                category: .settings,
+                metadata: [
+                    "error": "\(error)",
+                    "key": "\(key)",
+                    "type": "\(T.self)"
+                    // Omit logging value we failed to encode in case it contains sensitive information
+                ]
+            )
+            throw error
         }
     }
 
