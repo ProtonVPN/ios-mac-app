@@ -117,9 +117,7 @@ public class RefreshManager {
         timer = timerFactory.scheduledTimer(runAt: firstRunAt,
                                             repeating: timerRefreshInterval,
                                             queue: workQueue) { [weak self] in
-            Task { [weak self] in
-                await self?.work()
-            }
+            await self?.work()
         }
     }
 

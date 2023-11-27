@@ -30,6 +30,8 @@ public protocol AuthKeychainHandle {
     /// We also save them to memory as a quick cache that would save us
     /// a lot of trips to the keychain.
     func saveToCache(_ credentials: AuthCredentials?)
+    /// It would be wise to define from where we should fetch credentials from keychain
+    /// and where we should just use the cached username and userId.
     func fetch(forContext: AppContext?) async -> AuthCredentials?
     func store(_ credentials: AuthCredentials, forContext: AppContext?) async throws
     func clear() async
@@ -97,7 +99,7 @@ public class AuthKeychain {
     public static func clear() async {
         await `default`.clear()
     }
-    private let keychain = KeychainActor.default
+    private let keychain = KeychainActor()
 
     @Dependency(\.appContext) private var context
 }

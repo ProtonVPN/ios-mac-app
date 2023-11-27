@@ -187,8 +187,10 @@ extension DependencyContainer: AppSessionRefreshTimerDelegate {
         wasRecentlyActive()
     }
 
-    func shouldRefreshAccount() -> Bool {
-        wasRecentlyActive() && makeAuthKeychainHandle().username != nil
+    func shouldRefreshAccount() async -> Bool {
+        guard wasRecentlyActive() else { return false }
+        guard await makeAuthKeychainHandle().fetch() != nil else { return false }
+        return true
     }
 
     func shouldRefreshFull() -> Bool {

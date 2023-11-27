@@ -517,11 +517,9 @@ public final class ExtensionAPIService {
         let headers: [(APIHeader, String?)] = [(.authorization, "Bearer \(authCredentials.accessToken)"),
                                                (.sessionId, authCredentials.sessionId)]
         let retryBlock: () async -> Void = {
-//            Task { [self] in
-                await self.refreshServerStatus(logicalId: logicalId,
-                                               refreshApiTokenIfNeeded: false,
-                                               completionHandler: completionHandler)
-//            }
+            await self.refreshServerStatus(logicalId: logicalId,
+                                           refreshApiTokenIfNeeded: false,
+                                           completionHandler: completionHandler)
         }
         request(serverStatusRequest, headers: headers) { [weak self] result in
             switch result {
