@@ -30,8 +30,6 @@ public protocol AuthKeychainHandle {
     /// We also save them to memory as a quick cache that would save us
     /// a lot of trips to the keychain.
     func saveToCache(_ credentials: AuthCredentials?)
-    /// It would be wise to define from where we should fetch credentials from keychain
-    /// and where we should just use the cached username and userId.
     func fetch(forContext: AppContext?) async -> AuthCredentials?
     func store(_ credentials: AuthCredentials, forContext: AppContext?) async throws
     func clear() async
@@ -164,8 +162,6 @@ extension AuthKeychain: AuthKeychainHandle {
     }
 
     public func store(_ credentials: AuthCredentials, forContext context: AppContext?) async throws {
-        NSKeyedArchiver.setClassName("ProtonVPN.AuthCredentials", for: AuthCredentials.self)
-
         var key = defaultStorageKey
         if let context = context, let contextKey = storageKey(forContext: context) {
             key = contextKey

@@ -52,15 +52,15 @@ public final class ServerStatusRefreshManager: RefreshManager {
         }
     }
 
-    override internal func work() async {
+    override internal func work() {
         log.warning("ServerStatusRefreshManager")
         guard let currentLogicalId, let currentServerId else {
             log.info("No connected server id set; not refreshing server status.", category: .connection)
             return
         }
 
-        await apiService.refreshServerStatus(logicalId: currentLogicalId,
-                                             refreshApiTokenIfNeeded: true) { [unowned self] result in
+        apiService.refreshServerStatus(logicalId: currentLogicalId,
+                                       refreshApiTokenIfNeeded: true) { [unowned self] result in
             workQueue.async { [unowned self] in
                 switch result {
                 case .success(let response):

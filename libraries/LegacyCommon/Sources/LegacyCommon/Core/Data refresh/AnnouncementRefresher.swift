@@ -37,9 +37,7 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
     public typealias Factory = CoreApiServiceFactory & AnnouncementStorageFactory
     private let factory: Factory
     
-    private var coreApiService: CoreApiService {
-        factory.makeCoreApiService()
-    }
+    private lazy var coreApiService: CoreApiService = factory.makeCoreApiService()
     private lazy var announcementStorage: AnnouncementStorage = factory.makeAnnouncementStorage()
     
     private var lastRefreshDate: Date?

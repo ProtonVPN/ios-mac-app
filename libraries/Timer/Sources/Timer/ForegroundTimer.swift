@@ -40,7 +40,7 @@ public class ForegroundTimerImplementation: BackgroundTimerImplementation {
         repeating: Double?,
         leeway: DispatchTimeInterval?,
         queue: DispatchQueue,
-        _ closure: @escaping () async -> Void
+        _ closure: @escaping () -> Void
     ) {
         super.init(runAt: nextRunTime, repeating: repeating, leeway: leeway, queue: queue, closure)
 
@@ -55,7 +55,7 @@ public class ForegroundTimerFactoryImplementation: TimerFactoryImplementation {
         repeating: Double?,
         leeway: DispatchTimeInterval?,
         queue: DispatchQueue,
-        _ closure: @escaping (() async -> Void)
+        _ closure: @escaping (() -> Void)
     ) -> BackgroundTimer {
         ForegroundTimerImplementation(runAt: nextRunTime, repeating: repeating, leeway: leeway, queue: queue, closure)
     }

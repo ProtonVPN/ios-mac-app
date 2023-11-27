@@ -107,7 +107,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
 
     /// Running timers in NE proved to be not very reliable, so we run it every `checkInterval` seconds all the time,
     /// to make sure we don't miss the time when certificate has to be refreshed.
-    override internal func work() async {
+    override internal func work() {
         let features = vpnAuthenticationStorage.getStoredCertificateFeatures()
 
         checkRefreshCertificateNow(features: features, completion: { result in
