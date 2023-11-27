@@ -263,11 +263,11 @@ extension CoreNetworking: AuthDelegate {
     public func onAdditionalCredentialsInfoObtained(sessionUID: String, password: String?, salt: String?, privateKey: String?) {
         Task {
             guard let authCredential = await authCredential(sessionUID: sessionUID) else { return }
-            if let password = password {
+            if let password {
                 authCredential.update(password: password)
             }
             // salt should be associated with a private key. so both need to be valid
-            if let salt = salt, let privateKey = privateKey {
+            if let salt, let privateKey {
                 authCredential.update(salt: salt, privateKey: privateKey)
             }
             do {

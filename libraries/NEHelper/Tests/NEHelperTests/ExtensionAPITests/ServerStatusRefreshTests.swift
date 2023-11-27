@@ -197,6 +197,7 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
         manager.start { [unowned self] in
             expectations.managerStarted.fulfill()
             timerFactory.runRepeatingTimers {
+                self.wait(for: [expectations.firstError], timeout: self.expectationTimeout)
                 self.serverStatusCallback = self.mockEndpoint(ServerStatusRequest.self,
                                                               result: .success([\.original: originalServer]),
                                                               expectationToFulfill: expectations.secondRequestSucceed)
@@ -204,7 +205,7 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
             }
         }
 
-        wait(for: [expectations.managerStarted, expectations.firstError, expectations.secondRequestSucceed], timeout: expectationTimeout)
+        wait(for: [expectations.managerStarted, expectations.secondRequestSucceed], timeout: expectationTimeout)
     }
 
     func testServerMaintenanceFlag() {
