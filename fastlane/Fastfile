@@ -360,7 +360,7 @@ def find_xctestrun_filename(path, scheme, testplan, destination, architecture)
 
   names.each { |name|
     fullPath = path + name
-    if File.exists?(fullPath)
+    if File.exist?(fullPath)
       puts "Found xctestrun file at " + fullPath
       return name
     else 
