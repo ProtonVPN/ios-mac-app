@@ -49,6 +49,7 @@ import ProtonCoreCryptoVPNPatchedGoImplementation
 public let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 
 #if !REDESIGN
+@UIApplicationMain
 class AppDelegate: UIResponder {
     private static let acceptedDeepLinkChallengeInterval: TimeInterval = 10
 

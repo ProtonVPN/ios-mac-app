@@ -43,11 +43,11 @@ public class MockDependencyContainer {
     public lazy var alertService = CoreAlertServiceDummy()
     lazy var appSessionRefresher = AppSessionRefresherMock(factory: MockFactory(container: self))
     lazy var appSessionRefreshTimer = {
-        let result = AppSessionRefreshTimerImplementation(
+        let result = AppSessionRefreshTimer(
             factory: MockFactory(container: self),
-            refreshIntervals: (30, 30, 30, 30, 30),
-            delegate: self
+            refreshIntervals: (30, 30, 30, 30, 30)
         )
+        result.delegate = self
         return result
     }()
     public lazy var timerFactory = TimerFactoryMock()
