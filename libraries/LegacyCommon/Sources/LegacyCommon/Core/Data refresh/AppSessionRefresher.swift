@@ -65,16 +65,14 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     public var lastPartnersInfoRefresh: Date?
     
     public var loggedIn = false
-    public var successfulConsecutiveSessionRefreshes = CounterActor()
+    public var successfulConsecutiveSessionRefreshes = 0
 
     public var shouldRefreshServersAccordingToUserTier: Bool {
-        get async {
-            // Every n times, fully refresh the server list, including the paid ones.
-            // Add 1 to the value of `successfulConsecutiveSessionRefreshes` so that on
-            // startup we always do a full refresh.
-            let n = 10
-            return (await successfulConsecutiveSessionRefreshes.value + 1) % n == 0
-        }
+        // Every n times, fully refresh the server list, including the paid ones.
+        // Add 1 to the value of `successfulConsecutiveSessionRefreshes` so that on
+        // startup we always do a full refresh.
+        let n = 10
+        return (successfulConsecutiveSessionRefreshes + 1) % n == 0
     }
 
     public var vpnApiService: VpnApiService
@@ -110,10 +108,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
         attemptSilentLogIn { [weak self] result in
             switch result {
             case .success:
-                Task { [weak self] in
-                    await self?.successfulConsecutiveSessionRefreshes.increment()
-                }
-                break
+                self?.successfulConsecutiveSessionRefreshes += 1
             case let .failure(error):
                 log.error("Failed to refresh vpn credentials", category: .app, metadata: ["error": "\(error)"])
 
@@ -123,9 +118,8 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
                 default:
                     break // ignore failures
                 }
-                Task { [weak self] in
-                    await self?.successfulConsecutiveSessionRefreshes.reset()
-                }
+                
+                self?.successfulConsecutiveSessionRefreshes = 0
             }
         }
     }

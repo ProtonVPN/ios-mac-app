@@ -24,11 +24,7 @@ protocol AppCertificateRefreshManagerFactory {
     func makeAppCertificateRefreshManager() -> AppCertificateRefreshManager
 }
 
-protocol AppCertificateRefreshManager: VpnAuthenticationStorageDelegate {
-    func planNextRefresh()
-}
-
-final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshManager {
+final class AppCertificateRefreshManager {
 
     /// Last time interval that was waited before retry on API error. Will be increased by `nextRetryBackoff()`.
     private var lastRetryInterval: TimeInterval = 10
@@ -92,9 +88,7 @@ final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshMan
     }
 }
 
-// MARK: - VpnAuthenticationStorageDelegate implementation
-
-extension AppCertificateRefreshManagerImplementation {
+extension AppCertificateRefreshManager: VpnAuthenticationStorageDelegate {
 
     func certificateDeleted() {
         stopTimer()
