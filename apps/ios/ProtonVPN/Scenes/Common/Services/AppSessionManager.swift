@@ -355,14 +355,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             // Refresh certificate but don't log out in case of an error.
             do {
                 try await refreshVpnAuthCertificate()
-            } catch {
-                failure(error)
-                return
-            }
-
-            await successfulConsecutiveSessionRefreshes.increment()
-
-            do {
+                await successfulConsecutiveSessionRefreshes.increment()
                 try await planService.updateServicePlans()
             } catch {
                 failure(error)
