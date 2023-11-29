@@ -43,12 +43,7 @@ public extension AppSessionRefreshTimerDelegate {
     func shouldRefreshPartners() -> Bool { return true }
 }
 
-public protocol AppSessionRefreshTimer {
-    func start(now: Bool)
-    func stop()
-}
-
-public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
+public class AppSessionRefreshTimer {
     // swiftlint:disable:next large_tuple
     public typealias RefreshIntervals = (
         full: TimeInterval,
@@ -74,29 +69,27 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
         return factory.makeAppSessionRefresher() // Do not retain it
     }
 
-    private weak var delegate: AppSessionRefreshTimerDelegate?
+    public weak var delegate: AppSessionRefreshTimerDelegate?
 
     public init(
         factory: Factory,
-        refreshIntervals: RefreshIntervals,
-        delegate: AppSessionRefreshTimerDelegate?
+        refreshIntervals: RefreshIntervals
     ) {
         self.factory = factory
         self.timerFactory = factory.makeTimerFactory()
         self.refreshIntervals = refreshIntervals
-        self.delegate = delegate
     }
     
-    public func start(now: Bool) {
+    public func start(now: Bool = false) {
         let refreshes = [
-            (\AppSessionRefreshTimerImplementation.timerAccountRefresh, refreshAccount, refreshIntervals.account, appSessionRefresher.lastAccountRefresh),
-            (\AppSessionRefreshTimerImplementation.timerFullRefresh, refreshFull, refreshIntervals.full, appSessionRefresher.lastDataRefresh),
-            (\AppSessionRefreshTimerImplementation.timerLoadsRefresh, refreshLoads, refreshIntervals.loads, appSessionRefresher.lastServerLoadsRefresh),
-            (\AppSessionRefreshTimerImplementation.timerStreamingRefresh, refreshStreaming, refreshIntervals.streaming, appSessionRefresher.lastStreamingInfoRefresh),
-            (\AppSessionRefreshTimerImplementation.timerPartnersRefresh, refreshPartners, refreshIntervals.partners, appSessionRefresher.lastPartnersInfoRefresh)
+            (\AppSessionRefreshTimer.timerAccountRefresh, refreshAccount, refreshIntervals.account, appSessionRefresher.lastAccountRefresh),
+            (\AppSessionRefreshTimer.timerFullRefresh, refreshFull, refreshIntervals.full, appSessionRefresher.lastDataRefresh),
+            (\AppSessionRefreshTimer.timerLoadsRefresh, refreshLoads, refreshIntervals.loads, appSessionRefresher.lastServerLoadsRefresh),
+            (\AppSessionRefreshTimer.timerStreamingRefresh, refreshStreaming, refreshIntervals.streaming, appSessionRefresher.lastStreamingInfoRefresh),
+            (\AppSessionRefreshTimer.timerPartnersRefresh, refreshPartners, refreshIntervals.partners, appSessionRefresher.lastPartnersInfoRefresh)
         ]
 
-        var refreshed: Set<KeyPath<AppSessionRefreshTimerImplementation, BackgroundTimer?>> = []
+        var refreshed: Set<KeyPath<AppSessionRefreshTimer, BackgroundTimer?>> = []
         for (timerPath, timerFunction, refreshInterval, lastRefresh) in refreshes {
             let timer = self[keyPath: timerPath]
 

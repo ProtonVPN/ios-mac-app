@@ -309,9 +309,6 @@
 		D5BCDD2B25307681004BAEE8 /* CountryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDD2825307681004BAEE8 /* CountryViewController.swift */; };
 		D5C1376A2334A54D00D20514 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C137692334A54D00D20514 /* Coordinator.swift */; };
 		D5C1FE542A3C4D8C0049AF18 /* SimulatorVPN.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1FE532A3C4D8C0049AF18 /* SimulatorVPN.swift */; };
-		D5C7C8AB2B0B72A100641808 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8AA2B0B72A100641808 /* main.swift */; };
-		D5C7C8AD2B0B73CA00641808 /* TestAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8AC2B0B73CA00641808 /* TestAppDelegate.swift */; };
-		D5C7C8AF2B0B822000641808 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8AA2B0B72A100641808 /* main.swift */; };
 		D5C8901429360230009177E4 /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C8901229360230009177E4 /* ObfuscatedConstants.swift */; };
 		D5EE41312AD9619800ECC064 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = D5EE41302AD9619800ECC064 /* WireGuardKit */; };
 		D5F37635254010EF008C7207 /* UIViewController+Announcements.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F37634254010EF008C7207 /* UIViewController+Announcements.swift */; };
@@ -807,8 +804,6 @@
 		D5BF950F23559AAF00C7D1E7 /* XCTestExpectation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestExpectation.swift; sourceTree = "<group>"; };
 		D5C137692334A54D00D20514 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		D5C1FE532A3C4D8C0049AF18 /* SimulatorVPN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulatorVPN.swift; sourceTree = "<group>"; };
-		D5C7C8AA2B0B72A100641808 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		D5C7C8AC2B0B73CA00641808 /* TestAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAppDelegate.swift; sourceTree = "<group>"; };
 		D5C8901129360230009177E4 /* ObfuscatedConstants.example.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.example.swift; sourceTree = "<group>"; };
 		D5C8901229360230009177E4 /* ObfuscatedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.swift; sourceTree = "<group>"; };
 		D5D4D05322E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrEditProfileViewModelTests.swift; sourceTree = "<group>"; };
@@ -1269,7 +1264,6 @@
 				E5FFB24329F80185000C65A9 /* ProtonVPNApp.swift */,
 				E154A0C822E0A9A000283CF9 /* ObfuscatedConstants.swift */,
 				E10DFB6C22E1D0040026CAE5 /* ObfuscatedConstants.example.swift */,
-				D5C7C8AA2B0B72A100641808 /* main.swift */,
 			);
 			path = ProtonVPN;
 			sourceTree = "<group>";
@@ -1284,7 +1278,6 @@
 				D5136C1022858CDD0002C095 /* ViewModels */,
 				791DE5F5208DDA3200A29EA5 /* Info.plist */,
 				E16A7E6F2374C150008A0DA0 /* AlertTests.swift */,
-				D5C7C8AC2B0B73CA00641808 /* TestAppDelegate.swift */,
 			);
 			path = ProtonVPNTests;
 			sourceTree = "<group>";
@@ -3054,7 +3047,6 @@
 			files = (
 				42C37AFF2434E62C00366B79 /* UILabel+realSize.swift in Sources */,
 				7980ECD620F70C0800D5432B /* TabBarViewModel.swift in Sources */,
-				D5C7C8AB2B0B72A100641808 /* main.swift in Sources */,
 				79848BB220D2012B00EF6F9F /* MapViewModel.swift in Sources */,
 				792B58C22150E278000BB3A3 /* StatusViewModel.swift in Sources */,
 				E14EE2DB217E18E2004AF568 /* SecureCoreEntryAnnotation.swift in Sources */,
@@ -3216,7 +3208,6 @@
 				AD81310A2A853E2C00729E03 /* XCTestExpectation.swift in Sources */,
 				AD8131092A853E2C00729E03 /* CreateOrEditProfileViewModelTests.swift in Sources */,
 				AD81310E2A853E2C00729E03 /* CountryAnnotationViewModelTests.swift in Sources */,
-				D5C7C8AD2B0B73CA00641808 /* TestAppDelegate.swift in Sources */,
 				AD8131112A853E2C00729E03 /* LogSelectionViewModelTests.swift in Sources */,
 				AD8131072A853E2100729E03 /* ProtocolServiceMock.swift in Sources */,
 				AD8131102A853E2C00729E03 /* ColorPickerViewModelTests.swift in Sources */,
@@ -3226,7 +3217,6 @@
 				AD81310D2A853E2C00729E03 /* AlertTests.swift in Sources */,
 				AD81310B2A853E2C00729E03 /* MapViewModelTests.swift in Sources */,
 				AD8131032A853E2100729E03 /* ProfileServiceMock.swift in Sources */,
-				D5C7C8AF2B0B822000641808 /* main.swift in Sources */,
 				AD81310F2A853E2C00729E03 /* CountryItemViewModelTests.swift in Sources */,
 				AD8131052A853E2100729E03 /* ServerStorageArrayMock.swift in Sources */,
 				AD8131062A853E2100729E03 /* ConnectionStatusServiceMock.swift in Sources */,
