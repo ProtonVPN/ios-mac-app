@@ -283,13 +283,13 @@ extension CoreNetworking: AuthDelegate {
     }
 
     public func onAuthenticatedSessionInvalidated(sessionUID: String) {
-        // invalidating authenticated session should clear the unauth session as well,
-        // because we should fetch a new unauth session afterwards
-        unauthKeychain.clear()
         Task {
+            // invalidating authenticated session should clear the unauth session as well,
+            // because we should fetch a new unauth session afterwards
+            unauthKeychain.clear()
             await authKeychain.clear()
+            delegate.onLogout()
         }
-        delegate.onLogout()
     }
 
     public func onUnauthenticatedSessionInvalidated(sessionUID: String) {
@@ -359,9 +359,9 @@ extension CoreNetworking: AuthSessionInvalidatedDelegate {
     public func sessionWasInvalidated(for sessionUID: String, isAuthenticatedSession: Bool) {
         Task {
             await authKeychain.clear()
-        }
-        if isAuthenticatedSession {
-            delegate.onLogout()
+            if isAuthenticatedSession {
+                delegate.onLogout()
+            }
         }
     }
 }
