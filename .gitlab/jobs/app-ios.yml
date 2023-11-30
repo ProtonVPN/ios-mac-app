@@ -50,6 +50,13 @@ build:tests:ios:
 .ios_delete_simulator: &ios_delete_simulator
   - xcrun simctl delete ${CI_JOB_ID}
 
+
+.ios_tests_artifacts: &ios_tests_artifacts
+    when: on_failure
+    paths:
+      - fastlane/test_output/
+    expire_in: 2 days
+
 # ---
 
 test:unit:app:ios:
@@ -68,6 +75,8 @@ test:unit:app:ios:
   artifacts:
     reports:
       !reference [.code_coverage_unit, reports] # Cobertura xml to artifacts
+    name: "ios-unit-tests-result"
+    <<: *ios_tests_artifacts
 
 
 test:ui:app:ios:smoke:
@@ -86,6 +95,8 @@ test:ui:app:ios:smoke:
   artifacts:
     reports:
       !reference [.code_coverage_unit, reports] # Cobertura xml to artifacts
+    name: "ios-ui-smoke-tests-result"
+    <<: *ios_tests_artifacts
 
 
 test:ui:app:ios:all:
@@ -104,4 +115,6 @@ test:ui:app:ios:all:
   artifacts:
     reports:
       !reference [.code_coverage_unit, reports] # Cobertura xml to artifacts
+    name: "ios-ui-all-tests-result"
+    <<: *ios_tests_artifacts
 

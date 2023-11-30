@@ -315,29 +315,30 @@ lane :run_testplan do |options|
     end
 
     # Finally run tests
-    run_tests(
-      scheme: scheme,
-      derived_data_path: $derived_data_path_temporary,
-      test_without_building: true,
-      xctestrun: xctestrunPath,
-      clean: false,
-      skip_package_dependencies_resolution: true, # prevents fastlane from needlessly fetching all SPM dependencies before running tests
-      testplan: testplan,
-      devices: devices,
-      result_bundle: true,
-      destination: destination_xcodebuild,
-    )
+    begin
+        run_tests(
+          scheme: scheme,
+          derived_data_path: $derived_data_path_temporary,
+          test_without_building: true,
+          xctestrun: xctestrunPath,
+          clean: false,
+          skip_package_dependencies_resolution: true, # prevents fastlane from needlessly fetching all SPM dependencies before running tests
+          testplan: testplan,
+          devices: devices,
+          result_bundle: true,
+          destination: destination_xcodebuild,
+        )
+    ensure
+        # Prepare coverage report
+        coverage_report_file = "test_output/coverage.json"
+        `xcrun xccov view --report --json test_output/ProtonVPN-iOS.xcresult > #{coverage_report_file}`
 
-    # Prepare coverage report
-    coverage_report_file = "test_output/coverage.json"
-    `xcrun xccov view --report --json test_output/ProtonVPN-iOS.xcresult > #{coverage_report_file}`
+        # Convert test coverage report to cobertura format for gitlab to understand
+        `xcc generate #{coverage_report_file} test_output cobertura-xml --exclude-packages ProtonVPNTests`
 
-    # Convert test coverage report to cobertura format for gitlab to understand
-    `xcc generate #{coverage_report_file} test_output cobertura-xml --exclude-packages ProtonVPNTests`
-
-    # Print test coverage to console
-    puts `jq '"Total test coverage: \\(.lineCoverage * 100 | tostring | .[0:5])%"' #{coverage_report_file}`
-
+        # Print test coverage to console
+        puts `jq '"Total test coverage: \\(.lineCoverage * 100 | tostring | .[0:5])%"' #{coverage_report_file}`
+    end
 end
 
 # Form a full path to the archive file containing xctestrun for running tests
