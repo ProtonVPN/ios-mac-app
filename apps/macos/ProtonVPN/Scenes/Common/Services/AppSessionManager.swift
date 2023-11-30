@@ -53,7 +53,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     typealias Factory = VpnApiServiceFactory &
                         AppStateManagerFactory &
-                        NavigationServiceFactory &
                         VpnKeychainFactory &
                         PropertiesManagerFactory &
                         ServerStorageFactory &
@@ -73,7 +72,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     @MainActor var appState: AppState { appStateManager.state }
-    private var navService: NavigationService? { return factory.makeNavigationService() }
 
     private lazy var networking: Networking = factory.makeNetworking()
     private lazy var appSessionRefreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
@@ -147,7 +145,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             post(notification: SessionChanged(data: .established(gateway: self.factory.makeVpnGateway())))
         }
 
-        appSessionRefreshTimer.start()
+        appSessionRefreshTimer.start(now: false)
         profileManager.refreshProfiles()
         appCertificateRefreshManager.planNextRefresh()
     }
@@ -173,13 +171,13 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     private func retrieveProperties() async throws {
         guard let properties = try await getVPNProperties() else {
-            successfulConsecutiveSessionRefreshes = 0
+            await successfulConsecutiveSessionRefreshes.reset()
             return
         }
 
         if let credentials = properties.vpnCredentials {
             vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-            self.serverStorage.store(
+            await self.serverStorage.store(
                 properties.serverModels,
                 keepStalePaidServers: shouldRefreshServersAccordingToUserTier && credentials.maxTier == CoreAppConstants.VpnTiers.free
             )
@@ -210,11 +208,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             try await resolveActiveSession()
         } catch {
             logOutCleanup()
-            successfulConsecutiveSessionRefreshes = 0
+            await successfulConsecutiveSessionRefreshes.reset()
             throw error
         }
 
-        successfulConsecutiveSessionRefreshes += 1
+        await successfulConsecutiveSessionRefreshes.increment()
     }
 
     private func getVPNProperties() async throws -> VpnProperties? {
@@ -311,7 +309,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private func logoutRoutine(reason: String?) {
         sessionStatus = .notEstablished
         post(notification: SessionChanged(data: .lost(reason: reason)))
-        appSessionRefreshTimer.start()
+        appSessionRefreshTimer.start(now: false)
         logOutCleanup()
     }
 

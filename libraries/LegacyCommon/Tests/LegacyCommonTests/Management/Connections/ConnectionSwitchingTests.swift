@@ -823,9 +823,11 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         var storedServers: [ServerModel] = []
         container.serverStorage.didStoreNewServers = { newServers in
-            storedServers = newServers
-            expectations.serverSaves[nServerSaves].fulfill()
-            nServerSaves += 1
+            DispatchQueue.main.async {
+                storedServers = newServers
+                expectations.serverSaves[nServerSaves].fulfill()
+                nServerSaves += 1
+            }
         }
 
         var observedStates: [AppState] = []
