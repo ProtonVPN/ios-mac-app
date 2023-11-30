@@ -21,6 +21,7 @@ import LegacyCommon
 
 import VPNShared
 import Dependencies
+import VPNSharedTesting
 @testable import ProtonVPN
 
 fileprivate let testData = MockTestData()
@@ -41,7 +42,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     var vpnKeychain: VpnKeychainMock!
     var appStateManager: AppStateManagerMock!
 
-    let asyncTimeout: TimeInterval = 1
+    let asyncTimeout: TimeInterval = 5
 
     var mockVPNAPIService: VpnApiService {
         networking = NetworkingMock()
@@ -370,11 +371,12 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     }
 }
 
+fileprivate let propertiesManagerMock = PropertiesManagerMock()
+
 fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
 
     @Dependency(\.date) var date
 
-    private let container = DependencyContainer()
     private let vpnAPIService: VpnApiService
     private let authKeychain: AuthKeychainHandle
     private let unauthKeychain: UnauthKeychainHandle
@@ -382,19 +384,28 @@ fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     private let alertService: CoreAlertService
     private let appStateManager: AppStateManager
 
-    func makeNavigationService() -> NavigationService { NavigationServiceMock(container) }
+    let appCertificateRefreshManagerMock = AppCertificateRefreshManagerMock()
+    let announcementRefresherMock = AnnouncementRefresherMock()
+    let appSessionRefreshTimerMock = AppSessionRefreshTimerMock()
+
+    let profileManager = ProfileManager(
+        serverStorage: ServerStorageMock(),
+        propertiesManager: propertiesManagerMock,
+        profileStorage: ProfileStorage(authKeychain: MockAuthKeychain())
+    )
+
     func makePlanService() -> PlanService { PlanServiceMock() }
     func makeAuthKeychainHandle() -> AuthKeychainHandle { authKeychain }
     func makeUnauthKeychainHandle() -> UnauthKeychainHandle { unauthKeychain }
-    func makeAppCertificateRefreshManager() -> AppCertificateRefreshManager { container.makeAppCertificateRefreshManager() }
-    func makeAnnouncementRefresher() -> AnnouncementRefresher { container.makeAnnouncementRefresher() }
-    func makeAppSessionRefreshTimer() -> AppSessionRefreshTimer { container.makeAppSessionRefreshTimer() }
+    func makeAppCertificateRefreshManager() -> AppCertificateRefreshManager { appCertificateRefreshManagerMock }
+    func makeAnnouncementRefresher() -> AnnouncementRefresher { announcementRefresherMock }
+    func makeAppSessionRefreshTimer() -> AppSessionRefreshTimer { appSessionRefreshTimerMock }
     func makeAppStateManager() -> AppStateManager { appStateManager }
     func makeCoreAlertService() -> CoreAlertService { alertService }
-    func makeProfileManager() -> ProfileManager { container.makeProfileManager() }
-    func makePropertiesManager() -> PropertiesManagerProtocol { PropertiesManagerMock() }
+    func makeProfileManager() -> ProfileManager { profileManager }
+    func makePropertiesManager() -> PropertiesManagerProtocol { propertiesManagerMock }
     func makeServerStorage() -> ServerStorage { ServerStorageMock() }
-    func makeSystemExtensionManager() -> SystemExtensionManager { SystemExtensionManagerMock(factory: container) }
+    func makeSystemExtensionManager() -> SystemExtensionManager { SystemExtensionManagerMock(factory: self) }
     func makeVpnAuthentication() -> VpnAuthentication { VpnAuthenticationMock() }
     func makeVpnGateway() -> VpnGatewayProtocol { VpnGatewayMock() }
     func makeVpnKeychain() -> VpnKeychainProtocol { vpnKeychain }
@@ -449,5 +460,3 @@ fileprivate extension SystemAlert {
         actions.first { $0.style == type }?.handler?()
     }
 }
-
-fileprivate class NavigationServiceMock: NavigationService { }

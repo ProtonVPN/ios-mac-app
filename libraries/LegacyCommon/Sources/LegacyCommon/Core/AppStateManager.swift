@@ -36,6 +36,9 @@ public protocol AppStateManager {
     var state: AppState { get }
     var onVpnStateChanged: ((VpnState) -> Void)? { get set }
 
+    /// Helper to get app state in a thread safe manner when async calls can be used
+    @MainActor var stateThreadSafe: AppState { get }
+
     // The state displayed to the user in the UI is not always the same as the "real" VPN state
     // For example when connected to the VPN and using local agent we do not want to show the user "Connected" because Internet is not yet available before the local agent connects
     // So we fake it with a "Loading connection info" display state
@@ -62,6 +65,10 @@ public extension Notification.Name {
         public static var stateChange: Notification.Name = Notification.Name("AppStateManagerStateChange")
         public static var displayStateChange: Notification.Name = Notification.Name("AppStateManagerDisplayStateChange")
     }
+}
+
+public extension AppStateManager {
+    @MainActor var stateThreadSafe: AppState { get { self.state } }
 }
 
 public class AppStateManagerImplementation: AppStateManager {
