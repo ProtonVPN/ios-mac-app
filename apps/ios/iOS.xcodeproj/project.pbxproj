@@ -4452,7 +4452,7 @@
 			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
 			requirement = {
 				kind = exactVersion;
-				version = 3.2.1;
+				version = 4.2.2;
 			};
 		};
 		4C7D40622A60282D00ACDBED /* XCRemoteSwiftPackageReference "AlamofireImage" */ = {

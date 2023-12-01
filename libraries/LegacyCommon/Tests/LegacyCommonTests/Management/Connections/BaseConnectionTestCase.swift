@@ -59,8 +59,8 @@ class BaseConnectionTestCase: XCTestCase {
                                     profileId: nil,
                                     trigger: nil)
 
-    override func setUpWithError() throws {
-        try super.setUpWithError()
+    override func setUp() async throws {
+        try await super.setUp()
         container = MockDependencyContainer()
         container.propertiesManager.featureFlags = testData.defaultClientConfig.featureFlags
 
@@ -242,8 +242,8 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
     let localAgentEventQueue = DispatchQueue(label: "local agent testing event queue")
     let laConsts = LocalAgentConstants()!
 
-    override func setUpWithError() throws {
-        try super.setUpWithError()
+    override func setUp() async throws {
+        try await super.setUp()
 
         mockProviderState.shouldRefresh = false
         container.vpnKeychain.setVpnCredentials(with: .plus, maxTier: CoreAppConstants.VpnTiers.plus)

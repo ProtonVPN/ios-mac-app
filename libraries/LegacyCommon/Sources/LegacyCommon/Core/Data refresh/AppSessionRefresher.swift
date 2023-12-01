@@ -188,7 +188,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
 
         lastPartnersInfoRefresh = Date()
         do {
-            guard let partnerServices = try await vpnApiService.partnersServices() else { return }
+            let partnerServices = try await vpnApiService.partnersServices()
             propertiesManager.partnerTypes = partnerServices.partnerTypes
         } catch {
             log.error("RefreshPartners error", category: .app, metadata: ["error": "\(error)"])

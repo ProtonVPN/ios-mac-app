@@ -24,7 +24,7 @@ class FileLogHandlerTests: XCTestCase {
     private var folder: URL = URL(string: "/tmp")!
     private var file: URL!
     
-    override func setUpWithError() throws {
+    override func setUp() async throws {
         file = folder.appendingPathComponent("ProtonVPNtest.log", isDirectory: false)
     }
 

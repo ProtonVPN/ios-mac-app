@@ -23,7 +23,6 @@
 import Foundation
 import UIKit
 import LegacyCommon
-import KeychainAccess
 import BugReport
 import Search
 import Review
@@ -168,7 +167,7 @@ final class DependencyContainer: Container {
 
 extension DependencyContainer: AppSessionRefreshTimerDelegate {
     func canRefreshAccount() -> Bool {
-        makeAuthKeychainHandle().fetch() != nil
+        makeAuthKeychainHandle().username != nil
     }
 }
 

@@ -26,8 +26,8 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
 
     var serverDidChange: (([ServerStatusRequest.Logical]) -> ())?
 
-    override func setUpWithError() throws {
-        try super.setUpWithError()
+    override func setUp() async throws {
+        try await super.setUp()
         self.manager = ServerStatusRefreshManager(apiService: apiService,
                                                   timerFactory: timerFactory)
         self.manager.delegate = self
@@ -197,6 +197,7 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
         manager.start { [unowned self] in
             expectations.managerStarted.fulfill()
             timerFactory.runRepeatingTimers {
+                self.wait(for: [expectations.firstError], timeout: self.expectationTimeout)
                 self.serverStatusCallback = self.mockEndpoint(ServerStatusRequest.self,
                                                               result: .success([\.original: originalServer]),
                                                               expectationToFulfill: expectations.secondRequestSucceed)
@@ -204,7 +205,7 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
             }
         }
 
-        wait(for: [expectations.managerStarted, expectations.firstError, expectations.secondRequestSucceed], timeout: expectationTimeout)
+        wait(for: [expectations.managerStarted, expectations.secondRequestSucceed], timeout: expectationTimeout)
     }
 
     func testServerMaintenanceFlag() {
