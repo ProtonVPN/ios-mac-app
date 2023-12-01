@@ -49,25 +49,12 @@ protocol AppSessionManager {
 
     func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void)
     func refreshVpnAuthCertificate() async throws -> Void
-    func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func finishLogin(authCredentials: AuthCredentials, completion: @escaping (Result<(), Error>) -> Void)
     func logOut(force: Bool, reason: String?)
     
     func loadDataWithoutFetching() -> Bool
     func loadDataWithoutLogin(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func canPreviewApp() -> Bool
-}
-
-extension AppSessionManager {
-    func refreshVpnAuthCertificate() async throws -> Void {
-        return try await withCheckedThrowingContinuation { continuation in
-            refreshVpnAuthCertificate(success: {
-                continuation.resume()
-            }, failure: { error in
-                continuation.resume(throwing: error)
-            })
-        }
-    }
 }
 
 class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
@@ -127,18 +114,18 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     
     // MARK: - Beginning of the login logic.
     override func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
-        guard authKeychain.username != nil else {
-            DispatchQueue.main.async { completion(.failure(ProtonVpnError.userCredentialsMissing)) }
-            return
-        }
-
-        retrievePropertiesAndLogIn(
-            success: {
-                DispatchQueue.main.async { completion(.success) }
-            }, failure: { error in
-                DispatchQueue.main.async { completion(.failure(error)) }
+        Task {
+            guard await authKeychain.fetch()?.username != nil else {
+                await MainActor.run { completion(.failure(ProtonVpnError.userCredentialsMissing)) }
+                return
             }
-        )
+            do {
+                try await retrievePropertiesAndLogIn()
+                await MainActor.run { completion(.success) }
+            } catch {
+                await MainActor.run { completion(.failure(error)) }
+            }
+        }
     }
     
     func finishLogin(authCredentials: AuthCredentials, completion: @escaping (Result<(), Error>) -> Void) {
@@ -147,18 +134,16 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 try await authKeychain.store(authCredentials)
                 await unauthKeychain.clear()
             } catch {
-                await MainActor.run {
-                    completion(.failure(ProtonVpnError.keychainWriteFailed))
-                }
+                await MainActor.run { completion(.failure(ProtonVpnError.keychainWriteFailed)) }
                 return
             }
-            await MainActor.run {
-                retrievePropertiesAndLogIn(success: { [weak self] in
-                    self?.checkForSubuserWithoutSessions(completion: completion)
-                }, failure: { error in
-                    log.error("Failed to obtain user's auth credentials", category: .user, metadata: ["error": "\(error)"])
-                    completion(.failure(error))
-                })
+            do {
+                try await retrievePropertiesAndLogIn()
+                try checkForSubuserWithoutSessions()
+                await MainActor.run { completion(.success(())) }
+            } catch {
+                log.error("Failed to obtain user's auth credentials", category: .user, metadata: ["error": "\(error)"])
+                await MainActor.run { completion(.failure(error)) }
             }
         }
     }
@@ -218,8 +203,15 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                     self.refreshPartners(ifUnknownPartnerLogicalExistsIn: properties.serverModels) {
                         executeOnUIThread {
                             self.resolveActiveSession(success: {
-                                self.refreshVpnAuthCertificate(success: success, failure: failure)
-                                Task { await self.successfulConsecutiveSessionRefreshes.increment() }
+                                Task {
+                                    do {
+                                        try await self.refreshVpnAuthCertificate()
+                                        success()
+                                    } catch {
+                                        failure(error)
+                                    }
+                                    await self.successfulConsecutiveSessionRefreshes.increment()
+                                }
                             }, failure: { error in
                                 self.logOutCleanup()
                                 Task { await self.successfulConsecutiveSessionRefreshes.reset() }
@@ -237,136 +229,134 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                         return
                     }
 
-                    self.refreshVpnAuthCertificate(success: success, failure: failure)
-                    Task { await self.successfulConsecutiveSessionRefreshes.reset() }
+                    Task {
+                        do {
+                            try await self.refreshVpnAuthCertificate()
+                            success()
+                        } catch {
+                            failure(error)
+                        }
+                        await self.successfulConsecutiveSessionRefreshes.reset()
+                    }
                 }
             }
         }
     }
 
-    @available(*, renamed: "refreshVpnAuthCertificate()")
-    func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+    func refreshVpnAuthCertificate() async throws -> Void {
         guard loggedIn else {
             log.info("Not refreshing vpn certificate - client not logged in")
-            success()
             return
         }
 
         guard case .certificate = propertiesManager.vpnProtocol.authenticationType else {
             log.info("Not refreshing vpn certificate - cert auth not in use")
-            success()
             return
         }
-
-        self.vpnAuthentication.refreshCertificates { result in
-            switch result {
-            case .success:
-                success()
-            case let .failure(error) where error is ProviderMessageError:
-                // The vpn isn't connected yet, which means the extension hasn't been
-                // launched (if it's used at all for the user's preferred protocol)
-                // and the provider can't refresh the certificate.
-                // Fake success and the extension can handle refresh itself once we're connected.
-                success()
-            case .failure(AuthenticationRemoteClientError.needNewKeys):
-                // The network extension tried to refresh certificates, but the server responded saying
-                // that new keys needed regenerating. VpnAuthentication has deleted the keys, and now
-                // we just need to attempt to reconnect, since that will generate new keys for us.
-                executeOnUIThread {
-                    NotificationCenter.default.post(name: VpnGateway.needsReconnectNotification, object: nil)
-                    success()
+        try await withCheckedThrowingContinuation { continuation in
+            self.vpnAuthentication.refreshCertificates { result in
+                switch result {
+                case .success:
+                    continuation.resume()
+                case let .failure(error) where error is ProviderMessageError:
+                    // The vpn isn't connected yet, which means the extension hasn't been
+                    // launched (if it's used at all for the user's preferred protocol)
+                    // and the provider can't refresh the certificate.
+                    // Fake success and the extension can handle refresh itself once we're connected.
+                    continuation.resume()
+                case .failure(AuthenticationRemoteClientError.needNewKeys):
+                    // The network extension tried to refresh certificates, but the server responded saying
+                    // that new keys needed regenerating. VpnAuthentication has deleted the keys, and now
+                    // we just need to attempt to reconnect, since that will generate new keys for us.
+                    executeOnUIThread {
+                        NotificationCenter.default.post(name: VpnGateway.needsReconnectNotification, object: nil)
+                        continuation.resume()
+                    }
+                case let .failure(error):
+                    continuation.resume(throwing: error)
                 }
-            case let .failure(error):
-                failure(error)
             }
         }
     }
 
-    private func retrievePropertiesAndLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        Task {
-            let appState = await appStateManager.stateThreadSafe
-            let shouldRefreshServers = await shouldRefreshServersAccordingToUserTier
+    private func retrievePropertiesAndLogIn() async throws {
+        let appState = await appStateManager.stateThreadSafe
+        let shouldRefreshServers = await shouldRefreshServersAccordingToUserTier
 
-            // Get VPN properties from API and save them
-            do {
-                let properties = try await vpnApiService.vpnProperties(
-                    isDisconnected: appState.isDisconnected,
-                    lastKnownLocation: propertiesManager.userLocation,
-                    serversAccordingToTier: shouldRefreshServers
+        // Get VPN properties from API and save them
+        do {
+            let properties = try await vpnApiService.vpnProperties(
+                isDisconnected: appState.isDisconnected,
+                lastKnownLocation: propertiesManager.userLocation,
+                serversAccordingToTier: shouldRefreshServers
+            )
+
+            if let credentials = properties.vpnCredentials {
+                self.vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
+                self.review.update(plan: credentials.accountPlan.rawValue)
+                self.serverStorage.store(
+                    properties.serverModels,
+                    keepStalePaidServers: shouldRefreshServers && credentials.maxTier == CoreAppConstants.VpnTiers.free
                 )
-
-                if let credentials = properties.vpnCredentials {
-                    self.vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-                    self.review.update(plan: credentials.accountPlan.rawValue)
-                    self.serverStorage.store(
-                        properties.serverModels,
-                        keepStalePaidServers: shouldRefreshServers && credentials.maxTier == CoreAppConstants.VpnTiers.free
-                    )
-                } else {
-                    self.serverStorage.store(properties.serverModels)
-                }
-                self.propertiesManager.userRole = properties.userRole
-                self.propertiesManager.userAccountCreationDate = properties.userCreateTime
-                self.propertiesManager.userLocation = properties.location
-                if let clientConfig = properties.clientConfig {
-                    self.propertiesManager.openVpnConfig = clientConfig.openVPNConfig
-                    self.propertiesManager.wireguardConfig = clientConfig.wireGuardConfig
-                    self.propertiesManager.smartProtocolConfig = clientConfig.smartProtocolConfig
-                    self.propertiesManager.maintenanceServerRefreshIntereval = clientConfig.serverRefreshInterval
-                    self.propertiesManager.featureFlags = clientConfig.featureFlags
-                    self.propertiesManager.ratingSettings = clientConfig.ratingSettings
-                    self.review.update(configuration: Configuration(settings: clientConfig.ratingSettings))
-                    @Dependency(\.serverChangeStorage) var storage
-                    storage.config = clientConfig.serverChangeConfig
-                }
-                if self.propertiesManager.featureFlags.pollNotificationAPI {
-                    self.announcementRefresher.tryRefreshing()
-                }
-
-            } catch {
-                // In case getting vpn properties fails, we don't log user out in all cases. Instead
-                // check if we can continue.
-                // If user has the list of servers and IP is already saved, we can continue
-                // and update vpnProperties later.
-                // Also the error has to be not keychain related, because if there is a problem with
-                // the keychain, use most probably will not be able to use API nor VPN connection.
-                log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
-                let models = self.serverStorage.fetch()
-                guard !models.isEmpty, // only fail if there is a major reason
-                      self.propertiesManager.userLocation?.ip != nil,
-                      !(error is LegacyCommon.KeychainError) else {
-
-                    failure(error)
-                    return
-                }
+            } else {
+                self.serverStorage.store(properties.serverModels)
+            }
+            self.propertiesManager.userRole = properties.userRole
+            self.propertiesManager.userAccountCreationDate = properties.userCreateTime
+            self.propertiesManager.userLocation = properties.location
+            if let clientConfig = properties.clientConfig {
+                self.propertiesManager.openVpnConfig = clientConfig.openVPNConfig
+                self.propertiesManager.wireguardConfig = clientConfig.wireGuardConfig
+                self.propertiesManager.smartProtocolConfig = clientConfig.smartProtocolConfig
+                self.propertiesManager.maintenanceServerRefreshIntereval = clientConfig.serverRefreshInterval
+                self.propertiesManager.featureFlags = clientConfig.featureFlags
+                self.propertiesManager.ratingSettings = clientConfig.ratingSettings
+                self.review.update(configuration: Configuration(settings: clientConfig.ratingSettings))
+                @Dependency(\.serverChangeStorage) var storage
+                storage.config = clientConfig.serverChangeConfig
+            }
+            if self.propertiesManager.featureFlags.pollNotificationAPI {
+                self.announcementRefresher.tryRefreshing()
             }
 
-            // In case we are connected to VPN, but can't get auth info from `appStateManager` nor
-            // from `vpnKeychain`, we fail miserably and log out.
-            do {
-                try await self.resolveActiveSession()
+        } catch {
+            // In case getting vpn properties fails, we don't log user out in all cases. Instead
+            // check if we can continue.
+            // If user has the list of servers and IP is already saved, we can continue
+            // and update vpnProperties later.
+            // Also the error has to be not keychain related, because if there is a problem with
+            // the keychain, use most probably will not be able to use API nor VPN connection.
+            log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
+            let models = self.serverStorage.fetch()
+            guard !models.isEmpty, // only fail if there is a major reason
+                  self.propertiesManager.userLocation?.ip != nil,
+                  !(error is LegacyCommon.KeychainError) else {
 
-            } catch {
-                self.logOutCleanup()
-                await self.successfulConsecutiveSessionRefreshes.reset()
-                failure(error)
-                return
+                throw error
             }
+        }
 
-            setAndNotify(for: .established, reason: nil)
-            profileManager.refreshProfiles()
+        // In case we are connected to VPN, but can't get auth info from `appStateManager` nor
+        // from `vpnKeychain`, we fail miserably and log out.
+        do {
+            try await self.resolveActiveSession()
 
-            // Refresh certificate but don't log out in case of an error.
-            do {
-                try await refreshVpnAuthCertificate()
-                await successfulConsecutiveSessionRefreshes.increment()
-                try await planService.updateServicePlans()
-            } catch {
-                failure(error)
-                return
-            }
+        } catch {
+            self.logOutCleanup()
+            await self.successfulConsecutiveSessionRefreshes.reset()
+            throw error
+        }
 
-            success()
+        setAndNotify(for: .established, reason: nil)
+        profileManager.refreshProfiles()
+
+        // Refresh certificate but don't log out in case of an error.
+        do {
+            try await refreshVpnAuthCertificate()
+            await successfulConsecutiveSessionRefreshes.increment()
+            try await planService.updateServicePlans()
+        } catch {
+            throw error
         }
     }
     // swiftlint:enable function_body_length
@@ -407,16 +397,15 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         // execution earlier.
     }
 
-    private func checkForSubuserWithoutSessions(completion: @escaping (Result<(), Error>) -> Void) {
+    private func checkForSubuserWithoutSessions() throws {
         guard let credentials = try? self.vpnKeychain.fetchCached(),
             credentials.needConnectionAllocation else {
-            completion(.success)
             return
         }
 
         log.error("User with insufficient sessions detected. Throwing an error instead of logging in.", category: .app)
         logOutCleanup()
-        completion(.failure(ProtonVpnError.subuserWithoutSessions))
+        throw ProtonVpnError.subuserWithoutSessions
     }
     
     // MARK: - Log out
@@ -516,15 +505,17 @@ extension AppSessionManagerImplementation: PlanServiceDelegate {
             return
         }
 
-        // Note: Do not async this part, we don't want it to race with retrieving the new properties below.
-        NotificationCenter.default.post(name: .userCompletedUpsellAlertJourney, object: (modalSource, newPlanName))
-
-        log.debug("Reloading data after plan purchase", category: .app)
-        retrievePropertiesAndLogIn(success: { [dataReloaded] in
-            NotificationCenter.default.post(name: dataReloaded, object: nil)
-        }, failure: { error in
-            log.error("Data reload failed after plan purchase", category: .app, metadata: ["error": "\(error)"])
-        })
+        Task {
+            // Note: Do not async this part, we don't want it to race with retrieving the new properties below.
+            NotificationCenter.default.post(name: .userCompletedUpsellAlertJourney, object: (modalSource, newPlanName))
+            log.debug("Reloading data after plan purchase", category: .app)
+            do {
+                try await retrievePropertiesAndLogIn()
+                NotificationCenter.default.post(name: dataReloaded, object: nil)
+            } catch {
+                log.error("Data reload failed after plan purchase", category: .app, metadata: ["error": "\(error)"])
+            }
+        }
     }
 }
 

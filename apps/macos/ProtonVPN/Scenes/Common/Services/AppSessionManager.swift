@@ -41,7 +41,7 @@ protocol AppSessionManager {
     var loggedIn: Bool { get }
 
     func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void)
-    func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
+    func refreshVpnAuthCertificate() async throws
     func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func logOut(force: Bool, reason: String?)
     func logOut()
@@ -103,11 +103,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         executeOnUIThread(attemptLogin, success: { completion(.success) }, failure: { completion(.failure($0)) })
     }
 
-    func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        // Invoke async implementation
-        executeOnUIThread(refreshVpnAuthCertificate, success: success, failure: failure)
-    }
-
     func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         // Invoke async implementation
         executeOnUIThread({ try await self.attemptLogin(with: authCredentials) }, success: success, failure: failure)
@@ -150,13 +145,14 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         appCertificateRefreshManager.planNextRefresh()
     }
 
-    private func refreshVpnAuthCertificate() async throws {
+    @MainActor
+    func refreshVpnAuthCertificate() async throws {
         if !loggedIn {
             return
         }
 
         _ = try await withCheckedThrowingContinuation { [weak self] continuation in
-            self?.vpnAuthentication.refreshCertificates { result in continuation.resume(with: result) }
+            self?.vpnAuthentication.refreshCertificates(completion: continuation.resume(with:))
         }
     }
 
@@ -202,7 +198,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         }
         if propertiesManager.featureFlags.pollNotificationAPI {
             Task { @MainActor in
-                await self.announcementRefresher.tryRefreshing()
+                self.announcementRefresher.tryRefreshing()
             }
         }
 
