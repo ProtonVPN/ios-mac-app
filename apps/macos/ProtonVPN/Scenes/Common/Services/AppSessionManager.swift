@@ -125,7 +125,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private func attemptLogin(with authCredentials: AuthCredentials) async throws {
         do {
             try await authKeychain.store(authCredentials)
-            unauthKeychain.clear()
+            await unauthKeychain.clear()
         } catch {
             throw ProtonVpnError.keychainWriteFailed
         }

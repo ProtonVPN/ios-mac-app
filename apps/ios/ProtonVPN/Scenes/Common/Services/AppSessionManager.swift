@@ -128,9 +128,9 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         Task {
             do {
                 try await authKeychain.store(authCredentials)
-                unauthKeychain.clear()
+                await unauthKeychain.clear()
             } catch {
-                DispatchQueue.main.async {
+                await MainActor.run {
                     completion(.failure(ProtonVpnError.keychainWriteFailed))
                 }
                 return

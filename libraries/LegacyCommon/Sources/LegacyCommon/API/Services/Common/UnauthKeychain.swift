@@ -26,9 +26,9 @@ public protocol UnauthKeychainHandleFactory {
 }
 
 public protocol UnauthKeychainHandle {
-    func fetch() -> AuthCredential?
-    func store(_ credentials: AuthCredential)
-    func clear()
+    func fetch() async -> AuthCredential?
+    func store(_ credentials: AuthCredential) async
+    func clear() async
 }
 
 public final class UnauthKeychain: UnauthKeychainHandle {
@@ -37,16 +37,13 @@ public final class UnauthKeychain: UnauthKeychainHandle {
         static let unauthSessionCredentials = "unauthSessionCredentials"
     }
 
-    private let keychain: KeychainAccess.Keychain
+    private let keychain = KeychainActor()
 
-    public init() {
-        self.keychain = .init(service: KeychainConstants.appKeychain)
-            .accessibility(.afterFirstUnlockThisDeviceOnly)
-    }
+    public init() { }
 
-    public func fetch() -> AuthCredential? {
+    public func fetch() async -> AuthCredential? {
         do {
-            guard let data = try keychain.getData(StorageKey.unauthSessionCredentials) else {
+            guard let data = try await keychain.getData(StorageKey.unauthSessionCredentials) else {
                 return nil
             }
             return AuthCredential.unarchive(data: data as NSData)
@@ -56,18 +53,18 @@ public final class UnauthKeychain: UnauthKeychainHandle {
         }
     }
 
-    public func store(_ credentials: AuthCredential) {
+    public func store(_ credentials: AuthCredential) async {
         do {
-            try keychain.set(credentials.archive(), key: StorageKey.unauthSessionCredentials)
+            try await keychain.set(credentials.archive(), key: StorageKey.unauthSessionCredentials)
             log.debug("Keychain (unauth) session stored", category: .keychain)
         } catch {
             log.error("Keychain (unauth) write error: \(error)", category: .keychain)
         }
     }
 
-    public func clear() {
+    public func clear() async {
         do {
-            try keychain.remove(StorageKey.unauthSessionCredentials)
+            try await keychain.remove(StorageKey.unauthSessionCredentials)
         } catch {
             log.error("Keychain (unauth) clear error: \(error)", category: .keychain)
         }
