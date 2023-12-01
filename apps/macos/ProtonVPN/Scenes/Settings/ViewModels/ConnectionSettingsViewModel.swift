@@ -119,7 +119,7 @@ final class ConnectionSettingsViewModel {
 
     // MARK: - Quick and auto connect for current user
     var username: String? {
-        authKeychain.fetch()?.username
+        authKeychain.username
     }
 
     var autoConnect: (enabled: Bool, profileId: String?)? {

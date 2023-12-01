@@ -70,7 +70,7 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
             }
         }
     }
-    
+
     public func clear() {
         lastRefreshDate = nil
         announcementStorage.clear()
@@ -79,7 +79,9 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
     @objc func featureFlagsChanged(_ notification: NSNotification) {
         guard let featureFlags = notification.object as? FeatureFlags else { return }
         if featureFlags.pollNotificationAPI {
-            tryRefreshing()
+            Task {
+                await tryRefreshing()
+            }
         } else { // Hide announcements
             clear()
         }

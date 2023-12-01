@@ -79,8 +79,8 @@ public class ProfileStorage {
     
     // MARK: - Private functions
     private func storageKey() -> String? {
-        guard let authCredentials = authKeychain.fetch() else { return nil }
-        return "profiles_" + authCredentials.username
+        guard let username = authKeychain.username else { return nil }
+        return "profiles_" + username
     }
     
     private func fetchFromMemory(storageKey: String) -> [Profile] {

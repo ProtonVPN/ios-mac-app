@@ -27,8 +27,8 @@ import TimerMock
 class CertificateRefreshTests: ExtensionAPIServiceTestCase {
     var manager: ExtensionCertificateRefreshManager!
 
-    override func setUpWithError() throws {
-        try super.setUpWithError()
+    override func setUp() async throws {
+        try await super.setUp()
 
         self.manager = ExtensionCertificateRefreshManager(apiService: apiService,
                                                           timerFactory: timerFactory,

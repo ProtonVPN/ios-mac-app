@@ -30,7 +30,6 @@ public extension NSCoding {
     static func registerClassName(with moduleName: String) {
         let classNameComponents = NSStringFromClass(self).components(separatedBy: ".").dropFirst()
         let className = classNameComponents.joined(separator: ".")
-        NSKeyedArchiver.setClassName("\(moduleName).\(className)", for: self)
         NSKeyedUnarchiver.setClass(self, forClassName: "\(moduleName).\(className)")
     }
 }

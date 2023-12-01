@@ -33,8 +33,8 @@ class VpnServerSelectorTests: XCTestCase {
     private var serversGB: [ServerModel]!
     private var serversDE: [ServerModel]!
 
-    override func setUpWithError() throws {
-        try super.setUpWithError()
+    override func setUp() async throws {
+        try await super.setUp()
         if grouping1 == nil {
             serversGB = [
                 getServerModel(id: "GB0", countryCode: "GB", tier: 3, score: 1),

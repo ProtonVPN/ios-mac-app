@@ -24,11 +24,11 @@ import VPNShared
 
 /// - Note: To be implemented with remainder of protocol overrides feature.
 class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
-    override func setUpWithError() throws {
+    override func setUp() async throws {
         #if os(macOS)
         throw XCTSkip("Protocol override tests are skipped on macOS, since there is no cert refresh provider.")
         #else
-        try super.setUpWithError()
+        try await super.setUp()
 
         let testData = MockTestData()
 

@@ -114,7 +114,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     
     // MARK: - Beginning of the login logic.
     override func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
-        guard authKeychain.fetch() != nil else {
+        guard authKeychain.username != nil else {
             completion(.failure(ProtonVpnError.userCredentialsMissing))
             return
         }
@@ -125,22 +125,25 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
     
     func finishLogin(authCredentials: AuthCredentials, completion: @escaping (Result<(), Error>) -> Void) {
-        do {
-            try authKeychain.store(authCredentials)
-            unauthKeychain.clear()
-        } catch {
-            DispatchQueue.main.async {
-                completion(.failure(ProtonVpnError.keychainWriteFailed))
+        Task {
+            do {
+                try await authKeychain.store(authCredentials)
+                unauthKeychain.clear()
+            } catch {
+                DispatchQueue.main.async {
+                    completion(.failure(ProtonVpnError.keychainWriteFailed))
+                }
+                return
             }
-            return
+            await MainActor.run {
+                retrievePropertiesAndLogIn(success: { [weak self] in
+                    self?.checkForSubuserWithoutSessions(completion: completion)
+                }, failure: { error in
+                    log.error("Failed to obtain user's auth credentials", category: .user, metadata: ["error": "\(error)"])
+                    completion(.failure(error))
+                })
+            }
         }
-       
-        retrievePropertiesAndLogIn(success: { [weak self] in
-            self?.checkForSubuserWithoutSessions(completion: completion)
-        }, failure: { error in
-            log.error("Failed to obtain user's auth credentials", category: .user, metadata: ["error": "\(error)"])
-            completion(.failure(error))
-        })
     }
     
     func loadDataWithoutFetching() -> Bool {
@@ -434,9 +437,15 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
     
     private func logOutCleanup() {
+        let group = DispatchGroup()
         refreshTimer.stop()
         loggedIn = false
-        authKeychain.clear()
+        group.enter()
+        Task {
+            await authKeychain.clear()
+            group.leave()
+        }
+        group.wait()
         vpnKeychain.clear()
         announcementRefresher.clear()
         planService.clear()
@@ -446,7 +455,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         FeatureFlagsRepository.shared.resetFlags()
         
         let vpnAuthenticationTimeoutInSeconds = 2
-        let group = DispatchGroup()
         group.enter()
         vpnAuthentication.clearEverything {
             group.leave()
@@ -488,7 +496,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 // MARK: - Plan change
 extension AppSessionManagerImplementation: PlanServiceDelegate {
     func paymentTransactionDidFinish(modalSource: UpsellEvent.ModalSource?, newPlanName: String?) {
-        guard authKeychain.fetch() != nil else {
+        guard authKeychain.username != nil else {
             return
         }
 

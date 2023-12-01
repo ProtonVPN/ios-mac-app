@@ -23,8 +23,7 @@ extension Storage {
     private var username: String? {
         @Dependency(\.authKeychain) var authKeychain
 
-        let username = authKeychain.fetch()?.username
-        return username
+        return authKeychain.username
     }
 
     @discardableResult
@@ -60,7 +59,7 @@ extension UserDefaults {
     private var username: String? {
         @Dependency(\.authKeychain) var authKeychain
 
-        return authKeychain.fetch()?.username
+        return authKeychain.username
     }
 
     public func userObject(forKey key: String) -> Any? {

@@ -229,22 +229,14 @@ extension CorePlanService: StoreKitManagerDelegate {
     }
 
     var isSignedIn: Bool {
-        return authKeychain.fetch() != nil
+        authKeychain.username != nil
     }
 
     var activeUsername: String? {
-        guard let credentials = authKeychain.fetch() else {
-            return nil
-        }
-
-        return credentials.username
+        authKeychain.username
     }
 
     var userId: String? {
-        guard let credentials = authKeychain.fetch() else {
-            return nil
-        }
-
-        return credentials.userId
+        authKeychain.userId
     }
 }

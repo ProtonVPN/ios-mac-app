@@ -132,7 +132,7 @@ extension AppDelegate: NSApplicationDelegate {
         }
 
         log.debug("App activated with the refresh url, refreshing data", category: .app, metadata: ["url": "\(url)"])
-        guard container.makeAuthKeychainHandle().fetch() != nil else {
+        guard container.makeAuthKeychainHandle().username != nil else {
             log.debug("User not is logged in, not refreshing user data", category: .app)
             return
         }
@@ -166,8 +166,10 @@ extension AppDelegate: NSApplicationDelegate {
 
         container.makeAppSessionRefreshTimer().start(now: true) // refresh data if time passed
         // Refresh API announcements
-        if propertiesManager.featureFlags.pollNotificationAPI, container.makeAuthKeychainHandle().fetch() != nil {
-            self.container.makeAnnouncementRefresher().tryRefreshing()
+        if propertiesManager.featureFlags.pollNotificationAPI, container.makeAuthKeychainHandle().username != nil {
+            Task {
+                await self.container.makeAnnouncementRefresher().tryRefreshing()
+            }
         }
     }
 

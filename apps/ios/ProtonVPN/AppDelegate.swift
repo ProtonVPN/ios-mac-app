@@ -208,7 +208,7 @@ extension AppDelegate: UIApplicationDelegate {
         
         // Refresh API announcements
         let announcementRefresher = self.container.makeAnnouncementRefresher() // This creates refresher that is persisted in DI container
-        if propertiesManager.featureFlags.pollNotificationAPI, container.makeAuthKeychainHandle().fetch() != nil {
+        if propertiesManager.featureFlags.pollNotificationAPI, container.makeAuthKeychainHandle().username != nil {
             announcementRefresher.tryRefreshing()
         }
 
@@ -260,8 +260,8 @@ fileprivate extension AppDelegate {
             }
 
         case URLConstants.deepLinkRefresh, URLConstants.deepLinkRefreshAccount:
-            guard container.makeAuthKeychainHandle().fetch() != nil else {
-                log.debug("User not is logged in, not refreshing user data", category: .app)
+            guard container.makeAuthKeychainHandle().username != nil else {
+                log.debug("User is not logged in, not refreshing user data", category: .app)
                 return false
             }
 

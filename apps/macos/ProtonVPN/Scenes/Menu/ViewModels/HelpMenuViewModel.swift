@@ -119,7 +119,9 @@ class HelpMenuViewModel {
 
             // keychain
             self.vpnKeychain.clear()
-            self.authKeychain.clear()
+            Task {
+                await self.authKeychain.clear()
+            }
             self.vpnAuthenticationStorage.deleteCertificate()
             self.vpnAuthenticationStorage.deleteKeys()
 

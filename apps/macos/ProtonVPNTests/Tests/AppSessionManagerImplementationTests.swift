@@ -432,7 +432,10 @@ fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
 
 class AuthKeychainHandleMock: AuthKeychainHandle {
     var credentials: AuthCredentials?
+    var username: String?
+    var userId: String?
 
+    func saveToCache(_ credentials: VPNShared.AuthCredentials?) { }
     func store(_ credentials: VPNShared.AuthCredentials, forContext: VPNShared.AppContext?) throws { }
     func fetch(forContext: AppContext?) -> AuthCredentials? { return credentials }
     func clear() { }

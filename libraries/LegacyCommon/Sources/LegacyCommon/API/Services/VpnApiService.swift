@@ -136,7 +136,7 @@ public class VpnApiService {
     }
 
     public func clientCredentials(completion: @escaping (Result<VpnCredentials, Error>) -> Void) {
-        guard authKeychain.fetch() != nil else {
+        guard authKeychain.username != nil else {
             completion(.failure(VpnApiServiceError.endpointRequiresAuthentication))
             return
         }
@@ -327,31 +327,31 @@ public class VpnApiService {
         }
     }
 
-    public func clientCredentials() async throws -> VpnCredentials? {
+    public func clientCredentials() async throws -> VpnCredentials {
         try await withCheckedThrowingContinuation { continuation in
             clientCredentials(completion: continuation.resume(with:))
         }
     }
 
-    public func clientConfig(for shortenedIp: String?) async throws -> ClientConfig? {
+    public func clientConfig(for shortenedIp: String?) async throws -> ClientConfig {
         try await withCheckedThrowingContinuation { continuation in
             clientConfig(for: shortenedIp, completion: continuation.resume(with:))
         }
     }
 
-    public func virtualServices() async throws -> VPNStreamingResponse? {
+    public func virtualServices() async throws -> VPNStreamingResponse {
         try await withCheckedThrowingContinuation { continuation in
             networking.request(VPNStreamingRequest(), completion: continuation.resume(with:))
         }
     }
 
-    public func partnersServices() async throws -> VPNPartnersResponse? {
+    public func partnersServices() async throws -> VPNPartnersResponse {
         try await withCheckedThrowingContinuation { continuation in
             networking.request(VPNPartnersRequest(), completion: continuation.resume(with:))
         }
     }
 
-    public func userInfo() async throws -> User? {
+    public func userInfo() async throws -> User {
         try await withCheckedThrowingContinuation { continuation in
             Authenticator(api: networking.apiService).getUserInfo(completion: continuation.resume(with:))
         }
