@@ -211,9 +211,10 @@ extension AppDelegate: UIApplicationDelegate {
         if propertiesManager.featureFlags.pollNotificationAPI, container.makeAuthKeychainHandle().username != nil {
             announcementRefresher.tryRefreshing()
         }
-
-        container.makeAppSessionManager().refreshVpnAuthCertificate(success: { }, failure: { _ in })
-        container.makeReview().activated()
+        Task {
+            try? await container.makeAppSessionManager().refreshVpnAuthCertificate()
+            container.makeReview().activated()
+        }
     }
     
     private func setupLogsForApp() {
