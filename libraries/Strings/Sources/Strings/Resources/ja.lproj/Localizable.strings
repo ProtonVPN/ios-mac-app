@@ -170,11 +170,7 @@
 /* Used in many places in MacOS app */
 "_secure_core" = "Secure Core";
 
-/*
- %@ is a country e.g. Secure Core Switzerland
- 
- %@ is a country e.g. Secure Core Switzerland
-*/
+/* %@ is a country e.g. Secure Core Switzerland */
 "_secure_core_country" = "Secure Core %@";
 
 /* Profile create/edit menu */
@@ -202,11 +198,7 @@
 /* iOS: countries list section header */
 "_countries_premium" = "プレミアムプランの国一覧";
 
-/*
- %@ is a failure or timeout e.g. Connecting failed
- 
- MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed
-*/
+/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
 "_connecting_vpn" = "%@ に接続中";
 
 /* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
@@ -830,11 +822,7 @@
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
 "_reconnect_on_settings_change_body" = "変更を適用するには再接続する必要があります。";
 
-/*
- %@ is a country name, e.g. Switzerland servers under maintenance
- 
- Under maintenance alert
-*/
+/* Under maintenance alert */
 "_country_servers_under_maintenance" = "%@ サーバーはメンテナンス中です";
 
 /* Under maintenance alert */
@@ -900,11 +888,7 @@
 /* Button in several different alerts */
 "_got_it" = "了解";
 
-/*
- If the app cannot upgrade the user's plan and they must go to the website to uprade it
- 
- Plan upgrade unavailable alert
-*/
+/* Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "アプリ内でアップグレードできません";
 
 /* Plan upgrade unavailable alert */
@@ -1672,11 +1656,7 @@
 /* Header before the list of connections available for free users (in the country list) */
 "_connections_free" = "無料接続";
 
-/*
- Gateways info modal
- 
- Gateways info modals title (both iOS and macOS)
-*/
+/* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "ゲートウェイとは？";
 
 /* Gateways info modals text (both iOS and macOS) */
@@ -1837,11 +1817,7 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "%@ 設定は変更できませんでした。後ほど再度試すか、別のサーバーに接続してください。";
 
-/*
- MARK: Netshield stats
- 
- The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked
-*/
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
 "netshield_stats_hint_ads" = "広告ウェブサイトは、Cookie とトラッカーを使用してあなたをターゲットします。";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
@@ -2086,11 +2062,7 @@
 /* Description of user account update screen */
 "maximum_device_limit" = "接続するには他のデバイスの接続を解除してください。";
 
-/*
- New upsell modals
- 
- Title of VPN Accelerator upsell modal
-*/
+/* Title of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_title" = "さらに高速なブラウジング(最大10Gbps)";
 
 /* Feature of VPN Accelerator upsell modal */
