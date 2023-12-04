@@ -17,7 +17,7 @@
 "_br_2_button_next" = "Связаться с нами";
 
 /* ReportBug 2nd step (Quick fixes) cancel button */
-"_br_2_button_cancel" = "Отмена";
+"_br_2_button_cancel" = "Cancel";
 
 /* ReportBug 3rd step (form) send button */
 "_br_3_button_send" = "Отправить отчет";
@@ -38,7 +38,7 @@
 "_br_3_logs_description" = "Журнал - это тип файла, показывающий нам ваши действия, приведшие к появлению ошибки. Мы используем их только для того, чтобы помочь нашим инженерам исправить ошибки.";
 
 /* ReportBug 3rd step (form): message shown if user disabled logs */
-"_br_3_logs_disabled" = "Журналы ошибок помогают нам разобраться в сути вашей проблемы. Если вы не приложите их, мы не сможем провести полную проверку.";
+"_br_3_logs_disabled" = "Журналы ошибок помогают нам разобраться в сути вашей проблемы. Если вы не приложите их, мы не сможем провести полное исследование.";
 
 /* ReportBug success window: title text */
 "_br_success_title" = "Благодарим за отзыв";
@@ -47,7 +47,7 @@
 "_br_success_subtitle" = "Мы свяжемся с вами, как только сможем.";
 
 /* ReportBug success window: button */
-"_br_success_button" = "Понятно";
+"_br_success_button" = "Got it";
 
 /* ReportBug success window: title text */
 "_br_failure_title" = "Ваш отчет не был отправлен";
@@ -56,7 +56,7 @@
 "_br_failure_button_retry" = "Попробовать снова";
 
 /* ReportBug success window: troubleshoot button */
-"_br_failure_button_troubleshoot" = "Устранение неполадок";
+"_br_failure_button_troubleshoot" = "Troubleshoot";
 
 /* Title of the view nudging users to update before filling Bug Report */
 "_update_view_title" = "Обновить Proton VPN";

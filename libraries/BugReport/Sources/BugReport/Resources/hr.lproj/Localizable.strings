@@ -47,7 +47,7 @@
 "_br_success_subtitle" = "We’ll get back to you as soon as we can.";
 
 /* ReportBug success window: button */
-"_br_success_button" = "Shvaćam";
+"_br_success_button" = "Got it";
 
 /* ReportBug success window: title text */
 "_br_failure_title" = "Your report wasn’t sent";
@@ -56,7 +56,7 @@
 "_br_failure_button_retry" = "Pokušaj ponovno";
 
 /* ReportBug success window: troubleshoot button */
-"_br_failure_button_troubleshoot" = "Rješavanje problema";
+"_br_failure_button_troubleshoot" = "Troubleshoot";
 
 /* Title of the view nudging users to update before filling Bug Report */
 "_update_view_title" = "Ažuriraj Proton VPN";

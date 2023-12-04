@@ -47,7 +47,7 @@
 "_br_success_subtitle" = "Vă vom contacta cât de curând posibil.";
 
 /* ReportBug success window: button */
-"_br_success_button" = "Am înţeles";
+"_br_success_button" = "Am înțeles";
 
 /* ReportBug success window: title text */
 "_br_failure_title" = "Raportul nu a fost trimis.";

@@ -57,6 +57,7 @@
 /* MacOS: voice over indication for a country or server on maintenance */
 "_on_maintenance" = "En mantenimiento";
 
+/* iOS & MacOS: text that requires restart connection */
 "_reconnection_required" = "Reconexión requerida";
 
 /* Server status in many places in iOS and MacOS apps */
@@ -169,7 +170,11 @@
 /* Used in many places in MacOS app */
 "_secure_core" = "Secure Core";
 
-/* %@ is a country e.g. Secure Core Switzerland */
+/*
+ %@ is a country e.g. Secure Core Switzerland
+ 
+ %@ is a country e.g. Secure Core Switzerland
+*/
 "_secure_core_country" = "Secure Core %@";
 
 /* Profile create/edit menu */
@@ -197,7 +202,11 @@
 /* iOS: countries list section header */
 "_countries_premium" = "Países premium";
 
-/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
+/*
+ %@ is a failure or timeout e.g. Connecting failed
+ 
+ MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed
+*/
 "_connecting_vpn" = "Conectando %@";
 
 /* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
@@ -284,7 +293,7 @@
 "_switch_side_button_off" = "OFF";
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
-"_timeout_ks_ike_descritpion" = "Otra aplicación podría estar interfiriendo con el interruptor de apagado. Para solucionar este problema, cambie al protocolo OpenVPN o desactive el interruptor y vuelva a intentarlo.";
+"_timeout_ks_ike_descritpion" = "Otra aplicación podría estar interfiriendo con el interruptor de apagado. Para resolver este problema, cambie al protocolo OpenVPN o desactive el interruptor y vuelva a intentarlo.";
 
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Cambiar a OpenVPN y reintentar";
@@ -821,7 +830,11 @@
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
 "_reconnect_on_settings_change_body" = "Debe reiniciar su conexión para aplicar este cambio.";
 
-/* Under maintenance alert */
+/*
+ %@ is a country name, e.g. Switzerland servers under maintenance
+ 
+ Under maintenance alert
+*/
 "_country_servers_under_maintenance" = "Servidores de %@ en mantenimiento";
 
 /* Under maintenance alert */
@@ -887,7 +900,11 @@
 /* Button in several different alerts */
 "_got_it" = "¡Entendido!";
 
-/* Plan upgrade unavailable alert */
+/*
+ If the app cannot upgrade the user's plan and they must go to the website to uprade it
+ 
+ Plan upgrade unavailable alert
+*/
 "_upgrade_unavailable_title" = "Mejora no disponible en la app";
 
 /* Plan upgrade unavailable alert */
@@ -1352,10 +1369,10 @@
 "_subscription_extended_success" = "Ha comprado los créditos para extender su plan actual.";
 
 /* Button on alert after a problem with internet connection */
-"_ne_troubleshoot" = "Solución de problemas";
+"_ne_troubleshoot" = "Resolución de problemas";
 
 /* Title of connection troubleshooting screen */
-"_troubleshoot_title" = "Solución de problemas";
+"_troubleshoot_title" = "Resolución de problemas";
 
 "_troubleshoot_item_alt_title" = "Permitir ruta alternativa";
 
@@ -1381,7 +1398,7 @@
 
 "_troubleshoot_item_antivirus_title" = "Interferencia del antivirus";
 
-"_troubleshoot_item_antivirus_description" = "Desactive temporalmente o elimine su software antivirus.";
+"_troubleshoot_item_antivirus_description" = "Desactive o borre temporalmente su software antivirus.";
 
 "_troubleshoot_item_proxy_title" = "Interferencia de Proxy/Firewall";
 
@@ -1410,7 +1427,7 @@
 "_battery_description" = "Todo el tráfico en su teléfono se gestionará a través de OpenVPN, por lo tanto iOS asignará el uso de la batería de otras aplicaciones a Proton VPN.";
 
 /* Battery usage More info button text */
-"_battery_more" = "¿Quiere saber más?";
+"_battery_more" = "¿Desea saber más?";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
 "_netshield_stats_data_saved" = "Datos\nahorrados";
@@ -1457,7 +1474,7 @@
 "_netshield_alert_upgrade_description" = "NetShield aumenta su privacidad bloqueando anuncios y rastreadores.";
 
 /* Netshield section title in iOS connection screen */
-"_netshield_section_title" = "Malware y bloqueador de anuncios";
+"_netshield_section_title" = "Bloqueador de malware y anuncios";
 
 /* Title of the screen with news and offers. */
 "_news_title" = "Noticias";
@@ -1655,7 +1672,11 @@
 /* Header before the list of connections available for free users (in the country list) */
 "_connections_free" = "Conexiones gratuitas";
 
-/* Gateways info modals title (both iOS and macOS) */
+/*
+ Gateways info modal
+ 
+ Gateways info modals title (both iOS and macOS)
+*/
 "_gateways_modal_title" = "¿Qué es una puerta de enlace?";
 
 /* Gateways info modals text (both iOS and macOS) */
@@ -1816,7 +1837,11 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "No se pudo cambiar el ajuste de %@. Intente más tarde o conéctese a otro servidor";
 
-/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
+/*
+ MARK: Netshield stats
+ 
+ The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked
+*/
 "netshield_stats_hint_ads" = "Los sitios web de publicidad usan cookies y rastreadores para dirigirse a usted.";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
@@ -2061,7 +2086,11 @@
 /* Description of user account update screen */
 "maximum_device_limit" = "Desconecte otro dispositivo para conectarse a éste.";
 
-/* Title of VPN Accelerator upsell modal */
+/*
+ New upsell modals
+ 
+ Title of VPN Accelerator upsell modal
+*/
 "upsell_vpn_accelerator_title" = "Navegue a velocidades aún mayores (hasta 10 Gbps)";
 
 /* Feature of VPN Accelerator upsell modal */
@@ -2155,7 +2184,7 @@
 "modals_server_selection" = "Cambios a la selección de servidor";
 
 /* Description of the second section of the "What's new" screen */
-"modals_server_crowding" = "Para evitar la saturación de servidores y garantizar que todos tengan acceso a una navegación rápida y segura, eliminamos la selección manual de países e hicimos mejoras importantes en la selección automática de servidores.";
+"modals_server_crowding" = "Para evitar la saturación de servidores y garantizar que todos tengan acceso a una navegación rápida y segura, borramos la selección manual de países e hicimos mejoras importantes en la selección automática de servidores.";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
 "upsell_specific_location_subtitle" = "Obtenga cambios ilimitados con VPN Plus";
@@ -2191,7 +2220,7 @@
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
 
 /* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
-"welcome_upgrade_subtitle_fallback" = "Ha mejorado su suscripción. Disfrute funciones de privacidad avanzadas y rendimiento de otro nivel.";
+"welcome_upgrade_subtitle_fallback" = "Ha mejorado su suscripción. Disfrute de funciones de privacidad avanzadas y rendimiento de otro nivel.";
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Disponible con VPN Business.";

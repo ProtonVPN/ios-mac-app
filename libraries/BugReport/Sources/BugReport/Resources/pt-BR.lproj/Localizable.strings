@@ -38,7 +38,7 @@
 "_br_3_logs_description" = "Um registro é uma categoria de arquivo que nos mostra as ações que você realizou que levaram a um erro. Nós só os usaremos para ajudar nossos engenheiros a corrigir erros.";
 
 /* ReportBug 3rd step (form): message shown if user disabled logs */
-"_br_3_logs_disabled" = "Os registros de erros nos ajudam a resolver seu problema. Se você não os incluir, talvez não possamos investigar completamente seu problema.";
+"_br_3_logs_disabled" = "Os registros de erros nos ajudam a resolver seu problema. Se você não os incluir, talvez não possamos investigar completamente.";
 
 /* ReportBug success window: title text */
 "_br_success_title" = "Agradecemos seu comentário.";
@@ -56,7 +56,7 @@
 "_br_failure_button_retry" = "Tente novamente";
 
 /* ReportBug success window: troubleshoot button */
-"_br_failure_button_troubleshoot" = "Resolução de problemas";
+"_br_failure_button_troubleshoot" = "Solução de problemas";
 
 /* Title of the view nudging users to update before filling Bug Report */
 "_update_view_title" = "Atualizar Proton VPN";

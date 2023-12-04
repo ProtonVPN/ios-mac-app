@@ -57,6 +57,7 @@
 /* MacOS: voice over indication for a country or server on maintenance */
 "_on_maintenance" = "En mantenimiento";
 
+/* iOS & MacOS: text that requires restart connection */
 "_reconnection_required" = "Reconexión requerida";
 
 /* Server status in many places in iOS and MacOS apps */
@@ -169,7 +170,11 @@
 /* Used in many places in MacOS app */
 "_secure_core" = "Secure Core";
 
-/* %@ is a country e.g. Secure Core Switzerland */
+/*
+ %@ is a country e.g. Secure Core Switzerland
+ 
+ %@ is a country e.g. Secure Core Switzerland
+*/
 "_secure_core_country" = "Secure Core %@";
 
 /* Profile create/edit menu */
@@ -197,7 +202,11 @@
 /* iOS: countries list section header */
 "_countries_premium" = "Países premium";
 
-/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
+/*
+ %@ is a failure or timeout e.g. Connecting failed
+ 
+ MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed
+*/
 "_connecting_vpn" = "Conectando %@";
 
 /* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
@@ -293,7 +302,7 @@
 "_kill_switch_blocking_connection" = "Kill Switch bloquea todas las conexiones.";
 
 /* Disconnect notification */
-"_always_on_will_reconnect" = "La VPN siempre activa te reconectará automáticamente";
+"_always_on_will_reconnect" = "La VPN siempre activa te reconectará automáticamente.";
 
 /* MacOS: About window title */
 "_about" = "Acerca de";
@@ -714,7 +723,7 @@
 "_error_email_verification_disabled" = "Verificación de correo electrónico temporalmente desactivada";
 
 /* Error writing to system keychain */
-"_error_keychain_write" = "Proton no pudo comunicarse con su dispositivo. Por favor, inténtelo de nuevo más tarde.";
+"_error_keychain_write" = "Proton no ha podido comunicarse con tu dispositivo. Intenta de nuevo más tarde.";
 
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "La firma del módulo está vacía";
@@ -741,7 +750,7 @@
 "_ne_not_connected_to_the_internet" = "Sin conexión a Internet";
 
 /* Network error */
-"_ne_couldnt_reach_server" = "No pudimos acceder a los servidores de Proton";
+"_ne_couldnt_reach_server" = "No hemos podido acceder a los servidores de Proton.";
 
 /* API error */
 "_ae_wrong_login_credentials" = "Nombre de usuario o contraseña incorrectos";
@@ -777,7 +786,7 @@
 "_error_keychain_fetch" = "Error de la cadena de claves.";
 
 /* Error when the app fails to create a user */
-"_error_user_creation" = "Creación de cuenta fallida";
+"_error_user_creation" = "Error en la creación de cuenta";
 
 /* General title for several error alerts */
 "_error_unknown_title" = "Error desconocido";
@@ -821,7 +830,11 @@
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
 "_reconnect_on_settings_change_body" = "Debes reiniciar tu conexión para aplicar este cambio.";
 
-/* Under maintenance alert */
+/*
+ %@ is a country name, e.g. Switzerland servers under maintenance
+ 
+ Under maintenance alert
+*/
 "_country_servers_under_maintenance" = "Servidores de %@ en mantenimiento";
 
 /* Under maintenance alert */
@@ -887,7 +900,11 @@
 /* Button in several different alerts */
 "_got_it" = "¡Entendido!";
 
-/* Plan upgrade unavailable alert */
+/*
+ If the app cannot upgrade the user's plan and they must go to the website to uprade it
+ 
+ Plan upgrade unavailable alert
+*/
 "_upgrade_unavailable_title" = "Mejora no disponible en la aplicación";
 
 /* Plan upgrade unavailable alert */
@@ -1052,7 +1069,7 @@
 "_turn_ks_on_title" = "¿Activar Kill Switch?";
 
 /* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "Al activar interruptor de bloqueo, no podrás acceder a los dispositivos en tu red local. \n\n¿Deseas continuar?";
+"_turn_ks_on_description" = "Al activar interruptor de bloqueo, no podrás acceder a los dispositivos en tu red local. \n\n¿Quieres continuar?";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Obtener el plan %@";
@@ -1349,7 +1366,7 @@
 
 "_subscription_button" = "Amplía el plan por 1 año \n%@.";
 
-"_subscription_extended_success" = "Has adquirido créditos para ampliar tu plan actual.";
+"_subscription_extended_success" = "Has comprado los créditos para extender tu plan actual.";
 
 /* Button on alert after a problem with internet connection */
 "_ne_troubleshoot" = "Señala un problema";
@@ -1381,7 +1398,7 @@
 
 "_troubleshoot_item_antivirus_title" = "Interferencia del antivirus";
 
-"_troubleshoot_item_antivirus_description" = "Desactiva o elimina temporalmente tu software antivirus.";
+"_troubleshoot_item_antivirus_description" = "Desactiva o borra temporalmente tu software antivirus.";
 
 "_troubleshoot_item_proxy_title" = "Interferencia de proxy/cortafuego";
 
@@ -1505,7 +1522,7 @@
 "_kill_switch_reconnection_bold2" = "Protección de Kill Switch";
 
 /* MacOS: connection screen - cancel button */
-"_kill_switch_reconnection_cancel" = "Cancelar reconexión";
+"_kill_switch_reconnection_cancel" = "Cancelar la reconexión";
 
 /* Title for Smart Protocol in Settings */
 "_smart_protocol_title" = "Smart Protocol";
@@ -1655,7 +1672,11 @@
 /* Header before the list of connections available for free users (in the country list) */
 "_connections_free" = "Conexiones gratuitas";
 
-/* Gateways info modals title (both iOS and macOS) */
+/*
+ Gateways info modal
+ 
+ Gateways info modals title (both iOS and macOS)
+*/
 "_gateways_modal_title" = "¿Qué es una puerta de enlace?";
 
 /* Gateways info modals text (both iOS and macOS) */
@@ -1679,7 +1700,7 @@
 
 "_local_agent_policy_violation_error_title" = "Violación de la política";
 
-"_local_agent_policy_violation_error_message" = "No tienes permisos para conectarte al servidor. Elige un servidor diferente o actualiza tu plan.";
+"_local_agent_policy_violation_error_message" = "No tienes permisos para conectarte al servidor. Elige un servidor diferente o mejora tu plan.";
 
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
 "_loading_connection_info" = "Cargando la información de conexión";
@@ -1816,7 +1837,11 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "%@ No se ha podido cambiar la configuración. Por favor, inténtelo de nuevo más tarde o conéctese a un servidor diferente";
 
-/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
+/*
+ MARK: Netshield stats
+ 
+ The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked
+*/
 "netshield_stats_hint_ads" = "Los sitios web de publicidad utilizan cookies y rastreadores para dirigirse a ti.";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
@@ -1870,7 +1895,7 @@
 "_bad_interface_ip_range_alert_title" = "Interfaz de red errónea";
 
 /* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
-"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Tu red local podría ser insegura (la interfaz &#039;%@&#039; tiene la IP y prefijo &#039;%@&#039;). Tus datos podrían enviarse sin cifrar en la red local. Activar el interruptor de apagado bloqueará este tráfico. Las conexiones a periferias locales serán interrumpidas.";
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Tu red local podría ser insegura (la interfaz '%@' tiene la IP y prefijo '%@'). Tus datos podrían enviarse sin cifrar en la red local. Activar el interruptor de bloqueo bloqueará este tráfico. Las conexiones a periferias locales serán interrumpidas.";
 
 /* Title of the search screen */
 "search_title" = "Buscar";
@@ -2061,7 +2086,11 @@
 /* Description of user account update screen */
 "maximum_device_limit" = "Por favor, desconecte otro dispositivo para conectarse a este.";
 
-/* Title of VPN Accelerator upsell modal */
+/*
+ New upsell modals
+ 
+ Title of VPN Accelerator upsell modal
+*/
 "upsell_vpn_accelerator_title" = "Navega a velocidades aún mayores (hasta 10 Gbps)";
 
 /* Feature of VPN Accelerator upsell modal */
@@ -2203,10 +2232,10 @@
 "free_connections_modal_description" = "Proton Free te conecta automáticamente al servidor más rápido disponible. Normalmente es el servidor más cercano a tu ubicación.";
 
 /* Modal that lists countries in which servers are available to free users: banner with CTA */
-"free_connections_modal_banner" = "Disfruta de una cobertura global con VPN Plus";
+"free_connections_modal_banner" = "Disfruta de una cobertura global con VPN Plus.";
 
 /* Text on upsell banner in country list */
-"_free_banner_text" = "Disfruta de una cobertura global con VPN Plus";
+"_free_banner_text" = "Disfruta de una cobertura global con VPN Plus.";
 
 /* Title of banner shown on iOS apps to upsell users who want to select a country */
 "_wrong_country_banner_title" = "¿No es el país que querías?";

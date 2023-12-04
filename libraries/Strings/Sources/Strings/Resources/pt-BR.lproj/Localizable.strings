@@ -57,6 +57,7 @@
 /* MacOS: voice over indication for a country or server on maintenance */
 "_on_maintenance" = "Em manutenção";
 
+/* iOS & MacOS: text that requires restart connection */
 "_reconnection_required" = "Reconexão necessária";
 
 /* Server status in many places in iOS and MacOS apps */
@@ -169,7 +170,11 @@
 /* Used in many places in MacOS app */
 "_secure_core" = "Secure Core";
 
-/* %@ is a country e.g. Secure Core Switzerland */
+/*
+ %@ is a country e.g. Secure Core Switzerland
+ 
+ %@ is a country e.g. Secure Core Switzerland
+*/
 "_secure_core_country" = "Secure Core %@";
 
 /* Profile create/edit menu */
@@ -197,7 +202,11 @@
 /* iOS: countries list section header */
 "_countries_premium" = "Países premium";
 
-/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
+/*
+ %@ is a failure or timeout e.g. Connecting failed
+ 
+ MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed
+*/
 "_connecting_vpn" = "Conectando %@";
 
 /* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
@@ -821,7 +830,11 @@
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
 "_reconnect_on_settings_change_body" = "Sua conexão precisa ser reiniciada para aplicar esta modificação.";
 
-/* Under maintenance alert */
+/*
+ %@ is a country name, e.g. Switzerland servers under maintenance
+ 
+ Under maintenance alert
+*/
 "_country_servers_under_maintenance" = "Os servidores em %@ estão em manutenção";
 
 /* Under maintenance alert */
@@ -887,7 +900,11 @@
 /* Button in several different alerts */
 "_got_it" = "Entendi!";
 
-/* Plan upgrade unavailable alert */
+/*
+ If the app cannot upgrade the user's plan and they must go to the website to uprade it
+ 
+ Plan upgrade unavailable alert
+*/
 "_upgrade_unavailable_title" = "Upgrade indisponível no app";
 
 /* Plan upgrade unavailable alert */
@@ -903,7 +920,7 @@
 "_kill_switch_disable" = "Desativar kill switch";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
-"_kill_switch_enable" = "Ativar kill switch";
+"_kill_switch_enable" = "Ativar Kill Switch";
 
 /* MacOS: Settings screen title */
 "_preferences" = "Preferências";
@@ -1655,7 +1672,11 @@
 /* Header before the list of connections available for free users (in the country list) */
 "_connections_free" = "Conexões gratuitas";
 
-/* Gateways info modals title (both iOS and macOS) */
+/*
+ Gateways info modal
+ 
+ Gateways info modals title (both iOS and macOS)
+*/
 "_gateways_modal_title" = "O que é um gateway?";
 
 /* Gateways info modals text (both iOS and macOS) */
@@ -1816,7 +1837,11 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "Não foi possível alterar a configuração %@. Tente novamente mais tarde ou conecte-se a outro servidor.";
 
-/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
+/*
+ MARK: Netshield stats
+ 
+ The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked
+*/
 "netshield_stats_hint_ads" = "Os sites de publicidade usam cookies e rastreadores para atingir você.";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
@@ -1870,7 +1895,7 @@
 "_bad_interface_ip_range_alert_title" = "Interface de rede incorreta";
 
 /* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
-"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Sua rede local pode não ser segura (a interface '%@' tem o IP e o prefixo '%@'). Seus dados podem ser enviados sem criptografia pela rede local. A ativação do Kill Switch bloqueará esse tráfego. As conexões com periféricos locais serão interrompidas.";
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Sua rede local pode não ser segura (a interface '%@' possui o IP e o prefixo '%@'). Seus dados podem ser enviados sem criptografia pela rede local. A ativação do Kill Switch bloqueará esse tráfego. As conexões com periféricos locais serão interrompidas.";
 
 /* Title of the search screen */
 "search_title" = "Procurar";
@@ -2061,7 +2086,11 @@
 /* Description of user account update screen */
 "maximum_device_limit" = "Desconecte outro dispositivo para conectar a este.";
 
-/* Title of VPN Accelerator upsell modal */
+/*
+ New upsell modals
+ 
+ Title of VPN Accelerator upsell modal
+*/
 "upsell_vpn_accelerator_title" = "Navegue em velocidades ainda mais rápidas (até 10 Gbps)";
 
 /* Feature of VPN Accelerator upsell modal */

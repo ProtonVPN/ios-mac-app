@@ -38,7 +38,7 @@
 "_br_3_logs_description" = "Bir günlük, soruna neden olan olayları görmemizi sağlayan bir dosya türüdür. Bunları yalnızca mühendislerimizin hataları gidermesine yardımcı olmaları için kullanacağız.";
 
 /* ReportBug 3rd step (form): message shown if user disabled logs */
-"_br_3_logs_disabled" = "Hata günlükleri, sorununuzun temeline inmemize yardımcı olur. Bunları göndermezseniz, sorunu tam olarak araştıramayabiliriz.";
+"_br_3_logs_disabled" = "Hata günlükleri, sorununuzun temeline inmemize yardımcı olur. Bunları göndermezeniz, sorunu tam olarak araştıramayabiliriz.";
 
 /* ReportBug success window: title text */
 "_br_success_title" = "Geri bildiriminiz için teşekkürler";
@@ -47,7 +47,7 @@
 "_br_success_subtitle" = "Olabilecek en kısa sürede size döneceğiz.";
 
 /* ReportBug success window: button */
-"_br_success_button" = "Anladım";
+"_br_success_button" = "Got it";
 
 /* ReportBug success window: title text */
 "_br_failure_title" = "Bildiriminiz gönderilmedi";
@@ -56,7 +56,7 @@
 "_br_failure_button_retry" = "Yeniden dene";
 
 /* ReportBug success window: troubleshoot button */
-"_br_failure_button_troubleshoot" = "Sorun gider";
+"_br_failure_button_troubleshoot" = "Troubleshoot";
 
 /* Title of the view nudging users to update before filling Bug Report */
 "_update_view_title" = "Proton VPN uygulamasını güncelle";

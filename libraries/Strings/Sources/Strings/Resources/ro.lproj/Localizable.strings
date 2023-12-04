@@ -57,6 +57,7 @@
 /* MacOS: voice over indication for a country or server on maintenance */
 "_on_maintenance" = "În întreținere";
 
+/* iOS & MacOS: text that requires restart connection */
 "_reconnection_required" = "Reconectare necesară";
 
 /* Server status in many places in iOS and MacOS apps */
@@ -169,7 +170,11 @@
 /* Used in many places in MacOS app */
 "_secure_core" = "Secure Core";
 
-/* %@ is a country e.g. Secure Core Switzerland */
+/*
+ %@ is a country e.g. Secure Core Switzerland
+ 
+ %@ is a country e.g. Secure Core Switzerland
+*/
 "_secure_core_country" = "Secure Core %@";
 
 /* Profile create/edit menu */
@@ -197,7 +202,11 @@
 /* iOS: countries list section header */
 "_countries_premium" = "Țări premium";
 
-/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
+/*
+ %@ is a failure or timeout e.g. Connecting failed
+ 
+ MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed
+*/
 "_connecting_vpn" = "Se conectează %@";
 
 /* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
@@ -287,7 +296,7 @@
 "_timeout_ks_ike_descritpion" = "Altă aplicație ar putea interfera cu blocarea conexiunii. Pentru a rezolva această problemă, comutați la protocolul OpenVPN sau dezactivați blocarea conexiunii.";
 
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
-"_timeout_ks_ike_switch_protocol" = "Comutați la OpenVPN și reîncercați";
+"_timeout_ks_ike_switch_protocol" = "Reîncercare prin OpenVPN";
 
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Blocarea conexiunii blochează toate conexiunile";
@@ -714,7 +723,7 @@
 "_error_email_verification_disabled" = "Verificarea prin e-mail a fost temporar dezactivată";
 
 /* Error writing to system keychain */
-"_error_keychain_write" = "Proton nu a putut comunica cu dispozitivul. Reîncercați mai târziu.";
+"_error_keychain_write" = "Proton nu a putut contacta dispozitivul. Reîncercați mai târziu.";
 
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "Semnătura modulului este goală";
@@ -726,7 +735,7 @@
 "_error_hash_password" = "Nu se poate aplica funcția hash la parola utilizatorului";
 
 /* Error try to restore user from the session */
-"_error_fetch_session" = "Nu se poate găsi utilizatorul din sesiune";
+"_error_fetch_session" = "Nu se poate găsi utilizatorul din sesiune.";
 
 /* Network error */
 "_ne_request_timed_out" = "Solicitarea de rețea a expirat";
@@ -741,7 +750,7 @@
 "_ne_not_connected_to_the_internet" = "Neconectat la internet";
 
 /* Network error */
-"_ne_couldnt_reach_server" = "Nu s-au putut contacta serverele Proton";
+"_ne_couldnt_reach_server" = "Nu s-au putut contacta serverele Proton.";
 
 /* API error */
 "_ae_wrong_login_credentials" = "Nume de utilizator sau parolă incorecte";
@@ -777,10 +786,10 @@
 "_error_keychain_fetch" = "Eroare lanț chei.";
 
 /* Error when the app fails to create a user */
-"_error_user_creation" = "Crearea contului a eșuat";
+"_error_user_creation" = "Crearea contului a eșuat.";
 
 /* General title for several error alerts */
-"_error_unknown_title" = "Eroare necunoscută";
+"_error_unknown_title" = "Eroare necunoscută.";
 
 /* Delinquent user alert */
 "_delinquent_user_title" = "Factură neplătită";
@@ -821,7 +830,11 @@
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
 "_reconnect_on_settings_change_body" = "Conexiunea trebuie repornită pentru a se aplica această modificare.";
 
-/* Under maintenance alert */
+/*
+ %@ is a country name, e.g. Switzerland servers under maintenance
+ 
+ Under maintenance alert
+*/
 "_country_servers_under_maintenance" = "%@ servere în întreținere";
 
 /* Under maintenance alert */
@@ -887,7 +900,11 @@
 /* Button in several different alerts */
 "_got_it" = "Am înțeles!";
 
-/* Plan upgrade unavailable alert */
+/*
+ If the app cannot upgrade the user's plan and they must go to the website to uprade it
+ 
+ Plan upgrade unavailable alert
+*/
 "_upgrade_unavailable_title" = "Modificare indisponibilă din aplicație";
 
 /* Plan upgrade unavailable alert */
@@ -1052,7 +1069,7 @@
 "_turn_ks_on_title" = "Activați blocarea conexiunii?";
 
 /* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "Activând blocarea conexiunii, nu veți putea accesa dispozitivele din rețeaua locală.\n\nContinuare?";
+"_turn_ks_on_description" = "Activând blocarea conexiunii, nu veți putea accesa dispozitivele din rețeaua locală.\n\nContinuați?";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Luați planul %@";
@@ -1100,7 +1117,7 @@
 "_plans_footer" = "După confirmarea achiziției unui plan cu plată, contul dvs. iTunes va fi debitat cu suma afișată, care include taxe și comisioane de platformă suplimentare (care nu sunt percepute direct de către Proton). După efectuarea achiziției, planul selectat va fi actualizat automat pentru o perioadă de un an, după care puteți reînnoi sau anula, fie online, fie prin intermediul aplicației iOS.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/ an";
+"_per_year_short" = "/an";
 
 /* iOS plan feature */
 "_feature_server_count" = "Conectare la servere în";
@@ -1520,7 +1537,7 @@
 "_smart_protocol_reconnect_modal_title" = "Reconectare necesară";
 
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
-"_smart_protocol_reconnect_modal_body" = "Conexiunea va fi restabilită pentru a schimba modul lui Smart Protocol.";
+"_smart_protocol_reconnect_modal_body" = "Conexiunea va fi restabilită pentru a schimba modul pentru Smart Protocol.";
 
 /* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
 "_sysex_description_1" = "Pentru a utiliza Proton VPN, trebuie să activați **protocoale personale VPN** în Mac.";
@@ -1655,7 +1672,11 @@
 /* Header before the list of connections available for free users (in the country list) */
 "_connections_free" = "Conexiuni gratuite";
 
-/* Gateways info modals title (both iOS and macOS) */
+/*
+ Gateways info modal
+ 
+ Gateways info modals title (both iOS and macOS)
+*/
 "_gateways_modal_title" = "Ce este o poartă de acces?";
 
 /* Gateways info modals text (both iOS and macOS) */
@@ -1816,7 +1837,11 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "%@ nu s-a putut modifica. Reîncercați mai târziu sau conectați-vă la alt server.";
 
-/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
+/*
+ MARK: Netshield stats
+ 
+ The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked
+*/
 "netshield_stats_hint_ads" = "Reclamele de pe paginile web folosesc fișiere cookie și scripturi de urmărire pentru a vă identifica.";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
@@ -2061,7 +2086,11 @@
 /* Description of user account update screen */
 "maximum_device_limit" = "Deconectați un alt dispozitiv pentru a-l conecta pe acesta.";
 
-/* Title of VPN Accelerator upsell modal */
+/*
+ New upsell modals
+ 
+ Title of VPN Accelerator upsell modal
+*/
 "upsell_vpn_accelerator_title" = "Navigați pe web la viteze și mai mari (până la 10 Gbps)";
 
 /* Feature of VPN Accelerator upsell modal */
