@@ -31,11 +31,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d country</string>
+        <string>%d država</string>
         <key>few</key>
-        <string>%d countries</string>
+        <string>%d države</string>
         <key>other</key>
-        <string>%d countries</string>
+        <string>%d država</string>
       </dict>
       <key>num_servers</key>
       <dict>

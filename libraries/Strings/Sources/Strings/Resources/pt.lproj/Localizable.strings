@@ -57,6 +57,7 @@
 /* MacOS: voice over indication for a country or server on maintenance */
 "_on_maintenance" = "Em manutenção";
 
+/* iOS & MacOS: text that requires restart connection */
 "_reconnection_required" = "Requerida nova ligação";
 
 /* Server status in many places in iOS and MacOS apps */
@@ -169,7 +170,11 @@
 /* Used in many places in MacOS app */
 "_secure_core" = "Secure Core";
 
-/* %@ is a country e.g. Secure Core Switzerland */
+/*
+ %@ is a country e.g. Secure Core Switzerland
+ 
+ %@ is a country e.g. Secure Core Switzerland
+*/
 "_secure_core_country" = "Secure Core %@";
 
 /* Profile create/edit menu */
@@ -197,7 +202,11 @@
 /* iOS: countries list section header */
 "_countries_premium" = "Países Premium";
 
-/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
+/*
+ %@ is a failure or timeout e.g. Connecting failed
+ 
+ MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed
+*/
 "_connecting_vpn" = "A ligação %@";
 
 /* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
@@ -463,7 +472,7 @@
 "_map_show" = "Mostrar mapa";
 
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
-"_map_hide" = "Ocultar mapa";
+"_map_hide" = "Hide map";
 
 /* Description shown together with server info icon */
 "_tor_description" = "Liga-se à rede TOR";
@@ -531,7 +540,7 @@
 "_p2p_server" = "Servidor P2P";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_tor_server" = "Servidor Tor";
+"_tor_server" = "Tor Server";
 
 /* MacOS Profiles Overview: Table column header */
 "_profile" = "Perfil";
@@ -680,7 +689,7 @@
 /* Plan speed */
 "_plan_speed_high" = "Velocidade alta";
 
-"_plan_speed_fastest" = "A velocidade mais rápida";
+"_plan_speed_fastest" = "Fastest speed";
 
 /* Unknown error that has no better description */
 "_error_internal_error" = "Erro interno da API";
@@ -780,7 +789,7 @@
 "_error_user_creation" = "Erro ao criar a conta";
 
 /* General title for several error alerts */
-"_error_unknown_title" = "Erro desconhecido";
+"_error_unknown_title" = "Unknown error";
 
 /* Delinquent user alert */
 "_delinquent_user_title" = "Fatura em dívida";
@@ -821,7 +830,11 @@
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
 "_reconnect_on_settings_change_body" = "A sua ligação tem de ser reiniciada para aplicar esta alteração.";
 
-/* Under maintenance alert */
+/*
+ %@ is a country name, e.g. Switzerland servers under maintenance
+ 
+ Under maintenance alert
+*/
 "_country_servers_under_maintenance" = "%@ - servidores em manutenção";
 
 /* Under maintenance alert */
@@ -887,7 +900,11 @@
 /* Button in several different alerts */
 "_got_it" = "Entendido";
 
-/* Plan upgrade unavailable alert */
+/*
+ If the app cannot upgrade the user's plan and they must go to the website to uprade it
+ 
+ Plan upgrade unavailable alert
+*/
 "_upgrade_unavailable_title" = "Actualização indisponível na aplicação";
 
 /* Plan upgrade unavailable alert */
@@ -1100,7 +1117,7 @@
 "_plans_footer" = "Após confirmação da sua compra de um plano pago, será cobrada à sua conta iTunes a quantia mostrada, que inclui impostos e taxas adicionais da plataforma (que não são cobradas pelo Proton directamente). Após finalizar a compra, é feita a actualização para o plano selecionado por 1 ano, após o qual pode renovar ou cancelar, seja online, seja pela nossa aplicação iOS.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/ano";
+"_per_year_short" = "/ yr";
 
 /* iOS plan feature */
 "_feature_server_count" = "Ligar aos servidores em";
@@ -1229,7 +1246,7 @@
 "_next_tip" = "Dica seguinte";
 
 /* MacOS app tour: end tour button */
-"_end_tour" = "Terminar visita";
+"_end_tour" = "End Tour";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Boas-vindas a uma internet melhor";
@@ -1655,7 +1672,11 @@
 /* Header before the list of connections available for free users (in the country list) */
 "_connections_free" = "Conexões gratuitas";
 
-/* Gateways info modals title (both iOS and macOS) */
+/*
+ Gateways info modal
+ 
+ Gateways info modals title (both iOS and macOS)
+*/
 "_gateways_modal_title" = "O que é um gateway?";
 
 /* Gateways info modals text (both iOS and macOS) */
@@ -1721,7 +1742,7 @@
 
 "_subuser_alert_enable_connections_button" = "Ativar as ligações VPN";
 
-"_subuser_alert_login_button" = "Iniciar sessão novamente";
+"_subuser_alert_login_button" = "Sign in again";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "NAT moderado";
@@ -1760,7 +1781,7 @@
 "_settings_mac_crash_reports_tooltip" = "Os relatórios de falhas ajudam-nos a corrigir erros, a detetar firewalls e a evitar bloqueios de VPN.";
 
 /* Section title in Settings */
-"_advanced" = "Avançadas";
+"_advanced" = "Advanced";
 
 /* Non-standard ports feature title in Settings */
 "_non_standard_ports_title" = "Portas não padrão";
@@ -1816,7 +1837,11 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "Não é possível alterar a configuração %@. Tente novamente mais tarde ou ligue-se a um servidor diferente.";
 
-/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
+/*
+ MARK: Netshield stats
+ 
+ The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked
+*/
 "netshield_stats_hint_ads" = "As publicidades utilizam cookies e rastreadores para o seguir.";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
@@ -2061,7 +2086,11 @@
 /* Description of user account update screen */
 "maximum_device_limit" = "Desligue outro dispositivo para ligar a este.";
 
-/* Title of VPN Accelerator upsell modal */
+/*
+ New upsell modals
+ 
+ Title of VPN Accelerator upsell modal
+*/
 "upsell_vpn_accelerator_title" = "Navegue a velocidades ainda mais elevadas (até 10 Gbps)";
 
 /* Feature of VPN Accelerator upsell modal */
@@ -2137,7 +2166,7 @@
 "upsell_country_feature_title" = "Pretende escolher um país específico?";
 
 /* Feature of Country upsell modal */
-"upsell_country_feature_subtitle" = "Unlock country selection with VPN Plus";
+"upsell_country_feature_subtitle" = "Desbloqueie a seleção do país com a VPN Plus";
 
 /* Bold part of the feature of Country upsell modal */
 "upsell_country_feature_subtitle_bold" = "seleção de país";
@@ -2158,7 +2187,7 @@
 "modals_server_crowding" = "Para prevenir a lotação do servidor e garantir que todas as pessoas têm acesso rápido e seguro enquanto navegam, removemos a seleção manual do país e fizemos grandes melhorias à seleção automática do servidor.";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
-"upsell_specific_location_subtitle" = "Get unlimited changes with VPN Plus";
+"upsell_specific_location_subtitle" = "Obtenha mudanças ilimitadas com a VPN Plus";
 
 /* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
 "upsell_specific_location_title" = "You've reached the maximum number of Free server changes for now.";
@@ -2167,7 +2196,7 @@
 "upsell_specific_location_change_server_button_title" = "Alterar servidor";
 
 /* The name of one of the features in the Welcome screen that the user sees after upgrading */
-"welcome_upgrade_advanced_features" = "Advanced security features";
+"welcome_upgrade_advanced_features" = "Funcionalidades de segurança avançadas";
 
 /* The title of the Welcome screen when user upgrades to VPN Plus */
 "welcome_upgrade_title_plus" = "Boas-vindas ao VPN Plus";
@@ -2176,10 +2205,10 @@
 "welcome_upgrade_title_unlimited" = "Welcome to Proton Unlimited";
 
 /* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
-"welcome_upgrade_title_fallback" = "Congratulations!";
+"welcome_upgrade_title_fallback" = "Parabéns!";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Plus */
-"welcome_upgrade_subtitle_plus" = "Enjoy extra privacy features, supercharged performance, and next-level VPN customization.";
+"welcome_upgrade_subtitle_plus" = "Aproveite funcionalidades de privacidade extra, desempenho de alta qualidade, e uma personalização da VPN de outro nível.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited" = "Congratulations! You unlocked premium security and performance features on all Proton services, plus 500 GB total storage.\n\nEnjoy the best of Proton privacy.";
@@ -2197,22 +2226,22 @@
 "_available_with_vpn_business_tooltip" = "Disponível com a VPN Business.";
 
 /* Modal that lists countries in which servers are available to free users: Title */
-"free_connections_modal_title" = "Free connections";
+"free_connections_modal_title" = "Conexões gratuitas";
 
 /* Modal that lists countries in which servers are available to free users: Description */
-"free_connections_modal_description" = "Proton Free automatically connects you to the fastest available server. This will normally be the closest server to your location.";
+"free_connections_modal_description" = "O Proton Free liga-o automaticamente ao servidor mais rápido disponível. Este será, geralmente, o servidor mais próximo da sua localização.";
 
 /* Modal that lists countries in which servers are available to free users: banner with CTA */
-"free_connections_modal_banner" = "Get worldwide coverage with VPN Plus";
+"free_connections_modal_banner" = "Obtenha uma cobertura global com a VPN Plus";
 
 /* Text on upsell banner in country list */
-"_free_banner_text" = "Get worldwide coverage with VPN Plus";
+"_free_banner_text" = "Obtenha uma cobertura global com a VPN Plus";
 
 /* Title of banner shown on iOS apps to upsell users who want to select a country */
-"_wrong_country_banner_title" = "Not the country you wanted?";
+"_wrong_country_banner_title" = "Não é o país que pretendia?";
 
 /* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
-"_wrong_country_banner_subtitle" = "Upgrade to choose any server";
+"_wrong_country_banner_subtitle" = "Faça 'upgrade' para escolher qualquer servidor";
 
 /* Text of banner shown on macOS apps to upsell users who want to select a country */
-"_wrong_country_banner_text" = "Not the country you wanted? Upgrade to choose any server";
+"_wrong_country_banner_text" = "Não é o país que pretendia? Faça 'upgrade' para escolher qualquer servidor";

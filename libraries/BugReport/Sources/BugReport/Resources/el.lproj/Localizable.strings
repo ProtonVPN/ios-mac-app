@@ -56,7 +56,7 @@
 "_br_failure_button_retry" = "Δοκιμάστε ξανά";
 
 /* ReportBug success window: troubleshoot button */
-"_br_failure_button_troubleshoot" = "Επίλυση προβλημάτων";
+"_br_failure_button_troubleshoot" = "Αντιμετώπιση προβλημάτων";
 
 /* Title of the view nudging users to update before filling Bug Report */
 "_update_view_title" = "Ενημέρωση Proton VPN";
