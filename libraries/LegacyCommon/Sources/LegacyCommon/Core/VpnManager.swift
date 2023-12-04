@@ -159,7 +159,7 @@ public class VpnManager: VpnManagerProtocol {
     let alertService: CoreAlertService?
     let vpnAuthentication: VpnAuthentication
     let vpnKeychain: VpnKeychainProtocol
-    let vpnAuthenticationStorage: VpnAuthenticationStorage
+    let vpnAuthenticationStorage: VpnAuthenticationStorageAsync
 
     var localAgent: LocalAgent? {
         didSet {
@@ -216,7 +216,7 @@ public class VpnManager: VpnManagerProtocol {
         wireguardProtocolFactory: VpnProtocolFactory,
         appGroup: String,
         vpnAuthentication: VpnAuthentication,
-        vpnAuthenticationStorage: VpnAuthenticationStorage,
+        vpnAuthenticationStorage: VpnAuthenticationStorageAsync,
         vpnKeychain: VpnKeychainProtocol,
         propertiesManager: PropertiesManagerProtocol,
         vpnStateConfiguration: VpnStateConfiguration,
