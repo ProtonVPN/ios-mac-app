@@ -59,7 +59,6 @@
 "_on_maintenance" = "On maintenance";
 
 /* iOS & MacOS: text that requires restart connection */
-
 "_reconnection_required" = "Reconnection Required";
 
 /* Server status in many places in iOS and MacOS apps */
@@ -169,8 +168,6 @@
 "_secure_core" = "Secure Core";
 
 /* %@ is a country e.g. Secure Core Switzerland */
-
-/* %@ is a country e.g. Secure Core Switzerland */
 "_secure_core_country" = "Secure Core %@";
 
 /* Profile create/edit menu */
@@ -195,8 +192,6 @@
 
 /* iOS: countries list section header */
 "_countries_premium" = "Premium countries";
-
-/* %@ is a failure or timeout e.g. Connecting failed */
 
 /* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
 "_connecting_vpn" = "Connecting %@";
@@ -829,8 +824,6 @@
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
 "_reconnect_on_settings_change_body" = "Your connection needs to be restarted to apply this change.";
 
-/* %@ is a country name, e.g. Switzerland servers under maintenance */
-
 /* Under maintenance alert */
 "_country_servers_under_maintenance" = "%@ servers under maintenance";
 
@@ -891,9 +884,7 @@
 /* Button in several different alerts */
 "_got_it" = "Got it!";
 
-/* If the app cannot upgrade the user's plan and they must go to the website to uprade it */
-
-/* Plan upgrade unavailable alert */
+/* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Upgrade Unavailable in App";
 
 /* Plan upgrade unavailable alert */
@@ -1612,8 +1603,6 @@
 /* Header before the list of connections available for free users (in the country list) */
 "_connections_free" = "Free connections";
 
-/* Gateways info modal */
-
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "What's a gateway?";
 
@@ -1841,7 +1830,7 @@
 /* Button title when user is on lower tier than the server requires [Redesign_2023] */
 "upsell_get_plus" = "Get Plus";
 
-/* MARK: Netshield stats */
+// MARK: Netshield stats
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
 "netshield_stats_hint_ads" = "Advertisement websites use cookies and trackers to target you.";
@@ -1865,7 +1854,7 @@
 "_netshield_stats_blocked_E" = "%@ E";
 
 
-/* MARK: Connection details */
+// MARK: Connection details
 
 /* Connection details screen: Title before connection details table (macOS and iOS) [Redesign_2023] */
 "_connection_details_title" = "Connection details";
@@ -1953,8 +1942,6 @@
 /* Title at the top of the Settings tab [Redesign_2023] */
 "_settings_title" = "Settings";
 
-/* Section Titles */
-
 /* Title of the 'Account' section in the Settings tab [Redesign_2023] */
 "_settings_section_title_account" = "Account";
 /* Title of the 'Features' section in the Settings tab [Redesign_2023] */
@@ -1967,8 +1954,6 @@
 "_settings_section_title_support" = "Support";
 /* Title of the 'Improve Proton' section in the Settings tab [Redesign_2023] */
 "_settings_section_title_improve_proton" = "Improve Proton";
-
-/* Cell Titles */
 
 /* Title of the NetShield cell in the Settings tab [Redesign_2023] */
 "_settings_title_netshield" = "NetShield";
@@ -2273,7 +2258,7 @@
 /* Description of user account update screen */
 "maximum_device_limit" = "Please disconnect another device to connect to this one.";
 
-/* New upsell modals */
+// MARK: New upsell modals
 
 /* Title of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_title" = "Browse at even higher speeds (up to 10 Gbps)";
