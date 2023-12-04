@@ -353,6 +353,15 @@
         }
       },
       {
+        "package": "ViewInspector",
+        "repositoryURL": "https://github.com/nalexn/ViewInspector.git",
+        "state": {
+          "branch": null,
+          "revision": "a1422d4749ccf7f32b1d14a9ec19ec9a0b0fd337",
+          "version": "0.9.9"
+        }
+      },
+      {
         "package": "xctest-dynamic-overlay",
         "repositoryURL": "https://github.com/pointfreeco/xctest-dynamic-overlay",
         "state": {
