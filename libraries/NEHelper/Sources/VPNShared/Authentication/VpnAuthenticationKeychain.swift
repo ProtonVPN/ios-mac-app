@@ -1,7 +1,7 @@
 //
-//  Created on 2022-04-21.
+//  Created on 04/12/2023.
 //
-//  Copyright (c) 2022 Proton AG
+//  Copyright (c) 2023 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -22,7 +22,140 @@ import KeychainAccess
 import Ergonomics
 import PMLogger
 
-public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
+extension VpnAuthenticationKeychain: VpnAuthenticationStorage {
+    @available(*, noasync, message: "Please use the async version of this method")
+    public func deleteKeys() {
+        func awaitWithCompletion(_ completion: @escaping () -> Void) {
+            Task {
+                await deleteKeys()
+                completion()
+            }
+        }
+        let group = DispatchGroup()
+        group.enter()
+        awaitWithCompletion {
+            group.leave()
+        }
+        group.wait()
+    }
+
+    @available(*, noasync, message: "Please use the async version of this method")
+    public func deleteCertificate() {
+        func awaitWithCompletion(_ completion: @escaping () -> Void) {
+            Task {
+                await deleteCertificate()
+                completion()
+            }
+        }
+        let group = DispatchGroup()
+        group.enter()
+        awaitWithCompletion {
+            group.leave()
+        }
+        group.wait()
+    }
+    
+    @available(*, noasync, message: "Please use the async version of this method")
+    public func getKeys() -> VpnKeys {
+        func awaitWithCompletion(_ completion: @escaping (VpnKeys) -> Void) {
+            Task { completion(await getKeys()) }
+        }
+        let group = DispatchGroup()
+        group.enter()
+        var value: VpnKeys!
+        awaitWithCompletion {
+            value = $0
+            group.leave()
+        }
+        group.wait()
+
+        return value
+    }
+
+    @available(*, noasync, message: "Please use the async version of this method")
+    public func store(keys: VpnKeys) {
+        func awaitWithCompletion(_ completion: @escaping () -> Void) {
+            Task {
+                await store(keys: keys)
+                completion()
+            }
+        }
+        let group = DispatchGroup()
+        group.enter()
+        awaitWithCompletion {
+            group.leave()
+        }
+        group.wait()
+    }
+
+    @available(*, noasync, message: "Please use the async version of this method")
+    public func store(_ certificate: VpnCertificate) {
+        func awaitWithCompletion(_ completion: @escaping () -> Void) {
+            Task {
+                await store(certificate)
+                completion()
+            }
+        }
+        let group = DispatchGroup()
+        group.enter()
+        awaitWithCompletion {
+            group.leave()
+        }
+        group.wait()
+    }
+    @available(*, noasync, message: "Please use the async version of this method")
+    public func store(_ certificate: VpnCertificateWithFeatures) {
+        func awaitWithCompletion(_ completion: @escaping () -> Void) {
+            Task { 
+                await store(certificate)
+                completion()
+            }
+        }
+        let group = DispatchGroup()
+        group.enter()
+        awaitWithCompletion {
+            group.leave()
+        }
+        group.wait()
+    }
+
+    @available(*, noasync, message: "Please use the async version of this method")
+    public func getStoredCertificate() -> VpnCertificate? {
+        func awaitWithCompletion(_ completion: @escaping (VpnCertificate?) -> Void) {
+            Task { completion(await getStoredCertificate()) }
+        }
+        let group = DispatchGroup()
+        group.enter()
+        var value: VpnCertificate?
+        awaitWithCompletion {
+            value = $0
+            group.leave()
+        }
+        group.wait()
+
+        return value
+    }
+
+    @available(*, noasync, message: "Please use the async version of this method")
+    public func getStoredKeys() -> VpnKeys? {
+        func awaitWithCompletion(_ completion: @escaping (VpnKeys?) -> Void) {
+            Task { completion(await getStoredKeys()) }
+        }
+        let group = DispatchGroup()
+        group.enter()
+        var value: VpnKeys?
+        awaitWithCompletion {
+            value = $0
+            group.leave()
+        }
+        group.wait()
+
+        return value
+    }
+}
+
+public final class VpnAuthenticationKeychain: VpnAuthenticationStorageAsync {
+
     private struct KeychainStorageKey {
         static let vpnKeys = "vpnKeys"
         static let vpnCertificate = "vpnCertificate"
@@ -32,51 +165,48 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
         static let vpnCertificateFeatures = "vpnCertificateFeatures"
     }
 
-    private let appKeychain: KeychainAccess.Keychain
+    private let appKeychain: KeychainActor
     private let vpnKeysGenerator: VPNKeysGenerator
     public weak var delegate: VpnAuthenticationStorageDelegate?
 
     public init(accessGroup: String, vpnKeysGenerator: VPNKeysGenerator) {
-        appKeychain = KeychainAccess.Keychain(service: KeychainConstants.appKeychain, accessGroup: accessGroup)
-            .accessibility(.afterFirstUnlockThisDeviceOnly)
+        appKeychain = KeychainActor(accessGroup: accessGroup)
         self.vpnKeysGenerator = vpnKeysGenerator
     }
 
-    public func deleteKeys() {
+    public func deleteKeys() async {
         log.info("Deleting existing vpn authentication keys", category: .userCert)
-        appKeychain[KeychainStorageKey.vpnKeys] = nil
-        deleteCertificate()
+        await appKeychain.clear(contextValues: [KeychainStorageKey.vpnKeys])
+        await deleteCertificate()
     }
 
-    public func deleteCertificate() {
+    public func deleteCertificate() async {
         log.info("Deleting existing vpn authentication certificate", category: .userCert)
-        appKeychain[KeychainStorageKey.vpnCertificate] = nil
+        await appKeychain.clear(contextValues: [KeychainStorageKey.vpnCertificate])
         delegate?.certificateDeleted()
     }
 
-    public func getKeys() -> VpnKeys {
+    public func getKeys() async -> VpnKeys {
         let keys: VpnKeys
-        if let existingKeys = self.getStoredKeys() {
+        if let existingKeys = await self.getStoredKeys() {
             log.info("Using existing vpn authentication keys", category: .userCert)
             keys = existingKeys
         } else {
             log.info("No vpn auth keys, generating and storing", category: .userCert)
             keys = vpnKeysGenerator.generateKeys()
             log.info("Storing new VPN keys", category: .userCert, metadata: ["keys": "\(keys)"])
-            self.store(keys: keys)
+            await self.store(keys: keys)
         }
 
         return keys
     }
 
-    public func getStoredCertificate() -> VpnCertificate? {
+    public func getStoredCertificate() async -> VpnCertificate? {
        do {
-            guard let json = try appKeychain.getData(KeychainStorageKey.vpnCertificate) else {
+            guard let json = try await appKeychain.getData(KeychainStorageKey.vpnCertificate) else {
                 return nil
             }
-
-            let certificate = try JSONDecoder().decode(VpnCertificate.self, from: json)
-            return certificate
+            return try JSONDecoder().decode(VpnCertificate.self, from: json)
         } catch {
             log.error("Keychain (vpn) read error: \(error)", category: .userCert)
             return nil
@@ -88,36 +218,35 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
         return try? storage.get(VPNConnectionFeatures.self, forKey: DefaultsStorageKey.vpnCertificateFeatures)
     }
 
-    public func getStoredKeys() -> VpnKeys? {
+    public func getStoredKeys() async -> VpnKeys? {
         do {
-            guard let json = try appKeychain.getData(KeychainStorageKey.vpnKeys) else {
+            guard let json = try await appKeychain.getData(KeychainStorageKey.vpnKeys) else {
                 return nil
             }
 
-            let keys = try JSONDecoder().decode(VpnKeys.self, from: json)
-            return keys
+            return try JSONDecoder().decode(VpnKeys.self, from: json)
         } catch {
             log.error("Keychain (vpn) read error: \(error)", category: .userCert)
             // If keys are broken then the certificate is also unusable, so just delete everything and start again
-            deleteKeys()
-            deleteCertificate()
+            await deleteKeys()
+            await deleteCertificate()
             return nil
         }
     }
 
-    public func store(keys: VpnKeys) {
+    public func store(keys: VpnKeys) async {
         do {
             let data = try JSONEncoder().encode(keys)
-            try appKeychain.set(data, key: KeychainStorageKey.vpnKeys)
+            try await appKeychain.set(data, key: KeychainStorageKey.vpnKeys)
         } catch {
             log.error("Saving generated vpn auth keys failed \(error)", category: .userCert)
         }
     }
 
-    public func store(_ certificate: VpnCertificateWithFeatures) {
+    public func store(_ certificate: VpnCertificateWithFeatures) async {
         @Dependency(\.storage) var storage
         do {
-            try store(certificate: certificate.certificate)
+            try await store(certificate: certificate.certificate)
             try storage.set(certificate.features, forKey: DefaultsStorageKey.vpnCertificateFeatures)
             log.debug(
                 "Certificate with features saved",
@@ -133,9 +262,9 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
         }
     }
 
-    public func store(_ certificate: VpnCertificate) {
+    public func store(_ certificate: VpnCertificate) async {
         do {
-            try store(certificate: certificate)
+            try await store(certificate: certificate)
             log.debug("VPN certificate saved, valid until: \(certificate.validUntil)", category: .userCert)
             delegate?.certificateStored(certificate)
         } catch {
@@ -143,8 +272,9 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
         }
     }
 
-    private func store(certificate: VpnCertificate) throws {
+    private func store(certificate: VpnCertificate) async throws {
         let data = try JSONEncoder().encode(certificate)
-        try appKeychain.set(data, key: KeychainStorageKey.vpnCertificate)
+        try await appKeychain.set(data, key: KeychainStorageKey.vpnCertificate)
     }
 }
+

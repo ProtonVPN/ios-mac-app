@@ -26,12 +26,11 @@ public protocol VpnAuthenticationStorageFactory {
     func makeVpnAuthenticationStorage() -> VpnAuthenticationStorage
 }
 
-public protocol VpnAuthenticationStorage: AnyObject {
+public protocol VpnAuthenticationStorage: VpnAuthenticationStorageAsync {
     func deleteKeys()
     func deleteCertificate()
     func getKeys() -> VpnKeys
     func getStoredCertificate() -> VpnCertificate?
-    func getStoredCertificateFeatures() -> VPNConnectionFeatures?
     func getStoredKeys() -> VpnKeys?
     func store(keys: VpnKeys)
     func store(_ certificate: VpnCertificate)
