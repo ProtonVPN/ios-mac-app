@@ -57,6 +57,7 @@
 /* MacOS: voice over indication for a country or server on maintenance */
 "_on_maintenance" = "Dalam pemeliharaan";
 
+/* iOS & MacOS: text that requires restart connection */
 "_reconnection_required" = "Penyambungan Ulang Dibutuhkan";
 
 /* Server status in many places in iOS and MacOS apps */
@@ -169,7 +170,11 @@
 /* Used in many places in MacOS app */
 "_secure_core" = "Secure Core";
 
-/* %@ is a country e.g. Secure Core Switzerland */
+/*
+ %@ is a country e.g. Secure Core Switzerland
+ 
+ %@ is a country e.g. Secure Core Switzerland
+*/
 "_secure_core_country" = "Secure Core %@";
 
 /* Profile create/edit menu */
@@ -197,7 +202,11 @@
 /* iOS: countries list section header */
 "_countries_premium" = "Negara Premium";
 
-/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
+/*
+ %@ is a failure or timeout e.g. Connecting failed
+ 
+ MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed
+*/
 "_connecting_vpn" = "%@ menyambungkan";
 
 /* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
@@ -780,7 +789,7 @@
 "_error_user_creation" = "Pembuatan akun gagal";
 
 /* General title for several error alerts */
-"_error_unknown_title" = "Kesalahan yang tidak diketahui";
+"_error_unknown_title" = "Kesalahan tidak diketahui";
 
 /* Delinquent user alert */
 "_delinquent_user_title" = "Tagihan belum dibayar";
@@ -821,7 +830,11 @@
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
 "_reconnect_on_settings_change_body" = "Sambungan Anda perlu dimuat ulang untuk menerapkan perubahan ini.";
 
-/* Under maintenance alert */
+/*
+ %@ is a country name, e.g. Switzerland servers under maintenance
+ 
+ Under maintenance alert
+*/
 "_country_servers_under_maintenance" = "Server %@ sedang dalam pemeliharaan";
 
 /* Under maintenance alert */
@@ -887,7 +900,11 @@
 /* Button in several different alerts */
 "_got_it" = "Mengerti!";
 
-/* Plan upgrade unavailable alert */
+/*
+ If the app cannot upgrade the user's plan and they must go to the website to uprade it
+ 
+ Plan upgrade unavailable alert
+*/
 "_upgrade_unavailable_title" = "Peningkatan tidak tersedia di aplikasi";
 
 /* Plan upgrade unavailable alert */
@@ -1100,7 +1117,7 @@
 "_plans_footer" = "Apabila paket pilihan Anda telah dikonfirmasi, akun iTunes Anda akan ditagih sesuai harga yang tertera, termasuk harga paket dan biaya transaksi aplikasi Apple (tidak ditarik oleh Proton). Usai pembayaran, Anda bisa segera menikmati paket yang dipilih selama 1 tahun. Setelah itu, Anda bisa memperpanjang atau membatalkan paket melalui web atau aplikasi kami di iOS.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/ tahun";
+"_per_year_short" = "/th";
 
 /* iOS plan feature */
 "_feature_server_count" = "Terhubung ke server dalam";
@@ -1229,7 +1246,7 @@
 "_next_tip" = "Tips Berikutnya";
 
 /* MacOS app tour: end tour button */
-"_end_tour" = "Akhiri Tur";
+"_end_tour" = "Akhiri tur";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Selamat datang di internet yang lebih baik";
@@ -1655,7 +1672,11 @@
 /* Header before the list of connections available for free users (in the country list) */
 "_connections_free" = "Koneksi Free";
 
-/* Gateways info modals title (both iOS and macOS) */
+/*
+ Gateways info modal
+ 
+ Gateways info modals title (both iOS and macOS)
+*/
 "_gateways_modal_title" = "Apa itu gateway?";
 
 /* Gateways info modals text (both iOS and macOS) */
@@ -1793,7 +1814,7 @@
 "coupon_applied_plan_not_upgraded_yet" = "Kupon telah berhasil digunakan. Jenis akun Anda akan segera ditingkatkan dalam beberapa menit ke depan.";
 
 /* Title for the Two-factor authentication screen */
-"two_factor_authentication" = "Otentikasi dua-faktor";
+"two_factor_authentication" = "Autentikasi dua-faktor";
 
 /* Placeholder for the Two Factor text field */
 "two_factor_code" = "Kode dua faktor";
@@ -1816,7 +1837,11 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "Pengaturan %@ tidak dapat diubah. Silakan coba lagi nanti atau hubungkan ke server lain";
 
-/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
+/*
+ MARK: Netshield stats
+ 
+ The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked
+*/
 "netshield_stats_hint_ads" = "Situs iklan menggunakan cookie dan pelacak untuk mengincar Anda.";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
@@ -2061,7 +2086,11 @@
 /* Description of user account update screen */
 "maximum_device_limit" = "Mohon putuskan perangkat lain agar perangkat ini dapat terhubung.";
 
-/* Title of VPN Accelerator upsell modal */
+/*
+ New upsell modals
+ 
+ Title of VPN Accelerator upsell modal
+*/
 "upsell_vpn_accelerator_title" = "Jelajahi internet pada kecepatan yang bahkan lebih tinggi lagi (10 Gbps)";
 
 /* Feature of VPN Accelerator upsell modal */

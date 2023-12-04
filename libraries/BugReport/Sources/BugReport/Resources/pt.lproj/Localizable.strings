@@ -17,7 +17,7 @@
 "_br_2_button_next" = "Contacte-nos";
 
 /* ReportBug 2nd step (Quick fixes) cancel button */
-"_br_2_button_cancel" = "Cancelar";
+"_br_2_button_cancel" = "Cancel";
 
 /* ReportBug 3rd step (form) send button */
 "_br_3_button_send" = "Enviar relatório";
@@ -47,7 +47,7 @@
 "_br_success_subtitle" = "Entraremos em contacto consigo logo que possível.";
 
 /* ReportBug success window: button */
-"_br_success_button" = "Entendido";
+"_br_success_button" = "Got it";
 
 /* ReportBug success window: title text */
 "_br_failure_title" = "O seu relatório não foi enviado.";
@@ -56,7 +56,7 @@
 "_br_failure_button_retry" = "Tente de novo";
 
 /* ReportBug success window: troubleshoot button */
-"_br_failure_button_troubleshoot" = "Resolução de problemas";
+"_br_failure_button_troubleshoot" = "Troubleshoot";
 
 /* Title of the view nudging users to update before filling Bug Report */
 "_update_view_title" = "Actualizar o Proton VPN";

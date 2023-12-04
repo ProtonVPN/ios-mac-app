@@ -17,7 +17,7 @@
 "_br_2_button_next" = "تماس با ما";
 
 /* ReportBug 2nd step (Quick fixes) cancel button */
-"_br_2_button_cancel" = "انصراف";
+"_br_2_button_cancel" = "Cancel";
 
 /* ReportBug 3rd step (form) send button */
 "_br_3_button_send" = "ارسال گزارش";
@@ -47,7 +47,7 @@
 "_br_success_subtitle" = "در سریع ترین زمان ممکن به شما پاسخ خواهیم داد.";
 
 /* ReportBug success window: button */
-"_br_success_button" = "متوجه شدم";
+"_br_success_button" = "Got it";
 
 /* ReportBug success window: title text */
 "_br_failure_title" = "گزارش شما ارسال نشد";
@@ -56,7 +56,7 @@
 "_br_failure_button_retry" = "تلاش دوباره";
 
 /* ReportBug success window: troubleshoot button */
-"_br_failure_button_troubleshoot" = "عیب یابی";
+"_br_failure_button_troubleshoot" = "Troubleshoot";
 
 /* Title of the view nudging users to update before filling Bug Report */
 "_update_view_title" = "به‌روزرسانی Proton VPN";
