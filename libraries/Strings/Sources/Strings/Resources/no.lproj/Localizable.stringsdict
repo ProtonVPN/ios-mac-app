@@ -5,7 +5,7 @@
     <key>welcome_screen_feature_devices</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Up to %#@VARIABLE@ at once</string>
+      <string>Opp til %#@VARIABLE@ samtidig</string>
       <key>VARIABLE</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -13,15 +13,15 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 device</string>
+        <string>1 enhet</string>
         <key>other</key>
-        <string>%d دستگاه</string>
+        <string>%d enheter</string>
       </dict>
     </dict>
     <key>welcome_screen_feature_servers_countries</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>%#@num_servers@ در %#@num_countries@</string>
+      <string>%#@num_servers@ i %#@num_countries@</string>
       <key>num_countries</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -29,9 +29,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d کشور</string>
+        <string>%d land</string>
         <key>other</key>
-        <string>%d کشورها</string>
+        <string>%d land</string>
       </dict>
       <key>num_servers</key>
       <dict>
@@ -40,9 +40,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d+ new server</string>
+        <string>%d + ny tjener</string>
         <key>other</key>
-        <string>%d+ new servers</string>
+        <string>%d + nye tjenere</string>
       </dict>
     </dict>
     <key>modals_upsell_all_countries_feature_multipleDevices</key>
@@ -52,46 +52,46 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Protect up to %d devices</string>
+        <string>Beskytt opptil %d enhet</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Protect up to %d devices</string>
+        <string>Beskytt opptil %d enheter</string>
       </dict>
     </dict>
     <key>modals_upsell_all_countries_title</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>دسترسی به بالای %#@num_servers@ سرور در بیش از %#@num_countries@ کشور</string>
+      <string>Få tilgang til over %#@num_servers@ i %#@num_countries@</string>
       <key>num_countries</key>
       <dict>
         <key>one</key>
-        <string>%d کشورها</string>
+        <string>%d land</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d کشور</string>
+        <string>%d land</string>
       </dict>
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d سرور امن</string>
+        <string>%d sikker tjener</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d سرور امن</string>
+        <string>%d sikre tjenere</string>
       </dict>
     </dict>
     <key>subscription_upgrade_option1</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>صد ها سرور در %#@num_countries@ کشور</string>
+      <string>Hundrevis av tjenere i %#@num_countries@</string>
       <key>num_countries</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -99,15 +99,15 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d کشور</string>
+        <string>%d land</string>
         <key>other</key>
-        <string>%d کشورها</string>
+        <string>%d land</string>
       </dict>
     </dict>
     <key>subscription_upgrade_option2</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>تا %#@num_devices@ دستگاه را بطور همزمان متصل کنید</string>
+      <string>Koble opptil %#@num_devices@ samtidig</string>
       <key>num_devices</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -115,15 +115,15 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d دستگاه</string>
+        <string>%d enhet</string>
         <key>other</key>
-        <string>%d دستگاه</string>
+        <string>%d enheter</string>
       </dict>
     </dict>
     <key>maximum_device_plan_limit_part_2</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string> تا بتوانید %#@num_devices@ دستگاه را بطور همزمان متصل کنید.</string>
+      <string> for å få opptil %#@num_devices@ koblet til samtidig.</string>
       <key>num_devices</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -131,15 +131,15 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d دستگاه</string>
+        <string>%d enhet</string>
         <key>other</key>
-        <string>%d دستگاه</string>
+        <string>%d enheter</string>
       </dict>
     </dict>
     <key>search_upsell_title</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>دسترسی به همه %#@num_countries@</string>
+      <string>Få tilgang til alle %#@num_countries@</string>
       <key>num_countries</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -147,9 +147,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d کشور</string>
+        <string>%d land</string>
         <key>other</key>
-        <string>%d کشور</string>
+        <string>%d land</string>
       </dict>
     </dict>
     <key>_vpnauth_too_many_certs_retry_after</key>
@@ -161,11 +161,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>شما به حداکثر تعداد تغییرات تنظیمات رسیده اید. لطفا بعد از %d دقیقه دوباره تلاش کنید.</string>
+        <string>Du har nådd maksimalt antall innstillingsendringer. Vennligst prøv igjen etter minst %d minutt.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>other</key>
-        <string>شما به حداکثر تعداد تغییرات تنظیمات رسیده اید. لطفا بعد از %d دقیقه دوباره تلاش کنید.</string>
+        <string>Du har nådd maksimalt antall innstillingsendringer. Vennligst prøv igjen etter minst %d minutter.</string>
       </dict>
     </dict>
     <key>_countries_count_plus</key>
@@ -179,9 +179,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d +کشور</string>
+        <string>%d+ land</string>
         <key>other</key>
-        <string>%d+ کشور</string>
+        <string>%d+ land</string>
       </dict>
     </dict>
     <key>_countries_count</key>
@@ -195,9 +195,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d کشور</string>
+        <string>%d land</string>
         <key>other</key>
-        <string>%d کشور</string>
+        <string>%d land</string>
       </dict>
     </dict>
     <key>_plans_connections</key>
@@ -211,9 +211,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d اتصال</string>
+        <string>%d tilkobling</string>
         <key>other</key>
-        <string>%d اتصال</string>
+        <string>%d tilkoblinger</string>
       </dict>
     </dict>
     <key>_netshield_stats_ads_blocked</key>
@@ -227,11 +227,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Ad
-blocked</string>
+        <string>Annonse
+blokkert</string>
         <key>other</key>
-        <string>Ads
-blocked</string>
+        <string>Annonser
+blokkert</string>
       </dict>
     </dict>
     <key>_netshield_stats_trackers_stopped</key>
@@ -245,11 +245,11 @@ blocked</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Tracker
-stopped</string>
+        <string>Sporer
+stoppet</string>
         <key>other</key>
-        <string>Trackers
-stopped</string>
+        <string>Sporere
+stoppet</string>
       </dict>
     </dict>
     <key>_session_length_days</key>
@@ -263,9 +263,9 @@ stopped</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d روز</string>
+        <string>%d dager</string>
         <key>one</key>
-        <string>%d روز</string>
+        <string>%d dag</string>
       </dict>
     </dict>
     <key>_session_length_days_and_hours</key>
@@ -279,20 +279,20 @@ stopped</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d روز</string>
+        <string>%d dager</string>
         <key>one</key>
-        <string>%d روز</string>
+        <string>%d dag</string>
       </dict>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d hr</string>
+        <string>%d t</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d hr</string>
+        <string>%d t</string>
       </dict>
     </dict>
     <key>_session_length_hours_and_minutes</key>
@@ -302,24 +302,24 @@ stopped</string>
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d دقیقه</string>
+        <string>%d min</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d دقیقه</string>
+        <string>%d min</string>
       </dict>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d hr</string>
+        <string>%d t</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d hr</string>
+        <string>%d t</string>
       </dict>
     </dict>
     <key>_session_length_hours</key>
@@ -329,13 +329,13 @@ stopped</string>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d hr</string>
+        <string>%d t</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d hr</string>
+        <string>%d t</string>
       </dict>
     </dict>
     <key>_session_length_minutes_and_seconds</key>
@@ -345,24 +345,24 @@ stopped</string>
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d دقیقه</string>
+        <string>%d min</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d دقیقه</string>
+        <string>%d min</string>
       </dict>
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d sec</string>
+        <string>%d sek</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d sec</string>
+        <string>%d sek</string>
       </dict>
     </dict>
     <key>_session_length_minutes</key>
@@ -372,13 +372,13 @@ stopped</string>
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d دقیقه</string>
+        <string>%d min</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d دقیقه</string>
+        <string>%d min</string>
       </dict>
     </dict>
     <key>_session_length_seconds</key>
@@ -388,13 +388,13 @@ stopped</string>
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d sec</string>
+        <string>%d sek</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d sec</string>
+        <string>%d sek</string>
       </dict>
     </dict>
     <key>_step_of</key>
@@ -404,24 +404,24 @@ stopped</string>
       <key>STEPS</key>
       <dict>
         <key>one</key>
-        <string>از %d</string>
+        <string>av %d</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>از %d</string>
+        <string>av %d</string>
       </dict>
       <key>STEP</key>
       <dict>
         <key>one</key>
-        <string>قدم %d</string>
+        <string>Steg %d</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>مرحله %d</string>
+        <string>Steg %d</string>
       </dict>
     </dict>
     <key>free_connections_modal_subtitle</key>
@@ -431,13 +431,13 @@ stopped</string>
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Free server locations (%d)</string>
+        <string>Gratis tjenerplasseringer (%d)</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Free server locations (%d)</string>
+        <string>Gratis tjenerplasseringer (%d)</string>
       </dict>
     </dict>
   </dict>

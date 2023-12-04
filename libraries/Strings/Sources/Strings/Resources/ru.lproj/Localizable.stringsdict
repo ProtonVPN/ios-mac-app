@@ -15,17 +15,17 @@
         <key>one</key>
         <string>1 device</string>
         <key>few</key>
-        <string>%d devices</string>
+        <string>%d устройств</string>
         <key>many</key>
-        <string>%d devices</string>
+        <string>%d устройства</string>
         <key>other</key>
-        <string>%d devices</string>
+        <string>%d устройства</string>
       </dict>
     </dict>
     <key>welcome_screen_feature_servers_countries</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>%#@num_servers@ in %#@num_countries@</string>
+      <string>%#@num_servers@ в %#@num_countries@</string>
       <key>num_countries</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -33,13 +33,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d country</string>
+        <string>%d страна</string>
         <key>few</key>
-        <string>%d countries</string>
+        <string>%d страны</string>
         <key>many</key>
-        <string>%d countries</string>
+        <string>%d стран</string>
         <key>other</key>
-        <string>%d countries</string>
+        <string>%d стран</string>
       </dict>
       <key>num_servers</key>
       <dict>
@@ -50,11 +50,11 @@
         <key>one</key>
         <string>%d+ new server</string>
         <key>few</key>
-        <string>%d+ new servers</string>
+        <string>%d+ новых сервера</string>
         <key>many</key>
-        <string>%d+ new servers</string>
+        <string>%d+ нового сервера</string>
         <key>other</key>
-        <string>%d+ new servers</string>
+        <string>%d+ нового сервера</string>
       </dict>
     </dict>
     <key>modals_upsell_all_countries_feature_multipleDevices</key>
