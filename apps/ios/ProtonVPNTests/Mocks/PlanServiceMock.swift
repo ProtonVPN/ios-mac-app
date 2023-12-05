@@ -39,7 +39,7 @@ class PlanServiceMock: PlanService {
         return true
     }
 
-    func updateServicePlans(completion: @escaping (Result<(), Error>) -> Void) {
+    func updateServicePlans() async throws {
 
     }
     
