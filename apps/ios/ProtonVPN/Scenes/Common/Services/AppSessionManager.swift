@@ -49,7 +49,7 @@ protocol AppSessionManager {
 
     func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void)
     func refreshVpnAuthCertificate() async throws -> Void
-    func finishLogin(authCredentials: AuthCredentials, completion: @escaping (Result<(), Error>) -> Void)
+    func finishLogin(authCredentials: AuthCredentials) async throws
     func logOut(force: Bool, reason: String?)
     
     func loadDataWithoutFetching() -> Bool
@@ -115,36 +115,34 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     // MARK: - Beginning of the login logic.
     override func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
         Task {
+            let completeOnMain = { result in await MainActor.run { completion(result) } }
+
             guard await authKeychain.fetch()?.username != nil else {
-                await MainActor.run { completion(.failure(ProtonVpnError.userCredentialsMissing)) }
+                await completeOnMain(.failure(ProtonVpnError.userCredentialsMissing))
                 return
             }
             do {
                 try await retrievePropertiesAndLogIn()
-                await MainActor.run { completion(.success) }
+                await completeOnMain(.success)
             } catch {
-                await MainActor.run { completion(.failure(error)) }
+                await completeOnMain(.failure(error))
             }
         }
     }
-    
-    func finishLogin(authCredentials: AuthCredentials, completion: @escaping (Result<(), Error>) -> Void) {
-        Task {
-            do {
-                try await authKeychain.store(authCredentials)
-                await unauthKeychain.clear()
-            } catch {
-                await MainActor.run { completion(.failure(ProtonVpnError.keychainWriteFailed)) }
-                return
-            }
-            do {
-                try await retrievePropertiesAndLogIn()
-                try checkForSubuserWithoutSessions()
-                await MainActor.run { completion(.success(())) }
-            } catch {
-                log.error("Failed to obtain user's auth credentials", category: .user, metadata: ["error": "\(error)"])
-                await MainActor.run { completion(.failure(error)) }
-            }
+
+    func finishLogin(authCredentials: AuthCredentials) async throws {
+        do {
+            try await authKeychain.store(authCredentials)
+            await unauthKeychain.clear()
+        } catch {
+            throw ProtonVpnError.keychainWriteFailed
+        }
+        do {
+            try await retrievePropertiesAndLogIn()
+            try checkForSubuserWithoutSessions()
+        } catch {
+            log.error("Failed to obtain user's auth credentials", category: .user, metadata: ["error": "\(error)"])
+            throw error
         }
     }
     
@@ -189,11 +187,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 throw error
             }
 
-            do {
-                try await refreshVpnAuthCertificate()
-            } catch {
-                throw error
-            }
+            try await refreshVpnAuthCertificate()
             await successfulConsecutiveSessionRefreshes.reset()
             return
         }
@@ -218,11 +212,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             await successfulConsecutiveSessionRefreshes.reset()
             throw error
         }
-        do {
-            try await refreshVpnAuthCertificate()
-        } catch {
-            throw error
-        }
+        try await refreshVpnAuthCertificate()
         await successfulConsecutiveSessionRefreshes.increment()
     }
 
@@ -334,13 +324,9 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         profileManager.refreshProfiles()
 
         // Refresh certificate but don't log out in case of an error.
-        do {
-            try await refreshVpnAuthCertificate()
-            await successfulConsecutiveSessionRefreshes.increment()
-            try await planService.updateServicePlans()
-        } catch {
-            throw error
-        }
+        try await refreshVpnAuthCertificate()
+        await successfulConsecutiveSessionRefreshes.increment()
+        try await planService.updateServicePlans()
     }
     // swiftlint:enable function_body_length
 
