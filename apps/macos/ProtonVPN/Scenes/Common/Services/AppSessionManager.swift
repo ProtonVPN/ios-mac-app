@@ -314,6 +314,12 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private func logOutCleanup() {
         let group = DispatchGroup()
         appSessionRefreshTimer.stop()
+        
+        if let userId = authKeychain.userId {
+            FeatureFlagsRepository.shared.resetFlags(for: userId)
+            FeatureFlagsRepository.shared.clearUserId(userId)
+        }
+        
         group.enter()
         Task {
             await authKeychain.clear()
@@ -322,8 +328,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         group.wait()
         vpnKeychain.clear()
         announcementRefresher.clear()
-
-        FeatureFlagsRepository.shared.resetFlags()
 
         let vpnAuthenticationTimeoutInSeconds = 2
 
