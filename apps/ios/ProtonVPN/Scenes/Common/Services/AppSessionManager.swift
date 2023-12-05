@@ -53,7 +53,7 @@ protocol AppSessionManager {
     func logOut(force: Bool, reason: String?)
     
     func loadDataWithoutFetching() -> Bool
-    func loadDataWithoutLogin(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
+    func loadDataWithoutLogin() async throws
     func canPreviewApp() -> Bool
 }
 
@@ -171,76 +171,59 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         return true
     }
     
-    func loadDataWithoutLogin(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        Task {
-            let shouldRefreshServers = await shouldRefreshServersAccordingToUserTier
-            let appState = await appStateManager.stateThreadSafe
-
-            vpnApiService.vpnProperties(
+    func loadDataWithoutLogin() async throws {
+        let shouldRefreshServers = await shouldRefreshServersAccordingToUserTier
+        let appState = await appStateManager.stateThreadSafe
+        let properties: VpnProperties
+        do {
+            properties = try await vpnApiService.vpnProperties(
                 isDisconnected: appState.isDisconnected,
                 lastKnownLocation: propertiesManager.userLocation,
-                serversAccordingToTier: shouldRefreshServers
-            ) { [weak self] result in
-                guard let self = self else {
-                    return
-                }
-
-                switch result {
-                case let .success(properties):
-                    if let credentials = properties.vpnCredentials {
-                        self.vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-                        self.review.update(plan: credentials.accountPlan.rawValue)
-                        self.serverStorage.store(
-                            properties.serverModels,
-                            keepStalePaidServers: shouldRefreshServers && credentials.maxTier == CoreAppConstants.VpnTiers.free
-                        )
-                    } else {
-                        self.serverStorage.store(properties.serverModels)
-                    }
-
-                    self.propertiesManager.userLocation = properties.location
-
-                    self.refreshPartners(ifUnknownPartnerLogicalExistsIn: properties.serverModels) {
-                        executeOnUIThread {
-                            self.resolveActiveSession(success: {
-                                Task {
-                                    do {
-                                        try await self.refreshVpnAuthCertificate()
-                                        success()
-                                    } catch {
-                                        failure(error)
-                                    }
-                                    await self.successfulConsecutiveSessionRefreshes.increment()
-                                }
-                            }, failure: { error in
-                                self.logOutCleanup()
-                                Task { await self.successfulConsecutiveSessionRefreshes.reset() }
-                                failure(error)
-                            })
-                        }
-                    }
-                case let .failure(error):
-                    log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
-                    let models = self.serverStorage.fetch()
-                    guard !models.isEmpty, // only fail if there is a major reason
-                          self.propertiesManager.userLocation?.ip != nil,
-                          !(error is LegacyCommon.KeychainError) else {
-                        failure(error)
-                        return
-                    }
-
-                    Task {
-                        do {
-                            try await self.refreshVpnAuthCertificate()
-                            success()
-                        } catch {
-                            failure(error)
-                        }
-                        await self.successfulConsecutiveSessionRefreshes.reset()
-                    }
-                }
+                serversAccordingToTier: shouldRefreshServers)
+        } catch {
+            log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
+            let models = self.serverStorage.fetch()
+            guard !models.isEmpty, // only fail if there is a major reason
+                  propertiesManager.userLocation?.ip != nil,
+                  !(error is LegacyCommon.KeychainError) else {
+                throw error
             }
+
+            do {
+                try await refreshVpnAuthCertificate()
+            } catch {
+                throw error
+            }
+            await successfulConsecutiveSessionRefreshes.reset()
+            return
         }
+
+        if let credentials = properties.vpnCredentials {
+            vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
+            review.update(plan: credentials.accountPlan.rawValue)
+            serverStorage.store(
+                properties.serverModels,
+                keepStalePaidServers: shouldRefreshServers && credentials.maxTier == CoreAppConstants.VpnTiers.free
+            )
+        } else {
+            serverStorage.store(properties.serverModels)
+        }
+
+        propertiesManager.userLocation = properties.location
+        await refreshPartners(ifUnknownPartnerLogicalExistsIn: properties.serverModels)
+        do {
+            try await resolveActiveSession()
+        } catch {
+            logOutCleanup()
+            await successfulConsecutiveSessionRefreshes.reset()
+            throw error
+        }
+        do {
+            try await refreshVpnAuthCertificate()
+        } catch {
+            throw error
+        }
+        await successfulConsecutiveSessionRefreshes.increment()
     }
 
     func refreshVpnAuthCertificate() async throws -> Void {
@@ -292,31 +275,31 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             )
 
             if let credentials = properties.vpnCredentials {
-                self.vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-                self.review.update(plan: credentials.accountPlan.rawValue)
-                self.serverStorage.store(
+                vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
+                review.update(plan: credentials.accountPlan.rawValue)
+                serverStorage.store(
                     properties.serverModels,
                     keepStalePaidServers: shouldRefreshServers && credentials.maxTier == CoreAppConstants.VpnTiers.free
                 )
             } else {
-                self.serverStorage.store(properties.serverModels)
+                serverStorage.store(properties.serverModels)
             }
-            self.propertiesManager.userRole = properties.userRole
-            self.propertiesManager.userAccountCreationDate = properties.userCreateTime
-            self.propertiesManager.userLocation = properties.location
+            propertiesManager.userRole = properties.userRole
+            propertiesManager.userAccountCreationDate = properties.userCreateTime
+            propertiesManager.userLocation = properties.location
             if let clientConfig = properties.clientConfig {
-                self.propertiesManager.openVpnConfig = clientConfig.openVPNConfig
-                self.propertiesManager.wireguardConfig = clientConfig.wireGuardConfig
-                self.propertiesManager.smartProtocolConfig = clientConfig.smartProtocolConfig
-                self.propertiesManager.maintenanceServerRefreshIntereval = clientConfig.serverRefreshInterval
-                self.propertiesManager.featureFlags = clientConfig.featureFlags
-                self.propertiesManager.ratingSettings = clientConfig.ratingSettings
-                self.review.update(configuration: Configuration(settings: clientConfig.ratingSettings))
+                propertiesManager.openVpnConfig = clientConfig.openVPNConfig
+                propertiesManager.wireguardConfig = clientConfig.wireGuardConfig
+                propertiesManager.smartProtocolConfig = clientConfig.smartProtocolConfig
+                propertiesManager.maintenanceServerRefreshIntereval = clientConfig.serverRefreshInterval
+                propertiesManager.featureFlags = clientConfig.featureFlags
+                propertiesManager.ratingSettings = clientConfig.ratingSettings
+                review.update(configuration: Configuration(settings: clientConfig.ratingSettings))
                 @Dependency(\.serverChangeStorage) var storage
                 storage.config = clientConfig.serverChangeConfig
             }
-            if self.propertiesManager.featureFlags.pollNotificationAPI {
-                self.announcementRefresher.tryRefreshing()
+            if propertiesManager.featureFlags.pollNotificationAPI {
+                announcementRefresher.tryRefreshing()
             }
 
         } catch {
@@ -327,9 +310,9 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             // Also the error has to be not keychain related, because if there is a problem with
             // the keychain, use most probably will not be able to use API nor VPN connection.
             log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
-            let models = self.serverStorage.fetch()
+            let models = serverStorage.fetch()
             guard !models.isEmpty, // only fail if there is a major reason
-                  self.propertiesManager.userLocation?.ip != nil,
+                  propertiesManager.userLocation?.ip != nil,
                   !(error is LegacyCommon.KeychainError) else {
 
                 throw error
@@ -339,11 +322,11 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         // In case we are connected to VPN, but can't get auth info from `appStateManager` nor
         // from `vpnKeychain`, we fail miserably and log out.
         do {
-            try await self.resolveActiveSession()
+            try await resolveActiveSession()
 
         } catch {
-            self.logOutCleanup()
-            await self.successfulConsecutiveSessionRefreshes.reset()
+            logOutCleanup()
+            await successfulConsecutiveSessionRefreshes.reset()
             throw error
         }
 
@@ -360,21 +343,9 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         }
     }
     // swiftlint:enable function_body_length
-    
-    @available(*, renamed: "resolveActiveSession()")
-    private func resolveActiveSession(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        Task {
-            do {
-                try await resolveActiveSession()
-                success()
-            } catch {
-                failure(error)
-            }
-        }
-    }
 
     private func resolveActiveSession() async throws {
-        Task { @MainActor in NotificationCenter.default.post(Notification(name: self.sessionRefreshed, object: nil)) }
+        await MainActor.run { NotificationCenter.default.post(Notification(name: self.sessionRefreshed, object: nil)) }
 
         guard await appStateManager.stateThreadSafe.isConnected else {
             return // Success
@@ -398,7 +369,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
 
     private func checkForSubuserWithoutSessions() throws {
-        guard let credentials = try? self.vpnKeychain.fetchCached(),
+        guard let credentials = try? vpnKeychain.fetchCached(),
             credentials.needConnectionAllocation else {
             return
         }
