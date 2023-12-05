@@ -29,14 +29,17 @@ import Dependencies
 import TrustKit
 
 // Core dependencies
-import ProtonCoreServices
-import ProtonCoreLog
-import ProtonCoreUIFoundations
+import ProtonCoreAccountRecovery
+import ProtonCoreCryptoVPNPatchedGoImplementation
 import ProtonCoreEnvironment
-import ProtonCoreFeatureSwitch
 import ProtonCoreFeatureFlags
-import ProtonCoreObservability
+import ProtonCoreFeatureSwitch
+import ProtonCoreLog
 import ProtonCoreNetworking
+import ProtonCoreObservability
+import ProtonCorePushNotifications
+import ProtonCoreServices
+import ProtonCoreUIFoundations
 
 // Local dependencies
 import LegacyCommon
@@ -44,7 +47,7 @@ import Logging
 import PMLogger
 import VPNShared
 import VPNAppCore
-import ProtonCoreCryptoVPNPatchedGoImplementation
+
 
 public let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 
@@ -62,6 +65,7 @@ class AppDelegate: UIResponder {
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
     private lazy var appStateManager: AppStateManager = container.makeAppStateManager()
     private lazy var planService: PlanService = container.makePlanService()
+    private lazy var pushNotificationService = PushNotificationService.shared
 }
 #else
 class AppDelegate: UIResponder {
@@ -84,7 +88,7 @@ class AppDelegate: UIResponder {
 extension AppDelegate: UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        setupCoreIntegration()
+        setupCoreIntegration(launchOptions: launchOptions)
         setupLogsForApp()
         setupDebugHelpers()
 
@@ -333,7 +337,7 @@ fileprivate extension AppDelegate {
 }
 
 extension AppDelegate {
-    private func setupCoreIntegration() {
+    private func setupCoreIntegration(launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) {
         injectDefaultCryptoImplementation()
 
         ProtonCoreLog.PMLog.callback = { (message, level) in
@@ -365,5 +369,10 @@ extension AppDelegate {
             }
         }
         ObservabilityEnv.current.setupWorld(requestPerformer: apiService)
+
+        if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.dynamicPlan) {
+            pushNotificationService?.setup()
+            pushNotificationService?.registerHandler(AccountRecoveryHandler(), forType: NotificationType.accountRecoveryInitiated)
+        }
     }
 }

@@ -86,7 +86,9 @@
 		</dict>
 	</dict>
 	<key>UIBackgroundModes</key>
-	<array/>
+	<array>
+        <string>remote-notification</string>
+    </array>
 	<key>UILaunchStoryboardName</key>
 	<string>VPNLaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -105,6 +107,8 @@
 			<false/>
 		</dict>
 	</dict>
+    <key>NSUserNotificationsUsageDescription</key>
+    <string>We need to send you notifications to alert you about changes in your account</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

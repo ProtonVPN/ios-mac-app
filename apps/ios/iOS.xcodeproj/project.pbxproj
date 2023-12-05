@@ -104,6 +104,7 @@
 		4CF2982F2A7D3B8E00DEB23F /* fr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298162A7D3B8E00DEB23F /* fr.lproj */; };
 		4CF298302A7D406A00DEB23F /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 4CF297FC2A7D39F700DEB23F /* Intents.intentdefinition */; };
 		572DD1FF28EAD6E60051DB1A /* credentials_bf22.plist in Resources */ = {isa = PBXBuildFile; fileRef = 572DD1FE28EAD6E60051DB1A /* credentials_bf22.plist */; };
+		57BC698A2B1F33CB0049485C /* ProtonCoreAccountRecovery in Frameworks */ = {isa = PBXBuildFile; productRef = 57BC69892B1F33CB0049485C /* ProtonCoreAccountRecovery */; };
 		57E3438E28E573D60012B2DF /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438D28E573D60012B2DF /* PlanTests.swift */; };
 		57E3439028E576A70012B2DF /* SubscriptionsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438F28E576A70012B2DF /* SubscriptionsRobot.swift */; };
 		57E3439228E5A6780012B2DF /* AccountRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3439128E5A6780012B2DF /* AccountRobot.swift */; };
@@ -969,6 +970,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57BC698A2B1F33CB0049485C /* ProtonCoreAccountRecovery in Frameworks */,
 				ADBA84D92A589F27001EF3F5 /* Theme in Frameworks */,
 				4C8C314A2A73BA19006AD628 /* Home-iOS in Frameworks */,
 				4CCB4C602A6ED15B002D4204 /* ProtonCoreCryptoGoInterface in Frameworks */,
@@ -2418,6 +2420,7 @@
 				4C8571D62A7CEC250057FED6 /* TrustKit */,
 				E58974792A812A870017987D /* OHHTTPStubsSwift */,
 				4C4E98302AC1BFFF00B7B285 /* DictionaryCoder */,
+				57BC69892B1F33CB0049485C /* ProtonCoreAccountRecovery */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -4791,6 +4794,10 @@
 		4CEF8EB12A6EEA52000FBC01 /* TunnelKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TunnelKit;
+		};
+		57BC69892B1F33CB0049485C /* ProtonCoreAccountRecovery */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCoreAccountRecovery;
 		};
 		ADBA84DE2A58A1A0001EF3F5 /* CasePaths */ = {
 			isa = XCSwiftPackageProductDependency;

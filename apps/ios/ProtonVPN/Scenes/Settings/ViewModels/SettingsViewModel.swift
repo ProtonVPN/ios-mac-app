@@ -22,11 +22,14 @@
 
 import UIKit
 import LegacyCommon
+import ProtonCoreAccountRecovery
+import ProtonCoreFeatureFlags
 import ProtonCoreUIFoundations
 import VPNShared
 import LocalFeatureFlags
 import Strings
 import Dependencies
+import Onboarding
 
 final class SettingsViewModel {
     typealias Factory = AppStateManagerFactory &
@@ -47,7 +50,9 @@ final class SettingsViewModel {
     SafeModePropertyProviderFactory &
     PaymentsApiServiceFactory &
     CouponViewModelFactory &
-    AuthKeychainHandleFactory
+    AuthKeychainHandleFactory &
+    NetworkingFactory
+
 
     private let factory: Factory
     
@@ -65,6 +70,7 @@ final class SettingsViewModel {
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var appInfo: AppInfo = factory.makeAppInfo()
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
+    private lazy var networking: Networking = factory.makeNetworking()
     private let protocolService: ProtocolService
     
     var reloadNeeded: (() -> Void)?
@@ -215,7 +221,14 @@ final class SettingsViewModel {
             self?.pushSettingsAccountViewController()
         }
 
-        return TableViewSection(title: Localizable.account, cells: [cell])
+        if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.accountRecovery) {
+            let accountRecoveryCell = TableViewCellModel.pushStandard(title: AccountRecoveryModule.settingsItem) { [weak self] in
+                self?.pushAccountRecoveryViewController()
+            }
+            return TableViewSection(title: Localizable.account, cells: [cell, accountRecoveryCell])
+        } else {
+            return TableViewSection(title: Localizable.account, cells: [cell])
+        }
     }
     
     private var securitySection: TableViewSection {
@@ -626,7 +639,13 @@ final class SettingsViewModel {
         }
         pushHandler(accountViewController)
     }
-    
+
+    private func pushAccountRecoveryViewController() {
+        guard let pushHandler = pushHandler else { return }
+        let accountRecoveryViewController = AccountRecoveryModule.settingsViewController(networking.apiService)
+        pushHandler(accountRecoveryViewController)
+    }
+
     private func pushProtocolViewController() {
         let vpnProtocolViewModel = VpnProtocolViewModel(connectionProtocol: propertiesManager.connectionProtocol,
                                                         smartProtocolConfig: propertiesManager.smartProtocolConfig,
