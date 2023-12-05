@@ -13,6 +13,7 @@ import ProtonCoreLogin
 import ProtonCoreLoginUI
 import ProtonCoreNetworking
 import ProtonCorePayments
+import ProtonCorePushNotifications
 import ProtonCoreUIFoundations
 import UIKit
 import VPNShared
@@ -53,6 +54,7 @@ final class CoreLoginService {
         & CoreApiServiceFactory
         & SettingsServiceFactory
         & VpnApiServiceFactory
+        & PushNotificationServiceFactory
 
     private let appSessionManager: AppSessionManager
     private let appSessionRefresher: AppSessionRefresher
@@ -64,6 +66,7 @@ final class CoreLoginService {
     private let doh: DoHVPN
     private let coreApiService: CoreApiService
     private let settingsService: SettingsService
+    private let pushNotificationService: PushNotificationServiceProtocol
 
     private lazy var loginInterface: LoginAndSignupInterface = makeLoginInterface()
 
@@ -80,6 +83,7 @@ final class CoreLoginService {
         doh = factory.makeDoHVPN()
         coreApiService = factory.makeCoreApiService()
         settingsService = factory.makeSettingsService()
+        pushNotificationService = factory.makePushNotificationService()
     }
 
     private func makeLoginInterface() -> LoginAndSignupInterface {
@@ -140,7 +144,9 @@ final class CoreLoginService {
         case .loginStateChanged(.dataIsAvailable(let loginData)), .signupStateChanged(.dataIsAvailable(let loginData)):
             log.debug("Login or signup process in progress", category: .app)
             // Update the session id in the networking stack after login
-            networking.apiService.setSessionUID(uid: loginData.getCredential.UID)
+            let uid = loginData.getCredential.UID
+            networking.apiService.setSessionUID(uid: uid)
+            pushNotificationService.didLoginWithUID(uid)
         }
     }
 

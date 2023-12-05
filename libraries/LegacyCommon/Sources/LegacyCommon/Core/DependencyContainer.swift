@@ -23,6 +23,8 @@ import PMLogger
 import VPNShared
 import Dependencies
 
+import ProtonCorePushNotifications
+
 typealias PropertiesToOverride = DoHVPNFactory &
                                 NetworkingDelegateFactory &
                                 CoreAlertServiceFactory &
@@ -376,6 +378,13 @@ extension Container: CoreApiServiceFactory {
 extension Container: PaymentsApiServiceFactory {
     public func makePaymentsApiService() -> PaymentsApiService {
         PaymentsApiServiceImplementation(self)
+    }
+}
+
+// MARK: PushNotificationsServiceFactory
+extension Container: PushNotificationServiceFactory {
+    public func makePushNotificationService() -> ProtonCorePushNotifications.PushNotificationServiceProtocol {
+        PushNotificationService(apiService: networking.apiService)
     }
 }
 
