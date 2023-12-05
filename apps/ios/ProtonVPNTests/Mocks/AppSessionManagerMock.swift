@@ -39,7 +39,7 @@ class AppSessionManagerMock: AppSessionManager {
     public var callbackLogOut: (() -> Void)?
     public var callbackAttemptDataRefreshWithoutLogin: ((() -> Void, (Error) -> Void) -> Void)?
     public var callbackLadDataWithoutFetching: (() -> Bool)?
-    public var callbackLoadDataWithoutLogin: ((() -> Void, (Error) -> Void) -> Void)?
+    public var callbackLoadDataWithoutLogin: (() -> Void)?
     public var callbackRefreshData: (() -> Void)?
     public var callbackRefreshServerLoads: (() -> Void)?
     public var callbackCanPreviewApp: (() -> Bool)?
@@ -75,8 +75,8 @@ class AppSessionManagerMock: AppSessionManager {
         return callbackLadDataWithoutFetching?() ?? true
     }
     
-    func loadDataWithoutLogin(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        callbackLoadDataWithoutLogin?(success, failure)
+    func loadDataWithoutLogin() async throws {
+        callbackLoadDataWithoutLogin?()
     }
     
     func refreshData() {

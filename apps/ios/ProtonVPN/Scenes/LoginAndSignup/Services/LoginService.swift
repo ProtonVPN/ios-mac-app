@@ -252,11 +252,10 @@ extension CoreLoginService: LoginService {
                 case .success:
                     completion(.loggedIn)
                 case .failure:
-                    appSessionManager.loadDataWithoutLogin(success: {
+                    Task {
+                        try? await appSessionManager.loadDataWithoutLogin()
                         completion(.notLoggedIn)
-                    }, failure: { _ in
-                        completion(.notLoggedIn)
-                    })
+                    }
                 }
             }
         }
