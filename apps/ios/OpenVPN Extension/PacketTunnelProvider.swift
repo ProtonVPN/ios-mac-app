@@ -24,7 +24,7 @@ class PacketTunnelProvider: OpenVPNTunnelProvider, ExtensionAPIServiceDelegate {
     private var appInfo: AppInfo
     private var apiService: ExtensionAPIService!
     private var certificateRefreshManager: ExtensionCertificateRefreshManager!
-    private let vpnAuthenticationStorage: VpnAuthenticationStorage
+    private let vpnAuthenticationStorage: VpnAuthenticationStorageSync
     private var killSwitchSettingObservation: NSKeyValueObservation!
     // ExtensionAPIServiceDelegate
     internal var dataTaskFactory: DataTaskFactory!

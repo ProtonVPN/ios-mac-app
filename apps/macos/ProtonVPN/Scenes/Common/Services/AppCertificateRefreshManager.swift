@@ -34,10 +34,10 @@ final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshMan
     private var lastRetryInterval: TimeInterval = 10
 
     private var appSessionManager: AppSessionManager
-    private var vpnAuthenticationStorage: VpnAuthenticationStorage
+    private var vpnAuthenticationStorage: VpnAuthenticationStorageSync
     private var timer: Timer?
 
-    init(appSessionManager: AppSessionManager, vpnAuthenticationStorage: VpnAuthenticationStorage) {
+    init(appSessionManager: AppSessionManager, vpnAuthenticationStorage: VpnAuthenticationStorageSync) {
         self.appSessionManager = appSessionManager
         self.vpnAuthenticationStorage = vpnAuthenticationStorage
         self.vpnAuthenticationStorage.delegate = self

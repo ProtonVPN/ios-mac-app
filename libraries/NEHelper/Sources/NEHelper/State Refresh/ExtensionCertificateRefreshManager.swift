@@ -38,7 +38,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
     }
     fileprivate static var intervals = Intervals()
 
-    private let vpnAuthenticationStorage: VpnAuthenticationStorage
+    private let vpnAuthenticationStorage: VpnAuthenticationStorageSync
     private let apiService: ExtensionAPIService
     private var timer: BackgroundTimer?
 
@@ -55,7 +55,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
 
     public init(apiService: ExtensionAPIService,
                 timerFactory: TimerFactory,
-                vpnAuthenticationStorage: VpnAuthenticationStorage,
+                vpnAuthenticationStorage: VpnAuthenticationStorageSync,
                 keychain: AuthKeychainHandle) {
         let workQueue = DispatchQueue(label: "ch.protonvpn.extension.wireguard.certificate-refresh")
 

@@ -19,7 +19,7 @@
 import Foundation
 import VPNShared
 
-public class MockVpnAuthenticationStorage: VpnAuthenticationStorage {
+public class MockVpnAuthenticationStorage: VpnAuthenticationStorageSync {
     public var certAndFeaturesStored: ((VpnCertificateWithFeatures) -> ())?
     public var keysStored: ((VpnKeys) -> ())?
     public var certDeleted: (() -> Void)?

@@ -24,7 +24,7 @@ import Dependencies
 public final class VpnAuthenticationRemoteClient: VpnAuthentication {
     private var connectionProvider: ProviderMessageSender?
     private let sessionService: SessionService
-    private let authenticationStorage: VpnAuthenticationStorage
+    private let authenticationStorage: VpnAuthenticationStorageSync
 
     public typealias Factory = SessionServiceFactory &
         VpnAuthenticationStorageFactory &
@@ -39,7 +39,7 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
 
     public init(
         sessionService: SessionService,
-        authenticationStorage: VpnAuthenticationStorage
+        authenticationStorage: VpnAuthenticationStorageSync
     ) {
         self.sessionService = sessionService
         self.authenticationStorage = authenticationStorage
