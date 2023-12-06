@@ -142,7 +142,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         appSessionRefreshTimer.start(now: false)
         profileManager.refreshProfiles()
-        appCertificateRefreshManager.planNextRefresh()
+        await appCertificateRefreshManager.planNextRefresh()
     }
 
     @MainActor

@@ -41,7 +41,7 @@ public protocol VpnAuthenticationStorageSync: VpnAuthenticationStorageAsync {
 
 public protocol VpnAuthenticationStorageDelegate: AnyObject {
     func certificateDeleted()
-    func certificateStored(_ certificate: VpnCertificate)
+    func certificateStored(_ certificate: VpnCertificate) async
 }
 
 public protocol VpnAuthenticationStorageUserDefaults {

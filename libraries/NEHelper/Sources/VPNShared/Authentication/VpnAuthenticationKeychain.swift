@@ -256,7 +256,7 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorageAsync {
                     "features": "\(String(describing: certificate.features))"
                 ]
             )
-            delegate?.certificateStored(certificate.certificate)
+            await delegate?.certificateStored(certificate.certificate)
         } catch {
             log.error("Saving VPN certificate failed with error: \(error)", category: .userCert)
         }
@@ -266,7 +266,7 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorageAsync {
         do {
             try await store(certificate: certificate)
             log.debug("VPN certificate saved, valid until: \(certificate.validUntil)", category: .userCert)
-            delegate?.certificateStored(certificate)
+            await delegate?.certificateStored(certificate)
         } catch {
             log.error("Saving VPN certificate failed with error: \(error)", category: .userCert)
         }

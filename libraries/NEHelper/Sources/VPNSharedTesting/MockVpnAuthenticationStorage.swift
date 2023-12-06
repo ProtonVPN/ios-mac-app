@@ -71,13 +71,17 @@ public class MockVpnAuthenticationStorage: VpnAuthenticationStorageSync {
     public func store(_ certificate: VpnCertificateWithFeatures) {
         self.cert = certificate.certificate
         self.features = certificate.features
-        delegate?.certificateStored(certificate.certificate)
+        Task {
+            await delegate?.certificateStored(certificate.certificate)
+        }
         certAndFeaturesStored?(certificate)
     }
 
     public func store(_ certificate: VpnCertificate) {
         self.cert = certificate
-        delegate?.certificateStored(certificate)
+        Task {
+            await delegate?.certificateStored(certificate)
+        }
     }
 
     public var delegate: VpnAuthenticationStorageDelegate?
