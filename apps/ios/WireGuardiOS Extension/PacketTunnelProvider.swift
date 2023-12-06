@@ -22,7 +22,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
     private var certificateRefreshManager: ExtensionCertificateRefreshManager!
     private var serverStatusRefreshManager: ServerStatusRefreshManager!
     private var killSwitchSettingObservation: NSKeyValueObservation!
-    private let vpnAuthenticationStorage: VpnAuthenticationStorage
+    private let vpnAuthenticationStorage: VpnAuthenticationStorageSync
 
     private var currentWireguardServer: StoredWireguardConfig?
     // Currently connected logical server id

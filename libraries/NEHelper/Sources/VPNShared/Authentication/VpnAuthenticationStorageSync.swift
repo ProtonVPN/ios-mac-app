@@ -23,10 +23,10 @@
 import Foundation
 
 public protocol VpnAuthenticationStorageFactory {
-    func makeVpnAuthenticationStorage() -> VpnAuthenticationStorage
+    func makeVpnAuthenticationStorage() -> VpnAuthenticationStorageSync
 }
 
-public protocol VpnAuthenticationStorage: VpnAuthenticationStorageAsync {
+public protocol VpnAuthenticationStorageSync: VpnAuthenticationStorageAsync {
     func deleteKeys()
     func deleteCertificate()
     func getKeys() -> VpnKeys

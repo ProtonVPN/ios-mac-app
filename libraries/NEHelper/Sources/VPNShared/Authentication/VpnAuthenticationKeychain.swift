@@ -22,7 +22,7 @@ import KeychainAccess
 import Ergonomics
 import PMLogger
 
-extension VpnAuthenticationKeychain: VpnAuthenticationStorage {
+extension VpnAuthenticationKeychain: VpnAuthenticationStorageSync {
     @available(*, noasync, message: "Please use the async version of this method")
     public func deleteKeys() {
         func awaitWithCompletion(_ completion: @escaping () -> Void) {

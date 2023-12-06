@@ -304,7 +304,7 @@ extension Container: VpnManagerFactory {
 }
 
 extension Container: VpnAuthenticationStorageFactory {
-    public func makeVpnAuthenticationStorage() -> VpnAuthenticationStorage {
+    public func makeVpnAuthenticationStorage() -> VpnAuthenticationStorageSync {
         vpnAuthenticationKeychain
     }
 }

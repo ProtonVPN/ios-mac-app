@@ -26,7 +26,7 @@ import Logging
 
 // MacOS Certificate Refresh operation
 final class CertificateRefreshAsyncOperation: AsyncOperation {
-    private let storage: VpnAuthenticationStorage
+    private let storage: VpnAuthenticationStorageSync
     private let networking: Networking
     private let completion: CertificateRefreshCompletion?
 
@@ -43,7 +43,7 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
         return minNetworkErrorRetryDelay + jitter
     }
 
-    init(storage: VpnAuthenticationStorage, networking: Networking, completion: CertificateRefreshCompletion? = nil) {
+    init(storage: VpnAuthenticationStorageSync, networking: Networking, completion: CertificateRefreshCompletion? = nil) {
         self.storage = storage
         self.networking = networking
         self.completion = completion
