@@ -242,7 +242,7 @@ fileprivate class AppSessionManagerMock: AppSessionManager {
     
     func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {}
     func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void) { }
-    func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {}
+    func refreshVpnAuthCertificate() async throws {}
     func logOut(force: Bool, reason: String?) {}
     func logOut() {}
     func replyToApplicationShouldTerminate() {}
