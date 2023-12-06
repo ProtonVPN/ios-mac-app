@@ -47,3 +47,17 @@ public protocol VpnAuthenticationStorageDelegate: AnyObject {
 public protocol VpnAuthenticationStorageUserDefaults {
     var vpnCertificateFeatures: VPNConnectionFeatures? { get set }
 }
+
+public protocol VpnAuthenticationStorageAsync: AnyObject {
+    func deleteKeys() async
+    func deleteCertificate() async
+    func getKeys() async -> VpnKeys
+    func getStoredCertificate() async -> VpnCertificate?
+    func getStoredCertificateFeatures() -> VPNConnectionFeatures?
+    func getStoredKeys() async -> VpnKeys?
+    func store(keys: VpnKeys) async
+    func store(_ certificate: VpnCertificate) async
+    func store(_ certificate: VpnCertificateWithFeatures) async
+
+    var delegate: VpnAuthenticationStorageDelegate? { get set }
+}
