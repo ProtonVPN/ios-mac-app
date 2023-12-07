@@ -32,5 +32,10 @@ struct Credentials: Decodable {
         let decoder = PropertyListDecoder()
         return try! decoder.decode([Credentials].self, from: data)
     }
-    
+}
+
+extension Array<Credentials> {
+    subscript<K: RawRepresentable<Int>>(_ key: K) -> Element {
+        self[key.rawValue]
+    }
 }

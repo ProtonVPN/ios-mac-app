@@ -24,54 +24,45 @@ import ProtonCoreDoh
 
 class TokenRefreshTests: ProtonVPNUITests {
     
-    var doh: DoH & ServerConfig {
-          return CustomServerConfigDoH(
-            signupDomain: ObfuscatedConstants.blackSignupDomain,
-            captchaHost: ObfuscatedConstants.blackCaptchaHost,
-            humanVerificationV3Host: ObfuscatedConstants.blackHumanVerificationV3Host,
-            accountHost: ObfuscatedConstants.blackAccountHost,
-            defaultHost: ObfuscatedConstants.blackDefaultHost,
-            apiHost: ObfuscatedConstants.apiHost,
-            defaultPath: ObfuscatedConstants.blackDefaultPath
-          )
-      }
-    
     lazy var quarkCommands = QuarkCommands(doh: doh)
     private let mainRobot = MainRobot()
     private let loginRobot = LoginRobot()
-    private let credentialsBF22 = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials_bf22", withExtension: "plist")!)
+    
+    private let user = Credentials(username: StringUtils().randomAlphanumericString(length: 10), password: "123", plan: "vpn2022")
+
     
     override func setUp() {
         super.setUp()
-        logoutIfNeeded()
-        changeEnvToBlackIfNeeded()
-        useAndContinueTap()
+        setupAtlasEnvironment()
         mainRobot
             .showLogin()
             .verify.loginScreenIsShown()
+        quarkCommands.createUser(username: user.username, password: user.password, protonPlanName: user.plan)
     }
 
     @MainActor
-    func testExpireSessionAndRefreshToken() async throws {
+    func testLogInExpireSessionAndRefreshTokenGetUserRefreshTokenFailure() async throws {
+        
         loginRobot
-            .loginAsUser(credentialsBF22[0])
+            .enterCredentials(user)
             .signIn(robot: MainRobot.self)
-            .verify.qcButtonDisconnected()
-        try await quarkCommands.expireSessionAsync(username: credentialsBF22[0].username, expireRefreshToken: true)
+            .verify.connectionStatusNotConnected()
         mainRobot
             .goToSettingsTab()
+        try await quarkCommands.expireSessionAsync(username: user.username, expireRefreshToken: true)
+        SettingsRobot()
             .goToAccountDetail()
             .deleteAccount()
             .verify.userIsLoggedOut()
     }
 
     @MainActor
-    func testExpireSessionToken() async throws {
+    func testLogInExpireSessionGetUserRefreshTokenSuccess() async throws {
         loginRobot
-            .loginAsUser(credentialsBF22[0])
+            .enterCredentials(user)
             .signIn(robot: MainRobot.self)
-            .verify.qcButtonDisconnected()
-        try await quarkCommands.expireSessionAsync(username: credentialsBF22[0].username)
+            .verify.connectionStatusNotConnected()
+        try await quarkCommands.expireSessionAsync(username: user.username)
         mainRobot
             .goToSettingsTab()
             .goToAccountDetail()

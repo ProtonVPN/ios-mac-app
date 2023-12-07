@@ -51,8 +51,8 @@ class AccountRobot: CoreElements {
         
         @discardableResult
         func deleteAccountScreen() -> AccountRobot {
-            staticText(deleteAccountText).wait(time: 10).checkExists()
-            button(deleteButton).wait(time: 10).checkExists()
+            staticText(deleteAccountText).wait(time: 12).checkExists()
+            button(deleteButton).wait(time: 12).checkExists()
             return AccountRobot()
         }
         

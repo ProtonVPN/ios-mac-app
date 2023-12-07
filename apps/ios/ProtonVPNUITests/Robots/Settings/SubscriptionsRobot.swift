@@ -50,7 +50,7 @@ class SubscriptionsRobot: CoreElements {
     
     @discardableResult
     public func verifyNumberOfPlansToPurchase(number: Int) -> Self {
-        table("PaymentsUIViewController.tableView").wait().checkExists()
+        table("PaymentsUIViewController.tableView").wait(time: 15).checkExists()
         let count = XCUIApplication().tables.matching(identifier: "PaymentsUIViewController.tableView").cells.count
         XCTAssertEqual(count, number)
         return self
@@ -64,7 +64,7 @@ class SubscriptionsRobot: CoreElements {
 
     @discardableResult
     public func verifyTableCellStaticText(cellName: String, name: String) -> Self {
-        table("PaymentsUIViewController.tableView").wait().checkExists()
+        table("PaymentsUIViewController.tableView").wait(time: 15).checkExists()
         let staticTexts = XCUIApplication().tables.matching(identifier: "PaymentsUIViewController.tableView").cells.matching(identifier: cellName).staticTexts
         XCTAssertTrue(staticTexts[name].exists)
         return self

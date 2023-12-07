@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import fusion
+import ProtonCoreTestingToolkitUITestsLogin
 
 class ConnectionTests: ProtonVPNUITests {
     
@@ -17,16 +19,28 @@ class ConnectionTests: ProtonVPNUITests {
     private let serverListRobot = ServerListRobot()
     private let settingsRobot = SettingsRobot()
     
+    private let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
+    
+    enum CredentialsKey: Int {
+        case freeUser = 0
+        case basicUser = 1
+        case plusUser = 2
+    }
+    
     override func setUp() {
         super.setUp()
+        setupProdEnvironment()
+        mainRobot
+            .showLogin()
+            .verify.loginScreenIsShown()
     }
     
     func testConnectAndDisconnectViaQCButtonFreeUser() {
         
-        logoutIfNeeded()
-        changeEnvToProdIfNeeded()
-        openLoginScreen()
-        loginAsFreeUser()
+        loginRobot
+            .enterCredentials(credentials[0])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
         mainRobot
             .quickConnectViaQCButton()
             .verify.connectionStatusConnected(robot: MainRobot.self)
@@ -39,7 +53,10 @@ class ConnectionTests: ProtonVPNUITests {
         let countryName = "Australia"
         let back = "Countries"
         
-        logInToProdIfNeeded()
+        loginRobot
+            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
         mainRobot
             .goToCountriesTab()
             .connectToAServer()
@@ -53,8 +70,10 @@ class ConnectionTests: ProtonVPNUITests {
         
         let countryName = "Australia"
         
-        logoutIfNeeded()
-        logInToProdIfNeeded()
+        loginRobot
+            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
         mainRobot
             .goToCountriesTab()
             .openServerList(countryName)
@@ -72,7 +91,10 @@ class ConnectionTests: ProtonVPNUITests {
         let countryName = "Netherlands"
         let map = "Map"
         
-        logInToProdIfNeeded()
+        loginRobot
+            .enterCredentials(credentials[CredentialsKey.plusUser])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
         mainRobot
             .goToMapTab()
             .selectCountryAndConnect()
@@ -87,8 +109,10 @@ class ConnectionTests: ProtonVPNUITests {
         let profileName = StringUtils().randomAlphanumericString(length: 10)
         let countryName = "Argentina"
         let back = "Profiles"
-        
-        logInToProdIfNeeded()
+        loginRobot
+            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
         mainRobot
             .goToProfilesTab()
             .addNewProfile()
@@ -106,7 +130,10 @@ class ConnectionTests: ProtonVPNUITests {
         
         let back = "Profiles"
         
-        logInToProdIfNeeded()
+        loginRobot
+            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
         mainRobot
             .goToProfilesTab()
             .connectToAFastestServer()
@@ -129,7 +156,10 @@ class ConnectionTests: ProtonVPNUITests {
         let serverVia = "Switzerland"
         let status = "Switzerland >> Ukraine"
     
-        logInToProdIfNeeded()
+        loginRobot
+            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
         mainRobot
             .goToProfilesTab()
             .addNewProfile()
@@ -145,12 +175,12 @@ class ConnectionTests: ProtonVPNUITests {
     
     func testConnectToAPlusServerWithFreeUser() {
 
-        let countryName = "Ukraine"
+        let countryName = "Austria"
         
-        logoutIfNeeded()
-        changeEnvToProdIfNeeded()
-        openLoginScreen()
-        loginAsFreeUser()
+        loginRobot
+            .enterCredentials(credentials[CredentialsKey.freeUser])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
         mainRobot
             .goToCountriesTab()
             .connectToAPlusCountry(countryName)
@@ -161,7 +191,10 @@ class ConnectionTests: ProtonVPNUITests {
         
         let countryName = "Netherlands"
 
-        logInToProdIfNeeded()
+        loginRobot
+            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
         mainRobot
             .goToCountriesTab()
             .connectToAServer()
@@ -173,8 +206,10 @@ class ConnectionTests: ProtonVPNUITests {
     
     func testCancelLogoutWhileConnectedToVpn() {
             
-        logoutIfNeeded()
-        logInToProdIfNeeded()
+        loginRobot
+            .enterCredentials(credentials[CredentialsKey.plusUser])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
         mainRobot
             .goToCountriesTab()
             .connectToAServer()
@@ -184,84 +219,17 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.connectionStatusConnected(robot: ConnectionStatusRobot.self)
             .disconnectFromAServer()
     }
-    
-    func testConnectionViaOpenvpnUDP() {
-        
-        let protocolVia = "OpenVPN (UDP)"
-        let countryName = "Australia"
-        let back = "Countries"
-        
-        logInToProdIfNeeded()
-        mainRobot
-            .goToSettingsTab()
-            .goToProtocolsList()
-            .protocolOn(protocolVia)
-            .returnToSettings()
-        mainRobot
-            .goToCountriesTab()
-            .connectToAServer()
-            .verify.protocolNameIsCorrect(protocolVia)
-            .verify.connectedToAServer(countryName)
-            .backToPreviousTab(robot: CountryListRobot.self, back)
-            .disconnectViaCountry()
-            .verify.connectionStatusNotConnected()
-    }
-    
-    func testConnectionViaOpenvpnTCP() {
-           
-           let protocolVia = "OpenVPN (TCP)"
-           let countryName = "United States"
-           let back = "Countries"
-           
-           logInToProdIfNeeded()
-           mainRobot
-               .goToSettingsTab()
-               .goToProtocolsList()
-               .protocolOn(protocolVia)
-               .returnToSettings()
-           mainRobot
-               .goToCountriesTab()
-               .connectToAServer()
-               .verify.protocolNameIsCorrect(protocolVia)
-               .verify.connectedToAServer(countryName)
-               .backToPreviousTab(robot: CountryListRobot.self, back)
-               .disconnectViaCountry()
-               .verify.connectionStatusNotConnected()
-       }
-    
-    func testConnectionViaIkev() {
-            
-            let protocolVia = "IKEv2"
-            let countryName = "Australia"
-            let back = "Countries"
-        
-            logoutIfNeeded()
-            logInToProdIfNeeded()
-            loginAsFreeUser()
-            mainRobot
-                .goToSettingsTab()
-                .goToProtocolsList()
-                .protocolOn(protocolVia)
-                .returnToSettings()
-            mainRobot
-                .goToCountriesTab()
-                .connectToAServer()
-                .verify.protocolNameIsCorrect(protocolVia)
-                .verify.connectedToAServer(countryName)
-                .backToPreviousTab(robot: CountryListRobot.self, back)
-                .disconnectViaCountry()
-                .verify.connectionStatusNotConnected()
-        }
 
     func testConnectionViaSC() {
         
-        let protocolVia = "IKEv2"
+        let protocolVia = "WireGuard"
         let status = "Sweden >> Australia"
         let back = "Countries"
-        
-        logoutIfNeeded()
-        logInToProdIfNeeded()
-        loginAsBasicUser()
+
+        loginRobot
+            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
         mainRobot
             .goToSettingsTab()
             .goToProtocolsList()
@@ -286,10 +254,10 @@ class ConnectionTests: ProtonVPNUITests {
         let netshield = "Block malware, ads, & trackers"
         let status = "Sweden >> Australia"
         
-        logoutIfNeeded()
-        changeEnvToProdIfNeeded()
-        openLoginScreen()
-        loginAsBasicUser()
+        loginRobot
+            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
         mainRobot
             .goToSettingsTab()
             .goToProtocolsList()
@@ -316,10 +284,10 @@ class ConnectionTests: ProtonVPNUITests {
         let protocolViaSmart = "Smart"
         let back = "Settings"
         
-        logoutIfNeeded()
-        changeEnvToProdIfNeeded()
-        openLoginScreen()
-        loginAsBasicUser()
+        loginRobot
+            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
         mainRobot
             .goToSettingsTab()
             .goToProtocolsList()
@@ -367,10 +335,10 @@ class ConnectionTests: ProtonVPNUITests {
         
         let countryName = "Japan"
 
-        logoutIfNeeded()
-        changeEnvToProdIfNeeded()
-        openLoginScreen()
-        loginAsFreeUser()
+        loginRobot
+            .enterCredentials(credentials[CredentialsKey.freeUser])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
         mainRobot
             .goToSettingsTab()
             .turnKillSwitchOn()

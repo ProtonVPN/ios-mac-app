@@ -152,8 +152,8 @@ class SettingsRobot: CoreElements {
         }
         
         @discardableResult
-        func ikeIsEnabled() -> SettingsRobot {
-            staticText("IKEv2").checkExists()
+        func stealthIsEnabled() -> SettingsRobot {
+            staticText("Stealth").checkExists()
             return SettingsRobot()
         }
         

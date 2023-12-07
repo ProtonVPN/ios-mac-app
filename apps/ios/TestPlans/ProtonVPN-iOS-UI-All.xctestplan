@@ -27,17 +27,10 @@
     {
       "skippedTests" : [
         "ConnectionTests",
-        "ExternalAccountsTests",
-        "LoginExtAccountTests",
-        "LoginTests",
-        "PlanTests",
-        "ProfilesTests",
-        "SettingsTests",
-        "SignupTests",
-        "SignupTests\/testSignupExistingExternalAccount()",
+        "PlanTests\/testShowUpdatePlansForCurrentFreePlan()",
         "SignupTests\/testSignupExistingInternalAccount()",
-        "SignupTests\/testSignupNewInternalAccountUpgradePlans()",
-        "TokenRefreshTests"
+        "SignupTests\/testSignupNewExternalAccountUpgrade()",
+        "SignupTests\/testSignupNewInternalAccountUpgradePlans()"
       ],
       "target" : {
         "containerPath" : "container:iOS.xcodeproj",
