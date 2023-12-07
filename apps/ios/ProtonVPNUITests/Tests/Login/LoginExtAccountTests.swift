@@ -18,15 +18,14 @@ class LoginExtAccountTests: ProtonVPNUITests {
     override func setUp() {
         launchEnvironment = "ExtAccountNotSupportedStub"
         super.setUp()
-        logoutIfNeeded()
-        changeEnvToBlackIfNeeded()
-        useAndContinueTap()
+        setupAtlasEnvironment()
         mainRobot
             .showLogin()
             .verify.loginScreenIsShown()
     }
     
-    func testLoginExtAcountNotSupported() {
+    // Sign-in with external account on old iOS version
+    func testLoginExtAcountNotSupportedOnOldAppVersion() {
         loginRobot
             .fillUsername(username: "ExtUser")
             .fillpassword(password: "123")

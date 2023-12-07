@@ -74,7 +74,7 @@ class ProfileRobot: CoreElements {
         
     private func delete(_ name: String, _ countryname: String) -> ProfileRobot {
         button(editButton).tap()
-        button("Delete " + countryname + "    Fastest, " + name).tap()
+        button("Remove " + countryname + "    Fastest, " + name).tap()
         button(deleteButton).tap()
         return self
     }

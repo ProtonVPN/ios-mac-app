@@ -24,29 +24,29 @@ class SignupTests: ProtonVPNUITests {
     lazy var quarkCommands = QuarkCommands(doh: environment.doh)
     private let mainRobot = MainRobot()
     private let signupRobot = SignupRobot()
+    private let onboardingRobot = OnboardingRobot()
+
     
     override func setUp() {
         super.setUp()
-        logoutIfNeeded()
+        setupAtlasEnvironment()
+        mainRobot
+            .showSignup()
+            .verify.signupScreenIsShown()
+
         // This method is asynchronous, but it still works, because it's enough time before the actual UI testing starts
         quarkCommands.unban { result in
             print("Unban finished: \(result)") // swiftlint:disable:this no_print
         }
      }
 
+    // This test temporary disabled
     /// Test showing standard plan (not Black Friday 2022 plan) for upgrade after successful signup
     @MainActor
-    func testSignupNewExternalAccountSuccess() {
+    func testSignupNewExternalAccountUpgrade() {
         let email = StringUtils().randomAlphanumericString(length: 7) + "@mail.com"
         let code = "666666"
         let password = StringUtils().randomAlphanumericString(length: 8)
-        let plan = "Proton VPN Free"
-    
-        changeEnvToBlackIfNeeded()
-        useAndContinueTap()
-        mainRobot
-            .showSignup()
-            .verify.signupScreenIsShown()
 
         SignupExternalAccountsCapability()
             .signUpWithExternalAccount(
@@ -59,10 +59,6 @@ class SignupTests: ProtonVPNUITests {
             .verify.creatingAccountScreenIsShown()
             .verify.summaryScreenIsShown()
             .skipOnboarding()
-            .nextOnboardingStep()
-            .nextOnboardingStep()
-            .skipOnboarding()
-            .startUsingProtonVpn()
             .startUpgrade()
             .verifyStaticText("Get Plus")
             .sleepFor(3)
@@ -82,12 +78,6 @@ class SignupTests: ProtonVPNUITests {
             account: .external(email: email, password: password),
             currentlyUsedHostUrl: environment.doh.getCurrentlyUsedHostUrl()
         )
-
-        changeEnvToBlackIfNeeded()
-        useAndContinueTap()
-        mainRobot
-            .showSignup()
-            .verify.signupScreenIsShown()
 
         ProtonCoreTestingToolkitUITestsLogin.SignupRobot()
             .insertExternalEmail(name: email)

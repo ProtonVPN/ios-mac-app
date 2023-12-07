@@ -21,9 +21,6 @@ import Foundation
 
 fileprivate let summaryTitle = "Welcome to Proton VPN"
 fileprivate let summaryDescription = "Learn how to get the most out of Proton VPN in just a few seconds"
-fileprivate let takeTourButton = "Take a tour"
-fileprivate let skipButton = "Skip"
-fileprivate let slideOneTitle = "Be protected everywhere"
 
 class SummarySignupRobot: CoreElements {
     
@@ -33,8 +30,8 @@ class SummarySignupRobot: CoreElements {
         
         @discardableResult
         func summaryScreenIsShown(time: TimeInterval = 120) -> OnboardingRobot {
-            staticText(summaryTitle).wait(time: time).checkExists()
-            staticText(summaryDescription).wait(time: time).checkExists()
+            staticText(summaryTitle).waitUntilExists(time: time).checkExists()
+            staticText(summaryDescription).waitUntilExists(time: time).checkExists()
             return OnboardingRobot()
         }
     }

@@ -107,7 +107,6 @@
 		57E3438E28E573D60012B2DF /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438D28E573D60012B2DF /* PlanTests.swift */; };
 		57E3439028E576A70012B2DF /* SubscriptionsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438F28E576A70012B2DF /* SubscriptionsRobot.swift */; };
 		57E3439228E5A6780012B2DF /* AccountRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3439128E5A6780012B2DF /* AccountRobot.swift */; };
-		661D36E22948A0FC00A7EBE3 /* ExternalAccountsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661D36E12948A0FC00A7EBE3 /* ExternalAccountsTests.swift */; };
 		66E34BAF27ABCD2C002FC827 /* SettingsAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E34BAE27ABCD2C002FC827 /* SettingsAccountViewModel.swift */; };
 		66E34BB227ABD8F7002FC827 /* AccountDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66E34BB127ABD8F7002FC827 /* AccountDetailsTableViewCell.xib */; };
 		66E34BB427ABE30B002FC827 /* AccountDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E34BB327ABE30B002FC827 /* AccountDetailsTableViewCell.swift */; };
@@ -232,6 +231,9 @@
 		ADE5E67D2A83F45800AC8523 /* LogSelectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9492EE2266A14E800500E7D /* LogSelectionViewModelTests.swift */; };
 		B20C28F52799947A00157BD1 /* OnboardingRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20C28F42799947A00157BD1 /* OnboardingRobot.swift */; };
 		B22F331827906E9100DBB8CA /* RecoveryRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F331727906E9100DBB8CA /* RecoveryRobot.swift */; };
+		B28688CA2AC1C13800C1BA37 /* FreeRescopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28688C92AC1C13800C1BA37 /* FreeRescopeTests.swift */; };
+		B28688CC2AC1C56600C1BA37 /* InternalAndExternalSignUpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28688CB2AC1C56600C1BA37 /* InternalAndExternalSignUpTests.swift */; };
+		B28688CE2AC1C65300C1BA37 /* LoginExternalAccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28688CD2AC1C65300C1BA37 /* LoginExternalAccountTests.swift */; };
 		B29CD6AF2654109600978637 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CD6AE2654109600978637 /* StringUtils.swift */; };
 		B2BCF09928B546200041A635 /* Generate2FACode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BCF09828B546200041A635 /* Generate2FACode.swift */; };
 		B2BCF09C28B547F00041A635 /* twofausercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = B2BCF09B28B547F00041A635 /* twofausercredentials.plist */; };
@@ -650,7 +652,6 @@
 		57E3439128E5A6780012B2DF /* AccountRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRobot.swift; sourceTree = "<group>"; };
 		588875B805CC4143DA2C515E /* ProtocolsListRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProtocolsListRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Settings/ProtocolsListRobot.swift; sourceTree = "<group>"; };
 		626EBF8E3BDF0DC2F71393A2 /* AnnouncementFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnouncementFeatureView.swift; path = ../../../../../ios/ProtonVPN/Scenes/Announcements/Views/AnnouncementFeatureView.swift; sourceTree = "<group>"; };
-		661D36E12948A0FC00A7EBE3 /* ExternalAccountsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalAccountsTests.swift; sourceTree = "<group>"; };
 		66E34BAE27ABCD2C002FC827 /* SettingsAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsAccountViewModel.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/ViewModels/SettingsAccountViewModel.swift; sourceTree = "<group>"; };
 		66E34BB127ABD8F7002FC827 /* AccountDetailsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AccountDetailsTableViewCell.xib; path = ../../../../../ios/ProtonVPN/Scenes/Settings/Views/AccountDetailsTableViewCell.xib; sourceTree = "<group>"; };
 		66E34BB327ABE30B002FC827 /* AccountDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AccountDetailsTableViewCell.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/Views/AccountDetailsTableViewCell.swift; sourceTree = "<group>"; };
@@ -740,6 +741,9 @@
 		AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AnnouncementFeatureView.xib; path = ../../../../../ios/ProtonVPN/Scenes/Announcements/Views/AnnouncementFeatureView.xib; sourceTree = "<group>"; };
 		B20C28F42799947A00157BD1 /* OnboardingRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRobot.swift; sourceTree = "<group>"; };
 		B22F331727906E9100DBB8CA /* RecoveryRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryRobot.swift; sourceTree = "<group>"; };
+		B28688C92AC1C13800C1BA37 /* FreeRescopeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeRescopeTests.swift; sourceTree = "<group>"; };
+		B28688CB2AC1C56600C1BA37 /* InternalAndExternalSignUpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalAndExternalSignUpTests.swift; sourceTree = "<group>"; };
+		B28688CD2AC1C65300C1BA37 /* LoginExternalAccountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginExternalAccountTests.swift; sourceTree = "<group>"; };
 		B29CD6AE2654109600978637 /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtils.swift; sourceTree = "<group>"; };
 		B2BCF09828B546200041A635 /* Generate2FACode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generate2FACode.swift; sourceTree = "<group>"; };
 		B2BCF09B28B547F00041A635 /* twofausercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = twofausercredentials.plist; sourceTree = "<group>"; };
@@ -1160,14 +1164,6 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		661D36E02948A0DE00A7EBE3 /* ExternalAccounts */ = {
-			isa = PBXGroup;
-			children = (
-				661D36E12948A0FC00A7EBE3 /* ExternalAccountsTests.swift */,
-			);
-			path = ExternalAccounts;
-			sourceTree = "<group>";
-		};
 		6C79F2C7D41897FA4247FD73 /* Misc */ = {
 			isa = PBXGroup;
 			children = (
@@ -1458,15 +1454,30 @@
 			isa = PBXGroup;
 			children = (
 				F3B783F326E6428C006768A8 /* SignupRobot.swift */,
-				B20C28F42799947A00157BD1 /* OnboardingRobot.swift */,
 				B22F331727906E9100DBB8CA /* RecoveryRobot.swift */,
 				D32078B0341D91947B720055 /* AccountVerificationRobot.swift */,
 				4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */,
 				B2D457292771D8AD0065FEC2 /* PaymentsRobot.swift */,
-				B2D4572B2771D8C30065FEC2 /* SummarySignupRobot.swift */,
 				B2D4572D2771D8D50065FEC2 /* CreatingAccountRobot.swift */,
 			);
 			path = Signup;
+			sourceTree = "<group>";
+		};
+		B28688C72ABAD54800C1BA37 /* PlanTests */ = {
+			isa = PBXGroup;
+			children = (
+				57E3438D28E573D60012B2DF /* PlanTests.swift */,
+			);
+			path = PlanTests;
+			sourceTree = "<group>";
+		};
+		B28688C82AC1B38800C1BA37 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				B20C28F42799947A00157BD1 /* OnboardingRobot.swift */,
+				B2D4572B2771D8C30065FEC2 /* SummarySignupRobot.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		B2BCF0AA28B760B70041A635 /* Support */ = {
@@ -2171,7 +2182,7 @@
 		F377835D26E644BC00392958 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				661D36E02948A0DE00A7EBE3 /* ExternalAccounts */,
+				B28688C72ABAD54800C1BA37 /* PlanTests */,
 				F377835E26E644BC00392958 /* Settings */,
 				F377836126E644BC00392958 /* Connection */,
 				F377836526E644BC00392958 /* Profiles */,
@@ -2192,7 +2203,6 @@
 		F377836126E644BC00392958 /* Connection */ = {
 			isa = PBXGroup;
 			children = (
-				57E3438D28E573D60012B2DF /* PlanTests.swift */,
 				F377836226E644BC00392958 /* ConnectionTests.swift */,
 			);
 			path = Connection;
@@ -2202,6 +2212,7 @@
 			isa = PBXGroup;
 			children = (
 				F377836626E644BC00392958 /* ProfilesTests.swift */,
+				B28688C92AC1C13800C1BA37 /* FreeRescopeTests.swift */,
 			);
 			path = Profiles;
 			sourceTree = "<group>";
@@ -2209,10 +2220,12 @@
 		F377836726E644BC00392958 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				F377836826E644BC00392958 /* LoginTests.swift */,
+				B28688CB2AC1C56600C1BA37 /* InternalAndExternalSignUpTests.swift */,
 				F377836926E644BC00392958 /* SignupTests.swift */,
+				F377836826E644BC00392958 /* LoginTests.swift */,
 				37CC821428F4407C00230335 /* LoginExtAccountTests.swift */,
 				B2FCF5432940E91300EAC786 /* TokenRefreshTests.swift */,
+				B28688CD2AC1C65300C1BA37 /* LoginExternalAccountTests.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -2273,6 +2286,7 @@
 		F3B783F126E6428C006768A8 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				B28688C82AC1B38800C1BA37 /* Onboarding */,
 				B20C28F72799B59D00157BD1 /* Signup */,
 				B20C28F62799B59000157BD1 /* Login */,
 			);
@@ -3286,6 +3300,7 @@
 				F3B783F526E6428C006768A8 /* MainRobot.swift in Sources */,
 				F3B7840026E6428C006768A8 /* LoginRobot.swift in Sources */,
 				57E3439228E5A6780012B2DF /* AccountRobot.swift in Sources */,
+				B28688CA2AC1C13800C1BA37 /* FreeRescopeTests.swift in Sources */,
 				F3B783FB26E6428C006768A8 /* ServerListRobot.swift in Sources */,
 				F3B783F626E6428C006768A8 /* SettingsRobot.swift in Sources */,
 				F3B783FF26E6428C006768A8 /* SignupRobot.swift in Sources */,
@@ -3294,11 +3309,11 @@
 				B2D4572E2771D8D50065FEC2 /* CreatingAccountRobot.swift in Sources */,
 				F377836F26E644BC00392958 /* LoginTests.swift in Sources */,
 				D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */,
+				B28688CE2AC1C65300C1BA37 /* LoginExternalAccountTests.swift in Sources */,
 				57E3438E28E573D60012B2DF /* PlanTests.swift in Sources */,
 				B29CD6AF2654109600978637 /* StringUtils.swift in Sources */,
 				ADA1A0402A95E4EB00F9A6B6 /* Verifier.swift in Sources */,
 				F3B783FE26E6428C006768A8 /* NeedHelpRobot.swift in Sources */,
-				661D36E22948A0FC00A7EBE3 /* ExternalAccountsTests.swift in Sources */,
 				B2D4572A2771D8AD0065FEC2 /* PaymentsRobot.swift in Sources */,
 				B20C28F52799947A00157BD1 /* OnboardingRobot.swift in Sources */,
 				B2BCF09928B546200041A635 /* Generate2FACode.swift in Sources */,
@@ -3310,6 +3325,7 @@
 				F3B783FA26E6428C006768A8 /* CountryListRobot.swift in Sources */,
 				F377836E26E644BC00392958 /* ProfilesTests.swift in Sources */,
 				F377837026E644BC00392958 /* SignupTests.swift in Sources */,
+				B28688CC2AC1C56600C1BA37 /* InternalAndExternalSignUpTests.swift in Sources */,
 				B2FCF5442940E91300EAC786 /* TokenRefreshTests.swift in Sources */,
 				F377836C26E644BC00392958 /* ConnectionTests.swift in Sources */,
 				E5CF14862949E68700AF6912 /* QuarkCommands+Async.swift in Sources */,
