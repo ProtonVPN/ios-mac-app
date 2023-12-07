@@ -33,21 +33,25 @@ class MainRobot: CoreElements {
     
     let verify = Verify()
     
+    @discardableResult
     func goToCountriesTab() -> CountryListRobot {
         button(tabCountries).tap()
         return CountryListRobot()
     }
     
+    @discardableResult
     func goToMapTab() -> MapRobot {
         button(tabMap).tap()
         return MapRobot()
     }
     
+    @discardableResult
     func goToProfilesTab() -> ProfileRobot {
         button(tabProfiles).tap()
         return ProfileRobot()
     }
 
+    @discardableResult
     func goToSettingsTab() -> SettingsRobot {
         button(tabSettings).tap()
         return SettingsRobot()
@@ -102,13 +106,13 @@ class MainRobot: CoreElements {
     
         @discardableResult
         func connectionStatusNotConnected() -> MainRobot {
-            staticText(statusNotConnected).wait().checkExists()
+            staticText(statusNotConnected).waitUntilExists(time: 20).checkExists()
             return MainRobot()
         }
     
         @discardableResult
         func connectionStatusConnectedTo(_ name: String) -> MainRobot {
-            staticText(name).wait().checkExists()
+            staticText(name).waitUntilExists().checkExists()
             return MainRobot()
         }
     

@@ -22,42 +22,29 @@ fileprivate let assignConnectionErrorBannerMessage = "subuserAlertDescription1"
 fileprivate let okButton = "OK"
 fileprivate let assignVPNConnectionButton = "Enable VPN connections"
 fileprivate let loginButton = "Sign in again"
+fileprivate let invalidUsernameErrorMessage = "Invalid username"
+
 
 class LoginRobot: CoreElements {
     
     public let verify = Verify()
     
     @discardableResult
-    func loginUser(credentials: Credentials) -> LoginRobot {
-        return typeUsername(username: credentials.username)
-            .typePassword(password: credentials.password)
-    }
+    func enterCredentials(_ name: Credentials) -> LoginRobot {
+          return typeUsername(username: name.username)
+              .typePassword(password: name.password)
+      }
     
     @discardableResult
-    func loginWrongUser(_ username: String, _ password: String) -> LoginRobot {
+    func enterIncorrectCredentials(_ username: String, _ password: String) -> LoginRobot {
         return typeUsername(username: username)
             .typePassword(password: password)
-    }
-    
-    func loginAsUser(_ name: Credentials) -> LoginRobot {
-         return typeUsername(username: name.username)
-             .typePassword(password: name.password)
-     }
-    
-    func loginAsSubuser(subusercredentials: Credentials) -> LoginRobot {
-        return typeUsername(username: subusercredentials.username)
-            .typePassword(password: subusercredentials.password)
     }
     
     @discardableResult
     func signIn<T: CoreElements>(robot _: T.Type) -> T {
         button(signInButtonId).tap()
         return T()
-    }
-    
-    func needHelp() -> NeedHelpRobot {
-        button(helpButtonId).tap()
-        return NeedHelpRobot()
     }
     
     private func typeUsername(username: String) -> LoginRobot {
@@ -74,36 +61,44 @@ class LoginRobot: CoreElements {
         
         @discardableResult
         func loginScreenIsShown() -> LoginRobot {
-            staticText(titleId).wait().checkExists()
-            staticText(subtitleId).wait().checkExists()
+            staticText(titleId).waitUntilExists().checkExists()
+            staticText(subtitleId).waitUntilExists().checkExists()
+            textField(loginTextFieldId).tap()
             return LoginRobot()
         }
         
         @discardableResult
         func incorrectCredentialsErrorDialog() -> LoginRobot {
-            textView(invalidCredentialText).wait().checkExists()
-            button(okButton).wait().checkExists().tap()
+            textView(invalidCredentialText).waitUntilExists().checkExists()
+            button(okButton).checkExists().tap()
             return LoginRobot()
         }
         
         @discardableResult
-        func pleaseEnterPasswordAndUsernameErrorIsShown() -> LoginRobot {
-            staticText(enterPasswordErrorMessage).checkExists()
-            staticText(enterUsernameErrorMessage).checkExists()
+        func specialCharErrorDialog() -> LoginRobot {
+            textView(invalidUsernameErrorMessage).waitUntilExists().checkExists()
+            button(okButton).checkExists().tap()
             return LoginRobot()
         }
         
         @discardableResult
         func emailAddressAlreadyExists() -> LoginRobot {
-            textView(errorBannerMessage).wait(time: 5).checkExists()
-            button(okButton).wait().checkExists().tap()
+            textView(errorBannerMessage).waitUntilExists().checkExists()
+            button(okButton).waitUntilExists().checkExists().tap()
             return LoginRobot()
         }
         
         @discardableResult
         func assignVPNConnectionErrorIsShown() -> LoginRobot {
-            staticText(assignConnectionErrorBannerMessage).wait().checkExists()
-            button(loginButton).wait().checkExists().tap()
+            staticText(assignConnectionErrorBannerMessage).waitUntilExists().checkExists()
+            button(loginButton).waitUntilExists().checkExists().tap()
+            return LoginRobot()
+        }
+        
+        @discardableResult
+        func correctUserIsLogedIn(_ name: Credentials) -> LoginRobot {
+            staticText(name.username).checkExists()
+            staticText(name.plan).checkExists()
             return LoginRobot()
         }
     }

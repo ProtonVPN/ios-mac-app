@@ -11,12 +11,12 @@ import XCTest
 
 fileprivate let smartButton = "Smart"
 fileprivate let settingsButton = "Settings back btn"
-fileprivate let ikeButton = "IKEv2"
+fileprivate let stealthButton = "Stealth"
 
 class ProtocolsListRobot: CoreElements {
     
-    func ikeProtocolOn() -> ProtocolsListRobot {
-        cell(ikeButton).tap()
+    func stealthProtocolOn() -> ProtocolsListRobot {
+        cell(stealthButton).tap()
         return ProtocolsListRobot()
     }
 
