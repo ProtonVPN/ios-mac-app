@@ -7,21 +7,20 @@
 //
 
 import Foundation
+import XCTest
 import ProtonCoreTestingToolkitUITestsLogin
 
 class LoginTests: ProtonVPNUITests {
 
     private let mainRobot = MainRobot()
     private let loginRobot = LoginRobot()
-    private let needHelpRobot = NeedHelpRobot()
     
-    private let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
+    private let twopassusercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twopassusercredentials", withExtension: "plist")!)
+
     
     override func setUp() {
         super.setUp()
-        logoutIfNeeded()
-        changeEnvToProdIfNeeded()
-        useAndContinueTap()
+        setupProdEnvironment()
         mainRobot
             .showLogin()
             .verify.loginScreenIsShown()
@@ -29,37 +28,45 @@ class LoginTests: ProtonVPNUITests {
 
     func testLoginWithIncorrectCredentials() {
 
-        let username = credentials[0].username
+        let username = twopassusercredentials[0].username
         let userpassword = "wrong_password"
 
         loginRobot
-            .loginWrongUser(username, userpassword)
+            .enterIncorrectCredentials(username, userpassword)
             .signIn(robot: LoginRobot.self)
             .verify.incorrectCredentialsErrorDialog()
     }
-
-    func testLoginWithCorrectCredentials() {
-
-        for credential in credentials {
-            login(withCredentials: credential)
-            logoutIfNeeded()
-            openLoginScreen()
-        }
+    
+    func testLoginWithSpecialChars() {
+        let username = "ąčęėįš"
+        let password = "ąčęėįš"
+        
+        loginRobot
+            .enterIncorrectCredentials(username, password)
+            .signIn(robot: LoginRobot.self)
+            .verify.specialCharErrorDialog()
     }
 
-    func testLoginAsSubuserWithNoConnectionsAssigned () {
+    func testLoginAsSubuserWithNoConnectionsAssigned() {
 
         let subusercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "subusercredentials", withExtension: "plist")!)
 
         loginRobot
-            .loginAsUser(subusercredentials[0])
+            .enterCredentials(subusercredentials[0])
             .signIn(robot: LoginRobot.self)
             .verify.assignVPNConnectionErrorIsShown()
             .verify.loginScreenIsShown()
     }
 
     func testLoginWithTwoPassUser() {
-        loginAsTwoPassUser()
+        
+        loginRobot
+            .enterCredentials(twopassusercredentials[0])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
+            .goToSettingsTab()
+        loginRobot
+            .verify.correctUserIsLogedIn(twopassusercredentials[0])
     }
 
     @MainActor
@@ -67,11 +74,14 @@ class LoginTests: ProtonVPNUITests {
         let twofausercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twofausercredentials", withExtension: "plist")!)
 
         loginRobot
-            .loginAsUser(twofausercredentials[0])
+            .enterCredentials(twofausercredentials[0])
             .signIn(robot: TwoFaRobot.self)
             .fillTwoFACode(code: await generateCodeFor2FAUser(ObfuscatedConstants.twoFASecurityKey))
             .confirm2FA(robot: MainRobot.self)
-        correctUserIsLoggedIn(twofausercredentials[0])
+            .verify.connectionStatusNotConnected()
+            .goToSettingsTab()
+        loginRobot
+            .verify.correctUserIsLogedIn(twofausercredentials[0])
     }
 
     @MainActor
@@ -80,19 +90,13 @@ class LoginTests: ProtonVPNUITests {
         let twopasstwofausercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twopasstwofausercredentials", withExtension: "plist")!)
 
         loginRobot
-            .loginAsUser(twopasstwofausercredentials[0])
+            .enterCredentials(twopasstwofausercredentials[0])
             .signIn(robot: TwoFaRobot.self)
             .fillTwoFACode(code: await generateCodeFor2FAUser(ObfuscatedConstants.twoFAandTwoPassSecurityKey))
             .confirm2FA(robot: MainRobot.self)
-        correctUserIsLoggedIn(twopasstwofausercredentials[0])
-    }
-
-    func testNeedHelpClosed() {
-
+            .verify.connectionStatusNotConnected()
+            .goToSettingsTab()
         loginRobot
-            .needHelp()
-            .needHelpOptionsDisplayed()
-            .closeNeedHelpScreen()
-            .verify.loginScreenIsShown()
+            .verify.correctUserIsLogedIn(twopasstwofausercredentials[0])
     }
 }

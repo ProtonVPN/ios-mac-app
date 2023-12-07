@@ -22,24 +22,34 @@ import fusion
 class PlanTests: ProtonVPNUITests {
 
     private let mainRobot = MainRobot()
+    private let loginRobot = LoginRobot()
 
     private let credentialsBF22 = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials_bf22", withExtension: "plist")!)
+    
+    enum BFCredentialsKey: Int {
+        case plusUser = 0
+        case cycle15User = 1
+        case cycle30User = 2
+        case freeUser = 3
+    }
 
     override func setUp() {
         super.setUp()
 
-        logoutIfNeeded()
-        changeEnvToBlackIfNeeded()
-        openLoginScreen()
+        setupAtlasEnvironment()
+        mainRobot
+            .showLogin()
+            .verify.loginScreenIsShown()
 
     }
 
     /// Tests that the plan for the VPN Plus user is named "VPN Plus", lasts for 1 year and costs $99.99
     func testShowCurrentPlanForVPNPlusUser() {
 
-        loginAsPlusUser()
-
-        mainRobot
+        loginRobot
+            .enterCredentials(credentialsBF22[BFCredentialsKey.plusUser])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
             .goToSettingsTab()
             .goToAccountDetail()
             .goToManageSubscription()
@@ -52,61 +62,53 @@ class PlanTests: ProtonVPNUITests {
 
     /// Tests that the plan for the VPN Plus user is named "VPN Plus", lasts for 15 months and costs $149.85
     func testShowCurrentPlanForVPNPlus15MUser() {
-        loginAsBF22YearPlusUser()
 
-        mainRobot
+        loginRobot
+            .enterCredentials(credentialsBF22[BFCredentialsKey.cycle15User])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
             .goToSettingsTab()
             .goToAccountDetail()
             .goToManageSubscription()
             .checkPlanNameIs("VPN Plus")
-            .checkDurationIs("for 15 months")
+            .checkDurationIs("For 15 months")
             .checkPriceIs("$149.85")
     }
 
     /// Tests that the plan for the VPN Plus user is named "VPN Plus", lasts for 30 months and costs $299.70
     func testShowCurrentPlanForVPNPlus30MUser() {
-        loginAsBF22TwoYearPlusUser()
 
-        mainRobot
+        loginRobot
+            .enterCredentials(credentialsBF22[BFCredentialsKey.cycle30User])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
             .goToSettingsTab()
             .goToAccountDetail()
             .goToManageSubscription()
             .checkPlanNameIs("VPN Plus")
-            .checkDurationIs("for 30 months")
+            .checkDurationIs("For 30 months")
             .checkPriceIs("$299.70")
     }
 
+    // This test temporary disabled
     /// Test showing standard plans for upgrade but not Black Friday 2022 plans
     func testShowUpdatePlansForCurrentFreePlan() {
-        loginAsFreeUser()
-
-        mainRobot
+        
+        loginRobot
+            .enterCredentials(credentialsBF22[BFCredentialsKey.freeUser])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
             .goToSettingsTab()
             .goToAccountDetail()
             .goToUpgradeSubscription()
             .verifyStaticText("Upgrade your plan")
             .verifyNumberOfPlansToPurchase(number: 2)
+            .verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", name: "VPN Plus")
             .verifyTableCellStaticText(cellName: "PlanCell.Proton_Unlimited", name: "Proton Unlimited")
             .verifyTableCellStaticText(cellName: "PlanCell.Proton_Unlimited", name: "for 1 year")
             .verifyTableCellStaticText(cellName: "PlanCell.Proton_Unlimited", name: "$149.99")
             .verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", name: "VPN Plus")
             .verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", name: "for 1 year")
             .verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", name: "$99.99")
-    }
-    
-    override func loginAsPlusUser() {
-        login(withCredentials: credentialsBF22[0])
-    }
-
-    func loginAsBF22YearPlusUser() {
-        login(withCredentials: credentialsBF22[1])
-    }
-
-    func loginAsBF22TwoYearPlusUser() {
-        login(withCredentials: credentialsBF22[2])
-    }
-
-    override func loginAsFreeUser() {
-        login(withCredentials: credentialsBF22[3])
     }
 }

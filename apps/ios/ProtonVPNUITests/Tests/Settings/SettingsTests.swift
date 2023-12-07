@@ -13,9 +13,18 @@ class SettingsTests: ProtonVPNUITests {
     private let mainRobot = MainRobot()
     private let settingsRobot = SettingsRobot()
     
+    private let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
+    
     override func setUp() {
         super.setUp()
-        logInToProdIfNeeded()
+        setupProdEnvironment()
+        mainRobot
+            .showLogin()
+            .verify.loginScreenIsShown()
+        LoginRobot()
+            .enterCredentials(credentials[1])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
     }
     
     func testKillSwitchAndLANConnectionOnOff() {
@@ -37,8 +46,8 @@ class SettingsTests: ProtonVPNUITests {
             .returnToSettings()
             .verify.smartIsEnabled()
             .goToProtocolsList()
-            .ikeProtocolOn()
+            .stealthProtocolOn()
             .returnToSettings()
-            .verify.ikeIsEnabled()
+            .verify.stealthIsEnabled()
     }
 }

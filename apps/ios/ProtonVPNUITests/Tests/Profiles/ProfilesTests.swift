@@ -7,23 +7,40 @@
 //
 
 import XCTest
+import fusion
+import ProtonCoreTestingToolkitUITestsLogin
 
 class ProfilesTests: ProtonVPNUITests {
     
     private let mainRobot = MainRobot()
+    private let loginRobot = LoginRobot()
     private let profileRobot = ProfileRobot()
     private let createProfileRobot = CreateProfileRobot()
     
+    private let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
+    
+    enum CredentialsKey: Int {
+        case freeUser = 0
+        case basicUser = 1
+        case plusUser = 2
+    }
+    
     override func setUp() {
         super.setUp()
+        setupProdEnvironment()
+        mainRobot
+            .showLogin()
+            .verify.loginScreenIsShown()
     }
-
+    
     func testCreateAndDeleteProfile() {
         let profileName = StringUtils().randomAlphanumericString(length: 10)
         let countryName = "Netherlands"
         
-        logInToProdIfNeeded()
-        mainRobot
+        loginRobot
+            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
             .goToProfilesTab()
             .addNewProfile()
             .setProfileDetails(profileName, countryName)
@@ -37,8 +54,10 @@ class ProfilesTests: ProtonVPNUITests {
         let profileName = StringUtils().randomAlphanumericString(length: 10)
         let countryName = "Netherlands"
         
-        logInToProdIfNeeded()
-        mainRobot
+        loginRobot
+            .enterCredentials(credentials[CredentialsKey.plusUser])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
             .goToProfilesTab()
             .addNewProfile()
             .setProfileDetails(profileName, countryName)
@@ -55,9 +74,10 @@ class ProfilesTests: ProtonVPNUITests {
         let countryName = "Belgium"
         let newCountryName = "Australia"
         
-        logoutIfNeeded()
-        logInToProdIfNeeded()
-        mainRobot
+        loginRobot
+            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
             .goToProfilesTab()
             .addNewProfile()
             .setProfileDetails(profileName, countryName)
@@ -74,11 +94,10 @@ class ProfilesTests: ProtonVPNUITests {
         let countryName = "Netherlands"
         let serverVia = "Iceland"
         
-        logoutIfNeeded()
-        changeEnvToProdIfNeeded()
-        openLoginScreen()
-        loginAsPlusUser()
-        mainRobot
+        loginRobot
+            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
             .goToProfilesTab()
             .addNewProfile()
             .makeDefaultProfileWithSecureCore(profileName, countryName, serverVia)
@@ -89,33 +108,22 @@ class ProfilesTests: ProtonVPNUITests {
     func testFreeUserCannotCreateProfileWithSecureCore() {
         let profileName = StringUtils().randomAlphanumericString(length: 10)
 
-        logoutIfNeeded()
-        changeEnvToProdIfNeeded()
-        openLoginScreen()
-        loginAsFreeUser()
-        mainRobot
+        loginRobot
+            .enterCredentials(credentials[CredentialsKey.freeUser])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
             .goToProfilesTab()
             .addNewProfile()
             .setSecureCoreProfile(profileName)
             .verify.isShowingUpsellModal(ofType: .secureCore)
     }
-
-    func testProfileCreationUnavailableForFreeUser() throws {
-        throw XCTSkip("Skipping until we can log in with a user for which ShowNewFreePlan feature flag is true")
-        logoutIfNeeded()
-        changeEnvToProdIfNeeded() // When available: use environment where ShowNewFreePlan = true
-        openLoginScreen()
-        loginAsFreeUser() // When available: login as NewFree user with ShowNewFreePlan = true
-        mainRobot
-            .goToProfilesTab()
-            .addNewProfile()
-            .verify.isShowingUpsellModal(ofType: .profiles)
-    }
     
     func testRecommendedProfiles() {
         
-        logInToProdIfNeeded()
-        mainRobot
+        loginRobot
+            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
             .goToProfilesTab()
             .verify.recommendedProfilesAreVisible()
     }

@@ -31,6 +31,24 @@
       region = "US"
       codeCoverageEnabled = "YES"
       onlyGenerateCoverageForSpecifiedTargets = "YES">
+      <PreActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "xcrun simctl --set ~/Library/Developer/XCTestDevices list devices | grep -E &quot;Booted&quot; | sed -E &apos;s/.*\(([A-F0-9-]+)\).*/\1/&apos;| xargs -I {} plutil -replace restrictedBool.allowPasswordAutoFill.value -bool NO ~/Library/Developer/XCTestDevices/{}/data/Containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/UserSettings.plist&#10;xcrun simctl --set ~/Library/Developer/XCTestDevices list devices | grep -E &quot;Booted&quot; | sed -E &apos;s/.*\(([A-F0-9-]+)\).*/\1/&apos;| xargs -I {} plutil -replace restrictedBool.allowPasswordAutoFill.value -bool NO ~/Library/Developer/XCTestDevices/{}/data/Library/UserConfigurationProfiles/EffectiveUserSettings.plist&#10;xcrun simctl --set ~/Library/Developer/XCTestDevices list devices | grep -E &quot;Booted&quot; | sed -E &apos;s/.*\(([A-F0-9-]+)\).*/\1/&apos;| xargs -I {} plutil -replace restrictedBool.allowPasswordAutoFill.value -bool NO ~/Library/Developer/XCTestDevices/{}/data/Library/UserConfigurationProfiles/PublicInfo/PublicEffectiveUserSettings.plist&#10;xcrun simctl list devices | grep -E &quot;Booted&quot; | sed -E &apos;s/.*\(([A-F0-9-]+)\).*/\1/&apos;| xargs -I {} plutil -replace restrictedBool.allowPasswordAutoFill.value -bool NO ~/Library/Developer/CoreSimulator/Devices/{}/data/Containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/UserSettings.plist&#10;xcrun simctl list devices | grep -E &quot;Booted&quot; | sed -E &apos;s/.*\(([A-F0-9-]+)\).*/\1/&apos;| xargs -I {} plutil -replace restrictedBool.allowPasswordAutoFill.value -bool NO ~/Library/Developer/CoreSimulator/Devices/{}/data/Library/UserConfigurationProfiles/EffectiveUserSettings.plist&#10;xcrun simctl list devices | grep -E &quot;Booted&quot; | sed -E &apos;s/.*\(([A-F0-9-]+)\).*/\1/&apos;| xargs -I {} plutil -replace restrictedBool.allowPasswordAutoFill.value -bool NO ~/Library/Developer/CoreSimulator/Devices/{}/data/Library/UserConfigurationProfiles/PublicInfo/PublicEffectiveUserSettings.plist&#10;">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "D5811D7C229BBD870087B63A"
+                     BuildableName = "ProtonVPNUITests.xctest"
+                     BlueprintName = "ProtonVPNUITests"
+                     ReferencedContainer = "container:iOS.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PreActions>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
