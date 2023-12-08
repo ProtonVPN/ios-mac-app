@@ -33,7 +33,8 @@ protocol PlanServiceFactory {
 }
 
 protocol PlanServiceDelegate: AnyObject {
-    func paymentTransactionDidFinish(modalSource: UpsellEvent.ModalSource?, newPlanName: String?)
+    @MainActor
+    func paymentTransactionDidFinish(modalSource: UpsellEvent.ModalSource?, newPlanName: String?) async
 }
 
 enum PlusPlanUIResult {
@@ -174,8 +175,8 @@ final class CorePlanService: PlanService {
             case let .purchasedPlan(accountPlan: plan):
                 log.debug("Purchased plan: \(plan.protonName)", category: .iap)
                 completion(.planPurchased)
-                DispatchQueue.main.async { [weak self] in
-                    self?.delegate?.paymentTransactionDidFinish(modalSource: nil, newPlanName: plan.protonName)
+                Task { [weak self] in
+                    await self?.delegate?.paymentTransactionDidFinish(modalSource: nil, newPlanName: plan.protonName)
                 }
             case let .planPurchaseProcessingInProgress(accountPlan: plan):
                 log.debug("Purchasing \(plan.protonName)", category: .iap)
@@ -205,8 +206,8 @@ final class CorePlanService: PlanService {
         switch response {
         case let .purchasedPlan(accountPlan: plan):
             log.debug("Purchased plan: \(plan.protonName)", category: .iap)
-            DispatchQueue.main.async { [weak self] in
-                self?.delegate?.paymentTransactionDidFinish(modalSource: modalSource, newPlanName: plan.protonName)
+            Task { [weak self] in
+                await self?.delegate?.paymentTransactionDidFinish(modalSource: modalSource, newPlanName: plan.protonName)
             }
         case let .open(vc: _, opened: opened):
             assert(opened == true)
