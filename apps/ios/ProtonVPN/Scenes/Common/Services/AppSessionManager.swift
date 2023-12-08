@@ -402,6 +402,12 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         let group = DispatchGroup()
         refreshTimer.stop()
         loggedIn = false
+
+        if let userId = authKeychain.userId {
+            FeatureFlagsRepository.shared.resetFlags(for: userId)
+            FeatureFlagsRepository.shared.clearUserId(userId)
+        }
+
         group.enter()
         Task {
             await authKeychain.clear()
@@ -414,8 +420,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         searchStorage.clear()
         review.clear()
 
-        FeatureFlagsRepository.shared.resetFlags()
-        
         let vpnAuthenticationTimeoutInSeconds = 2
         group.enter()
         vpnAuthentication.clearEverything {

@@ -345,16 +345,16 @@ extension AppDelegate {
             }
         }
 
-        #if DEBUG
-        FeatureFactory.shared.enable(&.dynamicPlans)
-        #endif
-
         let apiService = container.makeNetworking().apiService
         apiService.acquireSessionIfNeeded { result in
             switch result {
             case .success(.sessionAlreadyPresent(let authCredential)), .success(.sessionFetchedAndAvailable(let authCredential)):
-                FeatureFlagsRepository.shared.setApiService(with: apiService)
-                FeatureFlagsRepository.shared.setUserId(with: authCredential.userID)
+                FeatureFlagsRepository.shared.setApiService(apiService)
+                
+                if !authCredential.userID.isEmpty {
+                    FeatureFlagsRepository.shared.setUserId(authCredential.userID)
+                }
+
                 Task {
                     try await FeatureFlagsRepository.shared.fetchFlags()
                 }
