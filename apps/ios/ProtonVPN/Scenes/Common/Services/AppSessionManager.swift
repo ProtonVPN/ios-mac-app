@@ -457,21 +457,19 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
 // MARK: - Plan change
 extension AppSessionManagerImplementation: PlanServiceDelegate {
-    func paymentTransactionDidFinish(modalSource: UpsellEvent.ModalSource?, newPlanName: String?) {
+    @MainActor
+    func paymentTransactionDidFinish(modalSource: UpsellEvent.ModalSource?, newPlanName: String?) async {
         guard authKeychain.username != nil else {
             return
         }
-
-        Task {
-            // Note: Do not async this part, we don't want it to race with retrieving the new properties below.
-            NotificationCenter.default.post(name: .userCompletedUpsellAlertJourney, object: (modalSource, newPlanName))
-            log.debug("Reloading data after plan purchase", category: .app)
-            do {
-                try await retrievePropertiesAndLogIn()
-                NotificationCenter.default.post(name: dataReloaded, object: nil)
-            } catch {
-                log.error("Data reload failed after plan purchase", category: .app, metadata: ["error": "\(error)"])
-            }
+        // Note: Do not async this part, we don't want it to race with retrieving the new properties below.
+        NotificationCenter.default.post(name: .userCompletedUpsellAlertJourney, object: (modalSource, newPlanName))
+        log.debug("Reloading data after plan purchase", category: .app)
+        do {
+            try await retrievePropertiesAndLogIn()
+            NotificationCenter.default.post(name: dataReloaded, object: nil)
+        } catch {
+            log.error("Data reload failed after plan purchase", category: .app, metadata: ["error": "\(error)"])
         }
     }
 }
