@@ -24,6 +24,9 @@ import fusion
 import XCTest
 import PMLogger
 import ProtonCoreDoh
+import ProtonCoreEnvironment
+import ProtonCoreQuarkCommands
+import ProtonCoreTestingToolkitUITestsLogin
 
 class ProtonVPNUITests: CoreTestCase {
 
@@ -130,7 +133,12 @@ class ProtonVPNUITests: CoreTestCase {
             return
         }
         cell.buttons["chevron"].tap()
-        let autofillSwitch = settingsApp.switches["AutoFill Passwords"]
+
+        var settingsText = "AutoFill Passwords"
+        if #available(iOS 17.0, *) {
+            settingsText = "AutoFill Passwords and Passkeys"
+        }
+        let autofillSwitch = settingsApp.switches[settingsText]
         if (autofillSwitch.value as? String) == "1" {
             autofillSwitch.tap()
         }
@@ -141,14 +149,14 @@ class ProtonVPNUITests: CoreTestCase {
            if staticText(dynamicDomain).exists() {
                openLoginScreen()
            } else {
-               textField("customEnvironmentTextField").wait(time:1).tap().clearText().typeText(dynamicDomain)
+               textField("customEnvironmentTextField").waitUntilExists(time:1).tap().clearText().typeText(dynamicDomain)
                button("Change and kill the app").tap()
                closeAndOpenTheApp()
            }
        }
            
     func setupProdEnvironment() {
-           if staticText("https://vpn-api.proton.me").wait(time:1).exists() {
+           if staticText("https://vpn-api.proton.me").waitUntilExists(time:1).exists() {
                openLoginScreen()
            } else {
                button("Reset to production and kill the app").tap()
@@ -189,9 +197,33 @@ class ProtonVPNUITests: CoreTestCase {
         }
         return nil
     }()
-    
+
+    func unbanBeforeSignup(doh: DoHInterface) {
+        let expectQuarkCommandToFinish = expectation(description: "Quark command should finish")
+        QuarkCommands.unban(currentlyUsedHostUrl: doh.getCurrentlyUsedHostUrl()) { _ in
+            expectQuarkCommandToFinish.fulfill()
+        }
+        wait(for: [expectQuarkCommandToFinish], timeout: 5.0)
+    }
+
+    func createAccountForTest(doh: DoHInterface, accountToBeCreated: AccountAvailableForCreation, at function: String = #function) -> Bool {
+        let expectQuarkCommandToFinish = expectation(description: "Quark command should finish")
+        var quarkCommandResult: Result<CreatedAccountDetails, CreateAccountError>?
+        QuarkCommands.create(account: accountToBeCreated, currentlyUsedHostUrl: doh.getCurrentlyUsedHostUrl()) { result in
+            quarkCommandResult = result
+            expectQuarkCommandToFinish.fulfill()
+        }
+
+        wait(for: [expectQuarkCommandToFinish], timeout: 5.0)
+        if case .failure(let error) = quarkCommandResult {
+            XCTFail("Internal account creation failed in test \(function) because of \(error.userFacingMessageInQuarkCommands)")
+            return false
+        }
+        return true
+    }
+
     var doh: DoHInterface {
-        if let customDomain = ProcessInfo.processInfo.environment["DYNAMIC_DOMAIN"] {
+        if let customDomain = ProcessInfo.processInfo.environment["DYNAMIC_DOMAIN"], !customDomain.isEmpty {
             return CustomServerConfigDoH(
                 signupDomain: customDomain,
                 captchaHost: "https://api.\(customDomain)",
