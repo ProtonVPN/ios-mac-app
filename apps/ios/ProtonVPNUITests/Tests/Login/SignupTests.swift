@@ -13,20 +13,11 @@ import ProtonCoreQuarkCommands
 import ProtonCoreTestingToolkitUITestsLogin
 
 class SignupTests: ProtonVPNUITests {
-    lazy var environment: Environment = {
-        guard let host = dynamicHost else {
-            return .black
-        }
 
-        return .custom(host)
-    }()
-    
-    lazy var quarkCommands = QuarkCommands(doh: environment.doh)
     private let mainRobot = MainRobot()
     private let signupRobot = SignupRobot()
     private let onboardingRobot = OnboardingRobot()
 
-    
     override func setUp() {
         super.setUp()
         setupAtlasEnvironment()
@@ -34,15 +25,10 @@ class SignupTests: ProtonVPNUITests {
             .showSignup()
             .verify.signupScreenIsShown()
 
-        // This method is asynchronous, but it still works, because it's enough time before the actual UI testing starts
-        quarkCommands.unban { result in
-            print("Unban finished: \(result)") // swiftlint:disable:this no_print
-        }
+        unbanBeforeSignup(doh: doh)
      }
 
-    // This test temporary disabled
     /// Test showing standard plan (not Black Friday 2022 plan) for upgrade after successful signup
-    @MainActor
     func testSignupNewExternalAccountUpgrade() {
         let email = StringUtils().randomAlphanumericString(length: 7) + "@mail.com"
         let code = "666666"
@@ -67,20 +53,15 @@ class SignupTests: ProtonVPNUITests {
             .verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", name: "$99.99")
     }
 
-    @MainActor
-    func testSignupExistingExternalAccount() async {
-
-        let email = "vpnfree@gmail.com"
+    func testSignupExistingExternalAccount() {
+        let randomEmail = "\(StringUtils().randomAlphanumericString(length: 8))@gmail.com"
         let password = StringUtils().randomAlphanumericString(length: 8)
         let code = "666666"
 
-        try? await QuarkCommands.createAsync(
-            account: .external(email: email, password: password),
-            currentlyUsedHostUrl: environment.doh.getCurrentlyUsedHostUrl()
-        )
+        guard createAccountForTest(doh: doh, accountToBeCreated: .external(email: randomEmail, password: password)) else { return }
 
         ProtonCoreTestingToolkitUITestsLogin.SignupRobot()
-            .insertExternalEmail(name: email)
+            .insertExternalEmail(name: randomEmail)
             .nextButtonTapToOwnershipHV()
             .fillInTextField(code)
             .tapOnVerifyCodeButton(to: LoginRobot.self)

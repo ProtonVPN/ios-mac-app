@@ -17,7 +17,6 @@ class LoginTests: ProtonVPNUITests {
     
     private let twopassusercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twopassusercredentials", withExtension: "plist")!)
 
-    
     override func setUp() {
         super.setUp()
         setupProdEnvironment()
@@ -69,14 +68,13 @@ class LoginTests: ProtonVPNUITests {
             .verify.correctUserIsLogedIn(twopassusercredentials[0])
     }
 
-    @MainActor
-    func testLoginAsTwoFa() async {
+    func testLoginAsTwoFa() {
         let twofausercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twofausercredentials", withExtension: "plist")!)
 
         loginRobot
             .enterCredentials(twofausercredentials[0])
             .signIn(robot: TwoFaRobot.self)
-            .fillTwoFACode(code: await generateCodeFor2FAUser(ObfuscatedConstants.twoFASecurityKey))
+            .fillTwoFACode(code: generateCodeFor2FAUser(ObfuscatedConstants.twoFASecurityKey))
             .confirm2FA(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
             .goToSettingsTab()
@@ -84,15 +82,14 @@ class LoginTests: ProtonVPNUITests {
             .verify.correctUserIsLogedIn(twofausercredentials[0])
     }
 
-    @MainActor
-    func testLoginWithTwoPassAnd2FAUser() async {
+    func testLoginWithTwoPassAnd2FAUser() {
 
         let twopasstwofausercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twopasstwofausercredentials", withExtension: "plist")!)
 
         loginRobot
             .enterCredentials(twopasstwofausercredentials[0])
             .signIn(robot: TwoFaRobot.self)
-            .fillTwoFACode(code: await generateCodeFor2FAUser(ObfuscatedConstants.twoFAandTwoPassSecurityKey))
+            .fillTwoFACode(code: generateCodeFor2FAUser(ObfuscatedConstants.twoFAandTwoPassSecurityKey))
             .confirm2FA(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
             .goToSettingsTab()

@@ -22,29 +22,20 @@ import ProtonCoreQuarkCommands
 import ProtonCoreEnvironment
 
 final class InternalAndExternalSignUpTests: ProtonVPNUITests {
-    
+
     private let mainRobot = MainRobot()
     private let loginRobot = LoginRobot()
-    
-    override func setUp() {
-            super.setUp()
-            setupAtlasEnvironment()
-            mainRobot
-                .showSignup()
-                .verify.signupScreenIsShown()
-        }
-        
-        lazy var environment: Environment = {
-            guard let host = dynamicHost else {
-                return .black
-            }
 
-            return .custom(host)
-        }()
-    
-    @MainActor
-    func testSignUpWithInternalAccountWorks() async throws {
-        try await QuarkCommands.unbanAsync(currentlyUsedHostUrl: environment.doh.getCurrentlyUsedHostUrl())
+    override func setUp() {
+        super.setUp()
+        setupAtlasEnvironment()
+        mainRobot
+            .showSignup()
+            .verify.signupScreenIsShown()
+    }
+
+    func testSignUpWithInternalAccountWorks() {
+        unbanBeforeSignup(doh: doh)
 
         let randomUsername = StringUtils().randomAlphanumericString(length: 8)
         let randomEmail = "\(StringUtils().randomAlphanumericString(length: 8))@proton.uitests"
@@ -65,11 +56,8 @@ final class InternalAndExternalSignUpTests: ProtonVPNUITests {
             .goToSettingsTab()
             .verify.userIsCreated(randomUsername, "Proton VPN Free")
     }
-    
-    @MainActor
-    func testSignUpWithExternalAccountWorks() async throws {
-        try await QuarkCommands.unbanAsync(currentlyUsedHostUrl: environment.doh.getCurrentlyUsedHostUrl())
 
+    func testSignUpWithExternalAccountWorks() {
         let randomEmail = "\(StringUtils().randomAlphanumericString(length: 8))@mailui.co"
         let randomPassword = StringUtils().randomAlphanumericString(length: 8)
 
