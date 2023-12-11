@@ -18,11 +18,11 @@ public struct ModalsFactory {
         freeConnectionsViewStoryboard = UIStoryboard(name: "FreeConnectionsViewController", bundle: Bundle.module)
    }
 
-    public func upsellViewController(upsellType: UpsellType) -> UpsellViewController {
-        let upsell = upsellStoryboard.instantiate(controllerType: UpsellViewController.self)
-        upsell.upsellType = upsellType
-        return upsell
-    }
+//    public func upsellViewController(upsellType: UpsellType) -> UpsellViewController {
+//        let upsell = upsellStoryboard.instantiate(controllerType: UpsellViewController.self)
+//        upsell.upsellType = upsellType
+//        return upsell
+//    }
 
     public func whatsNewViewController() -> UIViewController {
         UIHostingController(rootView: WhatsNewView())
