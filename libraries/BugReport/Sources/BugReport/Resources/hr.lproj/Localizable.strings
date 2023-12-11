@@ -47,7 +47,7 @@
 "_br_success_subtitle" = "We’ll get back to you as soon as we can.";
 
 /* ReportBug success window: button */
-"_br_success_button" = "Got it";
+"_br_success_button" = "Razumijem";
 
 /* ReportBug success window: title text */
 "_br_failure_title" = "Your report wasn’t sent";

@@ -17,7 +17,7 @@
 "_br_2_button_next" = "聯絡我們";
 
 /* ReportBug 2nd step (Quick fixes) cancel button */
-"_br_2_button_cancel" = "Cancel";
+"_br_2_button_cancel" = "取消";
 
 /* ReportBug 3rd step (form) send button */
 "_br_3_button_send" = "傳送回報";

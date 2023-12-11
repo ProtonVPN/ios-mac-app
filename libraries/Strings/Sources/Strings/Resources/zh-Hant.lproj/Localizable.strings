@@ -822,8 +822,6 @@
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
 "_reconnect_on_settings_change_body" = "您需要重新連線以套用此變更。";
 
-/* %@ is a country name, e.g. Switzerland servers under maintenance */
-
 /* Under maintenance alert */
 "_country_servers_under_maintenance" = "%@ 伺服器維護中";
 
@@ -2056,7 +2054,7 @@
 "modals_common_next" = "下一步";
 
 /* Common button title */
-"modals_common_get_started" = "Get started";
+"modals_common_get_started" = "開始使用";
 
 /* Description of user account update screen part 1 */
 "maximum_device_plan_limit_part_1" = "請先中斷另一臺裝置方可連結這一臺，或是考慮升級方案至 %@";

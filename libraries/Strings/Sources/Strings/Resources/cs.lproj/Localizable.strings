@@ -464,7 +464,7 @@
 "_map_show" = "Ukázat mapu";
 
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
-"_map_hide" = "Hide map";
+"_map_hide" = "Skrýt mapu";
 
 /* Description shown together with server info icon */
 "_tor_description" = "Připojuje se k síti TOR";
@@ -532,7 +532,7 @@
 "_p2p_server" = "Server P2P";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_tor_server" = "Tor Server";
+"_tor_server" = "Server Tor";
 
 /* MacOS Profiles Overview: Table column header */
 "_profile" = "Profil";
@@ -681,7 +681,7 @@
 /* Plan speed */
 "_plan_speed_high" = "Vysoká rychlost";
 
-"_plan_speed_fastest" = "Fastest speed";
+"_plan_speed_fastest" = "Nejvyšší rychlost";
 
 /* Unknown error that has no better description */
 "_error_internal_error" = "Interní chyba API";
@@ -781,7 +781,7 @@
 "_error_user_creation" = "Vytvoření účtu selhalo";
 
 /* General title for several error alerts */
-"_error_unknown_title" = "Unknown error";
+"_error_unknown_title" = "Neznámá chyba";
 
 /* Delinquent user alert */
 "_delinquent_user_title" = "Nezaplacená faktura";
@@ -888,7 +888,7 @@
 /* Button in several different alerts */
 "_got_it" = "Rozumím!";
 
-/* Plan upgrade unavailable alert */
+/* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Navýšení není k dispozici v aplikaci";
 
 /* Plan upgrade unavailable alert */
@@ -1101,7 +1101,7 @@
 "_plans_footer" = "Po potvrzení nákupu placeného tarifu bude z vašeho účtu iTunes stržena zobrazená částka, která zahrnuje daně a další poplatky platformy (které nejsou účtovány přímo společností Proton). Po provedení nákupu budete automaticky převedeni na vybraný plán na dobu 1 roku, po jejímž uplynutí můžete prodloužit nebo zrušit jeho platnost, a to buď online, nebo prostřednictvím naší aplikace pro iOS.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/ yr";
+"_per_year_short" = "/ rok";
 
 /* iOS plan feature */
 "_feature_server_count" = "Připojit k serverům v";
@@ -1230,7 +1230,7 @@
 "_next_tip" = "Další tip";
 
 /* MacOS app tour: end tour button */
-"_end_tour" = "End Tour";
+"_end_tour" = "Ukončit prohlídku";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Vítejte na lepším internetu";
@@ -1722,7 +1722,7 @@
 
 "_subuser_alert_enable_connections_button" = "Povolit VPN připojení";
 
-"_subuser_alert_login_button" = "Sign in again";
+"_subuser_alert_login_button" = "Přihlásit se znovu";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "Moderate NAT";
@@ -1761,7 +1761,7 @@
 "_settings_mac_crash_reports_tooltip" = "Hlášení o pádech nám pomáhají opravovat chyby, detekovat firewally a vyhýbat se blokování VPN.";
 
 /* Section title in Settings */
-"_advanced" = "Advanced";
+"_advanced" = "Pokročilé";
 
 /* Non-standard ports feature title in Settings */
 "_non_standard_ports_title" = "Nestandardní porty";

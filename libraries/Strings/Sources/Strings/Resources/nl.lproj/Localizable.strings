@@ -464,7 +464,7 @@
 "_map_show" = "Kaart tonen";
 
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
-"_map_hide" = "Hide map";
+"_map_hide" = "Kaart verbergen";
 
 /* Description shown together with server info icon */
 "_tor_description" = "Maakt verbinding met het TOR-netwerk";
@@ -532,7 +532,7 @@
 "_p2p_server" = "P2P-server";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_tor_server" = "Tor Server";
+"_tor_server" = "Tor-Server";
 
 /* MacOS Profiles Overview: Table column header */
 "_profile" = "Profiel";
@@ -681,7 +681,7 @@
 /* Plan speed */
 "_plan_speed_high" = "Hoge snelheid";
 
-"_plan_speed_fastest" = "Fastest speed";
+"_plan_speed_fastest" = "Hoogste snelheid";
 
 /* Unknown error that has no better description */
 "_error_internal_error" = "Interne API fout";
@@ -781,7 +781,7 @@
 "_error_user_creation" = "Account aanmaken is mislukt";
 
 /* General title for several error alerts */
-"_error_unknown_title" = "Unknown error";
+"_error_unknown_title" = "Onbekende fout";
 
 /* Delinquent user alert */
 "_delinquent_user_title" = "Onbetaalde factuur";
@@ -888,7 +888,7 @@
 /* Button in several different alerts */
 "_got_it" = "Ik begrijp het!";
 
-/* Plan upgrade unavailable alert */
+/* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Upgrade niet beschikbaar in App";
 
 /* Plan upgrade unavailable alert */
@@ -1230,7 +1230,7 @@
 "_next_tip" = "Volgende tip";
 
 /* MacOS app tour: end tour button */
-"_end_tour" = "End Tour";
+"_end_tour" = "Rondleiding beëindigen";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Welkom op een beter internet";
@@ -1722,7 +1722,7 @@
 
 "_subuser_alert_enable_connections_button" = "Schakel VPN-verbindingen in";
 
-"_subuser_alert_login_button" = "Sign in again";
+"_subuser_alert_login_button" = "Opnieuw inloggen";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "Gemiddelde NAT";
@@ -1761,7 +1761,7 @@
 "_settings_mac_crash_reports_tooltip" = "Crashrapporten helpen ons om programmafouten op te lossen, firewalls te detecteren en VPN-blokkeringen te vermijden.";
 
 /* Section title in Settings */
-"_advanced" = "Advanced";
+"_advanced" = "Geavanceerd";
 
 /* Non-standard ports feature title in Settings */
 "_non_standard_ports_title" = "Niet-standaard poorten";

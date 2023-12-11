@@ -251,7 +251,7 @@
 "_failed" = "neuspješno";
 
 /* Connection error translation. iOS quick connect widget: text shown on error. */
-"_connection_failed" = "Povezivanje nije uspjelo";
+"_connection_failed" = "Neuspjela veza";
 
 /* iOS status view */
 "_security" = "Sigurnost";
@@ -601,7 +601,7 @@
 "_random_available_server" = "Nasumični slobodni poslužitelj";
 
 /* iOS: Predefined profile with random server */
-"_random_connection" = "Random";
+"_random_connection" = "Nasumično";
 
 /* Profile create/change form */
 "_different_server_each_time" = "Svaki put drugačiji poslužitelj";
@@ -888,7 +888,7 @@
 /* Button in several different alerts */
 "_got_it" = "Razumijem!";
 
-/* Plan upgrade unavailable alert */
+/* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Nadogradnja nije dostupna u aplikaciji";
 
 /* Plan upgrade unavailable alert */
@@ -1564,7 +1564,7 @@
 
 "_from_server_title" = "From Server:";
 
-"_to_server_title" = "To Server:";
+"_to_server_title" = "Za poslužitelj:";
 
 "_update_billing" = "AŽURIRAJ PODATKE ZA NAPLATU";
 
@@ -2144,7 +2144,7 @@
 "upsell_country_feature_subtitle_bold" = "country selection";
 
 /* Title of the "What's new" screen */
-"modals_whats_new" = "What’s new";
+"modals_whats_new" = "Što je novo";
 
 /* Title of the first section of the "What's new" screen */
 "modals_free_countries" = "New Free countries";
@@ -2171,7 +2171,7 @@
 "welcome_upgrade_advanced_features" = "Advanced security features";
 
 /* The title of the Welcome screen when user upgrades to VPN Plus */
-"welcome_upgrade_title_plus" = "Welcome to VPN Plus";
+"welcome_upgrade_title_plus" = "Dobrodošli u VPN Plus";
 
 /* The title of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_title_unlimited" = "Welcome to Proton Unlimited";
