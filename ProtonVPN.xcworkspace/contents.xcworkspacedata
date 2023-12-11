@@ -67,9 +67,6 @@
             location = "group:libraries/Modals">
          </FileRef>
          <FileRef
-            location = "group:libraries/Onboarding">
-         </FileRef>
-         <FileRef
             location = "group:libraries/Review">
          </FileRef>
          <FileRef
@@ -103,9 +100,6 @@
       </FileRef>
       <FileRef
          location = "group:sampleapps/ModalsSampleMacOSApp/ModalsSampleMacOSApp.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "group:sampleapps/OnboardingSampleApp/OnboardingSampleApp.xcodeproj">
       </FileRef>
       <FileRef
          location = "group:sampleapps/SearchSampleApp/SearchSampleApp.xcodeproj">

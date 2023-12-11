@@ -26,7 +26,6 @@ import LegacyCommon
 import SwiftUI
 import BugReport
 import VPNShared
-import Onboarding
 import Strings
 import Dependencies
 import Modals_iOS

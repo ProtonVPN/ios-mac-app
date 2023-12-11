@@ -18,7 +18,6 @@
 
 import Foundation
 import UIKit
-import Onboarding
 
 final class PlanPurchaseViewController: UIViewController {
     @IBOutlet private weak var planPurchasedButton: UIButton!
