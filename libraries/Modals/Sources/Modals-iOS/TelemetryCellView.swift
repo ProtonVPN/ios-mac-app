@@ -18,6 +18,7 @@
 
 import SwiftUI
 import Theme
+import Strings
 
 struct TelemetryCellView: View {
 
@@ -50,8 +51,8 @@ struct TelemetryCellView: View {
 struct TelemetryCellView_Previews: PreviewProvider {
     static var isOn = true
     static var previews: some View {
-        TelemetryCellView(title: LocalizedString.onboardingUsageStatsTitle,
-                          description: LocalizedString.onboardingUsageStatsDescription,
+        TelemetryCellView(title: Localizable.onboardingUsageStatsTitle,
+                          description: Localizable.onboardingUsageStatsDescription,
                           isOn: .init(get: {
             isOn
         }, set: { newValue in

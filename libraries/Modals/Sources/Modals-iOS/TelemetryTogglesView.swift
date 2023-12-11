@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+import Strings
 
 struct TelemetryTogglesView: View {
     @Binding var usageStatisticsOn: Bool
@@ -26,16 +27,16 @@ struct TelemetryTogglesView: View {
         VStack(spacing: 0) {
             VStack(spacing: 0) {
                 TelemetryCellView(
-                    title: LocalizedString.onboardingUsageStatsTitle,
-                    description: LocalizedString.onboardingUsageStatsDescription,
+                    title: Localizable.onboardingUsageStatsTitle,
+                    description: Localizable.onboardingUsageStatsDescription,
                     isOn: $usageStatisticsOn
                 )
                 Divider()
                     .background(Color(.border))
                     .padding(.leading)
                 TelemetryCellView(
-                    title: LocalizedString.onboardingCrashReportsTitle,
-                    description: LocalizedString.onboardingCrashReportsDescription,
+                    title: Localizable.onboardingCrashReportsTitle,
+                    description: Localizable.onboardingCrashReportsDescription,
                     isOn: $crashReportsOn
                 )
             }
@@ -51,6 +52,36 @@ struct TelemetryTogglesView_Previews: PreviewProvider {
     static var previews: some View {
         TelemetryTogglesView(usageStatisticsOn: $usageStatisticsOn,
                              crashReportsOn: $crashReportsOn)
+            .previewLayout(.sizeThatFits)
+    }
+}
+
+struct OnboardingFooter: View {
+
+    private let urlUsageStatistics = "https://protonvpn.com/support/share-usage-statistics"
+
+    var body: some View {
+        // Find a way to combine the learn more text and the footer text into one localized string. We only have one localization that reads right-to-left at the moment, but there will probably be more in the future.
+        (Text(Localizable.onboardingFooter + " ") + Text(Localizable.onboardingFooterLearnMore)
+            .foregroundColor(Color(.text, .interactive))
+        )
+        .themeFont(.caption())
+        .padding()
+        .background(Color(.background, .strong))
+        .foregroundColor(Color(.text, .weak))
+        .onTapGesture {
+            guard let url = URL(string: urlUsageStatistics),
+                  UIApplication.shared.canOpenURL(url) else {
+                return
+            }
+            UIApplication.shared.open(url)
+        }
+    }
+}
+
+struct OnboardingFooter_Previews: PreviewProvider {
+    static var previews: some View {
+        OnboardingFooter()
             .previewLayout(.sizeThatFits)
     }
 }

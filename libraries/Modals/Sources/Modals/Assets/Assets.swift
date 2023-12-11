@@ -38,6 +38,7 @@ public enum Asset {
   public static let netshield = ImageAsset(name: "netshield")
   public static let profiles = ImageAsset(name: "profiles")
   public static let speed = ImageAsset(name: "speed")
+  public static let welcome = ImageAsset(name: "welcome")
   public static let worldwideCoverage = ImageAsset(name: "worldwide-coverage")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
