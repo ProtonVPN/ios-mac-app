@@ -23,7 +23,6 @@
 import XCTest
 import GSMessages
 import PMLogger
-import Onboarding
 import ProtonCoreNetworking
 import ProtonCoreAccountRecovery
 import SwiftUI
