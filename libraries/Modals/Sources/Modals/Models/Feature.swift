@@ -76,6 +76,7 @@ public enum Feature: Hashable, Identifiable {
     case welcomeNewServersCountries(Int, Int)
     case welcomeAdvancedFeatures
     case welcomeDevices(Int)
+    case banner
 }
 
 extension Feature: Equatable { }
@@ -146,6 +147,8 @@ extension Feature {
             return Localizable.welcomeUpgradeAdvancedFeatures
         case .welcomeDevices(let devices):
             return Localizable.welcomeScreenFeatureDevices(devices)
+        case .banner:
+            return ""
         }
     }
 
@@ -235,6 +238,8 @@ extension Feature {
             return IconProvider.sliders
         case .welcomeDevices:
             return IconProvider.locks
+        case .banner:
+            return IconProvider.play
         }
     }
 }
