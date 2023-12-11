@@ -1,4 +1,4 @@
-// General
+// MARK: General
 
 /* Common word */
 "_cancel" = "Cancel";
@@ -282,7 +282,7 @@
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Switch to OpenVPN and retry";
 
-// Notifications
+// MARK: Notifications
 
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Kill switch blocking all connections";
@@ -290,7 +290,7 @@
 /* Disconnect notification */
 "_always_on_will_reconnect" = "Always-on VPN will reconnect you automatically";
 
-// About
+// MARK: About
 
 /* MacOS: About window title */
 "_about" = "About";
@@ -310,7 +310,7 @@
 /* MacOS: About window */
 "_acknowledgements" = "Acknowledgements";
 
-// Login & Signup
+// MARK: Login & Signup
 
 /* Used in sign-in, sign-up and in settings */
 "_username" = "Username";
@@ -457,7 +457,7 @@
 /* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "Agree & Continue";
 
-// Map
+// MARK: Map
 
 /* iOS: Map screen title and tabbar item */
 "_map" = "Map";
@@ -468,7 +468,7 @@
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_hide" = "Hide map";
 
-// Servers
+// MARK: Servers
 
 /* Description shown together with server info icon */
 "_tor_description" = "Connects to TOR network";
@@ -537,7 +537,7 @@
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Tor Server";
 
-// Profiles
+// MARK: Profiles
 
 /* MacOS Profiles Overview: Table column header */
 "_profile" = "Profile";
@@ -685,7 +685,7 @@
 "_plan_speed_high" = "High speed";
 "_plan_speed_fastest" = "Fastest speed";
 
-// Errors
+// MARK: Errors
 
 /* Unknown error that has no better description */
 "_error_internal_error" = "Internal API error";
@@ -720,7 +720,7 @@
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton couldn't communicate with your device. Please try again later.";
 
-// Password encoding errors
+// MARK: Password encoding errors
 
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "Modulus signature is empty";
@@ -734,7 +734,7 @@
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Can't find user from the session";
 
-// Network errors
+// MARK: Network errors
 
 /* Network error */
 "_ne_request_timed_out" = "Network request timed out";
@@ -751,7 +751,7 @@
 /* Network error */
 "_ne_couldnt_reach_server" = "We could not reach Proton servers";
 
-// API errors
+// MARK: API errors
 
 /* API error */
 "_ae_wrong_login_credentials" = "Wrong username or password";
@@ -789,12 +789,12 @@
 /* Error when the app fails to create a user */
 "_error_user_creation" = "Account creation failed";
 
-// Unknown error
+// MARK: Unknown error
 
 /* General title for several error alerts */
 "_error_unknown_title" = "Unknown error";
 
-// Alerts
+// MARK: Alerts
 
 /* Delinquent user alert */
 "_delinquent_user_title" = "Unpaid invoice";
@@ -905,7 +905,7 @@
 /* iOS and macOS: Enable kill switch on badly-routed networks */
 "_kill_switch_enable" = "Enable Kill Switch";
 
-// Settings
+// MARK: Settings
 
 /* MacOS: Settings screen title */
 "_preferences" = "Preferences";
@@ -1050,7 +1050,7 @@
 "_turn_ks_on_description" = "By activating kill switch, you won't be able to access devices on your local network. \n\nContinue?";
 
 
-// Plans
+// MARK: Plans
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Get %@ Plan";
@@ -1100,7 +1100,7 @@
 /* Per year. Appended to plan price. */
 "_per_year_short" = "/ yr";
 
-// Plan selection: advances features; Manage subscription
+// MARK: Plan selection: advances features; Manage subscription
 
 /* iOS plan feature */
 "_feature_server_count" = "Connect to servers in";
@@ -1124,7 +1124,7 @@
 "_feature_blocked_content" = "Access blocked content";
 "_feature_bt" = "BitTorrent/file-sharing support";
 
-// Upsell & Onboard
+// MARK: Upsell & Onboard
 
 /* MacOS welcome screen: title */
 "_welcome_title" = "WELCOME ON BOARD!";
@@ -1186,33 +1186,27 @@
 
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "Quick Settings";
-// Upsell & Onboard - iOS
 
-/* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Welcome to a better internet";
+/* MacOS app tour: quick settings description */
+"_quick_settings_tour_description" = "Increase your security with one click:";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "From the scientists and engineers that created Proton Mail, welcome to a more secure and private internet.";
+/* MacOS app tour: quick settings secure core */
+"_quick_settings_tour_feature_1" = "Add one extra layer of security with Secure Core.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "We believe the internet should be free";
+/* MacOS app tour: quick settings net shield */
+"_quick_settings_tour_feature_2" = "Surf the web freely from malware and ads with NetShield.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page2_description" = "Beat censorship and regional restrictions. We have no ads, no bandwidth limits, and don’t sell your data.";
+/* MacOS app tour: quick settings kill switch */
+"_quick_settings_tour_feature_3" = "Prevent your IP to be exposed by turning on kill switch.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page3_title" = "Your security is our priority";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page3_description" = "We are a security company. Whether it is our Secure Core architecture or advanced encryption, security always comes first.";
+/* MacOS app tour: next tip button */
+"_next_tip" = "Next Tip";
 
-/* iOS onboarding next item button */
-"_next" = "Next";
+/* MacOS app tour: end tour button */
+"_end_tour" = "End Tour";
 
-/* iOS onboarding button to check app without logging in */
-"_discover_the_app" = "Discover the app";
-
-// Extensions
+// MARK: Extensions
 
 /* iOS: Table header in settings screen */
 "_extensions" = "Extensions";
@@ -1227,7 +1221,7 @@
 "_log_in_to_use_widget" = "Please sign in to get started";
 "_vpnstatus_not_loggedin" = "You are not signed in to Proton VPN. Open the Proton VPN app and sign in.";
 
-// Report bug
+// MARK: Report bug
 
 /* Bug report attachments */
 "_report_attachments" = "Attachments";
@@ -1271,7 +1265,7 @@
 /* Mag bug report: attach logs checkbox */
 "_report_attachments_checkbox" = "Include app logs and system details";
 
-// Mac main menu
+// MARK: Mac main menu
 
 /* Main mac app menu item */
 "_menu_about" = "About Proton VPN";
@@ -1304,7 +1298,7 @@
 "_menu_minimize" = "Minimize";
 
 
-// Manage subscription
+// MARK: Manage subscription
 
 "_subscription_will_expire" = "Current plan will expire on %@.";
 "_subscription_will_renew" = "Current plan will automatically renew on %@.";
@@ -1312,7 +1306,7 @@
 "_subscription_button" = "Extend plan for 1 year \n%@.";
 "_subscription_extended_success" = "You have successfully bought credits to extend your current plan.";
 
-// Internet connection troubleshoting
+// MARK: Internet connection troubleshoting
 
 /* Button on alert after a problem with internet connection */
 "_ne_troubleshoot" = "Troubleshoot";
@@ -1343,12 +1337,12 @@
 "_troubleshoot_item_other_link2" = "email";
 "_troubleshoot_item_other_link3" = "Twitter";
 
-// Netshield stats
+// MARK: Netshield stats
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
 "_netshield_stats_data_saved" = "Data\nsaved";
 
-// Netshield
+// MARK: Netshield
 
 /* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
 "_netshield_feature_description" = "Protect yourself from ads, malware, and trackers on websites and apps. If websites don't load, try disabling NetShield.\nLearn more";
@@ -1391,12 +1385,12 @@
 /* Netshield section title in iOS connection screen */
 "_netshield_section_title" = "Malware & Ads Blocker";
 
-// Announcements
+// MARK: Announcements
 
 /* Title of the screen with news and offers. */
 "_news_title" = "News";
 
-// Quick Settings
+// MARK: Quick Settings
 "_quick_settings_secureCore_description" = "Route your most sensitive data through our safest servers in privacy-friendly countries.";
 "_quick_settings_netShield_description" = "Browse the internet without ads and malware.";
 "_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak.";
@@ -1430,7 +1424,7 @@
 /* MacOS: connection screen - cancel button */
 "_kill_switch_reconnection_cancel" = "Cancel reconnection";
 
-// Smart Protocol
+// MARK: Smart Protocol
 
 /* Title for Smart Protocol in Settings */
 "_smart_protocol_title" = "Smart Protocol";
@@ -1447,7 +1441,7 @@
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "Your connection will be restarted to change the Smart Protocol mode.";
 
-// OpenVPN /  WireGuard / System Extensions
+// MARK: OpenVPN /  WireGuard / System Extensions
 
 /* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
 "_sysex_description_1" = "To use Proton VPN, you’ll need to enable **custom VPN protocols** on your Mac.";
@@ -1472,7 +1466,7 @@
 "_sysex_cannot_enable" = "Cannot enable System Extension";
 "_sysex_error_description" = "An error occurred while installing System Extension.\nReinstall Proton VPN, making sure it is located in the Applications folder, to fix this problem. Alternatively, contact our support.";
 
-// Cert based auth
+// MARK: Cert based auth
 
 "_vpnauth_certfail_title" = "Authentication error";
 "_vpnauth_certfail_description" = "Failed to refresh VPN certificate. Please check your connection";
@@ -1480,7 +1474,7 @@
 "_vpnauth_too_many_certs_title" = "Authentication error";
 "_vpnauth_too_many_certs_description" = "You reached the maximum number of setting changes. Please try again in a few minutes";
 
-// Downgrade
+// MARK: Downgrade
 
 "_from_server_title" = "From Server:";
 "_to_server_title" = "To Server:";
@@ -1510,7 +1504,7 @@
 "_tier_plus" = "Plus";
 "_tier_visionary" = "Visionary";
 
-// Streaming & Features
+// MARK: Streaming & Features
 
 "_information_title" = "Information";
 "_features_title" = "Features";
@@ -1562,7 +1556,7 @@
 
 "_action_requires_reconnect" = "Your connection needs to be restarted to apply this change";
 
-// Local agent
+// MARK: Local agent
 
 "_local_agent_server_error_title" = "Server error";
 "_local_agent_server_error_message" = "An error occured on the server. Please connect to another server.";
@@ -1570,7 +1564,7 @@
 "_local_agent_policy_violation_error_title" = "Policy violation";
 "_local_agent_policy_violation_error_message" = "You are not allowed to connect to the server. Choose a different server or upgrade your plan.";
 
-// Wireguard
+// MARK: Wireguard
 
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
 "_loading_connection_info" = "Loading connection info";
@@ -1590,19 +1584,19 @@
 "login_fetch_vpn_data" = "Configuring your VPN access";
 "login_summary_button" = "Start using Proton VPN";
 
-// Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Disable kill switch";
 
-// NetworkExtension + KillSwitch on T2 Macs
+/* NetworkExtension + KillSwitch on T2 Macs */
 "_neks_t2_title" = "Kill switch Stability Warning";
-// Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the
-// `_neks_t2_description' localized string.
+/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the */
+/* `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "T2 Security Chip";
 "_neks_t2_description" = "The use of kill switch is unstable on this device.\n\nYour device has a T2 Security Chip, which can result in system stability issues if the kill switch functionality of macOS is used by Proton VPN.";
 "_neks_t2_connect" = "Enable anyway";
 
 
-// Subuser alert
+// MARK: Subuser alert
 
 "_subuser_alert_title" = "Thanks for upgrading to Business/Visionary";
 "_subuser_alert_description1" = "To start your journey in Proton VPN please enable VPN connections to your account or any other sub-account.";
@@ -1611,7 +1605,7 @@
 "_subuser_alert_enable_connections_button" = "Enable VPN connections";
 "_subuser_alert_login_button" = "Sign in again";
 
-// Moderate NAT
+// MARK: Moderate NAT
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "Moderate NAT";
@@ -1643,7 +1637,7 @@
 /* Section title in Settings */
 "_advanced" = "Advanced";
 
-// Non-standard ports
+// MARK: Non-standard ports
 
 /* Non-standard ports feature title in Settings */
 "_non_standard_ports_title" = "Non-standard ports";
@@ -2192,7 +2186,7 @@
 /* Common button title */
 "modals_common_get_started" = "Get started";
 
-// Downgrade
+// MARK: Downgrade
 
 /* Description of user account update screen part 1 */
 "maximum_device_plan_limit_part_1" = "Please disconnect another device to connect to this one or upgrade to %@";
