@@ -25,7 +25,7 @@ public final class VpnAuthenticationManager: VpnAuthentication {
     private let operationDispatchQueue = DispatchQueue(label: "ch.protonvpn.mac.async_cert_refresh",
                                                        qos: .userInitiated)
     private let queue = OperationQueue()
-    private let storage: VpnAuthenticationStorage
+    private let storage: VpnAuthenticationStorageSync
     private let networking: Networking
 
     public typealias Factory = NetworkingFactory &
@@ -35,7 +35,7 @@ public final class VpnAuthenticationManager: VpnAuthentication {
         self.init(networking: factory.makeNetworking(), storage: factory.makeVpnAuthenticationStorage())
     }
 
-    public init(networking: Networking, storage: VpnAuthenticationStorage) {
+    public init(networking: Networking, storage: VpnAuthenticationStorageSync) {
         self.networking = networking
         self.storage = storage
         queue.maxConcurrentOperationCount = 1

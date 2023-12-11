@@ -23,15 +23,14 @@
 import Foundation
 
 public protocol VpnAuthenticationStorageFactory {
-    func makeVpnAuthenticationStorage() -> VpnAuthenticationStorage
+    func makeVpnAuthenticationStorage() -> VpnAuthenticationStorageSync
 }
 
-public protocol VpnAuthenticationStorage: AnyObject {
+public protocol VpnAuthenticationStorageSync: VpnAuthenticationStorageAsync {
     func deleteKeys()
     func deleteCertificate()
     func getKeys() -> VpnKeys
     func getStoredCertificate() -> VpnCertificate?
-    func getStoredCertificateFeatures() -> VPNConnectionFeatures?
     func getStoredKeys() -> VpnKeys?
     func store(keys: VpnKeys)
     func store(_ certificate: VpnCertificate)
@@ -42,9 +41,23 @@ public protocol VpnAuthenticationStorage: AnyObject {
 
 public protocol VpnAuthenticationStorageDelegate: AnyObject {
     func certificateDeleted()
-    func certificateStored(_ certificate: VpnCertificate)
+    func certificateStored(_ certificate: VpnCertificate) async
 }
 
 public protocol VpnAuthenticationStorageUserDefaults {
     var vpnCertificateFeatures: VPNConnectionFeatures? { get set }
+}
+
+public protocol VpnAuthenticationStorageAsync: AnyObject {
+    func deleteKeys() async
+    func deleteCertificate() async
+    func getKeys() async -> VpnKeys
+    func getStoredCertificate() async -> VpnCertificate?
+    func getStoredCertificateFeatures() -> VPNConnectionFeatures?
+    func getStoredKeys() async -> VpnKeys?
+    func store(keys: VpnKeys) async
+    func store(_ certificate: VpnCertificate) async
+    func store(_ certificate: VpnCertificateWithFeatures) async
+
+    var delegate: VpnAuthenticationStorageDelegate? { get set }
 }
