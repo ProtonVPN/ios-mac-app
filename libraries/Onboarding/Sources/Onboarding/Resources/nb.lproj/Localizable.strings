@@ -32,7 +32,7 @@
 
 "onboarding_connected_title" = "Gratulerer";
 
-"onboarding_connected_subtitle" = "Tilkoblingen din er beskyttet, og du er klar til å surfe på nettet.";
+"onboarding_connected_subtitle" = "Tilkoblingen din er beskyttet, og du er klar til å surfe weben.";
 
 "onboarding_connected_note" = "Trygt";
 
@@ -46,7 +46,7 @@
 
 "onboarding_get_plus" = "Få Plus";
 
-"onboarding_not_connected_subtitle" = "Du er klar til å surfe nettet.";
+"onboarding_not_connected_subtitle" = "Du er klar til å surfe weben";
 
 "onboarding_not_connected_error" = "Kan ikke opprette en tilkobling. Vennligst prøv igjen senere i appen.";
 

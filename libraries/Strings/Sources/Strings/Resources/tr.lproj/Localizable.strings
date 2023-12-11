@@ -464,7 +464,7 @@
 "_map_show" = "Haritayı göster";
 
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
-"_map_hide" = "Hide map";
+"_map_hide" = "Haritayı gizle";
 
 /* Description shown together with server info icon */
 "_tor_description" = "Tor ağına bağlanır";
@@ -532,7 +532,7 @@
 "_p2p_server" = "P2P sunucusu";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_tor_server" = "Tor Server";
+"_tor_server" = "Tor sunucusu";
 
 /* MacOS Profiles Overview: Table column header */
 "_profile" = "Profil";
@@ -681,7 +681,7 @@
 /* Plan speed */
 "_plan_speed_high" = "Yüksek hız";
 
-"_plan_speed_fastest" = "Fastest speed";
+"_plan_speed_fastest" = "En yüksek hız";
 
 /* Unknown error that has no better description */
 "_error_internal_error" = "İç API sorunu";
@@ -727,7 +727,7 @@
 "_error_hash_password" = "Kullanıcı parolası karılamadı";
 
 /* Error try to restore user from the session */
-"_error_fetch_session" = "Oturum kullanıcı bulunamadı";
+"_error_fetch_session" = "Oturum kullanıcısı bulunamadı";
 
 /* Network error */
 "_ne_request_timed_out" = "Ağ isteği zaman aşımına uğradı";
@@ -781,7 +781,7 @@
 "_error_user_creation" = "Hesap açılamadı";
 
 /* General title for several error alerts */
-"_error_unknown_title" = "Unknown error";
+"_error_unknown_title" = "Bilinmeyen sorun";
 
 /* Delinquent user alert */
 "_delinquent_user_title" = "Ödenmemiş fatura";
@@ -888,7 +888,7 @@
 /* Button in several different alerts */
 "_got_it" = "Anladım!";
 
-/* Plan upgrade unavailable alert */
+/* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Yükseltme uygulamada içinden yapılamaz";
 
 /* Plan upgrade unavailable alert */
@@ -1101,7 +1101,7 @@
 "_plans_footer" = "Ücretli bir tarife satın aldığınızı onayladıktan sonra, iTunes hesabınızdan vergiler ve ek platform ücretleri (doğrudan Proton tarafından ücretlendirilmeyen) ile birlikte görüntülenen tutar alınır. Satın alma işlemini yaptıktan sonra, 1 yıllık bir dönem için otomatik olarak seçilmiş tarifeye geçersiniz. Bu sürenin sonunda aboneliğinizi çevrim içi olarak ya da iOS uygulamamız üzerinden yenileyebilir ya da iptal edebilirsiniz.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/ yr";
+"_per_year_short" = "/ yıl";
 
 /* iOS plan feature */
 "_feature_server_count" = "Şuradaki sunuculara bağlan";
@@ -1230,7 +1230,7 @@
 "_next_tip" = "Sonraki ipucu";
 
 /* MacOS app tour: end tour button */
-"_end_tour" = "End Tour";
+"_end_tour" = "Turu bitir";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Daha iyi bir İnternet'e hoş geldiniz";
@@ -1680,7 +1680,7 @@
 
 "_local_agent_policy_violation_error_title" = "İlkeye aykırı kullanım";
 
-"_local_agent_policy_violation_error_message" = "Sunucuya bağlanmanıza izin verilmiyor. Başka bir sunucu seçin ya da tarifenizi yükseltin.";
+"_local_agent_policy_violation_error_message" = "Sunucuyla bağlantı kurmanıza izin verilmiyor. Başka bir sunucu seçin ya da tarifenizi yükseltin.";
 
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
 "_loading_connection_info" = "Bağlantı bilgileri yükleniyor";
@@ -1722,7 +1722,7 @@
 
 "_subuser_alert_enable_connections_button" = "VPN bağlantılarını aç";
 
-"_subuser_alert_login_button" = "Sign in again";
+"_subuser_alert_login_button" = "Yeniden oturum aç";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "Ilımlı NAT";
@@ -1761,7 +1761,7 @@
 "_settings_mac_crash_reports_tooltip" = "Çökme bildirimleri hataları gidermemize, güvenlik duvarlarını algılamamıza ve VPN engellemelerini aşmamıza yardımcı olur.";
 
 /* Section title in Settings */
-"_advanced" = "Advanced";
+"_advanced" = "Gelişmiş";
 
 /* Non-standard ports feature title in Settings */
 "_non_standard_ports_title" = "Standart olmayan bağlantı noktaları";

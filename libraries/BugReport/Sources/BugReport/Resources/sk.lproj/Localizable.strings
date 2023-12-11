@@ -47,7 +47,7 @@
 "_br_success_subtitle" = "Ozveme sa vám hneď, ako to bude možné.";
 
 /* ReportBug success window: button */
-"_br_success_button" = "Got it";
+"_br_success_button" = "Rozumiem";
 
 /* ReportBug success window: title text */
 "_br_failure_title" = "Hlásenie nebolo odoslané";
@@ -56,7 +56,7 @@
 "_br_failure_button_retry" = "Skúsiť znova";
 
 /* ReportBug success window: troubleshoot button */
-"_br_failure_button_troubleshoot" = "Troubleshoot";
+"_br_failure_button_troubleshoot" = "Riešenie problémov";
 
 /* Title of the view nudging users to update before filling Bug Report */
 "_update_view_title" = "Aktualizovať Proton VPN";
