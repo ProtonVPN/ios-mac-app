@@ -781,7 +781,7 @@
 "_error_user_creation" = "Tworzenie konta nie powiodło się";
 
 /* General title for several error alerts */
-"_error_unknown_title" = "Nieznany błąd";
+"_error_unknown_title" = "Wystąpił nieznany błąd";
 
 /* Delinquent user alert */
 "_delinquent_user_title" = "Nieopłacone faktury";
@@ -888,7 +888,7 @@
 /* Button in several different alerts */
 "_got_it" = "Ok!";
 
-/* Plan upgrade unavailable alert */
+/* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Aktualizacja w aplikacji jest niedostępna";
 
 /* Plan upgrade unavailable alert */
@@ -1218,7 +1218,7 @@
 "_quick_settings_tour_description" = "Zwiększ swój poziom bezpieczeństwa za pomocą jednego kliknięcia:";
 
 /* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Dodaj dodatkowe zabezpieczenie za pomocą funkcji Secure Core.";
+"_quick_settings_tour_feature_1" = "Dodaj dodatkowe zabezpieczenie dzięki funkcji Secure Core.";
 
 /* MacOS app tour: quick settings net shield */
 "_quick_settings_tour_feature_2" = "Przeglądaj Internet bez reklam i złośliwego oprogramowania dzięki funkcji NetShield.";
@@ -2081,7 +2081,7 @@
 "upsell_customization_title" = "Odblokuj zaawansowane ustawienia VPN";
 
 /* Feature of Customization upsell modal */
-"upsell_customization_access_LAN" = "Dostęp do urządzeń w sieci lokalnej (LAN)";
+"upsell_customization_access_LAN" = "Uzyskaj dostęp do urządzeń w sieci lokalnej (LAN)";
 
 /* Bold part of the feature of Customization upsell modal */
 "upsell_customization_access_LAN_bold" = "sieć lokalna (LAN)";

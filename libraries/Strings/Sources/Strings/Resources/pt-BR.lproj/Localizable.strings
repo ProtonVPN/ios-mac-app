@@ -888,7 +888,7 @@
 /* Button in several different alerts */
 "_got_it" = "Entendi!";
 
-/* Plan upgrade unavailable alert */
+/* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Upgrade indisponível no app";
 
 /* Plan upgrade unavailable alert */
@@ -1524,7 +1524,7 @@
 "_smart_protocol_reconnect_modal_body" = "Sua conexão será reiniciada para alterar o modo protocolo inteligente.";
 
 /* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
-"_sysex_description_1" = "Para usar a VPN Proton, você precisará ativar **protocolos VPN customizados** no seu Mac.";
+"_sysex_description_1" = "Para usar Proton VPN, você precisará ativar **protocolos VPN customizados** no seu Mac.";
 
 /* Part 2 of the description of the system extension wizard in mac */
 "_sysex_description_2" = "Protocolos personalizados permitem conexões mais rápidas e seguras, e você precisará ativá-los para se conectar à maioria dos servidores Proton VPN.";
@@ -1970,7 +1970,7 @@
 "modals_upsell_moderate_nat_subtitle_bold" = "NAT tipo 2";
 
 /* Feature of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_gaming" = "Aprimore a desempenho de jogos on-line e chamadas de vídeo";
+"modals_upsell_features_moderate_nat_gaming" = "Melhore o desempenho de jogos online e videochamadas";
 
 /* Feature of the Moderate NAT upsell screen */
 "modals_upsell_features_moderate_nat_direct_connections" = "O NAT tipo 2 (moderado) otimiza a velocidade e a estabilidade ao permitir conexões diretas entre dispositivos";

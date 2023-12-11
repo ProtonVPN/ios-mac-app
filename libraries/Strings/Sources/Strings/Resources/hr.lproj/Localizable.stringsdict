@@ -13,11 +13,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 device</string>
+        <string>1 uređaj</string>
         <key>few</key>
-        <string>%d devices</string>
+        <string>%d uređaja</string>
         <key>other</key>
-        <string>%d devices</string>
+        <string>%d uređaja</string>
       </dict>
     </dict>
     <key>welcome_screen_feature_servers_countries</key>
@@ -129,11 +129,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d device</string>
+        <string>%d uređaj</string>
         <key>few</key>
-        <string>%d devices</string>
+        <string>%d uređaja</string>
         <key>other</key>
-        <string>%d devices</string>
+        <string>%d uređaja</string>
       </dict>
     </dict>
     <key>maximum_device_plan_limit_part_2</key>
@@ -147,11 +147,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d device</string>
+        <string>%d uređaj</string>
         <key>few</key>
-        <string>%d devices</string>
+        <string>%d uređaja</string>
         <key>other</key>
-        <string>%d devices</string>
+        <string>%d uređaja</string>
       </dict>
     </dict>
     <key>search_upsell_title</key>
@@ -324,15 +324,15 @@ stopped</string>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d hr</string>
+        <string>%d sat</string>
         <key>few</key>
-        <string>%d hr</string>
+        <string>%d sata</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d hr</string>
+        <string>%d sati</string>
       </dict>
     </dict>
     <key>_session_length_hours_and_minutes</key>
@@ -342,28 +342,28 @@ stopped</string>
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d min</string>
+        <string>%d min.</string>
         <key>few</key>
-        <string>%d min</string>
+        <string>%d min.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d min</string>
+        <string>%d min.</string>
       </dict>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d hr</string>
+        <string>%d sat</string>
         <key>few</key>
-        <string>%d hr</string>
+        <string>%d sata</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d hr</string>
+        <string>%d sati</string>
       </dict>
     </dict>
     <key>_session_length_hours</key>
@@ -373,15 +373,15 @@ stopped</string>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d hr</string>
+        <string>%d sat</string>
         <key>few</key>
-        <string>%d hr</string>
+        <string>%d sata</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d hr</string>
+        <string>%d sati</string>
       </dict>
     </dict>
     <key>_session_length_minutes_and_seconds</key>
@@ -391,28 +391,28 @@ stopped</string>
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d min</string>
+        <string>%d min.</string>
         <key>few</key>
-        <string>%d min</string>
+        <string>%d min.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d min</string>
+        <string>%d min.</string>
       </dict>
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d sec</string>
+        <string>%d sek.</string>
         <key>few</key>
-        <string>%d sec</string>
+        <string>%d sek.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d sec</string>
+        <string>%d sek.</string>
       </dict>
     </dict>
     <key>_session_length_minutes</key>
@@ -422,15 +422,15 @@ stopped</string>
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d min</string>
+        <string>%d min.</string>
         <key>few</key>
-        <string>%d min</string>
+        <string>%d min.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d min</string>
+        <string>%d min.</string>
       </dict>
     </dict>
     <key>_session_length_seconds</key>
@@ -440,15 +440,15 @@ stopped</string>
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d sec</string>
+        <string>%d sek.</string>
         <key>few</key>
-        <string>%d sec</string>
+        <string>%d sek.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d sec</string>
+        <string>%d sek.</string>
       </dict>
     </dict>
     <key>_step_of</key>
@@ -471,15 +471,15 @@ stopped</string>
       <key>STEP</key>
       <dict>
         <key>one</key>
-        <string>Step %d</string>
+        <string>Korak %d</string>
         <key>few</key>
-        <string>Step %d</string>
+        <string>Korak %d</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Step %d</string>
+        <string>Korak %d</string>
       </dict>
     </dict>
     <key>free_connections_modal_subtitle</key>

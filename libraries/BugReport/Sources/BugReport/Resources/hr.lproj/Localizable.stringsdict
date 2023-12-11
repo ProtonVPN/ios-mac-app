@@ -22,15 +22,15 @@
       <key>STEP</key>
       <dict>
         <key>one</key>
-        <string>Step %d</string>
+        <string>Korak %d</string>
         <key>few</key>
-        <string>Step %d</string>
+        <string>Korak %d</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Step %d</string>
+        <string>Korak %d</string>
       </dict>
     </dict>
   </dict>
