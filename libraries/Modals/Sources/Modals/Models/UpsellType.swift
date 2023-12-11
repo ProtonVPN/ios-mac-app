@@ -27,6 +27,7 @@ public enum UpsellType {
     case welcomePlus(numberOfServers: Int, numberOfDevices: Int, numberOfCountries: Int)
     case welcomeUnlimited
     case welcomeFallback
+    case welcomeToProton
     case safeMode
     case moderateNAT
     case noLogs
@@ -88,6 +89,8 @@ public enum UpsellType {
             return Localizable.welcomeUpgradeTitleUnlimited
         case .welcomeFallback:
             return Localizable.welcomeUpgradeTitleFallback
+        case .welcomeToProton:
+            return Localizable.welcomeToProtonTitle
         }
     }
 
@@ -128,6 +131,8 @@ public enum UpsellType {
 #endif
         case .welcomeFallback:
             return Localizable.welcomeUpgradeSubtitleFallback
+        case .welcomeToProton:
+            return Localizable.welcomeToProtonSubtitle
         }
     }
 
@@ -183,6 +188,8 @@ public enum UpsellType {
             return []
         case .welcomeFallback:
             return []
+        case .welcomeToProton:
+            return [] // .banner
         }
     }
 
@@ -225,6 +232,8 @@ public enum UpsellType {
             Asset.welcomeUnlimited.swiftUIImage
         case .welcomeFallback:
             Asset.welcomeFallback.swiftUIImage
+        case .welcomeToProton:
+            Asset.welcome.swiftUIImage
         }
     }
 

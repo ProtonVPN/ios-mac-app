@@ -26,6 +26,7 @@ class ViewController: UITableViewController {
         (.welcomePlus(numberOfServers: 1300, numberOfDevices: 10, numberOfCountries: 61), "Welcome Plus"),
         (.welcomeUnlimited, "Welcome Unlimited"),
         (.welcomeFallback, "Welcome Fallback"),
+        (.welcomeToProton, "Welcome to Proton VPN"),
         (.allCountries(numberOfServers: 1300, numberOfCountries: 61), "All countries"),
         (.country(countryFlag: UIImage(named: "flags_US")!, numberOfDevices: 10, numberOfCountries: 61), "Countries"),
         (.secureCore, "Secure Core"),

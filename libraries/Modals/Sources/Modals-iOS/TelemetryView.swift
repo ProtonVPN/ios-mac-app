@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+import Strings
 
 struct TelemetryView: View {
 
@@ -34,7 +35,7 @@ struct TelemetryView: View {
             VStack() {
                 Spacer()
                 Image(uiImage: image!)
-                Text(LocalizedString.onboardingTelemetryTitle)
+                Text(Localizable.onboardingTelemetryTitle)
                     .themeFont(.headline)
                     .foregroundColor(Color(.text))
                     .padding()
@@ -42,9 +43,11 @@ struct TelemetryView: View {
                 TelemetryTogglesView(usageStatisticsOn: $usageStatisticsOn,
                                      crashReportsOn: $crashReportsOn)
                 Spacer()
-                OnboardingButton(completion: {
+                Button {
                     completion(usageStatisticsOn, crashReportsOn)
-                })
+                } label: {
+                    Text(Localizable.modalsCommonNext)
+                }
                 .padding(.bottom)
             }
         }

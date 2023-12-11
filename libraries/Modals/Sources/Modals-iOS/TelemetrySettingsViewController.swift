@@ -67,8 +67,8 @@ public class TelemetrySettingsViewController: UIViewController {
         hostingController.didMove(toParent: self)
 
         view.addSubview(hostingController.view)
-        view.backgroundColor = colors.background
-        hostingController.view.backgroundColor = colors.background
+        view.backgroundColor = .color(.background)
+        hostingController.view.backgroundColor = .color(.background)
 
         NSLayoutConstraint.activate([
             hostingController.view.topAnchor.constraint(equalTo: view.topAnchor),
