@@ -888,7 +888,7 @@
 /* Button in several different alerts */
 "_got_it" = "Зразумела!";
 
-/* Plan upgrade unavailable alert */
+/* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Паляпшэнне недаступна ў праграме";
 
 /* Plan upgrade unavailable alert */
@@ -1680,7 +1680,7 @@
 
 "_local_agent_policy_violation_error_title" = "Парушэнне палітыкі";
 
-"_local_agent_policy_violation_error_message" = "Вам не дазволена падключэнне да гэтага сервера. Выберыце іншы сервер або палепшыце свой тарыфны план.";
+"_local_agent_policy_violation_error_message" = "Вам забаронена падключацца да гэтага сервера. Выберыце іншы сервер або палепшыце свой тарыфны план.";
 
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
 "_loading_connection_info" = "Загрузка інфармацыі пра падключэнне";
@@ -2207,7 +2207,7 @@
 "free_connections_modal_banner" = "Тарыфны план VPN Plus забяспечвае пакрыццё ўсяго свету";
 
 /* Text on upsell banner in country list */
-"_free_banner_text" = "VPN Plus забяспечвае пакрыццё ўсяго свету";
+"_free_banner_text" = "Тарыфны план VPN Plus забяспечвае пакрыццё ўсяго свету";
 
 /* Title of banner shown on iOS apps to upsell users who want to select a country */
 "_wrong_country_banner_title" = "Не тая краіна, якую хацелі?";

@@ -5,38 +5,34 @@
     <key>onboarding_establish_subtitle</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Free subscription offers %#@num_servers@ in %#@num_countries@</string>
+      <string>Gratis abonnement tilbyr %#@num_servers@ i %#@num_countries@</string>
       <key>num_countries</key>
       <dict>
         <key>one</key>
-        <string>%d država</string>
-        <key>few</key>
-        <string>%d države</string>
+        <string>%d land</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d država</string>
+        <string>%d land</string>
       </dict>
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d poslužitelj</string>
-        <key>few</key>
-        <string>%d poslužitelja</string>
+        <string>%d tjener</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d poslužitelja</string>
+        <string>%d tjenere</string>
       </dict>
     </dict>
     <key>onboarding_upsell_title</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Access all %#@NUM_SERVERS@ in %#@NUM_COUNTRIES@ with Plus</string>
+      <string>Få tilgang til %#@NUM_SERVERS@ i %#@NUM_COUNTRIES@ med Plus</string>
       <key>NUM_COUNTRIES</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -44,11 +40,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d država</string>
+        <string>%d land</string>
         <key>one</key>
-        <string>%d država</string>
-        <key>few</key>
-        <string>%d države</string>
+        <string>%d land</string>
       </dict>
       <key>NUM_SERVERS</key>
       <dict>
@@ -57,17 +51,15 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d poslužitelja</string>
+        <string>%d tjenere</string>
         <key>one</key>
-        <string>%d poslužitelj</string>
-        <key>few</key>
-        <string>%d poslužitelja</string>
+        <string>%d tjener</string>
       </dict>
     </dict>
     <key>onboarding_purchased_subtitle</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>You now have access to %#@NUM_SEC_SERVERS@ and other premium features.</string>
+      <string>Du har nå tilgang til %#@NUM_SEC_SERVERS@ og andre premiumfunksjoner.</string>
       <key>NUM_SEC_SERVERS</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -75,17 +67,15 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d secure servers</string>
+        <string>%d sikre tjenere</string>
         <key>one</key>
-        <string>%d secure server</string>
-        <key>few</key>
-        <string>%d secure servers</string>
+        <string>%d sikker tjener</string>
       </dict>
     </dict>
     <key>onboarding_upsell_feature_multipleDevices</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Connect %#@NUM_DEVICES@ simultaneously</string>
+      <string>Koble til %#@NUM_DEVICES@ samtidig</string>
       <key>NUM_DEVICES</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -93,11 +83,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d uređaja</string>
+        <string>%d enheter</string>
         <key>one</key>
-        <string>%d uređaj</string>
-        <key>few</key>
-        <string>%d uređaja</string>
+        <string>%d enhet</string>
       </dict>
     </dict>
   </dict>

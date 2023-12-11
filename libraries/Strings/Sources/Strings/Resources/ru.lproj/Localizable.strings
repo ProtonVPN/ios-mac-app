@@ -464,7 +464,7 @@
 "_map_show" = "Показать карту";
 
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
-"_map_hide" = "Hide map";
+"_map_hide" = "Скрыть карту";
 
 /* Description shown together with server info icon */
 "_tor_description" = "Подключает к сети TOR";
@@ -532,7 +532,7 @@
 "_p2p_server" = "P2P сервер";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_tor_server" = "Tor Server";
+"_tor_server" = "Tor сервер";
 
 /* MacOS Profiles Overview: Table column header */
 "_profile" = "Профиль";
@@ -681,7 +681,7 @@
 /* Plan speed */
 "_plan_speed_high" = "Высокая скорость";
 
-"_plan_speed_fastest" = "Fastest speed";
+"_plan_speed_fastest" = "Высочайшая скорость";
 
 /* Unknown error that has no better description */
 "_error_internal_error" = "Внутренняя ошибка API";
@@ -781,7 +781,7 @@
 "_error_user_creation" = "Сбой создания аккаунта";
 
 /* General title for several error alerts */
-"_error_unknown_title" = "Unknown error";
+"_error_unknown_title" = "Неизвестная ошибка";
 
 /* Delinquent user alert */
 "_delinquent_user_title" = "Неоплаченный счет";
@@ -888,7 +888,7 @@
 /* Button in several different alerts */
 "_got_it" = "Я понял!";
 
-/* Plan upgrade unavailable alert */
+/* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Улучшение недоступно в приложении";
 
 /* Plan upgrade unavailable alert */
@@ -1101,7 +1101,7 @@
 "_plans_footer" = "При подтверждении покупки платной подписки, с вашего аккаунта в iTunes будет списана сумма, которая включает в себя налог и комиссию платформы (они определяются не компанией Proton). После покупки, ваша подписка будет улучшена до выбранного тарифа на 1 год. После этого вы сможете продлить или отменить подписку как через сайт, так и в нашем приложение для iOS.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/ yr";
+"_per_year_short" = "/ год";
 
 /* iOS plan feature */
 "_feature_server_count" = "Подключение к серверам в";
@@ -1230,7 +1230,7 @@
 "_next_tip" = "Следующий совет";
 
 /* MacOS app tour: end tour button */
-"_end_tour" = "End Tour";
+"_end_tour" = "Закончить тур";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Добро пожаловать в лучший Интернет";
@@ -1432,7 +1432,7 @@
 "_netshield_business_upsell_title" = "Блокировать рекламу c NetShield";
 
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
-"_netshield_business_upsell_subtitle" = "When you upgrade to VPN Business";
+"_netshield_business_upsell_subtitle" = "Когда вы улучшите до VPN Business";
 
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
@@ -1645,19 +1645,19 @@
 
 "_performance_load_high" = "Высокая";
 
-"_locations_all" = "All locations";
+"_locations_all" = "Все местоположения";
 
-"_locations_free" = "Free locations";
+"_locations_free" = "Бесплатные местоположения";
 
-"_locations_plus" = "Plus locations";
+"_locations_plus" = "Местоположения Plus";
 
-"_locations_gateways" = "Gateways";
+"_locations_gateways" = "Шлюзы";
 
 /* Header before the list of connections available for free users (in the country list) */
 "_connections_free" = "Бесплатные подключения";
 
 /* Gateways info modals title (both iOS and macOS) */
-"_gateways_modal_title" = "What's a gateway?";
+"_gateways_modal_title" = "Что такое шлюз?";
 
 /* Gateways info modals text (both iOS and macOS) */
 "_gateways_modal_text" = "VPN-шлюз – это безопасное соединение, предоставляющее контролируемый доступ к данным и сервисам вашей компании через выделенные серверы";
@@ -1722,7 +1722,7 @@
 
 "_subuser_alert_enable_connections_button" = "Разрешить подключения к VPN";
 
-"_subuser_alert_login_button" = "Sign in again";
+"_subuser_alert_login_button" = "Войти снова";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "Умеренный NAT";
@@ -1859,7 +1859,7 @@
 "_alert_protocol_deprecated_body_ios" = "This profile uses a protocol that is outdated and no longer supported. Click \"Update\" to switch to using the default Smart protocol.";
 
 /* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
-"_alert_protocol_deprecated_enable_smart" = "Update";
+"_alert_protocol_deprecated_enable_smart" = "Обновить";
 
 /* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser */
 "_alert_protocol_deprecated_learn_more" = "Подробнее";
@@ -2096,7 +2096,7 @@
 "upsell_customization_quick_connect" = "Get faster access to your profiles with Quick Connect";
 
 /* Bold part of the feature of Customization upsell modal */
-"upsell_customization_quick_connect_bold" = "Quick Connect";
+"upsell_customization_quick_connect_bold" = "Быстрое подключение";
 
 /* Title of Profiles upsell modal */
 "upsell_profiles_title" = "Get quick access to your frequent connections";
@@ -2144,7 +2144,7 @@
 "upsell_country_feature_subtitle_bold" = "country selection";
 
 /* Title of the "What's new" screen */
-"modals_whats_new" = "What’s new";
+"modals_whats_new" = "Что нового";
 
 /* Title of the first section of the "What's new" screen */
 "modals_free_countries" = "Новые страны с бесплатными серверами";
@@ -2189,7 +2189,7 @@
 "welcome_upgrade_subtitle_Unlimited_markdown" = "Congratulations! You unlocked premium security and performance features on all Proton services, plus **500 GB** total storage.\n\nEnjoy the best of Proton privacy.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
+"welcome_upgrade_subtitle_Unlimited_bold" = "500 ГБ";
 
 /* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
 "welcome_upgrade_subtitle_fallback" = "You've upgraded your subscription. Enjoy advanced privacy features and next-level performance.";

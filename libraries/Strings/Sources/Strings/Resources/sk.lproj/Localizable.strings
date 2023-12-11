@@ -464,7 +464,7 @@
 "_map_show" = "Zobraziť mapu";
 
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
-"_map_hide" = "Hide map";
+"_map_hide" = "Skryť mapu";
 
 /* Description shown together with server info icon */
 "_tor_description" = "Pripojenie k sieti TOR";
@@ -532,7 +532,7 @@
 "_p2p_server" = "Server P2P";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_tor_server" = "Tor Server";
+"_tor_server" = "Server Tor";
 
 /* MacOS Profiles Overview: Table column header */
 "_profile" = "Profil";
@@ -681,7 +681,7 @@
 /* Plan speed */
 "_plan_speed_high" = "Vysoká rýchlosť";
 
-"_plan_speed_fastest" = "Fastest speed";
+"_plan_speed_fastest" = "Najvyššia rýchlosť";
 
 /* Unknown error that has no better description */
 "_error_internal_error" = "Interná chyba API";
@@ -888,7 +888,7 @@
 /* Button in several different alerts */
 "_got_it" = "Rozumiem!";
 
-/* Plan upgrade unavailable alert */
+/* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "V aplikácii je dostupná aktualizácia";
 
 /* Plan upgrade unavailable alert */
@@ -1101,7 +1101,7 @@
 "_plans_footer" = "Po potvrdení zakúpenia plateného plánu sa z vášho účtu iTunes stiahne zobrazená suma, ktorá zahŕňa dane a dodatočné poplatky za platformu (ktoré neúčtuje priamo spoločnosť Proton). Po uskutočnení nákupu budete automaticky zaradený do vybraného plánu na obdobie 1 roka, po ktorom si ho môžete obnoviť alebo zrušiť, a to buď online, alebo prostredníctvom našej aplikácie pre iOS.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/ yr";
+"_per_year_short" = "/ rok";
 
 /* iOS plan feature */
 "_feature_server_count" = "Pripojiť k serverom v";
@@ -1260,7 +1260,7 @@
 "_extensions" = "Rozšírenia";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "Miniaplikácia iOS";
+"_widget" = "iOS widget";
 
 /* Menu point in settings screen */
 "_usage_statistics" = "Štatistiky používania";
@@ -1761,7 +1761,7 @@
 "_settings_mac_crash_reports_tooltip" = "Hlásenia o pádoch nám pomáhajú opravovať chyby, detekovať firewally a vyhýbať sa blokovaniu VPN.";
 
 /* Section title in Settings */
-"_advanced" = "Advanced";
+"_advanced" = "Pokročilé";
 
 /* Non-standard ports feature title in Settings */
 "_non_standard_ports_title" = "Neštandardné porty";
@@ -1865,7 +1865,7 @@
 "_alert_protocol_deprecated_learn_more" = "Viac informácií";
 
 /* Text for the 'Close' action of the deprecated protocol alert. */
-"_alert_protocol_deprecated_close" = "Close";
+"_alert_protocol_deprecated_close" = "Zavrieť";
 
 /* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
 "_bad_interface_ip_range_alert_title" = "Nesprávne sieťové rozhranie";

@@ -9,28 +9,24 @@
       <key>STEPS</key>
       <dict>
         <key>one</key>
-        <string>od %d</string>
-        <key>few</key>
-        <string>od %d</string>
+        <string>av %d</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>od %d</string>
+        <string>av %d</string>
       </dict>
       <key>STEP</key>
       <dict>
         <key>one</key>
-        <string>Korak %d</string>
-        <key>few</key>
-        <string>Korak %d</string>
+        <string>Trinn %d</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Korak %d</string>
+        <string>Trinn %d</string>
       </dict>
     </dict>
   </dict>

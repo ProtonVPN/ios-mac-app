@@ -17,7 +17,7 @@
 "_br_2_button_next" = "Связаться с нами";
 
 /* ReportBug 2nd step (Quick fixes) cancel button */
-"_br_2_button_cancel" = "Cancel";
+"_br_2_button_cancel" = "Отменить";
 
 /* ReportBug 3rd step (form) send button */
 "_br_3_button_send" = "Отправить отчет";
@@ -47,7 +47,7 @@
 "_br_success_subtitle" = "Мы свяжемся с вами, как только сможем.";
 
 /* ReportBug success window: button */
-"_br_success_button" = "Got it";
+"_br_success_button" = "Применить";
 
 /* ReportBug success window: title text */
 "_br_failure_title" = "Ваш отчет не был отправлен";

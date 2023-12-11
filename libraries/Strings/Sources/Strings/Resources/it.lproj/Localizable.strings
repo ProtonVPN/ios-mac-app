@@ -437,7 +437,7 @@
 "_setup_complete" = "Configurazione completata";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_free" = "Ora sei iscritto a un piano Proton VPN Free. Per iniziare, goditi sette giorni del nostro piano Proton VPN Plus gratuitamente.";
+"_setup_complete_free" = "Ora sei iscritto a un piano Proton VPN Free. Per iniziare, approfitta di sette giorni del nostro piano Proton VPN Plus gratuitamente.";
 
 /* iOS: title of the screen after successfull purchase */
 "_setup_complete_plus" = "Il tuo acquisto è stato completato. Il tuo piano Proton VPN Plus è ora attivo.";
@@ -888,7 +888,7 @@
 /* Button in several different alerts */
 "_got_it" = "Ricevuto!";
 
-/* Plan upgrade unavailable alert */
+/* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Aggiornamento non disponibile nell'app";
 
 /* Plan upgrade unavailable alert */
@@ -1985,7 +1985,7 @@
 "modals_upsell_all_countries_feature_netshield" = "Blocca pubblicità e malware con NetShield";
 
 /* Title of the NetShield upsell screen */
-"modals_upsell_net_shield_title" = "Goditi la navigazione senza pubblicità con NetShield";
+"modals_upsell_net_shield_title" = "Approfitta di una navigazione senza pubblicità con NetShield";
 
 /* Feature of the NetShield upsell screen */
 "modals_upsell_net_shield_ads" = "Blocca annunci e tracker";
@@ -2180,7 +2180,7 @@
 "welcome_upgrade_title_fallback" = "Congratulazioni!";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Plus */
-"welcome_upgrade_subtitle_plus" = "Goditi funzionalità extra per la privacy, prestazioni potenziate e personalizzazione VPN di livello superiore.";
+"welcome_upgrade_subtitle_plus" = "Approfitta di funzioni aggiuntive per la privacy, di prestazioni potenziate e di una personalizzazione della VPN di livello superiore.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited" = "Congratulazioni! Hai sbloccato funzionalità premium di sicurezza e prestazioni su tutti i servizi Proton, oltre a 500 GB di spazio di archiviazione totale.\n\nGoditi il ​​meglio della privacy di Proton.";

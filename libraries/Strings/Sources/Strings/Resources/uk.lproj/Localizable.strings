@@ -348,7 +348,7 @@
 "_need_help" = "Потрібна допомога?";
 
 /* MacOS: button in login screen */
-"_reset_password" = "Відновити пароль";
+"_reset_password" = "Скинути пароль";
 
 /* MacOS: button in login screen */
 "_common_issues" = "Поширені проблеми з входом";
@@ -464,7 +464,7 @@
 "_map_show" = "Показати карту";
 
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
-"_map_hide" = "Hide map";
+"_map_hide" = "Приховати карту";
 
 /* Description shown together with server info icon */
 "_tor_description" = "З'єднання з мережею TOR";
@@ -532,7 +532,7 @@
 "_p2p_server" = "Сервер P2P";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_tor_server" = "Tor Server";
+"_tor_server" = "Сервер Tor";
 
 /* MacOS Profiles Overview: Table column header */
 "_profile" = "Профіль";
@@ -681,7 +681,7 @@
 /* Plan speed */
 "_plan_speed_high" = "Висока швидкість";
 
-"_plan_speed_fastest" = "Fastest speed";
+"_plan_speed_fastest" = "Найвища швидкість";
 
 /* Unknown error that has no better description */
 "_error_internal_error" = "Внутрішня помилка API";
@@ -781,7 +781,7 @@
 "_error_user_creation" = "Не вдалося створити обліковий запис";
 
 /* General title for several error alerts */
-"_error_unknown_title" = "Unknown error";
+"_error_unknown_title" = "Невідома помилка";
 
 /* Delinquent user alert */
 "_delinquent_user_title" = "Несплачений рахунок";
@@ -888,7 +888,7 @@
 /* Button in several different alerts */
 "_got_it" = "Зрозуміло!";
 
-/* Plan upgrade unavailable alert */
+/* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Зміна тарифного плану недоступна в програмі";
 
 /* Plan upgrade unavailable alert */
@@ -1101,7 +1101,7 @@
 "_plans_footer" = "Одразу після підтвердження покупки тарифного плану, з вашого облікового запису iTunes буде списано вказану суму, що включає податки та додаткові платежі платформи (які не стягуються безпосередньо Proton). Після покупки вас автоматично буде переведено на вибраний тарифний план терміном на 1 рік, після чого ви можете продовжити чи скасувати передплату онлайн, або в програмі iOS.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/ yr";
+"_per_year_short" = "/ рік";
 
 /* iOS plan feature */
 "_feature_server_count" = "З'єднатися з серверами в";
@@ -1230,7 +1230,7 @@
 "_next_tip" = "Наступна порада";
 
 /* MacOS app tour: end tour button */
-"_end_tour" = "End Tour";
+"_end_tour" = "Завершити знайомство";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Вітаємо у кращому інтернеті";
@@ -1680,7 +1680,7 @@
 
 "_local_agent_policy_violation_error_title" = "Порушення політики";
 
-"_local_agent_policy_violation_error_message" = "Вам не дозволено з'єднання з цим сервером. Оберіть інший сервер чи перейдіть на тарифний план вищого рівня.";
+"_local_agent_policy_violation_error_message" = "Вам не дозволено з'єднання з цим сервером. Оберіть інший сервер або передплатіть тарифний план вищого рівня.";
 
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
 "_loading_connection_info" = "Завантаження інформації про з'єднання";
@@ -1722,7 +1722,7 @@
 
 "_subuser_alert_enable_connections_button" = "Увімкнути VPN-з'єднання";
 
-"_subuser_alert_login_button" = "Sign in again";
+"_subuser_alert_login_button" = "Увійти знову";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "Помірне NAT";
@@ -1761,7 +1761,7 @@
 "_settings_mac_crash_reports_tooltip" = "Звіти про збої допомагають нам виправляти помилки, виявляти мережеві екрани та уникати блокування VPN.";
 
 /* Section title in Settings */
-"_advanced" = "Advanced";
+"_advanced" = "Додатково";
 
 /* Non-standard ports feature title in Settings */
 "_non_standard_ports_title" = "Нестандартні порти";
@@ -1865,7 +1865,7 @@
 "_alert_protocol_deprecated_learn_more" = "Докладніше";
 
 /* Text for the 'Close' action of the deprecated protocol alert. */
-"_alert_protocol_deprecated_close" = "Close";
+"_alert_protocol_deprecated_close" = "Закрити";
 
 /* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
 "_bad_interface_ip_range_alert_title" = "Поганий мережевий інтерфейс";
@@ -2054,7 +2054,7 @@
 "modals_common_next" = "Далі";
 
 /* Common button title */
-"modals_common_get_started" = "Get started";
+"modals_common_get_started" = "Розпочати";
 
 /* Description of user account update screen part 1 */
 "maximum_device_plan_limit_part_1" = "Від'єднайте інший пристрій, щоб під'єднатися до цього, або передплатіть %@";

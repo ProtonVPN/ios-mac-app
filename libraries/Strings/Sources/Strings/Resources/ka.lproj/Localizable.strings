@@ -888,7 +888,7 @@
 /* Button in several different alerts */
 "_got_it" = "გავიგე!";
 
-/* Plan upgrade unavailable alert */
+/* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "აპში განახლება მიუწვდომელია";
 
 /* Plan upgrade unavailable alert */
