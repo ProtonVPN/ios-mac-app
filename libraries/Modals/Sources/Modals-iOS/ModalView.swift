@@ -21,6 +21,7 @@ import SharedViews
 import Strings
 import Theme
 import Modals
+import ProtonCoreUIFoundations
 
 struct ModalView: View {
 
@@ -104,11 +105,33 @@ struct ModalBodyView: View {
                         .frame(maxWidth: .infinity)
                 }
                 let features = upsellType.upsellFeature().features
-                if !features.isEmpty {
+                if features.contains(.banner) {
+                    BannerView()
+                } else if !features.isEmpty {
                     ModalFeaturesView(features: features)
                 }
             }
         }
+    }
+}
+
+struct BannerView: View {
+
+    var body: some View {
+        HStack(alignment: .top, spacing: .themeSpacing12) {
+            Asset.bannerIcon.swiftUIImage
+            VStack {
+                HStack {
+                    Text(Localizable.welcomeToProtonBannerTitle)
+                    IconProvider.arrowOutSquare.swiftUIImage
+                }
+                Text(Localizable.welcomeToProtonBannerSubtitle)
+            }
+        }
+        .padding(.vertical, .themeSpacing16)
+        .padding(.horizontal, .themeSpacing24)
+        .background(Color(.background, .weak))
+        .clipShape(RoundedRectangle(cornerRadius: AppTheme.CornerRadius.radius12.rawValue))
     }
 }
 

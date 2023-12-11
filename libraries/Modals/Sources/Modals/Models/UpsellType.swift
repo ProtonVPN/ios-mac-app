@@ -189,7 +189,7 @@ public enum UpsellType {
         case .welcomeFallback:
             return []
         case .welcomeToProton:
-            return [] // .banner
+            return [.banner]
         }
     }
 
