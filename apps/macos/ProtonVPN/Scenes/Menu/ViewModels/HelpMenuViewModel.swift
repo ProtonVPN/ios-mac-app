@@ -62,7 +62,7 @@ class HelpMenuViewModel {
     private lazy var logFileManager: LogFileManager = factory.makeLogFileManager()
     private lazy var logContentProvider: LogContentProvider = factory.makeLogContentProvider()
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
-    private lazy var vpnAuthenticationStorage: VpnAuthenticationStorage = factory.makeVpnAuthenticationStorage()
+    private lazy var vpnAuthenticationStorage: VpnAuthenticationStorageAsync = factory.makeVpnAuthenticationStorage()
 
     init(factory: Factory) {
         self.factory = factory
@@ -101,7 +101,9 @@ class HelpMenuViewModel {
     func selectClearApplicationData() {
         alertService.push(alert: ClearApplicationDataAlert { [self] in
             self.vpnManager.disconnect { [self] in
-                self.clearAllDataAndTerminate()
+                Task {
+                    await self.clearAllDataAndTerminate()
+                }
             }
         })
     }
@@ -110,57 +112,56 @@ class HelpMenuViewModel {
         logDebugInfoString()
         navService.showReportBug()
     }
-    
-    private func clearAllDataAndTerminate() {
-        DispatchQueue.main.async {
-            if self.systemExtensionManager.uninstallAll(userInitiated: true, timeout: nil) == .timedOut {
-                log.error("Timed out waiting for sysext uninstall, proceeding to clear app data", category: .sysex)
-            }
 
-            // keychain
-            self.vpnKeychain.clear()
-            Task {
-                await self.authKeychain.clear()
-            }
-            self.vpnAuthenticationStorage.deleteCertificate()
-            self.vpnAuthenticationStorage.deleteKeys()
+    @MainActor
+    private func clearAllDataAndTerminate() async {
+        if self.systemExtensionManager.uninstallAll(userInitiated: true, timeout: nil) == .timedOut {
+            log.error("Timed out waiting for sysext uninstall, proceeding to clear app data", category: .sysex)
+        }
 
-            // app data
-            if let bundleIdentifier = Bundle.main.bundleIdentifier {
-                @Dependency(\.defaultsProvider) var provider
-                let defaults = provider.getDefaults()
-                if let domain = defaults.persistentDomain(forName: bundleIdentifier) {
-                    for key in domain.keys {
-                        defaults.removeObject(forKey: key)
-                    }
-                    defaults.removePersistentDomain(forName: bundleIdentifier)
+        // keychain
+        self.vpnKeychain.clear()
+        Task {
+            await self.authKeychain.clear()
+        }
+        await self.vpnAuthenticationStorage.deleteCertificate()
+        await self.vpnAuthenticationStorage.deleteKeys()
+
+        // app data
+        if let bundleIdentifier = Bundle.main.bundleIdentifier {
+            @Dependency(\.defaultsProvider) var provider
+            let defaults = provider.getDefaults()
+            if let domain = defaults.persistentDomain(forName: bundleIdentifier) {
+                for key in domain.keys {
+                    defaults.removeObject(forKey: key)
                 }
+                defaults.removePersistentDomain(forName: bundleIdentifier)
             }
+        }
 
-            // Delete Caches folder
-            do {
-                try FileManager.default.removeItem(at: FileManager.cachesDirectoryURL)
-            } catch {
-                log.error("Error deleting caches", category: .app)
-            }
+        // Delete Caches folder
+        do {
+            try FileManager.default.removeItem(at: FileManager.cachesDirectoryURL)
+        } catch {
+            log.error("Error deleting caches", category: .app)
+        }
 
-            do {
-                try FileManager.default.removeItem(atPath: AppConstants.FilePaths.sandbox) // legacy
-            } catch {
-                log.error("Error deleting sandbox files", category: .app)
-            }
-            do {
-                try FileManager.default.removeItem(atPath: AppConstants.FilePaths.starterSandbox) // legacy
-            } catch {
-                log.error("Error deleting starter sandbox files", category: .app)
-            }
+        do {
+            try FileManager.default.removeItem(atPath: AppConstants.FilePaths.sandbox) // legacy
+        } catch {
+            log.error("Error deleting sandbox files", category: .app)
+        }
+        do {
+            try FileManager.default.removeItem(atPath: AppConstants.FilePaths.starterSandbox) // legacy
+        } catch {
+            log.error("Error deleting starter sandbox files", category: .app)
+        }
 
-            // vpn profile
-            self.vpnManager.removeConfigurations { _ in
-                // quit app
-                DispatchQueue.main.async {
-                    NSApplication.shared.terminate(self)
-                }
+        // vpn profile
+        self.vpnManager.removeConfigurations { _ in
+            // quit app
+            DispatchQueue.main.async {
+                NSApplication.shared.terminate(self)
             }
         }
     }
