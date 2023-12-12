@@ -73,8 +73,13 @@ class ProfileRobot: CoreElements {
     }
         
     private func delete(_ name: String, _ countryname: String) -> ProfileRobot {
+        
+        var deleteButtonText = "Delete"
+        if #available(iOS 17.0, *) {
+            deleteButtonText = "Remove"
+        }
         button(editButton).tap()
-        button("Remove " + countryname + "    Fastest, " + name).tap()
+        button(deleteButtonText+" " + countryname + "    Fastest, " + name).tap()
         button(deleteButton).tap()
         return self
     }
