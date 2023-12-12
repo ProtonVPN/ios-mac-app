@@ -23,6 +23,5 @@ public struct UpsellFeature {
     public let subtitle: String?
     public let boldSubtitleElements: [String]
     public let features: [Feature]
-    public let moreInformation: Feature?
     public let artImage: any View
 }

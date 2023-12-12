@@ -24,7 +24,6 @@ public typealias AssetImageTypeAlias = ImageAsset.Image
 public enum Asset {
   public static let flatIllustration = ImageAsset(name: "Flat illustration")
   public static let moderateNAT = ImageAsset(name: "ModerateNAT")
-  public static let noLogs = ImageAsset(name: "NoLogs")
   public static let plusCountries = ImageAsset(name: "PlusCountries")
   public static let safeMode = ImageAsset(name: "SafeMode")
   public static let secureCore = ImageAsset(name: "SecureCore")
