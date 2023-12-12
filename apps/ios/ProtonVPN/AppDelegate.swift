@@ -65,7 +65,7 @@ class AppDelegate: UIResponder {
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
     private lazy var appStateManager: AppStateManager = container.makeAppStateManager()
     private lazy var planService: PlanService = container.makePlanService()
-    private lazy var pushNotificationService = PushNotificationService.shared
+    private lazy var pushNotificationService = container.makePushNotificationService()
 }
 #else
 class AppDelegate: UIResponder {
@@ -221,6 +221,14 @@ extension AppDelegate: UIApplicationDelegate {
         }
     }
     
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        pushNotificationService.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
+    }
+
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        pushNotificationService.didFailToRegisterForRemoteNotifications(withError: error)
+    }
+
     private func setupLogsForApp() {
         let logFile = self.container.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename)
 
@@ -370,9 +378,17 @@ extension AppDelegate {
         }
         ObservabilityEnv.current.setupWorld(requestPerformer: apiService)
 
-        if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.dynamicPlan) {
-            pushNotificationService?.setup()
-            pushNotificationService?.registerHandler(AccountRecoveryHandler(), forType: NotificationType.accountRecoveryInitiated)
+        if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.accountRecovery) {
+            pushNotificationService.setup()
+
+            let vpnHandler = AccountRecoveryHandler()
+            vpnHandler.handler = { _ in
+                // for now, for all notification types, we take the same action
+                self.navigationService.presentAccountRecoveryViewController()
+                return .success(())
+            }
+
+            pushNotificationService.registerHandler(vpnHandler, forType: NotificationType.accountRecoveryInitiated)
         }
     }
 }
