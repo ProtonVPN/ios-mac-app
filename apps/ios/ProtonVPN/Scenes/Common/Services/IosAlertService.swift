@@ -314,11 +314,12 @@ extension IosAlertService: CoreAlertService {
     }
 
     private func show(alert: UpsellAlert, upsellType: Modals.UpsellType) {
-        let upsellViewController = modalsFactory.upsellViewController(upsellType: upsellType)
-
-        upsellAlerts[upsellViewController.id] = alert
-
-        upsellViewController.delegate = self
+//        let upsellViewController = modalsFactory.upsellViewController(upsellType: upsellType)
+        let upsellViewController = modalsFactory.modalViewController(upsellType: upsellType)
+// TODO: add id and delegate
+//        upsellAlerts[upsellViewController.id] = alert
+//
+//        upsellViewController.delegate = self
         windowService.present(modal: upsellViewController)
         NotificationCenter.default.post(name: .upsellAlertWasDisplayed, object: alert.modalSource)
     }

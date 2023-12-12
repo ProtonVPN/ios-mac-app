@@ -483,7 +483,6 @@
 		F3B7840026E6428C006768A8 /* LoginRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783F426E6428C006768A8 /* LoginRobot.swift */; };
 		F3BC534D278598E4009E49B4 /* OnboardingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC534C278598E4009E49B4 /* OnboardingService.swift */; };
 		F3BC535027859CF6009E49B4 /* AuthCredentials+Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC534F27859CF6009E49B4 /* AuthCredentials+Login.swift */; };
-		F3BC535427859EB9009E49B4 /* Onboarding+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC535327859EB9009E49B4 /* Onboarding+Configuration.swift */; };
 		F3E87E3126CFF26B00675AD2 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E87E3026CFF26B00675AD2 /* LoginService.swift */; };
 		FA46A2072B270C8000929229 /* SubscriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA46A2062B270C8000929229 /* SubscriptionTests.swift */; };
 		FA46A20A2B2712CA00929229 /* Proton VPN: Fast & Secure.storekit in Resources */ = {isa = PBXBuildFile; fileRef = FA46A2092B2712CA00929229 /* Proton VPN: Fast & Secure.storekit */; };
@@ -957,7 +956,6 @@
 		F3B783F426E6428C006768A8 /* LoginRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginRobot.swift; sourceTree = "<group>"; };
 		F3BC534C278598E4009E49B4 /* OnboardingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingService.swift; path = ../../../../../ios/ProtonVPN/Scenes/LoginAndSignup/Services/OnboardingService.swift; sourceTree = "<group>"; };
 		F3BC534F27859CF6009E49B4 /* AuthCredentials+Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "AuthCredentials+Login.swift"; path = "../../../../../ios/ProtonVPN/Scenes/LoginAndSignup/Extensions/AuthCredentials+Login.swift"; sourceTree = "<group>"; };
-		F3BC535327859EB9009E49B4 /* Onboarding+Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Onboarding+Configuration.swift"; path = "../../../../../ios/ProtonVPN/Scenes/LoginAndSignup/Extensions/Onboarding+Configuration.swift"; sourceTree = "<group>"; };
 		F3E87E3026CFF26B00675AD2 /* LoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		FA46A2062B270C8000929229 /* SubscriptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTests.swift; sourceTree = "<group>"; };
 		FA46A2092B2712CA00929229 /* Proton VPN: Fast & Secure.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Proton VPN: Fast & Secure.storekit"; sourceTree = "<group>"; };
@@ -2317,7 +2315,6 @@
 			isa = PBXGroup;
 			children = (
 				F3BC534F27859CF6009E49B4 /* AuthCredentials+Login.swift */,
-				F3BC535327859EB9009E49B4 /* Onboarding+Configuration.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3179,7 +3176,6 @@
 				F34AC17D27F439B40007FF93 /* Review+Configuration.swift in Sources */,
 				F3E87E3126CFF26B00675AD2 /* LoginService.swift in Sources */,
 				F314141B27B17380007424E9 /* NetShieldSelectionViewController.swift in Sources */,
-				F3BC535427859EB9009E49B4 /* Onboarding+Configuration.swift in Sources */,
 				D51DA6902541A66900B4A421 /* BadgedBarButtonItem.swift in Sources */,
 				E1FB547B230C000E00153F4D /* TitleTextFieldTableViewCell.swift in Sources */,
 				E13EDF7521F1D07700030CE7 /* WidgetSettingsViewController.swift in Sources */,

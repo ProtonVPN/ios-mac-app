@@ -19,6 +19,8 @@
 import Strings
 import SwiftUI
 
+// TODO: Change name, it's not only upsell now.
+// TODO: Maybe change to a builder pattern, switching on so many cases is becoming tedious.
 public enum UpsellType {
     case netShield
     case secureCore
@@ -54,6 +56,21 @@ public enum UpsellType {
         default:
             return nil
         }
+    }
+
+    public func primaryButtonTitle() -> String? {
+        switch self {
+        case .netShield:
+            return Localizable.modalsUpsellNetShieldTitle
+        case .welcomeToProton:
+            return Localizable.modalsCommonGetStarted
+        default:
+            return Localizable.upgrade
+        }
+    }
+
+    public func secondaryButtonTitle() -> String? {
+        return Localizable.notNow
     }
 
     private func title() -> String {

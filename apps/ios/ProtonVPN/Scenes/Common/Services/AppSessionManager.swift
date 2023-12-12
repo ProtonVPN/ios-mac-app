@@ -319,8 +319,9 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             await successfulConsecutiveSessionRefreshes.reset()
             throw error
         }
-
-        setAndNotify(for: .established, reason: nil)
+        await MainActor.run {
+            setAndNotify(for: .established, reason: nil)
+        }
         profileManager.refreshProfiles()
 
         // Refresh certificate but don't log out in case of an error.
