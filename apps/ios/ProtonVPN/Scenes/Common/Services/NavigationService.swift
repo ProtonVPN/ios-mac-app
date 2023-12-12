@@ -31,6 +31,9 @@ import Strings
 import Dependencies
 import Modals_iOS
 
+import ProtonCoreFeatureFlags
+import ProtonCoreAccountRecovery
+
 // MARK: Country Service
 
 protocol CountryService {
@@ -61,6 +64,7 @@ protocol SettingsService {
     func makeTelemetrySettingsViewController() -> TelemetrySettingsViewController
     func makeLogSelectionViewController() -> LogSelectionViewController
     func makeLogsViewController(logSource: LogSource) -> LogsViewController
+    func makeAccountRecoveryViewController() -> AccountRecoveryViewController
     func presentReportBug()
 }
 
@@ -127,6 +131,7 @@ final class NavigationService {
     private lazy var networking: Networking = factory.makeNetworking()
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var profileManager = factory.makeProfileManager()
+
     private lazy var onboardingService: OnboardingService = {
         let onboardingService = factory.makeOnboardingService(vpnGateway: vpnGateway)
         onboardingService.delegate = self
@@ -372,6 +377,10 @@ extension NavigationService: SettingsService {
             return
         }
     }
+
+    func makeAccountRecoveryViewController() -> AccountRecoveryViewController {
+        AccountRecoveryModule.settingsViewController(networking.apiService)
+    }
 }
 
 extension NavigationService: ProtocolService {
@@ -411,6 +420,16 @@ extension NavigationService: ConnectionStatusService {
         }
         self.windowService.addToStack(viewController, checkForDuplicates: true)
     }    
+}
+
+// MARK: Account Recovery
+extension NavigationService {
+    func presentAccountRecoveryViewController() {
+        guard FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.accountRecovery) else { return }
+
+        let viewController = makeAccountRecoveryViewController()
+        self.windowService.addToStack(viewController, checkForDuplicates: true)
+    }
 }
 
 // MARK: Login delegate

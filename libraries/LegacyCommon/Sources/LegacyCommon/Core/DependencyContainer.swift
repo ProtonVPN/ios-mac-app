@@ -93,6 +93,7 @@ open class Container: PropertiesToOverride {
 
     private lazy var announcementsViewModel: AnnouncementsViewModel = AnnouncementsViewModel(factory: self)
 
+    private lazy var pushNotificationService: PushNotificationServiceProtocol = PushNotificationService(apiService: networking.apiService)
     // Refreshes announcements from API
     private lazy var announcementRefresher = AnnouncementRefresherImplementation(factory: self)
 
@@ -384,7 +385,7 @@ extension Container: PaymentsApiServiceFactory {
 // MARK: PushNotificationsServiceFactory
 extension Container: PushNotificationServiceFactory {
     public func makePushNotificationService() -> ProtonCorePushNotifications.PushNotificationServiceProtocol {
-        PushNotificationService(apiService: networking.apiService)
+        pushNotificationService
     }
 }
 

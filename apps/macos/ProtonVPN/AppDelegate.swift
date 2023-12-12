@@ -182,14 +182,6 @@ extension AppDelegate: NSApplicationDelegate {
         updateRecentlyActive(false)
     }
 
-    func application(_ application: NSApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        pushNotificationService?.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
-    }
-
-    func application(_ application: NSApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        pushNotificationService?.didFailToRegisterForRemoteNotifications(withError: error)
-    }
-
     /// Waits until the app has been inactive for the specified interval, then sets ``wasRecentlyActive`` to `false` on
     /// `AppDelegate`. This is used for the ``AppSessionRefreshTimer`` to decide how often to update certain info.
     func updateRecentlyActive(_ active: Bool) {
