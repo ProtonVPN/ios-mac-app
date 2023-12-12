@@ -27,13 +27,14 @@ struct ModalView: View {
 
     let upsellType: UpsellType
 
-    var gotItAction: (() -> Void)?
+    var primaryAction: (() -> Void)?
+    var dismissAction: (() -> Void)?
 
     var body: some View {
         UpsellBackgroundView(showGradient: upsellType.shouldAddGradient()) {
             VStack(spacing: .themeSpacing16) {
                 ModalBodyView(upsellType: upsellType)
-                ModalButtonsView(gotItAction: gotItAction)
+                ModalButtonsView(upsellType: upsellType, primaryAction: primaryAction, dismissAction: dismissAction)
             }
             .padding(.horizontal, .themeSpacing16)
             .padding(.bottom, .themeRadius16)
@@ -46,39 +47,47 @@ struct ModalView_Previews: PreviewProvider {
     static var previews: some View {
         ModalView(upsellType: .welcomePlus(numberOfServers: 1800,
                                            numberOfDevices: 10,
-                                           numberOfCountries: 68),
-                  gotItAction: { })
+                                           numberOfCountries: 68))
         .previewDisplayName("Welcome plus")
 
-        ModalView(upsellType: .welcomeUnlimited,
-                  gotItAction: { })
+        ModalView(upsellType: .welcomeUnlimited)
         .previewDisplayName("Welcome unlimited")
     }
 }
 
 struct ModalButtonsView: View {
+    let upsellType: UpsellType
 
-    var gotItAction: (() -> Void)?
+    var primaryAction: (() -> Void)?
+    var dismissAction: (() -> Void)?
 
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        Button {
-            if let gotItAction {
-                gotItAction()
-            } else {
-                dismiss()
+        VStack {
+            if let primaryAction, let title = upsellType.primaryButtonTitle() {
+                Button {
+                    primaryAction()
+                } label: {
+                    Text(title)
+                }
+                .buttonStyle(PrimaryButtonStyle())
             }
-        } label: {
-            Text(Localizable.gotIt)
+            if let dismissAction, let title = upsellType.secondaryButtonTitle() {
+                Button {
+                    dismissAction()
+                } label: {
+                    Text(title)
+                }
+                .buttonStyle(SecondaryButtonStyle())
+            }
         }
-        .buttonStyle(PrimaryButtonStyle())
     }
 }
 
 struct ModalButtons_Previews: PreviewProvider {
     static var previews: some View {
-        ModalButtonsView(gotItAction: { })
+        ModalButtonsView(upsellType: .safeMode)
             .previewDisplayName("ModalButtons")
     }
 }

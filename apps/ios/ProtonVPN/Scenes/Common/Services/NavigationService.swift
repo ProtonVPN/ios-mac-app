@@ -132,7 +132,7 @@ final class NavigationService {
     private lazy var profileManager = factory.makeProfileManager()
 
     private lazy var onboardingService: OnboardingService = {
-        let onboardingService = factory.makeOnboardingService(vpnGateway: vpnGateway)
+        let onboardingService = factory.makeOnboardingService()
         onboardingService.delegate = self
         return onboardingService
     }()
@@ -175,7 +175,6 @@ final class NavigationService {
                 self?.presentWelcome(initialError: nil)
             }
         }
-        _ = onboardingService // initialize colors in Onboarding module
     }
 
     func presentWelcome(initialError: String?) {

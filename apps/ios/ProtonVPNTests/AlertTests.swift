@@ -26,6 +26,7 @@ import PMLogger
 import ProtonCoreNetworking
 import ProtonCoreAccountRecovery
 import SwiftUI
+import Modals_iOS
 @testable import LegacyCommon
 @testable import ProtonVPN
 

@@ -58,7 +58,7 @@ class ViewController: UITableViewController {
     let modalsFactory = ModalsFactory()
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        5
+        6
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -71,6 +71,8 @@ class ViewController: UITableViewController {
             return 2 // secure core / free connections
         case 4:
             return upgrades.count
+        case 5:
+            return 1 // onboarding
         default:
             return 1
         }
@@ -99,7 +101,8 @@ class ViewController: UITableViewController {
             }
         } else if indexPath.section == 4 {
             title = upgrades[indexPath.row].title
-
+        } else if indexPath.section == 5 {
+            title = "Onboarding"
         } else {
             title = ""
         }
@@ -156,11 +159,26 @@ class ViewController: UITableViewController {
             let modalVC = modalsFactory.userAccountUpdateViewController(viewModel: upgrades[indexPath.row].type,
                                                                         onPrimaryButtonTap: nil)
             viewController = modalVC
+        } else if indexPath.section == 5 {
+            let modalVC = modalsFactory.modalViewController(upsellType: .welcomeToProton, primaryAction: {
+                self.pushAllCountries()
+            })
+            let navigationController = UINavigationController(rootViewController: modalVC)
+            navigationController.setNavigationBarHidden(true, animated: false)
+            viewController = navigationController
         } else {
             fatalError()
         }
         viewController.modalPresentationStyle = presentationStyle
         present(viewController, animated: true, completion: nil)
+    }
+
+    func pushAllCountries() {
+        let allCountries = modalsFactory.modalViewController(upsellType: .allCountries(numberOfServers: 1800, numberOfCountries: 63), 
+                                                             primaryAction: { self.presentedViewController?.dismiss(animated: true) },
+                                                             dismissAction: { self.presentedViewController?.dismiss(animated: true) })
+
+        (presentedViewController as? UINavigationController)?.pushViewController(allCountries, animated: true)
     }
 }
 
