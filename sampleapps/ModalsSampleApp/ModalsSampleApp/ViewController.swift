@@ -33,7 +33,6 @@ class ViewController: UITableViewController {
         (.netShield, "Net Shield"),
         (.safeMode, "Safe Mode"),
         (.moderateNAT, "Moderate NAT"),
-        (.noLogs, "No Logs"),
         (.vpnAccelerator, "VPN Accelerator"),
         (.customization, "Customization"),
         (.profiles, "Profiles"),
@@ -122,9 +121,9 @@ class ViewController: UITableViewController {
             let type = upsells[indexPath.row].type
 //            switch type {
 //            case .welcomeFallback, .welcomeUnlimited, .welcomePlus:
-                viewController = modalsFactory.modalViewController(upsellType: type) {
+                viewController = modalsFactory.modalViewController(upsellType: type, primaryAction: {
                     self.dismiss(animated: true)
-                }
+                })
 //            default:
 //                let modalVC = modalsFactory.upsellViewController(upsellType: type)
 //                modalVC.delegate = self

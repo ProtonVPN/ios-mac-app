@@ -53,10 +53,6 @@ public enum Feature: Hashable, Identifiable {
     case routeSecureServers
     case addLayer
     case protectFromAttacks
-    case privacyFirst
-    case activityLogging
-    case noThirdParties
-    case externalAudit
     case gaming
     case directConnection
     case fasterServers
@@ -101,14 +97,6 @@ extension Feature {
             return Localizable.modalsUpsellSecureCoreLayer
         case .protectFromAttacks:
             return Localizable.modalsUpsellSecureCoreAttacks
-        case .privacyFirst:
-            return Localizable.modalsNoLogsPrivacyFirst
-        case .activityLogging:
-            return Localizable.modalsNoLogsLogActivity
-        case .noThirdParties:
-            return Localizable.modalsNoLogsThirdParties
-        case .externalAudit:
-            return Localizable.modalsNoLogsExternalAudit
         case .gaming:
             return Localizable.modalsUpsellFeaturesModerateNatGaming
         case .directConnection:
@@ -169,15 +157,6 @@ extension Feature {
         }
     }
 
-    public var linkImage: Image? {
-        switch self {
-        case .externalAudit:
-            return IconProvider.arrowOutSquare
-        default:
-            return nil
-        }
-    }
-
     public var image: Image {
         switch self {
         case .streaming:
@@ -196,10 +175,6 @@ extension Feature {
             return IconProvider.locks
         case .protectFromAttacks:
             return IconProvider.alias
-        case .privacyFirst, .activityLogging, .noThirdParties:
-            return IconProvider.checkmarkCircleFilled
-        case .externalAudit:
-            return IconProvider.lightbulb
         case .gaming:
             return IconProvider.magicWand
         case .directConnection:

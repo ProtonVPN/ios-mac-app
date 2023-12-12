@@ -32,7 +32,6 @@ public enum UpsellType {
     case welcomeToProton
     case safeMode
     case moderateNAT
-    case noLogs
     case vpnAccelerator
     case customization
     case profiles
@@ -44,18 +43,8 @@ public enum UpsellType {
             subtitle: subtitle(),
             boldSubtitleElements: boldSubtitleElements(),
             features: features(),
-            moreInformation: moreInformation(),
             artImage: artImage()
         )
-    }
-
-    private func moreInformation() -> Feature? {
-        switch self {
-        case .noLogs:
-            return .externalAudit
-        default:
-            return nil
-        }
     }
 
     public func primaryButtonTitle() -> String? {
@@ -87,8 +76,6 @@ public enum UpsellType {
             return Localizable.modalsUpsellSafeModeTitle
         case .moderateNAT:
             return Localizable.modalsUpsellModerateNatTitle
-        case .noLogs:
-            return Localizable.modalsNoLogsTitle
         case .vpnAccelerator:
             return Localizable.upsellVpnAcceleratorTitle
         case .customization:
@@ -125,8 +112,6 @@ public enum UpsellType {
             return Localizable.modalsUpsellFeaturesSafeModeSubtitle
         case .moderateNAT:
             return Localizable.modalsUpsellModerateNatSubtitle
-        case .noLogs:
-            return nil
         case .vpnAccelerator:
             return nil
         case .customization:
@@ -185,8 +170,6 @@ public enum UpsellType {
             return []
         case .moderateNAT:
             return [.gaming, .directConnection]
-        case .noLogs:
-            return [.privacyFirst, .activityLogging, .noThirdParties]
         case .vpnAccelerator:
             return [.fasterServers, .increaseConnectionSpeeds, .distantServers]
         case .customization:
@@ -223,8 +206,6 @@ public enum UpsellType {
             Asset.safeMode.swiftUIImage
         case .moderateNAT:
             Asset.moderateNAT.swiftUIImage
-        case .noLogs:
-            Asset.noLogs.swiftUIImage
         case .vpnAccelerator:
             Asset.speed.swiftUIImage
         case .customization:
@@ -256,7 +237,7 @@ public enum UpsellType {
 
     public var showUpgradeButton: Bool {
         switch self {
-        case .noLogs, .welcomeFallback, .welcomeUnlimited, .welcomePlus:
+        case .welcomeFallback, .welcomeUnlimited, .welcomePlus:
             return false
         case let .cantSkip(until, _, _):
             return Date().timeIntervalSince(until) < 0
@@ -276,8 +257,6 @@ public enum UpsellType {
 
     public func shouldAddGradient() -> Bool {
         switch self {
-        case .noLogs:
-            return false
         default:
             return true
         }

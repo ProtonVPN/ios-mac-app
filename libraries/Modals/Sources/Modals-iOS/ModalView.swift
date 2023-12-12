@@ -34,7 +34,9 @@ struct ModalView: View {
         UpsellBackgroundView(showGradient: upsellType.shouldAddGradient()) {
             VStack(spacing: .themeSpacing16) {
                 ModalBodyView(upsellType: upsellType)
-                ModalButtonsView(upsellType: upsellType, primaryAction: primaryAction, dismissAction: dismissAction)
+                ModalButtonsView(upsellType: upsellType, 
+                                 primaryAction: primaryAction,
+                                 dismissAction: dismissAction)
             }
             .padding(.horizontal, .themeSpacing16)
             .padding(.bottom, .themeRadius16)
@@ -124,32 +126,46 @@ struct ModalBodyView: View {
     }
 }
 
-struct BannerView: View {
-
-    var body: some View {
-        HStack(alignment: .top, spacing: .themeSpacing12) {
-            Asset.bannerIcon.swiftUIImage
-            VStack {
-                HStack {
-                    Text(Localizable.welcomeToProtonBannerTitle)
-                    IconProvider.arrowOutSquare.swiftUIImage
-                }
-                Text(Localizable.welcomeToProtonBannerSubtitle)
-            }
-        }
-        .padding(.vertical, .themeSpacing16)
-        .padding(.horizontal, .themeSpacing24)
-        .background(Color(.background, .weak))
-        .clipShape(RoundedRectangle(cornerRadius: AppTheme.CornerRadius.radius12.rawValue))
-    }
-}
-
 struct ModalBody_Previews: PreviewProvider {
     static var previews: some View {
         ModalBodyView(upsellType: .welcomePlus(numberOfServers: 1800,
                                                numberOfDevices: 10,
                                                numberOfCountries: 68))
             .previewDisplayName("ModalBody")
+    }
+}
+
+struct BannerView: View {
+
+    var body: some View {
+        HStack(alignment: .top, spacing: .themeSpacing12) {
+            Asset.bannerIcon.swiftUIImage
+            VStack(alignment: .leading, spacing: .themeSpacing4) {
+                HStack(spacing: 0) {
+                    Text(Localizable.welcomeToProtonBannerTitle)
+                        .themeFont(.body2(emphasised: true))
+                    Spacer(minLength: 8)
+                    IconProvider.arrowOutSquare.swiftUIImage
+                        .resizable()
+                        .renderingMode(.template)
+                        .frame(.square(16))
+                        .foregroundColor(Color(.icon, .weak))
+                }
+                Text(Localizable.welcomeToProtonBannerSubtitle)
+                    .foregroundColor(Color(.text, .weak))
+                    .themeFont(.caption(emphasised: false))
+            }
+        }
+        .padding(.themeSpacing16)
+        .background(Color(.background, .weak))
+        .clipShape(RoundedRectangle(cornerRadius: AppTheme.CornerRadius.radius12.rawValue))
+    }
+}
+
+struct BannerView_Previews: PreviewProvider {
+    static var previews: some View {
+        BannerView()
+            .previewDisplayName("BannerView")
     }
 }
 
@@ -173,10 +189,10 @@ struct ModalFeaturesView: View {
                 HStack(spacing: .themeSpacing8) {
                     let green = feature == .moneyGuarantee
                     feature.image.swiftUIImage
-                        .foregroundStyle(Color(.icon, green ? .success : [.interactive, .active]))
+                        .foregroundColor(Color(.icon, green ? .success : [.interactive, .active]))
                     if let title = try? AttributedString(markdown: feature.title()) {
                         Text(title)
-                            .foregroundStyle(Color(.text, green ? .success : []))
+                            .foregroundColor(Color(.text, green ? .success : []))
                     }
                 }
             }
@@ -191,7 +207,7 @@ struct ModalFeaturesView: View {
 
 struct ModalFeatures_Previews: PreviewProvider {
     static var previews: some View {
-        ModalFeaturesView(features: [.accessLAN, .activityLogging, .addLayer])
+        ModalFeaturesView(features: [.accessLAN, .blockAds, .addLayer])
             .previewDisplayName("Modal Features")
     }
 }

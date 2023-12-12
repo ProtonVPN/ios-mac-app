@@ -97,8 +97,6 @@ public final class UpsellViewController: UIViewController, Identifiable {
         if upsellType?.showUpgradeButton == false {
             useFreeButton.isHidden = true
             switch upsellType {
-            case .noLogs:
-                getPlusButton.setTitle(Localizable.modalsCommonNext, for: .normal)
             case .cantSkip:
                 getPlusButton.setTitle(Localizable.upsellSpecificLocationChangeServerButtonTitle, for: .normal)
             default:
@@ -162,13 +160,6 @@ public final class UpsellViewController: UIViewController, Identifiable {
 
         for feature in upsellFeature.features {
             if let view = Bundle.module.loadNibNamed("FeatureView", owner: self, options: nil)?.first as? FeatureView {
-                view.feature = feature
-                featuresStackView.addArrangedSubview(view)
-            }
-        }
-
-        if let feature = upsellType.upsellFeature().moreInformation {
-            if let view = Bundle.module.loadNibNamed("MoreInformationView", owner: self, options: nil)?.first as? MoreInformationView {
                 view.feature = feature
                 featuresStackView.addArrangedSubview(view)
             }

@@ -2138,21 +2138,6 @@
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Protect yourself from network attacks";
 
-/* Title of the No Logs screen */
-"modals_no_logs_title" = "No logs and Swiss-based";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_privacy_first" = "Proton VPN is privacy first";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_log_activity" = "We do not log your internet activity";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_third_parties" = "We do not share any data with third parties";
-
-/* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "Proton VPN's strict no-log policy is certified by an external audit.";
-
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "A note about speed...";
 
