@@ -18,10 +18,15 @@
 
 import SwiftUI
 
-public struct UpsellFeature {
+public struct ModalModel {
+    public struct Subtitle {
+        public let text: String
+        public let boldText: [String]
+    }
     public let title: String
-    public let subtitle: String?
-    public let boldSubtitleElements: [String]
+    public let subtitle: Subtitle?
     public let features: [Feature]
-    public let artImage: any View
+    public let primaryButtonTitle: String
+    public let secondaryButtonTitle: String?
+    public let shouldAddGradient: Bool
 }

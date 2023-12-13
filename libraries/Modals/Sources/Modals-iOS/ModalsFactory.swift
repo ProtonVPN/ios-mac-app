@@ -18,11 +18,11 @@ public struct ModalsFactory {
         freeConnectionsViewStoryboard = UIStoryboard(name: "FreeConnectionsViewController", bundle: Bundle.module)
    }
 
-//    public func upsellViewController(upsellType: UpsellType) -> UpsellViewController {
-//        let upsell = upsellStoryboard.instantiate(controllerType: UpsellViewController.self)
-//        upsell.upsellType = upsellType
-//        return upsell
-//    }
+    public func upsellViewController(modalType: ModalType) -> UpsellViewController {
+        let upsell = upsellStoryboard.instantiate(controllerType: UpsellViewController.self)
+        upsell.modalType = modalType
+        return upsell
+    }
 
     public func whatsNewViewController() -> UIViewController {
         UIHostingController(rootView: WhatsNewView())
@@ -30,10 +30,10 @@ public struct ModalsFactory {
 
     // This method uses the new `ModalView` and eventually all upsell modals should be migrated to this one
     // For now, only the welcome(plus/unlimited/fallback) modals use it.
-    public func modalViewController(upsellType: UpsellType,
+    public func modalViewController(modalType: ModalType,
                                     primaryAction: (() -> Void)? = nil,
                                     dismissAction: (() -> Void)? = nil) -> UIViewController {
-        UIHostingController(rootView: ModalView(upsellType: upsellType, primaryAction: primaryAction, dismissAction: dismissAction))
+        UIHostingController(rootView: ModalView(modalType: modalType, primaryAction: primaryAction, dismissAction: dismissAction))
     }
 
     public func discourageSecureCoreViewController(onDontShowAgain: ((Bool) -> Void)?, onActivate: (() -> Void)?, onCancel: (() -> Void)?, onLearnMore: (() -> Void)?) -> UIViewController {

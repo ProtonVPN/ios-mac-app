@@ -25,7 +25,10 @@ import ProtonCoreUIFoundations
 
 struct ModalView: View {
 
-    let upsellType: UpsellType
+    let modalType: ModalType
+    var modalModel: ModalModel {
+        modalType.modalModel()
+    }
 
     private static let maxContentWidth: CGFloat = 480
 
@@ -33,10 +36,10 @@ struct ModalView: View {
     var dismissAction: (() -> Void)?
 
     var body: some View {
-        UpsellBackgroundView(showGradient: upsellType.shouldAddGradient()) {
+        UpsellBackgroundView(showGradient: modalModel.shouldAddGradient) {
             VStack(spacing: .themeSpacing16) {
-                ModalBodyView(upsellType: upsellType)
-                ModalButtonsView(upsellType: upsellType, 
+                ModalBodyView(modalType: modalType)
+                ModalButtonsView(modalModel: modalModel,
                                  primaryAction: primaryAction,
                                  dismissAction: dismissAction)
             }
@@ -50,12 +53,12 @@ struct ModalView: View {
 
 struct ModalView_Previews: PreviewProvider {
     static var previews: some View {
-        ModalView(upsellType: .welcomePlus(numberOfServers: 1800,
-                                           numberOfDevices: 10,
-                                           numberOfCountries: 68))
+        ModalView(modalType: .welcomePlus(numberOfServers: 1800,
+                                          numberOfDevices: 10,
+                                          numberOfCountries: 68))
         .previewDisplayName("Welcome plus")
 
-        ModalView(upsellType: .welcomeUnlimited)
+        ModalView(modalType: .welcomeUnlimited)
         .previewDisplayName("Welcome unlimited")
     }
 }

@@ -21,7 +21,7 @@ import SwiftUI
 
 // TODO: Change name, it's not only upsell now.
 // TODO: Maybe change to a builder pattern, switching on so many cases is becoming tedious.
-public enum UpsellType {
+public enum ModalType { // ModalType
     case netShield
     case secureCore
     case allCountries(numberOfServers: Int, numberOfCountries: Int)
@@ -37,17 +37,18 @@ public enum UpsellType {
     case profiles
     case cantSkip(before: Date, duration: TimeInterval, longSkip: Bool)
 
-    public func upsellFeature() -> UpsellFeature {
-        UpsellFeature(
+    public func modalModel() -> ModalModel {
+        ModalModel(
             title: title(),
             subtitle: subtitle(),
-            boldSubtitleElements: boldSubtitleElements(),
             features: features(),
-            artImage: artImage()
+            primaryButtonTitle: primaryButtonTitle(),
+            secondaryButtonTitle: secondaryButtonTitle(),
+            shouldAddGradient: shouldAddGradient()
         )
     }
 
-    public func primaryButtonTitle() -> String? {
+    private func primaryButtonTitle() -> String {
         switch self {
         case .netShield:
             return Localizable.modalsUpsellNetShieldTitle
@@ -58,7 +59,7 @@ public enum UpsellType {
         }
     }
 
-    public func secondaryButtonTitle() -> String? {
+    private func secondaryButtonTitle() -> String? {
         return Localizable.notNow
     }
 
@@ -98,43 +99,43 @@ public enum UpsellType {
         }
     }
 
-    private func subtitle() -> String? {
+    private func subtitle() -> ModalModel.Subtitle? {
         switch self {
         case .netShield:
-            return Localizable.modalsUpsellFeaturesSubtitle
+            return .init(text: Localizable.modalsUpsellFeaturesSubtitle, boldText: [])
         case .secureCore:
-            return Localizable.modalsUpsellFeaturesSubtitle
+            return .init(text: Localizable.modalsUpsellFeaturesSubtitle, boldText: [])
         case .allCountries:
-            return Localizable.modalsUpsellFeaturesSubtitle
+            return .init(text: Localizable.modalsUpsellFeaturesSubtitle, boldText: [])
         case .country:
-            return Localizable.upsellCountryFeatureSubtitle
+            return .init(text: Localizable.upsellCountryFeatureSubtitle, boldText: [])
         case .safeMode:
-            return Localizable.modalsUpsellFeaturesSafeModeSubtitle
+            return .init(text: Localizable.modalsUpsellFeaturesSafeModeSubtitle, boldText: [])
         case .moderateNAT:
-            return Localizable.modalsUpsellModerateNatSubtitle
+            return .init(text: Localizable.modalsUpsellModerateNatSubtitle, boldText: [])
         case .vpnAccelerator:
             return nil
         case .customization:
             return nil
         case .profiles:
-            return Localizable.upsellProfilesSubtitle
+            return .init(text: Localizable.upsellProfilesSubtitle, boldText: [])
         case let .cantSkip(before, _, _):
             if before.timeIntervalSinceNow > 0 { // hide the subtitle after timer runs out
-                return Localizable.upsellSpecificLocationSubtitle
+                return .init(text: Localizable.upsellSpecificLocationSubtitle, boldText: [])
             }
             return nil
         case .welcomePlus:
-            return Localizable.welcomeUpgradeSubtitlePlus
+            return .init(text: Localizable.welcomeUpgradeSubtitlePlus, boldText: [])
         case .welcomeUnlimited:
 #if os(iOS)
-            return Localizable.welcomeUpgradeSubtitleUnlimitedMarkdown
+            return .init(text: Localizable.welcomeUpgradeSubtitleUnlimitedMarkdown, boldText: [])
 #else
-            return Localizable.welcomeUpgradeSubtitleUnlimited
+            return .init(text: Localizable.welcomeUpgradeSubtitleUnlimited, boldText: [])
 #endif
         case .welcomeFallback:
-            return Localizable.welcomeUpgradeSubtitleFallback
+            return .init(text: Localizable.welcomeUpgradeSubtitleFallback, boldText: [])
         case .welcomeToProton:
-            return Localizable.welcomeToProtonSubtitle
+            return .init(text: Localizable.welcomeToProtonSubtitle, boldText: [])
         }
     }
 
@@ -255,7 +256,7 @@ public enum UpsellType {
         }
     }
 
-    public func shouldAddGradient() -> Bool {
+    private func shouldAddGradient() -> Bool {
         switch self {
         default:
             return true

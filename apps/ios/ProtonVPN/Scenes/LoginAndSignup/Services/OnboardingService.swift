@@ -61,8 +61,8 @@ extension OnboardingModuleService: OnboardingService {
     }
 
     private func welcomeToProtonViewController() -> UIViewController {
-        ModalsFactory().modalViewController(upsellType: .welcomeToProton, primaryAction:  {
-            self.windowService.addToStack(self.allCountriesUpsellViewController(), 
+        ModalsFactory().modalViewController(modalType: .welcomeToProton, primaryAction:  {
+            self.windowService.addToStack(self.allCountriesUpsellViewController(),
                                           checkForDuplicates: false)
         })
     }
@@ -70,8 +70,8 @@ extension OnboardingModuleService: OnboardingService {
     private func allCountriesUpsellViewController() -> UIViewController {
         let serversCount = AccountPlan.plus.serversCount
         let countriesCount = self.planService.countriesCount
-        let allCountriesUpsell: UpsellType = .allCountries(numberOfServers: serversCount, numberOfCountries: countriesCount)
-        return ModalsFactory().modalViewController(upsellType: allCountriesUpsell) {
+        let allCountriesUpsell: ModalType = .allCountries(numberOfServers: serversCount, numberOfCountries: countriesCount)
+        return ModalsFactory().modalViewController(modalType: allCountriesUpsell) {
             self.userDidRequestPlanPurchase { action in
                 switch action {
                 case .planPurchased:

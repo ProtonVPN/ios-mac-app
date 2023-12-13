@@ -23,7 +23,7 @@ import Modals_macOS
 class ViewController: NSViewController {
 
     enum Modal {
-        case upsell(UpsellType)
+        case upsell(ModalType)
         case discourageSecureCore
         case whatsNew
         case freeConnections([(String, Image?)])
@@ -80,7 +80,7 @@ extension ViewController: NSTableViewDelegate {
         let viewController: NSViewController
         switch modal.type {
         case .upsell(let type):
-            viewController = ModalsFactory.upsellViewController(upsellType: type, upgradeAction: { }, continueAction: { })
+            viewController = ModalsFactory.upsellViewController(modalType: type, upgradeAction: { }, continueAction: { })
         case .discourageSecureCore:
             viewController = ModalsFactory.discourageSecureCoreViewController(onDontShowAgain: nil, onActivate: nil, onCancel: nil, onLearnMore: nil)
         case .freeConnections(let countries):

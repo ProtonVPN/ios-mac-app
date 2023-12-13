@@ -49,9 +49,9 @@ public final class UpsellViewController: NSViewController {
     @IBOutlet private weak var upgradeButton: UpsellPrimaryActionButton!
     @IBOutlet private weak var featuresStackView: NSStackView!
 
-    var upsellType: UpsellType?
-    private var upsellFeature: UpsellFeature? {
-        upsellType?.upsellFeature()
+    var modalType: ModalType?
+    private var modalModel: ModalModel? {
+        modalType?.modalModel()
     }
 
     var upgradeAction: (() -> Void)?
@@ -83,7 +83,7 @@ public final class UpsellViewController: NSViewController {
     }
 
     func addGradient() {
-        guard upsellType?.shouldAddGradient() ?? false else { return }
+        guard modalType?.modalModel().shouldAddGradient ?? false else { return }
         let gradientLayer = CAGradientLayer.gradientLayer(in: gradientView.bounds)
         gradientLayer.opacity = 0.4
         gradientView.wantsLayer = true
@@ -98,9 +98,9 @@ public final class UpsellViewController: NSViewController {
     }
 
     @objc func setupText() {
-        guard let upsellType else { return }
-        if upsellType.showUpgradeButton == false {
-            switch upsellType {
+        guard let modalType else { return }
+        if modalType.showUpgradeButton == false {
+            switch modalType {
             case .welcomeFallback, .welcomeUnlimited, .welcomePlus:
                 upgradeButton.title = Localizable.modalsCommonGetStarted
             case .cantSkip:
@@ -112,18 +112,18 @@ public final class UpsellViewController: NSViewController {
             upgradeButton.title = Localizable.modalsGetPlus
         }
 
-        guard let upsellFeature else { return }
-        titleLabel.stringValue = upsellFeature.title
-        if let subtitle = upsellFeature.subtitle {
-            descriptionLabel.attributedStringValue = subtitle.attributedString(size: 17,
-                                                                               color: .color(.text, .weak),
-                                                                               boldStrings: upsellFeature.boldSubtitleElements,
-                                                                               alignment: .center)
+        guard let modalModel else { return }
+        titleLabel.stringValue = modalModel.title
+        if let subtitle = modalModel.subtitle {
+            descriptionLabel.attributedStringValue = subtitle.text.attributedString(size: 17,
+                                                                                    color: .color(.text, .weak),
+                                                                                    boldStrings: subtitle.boldText,
+                                                                                    alignment: .center)
         } else {
             descriptionLabel.isHidden = true
         }
 
-        if let timeInterval = upsellType
+        if let timeInterval = modalType
             .changeDate?
             .timeIntervalSince(Date()),
            timeInterval > 0 {
@@ -133,8 +133,8 @@ public final class UpsellViewController: NSViewController {
         }
     }
 
-    func setupArt(feature: UpsellFeature) {
-        let childView = NSHostingController(rootView: AnyView(feature.artImage))
+    func setupArt(type: ModalType) {
+        let childView = NSHostingController(rootView: AnyView(type.artImage()))
         addChild(childView)
         childView.view.frame = featureArtView.bounds
         childView.view.layer?.backgroundColor = .clear
@@ -144,19 +144,20 @@ public final class UpsellViewController: NSViewController {
     }
 
     func setupFeatures() {
-        guard let upsellFeature else { return }
-        setupArt(feature: upsellFeature)
+        guard let modalType else { return }
+        setupArt(type: modalType)
+        let modalModel = modalType.modalModel()
 
         for view in featuresStackView.arrangedSubviews {
             view.removeFromSuperview()
         }
 
-        guard !upsellFeature.features.isEmpty else {
+        guard !modalModel.features.isEmpty else {
             featuresStackView.removeFromSuperview()
             return
         }
 
-        for feature in upsellFeature.features {
+        for feature in modalModel.features {
             let view = FeatureView()
             view.feature = feature
             featuresStackView.addArrangedSubview(view)
@@ -169,7 +170,7 @@ public final class UpsellViewController: NSViewController {
     }
 
     @IBAction private func upgrade(_ sender: Any) {
-        if upsellType?.showUpgradeButton == false {
+        if modalType?.showUpgradeButton == false {
             continueAction?()
         } else {
             upgradeAction?()

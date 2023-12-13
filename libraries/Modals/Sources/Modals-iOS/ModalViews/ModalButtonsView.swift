@@ -21,7 +21,7 @@ import SwiftUI
 import SharedViews
 
 struct ModalButtonsView: View {
-    let upsellType: UpsellType
+    let modalModel: ModalModel
 
     var primaryAction: (() -> Void)?
     var dismissAction: (() -> Void)?
@@ -30,15 +30,15 @@ struct ModalButtonsView: View {
 
     var body: some View {
         VStack {
-            if let primaryAction, let title = upsellType.primaryButtonTitle() {
+            if let primaryAction {
                 Button {
                     primaryAction()
                 } label: {
-                    Text(title)
+                    Text(modalModel.primaryButtonTitle)
                 }
                 .buttonStyle(PrimaryButtonStyle())
             }
-            if let dismissAction, let title = upsellType.secondaryButtonTitle() {
+            if let dismissAction, let title = modalModel.secondaryButtonTitle {
                 Button {
                     dismissAction()
                 } label: {
@@ -52,7 +52,7 @@ struct ModalButtonsView: View {
 
 struct ModalButtons_Previews: PreviewProvider {
     static var previews: some View {
-        ModalButtonsView(upsellType: .safeMode)
+        ModalButtonsView(modalModel: ModalType.safeMode.modalModel())
             .previewDisplayName("ModalButtons")
     }
 }

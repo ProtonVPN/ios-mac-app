@@ -23,10 +23,10 @@ import XCTest
 
 final class ModalsSampleAppTests: XCTestCase {
     func testUpsellViewControllerCreation() throws {
-        XCTAssertNotNil(ModalsFactory().upsellViewController(upsellType: .secureCore))
-        XCTAssertNotNil(ModalsFactory().upsellViewController(upsellType: .netShield))
-        XCTAssertNotNil(ModalsFactory().upsellViewController(upsellType: .allCountries(numberOfServers: 23, numberOfCountries: 34)))
-        XCTAssertNotNil(ModalsFactory().upsellViewController(upsellType: .safeMode))
-        XCTAssertNotNil(ModalsFactory().upsellViewController(upsellType: .moderateNAT))
+        XCTAssertNotNil(ModalsFactory().upsellViewController(modalType: .secureCore))
+        XCTAssertNotNil(ModalsFactory().upsellViewController(modalType: .netShield))
+        XCTAssertNotNil(ModalsFactory().upsellViewController(modalType: .allCountries(numberOfServers: 23, numberOfCountries: 34)))
+        XCTAssertNotNil(ModalsFactory().upsellViewController(modalType: .safeMode))
+        XCTAssertNotNil(ModalsFactory().upsellViewController(modalType: .moderateNAT))
     }
 }

@@ -21,18 +21,21 @@ import Modals
 
 struct ModalBodyView: View {
 
-    let upsellType: UpsellType
+    let modalType: ModalType
+    var modalModel: ModalModel {
+        modalType.modalModel()
+    }
 
     var body: some View {
         VerticallyCenteringScrollView {
             VStack(spacing: 0) {
-                upsellType.artImage()
+                modalType.artImage()
 
                 VStack(spacing: .themeSpacing8) {
-                    Text(upsellType.upsellFeature().title)
+                    Text(modalModel.title)
                         .themeFont(.headline)
                         .multilineTextAlignment(.center)
-                    if let subtitle = upsellType.upsellFeature().subtitle,
+                    if let subtitle = modalModel.subtitle?.text,
                        let subtitle = try? AttributedString(markdown: subtitle,
                                                             options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace)) {
                         Text(subtitle)
@@ -43,7 +46,7 @@ struct ModalBodyView: View {
                     }
                 }
                 Spacer().frame(height: .themeSpacing24)
-                let features = upsellType.upsellFeature().features
+                let features = modalModel.features
                 if features.contains(.banner) {
                     BannerView()
                 } else if !features.isEmpty {
@@ -56,7 +59,7 @@ struct ModalBodyView: View {
 
 struct ModalBody_Previews: PreviewProvider {
     static var previews: some View {
-        ModalBodyView(upsellType: .welcomePlus(numberOfServers: 1800,
+        ModalBodyView(modalType: .welcomePlus(numberOfServers: 1800,
                                                numberOfDevices: 10,
                                                numberOfCountries: 68))
             .previewDisplayName("ModalBody")
