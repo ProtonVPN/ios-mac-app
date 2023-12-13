@@ -19,25 +19,6 @@
 import SwiftUI
 import Theme
 
-public struct SecondaryButtonStyle: ButtonStyle {
-    public init() { }
-
-    public func makeBody(configuration: Configuration) -> some View {
-        configuration
-            .label
-            .foregroundColor(Color(.text, .interactive))
-#if canImport(UIKit)
-            .frame(maxWidth: .infinity, minHeight: .themeSpacing32)
-            .font(.body1())
-#endif
-            .padding(.vertical, .themeSpacing8)
-        //            .background(backgroundColor(isPressed: configuration.isPressed))
-            .themeBorder(color: .black,
-                         lineWidth: 0,
-                         cornerRadius: .radius8)
-    }
-}
-
 public struct PrimaryButtonStyle: ButtonStyle {
 
     @State var isHovered = false
