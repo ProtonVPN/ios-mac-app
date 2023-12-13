@@ -22,7 +22,7 @@ import UIKit
 
 class ViewController: UITableViewController {
     
-    let upsells: [(type: UpsellType, title: String)] = [
+    let upsells: [(type: ModalType, title: String)] = [
         (.welcomePlus(numberOfServers: 1300, numberOfDevices: 10, numberOfCountries: 61), "Welcome Plus"),
         (.welcomeUnlimited, "Welcome Unlimited"),
         (.welcomeFallback, "Welcome Fallback"),
@@ -119,16 +119,16 @@ class ViewController: UITableViewController {
             viewController = modalsFactory.whatsNewViewController()
         } else if indexPath.section == 2 {
             let type = upsells[indexPath.row].type
-//            switch type {
-//            case .welcomeFallback, .welcomeUnlimited, .welcomePlus:
-                viewController = modalsFactory.modalViewController(upsellType: type, primaryAction: {
+            switch type {
+            case .welcomeFallback, .welcomeUnlimited, .welcomePlus, .welcomeToProton:
+                viewController = modalsFactory.modalViewController(modalType: type, primaryAction: {
                     self.dismiss(animated: true)
                 })
-//            default:
-//                let modalVC = modalsFactory.upsellViewController(upsellType: type)
-//                modalVC.delegate = self
-//                viewController = modalVC
-//            }
+            default:
+                let modalVC = modalsFactory.upsellViewController(modalType: type)
+                modalVC.delegate = self
+                viewController = modalVC
+            }
         } else if indexPath.section == 3 {
             if indexPath.row == 0 {
                 let modalVC = modalsFactory.discourageSecureCoreViewController(
@@ -159,7 +159,7 @@ class ViewController: UITableViewController {
                                                                         onPrimaryButtonTap: nil)
             viewController = modalVC
         } else if indexPath.section == 5 {
-            let modalVC = modalsFactory.modalViewController(upsellType: .welcomeToProton, primaryAction: {
+            let modalVC = modalsFactory.modalViewController(modalType: .welcomeToProton, primaryAction: {
                 self.pushAllCountries()
             })
             let navigationController = UINavigationController(rootViewController: modalVC)
@@ -173,7 +173,7 @@ class ViewController: UITableViewController {
     }
 
     func pushAllCountries() {
-        let allCountries = modalsFactory.modalViewController(upsellType: .allCountries(numberOfServers: 1800, numberOfCountries: 63), 
+        let allCountries = modalsFactory.modalViewController(modalType: .allCountries(numberOfServers: 1800, numberOfCountries: 63), 
                                                              primaryAction: { self.presentedViewController?.dismiss(animated: true) },
                                                              dismissAction: { self.presentedViewController?.dismiss(animated: true) })
 
