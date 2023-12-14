@@ -61,7 +61,7 @@ extension OnboardingModuleService: OnboardingService {
     }
 
     private func welcomeToProtonViewController() -> UIViewController {
-        ModalsFactory().modalViewController(modalType: .welcomeToProton, primaryAction:  {
+        ModalsFactory().modalViewController(modalType: .welcomeToProton, primaryAction: {
             self.windowService.addToStack(self.allCountriesUpsellViewController(),
                                           checkForDuplicates: false)
         })

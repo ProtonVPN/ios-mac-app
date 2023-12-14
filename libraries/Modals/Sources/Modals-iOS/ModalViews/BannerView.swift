@@ -51,7 +51,7 @@ struct BannerView: View {
         }
         .padding(.themeSpacing16)
         .background(Color(.background, .weak))
-        .themeClip(cornerRadius: .radius12)
+        .clipRectangle(cornerRadius: .radius12)
     }
 }
 

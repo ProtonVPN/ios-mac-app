@@ -1120,10 +1120,6 @@
 /* iOS plan feature */
 "_feature_secure_core" = "Secure Core";
 
-/* iOS plan feature */
-"_feature_blocked_content" = "Access blocked content";
-"_feature_bt" = "BitTorrent/file-sharing support";
-
 // MARK: Upsell & Onboard
 
 /* MacOS welcome screen: title */
@@ -2331,7 +2327,6 @@
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Available with VPN Business.";
 
-"onboarding_telemetry_title" = "Help us fight censorship";
 "onboarding_usage_stats_title" = "Share anonymous usage statistics";
 "onboarding_usage_stats_description" = "Usage data helps us overcome VPN blocks and improve app performance.";
 "onboarding_crash_reports_title" = "Share anonymous crash reports";

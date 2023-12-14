@@ -144,7 +144,9 @@ final class CoreLoginService {
         case .loginStateChanged(.dataIsAvailable(let loginData)), .signupStateChanged(.dataIsAvailable(let loginData)):
             log.debug("Login or signup process in progress", category: .app)
             // Update the session id in the networking stack after login
-            networking.apiService.setSessionUID(uid: loginData.getCredential.UID)
+            let uid = loginData.getCredential.UID
+            networking.apiService.setSessionUID(uid: uid)
+            pushNotificationService.didLoginWithUID(uid)
         }
     }
 

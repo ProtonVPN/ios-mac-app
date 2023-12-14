@@ -442,10 +442,6 @@ public enum Localizable {
   /// Feature
   public static var feature: String { return Localizable.tr("Localizable", "_feature", fallback: "Feature") }
   /// iOS plan feature
-  public static var featureBlockedContent: String { return Localizable.tr("Localizable", "_feature_blocked_content", fallback: "Access blocked content") }
-  /// BitTorrent/file-sharing support
-  public static var featureBt: String { return Localizable.tr("Localizable", "_feature_bt", fallback: "BitTorrent/file-sharing support") }
-  /// iOS plan feature
   public static var featureConnections: String { return Localizable.tr("Localizable", "_feature_connections", fallback: "Simultaneous VPN connections") }
   /// Free servers
   public static var featureFreeServers: String { return Localizable.tr("Localizable", "_feature_free_servers", fallback: "Free servers") }
@@ -1707,16 +1703,6 @@ public enum Localizable {
   public static var modalsGetPlus: String { return Localizable.tr("Localizable", "modals_get_plus", fallback: "Upgrade") }
   /// Description of the first section of the "What's new" screen
   public static var modalsNewServers: String { return Localizable.tr("Localizable", "modals_new_servers", fallback: "There are now Free servers in Poland and Romania.") }
-  /// Learn more of the No Logs screen
-  public static var modalsNoLogsExternalAudit: String { return Localizable.tr("Localizable", "modals_no_logs_external_audit", fallback: "Proton VPN's strict no-log policy is certified by an external audit.") }
-  /// Feature of the No Logs screen
-  public static var modalsNoLogsLogActivity: String { return Localizable.tr("Localizable", "modals_no_logs_log_activity", fallback: "We do not log your internet activity") }
-  /// Feature of the No Logs screen
-  public static var modalsNoLogsPrivacyFirst: String { return Localizable.tr("Localizable", "modals_no_logs_privacy_first", fallback: "Proton VPN is privacy first") }
-  /// Feature of the No Logs screen
-  public static var modalsNoLogsThirdParties: String { return Localizable.tr("Localizable", "modals_no_logs_third_parties", fallback: "We do not share any data with third parties") }
-  /// Title of the No Logs screen
-  public static var modalsNoLogsTitle: String { return Localizable.tr("Localizable", "modals_no_logs_title", fallback: "No logs and Swiss-based") }
   /// Description of the second section of the "What's new" screen
   public static var modalsServerCrowding: String { return Localizable.tr("Localizable", "modals_server_crowding", fallback: "To prevent server crowding and ensure that everyone has access to fast and secure browsing, we removed manual country selection and made major improvements to automatic server selection.") }
   /// Title of the second section of the "What's new" screen
@@ -1791,8 +1777,6 @@ public enum Localizable {
   public static var onboardingFooter: String { return Localizable.tr("Localizable", "onboarding_footer", fallback: "These statistics do not contain your IP address, and they cannot be used to identify you. We'll never share them with third parties.") }
   /// Learn more
   public static var onboardingFooterLearnMore: String { return Localizable.tr("Localizable", "onboarding_footer_learn_more", fallback: "Learn more") }
-  /// Help us fight censorship
-  public static var onboardingTelemetryTitle: String { return Localizable.tr("Localizable", "onboarding_telemetry_title", fallback: "Help us fight censorship") }
   /// Usage data helps us overcome VPN blocks and improve app performance.
   public static var onboardingUsageStatsDescription: String { return Localizable.tr("Localizable", "onboarding_usage_stats_description", fallback: "Usage data helps us overcome VPN blocks and improve app performance.") }
   /// Share anonymous usage statistics
