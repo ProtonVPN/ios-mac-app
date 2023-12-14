@@ -19,9 +19,8 @@
 import Strings
 import SwiftUI
 
-// TODO: Change name, it's not only upsell now.
-// TODO: Maybe change to a builder pattern, switching on so many cases is becoming tedious.
-public enum ModalType { // ModalType
+// TODO: Separate `cantSkip` from the rest, it's different enough to be on it's own.
+public enum ModalType {
     case netShield
     case secureCore
     case allCountries(numberOfServers: Int, numberOfCountries: Int)
@@ -108,7 +107,8 @@ public enum ModalType { // ModalType
         case .allCountries:
             return .init(text: Localizable.modalsUpsellFeaturesSubtitle, boldText: [])
         case .country:
-            return .init(text: Localizable.upsellCountryFeatureSubtitle, boldText: [])
+            return .init(text: Localizable.upsellCountryFeatureSubtitle, 
+                         boldText: [Localizable.upsellCountryFeatureSubtitleBold])
         case .safeMode:
             return .init(text: Localizable.modalsUpsellFeaturesSafeModeSubtitle, boldText: [])
         case .moderateNAT:
@@ -118,7 +118,8 @@ public enum ModalType { // ModalType
         case .customization:
             return nil
         case .profiles:
-            return .init(text: Localizable.upsellProfilesSubtitle, boldText: [])
+            return .init(text: Localizable.upsellProfilesSubtitle, 
+                         boldText: [Localizable.upsellProfilesSubtitleBold])
         case let .cantSkip(before, _, _):
             if before.timeIntervalSinceNow > 0 { // hide the subtitle after timer runs out
                 return .init(text: Localizable.upsellSpecificLocationSubtitle, boldText: [])
@@ -128,7 +129,8 @@ public enum ModalType { // ModalType
             return .init(text: Localizable.welcomeUpgradeSubtitlePlus, boldText: [])
         case .welcomeUnlimited:
 #if os(iOS)
-            return .init(text: Localizable.welcomeUpgradeSubtitleUnlimitedMarkdown, boldText: [])
+            return .init(text: Localizable.welcomeUpgradeSubtitleUnlimitedMarkdown, 
+                         boldText: [Localizable.welcomeUpgradeSubtitleUnlimitedBold])
 #else
             return .init(text: Localizable.welcomeUpgradeSubtitleUnlimited, boldText: [])
 #endif
@@ -136,19 +138,6 @@ public enum ModalType { // ModalType
             return .init(text: Localizable.welcomeUpgradeSubtitleFallback, boldText: [])
         case .welcomeToProton:
             return .init(text: Localizable.welcomeToProtonSubtitle, boldText: [])
-        }
-    }
-
-    private func boldSubtitleElements() -> [String] {
-        switch self {
-        case .profiles:
-            return [Localizable.upsellProfilesSubtitleBold]
-        case .country:
-            return [Localizable.upsellCountryFeatureSubtitleBold]
-        case .welcomeUnlimited:
-            return [Localizable.welcomeUpgradeSubtitleUnlimitedBold]
-        default:
-            return []
         }
     }
 

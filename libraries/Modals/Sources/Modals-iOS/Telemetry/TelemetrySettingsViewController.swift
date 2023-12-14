@@ -25,27 +25,18 @@ public class TelemetrySettingsViewController: UIViewController {
     public init(
         preferenceChangeUsageData: @escaping (Bool) -> Void,
         preferenceChangeCrashReports: @escaping (Bool) -> Void,
-        usageStatisticsOn: Bool,
-        crashReportsOn: Bool,
+        usageStatisticsOn: @escaping () -> Bool,
+        crashReportsOn: @escaping () -> Bool,
         title: String? = nil
     ) {
-        var usageStatisticsOn = usageStatisticsOn
-        var crashReportsOn = crashReportsOn
-
         self.telemetryView = TelemetryTogglesView(
             usageStatisticsOn: .init(
-                get: { usageStatisticsOn },
-                set: {
-                    usageStatisticsOn = $0
-                    preferenceChangeUsageData($0)
-                }
+                get: { usageStatisticsOn() },
+                set: { preferenceChangeUsageData($0) }
             ),
             crashReportsOn: .init(
-                get: { crashReportsOn },
-                set: {
-                    crashReportsOn = $0
-                    preferenceChangeCrashReports($0)
-                }
+                get: { crashReportsOn() },
+                set: { preferenceChangeCrashReports($0) }
             )
         )
         super.init(nibName: nil, bundle: nil)
