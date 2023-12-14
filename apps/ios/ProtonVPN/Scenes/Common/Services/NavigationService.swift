@@ -351,8 +351,12 @@ extension NavigationService: SettingsService {
             preferenceChangeCrashReports: { [weak self] isOn in
                 self?.telemetrySettings.updateTelemetryCrashReports(isOn: isOn)
             },
-            usageStatisticsOn: telemetrySettings.telemetryUsageData,
-            crashReportsOn: telemetrySettings.telemetryCrashReports,
+            usageStatisticsOn: { [weak self] in
+                self?.telemetrySettings.telemetryUsageData ?? true
+            },
+            crashReportsOn: { [weak self] in
+                self?.telemetrySettings.telemetryCrashReports ?? true
+            },
             title: Localizable.usageStatistics
         )
     }

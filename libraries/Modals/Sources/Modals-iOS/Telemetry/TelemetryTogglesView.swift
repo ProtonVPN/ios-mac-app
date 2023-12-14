@@ -18,6 +18,7 @@
 
 import SwiftUI
 import Strings
+import Theme
 
 struct TelemetryTogglesView: View {
     @Binding var usageStatisticsOn: Bool
@@ -43,6 +44,7 @@ struct TelemetryTogglesView: View {
             .background(Color(.background))
             OnboardingFooter()
         }
+        .frame(maxWidth: Theme.Constants.readableContentWidth)
     }
 }
 
@@ -58,24 +60,18 @@ struct TelemetryTogglesView_Previews: PreviewProvider {
 
 struct OnboardingFooter: View {
 
-    private let urlUsageStatistics = "https://protonvpn.com/support/share-usage-statistics"
+    private let urlUsageStatistics = URL(string: "https://protonvpn.com/support/share-usage-statistics")!
 
     var body: some View {
-        // Find a way to combine the learn more text and the footer text into one localized string. We only have one localization that reads right-to-left at the moment, but there will probably be more in the future.
-        (Text(Localizable.onboardingFooter + " ") + Text(Localizable.onboardingFooterLearnMore)
-            .foregroundColor(Color(.text, .interactive))
-        )
-        .themeFont(.caption())
-        .padding()
-        .background(Color(.background, .strong))
-        .foregroundColor(Color(.text, .weak))
-        .onTapGesture {
-            guard let url = URL(string: urlUsageStatistics),
-                  UIApplication.shared.canOpenURL(url) else {
-                return
-            }
-            UIApplication.shared.open(url)
-        }
+        Link(destination: urlUsageStatistics, label: {
+            // Find a way to combine the learn more text and the footer text into one localized string. We only have one localization that reads right-to-left at the moment, but there will probably be more in the future.
+            (Text(Localizable.onboardingFooter + " ") + Text(Localizable.onboardingFooterLearnMore)
+                .foregroundColor(Color(.text, .interactive))
+            )
+            .themeFont(.caption())
+            .padding()
+            .foregroundColor(Color(.text, .weak))
+        })
     }
 }
 
