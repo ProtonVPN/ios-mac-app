@@ -29,7 +29,6 @@ import VPNShared
 import LocalFeatureFlags
 import Strings
 import Dependencies
-import Onboarding
 
 final class SettingsViewModel {
     typealias Factory = AppStateManagerFactory &

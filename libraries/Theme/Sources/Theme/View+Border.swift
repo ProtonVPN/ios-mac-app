@@ -28,7 +28,7 @@ extension View {
             .overlay(rectangle.stroke(color, lineWidth: lineWidth))
     }
 
-    public func themeClip(cornerRadius: AppTheme.CornerRadius) -> some View {
+    public func clipRectangle(cornerRadius: AppTheme.CornerRadius) -> some View {
         let rectangle = RoundedRectangle(cornerRadius: cornerRadius.rawValue)
         return self.clipShape(rectangle)
     }

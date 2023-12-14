@@ -30,9 +30,6 @@ public struct SecondaryButtonStyle: ButtonStyle {
             .frame(maxWidth: .infinity, minHeight: .themeSpacing32)
             .font(.body1())
             .padding(.vertical, .themeSpacing8)
-            .themeBorder(color: .black,
-                         lineWidth: 0,
-                         cornerRadius: .radius8)
     }
 }
 #endif

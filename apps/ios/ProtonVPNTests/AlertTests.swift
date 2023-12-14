@@ -174,8 +174,8 @@ fileprivate class SettingsServiceMock: SettingsService {
     func makeTelemetrySettingsViewController() -> TelemetrySettingsViewController {
         return TelemetrySettingsViewController(preferenceChangeUsageData: { _ in },
                                                preferenceChangeCrashReports: { _ in },
-                                               usageStatisticsOn: true,
-                                               crashReportsOn: true)
+                                               usageStatisticsOn: { true },
+                                               crashReportsOn: { true })
     }
     
     func makeExtensionsSettingsViewController() -> WidgetSettingsViewController {

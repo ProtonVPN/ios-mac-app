@@ -19,7 +19,6 @@
 import SwiftUI
 
 /// Vertical scroll view with content centred vertically
-///
 struct VerticallyCenteringScrollView<Content>: View where Content: View {
     @ViewBuilder let content: Content
 
