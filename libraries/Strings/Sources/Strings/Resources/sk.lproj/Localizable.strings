@@ -805,7 +805,7 @@
 "_upgrade_plan_to_access_server" = "Je nám ľúto, ale tento server nie je k dispozícii pre vašu úroveň predplatného. Ak chcete mať prístup k viacerým serverom, zvážte zvýšenie predplatného.";
 
 /* Under maintenance alert */
-"_all_servers_in_country_under_maintenance" = "Všetky servery v tejto krajine sú podrobené údržbe. Pripojte sa, prosím, do inej krajiny.";
+"_all_servers_in_country_under_maintenance" = "Všetky servery v tejto krajine sú podrobené údržbe. Pripojte sa do inej krajiny, prosím.";
 
 "_unsecure_wifi" = "Bolo zistené nezabezpečené pripojenie Wi-Fi";
 

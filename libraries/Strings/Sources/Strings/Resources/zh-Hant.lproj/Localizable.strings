@@ -49,7 +49,7 @@
 "_upgrade_subscription" = "升級套餐";
 
 /* MacOS: Settings -> Account. Button leading to web interface. */
-"_manage_subscription" = "管理訂閱";
+"_manage_subscription" = "管理訂購授權";
 
 /* iOS & MacOS: text near country or server; MacOS: title of several alerts */
 "_upgrade_required" = "需要升級";
@@ -342,7 +342,7 @@
 "_start_on_boot" = "開機時啟動";
 
 /* MacOS: button in login screen */
-"_create_account" = "建立帳號";
+"_create_account" = "創建帳號";
 
 /* MacOS: button in login screen */
 "_need_help" = "需要幫忙嗎？";
@@ -404,7 +404,7 @@
 "_use_sms_verification" = "簡訊驗證";
 
 /* iOS: human verification option select button */
-"_request_invitation" = "請求手動啟用";
+"_request_invitation" = "需求手動啟用";
 
 /* iOS: placeholder for code in human verification code form */
 "_enter_verification_code" = "123 456";
@@ -464,7 +464,7 @@
 "_map_show" = "顯示地圖";
 
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
-"_map_hide" = "Hide map";
+"_map_hide" = "隱藏地圖";
 
 /* Description shown together with server info icon */
 "_tor_description" = "連線至 TOR 網路";
@@ -493,7 +493,7 @@
 "_no_servers_to_show" = "目前未有任何伺服器可在此顯示。";
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
-"_plan_does_not_include_secure_core" = "您的訂閱並不包括Secure Core 功能。";
+"_plan_does_not_include_secure_core" = "您的方案並不包括Secure Core 功能。";
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
 "_learn_more_about_secure_core" = "瞭解更多有關Secure Core的資訊";
@@ -532,7 +532,7 @@
 "_p2p_server" = "P2P 伺服器";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_tor_server" = "Tor Server";
+"_tor_server" = "Tor 伺服器";
 
 /* MacOS Profiles Overview: Table column header */
 "_profile" = "設定檔";
@@ -559,7 +559,7 @@
 "_profile_deletion_failed" = "無法刪除配置";
 
 /* MacOS: Buttons in several places; iOS: profile creation screen title */
-"_create_new_profile" = "建立配置檔";
+"_create_new_profile" = "創建配置檔";
 
 /* MacOS: button in profiles tab in main window */
 "_manage_profiles" = "管理設定檔";
@@ -609,7 +609,7 @@
 /* Text used when no active server information is available */
 "_no_description_available" = "沒有說明資訊";
 
-"_create_profile" = "建立配置檔";
+"_create_profile" = "創建配置檔";
 
 /* Profile create/change form */
 "_profile_settings" = "設定檔設定";
@@ -681,13 +681,13 @@
 /* Plan speed */
 "_plan_speed_high" = "高速";
 
-"_plan_speed_fastest" = "Fastest speed";
+"_plan_speed_fastest" = "最快速";
 
 /* Unknown error that has no better description */
 "_error_internal_error" = "內部 API 錯誤";
 
 /* VPN session is active error */
-"_error_vpn_session_is_active" = "Proton VPN 的對話已啟動";
+"_error_vpn_session_is_active" = "Proton VPN 的運行階段已啟動";
 
 /* VPN credentials can't be loaded error */
 "_error_user_credentials_missing" = "使用者憑證已遺失。無法登錄";
@@ -727,10 +727,10 @@
 "_error_hash_password" = "無法加密用戶密碼";
 
 /* Error try to restore user from the session */
-"_error_fetch_session" = "無法從會話中找到用戶";
+"_error_fetch_session" = "在往來對話中未找到使用者";
 
 /* Network error */
-"_ne_request_timed_out" = "網路請求超時";
+"_ne_request_timed_out" = "網路需求超時";
 
 /* Network error */
 "_ne_unable_to_connect_to_host" = "無法連上伺服器";
@@ -778,10 +778,10 @@
 "_error_keychain_fetch" = "鑰匙圈錯誤。";
 
 /* Error when the app fails to create a user */
-"_error_user_creation" = "帳號建立失敗";
+"_error_user_creation" = "帳號創建失敗";
 
 /* General title for several error alerts */
-"_error_unknown_title" = "Unknown error";
+"_error_unknown_title" = "未知的錯誤";
 
 /* Delinquent user alert */
 "_delinquent_user_title" = "未支付發票";
@@ -802,7 +802,7 @@
 "_server_under_maintenance" = "伺服器維護中";
 
 /* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_server" = "抱歉，您的訂閱等級無法使用此伺服器。若您希望存取更多伺服器，歡迎升級訂閱方案。";
+"_upgrade_plan_to_access_server" = "抱歉，您的訂購授權無法使用此伺服器。若您希望存取更多伺服器，歡迎升級訂購授權。";
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "這個國家的所有伺服器都在維護中。請連線到其他國家。";
@@ -841,7 +841,7 @@
 "_vpn_stuck_disconnecting_title" = "連線錯誤";
 
 /* VPN stuck alert */
-"_vpn_stuck_disconnecting_body" = "您的裝置未能中止先前的 VPN 工作階段。您將需要重新啟動您的裝置，然後才可建立新的 VPN 連線。";
+"_vpn_stuck_disconnecting_body" = "您的裝置未能中止先前的 VPN 工作階段。您將需要重新啟動您的裝置，然後才可創建新的 VPN 連線。";
 
 "_update_required" = "需要更新";
 
@@ -868,7 +868,7 @@
 "_error_tls_server_verification" = "無法驗證伺服器憑證。";
 
 /* Mac: neagent help screen. The numbers refer to a text field and button in an image displayed above this text. Final string with filled in variables looks like this: "You may be asked to provide your computer account password\nto connect to the Proton VPN service. If this request appears,\nenter your Mac password (1) and click ‘Always Allow’ (2)." */
-"_neagent_description" = "您或會被要求提供您的%@\n以連線到 Proton VPN 服務。若有此請求顯示，\n請輸入您的 %@ %@，然後按一下 [%@] %@。";
+"_neagent_description" = "您或會被要求提供您的%@\n以連線到 Proton VPN 服務。若有此需求顯示，\n請輸入您的 %@ %@，然後按一下 [%@] %@。";
 
 /* Mac: neagent help screen */
 "_neagent_password" = "電腦帳號密碼";
@@ -892,7 +892,7 @@
 "_upgrade_unavailable_title" = "應用程式內未提供升級";
 
 /* Plan upgrade unavailable alert */
-"_upgrade_unavailable_body" = "您的 Proton VPN 訂閱未能在應用程式內升級，請造訪 account.protonvpn.com 以進行升級。";
+"_upgrade_unavailable_body" = "您的 Proton VPN 訂購授權未能在應用程式內升級，請造訪 account.protonvpn.com 以進行升級。";
 
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_title" = "清除應用程式資料";
@@ -930,7 +930,7 @@
 /* MacOS: Settings -> Account: name of field. */
 "_account_plan" = "帳號方案";
 
-"_manage_subscription_on_web" = "在網頁儀表板上管理您的訂閱";
+"_manage_subscription_on_web" = "在網頁儀表板上管理您的訂購授權";
 
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Kill Switch 開啟";
@@ -942,7 +942,7 @@
 "_always_on_vpn" = "總是開啟 VPN";
 
 /* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "「總是開啟 VPN」自動並迅速重新建立安全的 VPN 連線。為保障您的安全，此功能總是開啟。";
+"_always_on_vpn_tooltip_ios" = "「總是開啟 VPN」自動並迅速重新創建安全的 VPN 連線。為保障您的安全，此功能總是開啟。";
 
 /* MacOS: Settings -> Connection: name of field. */
 "_auto_connect" = "自動連線";
@@ -981,10 +981,10 @@
 "_security_options" = "安全性選項";
 
 /* iOS Settings -> Connection: name of field. */
-"_subscription_plan" = "訂閱方案";
+"_subscription_plan" = "訂購授權";
 
 /* iOS plan selection: header */
-"_choose_plan" = "選擇訂閱";
+"_choose_plan" = "選擇訂購授權";
 
 "_protocol" = "協定";
 
@@ -1083,7 +1083,7 @@
 "_free" = "免費";
 
 /* Alert message during In App Purchase */
-"_do_you_want_to_activate_subscription_for" = "是否要啟用購買的訂閱： ";
+"_do_you_want_to_activate_subscription_for" = "是否要啟用購買的訂購授權： ";
 
 /* Label in Plan information */
 "_most_popular" = "最熱門";
@@ -1101,7 +1101,7 @@
 "_plans_footer" = "您購買的付費方案一經確認後，將從您的 iTunes 帳號扣除顯示的金額，當中包括稅項及額外平台費用 (非由 Proton 直接收取)。購買後，您將會自動升級至選取的方案，為期 1 年，期滿後您可在線上或透過我們的 iOS 應用程式續訂或取消方案。";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/ yr";
+"_per_year_short" = "/年";
 
 /* iOS plan feature */
 "_feature_server_count" = "連線到伺服器";
@@ -1171,7 +1171,7 @@
 "_upgrade_my_plan" = "升級我的方案";
 
 /* MacOS: \Trial about to expire\ screen title */
-"_free_trial_about_to_expire_title" = "您的免費試用即將結束！";
+"_free_trial_about_to_expire_title" = "您的免費滿意體驗即將結束！";
 
 /* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
 "_free_trial_about_to_expire_description" = "升級到 %@ 方案以繼續享受下列功能：";
@@ -1230,13 +1230,13 @@
 "_next_tip" = "下一個提示";
 
 /* MacOS app tour: end tour button */
-"_end_tour" = "End Tour";
+"_end_tour" = "結束導覽";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "更好的網際網路，歡迎您";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "建立 ProtonMail 的科學家和工程師們歡迎您來到更安全私密的網路。";
+"_ios_onboarding_page1_description" = "創建 ProtonMail 的科學家和工程師們歡迎您來到更安全私密的網路。";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page2_title" = "我們深信網際網路應是自由的";
@@ -1346,7 +1346,7 @@
 
 "_subscription_will_renew" = "目前方案將於 %@ 自動續期。";
 
-"_subscription_description" = "您可以購買更多儲值以便自動延續您目前的方案。在您目前的訂閱期滿後，將扣除儲值以續訂您的方案。";
+"_subscription_description" = "您可以購買更多儲值以便自動延續您目前的方案。在您目前的訂購授權期滿後，將扣除儲值以續訂您的方案。";
 
 "_subscription_button" = "續訂一年\n%@";
 
@@ -1479,7 +1479,7 @@
 
 "_applying_settings_" = "套用設定";
 
-"_reestablish_vpn_connection_" = "正在重新建立 VPN 連線。";
+"_reestablish_vpn_connection_" = "正在重新創建 VPN 連線。";
 
 "_ip_will_not_be_exposed" = "您的IP將不會被公開。";
 
@@ -1585,11 +1585,11 @@
 
 "_reconnect_title" = "我們正重新連線到最快速的可用伺服器。";
 
-"_subscription_expired_title" = "您的 VPN 訂閱已逾期";
+"_subscription_expired_title" = "您的 VPN 訂購授權已逾期";
 
-"_subscription_expired_description" = "您的訂閱已降級。";
+"_subscription_expired_description" = "您的訂購授權已降級。";
 
-"_subscription_expired_reconnection_description" = "您的訂閱已降級，因此我們正重新連線到最快速的可用伺服器。";
+"_subscription_expired_reconnection_description" = "您的訂購授權已降級，因此我們正重新連線到最快速的可用伺服器。";
 
 "_subscription_upgrade_title" = "再次升級以享受下列種種功能：";
 
@@ -1722,13 +1722,13 @@
 
 "_subuser_alert_enable_connections_button" = "啟用 VPN 連線";
 
-"_subuser_alert_login_button" = "Sign in again";
+"_subuser_alert_login_button" = "再次登錄";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "Moderate NAT";
 
 /* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "Moderate NAT 會停用區域地址對映隨機化。這會稍微降低您的安全性，但允許如線上遊戲等點對點應用程式建立直接連線。 \n取得更多資訊";
+"_moderate_nat_explanation" = "Moderate NAT 會停用區域位址對映隨機化。這會稍微降低您的安全性，但允許如線上遊戲等點對點應用程式創建直接連線。 \n取得更多資訊";
 
 /* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
 "_moderate_nat_explanation_link" = "瞭解更多";
@@ -1761,7 +1761,7 @@
 "_settings_mac_crash_reports_tooltip" = "故障報告協助我們修復程式錯誤、偵測防火牆與避免 VPN 封鎖。";
 
 /* Section title in Settings */
-"_advanced" = "Advanced";
+"_advanced" = "進階";
 
 /* Non-standard ports feature title in Settings */
 "_non_standard_ports_title" = "非標準的連接埠";
@@ -1776,7 +1776,7 @@
 "_non_standard_ports_change_title" = "啟用非標準連接埠";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
-"proton_website_unreachable" = "由於網路限制， Proton VPN 網站可能暫時造訪不了。請使用手機版 app 建立一個新的 Proton 帳戶。";
+"proton_website_unreachable" = "由於網路限制， Proton VPN 網站可能暫時造訪不了。請使用手機版 app 創建一個新的 Proton 帳戶。";
 
 /* Title of the Use coupon button in Settings */
 "use_coupon" = "使用折扣碼";
@@ -1791,7 +1791,7 @@
 "coupon_applied" = "已成功使用折扣碼。";
 
 /* Banner shown after coupon is applied but the plan is not yet upgraded */
-"coupon_applied_plan_not_upgraded_yet" = "已成功使用優惠券。您的訂閱將於數分鐘後升級。";
+"coupon_applied_plan_not_upgraded_yet" = "已成功使用優惠券。您的訂購授權將於數分鐘後升級。";
 
 /* Title for the Two-factor authentication screen */
 "two_factor_authentication" = "兩步驟驗證";
@@ -1865,7 +1865,7 @@
 "_alert_protocol_deprecated_learn_more" = "了解更多";
 
 /* Text for the 'Close' action of the deprecated protocol alert. */
-"_alert_protocol_deprecated_close" = "Close";
+"_alert_protocol_deprecated_close" = "關閉";
 
 /* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
 "_bad_interface_ip_range_alert_title" = "網路設定不安全";
@@ -2117,7 +2117,7 @@
 "upsell_profiles_feature_auto_connect" = "為更快存取設定自動連線。";
 
 /* Feature of Countries upsell modal */
-"upsell_countries_any_location" = "選擇任何地址";
+"upsell_countries_any_location" = "選擇任何位址";
 
 /* Feature of Countries upsell modal */
 "upsell_countries_even_higher_speed" = "甚至更快虛擬私有網速度";
@@ -2192,7 +2192,7 @@
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
 
 /* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
-"welcome_upgrade_subtitle_fallback" = "您已升級您的訂閱。享受進階隱私功能與絕佳性能。";
+"welcome_upgrade_subtitle_fallback" = "您已升級您的訂購授權。享受進階隱私功能與絕佳性能。";
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "適用於企業版VPN.";

@@ -37,7 +37,7 @@
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Utvid listen over tjenere";
 
-"_collapse_list_of_servers" = "Skjul liste over tjenere";
+"_collapse_list_of_servers" = "Skjul listen over tjenere";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Advarsel";
@@ -1380,11 +1380,11 @@
 
 "_troubleshoot_item_gov_link1" = "Tor";
 
-"_troubleshoot_item_antivirus_title" = "Antivirus innblanding";
+"_troubleshoot_item_antivirus_title" = "Antivirus-forstyrrelser";
 
-"_troubleshoot_item_antivirus_description" = "Midlertidig deaktiver eller fjern din Antivirus programvarepakke.";
+"_troubleshoot_item_antivirus_description" = "Deaktiver eller fjern antivirusprogramvaren midlertidig.";
 
-"_troubleshoot_item_proxy_title" = "Proxy/Brannmur innblanding";
+"_troubleshoot_item_proxy_title" = "Proxy-/brannmurforstyrrelser";
 
 "_troubleshoot_item_proxy_description" = "Deaktiver alle proxyer eller brannmurer, eller kontakt din nettverksadministrator.";
 
@@ -1821,7 +1821,7 @@
 "netshield_stats_hint_ads" = "Annonsenettsteder bruker informasjonskapsler og sporere for å målrette deg.";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
-"netshield_stats_hint_trackers" = "Sporere er tredjeparts nettsteder som samler inn, lagrer og selger informasjon om nettaktiviteten din.";
+"netshield_stats_hint_trackers" = "Sporere er tredjepartsnettsteder som samler inn, lagrer og selger informasjon om nettaktiviteten din.";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
 "netshield_stats_hint_data" = "Anslått størrelse på annonser, sporere og skadelig programvare som NetShield har blokkert.";
@@ -1850,13 +1850,13 @@
 "_alert_protocol_deprecated_title" = "Protokoll utilgjengelig";
 
 /* Body of the deprecated protocol alert on MacOS. Shown when the user attempts to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
-"_alert_protocol_deprecated_body_macos" = "Denne profilen bruker en protokoll som er utdatert og ikke lenger støttes. Klikk på \"oppdater\" for å bytte til å bruke standard Smart-protokoll. Lær mer";
+"_alert_protocol_deprecated_body_macos" = "Denne profilen bruker en protokoll som er utdatert og ikke lenger støttes. Klikk på \"oppdater\" for å bytte til å bruke standard Smart Protocol. Lær mer";
 
 /* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
 "_alert_protocol_deprecated_link_text" = "Lær mer";
 
 /* Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
-"_alert_protocol_deprecated_body_ios" = "Denne profilen bruker en protokoll som er utdatert og ikke lenger støttes. Klikk på \"oppdater\" for å bytte til å bruke standard Smart-protokoll.";
+"_alert_protocol_deprecated_body_ios" = "Denne profilen bruker en protokoll som er utdatert og ikke lenger støttes. Klikk på \"oppdater\" for å bytte til å bruke standard Smart Protocol.";
 
 /* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
 "_alert_protocol_deprecated_enable_smart" = "Oppdater";
