@@ -30,7 +30,7 @@ public protocol AppSessionRefreshTimerFactory {
 public protocol AppSessionRefreshTimerDelegate: AnyObject {
     func shouldRefreshFull() -> Bool
     func shouldRefreshLoads() -> Bool
-    func shouldRefreshAccount() async -> Bool
+    func shouldRefreshAccount() -> Bool
     func shouldRefreshStreaming() -> Bool
     func shouldRefreshPartners() -> Bool
 }
@@ -38,7 +38,7 @@ public protocol AppSessionRefreshTimerDelegate: AnyObject {
 public extension AppSessionRefreshTimerDelegate {
     func shouldRefreshFull() -> Bool { return true }
     func shouldRefreshLoads() -> Bool { return true }
-    func shouldRefreshAccount() async -> Bool { return true }
+    func shouldRefreshAccount() -> Bool { return true }
     func shouldRefreshStreaming() -> Bool { return true }
     func shouldRefreshPartners() -> Bool { return true }
 }
@@ -151,10 +151,8 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
     }
     
     private func refreshAccount() {
-        Task {
-            guard let delegate, await delegate.shouldRefreshAccount() else { return }
-            appSessionRefresher.refreshAccount()
-        }
+        guard let delegate, delegate.shouldRefreshAccount() else { return }
+        appSessionRefresher.refreshAccount()
     }
 
     private func refreshStreaming() {
