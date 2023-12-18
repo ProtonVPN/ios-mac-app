@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22154" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22154"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,7 +14,6 @@
                 <outlet property="learnMore" destination="APs-Gh-8IG" id="AUd-K7-6Nc"/>
                 <outlet property="mapView" destination="5Kh-Ok-j2c" id="htz-ou-gLN"/>
                 <outlet property="noThanksButton" destination="cqF-tK-7IP" id="GIn-oy-oaj"/>
-                <outlet property="takeTourButton" destination="guH-vC-NAW" id="tbB-sR-EBr"/>
                 <outlet property="telemetryStackView" destination="Csr-RX-hFQ" id="WUd-cD-4Md"/>
                 <outlet property="titleLabel" destination="eNP-Q8-2Im" id="F9e-JY-jGE"/>
                 <outlet property="usageStatisticsButton" destination="kgn-lV-lbg" id="Ugu-hq-48y"/>
@@ -42,7 +41,7 @@
                 <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="32" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ehJ-3I-wDU">
                     <rect key="frame" x="0.0" y="64" width="800" height="349"/>
                     <subviews>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="eNP-Q8-2Im">
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="eNP-Q8-2Im">
                             <rect key="frame" x="339" y="333" width="122" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Welcome on Board" id="slM-b4-SMt">
                                 <font key="font" metaFont="system"/>
@@ -50,7 +49,7 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZgO-cU-Lfg">
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZgO-cU-Lfg">
                             <rect key="frame" x="363" y="285" width="75" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Take a tour" id="pDJ-Uj-JLu">
                                 <font key="font" metaFont="system"/>
@@ -59,18 +58,18 @@
                             </textFieldCell>
                         </textField>
                         <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="34" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M4I-2d-A6Y">
-                            <rect key="frame" x="239" y="213" width="322" height="40"/>
+                            <rect key="frame" x="328" y="213" width="144" height="40"/>
                             <subviews>
-                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cqF-tK-7IP" customClass="CancellationButton" customModule="ProtonVPN" customModuleProvider="target">
+                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cqF-tK-7IP" customClass="UpsellPrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="-7" y="-7" width="158" height="52"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="40" id="p7B-pz-Y5h"/>
-                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="144" id="vle-Zl-Ke7"/>
-                                    </constraints>
                                     <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vk7-u8-z3K">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="40" id="p7B-pz-Y5h"/>
+                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="144" id="vle-Zl-Ke7"/>
+                                    </constraints>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
                                             <real key="value" value="10"/>
@@ -80,32 +79,11 @@
                                         <action selector="cancel:" target="-2" id="vOu-Ng-9qg"/>
                                     </connections>
                                 </button>
-                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="guH-vC-NAW" customClass="UpsellPrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="171" y="-7" width="158" height="52"/>
-                                    <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="K6g-LT-Ee3">
-                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="system"/>
-                                    </buttonCell>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
-                                            <real key="value" value="10"/>
-                                        </userDefinedRuntimeAttribute>
-                                    </userDefinedRuntimeAttributes>
-                                    <connections>
-                                        <action selector="takeTour:" target="-2" id="gwe-IE-6cc"/>
-                                    </connections>
-                                </button>
                             </subviews>
-                            <constraints>
-                                <constraint firstItem="guH-vC-NAW" firstAttribute="width" secondItem="cqF-tK-7IP" secondAttribute="width" id="UjY-Qb-s3M"/>
-                                <constraint firstItem="guH-vC-NAW" firstAttribute="height" secondItem="cqF-tK-7IP" secondAttribute="height" id="xps-rB-l1u"/>
-                            </constraints>
                             <visibilityPriorities>
-                                <integer value="1000"/>
                                 <integer value="1000"/>
                             </visibilityPriorities>
                             <customSpacing>
-                                <real value="3.4028234663852886e+38"/>
                                 <real value="3.4028234663852886e+38"/>
                             </customSpacing>
                         </stackView>
@@ -121,7 +99,7 @@
                                         <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tPq-Wr-j2v">
                                             <rect key="frame" x="0.0" y="15" width="468" height="32"/>
                                             <subviews>
-                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="psN-rZ-28G">
+                                                <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="psN-rZ-28G">
                                                     <rect key="frame" x="-2" y="0.0" width="433" height="32"/>
                                                     <textFieldCell key="cell" selectable="YES" alignment="left" title="Share anonymous usage statistics. This helps us overcome VPN blocks and improve app performance. Learn more" id="9mN-bJ-vuH">
                                                         <font key="font" metaFont="system"/>
@@ -148,13 +126,13 @@
                                         </stackView>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="APs-Gh-8IG" userLabel="learnMoreButton" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="45" height="15"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="15" id="MLE-Ri-5pq"/>
-                                            </constraints>
                                             <buttonCell key="cell" type="bevel" title="Button" bezelStyle="regularSquare" alignment="left" imageScaling="proportionallyDown" inset="2" id="wAt-6N-di5">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="15" id="MLE-Ri-5pq"/>
+                                            </constraints>
                                         </button>
                                     </subviews>
                                     <visibilityPriorities>
@@ -169,7 +147,7 @@
                                 <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3mM-on-oAn">
                                     <rect key="frame" x="0.0" y="0.0" width="468" height="32"/>
                                     <subviews>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="7di-Vt-Zyq">
+                                        <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="7di-Vt-Zyq">
                                             <rect key="frame" x="-2" y="0.0" width="433" height="32"/>
                                             <textFieldCell key="cell" selectable="YES" alignment="left" title="Share anonymous crash reports. This helps us fix bugs, detect firewalls, and avoid VPN blocks." id="9OV-TU-3Jo">
                                                 <font key="font" metaFont="system"/>

@@ -204,8 +204,6 @@
 		E17C1D0720EB6DF000DCC687 /* HoverDetectionButtonAdvanced.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17C1D0620EB6DF000DCC687 /* HoverDetectionButtonAdvanced.swift */; };
 		E180D1482124955B00F4D1C7 /* UpsellPrimaryActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D1472124955B00F4D1C7 /* UpsellPrimaryActionButton.swift */; };
 		E180D14A212497CC00F4D1C7 /* ClearCancellationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D149212497CC00F4D1C7 /* ClearCancellationButton.swift */; };
-		E180D16A2126FCE500F4D1C7 /* TourPreviousButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D1692126FCE500F4D1C7 /* TourPreviousButton.swift */; };
-		E180D16C2126FCF700F4D1C7 /* TourNextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D16B2126FCF700F4D1C7 /* TourNextButton.swift */; };
 		E18262AF21302ED100A6A48F /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = E18262AE21302ED100A6A48F /* dsa_pub.pem */; };
 		E187021920E23815000521AC /* StatusMenuProfilesListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E187021720E23815000521AC /* StatusMenuProfilesListController.swift */; };
 		E187021A20E23815000521AC /* StatusMenuProfilesList.xib in Resources */ = {isa = PBXBuildFile; fileRef = E187021820E23815000521AC /* StatusMenuProfilesList.xib */; };
@@ -465,16 +463,7 @@
 		F315847727C793BE00D1F6CC /* AdvancedSettings.xib in Resources */ = {isa = PBXBuildFile; fileRef = F315847627C793BE00D1F6CC /* AdvancedSettings.xib */; };
 		F315847927C795A100D1F6CC /* AdvancedSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F315847827C795A100D1F6CC /* AdvancedSettingsViewModel.swift */; };
 		F320E02D26F08D7A00336F7A /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E02526F08D7A00336F7A /* WelcomeViewController.swift */; };
-		F320E02E26F08D7A00336F7A /* TourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E02626F08D7A00336F7A /* TourViewController.swift */; };
-		F320E02F26F08D7A00336F7A /* TourNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E02726F08D7A00336F7A /* TourNumberViewController.swift */; };
-		F320E03026F08D7A00336F7A /* TourController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E02926F08D7A00336F7A /* TourController.swift */; };
-		F320E03126F08D7A00336F7A /* TourWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E02A26F08D7A00336F7A /* TourWindowController.swift */; };
 		F320E03226F08D7A00336F7A /* Welcome.xib in Resources */ = {isa = PBXBuildFile; fileRef = F320E02C26F08D7A00336F7A /* Welcome.xib */; };
-		F320E03426F08DBD00336F7A /* TourNumber.xib in Resources */ = {isa = PBXBuildFile; fileRef = F320E03326F08DBD00336F7A /* TourNumber.xib */; };
-		F320E03726F08DED00336F7A /* TourNumberRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E03526F08DEC00336F7A /* TourNumberRingView.swift */; };
-		F320E03826F08DED00336F7A /* TourDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E03626F08DEC00336F7A /* TourDescriptionView.swift */; };
-		F320E03A26F08E1400336F7A /* TourNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E03926F08E1400336F7A /* TourNumberView.swift */; };
-		F320E03C26F08FAB00336F7A /* Tour.xib in Resources */ = {isa = PBXBuildFile; fileRef = F320E03B26F08FAB00336F7A /* Tour.xib */; };
 		F34AC17727F33E360007FF93 /* ProtonReachabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34AC17627F33E350007FF93 /* ProtonReachabilityChecker.swift */; };
 		F34AC17927F345BB0007FF93 /* NSProgressIndicator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34AC17827F345BB0007FF93 /* NSProgressIndicator+Extensions.swift */; };
 		F3747C0426D4E45100EF2F00 /* macOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C0326D4E45100EF2F00 /* macOSNetworkingDelegate.swift */; };
@@ -759,8 +748,6 @@
 		E17C1D0620EB6DF000DCC687 /* HoverDetectionButtonAdvanced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverDetectionButtonAdvanced.swift; sourceTree = "<group>"; };
 		E180D1472124955B00F4D1C7 /* UpsellPrimaryActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpsellPrimaryActionButton.swift; sourceTree = "<group>"; };
 		E180D149212497CC00F4D1C7 /* ClearCancellationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearCancellationButton.swift; sourceTree = "<group>"; };
-		E180D1692126FCE500F4D1C7 /* TourPreviousButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourPreviousButton.swift; sourceTree = "<group>"; };
-		E180D16B2126FCF700F4D1C7 /* TourNextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourNextButton.swift; sourceTree = "<group>"; };
 		E18262AE21302ED100A6A48F /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		E187021720E23815000521AC /* StatusMenuProfilesListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenuProfilesListController.swift; sourceTree = "<group>"; };
 		E187021820E23815000521AC /* StatusMenuProfilesList.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatusMenuProfilesList.xib; sourceTree = "<group>"; };
@@ -1051,16 +1038,7 @@
 		F315847627C793BE00D1F6CC /* AdvancedSettings.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AdvancedSettings.xib; path = ../../../../../macos/ProtonVPN/Scenes/Settings/Views/AdvancedSettings.xib; sourceTree = "<group>"; };
 		F315847827C795A100D1F6CC /* AdvancedSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdvancedSettingsViewModel.swift; path = ../../../../../macos/ProtonVPN/Scenes/Settings/ViewModels/AdvancedSettingsViewModel.swift; sourceTree = "<group>"; };
 		F320E02526F08D7A00336F7A /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
-		F320E02626F08D7A00336F7A /* TourViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourViewController.swift; sourceTree = "<group>"; };
-		F320E02726F08D7A00336F7A /* TourNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourNumberViewController.swift; sourceTree = "<group>"; };
-		F320E02926F08D7A00336F7A /* TourController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourController.swift; sourceTree = "<group>"; };
-		F320E02A26F08D7A00336F7A /* TourWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourWindowController.swift; sourceTree = "<group>"; };
 		F320E02C26F08D7A00336F7A /* Welcome.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Welcome.xib; sourceTree = "<group>"; };
-		F320E03326F08DBD00336F7A /* TourNumber.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TourNumber.xib; sourceTree = "<group>"; };
-		F320E03526F08DEC00336F7A /* TourNumberRingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourNumberRingView.swift; sourceTree = "<group>"; };
-		F320E03626F08DEC00336F7A /* TourDescriptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourDescriptionView.swift; sourceTree = "<group>"; };
-		F320E03926F08E1400336F7A /* TourNumberView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourNumberView.swift; sourceTree = "<group>"; };
-		F320E03B26F08FAB00336F7A /* Tour.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Tour.xib; sourceTree = "<group>"; };
 		F34AC17627F33E350007FF93 /* ProtonReachabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProtonReachabilityChecker.swift; path = ../../../../../macos/ProtonVPN/Scenes/Login/Services/ProtonReachabilityChecker.swift; sourceTree = "<group>"; };
 		F34AC17827F345BB0007FF93 /* NSProgressIndicator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSProgressIndicator+Extensions.swift"; path = "../../../macos/ProtonVPN/Extensions/NSProgressIndicator+Extensions.swift"; sourceTree = "<group>"; };
 		F3747C0326D4E45100EF2F00 /* macOSNetworkingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = macOSNetworkingDelegate.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/Services/macOSNetworkingDelegate.swift; sourceTree = "<group>"; };
@@ -1838,8 +1816,6 @@
 		F320E02426F08D7A00336F7A /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				F320E02726F08D7A00336F7A /* TourNumberViewController.swift */,
-				F320E02626F08D7A00336F7A /* TourViewController.swift */,
 				F320E02526F08D7A00336F7A /* WelcomeViewController.swift */,
 			);
 			path = ViewControllers;
@@ -1848,8 +1824,6 @@
 		F320E02826F08D7A00336F7A /* Windows */ = {
 			isa = PBXGroup;
 			children = (
-				F320E02926F08D7A00336F7A /* TourController.swift */,
-				F320E02A26F08D7A00336F7A /* TourWindowController.swift */,
 			);
 			path = Windows;
 			sourceTree = "<group>";
@@ -1857,11 +1831,6 @@
 		F320E02B26F08D7A00336F7A /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F320E03B26F08FAB00336F7A /* Tour.xib */,
-				F320E03626F08DEC00336F7A /* TourDescriptionView.swift */,
-				F320E03326F08DBD00336F7A /* TourNumber.xib */,
-				F320E03526F08DEC00336F7A /* TourNumberRingView.swift */,
-				F320E03926F08E1400336F7A /* TourNumberView.swift */,
 				F3B3BEB6279EBD5200F85BDF /* UpsellGradientView.swift */,
 				F320E02C26F08D7A00336F7A /* Welcome.xib */,
 			);
@@ -2600,8 +2569,6 @@
 				E187021B20E2616C000521AC /* StatusMenuProfileViewItem.swift */,
 				E187022520E3A567000521AC /* StatusMenuSurfaceButton.swift */,
 				EE35FC441F1CD70700CFE26F /* TabBarButton.swift */,
-				E180D16B2126FCF700F4D1C7 /* TourNextButton.swift */,
-				E180D1692126FCE500F4D1C7 /* TourPreviousButton.swift */,
 				E180D1472124955B00F4D1C7 /* UpsellPrimaryActionButton.swift */,
 				4CFFC94327E0C0AE0035969B /* CancellationButton.swift */,
 				E15A8690202738A1009B9C83 /* ZoomButton.swift */,
@@ -3087,14 +3054,12 @@
 				42BEF9812631AB1A009180A7 /* StreamOptionCVItem.xib in Resources */,
 				E581886A2AFA49EB00B981EB /* Empty.xib in Resources */,
 				4CD1F7852A72BE7D00E8AB01 /* ProtonVPN_ike_root.der in Resources */,
-				F320E03426F08DBD00336F7A /* TourNumber.xib in Resources */,
 				E1454CEE206FC6A900E6D396 /* HelpPopover.xib in Resources */,
 				EEBB82E81F1DF5A60041432A /* Overview.xib in Resources */,
 				423467C8261CEAAF00A73773 /* UserAccountUpdateViewController.xib in Resources */,
 				F320E03226F08D7A00336F7A /* Welcome.xib in Resources */,
 				EEBB82F31F1E0BCF0041432A /* OverviewItem.xib in Resources */,
 				EECEF3DB1F169A0500A16606 /* ServerItemCellView.xib in Resources */,
-				F320E03C26F08FAB00336F7A /* Tour.xib in Resources */,
 				EEBB82DB1F1DE8890041432A /* ProfilesContainer.xib in Resources */,
 				EEE113261F2CF19800C8221C /* Client.plist in Resources */,
 				EE27DB4F1F47187600D2FF2B /* SettingsTabBar.xib in Resources */,
@@ -3373,13 +3338,11 @@
 				EE4FCF641F21FA5300B04EF8 /* SecureTextFieldWithFocus.swift in Sources */,
 				E5FF895E2A810043002B4A49 /* AppReducer.swift in Sources */,
 				EE9589DE1F5938B2005E7495 /* SCExitCountryAnnotationView.swift in Sources */,
-				F320E03026F08D7A00336F7A /* TourController.swift in Sources */,
 				E156C19F20BE901A0054E935 /* StatusMenuWindowController.swift in Sources */,
 				F3021DB025E950A300EF73A1 /* TroubleshootingRowItem.swift in Sources */,
 				EE78749F1F3B4993001E261E /* OverviewItemViewModel+Descriptors.swift in Sources */,
 				E148458020CAB64900DFDAA4 /* HelpMenuViewModel.swift in Sources */,
 				EE98CFC91F14D62F000D6688 /* NSView+Extension.swift in Sources */,
-				F320E03A26F08E1400336F7A /* TourNumberView.swift in Sources */,
 				EE4FCF621F21FA2800B04EF8 /* TextFieldWithFocus.swift in Sources */,
 				D5ADA9CC228C4325004B0891 /* OsxUiAlertService.swift in Sources */,
 				EE3435691F2F620400DE0806 /* ProtonVpnMenuController.swift in Sources */,
@@ -3394,7 +3357,6 @@
 				42BEF95626317F29009180A7 /* FeatureRowView.swift in Sources */,
 				E187022620E3A567000521AC /* StatusMenuSurfaceButton.swift in Sources */,
 				42BEF97026319ADC009180A7 /* StreamingServicesOverlayViewController.swift in Sources */,
-				E180D16C2126FCF700F4D1C7 /* TourNextButton.swift in Sources */,
 				E5CFAACE29E92E8300C36735 /* AppTheme+Icons.swift in Sources */,
 				E187022020E268FE000521AC /* StatusMenuProfileItemViewModel.swift in Sources */,
 				EE5CF76E1F4DDB750002BBF3 /* ProfilesMenuController.swift in Sources */,
@@ -3435,7 +3397,6 @@
 				EE24A39B1F1BCA0D00B70949 /* ProfileItemView.swift in Sources */,
 				E1616C0F21CA67CB00F42D79 /* ProfileIcon+Extension.swift in Sources */,
 				E1F59B5620DCF26A00798435 /* StatusMenuCountryViewItem.swift in Sources */,
-				F320E02E26F08D7A00336F7A /* TourViewController.swift in Sources */,
 				EE5B17451F39CDF700879BE0 /* HeaderViewModel.swift in Sources */,
 				EE4E7DF71F62909A000F7D5E /* ProfilesWindowController.swift in Sources */,
 				E13464AB2033780300C0DB7D /* LoadCircle.swift in Sources */,
@@ -3505,7 +3466,6 @@
 				EE876E0C1F137D0C00C9B9C2 /* SidebarViewController.swift in Sources */,
 				E15A8691202738A1009B9C83 /* ZoomButton.swift in Sources */,
 				E1454CF0206FD37300E6D396 /* HelpPopoverViewModel.swift in Sources */,
-				F320E03826F08DED00336F7A /* TourDescriptionView.swift in Sources */,
 				E1420A77209C78CE00697461 /* ConnectionSettingsViewModel.swift in Sources */,
 				42BDA8B0251A40A4009A0C96 /* NSTextField+RealSizing.swift in Sources */,
 				E5F1112E27CE3A1D007DEC0D /* SettingsDropDownView.swift in Sources */,
@@ -3519,7 +3479,6 @@
 				EE98CFCB1F14D697000D6688 /* NSColor+Extension.swift in Sources */,
 				E1B3B6402024FEF00093A8FF /* ButtonImageView.swift in Sources */,
 				EE2FE5931F5ECD6B00ABA7DE /* ConnectionOverlay.swift in Sources */,
-				F320E03126F08D7A00336F7A /* TourWindowController.swift in Sources */,
 				D5F45D7C262EC16A00FB13E4 /* NSStackView+Children.swift in Sources */,
 				4C8641B527D22A6900EEFB1D /* IPCClientConnection.swift in Sources */,
 				ADE590CC2A616E4B00089165 /* ProtocolDeprecatedViewController.swift in Sources */,
@@ -3539,7 +3498,6 @@
 				42BEF96326318875009180A7 /* FeaturesOverlayViewModel.swift in Sources */,
 				E17C1CE120E6217E00DCC687 /* ShowApplicationButton.swift in Sources */,
 				D5D298B825B5BD27000FBD74 /* UpdateFileSelector.swift in Sources */,
-				F320E03726F08DED00336F7A /* TourNumberRingView.swift in Sources */,
 				EEAF7FF11EF30169006771DA /* Dictionary+Extension.swift in Sources */,
 				E5FF89652A810046002B4A49 /* SideBarView.swift in Sources */,
 				F3021D6225E9332A00EF73A1 /* TroubleshootingPopup.swift in Sources */,
@@ -3602,7 +3560,6 @@
 				E13464DC2035BA5C00C0DB7D /* NetworkStatistics.swift in Sources */,
 				EE27DB581F4759A600D2FF2B /* AppSessionManager.swift in Sources */,
 				EE35FC431F1CD2DA00CFE26F /* SidebarTabBarView.swift in Sources */,
-				E180D16A2126FCE500F4D1C7 /* TourPreviousButton.swift in Sources */,
 				42710D9C264929A000D70B92 /* StreamOptionCVItemViewModel.swift in Sources */,
 				E15DE7D22029EA6F00BFA78D /* PassThroughView.swift in Sources */,
 				4C7CADE4280060C90008778E /* CGMutablePath+Extension.swift in Sources */,
@@ -3615,7 +3572,6 @@
 				EE11F92C1F39B7D8006C389C /* HeaderViewController.swift in Sources */,
 				E187021C20E2616C000521AC /* StatusMenuProfileViewItem.swift in Sources */,
 				EE068DC21F23E7E30006C2D0 /* ProfilesSectionViewModel.swift in Sources */,
-				F320E02F26F08D7A00336F7A /* TourNumberViewController.swift in Sources */,
 				EEF7814F1F1A78B800E77B59 /* CountriesSectionViewController.swift in Sources */,
 				42C1F28C2553017D00793A49 /* QuickSettingsDropdownOption.swift in Sources */,
 				F315847927C795A100D1F6CC /* AdvancedSettingsViewModel.swift in Sources */,

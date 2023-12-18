@@ -44,7 +44,6 @@ protocol WindowService: WindowControllerDelegate {
     func showLogin(viewModel: LoginViewModel)
 #if !REDESIGN
     func showSidebar(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol)
-    func showTour()
 #endif
     
     func openAbout(factory: AboutViewController.Factory)
@@ -106,8 +105,6 @@ class WindowServiceImplementation: WindowService {
     fileprivate var mainWindowController: WindowController?
     fileprivate var statusMenuWindowController: StatusMenuWindowController?
     fileprivate var activeWindowControllers = Set<WindowController>()
-
-    fileprivate var tourController: TourController?
     
     init(factory: Factory) {
         self.factory = factory
@@ -193,13 +190,6 @@ class WindowServiceImplementation: WindowService {
 
     }
 
-    func showTour() {
-        guard let sidebarController = (mainWindowController as? SidebarWindowController)?.contentViewController as? SidebarViewController, let window = mainWindowController?.window else { return }
-        if let tourController = tourController {
-            tourController.close()
-        }
-        tourController = TourController(mainWindow: window, sidebarViewController: sidebarController)
-    }
 #endif
     
     func openAbout(factory: AboutViewController.Factory) {
