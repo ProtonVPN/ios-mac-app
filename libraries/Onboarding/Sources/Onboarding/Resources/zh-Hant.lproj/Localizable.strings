@@ -22,7 +22,7 @@
 
 "onboarding_plus_only" = "適用於 Plus 方案";
 
-"onboarding_establish_title" = "建立您的首次連線";
+"onboarding_establish_title" = "創建您的首次連線";
 
 "onboarding_establish_note" = "取決於您的地點，我們將會連線至最快且最穩定的伺服器。";
 
@@ -48,7 +48,7 @@
 
 "onboarding_not_connected_subtitle" = "您已準備好瀏覽網路。";
 
-"onboarding_not_connected_error" = "無法建立連線。請在應用程式中稍後再試。";
+"onboarding_not_connected_error" = "無法創建連線。請在應用程式中稍後再試。";
 
 "onboarding_continue" = "繼續";
 
@@ -62,6 +62,6 @@
 
 "onboarding_crash_reports_description" = "故障報告協助我們修復臭蟲、偵測防火牆與避免 VPN 封鎖。";
 
-"onboarding_footer" = "這些統計資料不包含您的 IP 地址，且其無法用於識別您的身份。我們永遠不會將它們與第三方分享。";
+"onboarding_footer" = "這些統計資料不包含您的 IP 位址，且其無法用於識別您的身份。我們永遠不會將它們與第三方分享。";
 
 "onboarding_footer_learn_more" = "取得更多資訊";
