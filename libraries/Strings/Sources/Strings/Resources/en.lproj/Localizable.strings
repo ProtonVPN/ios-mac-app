@@ -1121,25 +1121,14 @@
 "_feature_blocked_content" = "Access blocked content";
 "_feature_bt" = "BitTorrent/file-sharing support";
 
-
-
 // Upsell & Onboard
 
 /* MacOS welcome screen: title */
 "_welcome_title" = "WELCOME ON BOARD!";
 
-/* MacOS welcome screen: description */
-"_welcome_description" = "Thanks for using Proton VPN. Take a quick look\nat the main app features.";
-
-/* MacOS welcome screen: cancel button */
 "_no_thanks" = "No thanks";
 
-/* MacOS welcome screen: skip button */
-"_skip" = "Skip";
-
-/* MacOS welcome screen: take a tour button */
-"_take_tour" = "Take a Tour";
-
+"_welcome_description" = "Thanks for using Proton VPN.";
 
 /* Plus word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "Plus";
@@ -1192,47 +1181,8 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "Secure streaming of your\nfavorite content";
 
-
-/* MacOS app tour: quick connect title */
-"_quick_connect_tour_title" = "Quick Connect";
-
-/* MacOS app tour: quick connect description */
-"_quick_connect_tour_description" = "Automatically connect to the server that will provide you with the fastest connection.";
-
-/* MacOS app tour: profiles title */
-"_profiles_tour_title" = "Profiles";
-
-/* MacOS app tour: profiles description */
-"_profiles_tour_description" = "Save your preferred settings and servers for future use.";
-
-/* MacOS app tour: countries list title */
-"_countries_tour_title" = "Countries";
-
-/* MacOS app tour: countries list description */
-"_countries_tour_description" = "Choose which country and server you would like to use for your end IP address.";
-
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "Quick Settings";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "Increase your security with one click:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Add one extra layer of security with Secure Core.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "Surf the web freely from malware and ads with NetShield.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Prevent your IP to be exposed by turning on kill switch.";
-
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Next Tip";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "End Tour";
-
 // Upsell & Onboard - iOS
 
 /* iOS onboarding texts */
