@@ -183,10 +183,6 @@ fileprivate class SettingsServiceMock: SettingsService {
     
     func presentLogs() {}
     func presentReportBug() {}
-    
-    func makeBatteryUsageViewController() -> BatteryUsageViewController {
-        return BatteryUsageViewController()
-    }
 }
 
 fileprivate class LogContentMock: LogContent {

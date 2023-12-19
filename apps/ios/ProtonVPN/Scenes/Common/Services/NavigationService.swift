@@ -60,7 +60,6 @@ protocol SettingsService {
     func makeExtensionsSettingsViewController() -> WidgetSettingsViewController
     func makeTelemetrySettingsViewController() -> TelemetrySettingsViewController
     func makeLogSelectionViewController() -> LogSelectionViewController
-    func makeBatteryUsageViewController() -> BatteryUsageViewController
     func makeLogsViewController(logSource: LogSource) -> LogsViewController
     func presentReportBug()
 }
@@ -357,10 +356,6 @@ extension NavigationService: SettingsService {
     
     func makeLogSelectionViewController() -> LogSelectionViewController {
         return LogSelectionViewController(viewModel: LogSelectionViewModel(), settingsService: self)
-    }
-    
-    func makeBatteryUsageViewController() -> BatteryUsageViewController {
-        return BatteryUsageViewController()
     }
     
     func makeLogsViewController(logSource: LogSource) -> LogsViewController {
