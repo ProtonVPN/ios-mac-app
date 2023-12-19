@@ -405,8 +405,9 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
         if let userId = authKeychain.userId {
             FeatureFlagsRepository.shared.resetFlags(for: userId)
-            FeatureFlagsRepository.shared.clearUserId(userId)
         }
+
+        FeatureFlagsRepository.shared.clearUserId()
 
         group.enter()
         Task {
