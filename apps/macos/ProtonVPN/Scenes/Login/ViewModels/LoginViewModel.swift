@@ -57,7 +57,7 @@ final class LoginViewModel {
     private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
 
     var logInInProgress: (() -> Void)?
-    var logInFailure: ((String?) -> Void)?
+    var logInFailure: ((String?, Int?) -> Void)?
     var logInFailureWithSupport: ((String?) -> Void)?
     var checkInProgress: ((Bool) -> Void)?
     var twoFactorRequired: (() -> Void)?
@@ -97,7 +97,7 @@ final class LoginViewModel {
     
     func logInAppeared() {
         guard initialError == nil else {
-            logInFailure?(initialError)
+            logInFailure?(initialError, nil)
             return
         }
         logInInProgress?()
@@ -111,10 +111,10 @@ final class LoginViewModel {
                 self.specialErrorCaseNotification(error)
 
                 if case ProtonVpnError.userCredentialsMissing = error {
-                    self.logInFailure?(nil)
+                    self.logInFailure?(nil, nil)
                     return
                 }
-                self.logInFailure?(error.localizedDescription)
+                self.logInFailure?(error.localizedDescription, nil)
             }
         }
     }
@@ -222,9 +222,7 @@ final class LoginViewModel {
                 twoFactorRequired?()
             case .askSecondPassword, .chooseInternalUsernameAndCreateInternalAddress:
                 log.error("Unsupported login scenario", category: .app, metadata: ["result": "\(result)"])
-                logInFailure?(Localizable.loginUnsupportedState)
-            case .ssoChallenge(let ssoChallengeResponse):
-                fatalError("I don't know how to do that yet")
+                logInFailure?(Localizable.loginUnsupportedState, nil)
             }
         case let .failure(error):
             ObservabilityEnv.report(.ssoIdentityProviderLoginResult(status: .failed))
@@ -261,11 +259,13 @@ final class LoginViewModel {
             // the users cannot continue entering the 2FA code, they need to start over
             // the state is reset back to the username + password form and error is shown
             isTwoFactorStep = false
-            logInFailure?(message)
+            logInFailure?(message, nil)
         case let .invalidCredentials(message: message), let .invalid2FACode(message: message):
             // invalid credentials or 2FA code entered, show the most specific error message
-            logInFailure?(message)
-        case let .generic(_, code: _, originalError: originalError):
+            logInFailure?(message, nil)
+        case let .generic(message, code, _) where code == APIErrorCode.switchToSSOError:
+            logInFailure?(message, code)
+        case let .generic(_, _, originalError):
             // if the error is a response error and the underlying error is a network or TLS error convert it to the app network error
             // this is needed so the basic error handling logic shows an alert that offers troubleshooting to the users
             if let responseError = originalError as? ResponseError, let underlyingError = responseError.underlyingError, underlyingError.isNetworkError || underlyingError.isTlsError {
@@ -290,14 +290,14 @@ final class LoginViewModel {
                     self?.alertService.push(alert: ConnectionTroubleshootingAlert())
                 })
                 self.alertService.push(alert: alert)
-                self.logInFailure?(nil)
+                self.logInFailure?(nil, nil)
             } else if case ProtonVpnError.subuserWithoutSessions = error {
                 let role = self.propertiesManager.userRole
                 self.alertService.push(alert: SubuserWithoutConnectionsAlert(role: role))
                 self.isTwoFactorStep = false
-                self.logInFailure?(nil)
+                self.logInFailure?(nil, nil)
             } else {
-                self.logInFailure?(error.localizedDescription)
+                self.logInFailure?(error.localizedDescription, nil)
             }
         }
     }

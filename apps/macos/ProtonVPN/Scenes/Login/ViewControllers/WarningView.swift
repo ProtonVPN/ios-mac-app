@@ -26,6 +26,11 @@ protocol WarningViewDelegate: class {
     func keychainHelpAction()
 }
 
+enum WarningType {
+    case error
+    case info
+}
+
 class WarningView: NSStackView {
 
     @IBOutlet private weak var warningLabel: PVPNTextField!
@@ -40,15 +45,24 @@ class WarningView: NSStackView {
         }
     }
 
-    var message: String? {
-        didSet {
-            guard let message = message else {
-                isHidden = true
-                return
-            }
-            isHidden = false
-            warningLabel.attributedStringValue = message.styled(.danger, font: .themeFont(.small), alignment: .natural)
+    func setMessage(_ message: String?, warningType: WarningType = .error) {
+        guard let message = message else {
+            isHidden = true
+            return
         }
+
+        isHidden = false
+
+        var style: AppTheme.Style
+        switch warningType {
+        case .error:
+            style = .danger
+        case .info:
+            style = .active
+        }
+
+        warningLabel.attributedStringValue = message.styled(style, font: .themeFont(.small), alignment: .natural)
+        warningIcon.contentTintColor = .color(.icon, style)
     }
 
     override func awakeFromNib() {
@@ -61,11 +75,9 @@ class WarningView: NSStackView {
         helpLink.action = #selector(keychainHelpAction)
 
         warningIcon.image = AppTheme.Icon.exclamationCircleFilled
-        warningIcon.contentTintColor = .color(.icon, .danger)
     }
 
     @objc private func keychainHelpAction() {
         helpDelegate?.keychainHelpAction()
     }
-
 }

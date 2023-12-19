@@ -28,6 +28,7 @@ import Ergonomics
 import Strings
 import ProtonCoreFeatureFlags
 import ProtonCoreLoginUI
+import ProtonCoreServices
 
 final class LoginViewController: NSViewController {
     
@@ -274,7 +275,7 @@ final class LoginViewController: NSViewController {
     
     private func setupCallbacks() {
         viewModel.logInInProgress = { [weak self] in self?.presentLoadingScreen() }
-        viewModel.logInFailure = { [weak self] errorMessage in self?.handleLoginFailure(errorMessage) }
+        viewModel.logInFailure = { [weak self] errorMessage, errorCode in self?.handleLoginFailure(errorMessage, errorCode) }
         viewModel.logInFailureWithSupport = { [weak self] errorMessage in self?.handleLoginFailureWithSupport(errorMessage) }
         viewModel.checkInProgress = { [weak self] checkInProgress in
             if checkInProgress {
@@ -331,9 +332,12 @@ final class LoginViewController: NSViewController {
         loadingView.animate(true)
     }
     
-    private func handleLoginFailure(_ errorMessage: String?) {
+    private func handleLoginFailure(_ errorMessage: String?, _ errorCode: Int? = nil) {
         if viewModel.isTwoFactorStep {
             presentTwoFactorScreen(withErrorDescription: errorMessage)
+        } else if let errorCode = errorCode, errorCode == ProtonCoreServices.APIErrorCode.switchToSSOError {
+            signInWithSSOButtonAction()
+            presentOnboardingScreen(withErrorDescription: errorMessage, warningType: .info)
         } else {
             presentOnboardingScreen(withErrorDescription: errorMessage)
         }
@@ -344,8 +348,8 @@ final class LoginViewController: NSViewController {
         warningView.showSupport = true
     }
     
-    private func presentOnboardingScreen(withErrorDescription description: String?) {
-        warningView.message = description
+    private func presentOnboardingScreen(withErrorDescription description: String?, warningType: WarningType = .error) {
+        warningView.setMessage(description, warningType: warningType)
 
         _ = usernameTextField.becomeFirstResponder()
         onboardingView.isHidden = false

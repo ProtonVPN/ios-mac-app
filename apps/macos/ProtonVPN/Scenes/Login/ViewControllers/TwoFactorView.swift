@@ -57,7 +57,7 @@ final class TwoFactorView: NSView {
 
     var warningMessage: String? {
         didSet {
-            warningView.message = warningMessage
+            warningView.setMessage(warningMessage)
         }
     }
 
