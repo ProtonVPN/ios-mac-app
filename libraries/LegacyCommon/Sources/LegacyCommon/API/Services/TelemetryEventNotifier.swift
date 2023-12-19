@@ -151,6 +151,8 @@ public class TelemetryEventNotifier {
             assertionFailure("Notification object conversion failed in \(#function)")
             return
         }
+        // This will not always schedule an event. Only if the payment is done during the onboarding.
+        try? telemetryService?.onboardingEvent(.paymentDone)
 
         do {
             try telemetryService?.upsellEvent(.success, modalSource: source, newPlanName: newPlanName)

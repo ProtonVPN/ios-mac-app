@@ -49,6 +49,8 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var blockOneTimeAnnouncement: Bool { get }
     var blockUpdatePrompt: Bool { get }
     var hasConnected: Bool { get set }
+    var isSubsequentLaunch: Bool { get set }
+    var isOnboardingInProgress: Bool { get set }
     var lastIkeConnection: ConnectionConfiguration? { get set }
     var lastOpenVpnConnection: ConnectionConfiguration? { get set }
     var lastWireguardConnection: ConnectionConfiguration? { get set }
@@ -148,6 +150,7 @@ extension PropertiesManagerProtocol {
 
 public class PropertiesManager: PropertiesManagerProtocol {
     internal enum Keys: String, CaseIterable {
+        case isSubsequentLaunch = "isSubsequentLaunch"
         case autoConnect = "AutoConnect"
         case blockOneTimeAnnouncement = "BlockOneTimeAnnouncement"
         case blockUpdatePrompt = "BlockUpdatePrompt"
@@ -293,6 +296,11 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public func setTelemetryCrashReports(for username: String, enabled: Bool) {
         storage.setValue("\(enabled)", forKey: Keys.telemetryCrashReports.rawValue + username)
     }
+
+    public var isOnboardingInProgress: Bool = false
+
+    @BoolProperty(.isSubsequentLaunch)
+    public var isSubsequentLaunch: Bool
 
     // Use to do first time connecting stuff if needed
     @BoolProperty(.connectOnDemand, notifyChangesWith: PropertiesManager.hasConnectedNotification)

@@ -122,7 +122,7 @@ extension AppDelegate: NSApplicationDelegate {
                 self.navigationService.launched()
             }
 
-            self.container.applicationDidFinishedLoading()
+            self.container.applicationDidFinishLaunching()
         }
 
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(getUrl(_:withReplyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
