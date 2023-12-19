@@ -119,12 +119,6 @@ public enum Localizable {
   public static var availableWithVpnBusinessTooltip: String { return Localizable.tr("Localizable", "_available_with_vpn_business_tooltip", fallback: "Available with VPN Business.") }
   /// Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful.
   public static var badInterfaceIpRangeAlertTitle: String { return Localizable.tr("Localizable", "_bad_interface_ip_range_alert_title", fallback: "Bad Network Interface") }
-  /// Battery usages screen description
-  public static var batteryDescription: String { return Localizable.tr("Localizable", "_battery_description", fallback: "All traffic on your phone will be managed through OpenVPN, therefore iOS will allocate the battery usage of other apps to Proton VPN.") }
-  /// Battery usage More info button text
-  public static var batteryMore: String { return Localizable.tr("Localizable", "_battery_more", fallback: "Want to learn more?") }
-  /// iOS settings -> Battery usage; Title of battery usage screen;
-  public static var batteryTitle: String { return Localizable.tr("Localizable", "_battery_title", fallback: "Battery usage") }
   /// Common word
   public static var cancel: String { return Localizable.tr("Localizable", "_cancel", fallback: "Cancel") }
   /// This will cancel any re-connection attempt and leave you disconnected
