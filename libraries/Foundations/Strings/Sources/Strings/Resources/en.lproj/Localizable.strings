@@ -2305,3 +2305,75 @@
 
 /* Text of banner shown on macOS apps to upsell users who want to select a country */
 "_wrong_country_banner_text" = "Not the country you wanted? Upgrade to choose any server";
+
+// MARK: BugReport
+
+/* ReportBugwindow title */
+"_br_window_title" = "Report an issue";
+
+/* ReportBug 1st step title */
+"_br_1_title" = "What's the issue?";
+
+/* ReportBug 2nd step (Quick fixes) title */
+"_br_2_title" = "Quick fixes";
+
+/* ReportBug 2nd step (Quick fixes) subtitle */
+"_br_2_subtitle" = "These tips could help to solve your issue faster.";
+
+/* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
+"_br_2_footer" = "Didn't work?";
+
+/* ReportBug 2nd step (Quick fixes) button to go to the next step */
+"_br_2_button_next" = "Contact us";
+
+/* ReportBug 2nd step (Quick fixes) cancel button */
+"_br_2_button_cancel" = "Cancel";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_send" = "Send report";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_sending" = "Sending";
+
+/* ReportBug 3rd step (form) email field name */
+"_br_3_email" = "Email";
+
+/* ReportBug 3rd step (form) username field name */
+"_br_3_username" = "Username";
+
+/* ReportBug 3rd step (form) field to ask for includeing logs */
+"_br_3_logs_field" = "Send error logs";
+
+/* ReportBug 3rd step (form) logs description */
+"_br_3_logs_description" = "A log is a type of file that shows us the actions you took that led to an error. We’ll only ever use them to help our engineers fix bugs.";
+
+/* ReportBug 3rd step (form): message shown if user disabled logs */
+"_br_3_logs_disabled" = "Error logs help us to get to the bottom of your issue. If you don’t include them, we might not be able to investigate fully.";
+
+/* ReportBug success window: title text */
+"_br_success_title" = "Thanks for your feedback";
+
+/* ReportBug success window: subtitle text */
+"_br_success_subtitle" = "We’ll get back to you as soon as we can.";
+
+/* ReportBug success window: button */
+"_br_success_button" = "Got it";
+
+/* ReportBug success window: title text */
+"_br_failure_title" = "Your report wasn’t sent";
+
+/* ReportBug success window: retry button */
+"_br_failure_button_retry" = "Try again";
+
+/* ReportBug success window: troubleshoot button */
+"_br_failure_button_troubleshoot" = "Troubleshoot";
+
+/* Title of the view nudging users to update before filling Bug Report */
+"_update_view_title" = "Update Proton VPN";
+
+/* Description text of the view nudging users to update before filling Bug Report */
+"_update_view_description" = "You’re more likely to have issues on older versions of Proton VPN.";
+
+/* Action button of the view nudging users to update before filling Bug Report */
+"_update_view_button" = "Update";
+

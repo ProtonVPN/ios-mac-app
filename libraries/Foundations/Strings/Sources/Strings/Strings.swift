@@ -115,6 +115,46 @@ public enum Localizable {
   public static var availableWithVpnBusinessTooltip: String { return Localizable.tr("Localizable", "_available_with_vpn_business_tooltip", fallback: "Available with VPN Business.") }
   /// Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful.
   public static var badInterfaceIpRangeAlertTitle: String { return Localizable.tr("Localizable", "_bad_interface_ip_range_alert_title", fallback: "Bad Network Interface") }
+  /// ReportBug 1st step title
+  public static var br1Title: String { return Localizable.tr("Localizable", "_br_1_title", fallback: "What's the issue?") }
+  /// ReportBug 2nd step (Quick fixes) cancel button
+  public static var br2ButtonCancel: String { return Localizable.tr("Localizable", "_br_2_button_cancel", fallback: "Cancel") }
+  /// ReportBug 2nd step (Quick fixes) button to go to the next step
+  public static var br2ButtonNext: String { return Localizable.tr("Localizable", "_br_2_button_next", fallback: "Contact us") }
+  /// ReportBug 2nd step (Quick fixes) text under the list of suggestions
+  public static var br2Footer: String { return Localizable.tr("Localizable", "_br_2_footer", fallback: "Didn't work?") }
+  /// ReportBug 2nd step (Quick fixes) subtitle
+  public static var br2Subtitle: String { return Localizable.tr("Localizable", "_br_2_subtitle", fallback: "These tips could help to solve your issue faster.") }
+  /// ReportBug 2nd step (Quick fixes) title
+  public static var br2Title: String { return Localizable.tr("Localizable", "_br_2_title", fallback: "Quick fixes") }
+  /// ReportBug 3rd step (form) send button
+  public static var br3ButtonSend: String { return Localizable.tr("Localizable", "_br_3_button_send", fallback: "Send report") }
+  /// ReportBug 3rd step (form) send button
+  public static var br3ButtonSending: String { return Localizable.tr("Localizable", "_br_3_button_sending", fallback: "Sending") }
+  /// ReportBug 3rd step (form) email field name
+  public static var br3Email: String { return Localizable.tr("Localizable", "_br_3_email", fallback: "Email") }
+  /// ReportBug 3rd step (form) logs description
+  public static var br3LogsDescription: String { return Localizable.tr("Localizable", "_br_3_logs_description", fallback: "A log is a type of file that shows us the actions you took that led to an error. We’ll only ever use them to help our engineers fix bugs.") }
+  /// ReportBug 3rd step (form): message shown if user disabled logs
+  public static var br3LogsDisabled: String { return Localizable.tr("Localizable", "_br_3_logs_disabled", fallback: "Error logs help us to get to the bottom of your issue. If you don’t include them, we might not be able to investigate fully.") }
+  /// ReportBug 3rd step (form) field to ask for includeing logs
+  public static var br3LogsField: String { return Localizable.tr("Localizable", "_br_3_logs_field", fallback: "Send error logs") }
+  /// ReportBug 3rd step (form) username field name
+  public static var br3Username: String { return Localizable.tr("Localizable", "_br_3_username", fallback: "Username") }
+  /// ReportBug success window: retry button
+  public static var brFailureButtonRetry: String { return Localizable.tr("Localizable", "_br_failure_button_retry", fallback: "Try again") }
+  /// ReportBug success window: troubleshoot button
+  public static var brFailureButtonTroubleshoot: String { return Localizable.tr("Localizable", "_br_failure_button_troubleshoot", fallback: "Troubleshoot") }
+  /// ReportBug success window: title text
+  public static var brFailureTitle: String { return Localizable.tr("Localizable", "_br_failure_title", fallback: "Your report wasn’t sent") }
+  /// ReportBug success window: button
+  public static var brSuccessButton: String { return Localizable.tr("Localizable", "_br_success_button", fallback: "Got it") }
+  /// ReportBug success window: subtitle text
+  public static var brSuccessSubtitle: String { return Localizable.tr("Localizable", "_br_success_subtitle", fallback: "We’ll get back to you as soon as we can.") }
+  /// ReportBug success window: title text
+  public static var brSuccessTitle: String { return Localizable.tr("Localizable", "_br_success_title", fallback: "Thanks for your feedback") }
+  /// ReportBugwindow title
+  public static var brWindowTitle: String { return Localizable.tr("Localizable", "_br_window_title", fallback: "Report an issue") }
   /// Common word
   public static var cancel: String { return Localizable.tr("Localizable", "_cancel", fallback: "Cancel") }
   /// This will cancel any re-connection attempt and leave you disconnected
@@ -1479,6 +1519,12 @@ public enum Localizable {
   public static var updateRequiredSupport: String { return Localizable.tr("Localizable", "_update_required_support", fallback: "Contact support") }
   /// Primary button title in the App update required alert
   public static var updateRequiredUpdate: String { return Localizable.tr("Localizable", "_update_required_update", fallback: "Update") }
+  /// Action button of the view nudging users to update before filling Bug Report
+  public static var updateViewButton: String { return Localizable.tr("Localizable", "_update_view_button", fallback: "Update") }
+  /// Description text of the view nudging users to update before filling Bug Report
+  public static var updateViewDescription: String { return Localizable.tr("Localizable", "_update_view_description", fallback: "You’re more likely to have issues on older versions of Proton VPN.") }
+  /// Title of the view nudging users to update before filling Bug Report
+  public static var updateViewTitle: String { return Localizable.tr("Localizable", "_update_view_title", fallback: "Update Proton VPN") }
   /// Button in many places in both iOS and MacOS apps
   public static var upgrade: String { return Localizable.tr("Localizable", "_upgrade", fallback: "Upgrade") }
   /// UPGRADE AGAIN
