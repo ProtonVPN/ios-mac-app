@@ -340,15 +340,11 @@ public class VpnApiService {
     }
 
     public func virtualServices() async throws -> VPNStreamingResponse {
-        try await withCheckedThrowingContinuation { continuation in
-            networking.request(VPNStreamingRequest(), completion: continuation.resume(with:))
-        }
+        try await networking.apiService.perform(request: VPNStreamingRequest()).1
     }
 
     public func partnersServices() async throws -> VPNPartnersResponse {
-        try await withCheckedThrowingContinuation { continuation in
-            networking.request(VPNPartnersRequest(), completion: continuation.resume(with:))
-        }
+        try await networking.apiService.perform(request: VPNPartnersRequest()).1
     }
 
     public func userInfo() async throws -> User {
