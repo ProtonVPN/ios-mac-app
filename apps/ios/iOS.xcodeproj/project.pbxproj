@@ -296,8 +296,6 @@
 		D59AF71625597BBC004C60E3 /* TextWithActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59AF71425597BBC004C60E3 /* TextWithActivityCell.swift */; };
 		D59AF71725597BBC004C60E3 /* TextWithActivityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D59AF71525597BBC004C60E3 /* TextWithActivityCell.xib */; };
 		D5A3C34828D376CB00D69CD5 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = D5A3C34728D376CB00D69CD5 /* PMLogger */; };
-		D5A6ACB5250273CE00FB381F /* BatteryUsageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A6ACB3250273CE00FB381F /* BatteryUsageViewController.swift */; };
-		D5A6ACB6250273CE00FB381F /* BatteryUsageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5A6ACB4250273CE00FB381F /* BatteryUsageViewController.xib */; };
 		D5A880F422C61A59009B63D1 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A880F322C61A59009B63D1 /* UIButton+Extension.swift */; };
 		D5A8CD732456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8CD722456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift */; };
 		D5A8CD742456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8CD722456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift */; };
@@ -796,8 +794,6 @@
 		D596B8682A79330400CF6E30 /* ImageSubtitleImageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageSubtitleImageTableViewCell.xib; sourceTree = "<group>"; };
 		D59AF71425597BBC004C60E3 /* TextWithActivityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWithActivityCell.swift; sourceTree = "<group>"; };
 		D59AF71525597BBC004C60E3 /* TextWithActivityCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextWithActivityCell.xib; sourceTree = "<group>"; };
-		D5A6ACB3250273CE00FB381F /* BatteryUsageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryUsageViewController.swift; sourceTree = "<group>"; };
-		D5A6ACB4250273CE00FB381F /* BatteryUsageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BatteryUsageViewController.xib; sourceTree = "<group>"; };
 		D5A880F322C61A59009B63D1 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		D5A8CD722456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Extension.swift"; sourceTree = "<group>"; };
 		D5A8CD762456D8AE00F9B0C9 /* TroubleshootingSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootingSwitchCell.swift; sourceTree = "<group>"; };
@@ -1296,7 +1292,6 @@
 		791DE610208E08E600A29EA5 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				D5A6ACB3250273CE00FB381F /* BatteryUsageViewController.swift */,
 				F330F01527FC85AE00C3AA33 /* CouponViewController.swift */,
 				F330F01727FC884700C3AA33 /* CouponViewController.xib */,
 				E1EB9E7422FF096A009E704F /* LogSelectionViewController.swift */,
@@ -2140,7 +2135,6 @@
 				66E34BB727AC0978002FC827 /* ButtonWithLoadingTableViewCell.xib */,
 				793ECF452149045400C186A7 /* AppVersionView.swift */,
 				793ECF432149041A00C186A7 /* AppVersionView.xib */,
-				D5A6ACB4250273CE00FB381F /* BatteryUsageViewController.xib */,
 				793ECF3F2148EA0B00C186A7 /* ButtonTableViewCell.swift */,
 				793ECF402148EA0B00C186A7 /* ButtonTableViewCell.xib */,
 				E1D187EF2301AB2E00C5F492 /* CheckmarkTableViewCell.swift */,
@@ -2756,7 +2750,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5FD25D22A73AFCF00D9BDC0 /* ProtonVPN_ike_root.der in Resources */,
-				D5A6ACB6250273CE00FB381F /* BatteryUsageViewController.xib in Resources */,
 				D59AF71725597BBC004C60E3 /* TextWithActivityCell.xib in Resources */,
 				4CF298292A7D3B8E00DEB23F /* es-419.lproj in Resources */,
 				4CF298262A7D3B8E00DEB23F /* pt.lproj in Resources */,
@@ -3078,7 +3071,6 @@
 				D50B801F295DA63B00D85D29 /* LoginExternalAccountNotSupportedSetup.swift in Sources */,
 				E169D52B21E5075100D35312 /* ElectronViewContainer.swift in Sources */,
 				42066E8626301BF8001F86DB /* FeatureTableViewCell.swift in Sources */,
-				D5A6ACB5250273CE00FB381F /* BatteryUsageViewController.swift in Sources */,
 				7904DA4720E58292008A4FCB /* PrefillInformation.swift in Sources */,
 				F330F01C27FD752E00C3AA33 /* UINavigationController+Extensions.swift in Sources */,
 				D5209C7026CBBCF900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift in Sources */,

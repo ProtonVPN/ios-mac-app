@@ -105,9 +105,6 @@ final class SettingsViewModel {
         if LocalFeatureFlags.isEnabled(TelemetryFeature.telemetryOptIn) {
             sections.append(usageStatisticsSection)
         }
-        if let batterySection = batterySection {
-            sections.append(batterySection)
-        }
         sections.append(logSection)
         sections.append(bottomSection)
         
@@ -585,19 +582,6 @@ final class SettingsViewModel {
         return TableViewSection(title: "", cells: cells)
     }
     
-    private var batterySection: TableViewSection? {
-        switch propertiesManager.connectionProtocol {
-        case .vpnProtocol(.ike):
-            return nil
-        default:
-            return TableViewSection(title: "", cells: [
-                .pushStandard(title: Localizable.batteryTitle, handler: { [pushBatteryViewController] in
-                    pushBatteryViewController()
-                })
-            ])
-        }
-    }
-    
     private var logSection: TableViewSection {
         let cells: [TableViewCellModel] = [
             .pushStandard(title: Localizable.viewLogs, handler: { [pushLogSelectionViewController] in
@@ -704,11 +688,7 @@ final class SettingsViewModel {
     private func pushUsageStatisticsViewController() {
         pushHandler?(settingsService.makeTelemetrySettingsViewController())
     }
-    
-    private func pushBatteryViewController() {
-        pushHandler?(settingsService.makeBatteryUsageViewController())
-    }
-    
+
     private func pushLogSelectionViewController() {
         log.info("Build info: \(appInfo.debugInfoString)")
         pushHandler?(settingsService.makeLogSelectionViewController())
