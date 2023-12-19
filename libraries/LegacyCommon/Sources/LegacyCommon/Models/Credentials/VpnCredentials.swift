@@ -22,6 +22,7 @@
 import Foundation
 import VPNShared
 import Strings
+import ProtonCoreNetworking
 
 public class VpnCredentials: NSObject, NSSecureCoding, Codable {
 

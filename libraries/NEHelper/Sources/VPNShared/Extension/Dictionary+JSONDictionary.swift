@@ -21,10 +21,10 @@
 
 import Foundation
 
-public typealias JSONDictionary = [String: AnyObject]
+public typealias JSONDictionary = [String: Any]
 public typealias JSONArray = [JSONDictionary]
 
-public extension Dictionary where Key: ExpressibleByStringLiteral, Value: AnyObject {
+public extension Dictionary where Key: ExpressibleByStringLiteral, Value: Any {
     
     // MARK: String
     func string(_ key: Key) -> String? {

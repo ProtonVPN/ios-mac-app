@@ -349,10 +349,12 @@ public class AppStateManagerImplementation: AppStateManager {
     }
     
     private func stopAttemptingConnection() {
-        log.info("Stop preparing connection", category: .connectionConnect)
-        cancelTimeout()
-        handleVpnError(vpnState)
-        disconnect()
+        Task { @MainActor in
+            log.info("Stop preparing connection", category: .connectionConnect)
+            cancelTimeout()
+            await handleVpnError(vpnState)
+            disconnect()
+        }
     }
     
     private func prepareServerCertificate() {
@@ -503,7 +505,7 @@ public class AppStateManagerImplementation: AppStateManager {
         notifyObservers()
     }
     
-    private func handleVpnError(_ vpnState: VpnState) {
+    private func handleVpnError(_ vpnState: VpnState) async {
         // In the rare event that the vpn is stuck not disconnecting, show a helpful alert
         if case VpnState.disconnecting(_) = vpnState, stuckDisconnecting {
             log.error("Stale VPN connection failing to disconnect", category: .connectionConnect)
@@ -515,53 +517,25 @@ public class AppStateManagerImplementation: AppStateManager {
         
         do {
             let vpnCredentials = try vpnKeychain.fetch()
-            checkApiForFailureReason(vpnCredentials: vpnCredentials)
+            try await checkApiForFailureReason(vpnCredentials: vpnCredentials)
         } catch {
             connectionFailed()
             alertService?.push(alert: CannotAccessVpnCredentialsAlert())
         }
     }
     
-    private func checkApiForFailureReason(vpnCredentials: VpnCredentials) {
-        var rSessionCount: Int?
-        var rVpnCredentials: VpnCredentials?
-
-        let dispatchGroup = DispatchGroup()
-        let failureClosure: (Error) -> Void = { error in
-            dispatchGroup.leave()
-        }
-        
-        dispatchGroup.enter()
-        vpnApiService.sessionsCount { result in
-            switch result {
-            case let .success(sessionsCount):
-                rSessionCount = sessionsCount
-                dispatchGroup.leave()
-            case let .failure(error):
-                failureClosure(error)
-            }
-        }
-        
-        dispatchGroup.enter()
-        vpnApiService.clientCredentials { result in
-            switch result {
-            case let .success(newVpnCredentials):
-                rVpnCredentials = newVpnCredentials
-                dispatchGroup.leave()
-            case let .failure(error):
-                failureClosure(error)
-            }
-        }
-        
-        dispatchGroup.notify(queue: DispatchQueue.main) { [weak self] in
+    private func checkApiForFailureReason(vpnCredentials: VpnCredentials) async throws {
+        let sessionCount = try await vpnApiService.sessionsCount().sessionCount
+        let newVpnCredentials = try await vpnApiService.clientCredentials()
+        await MainActor.run { [weak self] in
             guard let self = self, self.state.isDisconnected else {
                 return
             }
             
-            if let sessionCount = rSessionCount, sessionCount >= (rVpnCredentials?.maxConnect ?? vpnCredentials.maxConnect) {
-                let accountPlan = rVpnCredentials?.accountPlan ?? vpnCredentials.accountPlan
+            if sessionCount >= newVpnCredentials.maxConnect {
+                let accountPlan = newVpnCredentials.accountPlan
                 self.maxSessionsReached(accountPlan: accountPlan)
-            } else if let newVpnCredentials = rVpnCredentials, newVpnCredentials.password != vpnCredentials.password {
+            } else if newVpnCredentials.password != vpnCredentials.password {
                 self.vpnKeychain.storeAndDetectDowngrade(vpnCredentials: newVpnCredentials)
                 guard let lastConfiguration = self.lastAttemptedConfiguration else {
                     return
