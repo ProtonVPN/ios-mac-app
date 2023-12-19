@@ -271,10 +271,6 @@ public enum Localizable {
   public static var countriesPremium: String { return Localizable.tr("Localizable", "_countries_premium", fallback: "Premium countries") }
   /// Countries
   public static var countriesTab: String { return Localizable.tr("Localizable", "_countries_tab", fallback: "Countries") }
-  /// MacOS app tour: countries list description
-  public static var countriesTourDescription: String { return Localizable.tr("Localizable", "_countries_tour_description", fallback: "Choose which country and server you would like to use for your end IP address.") }
-  /// MacOS app tour: countries list title
-  public static var countriesTourTitle: String { return Localizable.tr("Localizable", "_countries_tour_title", fallback: "Countries") }
   /// Profile create/edit menu
   public static var country: String { return Localizable.tr("Localizable", "_country", fallback: "Country") }
   /// Error when user hasn't selected profile country
@@ -359,8 +355,6 @@ public enum Localizable {
   public static var edit: String { return Localizable.tr("Localizable", "_edit", fallback: "Edit") }
   /// Common word
   public static var enabled: String { return Localizable.tr("Localizable", "_enabled", fallback: "Enabled") }
-  /// MacOS app tour: end tour button
-  public static var endTour: String { return Localizable.tr("Localizable", "_end_tour", fallback: "End Tour") }
   /// iOS: placeholder for email field in signup and email verification screens
   public static var enterEmailAddress: String { return Localizable.tr("Localizable", "_enter_email_address", fallback: "Enter email address") }
   /// Profile create/change form
@@ -749,7 +743,9 @@ public enum Localizable {
   public static var neUnableToConnectToHost: String { return Localizable.tr("Localizable", "_ne_unable_to_connect_to_host", fallback: "Service unreachable") }
   /// Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password
   public static var neagentAlwaysAllow: String { return Localizable.tr("Localizable", "_neagent_always_allow", fallback: "Always Allow") }
-  /// Mac: neagent help screen
+  /// Mac: neagent help screen. The numbers refer to a text field and button in an image displayed above this text. Final string with filled in variables looks like this: "You may be asked to provide your computer account password
+  /// to connect to the Proton VPN service. If this request appears,
+  /// enter your Mac password (1) and click ‘Always Allow’ (2)."
   public static func neagentDescription(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
     return Localizable.tr("Localizable", "_neagent_description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5), fallback: "You may be asked to provide your %@\nto connect to the Proton VPN service. If this request appears,\nenter your %@ %@ and click ‘%@’ %@.")
   }
@@ -845,13 +841,11 @@ public enum Localizable {
   public static var newsTitle: String { return Localizable.tr("Localizable", "_news_title", fallback: "News") }
   /// iOS onboarding next item button
   public static var next: String { return Localizable.tr("Localizable", "_next", fallback: "Next") }
-  /// MacOS app tour: next tip button
-  public static var nextTip: String { return Localizable.tr("Localizable", "_next_tip", fallback: "Next Tip") }
   /// Text used when no active server information is available
   public static var noDescriptionAvailable: String { return Localizable.tr("Localizable", "_no_description_available", fallback: "No description available") }
   /// There are currently no servers to show here.
   public static var noServersToShow: String { return Localizable.tr("Localizable", "_no_servers_to_show", fallback: "There are currently no servers to show here.") }
-  /// MacOS welcome screen: cancel button
+  /// No thanks
   public static var noThanks: String { return Localizable.tr("Localizable", "_no_thanks", fallback: "No thanks") }
   /// Enable Non-standard ports
   public static var nonStandardPortsChangeTitle: String { return Localizable.tr("Localizable", "_non_standard_ports_change_title", fallback: "Enable Non-standard ports") }
@@ -980,10 +974,6 @@ public enum Localizable {
   public static var profiles: String { return Localizable.tr("Localizable", "_profiles", fallback: "Profiles") }
   /// MacOS: profiles window title
   public static var profilesOverview: String { return Localizable.tr("Localizable", "_profiles_overview", fallback: "Profiles Overview") }
-  /// MacOS app tour: profiles description
-  public static var profilesTourDescription: String { return Localizable.tr("Localizable", "_profiles_tour_description", fallback: "Save your preferred settings and servers for future use.") }
-  /// MacOS app tour: profiles title
-  public static var profilesTourTitle: String { return Localizable.tr("Localizable", "_profiles_tour_title", fallback: "Profiles") }
   /// Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24).
   public static func promptKillSwitchDueToBadInterfaceIpRange(_ p1: Any, _ p2: Any) -> String {
     return Localizable.tr("Localizable", "_prompt_kill_switch_due_to_bad_interface_ip_range", String(describing: p1), String(describing: p2), fallback: "Your local network might be unsafe (the interface '%@' has the IP and prefix '%@'). Your data may be sent unencrypted over the local network. Enabling Kill Switch will block this traffic. Connections to local peripherals will be interrupted.")
@@ -998,10 +988,6 @@ public enum Localizable {
   public static var quickConnect: String { return Localizable.tr("Localizable", "_quick_connect", fallback: "Quick Connect") }
   /// MacOS: Settings -> Connection: description.
   public static var quickConnectTooltip: String { return Localizable.tr("Localizable", "_quick_connect_tooltip", fallback: "Quick Connect button will connect you to the selected profile") }
-  /// MacOS app tour: quick connect description
-  public static var quickConnectTourDescription: String { return Localizable.tr("Localizable", "_quick_connect_tour_description", fallback: "Automatically connect to the server that will provide you with the fastest connection.") }
-  /// MacOS app tour: quick connect title
-  public static var quickConnectTourTitle: String { return Localizable.tr("Localizable", "_quick_connect_tour_title", fallback: "Quick Connect") }
   /// Get Plus
   public static var quickSettingsGetPlus: String { return Localizable.tr("Localizable", "_quick_settings_get_plus", fallback: "Get Plus") }
   /// Disables internet if the VPN connection drops to prevent accidental IP leak.
@@ -1022,14 +1008,6 @@ public enum Localizable {
   public static var quickSettingsSecureCoreDescription: String { return Localizable.tr("Localizable", "_quick_settings_secureCore_description", fallback: "Route your most sensitive data through our safest servers in privacy-friendly countries.") }
   /// Secure Core may reduce VPN speed
   public static var quickSettingsSecureCoreNote: String { return Localizable.tr("Localizable", "_quick_settings_secureCore_note", fallback: "Secure Core may reduce VPN speed") }
-  /// MacOS app tour: quick settings description
-  public static var quickSettingsTourDescription: String { return Localizable.tr("Localizable", "_quick_settings_tour_description", fallback: "Increase your security with one click:") }
-  /// MacOS app tour: quick settings secure core
-  public static var quickSettingsTourFeature1: String { return Localizable.tr("Localizable", "_quick_settings_tour_feature_1", fallback: "Add one extra layer of security with Secure Core.") }
-  /// MacOS app tour: quick settings net shield
-  public static var quickSettingsTourFeature2: String { return Localizable.tr("Localizable", "_quick_settings_tour_feature_2", fallback: "Surf the web freely from malware and ads with NetShield.") }
-  /// MacOS app tour: quick settings kill switch
-  public static var quickSettingsTourFeature3: String { return Localizable.tr("Localizable", "_quick_settings_tour_feature_3", fallback: "Prevent your IP to be exposed by turning on kill switch.") }
   /// MacOS app tour: quick settings title
   public static var quickSettingsTourTitle: String { return Localizable.tr("Localizable", "_quick_settings_tour_title", fallback: "Quick Settings") }
   /// MacOS: quit application button in custom status menu
@@ -1326,8 +1304,6 @@ public enum Localizable {
   public static var showProtonvpn: String { return Localizable.tr("Localizable", "_show_protonvpn", fallback: "Show Proton VPN") }
   /// iOS: button in login and onboarding screens
   public static var signUp: String { return Localizable.tr("Localizable", "_sign_up", fallback: "Sign Up") }
-  /// MacOS welcome screen: skip button
-  public static var skip: String { return Localizable.tr("Localizable", "_skip", fallback: "Skip") }
   /// Description for Smart Protocol in Settings
   public static var smartProtocolDescription: String { return Localizable.tr("Localizable", "_smart_protocol_description", fallback: "Enable Smart Protocol to automatically use the protocol and port that offers the best connectivity.") }
   /// Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected
@@ -1442,8 +1418,6 @@ public enum Localizable {
   public static var systemExtensionTutorialMenuItem: String { return Localizable.tr("Localizable", "_system_extension_tutorial_menu_item", fallback: "System Extension Tutorial") }
   /// MacOS: Settings -> General: name of field.
   public static var systemNotifications: String { return Localizable.tr("Localizable", "_system_notifications", fallback: "System Notifications") }
-  /// MacOS welcome screen: take a tour button
-  public static var takeTour: String { return Localizable.tr("Localizable", "_take_tour", fallback: "Take a Tour") }
   /// iOS Settings -> Protocol -> OpenVPN/WireGuard: TCP option
   public static var tcp: String { return Localizable.tr("Localizable", "_tcp", fallback: "TCP") }
   /// iOS status view
@@ -1585,7 +1559,7 @@ public enum Localizable {
   public static var upgradeToPlus: String { return Localizable.tr("Localizable", "_upgrade_to_plus", fallback: "Upgrade to Plus") }
   /// Plan upgrade unavailable alert
   public static var upgradeUnavailableBody: String { return Localizable.tr("Localizable", "_upgrade_unavailable_body", fallback: "Your Proton VPN subscription cannot be upgraded from within the app, please visit account.protonvpn.com to upgrade.") }
-  /// Plan upgrade unavailable alert
+  /// If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert
   public static var upgradeUnavailableTitle: String { return Localizable.tr("Localizable", "_upgrade_unavailable_title", fallback: "Upgrade Unavailable in App") }
   /// Menu point in settings screen
   public static var usageStatistics: String { return Localizable.tr("Localizable", "_usage_statistics", fallback: "Usage statistics") }
@@ -1655,8 +1629,8 @@ public enum Localizable {
   public static var warningVpnSessionIsActive: String { return Localizable.tr("Localizable", "_warning_vpn_session_is_active", fallback: "Another user's Proton VPN session is active on this device. Continuing with the sign in will cause the current session to end. Do you want to continue?") }
   /// Shown on the Welcome screen as the longer screen text
   public static var welcomeBody: String { return Localizable.tr("Localizable", "_welcome_body", fallback: "High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.") }
-  /// MacOS welcome screen: description
-  public static var welcomeDescription: String { return Localizable.tr("Localizable", "_welcome_description", fallback: "Thanks for using Proton VPN. Take a quick look\nat the main app features.") }
+  /// Thanks for using Proton VPN.
+  public static var welcomeDescription: String { return Localizable.tr("Localizable", "_welcome_description", fallback: "Thanks for using Proton VPN.") }
   /// Shown on the Welcome screen as the screen headline
   public static var welcomeHeadline: String { return Localizable.tr("Localizable", "_welcome_headline", fallback: "Protect yourself online") }
   /// MacOS welcome screen: title

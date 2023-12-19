@@ -125,7 +125,6 @@ fileprivate class WindowServiceMock: WindowService {
     func closeIfPresent<T: NSWindowController>(windowController: T.Type) {}
     func showLogin(viewModel: LoginViewModel) {}
     func showSidebar(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol) {}
-    func showTour() {}
     func openAbout(factory: AboutViewController.Factory) {}
     func openAcknowledgements() {}
     func openSettingsWindow(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, accountViewModel: AccountViewModel, couponViewModel: CouponViewModel) { }

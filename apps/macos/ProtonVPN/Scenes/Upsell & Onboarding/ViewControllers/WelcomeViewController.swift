@@ -37,8 +37,7 @@ class WelcomeViewController: NSViewController {
     @IBOutlet weak var mapView: NSImageView!
     @IBOutlet weak var titleLabel: NSTextField!
     @IBOutlet weak var descriptionLabel: NSTextField!
-    @IBOutlet weak var noThanksButton: NSButton!
-    @IBOutlet weak var takeTourButton: UpsellPrimaryActionButton!
+    @IBOutlet weak var noThanksButton: UpsellPrimaryActionButton!
     @IBOutlet weak var usageStatisticsLabel: NSTextField!
     @IBOutlet weak var crashReportsLabel: NSTextField!
     @IBOutlet weak var usageStatisticsButton: SwitchButton!
@@ -84,8 +83,7 @@ class WelcomeViewController: NSViewController {
         description.addAttribute(.paragraphStyle, value: paragraphStyle, range: fullRange)
         descriptionLabel.attributedStringValue = description
         
-        noThanksButton.title = Localizable.noThanks
-        takeTourButton.title = Localizable.takeTour
+        noThanksButton.title = Localizable.continue
 
         setupTelemetry()
     }
@@ -131,13 +129,6 @@ class WelcomeViewController: NSViewController {
     @IBAction func cancel(_ sender: Any) {
         dismiss(nil)
     }
-    
-    @IBAction func takeTour(_ sender: Any) {
-        dismiss(nil)
-#if !REDESIGN
-        windowService.showTour()
-#endif
-    }
 }
 extension WelcomeViewController: SwitchButtonDelegate {
     func shouldToggle(_ button: NSButton, to value: ButtonState, completion: @escaping (Bool) -> Void) {
@@ -145,15 +136,13 @@ extension WelcomeViewController: SwitchButtonDelegate {
     }
 
     func switchButtonClicked(_ button: NSButton) {
-        Task {
-            switch button.tag {
-            case Switch.crashReports.rawValue:
-                telemetrySettings.updateTelemetryCrashReports(isOn: crashReportsButton.currentButtonState == .on)
-            case Switch.usageData.rawValue:
-                telemetrySettings.updateTelemetryUsageData(isOn: usageStatisticsButton.currentButtonState == .on)
-            default:
-                break
-            }
+        switch button.tag {
+        case Switch.crashReports.rawValue:
+            telemetrySettings.updateTelemetryCrashReports(isOn: crashReportsButton.currentButtonState == .on)
+        case Switch.usageData.rawValue:
+            telemetrySettings.updateTelemetryUsageData(isOn: usageStatisticsButton.currentButtonState == .on)
+        default:
+            break
         }
     }
 }
