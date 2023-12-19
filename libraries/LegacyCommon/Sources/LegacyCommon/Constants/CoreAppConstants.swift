@@ -52,7 +52,6 @@ public class CoreAppConstants {
         public static let privacyPolicy = "https://protonvpn.com/privacy-policy"
         public static let appstoreIosUrl = "http://itunes.apple.com/app/id1437005085"
         public static let unsecureWiFiUrl = "https://protonvpn.com/blog/public-wifi-safety/"
-        public static let batteryOpenVpn = "https://protonvpn.com/support/openvpn-battery-usage/"
         public static let alternativeRouting = "http://protonmail.com/blog/anti-censorship-alternative-routing"
         public static let vpnAccelerator = "https://protonvpn.com/support/how-to-use-vpn-accelerator/"
         public static let assignVPNConnections = "https://protonvpn.com/support/assign-vpn-connection"

@@ -1340,17 +1340,6 @@
 "_troubleshoot_item_other_link2" = "email";
 "_troubleshoot_item_other_link3" = "Twitter";
 
-// Battery usage
-
-/* iOS settings -> Battery usage; Title of battery usage screen; */
-"_battery_title" = "Battery usage";
-
-/* Battery usages screen description */
-"_battery_description" = "All traffic on your phone will be managed through OpenVPN, therefore iOS will allocate the battery usage of other apps to Proton VPN.";
-
-/* Battery usage More info button text */
-"_battery_more" = "Want to learn more?";
-
 // Netshield stats
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
