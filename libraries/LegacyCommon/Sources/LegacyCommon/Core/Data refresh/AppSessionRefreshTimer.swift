@@ -162,8 +162,8 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
 
     private func refreshPartners() {
         guard let delegate, delegate.shouldRefreshPartners() else { return }
-        Task { [weak self] in
-            await self?.appSessionRefresher.refreshPartners()
+        Task { [appSessionRefresher] in
+            await appSessionRefresher.refreshPartners()
         }
     }
 }
