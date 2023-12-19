@@ -135,30 +135,24 @@ public class VpnApiService {
         }
     }
 
-    public func clientCredentials(completion: @escaping (Result<VpnCredentials, Error>) -> Void) {
+    public func clientCredentials() async throws -> VpnCredentials {
         guard authKeychain.username != nil else {
-            completion(.failure(VpnApiServiceError.endpointRequiresAuthentication))
-            return
+            throw VpnApiServiceError.endpointRequiresAuthentication
         }
-        networking.request(VPNClientCredentialsRequest()) { (result: Result<VPNShared.JSONDictionary, Error>) in
-            switch result {
-            case let .success(json):
-                do {
-                    let vpnCredential = try VpnCredentials(dic: json)
-                    completion(.success(vpnCredential))
-                } catch {
-                    let error = error as NSError
-                    if error.code != -1 {
-                        log.error("clientCredentials error", category: .api, event: .response, metadata: ["error": "\(error)"])
-                        completion(.failure(error))
-                    } else {
-                        log.error("Error occurred during user's VPN credentials parsing", category: .api, event: .response, metadata: ["error": "\(error)"])
-                        let error = ParseError.vpnCredentialsParse
-                        completion(.failure(error))
-                    }
-                }
-            case let .failure(error):
-                completion(.failure(error))
+        
+        let json = try await networking.apiService.perform(request: VPNClientCredentialsRequest()).1
+        do {
+            return try VpnCredentials(dic: json)
+            
+        } catch {
+            let error = error as NSError
+            if error.code != -1 {
+                log.error("clientCredentials error", category: .api, event: .response, metadata: ["error": "\(error)"])
+                throw error
+            } else {
+                log.error("Error occurred during user's VPN credentials parsing", category: .api, event: .response, metadata: ["error": "\(error)"])
+                let error = ParseError.vpnCredentialsParse
+                throw error
             }
         }
     }
@@ -253,15 +247,8 @@ public class VpnApiService {
         }
     }
 
-    public func sessionsCount(completion: @escaping (Result<Int, Error>) -> Void) {
-        networking.request(VPNSessionsCountRequest()) { (result: Result<SessionsResponse, Error>) in
-            switch result {
-            case let .success(response):
-                completion(.success(response.sessionCount))
-            case let .failure(error):
-                completion(.failure(error))
-            }
-        }
+    public func sessionsCount() async throws -> SessionsResponse {
+        try await networking.apiService.perform(request: VPNSessionsCountRequest()).1
     }
     
     public func loads(lastKnownIp: String?, completion: @escaping (Result<ContinuousServerPropertiesDictionary, Error>) -> Void) {
@@ -324,12 +311,6 @@ public class VpnApiService {
             case let .failure(error):
                 completion(.failure(error))
             }
-        }
-    }
-
-    public func clientCredentials() async throws -> VpnCredentials {
-        try await withCheckedThrowingContinuation { continuation in
-            clientCredentials(completion: continuation.resume(with:))
         }
     }
 

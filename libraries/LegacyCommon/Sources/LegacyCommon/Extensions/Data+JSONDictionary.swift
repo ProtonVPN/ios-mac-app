@@ -22,7 +22,7 @@
 
 import Foundation
 
-public typealias JSONDictionary = [String: AnyObject]
+public typealias JSONDictionary = [String: Any]
 
 extension Data {
     var jsonDictionary: JSONDictionary? {

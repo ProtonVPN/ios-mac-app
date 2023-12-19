@@ -83,27 +83,26 @@ public final class PaymentsApiServiceImplementation: PaymentsApiService {
             completion(.planNotUpgradedYet)
             return
         }
-
-        // each try introduces a slight delay to give the backend time to upgrade the plan
-        // this is needed because applying promo code does not upgrade the plan immediately
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+        Task { @MainActor [weak self] in
+            // each try introduces a slight delay to give the backend time to upgrade the plan
+            // this is needed because applying promo code does not upgrade the plan immediately
+            try await Task.sleep(nanoseconds: NSEC_PER_SEC * 1)
+            guard let self else { return }
             // check if the plan is upgraded already
-            self?.vpnApiService.clientCredentials { result in
-                switch result {
-                case .failure:
-                    log.debug("Error checking if the plan is upgraded after applying promo code, returning", category: .app)
-                    // if a failure occurs just tell the user the plan is not upgraded yet but will be in a few minutes
-                    completion(.planNotUpgradedYet)
-                case let .success(credentials):
-                    // the plan is still not upgraded, try again
-                    if credentials.accountPlan == originalPlan {
-                        log.debug("The plan is not yet upgraded after applying promo code, trying again", category: .app)
-                        self?.checkPlanUpgraded(originalPlan: originalPlan, retries: retries - 1, completion: completion)
-                    } else { // the plan has been upgraded
-                        log.debug("The plan is upgraded after applying promo code", category: .app)
-                        completion(.planUpgraded)
-                    }
+            do {
+                let credentials = try await self.vpnApiService.clientCredentials()
+                // the plan is still not upgraded, try again
+                if credentials.accountPlan == originalPlan {
+                    log.debug("The plan is not yet upgraded after applying promo code, trying again", category: .app)
+                    self.checkPlanUpgraded(originalPlan: originalPlan, retries: retries - 1, completion: completion)
+                } else { // the plan has been upgraded
+                    log.debug("The plan is upgraded after applying promo code", category: .app)
+                    completion(.planUpgraded)
                 }
+            } catch {
+                log.debug("Error checking if the plan is upgraded after applying promo code, returning", category: .app)
+                // if a failure occurs just tell the user the plan is not upgraded yet but will be in a few minutes
+                completion(.planNotUpgradedYet)
             }
         }
     }
