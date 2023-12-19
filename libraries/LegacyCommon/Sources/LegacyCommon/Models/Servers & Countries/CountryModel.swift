@@ -48,7 +48,6 @@ public class CountryModel: Comparable, Hashable {
 
     private lazy var countrySearchName: String = {
         countryName
-            .folding(options: [.caseInsensitive, .diacriticInsensitive], locale: .current)
             .replacingOccurrences(of: "ł", with: "l")
     }()
 
@@ -64,7 +63,7 @@ public class CountryModel: Comparable, Hashable {
     }
     
     public func matches(searchQuery: String) -> Bool {
-        return countrySearchName.contains(searchQuery)
+        return countrySearchName.localizedStandardContains(searchQuery.replacingOccurrences(of: "ł", with: "l"))
     }
     
     // MARK: - Private setup functions

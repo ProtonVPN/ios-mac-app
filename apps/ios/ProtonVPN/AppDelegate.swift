@@ -116,7 +116,7 @@ extension AppDelegate: UIApplicationDelegate {
                 
         _ = container.makeDynamicBugReportManager() // Loads initial bug report config and sets up a timer to refresh it daily.
 
-        container.applicationDidFinishedLoading()
+        container.applicationDidFinishLaunching()
         return true
     }
         
