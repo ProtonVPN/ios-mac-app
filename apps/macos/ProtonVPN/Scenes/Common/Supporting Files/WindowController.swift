@@ -22,7 +22,7 @@
 
 import Cocoa
 
-protocol WindowControllerDelegate: class {
+protocol WindowControllerDelegate: AnyObject {
     func windowCloseRequested(_ sender: WindowController)
     func windowWillClose(_ sender: WindowController)
 }

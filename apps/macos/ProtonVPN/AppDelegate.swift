@@ -170,9 +170,7 @@ extension AppDelegate: NSApplicationDelegate {
         container.makeAppSessionRefreshTimer().start(now: true) // refresh data if time passed
         // Refresh API announcements
         if propertiesManager.featureFlags.pollNotificationAPI, container.makeAuthKeychainHandle().username != nil {
-            Task {
-                await self.container.makeAnnouncementRefresher().tryRefreshing()
-            }
+            container.makeAnnouncementRefresher().tryRefreshing()
         }
     }
 

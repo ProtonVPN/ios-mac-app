@@ -216,7 +216,7 @@ final class StatusMenuViewModel {
     
     func countryViewModel(at index: IndexPath) -> StatusMenuCountryItemViewModel? {
         guard let countryGroup = ((serverType == .secureCore ? secureCoreCountries : standardCountries)?[index.item]) else {
-            log.error(self.vpnGateway == nil ? "VpnGateway is nil" : "index.item: \(index.item), countryCount: \(countryCount())", category: .ui)
+            log.error("index.item: \(index.item), countryCount: \(countryCount())", category: .ui)
             return nil
         }
         

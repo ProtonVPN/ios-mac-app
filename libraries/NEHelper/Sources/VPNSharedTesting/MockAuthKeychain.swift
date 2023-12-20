@@ -60,7 +60,6 @@ public extension MockAuthKeychain {
                                                  refreshToken: "",
                                                  sessionId: "",
                                                  userId: "",
-                                                 expiration: Date().addingTimeInterval(2 * 60),
                                                  scopes: [])
     }
 }

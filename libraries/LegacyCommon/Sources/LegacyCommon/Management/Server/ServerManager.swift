@@ -132,7 +132,7 @@ public class ServerManagerImplementation: ServerManager {
             }
         ).compactMap { (key, value) -> ServerGroup? in
             guard !value.isEmpty else { return nil }
-            var kind = key
+            let kind = key
 
             // Order servers inside country/gateway
             let servers = value.sorted { s1, s2 in

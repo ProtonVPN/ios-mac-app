@@ -122,9 +122,9 @@ class CountriesSectionViewController: NSViewController {
         addNetShieldObservers()
         observeAppearance()
 
-        secureCoreBtn.setAccessibilityChildren([secureCoreContainer])
-        netShieldBtn.setAccessibilityChildren([netshieldContainer])
-        killSwitchBtn.setAccessibilityChildren([killSwitchContainer])
+        secureCoreBtn.setAccessibilityChildren([secureCoreContainer as Any])
+        netShieldBtn.setAccessibilityChildren([netshieldContainer as Any])
+        killSwitchBtn.setAccessibilityChildren([killSwitchContainer as Any])
     }
 
     func setupNetShieldBadge() {

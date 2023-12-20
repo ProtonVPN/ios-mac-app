@@ -24,7 +24,7 @@ import Cocoa
 import LegacyCommon
 import Strings
 
-protocol OverviewItemViewModelDelegate: class {
+protocol OverviewItemViewModelDelegate: AnyObject {
     func showDeleteWarning(_ viewModel: WarningPopupViewModel)
 }
 

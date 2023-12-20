@@ -40,7 +40,6 @@ public protocol VpnManagerProtocol {
     func setOnDemand(_ enabled: Bool)
     func disconnectAnyExistingConnectionAndPrepareToConnect(with configuration: VpnManagerConfiguration, completion: @escaping () -> Void)
     func disconnect(completion: @escaping () -> Void)
-    func connectedDate(completion: @escaping (Date?) -> Void)
     func connectedDate() async -> Date?
     func refreshState()
     func refreshManagers()
@@ -330,7 +329,7 @@ public class VpnManager: VpnManagerProtocol {
     }
 
     @available(*, deprecated, renamed: "connectedDate()")
-    public func connectedDate(completion: @escaping (Date?) -> Void) {
+    private func connectedDate(completion: @escaping (Date?) -> Void) {
         guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
             completion(nil)
             return
@@ -362,7 +361,7 @@ public class VpnManager: VpnManagerProtocol {
     }
 
     public func connectedDate() async -> Date? {
-        return await withCheckedContinuation { continuation in
+        await withCheckedContinuation { continuation in
             connectedDate(completion: continuation.resume)
         }
     }
