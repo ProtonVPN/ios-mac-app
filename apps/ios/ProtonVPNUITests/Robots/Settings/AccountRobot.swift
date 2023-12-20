@@ -18,6 +18,7 @@
 
 import Foundation
 import fusion
+import ProtonCoreTestingToolkitUITestsPaymentsUI
 
 fileprivate let manageSubscriptionButton = "Manage Subscription"
 fileprivate let upgradeSubscriptionButton = "Upgrade Subscription"
@@ -44,21 +45,27 @@ class AccountRobot: CoreElements {
         button(deleteAccountButton).tap()
         return AccountRobot()
     }
-    
+
+    @discardableResult
+    func tapSubscription() -> PaymentsUIRobot {
+        button(upgradeSubscriptionButton).tap()
+        return PaymentsUIRobot()
+    }
+
     let verify = Verify()
     
     class Verify: CoreElements {
         
         @discardableResult
         func deleteAccountScreen() -> AccountRobot {
-            staticText(deleteAccountText).wait(time: 12).checkExists()
-            button(deleteButton).wait(time: 12).checkExists()
+            staticText(deleteAccountText).waitUntilExists(time: 12).checkExists()
+            button(deleteButton).waitUntilExists(time: 12).checkExists()
             return AccountRobot()
         }
         
         @discardableResult
         func userIsLoggedOut() -> AccountRobot {
-            staticText(selectedEnvHeader).wait(time: 5).checkExists()
+            staticText(selectedEnvHeader).waitUntilExists(time: 5).checkExists()
             return AccountRobot()
         }
     }

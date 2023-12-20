@@ -24,33 +24,33 @@ class SubscriptionsRobot: CoreElements {
 
     @discardableResult
     func checkDurationIs(_ length: String) -> Self {
-        staticText(length).wait().checkExists()
+        staticText(length).waitUntilExists().checkExists()
         return self
     }
 
     @discardableResult
     func checkPriceIs(_ price: String) -> Self {
-        staticText(price).wait().checkExists()
+        staticText(price).waitUntilExists().checkExists()
 
         return self
     }
 
     @discardableResult
     func checkPlanNameIs(_ name: String) -> Self {
-        staticText(name).wait().checkExists()
+        staticText(name).waitUntilExists().checkExists()
 
         return self
     }
     
     @discardableResult
     func verifyStaticText(_ name: String) -> Self {
-        staticText(name).wait().checkExists()
+        staticText(name).waitUntilExists().checkExists()
         return self
     }
     
     @discardableResult
     public func verifyNumberOfPlansToPurchase(number: Int) -> Self {
-        table("PaymentsUIViewController.tableView").wait(time: 15).checkExists()
+        table("PaymentsUIViewController.tableView").waitUntilExists(time: 15).checkExists()
         let count = XCUIApplication().tables.matching(identifier: "PaymentsUIViewController.tableView").cells.count
         XCTAssertEqual(count, number)
         return self
@@ -64,7 +64,7 @@ class SubscriptionsRobot: CoreElements {
 
     @discardableResult
     public func verifyTableCellStaticText(cellName: String, name: String) -> Self {
-        table("PaymentsUIViewController.tableView").wait(time: 15).checkExists()
+        table("PaymentsUIViewController.tableView").waitUntilExists(time: 15).checkExists()
         let staticTexts = XCUIApplication().tables.matching(identifier: "PaymentsUIViewController.tableView").cells.matching(identifier: cellName).staticTexts
         XCTAssertTrue(staticTexts[name].exists)
         return self
