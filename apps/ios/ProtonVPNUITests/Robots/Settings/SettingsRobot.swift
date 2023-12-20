@@ -121,7 +121,7 @@ class SettingsRobot: CoreElements {
         
         @discardableResult
         func bugReportFormIsClosed() -> SettingsRobot {
-            staticText(headerTitle).wait().checkExists()
+            staticText(headerTitle).waitUntilExists().checkExists()
             return SettingsRobot()
         }
         
@@ -141,7 +141,7 @@ class SettingsRobot: CoreElements {
         
         @discardableResult
         func logOutSuccessfully() -> SettingsRobot {
-            staticText(firstAppScreen).wait().checkExists()
+            staticText(firstAppScreen).waitUntilExists().checkExists()
             return SettingsRobot()
         }
         

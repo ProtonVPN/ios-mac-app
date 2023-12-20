@@ -78,6 +78,9 @@
             reference = "container:TestPlans/ProtonVPN-iOS-Unit-All.xctestplan"
             default = "YES">
          </TestPlanReference>
+         <TestPlanReference
+            reference = "container:TestPlans/ProtonVPN-iOS-UI-Subscription.xctestplan">
+         </TestPlanReference>
       </TestPlans>
       <Testables>
          <TestableReference

@@ -1,16 +1,14 @@
 {
   "configurations" : [
     {
-      "id" : "2C3D2EC8-80D0-4B2B-B122-BBC091E28BE4",
+      "id" : "C7EFA94A-4F81-4181-AFF8-9F14B0804DB1",
       "name" : "Configuration 1",
       "options" : {
-        "environmentVariableEntries" : [
-          {
-            "key" : "DYNAMIC_DOMAIN",
-            "value" : "$(DYNAMIC_DOMAIN)"
-          }
-        ],
-        "testRepetitionMode" : "retryOnFailure"
+        "targetForVariableExpansion" : {
+          "containerPath" : "container:iOS.xcodeproj",
+          "identifier" : "791DE5D8208DDA3000A29EA5",
+          "name" : "ProtonVPN"
+        }
       }
     }
   ],
@@ -21,24 +19,18 @@
         "value" : "$(DYNAMIC_DOMAIN)"
       }
     ],
-    "language" : "en",
     "targetForVariableExpansion" : {
       "containerPath" : "container:iOS.xcodeproj",
       "identifier" : "791DE5D8208DDA3000A29EA5",
       "name" : "ProtonVPN"
     },
-    "testRepetitionMode" : "retryOnFailure",
     "testTimeoutsEnabled" : true
   },
   "testTargets" : [
     {
-      "skippedTests" : [
-        "ConnectionTests",
-        "PlanTests\/testShowCurrentPlanForVPNPlusUser()",
-        "PlanTests\/testShowUpdatePlansForCurrentFreePlan()",
-        "SignupTests\/testSignupExistingInternalAccount()",
-        "SignupTests\/testSignupNewExternalAccountUpgrade()",
-        "SignupTests\/testSignupNewInternalAccountUpgradePlans()"
+      "selectedTests" : [
+        "SubscriptionTests\/testUpgradeAccountFromFreeToUnlimited()",
+        "SubscriptionTests\/testUpgradeAccountFromFreeToVPN2022()"
       ],
       "target" : {
         "containerPath" : "container:iOS.xcodeproj",

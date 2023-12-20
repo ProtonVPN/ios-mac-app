@@ -36,7 +36,7 @@ class PasswordRobot: CoreElements {
 
         @discardableResult
         func passwordScreenIsShown() -> PasswordRobot {
-            staticText(accountVerificationTitle).wait(time: 20).checkExists()
+            staticText(accountVerificationTitle).waitUntilExists(time: 20).checkExists()
             return PasswordRobot()
         }
     }

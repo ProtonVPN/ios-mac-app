@@ -30,7 +30,7 @@ class AccountVerificationRobot: CoreElements {
 
         @discardableResult
         func accountVerificationScreenIsShown() -> AccountVerificationRobot {
-            staticText(accountVerificationTitle).wait(time: 20).checkExists()
+            staticText(accountVerificationTitle).waitUntilExists(time: 20).checkExists()
             return AccountVerificationRobot()
         }
     }
