@@ -102,7 +102,6 @@ public final class ExtensionAPIService {
                                                             refreshToken: refreshTokenResponse.refreshToken,
                                                             sessionId: refreshTokenResponse.uid,
                                                             userId: nil,
-                                                            expiration: Date(),
                                                             scopes: [])
                 Task { [weak self] in
                     await self?.handleTokenExpired(authCredentials: incompleteCredentials) { [weak self] result in
@@ -684,6 +683,6 @@ enum ExtensionAPIServiceError: Error, CustomStringConvertible {
 
 extension AuthCredentials {
     func updatedWithAccessToken(response: TokenRefreshRequest.Response) -> AuthCredentials {
-        return AuthCredentials(username: username, accessToken: response.accessToken, refreshToken: response.refreshToken, sessionId: sessionId, userId: userId, expiration: response.expirationDate, scopes: scopes)
+        return AuthCredentials(username: username, accessToken: response.accessToken, refreshToken: response.refreshToken, sessionId: sessionId, userId: userId, scopes: scopes)
     }
 }

@@ -18,8 +18,8 @@
 
 import Foundation
 
-#if canImport(Cocoa)
-import Cocoa
+#if canImport(AppKit)
+import AppKit
 
 public extension NSTextField {
     func style(placeholder: String? = nil, font: NSFont = .themeFont(), alignment: NSTextAlignment = .left) {

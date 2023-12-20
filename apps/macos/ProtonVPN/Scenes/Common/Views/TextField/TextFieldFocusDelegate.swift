@@ -22,7 +22,7 @@
 
 import Cocoa
 
-protocol TextFieldFocusDelegate: class {
+protocol TextFieldFocusDelegate: AnyObject {
     var shouldBecomeFirstResponder: Bool { get }
     func willReceiveFocus(_ textField: NSTextField)
     func didLoseFocus(_ textField: NSTextField)

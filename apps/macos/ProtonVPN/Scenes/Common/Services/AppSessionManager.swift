@@ -390,7 +390,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
             // At some point it may be possible to plumb the modal source through from the redirect deep link.
             // For now we will leave it nil and let the telemetry service take its best guess.
-            var modalSource: UpsellEvent.ModalSource?
+            let modalSource: UpsellEvent.ModalSource? = nil
             NotificationCenter.default.post(
                 name: .userCompletedUpsellAlertJourney,
                 object: (modalSource, downgradeInfo.to.accountPlan.rawValue)

@@ -40,6 +40,8 @@ public final class NetworkingMock {
     func request(_ route: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) {
         if let delegate = delegate {
             completion(delegate.handleMockNetworkingRequest(route))
+        } else {
+            completion(.success(try! JSONEncoder().encode(["key": "value"])))
         }
     }
 
@@ -82,7 +84,23 @@ extension NetworkingMock: Networking {
     }
     
     public func perform<R>(request route: Request) async throws -> (URLSessionDataTask?, R) where R : Decodable {
-        throw ""
+        try await withCheckedThrowingContinuation { continuation in
+            request(route) { (result: Result<Data, Error>) in
+                switch result {
+                case let .success(data):
+                    do {
+                        let decoder = JSONDecoder()
+                        decoder.keyDecodingStrategy = .decapitaliseFirstLetter
+                        let obj = try decoder.decode(R.self, from: data)
+                        continuation.resume(returning: (nil, obj))
+                    } catch {
+                        continuation.resume(throwing: error)
+                    }
+                case let .failure(error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
     }
     
     public func request(_ route: Request, completion: @escaping (Result<VPNShared.JSONDictionary, Error>) -> Void) {
@@ -188,6 +206,7 @@ public class FullNetworkingMockDelegate: NetworkingMockDelegate {
         case clientConfig = "/vpn/v2/clientconfig"
         case loads = "/vpn/loads"
         case certificate = "/vpn/v1/certificate"
+        case sessionCount = "/vpn/sessioncount"
     }
 
     public struct UnexpectedError: Error {
@@ -294,6 +313,10 @@ public class FullNetworkingMockDelegate: NetworkingMockDelegate {
                                            "ExpirationTime": Int(expiryTime.timeIntervalSince1970),
                                            "RefreshTime": Int(refreshTime.timeIntervalSince1970)]
             let data = try JSONSerialization.data(withJSONObject: certDict)
+            return .success(data)
+        case .sessionCount:
+            let sessionCountDict: [String: Any] = ["sessionCount": 0]
+            let data = try JSONSerialization.data(withJSONObject: sessionCountDict)
             return .success(data)
         }
     }

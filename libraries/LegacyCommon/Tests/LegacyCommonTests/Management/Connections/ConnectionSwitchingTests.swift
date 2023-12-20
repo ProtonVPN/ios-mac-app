@@ -202,7 +202,8 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
     /// list has placed the server we just connected to under maintenance. On the next reconnect, we go ahead and make
     /// all protocols available again, and check to see that the server chosen is not the one we were just connected to
     /// (i.e., the one with the higher score).
-    func testFastestConnectionAndSmartProtocolFallbackAndDisconnectApiUsage() { // swiftlint:disable:this function_body_length
+    @MainActor
+    func testFastestConnectionAndSmartProtocolFallbackAndDisconnectApiUsage() async { // swiftlint:disable:this function_body_length
         let unavailableCallback: AvailabilityCheckerMock.AvailabilityCallback = { serverIp in
             // Force server2 wireguard server to be unavailable
             if serverIp == self.testData.server2.ips.first {
@@ -266,8 +267,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         container.propertiesManager.hasConnected = true // check that we don't display FirstTimeConnectingAlert
         container.vpnGateway.connect(with: request)
         var connectionExpectations = [tunnelProviderExpectation]
-
-        wait(for: connectionExpectations, timeout: expectationTimeout)
+        await fulfillment(of: connectionExpectations, timeout: expectationTimeout)
 
         XCTAssert(container.appStateManager.state.isConnected)
 
@@ -287,11 +287,8 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         XCTAssertEqual(platformManager?.protocolConfiguration?.serverAddress, testData.server2.ips.first?.entryIp)
         XCTAssert(container.alertService.alerts.isEmpty)
 
-        container.vpnManager.connectedDate { date in
-            XCTAssertEqual(date, platformManager?.vpnConnection.connectedDate)
-            expectations.connectedDate.fulfill()
-        }
-        wait(for: [expectations.connectedDate], timeout: expectationTimeout)
+        let date = await container.vpnManager.connectedDate()
+        XCTAssertEqual(date, platformManager?.vpnConnection.connectedDate)
 
         didRequestCertRefresh = { _ in }
 
@@ -307,34 +304,35 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
             currentStatus = status
             expectations.reconnection.fulfill()
         }
+        Task {
+            var observedState: AppState?
+            var hasReconnected = false
 
-        var observedState: AppState?
-        var hasReconnected = false
-        let observer = NotificationCenter.default.addObserver(forName: .AppStateManager.stateChange, object: nil, queue: nil) { notification in
-            guard let appState = notification.object as? AppState else {
-                XCTFail("Did not send app state as part of notification")
-                return
-            }
-
-            if observedState?.isDisconnected == false, appState.isDisconnected {
-                expectations.disconnectAppStateChange.fulfill()
-            } else if observedState?.isConnected == false, appState.isConnected {
-                if !hasReconnected {
-                    expectations.reconnectionAppStateChange.fulfill()
-                    hasReconnected = true
-                } else {
-                    expectations.finalConnection.fulfill()
+            for await notification in NotificationCenter.default.notifications(named: .AppStateManager.stateChange, object: nil) {
+                guard let appState = notification.object as? AppState else {
+                    XCTFail("Did not send app state as part of notification")
+                    return
                 }
+
+                if observedState?.isDisconnected == false, appState.isDisconnected {
+                    expectations.disconnectAppStateChange.fulfill()
+                } else if observedState?.isConnected == false, appState.isConnected {
+                    if !hasReconnected {
+                        expectations.reconnectionAppStateChange.fulfill()
+                        hasReconnected = true
+                    } else {
+                        expectations.finalConnection.fulfill()
+                    }
+                }
+                observedState = appState
             }
-            observedState = appState
         }
-        defer { NotificationCenter.default.removeObserver(observer, name: .AppStateManager.stateChange, object: nil) }
 
         // reconnect with netshield settings change
         container.vpnGateway.reconnect(with: NATType.strictNAT)
 
         connectionExpectations = [expectations.reconnection, expectations.reconnectionAppStateChange]
-        wait(for: connectionExpectations, timeout: expectationTimeout)
+        await fulfillment(of: connectionExpectations, timeout: expectationTimeout)
 
         #if os(iOS)
         // on ios, protocol should fallback to WireGuard TCP
@@ -360,9 +358,9 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         }
 
         // After disconnect, check that the results fetched from the API match the local server storage
-        wait(for: [expectations.disconnect,
-                   expectations.disconnectAppStateChange,
-                   expectations.serverListFetch], timeout: expectationTimeout)
+        await fulfillment(of: [expectations.disconnect,
+                               expectations.disconnectAppStateChange,
+                               expectations.serverListFetch], timeout: expectationTimeout)
 
         XCTAssertEqual(currentStatus, .disconnected, "VPN status should be disconnected")
 
@@ -396,7 +394,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         tunnelProviderExpectation = expectations.reconnectionAfterServerInfoFetch
         container.vpnGateway.connect(with: request)
 
-        wait(for: [tunnelProviderExpectation, expectations.finalConnection], timeout: expectationTimeout)
+        await fulfillment(of: [tunnelProviderExpectation, expectations.finalConnection], timeout: expectationTimeout)
 
         // wireguard protocol now available for smart protocol to pick
         XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.udp))
@@ -413,7 +411,8 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         }
 
         container.vpnGateway.disconnect()
-        wait(for: [expectations.finalDisconnection], timeout: expectationTimeout)
+
+        await fulfillment(of: [expectations.finalDisconnection], timeout: expectationTimeout)
     }
 
     func retrieveAndSetVpnProperties() {

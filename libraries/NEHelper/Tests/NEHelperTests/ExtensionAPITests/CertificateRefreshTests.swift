@@ -779,7 +779,6 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
                             refreshToken: "refresh",
                             sessionId: "session",
                             userId: "user",
-                            expiration: Date().addingTimeInterval(60 * 60 * 24 * 3),
                             scopes: [])
         ]
 
@@ -888,7 +887,6 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
                             refreshToken: "refresh",
                             sessionId: "session",
                             userId: "user",
-                            expiration: Date().addingTimeInterval(60 * 60 * 24 * 3),
                             scopes: [])
         ]
 

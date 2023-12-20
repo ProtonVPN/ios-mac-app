@@ -32,7 +32,6 @@ public class AuthCredentials: NSObject, NSSecureCoding, Codable {
     public let refreshToken: String
     public let sessionId: String
     public let userId: String? // introduced in version 1.0.1 iOS, 1.4.0 macOS
-    public let expiration: Date
     public let scopes: [String]
     
     override public var description: String {
@@ -42,18 +41,16 @@ public class AuthCredentials: NSObject, NSSecureCoding, Codable {
             "Refresh token: \(refreshToken)\n" +
             "Session ID: \(sessionId)\n" +
             "User ID: \(userId ?? "<empty>")\n" +
-            "Expiration: \(expiration)\n" +
             "Scopes: \(scopes)\n"
     }
     
-    public init(version: Int? = nil, username: String, accessToken: String, refreshToken: String, sessionId: String, userId: String?, expiration: Date, scopes: [String]) {
+    public init(version: Int? = nil, username: String, accessToken: String, refreshToken: String, sessionId: String, userId: String?, scopes: [String]) {
         self.cacheVersion = version ?? Self.VERSION
         self.username = username
         self.accessToken = accessToken
         self.refreshToken = refreshToken
         self.sessionId = sessionId
         self.userId = userId
-        self.expiration = expiration
         self.scopes = scopes
         super.init()
     }
@@ -65,7 +62,6 @@ public class AuthCredentials: NSObject, NSSecureCoding, Codable {
         refreshToken = try dic.stringOrThrow(key: "RefreshToken")
         sessionId = try dic.stringOrThrow(key: "UID")
         userId = try dic.stringOrThrow(key: "UserID")
-        expiration = try dic.unixTimestampFromNowOrThrow(key: "ExpiresIn")
         let scopeString = try dic.stringOrThrow(key: "Scope")
         scopes = scopeString.components(separatedBy: .whitespaces)
         super.init()
@@ -79,7 +75,6 @@ public class AuthCredentials: NSObject, NSSecureCoding, Codable {
         static let refreshToken = "refreshToken"
         static let sessionId = "userId" // misnamed, should be "sessionId", but leaving for backwards compatibility
         static let userId = "staticUserId"
-        static let expiration = "expiration"
         static let scopes = "scopes"
     }
     
@@ -96,7 +91,6 @@ public class AuthCredentials: NSObject, NSSecureCoding, Codable {
                   refreshToken: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.refreshToken)! as String,
                   sessionId: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.sessionId)! as String,
                   userId: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.userId) as String?,
-                  expiration: aDecoder.decodeObject(of: NSDate.self, forKey: CoderKey.expiration)! as Date,
                   scopes: scopes)
     }
     

@@ -56,7 +56,7 @@ final class SubscriptionTests: ProtonVPNUITests {
 
         guard createAccountForTest(doh: doh, accountToBeCreated: .freeWithAddressAndKeys(username: user.username, password: user.password)) else { return }
 
-        LoginRobot()
+        _ = LoginRobot()
             .enterCredentials(user)
             .signIn(robot: MainRobot.self)
             .goToSettingsTab()
@@ -64,7 +64,7 @@ final class SubscriptionTests: ProtonVPNUITests {
             .tapSubscription()
             .expandPlan(plan: plan)
             .planButtonTap(plan: plan)
-        PaymentsUIRobot()
+        _ = PaymentsUIRobot()
             .verifyCurrentPlan(plan: plan)
     }
 }

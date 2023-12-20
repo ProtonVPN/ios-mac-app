@@ -45,6 +45,8 @@ class ProfilesTabBarView: NSView {
             transform = NSAffineTransform()
             transform.translateX(by: bounds.size.width, yBy: 0)
             transform.scaleX(by: -1, yBy: 1)
+        @unknown default:
+            transform = NSAffineTransform()
         }
     }
     

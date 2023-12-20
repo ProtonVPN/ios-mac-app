@@ -339,7 +339,7 @@ public class AppStateManagerImplementation: AppStateManager {
         timeoutTimer?.invalidate()
     }
     
-    @objc private func timeout() {
+    private func timeout() {
         log.info("Connection attempt timed out", category: .connectionConnect)
         state = .aborted(userInitiated: false)
         attemptingConnection = false
@@ -349,14 +349,12 @@ public class AppStateManagerImplementation: AppStateManager {
     }
     
     private func stopAttemptingConnection() {
-        Task { @MainActor in
-            log.info("Stop preparing connection", category: .connectionConnect)
-            cancelTimeout()
-            await handleVpnError(vpnState)
-            disconnect()
-        }
+        log.info("Stop preparing connection", category: .connectionConnect)
+        cancelTimeout()
+        handleVpnError(vpnState)
+        disconnect()
     }
-    
+
     private func prepareServerCertificate() {
         do {
             _ = try vpnKeychain.getServerCertificate()
@@ -399,9 +397,7 @@ public class AppStateManagerImplementation: AppStateManager {
     
     private func startObserving() {
         vpnManager.stateChanged = { [weak self] in
-            executeOnUIThread {
-                self?.vpnStateChanged()
-            }
+            self?.vpnStateChanged()
         }
         vpnManager.localAgentStateChanged = { [weak self] localAgentConnectedState in
             executeOnUIThread {
@@ -411,8 +407,8 @@ public class AppStateManagerImplementation: AppStateManager {
         
         NotificationCenter.default.addObserver(self, selector: #selector(killSwitchChanged), name: type(of: propertiesManager).hasConnectedNotification, object: nil)
     }
-    
-    @objc private func vpnStateChanged() {
+
+    private func vpnStateChanged() {
         reachability?.whenReachable = nil
         
         let newState = vpnManager.state
@@ -495,18 +491,13 @@ public class AppStateManagerImplementation: AppStateManager {
         notifyObservers()
     }
     // swiftlint:enable cyclomatic_complexity
-    
-    private func unknownError(_ vpnState: VpnState) {
-        handleVpnStateChange(vpnState)
-    }
-    
+
     private func connectionFailed() {
-        state = .error(NSError(code: 0, localizedDescription: ""))
+        state = .error(NSError(code: 0, localizedDescription: "connectionFailed"))
         notifyObservers()
     }
-    
-    @MainActor
-    private func handleVpnError(_ vpnState: VpnState) async {
+
+    private func handleVpnError(_ vpnState: VpnState) {
         // In the rare event that the vpn is stuck not disconnecting, show a helpful alert
         if case VpnState.disconnecting(_) = vpnState, stuckDisconnecting {
             log.error("Stale VPN connection failing to disconnect", category: .connectionConnect)
@@ -518,34 +509,36 @@ public class AppStateManagerImplementation: AppStateManager {
         
         do {
             let vpnCredentials = try vpnKeychain.fetch()
-            try await checkApiForFailureReason(vpnCredentials: vpnCredentials)
+            checkApiForFailureReason(vpnCredentials: vpnCredentials)
         } catch {
             connectionFailed()
             alertService?.push(alert: CannotAccessVpnCredentialsAlert())
         }
     }
     
-    private func checkApiForFailureReason(vpnCredentials: VpnCredentials) async throws {
-        let sessionCount = try await vpnApiService.sessionsCount().sessionCount
-        let newVpnCredentials = try await vpnApiService.clientCredentials()
-        await MainActor.run { [weak self] in
-            guard let self = self, self.state.isDisconnected else {
-                return
-            }
-            
-            if sessionCount >= newVpnCredentials.maxConnect {
-                let accountPlan = newVpnCredentials.accountPlan
-                self.maxSessionsReached(accountPlan: accountPlan)
-            } else if newVpnCredentials.password != vpnCredentials.password {
-                self.vpnKeychain.storeAndDetectDowngrade(vpnCredentials: newVpnCredentials)
-                guard let lastConfiguration = self.lastAttemptedConfiguration else {
+    private func checkApiForFailureReason(vpnCredentials: VpnCredentials) {
+        Task {
+            let rSessionCount = try? await vpnApiService.sessionsCount().sessionCount
+            let rVpnCredentials = try? await vpnApiService.clientCredentials()
+            await MainActor.run { [weak self] in
+                guard let self = self, self.state.isDisconnected else {
                     return
                 }
-                if self.state.isDisconnected {
-                    self.isOnDemandEnabled { enabled in
-                        guard !enabled else { return }
-                        log.info("Attempt connection after retrieving new credentials", category: .connectionConnect, event: .trigger)
-                        self.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: lastConfiguration)
+
+                if let sessionCount = rSessionCount, sessionCount >= (rVpnCredentials?.maxConnect ?? vpnCredentials.maxConnect) {
+                    let accountPlan = rVpnCredentials?.accountPlan ?? vpnCredentials.accountPlan
+                    self.maxSessionsReached(accountPlan: accountPlan)
+                } else if let newVpnCredentials = rVpnCredentials, newVpnCredentials.password != vpnCredentials.password {
+                    self.vpnKeychain.storeAndDetectDowngrade(vpnCredentials: newVpnCredentials)
+                    guard let lastConfiguration = self.lastAttemptedConfiguration else {
+                        return
+                    }
+                    if self.state.isDisconnected {
+                        self.isOnDemandEnabled { enabled in
+                            guard !enabled else { return }
+                            log.info("Attempt connection after retrieving new credentials", category: .connectionConnect, event: .trigger)
+                            self.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: lastConfiguration)
+                        }
                     }
                 }
             }

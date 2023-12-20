@@ -23,9 +23,9 @@
 import Foundation
 
 extension String {    
-    /// Returns the first characters in the string until the startingChacater
+    /// Returns the first characters in the string until the startingCharacter
     public func removeSubstring(startingWithCharacter char: Character) -> String {
-        guard let last = self.index(of: char) else {
+        guard let last = self.firstIndex(of: char) else {
             return self
         }
         return String(self[startIndex..<last])

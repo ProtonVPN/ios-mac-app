@@ -51,8 +51,6 @@ class MapViewModelTests: XCTestCase {
 
         let vpnApiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation(), authKeychain: MockAuthKeychain())
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
-        let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN",
-                                                        vpnKeysGenerator: ExtensionVPNKeysGenerator())
         let configurationPreparer = VpnManagerConfigurationPreparer(
             vpnKeychain: VpnKeychainMock(),
             alertService: AlertServiceEmptyStub(),
