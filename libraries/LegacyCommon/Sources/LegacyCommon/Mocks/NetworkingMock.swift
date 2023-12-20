@@ -64,6 +64,27 @@ public final class NetworkingMock {
 }
 
 extension NetworkingMock: Networking {
+    public func perform(request route: Request) async throws -> (URLSessionDataTask?, JSONDictionary) {
+        try await withCheckedThrowingContinuation { continuation in
+            request(route) { (result: Result<Data, Error>) in
+                switch result {
+                case let .success(data):
+                    guard let dict = data.jsonDictionary else {
+                        continuation.resume(throwing: POSIXError(.EBADMSG))
+                        return
+                    }
+                    continuation.resume(returning: (nil, dict))
+                case let .failure(error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
+    
+    public func perform<R>(request route: Request) async throws -> (URLSessionDataTask?, R) where R : Decodable {
+        throw ""
+    }
+    
     public func request(_ route: Request, completion: @escaping (Result<VPNShared.JSONDictionary, Error>) -> Void) {
         request(route) { (result: Result<Data, Error>) in
             switch result {

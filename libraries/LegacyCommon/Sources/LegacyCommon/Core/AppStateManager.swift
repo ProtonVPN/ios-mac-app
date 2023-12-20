@@ -505,6 +505,7 @@ public class AppStateManagerImplementation: AppStateManager {
         notifyObservers()
     }
     
+    @MainActor
     private func handleVpnError(_ vpnState: VpnState) async {
         // In the rare event that the vpn is stuck not disconnecting, show a helpful alert
         if case VpnState.disconnecting(_) = vpnState, stuckDisconnecting {
