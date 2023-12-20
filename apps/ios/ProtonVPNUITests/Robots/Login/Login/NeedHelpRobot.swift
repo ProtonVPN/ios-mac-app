@@ -62,7 +62,7 @@ class NeedHelpRobot: CoreElements {
      }
      
      func closeNeedHelpScreen() -> LoginRobot {
-         button(helpViewCloseButtonId).wait().tap()
+         button(helpViewCloseButtonId).waitUntilExists().tap()
          return LoginRobot()
      }
 }

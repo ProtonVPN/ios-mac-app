@@ -32,8 +32,8 @@ class PaymentsRobot: CoreElements {
         
         @discardableResult
         func subscriptionScreenIsShown() -> PaymentsRobot {
-            staticText(titleId).wait(time: 10).checkExists()
-            staticText(freePlanTitle).wait(time: 10).checkExists()
+            staticText(titleId).waitUntilExists(time: 10).checkExists()
+            staticText(freePlanTitle).waitUntilExists(time: 10).checkExists()
             return PaymentsRobot()
         }
     }

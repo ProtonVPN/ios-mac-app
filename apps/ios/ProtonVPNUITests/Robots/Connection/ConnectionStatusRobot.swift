@@ -60,22 +60,22 @@ class ConnectionStatusRobot: CoreElements {
         
         @discardableResult
         func connectedToAServer(_ name: String) -> MainRobot {
-            staticText(statusConnected + name).wait(time: 35).checkExists()
-            button(tabQCActive).wait().checkExists()
+            staticText(statusConnected + name).waitUntilExists(time: 35).checkExists()
+            button(tabQCActive).waitUntilExists().checkExists()
             return MainRobot()
         }
         
         @discardableResult
         func connectedToASCServer(_ name: String) -> ConnectionStatusRobot {
-            staticText(statusConnected + name).wait(time: 30).checkExists()
-            button(tabQCActive).wait().checkExists()
+            staticText(statusConnected + name).waitUntilExists(time: 30).checkExists()
+            button(tabQCActive).waitUntilExists().checkExists()
             return ConnectionStatusRobot()
         }
         
         @discardableResult
         func disconnectedFromAServer() -> MainRobot {
-            staticText(statusNotConnected).wait().checkExists()
-            button(tabQCInactive).wait().checkExists()
+            staticText(statusNotConnected).waitUntilExists().checkExists()
+            button(tabQCInactive).waitUntilExists().checkExists()
             return MainRobot()
         }
         
@@ -87,24 +87,24 @@ class ConnectionStatusRobot: CoreElements {
         
         @discardableResult
         func connectionStatusNotConnected() -> CountryListRobot {
-            staticText("Not Connected").wait(time: 10).checkExists()
+            staticText("Not Connected").waitUntilExists(time: 10).checkExists()
             return CountryListRobot()
         }
         
         @discardableResult
         func connectionStatusConnected<T: CoreElements>(robot _: T.Type) -> T {
-            button(tabQCActive).wait(time: 10).checkExists()
+            button(tabQCActive).waitUntilExists(time: 10).checkExists()
             return T()
         }
         
         @discardableResult
         func protocolNameIsCorrect(_ protocolname: String) -> ConnectionStatusRobot {
-            staticText(protocolname).wait(time: 30).checkExists()
+            staticText(protocolname).waitUntilExists(time: 30).checkExists()
             return ConnectionStatusRobot()
         }
         
         func upsellModalIsShown() -> ConnectionStatusRobot {
-            button(getPlusButton).wait().checkExists()
+            button(getPlusButton).waitUntilExists().checkExists()
             button(notNowbutton).tap()
             return ConnectionStatusRobot()
         }

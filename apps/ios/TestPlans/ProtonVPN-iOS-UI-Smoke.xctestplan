@@ -15,6 +15,12 @@
     }
   ],
   "defaultOptions" : {
+    "environmentVariableEntries" : [
+      {
+        "key" : "DYNAMIC_DOMAIN",
+        "value" : "$(DYNAMIC_DOMAIN)"
+      }
+    ],
     "language" : "en",
     "targetForVariableExpansion" : {
       "containerPath" : "container:iOS.xcodeproj",
@@ -69,6 +75,7 @@
         "SignupTests\/testSignupNewExternalAccountSuccess()",
         "SignupTests\/testSignupNewExternalAccountUpgrade()",
         "SignupTests\/testSignupNewInternalAccountUpgradePlans()",
+        "SubscriptionTests",
         "TokenRefreshTests",
         "TokenRefreshTests\/testLogInExpireSessionAndRefreshTokenGetUserRefreshTokenFailure()",
         "TokenRefreshTests\/testLogInExpireSessionGetUserRefreshTokenSuccess()",
