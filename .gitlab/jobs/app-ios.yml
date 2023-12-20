@@ -118,3 +118,42 @@ test:ui:app:ios:all:
     name: "ios-ui-all-tests-result"
     <<: *ios_tests_artifacts
 
+
+test:ui:app:ios:custom:
+  extends:
+    - .ios_job_template
+  rules: &rules_custom
+    - if: $CI_PIPELINE_SOURCE == "schedule" && '$CUSTOM_TEST_PLAN'
+      when: always
+  stage: test_ui
+  needs:
+    - job: build:tests:ios
+      artifacts: true
+  script:
+    - *ios_prepare_simulator
+    - fastlane run_testplan ios:true scheme:ProtonVPN-iOS testplan:$CUSTOM_TEST_PLAN
+  after_script:
+    - *ios_delete_simulator
+  artifacts:
+    reports:
+      !reference [.code_coverage_unit, reports] # Cobertura xml to artifacts
+    name: "ios-ui-custom-tests-result"
+    <<: *ios_tests_artifacts
+
+
+report:slack-junit-ios-custom:
+  rules: *rules_custom
+  image: $CI_REGISTRY/tpe/test-scripts
+  stage: test_ui
+  dependencies:
+    - deploy:review
+    - test:ui:app:ios:custom
+  script:
+    - test_reporter.py
+      --path fastlane/test_output/
+      --platform ios
+      --job-name VPN-iOS-ui-tests
+      --slack-channel "$SLACK_CHANNEL"
+  allow_failure: true
+  tags:
+    - shared-small

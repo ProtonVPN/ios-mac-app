@@ -33,7 +33,7 @@ class ServerListRobot: CoreElements {
         
         @discardableResult
         func serverListIsOpen(_ name: String) -> ServerListRobot {
-            staticText(name).wait().checkExists()
+            staticText(name).waitUntilExists().checkExists()
             return ServerListRobot()
         }
     }

@@ -1,0 +1,199 @@
+{
+  "identifier" : "0B0B13AE",
+  "nonRenewingSubscriptions" : [
+    {
+      "displayPrice" : "149.99",
+      "familyShareable" : false,
+      "internalID" : "1611048698",
+      "localizations" : [
+        {
+          "description" : "1-year subscription to Proton Unlimited",
+          "displayName" : "Proton Unlimited",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "iosvpn_bundle2022_12_usd_non_renewing",
+      "referenceName" : "Proton Bundle 2022 (1 year) non renewing",
+      "type" : "NonRenewingSubscription"
+    },
+    {
+      "displayPrice" : "59.99",
+      "familyShareable" : false,
+      "internalID" : "1440798148",
+      "localizations" : [
+        {
+          "description" : "12 months of ProtonVPN Basic",
+          "displayName" : "ProtonVPN Basic - 12 months",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "ios_vpnbasic_12_usd_non_renewing",
+      "referenceName" : "ProtonVPN Basic non-renewing 12 month subscription",
+      "type" : "NonRenewingSubscription"
+    },
+    {
+      "displayPrice" : "99.99",
+      "familyShareable" : false,
+      "internalID" : "1440795690",
+      "localizations" : [
+        {
+          "description" : "12 months of ProtonVPN Plus",
+          "displayName" : "ProtonVPN Plus - 12 months",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "ios_vpnplus_12_usd_non_renewing",
+      "referenceName" : "ProtonVPN Plus non-renewing 12 month subscription",
+      "type" : "NonRenewingSubscription"
+    },
+    {
+      "displayPrice" : "99.99",
+      "familyShareable" : false,
+      "internalID" : "1611047593",
+      "localizations" : [
+        {
+          "description" : "1-year subscription to VPN Plus",
+          "displayName" : "VPN Plus",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "iosvpn_vpn2022_12_usd_non_renewing",
+      "referenceName" : "VPN Plus 2022 (1 year) non renewing",
+      "type" : "NonRenewingSubscription"
+    }
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+    "_applicationInternalID" : "1437005085",
+    "_developerTeamID" : "2SB5Z68H26",
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 723981006.60922098,
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "21395663",
+      "localizations" : [
+
+      ],
+      "name" : "VPN plans",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "139.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "6468678317",
+          "introductoryOffer" : null,
+          "localizations" : [
+
+          ],
+          "productID" : "iosvpn_bundle2022_12_usd_auto_renewing",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Proton Bundle 2022 (1 year) auto-renewing",
+          "subscriptionGroupID" : "21395663",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "11.99",
+          "familyShareable" : false,
+          "groupNumber" : 3,
+          "internalID" : "6468678372",
+          "introductoryOffer" : null,
+          "localizations" : [
+
+          ],
+          "productID" : "iosvpn_vpn2022_1_usd_auto_renewing",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "VPN Plus 2022 (1 month) auto-renewing",
+          "subscriptionGroupID" : "21395663",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "79.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6468663278",
+          "introductoryOffer" : null,
+          "localizations" : [
+
+          ],
+          "productID" : "iosvpn_vpn2022_12_usd_auto_renewing",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "VPN Plus 2022 (1 year) auto-renewing",
+          "subscriptionGroupID" : "21395663",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

@@ -75,13 +75,13 @@ class MainRobot: CoreElements {
     
     @discardableResult
     public func showSignup() -> SignupRobot {
-        button(showSignupButtonLabelText).wait().tap()
+        button(showSignupButtonLabelText).waitUntilExists().tap()
         return SignupRobot()
     }
     
     @discardableResult
     public func showLogin() -> LoginRobot {
-        button(showLoginButtonLabelText).wait().tap()
+        button(showLoginButtonLabelText).waitUntilExists().tap()
         return LoginRobot()
     }
     
@@ -94,13 +94,13 @@ class MainRobot: CoreElements {
     
         @discardableResult
         func qcButtonConnected() -> MainRobot {
-            button(tabQCActive).wait().checkExists()
+            button(tabQCActive).waitUntilExists().checkExists()
             return MainRobot()
         }
     
         @discardableResult
         func qcButtonDisconnected() -> MainRobot {
-            button(tabQCInactive).wait().checkExists()
+            button(tabQCInactive).waitUntilExists().checkExists()
             return MainRobot()
         }
     

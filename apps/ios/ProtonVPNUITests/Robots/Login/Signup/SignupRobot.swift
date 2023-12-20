@@ -45,22 +45,22 @@ class SignupRobot: CoreElements {
 
         @discardableResult
         func signupScreenIsShown() -> SignupRobot {
-            staticText(titleId).wait(time: 10).checkExists()
-            staticText(subtitleId).wait(time: 10).checkExists()
+            staticText(titleId).waitUntilExists(time: 10).checkExists()
+            staticText(subtitleId).waitUntilExists(time: 10).checkExists()
             return SignupRobot()
         }
         
         @discardableResult
         func protonmailAccountErrorIsShown() -> SignupRobot {
-            textView(protonmailErrorMessage).wait(time: 10).checkExists()
-            button(okButton).wait().checkExists().tap()
+            textView(protonmailErrorMessage).waitUntilExists(time: 10).checkExists()
+            button(okButton).waitUntilExists().checkExists().tap()
             return SignupRobot()
         }
         
         @discardableResult
         func usernameErrorIsShown() -> SignupRobot {
-            textView(usernameErrorMessage).wait(time: 2).checkExists()
-            button(okButton).wait().checkExists().tap()
+            textView(usernameErrorMessage).waitUntilExists(time: 2).checkExists()
+            button(okButton).waitUntilExists().checkExists().tap()
             return SignupRobot()
         }
     }

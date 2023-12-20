@@ -36,6 +36,6 @@ class LoginExtAccountTests: ProtonVPNUITests {
 
 extension LoginRobot.Verify {
     func bannerExtAccountError() {
-        alert("Proton address required").wait().checkExists()
+        alert("Proton address required").waitUntilExists().checkExists()
     }
 }

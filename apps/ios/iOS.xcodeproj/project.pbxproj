@@ -485,6 +485,8 @@
 		F3BC535027859CF6009E49B4 /* AuthCredentials+Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC534F27859CF6009E49B4 /* AuthCredentials+Login.swift */; };
 		F3BC535427859EB9009E49B4 /* Onboarding+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC535327859EB9009E49B4 /* Onboarding+Configuration.swift */; };
 		F3E87E3126CFF26B00675AD2 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E87E3026CFF26B00675AD2 /* LoginService.swift */; };
+		FA46A2072B270C8000929229 /* SubscriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA46A2062B270C8000929229 /* SubscriptionTests.swift */; };
+		FA46A20A2B2712CA00929229 /* Proton VPN: Fast & Secure.storekit in Resources */ = {isa = PBXBuildFile; fileRef = FA46A2092B2712CA00929229 /* Proton VPN: Fast & Secure.storekit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -957,6 +959,9 @@
 		F3BC534F27859CF6009E49B4 /* AuthCredentials+Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "AuthCredentials+Login.swift"; path = "../../../../../ios/ProtonVPN/Scenes/LoginAndSignup/Extensions/AuthCredentials+Login.swift"; sourceTree = "<group>"; };
 		F3BC535327859EB9009E49B4 /* Onboarding+Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Onboarding+Configuration.swift"; path = "../../../../../ios/ProtonVPN/Scenes/LoginAndSignup/Extensions/Onboarding+Configuration.swift"; sourceTree = "<group>"; };
 		F3E87E3026CFF26B00675AD2 /* LoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
+		FA46A2062B270C8000929229 /* SubscriptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTests.swift; sourceTree = "<group>"; };
+		FA46A2092B2712CA00929229 /* Proton VPN: Fast & Secure.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Proton VPN: Fast & Secure.storekit"; sourceTree = "<group>"; };
+		FA46A20B2B271A6100929229 /* ProtonVPN-iOS-UI-Subscription.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-iOS-UI-Subscription.xctestplan"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1492,6 +1497,7 @@
 				B2E466D2297E98070026ED26 /* ProtonVPN-iOS-Unit-All.xctestplan */,
 				F377836426E644BC00392958 /* ProtonVPN-iOS-UI-Smoke.xctestplan */,
 				B2E466D3297E985E0026ED26 /* ProtonVPN-iOS-UI-All.xctestplan */,
+				FA46A20B2B271A6100929229 /* ProtonVPN-iOS-UI-Subscription.xctestplan */,
 			);
 			path = TestPlans;
 			sourceTree = "<group>";
@@ -2176,11 +2182,12 @@
 		F377835D26E644BC00392958 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				B28688C72ABAD54800C1BA37 /* PlanTests */,
-				F377835E26E644BC00392958 /* Settings */,
 				F377836126E644BC00392958 /* Connection */,
-				F377836526E644BC00392958 /* Profiles */,
 				F377836726E644BC00392958 /* Login */,
+				B28688C72ABAD54800C1BA37 /* PlanTests */,
+				F377836526E644BC00392958 /* Profiles */,
+				F377835E26E644BC00392958 /* Settings */,
+				FA46A2082B270C9200929229 /* SubscriptionTests */,
 			);
 			name = Tests;
 			path = ../../ios/ProtonVPNUITests/Tests;
@@ -2323,6 +2330,15 @@
 				F316A07426DFBCB600669386 /* PlanService.swift */,
 			);
 			path = Payments;
+			sourceTree = "<group>";
+		};
+		FA46A2082B270C9200929229 /* SubscriptionTests */ = {
+			isa = PBXGroup;
+			children = (
+				FA46A2062B270C8000929229 /* SubscriptionTests.swift */,
+				FA46A2092B2712CA00929229 /* Proton VPN: Fast & Secure.storekit */,
+			);
+			path = SubscriptionTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2857,6 +2873,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA46A20A2B2712CA00929229 /* Proton VPN: Fast & Secure.storekit in Resources */,
 				E90AAE2527A0407400FDAEC6 /* subusercredentials.plist in Resources */,
 				B2BCF09E28B549C90041A635 /* twopasstwofausercredentials.plist in Resources */,
 				D5AAA128229D23F500EA839A /* credentials.plist in Resources */,
@@ -3296,6 +3313,7 @@
 				F3B783FB26E6428C006768A8 /* ServerListRobot.swift in Sources */,
 				F3B783F626E6428C006768A8 /* SettingsRobot.swift in Sources */,
 				F3B783FF26E6428C006768A8 /* SignupRobot.swift in Sources */,
+				FA46A2072B270C8000929229 /* SubscriptionTests.swift in Sources */,
 				D5AAA12B229D28E400EA839A /* Credentials.swift in Sources */,
 				F36AC257264BF41B008CFCD3 /* SnapshotHelper.swift in Sources */,
 				B2D4572E2771D8D50065FEC2 /* CreatingAccountRobot.swift in Sources */,
