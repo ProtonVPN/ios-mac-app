@@ -18,6 +18,10 @@
 
 import ProtonCoreNetworking
 
+public struct TelemetryResponse: Codable {
+    let code: Int
+}
+
 final class TelemetryRequest: Request {
 
     var parameters: [String: Any]?

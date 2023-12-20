@@ -140,7 +140,7 @@ public class VpnApiService {
             throw VpnApiServiceError.endpointRequiresAuthentication
         }
         
-        let json = try await networking.apiService.perform(request: VPNClientCredentialsRequest()).1
+        let json = try await networking.perform(request: VPNClientCredentialsRequest()).1
         do {
             return try VpnCredentials(dic: json)
             
@@ -248,7 +248,7 @@ public class VpnApiService {
     }
 
     public func sessionsCount() async throws -> SessionsResponse {
-        try await networking.apiService.perform(request: VPNSessionsCountRequest()).1
+        try await networking.perform(request: VPNSessionsCountRequest()).1
     }
     
     public func loads(lastKnownIp: String?, completion: @escaping (Result<ContinuousServerPropertiesDictionary, Error>) -> Void) {
@@ -321,11 +321,11 @@ public class VpnApiService {
     }
 
     public func virtualServices() async throws -> VPNStreamingResponse {
-        try await networking.apiService.perform(request: VPNStreamingRequest()).1
+        try await networking.perform(request: VPNStreamingRequest()).1
     }
 
     public func partnersServices() async throws -> VPNPartnersResponse {
-        try await networking.apiService.perform(request: VPNPartnersRequest()).1
+        try await networking.perform(request: VPNPartnersRequest()).1
     }
 
     public func userInfo() async throws -> User {

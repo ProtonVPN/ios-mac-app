@@ -20,8 +20,8 @@ import Foundation
 import ProtonCoreUtilities
 
 public protocol TelemetryAPI {
-    func flushEvent(event: [String: Any], isBusiness: Bool) async throws
-    func flushEvents(events: [String: Any], isBusiness: Bool) async throws
+    func flushEvent(event: [String: Any], isBusiness: Bool) async throws -> (URLSessionDataTask?, TelemetryResponse)
+    func flushEvents(events: [String: Any], isBusiness: Bool) async throws -> (URLSessionDataTask?, TelemetryResponse)
 }
 
 public protocol TelemetryAPIFactory {
@@ -36,11 +36,11 @@ class TelemetryAPIImplementation: TelemetryAPI {
         self.networking = networking
     }
 
-    func flushEvent(event: [String: Any], isBusiness: Bool) async throws {
-        _ = try await networking.apiService.perform(request: TelemetryRequest(event, isBusiness: isBusiness))
+    func flushEvent(event: [String: Any], isBusiness: Bool) async throws -> (URLSessionDataTask?, TelemetryResponse) {
+        try await networking.perform(request: TelemetryRequest(event, isBusiness: isBusiness))
     }
 
-    func flushEvents(events: [String: Any], isBusiness: Bool) async throws {
-        _ = try await networking.apiService.perform(request: TelemetryRequestMultiple(events, isBusiness: isBusiness))
+    func flushEvents(events: [String: Any], isBusiness: Bool) async throws -> (URLSessionDataTask?, TelemetryResponse) {
+        try await networking.perform(request: TelemetryRequestMultiple(events, isBusiness: isBusiness))
     }
 }
