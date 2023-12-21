@@ -23,15 +23,37 @@ test:ui:bugreport:ios:
 
 test:ui:bugreport:macos:
   extends:
-    - .mac_job_template
-    - .ui_full_tests_template
+    - .mr_job_template
+    # - .ui_full_tests_template
+  tags:
+    - vpn-macos-tests
   stage: test_ui
   needs:
     - job: test:unit:app:macos
       artifacts: false
+  before_script: 
+    - base64 -D -o Certificates.p12 <<< $DEVELOPER_CERTIFICATE
+    - mkdir -pv ~/Library/MobileDevice/Provisioning\ Profiles/
+    - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE
+    - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE_OVPN
+    - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_WireGuard_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE_WG
+    - fastlane create_macos_keychain
+    - ssh-add -D # Delete all ssh private keys
+    # Add private key for access to gitlab
+    - echo "$CI_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    # Save gitlab servers public key
+    - if [ -z "$(ssh-keygen -F $CI_SERVER_HOST)" ]; then ssh-keyscan -H $CI_SERVER_HOST >> ~/.ssh/known_hosts; fi
+    # Make sure xcode uses system ssh/git settings
+    - defaults write com.apple.dt.Xcode IDEPackageSupportUseBuiltinSCM YES
   script:
     - fastlane macos_bugreport_ui_test
     - scripts/print-coverage.sh fastlane/test_output/BugReportSampleMacOSApp.xcresult "BugReport " 1
+  after_script:
+    - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile
+    - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile
+    - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_WireGuard_Development_PP.provisionprofile
+    - fastlane delete_macos_keychain
+    - ssh-add -D # Delete all ssh private keys
   artifacts:
     reports:
       junit:

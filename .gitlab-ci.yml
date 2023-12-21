@@ -20,11 +20,13 @@ variables:
   GIT_SUBMODULE_FORCE_HTTPS: "true"
   # Folder where jobs put their output like build binaries, test results, etc.
   JOBS_OUTPUT_PATH: "artifacts/"
+  # Default tart settings
+  TART_EXECUTOR_ALWAYS_PULL: "false"
+  TART_EXECUTOR_HEADLESS: "false"
+
 
 default:
-  image: harbor.protontech.ch/docker.io/library/alpine:3.18
-  tags:
-    - shared-small
+  image: "team-vpn"
 
 workflow:
   rules:

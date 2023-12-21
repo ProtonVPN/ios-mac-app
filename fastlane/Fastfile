@@ -55,9 +55,11 @@ $fastlane_output_folder = "output_directory/"
 
 # Signing
 $team_id_ios = "2SB5Z68H26"
+$team_id_macos = "J6S6Q257EK"
 
 # GIT settings for storing certificates and PPs
 $match_git_branch_ios = "ios/vpn"
+$match_git_branch_macos = "macos/vpn"
 $match_keychain_name = "fastlane.keychain" # Fastlane match will save secure stuff here
 # env['MATCH_GIT_URL'] must be set on the server to a repo where PPs are saved
 
@@ -67,6 +69,12 @@ $APP_ID_IOS_OVPN = "ch.protonmail.vpn.OpenVPN-Extension"
 $APP_ID_IOS_WG = "ch.protonmail.vpn.WireGuardiOS-Extension"
 $APP_ID_IOS_WIDGET = "ch.protonmail.vpn.widget"
 $APP_ID_IOS_SIRI = "ch.protonmail.vpn.Siri-Shortcut-Handler"
+
+$APP_ID_MACOS_APP = "ch.protonvpn.mac"
+$APP_ID_MACOS_OVPN = "ch.protonvpn.mac.OpenVPN-Extension"
+$APP_ID_MACOS_WG = "ch.protonvpn.mac.WireGuard-Extension"
+$APP_ID_MACOS_STARTER = "ch.protonvpn.ProtonVPNStarter"
+
 
 # When lane is run from gitlab CI, script creates a separate simulator for each run, to make 
 # it possible to run several test jobs at the same time. If running lane locally, default
@@ -105,7 +113,7 @@ lane:ios_prepare_certificates_develop do
     match_keychain_create
 
     # Prepare API key for contacting Apple APIs
-    get_app_store_api_key
+    get_app_store_api_key("iOS")
 
     # Download current certs and PPs from git or crate them on appstore portal
     # and save to git repo (env['MATCH_GIT_URL']) for later use.
@@ -114,12 +122,39 @@ lane:ios_prepare_certificates_develop do
           team_id: $team_id_ios,
           git_branch: $match_git_branch_ios,
           keychain_name: $match_keychain_name,
+          platform: "ios",
           app_identifier: [
               $APP_ID_IOS_APP,
               $APP_ID_IOS_OVPN,
               $APP_ID_IOS_WG,
               $APP_ID_IOS_WIDGET,
               $APP_ID_IOS_SIRI
+          ],
+    )
+end
+
+desc "Prepare certificates and provisioning profiles for macos app (debug)"
+lane:macos_prepare_certificates_develop do
+    # Separate keychain is created if needed
+    match_keychain_create
+
+    # Prepare API key for contacting Apple APIs
+    get_app_store_api_key("macOS")
+
+    # Download current certs and PPs from git or crate them on appstore portal
+    # and save to git repo (env['MATCH_GIT_URL']) for later use.
+    match(
+          type: "development",
+          force_for_new_devices: true, # Regenerate PPs if new devices were added
+          team_id: $team_id_macos,
+          git_branch: $match_git_branch_macos,
+          keychain_name: $match_keychain_name,
+          platform: "macos",
+          app_identifier: [
+              $APP_ID_MACOS_APP,
+              $APP_ID_MACOS_OVPN,
+              $APP_ID_MACOS_WG,
+              $APP_ID_MACOS_STARTER
           ],
     )
 end
@@ -132,7 +167,7 @@ lane :ios_build_debug do
         # Delete old DerivedData folders
         cleanup_derived_data
 
-        # Download develop certificats and PPs from a special repo or recreate them on apple dev portal
+        # Download develop certificates and PPs from a special repo or recreate them on apple dev portal
         ios_prepare_certificates_develop
 
         # Setup for debug build
@@ -241,6 +276,8 @@ lane :build_tests do |options|
     # A little more info about destinations can be found here: https://mokacoding.com/blog/xcodebuild-destination-options/
 
     if options[:ios]
+      ios_prepare_certificates_develop
+
       destination_for_xcbuild = "generic/platform=iOS Simulator"
       output_folder_path = $output_folder_ios
       scheme = "ProtonVPN-iOS"
@@ -250,6 +287,32 @@ lane :build_tests do |options|
       output_folder_path = $output_folder_macos
       scheme = "ProtonVPN-macOS"
       
+      # Download develop certificates and PPs from a special repo or recreate them on apple dev portal
+      macos_prepare_certificates_develop
+
+      # Setup for debug build
+      configuration = "Debug"
+      export_method = "development"
+
+      # Update project settings to use manual PPs
+      $ppPrefix = "match " + export_method.capitalize + " "
+      $appPostfix = " macos"
+      provisioningProfilesByName = {
+          'ProtonVPN-mac' => $ppPrefix + $APP_ID_MACOS_APP + $appPostfix,
+          'ProtonVPN OpenVPN' => $ppPrefix + $APP_ID_MACOS_OVPN + $appPostfix,
+          'ProtonVPN WireGuard' => $ppPrefix + $APP_ID_MACOS_WG + $appPostfix,
+          'ProtonVPNStarter' => $ppPrefix + $APP_ID_MACOS_STARTER + $appPostfix,
+      }
+      provisioningProfilesByName.each do |target_identifier, target_pp|
+          update_code_signing_settings(
+              path: "apps/macos/macOS.xcodeproj",
+              targets: target_identifier,
+              profile_name: target_pp,
+              use_automatic_signing: false #,
+              #build_configurations: configuration
+          )
+      end 
+
     end
 
     run_tests(
@@ -494,7 +557,7 @@ lane :ios_internal_beta do |options|
     xcodeproj: "./apps/ios/iOS.xcodeproj"
   )
   # Prepare API key for contacting Apple APIs
-  get_app_store_api_key
+  get_app_store_api_key("iOS")
 
   # Release build
   build_app(
@@ -561,12 +624,23 @@ lane :mac_update_build_numbers do
 
 end
 
-def get_app_store_api_key
-  app_store_connect_api_key(
-    key_id: ENV["APPSTORE_API_KEY_ID"],
-    issuer_id: ENV["APPSTORE_API_KEY_ISSUER"],
-    key_content: ENV["APPSTORE_API_KEY"],
-    duration: 1200,
-    in_house: false
-  )
+def get_app_store_api_key(os)
+  if os == "iOS"
+    app_store_connect_api_key(
+      key_id: ENV["APPSTORE_API_KEY_ID"],
+      issuer_id: ENV["APPSTORE_API_KEY_ISSUER"],
+      key_content: ENV["APPSTORE_API_KEY"],
+      duration: 1200,
+      in_house: false
+    )
+  elsif os == "macOS"
+    app_store_connect_api_key(
+      key_id: ENV["APPSTORE_API_KEY_ID_MAC"],
+      issuer_id: ENV["APPSTORE_API_KEY_ISSUER_MAC"],
+      key_content: ENV["APPSTORE_API_KEY_MAC"],
+      duration: 1200,
+      in_house: false
+    )
+  end
+
 end

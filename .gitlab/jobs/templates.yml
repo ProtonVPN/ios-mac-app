@@ -54,7 +54,7 @@
     - ssh-add -D # Delete all ssh private keys
   interruptible: true
   tags:
-    - iOS_vpn
+    - vpn-ios-tests
 
 # Download obfuscated constants and other very top secret stuff
 .prepare_secrets:
@@ -62,41 +62,14 @@
     - ./scripts/credentials.sh cleanup
     - ./scripts/credentials.sh setup -s -d -p .secrets-ci-${CI_JOB_ID} -r https://bot:${CI_SECRETS_REPO_KEY}@${CI_SERVER_HOST}/${CI_SECRETS_REPO_PATH}
 
-# Script for deleting all keychain entries that Proton VPN mac app makes.
-# Should be done because otherwise CI throws modals asking for login keychain password.
-# Usage in before_script, script, after_script: `!reference [.mac_clean_app_keychain, before_script]`
-.mac_clean_app_keychain:
-  before_script:
-    # App saves several items in the keychain. Let's delete them all.
-    - for i in `seq 8`; do security delete-generic-password -s "ProtonVPN" || true; done
-    - for i in `seq 2`; do security delete-generic-password -s "ProtonVPN-Server-Password" || true; done
-
-# Script for deleting all keychains that may be left from older jobs.
-# Sometimes jobs leave orphaned keychains. When such a keychain is present, XCode asks for a password
-# when it tries to sign the app. This script deletes all the keychains that may be left by other jobs.
-# Usage in before_script, script, after_script: `!reference [.mac_clean_macos_keychain, before_script]`
-.mac_clean_macos_keychain:
-  before_script:
-    # Delete old keychains
-    - security list-keychains | grep -E "\/[0-9]{7,8}-db" | xargs security delete-keychain || true
-
-# Template for macOS jobs. These require having proper development certificates and provisioning
-# profiles installed.
+# Template for macOS jobs. This template expects job to be run on a VM.
 .mac_job_template:
   extends: .mr_job_template
   tags:
-    - macOS_vpn
+    - vpn-macos-tests
   before_script:
-    - !reference [.mac_clean_app_keychain, before_script]
-    - !reference [.mac_clean_macos_keychain, before_script]
     - !reference [.prepare_secrets, before_script] # Download obfuscated constants
     - cd apps/macos/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
-    - base64 -D -o Certificates.p12 <<< $DEVELOPER_CERTIFICATE
-    - mkdir -pv ~/Library/MobileDevice/Provisioning\ Profiles/
-    - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE
-    - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE_OVPN
-    - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_WireGuard_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE_WG
-    - fastlane create_macos_keychain
     - ssh-add -D # Delete all ssh private keys
     # Add private key for access to gitlab
     - echo "$CI_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
@@ -105,11 +78,6 @@
     # Make sure xcode uses system ssh/git settings
     - defaults write com.apple.dt.Xcode IDEPackageSupportUseBuiltinSCM YES
   after_script:
-    - !reference [.mac_clean_app_keychain, before_script]
-    - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile
-    - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile
-    - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_WireGuard_Development_PP.provisionprofile
-    - fastlane delete_macos_keychain
     - ssh-add -D # Delete all ssh private keys
   interruptible: true
 

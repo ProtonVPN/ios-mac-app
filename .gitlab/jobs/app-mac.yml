@@ -25,6 +25,7 @@ build:tests:macos:
   stage: build
   tags:
     - vpn-apple-builds
+  allow_failure: false
   needs:
     - job: lint:code-quality
       artifacts: false
@@ -35,7 +36,7 @@ build:tests:macos:
     name: "macos-xctestrun"
     paths:
       - "${JOBS_OUTPUT_PATH}macos/"
-    expire_in: 1 day # todo: make this longer before MR
+    expire_in: 2 days
   
 
 test:unit:app:macos:

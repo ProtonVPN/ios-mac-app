@@ -25,6 +25,7 @@ build:tests:ios:
     - .mr_job_template
     - .ios_job_template
   stage: build
+  allow_failure: false
   tags:
     - vpn-apple-builds
   needs:
