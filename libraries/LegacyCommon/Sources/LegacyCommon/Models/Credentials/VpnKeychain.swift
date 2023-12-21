@@ -166,6 +166,8 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
     
     public func storeAndDetectDowngrade(vpnCredentials: VpnCredentials) {
+        // TODO: Refactor to make it obvious that code posting notifications is
+        // being run AFTER storing credentials to the keychain.
         if let currentCredentials = try? fetch() {
             DispatchQueue.main.async {
                 let downgradeInfo = VpnDowngradeInfo(currentCredentials, vpnCredentials)
