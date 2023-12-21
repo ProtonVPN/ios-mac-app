@@ -5,7 +5,7 @@ lint:commit-quality:
     - .mr_job_template
   stage: lint
   tags:
-    - vpn-apple-builds # Temporary: change this to macOS_vpn when libssh2 and libgit2 is installed globally
+    - vpn-apple-xs
   interruptible: true
   script:
     - mint run gluon lint --verbose
@@ -28,7 +28,7 @@ lint:code-quality:
   script:    
     - scripts/code_quality.sh
   tags:
-    - iOS_vpn 
+    - vpn-apple-xs
   rules:
 
 
@@ -40,5 +40,5 @@ lint:strings-files:
   script:
     - scripts/lint_translations.sh
   tags:
-    - macOS_vpn
+    - vpn-apple-xs
   rules:
