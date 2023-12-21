@@ -146,7 +146,7 @@ report:slack-junit-ios-custom:
   rules: *rules_custom
   image: $CI_REGISTRY/tpe/test-scripts
   stage: test_ui
-  dependencies:
+  needs:
     - deploy:review
     - test:ui:app:ios:custom
   script:
