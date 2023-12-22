@@ -445,7 +445,7 @@ final class LoginViewController: NSViewController {
                         log.error("SSO auth failed: missing callbackURL", category: .core)
                     }
 
-                    self?.presentOnboardingScreen(withErrorDescription: nil)
+                    self?.presentOnboardingScreen(withErrorDescription: Localizable.ssoLoginFailure)
                 }
                 return
             }
@@ -459,7 +459,7 @@ final class LoginViewController: NSViewController {
                               category: .core,
                               metadata: ["url": "\(callbackURL)"])
 
-                    self?.presentOnboardingScreen(withErrorDescription: nil)
+                    self?.presentOnboardingScreen(withErrorDescription: Localizable.ssoLoginFailure)
                 }
             } else {
                 ObservabilityEnv.report(.ssoIdentityProviderLoginResult(status: .successful))
