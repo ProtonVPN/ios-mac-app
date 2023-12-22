@@ -29,6 +29,7 @@ import Ergonomics
 import Strings
 import ProtonCoreFeatureFlags
 import ProtonCoreLoginUI
+import ProtonCoreObservability
 import ProtonCoreServices
 
 final class LoginViewController: NSViewController {
@@ -436,6 +437,14 @@ final class LoginViewController: NSViewController {
         { callbackURL, error in
             guard error == nil, let callbackURL = callbackURL else { 
                 DispatchQueue.main.async { [weak self] in
+                    ObservabilityEnv.report(.ssoIdentityProviderLoginResult(status: .failed))
+
+                    if let error = error {
+                        log.error("SSO auth failed with error: \(error)", category: .core)
+                    } else {
+                        log.error("SSO auth failed: missing callbackURL", category: .core)
+                    }
+
                     self?.presentOnboardingScreen(withErrorDescription: nil)
                 }
                 return
@@ -443,9 +452,17 @@ final class LoginViewController: NSViewController {
 
             let ssoResponseTokenFound = self.identifyAndProcessSSOResponseToken(from: callbackURL)
             if !ssoResponseTokenFound {
+                ObservabilityEnv.report(.ssoIdentityProviderLoginResult(status: .failed))
+
                 DispatchQueue.main.async { [weak self] in
+                    log.error("SSO auth failed: missing token in SSO response",
+                              category: .core,
+                              metadata: ["url": "\(callbackURL)"])
+
                     self?.presentOnboardingScreen(withErrorDescription: nil)
                 }
+            } else {
+                ObservabilityEnv.report(.ssoIdentityProviderLoginResult(status: .successful))
             }
         }
 
