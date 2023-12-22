@@ -35,6 +35,7 @@ import ProtonCoreUIFoundations
 import ProtonCoreEnvironment
 import ProtonCoreFeatureFlags
 import ProtonCoreObservability
+import ProtonCorePushNotifications
 import ProtonCoreCryptoVPNPatchedGoImplementation
 
 // Local dependencies
@@ -60,6 +61,7 @@ class AppDelegate: NSObject {
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
     private lazy var appInfo: AppInfo = container.makeAppInfo()
     private var appInactivityTimer: BackgroundTimer?
+    private lazy var pushNotificationService = PushNotificationService.shared
     private var notificationManager: NotificationManagerProtocol!
 }
 #else
@@ -71,6 +73,7 @@ class AppDelegate: NSObject {
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
     private lazy var appInfo: AppInfo = container.makeAppInfo()
     private var appInactivityTimer: BackgroundTimer?
+    private lazy var pushNotificationService = PushNotificationService.shared
     private var notificationManager: NotificationManagerProtocol!
 }
 #endif
@@ -84,7 +87,7 @@ extension AppDelegate: NSApplicationDelegate {
         log.info("Starting app version \(appInfo.bundleShortVersion) (\(appInfo.bundleVersion))", category: .app, event: .processStart)
 
         LegacyDefaultsMigration.migrateLargeData(from: provider.getDefaults())
-        
+
         // Ignore SIGPIPE errors, which can happen when receiving mach messages or writing to sockets.
         signal(SIGPIPE, SIG_IGN)
 
@@ -92,9 +95,9 @@ extension AppDelegate: NSApplicationDelegate {
         migrateIfNeeded {
             self.setNSCodingModuleName()
             self.setupDebugHelpers()
-            
+
             SentryHelper.setupSentry(dsn: ObfuscatedConstants.sentryDsnmacOS)
-            
+
             AppLaunchRoutine.execute(propertiesManager: self.propertiesManager)
 #if !REDESIGN
             self.protonVpnMenu.update(with: self.container.makeProtonVpnMenuViewModel())
@@ -107,7 +110,7 @@ extension AppDelegate: NSApplicationDelegate {
             self.container.makeMaintenanceManagerHelper().startMaintenanceManager()
             _ = self.container.makeUpdateManager() // Load update manager so it has a chance to update xml url
             _ = self.container.makeDynamicBugReportManager() // Loads initial bug report config and sets up a timer to refresh it daily.
-            
+
             if self.startedAtLogin() {
                 DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
             }
@@ -149,17 +152,17 @@ extension AppDelegate: NSApplicationDelegate {
 
         NotificationCenter.default.post(name: PropertiesManager.announcementsNotification, object: nil)
     }
-    
+
     private func setupDebugHelpers() {
         #if FREQUENT_AUTH_CERT_REFRESH
         CertificateConstants.certificateDuration = "30 minutes"
         #endif
     }
-    
+
     func applicationShouldHandleReopen(_ theApplication: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
         return navigationService.handleApplicationReopen(hasVisibleWindows: flag)
     }
-    
+
     func applicationDidBecomeActive(_ notification: Notification) {
         log.info("applicationDidBecomeActive", category: .os)
         updateRecentlyActive(true)
@@ -198,17 +201,17 @@ extension AppDelegate: NSApplicationDelegate {
             }
         }
     }
-    
+
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         log.info("applicationShouldTerminate", category: .os)
         provider.getDefaults().set(500, forKey: "NSInitialToolTipDelay")
         return navigationService.handleApplicationShouldTerminate()
     }
-    
+
     private func migrateIfNeeded(completion: @escaping (() -> Void)) {
         do {
             try FileManager.default.copyItem(atPath: AppConstants.FilePaths.sandbox, toPath: AppConstants.FilePaths.userDefaults)
-            
+
             // Restart the app so that it picks up the copied user defaults instead of creating a new one
             restartApp()
         } catch let error as NSError {
@@ -220,7 +223,7 @@ extension AppDelegate: NSApplicationDelegate {
             default:
                 log.error("Migration error code: \((error as NSError).code)", category: .app) // don't show full error text because it can contain system username
             }
-            
+
             DispatchQueue.main.async {
                 completion()
             }
@@ -260,19 +263,19 @@ extension AppDelegate: NSApplicationDelegate {
         relaunchAppProcess.launch()
         exit(0)
     }
-    
+
     private func setNSCodingModuleName() {
         // Force all encoded objects to be decoded and encoded using the ProtonVPN module name
         setUpNSCoding(withModuleName: "ProtonVPN")
     }
-    
+
     private func startedAtLogin() -> Bool {
         let launcherAppIdentifier = "ch.protonvpn.ProtonVPNStarter"
         for app in NSWorkspace.shared.runningApplications where app.bundleIdentifier == launcherAppIdentifier {
             return true
         }
         return false
-    }    
+    }
 
     private func setupLogsForApp() {
         let logFile = self.container.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename)
@@ -292,39 +295,39 @@ extension AppDelegate {
             .addCheck("1.7.1") { version, completion in
                 // Restart the connection, because whole vpncore was upgraded between version 1.6.0 and 1.7.0
                 log.info("App was updated to version 1.7.1 from version \(version)", category: .appUpdate)
-                
+
                 self.reconnectWhenPossible()
                 completion(nil)
             }
             .addCheck("2.0.0") { version, completion in
                 // Restart the connection, to enable native KS (if needed)
                 log.info("App was updated to version 2.0.0 from version \(version)", category: .appUpdate)
-                
+
                 guard self.container.makePropertiesManager().killSwitch else {
                     completion(nil)
                     return
                 }
-                
+
                 self.reconnectWhenPossible()
-                completion(nil)                
+                completion(nil)
             }
             .migrate { _ in
                 // Migration complete
             }
     }
-    
+
     private func reconnectWhenPossible() {
         var appStateManager = self.container.makeAppStateManager()
-        
+
         appStateManager.onVpnStateChanged = { newState in
             if newState != .invalid {
                 appStateManager.onVpnStateChanged = nil
             }
-            
+
             guard case .connected = newState else {
                 return
             }
-            
+
             appStateManager.disconnect {
                 self.container.makeVpnGateway().quickConnect(trigger: .auto)
             }

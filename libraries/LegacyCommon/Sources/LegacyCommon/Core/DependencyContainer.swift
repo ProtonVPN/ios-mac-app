@@ -23,6 +23,8 @@ import PMLogger
 import VPNShared
 import Dependencies
 
+import ProtonCorePushNotifications
+
 typealias PropertiesToOverride = DoHVPNFactory &
                                 NetworkingDelegateFactory &
                                 CoreAlertServiceFactory &
@@ -91,6 +93,7 @@ open class Container: PropertiesToOverride {
 
     private lazy var announcementsViewModel: AnnouncementsViewModel = AnnouncementsViewModel(factory: self)
 
+    private lazy var pushNotificationService: PushNotificationServiceProtocol = PushNotificationService(apiService: networking.apiService)
     // Refreshes announcements from API
     private lazy var announcementRefresher = AnnouncementRefresherImplementation(factory: self)
 
@@ -376,6 +379,13 @@ extension Container: CoreApiServiceFactory {
 extension Container: PaymentsApiServiceFactory {
     public func makePaymentsApiService() -> PaymentsApiService {
         PaymentsApiServiceImplementation(self)
+    }
+}
+
+// MARK: PushNotificationsServiceFactory
+extension Container: PushNotificationServiceFactory {
+    public func makePushNotificationService() -> ProtonCorePushNotifications.PushNotificationServiceProtocol {
+        pushNotificationService
     }
 }
 
