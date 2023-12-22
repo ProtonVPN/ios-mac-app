@@ -20,6 +20,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import AuthenticationServices
 import Cocoa
 import LegacyCommon
 import Foundation
@@ -28,6 +29,7 @@ import Ergonomics
 import Strings
 import ProtonCoreFeatureFlags
 import ProtonCoreLoginUI
+import ProtonCoreObservability
 import ProtonCoreServices
 
 final class LoginViewController: NSViewController {
@@ -132,7 +134,11 @@ final class LoginViewController: NSViewController {
     fileprivate var passwordEntry: String {
         return secureTextEntry ? passwordSecureTextField.stringValue : passwordTextField.stringValue
     }
-    
+
+    private var isSSOEnabled: Bool {
+        FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.externalSSO, reloadValue: true)
+    }
+
     // MARK: - Public functions
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
@@ -251,7 +257,7 @@ final class LoginViewController: NSViewController {
         loginButton.target = self
         loginButton.action = #selector(loginButtonAction)
         
-        if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.externalSSO) {
+        if isSSOEnabled {
             signInWithSSO.isHidden = false
             loginButtonToSSOButtonVerticalOffset.isActive = true
             signInWithSSO.title = LUITranslation.sign_in_with_sso_button.l10n
@@ -297,7 +303,7 @@ final class LoginViewController: NSViewController {
         case .protonSignin:
             viewModel.logIn(username: usernameTextField.stringValue, password: passwordEntry)
         case .ssoSignin:
-            guard FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.externalSSO) else {
+            guard isSSOEnabled else {
                 assertionFailure("This action should never be called if sso signin is not enabled")
                 return
             }
@@ -317,8 +323,8 @@ final class LoginViewController: NSViewController {
     }
     
     private func showSSOWebView(request: URLRequest) {
-        let ssoViewController = SSOWebViewController(request: request, delegate: self, viewModel: viewModel)
-        presentAsModalWindow(ssoViewController)
+        guard let authURL = request.url else { return }
+        startWebAuthenticationSession(authURL)
     }
     
     private func presentLoadingScreen() {
@@ -377,7 +383,7 @@ final class LoginViewController: NSViewController {
     }
     
     @objc private func signInWithSSOButtonAction() {
-        guard FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.externalSSO) else {
+        guard isSSOEnabled else {
             assertionFailure("This action should never be called if sso signin is not enabled")
             return
         }
@@ -422,6 +428,52 @@ final class LoginViewController: NSViewController {
         helpPopover!.behavior = .transient
         helpPopover!.show(relativeTo: needHelpButton.bounds, of: needHelpButton, preferredEdge: .maxX)
         helpPopover!.delegate = self
+    }
+
+    // MARK: - SSO
+
+    private func startWebAuthenticationSession(_ authURL: URL) {
+        let session = ASWebAuthenticationSession(url: authURL, callbackURLScheme: "protonvpn")
+        { callbackURL, error in
+            guard error == nil, let callbackURL = callbackURL else { 
+                DispatchQueue.main.async { [weak self] in
+                    ObservabilityEnv.report(.ssoIdentityProviderLoginResult(status: .failed))
+
+                    if let error = error {
+                        log.error("SSO auth failed with error: \(error)", category: .core)
+                    } else {
+                        log.error("SSO auth failed: missing callbackURL", category: .core)
+                    }
+
+                    self?.presentOnboardingScreen(withErrorDescription: Localizable.ssoLoginFailure)
+                }
+                return
+            }
+
+            let ssoResponseTokenFound = self.identifyAndProcessSSOResponseToken(from: callbackURL)
+            if !ssoResponseTokenFound {
+                ObservabilityEnv.report(.ssoIdentityProviderLoginResult(status: .failed))
+
+                DispatchQueue.main.async { [weak self] in
+                    log.error("SSO auth failed: missing token in SSO response",
+                              category: .core,
+                              metadata: ["url": "\(callbackURL)"])
+
+                    self?.presentOnboardingScreen(withErrorDescription: Localizable.ssoLoginFailure)
+                }
+            } else {
+                ObservabilityEnv.report(.ssoIdentityProviderLoginResult(status: .successful))
+            }
+        }
+
+        session.presentationContextProvider = self
+        session.prefersEphemeralWebBrowserSession = true
+
+        session.start()
+    }
+
+    private func identifyAndProcessSSOResponseToken(from url: URL?) -> Bool {
+        viewModel.identifyAndProcessSSOResponseToken(from: url, username: usernameTextField.stringValue)
     }
 }
 
@@ -501,12 +553,8 @@ extension LoginViewController: NSPopoverDelegate {
     }
 }
 
-extension LoginViewController: SSOWebViewControllerDelegate {
-    func didDismissViewController() {
-        presentOnboardingScreen(withErrorDescription: nil)
-    }
-    
-    func identifyAndProcessSSOResponseToken(from url: URL?) -> Bool {
-        viewModel.identifyAndProcessSSOResponseToken(from: url, username: usernameTextField.stringValue)
+extension LoginViewController: ASWebAuthenticationPresentationContextProviding {
+    func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+        return view.window!
     }
 }
