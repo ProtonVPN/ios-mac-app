@@ -25,6 +25,8 @@ import GSMessages
 import PMLogger
 import Onboarding
 import ProtonCoreNetworking
+import ProtonCoreAccountRecovery
+import SwiftUI
 @testable import LegacyCommon
 @testable import ProtonVPN
 
@@ -183,6 +185,11 @@ fileprivate class SettingsServiceMock: SettingsService {
     
     func presentLogs() {}
     func presentReportBug() {}
+
+    func makeAccountRecoveryViewController() -> AccountRecoveryViewController {
+        let viewModel = AccountRecoveryView.ViewModel()
+        return UIHostingController(rootView: AccountRecoveryView(viewModel: viewModel))
+    }
 }
 
 fileprivate class LogContentMock: LogContent {
