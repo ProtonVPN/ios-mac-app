@@ -17,7 +17,6 @@ variables:
   CI_KEYCHAIN_NAME: $CI_JOB_ID
   # We use this variable when we run publish-github jobs
   RELEASE_GITHUB_REPOSITORY: git@github.com:ProtonVPN/ios-mac-app.git
-  GIT_SUBMODULE_FORCE_HTTPS: "true"
   # Folder where jobs put their output like build binaries, test results, etc.
   JOBS_OUTPUT_PATH: "artifacts/"
   # Default tart settings
