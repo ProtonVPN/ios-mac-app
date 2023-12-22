@@ -86,6 +86,7 @@ test:ui:app:ios:smoke:
     - .ios_job_template
   stage: test_ui
   needs:
+    - job: deploy:review
     - job: build:tests:ios
       artifacts: true
   script:
@@ -106,6 +107,7 @@ test:ui:app:ios:all:
     - .ui_full_tests_template
   stage: test_ui
   needs:
+    - job: deploy:review
     - job: build:tests:ios
       artifacts: true
   script:
@@ -128,6 +130,7 @@ test:ui:app:ios:custom:
       when: always
   stage: test_ui
   needs:
+    - job: deploy:review
     - job: build:tests:ios
       artifacts: true
   script:
