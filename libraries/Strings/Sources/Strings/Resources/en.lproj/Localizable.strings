@@ -354,6 +354,9 @@
 /* MacOS: button in login screen */
 "_forgot_username" = "Forgot Username";
 
+/* MacOS: generic failure message for SSO login */
+"_sso_login_failure" = "Failed to log in with SSO. Please try again.";
+
 /* iOS: button in login screen */
 "_forgot_password" = "Forgot Password?";
 

@@ -1314,6 +1314,8 @@ public enum Localizable {
   public static func speed(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_speed", String(describing: p1), fallback: "%@ speed")
   }
+  /// MacOS: generic failure message for SSO login
+  public static var ssoLoginFailure: String { return Localizable.tr("Localizable", "_sso_login_failure", fallback: "Failed to log in with SSO. Please try again.") }
   /// MacOS profile form: feature selection value
   public static var standard: String { return Localizable.tr("Localizable", "_standard", fallback: "Standard") }
   /// MacOS: Settings -> General: name of field.
