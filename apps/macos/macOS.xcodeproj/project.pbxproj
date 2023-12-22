@@ -96,8 +96,6 @@
 		5553CE25D76277AC1F78D477 /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65229530CD3C602EE8E33CB0 /* AnnouncementDetailViewController.swift */; };
 		5AD7615A4525DAA15F6ED3BF /* AnnouncementFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDB93D66CF4A7DB23EE7AA8 /* AnnouncementFeatureView.swift */; };
 		62A4D59A5CDFD51355EAEA8B /* AnnouncementDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17F6646170F7CB52D5A45560 /* AnnouncementDetailViewController.xib */; };
-		667E0E902A4EDA9000EE83ED /* SSOWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667E0E8F2A4EDA8F00EE83ED /* SSOWebViewController.swift */; };
-		667E0E922A4EE2DF00EE83ED /* SSOWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 667E0E912A4EE2DF00EE83ED /* SSOWebViewController.xib */; };
 		7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7518A5EF1EEF362900E1EB2B /* libc++.tbd */; };
 		79DAC5E0FFC36981E0DC7FC5 /* BannerCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE3F63494AD347F2FCD626D /* BannerCellView.swift */; };
 		7F4D7594012E990A84895535 /* BannerCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E93E4DC7EC79388198005F1 /* BannerCellView.xib */; };
@@ -633,8 +631,6 @@
 		4CE2F42127ECA7B000B21A00 /* GIFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GIFView.swift; path = ../../../../../../macos/ProtonVPN/Scenes/Common/Views/Custom/GIFView.swift; sourceTree = "<group>"; };
 		4CFFC94327E0C0AE0035969B /* CancellationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CancellationButton.swift; path = ../../../../../../macos/ProtonVPN/Scenes/Common/Views/Button/CancellationButton.swift; sourceTree = "<group>"; };
 		65229530CD3C602EE8E33CB0 /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
-		667E0E8F2A4EDA8F00EE83ED /* SSOWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSOWebViewController.swift; sourceTree = "<group>"; };
-		667E0E912A4EE2DF00EE83ED /* SSOWebViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SSOWebViewController.xib; sourceTree = "<group>"; };
 		7518A5EF1EEF362900E1EB2B /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		78C16264DDB60F80353FA5CA /* LogViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogViewHelper.swift; sourceTree = "<group>"; };
 		8E93E4DC7EC79388198005F1 /* BannerCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BannerCellView.xib; sourceTree = "<group>"; };
@@ -1965,8 +1961,6 @@
 			isa = PBXGroup;
 			children = (
 				E5E48D042A4D729B00B09111 /* LoginViewControllerRepresentable.swift */,
-				667E0E8F2A4EDA8F00EE83ED /* SSOWebViewController.swift */,
-				667E0E912A4EE2DF00EE83ED /* SSOWebViewController.xib */,
 				EE4943ED1F29C20200CF980F /* LoginViewController.swift */,
 				EE4943EB1F29BE3600CF980F /* Login.xib */,
 				E1454CEB206FC6A900E6D396 /* HelpPopoverViewController.swift */,
@@ -3078,7 +3072,6 @@
 				EE27DB3D1F4706E400D2FF2B /* SettingsContainer.xib in Resources */,
 				E187021E20E26201000521AC /* StatusMenuProfileViewItem.xib in Resources */,
 				EEF7814B1F1A701900E77B59 /* CountriesSection.xib in Resources */,
-				667E0E922A4EE2DF00EE83ED /* SSOWebViewController.xib in Resources */,
 				EE343B791F33AF080052C6C4 /* SecureCoreWarning.xib in Resources */,
 				F3021DA925E9508500EF73A1 /* TroubleshootingRowItem.xib in Resources */,
 				42BEF97126319ADC009180A7 /* StreamingServicesOverlayViewController.xib in Resources */,
@@ -3411,7 +3404,6 @@
 				42F63FE92566B66000DE60B2 /* ReconnectingOverlayViewModel.swift in Sources */,
 				EE74FCB01F5DD71400E266BC /* PopUpViewModel.swift in Sources */,
 				EE7874A51F3B6569001E261E /* WarningPopupViewController.swift in Sources */,
-				667E0E902A4EDA9000EE83ED /* SSOWebViewController.swift in Sources */,
 				AD8130FF2A85360800729E03 /* LiveDependencies.swift in Sources */,
 				D5906F1222D36035001BC074 /* AccountPlan+Extension.swift in Sources */,
 				EE8EF1F21F1FC71F0057CD94 /* OverviewItemViewModel.swift in Sources */,
