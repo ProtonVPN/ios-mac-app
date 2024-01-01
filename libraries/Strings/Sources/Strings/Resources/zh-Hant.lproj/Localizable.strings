@@ -356,6 +356,9 @@
 /* MacOS: button in login screen */
 "_forgot_username" = "忘記使用者名稱";
 
+/* MacOS: generic failure message for SSO login */
+"_sso_login_failure" = "Failed to log in with SSO. Please try again.";
+
 /* iOS: button in login screen */
 "_forgot_password" = "忘記密碼？";
 
@@ -1129,17 +1132,9 @@
 /* MacOS welcome screen: title */
 "_welcome_title" = "歡迎使用!";
 
-/* MacOS welcome screen: description */
-"_welcome_description" = "感謝您使用 Proton VPN。請一睹主要的應用程式功能。";
-
-/* MacOS welcome screen: cancel button */
 "_no_thanks" = "不用了，謝謝";
 
-/* MacOS welcome screen: skip button */
-"_skip" = "略過";
-
-/* MacOS welcome screen: take a tour button */
-"_take_tour" = "使用導覽";
+"_welcome_description" = "Thanks for using Proton VPN.";
 
 /* Plus word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "Plus";
@@ -1193,44 +1188,8 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "安全的串流傳輸您喜歡的內容";
 
-/* MacOS app tour: quick connect title */
-"_quick_connect_tour_title" = "快速連線";
-
-/* MacOS app tour: quick connect description */
-"_quick_connect_tour_description" = "自動連線到提供最快速度的伺服器。";
-
-/* MacOS app tour: profiles title */
-"_profiles_tour_title" = "配置";
-
-/* MacOS app tour: profiles description */
-"_profiles_tour_description" = "儲存您偏好的設定和伺服器以便未來使用。";
-
-/* MacOS app tour: countries list title */
-"_countries_tour_title" = "國家";
-
-/* MacOS app tour: countries list description */
-"_countries_tour_description" = "選取您最終的 IP 位址使用哪個國家及伺服器。";
-
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "快速設定";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "一按以提高您的安全性：";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "以 Secure Core 增添多一層安全性。";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "以 NetShield 自由自在瀏覽網頁，免於惡意軟體與廣告。";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "開啟 Kill Switch 以防洩露您的 IP 。";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "下一個提示";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "結束導覽";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "更好的網際網路，歡迎您";
@@ -1403,15 +1362,6 @@
 "_troubleshoot_item_other_link2" = "電郵";
 
 "_troubleshoot_item_other_link3" = "Twitter";
-
-/* iOS settings -> Battery usage; Title of battery usage screen; */
-"_battery_title" = "電池用量";
-
-/* Battery usages screen description */
-"_battery_description" = "OpenVPN 會管理好您電話上所有對外的數據傳輸，所以 iOS 系統會由其應用程式分配更多電量到 Proton VPN 上。";
-
-/* Battery usage More info button text */
-"_battery_more" = "點擊瞭解更多";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
 "_netshield_stats_data_saved" = "節省的\n流量";

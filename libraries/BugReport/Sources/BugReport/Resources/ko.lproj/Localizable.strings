@@ -38,7 +38,7 @@
 "_br_3_logs_description" = "로그는 오류를 초래한 작업을 보여주는 파일 유형입니다. 엔지니어들이 버그를 수정할 수 있도록 수정에만 해당 로그를 사용합니다.";
 
 /* ReportBug 3rd step (form): message shown if user disabled logs */
-"_br_3_logs_disabled" = "오류 로그는 문제의 원인을 알아가는데 도움이 됩니다. 로그가 포함되지 못한다면, 문제에 대한 조사에 어려움을 겪을 수도 있습니다.";
+"_br_3_logs_disabled" = "오류 로그는 문제의 원인을 알아가는 데에 도움이 됩니다. 로그가 포함되지 못한다면, 문제에 대한 조사에 어려움을 겪을 수도 있습니다.";
 
 /* ReportBug success window: title text */
 "_br_success_title" = "피드백 주셔서 감사합니다";
