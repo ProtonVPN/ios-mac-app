@@ -356,6 +356,9 @@
 /* MacOS: button in login screen */
 "_forgot_username" = "Utilizator uitat";
 
+/* MacOS: generic failure message for SSO login */
+"_sso_login_failure" = "Failed to log in with SSO. Please try again.";
+
 /* iOS: button in login screen */
 "_forgot_password" = "Ați uitat parola?";
 
@@ -1129,17 +1132,9 @@
 /* MacOS welcome screen: title */
 "_welcome_title" = "BINE AȚI VENIT!";
 
-/* MacOS welcome screen: description */
-"_welcome_description" = "Vă mulțumim că utilizați Proton VPN. Aruncați o privire\nasupra funcțiilor principale ale aplicației.";
-
-/* MacOS welcome screen: cancel button */
 "_no_thanks" = "Nu, mulțumesc";
 
-/* MacOS welcome screen: skip button */
-"_skip" = "Omitere";
-
-/* MacOS welcome screen: take a tour button */
-"_take_tour" = "Faceți un tur";
+"_welcome_description" = "Vă mulțumim că utilizați Proton VPN.";
 
 /* Plus word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "Plus";
@@ -1193,44 +1188,8 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "Vizionați în siguranță\nconținutul favorit";
 
-/* MacOS app tour: quick connect title */
-"_quick_connect_tour_title" = "Conectare rapidă";
-
-/* MacOS app tour: quick connect description */
-"_quick_connect_tour_description" = "Conectare automată la servereul care va furniza cea mai rapidă conexiune.";
-
-/* MacOS app tour: profiles title */
-"_profiles_tour_title" = "Profile";
-
-/* MacOS app tour: profiles description */
-"_profiles_tour_description" = "Salvați setările preferate și serverele pentru o utilizare ulterioară.";
-
-/* MacOS app tour: countries list title */
-"_countries_tour_title" = "Țări";
-
-/* MacOS app tour: countries list description */
-"_countries_tour_description" = "Alegeți țara și serverul pe care doriți să le utilizați ca adresă IP vizibilă.";
-
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "Setări rapide";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "Măriți-vă securitatea cu un singur clic:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Adăugați un strat de securitate cu Secure Core.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "Navigați fără malware și reclame cu NetShield.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Preveniți expunerea adresei IP activând blocarea conexiunii.";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Înainte";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "Terminare tur";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Bun venit la un internet mai bun";
@@ -1403,15 +1362,6 @@
 "_troubleshoot_item_other_link2" = "e-mail";
 
 "_troubleshoot_item_other_link3" = "Twitter";
-
-/* iOS settings -> Battery usage; Title of battery usage screen; */
-"_battery_title" = "Utilizare baterie";
-
-/* Battery usages screen description */
-"_battery_description" = "Întregul trafic de pe telefon va fi gestionat prin OpenVPN, deci iOS va aloca utilizarea bateriei de către alte aplicații către Proton VPN.";
-
-/* Battery usage More info button text */
-"_battery_more" = "Doriți să aflați mai multe?";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
 "_netshield_stats_data_saved" = "Date\nsalvate";
@@ -1635,7 +1585,7 @@
 
 "_feature_p2p_description" = "Aceste servere oferă cea mai bună performanță pentru BitTorrent și partajarea de fișiere.";
 
-"_feature_tor_description" = "Direcționează traficul de internet prin rețeaua Tor. Mai lent, dar mai privat.";
+"_feature_tor_description" = "Direcționați traficul de internet prin rețeaua Tor. Mai lent, dar mai privat.";
 
 "_performance_load_description" = "Serverele mai încărcate sunt mai lente decât serverele mai puțin încărcate.";
 

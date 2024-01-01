@@ -76,7 +76,7 @@
 "_disabled" = "Zakázané";
 
 /* Button in some alerts */
-"_disable" = "Vypnúť";
+"_disable" = "Zakázať";
 
 /* Button in Kill switch error alert */
 "_report" = "Nahlásiť";
@@ -141,7 +141,7 @@
 "_get_plus_for_feature" = "Získajte službu Proton VPN Plus a odomknite si túto a ďalšie funkcie.";
 
 /* Display more information */
-"_more_info" = "Viac informácií";
+"_more_info" = "Zistiť viac";
 
 /* Display less information */
 "_less_info" = "Menej informácií";
@@ -225,12 +225,12 @@
 "_you_are_not_connected" = "Bez pripojenia";
 
 /* MacOS: button in connecting overlay */
-"_try_again" = "Skús znova";
+"_try_again" = "Skúsiť znova";
 
 "_try_again_without_killswitch" = "Vypnite Kill Switch a skúste to znova";
 
 /* Button in some alerts */
-"_retry" = "Skúsiť znova";
+"_retry" = "Opakovať";
 
 /* iOS: section header in countries list */
 "_free_servers" = "Bezplatné servery";
@@ -280,9 +280,9 @@
 /* Main mac app menu item */
 "_upgrade_for_secure_core" = "na používanie jadra Secure Core";
 
-"_switch_side_button_on" = "ZAP";
+"_switch_side_button_on" = "ZAP.";
 
-"_switch_side_button_off" = "VYP";
+"_switch_side_button_off" = "VYP.";
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "Nejaká iná aplikácia by mohla zasahovať do kill switch. Ak chcete tento problém odstrániť, prepnite na protokol OpenVPN alebo vypnite kill switch a skúste to znova.";
@@ -294,7 +294,7 @@
 "_kill_switch_blocking_connection" = "Kill switch blokujúci všetky pripojenia";
 
 /* Disconnect notification */
-"_always_on_will_reconnect" = "Trvalá sieť VPN vás automaticky znovu pripojí";
+"_always_on_will_reconnect" = "Vždy zapnutá VPN vás automaticky znovu pripojí";
 
 /* MacOS: About window title */
 "_about" = "O aplikácii";
@@ -355,6 +355,9 @@
 
 /* MacOS: button in login screen */
 "_forgot_username" = "Zabudnuté používateľské meno";
+
+/* MacOS: generic failure message for SSO login */
+"_sso_login_failure" = "Prihlásenie s SSO zlyhalo. Skúste znova, prosím.";
 
 /* iOS: button in login screen */
 "_forgot_password" = "Zabudli ste heslo?";
@@ -618,7 +621,7 @@
 "_connection_settings" = "Nastavenie pripojenia";
 
 /* Profile create/change form */
-"_name" = "Meno";
+"_name" = "Názov";
 
 /* Profile create/change form */
 "_enter_profile_name" = "Zadajte názov profilu";
@@ -715,7 +718,7 @@
 "_error_email_verification_disabled" = "Overovanie emailov dočasne vypnuté";
 
 /* Error writing to system keychain */
-"_error_keychain_write" = "Proton nemôže komunikovať s vaším zariadením. Skúste to prosím neskôr.";
+"_error_keychain_write" = "Proton nemôže komunikovať s vaším zariadením. Skúste to neskôr, prosím.";
 
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "Podpis modulu je prázdny";
@@ -960,7 +963,7 @@
 "_system_notifications" = "Systémové notifikácie";
 
 /* MacOS: Settings -> General: name of field. */
-"_early_access" = "Skorý prístup";
+"_early_access" = "Skorší prístup";
 
 /* MacOS: Settings -> General: description. */
 "_early_access_tooltip" = "Buďte prvý, kto získa najnovšie aktualizácie. Pamätajte, že skoré verzie môžu byť menej stabilné.";
@@ -969,7 +972,7 @@
 "_unprotected_network" = "Upozornenie na nechránené siete";
 
 /* MacOS: Settings -> General: description */
-"_unprotected_network_tooltip" = "Dostaňte notifikáciu, keď Proton VPN zistí, že ste pripojení k nezabezpečenej sieti.";
+"_unprotected_network_tooltip" = "Pri detekcii pripojenia cez nezabezpečenú sieť vám Proton VPN pošle notifikáciu.";
 
 /* MacOS: Settings -> Connection: name of field. */
 "_dns_leak_protection" = "Ochrana proti úniku DNS";
@@ -1059,7 +1062,7 @@
 "_get_plan" = "Získajte plán %@";
 
 /* Account plan description */
-"_free_countries" = "3 Krajín";
+"_free_countries" = "3 krajiny";
 
 /* Account plan description */
 "_all_countries" = "60+ krajín";
@@ -1089,7 +1092,7 @@
 "_most_popular" = "Najpopulárnejšie";
 
 /* Button in plan selection */
-"_select_plan" = "Zvolte plán";
+"_select_plan" = "Vyberte plán";
 
 /* Plan information */
 "_advanced_features" = "+ Pokročilé funkcie";
@@ -1129,17 +1132,9 @@
 /* MacOS welcome screen: title */
 "_welcome_title" = "VITAJTE NA PALUBE!";
 
-/* MacOS welcome screen: description */
-"_welcome_description" = "Ďakujeme, že používate Proton VPN. Pozrite sa rýchlo\nna hlavné funkcie aplikácie.";
-
-/* MacOS welcome screen: cancel button */
 "_no_thanks" = "Nie, ďakujem.";
 
-/* MacOS welcome screen: skip button */
-"_skip" = "Preskočiť";
-
-/* MacOS welcome screen: take a tour button */
-"_take_tour" = "Absolvujte prehliadku";
+"_welcome_description" = "Ďakujeme, že používate Proton VPN.";
 
 /* Plus word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "Plus";
@@ -1193,44 +1188,8 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "Bezpečné streamovanie vášho\nobľúbeného obsahu";
 
-/* MacOS app tour: quick connect title */
-"_quick_connect_tour_title" = "Rýchle pripojenie";
-
-/* MacOS app tour: quick connect description */
-"_quick_connect_tour_description" = "Automatické pripojenie k serveru, ktorý Vám poskytne najrýchlejšie pripojenie.";
-
-/* MacOS app tour: profiles title */
-"_profiles_tour_title" = "Profily";
-
-/* MacOS app tour: profiles description */
-"_profiles_tour_description" = "Uložte si preferované nastavenia a servery pre budúce použitie.";
-
-/* MacOS app tour: countries list title */
-"_countries_tour_title" = "Krajiny";
-
-/* MacOS app tour: countries list description */
-"_countries_tour_description" = "Vyberte krajinu a server, ktorý chcete použiť pre svoju koncovú IP adresu.";
-
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "Rýchle nastavenia";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "Zvýšte svoje zabezpečenie jedným kliknutím:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Pridajte ďalšiu vrstvu zabezpečenia pomocou Secure Core.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "Surfujte na webe bez škodlivého malvéru a reklám s NetShieldom.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Zabráňte odhaleniu svojej IP adresy zapnutím kill switch.";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Ďalší tip";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "Ukončiť prehliadku";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Vitajte v lepšom interente";
@@ -1268,7 +1227,7 @@
 /* iOS widget: text for not-logged-in user */
 "_log_in_to_use_widget" = "Ak chcete začať, prihláste sa";
 
-"_vpnstatus_not_loggedin" = "Nie ste prihlásený do siete Proton VPN. Otvorte aplikáciu Proton VPN a prihláste sa.";
+"_vpnstatus_not_loggedin" = "Nemáte aktívne prihlásenie do siete Proton VPN. Otvorte aplikáciu Proton VPN a prihláste sa.";
 
 /* Bug report attachments */
 "_report_attachments" = "Prílohy";
@@ -1304,7 +1263,7 @@
 "_report_field_feedback" = "Čo sa pokazilo?";
 
 /* Mac bug report: steps field label */
-"_report_field_steps" = "Čo sú presné kroky, ktoré ste vykonali?";
+"_report_field_steps" = "Aké kroky ste presne vykonali?";
 
 /* Mag bug report: textfields placeholder */
 "_report_field_placeholder" = "Začnite písať...";
@@ -1366,7 +1325,7 @@
 
 "_troubleshoot_item_nointernet_title" = "Žiadne internetové pripojenie";
 
-"_troubleshoot_item_nointernet_description" = "Uistite sa prosím že vaše internetové pripojenie funguje.";
+"_troubleshoot_item_nointernet_description" = "Uistite sa, prosím, že vaše internetové pripojenie funguje.";
 
 "_troubleshoot_item_isp_title" = "Problém s poskytovateľom internetových služieb (ISP)";
 
@@ -1390,7 +1349,7 @@
 
 "_troubleshoot_item_proton_title" = "Proton je nedostupný.";
 
-"_troubleshoot_item_proton_description" = "Skontrolujte Proton Status pre náš stav systému.";
+"_troubleshoot_item_proton_description" = "Skontrolujte stav nášho systému na Proton Status.";
 
 "_troubleshoot_item_proton_link1" = "Proton Status";
 
@@ -1403,15 +1362,6 @@
 "_troubleshoot_item_other_link2" = "email";
 
 "_troubleshoot_item_other_link3" = "Twitter";
-
-/* iOS settings -> Battery usage; Title of battery usage screen; */
-"_battery_title" = "Využitie batérie";
-
-/* Battery usages screen description */
-"_battery_description" = "Všetka prevádzka v telefóne bude spravovaná prostredníctvom OpenVPN, preto iOS pridelí spotrebu batérie iných aplikácií službe Proton VPN.";
-
-/* Battery usage More info button text */
-"_battery_more" = "Chcete sa dozvedieť viac?";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
 "_netshield_stats_data_saved" = "Dáta\nušetrené";
@@ -1467,7 +1417,7 @@
 
 "_quick_settings_netShield_description" = "Prehliadajte internet bez reklám a malvéru";
 
-"_quick_settings_killSwitch_description" = "Zakáže internet, ak sa pripojenie VPN preruší, aby sa zabránilo náhodnému úniku IP.";
+"_quick_settings_killSwitch_description" = "Aby sa zabránilo náhodnému úniku IP zakáže internet, ak sa pripojenie VPN preruší.";
 
 "_quick_settings_secureCore_note" = "Secure Core môže znížiť rýchlosť VPN";
 
@@ -1581,7 +1531,7 @@
 "_maximum_device_reached_description" = "Pre pripojenie k tomuto zariadeniu, odpojte prosím iné zariadenie.";
 
 /* Description of user account update screen part 1 */
-"maximum_device_plan_limit_part_1" = "Prosíme odpojte iné zariadenie na pripojenie tohto alebo navýšte na %@";
+"maximum_device_plan_limit_part_1" = "Odpojte, prosím, iné zariadenie na pripojenie tohto alebo navýšte na %@";
 
 "_reconnect_title" = "Obnovujeme pripojenie k najrýchlejšiemu dostupnému serveru.";
 
@@ -1609,7 +1559,7 @@
 
 "_smart_routing_title" = "Smart Routing";
 
-"_streaming_title" = "Streamované";
+"_streaming_title" = "Streamovanie";
 
 "_p2p_title" = "P2P/BitTorrent";
 
@@ -1877,7 +1827,7 @@
 "search_title" = "Hľadať";
 
 /* Title of the Search screen infographic */
-"search_subtitle" = "Vyhľadať ľubovoľnú polohu";
+"search_subtitle" = "Vyhľadať ľubovoľné umiestnenie";
 
 /* Section header in search */
 "search_countries" = "Krajiny";
@@ -1904,7 +1854,7 @@
 "search_us_regions_sample" = "Kalifornia, Florida, Colorado...";
 
 /* Title shown when nothing is found in search */
-"search_no_results_title" = "Žiadne nájdené výsledky";
+"search_no_results_title" = "Neboli nájdené žiadne výsledky";
 
 /* Subtitle shown when nothing is found in search */
 "search_no_results_subtitle" = "Skúste iné kľúčové slovo, prosím";
@@ -1928,7 +1878,7 @@
 "search_bar_placeholder" = "Krajina, mesto alebo server";
 
 /* Subtitle for the upsell banner shown to free users in search */
-"search_upsell_subtitle" = "Viac polôh = viac odblokovaného obsahu + extra bezpečnosť + vyššia rýchlosť";
+"search_upsell_subtitle" = "Viac umiestnení = viac odblokovaného obsahu + extra bezpečnosť + vyššia rýchlosť";
 
 /* Section header in search */
 "search_secure_core_countries" = "Secure Core krajiny";
@@ -1958,7 +1908,7 @@
 "modals_upsell_features_safe_mode_subtitle" = "Máte pokročilé alebo profesionálne počítačové potreby, ktoré si vyžadujú neštandardné porty?\n\nUpgradom na VPN Plus získate prístup k týmto a ďalším prémiovým funkciám.";
 
 /* Title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_title" = "Povolenie prenosu na neštandardné porty";
+"modals_upsell_safe_mode_title" = "Povolenie prenosu cez neštandardné porty";
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "Zvýšte úroveň svojich herných zážitkov";
@@ -2057,7 +2007,7 @@
 "modals_common_get_started" = "Začíname";
 
 /* Description of user account update screen part 1 */
-"maximum_device_plan_limit_part_1" = "Prosíme odpojte iné zariadenie na pripojenie tohto alebo navýšte na %@";
+"maximum_device_plan_limit_part_1" = "Odpojte, prosím, iné zariadenie na pripojenie tohto alebo navýšte na %@";
 
 /* Description of user account update screen */
 "maximum_device_limit" = "Pre pripojenie k tomuto zariadeniu, odpojte prosím iné zariadenie.";

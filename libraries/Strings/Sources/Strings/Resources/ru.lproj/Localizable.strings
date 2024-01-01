@@ -356,6 +356,9 @@
 /* MacOS: button in login screen */
 "_forgot_username" = "Забыл имя пользователя";
 
+/* MacOS: generic failure message for SSO login */
+"_sso_login_failure" = "Failed to log in with SSO. Please try again.";
+
 /* iOS: button in login screen */
 "_forgot_password" = "Забыли пароль?";
 
@@ -1129,17 +1132,9 @@
 /* MacOS welcome screen: title */
 "_welcome_title" = "ДОБРО ПОЖАЛОВАТЬ НА БОРТ!";
 
-/* MacOS welcome screen: description */
-"_welcome_description" = "Спасибо за использование Proton VPN. Взгляните\nна основные возможности приложения.";
-
-/* MacOS welcome screen: cancel button */
 "_no_thanks" = "Нет, спасибо";
 
-/* MacOS welcome screen: skip button */
-"_skip" = "Пропустить";
-
-/* MacOS welcome screen: take a tour button */
-"_take_tour" = "Ознакомительный тур";
+"_welcome_description" = "Спасибо за использование Proton VPN.";
 
 /* Plus word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "Plus";
@@ -1193,44 +1188,8 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "Защищенный просмотр ваших\nлюбимых трансляций";
 
-/* MacOS app tour: quick connect title */
-"_quick_connect_tour_title" = "Быстрое подключение";
-
-/* MacOS app tour: quick connect description */
-"_quick_connect_tour_description" = "Автоматически подключайтесь к серверу, который обеспечит вам самое быстрое подключение.";
-
-/* MacOS app tour: profiles title */
-"_profiles_tour_title" = "Профили";
-
-/* MacOS app tour: profiles description */
-"_profiles_tour_description" = "Сохраните предпочитаемые Вами настройки и серверы для дальнейшего использования.";
-
-/* MacOS app tour: countries list title */
-"_countries_tour_title" = "Страны";
-
-/* MacOS app tour: countries list description */
-"_countries_tour_description" = "Выберите, какую страну и сервер вы хотели бы использовать для конечного IP-адреса.";
-
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "Быстрые настройки";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "Повысьте свою безопасность одним щелчком мыши:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Добавьте дополнительный уровень безопасности с Secure Core.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "Путешествуйте по сети, свободной от вредоносного ПО и рекламы, при помощи NetShield.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Предотвратите раскрытие вашего IP-адреса, включив Kill Switch.";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Следующий совет";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "Закончить тур";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Добро пожаловать в лучший Интернет";
@@ -1403,15 +1362,6 @@
 "_troubleshoot_item_other_link2" = "эл. почта";
 
 "_troubleshoot_item_other_link3" = "Twitter";
-
-/* iOS settings -> Battery usage; Title of battery usage screen; */
-"_battery_title" = "Использование аккумулятора";
-
-/* Battery usages screen description */
-"_battery_description" = "Весь трафик на вашем телефоне будет проходить через OpenVPN, поэтому iOS будет относить использование батареи другими приложениями на счет Proton VPN.";
-
-/* Battery usage More info button text */
-"_battery_more" = "Хотите узнать больше?";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
 "_netshield_stats_data_saved" = "Данные\nсохранены";
@@ -1761,7 +1711,7 @@
 "_settings_mac_crash_reports_tooltip" = "Сообщения о сбоях помогают нам исправлять ошибки, обнаруживать брандмауэры и избегать блокировки VPN.";
 
 /* Section title in Settings */
-"_advanced" = "Advanced";
+"_advanced" = "Продвинутые";
 
 /* Non-standard ports feature title in Settings */
 "_non_standard_ports_title" = "Нестандартные порты";
@@ -1850,7 +1800,7 @@
 "_alert_protocol_deprecated_title" = "Протокол недоступен";
 
 /* Body of the deprecated protocol alert on MacOS. Shown when the user attempts to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
-"_alert_protocol_deprecated_body_macos" = "This profile uses a protocol that is outdated and no longer supported. Click \"Update\" to switch to using the default Smart protocol. Learn more";
+"_alert_protocol_deprecated_body_macos" = "В этом профиле используется протокол, который устарел и больше не поддерживается. Нажмите \"Обновить\", чтобы перейти к использованию протокола Smart по умолчанию. Узнать больше";
 
 /* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
 "_alert_protocol_deprecated_link_text" = "Подробнее";
@@ -1868,10 +1818,10 @@
 "_alert_protocol_deprecated_close" = "Закрыть";
 
 /* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
-"_bad_interface_ip_range_alert_title" = "Bad Network Interface";
+"_bad_interface_ip_range_alert_title" = "Плохой сетевой интерфейс";
 
 /* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
-"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Your local network might be unsafe (the interface '%@' has the IP and prefix '%@'). Your data may be sent unencrypted over the local network. Enabling Kill Switch will block this traffic. Connections to local peripherals will be interrupted.";
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Ваша локальная сеть может быть небезопасной (интерфейс '%@' имеет IP и приставку '%@'). Ваши данные могут передаваться по локальной сети в незашифрованном виде. Включение Kill Switch заблокирует этот трафик. Соединения с локальными периферийными устройствами будут прерваны.";
 
 /* Title of the search screen */
 "search_title" = "Поиск";
@@ -1961,19 +1911,19 @@
 "modals_upsell_safe_mode_title" = "Разрешить трафик на нестандартные порты";
 
 /* Title of the Moderate NAT upsell screen */
-"modals_upsell_moderate_nat_title" = "Level up your gaming experience";
+"modals_upsell_moderate_nat_title" = "Повысьте уровень своего игрового опыта";
 
 /* Subtitle of Moderate NAT upsell screens */
-"modals_upsell_moderate_nat_subtitle" = "Unlock NAT type 2 with VPN Plus";
+"modals_upsell_moderate_nat_subtitle" = "Разблокируйте NAT2 с помощью VPN Plus";
 
 /* Bold part of the subtitle of Moderate NAT upsell screens */
-"modals_upsell_moderate_nat_subtitle_bold" = "NAT type 2";
+"modals_upsell_moderate_nat_subtitle_bold" = "NAT2";
 
 /* Feature of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_gaming" = "Improve online gaming and video call performance";
+"modals_upsell_features_moderate_nat_gaming" = "Повысьте качество онлайн-игр и видеозвонков";
 
 /* Feature of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_direct_connections" = "NAT type 2 (moderate) optimizes speed and stability by enabling direct connections between devices";
+"modals_upsell_features_moderate_nat_direct_connections" = "NAT2 (умеренное) оптимизирует скорость и стабильность, обеспечивая прямое соединение между устройствами";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_streaming" = "Смотрите любимые фильмы";
@@ -2063,73 +2013,73 @@
 "maximum_device_limit" = "Отключите другое устройство для подключения к этому.";
 
 /* Title of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_title" = "Browse at even higher speeds (up to 10 Gbps)";
+"upsell_vpn_accelerator_title" = "Работайте на еще более высоких скоростях (до 10 Гбит/с).";
 
 /* Feature of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_faster_servers" = "Access faster, less crowded servers.";
 
 /* Feature of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_increase_connection_speeds" = "Increase connection speeds by up to 400%% with VPN Accelerator.";
+"upsell_vpn_accelerator_increase_connection_speeds" = "Увеличьте скорость подключения до 400%% с помощью VPN Accelerator.";
 
 /* Bold part of the feature of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_increase_connection_speeds_bold" = "VPN Accelerator.";
 
 /* Feature of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_distant_servers" = "Improved speed and stability when connected to distant servers.";
+"upsell_vpn_accelerator_distant_servers" = "Повышенная скорость и стабильность при подключении к удаленным серверам.";
 
 /* Title of Customization upsell modal */
-"upsell_customization_title" = "Unlock advanced VPN customization";
+"upsell_customization_title" = "Разблокируйте расширенную настройку VPN";
 
 /* Feature of Customization upsell modal */
-"upsell_customization_access_LAN" = "Access devices on your local area network (LAN)";
+"upsell_customization_access_LAN" = "Доступ к устройствам в вашей локальной сети (LAN)";
 
 /* Bold part of the feature of Customization upsell modal */
-"upsell_customization_access_LAN_bold" = "local area network (LAN)";
+"upsell_customization_access_LAN_bold" = "локальная сеть (LAN)";
 
 /* Feature of Customization upsell modal */
-"upsell_customization_profiles" = "Save frequently used connections with profiles";
+"upsell_customization_profiles" = "Сохраняйте часто используемые подключения с помощью профилей";
 
 /* Bold part of the feature of Customization upsell modal */
 "upsell_customization_profiles_bold" = "профили";
 
 /* Feature of Customization upsell modal */
-"upsell_customization_quick_connect" = "Get faster access to your profiles with Quick Connect";
+"upsell_customization_quick_connect" = "Получите быстрый доступ к своим профилям с помощью Быстрого подключения";
 
 /* Bold part of the feature of Customization upsell modal */
 "upsell_customization_quick_connect_bold" = "Быстрое подключение";
 
 /* Title of Profiles upsell modal */
-"upsell_profiles_title" = "Get quick access to your frequent connections";
+"upsell_profiles_title" = "Получите быстрый доступ к своим частым подключениям";
 
 /* Subtitle of Profiles upsell modal */
-"upsell_profiles_subtitle" = "Unlock profiles with VPN Plus";
+"upsell_profiles_subtitle" = "Разблокировать профили с помощью VPN Plus";
 
 /* Bold part of the subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle_bold" = "профили";
 
 /* Feature of Profiles upsell modal */
-"upsell_profiles_feature_location" = "Save your preferred server, city, or country.";
+"upsell_profiles_feature_location" = "Сохраните предпочитаемый сервер, город или страну.";
 
 /* Feature of Profiles upsell modal */
-"upsell_profiles_feature_protocols" = "Set custom protocols and premium VPN features.";
+"upsell_profiles_feature_protocols" = "Настройка пользовательских протоколов и платных функций VPN.";
 
 /* Feature of Profiles upsell modal */
-"upsell_profiles_feature_auto_connect" = "Set up auto-connect for even faster access.";
+"upsell_profiles_feature_auto_connect" = "Настройте автоподключение для еще более быстрого доступа.";
 
 /* Feature of Countries upsell modal */
-"upsell_countries_any_location" = "Choose any location";
+"upsell_countries_any_location" = "Выберите любое местоположение";
 
 /* Feature of Countries upsell modal */
-"upsell_countries_even_higher_speed" = "Even higher VPN speed";
+"upsell_countries_even_higher_speed" = "Еще более высокая скорость VPN";
 
 /* Feature of Countries upsell modal */
-"upsell_countries_geoblocked_content" = "Access geoblocked content";
+"upsell_countries_geoblocked_content" = "Доступ к содержимому, заблокированному по географическому признаку";
 
 /* Feature of Country upsell modal */
 "upsell_countries_connect_to" = "Connect to %d countries";
 
 /* Feature of Country upsell modal */
-"upsell_countries_higher_speeds" = "Even higher VPN speed";
+"upsell_countries_higher_speeds" = "Еще более высокая скорость VPN";
 
 /* Feature of Country upsell modal */
 "upsell_countries_money_back" = "30-дневная гарантия возврата денег";
@@ -2138,10 +2088,10 @@
 "upsell_country_feature_title" = "Хотите выбрать определенную страну?";
 
 /* Feature of Country upsell modal */
-"upsell_country_feature_subtitle" = "Unlock country selection with VPN Plus";
+"upsell_country_feature_subtitle" = "Разблокируйте выбор страны с помощью VPN Plus";
 
 /* Bold part of the feature of Country upsell modal */
-"upsell_country_feature_subtitle_bold" = "country selection";
+"upsell_country_feature_subtitle_bold" = "выбор страны";
 
 /* Title of the "What's new" screen */
 "modals_whats_new" = "Что нового";
@@ -2174,7 +2124,7 @@
 "welcome_upgrade_title_plus" = "Добро пожаловать в VPN Plus";
 
 /* The title of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_title_unlimited" = "Welcome to Proton Unlimited";
+"welcome_upgrade_title_unlimited" = "Добро пожаловать в Proton Unlimited";
 
 /* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
 "welcome_upgrade_title_fallback" = "Поздравляем!";
@@ -2183,16 +2133,16 @@
 "welcome_upgrade_subtitle_plus" = "Используйте расширенные функции конфиденциальности, максимальную производительность и настройку VPN нового уровня.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "Congratulations! You unlocked premium security and performance features on all Proton services, plus 500 GB total storage.\n\nEnjoy the best of Proton privacy.";
+"welcome_upgrade_subtitle_Unlimited" = "Поздравляем! Вы разблокировали платные функции безопасности и производительности во всех службах Proton, а также 500 ГБ общего хранилища.\n\nПользуйтесь лучшими возможностями приватности Proton.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "Congratulations! You unlocked premium security and performance features on all Proton services, plus **500 GB** total storage.\n\nEnjoy the best of Proton privacy.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "Поздравляем! Вы разблокировали платные функции безопасности и производительности во всех службах Proton, а также **500 ГБ** общего объема памяти.\n\nПользуйтесь лучшими возможностями приватности Proton.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 ГБ";
 
 /* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
-"welcome_upgrade_subtitle_fallback" = "You've upgraded your subscription. Enjoy advanced privacy features and next-level performance.";
+"welcome_upgrade_subtitle_fallback" = "Вы улучшили свою подписку. Пользуйтесь расширенными функциями приватности и производительностью нового уровня.";
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Доступно с VPN для бизнеса.";
@@ -2204,10 +2154,10 @@
 "free_connections_modal_description" = "Proton Free automatically connects you to the fastest available server. This will normally be the closest server to your location.";
 
 /* Modal that lists countries in which servers are available to free users: banner with CTA */
-"free_connections_modal_banner" = "Get worldwide coverage with VPN Plus";
+"free_connections_modal_banner" = "Получите глобальное покрытие с помощью VPN Plus";
 
 /* Text on upsell banner in country list */
-"_free_banner_text" = "Get worldwide coverage with VPN Plus";
+"_free_banner_text" = "Получите глобальное покрытие с помощью VPN Plus";
 
 /* Title of banner shown on iOS apps to upsell users who want to select a country */
 "_wrong_country_banner_title" = "Не та страна, которую вы хотели?";

@@ -356,6 +356,9 @@
 /* MacOS: button in login screen */
 "_forgot_username" = "Nome utente dimenticato";
 
+/* MacOS: generic failure message for SSO login */
+"_sso_login_failure" = "Accesso con SSO non riuscito. Riprova.";
+
 /* iOS: button in login screen */
 "_forgot_password" = "Password dimenticata?";
 
@@ -390,7 +393,7 @@
 "_get_verification_sms" = "Ricevi SMS di verifica";
 
 /* iOS: text in human verification options screen */
-"_select_verification_option" = "Per favore seleziona un'opzione di verifica per procedere:";
+"_select_verification_option" = "Seleziona un'opzione di verifica per procedere:";
 
 /* iOS: text in human verification options screen */
 "_select_verification_option_top_message" = "Per prevenire gli abusi, devi verificare di essere un umano.";
@@ -1129,17 +1132,9 @@
 /* MacOS welcome screen: title */
 "_welcome_title" = "TI DIAMO IL BENVENUTO A BORDO!";
 
-/* MacOS welcome screen: description */
-"_welcome_description" = "Grazie per utilizzare Proton VPN. Dai un rapido sguardo\nalle funzioni principali dell'app.";
-
-/* MacOS welcome screen: cancel button */
 "_no_thanks" = "No, grazie";
 
-/* MacOS welcome screen: skip button */
-"_skip" = "Salta";
-
-/* MacOS welcome screen: take a tour button */
-"_take_tour" = "Fai un tour";
+"_welcome_description" = "Grazie per utilizzare Proton VPN.";
 
 /* Plus word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "Plus";
@@ -1193,44 +1188,8 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "Streaming sicuro del tuo\ncontenuto preferito";
 
-/* MacOS app tour: quick connect title */
-"_quick_connect_tour_title" = "Connessione rapida";
-
-/* MacOS app tour: quick connect description */
-"_quick_connect_tour_description" = "Connettiti automaticamente al server che ti fornisce la connessione più veloce.";
-
-/* MacOS app tour: profiles title */
-"_profiles_tour_title" = "Profili";
-
-/* MacOS app tour: profiles description */
-"_profiles_tour_description" = "Salva le impostazioni e i server preferiti per l'utilizzo futuro.";
-
-/* MacOS app tour: countries list title */
-"_countries_tour_title" = "Paesi";
-
-/* MacOS app tour: countries list description */
-"_countries_tour_description" = "Scegli quale paese e server vuoi utilizzare per il tuo indirizzo IP finale.";
-
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "Impostazioni rapide";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "Aumenta la tua sicurezza con un clic:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Aggiungi un ulteriore livello di sicurezza con Secure Core.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "Naviga su internet libero da malware o annunci con NetShield.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Impedisci che il tuo IP venga esposto attivando kill switch.";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Prossimo consiglio";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "Termina il tour";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Ti diamo il benvenuto in un internet migliore";
@@ -1403,15 +1362,6 @@
 "_troubleshoot_item_other_link2" = "email";
 
 "_troubleshoot_item_other_link3" = "Twitter";
-
-/* iOS settings -> Battery usage; Title of battery usage screen; */
-"_battery_title" = "Utilizzo della batteria";
-
-/* Battery usages screen description */
-"_battery_description" = "Tutto il traffico sul tuo telefono sarà gestito tramite OpenVPN, quindi iOS assegnerà l'utilizzo della batteria di altre app a Proton VPN.";
-
-/* Battery usage More info button text */
-"_battery_more" = "Vuoi saperne di più?";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
 "_netshield_stats_data_saved" = "dati\nsalvati";
