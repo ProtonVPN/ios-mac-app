@@ -46,19 +46,19 @@ public protocol Networking: APIServiceDelegate {
     func request<T>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable
     func request(_ route: URLRequest, completion: @escaping (_ result: Result<String, Error>) -> Void)
     func request<T>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable
-    func perform<R>(request route: Request) async throws -> (URLSessionDataTask?, R) where R: APIDecodableResponse
-    func perform(request route: Request) async throws -> (URLSessionDataTask?, JSONDictionary)
+    func perform<R>(request route: Request) async throws -> R where R: APIDecodableResponse
+    func perform(request route: Request) async throws -> JSONDictionary
 }
 
 // MARK: CoreNetworking
 public final class CoreNetworking: Networking {
     
-    public func perform<R>(request route: Request) async throws -> (URLSessionDataTask?, R) where R: APIDecodableResponse {
-        try await apiService.perform(request: route)
+    public func perform<R>(request route: Request) async throws -> R where R: APIDecodableResponse {
+        (try await apiService.perform(request: route) as (URLSessionDataTask?, R)).1
     }
 
-    public func perform(request route: Request) async throws -> (URLSessionDataTask?, JSONDictionary) {
-        try await apiService.perform(request: route)
+    public func perform(request route: Request) async throws -> JSONDictionary {
+        ((try await apiService.perform(request: route)) as (URLSessionDataTask?, JSONDictionary)).1
     }
 
     public private(set) var apiService: PMAPIService    
