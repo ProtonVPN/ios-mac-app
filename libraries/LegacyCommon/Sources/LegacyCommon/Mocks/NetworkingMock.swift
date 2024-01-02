@@ -66,7 +66,7 @@ public final class NetworkingMock {
 }
 
 extension NetworkingMock: Networking {
-    public func perform(request route: Request) async throws -> (URLSessionDataTask?, JSONDictionary) {
+    public func perform(request route: Request) async throws -> JSONDictionary {
         try await withCheckedThrowingContinuation { continuation in
             request(route) { (result: Result<Data, Error>) in
                 switch result {
@@ -75,7 +75,7 @@ extension NetworkingMock: Networking {
                         continuation.resume(throwing: POSIXError(.EBADMSG))
                         return
                     }
-                    continuation.resume(returning: (nil, dict))
+                    continuation.resume(returning: dict)
                 case let .failure(error):
                     continuation.resume(throwing: error)
                 }
@@ -83,7 +83,7 @@ extension NetworkingMock: Networking {
         }
     }
     
-    public func perform<R>(request route: Request) async throws -> (URLSessionDataTask?, R) where R : Decodable {
+    public func perform<R>(request route: Request) async throws -> R where R : Decodable {
         try await withCheckedThrowingContinuation { continuation in
             request(route) { (result: Result<Data, Error>) in
                 switch result {
@@ -92,7 +92,7 @@ extension NetworkingMock: Networking {
                         let decoder = JSONDecoder()
                         decoder.keyDecodingStrategy = .decapitaliseFirstLetter
                         let obj = try decoder.decode(R.self, from: data)
-                        continuation.resume(returning: (nil, obj))
+                        continuation.resume(returning: obj)
                     } catch {
                         continuation.resume(throwing: error)
                     }

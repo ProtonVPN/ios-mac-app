@@ -27,13 +27,13 @@ import XCTest
 
 actor TelemetryAPIImplementationMock: TelemetryAPI {
     var events = [[String: Any]]()
-    func flushEvent(event: [String : Any], isBusiness: Bool) async throws -> (URLSessionDataTask?, LegacyCommon.TelemetryResponse) {
+    func flushEvent(event: [String : Any], isBusiness: Bool) async throws -> LegacyCommon.TelemetryResponse {
         events.append(event)
-        return (nil, TelemetryResponse(code: 1000))
+        return TelemetryResponse(code: 1000)
     }
     
-    func flushEvents(events: [String : Any], isBusiness: Bool) async throws -> (URLSessionDataTask?, LegacyCommon.TelemetryResponse) {
-        return (nil, TelemetryResponse(code: 1000))
+    func flushEvents(events: [String : Any], isBusiness: Bool) async throws -> LegacyCommon.TelemetryResponse {
+        return TelemetryResponse(code: 1000)
     }
 }
 

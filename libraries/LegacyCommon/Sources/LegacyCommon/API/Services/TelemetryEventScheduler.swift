@@ -72,7 +72,7 @@ class TelemetryEventScheduler {
         guard LocalFeatureFlags.isEnabled(TelemetryFeature.useBuffer) else {
             do {
                 let response = try await telemetryAPI.flushEvent(event: event.toJSONDictionary(), isBusiness: isBusiness)
-                log.info("Telemetry event sent with response code: \(response.1.code). Event: \(event)", category: .telemetry)
+                log.info("Telemetry event sent with response code: \(response.code). Event: \(event)", category: .telemetry)
             } catch {
                 log.debug("Failed to send a Telemetry event with error: \(error.localizedDescription). Didn't save to buffer because feature flag is disabled")
             }
@@ -85,7 +85,7 @@ class TelemetryEventScheduler {
         }
         do {
             let response = try await telemetryAPI.flushEvent(event: event.toJSONDictionary(), isBusiness: isBusiness)
-            log.info("Telemetry event sent with response code: \(response.1.code). Event: \(event)", category: .telemetry)
+            log.info("Telemetry event sent with response code: \(response.code). Event: \(event)", category: .telemetry)
         } catch {
             log.warning("Failed to send telemetry event, saving to storage: \(event)", category: .telemetry)
             await scheduleEvent(event)
@@ -110,7 +110,7 @@ class TelemetryEventScheduler {
         await buffer.scheduledEvents { [telemetryAPI] events in
             do {
                 let response = try await telemetryAPI.flushEvents(events: events, isBusiness: isBusiness)
-                log.info("Telemetry events sent with response code: \(response.1.code). Events: \(events)", category: .telemetry)
+                log.info("Telemetry events sent with response code: \(response.code). Events: \(events)", category: .telemetry)
             } catch {
                 log.warning("Failed to send scheduled telemetry events, leaving in storage: \(events)", category: .telemetry)
             }

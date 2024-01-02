@@ -397,7 +397,9 @@ public class AppStateManagerImplementation: AppStateManager {
     
     private func startObserving() {
         vpnManager.stateChanged = { [weak self] in
-            self?.vpnStateChanged()
+            executeOnUIThread {
+                self?.vpnStateChanged()
+            }
         }
         vpnManager.localAgentStateChanged = { [weak self] localAgentConnectedState in
             executeOnUIThread {
