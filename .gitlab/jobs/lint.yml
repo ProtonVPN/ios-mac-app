@@ -6,7 +6,7 @@ lint:commit-quality:
   stage: lint
   tags:
     - vpn-apple-xs
-  interruptible: true
+  interruptible: true # Cancel job if newer commit was pushed
   script:
     - mint run gluon lint --verbose
   rules:
@@ -29,6 +29,7 @@ lint:code-quality:
     - scripts/code_quality.sh
   tags:
     - vpn-apple-xs
+  interruptible: true # Cancel job if newer commit was pushed
   rules:
 
 
@@ -41,4 +42,5 @@ lint:strings-files:
     - scripts/lint_translations.sh
   tags:
     - vpn-apple-xs
+  interruptible: true # Cancel job if newer commit was pushed
   rules:
