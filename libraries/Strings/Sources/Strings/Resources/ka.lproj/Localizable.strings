@@ -356,6 +356,9 @@
 /* MacOS: button in login screen */
 "_forgot_username" = "დაგავიწყდათ თქვენი მომხმარებლის სახელი";
 
+/* MacOS: generic failure message for SSO login */
+"_sso_login_failure" = "Failed to log in with SSO. Please try again.";
+
 /* iOS: button in login screen */
 "_forgot_password" = "დაგავიწყდათ პაროლი?";
 
@@ -1129,17 +1132,9 @@
 /* MacOS welcome screen: title */
 "_welcome_title" = "კეთილი იყოს თქვენი მობრძანება!";
 
-/* MacOS welcome screen: description */
-"_welcome_description" = "მადლობა Proton VPN-ის გამოყენებისთვის. თვალი გადაავლეთ\nაპის მთავარ ფუნქციებს.";
-
-/* MacOS welcome screen: cancel button */
 "_no_thanks" = "არა, მადლობა";
 
-/* MacOS welcome screen: skip button */
-"_skip" = "გამოტოვება";
-
-/* MacOS welcome screen: take a tour button */
-"_take_tour" = "გასაცნობი ტური";
+"_welcome_description" = "დიდი მადლობა Proton VPN-ის გამოყენებისთვის.";
 
 /* Plus word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "პლუსი";
@@ -1193,44 +1188,8 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "დაიცავით თქვენი საყვარელი\nვიდეოს სტრიმი";
 
-/* MacOS app tour: quick connect title */
-"_quick_connect_tour_title" = "სწრაფი მიერთება";
-
-/* MacOS app tour: quick connect description */
-"_quick_connect_tour_description" = "ავტომატურად დაგაკავშირებთ სერვერთან, რომელიც ყველაზე სწრაფ შეერთებას უზრუნველყოფს.";
-
-/* MacOS app tour: profiles title */
-"_profiles_tour_title" = "პროფილები";
-
-/* MacOS app tour: profiles description */
-"_profiles_tour_description" = "შეინახეთ თქვენი პარამეტრები და სერვერები მომავალში გამოსაყენებლად.";
-
-/* MacOS app tour: countries list title */
-"_countries_tour_title" = "ქვეყნები";
-
-/* MacOS app tour: countries list description */
-"_countries_tour_description" = "აირჩიეთ, თქვენი საბოლოო IP მისამართისთვის, რომელი ქვეყანა და სერვერი გნებავთ, გამოიყენოთ.";
-
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "სწრაფი პარამეტრები";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "გაზარდეთ თქვენი უსაფრთხოება ერთი წკაპით:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "დაამატეთ უსაფრთხოების კიდევ ერთი დონე Secure Core-სთან ერთად.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "იმუშავეთ არასასურველი პროგრამებისა და რეკლამებისგან თავისუფალ ინტერნეტში NetShield-თან ერთად.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "დაიცავით თავი თქვენი IP-ის გამოაშკარავებისგან Kill Switch-ის ჩართვით.";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "შემდეგი მინიშნება";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "ტურის დასრულება";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "მოგესალმებით უკეთეს ინტერნეტში";
@@ -1403,15 +1362,6 @@
 "_troubleshoot_item_other_link2" = "ელფოსტა";
 
 "_troubleshoot_item_other_link3" = "Twitter";
-
-/* iOS settings -> Battery usage; Title of battery usage screen; */
-"_battery_title" = "ელემენტის გამოყენება";
-
-/* Battery usages screen description */
-"_battery_description" = "თქვენს ტელეფონზე ყველა ტრაფიკი იმართება OpenVPN-ის საშუალებით, ამიტომ iOS-ი სხვა აპების ბატარეის გამოყენებას Proton VPN-სთვის გამოყოფს.";
-
-/* Battery usage More info button text */
-"_battery_more" = "გნებავთ, მეტი გაიგოთ?";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
 "_netshield_stats_data_saved" = "მინაცემები\nშენახულია";

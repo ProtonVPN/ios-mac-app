@@ -356,6 +356,9 @@
 /* MacOS: button in login screen */
 "_forgot_username" = "Kullanıcı adımı unuttum";
 
+/* MacOS: generic failure message for SSO login */
+"_sso_login_failure" = "Failed to log in with SSO. Please try again.";
+
 /* iOS: button in login screen */
 "_forgot_password" = "Parolanızı mı unuttunuz?";
 
@@ -712,7 +715,7 @@
 "_error_decode" = "Sınıftaki arşivlenmiş verilerin kodu çözülemedi: %@";
 
 /* Internal application error */
-"_error_email_verification_disabled" = "E-posta doğrulaması geçici olarak kapatıldı";
+"_error_email_verification_disabled" = "E-posta doğrulaması geçici olarak kullanım dışı bırakıldı";
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton aygıtınızla iletişim kuramadı. Lütfen bir süre sonra yeniden deneyin.";
@@ -1129,17 +1132,9 @@
 /* MacOS welcome screen: title */
 "_welcome_title" = "HOŞ GELDİNİZ!";
 
-/* MacOS welcome screen: description */
-"_welcome_description" = "Proton VPN kullandığınız için teşekkürler. Temel uygulama özelliklerine\nhızlıca göz atın.";
-
-/* MacOS welcome screen: cancel button */
 "_no_thanks" = "Hayır, teşekkürler";
 
-/* MacOS welcome screen: skip button */
-"_skip" = "Atla";
-
-/* MacOS welcome screen: take a tour button */
-"_take_tour" = "Tura çıkın";
+"_welcome_description" = "Proton VPN kullandığınız için teşekkürler.";
 
 /* Plus word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "Artı";
@@ -1193,44 +1188,8 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "En sevdiğiniz içeriklerin\ngüvenli yayın akışı";
 
-/* MacOS app tour: quick connect title */
-"_quick_connect_tour_title" = "Hızlı bağlan";
-
-/* MacOS app tour: quick connect description */
-"_quick_connect_tour_description" = "Size en hızlı bağlantıyı sağlayacak sunucuya otomatik olarak bağlanın.";
-
-/* MacOS app tour: profiles title */
-"_profiles_tour_title" = "Profiller";
-
-/* MacOS app tour: profiles description */
-"_profiles_tour_description" = "Kullanmayı yeğlediğiniz ayarları ve sunucuları ileride kullanmak üzere kaydedin.";
-
-/* MacOS app tour: countries list title */
-"_countries_tour_title" = "Ülkeler";
-
-/* MacOS app tour: countries list description */
-"_countries_tour_description" = "Çıkış IP adresiniz için kullanmak istediğiniz ülkeyi ve sunucuyu seçin.";
-
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "Hızlı ayarlar";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "Tek bir tıklama ile güvenliğinizi artırın:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Secure Core ile ek bir güvenlik katmanı ekleyin.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "NetShield ile kötü amaçlı yazılımlar ve reklamlar olmadan İnternet üzerinde özgürce gezinin.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Bağlantı kesiciyi açarak IP adresinizin açığa çıkmasını önleyin.";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Sonraki ipucu";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "Turu bitir";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Daha iyi bir İnternet'e hoş geldiniz";
@@ -1404,15 +1363,6 @@
 
 "_troubleshoot_item_other_link3" = "Twitter";
 
-/* iOS settings -> Battery usage; Title of battery usage screen; */
-"_battery_title" = "Pil kullanımı";
-
-/* Battery usages screen description */
-"_battery_description" = "Telefonunuzdaki tüm trafik OpenVPN üzerinden geçirilecek. Bu nedenle iOS, diğer uygulamaların pil kullanımını Proton VPN için ayıracak.";
-
-/* Battery usage More info button text */
-"_battery_more" = "Ayrıntılı bilgi almak ister misiniz?";
-
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
 "_netshield_stats_data_saved" = "Kazanılan\nveri";
 
@@ -1451,9 +1401,9 @@
 /* Settings -> Netshield: Block malware, ads, trackers */
 "_netshield_level2" = "Kötü amaçlı yazılımları, reklamları ve izleyicileri engelleyin";
 
-"_netshield_alert_reconnect_description_on" = "NetShield kipini değiştirmek için bağlantınız yeniden başlatılacak.\nNot: Bazı siteler yüklenmezse, NetShield özelliğini kapatmayı deneyin.";
+"_netshield_alert_reconnect_description_on" = "NetShield kipine geçmek için bağlantınız yeniden başlatılacak.\nNot: Bazı siteler yüklenmezse, NetShield özelliğini kapatmayı deneyin.";
 
-"_netshield_alert_reconnect_description_off" = "NetShield kipini değiştirmek için bağlantınız yeniden başlatılacak.";
+"_netshield_alert_reconnect_description_off" = "NetShield kipine geçmek için bağlantınız yeniden başlatılacak.";
 
 "_netshield_alert_upgrade_description" = "NetShield, reklamları ve etkinlik izleyicileri engelleyerek gizliliğinizi artırır.";
 
@@ -1521,7 +1471,7 @@
 "_smart_protocol_reconnect_modal_title" = "Yeniden bağlantı kurulması gerekli";
 
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
-"_smart_protocol_reconnect_modal_body" = "Smart Protocol kipini değiştirmek için bağlantınız yeniden başlatılacak.";
+"_smart_protocol_reconnect_modal_body" = "Smart Protocol kipine geçmek için bağlantınız yeniden başlatılacak.";
 
 /* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
 "_sysex_description_1" = "Mac bilgisayarınızda Proton VPN kullanabilmek için **özel VPN iletişim kurallarını** açmalısınız.";

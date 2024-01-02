@@ -356,6 +356,9 @@
 /* MacOS: button in login screen */
 "_forgot_username" = "Przypomnij nazwę użytkownika";
 
+/* MacOS: generic failure message for SSO login */
+"_sso_login_failure" = "Nie udało się zalogować przez SSO. Spróbuj ponownie później.";
+
 /* iOS: button in login screen */
 "_forgot_password" = "Nie pamiętasz hasła?";
 
@@ -1129,17 +1132,9 @@
 /* MacOS welcome screen: title */
 "_welcome_title" = "WITAJ NA POKŁADZIE!";
 
-/* MacOS welcome screen: description */
-"_welcome_description" = "Dziękujemy za skorzystanie z usługi Proton VPN. Rzuć okiem\nna główne funkcje aplikacji.";
-
-/* MacOS welcome screen: cancel button */
 "_no_thanks" = "Nie, dziękuję";
 
-/* MacOS welcome screen: skip button */
-"_skip" = "Pomiń";
-
-/* MacOS welcome screen: take a tour button */
-"_take_tour" = "Otwórz przewodnik";
+"_welcome_description" = "Dziękujemy za skorzystanie z usługi Proton VPN.";
 
 /* Plus word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "Plus";
@@ -1193,44 +1188,8 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "Bezpieczny streaming Twoich\nulubionych treści";
 
-/* MacOS app tour: quick connect title */
-"_quick_connect_tour_title" = "Szybkie połączenie";
-
-/* MacOS app tour: quick connect description */
-"_quick_connect_tour_description" = "Automatycznie połącz się z serwerem, który zapewni najszybsze połączenie.";
-
-/* MacOS app tour: profiles title */
-"_profiles_tour_title" = "Profile";
-
-/* MacOS app tour: profiles description */
-"_profiles_tour_description" = "Zapisz preferowane ustawienia i serwery do wykorzystania w przyszłości.";
-
-/* MacOS app tour: countries list title */
-"_countries_tour_title" = "Kraje";
-
-/* MacOS app tour: countries list description */
-"_countries_tour_description" = "Wybierz kraj i serwer, który chcesz wykorzystać jako końcowy adres IP.";
-
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "Szybkie ustawienia";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "Zwiększ swój poziom bezpieczeństwa za pomocą jednego kliknięcia:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Dodaj dodatkowe zabezpieczenie dzięki funkcji Secure Core.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "Przeglądaj Internet bez reklam i złośliwego oprogramowania dzięki funkcji NetShield.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Włączenie funkcji Kill Switch zapobiega ujawnieniu Twojego adresu IP.";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Następna wskazówka";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "Zamknij przewodnik";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Witaj w lepszym Internecie";
@@ -1403,15 +1362,6 @@
 "_troubleshoot_item_other_link2" = "e-mail";
 
 "_troubleshoot_item_other_link3" = "Twitter";
-
-/* iOS settings -> Battery usage; Title of battery usage screen; */
-"_battery_title" = "Użycie baterii";
-
-/* Battery usages screen description */
-"_battery_description" = "Cały ruch sieciowy telefonu będzie zarządzany przez protokół OpenVPN, dlatego system iOS przydzieli użycie baterii innych aplikacji do aplikacji Proton VPN.";
-
-/* Battery usage More info button text */
-"_battery_more" = "Chcesz dowiedzieć się więcej?";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
 "_netshield_stats_data_saved" = "zaoszczędzonych\ndanych";

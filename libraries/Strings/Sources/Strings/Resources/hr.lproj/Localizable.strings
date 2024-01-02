@@ -356,6 +356,9 @@
 /* MacOS: button in login screen */
 "_forgot_username" = "Zaboravili ste korisničko ime";
 
+/* MacOS: generic failure message for SSO login */
+"_sso_login_failure" = "Failed to log in with SSO. Please try again.";
+
 /* iOS: button in login screen */
 "_forgot_password" = "Zaboravili ste lozinku?";
 
@@ -1129,17 +1132,9 @@
 /* MacOS welcome screen: title */
 "_welcome_title" = "DOBRO DOŠLI!";
 
-/* MacOS welcome screen: description */
-"_welcome_description" = "Hvala što koristite Proton VPN. Brzo istražite\nglavne značajke aplikacije.";
-
-/* MacOS welcome screen: cancel button */
 "_no_thanks" = "Ne, hvala";
 
-/* MacOS welcome screen: skip button */
-"_skip" = "Preskoči";
-
-/* MacOS welcome screen: take a tour button */
-"_take_tour" = "Započnite obilazak";
+"_welcome_description" = "Thanks for using Proton VPN.";
 
 /* Plus word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "Plus";
@@ -1193,44 +1188,8 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "Sigurno streamanje vašeg\nnajdražeg sadržaja";
 
-/* MacOS app tour: quick connect title */
-"_quick_connect_tour_title" = "Brzo povezivanje";
-
-/* MacOS app tour: quick connect description */
-"_quick_connect_tour_description" = "Automatski budite povezani na poslužitelj koji će vam pružiti najbržu vezu.";
-
-/* MacOS app tour: profiles title */
-"_profiles_tour_title" = "Profili";
-
-/* MacOS app tour: profiles description */
-"_profiles_tour_description" = "Spremite željene postavke i poslužitelje za buduću upotrebu.";
-
-/* MacOS app tour: countries list title */
-"_countries_tour_title" = "Države";
-
-/* MacOS app tour: countries list description */
-"_countries_tour_description" = "Odaberite državu i poslužitelj koji želite koristiti za vašu krajnju IP adresu.";
-
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "Brze postavke";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "Povećajte svoju sigurnost jednim klikom:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Dodajte još dodatni sloj sigurnosti uz Secure Core.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "Pretražujte Internet slobodno od zlonamjernih programa i oglasa pomoću NetShield-a.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Spriječite da vaša IP adresa bude izložena uključivanjem kill switch.";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Sljedeći savjet";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "Završi obilazak";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Welcome to a better internet";
@@ -1403,15 +1362,6 @@
 "_troubleshoot_item_other_link2" = "e-pošta";
 
 "_troubleshoot_item_other_link3" = "Twitter";
-
-/* iOS settings -> Battery usage; Title of battery usage screen; */
-"_battery_title" = "Potrošnja baterije";
-
-/* Battery usages screen description */
-"_battery_description" = "Sav promet na vašem uređaju će se upravljati putem OpenVPN-a, stoga će iOS dodijeliti potrošnju baterije drugih aplikacija Proton VPN-u.";
-
-/* Battery usage More info button text */
-"_battery_more" = "Želite li saznati više?";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
 "_netshield_stats_data_saved" = "Data\nsaved";
