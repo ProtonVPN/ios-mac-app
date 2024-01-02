@@ -56,7 +56,7 @@
 "_br_failure_button_retry" = "Попробовать снова";
 
 /* ReportBug success window: troubleshoot button */
-"_br_failure_button_troubleshoot" = "Troubleshoot";
+"_br_failure_button_troubleshoot" = "Устранение неполадок";
 
 /* Title of the view nudging users to update before filling Bug Report */
 "_update_view_title" = "Обновить Proton VPN";

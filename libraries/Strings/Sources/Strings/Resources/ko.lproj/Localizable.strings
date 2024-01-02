@@ -312,7 +312,7 @@
 "_changelog" = "변경 내역";
 
 /* MacOS: About window */
-"_acknowledgements" = "승인서";
+"_acknowledgements" = "감사의 인사";
 
 /* Used in sign-in, sign-up and in settings */
 "_username" = "사용자 이름";
@@ -355,6 +355,9 @@
 
 /* MacOS: button in login screen */
 "_forgot_username" = "사용자 이름을 잊으셨나요";
+
+/* MacOS: generic failure message for SSO login */
+"_sso_login_failure" = "SSO를 통한 로그인에 실패했습니다. 다시 시도해 주세요.";
 
 /* iOS: button in login screen */
 "_forgot_password" = "비밀번호를 잊으셨나요?";
@@ -727,7 +730,7 @@
 "_error_hash_password" = "비밀번호를 해싱할 수 없습니다";
 
 /* Error try to restore user from the session */
-"_error_fetch_session" = "세션으로 부터 사용자를 찾을 수 없음";
+"_error_fetch_session" = "세션으로부터 사용자를 찾을 수 없음";
 
 /* Network error */
 "_ne_request_timed_out" = "네트워크 요청 시간 초과됨";
@@ -1129,17 +1132,9 @@
 /* MacOS welcome screen: title */
 "_welcome_title" = "환영합니다!";
 
-/* MacOS welcome screen: description */
-"_welcome_description" = "Proton VPN를 사용해 주셔서 감사합니다. 주요한 앱 기능을 빠르게 살펴봅시다.\n";
-
-/* MacOS welcome screen: cancel button */
 "_no_thanks" = "괜찮습니다";
 
-/* MacOS welcome screen: skip button */
-"_skip" = "건너뛰기";
-
-/* MacOS welcome screen: take a tour button */
-"_take_tour" = "둘러보기";
+"_welcome_description" = "Proton VPN을 사용해 주셔서 감사합니다.";
 
 /* Plus word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "Plus";
@@ -1193,44 +1188,8 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "좋아하는 콘텐츠를 안전하게\n스트리밍 하세요";
 
-/* MacOS app tour: quick connect title */
-"_quick_connect_tour_title" = "빠른 연결";
-
-/* MacOS app tour: quick connect description */
-"_quick_connect_tour_description" = "가장 빠른 연결을 제공하는 서버에 자동으로 연결합니다.";
-
-/* MacOS app tour: profiles title */
-"_profiles_tour_title" = "프로필";
-
-/* MacOS app tour: profiles description */
-"_profiles_tour_description" = "나중에 사용할 수 있도록 원하는 설정과 서버를 저장하세요.";
-
-/* MacOS app tour: countries list title */
-"_countries_tour_title" = "국가";
-
-/* MacOS app tour: countries list description */
-"_countries_tour_description" = "최종 IP 주소에 사용할 국가와 서버를 선택하세요.";
-
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "간편 설정";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "한 번의 클릭으로 보안을 향상하세요:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Secure Core로 보안 층을 하나 더 추가하세요.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "NetShield와 함께 멀웨어 및 광고로 부터 자유롭게 웹을 탐색하세요.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Kill switch를 활성화 하여 IP가 노출되는 것을 방지하세요.";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "다음 팁";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "끝내기";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "더 나은 인터넷에 오신 것을 환영합니다";
@@ -1403,15 +1362,6 @@
 "_troubleshoot_item_other_link2" = "이메일";
 
 "_troubleshoot_item_other_link3" = "Twitter";
-
-/* iOS settings -> Battery usage; Title of battery usage screen; */
-"_battery_title" = "배터리 사용";
-
-/* Battery usages screen description */
-"_battery_description" = "스마트폰의 모든 트래픽이 OpenVPN에 의해 관리됩니다. 따라서 iOS의 다른 앱의 배터리 사용량이 Proton VPN에 할당되게 됩니다.";
-
-/* Battery usage More info button text */
-"_battery_more" = "더 알아보시겠습니까?";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
 "_netshield_stats_data_saved" = "데이터\n절약";
@@ -2021,7 +1971,7 @@
 "modals_no_logs_third_parties" = "우리는 어떠한 데이터를 제 3자에게 제공하지 않습니다";
 
 /* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "Proton VPN의 엄격한 기록이 없는 정책은 외부 심사를 통해 인증되었습니다.";
+"modals_no_logs_external_audit" = "Proton VPN의 엄격한 노-로그 정책은 외부감사를 통해 검증되었습니다.";
 
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "속도에 대한 참고 사항...";
