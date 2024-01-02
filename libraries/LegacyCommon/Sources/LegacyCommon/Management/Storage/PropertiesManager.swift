@@ -265,7 +265,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         guard let username,
               let string = defaults.string(forKey: Keys.telemetryUsageData.rawValue + username),
               let usageData = Bool(string) else {
-            return false // default value for usage data if the user didn't get through the onboarding
+            return true // default value for usage data if the user didn't get through the onboarding
         }
         return usageData
     }

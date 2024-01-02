@@ -84,38 +84,38 @@ extension MacAlertService: CoreAlertService {
             show(refreshTokenExpiredAlert)
 
         case let alert as WelcomeScreenAlert:
-            show(alert: alert, upsellType: welcomeScreenType(plan: alert.plan))
+            show(alert: alert, modalType: welcomeScreenType(plan: alert.plan))
 
         case let alert as AllCountriesUpsellAlert:
             let plus = AccountPlan.plus
             let countriesCount = planService.countriesCount
-            let allCountriesUpsell = UpsellType.allCountries(numberOfServers: plus.serversCount, numberOfCountries: countriesCount)
-            show(alert: alert, upsellType: allCountriesUpsell)
+            let allCountriesUpsell = ModalType.allCountries(numberOfServers: plus.serversCount, numberOfCountries: countriesCount)
+            show(alert: alert, modalType: allCountriesUpsell)
 
         case let alert as ModerateNATUpsellAlert:
-            show(alert: alert, upsellType: .moderateNAT)
+            show(alert: alert, modalType: .moderateNAT)
 
         case let alert as SafeModeUpsellAlert:
-            show(alert: alert, upsellType: .safeMode)
+            show(alert: alert, modalType: .safeMode)
 
         case let alert as SecureCoreUpsellAlert:
-            show(alert: alert, upsellType: .secureCore)
+            show(alert: alert, modalType: .secureCore)
 
         case let alert as NetShieldUpsellAlert:
-            show(alert: alert, upsellType: .netShield)
+            show(alert: alert, modalType: .netShield)
 
         case let alert as ProfilesUpsellAlert:
-            show(alert: alert, upsellType: .profiles)
+            show(alert: alert, modalType: .profiles)
 
         case let alert as VPNAcceleratorUpsellAlert:
-            show(alert: alert, upsellType: .vpnAccelerator)
+            show(alert: alert, modalType: .vpnAccelerator)
 
         case let alert as CustomizationUpsellAlert:
-            show(alert: alert, upsellType: .customization)
+            show(alert: alert, modalType: .customization)
 
         case let alert as CountryUpsellAlert:
             let plus = AccountPlan.plus
-            show(alert: alert, upsellType: .country(countryFlag: alert.countryFlag,
+            show(alert: alert, modalType: .country(countryFlag: alert.countryFlag,
                                                     numberOfDevices: plus.devicesCount,
                                                     numberOfCountries: planService.countriesCount))
 
@@ -239,7 +239,7 @@ extension MacAlertService: CoreAlertService {
         case let alert as ConnectionCooldownAlert:
             show(
                 alert: alert,
-                upsellType: .cantSkip(before: alert.until, duration: alert.duration, longSkip: alert.longSkip)
+                modalType: .cantSkip(before: alert.until, duration: alert.duration, longSkip: alert.longSkip)
             )
 
         case let alert as FreeConnectionsAlert:
@@ -334,7 +334,7 @@ extension MacAlertService: CoreAlertService {
         windowService.presentKeyModal(viewController: connectionTroubleshootingAlert)
     }
 
-    private func show(alert: UpsellAlert, upsellType: UpsellType) {
+    private func show(alert: UpsellAlert, modalType: ModalType) {
         let modalSource = alert.modalSource
 
         let upgradeAction: (() -> Void) = { [weak self] in
@@ -350,7 +350,7 @@ extension MacAlertService: CoreAlertService {
         NotificationCenter.default.post(name: .upsellAlertWasDisplayed, object: modalSource)
 
         let upsellViewController = ModalsFactory.upsellViewController(
-            upsellType: upsellType,
+            modalType: modalType,
             upgradeAction: upgradeAction,
             continueAction: alert.continueAction
         )
@@ -410,7 +410,7 @@ extension MacAlertService: CoreAlertService {
         windowService.presentKeyModal(viewController: upsellViewController)
     }
 
-    private func welcomeScreenType(plan: WelcomeScreenAlert.Plan) -> UpsellType {
+    private func welcomeScreenType(plan: WelcomeScreenAlert.Plan) -> ModalType {
         switch plan {
         case .fallback:
             return .welcomeFallback

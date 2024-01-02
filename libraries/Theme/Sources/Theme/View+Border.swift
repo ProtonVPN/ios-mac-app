@@ -28,6 +28,11 @@ extension View {
             .overlay(rectangle.stroke(color, lineWidth: lineWidth))
     }
 
+    public func clipRectangle(cornerRadius: AppTheme.CornerRadius) -> some View {
+        let rectangle = RoundedRectangle(cornerRadius: cornerRadius.rawValue)
+        return self.clipShape(rectangle)
+    }
+
     public func frame(_ size: AppTheme.IconSize) -> some View {
         return frame(width: size.width, height: size.height)
     }
