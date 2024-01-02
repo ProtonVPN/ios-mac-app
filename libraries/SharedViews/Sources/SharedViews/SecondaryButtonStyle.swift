@@ -1,7 +1,7 @@
 //
-//  Created on 10.01.2022.
+//  Created on 13/12/2023.
 //
-//  Copyright (c) 2022 Proton AG
+//  Copyright (c) 2023 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,21 +16,20 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import UIKit
+import SwiftUI
+import Theme
 
-final class PlanPurchaseViewController: UIViewController {
-    @IBOutlet private weak var planPurchasedButton: UIButton!
+#if canImport(UIKit)
+public struct SecondaryButtonStyle: ButtonStyle {
+    public init() { }
 
-    var completion: OnboardingPlanPurchaseCompletion?
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        planPurchasedButton.accessibilityIdentifier = "PlanPurchaseButton"
-    }
-
-    @IBAction private func planPurchasedTapped(_ sender: Any) {
-        completion?(.planPurchased)
+    public func makeBody(configuration: Configuration) -> some View {
+        configuration
+            .label
+            .foregroundColor(Color(.text, .interactive))
+            .frame(maxWidth: .infinity, minHeight: .themeSpacing32)
+            .font(.body1())
+            .padding(.vertical, .themeSpacing8)
     }
 }
+#endif

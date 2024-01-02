@@ -1,7 +1,7 @@
 //
-//  Created on 10.01.2022.
+//  Created on 14/12/2023.
 //
-//  Copyright (c) 2022 Proton AG
+//  Copyright (c) 2023 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,20 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
 
-final class PlanPurchaseViewController: UIViewController {
-    @IBOutlet private weak var planPurchasedButton: UIButton!
-
-    var completion: OnboardingPlanPurchaseCompletion?
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        planPurchasedButton.accessibilityIdentifier = "PlanPurchaseButton"
-    }
-
-    @IBAction private func planPurchasedTapped(_ sender: Any) {
-        completion?(.planPurchased)
-    }
+public enum Constants {
+    static public let readableContentWidth: CGFloat = 672
 }

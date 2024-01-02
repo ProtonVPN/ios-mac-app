@@ -22,17 +22,17 @@ import UIKit
 
 class ViewController: UITableViewController {
     
-    let upsells: [(type: UpsellType, title: String)] = [
+    let upsells: [(type: ModalType, title: String)] = [
         (.welcomePlus(numberOfServers: 1300, numberOfDevices: 10, numberOfCountries: 61), "Welcome Plus"),
         (.welcomeUnlimited, "Welcome Unlimited"),
         (.welcomeFallback, "Welcome Fallback"),
+        (.welcomeToProton, "Welcome to Proton VPN"),
         (.allCountries(numberOfServers: 1300, numberOfCountries: 61), "All countries"),
         (.country(countryFlag: UIImage(named: "flags_US")!, numberOfDevices: 10, numberOfCountries: 61), "Countries"),
         (.secureCore, "Secure Core"),
         (.netShield, "Net Shield"),
         (.safeMode, "Safe Mode"),
         (.moderateNAT, "Moderate NAT"),
-        (.noLogs, "No Logs"),
         (.vpnAccelerator, "VPN Accelerator"),
         (.customization, "Customization"),
         (.profiles, "Profiles"),
@@ -52,34 +52,45 @@ class ViewController: UITableViewController {
     static let fromServer = ("US-CA#63", UIImage(named: "flags_US")!)
     static let toServer = ("US-CA#78", UIImage(named: "flags_US")!)
 
+    var presentationStyle = UIModalPresentationStyle.fullScreen
+
     let modalsFactory = ModalsFactory()
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        4
+        6
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 1:
-            return upsells.count
+            return 1 // presentation mode
         case 2:
-            return 2
+            return upsells.count
         case 3:
+            return 2 // secure core / free connections
+        case 4:
             return upgrades.count
+        case 5:
+            return 1 // onboarding
         default:
             return 1
         }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ModalPresentationTableViewCell", for: indexPath) as! ModalPresentationTableViewCell
+            cell.delegate = self
+            return cell
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "ModalTableViewCell", for: indexPath)
 
         let title: String
-        if indexPath.section == 0 {
+        if indexPath.section == 1 {
             title = "What's new"
-        } else if indexPath.section == 1 {
-            title = upsells[indexPath.row].title
         } else if indexPath.section == 2 {
+            title = upsells[indexPath.row].title
+        } else if indexPath.section == 3 {
             if indexPath.row == 0 {
                 title = "Discourage Secure Core"
             } else if indexPath.row == 1 {
@@ -87,9 +98,10 @@ class ViewController: UITableViewController {
             } else {
                 title = "-"
             }
-        } else if indexPath.section == 3 {
+        } else if indexPath.section == 4 {
             title = upgrades[indexPath.row].title
-
+        } else if indexPath.section == 5 {
+            title = "Onboarding"
         } else {
             title = ""
         }
@@ -103,21 +115,21 @@ class ViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let viewController: UIViewController
-        if indexPath.section == 0 {
+        if indexPath.section == 1 {
             viewController = modalsFactory.whatsNewViewController()
-        } else if indexPath.section == 1 {
+        } else if indexPath.section == 2 {
             let type = upsells[indexPath.row].type
             switch type {
-            case .welcomeFallback, .welcomeUnlimited, .welcomePlus:
-                viewController = modalsFactory.modalViewController(upsellType: type) {
+            case .welcomeFallback, .welcomeUnlimited, .welcomePlus, .welcomeToProton:
+                viewController = modalsFactory.modalViewController(modalType: type, primaryAction: {
                     self.dismiss(animated: true)
-                }
+                })
             default:
-                let modalVC = modalsFactory.upsellViewController(upsellType: type)
+                let modalVC = modalsFactory.upsellViewController(modalType: type)
                 modalVC.delegate = self
                 viewController = modalVC
             }
-        } else if indexPath.section == 2 {
+        } else if indexPath.section == 3 {
             if indexPath.row == 0 {
                 let modalVC = modalsFactory.discourageSecureCoreViewController(
                     onDontShowAgain: nil,
@@ -142,15 +154,36 @@ class ViewController: UITableViewController {
             } else {
                 fatalError()
             }
-        } else if indexPath.section == 3 {
+        } else if indexPath.section == 4 {
             let modalVC = modalsFactory.userAccountUpdateViewController(viewModel: upgrades[indexPath.row].type,
                                                                         onPrimaryButtonTap: nil)
             viewController = modalVC
+        } else if indexPath.section == 5 {
+            let modalVC = modalsFactory.modalViewController(modalType: .welcomeToProton, primaryAction: {
+                self.pushAllCountries()
+            })
+            let navigationController = UINavigationController(rootViewController: modalVC)
+            navigationController.setNavigationBarHidden(true, animated: false)
+            viewController = navigationController
         } else {
             fatalError()
         }
-
+        viewController.modalPresentationStyle = presentationStyle
         present(viewController, animated: true, completion: nil)
+    }
+
+    func pushAllCountries() {
+        let allCountries = modalsFactory.modalViewController(modalType: .allCountries(numberOfServers: 1800, numberOfCountries: 63), 
+                                                             primaryAction: { self.presentedViewController?.dismiss(animated: true) },
+                                                             dismissAction: { self.presentedViewController?.dismiss(animated: true) })
+
+        (presentedViewController as? UINavigationController)?.pushViewController(allCountries, animated: true)
+    }
+}
+
+extension ViewController: PresentationModeSwitchDelegate {
+    func didTapPresentationModeSwitch(style: UIModalPresentationStyle) {
+        presentationStyle = style
     }
 }
 

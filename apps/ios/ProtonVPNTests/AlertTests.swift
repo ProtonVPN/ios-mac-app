@@ -23,10 +23,10 @@
 import XCTest
 import GSMessages
 import PMLogger
-import Onboarding
 import ProtonCoreNetworking
 import ProtonCoreAccountRecovery
 import SwiftUI
+import Modals_iOS
 @testable import LegacyCommon
 @testable import ProtonVPN
 
@@ -174,8 +174,8 @@ fileprivate class SettingsServiceMock: SettingsService {
     func makeTelemetrySettingsViewController() -> TelemetrySettingsViewController {
         return TelemetrySettingsViewController(preferenceChangeUsageData: { _ in },
                                                preferenceChangeCrashReports: { _ in },
-                                               usageStatisticsOn: true,
-                                               crashReportsOn: true)
+                                               usageStatisticsOn: { true },
+                                               crashReportsOn: { true })
     }
     
     func makeExtensionsSettingsViewController() -> WidgetSettingsViewController {

@@ -55,7 +55,7 @@ public enum Localizable {
   public static var activateWidgetStep3: String { return Localizable.tr("Localizable", "_activate_widget_step_3", fallback: "Add the Proton VPN widget to the list of active widgets.") }
   /// Plan information
   public static var adblockerNetshieldFeature: String { return Localizable.tr("Localizable", "_adblocker_netshield_feature", fallback: "Adblocker (NetShield)") }
-  /// Advanced
+  /// Section title in Settings
   public static var advanced: String { return Localizable.tr("Localizable", "_advanced", fallback: "Advanced") }
   /// Plan information
   public static var advancedFeatures: String { return Localizable.tr("Localizable", "_advanced_features", fallback: "+ Advanced features") }
@@ -189,7 +189,7 @@ public enum Localizable {
   public static var connectionCardConnectingTo: String { return Localizable.tr("Localizable", "_connection_card_connecting_to", fallback: "Connecting to...") }
   /// Connection card in home tab: "Last connected to... <country name>" [Redesign_2023]
   public static var connectionCardLastConnectedTo: String { return Localizable.tr("Localizable", "_connection_card_last_connected_to", fallback: "Last connected to") }
-  /// Browsing safely from
+  /// Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023]
   public static var connectionCardSafelyBrowsingFrom: String { return Localizable.tr("Localizable", "_connection_card_safely_browsing_from", fallback: "Browsing safely from") }
   /// Connection details screen: City (macOS and iOS) [Redesign_2023]
   public static var connectionDetailsCity: String { return Localizable.tr("Localizable", "_connection_details_city", fallback: "City") }
@@ -263,7 +263,7 @@ public enum Localizable {
   public static var countriesFree: String { return Localizable.tr("Localizable", "_countries_free", fallback: "Free countries") }
   /// iOS: countries list section header
   public static var countriesPremium: String { return Localizable.tr("Localizable", "_countries_premium", fallback: "Premium countries") }
-  /// Countries
+  /// Countries tab in bottom menu [Redesign_2023]
   public static var countriesTab: String { return Localizable.tr("Localizable", "_countries_tab", fallback: "Countries") }
   /// Profile create/edit menu
   public static var country: String { return Localizable.tr("Localizable", "_country", fallback: "Country") }
@@ -329,8 +329,6 @@ public enum Localizable {
   public static var disconnected: String { return Localizable.tr("Localizable", "_disconnected", fallback: "Disconnected") }
   /// Status of VPN connection reported by Siri
   public static var disconnecting: String { return Localizable.tr("Localizable", "_disconnecting", fallback: "Disconnecting") }
-  /// iOS onboarding button to check app without logging in
-  public static var discoverTheApp: String { return Localizable.tr("Localizable", "_discover_the_app", fallback: "Discover the app") }
   /// MacOS: Settings -> Connection: name of field.
   public static var dnsLeakProtection: String { return Localizable.tr("Localizable", "_dns_leak_protection", fallback: "DNS Leak Protection") }
   /// MacOS: Settings -> Connection: description.
@@ -349,6 +347,8 @@ public enum Localizable {
   public static var edit: String { return Localizable.tr("Localizable", "_edit", fallback: "Edit") }
   /// Common word
   public static var enabled: String { return Localizable.tr("Localizable", "_enabled", fallback: "Enabled") }
+  /// MacOS app tour: end tour button
+  public static var endTour: String { return Localizable.tr("Localizable", "_end_tour", fallback: "End Tour") }
   /// iOS: placeholder for email field in signup and email verification screens
   public static var enterEmailAddress: String { return Localizable.tr("Localizable", "_enter_email_address", fallback: "Enter email address") }
   /// Profile create/change form
@@ -441,10 +441,6 @@ public enum Localizable {
   public static var fastestConnection: String { return Localizable.tr("Localizable", "_fastest_connection", fallback: "Fastest") }
   /// Feature
   public static var feature: String { return Localizable.tr("Localizable", "_feature", fallback: "Feature") }
-  /// iOS plan feature
-  public static var featureBlockedContent: String { return Localizable.tr("Localizable", "_feature_blocked_content", fallback: "Access blocked content") }
-  /// BitTorrent/file-sharing support
-  public static var featureBt: String { return Localizable.tr("Localizable", "_feature_bt", fallback: "BitTorrent/file-sharing support") }
   /// iOS plan feature
   public static var featureConnections: String { return Localizable.tr("Localizable", "_feature_connections", fallback: "Simultaneous VPN connections") }
   /// Free servers
@@ -540,15 +536,15 @@ public enum Localizable {
   public static var homeRecentsRecentSection: String { return Localizable.tr("Localizable", "_home_recents_recent_section", fallback: "Recents") }
   /// Tooltip text presented on hover over one of the recent connections items. [Redesign_2023]
   public static var homeRecentsServerUnderMaintenance: String { return Localizable.tr("Localizable", "_home_recents_server_under_maintenance", fallback: "Server under maintenance") }
-  /// Home
+  /// Home tab in bottom menu [Redesign_2023]
   public static var homeTab: String { return Localizable.tr("Localizable", "_home_tab", fallback: "Home") }
-  /// The VPN is disconnected. Connect to a server to securely browse the internet.
+  /// The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023]
   public static var homeUnprotectedAccessibilityHint: String { return Localizable.tr("Localizable", "_home_unprotected_accessibility_hint", fallback: "The VPN is disconnected. Connect to a server to securely browse the internet.") }
-  /// You are browsing unprotected from %@.
+  /// The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023]
   public static func homeUnprotectedAccessibilityLabel(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_home_unprotected_accessibility_label", String(describing: p1), fallback: "You are browsing unprotected from %@.")
   }
-  /// You are unprotected
+  /// The header shown at the top of the application in the home tab when the VPN is not connected to any server. [Redesign_2023]
   public static var homeUnprotectedHeader: String { return Localizable.tr("Localizable", "_home_unprotected_header", fallback: "You are unprotected") }
   /// Button in Kill switch error alert
   public static var ignore: String { return Localizable.tr("Localizable", "_ignore", fallback: "Ignore") }
@@ -560,18 +556,6 @@ public enum Localizable {
   public static var initializingConnection: String { return Localizable.tr("Localizable", "_initializing_connection", fallback: "Initializing Connection...") }
   /// It's been a while since you last used the Proton VPN app. Please log back in.
   public static var invalidRefreshTokenPleaseLogin: String { return Localizable.tr("Localizable", "_invalid_refresh_token_please_login", fallback: "It's been a while since you last used the Proton VPN app. Please log back in.") }
-  /// iOS onboarding texts
-  public static var iosOnboardingPage1Description: String { return Localizable.tr("Localizable", "_ios_onboarding_page1_description", fallback: "From the scientists and engineers that created Proton Mail, welcome to a more secure and private internet.") }
-  /// iOS onboarding texts
-  public static var iosOnboardingPage1Title: String { return Localizable.tr("Localizable", "_ios_onboarding_page1_title", fallback: "Welcome to a better internet") }
-  /// iOS onboarding texts
-  public static var iosOnboardingPage2Description: String { return Localizable.tr("Localizable", "_ios_onboarding_page2_description", fallback: "Beat censorship and regional restrictions. We have no ads, no bandwidth limits, and don’t sell your data.") }
-  /// iOS onboarding texts
-  public static var iosOnboardingPage2Title: String { return Localizable.tr("Localizable", "_ios_onboarding_page2_title", fallback: "We believe the internet should be free") }
-  /// iOS onboarding texts
-  public static var iosOnboardingPage3Description: String { return Localizable.tr("Localizable", "_ios_onboarding_page3_description", fallback: "We are a security company. Whether it is our Secure Core architecture or advanced encryption, security always comes first.") }
-  /// iOS onboarding texts
-  public static var iosOnboardingPage3Title: String { return Localizable.tr("Localizable", "_ios_onboarding_page3_title", fallback: "Your security is our priority") }
   /// iOS: Status view
   public static var ip: String { return Localizable.tr("Localizable", "_ip", fallback: "IP") }
   /// %@ is an IP address e.g. IP: 123.45.67.890
@@ -698,16 +682,15 @@ public enum Localizable {
   public static var menuShowAll: String { return Localizable.tr("Localizable", "_menu_show_all", fallback: "Show All") }
   /// Main mac app menu item
   public static var menuWindow: String { return Localizable.tr("Localizable", "_menu_window", fallback: "Window") }
-  /// Enable Moderate NAT
+  /// Title for alert shown when enabling Moderate NAT requires reconnection
   public static var moderateNatChangeTitle: String { return Localizable.tr("Localizable", "_moderate_nat_change_title", fallback: "Enable Moderate NAT") }
-  /// Enable Moderate NAT
+  /// Title for alert shown when enabling Moderate NAT requires reconnection
   public static var moderateNatEnableTitle: String { return Localizable.tr("Localizable", "_moderate_nat_enable_title", fallback: "Enable Moderate NAT") }
-  /// Moderate NAT disables randomization of local address mapping. This can slightly reduce your security, but allows peer-to-peer applications such as online games to establish direct connections. 
-  /// Learn more
+  /// Explanation for the Moderate NAT feature shown next to the feature in Settings
   public static var moderateNatExplanation: String { return Localizable.tr("Localizable", "_moderate_nat_explanation", fallback: "Moderate NAT disables randomization of local address mapping. This can slightly reduce your security, but allows peer-to-peer applications such as online games to establish direct connections. \nLearn more") }
-  /// Learn more
+  /// Link at the end of Moderate NAT feature explanation. Must match the explanation value
   public static var moderateNatExplanationLink: String { return Localizable.tr("Localizable", "_moderate_nat_explanation_link", fallback: "Learn more") }
-  /// Moderate NAT
+  /// Moderate NAT feature title in Settings
   public static var moderateNatTitle: String { return Localizable.tr("Localizable", "_moderate_nat_title", fallback: "Moderate NAT") }
   /// Display more information
   public static var moreInfo: String { return Localizable.tr("Localizable", "_more_info", fallback: "Learn more") }
@@ -757,9 +740,9 @@ public enum Localizable {
   /// 
   /// Your device has a T2 Security Chip, which can result in system stability issues if the kill switch functionality of macOS is used by Proton VPN.
   public static var neksT2Description: String { return Localizable.tr("Localizable", "_neks_t2_description", fallback: "The use of kill switch is unstable on this device.\n\nYour device has a T2 Security Chip, which can result in system stability issues if the kill switch functionality of macOS is used by Proton VPN.") }
-  /// T2 Security Chip
+  /// `_neks_t2_description' localized string.
   public static var neksT2Hyperlink: String { return Localizable.tr("Localizable", "_neks_t2_hyperlink", fallback: "T2 Security Chip") }
-  /// Kill switch Stability Warning
+  /// NetworkExtension + KillSwitch on T2 Macs
   public static var neksT2Title: String { return Localizable.tr("Localizable", "_neks_t2_title", fallback: "Kill switch Stability Warning") }
   /// Your connection will be restarted to change the NetShield mode.
   public static var netshieldAlertReconnectDescriptionOff: String { return Localizable.tr("Localizable", "_netshield_alert_reconnect_description_off", fallback: "Your connection will be restarted to change the NetShield mode.") }
@@ -833,22 +816,21 @@ public enum Localizable {
   public static var networkUnreachable: String { return Localizable.tr("Localizable", "_network_unreachable", fallback: "Network Unreachable") }
   /// Title of the screen with news and offers.
   public static var newsTitle: String { return Localizable.tr("Localizable", "_news_title", fallback: "News") }
-  /// iOS onboarding next item button
-  public static var next: String { return Localizable.tr("Localizable", "_next", fallback: "Next") }
+  /// MacOS app tour: next tip button
+  public static var nextTip: String { return Localizable.tr("Localizable", "_next_tip", fallback: "Next Tip") }
   /// Text used when no active server information is available
   public static var noDescriptionAvailable: String { return Localizable.tr("Localizable", "_no_description_available", fallback: "No description available") }
   /// There are currently no servers to show here.
   public static var noServersToShow: String { return Localizable.tr("Localizable", "_no_servers_to_show", fallback: "There are currently no servers to show here.") }
   /// No thanks
   public static var noThanks: String { return Localizable.tr("Localizable", "_no_thanks", fallback: "No thanks") }
-  /// Enable Non-standard ports
+  /// Title for alert shown when enabling Non-standard ports requires reconnection
   public static var nonStandardPortsChangeTitle: String { return Localizable.tr("Localizable", "_non_standard_ports_change_title", fallback: "Enable Non-standard ports") }
-  /// Use Proton VPN for any special need by allowing traffic to non-standard ports through the VPN network. 
-  /// Learn more
+  /// Explanation for the Non-standard ports feature shown next to the feature in Settings
   public static var nonStandardPortsExplanation: String { return Localizable.tr("Localizable", "_non_standard_ports_explanation", fallback: "Use Proton VPN for any special need by allowing traffic to non-standard ports through the VPN network. \nLearn more") }
-  /// Learn more
+  /// Link at the end of Non-standard ports feature explanation. Must match the explanation value
   public static var nonStandardPortsExplanationLink: String { return Localizable.tr("Localizable", "_non_standard_ports_explanation_link", fallback: "Learn more") }
-  /// Non-standard ports
+  /// Non-standard ports feature title in Settings
   public static var nonStandardPortsTitle: String { return Localizable.tr("Localizable", "_non_standard_ports_title", fallback: "Non-standard ports") }
   /// iOS: connection bar; Main mac app menu item;
   public static var notConnected: String { return Localizable.tr("Localizable", "_not_connected", fallback: "Not Connected") }
@@ -860,9 +842,9 @@ public enum Localizable {
   public static var ok: String { return Localizable.tr("Localizable", "_ok", fallback: "OK") }
   /// MacOS: voice over indication for a country or server on maintenance
   public static var onMaintenance: String { return Localizable.tr("Localizable", "_on_maintenance", fallback: "On maintenance") }
-  /// Share anonymous crash reports. This helps us fix bugs, detect firewalls, and avoid VPN blocks.
+  /// Telemetry label in the onboarding screen for mac next to a toggle
   public static var onboardingMacCrashReports: String { return Localizable.tr("Localizable", "_onboarding_mac_crash_reports", fallback: "Share anonymous crash reports. This helps us fix bugs, detect firewalls, and avoid VPN blocks.") }
-  /// Share anonymous usage statistics. This helps us overcome VPN blocks and improve app performance.
+  /// Telemetry label in the onboarding screen for mac next to a toggle
   public static var onboardingMacUsageStats: String { return Localizable.tr("Localizable", "_onboarding_mac_usage_stats", fallback: "Share anonymous usage statistics. This helps us overcome VPN blocks and improve app performance.") }
   /// Main mac app menu item
   public static var openAppToLogIn: String { return Localizable.tr("Localizable", "_open_app_to_log_in", fallback: "Show Proton VPN to sign in...") }
@@ -1002,6 +984,14 @@ public enum Localizable {
   public static var quickSettingsSecureCoreDescription: String { return Localizable.tr("Localizable", "_quick_settings_secureCore_description", fallback: "Route your most sensitive data through our safest servers in privacy-friendly countries.") }
   /// Secure Core may reduce VPN speed
   public static var quickSettingsSecureCoreNote: String { return Localizable.tr("Localizable", "_quick_settings_secureCore_note", fallback: "Secure Core may reduce VPN speed") }
+  /// MacOS app tour: quick settings description
+  public static var quickSettingsTourDescription: String { return Localizable.tr("Localizable", "_quick_settings_tour_description", fallback: "Increase your security with one click:") }
+  /// MacOS app tour: quick settings secure core
+  public static var quickSettingsTourFeature1: String { return Localizable.tr("Localizable", "_quick_settings_tour_feature_1", fallback: "Add one extra layer of security with Secure Core.") }
+  /// MacOS app tour: quick settings net shield
+  public static var quickSettingsTourFeature2: String { return Localizable.tr("Localizable", "_quick_settings_tour_feature_2", fallback: "Surf the web freely from malware and ads with NetShield.") }
+  /// MacOS app tour: quick settings kill switch
+  public static var quickSettingsTourFeature3: String { return Localizable.tr("Localizable", "_quick_settings_tour_feature_3", fallback: "Prevent your IP to be exposed by turning on kill switch.") }
   /// MacOS app tour: quick settings title
   public static var quickSettingsTourTitle: String { return Localizable.tr("Localizable", "_quick_settings_tour_title", fallback: "Quick Settings") }
   /// MacOS: quit application button in custom status menu
@@ -1178,15 +1168,15 @@ public enum Localizable {
   public static var settingsKillswitchOff: String { return Localizable.tr("Localizable", "_settings_killswitch_off", fallback: "Off") }
   /// Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023]
   public static var settingsKillswitchOn: String { return Localizable.tr("Localizable", "_settings_killswitch_on", fallback: "On") }
-  /// Share anonymous crash reports
+  /// Telemetry label in the settings window for mac
   public static var settingsMacCrashReportsTitle: String { return Localizable.tr("Localizable", "_settings_mac_crash_reports_title", fallback: "Share anonymous crash reports") }
-  /// Crash reports help us fix bugs, detect firewalls, and avoid VPN blocks.
+  /// Telemetry tooltip in the settings window for mac
   public static var settingsMacCrashReportsTooltip: String { return Localizable.tr("Localizable", "_settings_mac_crash_reports_tooltip", fallback: "Crash reports help us fix bugs, detect firewalls, and avoid VPN blocks.") }
-  /// Learn more
+  /// Clickable label title in the onboarding screen for mac
   public static var settingsMacTelemetryLearnMore: String { return Localizable.tr("Localizable", "_settings_mac_telemetry_learn_more", fallback: "Learn more") }
-  /// Share anonymous usage statistics
+  /// Telemetry label in the settings window for mac
   public static var settingsMacUsageStatsTitle: String { return Localizable.tr("Localizable", "_settings_mac_usage_stats_title", fallback: "Share anonymous usage statistics") }
-  /// Usage data helps us overcome VPN blocks and improve app performance.
+  /// Telemetry tooltip in the settings window for mac
   public static var settingsMacUsageStatsTooltip: String { return Localizable.tr("Localizable", "_settings_mac_usage_stats_tooltip", fallback: "Usage data helps us overcome VPN blocks and improve app performance.") }
   /// Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023]
   public static var settingsNetshieldOff: String { return Localizable.tr("Localizable", "_settings_netshield_off", fallback: "Off") }
@@ -1236,7 +1226,7 @@ public enum Localizable {
   public static var settingsSectionTitleImproveProton: String { return Localizable.tr("Localizable", "_settings_section_title_improve_proton", fallback: "Improve Proton") }
   /// Title of the 'Support' section in the Settings tab [Redesign_2023]
   public static var settingsSectionTitleSupport: String { return Localizable.tr("Localizable", "_settings_section_title_support", fallback: "Support") }
-  /// Settings
+  /// Settings tab in bottom menu [Redesign_2023]
   public static var settingsTab: String { return Localizable.tr("Localizable", "_settings_tab", fallback: "Settings") }
   /// Represents a value of Auto for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme [Redesign_2023]
   public static var settingsThemeLabelAuto: String { return Localizable.tr("Localizable", "_settings_theme_label_auto", fallback: "Auto*") }
@@ -1631,7 +1621,7 @@ public enum Localizable {
   public static var welcomeHeadline: String { return Localizable.tr("Localizable", "_welcome_headline", fallback: "Protect yourself online") }
   /// MacOS welcome screen: title
   public static var welcomeTitle: String { return Localizable.tr("Localizable", "_welcome_title", fallback: "WELCOME ON BOARD!") }
-  /// Disable kill switch
+  /// Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below
   public static var wgksKsOff: String { return Localizable.tr("Localizable", "_wgks_ks_off", fallback: "Disable kill switch") }
   /// iOS: 1. Menu point in settings screen. 2. Widget description screen title.
   public static var widget: String { return Localizable.tr("Localizable", "_widget", fallback: "iOS Widget") }
@@ -1649,9 +1639,9 @@ public enum Localizable {
   public static var wrongCountryBannerTitle: String { return Localizable.tr("Localizable", "_wrong_country_banner_title", fallback: "Not the country you wanted?") }
   /// MacOS: text in main window
   public static var youAreNotConnected: String { return Localizable.tr("Localizable", "_you_are_not_connected", fallback: "You are not connected") }
-  /// Apply
+  /// Button to apply coupon
   public static var applyCoupon: String { return Localizable.tr("Localizable", "apply_coupon", fallback: "Apply") }
-  /// Authenticate
+  /// Button to confirm two-factor or recovery code in login
   public static var authenticate: String { return Localizable.tr("Localizable", "authenticate", fallback: "Authenticate") }
   /// Connection status title when user is connected to a VPN [Redesign_2023]
   public static var connectionStatusProtected: String { return Localizable.tr("Localizable", "connection_status_protected", fallback: "Protected") }
@@ -1659,11 +1649,11 @@ public enum Localizable {
   public static var connectionStatusProtecting: String { return Localizable.tr("Localizable", "connection_status_protecting", fallback: "Protecting your digital identity") }
   /// Connection status title when user is not connected to a VPN [Redesign_2023]
   public static var connectionStatusUnprotected: String { return Localizable.tr("Localizable", "connection_status_unprotected", fallback: "You are unprotected") }
-  /// Coupon has been applied successfully.
+  /// Banner shown after coupon is applied
   public static var couponApplied: String { return Localizable.tr("Localizable", "coupon_applied", fallback: "Coupon has been applied successfully.") }
-  /// Coupon has been applied successfully. Your subscription will be upgraded within a few minutes.
+  /// Banner shown after coupon is applied but the plan is not yet upgraded
   public static var couponAppliedPlanNotUpgradedYet: String { return Localizable.tr("Localizable", "coupon_applied_plan_not_upgraded_yet", fallback: "Coupon has been applied successfully. Your subscription will be upgraded within a few minutes.") }
-  /// Coupon code
+  /// Title of the screen to apply a coupon
   public static var couponCode: String { return Localizable.tr("Localizable", "coupon_code", fallback: "Coupon code") }
   /// Modal that lists countries in which servers are available to free users: banner with CTA
   public static var freeConnectionsModalBanner: String { return Localizable.tr("Localizable", "free_connections_modal_banner", fallback: "Get worldwide coverage with VPN Plus") }
@@ -1679,7 +1669,7 @@ public enum Localizable {
   public static var loginFetchVpnData: String { return Localizable.tr("Localizable", "login_fetch_vpn_data", fallback: "Configuring your VPN access") }
   /// Start using Proton VPN
   public static var loginSummaryButton: String { return Localizable.tr("Localizable", "login_summary_button", fallback: "Start using Proton VPN") }
-  /// Invalid login method. Please contact support.
+  /// Error message shown when tryng to log in with an unsupported method
   public static var loginUnsupportedState: String { return Localizable.tr("Localizable", "login_unsupported_state", fallback: "Invalid login method. Please contact support.") }
   /// Description of user account update screen
   public static var maximumDeviceLimit: String { return Localizable.tr("Localizable", "maximum_device_limit", fallback: "Please disconnect another device to connect to this one.") }
@@ -1713,16 +1703,6 @@ public enum Localizable {
   public static var modalsGetPlus: String { return Localizable.tr("Localizable", "modals_get_plus", fallback: "Upgrade") }
   /// Description of the first section of the "What's new" screen
   public static var modalsNewServers: String { return Localizable.tr("Localizable", "modals_new_servers", fallback: "There are now Free servers in Poland and Romania.") }
-  /// Learn more of the No Logs screen
-  public static var modalsNoLogsExternalAudit: String { return Localizable.tr("Localizable", "modals_no_logs_external_audit", fallback: "Proton VPN's strict no-log policy is certified by an external audit.") }
-  /// Feature of the No Logs screen
-  public static var modalsNoLogsLogActivity: String { return Localizable.tr("Localizable", "modals_no_logs_log_activity", fallback: "We do not log your internet activity") }
-  /// Feature of the No Logs screen
-  public static var modalsNoLogsPrivacyFirst: String { return Localizable.tr("Localizable", "modals_no_logs_privacy_first", fallback: "Proton VPN is privacy first") }
-  /// Feature of the No Logs screen
-  public static var modalsNoLogsThirdParties: String { return Localizable.tr("Localizable", "modals_no_logs_third_parties", fallback: "We do not share any data with third parties") }
-  /// Title of the No Logs screen
-  public static var modalsNoLogsTitle: String { return Localizable.tr("Localizable", "modals_no_logs_title", fallback: "No logs and Swiss-based") }
   /// Description of the second section of the "What's new" screen
   public static var modalsServerCrowding: String { return Localizable.tr("Localizable", "modals_server_crowding", fallback: "To prevent server crowding and ensure that everyone has access to fast and secure browsing, we removed manual country selection and made major improvements to automatic server selection.") }
   /// Title of the second section of the "What's new" screen
@@ -1789,9 +1769,21 @@ public enum Localizable {
   public static var newPlansBrandSubtitle: String { return Localizable.tr("Localizable", "new_plans_brand_subtitle", fallback: "Introducing Proton’s refreshed look.\nMany services, one mission. Welcome to an internet where privacy is the default.") }
   /// Title of the New Brand screen
   public static var newPlansBrandTitle: String { return Localizable.tr("Localizable", "new_plans_brand_title", fallback: "Updated Proton, unified protection") }
-  /// The Proton VPN website might be temporarily unreachable due to network restrictions. Please use the mobile app to create a new Proton account.
+  /// Crash reports help us fix bugs, detect firewalls, and avoid VPN blocks.
+  public static var onboardingCrashReportsDescription: String { return Localizable.tr("Localizable", "onboarding_crash_reports_description", fallback: "Crash reports help us fix bugs, detect firewalls, and avoid VPN blocks.") }
+  /// Share anonymous crash reports
+  public static var onboardingCrashReportsTitle: String { return Localizable.tr("Localizable", "onboarding_crash_reports_title", fallback: "Share anonymous crash reports") }
+  /// These statistics do not contain your IP address, and they cannot be used to identify you. We'll never share them with third parties.
+  public static var onboardingFooter: String { return Localizable.tr("Localizable", "onboarding_footer", fallback: "These statistics do not contain your IP address, and they cannot be used to identify you. We'll never share them with third parties.") }
+  /// Learn more
+  public static var onboardingFooterLearnMore: String { return Localizable.tr("Localizable", "onboarding_footer_learn_more", fallback: "Learn more") }
+  /// Usage data helps us overcome VPN blocks and improve app performance.
+  public static var onboardingUsageStatsDescription: String { return Localizable.tr("Localizable", "onboarding_usage_stats_description", fallback: "Usage data helps us overcome VPN blocks and improve app performance.") }
+  /// Share anonymous usage statistics
+  public static var onboardingUsageStatsTitle: String { return Localizable.tr("Localizable", "onboarding_usage_stats_title", fallback: "Share anonymous usage statistics") }
+  /// Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable
   public static var protonWebsiteUnreachable: String { return Localizable.tr("Localizable", "proton_website_unreachable", fallback: "The Proton VPN website might be temporarily unreachable due to network restrictions. Please use the mobile app to create a new Proton account.") }
-  /// Recovery code
+  /// Placeholder for the Recovery code text field
   public static var recoveryCode: String { return Localizable.tr("Localizable", "recovery_code", fallback: "Recovery code") }
   /// Placeholder text showing in the search bar on the search screen
   public static var searchBarPlaceholder: String { return Localizable.tr("Localizable", "search_bar_placeholder", fallback: "Country, City or Server") }
@@ -1849,9 +1841,9 @@ public enum Localizable {
   public static func subscriptionUpgradeOption2(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "subscription_upgrade_option2", p1, fallback: "Plural format key: \"Connect up to %#@num_devices@ at the same time\"")
   }
-  /// Two-factor authentication
+  /// Title for the Two-factor authentication screen
   public static var twoFactorAuthentication: String { return Localizable.tr("Localizable", "two_factor_authentication", fallback: "Two-factor authentication") }
-  /// Two-factor code
+  /// Placeholder for the Two Factor text field
   public static var twoFactorCode: String { return Localizable.tr("Localizable", "two_factor_code", fallback: "Two-factor code") }
   /// Feature of Countries upsell modal
   public static var upsellCountriesAnyLocation: String { return Localizable.tr("Localizable", "upsell_countries_any_location", fallback: "Choose any location") }
@@ -1917,13 +1909,13 @@ public enum Localizable {
   public static var upsellVpnAcceleratorIncreaseConnectionSpeedsBold: String { return Localizable.tr("Localizable", "upsell_vpn_accelerator_increase_connection_speeds_bold", fallback: "VPN Accelerator.") }
   /// Title of VPN Accelerator upsell modal
   public static var upsellVpnAcceleratorTitle: String { return Localizable.tr("Localizable", "upsell_vpn_accelerator_title", fallback: "Browse at even higher speeds (up to 10 Gbps)") }
-  /// Use coupon
+  /// Title of the Use coupon button in Settings
   public static var useCoupon: String { return Localizable.tr("Localizable", "use_coupon", fallback: "Use coupon") }
-  /// Use recovery code
+  /// Title for the button to switch to entering recovery code
   public static var useRecoveryCode: String { return Localizable.tr("Localizable", "use_recovery_code", fallback: "Use recovery code") }
-  /// Use two-factor code
+  /// Title for the button to switch to entering two-factor code
   public static var useTwoFactorCode: String { return Localizable.tr("Localizable", "use_two_factor_code", fallback: "Use two-factor code") }
-  /// %@ setting could not be changed. Please try again later or connect to a different server
+  /// Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment
   public static func vpnFeatureCannotBeSetError(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "vpn_feature_cannot_be_set_error", String(describing: p1), fallback: "%@ setting could not be changed. Please try again later or connect to a different server")
   }
@@ -1935,6 +1927,14 @@ public enum Localizable {
   public static func welcomeScreenFeatureServersCountries(_ p1: Int, _ p2: Int) -> String {
     return Localizable.tr("Localizable", "welcome_screen_feature_servers_countries", p1, p2, fallback: "Plural format key: \"%#@num_servers@ in %#@num_countries@\"")
   }
+  /// Welcome to Proton screen shown during onboarding. Banner subtitle label.
+  public static var welcomeToProtonBannerSubtitle: String { return Localizable.tr("Localizable", "welcome_to_proton_banner_subtitle", fallback: "Your VPN activity is protected by Swiss privacy laws. We’ll never track you online or share your information with third parties.") }
+  /// Welcome to Proton screen shown during onboarding. Banner title label.
+  public static var welcomeToProtonBannerTitle: String { return Localizable.tr("Localizable", "welcome_to_proton_banner_title", fallback: "Certified no-logs VPN") }
+  /// Welcome to Proton screen shown during onboarding. Subtitle label.
+  public static var welcomeToProtonSubtitle: String { return Localizable.tr("Localizable", "welcome_to_proton_subtitle", fallback: "Browse privately, access blocked content, and enjoy digital freedom.") }
+  /// Welcome to Proton screen shown during onboarding. Title label.
+  public static var welcomeToProtonTitle: String { return Localizable.tr("Localizable", "welcome_to_proton_title", fallback: "Welcome to Proton VPN") }
   /// The name of one of the features in the Welcome screen that the user sees after upgrading
   public static var welcomeUpgradeAdvancedFeatures: String { return Localizable.tr("Localizable", "welcome_upgrade_advanced_features", fallback: "Advanced security features") }
   /// The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan

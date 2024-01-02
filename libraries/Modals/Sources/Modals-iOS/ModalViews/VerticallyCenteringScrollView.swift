@@ -1,7 +1,7 @@
 //
-//  Created on 10.01.2022.
+//  Created on 13/12/2023.
 //
-//  Copyright (c) 2022 Proton AG
+//  Copyright (c) 2023 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,21 +16,19 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import UIKit
+import SwiftUI
 
-final class PlanPurchaseViewController: UIViewController {
-    @IBOutlet private weak var planPurchasedButton: UIButton!
+/// Vertical scroll view with content centred vertically
+struct VerticallyCenteringScrollView<Content>: View where Content: View {
+    @ViewBuilder let content: Content
 
-    var completion: OnboardingPlanPurchaseCompletion?
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        planPurchasedButton.accessibilityIdentifier = "PlanPurchaseButton"
-    }
-
-    @IBAction private func planPurchasedTapped(_ sender: Any) {
-        completion?(.planPurchased)
+    var body: some View {
+        GeometryReader { geometry in
+            ScrollView(.vertical, showsIndicators: false) {
+                content
+                    .frame(width: geometry.size.width)
+                    .frame(minHeight: geometry.size.height)
+            }
+        }
     }
 }

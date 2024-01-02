@@ -24,7 +24,6 @@ public typealias AssetImageTypeAlias = ImageAsset.Image
 public enum Asset {
   public static let flatIllustration = ImageAsset(name: "Flat illustration")
   public static let moderateNAT = ImageAsset(name: "ModerateNAT")
-  public static let noLogs = ImageAsset(name: "NoLogs")
   public static let plusCountries = ImageAsset(name: "PlusCountries")
   public static let safeMode = ImageAsset(name: "SafeMode")
   public static let secureCore = ImageAsset(name: "SecureCore")
@@ -32,12 +31,14 @@ public enum Asset {
   public static let welcomeFallback = ImageAsset(name: "WelcomeFallback")
   public static let welcomePlus = ImageAsset(name: "WelcomePlus")
   public static let welcomeUnlimited = ImageAsset(name: "WelcomeUnlimited")
+  public static let bannerIcon = ImageAsset(name: "bannerIcon")
   public static let customisation = ImageAsset(name: "customisation")
   public static let maximumDeviceLimitUpsell = ImageAsset(name: "maximum-device-limit-upsell")
   public static let maximumDeviceLimitWarning = ImageAsset(name: "maximum-device-limit-warning")
   public static let netshield = ImageAsset(name: "netshield")
   public static let profiles = ImageAsset(name: "profiles")
   public static let speed = ImageAsset(name: "speed")
+  public static let welcome = ImageAsset(name: "welcome")
   public static let worldwideCoverage = ImageAsset(name: "worldwide-coverage")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name

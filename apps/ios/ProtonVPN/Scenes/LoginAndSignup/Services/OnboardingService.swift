@@ -17,14 +17,15 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Onboarding
 import UIKit
 import LegacyCommon
 import LocalFeatureFlags
 import VPNShared
+import Modals
+import Modals_iOS
 
 protocol OnboardingServiceFactory: AnyObject {
-    func makeOnboardingService(vpnGateway: VpnGatewayProtocol) -> OnboardingService
+    func makeOnboardingService() -> OnboardingService
 }
 
 protocol OnboardingServiceDelegate: AnyObject {
@@ -38,76 +39,55 @@ protocol OnboardingService: AnyObject {
 }
 
 final class OnboardingModuleService {
-    typealias Factory = WindowServiceFactory
-        & VpnGatewayFactory
-        & AppStateManagerFactory
-        & PlanServiceFactory
-        & TelemetrySettingsFactory
+    typealias Factory = WindowServiceFactory & PlanServiceFactory
 
     private let windowService: WindowService
-    private let vpnGateway: VpnGatewayProtocol
-    private let appStateManager: AppStateManager
     private let planService: PlanService
-    private let telemetrySettings: TelemetrySettings
-
-    private var onboardingCoordinator: OnboardingCoordinator
-    private var completion: OnboardingConnectionRequestCompletion?
 
     weak var delegate: OnboardingServiceDelegate?
 
-    init(factory: Factory, vpnGateway: VpnGatewayProtocol) {
+    init(factory: Factory) {
         windowService = factory.makeWindowService()
-        appStateManager = factory.makeAppStateManager()
         planService = factory.makePlanService()
-        telemetrySettings = factory.makeTelemetrySettings()
-        self.vpnGateway = vpnGateway
-
-        let telemetry = LocalFeatureFlags.isEnabled(TelemetryFeature.telemetryOptIn)
-        let onboardingConfiguration = Configuration(telemetryEnabled: telemetry)
-        onboardingCoordinator = OnboardingCoordinator(configuration: onboardingConfiguration)
-        onboardingCoordinator.delegate = self
-
-        NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: .AppStateManager.displayStateChange, object: nil)
-    }
-
-    @objc private func connectionChanged(_ notification: NSNotification) {
-        switch appStateManager.displayState {
-        case .connected:
-            guard let connection = appStateManager.activeConnection() else {
-                return
-            }
-
-            log.debug("Onboarding VPN connection successful", category: .app)
-            completion?(Country(name: connection.server.country, flag: UIImage.flag(countryCode: connection.server.countryCode)))
-            completion = nil
-        case .disconnected:
-            log.error("Onboarding VPN connection failed", category: .app)
-            completion?(nil)
-            completion = nil
-        default:
-            break
-        }
     }
 }
 
 extension OnboardingModuleService: OnboardingService {
     func showOnboarding() {
         log.debug("Starting onboarding", category: .app)
-        let viewController = onboardingCoordinator.start()
-        windowService.show(viewController: viewController)
+        let navigationController = UINavigationController(rootViewController: welcomeToProtonViewController())
+        navigationController.setNavigationBarHidden(true, animated: false)
+        windowService.show(viewController: navigationController)
+    }
+
+    private func welcomeToProtonViewController() -> UIViewController {
+        ModalsFactory().modalViewController(modalType: .welcomeToProton, primaryAction: {
+            self.windowService.addToStack(self.allCountriesUpsellViewController(),
+                                          checkForDuplicates: false)
+        })
+    }
+
+    private func allCountriesUpsellViewController() -> UIViewController {
+        let serversCount = AccountPlan.plus.serversCount
+        let countriesCount = self.planService.countriesCount
+        let allCountriesUpsell: ModalType = .allCountries(numberOfServers: serversCount, numberOfCountries: countriesCount)
+        return ModalsFactory().modalViewController(modalType: allCountriesUpsell) {
+            self.userDidRequestPlanPurchase { action in
+                switch action {
+                case .planPurchased:
+                    self.onboardingCoordinatorDidFinish()
+                case .planPurchaseViewControllerReady(let viewController):
+                    self.windowService.present(modal: viewController)
+                }
+            }
+        } dismissAction: {
+            self.onboardingCoordinatorDidFinish()
+        }
     }
 }
 
-extension OnboardingModuleService: OnboardingCoordinatorDelegate {
-    func preferenceChangeUsageData(telemetryUsageData: Bool) {
-        telemetrySettings.updateTelemetryUsageData(isOn: telemetryUsageData)
-    }
-
-    func preferenceChangeCrashReports(telemetryCrashReports: Bool) {
-        telemetrySettings.updateTelemetryCrashReports(isOn: telemetryCrashReports)
-    }
-
-    func userDidRequestPlanPurchase(completion: @escaping OnboardingPlanPurchaseCompletion) {
+extension OnboardingModuleService {
+    func userDidRequestPlanPurchase(completion: @escaping (PlanPurchaseAction) -> Void) {
         planService.createPlusPlanUI { result in
             switch result {
             case let .planPurchaseViewControllerCreated(viewController):
@@ -120,14 +100,11 @@ extension OnboardingModuleService: OnboardingCoordinatorDelegate {
 
     func onboardingCoordinatorDidFinish() {
         log.debug("Onboarding finished", category: .app)
-
         delegate?.onboardingServiceDidFinish()
     }
+}
 
-    func userDidRequestConnection(completion: @escaping OnboardingConnectionRequestCompletion) {
-        log.debug("Onboarding requested VPN connection", category: .app)
-        self.completion = completion
-
-        vpnGateway.quickConnect(trigger: .auto)
-    }
+enum PlanPurchaseAction {
+    case planPurchaseViewControllerReady(UIViewController)
+    case planPurchased
 }

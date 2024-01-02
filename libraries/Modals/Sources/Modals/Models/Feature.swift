@@ -53,10 +53,6 @@ public enum Feature: Hashable, Identifiable {
     case routeSecureServers
     case addLayer
     case protectFromAttacks
-    case privacyFirst
-    case activityLogging
-    case noThirdParties
-    case externalAudit
     case gaming
     case directConnection
     case fasterServers
@@ -76,6 +72,7 @@ public enum Feature: Hashable, Identifiable {
     case welcomeNewServersCountries(Int, Int)
     case welcomeAdvancedFeatures
     case welcomeDevices(Int)
+    case banner
 }
 
 extension Feature: Equatable { }
@@ -100,14 +97,6 @@ extension Feature {
             return Localizable.modalsUpsellSecureCoreLayer
         case .protectFromAttacks:
             return Localizable.modalsUpsellSecureCoreAttacks
-        case .privacyFirst:
-            return Localizable.modalsNoLogsPrivacyFirst
-        case .activityLogging:
-            return Localizable.modalsNoLogsLogActivity
-        case .noThirdParties:
-            return Localizable.modalsNoLogsThirdParties
-        case .externalAudit:
-            return Localizable.modalsNoLogsExternalAudit
         case .gaming:
             return Localizable.modalsUpsellFeaturesModerateNatGaming
         case .directConnection:
@@ -146,6 +135,8 @@ extension Feature {
             return Localizable.welcomeUpgradeAdvancedFeatures
         case .welcomeDevices(let devices):
             return Localizable.welcomeScreenFeatureDevices(devices)
+        case .banner:
+            return ""
         }
     }
 
@@ -163,15 +154,6 @@ extension Feature {
             return [Localizable.upsellCustomizationAccessLANBold]
         default:
             return []
-        }
-    }
-
-    public var linkImage: Image? {
-        switch self {
-        case .externalAudit:
-            return IconProvider.arrowOutSquare
-        default:
-            return nil
         }
     }
 
@@ -193,10 +175,6 @@ extension Feature {
             return IconProvider.locks
         case .protectFromAttacks:
             return IconProvider.alias
-        case .privacyFirst, .activityLogging, .noThirdParties:
-            return IconProvider.checkmarkCircleFilled
-        case .externalAudit:
-            return IconProvider.lightbulb
         case .gaming:
             return IconProvider.magicWand
         case .directConnection:
@@ -235,6 +213,8 @@ extension Feature {
             return IconProvider.sliders
         case .welcomeDevices:
             return IconProvider.locks
+        case .banner:
+            return IconProvider.play
         }
     }
 }

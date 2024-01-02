@@ -180,38 +180,38 @@ extension IosAlertService: CoreAlertService {
             show(discourageAlert)
             
         case let safeModeUpsell as SafeModeUpsellAlert:
-            show(alert: safeModeUpsell, upsellType: .safeMode)
+            show(alert: safeModeUpsell, modalType: .safeMode)
 
         case let netShieldUpsell as NetShieldUpsellAlert:
-            show(alert: netShieldUpsell, upsellType: .netShield)
+            show(alert: netShieldUpsell, modalType: .netShield)
 
         case let secureCoreUpsell as SecureCoreUpsellAlert:
-            show(alert: secureCoreUpsell, upsellType: .secureCore)
+            show(alert: secureCoreUpsell, modalType: .secureCore)
 
         case let moderateNatUpsell as ModerateNATUpsellAlert:
-            show(alert: moderateNatUpsell, upsellType: .moderateNAT)
+            show(alert: moderateNatUpsell, modalType: .moderateNAT)
 
         case let allCountriesUpsell as AllCountriesUpsellAlert:
             let plus = AccountPlan.plus
-            let allCountriesUpsellType = UpsellType.allCountries(
+            let allCountriesModalType = ModalType.allCountries(
                 numberOfServers: plus.serversCount,
                 numberOfCountries: planService.countriesCount
             )
-            show(alert: allCountriesUpsell, upsellType: allCountriesUpsellType)
+            show(alert: allCountriesUpsell, modalType: allCountriesModalType)
 
         case let profilesUpsell as ProfilesUpsellAlert:
-            show(alert: profilesUpsell, upsellType: .profiles)
+            show(alert: profilesUpsell, modalType: .profiles)
 
         case let vpnAcceleratorUpsell as VPNAcceleratorUpsellAlert:
-            show(alert: vpnAcceleratorUpsell, upsellType: .vpnAccelerator)
+            show(alert: vpnAcceleratorUpsell, modalType: .vpnAccelerator)
 
         case let customizationUpsell as CustomizationUpsellAlert:
-            show(alert: customizationUpsell, upsellType: .customization)
+            show(alert: customizationUpsell, modalType: .customization)
 
         case let countryUpsell as CountryUpsellAlert:
             show(
                 alert: countryUpsell,
-                upsellType: .country(
+                modalType: .country(
                     countryFlag: countryUpsell.countryFlag,
                     numberOfDevices: AccountPlan.plus.devicesCount,
                     numberOfCountries: planService.countriesCount
@@ -236,7 +236,7 @@ extension IosAlertService: CoreAlertService {
         case let cooldownUpsell as ConnectionCooldownAlert:
             show(
                 alert: cooldownUpsell,
-                upsellType: .cantSkip(
+                modalType: .cantSkip(
                     before: cooldownUpsell.until,
                     duration: cooldownUpsell.duration,
                     longSkip: cooldownUpsell.longSkip
@@ -297,25 +297,25 @@ extension IosAlertService: CoreAlertService {
     }
 
     private func showWelcomeScreen(welcomeScreenAlert: WelcomeScreenAlert) {
-        let upsellType: UpsellType
+        let modalType: ModalType
         switch welcomeScreenAlert.plan {
         case .fallback:
-            upsellType = .welcomeFallback
+            modalType = .welcomeFallback
         case .unlimited:
-            upsellType = .welcomeUnlimited
+            modalType = .welcomeUnlimited
         case let .plus(numberOfServers, numberOfDevices, numberOfCountries):
-            upsellType = .welcomePlus(numberOfServers: numberOfServers,
-                                      numberOfDevices: numberOfDevices,
-                                      numberOfCountries: numberOfCountries)
+            modalType = .welcomePlus(numberOfServers: numberOfServers,
+                                     numberOfDevices: numberOfDevices,
+                                     numberOfCountries: numberOfCountries)
         }
-        let viewController = modalsFactory.modalViewController(upsellType: upsellType)
+        let viewController = modalsFactory.modalViewController(modalType: modalType)
         viewController.modalPresentationStyle = .overFullScreen
         windowService.present(modal: viewController)
     }
 
-    private func show(alert: UpsellAlert, upsellType: Modals.UpsellType) {
-        let upsellViewController = modalsFactory.upsellViewController(upsellType: upsellType)
-
+    private func show(alert: UpsellAlert, modalType: Modals.ModalType) {
+        // TODO: Migrate to modalsFactory.modalViewController(modalType: modalType)
+        let upsellViewController = modalsFactory.upsellViewController(modalType: modalType)
         upsellAlerts[upsellViewController.id] = alert
 
         upsellViewController.delegate = self

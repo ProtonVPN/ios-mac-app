@@ -39,9 +39,7 @@ public struct PrimaryButtonStyle: ButtonStyle {
 #endif
             .padding(.vertical, .themeSpacing8)
             .background(backgroundColor(isPressed: configuration.isPressed))
-            .themeBorder(color: .black,
-                         lineWidth: 0,
-                         cornerRadius: .radius8)
+            .clipRectangle(cornerRadius: .radius8)
             .onHover {
                 isHovered = $0
 #if canImport(Cocoa)

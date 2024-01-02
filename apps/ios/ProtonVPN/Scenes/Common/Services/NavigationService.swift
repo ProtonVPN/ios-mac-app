@@ -26,7 +26,6 @@ import LegacyCommon
 import SwiftUI
 import BugReport
 import VPNShared
-import Onboarding
 import Strings
 import Dependencies
 import Modals_iOS
@@ -133,7 +132,7 @@ final class NavigationService {
     private lazy var profileManager = factory.makeProfileManager()
 
     private lazy var onboardingService: OnboardingService = {
-        let onboardingService = factory.makeOnboardingService(vpnGateway: vpnGateway)
+        let onboardingService = factory.makeOnboardingService()
         onboardingService.delegate = self
         return onboardingService
     }()
@@ -176,7 +175,6 @@ final class NavigationService {
                 self?.presentWelcome(initialError: nil)
             }
         }
-        _ = onboardingService // initialize colors in Onboarding module
     }
 
     func presentWelcome(initialError: String?) {
@@ -353,8 +351,12 @@ extension NavigationService: SettingsService {
             preferenceChangeCrashReports: { [weak self] isOn in
                 self?.telemetrySettings.updateTelemetryCrashReports(isOn: isOn)
             },
-            usageStatisticsOn: telemetrySettings.telemetryUsageData,
-            crashReportsOn: telemetrySettings.telemetryCrashReports,
+            usageStatisticsOn: { [weak self] in
+                self?.telemetrySettings.telemetryUsageData ?? true
+            },
+            crashReportsOn: { [weak self] in
+                self?.telemetrySettings.telemetryCrashReports ?? true
+            },
             title: Localizable.usageStatistics
         )
     }

@@ -67,7 +67,7 @@ public final class UpsellViewController: UIViewController, Identifiable {
 
     public weak var delegate: UpsellViewControllerDelegate?
 
-    var upsellType: UpsellType?
+    var modalType: ModalType?
 
     // MARK: Setup
 
@@ -94,11 +94,9 @@ public final class UpsellViewController: UIViewController, Identifiable {
         titleStyle(titleLabel)
         subtitleStyle(subtitleLabel)
 
-        if upsellType?.showUpgradeButton == false {
+        if modalType?.showUpgradeButton == false {
             useFreeButton.isHidden = true
-            switch upsellType {
-            case .noLogs:
-                getPlusButton.setTitle(Localizable.modalsCommonNext, for: .normal)
+            switch modalType {
             case .cantSkip:
                 getPlusButton.setTitle(Localizable.upsellSpecificLocationChangeServerButtonTitle, for: .normal)
             default:
@@ -113,7 +111,7 @@ public final class UpsellViewController: UIViewController, Identifiable {
         getPlusButton.accessibilityIdentifier = "GetPlusButton"
         titleLabel.accessibilityIdentifier = "TitleLabel"
 
-        if let timeInterval = upsellType?
+        if let timeInterval = modalType?
             .changeDate?
             .timeIntervalSince(Date()),
            timeInterval > 0 {
@@ -125,7 +123,7 @@ public final class UpsellViewController: UIViewController, Identifiable {
     }
 
     func layoutGradient() {
-        guard upsellType?.shouldAddGradient() == true else { return }
+        guard modalType?.modalModel().shouldAddGradient == true else { return }
         guard gradientView.layer.sublayers?.contains(gradientLayer) != true else {
             gradientLayer.frame = gradientView.frame
             return
@@ -134,41 +132,34 @@ public final class UpsellViewController: UIViewController, Identifiable {
     }
 
     func setupTitleLabels() {
-        guard let upsellType = upsellType else { return }
-        let upsellFeature = upsellType.upsellFeature()
-        titleLabel.text = upsellFeature.title
-        if let subtitle = upsellFeature.subtitle {
+        guard let modalType = modalType else { return }
+        let modalModel = modalType.modalModel()
+        titleLabel.text = modalModel.title
+        if let subtitle = modalModel.subtitle {
             subtitleLabel.attributedText =
-            subtitle.attributedString(size: 17,
-                                      color: UIColor.color(.text, .weak),
-                                      boldStrings: upsellFeature.boldSubtitleElements)
+            subtitle.text.attributedString(size: 17,
+                                           color: UIColor.color(.text, .weak),
+                                           boldStrings: subtitle.boldText)
         } else {
             subtitleLabel.isHidden = true
         }
     }
 
     func setupFeatures() {
-        guard let upsellType = upsellType else { return }
-        let upsellFeature = upsellType.upsellFeature()
+        guard let modalType = modalType else { return }
+        let modalModel = modalType.modalModel()
 
-        applyArtView(feature: upsellFeature)
+        applyArtView(upsell: modalType)
 
-        borderView.isHidden = upsellFeature.features.isEmpty
+        borderView.isHidden = modalModel.features.isEmpty
 
         for view in featuresStackView.arrangedSubviews {
             view.removeFromSuperview()
             featuresStackView.removeArrangedSubview(view)
         }
 
-        for feature in upsellFeature.features {
+        for feature in modalModel.features {
             if let view = Bundle.module.loadNibNamed("FeatureView", owner: self, options: nil)?.first as? FeatureView {
-                view.feature = feature
-                featuresStackView.addArrangedSubview(view)
-            }
-        }
-
-        if let feature = upsellType.upsellFeature().moreInformation {
-            if let view = Bundle.module.loadNibNamed("MoreInformationView", owner: self, options: nil)?.first as? MoreInformationView {
                 view.feature = feature
                 featuresStackView.addArrangedSubview(view)
             }
@@ -183,7 +174,7 @@ public final class UpsellViewController: UIViewController, Identifiable {
     // MARK: Actions
 
     @IBAction private func getPlusTapped(_ sender: Any) {
-        if upsellType?.showUpgradeButton == false {
+        if modalType?.showUpgradeButton == false {
             delegate?.userDidTapNext(upsell: self)
         } else {
             delegate?.userDidRequestPlus(upsell: self)
@@ -208,8 +199,8 @@ public final class UpsellViewController: UIViewController, Identifiable {
         })
     }
 
-    private func applyArtView(feature: UpsellFeature) {
-        let childView = UIHostingController(rootView: AnyView(feature.artImage))
+    private func applyArtView(upsell: ModalType) {
+        let childView = UIHostingController(rootView: AnyView(upsell.artImage()))
         addChild(childView)
         childView.view.frame = featureArtView.bounds
         childView.view.backgroundColor = .clear
