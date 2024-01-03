@@ -145,13 +145,12 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     }
     
     @objc public func refreshAccount() {
-        lastAccountRefresh = Date()        
-        
-        self.vpnApiService.clientCredentials { result in
-            switch result {
-            case let .success(credentials):
+        Task {
+            lastAccountRefresh = Date()
+            do {
+                let credentials = try await self.vpnApiService.clientCredentials()
                 self.vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-            case let .failure(error):
+            } catch {
                 log.error("RefreshAccount error", category: .app, metadata: ["error": "\(error)"])
             }
         }

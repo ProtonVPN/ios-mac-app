@@ -18,8 +18,8 @@
 
 import Foundation
 
-#if canImport(Cocoa)
-import Cocoa
+#if canImport(AppKit)
+import AppKit
 
 public extension NSFont {
     static func themeFont(_ semanticSize: AppTheme.FontSize = .paragraph, bold: Bool = false) -> NSFont {

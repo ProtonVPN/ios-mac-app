@@ -44,7 +44,7 @@ extension ServerFeature {
     }
 
     func commaSeparatedList(isFree: Bool) -> String {
-        var featureNames = (isFree ? ["free"] : [])
+        let featureNames = (isFree ? ["free"] : [])
         return featureNames
             .appending(elements().map(\.featureName))
             .joined(separator: ",")

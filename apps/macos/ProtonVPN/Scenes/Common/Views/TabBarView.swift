@@ -145,6 +145,8 @@ class TabBarView: NSView {
             return focusedTabIndex == index
         case .rightToLeft:
             return focusedTabIndex == (tabCount ?? 0) - index - 1
+        @unknown default:
+            return focusedTabIndex == index
         }
     }
     

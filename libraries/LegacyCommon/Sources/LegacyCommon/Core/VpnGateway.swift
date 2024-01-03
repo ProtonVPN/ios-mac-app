@@ -743,15 +743,16 @@ fileprivate extension VpnGateway {
         }
 
         self.disconnect {
-            self.vpnApiService.clientCredentials { [unowned self] result in
-                switch result {
-                case let .success(credentials):
+            Task { [oldServer] in
+                do {
+                    let credentials = try await self.vpnApiService.clientCredentials()
+                    
                     self.vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
                     
                     let reconnectInfo = self.reconnectServer(downgradeInfo, oldServer: oldServer)
                     let alert = UserBecameDelinquentAlert(reconnectInfo: reconnectInfo)
                     self.alertService?.push(alert: alert)
-                case let .failure(error):
+                } catch {
                     log.error("Error received: \(error)", category: .connectionConnect)
                 }
             }

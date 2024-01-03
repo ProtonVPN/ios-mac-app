@@ -22,7 +22,7 @@ import LegacyCommon
 import Theme
 import Strings
 
-protocol WarningViewDelegate: class {
+protocol WarningViewDelegate: AnyObject {
     func keychainHelpAction()
 }
 

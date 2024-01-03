@@ -324,7 +324,7 @@ class CreateNewProfileViewModel {
         var connectionProtocol: ConnectionProtocol? = profile.connectionProtocol
 
         var countryIndex: Int?
-        if let countryCode = profile.serverOffering.countryCode {
+        if profile.serverOffering.countryCode != nil {
             countryIndex = grouping.firstIndex {
                 switch $0.kind {
                 case .country(let country):

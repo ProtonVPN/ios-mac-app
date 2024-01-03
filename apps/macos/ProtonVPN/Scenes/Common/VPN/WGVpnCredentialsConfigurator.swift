@@ -27,7 +27,7 @@ final class WGVpnCredentialsConfigurator: VpnCredentialsConfigurator {
                                                  wireguardConfig: propertiesManager.wireguardConfig)
 
         let version: StoredWireguardConfig.Version = .v1
-        var configData = Data(bytes: [UInt8(version.rawValue)])
+        var configData = Data([UInt8(version.rawValue)])
         do {
             let encoder = JSONEncoder()
             configData.append(try encoder.encode(storedConfig))

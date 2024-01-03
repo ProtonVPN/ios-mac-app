@@ -30,7 +30,7 @@ import Home
 import Home_macOS
 import Strings
 
-protocol QuickSettingsDetailViewControllerProtocol: class {
+protocol QuickSettingsDetailViewControllerProtocol: AnyObject {
     var arrowIV: NSImageView! { get }
     var arrowHorizontalConstraint: NSLayoutConstraint! { get }
     var contentBox: NSBox! { get }

@@ -121,7 +121,6 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
                                                   refreshToken: "54321",
                                                   sessionId: "15213",
                                                   userId: "bravo",
-                                                  expiration: Date().addingTimeInterval(60 * 20),
                                                   scopes: []))
         timerFactory = TimerFactoryMock()
 

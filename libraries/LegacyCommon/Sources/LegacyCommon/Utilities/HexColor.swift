@@ -44,8 +44,8 @@ extension UIColor {
     }
 }
 
-#elseif canImport(Cocoa)
-import Cocoa
+#elseif canImport(AppKit)
+import AppKit
 
 extension NSColor {
 

@@ -21,8 +21,8 @@
 
 #if canImport(UIKit)
 import UIKit
-#elseif canImport(Cocoa)
-import Cocoa
+#elseif canImport(AppKit)
+import AppKit
 #endif
 
 import Dependencies
@@ -79,7 +79,7 @@ public enum ProfileConstants {
 
 #if canImport(UIKit)
     public typealias ProfileColors = [UIColor]
-#elseif canImport(Cocoa)
+#elseif canImport(AppKit)
     public typealias ProfileColors = [NSColor]
 #endif
 

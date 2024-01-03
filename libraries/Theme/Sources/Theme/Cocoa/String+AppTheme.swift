@@ -18,8 +18,8 @@
 
 import Foundation
 
-#if canImport(Cocoa)
-import Cocoa
+#if canImport(AppKit)
+import AppKit
 
 public extension String {
     func styled(_ style: AppTheme.Style = .normal, context: AppTheme.Context = .text, font: NSFont = .themeFont(), hover: Bool = false, alignment: NSTextAlignment = .center, lineBreakMode: NSLineBreakMode? = nil, textColor: NSColor? = nil) -> NSAttributedString {

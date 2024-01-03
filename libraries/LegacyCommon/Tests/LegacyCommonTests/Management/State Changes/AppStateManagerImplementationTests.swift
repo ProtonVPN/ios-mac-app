@@ -31,7 +31,8 @@ class AppStateManagerImplementationTests: XCTestCase {
     let propertiesManager = PropertiesManagerMock()
     let alertService = CoreAlertServiceDummy()
     let vpnKeychain = VpnKeychainMock()
-    
+    let networkingDelegate = FullNetworkingMockDelegate()
+
     var vpnManager: VpnManagerMock!
     var appStateManager: AppStateManager!
 
@@ -43,6 +44,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         propertiesManager.hasConnected = true
         
         let networking = NetworkingMock()
+        networking.delegate = networkingDelegate
         vpnManager = VpnManagerMock()
         
         let preparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService, propertiesManager: propertiesManager)
