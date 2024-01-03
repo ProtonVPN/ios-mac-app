@@ -26,6 +26,8 @@ import VPNShared
 import VPNAppCore
 
 public class PropertiesManagerMock: PropertiesManagerProtocol {
+    public var isOnboardingInProgress: Bool = false
+    public var isSubsequentLaunch: Bool = false
     public var showWhatsNewModal: Bool = true
 
     private let queue = DispatchQueue(label: "ch.proton.test.mock.sync.properties")
@@ -55,10 +57,8 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
 
     public var hasConnected: Bool = false {
         didSet {
-            Task {
-                await MainActor.run {
-                    NotificationCenter.default.post(name: Self.hasConnectedNotification, object: hasConnected)
-                }
+            Task { @MainActor in
+                NotificationCenter.default.post(name: Self.hasConnectedNotification, object: hasConnected)
             }
         }
     }

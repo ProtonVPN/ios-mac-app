@@ -124,11 +124,19 @@ open class Container: PropertiesToOverride {
 
     /// Call this method from `application(didFinishLaunchingWithOptions)` of the app.
     /// It does preparation work needed at the start of the app, but which can't be done in `init` because it's too early.
-    public func applicationDidFinishedLoading() {
+    public func applicationDidFinishLaunching() {
         Task {
             // We need to initialise the TelemetryService somewhere because no other part of the code uses it directly.
             // TelemetryService listens to notifications and sends telemetry events based on that.
             self.telemetryService = await makeTelemetryService()
+
+            if !propertiesManager.isSubsequentLaunch {
+                // The app launched for the first time since the last install.
+                // Since the telemetry is on by default, there is no way of disabling this event.
+                // If we remove the app, we'll still be logged in, but the telemetry settings will be reset to it's default, "On" state.
+                try? telemetryService?.onboardingEvent(.firstLaunch)
+                propertiesManager.isSubsequentLaunch = true
+            }
         }
     }
 

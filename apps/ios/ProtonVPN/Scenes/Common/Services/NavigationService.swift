@@ -443,6 +443,11 @@ extension NavigationService: LoginServiceDelegate {
 
     func userDidSignUp() {
         onboardingService.showOnboarding()
+        propertiesManager.isOnboardingInProgress = true
+        Task {
+            let service = await factory.makeTelemetryService()
+            try service.onboardingEvent(.onboardingStart)
+        }
     }
 }
 
@@ -450,6 +455,7 @@ extension NavigationService: LoginServiceDelegate {
 
 extension NavigationService: OnboardingServiceDelegate {
     func onboardingServiceDidFinish() {
+        propertiesManager.isOnboardingInProgress = false
         presentMainInterface()
     }
 }
