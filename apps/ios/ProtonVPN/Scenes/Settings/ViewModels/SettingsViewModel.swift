@@ -31,7 +31,6 @@ import ProtonCoreUIFoundations
 import Domain
 import LocalFeatureFlags
 import Strings
-import Onboarding
 
 import VPNShared
 import LegacyCommon
