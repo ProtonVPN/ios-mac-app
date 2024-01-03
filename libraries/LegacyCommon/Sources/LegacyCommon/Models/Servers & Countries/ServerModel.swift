@@ -191,7 +191,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         city = dic.string("City") // "City": "Zurich"
         self.location = try ServerLocation(dic: dic.jsonDictionaryOrThrow(key: "Location")) // "Location"
         hostCountry = dic.string("HostCountry")
-        translatedCity = dic["Translations"]?["City"] as? String
+        translatedCity = (dic["Translations"] as? AnyObject)?["City"] as? String
         ips = try dic.jsonArrayOrThrow(key: "Servers").map { try ServerIp(dic: $0) }
         gatewayName = dic.string("GatewayName")
         super.init()

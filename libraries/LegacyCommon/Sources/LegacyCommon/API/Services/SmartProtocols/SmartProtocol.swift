@@ -120,7 +120,7 @@ final class SmartProtocolImplementation: SmartProtocol {
                 return
             }
 
-            log.debug("Best protocol for \(server.entryIp) is \(best.vpnProtocol) with ports \(ports)", category: .connectionConnect, event: .scan)
+            log.debug("Best protocol for \(server.entryIp ?? "") is \(best.vpnProtocol) with ports \(ports)", category: .connectionConnect, event: .scan)
 
             if ConnectionProtocol.vpnProtocol(best.vpnProtocol).isDeprecated {
                 XCTFail("We should never choose a deprecated protocol (\(best.vpnProtocol)) (VPNAPPL-1843)")

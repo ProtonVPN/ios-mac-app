@@ -221,6 +221,8 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
             self.expandButton.transform = NSAffineTransform()
             self.expandButton.transform.translateX(by: self.expandButton.bounds.size.width, yBy: 0)
             self.expandButton.transform.scaleX(by: -1, yBy: 1)
+        @unknown default:
+            self.expandButton.transform = NSAffineTransform()
         }
     }
     

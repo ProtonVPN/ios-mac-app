@@ -230,7 +230,7 @@ fileprivate extension ConnectionSpec {
         case .region(let code):
             return .country(code, .fastest)
 
-        case .exact(_, number: let number, subregion: let subregion, regionCode: let regionCode):
+        case .exact:
             return .random // todo:
 
         case .secureCore(let secureCoreSpecs):
@@ -239,7 +239,7 @@ fileprivate extension ConnectionSpec {
                 return .fastest
             case .fastestHop(to: let to):
                 return .country(to, .fastest)
-            case .hop(to: let to, via: let via):
+            case .hop(to: let to, _):
                 return .country(to, .fastest) // todo:
             }
         }

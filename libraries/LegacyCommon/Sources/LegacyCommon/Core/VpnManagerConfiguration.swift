@@ -193,7 +193,6 @@ public class VpnManagerConfigurationPreparer {
         }
 
         @Dependency(\.appFeaturePropertyProvider) var appFeaturePropertyProvider
-        let vpnAcceleratorEnabled = appFeaturePropertyProvider.getValue(for: VPNAccelerator.self)
         if appFeaturePropertyProvider.getValue(for: VPNAccelerator.self) == .off {
             // VPN accelerator works with opposite logic, we send this suffix in case of NOT activated
             extraConfiguration += [.vpnAccelerator]

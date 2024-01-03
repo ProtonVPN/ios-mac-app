@@ -41,32 +41,4 @@ class RecoveryRobot: CoreElements {
         textField(phoneTextFieldId).tap().typeText(number)
         return self
     }
-    
-    public let verify = Verify()
-    
-    class Verify: CoreElements {
-        
-        let coreRecoveryRobot = ProtonCoreTestingToolkitUITestsLogin.RecoveryRobot()
-        
-        @discardableResult
-        func nextButtonIsEnabled() -> RecoveryRobot {
-            _ = self.coreRecoveryRobot
-            self.nextButtonIsEnabled()
-            return RecoveryRobot()
-        }
-        
-        @discardableResult
-        func recoveryDialogDisplay() -> RecoveryRobot {
-            _ = self.coreRecoveryRobot
-            self.recoveryDialogDisplay()
-            return RecoveryRobot()
-        }
-        
-        @discardableResult
-        func recoveryScreenIsShown() -> RecoveryRobot {
-            _ = self.coreRecoveryRobot
-            self.recoveryScreenIsShown()
-            return RecoveryRobot()
-        }
-    }
 }

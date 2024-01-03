@@ -18,8 +18,8 @@
 
 import Foundation
 
-#if canImport(Cocoa)
-import Cocoa
+#if canImport(AppKit)
+import AppKit
 
 public extension NSImage {
     func colored(context: AppTheme.Context = .icon, _ style: AppTheme.Style = .normal) -> NSImage {

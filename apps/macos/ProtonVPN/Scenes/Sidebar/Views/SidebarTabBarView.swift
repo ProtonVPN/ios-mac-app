@@ -36,6 +36,8 @@ class SidebarTabBarView: NSView {
             return activeTab == index
         case .rightToLeft:
             return activeTab != index
+        @unknown default:
+            return activeTab == index
         }
     }
     

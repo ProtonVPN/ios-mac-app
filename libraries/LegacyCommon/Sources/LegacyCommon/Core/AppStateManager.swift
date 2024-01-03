@@ -339,7 +339,7 @@ public class AppStateManagerImplementation: AppStateManager {
         timeoutTimer?.invalidate()
     }
     
-    @objc private func timeout() {
+    private func timeout() {
         log.info("Connection attempt timed out", category: .connectionConnect)
         state = .aborted(userInitiated: false)
         attemptingConnection = false
@@ -354,7 +354,7 @@ public class AppStateManagerImplementation: AppStateManager {
         handleVpnError(vpnState)
         disconnect()
     }
-    
+
     private func prepareServerCertificate() {
         do {
             _ = try vpnKeychain.getServerCertificate()
@@ -409,8 +409,8 @@ public class AppStateManagerImplementation: AppStateManager {
         
         NotificationCenter.default.addObserver(self, selector: #selector(killSwitchChanged), name: type(of: propertiesManager).hasConnectedNotification, object: nil)
     }
-    
-    @objc private func vpnStateChanged() {
+
+    private func vpnStateChanged() {
         reachability?.whenReachable = nil
         
         let newState = vpnManager.state
@@ -493,16 +493,12 @@ public class AppStateManagerImplementation: AppStateManager {
         notifyObservers()
     }
     // swiftlint:enable cyclomatic_complexity
-    
-    private func unknownError(_ vpnState: VpnState) {
-        handleVpnStateChange(vpnState)
-    }
-    
+
     private func connectionFailed() {
-        state = .error(NSError(code: 0, localizedDescription: ""))
+        state = .error(NSError(code: 0, localizedDescription: "connectionFailed"))
         notifyObservers()
     }
-    
+
     private func handleVpnError(_ vpnState: VpnState) {
         // In the rare event that the vpn is stuck not disconnecting, show a helpful alert
         if case VpnState.disconnecting(_) = vpnState, stuckDisconnecting {
@@ -523,54 +519,28 @@ public class AppStateManagerImplementation: AppStateManager {
     }
     
     private func checkApiForFailureReason(vpnCredentials: VpnCredentials) {
-        var rSessionCount: Int?
-        var rVpnCredentials: VpnCredentials?
-
-        let dispatchGroup = DispatchGroup()
-        let failureClosure: (Error) -> Void = { error in
-            dispatchGroup.leave()
-        }
-        
-        dispatchGroup.enter()
-        vpnApiService.sessionsCount { result in
-            switch result {
-            case let .success(sessionsCount):
-                rSessionCount = sessionsCount
-                dispatchGroup.leave()
-            case let .failure(error):
-                failureClosure(error)
-            }
-        }
-        
-        dispatchGroup.enter()
-        vpnApiService.clientCredentials { result in
-            switch result {
-            case let .success(newVpnCredentials):
-                rVpnCredentials = newVpnCredentials
-                dispatchGroup.leave()
-            case let .failure(error):
-                failureClosure(error)
-            }
-        }
-        
-        dispatchGroup.notify(queue: DispatchQueue.main) { [weak self] in
-            guard let self = self, self.state.isDisconnected else {
-                return
-            }
-            
-            if let sessionCount = rSessionCount, sessionCount >= (rVpnCredentials?.maxConnect ?? vpnCredentials.maxConnect) {
-                let accountPlan = rVpnCredentials?.accountPlan ?? vpnCredentials.accountPlan
-                self.maxSessionsReached(accountPlan: accountPlan)
-            } else if let newVpnCredentials = rVpnCredentials, newVpnCredentials.password != vpnCredentials.password {
-                self.vpnKeychain.storeAndDetectDowngrade(vpnCredentials: newVpnCredentials)
-                guard let lastConfiguration = self.lastAttemptedConfiguration else {
+        Task {
+            let rSessionCount = try? await vpnApiService.sessionsCount().sessionCount
+            let rVpnCredentials = try? await vpnApiService.clientCredentials()
+            await MainActor.run { [weak self] in
+                guard let self = self, self.state.isDisconnected else {
                     return
                 }
-                if self.state.isDisconnected {
-                    self.isOnDemandEnabled { enabled in
-                        guard !enabled else { return }
-                        log.info("Attempt connection after retrieving new credentials", category: .connectionConnect, event: .trigger)
-                        self.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: lastConfiguration)
+
+                if let sessionCount = rSessionCount, sessionCount >= (rVpnCredentials?.maxConnect ?? vpnCredentials.maxConnect) {
+                    let accountPlan = rVpnCredentials?.accountPlan ?? vpnCredentials.accountPlan
+                    self.maxSessionsReached(accountPlan: accountPlan)
+                } else if let newVpnCredentials = rVpnCredentials, newVpnCredentials.password != vpnCredentials.password {
+                    self.vpnKeychain.storeAndDetectDowngrade(vpnCredentials: newVpnCredentials)
+                    guard let lastConfiguration = self.lastAttemptedConfiguration else {
+                        return
+                    }
+                    if self.state.isDisconnected {
+                        self.isOnDemandEnabled { enabled in
+                            guard !enabled else { return }
+                            log.info("Attempt connection after retrieving new credentials", category: .connectionConnect, event: .trigger)
+                            self.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: lastConfiguration)
+                        }
                     }
                 }
             }

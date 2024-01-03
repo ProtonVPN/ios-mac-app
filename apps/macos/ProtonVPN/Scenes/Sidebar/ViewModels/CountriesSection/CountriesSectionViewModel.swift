@@ -501,7 +501,7 @@ class CountriesSectionViewModel {
         // FREE
         let plusLocations: [ServerGroup]
         let freePart: [CellModel]
-        var plusBanner = [freeUserBannerCellModel]
+        let plusBanner = [freeUserBannerCellModel]
 
         @Dependency(\.featureFlagProvider) var featureFlagProvider
         if !featureFlagProvider[\.showNewFreePlan] { // old

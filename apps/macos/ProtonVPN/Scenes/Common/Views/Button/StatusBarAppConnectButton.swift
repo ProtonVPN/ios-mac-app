@@ -81,7 +81,6 @@ class StatusBarAppConnectButton: LargeDropdownButton {
 
         let buttonTitle = self.style(isConnected ? Localizable.disconnect : Localizable.quickConnect, font: .themeFont(.heading4))
         let textHeight = buttonTitle.size().height
-        let textWidth = buttonTitle.size().width
         buttonTitle.draw(in: CGRect(
             x: 0,
             y: (bounds.height - textHeight) / 2,
