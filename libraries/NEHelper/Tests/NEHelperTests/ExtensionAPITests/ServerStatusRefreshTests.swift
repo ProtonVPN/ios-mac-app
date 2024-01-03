@@ -18,7 +18,10 @@
 
 import Foundation
 import XCTest
+
+import Domain
 import VPNShared
+
 @testable import NEHelper
 
 class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {

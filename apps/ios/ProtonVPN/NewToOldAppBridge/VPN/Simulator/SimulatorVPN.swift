@@ -19,6 +19,8 @@
 #if targetEnvironment(simulator)
 
 import Foundation
+
+import Domain
 import VPNAppCore
 import LegacyCommon
 

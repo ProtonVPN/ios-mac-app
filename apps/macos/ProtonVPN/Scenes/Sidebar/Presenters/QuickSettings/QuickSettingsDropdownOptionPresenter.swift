@@ -21,10 +21,12 @@
 //
 
 import Cocoa
-import LegacyCommon
-import VPNShared
+
+import Domain
 import Theme
 import Strings
+import VPNShared
+import LegacyCommon
 
 protocol QuickSettingsDropdownOptionPresenter {
     var title: String! { get }

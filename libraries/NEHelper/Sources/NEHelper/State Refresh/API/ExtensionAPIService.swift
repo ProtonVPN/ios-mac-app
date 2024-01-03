@@ -17,13 +17,16 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Dependencies
 import NetworkExtension
+#if os(iOS)
+import UIKit // sus UI import in business logic file
+#endif
+
+import Dependencies
+
+import Domain
 import Timer
 import VPNShared
-#if os(iOS)
-import UIKit
-#endif
 
 public protocol ExtensionAPIServiceDelegate: AnyObject {
     var dataTaskFactory: DataTaskFactory! { get }

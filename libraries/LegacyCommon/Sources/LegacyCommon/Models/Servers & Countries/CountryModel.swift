@@ -21,8 +21,11 @@
 
 import Foundation
 import CoreLocation
-import VPNAppCore
+
+import Domain
+import Ergonomics
 import Strings
+import VPNAppCore
 
 // FUTURETODO: get rid of this class and rely only on ServerGroup
 public class CountryModel: Comparable, Hashable {

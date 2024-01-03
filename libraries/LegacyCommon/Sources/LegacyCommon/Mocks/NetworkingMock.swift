@@ -103,7 +103,7 @@ extension NetworkingMock: Networking {
         }
     }
     
-    public func request(_ route: Request, completion: @escaping (Result<VPNShared.JSONDictionary, Error>) -> Void) {
+    public func request(_ route: Request, completion: @escaping (Result<JSONDictionary, Error>) -> Void) {
         request(route) { (result: Result<Data, Error>) in
             switch result {
             case let .success(data):

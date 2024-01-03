@@ -16,12 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import XCTest
 import NetworkExtension
-import GoLibs
-import VPNShared
+
 import Dependencies
+
+import GoLibs
+
+import Domain
+import ExtensionIPC
+import VPNShared
 
 @testable import LegacyCommon
 

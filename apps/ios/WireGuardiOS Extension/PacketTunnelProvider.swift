@@ -9,12 +9,16 @@
 import Foundation
 import NetworkExtension
 import os
-import WireGuardKit
 import Logging
-import Timer
-import NEHelper
-import VPNShared
+
+import WireGuardKit
+
+import Domain
+import ExtensionIPC
 import LocalFeatureFlags
+import Timer
+import VPNShared
+import NEHelper
 
 class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate {
     private var timerFactory: TimerFactory!

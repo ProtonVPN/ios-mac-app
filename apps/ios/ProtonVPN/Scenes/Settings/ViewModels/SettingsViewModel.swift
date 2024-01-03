@@ -21,14 +21,20 @@
 //
 
 import UIKit
-import LegacyCommon
+
+import Dependencies
+
 import ProtonCoreAccountRecovery
 import ProtonCoreFeatureFlags
 import ProtonCoreUIFoundations
-import VPNShared
+
+import Domain
 import LocalFeatureFlags
 import Strings
-import Dependencies
+import Onboarding
+
+import VPNShared
+import LegacyCommon
 
 final class SettingsViewModel {
     typealias Factory = AppStateManagerFactory &

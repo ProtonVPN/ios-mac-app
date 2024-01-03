@@ -21,16 +21,20 @@
 //
 
 import Foundation
-import GSMessages
-import LegacyCommon
 import UIKit
-import ProtonCoreUIFoundations
-import VPNShared
-import LocalFeatureFlags
-import Home
-import Strings
+
 import Dependencies
+import GSMessages
+
+import ProtonCoreUIFoundations
+
+import Domain
+import LocalFeatureFlags
+import Strings
+import Home
 import Theme
+import VPNShared
+import LegacyCommon
 
 class StatusViewModel {
     typealias Factory = AppSessionManagerFactory &

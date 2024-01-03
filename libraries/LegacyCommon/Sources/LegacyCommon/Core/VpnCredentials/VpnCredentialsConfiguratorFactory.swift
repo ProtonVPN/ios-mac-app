@@ -7,6 +7,8 @@
 //
 
 import Foundation
+
+import Domain
 import VPNShared
 
 public protocol VpnCredentialsConfiguratorFactoryCreator {

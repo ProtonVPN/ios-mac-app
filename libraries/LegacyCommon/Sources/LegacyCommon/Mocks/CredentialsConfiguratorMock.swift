@@ -19,6 +19,8 @@
 #if DEBUG
 import Foundation
 import NetworkExtension
+
+import Domain
 import VPNShared
 
 public class VpnCredentialsConfiguratorMock: VpnCredentialsConfigurator {

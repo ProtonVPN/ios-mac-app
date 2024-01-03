@@ -20,9 +20,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 import Cocoa
-import LegacyCommon
+
+import Domain
 import Ergonomics
 import Strings
+import LegacyCommon
 
 final class ConnectionSettingsViewController: NSViewController, ReloadableViewController {
     

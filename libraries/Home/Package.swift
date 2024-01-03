@@ -36,10 +36,6 @@ let package = Package(
             exact: "1.0.0"
         ),
         .package(
-            url: "https://github.com/pointfreeco/swift-snapshot-testing",
-            exact: "1.15.0"
-        ),
-        .package(
             url: "https://github.com/pointfreeco/swift-dependencies.git",
             exact: "1.0.0"
         ),

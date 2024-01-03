@@ -7,16 +7,19 @@
 //
 //  See LICENSE for up to date license information.
 
+import DictionaryCoder
+import NetworkExtension
+
+import Dependencies
 import TunnelKitOpenVPNAppExtension
 import TunnelKitOpenVPN
 
-import NetworkExtension
-import Dependencies
+import Domain
+import LocalFeatureFlags
+import Timer
+import ExtensionIPC
 import NEHelper
 import VPNShared
-import Timer
-import LocalFeatureFlags
-import DictionaryCoder
 
 class PacketTunnelProvider: OpenVPNTunnelProvider, ExtensionAPIServiceDelegate {
 
@@ -28,7 +31,7 @@ class PacketTunnelProvider: OpenVPNTunnelProvider, ExtensionAPIServiceDelegate {
     private var killSwitchSettingObservation: NSKeyValueObservation!
     // ExtensionAPIServiceDelegate
     internal var dataTaskFactory: DataTaskFactory!
-    var transport: VPNShared.WireGuardTransport? // Used only on WireGuard
+    var transport: WireGuardTransport? // Used only on WireGuard
 
     var tunnelProviderProtocol: NETunnelProviderProtocol? {
         guard let tunnelProviderProtocol = self.protocolConfiguration as? NETunnelProviderProtocol else {

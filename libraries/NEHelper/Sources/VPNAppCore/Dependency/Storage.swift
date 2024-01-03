@@ -19,6 +19,7 @@
 import Dependencies
 import XCTestDynamicOverlay
 
+import Domain
 import VPNShared
 
 public struct SettingsStorage: Sendable {

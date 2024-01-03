@@ -17,8 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import VPNShared
+
+import Domain
 import LocalFeatureFlags
+import VPNShared
 
 public final class ServerStatusRequest: APIRequest {
     let params: Params

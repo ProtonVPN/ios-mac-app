@@ -17,10 +17,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
-import VPNAppCore
-import Theme
+
 import Dependencies
+
+import Domain
 import Strings
+import Theme
+import VPNAppCore
 
 public struct ConnectionInfoBuilder {
 

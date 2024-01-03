@@ -18,6 +18,8 @@
 
 #if DEBUG
 import Foundation
+
+import Domain
 import VPNShared
 
 public final class NetShieldPropertyProviderMock: NetShieldPropertyProvider {

@@ -20,14 +20,16 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import AppKit
 import Foundation
+
 import Dependencies
+
+import Domain
+import Strings
+import Theme
 import LegacyCommon
 import VPNShared
-import Dependencies
-import Strings
-import AppKit
-import Theme
 import VPNAppCore
 import Modals
 
