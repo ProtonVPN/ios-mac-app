@@ -17,6 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+
+import Domain
 import VPNAppCore
 
 /// UI presents servers grouped by either a country or a "gateway"

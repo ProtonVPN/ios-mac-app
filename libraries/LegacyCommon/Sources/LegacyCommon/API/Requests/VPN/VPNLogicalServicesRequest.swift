@@ -21,7 +21,10 @@
 //
 
 import Foundation
+
 import ProtonCoreNetworking
+
+import Domain
 import LocalFeatureFlags
 import VPNShared
 

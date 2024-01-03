@@ -22,6 +22,7 @@ import Foundation
 import Dependencies
 import ComposableArchitecture
 
+import Domain
 import Theme
 import VPNShared
 import VPNAppCore

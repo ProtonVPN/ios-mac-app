@@ -21,6 +21,8 @@
 
 #if DEBUG
 import Foundation
+
+import Domain
 import VPNShared
 import VPNAppCore
 

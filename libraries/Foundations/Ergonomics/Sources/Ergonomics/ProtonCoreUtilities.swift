@@ -1,5 +1,5 @@
 //
-//  Created on 11.01.23.
+//  Created on 28/11/2023.
 //
 //  Copyright (c) 2023 Proton AG
 //
@@ -16,14 +16,4 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
-public extension String {
-    func prepending(_ s: String) -> String {
-        return s + self
-    }
-
-    func appending(_ s: String) -> String {
-        return self + s
-    }
-}
+@_exported import ProtonCoreUtilities

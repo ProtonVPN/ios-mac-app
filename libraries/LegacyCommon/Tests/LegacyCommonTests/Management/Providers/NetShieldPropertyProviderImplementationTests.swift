@@ -21,7 +21,10 @@
 //
 
 import XCTest
+
 import Dependencies
+
+import Domain
 import VPNShared
 import VPNSharedTesting
 @testable import LegacyCommon

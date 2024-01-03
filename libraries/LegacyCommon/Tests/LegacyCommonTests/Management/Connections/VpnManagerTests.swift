@@ -17,8 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
 import NetworkExtension
+import XCTest
+
+import Domain
 import VPNShared
 
 @testable import LegacyCommon

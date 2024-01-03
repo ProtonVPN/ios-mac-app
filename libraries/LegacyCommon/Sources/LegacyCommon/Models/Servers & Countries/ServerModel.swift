@@ -20,9 +20,11 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+
+import Domain
+import Strings
 import VPNShared
 import VPNAppCore
-import Strings
 
 public class ServerModel: NSObject, NSCoding, Codable {
     

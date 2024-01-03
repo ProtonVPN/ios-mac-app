@@ -18,7 +18,10 @@
 
 import Foundation
 import Network
+
 import Dependencies
+
+import Domain
 import VPNAppCore
 
 /// Misconfigured Local Networks

@@ -31,29 +31,29 @@ let package = Package(
         .package(path: "../../external/tunnelkit"),
 
         // Local packages
+        .package(path: "../Foundations/Domain"),
+        .package(path: "../Foundations/Ergonomics"),
+        .package(path: "../Foundations/LocalFeatureFlags"),
+        .package(path: "../Foundations/PMLogger"),
+        .package(path: "../Foundations/Strings"),
+        .package(path: "../Foundations/Theme"),
+        .package(path: "../Foundations/Timer"),
+
+        .package(path: "../Shared/ExtensionIPC"),
+
         .package(path: "../BugReport"),
-        .package(path: "../ConnectionDetails"),
-        .package(path: "../Ergonomics"),
         .package(path: "../Modals"),
         .package(path: "../Home"),
-        .package(path: "../LocalFeatureFlags"),
         .package(path: "../NEHelper"),
-        .package(path: "../PMLogger"),
-        .package(path: "../SharedViews"),
         .package(path: "../Settings"),
-        .package(path: "../Strings"),
-        .package(path: "../Theme"),
-        .package(path: "../Timer"),
 
         // External dependencies
-        .github("apple", repo: "swift-collections", .upToNextMajor(from: "1.0.4")),
         .github("ashleymills", repo: "Reachability.swift", exact: "5.1.0"),
         .github("getsentry", repo: "sentry-cocoa", exact: "8.9.0"),
         .github("kishikawakatsumi", repo: "KeychainAccess", exact: "4.2.2"),
         .github("pointfreeco", repo: "swift-clocks", .upToNextMajor(from: "1.0.0")),
         .github("pointfreeco", repo: "swift-composable-architecture", .upToNextMajor(from: "1.0.0")),
         .github("pointfreeco", repo: "swift-dependencies", .upToNextMajor(from: "1.0.0")),
-        .github("pointfreeco", repo: "swiftui-navigation", exact: "1.0.0"),
         .github("SDWebImage", repo: "SDWebImage", .upTo("5.16.0")),
         .github("ProtonMail", repo: "TrustKit", revision: "d107d7cc825f38ae2d6dc7c54af71d58145c3506"),
         .github("almazrafi", repo: "DictionaryCoder", exact: "1.1.0"),
@@ -64,15 +64,23 @@ let package = Package(
             name: "LegacyCommon",
             dependencies: [
                 // Local
+                "Domain",
+                "Ergonomics",
+                "LocalFeatureFlags",
+                "PMLogger",
                 "Strings",
                 "Theme",
+                "Timer",
+
+                "ExtensionIPC",
+                .product(name: "VPNShared", package: "NEHelper"),
+                .product(name: "VPNAppCore", package: "NEHelper"),
+                .product(name: "VPNCrypto", package: "NEHelper"),
+
                 "Home",
                 "Modals",
                 "Settings",
                 "BugReport",
-                .product(name: "VPNShared", package: "NEHelper"),
-                .product(name: "VPNAppCore", package: "NEHelper"),
-                .product(name: "VPNCrypto", package: "NEHelper"),
 
                 // Todo: move these to LegacyCommonTestSupport, if we ever can
                 .product(name: "VPNSharedTesting", package: "NEHelper"),

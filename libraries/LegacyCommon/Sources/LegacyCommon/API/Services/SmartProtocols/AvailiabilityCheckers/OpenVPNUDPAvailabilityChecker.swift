@@ -21,6 +21,8 @@
 //
 
 import Foundation
+
+import Domain
 import VPNShared
 
 final class OpenVPNUDPAvailabilityChecker: SharedLibraryUDPAvailabilityChecker {

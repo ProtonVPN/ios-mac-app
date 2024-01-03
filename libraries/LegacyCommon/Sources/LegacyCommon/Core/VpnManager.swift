@@ -20,9 +20,14 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import NetworkExtension
-import VPNShared
-import LocalFeatureFlags
+
 import Dependencies
+
+import Domain
+import LocalFeatureFlags
+import ExtensionIPC
+import VPNShared
+
 import Home
 
 public protocol VpnManagerProtocol {

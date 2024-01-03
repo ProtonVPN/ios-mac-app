@@ -22,6 +22,9 @@
 
 import Foundation
 import Dependencies
+
+import Domain
+import Ergonomics
 import VPNCrypto
 
 public struct VpnCertificate {

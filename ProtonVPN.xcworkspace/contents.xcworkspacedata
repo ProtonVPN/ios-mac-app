@@ -22,33 +22,50 @@
       </Group>
       <Group
          location = "container:"
+         name = "Foundations">
+         <FileRef
+            location = "group:libraries/Foundations/Domain">
+         </FileRef>
+         <FileRef
+            location = "group:libraries/Foundations/Ergonomics">
+         </FileRef>
+         <FileRef
+            location = "group:libraries/Foundations/LocalFeatureFlags">
+         </FileRef>
+         <FileRef
+            location = "group:libraries/Foundations/PMLogger">
+         </FileRef>
+         <FileRef
+            location = "group:libraries/Foundations/Strings">
+         </FileRef>
+         <FileRef
+            location = "group:libraries/Foundations/Theme">
+         </FileRef>
+         <FileRef
+            location = "group:libraries/Foundations/Timer">
+         </FileRef>
+      </Group>
+      <Group
+         location = "container:"
+         name = "Shared">
+         <FileRef
+            location = "group:libraries/Shared/ExtensionIPC">
+         </FileRef>
+         <FileRef
+            location = "group:libraries/Shared/Persistence">
+         </FileRef>
+      </Group>
+      <Group
+         location = "container:"
          name = "Core">
          <FileRef
             location = "group:libraries/LegacyCommon">
          </FileRef>
          <FileRef
-            location = "group:libraries/Ergonomics">
-         </FileRef>
-         <FileRef
-            location = "group:libraries/LocalFeatureFlags">
-         </FileRef>
-         <FileRef
             location = "group:libraries/NEHelper">
          </FileRef>
          <FileRef
-            location = "group:libraries/PMLogger">
-         </FileRef>
-         <FileRef
-            location = "group:libraries/Strings">
-         </FileRef>
-         <FileRef
-            location = "group:libraries/Theme">
-         </FileRef>
-         <FileRef
             location = "group:libraries/SharedViews">
-         </FileRef>
-         <FileRef
-            location = "group:libraries/Timer">
          </FileRef>
       </Group>
       <Group

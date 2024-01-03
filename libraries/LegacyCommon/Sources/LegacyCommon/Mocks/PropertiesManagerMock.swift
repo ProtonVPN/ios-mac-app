@@ -21,7 +21,10 @@
 
 #if DEBUG
 import Foundation
+
 import ProtonCoreDataModel
+
+import Domain
 import VPNShared
 import VPNAppCore
 

@@ -20,11 +20,14 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+
 import ProtonCoreNetworking
 import ProtonCoreAuthentication
 import ProtonCoreDataModel
-import VPNShared
+
+import Ergonomics
 import LocalFeatureFlags
+import VPNShared
 
 public protocol VpnApiServiceFactory {
     func makeVpnApiService() -> VpnApiService
@@ -168,7 +171,7 @@ public class VpnApiService {
                 countryCodes: countryCodes,
                 freeTier: freeTier
             )
-        ) { (result: Result<VPNShared.JSONDictionary, Error>) in
+        ) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(json):
                 guard let serversJson = json.jsonArray(key: "LogicalServers") else {
@@ -201,7 +204,7 @@ public class VpnApiService {
     }
 
     public func serverState(serverId id: String, completion: @escaping (Result<VpnServerState, Error>) -> Void) {
-        networking.request(VPNServerRequest(id)) { (result: Result<VPNShared.JSONDictionary, Error>) in
+        networking.request(VPNServerRequest(id)) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(response):
                 guard let json = response.jsonDictionary(key: "Server"), let serverState = try? VpnServerState(dictionary: json)  else {
@@ -231,7 +234,7 @@ public class VpnApiService {
     }
 
     public func userLocation(completion: @escaping (Result<UserLocation, Error>) -> Void) {
-        networking.request(VPNLocationRequest()) { (result: Result<VPNShared.JSONDictionary, Error>) in
+        networking.request(VPNLocationRequest()) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(response):
                 guard let userLocation = try? UserLocation(dic: response) else {
@@ -256,7 +259,7 @@ public class VpnApiService {
         if let ip = lastKnownIp {
             shortenedIp = truncatedIp(ip)
         }
-        networking.request(VPNLoadsRequest(shortenedIp)) { (result: Result<VPNShared.JSONDictionary, Error>) in
+        networking.request(VPNLoadsRequest(shortenedIp)) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(response):
                 guard let loadsJson = response.jsonArray(key: "LogicalServers") else {
@@ -288,7 +291,7 @@ public class VpnApiService {
         let request = VPNClientConfigRequest(isAuth: vpnKeychain.userIsLoggedIn,
                                              ip: shortenedIp)
 
-        networking.request(request) { (result: Result<VPNShared.JSONDictionary, Error>) in
+        networking.request(request) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(response):
                 do {

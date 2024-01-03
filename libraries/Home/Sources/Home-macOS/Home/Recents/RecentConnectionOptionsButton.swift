@@ -17,11 +17,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+
+import ProtonCoreUIFoundations
+
+import Domain
 import Strings
 import Theme
 import VPNAppCore
 import Home
-import ProtonCoreUIFoundations
 
 struct RecentConnectionOptionsButton: View {
     let item: RecentConnection

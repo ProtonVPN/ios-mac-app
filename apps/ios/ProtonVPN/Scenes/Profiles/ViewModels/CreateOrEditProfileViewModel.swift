@@ -20,11 +20,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import GSMessages
 import UIKit
-import LegacyCommon
-import VPNAppCore
+
+import GSMessages
+
+import Domain
 import Strings
+import VPNAppCore
+import LegacyCommon
 
 class CreateOrEditProfileViewModel: NSObject {
     

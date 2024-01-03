@@ -20,14 +20,18 @@
 //  along with ProtonVPN. If not, see <https://www.gnu.org/licenses/>.
 //
 
-import LegacyCommon
-import UIKit
 import Foundation
+import UIKit
+
 import Dependencies
+
+import ProtonCoreFeatureFlags
+
+import ExtensionIPC
 import Search
 import Review
 import VPNShared
-import ProtonCoreFeatureFlags
+import LegacyCommon
 
 enum SessionStatus {
     

@@ -20,13 +20,15 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import LegacyCommon
-import VPNShared
-import VPNAppCore
 import AppKit
+
+import Domain
 import Logging
 import Theme
 import Strings
+import VPNShared
+import VPNAppCore
+import LegacyCommon
 
 protocol OverlayViewModelDelegate: AnyObject {
     func stateChanged()

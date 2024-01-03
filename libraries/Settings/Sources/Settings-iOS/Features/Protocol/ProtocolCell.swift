@@ -18,6 +18,7 @@
 
 import SwiftUI
 
+import Domain
 import Strings
 import Theme
 import VPNAppCore

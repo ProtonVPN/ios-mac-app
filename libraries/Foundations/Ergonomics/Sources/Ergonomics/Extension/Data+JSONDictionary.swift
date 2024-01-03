@@ -1,5 +1,5 @@
 //
-//  Created on 03.10.23.
+//  Created on 28/11/2023.
 //
 //  Copyright (c) 2023 Proton AG
 //
@@ -18,4 +18,8 @@
 
 import Foundation
 
-extension String: Error {}
+extension Data {
+    public var jsonDictionary: JSONDictionary? {
+        return (try? JSONSerialization.jsonObject(with: self, options: .mutableContainers)) as? JSONDictionary
+    }
+}

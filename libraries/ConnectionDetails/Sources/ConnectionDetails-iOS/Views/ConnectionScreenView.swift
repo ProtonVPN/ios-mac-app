@@ -17,14 +17,18 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+
 import ComposableArchitecture
-import Strings
-import ConnectionDetails
-import VPNAppCore
-import Theme
-import SharedViews
-import VPNShared
+
 import ProtonCoreUIFoundations
+
+import Domain
+import Strings
+import Theme
+import ConnectionDetails
+import SharedViews
+import VPNAppCore
+import VPNShared
 
 public struct ConnectionScreenFeature: Reducer {
 
@@ -158,10 +162,10 @@ public struct ConnectionScreenFeature: Reducer {
                     return .none // todo: cancel previous task
                 }
                 return .run { send in
-                    @Dependency(\.getServerById) var getServerByIdPublisher
-                    for await vpnServer in getServerByIdPublisher(serverId).values {
-                        await send(.newServer(vpnServer), animation: .default)
-                    }
+                     @Dependency(\.getServerById) var getServerByIdPublisher
+                     for await vpnServer in getServerByIdPublisher(serverId).values {
+                         await send(.newServer(vpnServer), animation: .default)
+                     }
                 }
 
             case .newServer(let vpnServer):

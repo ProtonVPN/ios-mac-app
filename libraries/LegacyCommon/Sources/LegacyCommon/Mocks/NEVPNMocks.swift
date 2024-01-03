@@ -19,8 +19,11 @@
 #if DEBUG
 import Foundation
 import NetworkExtension
-import VPNShared
+
 import XCTestDynamicOverlay
+
+import ExtensionIPC
+import VPNShared
 
 public enum NEMockError: Error {
     case invalidProviderConfiguration

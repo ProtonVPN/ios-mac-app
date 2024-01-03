@@ -21,14 +21,18 @@
 //
 
 import UIKit
-import LegacyCommon
-import Search
-import ProtonCoreUIFoundations
-import VPNShared
+
 import Dependencies
-import VPNAppCore
+
+import ProtonCoreUIFoundations
+
+import Domain
 import Strings
 import Theme
+import Search
+import VPNShared
+import VPNAppCore
+import LegacyCommon
 
 class CountryItemViewModel {
     /// Contains information about the region such as the country code, the tier the

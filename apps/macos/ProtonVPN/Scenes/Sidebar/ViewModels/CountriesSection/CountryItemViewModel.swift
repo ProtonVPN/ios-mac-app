@@ -21,11 +21,14 @@
 //
 
 import Cocoa
+
 import LegacyCommon
-import VPNShared
-import VPNAppCore
+
+import Domain
 import Strings
 import Dependencies
+import VPNShared
+import VPNAppCore
 
 class CountryItemViewModel {
     /// Contains information about the region such as the country code, the tier the

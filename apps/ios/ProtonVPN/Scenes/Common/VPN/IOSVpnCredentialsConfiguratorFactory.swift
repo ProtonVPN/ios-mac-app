@@ -7,8 +7,10 @@
 //
 
 import Foundation
-import LegacyCommon
+
+import Domain
 import VPNShared
+import LegacyCommon
 
 final class IOSVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory {
     

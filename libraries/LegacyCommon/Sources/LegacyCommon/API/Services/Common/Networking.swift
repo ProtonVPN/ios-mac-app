@@ -7,6 +7,10 @@
 //
 
 import Foundation
+
+import KeychainAccess
+import TrustKit
+
 import ProtonCoreFoundations
 import ProtonCoreNetworking
 import ProtonCoreServices
@@ -18,9 +22,9 @@ import ProtonCoreUtilities
 import ProtonCoreChallenge
 #endif
 import GoLibs
+
+import Ergonomics
 import VPNShared
-import TrustKit
-import KeychainAccess
 
 public typealias SuccessCallback = (() -> Void)
 public typealias GenericCallback<T> = ((T) -> Void)
@@ -42,7 +46,7 @@ public protocol NetworkingFactory {
 public protocol Networking: APIServiceDelegate {
     var apiService: PMAPIService { get }
 
-    func request(_ route: Request, completion: @escaping (_ result: Result<VPNShared.JSONDictionary, Error>) -> Void)
+    func request(_ route: Request, completion: @escaping (_ result: Result<JSONDictionary, Error>) -> Void)
     func request<T>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable
     func request(_ route: URLRequest, completion: @escaping (_ result: Result<String, Error>) -> Void)
     func request<T>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable
@@ -139,7 +143,7 @@ public final class CoreNetworking: Networking {
         PMAPIService.noTrustKit = (tk == nil)
     }
 
-    public func request(_ route: Request, completion: @escaping (_ result: Result<VPNShared.JSONDictionary, Error>) -> Void) {
+    public func request(_ route: Request, completion: @escaping (_ result: Result<JSONDictionary, Error>) -> Void) {
         let url = fullUrl(route)
         log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
 
