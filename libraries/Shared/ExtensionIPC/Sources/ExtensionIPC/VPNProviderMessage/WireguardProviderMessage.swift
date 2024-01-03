@@ -18,6 +18,9 @@
 
 import Foundation
 
+import Domain
+import Ergonomics
+
 public enum WireguardProviderRequest: ProviderRequest {
     private enum MessageCode: UInt8 {
         // Standard messages
@@ -273,12 +276,6 @@ private extension HTTPCookie {
         }
 
         return HTTPCookie(properties: cookieProperties)
-    }
-}
-
-extension Data {
-    var jsonDictionary: JSONDictionary? {
-        return (try? JSONSerialization.jsonObject(with: self, options: .mutableContainers)) as? JSONDictionary
     }
 }
 

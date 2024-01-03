@@ -28,8 +28,5 @@ let package = Package(
             resources: [],
             plugins: []
         ),
-        .testTarget(
-            name: "ThemeTests",
-            dependencies: ["Theme"]),
     ]
 )

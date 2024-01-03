@@ -19,7 +19,6 @@
 import Foundation
 
 import Strings
-import VPNShared
 
 public enum ConnectionProtocol: Equatable, Hashable, CaseIterable, Sendable, Codable {
     case vpnProtocol(VpnProtocol)

@@ -16,10 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Dependencies
-import Foundation
 import Combine
-import VPNShared
+
+import Dependencies
+
+import Domain
 
 // This struct is still WIP
 public enum VPNConnectionStatus: Equatable {

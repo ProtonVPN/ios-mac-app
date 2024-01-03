@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+
 import Ergonomics
-import ProtonCoreUtilities
 
 public struct ServerFeature: OptionSet, Codable {
 
@@ -61,7 +61,7 @@ extension ServerFeature {
         }
     }
 
-    func commaSeparatedList(isFree: Bool) -> String {
+    public func commaSeparatedList(isFree: Bool) -> String {
         let featureNames = (isFree ? ["free"] : [])
         return featureNames
             .appending(elements().map(\.featureName))
