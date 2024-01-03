@@ -124,7 +124,11 @@ actor TelemetryBuffer {
             self.events = events
             log.debug("Retrieved \(events.count) events from storage", category: .telemetry)
         } catch {
-            log.warning("Couldn't retrieve Telemetry events from storage: \(error)", category: .telemetry)
+            if (error as? CocoaError)?.code.rawValue == NSFileReadNoSuchFileError {
+                log.info("No Telemetry events in storage", category: .telemetry)
+            } else {
+                log.warning("Couldn't retrieve Telemetry events from storage: \(error)", category: .telemetry)
+            }
         }
     }
 
