@@ -68,6 +68,7 @@ protocol TelemetryTimer {
 }
 
 public protocol TelemetryService: AnyObject {
+    func onboardingEvent(_ event: OnboardingEvent.Event) throws
     func upsellEvent(
         _ event: UpsellEvent.Event,
         modalSource: UpsellEvent.ModalSource?,
@@ -143,6 +144,18 @@ public class TelemetryServiceImplementation: TelemetryService {
 
     public func userInitiatedVPNChange(_ change: UserInitiatedVPNChange) {
         self.userInitiatedVPNChange = change
+    }
+
+    public func onboardingEvent(_ event: OnboardingEvent.Event) throws {
+        guard event != .paymentDone || propertiesManager.isOnboardingInProgress else {
+            return
+        }
+        let cached = try? vpnKeychain.fetchCached()
+        let accountPlan = cached?.accountPlan ?? .free
+        let event = OnboardingEvent(event: event,
+                                    dimensions: .init(userCountry: propertiesManager.userLocation?.country ?? "",
+                                                      userPlan: accountPlan))
+        try telemetryEventScheduler.report(event: event)
     }
 
     public func upsellEvent(

@@ -22,7 +22,7 @@ public struct UpsellEvent: TelemetryEvent, Encodable {
     public typealias VPNStatus = CommonTelemetryDimensions.VPNStatus
     public typealias CodingKeys = TelemetryKeys
 
-    public var measurementGroup: String = "vpn.any.upsell"
+    public let measurementGroup: String = "vpn.any.upsell"
     public let event: Event
     public let dimensions: Dimensions
 
