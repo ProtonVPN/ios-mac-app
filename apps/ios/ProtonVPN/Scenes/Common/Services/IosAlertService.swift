@@ -308,7 +308,9 @@ extension IosAlertService: CoreAlertService {
                                      numberOfDevices: numberOfDevices,
                                      numberOfCountries: numberOfCountries)
         }
-        let viewController = modalsFactory.modalViewController(modalType: modalType)
+        let viewController = modalsFactory.modalViewController(modalType: modalType, primaryAction:  { [weak self] in
+            self?.windowService.dismissModal(nil)
+        })
         viewController.modalPresentationStyle = .overFullScreen
         windowService.present(modal: viewController)
     }
