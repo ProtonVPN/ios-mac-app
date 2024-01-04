@@ -51,7 +51,7 @@ public enum ModalType {
         switch self {
         case .netShield:
             return Localizable.modalsUpsellNetShieldTitle
-        case .welcomeToProton:
+        case .welcomeToProton, .welcomeFallback, .welcomeUnlimited, .welcomePlus:
             return Localizable.modalsCommonGetStarted
         default:
             return Localizable.upgrade
