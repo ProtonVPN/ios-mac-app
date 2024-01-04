@@ -17,7 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+
 import GoLibs
+
+import Domain
 import VPNShared
 
 extension LocalAgentFeatures {   

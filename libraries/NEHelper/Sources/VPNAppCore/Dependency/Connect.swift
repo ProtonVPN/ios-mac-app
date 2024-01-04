@@ -19,6 +19,8 @@
 import Foundation
 import Dependencies
 
+import Domain
+
 extension DependencyValues {
     /// ATM it's neither async nor throws, but the plan is to return only after connection is made and also to throw exceptions
     /// so user can be presented with an error from UI, and not from the depths of VPN connection related code.

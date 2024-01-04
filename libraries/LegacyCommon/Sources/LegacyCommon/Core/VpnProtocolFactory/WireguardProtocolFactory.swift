@@ -8,6 +8,8 @@
 
 import Foundation
 import NetworkExtension
+
+import ExtensionIPC
 import VPNShared
 
 public protocol WireguardProtocolFactoryCreator {

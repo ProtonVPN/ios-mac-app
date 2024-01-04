@@ -20,11 +20,14 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import CommonCrypto
 import Foundation
 import Network
-import VPNShared
+import CommonCrypto
+
 import XCTestDynamicOverlay
+
+import Domain
+import VPNShared
 
 @available(*, deprecated, message: "OpenVPN has been deprecated (VPNAPPL-1843)")
 final class OpenVPNTCPAvailabilityChecker: SmartProtocolAvailabilityChecker {

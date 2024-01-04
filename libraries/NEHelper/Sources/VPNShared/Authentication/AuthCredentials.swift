@@ -21,6 +21,8 @@
 
 import Foundation
 
+import Ergonomics
+
 public class AuthCredentials: NSObject, NSSecureCoding, Codable {
     static let VERSION: Int = 0 // Current build version.
 

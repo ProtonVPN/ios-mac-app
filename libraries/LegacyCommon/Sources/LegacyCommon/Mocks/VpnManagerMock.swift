@@ -21,7 +21,10 @@
 
 #if DEBUG
 import Foundation
+
+import Domain
 import VPNShared
+
 import Home
 
 public class VpnManagerMock: VpnManagerProtocol {

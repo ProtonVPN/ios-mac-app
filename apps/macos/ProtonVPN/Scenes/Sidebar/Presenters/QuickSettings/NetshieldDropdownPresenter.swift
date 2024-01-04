@@ -20,14 +20,17 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import AppKit
 import Foundation
+
+import Dependencies
+
+import Domain
+import Strings
+import Home
 import Modals_macOS
 import LegacyCommon
-import AppKit
 import VPNShared
-import Home
-import Strings
-import Dependencies
 
 class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     

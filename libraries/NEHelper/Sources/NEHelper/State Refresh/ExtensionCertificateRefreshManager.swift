@@ -8,6 +8,8 @@
 
 import Foundation
 import NetworkExtension
+
+import Domain
 import Timer
 import VPNShared
 

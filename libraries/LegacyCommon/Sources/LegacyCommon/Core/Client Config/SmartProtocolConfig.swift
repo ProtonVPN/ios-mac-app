@@ -21,7 +21,8 @@
 //
 
 import Foundation
-import Logging
+
+import Domain
 import VPNShared
 
 public struct SmartProtocolConfig: Codable, Equatable, DefaultableProperty {

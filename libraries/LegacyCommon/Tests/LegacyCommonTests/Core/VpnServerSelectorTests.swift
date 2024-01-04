@@ -21,8 +21,11 @@
 //
 
 import XCTest
-@testable import LegacyCommon
+
+import Domain
 import VPNAppCore
+
+@testable import LegacyCommon
 
 class VpnServerSelectorTests: XCTestCase {
     static let connectionProtocol: ConnectionProtocol = .vpnProtocol(.ike)

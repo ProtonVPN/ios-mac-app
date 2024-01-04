@@ -21,13 +21,18 @@
 //
 
 import Foundation
-import GoLibs
 import Reachability
-import VPNShared
 import Network
-import LocalFeatureFlags
+
 import Dependencies
+
+import GoLibs
+
+import Domain
+import LocalFeatureFlags
 import Timer
+import VPNShared
+
 import Home
 
 private enum LocalAgentFeature: String, FeatureFlag {

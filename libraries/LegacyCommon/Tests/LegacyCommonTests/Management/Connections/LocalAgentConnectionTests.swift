@@ -17,10 +17,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
 import NetworkExtension
-import VPNShared
+import XCTest
+
 import GoLibs
+
+import Domain
+import VPNShared
+
 @testable import LegacyCommon
 
 class LocalAgentConnectionTests: ConnectionTestCaseDriver {

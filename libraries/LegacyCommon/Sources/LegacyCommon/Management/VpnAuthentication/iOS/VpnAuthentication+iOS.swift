@@ -17,8 +17,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import VPNShared
+
 import Dependencies
+
+import Domain
+import ExtensionIPC
+import VPNShared
 
 #if os(iOS)
 public final class VpnAuthenticationRemoteClient: VpnAuthentication {

@@ -17,13 +17,18 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Dependencies
-import XCTest
 import NetworkExtension
-import VPNShared
-import VPNSharedTesting
+import XCTest
+
+import Dependencies
+
 import GoLibs
 import ProtonCoreServices
+
+import Domain
+import VPNShared
+import VPNSharedTesting
+
 @testable import LegacyCommon
 
 class ConnectionSwitchingTests: BaseConnectionTestCase {

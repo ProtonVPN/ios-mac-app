@@ -17,8 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+
 import Dependencies
 import KeychainAccess
+
+import Domain
 import Ergonomics
 import PMLogger
 

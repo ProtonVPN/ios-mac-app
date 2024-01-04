@@ -17,9 +17,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import XCTest
+
 import Dependencies
+
+import Domain
 import VPNShared
 import VPNSharedTesting
+
 @testable import LegacyCommon
 
 final class NATTypePropertyProviderImplementationTests: XCTestCase {

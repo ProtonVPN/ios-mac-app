@@ -187,6 +187,10 @@
 		AD6099FB299B2343007E46BC /* ImageSubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6099FA299B2343007E46BC /* ImageSubtitleTableViewCell.swift */; };
 		AD609A03299B89C0007E46BC /* ImageSubtitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD609A02299B89C0007E46BC /* ImageSubtitleTableViewCell.xib */; };
 		AD609A05299D1120007E46BC /* ImageSubtitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD609A02299B89C0007E46BC /* ImageSubtitleTableViewCell.xib */; };
+		AD626C762B167DEF006E11FC /* ExtensionIPC in Frameworks */ = {isa = PBXBuildFile; productRef = AD626C752B167DEF006E11FC /* ExtensionIPC */; };
+		AD626C782B167DF5006E11FC /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = AD626C772B167DF5006E11FC /* Domain */; };
+		AD626C7A2B167DFC006E11FC /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = AD626C792B167DFC006E11FC /* Domain */; };
+		AD626C7C2B167E00006E11FC /* ExtensionIPC in Frameworks */ = {isa = PBXBuildFile; productRef = AD626C7B2B167E00006E11FC /* ExtensionIPC */; };
 		AD80107E2AC6CEAD000DB179 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* LiveDependencies.swift */; };
 		AD80107F2AC6CEAE000DB179 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* LiveDependencies.swift */; };
 		AD8010802AC6CEAE000DB179 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* LiveDependencies.swift */; };
@@ -194,6 +198,7 @@
 		AD8130FD2A852E4F00729E03 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* LiveDependencies.swift */; };
 		AD81310D2A853E2C00729E03 /* AlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A7E6F2374C150008A0DA0 /* AlertTests.swift */; };
 		ADA1A0402A95E4EB00F9A6B6 /* Verifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1A03F2A95E4EB00F9A6B6 /* Verifier.swift */; };
+		ADA2E1712B16941300792E2C /* ExtensionIPC in Frameworks */ = {isa = PBXBuildFile; productRef = ADA2E1702B16941300792E2C /* ExtensionIPC */; };
 		ADA7343729B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADA7343629B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib */; };
 		ADA7343929B1896300CF8F77 /* NetShieldStatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA7343829B1896300CF8F77 /* NetShieldStatsTableViewCell.swift */; };
 		ADBA84D92A589F27001EF3F5 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = 0F37F582FD946FEFFFACCDE6 /* Theme */; };
@@ -1014,6 +1019,7 @@
 				D555C49B297EE22D000593EF /* LocalFeatureFlags in Frameworks */,
 				4C506BD92A716BEE005895E6 /* ProtonCorePayments in Frameworks */,
 				4C506BD72A716BE6005895E6 /* ProtonCorePaymentsUI in Frameworks */,
+				ADA2E1712B16941300792E2C /* ExtensionIPC in Frameworks */,
 				D554556422805539006574F9 /* NetworkExtension.framework in Frameworks */,
 				4C4E98352AC1C07E00B7B285 /* DictionaryCoder in Frameworks */,
 			);
@@ -1037,12 +1043,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD626C7A2B167DFC006E11FC /* Domain in Frameworks */,
 				4CCB4C5C2A6ECCE1002D4204 /* ProtonCoreLog in Frameworks */,
 				4C78F5F52A6E8C0F0099DA1A /* TunnelKitOpenVPNAppExtension in Frameworks */,
 				4CCB4C5E2A6ED114002D4204 /* ProtonCoreUtilities in Frameworks */,
 				D555C493297E7B22000593EF /* NEHelper in Frameworks */,
 				E5DEF0612A739A08006FC9DC /* DictionaryCoder in Frameworks */,
 				D555C495297E7B26000593EF /* PMLogger in Frameworks */,
+				AD626C7C2B167E00006E11FC /* ExtensionIPC in Frameworks */,
 				E144150422EF39F700894DD0 /* NetworkExtension.framework in Frameworks */,
 				4C78F5F72A6E8C380099DA1A /* TunnelKitOpenVPN in Frameworks */,
 				D555C497297E7B3A000593EF /* Timer in Frameworks */,
@@ -1071,11 +1079,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD626C762B167DEF006E11FC /* ExtensionIPC in Frameworks */,
 				E59C7A9129229A940034E56F /* NEHelper in Frameworks */,
 				E59C7A9029229A940034E56F /* Modals in Frameworks */,
 				D5EE41312AD9619800ECC064 /* WireGuardKit in Frameworks */,
 				E9445D5F26528A790075FD31 /* NetworkExtension.framework in Frameworks */,
 				D5F65F9828A149BC0062CF85 /* Timer in Frameworks */,
+				AD626C782B167DF5006E11FC /* Domain in Frameworks */,
 				D5A3C34828D376CB00D69CD5 /* PMLogger in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2452,6 +2462,7 @@
 				4C506BD82A716BEE005895E6 /* ProtonCorePayments */,
 				E5FD25C72A73AD8600D9BDC0 /* ProtonCoreCryptoVPNPatchedGoImplementation */,
 				4C4E98342AC1C07E00B7B285 /* DictionaryCoder */,
+				ADA2E1702B16941300792E2C /* ExtensionIPC */,
 			);
 			productName = "Siri Shortcut Handler";
 			productReference = D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */;
@@ -2509,6 +2520,8 @@
 				4CCB4C5B2A6ECCE1002D4204 /* ProtonCoreLog */,
 				4CCB4C5D2A6ED114002D4204 /* ProtonCoreUtilities */,
 				E5DEF0602A739A08006FC9DC /* DictionaryCoder */,
+				AD626C792B167DFC006E11FC /* Domain */,
+				AD626C7B2B167E00006E11FC /* ExtensionIPC */,
 			);
 			productName = "OpenVPN Extension";
 			productReference = E14414F722EF38ED00894DD0 /* OpenVPN Extension.appex */;
@@ -2566,6 +2579,8 @@
 				D16ECAECC9861A6ED5EDA4F2 /* Modals */,
 				2DC3E67F6A25A4AD4DFCF448 /* NEHelper */,
 				D5EE41302AD9619800ECC064 /* WireGuardKit */,
+				AD626C752B167DEF006E11FC /* ExtensionIPC */,
+				AD626C772B167DF5006E11FC /* Domain */,
 			);
 			productName = "WireGuardiOS Extension";
 			productReference = E9445D5E26528A790075FD31 /* WireGuardiOS Extension.appex */;
@@ -4752,6 +4767,26 @@
 		57BC69892B1F33CB0049485C /* ProtonCoreAccountRecovery */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCoreAccountRecovery;
+		};
+		AD626C752B167DEF006E11FC /* ExtensionIPC */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ExtensionIPC;
+		};
+		AD626C772B167DF5006E11FC /* Domain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Domain;
+		};
+		AD626C792B167DFC006E11FC /* Domain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Domain;
+		};
+		AD626C7B2B167E00006E11FC /* ExtensionIPC */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ExtensionIPC;
+		};
+		ADA2E1702B16941300792E2C /* ExtensionIPC */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ExtensionIPC;
 		};
 		ADBA84DE2A58A1A0001EF3F5 /* CasePaths */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -17,13 +17,17 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+
+import ComposableArchitecture
+
+import ProtonCoreUIFoundations
+
+import Domain
 import Home
 import VPNAppCore
-import ComposableArchitecture
 import Strings
 import Theme
 import SharedViews
-import ProtonCoreUIFoundations
 
 struct RecentsSectionView: View {
 

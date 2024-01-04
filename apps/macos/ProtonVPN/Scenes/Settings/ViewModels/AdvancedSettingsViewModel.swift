@@ -17,11 +17,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import LegacyCommon
-import VPNShared
+
+import Dependencies
+
+import Domain
 import LocalFeatureFlags
 import Strings
-import Dependencies
+import LegacyCommon
+import VPNShared
 
 final class AdvancedSettingsViewModel {
     typealias Factory = PropertiesManagerFactory

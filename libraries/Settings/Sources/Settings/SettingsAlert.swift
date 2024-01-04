@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 
+import Domain
 import Strings
 import VPNAppCore
 
