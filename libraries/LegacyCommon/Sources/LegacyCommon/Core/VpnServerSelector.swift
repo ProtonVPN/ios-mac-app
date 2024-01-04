@@ -21,6 +21,8 @@
 //
 
 import Foundation
+
+import Domain
 import VPNAppCore
 
 /// Selects the most suitable server to connect to

@@ -21,7 +21,10 @@
 //
 
 import Foundation
+
 import Dependencies
+
+import Domain
 import VPNShared
 
 public struct LocalAgentConfiguration {

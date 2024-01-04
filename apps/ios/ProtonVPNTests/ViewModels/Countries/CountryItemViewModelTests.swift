@@ -21,6 +21,8 @@
 //
 
 import XCTest
+
+import Domain
 import LegacyCommon
 import ProtonCoreUIFoundations
 import TimerMock

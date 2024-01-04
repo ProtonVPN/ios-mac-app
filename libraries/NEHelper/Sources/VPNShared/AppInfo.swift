@@ -17,10 +17,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Dependencies
 #if os(iOS)
 import UIKit
 #endif
+
+import Dependencies
+
+import Ergonomics
 
 public enum AppContext: String {
     case mainApp

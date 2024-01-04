@@ -21,6 +21,8 @@
 //
 
 import ProtonCoreNetworking
+
+import Ergonomics
 import VPNShared
 
 final class VPNLocationRequest: Request {
@@ -42,7 +44,7 @@ public struct UserLocation: Codable {
     public let country: String
     public let isp: String
 
-    public init(dic: VPNShared.JSONDictionary) throws {
+    public init(dic: JSONDictionary) throws {
         ip = try dic.stringOrThrow(key: "IP")
         country = try dic.stringOrThrow(key: "Country")
         isp = try dic.stringOrThrow(key: "ISP")

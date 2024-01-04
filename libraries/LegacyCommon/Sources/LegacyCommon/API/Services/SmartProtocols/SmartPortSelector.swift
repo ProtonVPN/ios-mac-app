@@ -7,8 +7,11 @@
 //
 
 import Foundation
-import VPNShared
+
 import XCTestDynamicOverlay
+
+import Domain
+import VPNShared
 
 typealias SmartPortSelectorCompletion = ([Int]) -> Void
 

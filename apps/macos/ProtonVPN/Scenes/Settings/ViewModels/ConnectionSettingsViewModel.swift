@@ -21,12 +21,15 @@
 //
 
 import Cocoa
+
 import Dependencies
+
+import Domain
+import Theme
+import Strings
 import LegacyCommon
 import VPNShared
 import VPNAppCore
-import Theme
-import Strings
 
 final class ConnectionSettingsViewModel {
     @Dependency(\.profileAuthorizer) var profileAuthorizer

@@ -21,9 +21,12 @@
 //
 
 import Foundation
+
 import Dependencies
-import VPNShared
+
+import Domain
 import LocalFeatureFlags
+import VPNShared
 
 public protocol NetShieldPropertyProvider: FeaturePropertyProvider {
     /// Current NetShield type

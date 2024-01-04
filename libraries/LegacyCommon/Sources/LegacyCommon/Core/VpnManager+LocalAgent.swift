@@ -21,8 +21,12 @@
 //
 
 import Foundation
-import VPNShared
+
+import Domain
 import LocalFeatureFlags
+import ExtensionIPC
+import VPNShared
+
 import Home
 
 private let localAgentQueue = DispatchQueue(label: "ch.protonvpn.apple.local-agent")

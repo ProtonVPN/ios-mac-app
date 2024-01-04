@@ -22,6 +22,8 @@
 
 import Foundation
 import NetworkExtension
+
+import Domain
 import VPNShared
 
 public protocol VpnStateConfigurationFactory {

@@ -22,6 +22,8 @@
 
 import Foundation
 import Network
+
+import Domain
 import VPNShared
 
 final class IKEv2AvailabilityChecker: SharedLibraryUDPAvailabilityChecker {

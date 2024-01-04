@@ -20,8 +20,11 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import ProtonCoreNetworking
 import Foundation
+
+import ProtonCoreNetworking
+
+import Domain
 import VPNShared
 
 #if canImport(UIKit)

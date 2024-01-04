@@ -17,6 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import XCTest
+
+import Ergonomics
+
 @testable import NEHelper
 @testable import VPNShared
 

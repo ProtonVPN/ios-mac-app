@@ -20,15 +20,18 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Cocoa
-import LegacyCommon
 import AppKit
-import VPNShared
-import Theme
-import Ergonomics
-import Home
-import Strings
+import Cocoa
+
 import Dependencies
+
+import Domain
+import Ergonomics
+import Strings
+import Theme
+import Home
+import VPNShared
+import LegacyCommon
 
 class QuickSettingsStack: NSStackView {
 

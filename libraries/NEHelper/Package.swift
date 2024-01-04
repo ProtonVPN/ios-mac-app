@@ -18,11 +18,16 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../external/protoncore"),
-        .package(path: "../Ergonomics"),
-        .package(path: "../Timer"),
-        .package(path: "../PMLogger"),
-        .package(path: "../LocalFeatureFlags"),
-        .package(path: "../Strings"),
+
+        .package(path: "../Foundations/Domain"),
+        .package(path: "../Foundations/Ergonomics"),
+        .package(path: "../Foundations/LocalFeatureFlags"),
+        .package(path: "../Foundations/PMLogger"),
+        .package(path: "../Foundations/Strings"),
+        .package(path: "../Foundations/Timer"),
+
+        .package(path: "../Shared/ExtensionIPC"),
+
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.4.4"),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", exact: "4.2.2"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies.git", exact: "1.0.0"),
@@ -32,6 +37,8 @@ let package = Package(
         .target(
             name: "VPNShared",
             dependencies: [
+                "Domain",
+                "ExtensionIPC",
                 "VPNCrypto",
                 .product(name: "Ergonomics", package: "Ergonomics"),
                 .product(name: "Timer", package: "Timer"),
@@ -45,11 +52,13 @@ let package = Package(
         .target(
             name: "NEHelper",
             dependencies: [
+                "Ergonomics",
+                "ExtensionIPC",
+                "VPNShared",
                 .product(name: "Timer", package: "Timer"),
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "LocalFeatureFlags", package: "LocalFeatureFlags"),
-                .core(module: "Utilities"),
-                "VPNShared"
+                .core(module: "Utilities")
             ]
         ),
         .target(

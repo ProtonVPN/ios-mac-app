@@ -17,8 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Dependencies
 import Combine
+
+import Dependencies
+
+import Domain
 import VPNAppCore
 
 public struct VpnServerGetter {

@@ -15,11 +15,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Combine
+
 import ComposableArchitecture
+import Dependencies
+
+import Domain
 import VPNAppCore
 import PMLogger
-import Dependencies
-import Combine
 
 private var appStateManager: AppStateManager! = Container.sharedContainer.makeAppStateManager()
 

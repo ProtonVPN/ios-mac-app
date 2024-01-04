@@ -18,11 +18,15 @@
 
 import Foundation
 import UIKit
+
+import Dependencies
+
+import Domain
+import Strings
+import Theme
+
 import LegacyCommon
 import VPNShared
-import Strings
-import Dependencies
-import Theme
 
 final class NetShieldSelectionViewModel {
     typealias Factory = PlanServiceFactory & AppSessionManagerFactory & CoreAlertServiceFactory & NetShieldPropertyProviderFactory

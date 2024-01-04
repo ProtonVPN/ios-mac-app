@@ -19,10 +19,12 @@
 #if DEBUG
 import Foundation
 import NetworkExtension
+
+import Domain
+import Timer
 import TimerMock
 import VPNShared
 import VPNSharedTesting
-import Timer
 
 public class MockDependencyContainer {
     public static let appGroup = "test"

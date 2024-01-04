@@ -21,12 +21,15 @@
 //
 
 import XCTest
-import LegacyCommon
+
+import Domain
+import Strings
 import VPNAppCore
+import LegacyCommon
+
 import TimerMock
 import VPNShared
 import VPNSharedTesting
-import Strings
 
 @testable import ProtonVPN
 

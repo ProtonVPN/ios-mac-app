@@ -16,12 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import VPNShared
-import GoLibs
 import XCTest
+
 import Dependencies
-import TimerMock
+
+import GoLibs
+
+import Domain
 import LocalFeatureFlags
+import TimerMock
+import VPNShared
 @testable import LegacyCommon
 
 final class LocalAgentTests: XCTestCase {

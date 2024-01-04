@@ -26,10 +26,14 @@ import AppKit
 #endif
 
 import Dependencies
+
 import ProtonCoreUIFoundations
-import VPNAppCore
+
+import Domain
 import Strings
 import Theme
+
+import VPNAppCore
 
 
 public enum ProfileConstants {

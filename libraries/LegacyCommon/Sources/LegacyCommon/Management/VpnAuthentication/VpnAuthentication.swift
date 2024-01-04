@@ -21,6 +21,8 @@
 //
 
 import Foundation
+
+import Domain
 import VPNShared
 
 public protocol VpnAuthenticationFactory {

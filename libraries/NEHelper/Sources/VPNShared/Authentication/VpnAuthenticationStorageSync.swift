@@ -22,6 +22,8 @@
 
 import Foundation
 
+import Domain
+
 public protocol VpnAuthenticationStorageFactory {
     func makeVpnAuthenticationStorage() -> VpnAuthenticationStorageSync
 }

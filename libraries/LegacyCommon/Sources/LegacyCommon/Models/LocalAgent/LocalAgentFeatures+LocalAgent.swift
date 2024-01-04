@@ -22,6 +22,8 @@
 
 import Foundation
 import GoLibs
+
+import Domain
 import VPNShared
 
 enum LocalAgentFeaturesKeys: String {

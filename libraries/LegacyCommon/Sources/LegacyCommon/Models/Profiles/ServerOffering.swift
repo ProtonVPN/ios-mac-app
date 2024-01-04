@@ -20,6 +20,8 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+
+import Domain
 import VPNAppCore
 
 // This is needed to maintain compatibility with how profiles are stored on disk

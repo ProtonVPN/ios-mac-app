@@ -18,18 +18,22 @@
 
 // MARK: - Start SwiftUI Life cycle
 import SwiftUI
+
+import ComposableArchitecture
+
+import Domain
 import Theme
+
 import Home
 import Home_iOS
 import ConnectionDetails
 import ConnectionDetails_iOS
-import LegacyCommon
-import VPNShared
-import VPNAppCore
 import Settings
 import Settings_iOS
 
-import ComposableArchitecture
+import LegacyCommon
+import VPNShared
+import VPNAppCore
 
 struct AppReducer: Reducer {
     struct State: Equatable {

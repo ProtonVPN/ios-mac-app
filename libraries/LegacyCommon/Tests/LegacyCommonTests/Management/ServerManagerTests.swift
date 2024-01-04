@@ -20,9 +20,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-@testable import LegacyCommon
 import XCTest
+
+import Domain
 import VPNShared
+
+@testable import LegacyCommon
 
 class ServerManagerTests: XCTestCase {
     let serverStorage = ServerStorageMock(fileName: "ServerManagerTestServers", bundle: Bundle.module)
