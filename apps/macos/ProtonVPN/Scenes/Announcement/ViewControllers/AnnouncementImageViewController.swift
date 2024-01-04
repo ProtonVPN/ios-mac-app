@@ -18,8 +18,8 @@
 
 import AppKit
 import LegacyCommon
-import SDWebImage
 import Ergonomics
+import Strings
 
 final class AnnouncementImageViewController: NSViewController {
     @IBOutlet private weak var imageView: NSImageView!
@@ -56,7 +56,7 @@ final class AnnouncementImageViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        actionButton.title = data.button.text
+        actionButton.title = data.button.text ?? Localizable.ok
         actionButton.contentTintColor = .color(.icon)
 
         progressIndicator.startAnimation(nil)

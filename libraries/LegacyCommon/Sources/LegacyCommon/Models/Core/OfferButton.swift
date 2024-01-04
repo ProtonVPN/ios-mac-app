@@ -20,7 +20,7 @@ import Foundation
 
 public struct OfferButton: Codable {
     public let url: String
-    public let text: String
+    public let text: String?
     public let action: Offer.Action?
     public let behaviors: [Offer.Behavior]?
 

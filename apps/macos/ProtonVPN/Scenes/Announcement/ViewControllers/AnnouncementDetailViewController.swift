@@ -21,9 +21,9 @@
 //
 
 import Cocoa
-import SDWebImage
 import LegacyCommon
 import Ergonomics
+import Strings
 
 final class AnnouncementDetailViewController: NSViewController {
     @IBOutlet private weak var incentiveLabel: NSTextField!
@@ -94,7 +94,7 @@ final class AnnouncementDetailViewController: NSViewController {
         featuresFooterLabel.textColor = .color(.text, .weak)
         featuresFooterLabel.stringValue = data.featuresFooter
 
-        actionButton.title = data.button.text
+        actionButton.title = data.button.text ?? Localizable.ok
         actionButton.contentTintColor = .color(.icon)
 
         pageFooterLabel.textColor = .color(.text, .weak)

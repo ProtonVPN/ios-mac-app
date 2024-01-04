@@ -366,6 +366,8 @@
 		E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C42811698F0060C463 /* Modals-iOS */; };
 		E547D2F529EE9F67008FB760 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E547D2F429EE9F67008FB760 /* Theme */; };
 		E551EB0529AF583D00B6612D /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0429AF583D00B6612D /* Assets.swift */; };
+		E5814EDD2B481F4E00ACF2A7 /* OfferBannerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5814EDB2B481F4D00ACF2A7 /* OfferBannerViewCell.xib */; };
+		E5814EDE2B481F4E00ACF2A7 /* OfferBannerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5814EDC2B481F4D00ACF2A7 /* OfferBannerViewCell.swift */; };
 		E582CC122A1372B500C91B64 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E582CC112A1372B500C91B64 /* Theme */; };
 		E58974762A81296E0017987D /* OHHTTPStubs in Frameworks */ = {isa = PBXBuildFile; productRef = E58974752A81296E0017987D /* OHHTTPStubs */; };
 		E58974782A81297D0017987D /* OHHTTPStubsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E58974772A81297D0017987D /* OHHTTPStubsSwift */; };
@@ -869,6 +871,8 @@
 		E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationTableViewCell.swift; sourceTree = "<group>"; };
 		E551EB0329AF570E00B6612D /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		E551EB0429AF583D00B6612D /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
+		E5814EDB2B481F4D00ACF2A7 /* OfferBannerViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OfferBannerViewCell.xib; sourceTree = "<group>"; };
+		E5814EDC2B481F4D00ACF2A7 /* OfferBannerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfferBannerViewCell.swift; sourceTree = "<group>"; };
 		E58E5AB32A4AD33000891B77 /* InitialStateProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialStateProvider.swift; sourceTree = "<group>"; };
 		E59C7A922923B1650034E56F /* ServersInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServersInformationViewController.swift; sourceTree = "<group>"; };
 		E59C7A962923B1BB0034E56F /* ServersInformationViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ServersInformationViewController.storyboard; sourceTree = "<group>"; };
@@ -1969,6 +1973,8 @@
 		F36ECC862611C5050089B898 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E5814EDC2B481F4D00ACF2A7 /* OfferBannerViewCell.swift */,
+				E5814EDB2B481F4D00ACF2A7 /* OfferBannerViewCell.xib */,
 				D572E56F2AB487D900CBD2B7 /* BannerViewCell.swift */,
 				D572E56E2AB487D900CBD2B7 /* BannerViewCell.xib */,
 				796BD1D021144D49003D6B8D /* ServersHeaderView.swift */,
@@ -2785,6 +2791,7 @@
 				66E34BB827AC0978002FC827 /* ButtonWithLoadingTableViewCell.xib in Resources */,
 				793ECF3E2148E84500C186A7 /* TooltipTableViewCell.xib in Resources */,
 				4CF2981B2A7D3B8E00DEB23F /* pl.lproj in Resources */,
+				E5814EDD2B481F4E00ACF2A7 /* OfferBannerViewCell.xib in Resources */,
 				4CF2982D2A7D3B8E00DEB23F /* pt-PT.lproj in Resources */,
 				E169FC3D2289AE9900FDC933 /* phone_country_code.geojson in Resources */,
 				D580AB8E2452C798003C34B9 /* TroubleshootingCell.xib in Resources */,
@@ -3181,6 +3188,7 @@
 				793ECF462149045400C186A7 /* AppVersionView.swift in Sources */,
 				79848BB020D2011500EF6F9F /* CountryAnnotationViewModel.swift in Sources */,
 				D5ADA9C9228AE04A004B0891 /* UIAlertService.swift in Sources */,
+				E5814EDE2B481F4E00ACF2A7 /* OfferBannerViewCell.swift in Sources */,
 				791C54F2214A75DB00C6F337 /* ConnectionBarViewController.swift in Sources */,
 				E119AF732170B8E800255F7E /* CountryAnnotation.swift in Sources */,
 				428DF978262EFCDE00944379 /* ServersStreamingFeaturesVC.swift in Sources */,

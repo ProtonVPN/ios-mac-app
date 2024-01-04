@@ -229,6 +229,9 @@
 		E1F59B5720DCF26A00798435 /* StatusMenuCountryViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F59B5520DCF26A00798435 /* StatusMenuCountryViewItem.xib */; };
 		E1F59B5920E11B7600798435 /* StatusBarAppConnectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F59B5820E11B7600798435 /* StatusBarAppConnectButton.swift */; };
 		E1FFCF82202DAF17001B8108 /* ServerInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FFCF80202DAF17001B8108 /* ServerInfo.xib */; };
+		E508403C2B502C6E0055BF09 /* OfferBannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E508403B2B502C6E0055BF09 /* OfferBannerViewModel.swift */; };
+		E50859E82B4D679600673EF1 /* OfferBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50859E62B4D679600673EF1 /* OfferBannerView.swift */; };
+		E50859E92B4D679600673EF1 /* OfferBannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E50859E72B4D679600673EF1 /* OfferBannerView.xib */; };
 		E50B623D28B4D2FE004D533B /* AnnouncementImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50B623C28B4D2FE004D533B /* AnnouncementImageViewController.swift */; };
 		E50B623F28B4D30F004D533B /* AnnouncementImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E50B623E28B4D30F004D533B /* AnnouncementImageViewController.xib */; };
 		E51122DC27D0B6780088FCAC /* XCUIElement+forceClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51122DB27D0B6780088FCAC /* XCUIElement+forceClick.swift */; };
@@ -771,6 +774,9 @@
 		E1F59B5520DCF26A00798435 /* StatusMenuCountryViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatusMenuCountryViewItem.xib; sourceTree = "<group>"; };
 		E1F59B5820E11B7600798435 /* StatusBarAppConnectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarAppConnectButton.swift; sourceTree = "<group>"; };
 		E1FFCF80202DAF17001B8108 /* ServerInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServerInfo.xib; sourceTree = "<group>"; };
+		E508403B2B502C6E0055BF09 /* OfferBannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferBannerViewModel.swift; sourceTree = "<group>"; };
+		E50859E62B4D679600673EF1 /* OfferBannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfferBannerView.swift; sourceTree = "<group>"; };
+		E50859E72B4D679600673EF1 /* OfferBannerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OfferBannerView.xib; sourceTree = "<group>"; };
 		E50B623C28B4D2FE004D533B /* AnnouncementImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementImageViewController.swift; sourceTree = "<group>"; };
 		E50B623E28B4D30F004D533B /* AnnouncementImageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementImageViewController.xib; sourceTree = "<group>"; };
 		E51122DB27D0B6780088FCAC /* XCUIElement+forceClick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "XCUIElement+forceClick.swift"; path = "../../../macos/ProtonVPNUITests/Other classes/XCUIElement+forceClick.swift"; sourceTree = "<group>"; };
@@ -2258,6 +2264,7 @@
 				42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */,
 				EE5B17441F39CDF700879BE0 /* HeaderViewModel.swift */,
 				27AA91B78C375F475C3F8608 /* BannerViewModel.swift */,
+				E508403B2B502C6E0055BF09 /* OfferBannerViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -2334,6 +2341,8 @@
 		F36ECE242611DF190089B898 /* CountriesSection */ = {
 			isa = PBXGroup;
 			children = (
+				E50859E62B4D679600673EF1 /* OfferBannerView.swift */,
+				E50859E72B4D679600673EF1 /* OfferBannerView.xib */,
 				EEF7814A1F1A701900E77B59 /* CountriesSection.xib */,
 				EECEF3D81F1699F500A16606 /* CountryItemCellView.xib */,
 				EECEF3DD1F169B4800A16606 /* CountryItemCellView.swift */,
@@ -3103,6 +3112,7 @@
 				EE7874A21F3B63C7001E261E /* WarningPopup.xib in Resources */,
 				EE4943EC1F29BE3600CF980F /* Login.xib in Resources */,
 				BEC156ED7BB56668D6932825 /* AnnouncementFeatureView.xib in Resources */,
+				E50859E92B4D679600673EF1 /* OfferBannerView.xib in Resources */,
 				E5EB08CA281FDF4800F29B20 /* LoadingView.xib in Resources */,
 				62A4D59A5CDFD51355EAEA8B /* AnnouncementDetailViewController.xib in Resources */,
 				4E06182DC9F62ECAC45524E0 /* SubuserMacAlertViewController.xib in Resources */,
@@ -3378,6 +3388,7 @@
 				4CA7BA4F2965788B0001C7E7 /* PopUpButtonItemViewModel.swift in Sources */,
 				E9E5F98427C667170068309F /* AppCertificateRefreshManager.swift in Sources */,
 				EEDC30B61EFB18DC00279A3A /* Bundle+Extension.swift in Sources */,
+				E50859E82B4D679600673EF1 /* OfferBannerView.swift in Sources */,
 				F34AC17727F33E360007FF93 /* ProtonReachabilityChecker.swift in Sources */,
 				E5FF89632A810046002B4A49 /* SideBarButtonStyle.swift in Sources */,
 				EE46A08E1F2E1BD5008B435C /* StatusMenuViewModel.swift in Sources */,
@@ -3571,6 +3582,7 @@
 				EEA556341F1F48F20061F43F /* ColorPickerItemView.swift in Sources */,
 				E187022220E27801000521AC /* StatusMenuProfilesListViewModel.swift in Sources */,
 				3328A24484BCAA8F674140DC /* XPCConnectionsRepository.swift in Sources */,
+				E508403C2B502C6E0055BF09 /* OfferBannerViewModel.swift in Sources */,
 				09A7611B37870D3AFF300CF6 /* WireguardMacProtocolFactory.swift in Sources */,
 				00812A4F085892E5DCCEE741 /* SysexGuideWindowController.swift in Sources */,
 				5553CE25D76277AC1F78D477 /* AnnouncementDetailViewController.swift in Sources */,

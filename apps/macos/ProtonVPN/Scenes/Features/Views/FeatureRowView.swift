@@ -22,7 +22,6 @@
 
 import Cocoa
 import LegacyCommon
-import SDWebImage
 
 class FeatureRowView: NSView {
     

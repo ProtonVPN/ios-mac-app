@@ -25,6 +25,7 @@ import Foundation
 public protocol AnnouncementManager {
     var hasUnreadAnnouncements: Bool { get }
     func fetchCurrentAnnouncementsFromStorage() -> [Announcement]
+    func fetchCurrentOfferBannerFromStorage() -> Announcement?
     func markAsRead(announcement: Announcement)
     func shouldShowAnnouncementsIcon() -> Bool
 }
@@ -50,7 +51,15 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
     public func shouldShowAnnouncementsIcon() -> Bool {
         fetchCurrentAnnouncementsFromStorage().contains(where: { $0.knownType == .default })
     }
-    
+
+    public func fetchCurrentOfferBannerFromStorage() -> Announcement? {
+        announcementStorage.fetch().filter {
+            $0.knownType == .banner && $0.startTime.isPast && $0.endTime.isFuture && $0.offer != nil && $0.isRead == false
+        }.sorted { // sorting is needed because we only want to consider the first announcement
+            $0.startTime < $1.startTime
+        }.first
+    }
+
     public func fetchCurrentAnnouncementsFromStorage() -> [Announcement] {
         announcementStorage.fetch().filter {
             $0.startTime.isPast && $0.endTime.isFuture && $0.offer != nil
