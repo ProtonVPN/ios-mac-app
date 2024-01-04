@@ -21,7 +21,6 @@
 //
 
 import Cocoa
-import SDWebImage
 import LegacyCommon
 
 final class AnnouncementFeatureView: NSView {

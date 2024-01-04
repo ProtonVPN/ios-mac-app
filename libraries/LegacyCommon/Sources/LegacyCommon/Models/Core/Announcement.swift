@@ -52,6 +52,7 @@ extension Announcement {
     public enum NotificationType: Int, Codable {
         case `default` = 0
         case oneTime = 1
+        case banner = 2
     }
 }
 

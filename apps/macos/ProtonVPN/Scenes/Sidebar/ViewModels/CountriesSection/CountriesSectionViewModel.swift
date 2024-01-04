@@ -39,6 +39,7 @@ enum CellModel {
     case server(ServerItemViewModel)
     case profile(ProfileItemViewModel)
     case banner(BannerViewModel)
+    case offerBanner(OfferBannerViewModel)
 }
 
 struct ContentChange {
@@ -80,6 +81,7 @@ class CountriesSectionViewModel {
     private var expandedCountries: Set<String> = []
     private var currentQuery: String?
     private let sysexManager: SystemExtensionManager
+    private let announcementManager: AnnouncementManager
 
     weak var delegate: CountriesSettingsDelegate?
 
@@ -199,7 +201,8 @@ class CountriesSectionViewModel {
         VpnManagerFactory &
         VpnStateConfigurationFactory &
         ModelIdCheckerFactory &
-        SystemExtensionManagerFactory
+        SystemExtensionManagerFactory &
+        AnnouncementManagerFactory
 
     private let factory: Factory
     
@@ -214,6 +217,7 @@ class CountriesSectionViewModel {
         self.propertiesManager = factory.makePropertiesManager()
         self.secureCoreState = self.propertiesManager.secureCoreToggle
         self.sysexManager = factory.makeSystemExtensionManager()
+        self.announcementManager = factory.makeAnnouncementManager()
         if case .connected = appStateManager.state {
             self.connectedServer = appStateManager.activeConnection()?.server
         }
@@ -232,7 +236,7 @@ class CountriesSectionViewModel {
         notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: serverManager.contentChanged, object: nil)
         updateState()
     }
-        
+
     func displayUpgradeMessage( _ serverModel: ServerModel? ) {
         alertService.push(alert: AllCountriesUpsellAlert())
     }
@@ -503,7 +507,7 @@ class CountriesSectionViewModel {
         // FREE
         let plusLocations: [ServerGroup]
         let freePart: [CellModel]
-        let plusBanner = [freeUserBannerCellModel]
+        let banner = (offerBannerCellModel ?? freeUserBannerCellModel)
 
         @Dependency(\.featureFlagProvider) var featureFlagProvider
         if !featureFlagProvider[\.showNewFreePlan] { // old
@@ -549,9 +553,9 @@ class CountriesSectionViewModel {
         return (gatewaysSection
                 + freePart
                 + [ .header(headerPlusVM) ]
-                + plusBanner
+                + [banner]
                 + plusCells,
-            containsGateways)
+                containsGateways)
     }
     
     private func countryViewModel(_ serversGroup: ServerGroup, displaySeparator: Bool, serversFilter: ((ServerModel) -> Bool)?, showCountryConnectButton: Bool) -> CountryItemViewModel {
@@ -641,5 +645,23 @@ class CountriesSectionViewModel {
             separatorTop: false,
             separatorBottom: true
         ))
+    }
+
+    private var offerBannerCellModel: CellModel? {
+        guard let offerBanner = announcementManager.fetchCurrentOfferBannerFromStorage(),
+              let url = offerBanner.offer?.panel?.fullScreenImage?.source.first?.url,
+              let imageURL = URL(string: url),
+              let buttonURLString = offerBanner.offer?.panel?.button.url,
+              let buttonURL = URL(string: buttonURLString) else {
+            return nil
+        }
+        return .offerBanner(OfferBannerViewModel(imageURL: imageURL,
+                                                 endTime: offerBanner.endTime,
+                                                 action: { SafariService.openLink(url: buttonURL) },
+                                                 dismiss: { [weak self] in
+            self?.announcementManager.markAsRead(announcement: offerBanner)
+            self?.updateState()
+            self?.contentChanged?(ContentChange(reset: true))
+        }))
     }
 }
