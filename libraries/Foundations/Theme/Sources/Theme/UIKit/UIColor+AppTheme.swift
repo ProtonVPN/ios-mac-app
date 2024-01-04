@@ -18,7 +18,7 @@
 
 import Foundation
 import SwiftUI
-
+import ProtonCoreUIFoundations
 #if canImport(UIKit)
 import UIKit
 
@@ -31,25 +31,25 @@ private extension AppTheme.Style {
         assert(contains(.interactive))
         if contains(.strong) {
             if contains(.active) {
-                return Asset.mobileInteractionStrongPressed.color
+                return ColorProvider.InteractionStrongPressed
             } else {
-                return Asset.mobileInteractionStrong.color
+                return ColorProvider.InteractionStrong
             }
         } else if contains(.weak) {
             if contains(.active) {
-                return Asset.mobileInteractionWeakPressed.color
+                return ColorProvider.InteractionWeakPressed
             } else if contains(.disabled) {
-                return Asset.mobileInteractionWeakDisabled.color
+                return ColorProvider.InteractionWeakDisabled
             } else {
-                return Asset.mobileInteractionWeak.color
+                return ColorProvider.InteractionWeak
             }
         } else {
             if contains(.active) {
-                return Asset.mobileInteractionNormPressed.color
+                return ColorProvider.InteractionNormPressed
             } else if contains(.disabled) {
-                return Asset.mobileInteractionNormDisabled.color
+                return ColorProvider.InteractionNormDisabled
             } else {
-                return Asset.mobileInteractionNorm.color
+                return ColorProvider.InteractionNorm
             }
         }
     }
@@ -57,47 +57,47 @@ private extension AppTheme.Style {
     var notificationColor: UIColor {
         assert(!isDisjoint(with: .notificationStyles))
         if contains(.danger) {
-            return Asset.mobileNotificationError.color
+            return ColorProvider.NotificationError
         } else if contains(.warning) {
-            return Asset.mobileNotificationWarning.color
+            return ColorProvider.NotificationWarning
         } else if contains(.success) {
-            return Asset.mobileNotificationSuccess.color
+            return ColorProvider.NotificationSuccess
         } else if contains(.info) {
-            return Asset.mobileNotificationNorm.color
+            return ColorProvider.NotificationNorm
         }
         assertionFailure("notification color not handled")
-        return Asset.mobileNotificationNorm.color
+        return ColorProvider.NotificationNorm
     }
 
     var backgroundColor: UIColor {
         if contains(.weak) {
-            return Asset.mobileBackgroundSecondary.color
+            return ColorProvider.BackgroundSecondary
         } else if contains(.strong) {
-            return Asset.mobileBackgroundDeep.color
+            return ColorProvider.BackgroundDeep
         } else if contains(.success) {
-            return Asset.protonVpnGreen.color
+            return ColorProvider.NotificationSuccess
         } else {
-            return Asset.mobileBackgroundNorm.color
+            return ColorProvider.BackgroundNorm
         }
     }
 
     var textColor: UIColor {
         if contains(.primary) {
-            return Asset.white.color
+            return ColorProvider.White
         } else if contains(.weak) {
-            return Asset.mobileTextWeak.color
+            return ColorProvider.TextWeak
         } else if contains(.hint) {
-            return Asset.mobileTextHint.color
+            return ColorProvider.TextHint
         } else if contains(.disabled) {
-            return Asset.mobileTextDisabled.color
+            return ColorProvider.TextDisabled
         } else if contains(.inverted) {
-            return Asset.mobileTextInverted.color
+            return ColorProvider.TextInverted
         } else if contains(.interactive) {
-            return Asset.mobileTextAccent.color
+            return ColorProvider.TextAccent
         } else if contains(.success) {
-            return Asset.protonVpnGreen.color
+            return ColorProvider.NotificationSuccess
         } else {
-            return Asset.mobileTextNorm.color
+            return ColorProvider.TextNorm
         }
     }
 
@@ -122,7 +122,7 @@ public extension AppTheme.Context {
         case .icon:
             return style.iconColor
         case .border:
-            return Asset.mobileSeparatorNorm.color
+            return ColorProvider.SeparatorNorm
         case .field: // not for iOS
             return .cyan
         }

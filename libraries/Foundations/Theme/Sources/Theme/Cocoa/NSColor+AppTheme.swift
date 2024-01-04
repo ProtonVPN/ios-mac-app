@@ -18,11 +18,12 @@
 
 import Foundation
 import SwiftUI
+import ProtonCoreUIFoundations
 
 #if canImport(Cocoa)
 import Cocoa
 
-private let CP = ProtonColorPalettemacOS.instance
+private let CP = ColorProvider
 
 private extension AppTheme.Style {
     static var signalStyles: Self {
@@ -145,7 +146,7 @@ private extension AppTheme.Style {
 
     var textColor: NSColor {
         if contains(.primary) {
-            return Asset.white.color
+            return CP.White
         } else if contains(.weak) {
             return CP.TextWeak
         } else if contains(.hint) {
