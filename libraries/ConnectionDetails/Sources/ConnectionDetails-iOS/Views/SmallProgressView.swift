@@ -18,6 +18,7 @@
 
 import SwiftUI
 import Theme
+import ProtonCoreUIFoundations
 
 /// Progress indicator that changes color based on the percentage
 public struct SmallProgressView: View {
@@ -49,7 +50,7 @@ public struct SmallProgressView: View {
     public var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: .themeRadius7)
-                .fill(Asset.mobileShade40.swiftUIColor)
+                .fill(ColorProvider.Shade40)
 
             GeometryReader { geo in
                 RoundedRectangle(cornerRadius: .themeRadius7)

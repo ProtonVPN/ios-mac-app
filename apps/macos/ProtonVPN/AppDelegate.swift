@@ -45,6 +45,8 @@ import PMLogger
 import VPNShared
 import Timer
 
+import AppKit
+
 #if !REDESIGN
 
 let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
@@ -80,6 +82,7 @@ class AppDelegate: NSObject {
 
 extension AppDelegate: NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        NSApp.appearance = .init(named: .darkAqua)
         injectDefaultCryptoImplementation()
         setupCoreIntegration()
         setupLogsForApp()
