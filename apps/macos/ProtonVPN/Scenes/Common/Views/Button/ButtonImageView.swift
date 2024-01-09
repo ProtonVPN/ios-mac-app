@@ -34,6 +34,11 @@ class ButtonImageView: NSImageView {
 
 class HoverableButtonImageView: ButtonImageView {
 
+    override var isEnabled: Bool {
+        didSet {
+            window?.invalidateCursorRects(for: self)
+        }
+    }
     override open func awakeFromNib() {
         super.awakeFromNib()
 
@@ -44,15 +49,9 @@ class HoverableButtonImageView: ButtonImageView {
         self.addTrackingArea(trackingArea)
     }
 
-    override open func mouseEntered(with event: NSEvent) {
+    override func resetCursorRects() {
         if isEnabled {
-            self.addCursorRect(bounds, cursor: NSCursor.pointingHand)
-        }
-    }
-
-    override open func mouseExited(with event: NSEvent) {
-        if isEnabled {
-            self.addCursorRect(bounds, cursor: NSCursor.arrow)
+            addCursorRect(bounds, cursor: .pointingHand)
         }
     }
 }

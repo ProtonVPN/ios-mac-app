@@ -118,15 +118,17 @@ class QuickSettingsDropdownOption: NSView {
     }
     
     // MARK: - Mouse
-    
-    override func mouseMoved(with event: NSEvent) {
+
+    override func resetCursorRects() {
         addCursorRect(bounds, cursor: .pointingHand)
+    }
+
+    override func mouseEntered(with event: NSEvent) {
         self.isHovered = true
         setBackground()
     }
     
     override func mouseExited(with event: NSEvent) {
-        removeCursorRect(bounds, cursor: .pointingHand)
         self.isHovered = false
         setBackground()
     }

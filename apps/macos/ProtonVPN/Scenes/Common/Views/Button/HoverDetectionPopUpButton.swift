@@ -31,13 +31,9 @@ class HoverDetectionPopUpButton: NSPopUpButton {
                                           owner: self, userInfo: nil)
         addTrackingArea(trackingArea)
     }
-    
-    override func mouseEntered(with event: NSEvent) {
+
+    override func resetCursorRects() {
         addCursorRect(bounds, cursor: .pointingHand)
-    }
-    
-    override func mouseExited(with event: NSEvent) {
-        removeCursorRect(bounds, cursor: .pointingHand)
     }
 }
 

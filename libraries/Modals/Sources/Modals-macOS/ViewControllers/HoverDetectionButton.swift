@@ -31,6 +31,12 @@ class HoverDetectionButton: NSButton {
         return size
     }
 
+    override var isEnabled: Bool {
+        didSet {
+            window?.invalidateCursorRects(for: self)
+        }
+    }
+
     private var trackingArea: NSTrackingArea? {
         willSet {
             if trackingArea != nil {
@@ -77,18 +83,18 @@ class HoverDetectionButton: NSButton {
         super.viewWillDraw()
         layer?.masksToBounds = false
     }
+    
+    override func resetCursorRects() {
+        addCursorRect(bounds, cursor: .pointingHand)
+    }
 
     override func mouseEntered(with event: NSEvent) {
         if isEnabled {
-            addCursorRect(bounds, cursor: .pointingHand)
             isHovered = true
-        } else {
-            removeCursorRect(bounds, cursor: .pointingHand)
         }
     }
 
     override func mouseExited(with event: NSEvent) {
-        removeCursorRect(bounds, cursor: .pointingHand)
         isHovered = false
     }
 }

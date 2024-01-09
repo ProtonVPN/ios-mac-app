@@ -32,17 +32,14 @@ class LoginButton: HoverDetectionButton {
     override var isEnabled: Bool {
         didSet {
             needsDisplay = true
+            window?.invalidateCursorRects(for: self)
         }
     }
 
-    override func mouseEntered(with event: NSEvent) {
+    override func resetCursorRects() {
         if isEnabled {
             addCursorRect(bounds, cursor: .pointingHand)
         }
-    }
-    
-    override func mouseExited(with event: NSEvent) {
-        removeCursorRect(bounds, cursor: .pointingHand)
     }
     
     override func viewWillDraw() {
