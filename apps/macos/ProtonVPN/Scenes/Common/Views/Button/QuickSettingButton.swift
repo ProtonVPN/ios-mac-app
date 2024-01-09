@@ -101,10 +101,12 @@ class QuickSettingButton: NSButton {
     }
         
     // MARK: - Mouse
-    
-    override func mouseMoved(with event: NSEvent) {
-        hovered = true
+    override func resetCursorRects() {
         addCursorRect(bounds, cursor: .pointingHand)
+    }
+
+    override func mouseEntered(with event: NSEvent) {
+        hovered = true
         DarkAppearance {
             layer?.backgroundColor = self.cgColor(.background)
         }
@@ -112,7 +114,6 @@ class QuickSettingButton: NSButton {
     
     override func mouseExited(with event: NSEvent) {
         hovered = false
-        removeCursorRect(bounds, cursor: .pointingHand)
         DarkAppearance {
             layer?.backgroundColor = self.cgColor(.background)
         }
