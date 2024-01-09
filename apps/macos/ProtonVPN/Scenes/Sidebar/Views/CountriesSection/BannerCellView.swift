@@ -89,12 +89,8 @@ final class BannerCellView: NSView {
     }
 
     // MARK: - Mouse hovering
-
-    override func mouseEntered(with event: NSEvent) {
+   
+    override func resetCursorRects() {
         addCursorRect(frame, cursor: .pointingHand)
-    }
-
-    override func mouseExited(with event: NSEvent) {
-        removeCursorRect(frame, cursor: .pointingHand)
     }
 }

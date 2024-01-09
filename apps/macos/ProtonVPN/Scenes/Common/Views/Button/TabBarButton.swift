@@ -48,6 +48,12 @@ class TabBarButton: NSButton {
         }
     }
 
+    override var isEnabled: Bool {
+        didSet {
+            window?.invalidateCursorRects(for: self)
+        }
+    }
+
     override func accessibilityRole() -> NSAccessibility.Role? {
         return .tabGroup
     }
@@ -61,16 +67,18 @@ class TabBarButton: NSButton {
         let trackingArea = NSTrackingArea(rect: bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow], owner: self, userInfo: nil)
         addTrackingArea(trackingArea)
     }
-    
-    override func mouseEntered(with event: NSEvent) {
+
+    override func resetCursorRects() {
         if isEnabled {
             addCursorRect(bounds, cursor: .pointingHand)
         }
+    }
+
+    override func mouseEntered(with event: NSEvent) {
         isHovered = true
     }
     
     override func mouseExited(with event: NSEvent) {
-        removeCursorRect(bounds, cursor: .pointingHand)
         isHovered = false
     }
     
