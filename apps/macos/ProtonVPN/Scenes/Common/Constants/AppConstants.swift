@@ -86,4 +86,9 @@ class AppConstants {
         // Status bar blinking speed
         static let statusIconBlink: TimeInterval = .milliseconds(600)
     }
+
+    struct DeepLinking {
+        static let deepLinkScheme = "protonvpn"
+        static let deepLinkBaseUrl = "\(deepLinkScheme)://"
+    }
 }
