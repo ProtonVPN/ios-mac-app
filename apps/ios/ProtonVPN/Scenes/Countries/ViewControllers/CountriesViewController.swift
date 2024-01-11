@@ -115,7 +115,6 @@ final class CountriesViewController: UIViewController {
         tableView.register(ServersHeaderView.nib, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)
         tableView.register(DefaultProfileTableViewCell.nib, forCellReuseIdentifier: DefaultProfileTableViewCell.identifier)
         tableView.register(BannerViewCell.nib, forCellReuseIdentifier: BannerViewCell.identifier)
-        tableView.register(OfferBannerViewCell.nib, forCellReuseIdentifier: OfferBannerViewCell.identifier)
     }
     
     private func setupNavigationBar() {
@@ -205,12 +204,6 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
             }
             cell.viewModel = viewModel
             return cell
-        case .offerBanner(let viewModel):
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: OfferBannerViewCell.identifier) as? OfferBannerViewCell else {
-                return UITableViewCell()
-            }
-            cell.viewModel = viewModel
-            return cell
         }
     }
 
@@ -226,12 +219,9 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
 
         case .banner(let viewModel):
             viewModel.action()
-
-        case .offerBanner(let viewModel):
-            viewModel.action()
         }
     }
-
+    
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.1
     }

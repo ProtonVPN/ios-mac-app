@@ -34,7 +34,6 @@ enum RowViewModel {
     case serverGroup(CountryItemViewModel)
     case profile(DefaultProfileViewModel)
     case banner(BannerViewModel)
-    case offerBanner(BannerViewModel)
 }
 
 private enum Section {
@@ -354,15 +353,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
             }
         }
 
-//        let banner = RowViewModel.banner(BannerViewModel(
-//            leftIcon: Modals.Asset.worldwideCoverage,
-//            text: Localizable.freeBannerText,
-//            action: { [weak self] in
-//                self?.presentAllCountriesUpsell()
-//            }
-//        ))
-
-        let banner = RowViewModel.offerBanner(BannerViewModel(
+        let banner = RowViewModel.banner(BannerViewModel(
             leftIcon: Modals.Asset.worldwideCoverage,
             text: Localizable.freeBannerText,
             action: { [weak self] in
