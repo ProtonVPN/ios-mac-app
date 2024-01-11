@@ -33,7 +33,8 @@ final class OfferBannerView: NSView {
     @IBOutlet private weak var roundedBackgroundView: NSView!
     @IBOutlet private weak var label: NSTextField!
     @IBOutlet private weak var separatorViewBottom: NSView!
-    
+    @IBOutlet var dismissButton: NSButton!
+
     private var viewModel: OfferBannerViewModel!
 
     static let relativeDateTimeFormatter: RelativeDateTimeFormatter = {
@@ -62,16 +63,13 @@ final class OfferBannerView: NSView {
         DarkAppearance {
             separatorViewBottom.layer?.backgroundColor = .cgColor(.border, .weak)
         }
-
-        let trackingFrame = NSRect(origin: roundedBackgroundView.frame.origin, size: CGSize(width: roundedBackgroundView.frame.size.width, height: roundedBackgroundView.frame.size.height))
-        let trackingArea = NSTrackingArea(rect: trackingFrame, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow], owner: self, userInfo: nil)
-        addTrackingArea(trackingArea)
     }
 
     func updateView(withModel viewModel: OfferBannerViewModel) {
         self.viewModel = viewModel
         let timeLeft = viewModel.endTime.timeIntervalSinceNow
         let timeLeftString = Self.relativeDateTimeFormatter.localizedString(fromTimeInterval: timeLeft)
+        label.isHidden = !viewModel.showCountDown
         label.stringValue = Localizable.offerEnding(timeLeftString)
         if let image = SDImageCache.shared.imageFromCache(forKey: viewModel.imageURL.absoluteString) {
             self.image.image = image
@@ -98,6 +96,7 @@ final class OfferBannerView: NSView {
     // MARK: - Mouse hovering
 
     override func resetCursorRects() {
-        addCursorRect(frame, cursor: .pointingHand)
+        addCursorRect(roundedBackgroundView.frame, cursor: .pointingHand)
+        addCursorRect(dismissButton.frame, cursor: .pointingHand)
     }
 }
