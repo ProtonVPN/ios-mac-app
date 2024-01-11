@@ -53,11 +53,19 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
     }
 
     public func fetchCurrentOfferBannerFromStorage() -> Announcement? {
-        announcementStorage.fetch().filter {
-            $0.knownType == .banner && $0.startTime.isPast && $0.endTime.isFuture && $0.offer != nil && $0.isRead == false
+        let offers = announcementStorage.fetch().filter {
+            $0.knownType == .banner && $0.startTime.isPast && $0.endTime.isFuture && $0.offer != nil
         }.sorted { // sorting is needed because we only want to consider the first announcement
-            $0.startTime < $1.startTime
-        }.first
+            $0.endTime < $1.endTime
+        }
+        if offers.count > 1 {
+            let errorMessage = "There should only ever be one or none welcome offer banner, having more is an error."
+            assertionFailure(errorMessage)
+            log.error(.init(stringLiteral: errorMessage), category: .api)
+        }
+        // Only return the one with closest endTime. If the offer was read, return nothing, though there might be others in queue.
+        // This should not really happen, it would be a configuration error if it did.
+        return offers.first?.isRead == false ? offers.first : nil
     }
 
     public func fetchCurrentAnnouncementsFromStorage() -> [Announcement] {

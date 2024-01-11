@@ -21,6 +21,7 @@ import Foundation
 struct OfferBannerViewModel {
     var imageURL: URL
     var endTime: Date
+    var showCountDown: Bool
     var action: () -> Void
     var dismiss: () -> Void
 }

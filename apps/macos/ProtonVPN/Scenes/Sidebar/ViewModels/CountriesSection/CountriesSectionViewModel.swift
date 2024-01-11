@@ -657,6 +657,7 @@ class CountriesSectionViewModel {
         }
         return .offerBanner(OfferBannerViewModel(imageURL: imageURL,
                                                  endTime: offerBanner.endTime,
+                                                 showCountDown: offerBanner.offer?.panel?.showCountDown ?? false,
                                                  action: { SafariService.openLink(url: buttonURL) },
                                                  dismiss: { [weak self] in
             self?.announcementManager.markAsRead(announcement: offerBanner)

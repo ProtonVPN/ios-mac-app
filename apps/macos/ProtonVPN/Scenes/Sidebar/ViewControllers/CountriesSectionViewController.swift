@@ -406,8 +406,8 @@ extension CountriesSectionViewController: NSTableViewDelegate {
             return 32
         case .banner:
             return 100
-        case .offerBanner:
-            return 128
+        case .offerBanner(let model):
+            return model.showCountDown ? 128 : 113
         default:
             return 40
         }

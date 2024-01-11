@@ -94,6 +94,7 @@
                 <constraint firstAttribute="bottom" secondItem="y1t-Cw-HsQ" secondAttribute="bottom" constant="12" id="z1A-Uu-4I9"/>
             </constraints>
             <connections>
+                <outlet property="dismissButton" destination="XiT-r3-dTA" id="WqR-wK-MkC"/>
                 <outlet property="image" destination="DXF-3R-Tyw" id="0n6-6k-EMy"/>
                 <outlet property="label" destination="G1h-UU-uE9" id="VXJ-SM-x2Q"/>
                 <outlet property="roundedBackgroundView" destination="y1t-Cw-HsQ" id="VPl-GU-gjn"/>
