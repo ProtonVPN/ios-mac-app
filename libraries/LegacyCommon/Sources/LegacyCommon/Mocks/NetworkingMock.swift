@@ -199,12 +199,12 @@ public class FullNetworkingMockDelegate: NetworkingMockDelegate {
     public enum MockEndpoint: String {
         case vpn = "/vpn"
         case status = "/vpn_status"
-        case location = "/vpn/location"
-        case logicals = "/vpn/logicals"
-        case streamingServices = "/vpn/streamingservices"
+        case location = "/vpn/v1/location"
+        case logicals = "/vpn/v1/logicals"
+        case streamingServices = "/vpn/v1/streamingservices"
         case partners = "/vpn/v1/partners"
         case clientConfig = "/vpn/v2/clientconfig"
-        case loads = "/vpn/loads"
+        case loads = "/vpn/v1/loads"
         case certificate = "/vpn/v1/certificate"
         case sessionCount = "/vpn/sessioncount"
     }

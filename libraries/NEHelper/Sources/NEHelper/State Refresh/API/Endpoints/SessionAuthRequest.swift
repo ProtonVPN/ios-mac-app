@@ -19,7 +19,7 @@
 import Foundation
 
 class SessionAuthRequest: APIRequest {
-    var endpointUrl: String { "auth/sessions/forks/\(params.selector)" }
+    var endpointUrl: String { "auth/v4/sessions/forks/\(params.selector)" }
     let httpMethod = "GET"
     let hasBody = false
 

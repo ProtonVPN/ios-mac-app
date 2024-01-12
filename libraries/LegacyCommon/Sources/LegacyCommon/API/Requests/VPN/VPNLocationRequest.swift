@@ -27,7 +27,7 @@ import VPNShared
 
 final class VPNLocationRequest: Request {
     var path: String {
-        return "/vpn/location"
+        return "/vpn/v1/location"
     }
 
     var isAuth: Bool {
