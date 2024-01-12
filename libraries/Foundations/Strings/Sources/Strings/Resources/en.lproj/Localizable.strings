@@ -1386,6 +1386,9 @@
 /* Title of the screen with news and offers. */
 "_news_title" = "News";
 
+/* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
+"_offer_ending_" = "Ending %@";
+
 // MARK: Quick Settings
 "_quick_settings_secureCore_description" = "Route your most sensitive data through our safest servers in privacy-friendly countries.";
 "_quick_settings_netShield_description" = "Browse the internet without ads and malware.";

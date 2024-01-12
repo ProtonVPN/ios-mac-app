@@ -56,10 +56,6 @@ final class BannerCellView: NSView {
                 $0.layer?.backgroundColor = .cgColor(.border, .weak)
             }
         }
-
-        let trackingFrame = NSRect(origin: roundedBackgroundView.frame.origin, size: CGSize(width: roundedBackgroundView.frame.size.width, height: roundedBackgroundView.frame.size.height))
-        let trackingArea = NSTrackingArea(rect: trackingFrame, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow], owner: self, userInfo: nil)
-        addTrackingArea(trackingArea)
     }
 
     func updateView(withModel viewModel: BannerViewModel) {
@@ -91,6 +87,6 @@ final class BannerCellView: NSView {
     // MARK: - Mouse hovering
    
     override func resetCursorRects() {
-        addCursorRect(frame, cursor: .pointingHand)
+        addCursorRect(roundedBackgroundView.frame, cursor: .pointingHand)
     }
 }

@@ -50,7 +50,7 @@ public class AnnouncementsViewModel {
     public var oneTimeAnnouncement: Announcement? {
         items.first { $0.knownType == .oneTime && $0.isRead == false }
     }
-    
+
     // Callbacks
     public var refreshView: (() -> Void)?
     

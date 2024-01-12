@@ -56,7 +56,8 @@ class CountriesSectionViewController: NSViewController {
         case header = "CountriesSectionHeaderView"
         case profile = "ProfileItemView"
         case banner = "BannerCellView"
-        
+        case offerBanner = "OfferBannerView"
+
         var identifier: NSUserInterfaceItemIdentifier { NSUserInterfaceItemIdentifier(self.rawValue) }
         var nib: NSNib? { NSNib(nibNamed: NSNib.Name(self.rawValue), bundle: nil) }
     }
@@ -405,6 +406,8 @@ extension CountriesSectionViewController: NSTableViewDelegate {
             return 32
         case .banner:
             return 100
+        case .offerBanner(let model):
+            return model.showCountDown ? 128 : 113
         default:
             return 40
         }
@@ -438,6 +441,10 @@ extension CountriesSectionViewController: NSTableViewDelegate {
             return cell
         case .banner(let viewModel):
             let cell = tableView.makeView(withIdentifier: Cell.banner.identifier, owner: nil) as! BannerCellView
+            cell.updateView(withModel: viewModel)
+            return cell
+        case .offerBanner(let viewModel):
+            let cell = tableView.makeView(withIdentifier: Cell.offerBanner.identifier, owner: nil) as! OfferBannerView
             cell.updateView(withModel: viewModel)
             return cell
         }

@@ -20,7 +20,6 @@ import Foundation
 import UIKit
 import LegacyCommon
 import Alamofire
-import SDWebImage
 import ProtonCoreUIFoundations
 
 final class AnnouncementImageViewController: AnnouncementViewController {

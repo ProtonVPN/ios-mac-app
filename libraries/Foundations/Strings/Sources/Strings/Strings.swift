@@ -838,6 +838,10 @@ public enum Localizable {
   public static var notConnectedToTheInternet: String { return Localizable.tr("Localizable", "_not_connected_to_the_internet", fallback: "Unable to establish VPN connection. You are not connected to the internet.") }
   /// Not now
   public static var notNow: String { return Localizable.tr("Localizable", "_not_now", fallback: "Not now") }
+  /// Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour"
+  public static func offerEnding(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_offer_ending_", String(describing: p1), fallback: "Ending %@")
+  }
   /// Common word
   public static var ok: String { return Localizable.tr("Localizable", "_ok", fallback: "OK") }
   /// MacOS: voice over indication for a country or server on maintenance
