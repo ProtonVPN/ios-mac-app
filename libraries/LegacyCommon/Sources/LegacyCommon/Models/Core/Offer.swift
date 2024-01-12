@@ -23,8 +23,8 @@
 import Foundation
 
 public struct Offer: Codable {
-    public let label: String
-    public let icon: String
+    public let label: String?
+    public let icon: String?
     public let panel: OfferPanel?
     
     // Our decoding strategy changes first letter to lowercase

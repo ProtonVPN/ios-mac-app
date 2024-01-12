@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22154" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22154"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe" customClass="OfferBannerView" customModule="ProtonVPN" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="520" height="104"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vAE-dT-dkH" userLabel="expandBtn">
+                    <rect key="frame" x="0.0" y="0.0" width="520" height="104"/>
+                    <buttonCell key="cell" type="bevel" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="kwP-s5-tBN">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="didTap:" target="c22-O7-iKe" id="I42-yZ-1b3"/>
+                    </connections>
+                </button>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="y1t-Cw-HsQ">
+                    <rect key="frame" x="24" y="12" width="472" height="80"/>
+                    <subviews>
+                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J6T-za-WUz">
+                            <rect key="frame" x="12" y="12" width="448" height="56"/>
+                            <subviews>
+                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="311" placeholderIntrinsicHeight="40" translatesAutoresizingMaskIntoConstraints="NO" id="DXF-3R-Tyw">
+                                    <rect key="frame" x="0.0" y="16" width="311" height="40"/>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="left" imageScaling="proportionallyUpOrDown" id="57v-AJ-f2a"/>
+                                </imageView>
+                                <textField focusRingType="none" horizontalHuggingPriority="240" verticalHuggingPriority="750" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="G1h-UU-uE9">
+                                    <rect key="frame" x="-2" y="0.0" width="452" height="16"/>
+                                    <textFieldCell key="cell" alignment="left" title="_Get worldwide coverage with VPN Plus_" id="kSZ-IX-cs5">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                            </subviews>
+                            <visibilityPriorities>
+                                <integer value="1000"/>
+                                <integer value="1000"/>
+                            </visibilityPriorities>
+                            <customSpacing>
+                                <real value="3.4028234663852886e+38"/>
+                                <real value="3.4028234663852886e+38"/>
+                            </customSpacing>
+                        </stackView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="J6T-za-WUz" secondAttribute="trailing" constant="12" id="7gE-hs-2JF"/>
+                        <constraint firstItem="J6T-za-WUz" firstAttribute="leading" secondItem="y1t-Cw-HsQ" secondAttribute="leading" constant="12" id="GCN-5E-SjK"/>
+                        <constraint firstAttribute="bottom" secondItem="J6T-za-WUz" secondAttribute="bottom" constant="12" id="tDF-i4-ocr"/>
+                        <constraint firstItem="J6T-za-WUz" firstAttribute="top" secondItem="y1t-Cw-HsQ" secondAttribute="top" constant="12" id="uCi-eY-I36"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="vsL-vs-uFR"/>
+                    </constraints>
+                </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="Xpy-4s-tWh">
+                    <rect key="frame" x="0.0" y="0.0" width="520" height="1"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="XKE-g2-FSG"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="c1R-ov-SXN"/>
+                    </constraints>
+                </customView>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="XiT-r3-dTA">
+                    <rect key="frame" x="460" y="56" width="48" height="48"/>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Dismiss button" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="rRI-3N-jwM">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="didDismiss:" target="c22-O7-iKe" id="Qf3-Hi-8do"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="y1t-Cw-HsQ" secondAttribute="trailing" constant="24" id="241-QZ-6t4"/>
+                <constraint firstItem="Xpy-4s-tWh" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="Ejf-7h-eNT"/>
+                <constraint firstAttribute="trailing" secondItem="Xpy-4s-tWh" secondAttribute="trailing" id="G9z-ss-zma"/>
+                <constraint firstItem="y1t-Cw-HsQ" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="24" id="IVr-8K-Ard"/>
+                <constraint firstItem="XiT-r3-dTA" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="NLc-ki-Wku"/>
+                <constraint firstItem="vAE-dT-dkH" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="WQ4-Bs-bEe"/>
+                <constraint firstItem="y1t-Cw-HsQ" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="12" id="Yh8-aA-yBe"/>
+                <constraint firstAttribute="bottom" secondItem="vAE-dT-dkH" secondAttribute="bottom" id="Z1V-1e-8R3"/>
+                <constraint firstItem="vAE-dT-dkH" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="epi-lr-Sz8"/>
+                <constraint firstAttribute="trailing" secondItem="XiT-r3-dTA" secondAttribute="trailing" constant="12" id="jiG-NG-9KG"/>
+                <constraint firstAttribute="trailing" secondItem="vAE-dT-dkH" secondAttribute="trailing" id="pXN-H3-8mf"/>
+                <constraint firstAttribute="bottom" secondItem="Xpy-4s-tWh" secondAttribute="bottom" id="yzz-a0-Te4"/>
+                <constraint firstAttribute="bottom" secondItem="y1t-Cw-HsQ" secondAttribute="bottom" constant="12" id="z1A-Uu-4I9"/>
+            </constraints>
+            <connections>
+                <outlet property="dismissButton" destination="XiT-r3-dTA" id="WqR-wK-MkC"/>
+                <outlet property="image" destination="DXF-3R-Tyw" id="0n6-6k-EMy"/>
+                <outlet property="label" destination="G1h-UU-uE9" id="VXJ-SM-x2Q"/>
+                <outlet property="roundedBackgroundView" destination="y1t-Cw-HsQ" id="VPl-GU-gjn"/>
+                <outlet property="separatorViewBottom" destination="Xpy-4s-tWh" id="6Nm-Zm-egY"/>
+            </connections>
+            <point key="canvasLocation" x="-154" y="-27"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="Dismiss button" width="28" height="28"/>
+    </resources>
+</document>

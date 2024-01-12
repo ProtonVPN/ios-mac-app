@@ -1,7 +1,7 @@
 //
-//  Created on 21/09/2022.
+//  Created on 11/01/2024.
 //
-//  Copyright (c) 2022 Proton AG
+//  Copyright (c) 2024 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -18,16 +18,10 @@
 
 import Foundation
 
-public struct OfferButton: Codable {
-    public let url: String
-    public let text: String?
-    public let action: Offer.Action?
-    public let behaviors: [Offer.Behavior]?
-
-    enum CodingKeys: String, CodingKey {
-        case text
-        case url = "URL"
-        case action
-        case behaviors
-    }
+struct OfferBannerViewModel {
+    var imageURL: URL
+    var endTime: Date
+    var showCountDown: Bool
+    var action: () -> Void
+    var dismiss: () -> Void
 }
