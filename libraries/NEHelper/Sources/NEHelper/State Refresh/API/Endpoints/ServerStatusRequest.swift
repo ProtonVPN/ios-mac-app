@@ -28,7 +28,7 @@ public final class ServerStatusRequest: APIRequest {
     let hasBody = false
 
     var endpointUrl: String {
-        var result = "vpn/logicals/\(params.logicalId)/alternatives"
+        var result = "vpn/v1/logicals/\(params.logicalId)/alternatives"
 
         if LocalFeatureFlags.isEnabled(LogicalFeature.perProtocolEntries), let transport = params.transport {
             result.append("?WithEntriesForProtocols=\(VpnProtocol.wireGuard(transport).apiDescription)")

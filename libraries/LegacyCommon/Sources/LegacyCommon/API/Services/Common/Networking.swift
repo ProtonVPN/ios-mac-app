@@ -253,7 +253,11 @@ extension CoreNetworking: APIServiceDelegate {
     }
 
     public var appVersion: String {
+#if DEBUG
+        return appInfo.appVersion + "-dev"
+#else
         return appInfo.appVersion
+#endif
     }
 
     public var userAgent: String? {

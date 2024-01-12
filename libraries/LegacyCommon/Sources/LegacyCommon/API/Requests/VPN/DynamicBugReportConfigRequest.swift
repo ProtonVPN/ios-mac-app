@@ -20,7 +20,7 @@ import ProtonCoreNetworking
 
 class DynamicBugReportConfigRequest: Request {
     var path: String {
-        return "/vpn/featureconfig/dynamic-bug-reports"
+        return "/vpn/v1/featureconfig/dynamic-bug-reports"
     }
 
     var isAuth: Bool {
