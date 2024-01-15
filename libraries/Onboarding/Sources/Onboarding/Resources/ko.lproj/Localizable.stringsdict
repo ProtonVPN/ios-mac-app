@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>onboarding_establish_subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>무료 요금제는 %#@num_countries@의 %#@num_servers@를 제공합니다</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d개 국가</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d개 서버</string>
+      </dict>
+    </dict>
+    <key>onboarding_upsell_title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Plus로 %#@NUM_COUNTRIES@의 %#@NUM_SERVERS@에 접근하세요</string>
+      <key>NUM_COUNTRIES</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d개 국가</string>
+      </dict>
+      <key>NUM_SERVERS</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d개 서버</string>
+      </dict>
+    </dict>
+    <key>onboarding_purchased_subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>이제 %#@NUM_SEC_SERVERS@와 다른 프리미엄 기능에 접근할 수 있습니다.</string>
+      <key>NUM_SEC_SERVERS</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>보안 서버 %d개</string>
+      </dict>
+    </dict>
+    <key>onboarding_upsell_feature_multipleDevices</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>동시에 %#@NUM_DEVICES@에서 연결하세요</string>
+      <key>NUM_DEVICES</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d개 기기</string>
+      </dict>
+    </dict>
+  </dict>
+</plist>

@@ -1,0 +1,67 @@
+"onboarding_take_tour" = "Κάντε μια περιήγηση";
+
+"onboarding_skip" = "Παράλειψη";
+
+"onboarding_welcome_title" = "Καλώς ήρθατε στο Proton VPN";
+
+"onboarding_welcome_subtitle" = "Μάθετε πως να εκμεταλευτείτε στο έπακρο το Proton VPN μέσα σε μερικά δευτερόλεπτα";
+
+"onboarding_beprotected_title" = "Εξασφαλίστε προστασία παντού";
+
+"onboarding_beprotected_subtitle" = "Το Proton VPN υποστηρίζει όλες τις συσκευές, συμπεριλαμβανομένων Windows, macOS και πολλές άλλες.";
+
+"onboarding_unblockstreaming_title" = "Αφαίρεση φραγής μετάδοσης";
+
+"onboarding_unblockstreaming_subtitle" = "Ασφαλής πρόσβαση στο αγαπημένο σας περιεχόμενο από άλλες χώρες — Τώρα διαθέσιμο στο Android TV.";
+
+"onboarding_netshield_title" = "Φραγή διαφημίσεων και πολλών άλλων";
+
+"onboarding_netshield_subtitle" = "Μπλοκάρει κακόβουλο λογισμικό, διαφημίσεις και ιχνηλάτες σε προγράμματα περιήγησης και σε όλες τις εφαρμογές.";
+
+"onboarding_next" = "Επόμενο";
+
+"onboarding_plus_only" = "Διαθέσιμο με Plus";
+
+"onboarding_establish_title" = "Εγκαθίδρυση της πρώτης σας σύνδεσης";
+
+"onboarding_establish_note" = "Θα σας συνδέσουμε στον ταχύτερο και πιο ευσταθή διακομιστή ανάλογα με την τοποθεσία σας.";
+
+"onboarding_establish_connect_now" = "Σύνδεση τώρα";
+
+"onboarding_done" = "Έτοιμο";
+
+"onboarding_connected_title" = "Συγχαρητήρια";
+
+"onboarding_connected_subtitle" = "Η σύνδεσή σας είναι προστατευμένη και εσείς έτοιμος/η για περιήγηση του ιστού.";
+
+"onboarding_connected_note" = "Με ασφάλεια.";
+
+"onboarding_connected_connected_to" = "Συνδεδεμένο με:";
+
+"onboarding_connected_connect_to_plus" = "Σύνδεση σε διακομιστή Plus";
+
+"onboarding_congratulations" = "Συγχαρητήρια";
+
+"onboarding_purchased_note" = "Απολαύστε τον κόσμο της ιδιωτικότητας.";
+
+"onboarding_get_plus" = "Αποκτήστε το Plus";
+
+"onboarding_not_connected_subtitle" = "Είστε έτοιμος/η για περιήγηση στον ιστό.";
+
+"onboarding_not_connected_error" = "Δεν είναι δυνατή η πραγματοποίηση σύνδεσης. Παρακαλούμε προσπαθήστε ξανά αργότερα στην εφαρμογή.";
+
+"onboarding_continue" = "Συνέχεια";
+
+"onboarding_telemetry_title" = "Βοηθήστε μας να καταπολεμήσουμε τη λογοκρισία";
+
+"onboarding_usage_stats_title" = "Κοινοποιήστε ανώνυμα στατιστικά χρήσης";
+
+"onboarding_usage_stats_description" = "Τα δεδομένα χρήσης μας βοηθούν να ξεπεράσουμε τα μπλοκαρίσματα VPN και να βελτιώσουμε την απόδοση των εφαρμογών.";
+
+"onboarding_crash_reports_title" = "Κοινοποιήστε ανώνυμες αναφορές σφαλμάτων";
+
+"onboarding_crash_reports_description" = "Οι αναφορές σφαλμάτων μάς βοηθούν να διορθώνουμε σφάλματα, να εντοπίζουμε τείχη προστασίας και να αποφεύγουμε τα μπλοκαρίσματα VPN.";
+
+"onboarding_footer" = "Αυτά τα στατιστικά στοιχεία δεν περιέχουν τη διεύθυνση IP σας και δεν μπορούν να χρησιμοποιηθούν για την αναγνώρισή σας. Δε θα τα μοιραστούμε ποτέ με τρίτους.";
+
+"onboarding_footer_learn_more" = "Μάθετε περισσότερα";

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>onboarding_establish_subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>La suscripción gratuita ofrece %#@num_servers@ en %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>one</key>
+        <string>%d paises</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d paises</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>one</key>
+        <string>%d servidores</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d servidores</string>
+      </dict>
+    </dict>
+    <key>onboarding_upsell_title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Acceda a %#@NUM_SERVERS@ en %#@NUM_COUNTRIES@ con Plus</string>
+      <key>NUM_COUNTRIES</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d países</string>
+        <key>one</key>
+        <string>%d país</string>
+      </dict>
+      <key>NUM_SERVERS</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d servidores</string>
+        <key>one</key>
+        <string>%d servidor</string>
+      </dict>
+    </dict>
+    <key>onboarding_purchased_subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Ahora tiene acceso a %#@NUM_SEC_SERVERS@ y otras funciones premium.</string>
+      <key>NUM_SEC_SERVERS</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d servidores seguros</string>
+        <key>one</key>
+        <string>%d servidor seguro</string>
+      </dict>
+    </dict>
+    <key>onboarding_upsell_feature_multipleDevices</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Conecte %#@NUM_DEVICES@ simultáneamente</string>
+      <key>NUM_DEVICES</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d dispositivos</string>
+        <key>one</key>
+        <string>%d dispositivo</string>
+      </dict>
+    </dict>
+  </dict>
+</plist>

@@ -1,0 +1,67 @@
+"onboarding_take_tour" = "ツアーを開始";
+
+"onboarding_skip" = "スキップ";
+
+"onboarding_welcome_title" = "Proton VPN へようこそ";
+
+"onboarding_welcome_subtitle" = "Proton VPN を最大限に活用する方法を、わずか数秒でご紹介します。";
+
+"onboarding_beprotected_title" = "すべてが保護されます";
+
+"onboarding_beprotected_subtitle" = "Proton VPN は WIndows や macOS などを含むすべてのデバイスをサポートしています。";
+
+"onboarding_unblockstreaming_title" = "ストリーミングサイトのブロックを解除";
+
+"onboarding_unblockstreaming_subtitle" = "ほかの国から安全に好きなコンテンツへアクセスします。現在は Android TV でも利用できます。";
+
+"onboarding_netshield_title" = "広告などをブロック";
+
+"onboarding_netshield_subtitle" = "すべてのブラウザーやアプリからマルウェア、広告、トラッカーをブロック";
+
+"onboarding_next" = "次へ";
+
+"onboarding_plus_only" = "Plus で利用可能";
+
+"onboarding_establish_title" = "初めての接続を確立";
+
+"onboarding_establish_note" = "現在地から最も最適なサーバーに接続しています。";
+
+"onboarding_establish_connect_now" = "今すぐ接続";
+
+"onboarding_done" = "完了";
+
+"onboarding_connected_title" = "おめでとうございます";
+
+"onboarding_connected_subtitle" = "接続は保護されており、安全に Web をブラウズできます。";
+
+"onboarding_connected_note" = "安全です。";
+
+"onboarding_connected_connected_to" = "接続先:";
+
+"onboarding_connected_connect_to_plus" = "Plus サーバーに接続";
+
+"onboarding_congratulations" = "おめでとうございます";
+
+"onboarding_purchased_note" = "プライバシーの世界を楽しもう。";
+
+"onboarding_get_plus" = "PLUS を入手";
+
+"onboarding_not_connected_subtitle" = "Webにアクセスする準備ができました。";
+
+"onboarding_not_connected_error" = "接続を確立できません。あとで再度お試しください。";
+
+"onboarding_continue" = "続行";
+
+"onboarding_telemetry_title" = "検閲との闘いにご協力ください";
+
+"onboarding_usage_stats_title" = "匿名の使用統計を共有";
+
+"onboarding_usage_stats_description" = "使用状況データは VPN 検閲に打ち勝ち、アプリのパフォーマンスを改善するために使用されます。";
+
+"onboarding_crash_reports_title" = "匿名のクラッシュレポートを共有";
+
+"onboarding_crash_reports_description" = "クラッシュレポートはバグを修正し、ファイアウォールを検出し、VPN 検閲を回避するために使用されます。";
+
+"onboarding_footer" = "この統計にあなたの IP アドレスは含まれず、あなたを特定することはできません。この統計は第三者に共有しません。";
+
+"onboarding_footer_learn_more" = "詳細";

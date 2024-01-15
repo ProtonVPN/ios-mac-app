@@ -1124,11 +1124,6 @@
 /* iOS plan feature */
 "_feature_secure_core" = "Secure Core";
 
-/* iOS plan feature */
-"_feature_blocked_content" = "Pristup blokiranom sadržaju";
-
-"_feature_bt" = "Podrška za BitTorrent/dijeljenje datoteka";
-
 /* MacOS welcome screen: title */
 "_welcome_title" = "DOBRO DOŠLI!";
 
@@ -1191,29 +1186,23 @@
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "Brze postavke";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Welcome to a better internet";
+/* MacOS app tour: quick settings description */
+"_quick_settings_tour_description" = "Povećajte svoju sigurnost jednim klikom:";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "From the scientists and engineers that created Proton Mail, welcome to a more secure and private internet.";
+/* MacOS app tour: quick settings secure core */
+"_quick_settings_tour_feature_1" = "Dodajte još dodatni sloj sigurnosti uz Secure Core.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "We believe the internet should be free";
+/* MacOS app tour: quick settings net shield */
+"_quick_settings_tour_feature_2" = "Pretražujte Internet slobodno od zlonamjernih programa i oglasa pomoću NetShield-a.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page2_description" = "Pobijedite cenzuru i regionalna ograničenja. Nemamo oglase, nemamo ograničenja propusnosti i ne prodajemo vaše podatke.";
+/* MacOS app tour: quick settings kill switch */
+"_quick_settings_tour_feature_3" = "Spriječite da vaša IP adresa bude izložena uključivanjem kill switch.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page3_title" = "Vaša sigurnost je naš prioritet";
+/* MacOS app tour: next tip button */
+"_next_tip" = "Next Tip";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page3_description" = "Mi smo sigurnosna tvrtka. Bilo da se radi o Secure Core arhitekturi ili naprednom šifriranju, sigurnost je uvijek na prvom mjestu.";
-
-/* iOS onboarding next item button */
-"_next" = "Sljedeće";
-
-/* iOS onboarding button to check app without logging in */
-"_discover_the_app" = "Otkrijte aplikaciju";
+/* MacOS app tour: end tour button */
+"_end_tour" = "End Tour";
 
 /* iOS: Table header in settings screen */
 "_extensions" = "Proširenja";
@@ -1412,6 +1401,9 @@
 
 /* Title of the screen with news and offers. */
 "_news_title" = "Vijesti";
+
+/* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
+"_offer_ending_" = "Ending %@";
 
 "_quick_settings_secureCore_description" = "Usmjerite svoje najosjetljivije podatke preko naših najsigurnijih poslužitelja u zemljama koje poštuju privatnost.";
 
@@ -1652,10 +1644,16 @@
 
 "login_summary_button" = "Započnite koristiti Proton VPN";
 
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Onemogući kill switch";
 
+/* NetworkExtension + KillSwitch on T2 Macs */
 "_neks_t2_title" = "Kill switch Stability Warning";
 
+/*
+ Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the
+ `_neks_t2_description' localized string.
+*/
 "_neks_t2_hyperlink" = "T2 Security Chip";
 
 "_neks_t2_description" = "The use of kill switch is unstable on this device.\n\nYour device has a T2 Security Chip, which can result in system stability issues if the kill switch functionality of macOS is used by Proton VPN.";
@@ -1958,21 +1956,6 @@
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Protect yourself from network attacks";
 
-/* Title of the No Logs screen */
-"modals_no_logs_title" = "No logs and Swiss-based";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_privacy_first" = "Proton VPN is privacy first";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_log_activity" = "We do not log your internet activity";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_third_parties" = "We do not share any data with third parties";
-
-/* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "Proton VPN's strict no-log policy is certified by an external audit.";
-
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "A note about speed...";
 
@@ -2144,8 +2127,32 @@
 /* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
 "welcome_upgrade_subtitle_fallback" = "You've upgraded your subscription. Enjoy advanced privacy features and next-level performance.";
 
+/* Welcome to Proton screen shown during onboarding. Title label. */
+"welcome_to_proton_title" = "Dobrodošli u Proton VPN";
+
+/* Welcome to Proton screen shown during onboarding. Subtitle label. */
+"welcome_to_proton_subtitle" = "Browse privately, access blocked content, and enjoy digital freedom.";
+
+/* Welcome to Proton screen shown during onboarding. Banner title label. */
+"welcome_to_proton_banner_title" = "Certified no-logs VPN";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle" = "Your VPN activity is protected by Swiss privacy laws. We’ll never track you online or share your information with third parties.";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Available with VPN Business.";
+
+"onboarding_usage_stats_title" = "Share anonymous usage statistics";
+
+"onboarding_usage_stats_description" = "Usage data helps us overcome VPN blocks and improve app performance.";
+
+"onboarding_crash_reports_title" = "Share anonymous crash reports";
+
+"onboarding_crash_reports_description" = "Crash reports help us fix bugs, detect firewalls, and avoid VPN blocks.";
+
+"onboarding_footer" = "These statistics do not contain your IP address, and they cannot be used to identify you. We'll never share them with third parties.";
+
+"onboarding_footer_learn_more" = "Saznajte više";
 
 /* Modal that lists countries in which servers are available to free users: Title */
 "free_connections_modal_title" = "Free connections";

@@ -1,0 +1,67 @@
+"onboarding_take_tour" = "Otwórz przewodnik";
+
+"onboarding_skip" = "Pomiń";
+
+"onboarding_welcome_title" = "Witaj w Proton VPN";
+
+"onboarding_welcome_subtitle" = "Dowiedz się, jak wykorzystać możliwości aplikacji Proton VPN";
+
+"onboarding_beprotected_title" = "Bądź wszędzie chroniony";
+
+"onboarding_beprotected_subtitle" = "Aplikacja Proton VPN wspiera wszystkie urządzenia, w tym systemy Windows, macOS i wiele innych.";
+
+"onboarding_unblockstreaming_title" = "Odblokuj usługi streamingu";
+
+"onboarding_unblockstreaming_subtitle" = "Bezpieczny dostęp do ulubionych treści z innych krajów, teraz także na Android TV.";
+
+"onboarding_netshield_title" = "Zablokuj reklamy i wiele więcej";
+
+"onboarding_netshield_subtitle" = "Zablokuj złośliwe oprogramowanie, reklamy i elementy śledzące w przeglądarce oraz aplikacjach.";
+
+"onboarding_next" = "Dalej";
+
+"onboarding_plus_only" = "Funkcja dostępna w planie Plus";
+
+"onboarding_establish_title" = "Nawiąż pierwsze połączenie";
+
+"onboarding_establish_note" = "Połączenie zostanie nawiązane z najszybszym i najbardziej stabilnym serwerem dla Twojej lokalizacji.";
+
+"onboarding_establish_connect_now" = "Połącz";
+
+"onboarding_done" = "Gotowe";
+
+"onboarding_connected_title" = "Gratulacje";
+
+"onboarding_connected_subtitle" = "Twoje połączenie jest chronione i możesz przeglądać Internet.";
+
+"onboarding_connected_note" = "Bezpiecznie.";
+
+"onboarding_connected_connected_to" = "Połączono z:";
+
+"onboarding_connected_connect_to_plus" = "Połącz się z serwerem planu Plus";
+
+"onboarding_congratulations" = "Gratulacje";
+
+"onboarding_purchased_note" = "Ciesz się prywatnością.";
+
+"onboarding_get_plus" = "Wybierz plan Plus";
+
+"onboarding_not_connected_subtitle" = "Możesz przeglądać Internet.";
+
+"onboarding_not_connected_error" = "Nie można nawiązać połączenia. Spróbuj ponownie później.";
+
+"onboarding_continue" = "Kontynuuj";
+
+"onboarding_telemetry_title" = "Pomóż nam pokonać cenzurę";
+
+"onboarding_usage_stats_title" = "Udostępnij anonimowe statystyki użytkowania";
+
+"onboarding_usage_stats_description" = "Dane użytkowania pomagają nam ominąć blokady VPN i poprawić wydajność aplikacji.";
+
+"onboarding_crash_reports_title" = "Udostępnij anonimowe raporty o awariach";
+
+"onboarding_crash_reports_description" = "Raporty o awariach pomagają nam naprawić błędy, wykryć zapory sieciowe i ominąć blokady VPN.";
+
+"onboarding_footer" = "Te statystyki nie zawierają adresu IP i nie mogą zostać użyte do identyfikacji użytkownika. Dane nie zostaną udostępnione stronom trzecim.";
+
+"onboarding_footer_learn_more" = "Dowiedz się więcej";

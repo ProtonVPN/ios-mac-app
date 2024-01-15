@@ -357,7 +357,7 @@
 "_forgot_username" = "Utilizator uitat";
 
 /* MacOS: generic failure message for SSO login */
-"_sso_login_failure" = "Failed to log in with SSO. Please try again.";
+"_sso_login_failure" = "Eșuare autentificare cu autentificarea unică (SSO). Reîncercați.";
 
 /* iOS: button in login screen */
 "_forgot_password" = "Ați uitat parola?";
@@ -1124,11 +1124,6 @@
 /* iOS plan feature */
 "_feature_secure_core" = "Secure Core";
 
-/* iOS plan feature */
-"_feature_blocked_content" = "Accesare conținut blocat";
-
-"_feature_bt" = "Suport BitTorrent/partajare de fișiere";
-
 /* MacOS welcome screen: title */
 "_welcome_title" = "BINE AȚI VENIT!";
 
@@ -1191,29 +1186,23 @@
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "Setări rapide";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Bun venit la un internet mai bun";
+/* MacOS app tour: quick settings description */
+"_quick_settings_tour_description" = "Măriți-vă securitatea cu un singur clic:";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "De la oamenii de știință și inginerii care au creat Proton Mail, bun venit la un internet mai sigur și privat.";
+/* MacOS app tour: quick settings secure core */
+"_quick_settings_tour_feature_1" = "Adăugați un strat de securitate cu Secure Core.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "Credem că internetul ar trebui să fie liber";
+/* MacOS app tour: quick settings net shield */
+"_quick_settings_tour_feature_2" = "Navigați fără malware și reclame cu NetShield.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page2_description" = "Învingeți cenzura și restricțiile regionale. Nu avem reclame, nu există limite de lățime de bandă și nu vă vindem datele.";
+/* MacOS app tour: quick settings kill switch */
+"_quick_settings_tour_feature_3" = "Preveniți expunerea adresei IP activând blocarea conexiunii.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page3_title" = "Securitatea dvs. este prioritatea noastră";
+/* MacOS app tour: next tip button */
+"_next_tip" = "Alt sfat";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page3_description" = "Suntem o companie de securitate. Indiferent dacă este vorba de arhitectura noastră Secure Core sau criptare avansată, securitatea este întotdeauna pe primul loc.";
-
-/* iOS onboarding next item button */
-"_next" = "Înainte";
-
-/* iOS onboarding button to check app without logging in */
-"_discover_the_app" = "Descoperiți aplicația";
+/* MacOS app tour: end tour button */
+"_end_tour" = "Terminare tur";
 
 /* iOS: Table header in settings screen */
 "_extensions" = "Extensii";
@@ -1412,6 +1401,9 @@
 
 /* Title of the screen with news and offers. */
 "_news_title" = "Știri";
+
+/* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
+"_offer_ending_" = "Ending %@";
 
 "_quick_settings_secureCore_description" = "Direcționați-vă cele mai importante date prin serverele noastre sigure din țările care respectă intimitatea.";
 
@@ -1652,10 +1644,16 @@
 
 "login_summary_button" = "Start utilizare Proton VPN";
 
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Dezactivare blocare conexiune";
 
+/* NetworkExtension + KillSwitch on T2 Macs */
 "_neks_t2_title" = "Avertizare stabilitate blocare conexiune";
 
+/*
+ Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the
+ `_neks_t2_description' localized string.
+*/
 "_neks_t2_hyperlink" = "Cip de securitate T2";
 
 "_neks_t2_description" = "Utilizarea blocării conexiunii este instabilă pe acest dispozitiv.\n\nDispozitivul are un cip de securitate T2, care poate duce la probleme de stabilitate a sistemului dacă funcționalitatea blocării conexiunii din macOS este utilizată de Proton VPN.";
@@ -1958,21 +1956,6 @@
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Protejați-vă de atacurile din rețea";
 
-/* Title of the No Logs screen */
-"modals_no_logs_title" = "Fără jurnale și aflată în Elveția";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_privacy_first" = "Proton VPN pune confidențialitatea pe primul loc";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_log_activity" = "Nu vă înregistrăm activitatea de pe internet";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_third_parties" = "Nu partajăm orice date cu terțe părți";
-
-/* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "Politica strictă a Proton VPN de a nu ține jurnale este certificată de un audit extern.";
-
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "Observație privind viteza…";
 
@@ -2144,8 +2127,32 @@
 /* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
 "welcome_upgrade_subtitle_fallback" = "V-ați modificat abonamentul. Bucurați-vă de funcțiile de confidențialitate și performanță de nivel superior.";
 
+/* Welcome to Proton screen shown during onboarding. Title label. */
+"welcome_to_proton_title" = "Bun venit la Proton VPN";
+
+/* Welcome to Proton screen shown during onboarding. Subtitle label. */
+"welcome_to_proton_subtitle" = "Navigați în privat, accesați conținutul blocat și bucurați-vă de libertatea digitală.";
+
+/* Welcome to Proton screen shown during onboarding. Banner title label. */
+"welcome_to_proton_banner_title" = "VPN certificat fără jurnalizare";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle" = "Activitatea prin VPN vă este protejată de legile elvețiene privind confidențialitatea. Nu vă vom urmări niciodată online și nu vă vom partaja informațiile cu terțe părți.";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Disponibil cu VPN Business.";
+
+"onboarding_usage_stats_title" = "Partajare anonimă statistici de utilizare";
+
+"onboarding_usage_stats_description" = "Datele de utilizare ne ajută să depășim blocările VPN-ului și să îmbunătățim performanța aplicației.";
+
+"onboarding_crash_reports_title" = "Partajare anonimă rapoarte de erori";
+
+"onboarding_crash_reports_description" = "Rapoartele de erori ne ajută să reparăm erorile, să detectăm paravanele de protecție și să evităm blocările VPN-ului.";
+
+"onboarding_footer" = "Aceste statistici nu conțin adresa dvs. IP și nu pot fi utilizate să vă identifice. Nu le vom partaja cu terțe părți.";
+
+"onboarding_footer_learn_more" = "Detalii";
 
 /* Modal that lists countries in which servers are available to free users: Title */
 "free_connections_modal_title" = "Conexiuni gratuite";

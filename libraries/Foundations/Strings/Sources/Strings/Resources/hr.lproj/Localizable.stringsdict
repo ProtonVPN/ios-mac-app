@@ -23,7 +23,7 @@
     <key>welcome_screen_feature_servers_countries</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>%#@num_servers@ in %#@num_countries@</string>
+      <string>%#@num_servers@ u %#@num_countries@</string>
       <key>num_countries</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>

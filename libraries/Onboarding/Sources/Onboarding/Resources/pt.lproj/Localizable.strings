@@ -1,0 +1,67 @@
+"onboarding_take_tour" = "Visita guiada";
+
+"onboarding_skip" = "Saltar";
+
+"onboarding_welcome_title" = "Boas vindas ao Proton VPN";
+
+"onboarding_welcome_subtitle" = "Saiba como tirar o máximo partido do Proton VPN em apenas alguns segundos";
+
+"onboarding_beprotected_title" = "Proteção em todos os lugares";
+
+"onboarding_beprotected_subtitle" = "O Proton VPN suporta todos os dispositivos, incluindo Windows, macOS e muitos outros.";
+
+"onboarding_unblockstreaming_title" = "Desbloquear o streaming";
+
+"onboarding_unblockstreaming_subtitle" = "Acesso seguro aos seus conteúdos favoritos de outros países - Agora disponível na Android TV.";
+
+"onboarding_netshield_title" = "Bloquear anúncios e muito mais";
+
+"onboarding_netshield_subtitle" = "Bloqueie malware, anúncios e rastreadores no navegador e em todas as aplicações.";
+
+"onboarding_next" = "Seguinte";
+
+"onboarding_plus_only" = "Disponível com o Plus";
+
+"onboarding_establish_title" = "Estabeleça a sua primeira ligação";
+
+"onboarding_establish_note" = "Vamos ligaá-lo ao servidor mais rápido e estável dependendo de sua localização.";
+
+"onboarding_establish_connect_now" = "Ligar agora";
+
+"onboarding_done" = "Feito";
+
+"onboarding_connected_title" = "Parabéns";
+
+"onboarding_connected_subtitle" = "A sua ligação está protegida e está pronto para navegar na web.";
+
+"onboarding_connected_note" = "Seguramente.";
+
+"onboarding_connected_connected_to" = "Ligado a:";
+
+"onboarding_connected_connect_to_plus" = "Ligue-se a um servidor Plus";
+
+"onboarding_congratulations" = "Parabéns";
+
+"onboarding_purchased_note" = "Aproveite o mundo da privacidade.";
+
+"onboarding_get_plus" = "Obter o Plus";
+
+"onboarding_not_connected_subtitle" = "Está pronto para navegar na web.";
+
+"onboarding_not_connected_error" = "Não é possível estabelecer uma ligação. Tente novamente mais tarde na aplicação.";
+
+"onboarding_continue" = "Continuar";
+
+"onboarding_telemetry_title" = "Ajude-nos a combater a censura";
+
+"onboarding_usage_stats_title" = "Partilhar estatísticas anônimas de utilização";
+
+"onboarding_usage_stats_description" = "Os dados de utilização ajudam-nos a ultrapassar bloqueios de VPN e a melhorar a aplicação.";
+
+"onboarding_crash_reports_title" = "Partilhar relatórios de acidente anônimo";
+
+"onboarding_crash_reports_description" = "Os relatórios de falhas ajudam-nos a corrigir erros, a detetar firewalls e a evitar bloqueios de VPN.";
+
+"onboarding_footer" = "Estas estatísticas não contêm o seu endereço IP e não podem ser utilizadas para o identificar. Nunca as partilharemos com terceiros.";
+
+"onboarding_footer_learn_more" = "Mais informação";

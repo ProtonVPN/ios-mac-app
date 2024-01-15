@@ -87,7 +87,7 @@
 "_continue" = "İlerle";
 
 /* Button in some alerts */
-"_show_instructions" = "Yönergeleri göster";
+"_show_instructions" = "Yönergeleri görüntüle";
 
 /* iOS: quick connect widget */
 "_network_unreachable" = "Ağa erişilemiyor";
@@ -269,7 +269,7 @@
 "_city" = "İl";
 
 /* iOS status view */
-"_technical_details" = "Teknik ayrıntılar";
+"_technical_details" = "Teknik bilgiler";
 
 /* Main mac app menu item */
 "_open_app_to_log_in" = "Oturum açmak için Proton VPN uygulamasını aç...";
@@ -324,7 +324,7 @@
 "_password_confirm" = "Parola onayı";
 
 /* Show/hide password switch */
-"_show" = "GÖSTER";
+"_show" = "GÖRÜNTÜLE";
 
 /* Show/hide password switch */
 "_hide" = "GİZLE";
@@ -357,7 +357,7 @@
 "_forgot_username" = "Kullanıcı adımı unuttum";
 
 /* MacOS: generic failure message for SSO login */
-"_sso_login_failure" = "Failed to log in with SSO. Please try again.";
+"_sso_login_failure" = "Tek oturum açma ile oturum açılamadı. Lütfen yeniden deneyin.";
 
 /* iOS: button in login screen */
 "_forgot_password" = "Parolanızı mı unuttunuz?";
@@ -464,7 +464,7 @@
 "_map" = "Harita";
 
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
-"_map_show" = "Haritayı göster";
+"_map_show" = "Haritayı görüntüle";
 
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
 "_map_hide" = "Haritayı gizle";
@@ -1124,11 +1124,6 @@
 /* iOS plan feature */
 "_feature_secure_core" = "Secure Core";
 
-/* iOS plan feature */
-"_feature_blocked_content" = "Engellenen içeriğe erişin";
-
-"_feature_bt" = "BitTorrent/dosya paylaşımı desteği";
-
 /* MacOS welcome screen: title */
 "_welcome_title" = "HOŞ GELDİNİZ!";
 
@@ -1191,29 +1186,23 @@
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "Hızlı ayarlar";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Daha iyi bir İnternet'e hoş geldiniz";
+/* MacOS app tour: quick settings description */
+"_quick_settings_tour_description" = "Tek bir tıklama ile güvenliğinizi artırın:";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Proton Mail uygulamasını yaratan bilim insanları ve mühendislerin sunduğu, daha güvenli ve gizli bir İnternet fikrine hoş geldiniz.";
+/* MacOS app tour: quick settings secure core */
+"_quick_settings_tour_feature_1" = "Secure Core ile ek bir güvenlik katmanı ekleyin.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "İnternetin özgür olması gerektiğine inanıyoruz";
+/* MacOS app tour: quick settings net shield */
+"_quick_settings_tour_feature_2" = "NetShield ile kötü amaçlı yazılımlar ve reklamlar olmadan İnternet üzerinde özgürce gezinin.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page2_description" = "Sansürü ve bölgesel kısıtlamaları aşın. Reklam yok, bant genişliği sınırlaması yok ve verilerinizi satmıyoruz.";
+/* MacOS app tour: quick settings kill switch */
+"_quick_settings_tour_feature_3" = "Bağlantı kesiciyi açarak IP adresinizin açığa çıkmasını önleyin.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page3_title" = "Güvenliğiniz önceliğimizdir";
+/* MacOS app tour: next tip button */
+"_next_tip" = "Sonraki ipucu";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page3_description" = "Biz bir güvenlik şirketiyiz. İster Secure Core mimarimiz ister gelişmiş şifreleme olsun güvenlik her zaman önce gelir.";
-
-/* iOS onboarding next item button */
-"_next" = "İleri";
-
-/* iOS onboarding button to check app without logging in */
-"_discover_the_app" = "Uygulamayı keşfedin";
+/* MacOS app tour: end tour button */
+"_end_tour" = "Turu bitir";
 
 /* iOS: Table header in settings screen */
 "_extensions" = "Uzantılar";
@@ -1287,7 +1276,7 @@
 "_menu_hide_others" = "Diğerlerini gizle";
 
 /* Main mac app menu item */
-"_menu_show_all" = "Tümünü göster";
+"_menu_show_all" = "Tümünü görüntüle";
 
 /* Main mac app menu item */
 "_menu_logout" = "Oturumu kapat";
@@ -1412,6 +1401,9 @@
 
 /* Title of the screen with news and offers. */
 "_news_title" = "Haberler";
+
+/* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
+"_offer_ending_" = "Ending %@";
 
 "_quick_settings_secureCore_description" = "En hassas verilerinizi gizliliğe saygı gösteren ülkelerdeki en güvenli sunucularımız üzerinden yöneltin.";
 
@@ -1652,10 +1644,16 @@
 
 "login_summary_button" = "Proton VPN kullanmaya başlayın";
 
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Bağlantı kesiciyi kapat";
 
+/* NetworkExtension + KillSwitch on T2 Macs */
 "_neks_t2_title" = "Bağlantı kesici kararsızlığı uyarısı";
 
+/*
+ Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the
+ `_neks_t2_description' localized string.
+*/
 "_neks_t2_hyperlink" = "T2 güvenlik çipi";
 
 "_neks_t2_description" = "Bu aygıt üzerinde bağlantı kesici kullanımı sorunlara yol açar.\n\nAygıtınızda macOS üzerinde Proton VPN bağlantı kesici özelliği kullanıldığında kararsızlığa yol açan T2 güvenlik çipi bulunuyor.";
@@ -1678,7 +1676,7 @@
 "_moderate_nat_title" = "Ilımlı NAT";
 
 /* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "Ilımlı NAT rastgele yerel adres eşleştirmesini kapatır. Bu nedenle güvenliğinizi hafifçe olumsuz etkiler. Ancak çevrim içi oyunlar gibi doğrudan bağlantı kuran uçtan uca bağlantıların kurulabilmesini sağlar.\nAyrıntılı bilgi alın";
+"_moderate_nat_explanation" = "Ilımlı NAT rastgele yerel adres eşleştirmesini kapatır. Bu nedenle güvenliğinizi hafifçe olumsuz etkiler. Ancak çevrim içi oyunlar gibi doğrudan bağlantı kuran eşler arası bağlantıların kurulabilmesini sağlar.\nAyrıntılı bilgi alın";
 
 /* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
 "_moderate_nat_explanation_link" = "Ayrıntılı bilgi alın";
@@ -1958,21 +1956,6 @@
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Kendinizi ağ saldırılarından koruyabilirsiniz";
 
-/* Title of the No Logs screen */
-"modals_no_logs_title" = "Kayıt tutmuyoruz ve İsviçre merkezliyiz";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_privacy_first" = "Proton VPN gizliliğe öncelik verir";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_log_activity" = "İnternetteki etkinliklerinizi kaydetmeyiz";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_third_parties" = "Üçüncü taraflarla hiç bir veri paylaşmıyoruz";
-
-/* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "Proton VPN tarafından uygulanan sıkı kayıt tutmama ilkesi bir dış denetçi tarafından belgelenmiştir.";
-
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "Hız hakkında bir not...";
 
@@ -2144,8 +2127,32 @@
 /* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
 "welcome_upgrade_subtitle_fallback" = "Abonelik tarifenizi yükselttiniz. Gelişmiş gizlilik özelliklerinin ve yeni nesil başarımın tadını çıkarın.";
 
+/* Welcome to Proton screen shown during onboarding. Title label. */
+"welcome_to_proton_title" = "Proton VPN hizmetine hoş geldiniz";
+
+/* Welcome to Proton screen shown during onboarding. Subtitle label. */
+"welcome_to_proton_subtitle" = "Gizliliğinizi koruyarak gezinin, engellenen içeriğe erişin ve dijital özgürlüğün tadını çıkarın.";
+
+/* Welcome to Proton screen shown during onboarding. Banner title label. */
+"welcome_to_proton_banner_title" = "Kayıt tutmadığı belgelenmiş VPN";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle" = "VPN etkinliğiniz İsviçre gizlilik yasalarıyla korunur. Sizi asla çevrim içi olarak izlemeyeceğiz veya bilgilerinizi üçüncü taraflarla paylaşmayacağız.";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "VPN Business ile kullanılabilir.";
+
+"onboarding_usage_stats_title" = "Anonim kullanım istatistikleri paylaşılsın";
+
+"onboarding_usage_stats_description" = "Kullanım verileri VPN engellemelerini aşmamıza ve uygulamanın başarımını artırmamıza yardımcı olur.";
+
+"onboarding_crash_reports_title" = "Anonim çökme bildirimleri paylaşılsın";
+
+"onboarding_crash_reports_description" = "Çökme bildirimleri sorunları gidermemize, güvenlik duvarlarını algılamamıza ve VPN engellemelerini aşmamıza yardımcı olur.";
+
+"onboarding_footer" = "Bu istatistikler IP adresinizi içermez ve kim olduğunuzu belirlemek için kullanılamaz. Bu verileri asla üçüncü taraflar ile paylaşmayız.";
+
+"onboarding_footer_learn_more" = "Ayrıntılı bilgi alın";
 
 /* Modal that lists countries in which servers are available to free users: Title */
 "free_connections_modal_title" = "Free bağlantıları";

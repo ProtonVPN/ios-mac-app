@@ -437,7 +437,7 @@
 "_verification_instructions" = "Sinulle on lähetetty vahvistuskoodi, joka tulee syöttää alle.";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete" = "Määritys on suoritettu";
+"_setup_complete" = "Määritys on valmis";
 
 /* iOS: title of the screen after successfull purchase */
 "_setup_complete_free" = "Olet nyt rekisteröitynyt Proton VPN:n ilmaiskäyttäjäksi. Nauti aluksi seisemän päivää ilmaisesta Proton VPN Plus -tilauksen kokeilujaksosta.";
@@ -1124,11 +1124,6 @@
 /* iOS plan feature */
 "_feature_secure_core" = "Secure Core";
 
-/* iOS plan feature */
-"_feature_blocked_content" = "Käytä estettyä sisältöä";
-
-"_feature_bt" = "P2P-tiedostonjako/BitTorrent-tuki";
-
 /* MacOS welcome screen: title */
 "_welcome_title" = "TERVETULOA MUKAAN!";
 
@@ -1191,29 +1186,23 @@
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "Pika-asetukset";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Tervetuloa parempaan Internetiin";
+/* MacOS app tour: quick settings description */
+"_quick_settings_tour_description" = "Paranna turvallisuuttasi yhdellä painalluksella:";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Proton Mailin luoneet tutkijat ja insinöörit toivottavat sinut tervetulleeksi turvallisempaan ja yksityisempään Internetiin.";
+/* MacOS app tour: quick settings secure core */
+"_quick_settings_tour_feature_1" = "Lisää yksi suojaustaso Secure Corella.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "Uskomme vapaaseen Internetiin";
+/* MacOS app tour: quick settings net shield */
+"_quick_settings_tour_feature_2" = "NetShieldin avulla selaat verkkoa ilman haittaohjelmia ja mainoksia.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page2_description" = "Päihitä sensuuri ja alueelliset rajoitukset. Meillä ei ole mainoksia eikä kaistanleveysrajoituksia, emmekä myy tietojasi.";
+/* MacOS app tour: quick settings kill switch */
+"_quick_settings_tour_feature_3" = "Estä IP-osoitettasi paljastumasta käyttämällä tappokytkintä.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page3_title" = "Turvallisuutesi on ensisijalla";
+/* MacOS app tour: next tip button */
+"_next_tip" = "Seuraava vinkki";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page3_description" = "Olemme turvallisuusyhtiö. Olipa kyse Secure Core -arkkitehtuuristamme tai kehittyneestä salauksesta, turvallisuus on aina etusijalla.";
-
-/* iOS onboarding next item button */
-"_next" = "Seuraava";
-
-/* iOS onboarding button to check app without logging in */
-"_discover_the_app" = "Tutustu sovellukseen";
+/* MacOS app tour: end tour button */
+"_end_tour" = "Lopeta esittely";
 
 /* iOS: Table header in settings screen */
 "_extensions" = "Laajennukset";
@@ -1412,6 +1401,9 @@
 
 /* Title of the screen with news and offers. */
 "_news_title" = "Uutiset";
+
+/* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
+"_offer_ending_" = "Ending %@";
 
 "_quick_settings_secureCore_description" = "Ohjaa arkaluonteisimmat tietosi tietosuojaa kunnioittavissa maissa sijaitsevien turvallisimpien palvelintemme kautta.";
 
@@ -1652,10 +1644,16 @@
 
 "login_summary_button" = "Aloita Proton VPN:n käyttö";
 
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Poista tappokytkin käytöstä";
 
+/* NetworkExtension + KillSwitch on T2 Macs */
 "_neks_t2_title" = "Varoitus tappokytkimen epävakaudesta";
 
+/*
+ Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the
+ `_neks_t2_description' localized string.
+*/
 "_neks_t2_hyperlink" = "T2 Security -siru";
 
 "_neks_t2_description" = "Tappokytkin toimii tässä laitteessa epävakaasti.\n\nLaitteessasi on T2 Security -suojaussiru, joka saattaa aiheuttaa järjestelmän vakausongelmia, jos Proton VPN käyttää macOS:n tappokytkintoiminnallisuutta.";
@@ -1958,21 +1956,6 @@
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Suojaudu verkkohyökkäyksiltä";
 
-/* Title of the No Logs screen */
-"modals_no_logs_title" = "Lokivapaa ja Sveitsiläinen";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_privacy_first" = "Proton VPN:lle yksityisyys on ensisjaista";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_log_activity" = "Emme kerää lokeja toimistasi Internetissä";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_third_parties" = "Emme jaa mitään tietoja ulkopuolisille";
-
-/* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "Proton VPN:n tiukka lokivapaa käytäntö on puolueettoman auditoinnin vahvistama.";
-
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "Huomautus nopeudesta...";
 
@@ -2144,8 +2127,32 @@
 /* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
 "welcome_upgrade_subtitle_fallback" = "Olet päivittänyt tilauksesi. Nauti kehittyneistä yksityisyysominaisuuksista ja uuden tason suorituskyvystä.";
 
+/* Welcome to Proton screen shown during onboarding. Title label. */
+"welcome_to_proton_title" = "Tervetuloa Proton VPN:ään";
+
+/* Welcome to Proton screen shown during onboarding. Subtitle label. */
+"welcome_to_proton_subtitle" = "Selaa yksityisesti, pääse estettyyn sisältöön ja nauti digitaalisesta vapaudesta.";
+
+/* Welcome to Proton screen shown during onboarding. Banner title label. */
+"welcome_to_proton_banner_title" = "Sertifioitu ei-lokeja VPN";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle" = "VPN-toimintasi on suojattu Sveitsin tietosuojalaeilla. Emme koskaan seuraa sinua verkossa tai jaa tietojasi kolmansille osapuolille.";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Sisältyy VPN Business -tilaukseen.";
+
+"onboarding_usage_stats_title" = "Jaa nimettömiä käyttötilastoja";
+
+"onboarding_usage_stats_description" = "Käyttötilastot auttavat meitä kiertämään VPN-estoja ja parantamaan sovelluksen suorituskykyä.";
+
+"onboarding_crash_reports_title" = "Jaa nimettömiä kaatumisilmoituksia";
+
+"onboarding_crash_reports_description" = "Kaatumisilmoitukset auttavat meitä korjaaman vikoja, tunnistamaan palomuureja ja kiertämään VPN-estoja.";
+
+"onboarding_footer" = "Nämä tilastot eivät sisällä IP-osoitettasi, eikä sinua ole mahdollista tunnistaa niiden perusteella. Emme koskaa jaa niitä ulkopuolisille tahoille.";
+
+"onboarding_footer_learn_more" = "Lue lisää";
 
 /* Modal that lists countries in which servers are available to free users: Title */
 "free_connections_modal_title" = "Ilmaisyhteydet";

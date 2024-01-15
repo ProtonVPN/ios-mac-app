@@ -1,0 +1,67 @@
+"onboarding_take_tour" = "Neem een rondleiding";
+
+"onboarding_skip" = "Overslaan";
+
+"onboarding_welcome_title" = "Welkom bij Proton VPN";
+
+"onboarding_welcome_subtitle" = "Ontdek in enkele seconden hoe u het meeste uit Proton VPN haalt";
+
+"onboarding_beprotected_title" = "Wees overal beveiligd";
+
+"onboarding_beprotected_subtitle" = "Proton VPN ondersteunt alle apparaten, inclusief Windows, macOS en vele anderen.";
+
+"onboarding_unblockstreaming_title" = "Deblokkeer streamingdiensten";
+
+"onboarding_unblockstreaming_subtitle" = "Veilige toegang tot uw favoriete inhoud van andere landen, nu ook op AndroidTV.";
+
+"onboarding_netshield_title" = "Blokkeer advertenties en veel meer";
+
+"onboarding_netshield_subtitle" = "Blokkeer malware, advertenties, en trackers in browser en in alle apps.";
+
+"onboarding_next" = "Volgende";
+
+"onboarding_plus_only" = "Beschikbaar met Plus";
+
+"onboarding_establish_title" = "Uw eerste verbinding tot stand brengen";
+
+"onboarding_establish_note" = "We verbinden u met de snelste en meest stabiele server afhankelijk van uw locatie.";
+
+"onboarding_establish_connect_now" = "Nu verbinden";
+
+"onboarding_done" = "Klaar";
+
+"onboarding_connected_title" = "Gefeliciteerd";
+
+"onboarding_connected_subtitle" = "Uw verbinding is beveiligd en u bent klaar om op het web te browsen.";
+
+"onboarding_connected_note" = "Veilig.";
+
+"onboarding_connected_connected_to" = "Verbonden met:";
+
+"onboarding_connected_connect_to_plus" = "Verbind met een Plus server";
+
+"onboarding_congratulations" = "Gefeliciteerd";
+
+"onboarding_purchased_note" = "Geniet van de wereld van privacy.";
+
+"onboarding_get_plus" = "Neem Plus";
+
+"onboarding_not_connected_subtitle" = "U bent klaar om op het web te browsen.";
+
+"onboarding_not_connected_error" = "Kan geen verbinding maken. Probeer later opnieuw in de app.";
+
+"onboarding_continue" = "Doorgaan";
+
+"onboarding_telemetry_title" = "Help ons censuur te bestrijden";
+
+"onboarding_usage_stats_title" = "Anonieme gebruiksstatistieken delen";
+
+"onboarding_usage_stats_description" = "Gebruiksgegevens helpen ons om VPN-blokkering te omzeilen en de prestaties van de app te verbeteren.";
+
+"onboarding_crash_reports_title" = "Anonieme crashrapporten delen";
+
+"onboarding_crash_reports_description" = "Crashrapporten helpen ons om bugs op te lossen, firewalls te detecteren en VPN-blokkeringen te vermijden.";
+
+"onboarding_footer" = "Deze statistieken bevatten uw IP-adres niet, en kunnen niet gebruikt worden om u te identificeren. We zullen deze nooit delen met derden.";
+
+"onboarding_footer_learn_more" = "Meer informatie";
