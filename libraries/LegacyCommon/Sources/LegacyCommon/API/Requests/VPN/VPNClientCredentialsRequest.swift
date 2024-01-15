@@ -24,7 +24,7 @@ import ProtonCoreNetworking
 
 final class VPNClientCredentialsRequest: Request {
     var path: String {
-        return "/vpn"
+        return "/vpn/v2"
     }
 
     var retryPolicy: ProtonRetryPolicy.RetryMode {

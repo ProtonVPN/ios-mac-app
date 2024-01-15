@@ -197,7 +197,7 @@ public protocol NetworkingMockDelegate: AnyObject {
 
 public class FullNetworkingMockDelegate: NetworkingMockDelegate {
     public enum MockEndpoint: String {
-        case vpn = "/vpn"
+        case vpn = "/vpn/v2"
         case status = "/vpn_status"
         case location = "/vpn/v1/location"
         case logicals = "/vpn/v1/logicals"

@@ -27,7 +27,7 @@ import VPNSharedTesting
 fileprivate let testData = MockTestData()
 fileprivate let testAuthCredentials = AuthCredentials(username: "username", accessToken: "", refreshToken: "", sessionId: "", userId: "", scopes: [])
 fileprivate let testVPNCredentials = VpnKeychainMock.vpnCredentials(accountPlan: .plus, maxTier: CoreAppConstants.VpnTiers.plus)
-fileprivate let subuserCredentials = VpnCredentials(status: 0, expirationTime: Date(), accountPlan: .plus, maxConnect: 0, maxTier: 0, services: 0, groupId: "", name: "", password: "", delinquent: 0, credit: 0, currency: "", hasPaymentMethod: false, planName: nil, subscribed: nil, needConnectionAllocation: true, businessEvents: false)
+fileprivate let subuserCredentials = VpnCredentials(status: 0, expirationTime: Date(), accountPlan: .plus, maxConnect: 0, maxTier: 0, services: 0, groupId: "", name: "", password: "", delinquent: 0, credit: 0, currency: "", hasPaymentMethod: false, planName: nil, subscribed: nil, businessEvents: false)
 
 final class AppSessionManagerImplementationTests: XCTestCase {
 
@@ -161,7 +161,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         networkingDelegate.apiVpnLocation = .mock
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
         vpnKeychain.credentials = subuserCredentials
-        XCTAssertTrue(try vpnKeychain.fetchCached().needConnectionAllocation, "Expected cached credentials to represent subuser without sessions")
+        try vpnKeychain.fetchCached()
         manager.finishLogin(
             authCredentials: testAuthCredentials,
             success: {

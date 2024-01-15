@@ -89,7 +89,7 @@ public class VpnApiService {
 
         // Only retrieve IP address when not connected to VPN
         async let asyncLocation = (isDisconnected ? userLocation() : lastKnownLocation) ?? lastKnownLocation
-        async let asyncCredentials = try? clientCredentials()
+        let asyncCredentials = try? await clientCredentials()
 
         return await VpnProperties(
             serverModels: try serverInfo(
@@ -142,13 +142,16 @@ public class VpnApiService {
         guard authKeychain.username != nil else {
             throw VpnApiServiceError.endpointRequiresAuthentication
         }
-        
-        let json = try await networking.perform(request: VPNClientCredentialsRequest())
+
         do {
+            let json = try await networking.perform(request: VPNClientCredentialsRequest())
             return try VpnCredentials(dic: json)
-            
         } catch {
             let error = error as NSError
+            if error.httpCode == HttpStatusCode.accessForbidden,
+               error.responseCode == ApiErrorCode.subuserWithoutSessions {
+                throw ProtonVpnError.subuserWithoutSessions
+            }
             if error.code != -1 {
                 log.error("clientCredentials error", category: .api, event: .response, metadata: ["error": "\(error)"])
                 throw error
