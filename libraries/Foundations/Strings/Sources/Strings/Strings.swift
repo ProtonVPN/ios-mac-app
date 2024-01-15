@@ -738,7 +738,7 @@ public enum Localizable {
   /// 
   /// Your device has a T2 Security Chip, which can result in system stability issues if the kill switch functionality of macOS is used by Proton VPN.
   public static var neksT2Description: String { return Localizable.tr("Localizable", "_neks_t2_description", fallback: "The use of kill switch is unstable on this device.\n\nYour device has a T2 Security Chip, which can result in system stability issues if the kill switch functionality of macOS is used by Proton VPN.") }
-  /// `_neks_t2_description' localized string.
+  /// Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string.
   public static var neksT2Hyperlink: String { return Localizable.tr("Localizable", "_neks_t2_hyperlink", fallback: "T2 Security Chip") }
   /// NetworkExtension + KillSwitch on T2 Macs
   public static var neksT2Title: String { return Localizable.tr("Localizable", "_neks_t2_title", fallback: "Kill switch Stability Warning") }
@@ -984,6 +984,8 @@ public enum Localizable {
   public static var quickSettingsSecureCoreDescription: String { return Localizable.tr("Localizable", "_quick_settings_secureCore_description", fallback: "Route your most sensitive data through our safest servers in privacy-friendly countries.") }
   /// Secure Core may reduce VPN speed
   public static var quickSettingsSecureCoreNote: String { return Localizable.tr("Localizable", "_quick_settings_secureCore_note", fallback: "Secure Core may reduce VPN speed") }
+  /// Quick Settings
+  public static var quickSettingsTitle: String { return Localizable.tr("Localizable", "_quick_settings_title", fallback: "Quick Settings") }
   /// MacOS: quit application button in custom status menu
   public static var quit: String { return Localizable.tr("Localizable", "_quit", fallback: "Quit") }
   /// MacOS: alert show before quitting app if VPN is connected

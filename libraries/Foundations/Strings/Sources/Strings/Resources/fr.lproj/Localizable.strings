@@ -1629,10 +1629,7 @@
 /* NetworkExtension + KillSwitch on T2 Macs */
 "_neks_t2_title" = "Avertissement de stabilité Arrêt d'urgence (kill switch)";
 
-/*
- Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the
- `_neks_t2_description' localized string.
-*/
+/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "Puce de sécurité T2";
 
 "_neks_t2_description" = "L'utilisation de la fonctionnalité Arrêt d'urgence (kill switch) est instable sur cet appareil.\n\nVotre appareil est doté d'une puce de sécurité T2 qui peut entraîner des problèmes de stabilité du système macOS si cette fonctionnalité est utilisée par Proton VPN.";

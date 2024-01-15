@@ -1629,10 +1629,7 @@
 /* NetworkExtension + KillSwitch on T2 Macs */
 "_neks_t2_title" = "Varoitus tappokytkimen epävakaudesta";
 
-/*
- Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the
- `_neks_t2_description' localized string.
-*/
+/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "T2 Security -siru";
 
 "_neks_t2_description" = "Tappokytkin toimii tässä laitteessa epävakaasti.\n\nLaitteessasi on T2 Security -suojaussiru, joka saattaa aiheuttaa järjestelmän vakausongelmia, jos Proton VPN käyttää macOS:n tappokytkintoiminnallisuutta.";

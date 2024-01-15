@@ -1629,10 +1629,7 @@
 /* NetworkExtension + KillSwitch on T2 Macs */
 "_neks_t2_title" = "IP-beveiliging Stabiliteitswaarschuwing";
 
-/*
- Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the
- `_neks_t2_description' localized string.
-*/
+/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "T2-beveiligingschip";
 
 "_neks_t2_description" = "Het gebruik van de IP-beveiliging is instabiel op dit apparaat.\n\nUw apparaat heeft een T2-beveiligingschip, welke kan resulteren in een stabiliteitsproblemen op uw systeem als de IP-beveiligingsfunctionaliteit van macOS gebruikt wordt door ProtonVPN.";

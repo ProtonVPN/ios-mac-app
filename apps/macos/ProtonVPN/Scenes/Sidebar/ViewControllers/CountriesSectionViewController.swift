@@ -40,7 +40,7 @@ class QuickSettingsStack: NSStackView {
     }
 
     override func accessibilityLabel() -> String? {
-        Localizable.quickSettingsTourTitle
+        Localizable.quickSettingsTitle
     }
 
     override func accessibilityRole() -> NSAccessibility.Role? {

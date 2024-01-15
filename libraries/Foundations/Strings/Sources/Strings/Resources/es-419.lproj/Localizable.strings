@@ -1629,10 +1629,7 @@
 /* NetworkExtension + KillSwitch on T2 Macs */
 "_neks_t2_title" = "Advertencia de estabilidad del interruptor de bloqueo";
 
-/*
- Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the
- `_neks_t2_description' localized string.
-*/
+/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "Chip de seguridad T2";
 
 "_neks_t2_description" = "El uso del interruptor de bloqueo es inestable en este dispositivo.\n\nSu dispositivo tiene un chip de seguridad T2, lo que puede provocar problemas de estabilidad del sistema si Proton VPN usa la funcionalidad del interruptor de macOS.";

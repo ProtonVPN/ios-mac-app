@@ -1368,6 +1368,7 @@
 "_offer_ending_" = "Ending %@";
 
 // MARK: Quick Settings
+"_quick_settings_title" = "Quick Settings";
 "_quick_settings_secureCore_description" = "Route your most sensitive data through our safest servers in privacy-friendly countries.";
 "_quick_settings_netShield_description" = "Browse the internet without ads and malware.";
 "_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak.";
@@ -1566,8 +1567,7 @@
 
 /* NetworkExtension + KillSwitch on T2 Macs */
 "_neks_t2_title" = "Kill switch Stability Warning";
-/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the */
-/* `_neks_t2_description' localized string. */
+/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "T2 Security Chip";
 "_neks_t2_description" = "The use of kill switch is unstable on this device.\n\nYour device has a T2 Security Chip, which can result in system stability issues if the kill switch functionality of macOS is used by Proton VPN.";
 "_neks_t2_connect" = "Enable anyway";
