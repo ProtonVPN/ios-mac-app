@@ -357,7 +357,7 @@
 "_forgot_username" = "დაგავიწყდათ თქვენი მომხმარებლის სახელი";
 
 /* MacOS: generic failure message for SSO login */
-"_sso_login_failure" = "Failed to log in with SSO. Please try again.";
+"_sso_login_failure" = "SSO-ით შესვლა ჩავარდა. თავიდან სცადეთ.";
 
 /* iOS: button in login screen */
 "_forgot_password" = "დაგავიწყდათ პაროლი?";
@@ -1124,11 +1124,6 @@
 /* iOS plan feature */
 "_feature_secure_core" = "Secure Core";
 
-/* iOS plan feature */
-"_feature_blocked_content" = "მიუწვდომელი შიგთავსი";
-
-"_feature_bt" = "BitTorrent/ფაილების გაზიარების მხარდაჭერა";
-
 /* MacOS welcome screen: title */
 "_welcome_title" = "კეთილი იყოს თქვენი მობრძანება!";
 
@@ -1187,33 +1182,6 @@
 
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "დაიცავით თქვენი საყვარელი\nვიდეოს სტრიმი";
-
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "სწრაფი პარამეტრები";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "მოგესალმებით უკეთეს ინტერნეტში";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "მეცნიერებისა და ინჟინრებისგან, რომლებმაც Proton Mail-ი შექმნეს: მოგესალმებით უფრო დაცულ და კონფიდენციალურ ინტერნეტში.";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "ჩვენ გვჯერა, რომ ინტერნეტი უფასო უნდა იყოს";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page2_description" = "გაიმარჯვეთ ცენზურასა და რეგიონულ შეზღუდვებზე. ჩვენ არ გვაქვს რეკლამა და სიჩქარის შეზღუდვები და არც თქვენს მონაცემებს ვყიდით.";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page3_title" = "თქვენი უსაფრთხოება ჩვენი პრიორიტეტია";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page3_description" = "ჩვენი კომპანიის პროდუქტი უსაფრთხოებაა. იქნება ეს ჩვენი Secure Core-ის არქიტექტურა თუ დამატებითი დაშიფვრა, უსაფრთხოება პირველ რიგშია.";
-
-/* iOS onboarding next item button */
-"_next" = "შემდეგი";
-
-/* iOS onboarding button to check app without logging in */
-"_discover_the_app" = "აპის აღმოჩენა";
 
 /* iOS: Table header in settings screen */
 "_extensions" = "გაფართოებები";
@@ -1412,6 +1380,9 @@
 
 /* Title of the screen with news and offers. */
 "_news_title" = "სიახლეები";
+
+/* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
+"_offer_ending_" = "Ending %@";
 
 "_quick_settings_secureCore_description" = "დაარაუტეთ თქვენი ყველაზე მგრძნობიარე მონაცემები ჩვენი ყველაზე დაცული სერვერების გავლით.";
 
@@ -1652,10 +1623,13 @@
 
 "login_summary_button" = "Proton VPN-ის გამოყენების დაწყება";
 
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Kill Switch-ის გამორთვა";
 
+/* NetworkExtension + KillSwitch on T2 Macs */
 "_neks_t2_title" = "Kill Switch-ის სტაბილურობის გაფრთხილება";
 
+/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "უსაფრთხოების ჩიპი T2";
 
 "_neks_t2_description" = "თქვენს მოწყობილობას აქვს T2 უსაფრთხოების ჩიპი, რომელსაც სისტემის სტაბილურობის პრობლემების გამოწვევა შეუძლია,\n\nთუ Proton VPN-ი macOS-ზე Kill Switch-ს იყენებს.";
@@ -1958,21 +1932,6 @@
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "დაიცავით თავი ქსელური შეტევებისგან";
 
-/* Title of the No Logs screen */
-"modals_no_logs_title" = "ჟურნალის გარეშე, შვეიცარიაში";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_privacy_first" = "Proton VPN ჯერ კონფიდენციალობაა, უპირველეს ყოვლისა";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_log_activity" = "ჩვენ არ ვინახავთ, რას აკეთებთ ინტერნეტში";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_third_parties" = "ჩვენ არ ვუზიარებთ მონაცემებს მესამე პირებს";
-
-/* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "Proton VPN-ის ჟურნალის-არ-შენახვის პოლიტიკა გარე აუდიტის მიწერ მოწმდება.";
-
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "შენიშვნა სიჩქარის შესახებ...";
 
@@ -2144,8 +2103,32 @@
 /* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
 "welcome_upgrade_subtitle_fallback" = "თქვენ ასწიეთ თქვენი ტარიფი. ისიამოვნეთ დამატებითი კონფიდენციალობის ფუნქციებით და შემდეგი დონის წარმადობით.";
 
+/* Welcome to Proton screen shown during onboarding. Title label. */
+"welcome_to_proton_title" = "მოგესალმებით Proton VPN-ში";
+
+/* Welcome to Proton screen shown during onboarding. Subtitle label. */
+"welcome_to_proton_subtitle" = "იმუშავეთ ინტერნეტში ინკოგნიტოდ, იქონიეთ წვდომა დაბლოკილ შემცველობასთან და ისიამოვნეთ ციფრული თავისუფლებით.";
+
+/* Welcome to Proton screen shown during onboarding. Banner title label. */
+"welcome_to_proton_banner_title" = "სერტიფიცირებული VPN ჟურნალის გარეშე";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle" = "თქვენი VPN აქტივობა დაცულია შვეიცარიის კონფიდენციალობის კანონებით. ჩვენ არასდროს გტრეკავთ ინტერნეტში ან ვუზიარებთ თქვენს ინფორმაციას მესამე პირებს.";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "ხელმისაწვდომია VPN Business-თან ერთად.";
+
+"onboarding_usage_stats_title" = "გამოყენების ანონიმური სტატისტიკის გაზიარება";
+
+"onboarding_usage_stats_description" = "გამოყენების მონაცემები გვეხმარება VPN ბლოკების დაძლევაში და აპლიკაციის მუშაობის გაუმჯობესებაში.";
+
+"onboarding_crash_reports_title" = "ავარიის ანონიმური ანგარიშების გაზიარება";
+
+"onboarding_crash_reports_description" = "ავარიის ანგარიშები გვეხმარება შეცდომების გამოსწორებაში, ფეიერვოლების აღმოჩენაში და VPN ბლოკების თავიდან აცილებაში.";
+
+"onboarding_footer" = "ეს სტატისტიკა არ შეიცავს თქვენს IP მისამართს და მათი იდენტიფიცირებისთვის შეუძლებელია. ჩვენ არასდროს გავუზიარებთ მათ მესამე მხარეებს.";
+
+"onboarding_footer_learn_more" = "გაიგეთ მეტი";
 
 /* Modal that lists countries in which servers are available to free users: Title */
 "free_connections_modal_title" = "უფასო მიერთებები";

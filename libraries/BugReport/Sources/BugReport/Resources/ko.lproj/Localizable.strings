@@ -50,7 +50,7 @@
 "_br_success_button" = "알겠습니다";
 
 /* ReportBug success window: title text */
-"_br_failure_title" = "사용자의 리포트가 전송되지 못했습니다";
+"_br_failure_title" = "신고가 전송되지 않았습니다";
 
 /* ReportBug success window: retry button */
 "_br_failure_button_retry" = "다시 시도";

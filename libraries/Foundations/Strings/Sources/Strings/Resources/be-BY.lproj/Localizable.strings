@@ -208,12 +208,6 @@
 /* iOS: countries list section header */
 "_countries_premium" = "Premium страны";
 
-/* MacOS app tour: countries list description */
-"_countries_tour_description" = "Выберите, какую страну и сервер вы хотели бы использовать для конечного IP-адреса.";
-
-/* MacOS app tour: countries list title */
-"_countries_tour_title" = "Страны";
-
 /* Profile create/edit menu */
 "_country" = "Страна";
 
@@ -330,9 +324,6 @@
 
 /* Common word */
 "_enabled" = "Включены";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "Закончить тур";
 
 /* %@ is always 'PLUS' e.g. ENJOY PLUS FOR FREE! */
 "_enjoy_for_free" = "Пользуйтесь %@ бесплатно!";
@@ -976,7 +967,7 @@
 /* (No Comment) */
 "_neks_t2_description" = "Использование Kill Switch нестабильно на этом устройстве.\n\nВаше устройство оснащено чипом безопасности T2, что может привести к проблемам со стабильностью системы, если функция Kill Switch в macOS используется Proton VPN.";
 
-/* `_neks_t2_description' localized string. */
+/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "Чип безопасности T2";
 
 /* NetworkExtension + KillSwitch on T2 Macs */
@@ -1017,9 +1008,6 @@
 
 /* iOS onboarding next item button */
 "_next" = "Далее";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Следующий совет";
 
 /* Text used when no active server information is available */
 "_no_description_available" = "Описание отсутствует";
@@ -1213,12 +1201,6 @@
 /* MacOS: profiles window title */
 "_profiles_overview" = "Обзор профилей";
 
-/* MacOS app tour: profiles description */
-"_profiles_tour_description" = "Сохраните предпочитаемые Вами настройки и серверы для дальнейшего использования.";
-
-/* MacOS app tour: profiles title */
-"_profiles_tour_title" = "Профили";
-
 /* (No Comment) */
 "_protocol" = "Протокол";
 
@@ -1236,12 +1218,6 @@
 
 /* MacOS: Settings -> Connection: description. */
 "_quick_connect_tooltip" = "Кнопка «Быстрое подключение» подключит вас к выбранному профилю";
-
-/* MacOS app tour: quick connect description */
-"_quick_connect_tour_description" = "Автоматически подключайтесь к серверу, который обеспечит вам самое быстрое подключение.";
-
-/* MacOS app tour: quick connect title */
-"_quick_connect_tour_title" = "Быстрое подключение";
 
 /* (No Comment) */
 "_quick_settings_get_plus" = "Получить Plus";
@@ -1272,21 +1248,6 @@
 
 /* (No Comment) */
 "_quick_settings_secureCore_note" = "Secure Core может снизить скорость VPN";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "Повысьте свою безопасность одним щелчком мыши:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Добавьте дополнительный уровень безопасности с Secure Core.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "Путешествуйте по сети, свободной от вредоносного ПО и рекламы, при помощи NetShield.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Предотвратите раскрытие вашего IP-адреса, включив Kill Switch.";
-
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "Быстрые настройки";
 
 /* MacOS: quit application button in custom status menu */
 "_quit" = "Выход";

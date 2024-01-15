@@ -297,7 +297,7 @@
 "_always_on_will_reconnect" = "Stale aktywny VPN automatycznie przywróci Twoje połączenie";
 
 /* MacOS: About window title */
-"_about" = "O Proton VPN";
+"_about" = "Informacje";
 
 /* iOS setting: after this word actual version and build number are appended */
 "_version" = "Wersja";
@@ -1124,11 +1124,6 @@
 /* iOS plan feature */
 "_feature_secure_core" = "Secure Core";
 
-/* iOS plan feature */
-"_feature_blocked_content" = "Dostęp do zablokowanych treści";
-
-"_feature_bt" = "Wsparcie BitTorrent / udostępnianie plików";
-
 /* MacOS welcome screen: title */
 "_welcome_title" = "WITAJ NA POKŁADZIE!";
 
@@ -1187,33 +1182,6 @@
 
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "Bezpieczny streaming Twoich\nulubionych treści";
-
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "Szybkie ustawienia";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Witaj w lepszym Internecie";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Naukowcy i inżynierowie, którzy stworzyli pocztę Proton Mail, witają w bezpieczniejszym i bardziej prywatnym Internecie.";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "Wierzymy w konieczność wolności w Internecie";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page2_description" = "Pokonaj cenzurę i ograniczenia regionalne. Nie posiadamy reklam, limitów danych i nie sprzedajemy Twoich informacji.";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page3_title" = "Twoje bezpieczeństwo jest naszym priorytetem";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page3_description" = "Zajmujemy się ochroną prywatności. Od trybu Secure Core po zaawansowane szyfrowanie, bezpieczeństwo stawiamy zawsze na pierwszym miejscu.";
-
-/* iOS onboarding next item button */
-"_next" = "Dalej";
-
-/* iOS onboarding button to check app without logging in */
-"_discover_the_app" = "Poznaj aplikację";
 
 /* iOS: Table header in settings screen */
 "_extensions" = "Rozszerzenia";
@@ -1413,6 +1381,9 @@
 /* Title of the screen with news and offers. */
 "_news_title" = "Aktualności";
 
+/* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
+"_offer_ending_" = "Ending %@";
+
 "_quick_settings_secureCore_description" = "Przekieruj swoje najbardziej poufne dane przez nasze najbezpieczniejsze serwery ulokowane w krajach szanujących prywatność.";
 
 "_quick_settings_netShield_description" = "Przeglądaj Internet bez reklam i złośliwego oprogramowania.";
@@ -1506,7 +1477,7 @@
 
 "_vpnauth_certfail_title" = "Błąd uwierzytelniania";
 
-"_vpnauth_certfail_description" = "Nie udało się odświeżyć certyfikatu VPN. Sprawdź swoje połączenie";
+"_vpnauth_certfail_description" = "Nie udało się odświeżyć certyfikatu VPN. Sprawdź połączenie";
 
 "_vpnauth_too_many_certs_title" = "Błąd uwierzytelniania";
 
@@ -1652,10 +1623,13 @@
 
 "login_summary_button" = "Zacznij korzystać z Proton VPN";
 
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Wyłącz Kill Switch";
 
+/* NetworkExtension + KillSwitch on T2 Macs */
 "_neks_t2_title" = "Ostrzeżenie o niestabilności funkcji Kill Switch";
 
+/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "Czip zabezpieczeń T2";
 
 "_neks_t2_description" = "Funkcja Kill Switch jest niestabilna na tym urządzeniu.\n\nTwoje urządzenia posiada czip zabezpieczeń T2, który może powodować problemy ze stabilnością tej funkcji.";
@@ -1958,21 +1932,6 @@
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Chroń się przed atakami sieciowymi";
 
-/* Title of the No Logs screen */
-"modals_no_logs_title" = "Szwajcarska usługa bez przechowywania logów";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_privacy_first" = "Proton VPN stawia na prywatność";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_log_activity" = "Nie przechowujemy logów Twojej aktywności w Internecie";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_third_parties" = "Nie udostępniamy danych stronom trzecim";
-
-/* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "Polityka braku przechowywania logów Proton VPN została potwierdzona przez zewnętrzny audyt.";
-
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "Uwaga dotycząca prędkości...";
 
@@ -2144,8 +2103,32 @@
 /* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
 "welcome_upgrade_subtitle_fallback" = "Subskrypcja została ulepszona. Ciesz się zaawansowanymi funkcjami prywatności i wydajnością na wyższym poziomie.";
 
+/* Welcome to Proton screen shown during onboarding. Title label. */
+"welcome_to_proton_title" = "Witaj w Proton VPN";
+
+/* Welcome to Proton screen shown during onboarding. Subtitle label. */
+"welcome_to_proton_subtitle" = "Przeglądaj prywatnie Internet, uzyskaj dostęp do zablokowanych treści i ciesz się cyfrową wolnością.";
+
+/* Welcome to Proton screen shown during onboarding. Banner title label. */
+"welcome_to_proton_banner_title" = "Certyfikowany VPN bez logów";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle" = "Twoja aktywność VPN jest chroniona przez szwajcarskie prawa ochrony danych osobowych. Nigdy nie będziemy śledzić użytkownika ani udostępniać danych stronom trzecim.";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Funkcja dostępna w planie VPN Business.";
+
+"onboarding_usage_stats_title" = "Udostępnij anonimowe statystyki użytkowania";
+
+"onboarding_usage_stats_description" = "Dane użytkowania pomagają nam ominąć blokady VPN i poprawić wydajność aplikacji.";
+
+"onboarding_crash_reports_title" = "Udostępnij anonimowe raporty o awariach";
+
+"onboarding_crash_reports_description" = "Raporty o awariach pomagają nam naprawić błędy, wykryć zapory sieciowe i ominąć blokady VPN.";
+
+"onboarding_footer" = "Te statystyki nie zawierają adresu IP i nie mogą zostać użyte do identyfikacji użytkownika. Dane nie zostaną udostępnione stronom trzecim.";
+
+"onboarding_footer_learn_more" = "Dowiedz się więcej";
 
 /* Modal that lists countries in which servers are available to free users: Title */
 "free_connections_modal_title" = "Bezpłatne połączenia";

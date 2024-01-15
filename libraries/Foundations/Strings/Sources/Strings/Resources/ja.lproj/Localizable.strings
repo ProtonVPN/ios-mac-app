@@ -1124,11 +1124,6 @@
 /* iOS plan feature */
 "_feature_secure_core" = "Secure Core";
 
-/* iOS plan feature */
-"_feature_blocked_content" = "ブロックされたコンテンツへアクセス";
-
-"_feature_bt" = "BitTorrent/ファイル共有のサポート";
-
 /* MacOS welcome screen: title */
 "_welcome_title" = "Proton VPNへようこそ！";
 
@@ -1187,33 +1182,6 @@
 
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "お気に入りのコンテンツの\n 安全なストリーミング";
-
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "クイック設定";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "より良いインターネットへようこそ";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Proton Mail を開発した科学者やエンジニアが、より安全でプライベートなインターネット接続を提供します。";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "インターネットは自由であるべきだと考えます";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page2_description" = "検閲や地域的制約に縛られず、帯域幅の制限もありません。広告表示もなく、個人情報を第三者に販売しません。";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page3_title" = "ユーザーのセキュリティが私たちの最優先事項です";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page3_description" = "私たちはセキュリティを提供する企業です。常にセキュリティを第一に考え、 Secure Core アーキテクチャや最新の暗号化技術等を提供しています。";
-
-/* iOS onboarding next item button */
-"_next" = "次へ";
-
-/* iOS onboarding button to check app without logging in */
-"_discover_the_app" = "アプリを知る";
 
 /* iOS: Table header in settings screen */
 "_extensions" = "拡張機能";
@@ -1412,6 +1380,9 @@
 
 /* Title of the screen with news and offers. */
 "_news_title" = "ニュース";
+
+/* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
+"_offer_ending_" = "Ending %@";
 
 "_quick_settings_secureCore_description" = "プライバシーフレンドリーな国にある私たちの安全なサーバーを経由して接続します。";
 
@@ -1652,10 +1623,13 @@
 
 "login_summary_button" = "Proton VPN を始めましょう";
 
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "キルスイッチを無効にする";
 
+/* NetworkExtension + KillSwitch on T2 Macs */
 "_neks_t2_title" = "キルスイッチの安全性に関する警告";
 
+/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "T2 セキュリティチップ";
 
 "_neks_t2_description" = "このデバイスではキルスイッチが正常に動作しないことがあります。\n\nT2 セキュリティチップが搭載されているため、Proton VPN でキルスイッチが macOS で使われている場合、システムに問題をきたす可能性があります。";
@@ -1958,21 +1932,6 @@
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "ネットワーク攻撃から自分を保護";
 
-/* Title of the No Logs screen */
-"modals_no_logs_title" = "ログなしかつスイス拠点";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_privacy_first" = "Proton VPN はプライバシーファーストです";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_log_activity" = "あなたのインターネット上での活動を記録しません";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_third_parties" = "私たちは第三者にデータを共有しません";
-
-/* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "Proton VPN の強固なノーログポリシーは外部監査に認証されています。";
-
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "速度について...";
 
@@ -2144,8 +2103,32 @@
 /* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
 "welcome_upgrade_subtitle_fallback" = "サブスクリプションをアップグレードしました。 高度なプライバシー機能と次のレベルのパフォーマンスをお楽しみください。";
 
+/* Welcome to Proton screen shown during onboarding. Title label. */
+"welcome_to_proton_title" = "Proton VPNへようこそ";
+
+/* Welcome to Proton screen shown during onboarding. Subtitle label. */
+"welcome_to_proton_subtitle" = "Browse privately, access blocked content, and enjoy digital freedom.";
+
+/* Welcome to Proton screen shown during onboarding. Banner title label. */
+"welcome_to_proton_banner_title" = "Certified no-logs VPN";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle" = "Your VPN activity is protected by Swiss privacy laws. We’ll never track you online or share your information with third parties.";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "VPN ビジネスでご利用いただけます。";
+
+"onboarding_usage_stats_title" = "匿名の使用統計を共有";
+
+"onboarding_usage_stats_description" = "使用状況データは VPN 検閲に打ち勝ち、アプリのパフォーマンスを改善するために使用されます。";
+
+"onboarding_crash_reports_title" = "匿名のクラッシュレポートを共有";
+
+"onboarding_crash_reports_description" = "クラッシュレポートはバグを修正し、ファイアウォールを検出し、VPN 検閲を回避するために使用されます。";
+
+"onboarding_footer" = "この統計にあなたの IP アドレスは含まれず、あなたを特定することはできません。この統計は第三者に共有しません。";
+
+"onboarding_footer_learn_more" = "詳細";
 
 /* Modal that lists countries in which servers are available to free users: Title */
 "free_connections_modal_title" = "無料接続";

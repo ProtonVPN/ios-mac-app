@@ -1180,28 +1180,6 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "Secure streaming of your\nfavorite content";
 
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "Quick Settings";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "Increase your security with one click:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Add one extra layer of security with Secure Core.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "Surf the web freely from malware and ads with NetShield.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Prevent your IP to be exposed by turning on kill switch.";
-
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Next Tip";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "End Tour";
-
 // MARK: Extensions
 
 /* iOS: Table header in settings screen */
@@ -1390,6 +1368,7 @@
 "_offer_ending_" = "Ending %@";
 
 // MARK: Quick Settings
+"_quick_settings_title" = "Quick Settings";
 "_quick_settings_secureCore_description" = "Route your most sensitive data through our safest servers in privacy-friendly countries.";
 "_quick_settings_netShield_description" = "Browse the internet without ads and malware.";
 "_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak.";
@@ -1588,8 +1567,7 @@
 
 /* NetworkExtension + KillSwitch on T2 Macs */
 "_neks_t2_title" = "Kill switch Stability Warning";
-/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the */
-/* `_neks_t2_description' localized string. */
+/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "T2 Security Chip";
 "_neks_t2_description" = "The use of kill switch is unstable on this device.\n\nYour device has a T2 Security Chip, which can result in system stability issues if the kill switch functionality of macOS is used by Proton VPN.";
 "_neks_t2_connect" = "Enable anyway";

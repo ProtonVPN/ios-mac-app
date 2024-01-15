@@ -32,7 +32,7 @@
 "_br_3_username" = "Nome utente";
 
 /* ReportBug 3rd step (form) field to ask for includeing logs */
-"_br_3_logs_field" = "Invia log errore";
+"_br_3_logs_field" = "Invia i log degli errori";
 
 /* ReportBug 3rd step (form) logs description */
 "_br_3_logs_description" = "Un log è un tipo di file che ci mostra le azioni intraprese che hanno portato a un errore. Li useremo solamente per aiutare i nostri ingegneri a correggere i bug.";

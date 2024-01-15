@@ -208,12 +208,6 @@
 /* iOS: countries list section header */
 "_countries_premium" = "Países premium";
 
-/* MacOS app tour: countries list description */
-"_countries_tour_description" = "Elige qué país y servidor deseas utilizar para tu dirección IP final.";
-
-/* MacOS app tour: countries list title */
-"_countries_tour_title" = "Países";
-
 /* Profile create/edit menu */
 "_country" = "País";
 
@@ -330,9 +324,6 @@
 
 /* Common word */
 "_enabled" = "Habilitado";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "Terminar recorrido";
 
 /* %@ is always 'PLUS' e.g. ENJOY PLUS FOR FREE! */
 "_enjoy_for_free" = "¡Disfruta de %@ gratis!";
@@ -1003,9 +994,6 @@
 /* iOS onboarding next item button */
 "_next" = "Siguiente";
 
-/* MacOS app tour: next tip button */
-"_next_tip" = "Siguiente consejo";
-
 /* Text used when no active server information is available */
 "_no_description_available" = "No hay descripción disponible";
 
@@ -1192,12 +1180,6 @@
 /* MacOS: profiles window title */
 "_profiles_overview" = "Resumen de los perfiles";
 
-/* MacOS app tour: profiles description */
-"_profiles_tour_description" = "Guarda tus ajustes y servidores preferidos para futuro uso.";
-
-/* MacOS app tour: profiles title */
-"_profiles_tour_title" = "Perfiles";
-
 /* (No Comment) */
 "_protocol" = "Protocolo";
 
@@ -1209,12 +1191,6 @@
 
 /* MacOS: Settings -> Connection: description. */
 "_quick_connect_tooltip" = "El botón de conexión rápida te conectará al perfil seleccionado";
-
-/* MacOS app tour: quick connect description */
-"_quick_connect_tour_description" = "Conectarse automáticamente al servidor que le proporcionará la conexión más rápida.";
-
-/* MacOS app tour: quick connect title */
-"_quick_connect_tour_title" = "Conexión rápida";
 
 /* (No Comment) */
 "_quick_settings_get_plus" = "Obtener Plus";
@@ -1245,21 +1221,6 @@
 
 /* (No Comment) */
 "_quick_settings_secureCore_note" = "Secure Core puede reducir la velocidad de la VPN";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "Aumenta tu seguridad con un solo clic:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Añadir una capa extra de seguridad con Secure Core.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "Navegue por la web libre de malware y anuncios con NetShield.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Evita que tu IP quede expuesta activando Kill Switch.";
-
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "Configuración rápida";
 
 /* MacOS: quit application button in custom status menu */
 "_quit" = "Salir";
