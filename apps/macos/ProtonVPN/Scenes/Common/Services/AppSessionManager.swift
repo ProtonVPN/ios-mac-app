@@ -131,7 +131,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @MainActor
     private func finishLogin() async throws {
         try await retrieveProperties()
-        try checkForSubuserWithoutSessions()
         try await refreshVpnAuthCertificate()
 
         if sessionStatus == .notEstablished {
@@ -153,15 +152,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         _ = try await withCheckedThrowingContinuation { [weak self] continuation in
             self?.vpnAuthentication.refreshCertificates(completion: continuation.resume(with:))
-        }
-    }
-
-    private func checkForSubuserWithoutSessions() throws {
-        if let credentials = try? self.vpnKeychain.fetchCached(),
-           credentials.needConnectionAllocation {
-            log.error("User with insufficient sessions detected. Throwing an error instead of logging in.", category: .app)
-            logOutCleanup()
-            throw ProtonVpnError.subuserWithoutSessions
         }
     }
 
@@ -223,9 +213,15 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 lastKnownLocation: location,
                 serversAccordingToTier: shouldRefreshServersAccordingToUserTier
             )
+        } catch ProtonVpnError.subuserWithoutSessions {
+            log.error("User with insufficient sessions detected. Throwing an error instead of logging in.", category: .app)
+            logOutCleanup()
+            throw ProtonVpnError.subuserWithoutSessions
         } catch {
             log.error("Failed to obtain user's VPN properties: \(error.localizedDescription)", category: .app)
-            if serverStorage.fetch().isEmpty, self.propertiesManager.userLocation?.ip == nil, (error is KeychainError) {
+            if serverStorage.fetch().isEmpty, 
+                self.propertiesManager.userLocation?.ip == nil,
+                (error is KeychainError) {
                 // only throw if there is a major reason
                 throw error
             }
