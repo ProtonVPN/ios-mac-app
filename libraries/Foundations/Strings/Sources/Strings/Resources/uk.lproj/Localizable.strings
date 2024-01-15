@@ -357,7 +357,7 @@
 "_forgot_username" = "Забули ім'я користувача";
 
 /* MacOS: generic failure message for SSO login */
-"_sso_login_failure" = "Failed to log in with SSO. Please try again.";
+"_sso_login_failure" = "Не вдалося увійти з SSO. Будь ласка, спробуйте знову.";
 
 /* iOS: button in login screen */
 "_forgot_password" = "Забули пароль?";
@@ -1083,7 +1083,7 @@
 "_plus_plan_features" = "Сервери Plus\nSecure Core\nСервери Tor";
 
 /* Used instead of price for free plans. */
-"_free" = "Безплатно";
+"_free" = "Безкоштовно";
 
 /* Alert message during In App Purchase */
 "_do_you_want_to_activate_subscription_for" = "Ви хочете активувати придбану передплату для ";
@@ -1123,11 +1123,6 @@
 
 /* iOS plan feature */
 "_feature_secure_core" = "Secure Core";
-
-/* iOS plan feature */
-"_feature_blocked_content" = "Доступ до заблокованого вмісту";
-
-"_feature_bt" = "Підтримка BitTorrent/обміну файлами";
 
 /* MacOS welcome screen: title */
 "_welcome_title" = "ЛАСКАВО ПРОСИМО!";
@@ -1187,33 +1182,6 @@
 
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "Безпечна потокова трансляція ваших\nулюблених матеріалів";
-
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "Швидкі налаштування";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Вітаємо у кращому інтернеті";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Від вчених та інженерів, які створили Proton Mail, ласкаво просимо до безпечнішого та приватнішого інтернету.";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "Ми переконані, що інтернет повинен бути вільним";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page2_description" = "Здолайте цензуру та регіональні обмеження. У нас немає реклами, обмеження пропускної здатності, і ми не заробляємо на ваших даних.";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page3_title" = "Ваша безпека є нашим пріоритетом";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page3_description" = "Ми зосереджені на захисті даних. Починаючи від нашої архітектури Secure Core, до розширеного шифрування, безпека завжди на першому місці.";
-
-/* iOS onboarding next item button */
-"_next" = "Далі";
-
-/* iOS onboarding button to check app without logging in */
-"_discover_the_app" = "Ознайомитися з програмою";
 
 /* iOS: Table header in settings screen */
 "_extensions" = "Розширення";
@@ -1413,6 +1381,9 @@
 /* Title of the screen with news and offers. */
 "_news_title" = "Новини";
 
+/* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
+"_offer_ending_" = "Ending %@";
+
 "_quick_settings_secureCore_description" = "Спрямовуйте свої найвразливіші дані через наші найзахищеніші сервери в країнах, що цінують приватність.";
 
 "_quick_settings_netShield_description" = "Користуйтеся інтернетом без реклами та зловмисних програм.";
@@ -1545,7 +1516,7 @@
 
 "_subscription_upgrade_option3" = "Додаткові функції: NetShield, Secure Core, Tor, P2P";
 
-"_tier_free" = "Безплатно";
+"_tier_free" = "Безкоштовно";
 
 "_tier_plus" = "Plus";
 
@@ -1652,10 +1623,13 @@
 
 "login_summary_button" = "Почати користуватися Proton VPN";
 
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Вимкнути Kill Switch";
 
+/* NetworkExtension + KillSwitch on T2 Macs */
 "_neks_t2_title" = "Попередження про стабільність Kill Switch";
 
+/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "Чип безпеки T2";
 
 "_neks_t2_description" = "Робота Kill Switch нестабільна на цьому пристрої.\n\nВаш пристрій має чип безпеки T2, що може призвести до проблем зі стабільністю системи, якщо Proton VPN використовує можливості Kill Switch у macOS.";
@@ -1958,21 +1932,6 @@
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Захистіться від мережевих атак";
 
-/* Title of the No Logs screen */
-"modals_no_logs_title" = "Не веде журналів і розташовано у Швейцарії";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_privacy_first" = "Proton VPN — це насамперед приватність";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_log_activity" = "Ми не зберігаємо вашу активність в інтернеті";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_third_parties" = "Ми не передаємо жодних даних третім сторонам";
-
-/* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "Сувора політика Proton VPN без журналювання підтверджена зовнішньою перевіркою.";
-
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "Примітка про швидкість...";
 
@@ -2144,8 +2103,32 @@
 /* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
 "welcome_upgrade_subtitle_fallback" = "Ви оновили свій тарифний план. Оцініть переваги розширених функцій безпеки й продуктивності нового рівня.";
 
+/* Welcome to Proton screen shown during onboarding. Title label. */
+"welcome_to_proton_title" = "Ласкаво просимо до Proton VPN";
+
+/* Welcome to Proton screen shown during onboarding. Subtitle label. */
+"welcome_to_proton_subtitle" = "Приватний перегляд, доступ до заблокованого вмісту і задоволення від цифрової свободи.";
+
+/* Welcome to Proton screen shown during onboarding. Banner title label. */
+"welcome_to_proton_banner_title" = "Сертифіковане VPN без журналювання";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle" = "Ваша активність VPN захищена швейцарськими законами про приватність. Ми ніколи не стежитимемо за вами онлайн, або передавати вашу інформацію третім особам.";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Доступно для VPN Business.";
+
+"onboarding_usage_stats_title" = "Анонімна статистика використання";
+
+"onboarding_usage_stats_description" = "Дані про використання допомагають нам обходити блокування VPN і вдосконалювати швидкодію програми.";
+
+"onboarding_crash_reports_title" = "Анонімні звіти про збої";
+
+"onboarding_crash_reports_description" = "Звіти про збої допомагають нам виправляти помилки, виявляти мережеві екрани та уникати блокування VPN.";
+
+"onboarding_footer" = "Ця статистика не містить вашої IP-адреси та не може бути використана для вашої ідентифікації. Ми ніколи не передаємо ці дані третім сторонам.";
+
+"onboarding_footer_learn_more" = "Докладніше";
 
 /* Modal that lists countries in which servers are available to free users: Title */
 "free_connections_modal_title" = "Безплатні з'єднання";

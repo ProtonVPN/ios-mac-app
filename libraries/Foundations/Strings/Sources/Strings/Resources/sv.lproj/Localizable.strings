@@ -1124,11 +1124,6 @@
 /* iOS plan feature */
 "_feature_secure_core" = "Secure Core";
 
-/* iOS plan feature */
-"_feature_blocked_content" = "Åtkomst till blockerat innehåll";
-
-"_feature_bt" = "Stöd för BitTorrent/fildelning";
-
 /* MacOS welcome screen: title */
 "_welcome_title" = "VÄLKOMMEN OMBORD!";
 
@@ -1187,33 +1182,6 @@
 
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "Säker streaming av ditt\nfavoritinnehåll";
-
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "Snabbinställningar";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Välkommen till ett bättre Internet";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Från forskarna och ingenjörerna som skapade Proton Mail, välkommen till ett säkrare och privat Internet.";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "Vi anser att Internet ska vara gratis";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page2_description" = "Besegra censur och regionala begränsningar. Vi har inga annonser, inga bandbreddsbegränsningar och säljer inte din data.";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page3_title" = "Din säkerhet är vår prioritet";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page3_description" = "Vi är ett säkerhetsföretag. Oavsett om det är vår Secure Core-arkitektur eller avancerad kryptering, kommer säkerheten alltid först.";
-
-/* iOS onboarding next item button */
-"_next" = "Nästa";
-
-/* iOS onboarding button to check app without logging in */
-"_discover_the_app" = "Upptäck appen";
 
 /* iOS: Table header in settings screen */
 "_extensions" = "Utökningar";
@@ -1412,6 +1380,9 @@
 
 /* Title of the screen with news and offers. */
 "_news_title" = "Nyheter";
+
+/* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
+"_offer_ending_" = "Upphör om %@";
 
 "_quick_settings_secureCore_description" = "Dirigera dina mest känsliga data genom våra säkraste servrar i integritetsvänliga länder.";
 
@@ -1652,10 +1623,13 @@
 
 "login_summary_button" = "Börja använda Proton VPN";
 
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Inaktivera kill switch";
 
+/* NetworkExtension + KillSwitch on T2 Macs */
 "_neks_t2_title" = "Stabilitetsvarning för kill switch";
 
+/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "T2 säkerhetschip";
 
 "_neks_t2_description" = "Användningen av kill switch är instabil på denna enhet.\n\nDin enhet har ett T2-säkerhetschip, vilket kan resultera i systemstabilitetsproblem om kill-switch-funktionaliteten i macOS används av Proton VPN.";
@@ -1958,21 +1932,6 @@
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Skydda dig själv från nätverksattacker";
 
-/* Title of the No Logs screen */
-"modals_no_logs_title" = "Inga loggar och baserat i Schweiz";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_privacy_first" = "Proton VPN är integritet först";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_log_activity" = "Vi loggar inte din Internetaktivitet";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_third_parties" = "Vi delar ingen data med tredje part";
-
-/* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "Proton VPN:s strikta policy för att inte logga är certifierad av en extern granskning.";
-
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "En notis om hastighet...";
 
@@ -2144,8 +2103,32 @@
 /* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
 "welcome_upgrade_subtitle_fallback" = "Du har uppgraderat din prenumeration. Njut av avancerade integritetsfunktioner och nästa nivå av prestanda.";
 
+/* Welcome to Proton screen shown during onboarding. Title label. */
+"welcome_to_proton_title" = "Välkommen till Proton VPN";
+
+/* Welcome to Proton screen shown during onboarding. Subtitle label. */
+"welcome_to_proton_subtitle" = "Surfa privat, åtkomst till blockerat innehåll och njut av digital frihet.";
+
+/* Welcome to Proton screen shown during onboarding. Banner title label. */
+"welcome_to_proton_banner_title" = "Certified no-logs VPN";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle" = "Din VPN-aktivitet skyddas av schweiziska integritetslagar. Vi kommer aldrig att spåra dig online eller dela din information med tredje part.";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Tillgängligt med VPN Business.";
+
+"onboarding_usage_stats_title" = "Dela anonym användningsstatistik";
+
+"onboarding_usage_stats_description" = "Användningsdata hjälper oss att övervinna VPN-blockeringar och förbättra appens prestanda.";
+
+"onboarding_crash_reports_title" = "Dela anonyma kraschrapporter";
+
+"onboarding_crash_reports_description" = "Kraschrapporter hjälper oss att åtgärda fel, upptäcka brandväggar och undvika VPN-blockeringar.";
+
+"onboarding_footer" = "Denna statistik innehåller inte din IP-adress och den kan inte användas för att identifiera dig. Vi kommer aldrig att dela den med tredje part.";
+
+"onboarding_footer_learn_more" = "Lär dig mer";
 
 /* Modal that lists countries in which servers are available to free users: Title */
 "free_connections_modal_title" = "Gratis anslutningar";

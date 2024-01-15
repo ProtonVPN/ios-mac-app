@@ -1124,11 +1124,6 @@
 /* iOS plan feature */
 "_feature_secure_core" = "Secure Core";
 
-/* iOS plan feature */
-"_feature_blocked_content" = "Přístup k blokovanému obsahu";
-
-"_feature_bt" = "BitTorrent/podpora sdílení souborů";
-
 /* MacOS welcome screen: title */
 "_welcome_title" = "VÍTEJTE NA PALUBĚ!";
 
@@ -1187,33 +1182,6 @@
 
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "Bezpečné streamování vašeho\noblíbeného obsahu";
-
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "Rychlá nastavení";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Vítejte na lepším internetu";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Od vědců a inženýrů, kteří vytvořili Proton Mail, vítejte na bezpečnějším a soukromějším internetu.";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "Věříme, že internet by měl být svobodný";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page2_description" = "Překonejte cenzuru a regionální omezení. Nemáme reklamy, neomezujeme šířku pásma a neprodáváme vaše data.";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page3_title" = "Vaše bezpečnost je naší prioritou";
-
-/* iOS onboarding texts */
-"_ios_onboarding_page3_description" = "Jsme bezpečnostní společnost. Ať už jde o naši architekturu Secure Core nebo pokročilé šifrování, bezpečnost je vždy na prvním místě.";
-
-/* iOS onboarding next item button */
-"_next" = "Další";
-
-/* iOS onboarding button to check app without logging in */
-"_discover_the_app" = "Prozkoumejte aplikaci";
 
 /* iOS: Table header in settings screen */
 "_extensions" = "Rozšíření";
@@ -1412,6 +1380,9 @@
 
 /* Title of the screen with news and offers. */
 "_news_title" = "Novinky";
+
+/* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
+"_offer_ending_" = "Ending %@";
 
 "_quick_settings_secureCore_description" = "Směrujte vaše nejcitlivější data skrz naše nejbezpečnější servery v zemích respektujících soukromí.";
 
@@ -1652,10 +1623,13 @@
 
 "login_summary_button" = "Začněte používat Proton VPN";
 
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Vypnout Kill Switch";
 
+/* NetworkExtension + KillSwitch on T2 Macs */
 "_neks_t2_title" = "Upozornění na stabilitu Kill Switch";
 
+/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "T2 bezpečnostní čip";
 
 "_neks_t2_description" = "Použití funkce Kill Switch je u tohoto zařízení nestabilní.\n\nVaše zařízení je vybaveno bezpečnostním čipem T2, což může vést k problémům se stabilitou systému, pokud Proton VPN používá funkci Kill Switch systému macOS.";
@@ -1958,21 +1932,6 @@
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Chraňte se před síťovými útoky";
 
-/* Title of the No Logs screen */
-"modals_no_logs_title" = "Žádné logy, se sídlem ve Švýcarsku";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_privacy_first" = "Proton VPN je ochrana soukromí na prvním místě";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_log_activity" = "Vaši aktivitu na internetu nezaznamenáváme";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_third_parties" = "Nesdílíme žádné údaje s třetími stranami";
-
-/* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "Přísné zásady společnosti Proton VPN týkající se zákazu logování jsou potvrzeny externím auditem.";
-
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "Poznámka k rychlosti...";
 
@@ -2144,8 +2103,32 @@
 /* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
 "welcome_upgrade_subtitle_fallback" = "Navýšili jste své předplatné. Užívejte si pokročilé funkce ochrany soukromí a výkon na vyšší úrovni.";
 
+/* Welcome to Proton screen shown during onboarding. Title label. */
+"welcome_to_proton_title" = "Vítejte v Proton VPN";
+
+/* Welcome to Proton screen shown during onboarding. Subtitle label. */
+"welcome_to_proton_subtitle" = "Procházejte soukromě, přistupujte k blokovanému obsahu a užívejte si digitální svobody.";
+
+/* Welcome to Proton screen shown during onboarding. Banner title label. */
+"welcome_to_proton_banner_title" = "Certifikovaná síť VPN bez logů";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle" = "Vaše aktivity v síti VPN jsou chráněny švýcarskými zákony o ochraně osobních údajů. Nikdy vás nebudeme sledovat online ani sdílet vaše informace s třetími stranami.";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Dostupné s VPN Business.";
+
+"onboarding_usage_stats_title" = "Sdílejte anonymní statistiky o používání";
+
+"onboarding_usage_stats_description" = "Údaje o používání nám pomáhají obcházet blokování VPN a vylepšovat výkon aplikace.";
+
+"onboarding_crash_reports_title" = "Sdílet anonymní hlášení o pádech";
+
+"onboarding_crash_reports_description" = "Hlášení o pádech nám pomáhají opravovat chyby, detekovat firewally a vyhýbat se blokování VPN.";
+
+"onboarding_footer" = "Tyto statistiky neobsahují vaši IP adresu a nelze je použít k vaší identifikaci. Nikdy je nebudeme sdílet se třetími stranami.";
+
+"onboarding_footer_learn_more" = "Více informací";
 
 /* Modal that lists countries in which servers are available to free users: Title */
 "free_connections_modal_title" = "Připojení Free";
