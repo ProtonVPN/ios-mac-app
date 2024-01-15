@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>onboarding_establish_subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Bezplatná tarifa ponúka %#@num_servers@ v %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>one</key>
+        <string>%d krajina</string>
+        <key>few</key>
+        <string>%d krajiny</string>
+        <key>many</key>
+        <string>%d krajín</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d krajín</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>one</key>
+        <string>%d server</string>
+        <key>few</key>
+        <string>%d servery</string>
+        <key>many</key>
+        <string>%d serverov</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d serverov</string>
+      </dict>
+    </dict>
+    <key>onboarding_upsell_title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Pristupujte ku všetkým %#@NUM_SERVERS@ v %#@NUM_COUNTRIES@ s Plus</string>
+      <key>NUM_COUNTRIES</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d krajín</string>
+        <key>one</key>
+        <string>%d krajina</string>
+        <key>few</key>
+        <string>%d krajiny</string>
+        <key>many</key>
+        <string>%d krajín</string>
+      </dict>
+      <key>NUM_SERVERS</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d serverov</string>
+        <key>one</key>
+        <string>%d server</string>
+        <key>few</key>
+        <string>%d servery</string>
+        <key>many</key>
+        <string>%d serverov</string>
+      </dict>
+    </dict>
+    <key>onboarding_purchased_subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Teraz máte prístup k %#@NUM_SEC_SERVERS@ a ďalším prémiovým funkciám.</string>
+      <key>NUM_SEC_SERVERS</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d bezpečných serverov</string>
+        <key>one</key>
+        <string>%d bezpečný server</string>
+        <key>few</key>
+        <string>%d bezpečné servery</string>
+        <key>many</key>
+        <string>%d bezpečných serverov</string>
+      </dict>
+    </dict>
+    <key>onboarding_upsell_feature_multipleDevices</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Pripojte %#@NUM_DEVICES@ súčasne</string>
+      <key>NUM_DEVICES</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d zariadení</string>
+        <key>one</key>
+        <string>%d zariadenie</string>
+        <key>few</key>
+        <string>%d zariadenia</string>
+        <key>many</key>
+        <string>%d zariadení</string>
+      </dict>
+    </dict>
+  </dict>
+</plist>

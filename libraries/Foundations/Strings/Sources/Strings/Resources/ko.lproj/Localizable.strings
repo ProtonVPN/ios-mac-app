@@ -1124,11 +1124,6 @@
 /* iOS plan feature */
 "_feature_secure_core" = "Secure Core";
 
-/* iOS plan feature */
-"_feature_blocked_content" = "차단된 콘텐츠에 접속";
-
-"_feature_bt" = "BitTorrent/파일 공유 지원";
-
 /* MacOS welcome screen: title */
 "_welcome_title" = "환영합니다!";
 
@@ -1191,29 +1186,23 @@
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "간편 설정";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "더 나은 인터넷에 오신 것을 환영합니다";
+/* MacOS app tour: quick settings description */
+"_quick_settings_tour_description" = "한 번의 클릭으로 보안을 향상하세요:";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Proton Mail을 개발한 과학자와 엔지니어로 부터: 더 안전하고 프라이빗한 인터넷 세계에 오신 것을 환영합니다.";
+/* MacOS app tour: quick settings secure core */
+"_quick_settings_tour_feature_1" = "Secure Core로 보안 층을 하나 더 추가하세요.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "우리는 인터넷이 자유로워야 한다고 생각합니다";
+/* MacOS app tour: quick settings net shield */
+"_quick_settings_tour_feature_2" = "NetShield와 함께 멀웨어 및 광고로 부터 자유롭게 웹을 탐색하세요.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page2_description" = "검열과 지역 제한을 극복하세요. Proton VPN은 광고도 없고, 대역폭 제한도 없으며, 당신의 데이터를 판매하지도 않습니다.";
+/* MacOS app tour: quick settings kill switch */
+"_quick_settings_tour_feature_3" = "Kill switch를 활성화 하여 IP가 노출되는 것을 방지하세요.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page3_title" = "저희는 당신의 보안을 가장 중요시합니다.";
+/* MacOS app tour: next tip button */
+"_next_tip" = "다음 팁";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page3_description" = "우리는 보안 회사입니다. 그러기에, 보안 코어 아키텍처이든 고급 암호화이든, 보안이 항상 최우선입니다.";
-
-/* iOS onboarding next item button */
-"_next" = "다음";
-
-/* iOS onboarding button to check app without logging in */
-"_discover_the_app" = "앱을 탐색해보세요";
+/* MacOS app tour: end tour button */
+"_end_tour" = "투어 끝내기";
 
 /* iOS: Table header in settings screen */
 "_extensions" = "확장 프로그램";
@@ -1412,6 +1401,9 @@
 
 /* Title of the screen with news and offers. */
 "_news_title" = "뉴스";
+
+/* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
+"_offer_ending_" = "Ending %@";
 
 "_quick_settings_secureCore_description" = "개인 정보 보호 친화적인 국가에 있는 가장 안전한 서버를 통해 가장 민감한 데이터를 라우팅하세요.";
 
@@ -1652,10 +1644,16 @@
 
 "login_summary_button" = "Proton VPN 사용 시작";
 
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "킬 스위치 비활성화";
 
+/* NetworkExtension + KillSwitch on T2 Macs */
 "_neks_t2_title" = "Kill switch 안전성 경고";
 
+/*
+ Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the
+ `_neks_t2_description' localized string.
+*/
 "_neks_t2_hyperlink" = "T2 보안 칩";
 
 "_neks_t2_description" = "이 디바이스에서는 킬 스위치의 사용이 불안정 합니다.\n\n사용자의 기기가 T2 보안 칩이 내장되어 있으며, macOS의 킬 스위치 기능이 Proton VPN에서 사용되는 경우 시스템 안정성 문제가 발생할 수 있습니다.";
@@ -1958,21 +1956,6 @@
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "네트워크 공격으로부터의 보호";
 
-/* Title of the No Logs screen */
-"modals_no_logs_title" = "기록이 없고 스위스에 위치";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_privacy_first" = "Proton VPN 은 보안이 먼저입니다";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_log_activity" = "우리는 인터넷 활동을 하는 동안 기록을 남기지 않습니다";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_third_parties" = "우리는 어떠한 데이터를 제 3자에게 제공하지 않습니다";
-
-/* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "Proton VPN의 엄격한 노-로그 정책은 외부감사를 통해 검증되었습니다.";
-
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "속도에 대한 참고 사항...";
 
@@ -2144,8 +2127,32 @@
 /* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
 "welcome_upgrade_subtitle_fallback" = "구독을 업그레이드 했습니다. 한 차원 높은 개인정보 보호 기능과 성능을 즐겨보세요.";
 
+/* Welcome to Proton screen shown during onboarding. Title label. */
+"welcome_to_proton_title" = "Proton VPN에 오신 것을 환영합니다";
+
+/* Welcome to Proton screen shown during onboarding. Subtitle label. */
+"welcome_to_proton_subtitle" = "브라우징은 은밀하게, 막힌 컨텐츠는 열리게, 디지털 자유를 그렇게 누리십시오.";
+
+/* Welcome to Proton screen shown during onboarding. Banner title label. */
+"welcome_to_proton_banner_title" = "노-로그 인증을 받은 VPN";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle" = "사용자의 VPN 활동은 스위스의 개인정보 보호법대로 보호됩니다. 저희는 당신을 온라인 상에서 추적하거나 정보를 제 3자와 공유하지 않습니다.";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "VPN Business에서 사용 가능합니다.";
+
+"onboarding_usage_stats_title" = "익명 사용 통계 공유";
+
+"onboarding_usage_stats_description" = "사용 데이터는 VPN 차단을 무력화하고 앱 성능을 개선하는 데 도움이 됩니다.";
+
+"onboarding_crash_reports_title" = "익명 충돌 보고서 공유";
+
+"onboarding_crash_reports_description" = "충돌 보고서는 버그를 수정하고 방화벽을 감지하며 VPN 차단을 방지하는 데 도움이 됩니다.";
+
+"onboarding_footer" = "이러한 통계에는 IP 주소가 포함되어 있지 않으며 귀하를 식별하는 데 사용할 수 없습니다. 이 정보를 다른 사람에게 공유하지 않습니다.";
+
+"onboarding_footer_learn_more" = "더 알아보기";
 
 /* Modal that lists countries in which servers are available to free users: Title */
 "free_connections_modal_title" = "무료 연결";

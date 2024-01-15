@@ -227,7 +227,7 @@
 /* MacOS: button in connecting overlay */
 "_try_again" = "Intente nuevamente";
 
-"_try_again_without_killswitch" = "Desactivar el interruptor de apagado y reintentar";
+"_try_again_without_killswitch" = "Desactivar el interruptor de bloqueo y reintentar";
 
 /* Button in some alerts */
 "_retry" = "Reintentar";
@@ -285,13 +285,13 @@
 "_switch_side_button_off" = "OFF";
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
-"_timeout_ks_ike_descritpion" = "Otra aplicación podría estar interfiriendo con el interruptor de apagado. Para resolver este problema, cambie al protocolo OpenVPN o desactive el interruptor y vuelva a intentarlo.";
+"_timeout_ks_ike_descritpion" = "Otra aplicación podría estar interfiriendo con el interruptor de bloqueo. Para resolver este problema, cambie al protocolo OpenVPN o desactive el interruptor y vuelva a intentarlo.";
 
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Cambiar a OpenVPN y reintentar";
 
 /* Disconnect notification */
-"_kill_switch_blocking_connection" = "El interruptor de apagado bloquea todas las conexiones";
+"_kill_switch_blocking_connection" = "El interruptor de bloqueo bloquea todas las conexiones";
 
 /* Disconnect notification */
 "_always_on_will_reconnect" = "La VPN siempre activa le reconectará automáticamente";
@@ -904,10 +904,10 @@
 "_delete_application_data_popup_body" = "Todos los datos de Proton VPN se eliminarán y la aplicación se cerrará. ¿Quiere continuar?";
 
 /* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Desactivar el interruptor de apagado";
+"_kill_switch_disable" = "Desactivar el interruptor de bloqueo";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
-"_kill_switch_enable" = "Activar el interruptor de apagado";
+"_kill_switch_enable" = "Activar el interruptor de bloqueo";
 
 /* MacOS: Settings screen title */
 "_preferences" = "Preferencias";
@@ -936,7 +936,7 @@
 "_manage_subscription_on_web" = "Gestione su suscripción en el panel web";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_kill_switch" = "Interruptor de apagado";
+"_kill_switch" = "Interruptor de bloqueo";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Bloquea todo el tráfico de red cuando el túnel VPN se pierde.";
@@ -1048,15 +1048,15 @@
 
 "_allow_lan_info" = "Permite saltarse la VPN y conectarse a dispositivos de su red local, como su impresora.";
 
-"_allow_lan_description" = "Para permitir acceso LAN, el interruptor de apagado debe estar desactivado.\n\n¿Continuar?";
+"_allow_lan_description" = "Para permitir acceso LAN, el interruptor de bloqueo debe estar desactivado.\n\n¿Continuar?";
 
 "_allow_lan_note" = "Tome en cuenta que su conexión debe reiniciarse para aplicar este cambio";
 
 /* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "¿Activar el interruptor de apagado?";
+"_turn_ks_on_title" = "¿Activar el interruptor de bloqueo?";
 
 /* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "Al activar el interruptor de apagado, no podrá acceder a los dispositivos en su red local. \n\n¿Continuar?";
+"_turn_ks_on_description" = "Al activar el interruptor de bloqueo, no podrá acceder a los dispositivos en su red local. \n\n¿Continuar?";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Obtener el plan %@";
@@ -1124,11 +1124,6 @@
 /* iOS plan feature */
 "_feature_secure_core" = "Secure Core";
 
-/* iOS plan feature */
-"_feature_blocked_content" = "Acceso a contenido bloqueado";
-
-"_feature_bt" = "BitTorrent/soporte para compartir archivos";
-
 /* MacOS welcome screen: title */
 "_welcome_title" = "¡BIENVENIDO A BORDO!";
 
@@ -1191,29 +1186,23 @@
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "Ajustes rápidos";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Bienvenido/a a un internet mejor";
+/* MacOS app tour: quick settings description */
+"_quick_settings_tour_description" = "Aumente su seguridad con un solo clic:";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "De los científicos e ingenieros que crearon Proton Mail, bienvenidos a un internet más seguro y privado.";
+/* MacOS app tour: quick settings secure core */
+"_quick_settings_tour_feature_1" = "Añada una capa extra de seguridad con Secure Core.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "Creemos que Internet debe ser libre";
+/* MacOS app tour: quick settings net shield */
+"_quick_settings_tour_feature_2" = "Navegue libremente por la web de malware y anuncios con NetShield.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page2_description" = "Golpeamos la censura y las restricciones regionales. No tenemos anuncios, ni límites de ancho de banda, y no vendemos sus datos.";
+/* MacOS app tour: quick settings kill switch */
+"_quick_settings_tour_feature_3" = "Evita que su IP sea expuesta activando el interruptor de bloqueo.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page3_title" = "Su seguridad es nuestra prioridad";
+/* MacOS app tour: next tip button */
+"_next_tip" = "Siguiente consejo";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page3_description" = "Somos una empresa de seguridad. Ya sea nuestra arquitectura Secure Core o nuestro cifrado avanzado, la seguridad siempre es lo primero.";
-
-/* iOS onboarding next item button */
-"_next" = "Siguiente";
-
-/* iOS onboarding button to check app without logging in */
-"_discover_the_app" = "Descubrir la app";
+/* MacOS app tour: end tour button */
+"_end_tour" = "Finalizar recorrido";
 
 /* iOS: Table header in settings screen */
 "_extensions" = "Extensiones";
@@ -1413,6 +1402,9 @@
 /* Title of the screen with news and offers. */
 "_news_title" = "Noticias";
 
+/* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
+"_offer_ending_" = "Finaliza %@";
+
 "_quick_settings_secureCore_description" = "Envía sus datos más sensibles a través de nuestros servidores más seguros en países que no tengan privacidad.";
 
 "_quick_settings_netShield_description" = "Navegue por internet sin anuncios ni malware.";
@@ -1423,7 +1415,7 @@
 
 "_quick_settings_netShield_note" = "Si los sitios web no se cargan, intente desactivar NetShield";
 
-"_quick_settings_killSwitch_note" = "Si no puede conectarse a dispositivos de su red local, intente desactivar el interruptor de apagado.";
+"_quick_settings_killSwitch_note" = "Si no puede conectarse a dispositivos de su red local, intente desactivar el interruptor de bloqueo.";
 
 "_quick_settings_get_plus" = "Obtener Plus";
 
@@ -1444,16 +1436,16 @@
 "_upgrade_required_securecore_description" = "Secure Core está disponible con un plan Plus. Actualice ahora para enrutar el tráfico a través de nuestros servidores más seguros en países amigables con la privacidad.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection_header" = "El interruptor de apagado está protegiendo su IP";
+"_kill_switch_reconnection_header" = "El interruptor de bloqueo está protegiendo su IP";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Su conexión a internet se reanudará tan pronto como ProtonVPN se conecte a un servidor.\nPara usar Internet sin protección VPN e interruptor de apagado cancele la reconexión al servidor.";
+"_kill_switch_reconnection" = "Su conexión a internet se reanudará tan pronto como ProtonVPN se conecte a un servidor.\nPara usar Internet sin protección VPN e interruptor de bloqueo cancele la reconexión al servidor.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "sin";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
-"_kill_switch_reconnection_bold2" = "Protección de interruptor de apagado";
+"_kill_switch_reconnection_bold2" = "Protección de interruptor de bloqueo";
 
 /* MacOS: connection screen - cancel button */
 "_kill_switch_reconnection_cancel" = "Cancelar reconexión";
@@ -1652,13 +1644,19 @@
 
 "login_summary_button" = "Comenzar con Proton VPN";
 
-"_wgks_ks_off" = "Desactivar el interruptor de apagado";
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
+"_wgks_ks_off" = "Desactivar el interruptor de bloqueo";
 
-"_neks_t2_title" = "Advertencia de estabilidad del interruptor de apagado";
+/* NetworkExtension + KillSwitch on T2 Macs */
+"_neks_t2_title" = "Advertencia de estabilidad del interruptor de bloqueo";
 
+/*
+ Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the
+ `_neks_t2_description' localized string.
+*/
 "_neks_t2_hyperlink" = "Chip de seguridad T2";
 
-"_neks_t2_description" = "El uso del interruptor de apagado es inestable en este dispositivo.\n\nSu dispositivo tiene un chip de seguridad T2, lo que puede provocar problemas de estabilidad del sistema si Proton VPN usa la funcionalidad del interruptor de macOS.";
+"_neks_t2_description" = "El uso del interruptor de bloqueo es inestable en este dispositivo.\n\nSu dispositivo tiene un chip de seguridad T2, lo que puede provocar problemas de estabilidad del sistema si Proton VPN usa la funcionalidad del interruptor de macOS.";
 
 "_neks_t2_connect" = "Activar de todos modos";
 
@@ -1821,7 +1819,7 @@
 "_bad_interface_ip_range_alert_title" = "Interfaz de red errónea";
 
 /* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
-"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Su red local podría ser insegura (la interfaz '%@' tiene la IP y prefijo '%@'). Sus datos podrían enviarse sin cifrar en la red local. Activar el interruptor de apagado bloqueará este tráfico. Las conexiones a periferias locales serán interrumpidas.";
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Su red local podría ser insegura (la interfaz '%@' tiene la IP y prefijo '%@'). Sus datos podrían enviarse sin cifrar en la red local. Activar el interruptor de bloqueo bloqueará este tráfico. Las conexiones a periferias locales serán interrumpidas.";
 
 /* Title of the search screen */
 "search_title" = "Buscar";
@@ -1957,21 +1955,6 @@
 
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Protéjase de los ataques de red";
-
-/* Title of the No Logs screen */
-"modals_no_logs_title" = "Sin registros y con sede en Suiza";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_privacy_first" = "Proton VPN es la privacidad primero";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_log_activity" = "No registramos su actividad en internet";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_third_parties" = "No compartimos ningún dato con terceros";
-
-/* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "La política estricta de no registro de Proton VPN está certificada por una auditoría externa.";
 
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "Una nota acerca de la velocidad...";
@@ -2144,8 +2127,32 @@
 /* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
 "welcome_upgrade_subtitle_fallback" = "Ha mejorado su suscripción. Disfrute de funciones de privacidad avanzadas y rendimiento de otro nivel.";
 
+/* Welcome to Proton screen shown during onboarding. Title label. */
+"welcome_to_proton_title" = "Le damos la bienvenida a Proton VPN";
+
+/* Welcome to Proton screen shown during onboarding. Subtitle label. */
+"welcome_to_proton_subtitle" = "Navegue de forma privada, acceda a contenido bloqueado y disfrute de la libertad digital.";
+
+/* Welcome to Proton screen shown during onboarding. Banner title label. */
+"welcome_to_proton_banner_title" = "VPN sin registros certificada";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle" = "Su actividad de VPN está protegida por las leyes de privacidad suizas. Nunca le rastrearemos en línea ni compartiremos su información con terceros.";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Disponible con VPN Business.";
+
+"onboarding_usage_stats_title" = "Compartir estadísticas de uso anónimas";
+
+"onboarding_usage_stats_description" = "Los datos de uso nos ayudan a superar los bloqueos de VPN y mejorar el rendimiento de la aplicación.";
+
+"onboarding_crash_reports_title" = "Compartir reportes de error anónimos";
+
+"onboarding_crash_reports_description" = "Los reportes de error nos ayuda a corregir errores, detectar firewalls y evitar bloqueos de VPN.";
+
+"onboarding_footer" = "Estas estadísticas no contienen su dirección IP y no pueden usarse para identificarle. Nunca las compartiremos con terceros.";
+
+"onboarding_footer_learn_more" = "Más información";
 
 /* Modal that lists countries in which servers are available to free users: Title */
 "free_connections_modal_title" = "Conexiones gratuitas";

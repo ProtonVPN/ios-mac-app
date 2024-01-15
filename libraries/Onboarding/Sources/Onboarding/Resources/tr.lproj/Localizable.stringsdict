@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>onboarding_establish_subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Free tarifesi ile %#@num_countries@ bulunan %#@num_servers@ erişebilirsiniz</string>
+      <key>num_countries</key>
+      <dict>
+        <key>one</key>
+        <string>%d ülkede</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d ülkede</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>one</key>
+        <string>%d sunucuya</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d sunucuya</string>
+      </dict>
+    </dict>
+    <key>onboarding_upsell_title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Plus tarifesi ile %#@NUM_COUNTRIES@ bulunan %#@NUM_SERVERS@ tümüne erişebilirsiniz</string>
+      <key>NUM_COUNTRIES</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d ülkede</string>
+        <key>one</key>
+        <string>%d ülkede</string>
+      </dict>
+      <key>NUM_SERVERS</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d sunucunun</string>
+        <key>one</key>
+        <string>%d sunucunun</string>
+      </dict>
+    </dict>
+    <key>onboarding_purchased_subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Artık %#@NUM_SEC_SERVERS@ ve diğer ücretli özelliklere erişebilirsiniz.</string>
+      <key>NUM_SEC_SERVERS</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d güvenli sunucu</string>
+        <key>one</key>
+        <string>%d güvenli sunucu</string>
+      </dict>
+    </dict>
+    <key>onboarding_upsell_feature_multipleDevices</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Aynı anda %#@NUM_DEVICES@ bağlayabilirsiniz</string>
+      <key>NUM_DEVICES</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d aygıt</string>
+        <key>one</key>
+        <string>%d aygıt</string>
+      </dict>
+    </dict>
+  </dict>
+</plist>

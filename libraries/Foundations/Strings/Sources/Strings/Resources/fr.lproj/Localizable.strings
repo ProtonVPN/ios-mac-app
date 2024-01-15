@@ -1124,11 +1124,6 @@
 /* iOS plan feature */
 "_feature_secure_core" = "Secure Core";
 
-/* iOS plan feature */
-"_feature_blocked_content" = "Accès au contenu bloqué";
-
-"_feature_bt" = "Prise en charge de BitTorrent/partage de fichiers";
-
 /* MacOS welcome screen: title */
 "_welcome_title" = "BIENVENUE !";
 
@@ -1191,29 +1186,23 @@
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "Paramètres rapides";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Bienvenue sur un meilleur internet";
+/* MacOS app tour: quick settings description */
+"_quick_settings_tour_description" = "Renforcez votre sécurité en un clic :";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Par les scientifiques et les ingénieurs à l'origine de Proton Mail, bienvenue sur un internet plus sécurisé et plus privé.";
+/* MacOS app tour: quick settings secure core */
+"_quick_settings_tour_feature_1" = "Ajoutez un niveau de sécurité avec Secure Core.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "Nous pensons qu'internet devrait être libre";
+/* MacOS app tour: quick settings net shield */
+"_quick_settings_tour_feature_2" = "Surfez librement sur le web, à l'abri des logiciels malveillants et des publicités grâce à NetShield.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page2_description" = "Évitez la censure et les restrictions régionales. Nous n'avons aucune publicité, aucune limite de bande passante et nous ne vendons pas vos données.";
+/* MacOS app tour: quick settings kill switch */
+"_quick_settings_tour_feature_3" = "Empêchez votre IP d'être révélée en activant la fonctionnalité Arrêt d'urgence (kill switch).";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page3_title" = "Votre sécurité est notre priorité";
+/* MacOS app tour: next tip button */
+"_next_tip" = "Astuce suivante";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page3_description" = "Nous sommes une entreprise de sécurité. Qu’il s’agisse de notre architecture Secure Core ou du chiffrement avancé, la sécurité est toujours notre priorité.";
-
-/* iOS onboarding next item button */
-"_next" = "Suivant";
-
-/* iOS onboarding button to check app without logging in */
-"_discover_the_app" = "Découvrez l'application";
+/* MacOS app tour: end tour button */
+"_end_tour" = "Fin de la visite";
 
 /* iOS: Table header in settings screen */
 "_extensions" = "Extensions";
@@ -1412,6 +1401,9 @@
 
 /* Title of the screen with news and offers. */
 "_news_title" = "Actualités";
+
+/* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
+"_offer_ending_" = "Ending %@";
 
 "_quick_settings_secureCore_description" = "Acheminez vos données les plus sensibles via nos serveurs les plus sécurisés dans des pays respectueux de la vie privée.";
 
@@ -1652,10 +1644,16 @@
 
 "login_summary_button" = "Commencez à utiliser Proton VPN";
 
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Désactiver la fonctionnalité Arrêt d'urgence (kill switch)";
 
+/* NetworkExtension + KillSwitch on T2 Macs */
 "_neks_t2_title" = "Avertissement de stabilité Arrêt d'urgence (kill switch)";
 
+/*
+ Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the
+ `_neks_t2_description' localized string.
+*/
 "_neks_t2_hyperlink" = "Puce de sécurité T2";
 
 "_neks_t2_description" = "L'utilisation de la fonctionnalité Arrêt d'urgence (kill switch) est instable sur cet appareil.\n\nVotre appareil est doté d'une puce de sécurité T2 qui peut entraîner des problèmes de stabilité du système macOS si cette fonctionnalité est utilisée par Proton VPN.";
@@ -1958,21 +1956,6 @@
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Protégez-vous des attaques réseau";
 
-/* Title of the No Logs screen */
-"modals_no_logs_title" = "Aucun journaux (no log) et basé en Suisse";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_privacy_first" = "Proton VPN : priorité à la confidentialité";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_log_activity" = "Nous n'enregistrons pas votre activité sur internet.";
-
-/* Feature of the No Logs screen */
-"modals_no_logs_third_parties" = "Nous ne partageons aucune donnée avec des tierces parties.";
-
-/* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "La politique stricte de non-journalisation (no log) Proton VPN est certifiée par un audit externe.";
-
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "Une précision à propos de la vitesse…";
 
@@ -2144,8 +2127,32 @@
 /* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
 "welcome_upgrade_subtitle_fallback" = "Vous avez modifié votre abonnement. Profitez de fonctionnalités avancées pour protéger votre vie privée et de meilleures performances.";
 
+/* Welcome to Proton screen shown during onboarding. Title label. */
+"welcome_to_proton_title" = "Bienvenue sur Proton VPN";
+
+/* Welcome to Proton screen shown during onboarding. Subtitle label. */
+"welcome_to_proton_subtitle" = "Naviguez en toute confidentialité, accédez aux contenus bloqués et profitez de la liberté numérique.";
+
+/* Welcome to Proton screen shown during onboarding. Banner title label. */
+"welcome_to_proton_banner_title" = "Le VPN qui n'enregistre pas vos activités.";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle" = "Quand vous utilisez le VPN, vos activités en ligne sont protégées par les lois suisses sur la protection de la vie privée. Nous ne suivrons jamais vos activités et nous ne partagerons jamais vos informations avec des tiers.";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Disponible avec VPN Business.";
+
+"onboarding_usage_stats_title" = "Partager des statistiques d'utilisation anonymes";
+
+"onboarding_usage_stats_description" = "Les données d'utilisation nous aident à contourner les blocages VPN et à améliorer les performances de l'application.";
+
+"onboarding_crash_reports_title" = "Partager des rapports de plantage anonymes";
+
+"onboarding_crash_reports_description" = "Les rapports de plantage nous aident à corriger les bugs, à détecter les pare-feux et à éviter le blocage de VPN.";
+
+"onboarding_footer" = "Ces statistiques ne contiennent pas votre adresse IP, elles ne peuvent pas être utilisées pour vous identifier. Nous ne les partagerons jamais avec des tiers.";
+
+"onboarding_footer_learn_more" = "En savoir plus";
 
 /* Modal that lists countries in which servers are available to free users: Title */
 "free_connections_modal_title" = "Connexions avec Proton Free";
