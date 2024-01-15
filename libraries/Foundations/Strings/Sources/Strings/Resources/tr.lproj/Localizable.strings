@@ -1629,10 +1629,7 @@
 /* NetworkExtension + KillSwitch on T2 Macs */
 "_neks_t2_title" = "Bağlantı kesici kararsızlığı uyarısı";
 
-/*
- Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the
- `_neks_t2_description' localized string.
-*/
+/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "T2 güvenlik çipi";
 
 "_neks_t2_description" = "Bu aygıt üzerinde bağlantı kesici kullanımı sorunlara yol açar.\n\nAygıtınızda macOS üzerinde Proton VPN bağlantı kesici özelliği kullanıldığında kararsızlığa yol açan T2 güvenlik çipi bulunuyor.";

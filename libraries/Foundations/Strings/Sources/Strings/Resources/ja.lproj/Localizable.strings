@@ -1629,10 +1629,7 @@
 /* NetworkExtension + KillSwitch on T2 Macs */
 "_neks_t2_title" = "キルスイッチの安全性に関する警告";
 
-/*
- Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the
- `_neks_t2_description' localized string.
-*/
+/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "T2 セキュリティチップ";
 
 "_neks_t2_description" = "このデバイスではキルスイッチが正常に動作しないことがあります。\n\nT2 セキュリティチップが搭載されているため、Proton VPN でキルスイッチが macOS で使われている場合、システムに問題をきたす可能性があります。";

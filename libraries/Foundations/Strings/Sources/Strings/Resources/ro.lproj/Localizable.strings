@@ -1629,10 +1629,7 @@
 /* NetworkExtension + KillSwitch on T2 Macs */
 "_neks_t2_title" = "Avertizare stabilitate blocare conexiune";
 
-/*
- Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the
- `_neks_t2_description' localized string.
-*/
+/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "Cip de securitate T2";
 
 "_neks_t2_description" = "Utilizarea blocării conexiunii este instabilă pe acest dispozitiv.\n\nDispozitivul are un cip de securitate T2, care poate duce la probleme de stabilitate a sistemului dacă funcționalitatea blocării conexiunii din macOS este utilizată de Proton VPN.";

@@ -1629,10 +1629,7 @@
 /* NetworkExtension + KillSwitch on T2 Macs */
 "_neks_t2_title" = "Upozornenie na stabilitu Kill Switch";
 
-/*
- Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the
- `_neks_t2_description' localized string.
-*/
+/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "Bezpečnostný čip T2";
 
 "_neks_t2_description" = "Používanie Kill Switch je na tomto zariadení nestabilné.\n\nVaše zariadenie má bezpečnostný čip T2, čo môže viesť k problémom so stabilitou systému, ak Proton VPN používa funkciu Kill Switch v systéme macOS.";
