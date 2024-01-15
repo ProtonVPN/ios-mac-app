@@ -1183,27 +1183,6 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "Sigurno streamanje vašeg\nnajdražeg sadržaja";
 
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "Brze postavke";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "Povećajte svoju sigurnost jednim klikom:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Dodajte još dodatni sloj sigurnosti uz Secure Core.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "Pretražujte Internet slobodno od zlonamjernih programa i oglasa pomoću NetShield-a.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Spriječite da vaša IP adresa bude izložena uključivanjem kill switch.";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Next Tip";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "End Tour";
-
 /* iOS: Table header in settings screen */
 "_extensions" = "Proširenja";
 

@@ -1183,27 +1183,6 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "დაიცავით თქვენი საყვარელი\nვიდეოს სტრიმი";
 
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "სწრაფი პარამეტრები";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "გაზარდეთ თქვენი უსაფრთხოება ერთი წკაპით:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "დაამატეთ უსაფრთხოების კიდევ ერთი დონე Secure Core-სთან ერთად.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "იმუშავეთ არასასურველი პროგრამებისა და რეკლამებისგან თავისუფალ ინტერნეტში NetShield-თან ერთად.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "დაიცავით თავი თქვენი IP-ის გამოაშკარავებისგან Kill Switch-ის ჩართვით.";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "შემდეგი მინიშნება";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "ტურის დასრულება";
-
 /* iOS: Table header in settings screen */
 "_extensions" = "გაფართოებები";
 

@@ -1183,27 +1183,6 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "お気に入りのコンテンツの\n 安全なストリーミング";
 
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "クイック設定";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "ワンクリックでセキュリティを強化:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Secure Core を使ってセキュリティレイヤーを1つ追加します。";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "NetShield でマルウェアや広告のないネットサーフィンを楽しみましょう。";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "キルスイッチをオンにすると IP アドレスの漏洩を防ぐことができます。";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Next Tip";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "End Tour";
-
 /* iOS: Table header in settings screen */
 "_extensions" = "拡張機能";
 

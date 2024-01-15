@@ -1183,27 +1183,6 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "安全的串流傳輸您喜歡的內容";
 
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "快速設定";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "一按以提高您的安全性：";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "以 Secure Core 增添多一層安全性。";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "以 NetShield 自由自在瀏覽網頁，免於惡意軟體與廣告。";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "開啟 Kill Switch 以防洩露您的 IP 。";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Next Tip";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "End Tour";
-
 /* iOS: Table header in settings screen */
 "_extensions" = "附加元件";
 

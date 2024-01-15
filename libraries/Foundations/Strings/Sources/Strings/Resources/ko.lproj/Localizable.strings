@@ -1183,27 +1183,6 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "좋아하는 콘텐츠를 안전하게\n스트리밍 하세요";
 
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "간편 설정";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "한 번의 클릭으로 보안을 향상하세요:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Secure Core로 보안 층을 하나 더 추가하세요.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "NetShield와 함께 멀웨어 및 광고로 부터 자유롭게 웹을 탐색하세요.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Kill switch를 활성화 하여 IP가 노출되는 것을 방지하세요.";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "다음 팁";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "투어 끝내기";
-
 /* iOS: Table header in settings screen */
 "_extensions" = "확장 프로그램";
 

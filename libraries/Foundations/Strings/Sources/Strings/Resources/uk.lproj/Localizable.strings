@@ -1183,27 +1183,6 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "Безпечна потокова трансляція ваших\nулюблених матеріалів";
 
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "Швидкі налаштування";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "Збільште свою безпеку одним натиском:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Додайте ще один рівень захисту за допомогою Secure Core.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "Вільно користуйтеся інтернетом без реклами та зловмисних програм завдяки NetShield.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Запобігайте викриттю своєї IP-адреси, увімкнувши Kill Switch.";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Наступна порада";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "Завершити знайомство";
-
 /* iOS: Table header in settings screen */
 "_extensions" = "Розширення";
 

@@ -1183,27 +1183,6 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "Tonton tayangan streaming favorit Anda\ndengan aman";
 
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "Pengaturan Cepat";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "Tingkatkan keamanan Anda dengan sekali klik:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Tambahkan satu ekstra lapisan keamanan dengan Secure Core.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "Berselancar bebas dari malware dan iklan dengan NetShield.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Cegah IP Anda terekspos dengan mengaktifkan kill switch.";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Tip Berikutnya";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "Akhiri Tur";
-
 /* iOS: Table header in settings screen */
 "_extensions" = "Ekstensi";
 

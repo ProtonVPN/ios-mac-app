@@ -1183,27 +1183,6 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "Bezpečné streamovanie vášho\nobľúbeného obsahu";
 
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "Rýchle nastavenia";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "Zvýšte svoje zabezpečenie jedným kliknutím:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Pridajte ďalšiu vrstvu zabezpečenia pomocou Secure Core.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "Surfujte na webe bez škodlivého malvéru a reklám s NetShieldom.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Zabráňte odhaleniu svojej IP adresy zapnutím kill switch.";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Ďalší tip";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "Ukončiť prehliadku";
-
 /* iOS: Table header in settings screen */
 "_extensions" = "Rozšírenia";
 

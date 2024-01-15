@@ -1183,27 +1183,6 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "En sevdiğiniz içeriklerin\ngüvenli yayın akışı";
 
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "Hızlı ayarlar";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "Tek bir tıklama ile güvenliğinizi artırın:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Secure Core ile ek bir güvenlik katmanı ekleyin.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "NetShield ile kötü amaçlı yazılımlar ve reklamlar olmadan İnternet üzerinde özgürce gezinin.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Bağlantı kesiciyi açarak IP adresinizin açığa çıkmasını önleyin.";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Sonraki ipucu";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "Turu bitir";
-
 /* iOS: Table header in settings screen */
 "_extensions" = "Uzantılar";
 
