@@ -347,8 +347,6 @@ public enum Localizable {
   public static var edit: String { return Localizable.tr("Localizable", "_edit", fallback: "Edit") }
   /// Common word
   public static var enabled: String { return Localizable.tr("Localizable", "_enabled", fallback: "Enabled") }
-  /// MacOS app tour: end tour button
-  public static var endTour: String { return Localizable.tr("Localizable", "_end_tour", fallback: "End Tour") }
   /// iOS: placeholder for email field in signup and email verification screens
   public static var enterEmailAddress: String { return Localizable.tr("Localizable", "_enter_email_address", fallback: "Enter email address") }
   /// Profile create/change form
@@ -816,8 +814,6 @@ public enum Localizable {
   public static var networkUnreachable: String { return Localizable.tr("Localizable", "_network_unreachable", fallback: "Network Unreachable") }
   /// Title of the screen with news and offers.
   public static var newsTitle: String { return Localizable.tr("Localizable", "_news_title", fallback: "News") }
-  /// MacOS app tour: next tip button
-  public static var nextTip: String { return Localizable.tr("Localizable", "_next_tip", fallback: "Next Tip") }
   /// Text used when no active server information is available
   public static var noDescriptionAvailable: String { return Localizable.tr("Localizable", "_no_description_available", fallback: "No description available") }
   /// There are currently no servers to show here.
@@ -988,16 +984,6 @@ public enum Localizable {
   public static var quickSettingsSecureCoreDescription: String { return Localizable.tr("Localizable", "_quick_settings_secureCore_description", fallback: "Route your most sensitive data through our safest servers in privacy-friendly countries.") }
   /// Secure Core may reduce VPN speed
   public static var quickSettingsSecureCoreNote: String { return Localizable.tr("Localizable", "_quick_settings_secureCore_note", fallback: "Secure Core may reduce VPN speed") }
-  /// MacOS app tour: quick settings description
-  public static var quickSettingsTourDescription: String { return Localizable.tr("Localizable", "_quick_settings_tour_description", fallback: "Increase your security with one click:") }
-  /// MacOS app tour: quick settings secure core
-  public static var quickSettingsTourFeature1: String { return Localizable.tr("Localizable", "_quick_settings_tour_feature_1", fallback: "Add one extra layer of security with Secure Core.") }
-  /// MacOS app tour: quick settings net shield
-  public static var quickSettingsTourFeature2: String { return Localizable.tr("Localizable", "_quick_settings_tour_feature_2", fallback: "Surf the web freely from malware and ads with NetShield.") }
-  /// MacOS app tour: quick settings kill switch
-  public static var quickSettingsTourFeature3: String { return Localizable.tr("Localizable", "_quick_settings_tour_feature_3", fallback: "Prevent your IP to be exposed by turning on kill switch.") }
-  /// MacOS app tour: quick settings title
-  public static var quickSettingsTourTitle: String { return Localizable.tr("Localizable", "_quick_settings_tour_title", fallback: "Quick Settings") }
   /// MacOS: quit application button in custom status menu
   public static var quit: String { return Localizable.tr("Localizable", "_quit", fallback: "Quit") }
   /// MacOS: alert show before quitting app if VPN is connected

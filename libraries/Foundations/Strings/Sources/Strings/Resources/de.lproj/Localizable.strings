@@ -1183,27 +1183,6 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "Sicheres Streaming\ndeiner Lieblingsinhalte";
 
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "Schnelleinstellungen";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "Erhöhe deine Sicherheit mit nur einem Klick:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Füge mit „Secure Core“ eine zusätzliche Sicherheitsebene hinzu.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "Surfe mit NetShield frei von Schadsoftware und Werbung im Internet.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Verhindere die Offenlegung deiner IP durch Aktivieren des „Kill Switch“.";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Nächster Tipp";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "Tour beenden";
-
 /* iOS: Table header in settings screen */
 "_extensions" = "Erweiterungen";
 

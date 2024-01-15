@@ -1183,27 +1183,6 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "Secure streaming of your\nfavorite content";
 
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "تنظیمات سریع";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "امنیت خود را با یک کلیک افزایش دهید:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "با Secure Core یک لایه دیگر از امنیت اضافه کنید.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "با NetShield وب را آزاد از بدافزار و آگهی بگردید.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "با روشن کردن Kill Switch از آشکار شدن IP خود جلوگیری کنید.";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Next Tip";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "End Tour";
-
 /* iOS: Table header in settings screen */
 "_extensions" = "افزونه‌ها";
 

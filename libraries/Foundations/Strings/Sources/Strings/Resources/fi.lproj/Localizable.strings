@@ -1183,27 +1183,6 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "Suosikkisisältösi\nturvallinen suoratoisto";
 
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "Pika-asetukset";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "Paranna turvallisuuttasi yhdellä painalluksella:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Lisää yksi suojaustaso Secure Corella.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "NetShieldin avulla selaat verkkoa ilman haittaohjelmia ja mainoksia.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Estä IP-osoitettasi paljastumasta käyttämällä tappokytkintä.";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Seuraava vinkki";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "Lopeta esittely";
-
 /* iOS: Table header in settings screen */
 "_extensions" = "Laajennukset";
 

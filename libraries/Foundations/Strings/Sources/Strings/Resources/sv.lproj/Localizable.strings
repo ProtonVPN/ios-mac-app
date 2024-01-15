@@ -1183,27 +1183,6 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "Säker streaming av ditt\nfavoritinnehåll";
 
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "Snabbinställningar";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "Öka din säkerhet med ett klick:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Lägg till ett extra lager av säkerhet med Secure Core.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "Surfa på webben fritt från skadlig programvara och annonser med NetShield.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Förhindra att din IP exponeras genom att slå på kill switch.";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Nästa tips";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "Avsluta rundtur";
-
 /* iOS: Table header in settings screen */
 "_extensions" = "Utökningar";
 

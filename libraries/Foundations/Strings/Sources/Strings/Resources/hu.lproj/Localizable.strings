@@ -157,12 +157,6 @@
 /* iOS: countries list section header */
 "_countries_premium" = "Prémium országok";
 
-/* MacOS app tour: countries list description */
-"_countries_tour_description" = "Válaszd ki, hogy melyik országot és szervert szeretnéd használni a végső IP-címhez.";
-
-/* MacOS app tour: countries list title */
-"_countries_tour_title" = "Országok";
-
 /* Profile create/edit menu */
 "_country" = "Ország";
 
@@ -270,9 +264,6 @@
 
 /* Common word */
 "_enabled" = "Elérhető";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "Bezárás";
 
 /* %@ is always 'Plus' e.g. ENJOY Plus FOR FREE! */
 "_enjoy_for_free" = "PRÓBÁLD KI A %@ CSOMAGOT INGYEN!";
@@ -667,12 +658,6 @@
 /* MacOS: Map view toggle button accessibility label (used by screen readers) */
 "_map_show" = "Térkép megjelenítése";
 
-/* MacOS app tour: map description */
-"_map_tour_description" = "Nézd meg a VPN kiszolgálók helyét. Keresd meg a hozzád legközelebb esőt.";
-
-/* MacOS app tour: map title */
-"_map_tour_title" = "Térkép";
-
 /* Cancel button in trial modals used in both iOS and MacOS */
 "_maybe_later" = "Talán később";
 
@@ -762,9 +747,6 @@
 
 /* iOS onboarding next item button */
 "_next" = "Következő";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Következő tipp";
 
 /* Text used when no active server information is available */
 "_no_description_available" = "Nincs elérhető leírás";
@@ -928,12 +910,6 @@
 /* MacOS: profiles window title */
 "_profiles_overview" = "Profilok áttekintése";
 
-/* MacOS app tour: profiles description */
-"_profiles_tour_description" = "Mentsd el a kívánt beállításokat és kiszolgálókat a későbbi használathoz.";
-
-/* MacOS app tour: profiles title */
-"_profiles_tour_title" = "Profilok";
-
 /* iOS Settings: VPN protocol label. */
 "_protocol" = "Protokoll";
 
@@ -951,12 +927,6 @@
 
 /* MacOS: Settings -> Connection: description. */
 "_quick_connect_tooltip" = "A gyors csatlakozás gomb az előre kiválasztott szerverhez kapcsolódik";
-
-/* MacOS app tour: quick connect description */
-"_quick_connect_tour_description" = "Automatikusan csatlakozik ahhoz a szerverhez, amely a leggyorsabb kapcsolatot biztosítja.";
-
-/* MacOS app tour: quick connect title */
-"_quick_connect_tour_title" = "Gyors kapcsolódás";
 
 /* MacOS: quit application button in custom status menu */
 "_quit" = "Kilépés";
@@ -1080,12 +1050,6 @@
 
 /* MacOS: secure core tooltip */
 "_secure_core_info" = "További védelmet nyújt a VPN-kiszolgálók veszélyeivel szemben, ha a forgalmat a biztonsági mag hálózatunkon keresztül irányítod át";
-
-/* MacOS app tour: secure core description */
-"_secure_core_tour_description" = "A biztonsági mag a forgalmat további kiszolgálókon keresztül továbbítja. A szolgáltatás a Plus és a Visionary csomagokkal használható.";
-
-/* MacOS app tour: secure core title */
-"_secure_core_tour_title" = "Biztonsági mag";
 
 /* MacOS: \"Trial about to expire\" screen */
 "_secure_streaming_description" = "Kedvenc tartalmaidnak biztonságos streamingje";

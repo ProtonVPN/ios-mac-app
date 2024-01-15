@@ -1183,27 +1183,6 @@
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_description" = "Sikker stømming av ditt\nfavoritt innhold.";
 
-/* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "Hurtiginnstillinger";
-
-/* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "Øk sikkerheten din med ett klikk:";
-
-/* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Legg til et ekstra lag med sikkerhet med Secure Core.";
-
-/* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "Surf weben fri fra skadelig programvare og annonser med NetShield.";
-
-/* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Forhindre at IP-en din blir eksponert ved å slå på nødstopp.";
-
-/* MacOS app tour: next tip button */
-"_next_tip" = "Neste tips";
-
-/* MacOS app tour: end tour button */
-"_end_tour" = "Avslutt omvisning";
-
 /* iOS: Table header in settings screen */
 "_extensions" = "Utvidelser";
 
