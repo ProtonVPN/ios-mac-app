@@ -215,7 +215,9 @@ final class SettingsViewModel {
     }
     
     private var accountSection: TableViewSection {
-        refreshAccountRecoveryState()
+        if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.accountRecovery) {
+            refreshAccountRecoveryState()
+        }
 
         let username: String = authKeychain.username ?? Localizable.unavailable
         let accountPlanName: String
