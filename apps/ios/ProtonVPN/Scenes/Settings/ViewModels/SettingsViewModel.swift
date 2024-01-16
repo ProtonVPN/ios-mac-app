@@ -89,7 +89,6 @@ final class SettingsViewModel {
     private let accountRecoveryRepository: AccountRecoveryRepositoryProtocol
     private let isAccountRecoveryEnabled: Bool
 
-
     var pushHandler: ((UIViewController) -> Void)?
 
     init(factory: Factory, protocolService: ProtocolService, vpnGateway: VpnGatewayProtocol) {
