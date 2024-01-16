@@ -87,6 +87,8 @@ final class SettingsViewModel {
     private var profileManager: ProfileManager?
     private var serverManager: ServerManager?
     private let accountRecoveryRepository: AccountRecoveryRepositoryProtocol
+    private let isAccountRecoveryEnabled: Bool
+
 
     var pushHandler: ((UIViewController) -> Void)?
 
@@ -94,14 +96,18 @@ final class SettingsViewModel {
         self.factory = factory
         self.protocolService = protocolService
         self.vpnGateway = vpnGateway
-
         self.accountRecoveryRepository = AccountRecoveryRepository(apiService: factory.makeNetworking().apiService)
+
+        isAccountRecoveryEnabled = FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.accountRecovery)
+
 
         if appSessionManager.sessionStatus == .established {
             sessionEstablished(vpnGateway: vpnGateway)
         }
 
-        refreshAccountRecoveryState()
+        if isAccountRecoveryEnabled {
+            refreshAccountRecoveryState()
+        }
         startObserving()
     }
 
@@ -215,7 +221,7 @@ final class SettingsViewModel {
     }
     
     private var accountSection: TableViewSection {
-        if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.accountRecovery) {
+        if isAccountRecoveryEnabled {
             refreshAccountRecoveryState()
         }
 
@@ -237,7 +243,7 @@ final class SettingsViewModel {
             self?.pushSettingsAccountViewController()
         }
 
-        if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.accountRecovery) && shouldShowAccountRecovery {
+        if isAccountRecoveryEnabled && shouldShowAccountRecovery {
             let accountRecoveryCell = TableViewCellModel.pushKeyValue(key: AccountRecoveryModule.settingsItem, value: accountRecoveryStateText, icon: accountRecoveryImage) { [weak self] in
                 self?.pushAccountRecoveryViewController()
             }
@@ -657,12 +663,14 @@ final class SettingsViewModel {
     }
 
     private func pushAccountRecoveryViewController() {
+        assert(isAccountRecoveryEnabled, "function called with an invalid feature flag value")
         guard let pushHandler = pushHandler else { return }
         let accountRecoveryViewController = AccountRecoveryModule.settingsViewController(networking.apiService)
         pushHandler(accountRecoveryViewController)
     }
 
     private func refreshAccountRecoveryState() {
+        assert(isAccountRecoveryEnabled, "function called with an invalid feature flag value")
         Task {
             guard let status = await accountRecoveryRepository.accountRecoveryStatus() 
             else { return }
