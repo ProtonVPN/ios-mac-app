@@ -86,7 +86,7 @@ final class SettingsViewModel {
     private var vpnGateway: VpnGatewayProtocol
     private var profileManager: ProfileManager?
     private var serverManager: ServerManager?
-    private let accountRecoveryRepository: AccountRecoveryRepositoryProtocol
+    private var accountRecoveryRepository: AccountRecoveryRepositoryProtocol? = nil
     private let isAccountRecoveryEnabled: Bool
 
     var pushHandler: ((UIViewController) -> Void)?
@@ -95,7 +95,6 @@ final class SettingsViewModel {
         self.factory = factory
         self.protocolService = protocolService
         self.vpnGateway = vpnGateway
-        self.accountRecoveryRepository = AccountRecoveryRepository(apiService: factory.makeNetworking().apiService)
 
         isAccountRecoveryEnabled = FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.accountRecovery)
 
@@ -105,6 +104,8 @@ final class SettingsViewModel {
         }
 
         if isAccountRecoveryEnabled {
+            self.accountRecoveryRepository = AccountRecoveryRepository(apiService: factory.makeNetworking().apiService)
+
             refreshAccountRecoveryState()
         }
         startObserving()
@@ -671,7 +672,8 @@ final class SettingsViewModel {
     private func refreshAccountRecoveryState() {
         assert(isAccountRecoveryEnabled, "function called with an invalid feature flag value")
         Task {
-            guard let status = await accountRecoveryRepository.accountRecoveryStatus() 
+
+            guard let accountRecoveryRepository = accountRecoveryRepository, let status = await accountRecoveryRepository.accountRecoveryStatus() 
             else { return }
             shouldShowAccountRecovery = status.shouldShowSettingsItem
             accountRecoveryStateText = status.valueForSettingsItem
