@@ -130,7 +130,7 @@ public struct SecureCoreFlagView: View {
     public let regionCode: String
     public let viaRegionCode: String?
     public let flagShadowColor: Color = .black.opacity(0.4)
-    public let flagCurveColor: Color = Color(.text, .hint)
+    public let flagCurveColor: Color = Asset.protonCarbonBorderNorm.swiftUIColor
 
     let flagSize: FlagSizes
     @ScaledMetric var scale: CGFloat = 1

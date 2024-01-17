@@ -23,7 +23,6 @@
 import UIKit
 import LegacyCommon
 import Theme
-import ProtonCoreUIFoundations
 
 extension UIColor {
     
@@ -42,82 +41,82 @@ extension UIColor {
     }
 
     class func brandColor() -> UIColor {
-        ColorProvider.BrandNorm
+        return ColorPaletteiOS.instance.BrandNorm
     }
 
     class func textAccent() -> UIColor {
-        ColorProvider.TextAccent
+        return ColorPaletteiOS.instance.TextAccent
     }
 
     class func interactionNorm() -> UIColor {
-        ColorProvider.InteractionNorm
+        return ColorPaletteiOS.instance.InteractionNorm
     }
     
     class func brandLighten20Color() -> UIColor {
-        ColorProvider.BrandLighten20
+        return ColorPaletteiOS.instance.BrandLighten20
     }
     
     class func brandLighten40Color() -> UIColor {
-        ColorProvider.BrandLighten40
+        return ColorPaletteiOS.instance.BrandLighten40
     }
     
     class func brandDarken40Color() -> UIColor {
-        ColorProvider.BrandDarken40
+        return ColorPaletteiOS.instance.BrandDarken40
     }
 
     class func secondaryBackgroundColor() -> UIColor {
-        ColorProvider.BackgroundSecondary
+        return ColorPaletteiOS.instance.BackgroundSecondary
     }
 
     class func backgroundColor() -> UIColor {
-        ColorProvider.BackgroundNorm
+        return ColorPaletteiOS.instance.BackgroundNorm
     }
 
     class func weakTextColor() -> UIColor {
-        ColorProvider.TextWeak
+        return ColorPaletteiOS.instance.TextWeak
     }
 
     class func weakInteractionColor() -> UIColor {
-        ColorProvider.InteractionWeak
+        return ColorPaletteiOS.instance.InteractionWeak
     }
     
     class func normalSeparatorColor() -> UIColor {
-        ColorProvider.SeparatorNorm
+        return ColorPaletteiOS.instance.SeparatorNorm
     }
     
     class func notificationWarningColor() -> UIColor {
-        ColorProvider.NotificationWarning
+        return ColorPaletteiOS.instance.NotificationWarning
     }
     
     class func notificationOKColor() -> UIColor {
-        ColorProvider.NotificationSuccess
+        return ColorPaletteiOS.instance.NotificationSuccess
     }
 
     class func normalTextColor() -> UIColor {
-        ColorProvider.TextNorm
+        return ColorPaletteiOS.instance.TextNorm
     }
 
     class func buttonTitleColor() -> UIColor {
-        ColorProvider.White
+        return ColorPaletteiOS.instance.White
     }
 
     class func iconWeak() -> UIColor {
-        ColorProvider.IconWeak
+        return ColorPaletteiOS.instance.IconWeak
     }
 
     class func iconHint() -> UIColor {
-        ColorProvider.IconHint
+        return ColorPaletteiOS.instance.IconHint
     }
 
     class func iconNorm() -> UIColor {
-        ColorProvider.IconNorm
+        return ColorPaletteiOS.instance.IconNorm
     }
 
     class func iconAccent() -> UIColor {
-        ColorProvider.IconAccent
+        return ColorPaletteiOS.instance.IconAccent
     }
     
     class func notificationErrorColor() -> UIColor {
-        ColorProvider.NotificationError
+        return ColorPaletteiOS.instance.NotificationError
     }
 }
