@@ -447,7 +447,7 @@ final class ConnectionSettingsViewModel {
     }
         
     func protocolString(for vpnProtocol: ConnectionProtocol) -> NSAttributedString {
-        return vpnProtocol.description.styled(font: .themeFont(.heading4), alignment: .left)
+        return vpnProtocol.description.styled(.dropdown, font: .themeFont(.heading4), alignment: .left)
     }
     
     // MARK: - Values
@@ -464,7 +464,7 @@ final class ConnectionSettingsViewModel {
     }
     
     private func concatenated(imageString: NSAttributedString, with text: String, enabled: Bool) -> NSAttributedString {
-        let style: AppTheme.Style = enabled ? .normal : [.transparent, .disabled]
+        let style: AppTheme.Style = enabled ? .dropdown : [.transparent, .disabled]
         let nameAttributedString = ("  " + text).styled(style, font: .themeFont(.heading4))
         let attributedString = NSMutableAttributedString(attributedString: NSAttributedString.concatenate(imageString, nameAttributedString))
         let range = (attributedString.string as NSString).range(of: attributedString.string)
