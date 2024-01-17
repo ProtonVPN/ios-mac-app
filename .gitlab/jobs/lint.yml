@@ -10,6 +10,7 @@ lint:commit-quality:
   script:
     - mint run gluon lint --verbose
   rules:
+    - when: always
 
 
 # Runs a script that goes through all our apps and lib folders and lints them if .swiftlint file is available.
@@ -31,6 +32,7 @@ lint:code-quality:
     - vpn-apple-xs
   interruptible: true # Cancel job if newer commit was pushed
   rules:
+    - when: always
 
 
 # Check that strings files are properly formatted (prevents "double comment close" issue)
@@ -44,3 +46,4 @@ lint:strings-files:
     - vpn-apple-xs
   interruptible: true # Cancel job if newer commit was pushed
   rules:
+    - when: always
