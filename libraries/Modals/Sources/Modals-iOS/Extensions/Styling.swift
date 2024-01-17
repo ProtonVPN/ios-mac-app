@@ -63,6 +63,6 @@ let subtitleStyle = concat(centeredTextStyle, and: {
 
 let closeButtonStyle: (UIButton) -> Void = {
     $0.titleLabel?.text = ""
-    $0.setTitleColor(Asset.mobileTextAccent.color, for: .normal)
+    $0.setTitleColor(.color(.text, .interactive), for: .normal)
     $0.tintColor = .color(.text)
 }
