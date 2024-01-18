@@ -89,12 +89,12 @@ public class VpnApiService {
 
         // Only retrieve IP address when not connected to VPN
         async let asyncLocation = (isDisconnected ? userLocation() : lastKnownLocation) ?? lastKnownLocation
-        let asyncCredentials = try? await clientCredentials()
+        let asyncCredentials = try await clientCredentials()
 
         return await VpnProperties(
             serverModels: try serverInfo(
                 ip: asyncLocation?.ip,
-                freeTier: asyncCredentials?.maxTier == CoreAppConstants.VpnTiers.free && serversAccordingToTier
+                freeTier: asyncCredentials.maxTier == CoreAppConstants.VpnTiers.free && serversAccordingToTier
             ),
             vpnCredentials: asyncCredentials,
             location: asyncLocation,

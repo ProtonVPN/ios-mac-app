@@ -26,13 +26,13 @@ import ProtonCoreDataModel
 public struct VpnProperties {
     
     public let serverModels: [ServerModel]
-    public let vpnCredentials: VpnCredentials?
+    public let vpnCredentials: VpnCredentials
     public let location: UserLocation?
     public let clientConfig: ClientConfig?
     public let userRole: UserRole
     public let userCreateTime: Date?
 
-    public init(serverModels: [ServerModel], vpnCredentials: VpnCredentials?, location: UserLocation?, clientConfig: ClientConfig?, user: User?) {
+    public init(serverModels: [ServerModel], vpnCredentials: VpnCredentials, location: UserLocation?, clientConfig: ClientConfig?, user: User?) {
         self.serverModels = serverModels
         self.vpnCredentials = vpnCredentials
         self.location = location
