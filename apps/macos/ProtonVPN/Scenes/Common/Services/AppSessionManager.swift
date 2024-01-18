@@ -160,16 +160,12 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             await successfulConsecutiveSessionRefreshes.reset()
             return
         }
-
-        if let credentials = properties.vpnCredentials {
-            vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-            await self.serverStorage.store(
-                properties.serverModels,
-                keepStalePaidServers: shouldRefreshServersAccordingToUserTier && credentials.maxTier == CoreAppConstants.VpnTiers.free
-            )
-        } else {
-            self.serverStorage.store(properties.serverModels)
-        }
+        
+        vpnKeychain.storeAndDetectDowngrade(vpnCredentials: properties.vpnCredentials)
+        await self.serverStorage.store(
+            properties.serverModels,
+            keepStalePaidServers: shouldRefreshServersAccordingToUserTier && properties.vpnCredentials.maxTier == CoreAppConstants.VpnTiers.free
+        )
 
         if await appState.isDisconnected {
             propertiesManager.userLocation = properties.location

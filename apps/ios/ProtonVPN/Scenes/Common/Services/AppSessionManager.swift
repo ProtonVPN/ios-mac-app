@@ -195,17 +195,12 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             return
         }
 
-        if let credentials = properties.vpnCredentials {
-            vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-            review.update(plan: credentials.accountPlan.rawValue)
-            serverStorage.store(
-                properties.serverModels,
-                keepStalePaidServers: shouldRefreshServers && credentials.maxTier == CoreAppConstants.VpnTiers.free
-            )
-        } else {
-            serverStorage.store(properties.serverModels)
-        }
-
+        vpnKeychain.storeAndDetectDowngrade(vpnCredentials: properties.vpnCredentials)
+        review.update(plan: properties.vpnCredentials.accountPlan.rawValue)
+        serverStorage.store(
+            properties.serverModels,
+            keepStalePaidServers: shouldRefreshServers && properties.vpnCredentials.maxTier == CoreAppConstants.VpnTiers.free
+        )
         propertiesManager.userLocation = properties.location
         await refreshPartners(ifUnknownPartnerLogicalExistsIn: properties.serverModels)
         do {
@@ -266,17 +261,13 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 lastKnownLocation: propertiesManager.userLocation,
                 serversAccordingToTier: shouldRefreshServers
             )
-
-            if let credentials = properties.vpnCredentials {
-                vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-                review.update(plan: credentials.accountPlan.rawValue)
-                serverStorage.store(
-                    properties.serverModels,
-                    keepStalePaidServers: shouldRefreshServers && credentials.maxTier == CoreAppConstants.VpnTiers.free
-                )
-            } else {
-                serverStorage.store(properties.serverModels)
-            }
+            
+            vpnKeychain.storeAndDetectDowngrade(vpnCredentials: properties.vpnCredentials)
+            review.update(plan: properties.vpnCredentials.accountPlan.rawValue)
+            serverStorage.store(
+                properties.serverModels,
+                keepStalePaidServers: shouldRefreshServers && properties.vpnCredentials.maxTier == CoreAppConstants.VpnTiers.free
+            )
             propertiesManager.userRole = properties.userRole
             propertiesManager.userAccountCreationDate = properties.userCreateTime
             propertiesManager.userLocation = properties.location
