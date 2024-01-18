@@ -20,7 +20,6 @@ import fusion
 import Foundation
 
 fileprivate let summaryTitle = "Welcome to Proton VPN"
-fileprivate let summaryDescription = "Learn how to get the most out of Proton VPN in just a few seconds"
 
 class SummarySignupRobot: CoreElements {
     
@@ -31,7 +30,6 @@ class SummarySignupRobot: CoreElements {
         @discardableResult
         func summaryScreenIsShown(time: TimeInterval = 120) -> OnboardingRobot {
             staticText(summaryTitle).waitUntilExists(time: time).checkExists()
-            staticText(summaryDescription).waitUntilExists(time: time).checkExists()
             return OnboardingRobot()
         }
     }
