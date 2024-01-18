@@ -37,15 +37,17 @@ distribute:ios:testflight:alpha:
     # No release on TAGs
     - if: $CI_COMMIT_TAG
       when: never
-    # Prevent pipeline on MR creation
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-      when: never
-    # Release after each push to develop
-    - if: $CI_COMMIT_BRANCH == "develop"
+    # No need to release on schedule
+    - if: $CI_PIPELINE_SOURCE == "schedule"
       when: manual
+      allow_failure: true
+    # Allow manual releases on pipelines run against develop branch
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
       allow_failure: true # the pipeline continues running even if the manual job is not run
     # Otherwise allow manual release
     - when: manual
+      allow_failure: true
   variables:
     CI_KEYCHAIN_NAME: "IOS_RELEASE_$CI_PIPELINE_ID"
   artifacts:
@@ -68,15 +70,17 @@ distribute:mac:alpha:
     # No release on TAGs
     - if: $CI_COMMIT_TAG
       when: never
-    # Prevent pipeline on MR creation
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-      when: never
-    # Release after each push to develop
-    - if: $CI_COMMIT_BRANCH == "develop"
+    # No need to release on schedule
+    - if: $CI_PIPELINE_SOURCE == "schedule"
       when: manual
+      allow_failure: true
+    # Allow manual releases on pipelines run against develop branch
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
       allow_failure: true # the pipeline continues running even if the manual job is not run
     # Otherwise allow manual release
     - when: manual
+      allow_failure: true
   trigger:
     project: apple/vpn/mac-ci
     branch: mac-v4
