@@ -18,110 +18,33 @@
 
 import fusion
 
-fileprivate let establishConnectionTitle = "Establish your first connection"
-fileprivate let continueButton = "Continue"
-fileprivate let skipButton = "SkipButton"
-fileprivate let nextButton = "Next"
-fileprivate let closeButton = "CloseButton"
-fileprivate let takeTourButton = "TakeATourButton"
 fileprivate let upgradeButton = "Upgrade"
+fileprivate let getStartedButton = "Get started"
+fileprivate let notNowButton = "Not now"
 
 class OnboardingRobot: CoreElements {
     
     @discardableResult
-    func startUserOnboarding() -> OnboardingRobot {
-        button(takeTourButton).tap()
+    func getStart() -> OnboardingRobot {
+        button(getStartedButton).tap()
         return OnboardingRobot()
     }
     
     @discardableResult
-    func skipOnboardingStep() -> OnboardingRobot {
-        button(skipButton).tap()
+    func skipUpgrade() -> OnboardingRobot {
+        button(notNowButton).tap()
         return OnboardingRobot()
     }
     
     @discardableResult
-    func nextOnboardingStep() -> OnboardingRobot {
-        button(nextButton).tap()
-        return OnboardingRobot()
-    }
-    
-    @discardableResult
-    func continueOnboardingStep() -> OnboardingRobot {
-        button(continueButton).tap()
-        return OnboardingRobot()
-    }
-    
-    @discardableResult
-    func closeOnboardingScreen() -> OnboardingRobot {
-        button(closeButton).tap()
-        return OnboardingRobot()
-    }
-    
-    @discardableResult
-    func startUpgrade() -> SubscriptionsRobot {
+    func upgradePlan() -> SubscriptionsRobot {
         button(upgradeButton).tap()
         return SubscriptionsRobot()
     }
     
-    @discardableResult
-    func skipFullOnboarding() -> OnboardingRobot {
-        skipOnboardingStep()
-        nextOnboardingStep()
-        nextOnboardingStep()
-        skipOnboardingStep()
-        continueOnboardingStep() //toliau tesiais upgrade arba skip
-        closeOnboardingScreen()
-        return OnboardingRobot()
+    func startUsingApp() -> MainRobot {
+        getStart()
+        skipUpgrade()
+        return MainRobot()
     }
-    
-    func skipOnboarding() -> OnboardingRobot {
-        skipOnboardingStep()
-        nextOnboardingStep()
-        nextOnboardingStep()
-        skipOnboardingStep()
-        continueOnboardingStep()
-        return OnboardingRobot()
-    }
-    
 }
-    
-    
-    
-//
-//
-//    func startUsingProtonVpn() -> OnboardingRobot {
-//        button(continueButton).tap()
-//        return OnboardingRobot()
-//    }
-//
-//    func closeOnboardingScreen() -> OnboardingRobot {
-//        button(closeButton).tap()
-//        return OnboardingRobot()
-//    }
-//
-//    func closeScreen() -> MainRobot {
-//        button(closeButton).tap()
-//        return MainRobot()
-//    }
-//
-//    func startUserOnboarding() -> OnboardingRobot {
-//          button(takeTourButton).tap()
-//          return OnboardingRobot()
-//    }
-//
-//    func skipOnboarding() -> OnboardingRobot {
-//          button(skipButton).tap()
-//          return OnboardingRobot()
-//    }
-//
-//    func nextOnboardingStep() -> OnboardingRobot {
-//          button(nextButton).tap()
-//          return OnboardingRobot()
-//    }
-//
-//    func startUpgrade() -> SubscriptionsRobot {
-//          button(upgradeButton).tap()
-//          return SubscriptionsRobot()
-//    }
-//}
