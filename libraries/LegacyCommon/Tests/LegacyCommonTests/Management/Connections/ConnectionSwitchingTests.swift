@@ -24,6 +24,7 @@ import Dependencies
 
 import GoLibs
 import ProtonCoreServices
+import ProtonCoreNetworking
 
 import Domain
 import VPNShared
@@ -490,7 +491,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
             if alert is ProtocolNotAvailableForServerAlert {
                 protocolAlertExpectation.fulfill()
             } else {
-                XCTFail("Unexpected alert.")
+                XCTFail("Unexpected alert. \(type(of: alert))")
             }
         }
 
@@ -506,6 +507,11 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         // Feature flag disables all protocols allowed by API config (contradictory setup edge case)
         container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
             .with(featureFlags: .wireGuardTlsDisabled, smartProtocolConfig: .onlyWgTcpAndTls)
+        container.authKeychain.setMockUsername("user")
+        let freeCreds = VpnKeychainMock.vpnCredentials(accountPlan: .free,
+                                                       maxTier: CoreAppConstants.VpnTiers.free)
+        container.networkingDelegate.apiCredentials = freeCreds
+
         retrieveAndSetVpnProperties()
 
         container.vpnGateway.connect(with: request)

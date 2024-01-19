@@ -22,12 +22,17 @@ import LegacyCommon
 import VPNShared
 import Dependencies
 import VPNSharedTesting
+import ProtonCoreNetworking
 @testable import ProtonVPN
 
 fileprivate let testData = MockTestData()
 fileprivate let testAuthCredentials = AuthCredentials(username: "username", accessToken: "", refreshToken: "", sessionId: "", userId: "", scopes: [])
 fileprivate let testVPNCredentials = VpnKeychainMock.vpnCredentials(accountPlan: .plus, maxTier: CoreAppConstants.VpnTiers.plus)
-fileprivate let subuserCredentials = VpnCredentials(status: 0, expirationTime: Date(), accountPlan: .plus, maxConnect: 0, maxTier: 0, services: 0, groupId: "", name: "", password: "", delinquent: 0, credit: 0, currency: "", hasPaymentMethod: false, planName: nil, subscribed: nil, businessEvents: false)
+
+fileprivate let subuserWithoutSessionsResponseError = ResponseError(httpCode: HttpStatusCode.accessForbidden,
+                                                                    responseCode: ApiErrorCode.subuserWithoutSessions,
+                                                                    userFacingMessage: nil,
+                                                                    underlyingError: nil)
 
 final class AppSessionManagerImplementationTests: XCTestCase {
 
@@ -160,8 +165,8 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         let loginExpectation = XCTestExpectation(description: "Manager should not time out")
         networkingDelegate.apiVpnLocation = .mock
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
-        vpnKeychain.credentials = subuserCredentials
-        try vpnKeychain.fetchCached()
+        networkingDelegate.apiCredentialsResponseError = subuserWithoutSessionsResponseError
+        authKeychain.username = "testUsername"
         manager.finishLogin(
             authCredentials: testAuthCredentials,
             success: {
@@ -215,6 +220,9 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         appStateManager.state = .connected(differentUserServerDescriptor)
         networkingDelegate.apiVpnLocation = .mock
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
+        let freeCreds = VpnKeychainMock.vpnCredentials(accountPlan: .free,
+                                                       maxTier: CoreAppConstants.VpnTiers.free)
+        networkingDelegate.apiCredentials = freeCreds
         authKeychain.credentials = testAuthCredentials
         alertService.addAlertHandler(for: ActiveSessionWarningAlert.self, handler: { alert in
             activeSessionAlertExpectation.fulfill()
@@ -238,6 +246,9 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         appStateManager.state = .connected(differentUserServerDescriptor)
         networkingDelegate.apiVpnLocation = .mock
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
+        let freeCreds = VpnKeychainMock.vpnCredentials(accountPlan: .free,
+                                                       maxTier: CoreAppConstants.VpnTiers.free)
+        networkingDelegate.apiCredentials = freeCreds
         authKeychain.credentials = testAuthCredentials
         alertService.addAlertHandler(for: ActiveSessionWarningAlert.self, handler: { alert in
             activeSessionAlertExpectation.fulfill()
@@ -431,7 +442,12 @@ fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
 }
 
 class AuthKeychainHandleMock: AuthKeychainHandle {
-    var credentials: AuthCredentials?
+    var credentials: AuthCredentials? {
+        didSet {
+            username = credentials?.username
+            userId = credentials?.userId
+        }
+    }
     var username: String?
     var userId: String?
 
