@@ -26,6 +26,7 @@ import LegacyCommon
 import Theme
 import SDWebImage
 import Strings
+import Timer
 
 final class OfferBannerView: NSView {
 
@@ -37,16 +38,12 @@ final class OfferBannerView: NSView {
 
     private var viewModel: OfferBannerViewModel!
 
-    static let relativeDateTimeFormatter: RelativeDateTimeFormatter = {
-        let formatter = RelativeDateTimeFormatter()
-        formatter.dateTimeStyle = .named
-        formatter.unitsStyle = .full
-        return formatter
-    }()
+    var timer: BackgroundTimer?
 
     override func awakeFromNib() {
         super.awakeFromNib()
 
+        dismissButton.image = Theme.Asset.dismissButton.image
         roundedBackgroundView.wantsLayer = true
         roundedBackgroundView.layer?.cornerRadius = 8
         DarkAppearance {
@@ -67,10 +64,9 @@ final class OfferBannerView: NSView {
 
     func updateView(withModel viewModel: OfferBannerViewModel) {
         self.viewModel = viewModel
-        let timeLeft = viewModel.endTime.timeIntervalSinceNow
-        let timeLeftString = Self.relativeDateTimeFormatter.localizedString(fromTimeInterval: timeLeft)
-        label.isHidden = !viewModel.showCountDown
-        label.stringValue = Localizable.offerEnding(timeLeftString)
+        timer?.invalidate()
+        timer = viewModel.createTimer(updateTimeRemaining: updateTimeRemaining)
+
         if let image = SDImageCache.shared.imageFromCache(forKey: viewModel.imageURL.absoluteString) {
             self.image.image = image
             return
@@ -81,6 +77,17 @@ final class OfferBannerView: NSView {
                 self?.image.image = image
             }
         }
+    }
+
+    func updateTimeRemaining() {
+        guard let viewModel else { return }
+        label.isHidden = !viewModel.showCountDown
+        guard let text = viewModel.timeLeftString() else {
+            timer?.invalidate()
+            viewModel.dismiss()
+            return
+        }
+        label.stringValue = text
     }
 
     // MARK: - Actions

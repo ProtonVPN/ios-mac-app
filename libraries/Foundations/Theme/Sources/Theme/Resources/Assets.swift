@@ -25,6 +25,8 @@ public typealias AssetImageTypeAlias = ImageAsset.Image
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 public enum Asset {
   public static let wrongCountry = ImageAsset(name: "wrong-country")
+  public static let offerBannerGradientLeft = ColorAsset(name: "OfferBannerGradientLeft")
+  public static let offerBannerGradientRight = ColorAsset(name: "OfferBannerGradientRight")
   public static let upsellGradientBottom = ColorAsset(name: "UpsellGradientBottom")
   public static let upsellGradientTop = ColorAsset(name: "UpsellGradientTop")
   public enum Flags {
@@ -269,6 +271,7 @@ public enum Asset {
     public static let zm = ImageAsset(name: "Flags/ZM")
     public static let zw = ImageAsset(name: "Flags/ZW")
   }
+  public static let dismissButton = ImageAsset(name: "Dismiss button")
   public static let icAlertProAccount = ImageAsset(name: "ic-alert-pro-account")
   public static let icKillswitch = ImageAsset(name: "ic-killswitch")
   public static let icNetshield = ImageAsset(name: "ic-netshield")
