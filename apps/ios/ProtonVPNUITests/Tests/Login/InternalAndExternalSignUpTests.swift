@@ -51,8 +51,7 @@ final class InternalAndExternalSignUpTests: ProtonVPNUITests {
                 retRobot: CreatingAccountRobot.self)
             .verify.creatingAccountScreenIsShown()
             .verify.summaryScreenIsShown(time: 190)
-            .skipFullOnboarding()
-        mainRobot
+            .startUsingApp()
             .goToSettingsTab()
             .verify.userIsCreated(randomUsername, "Proton VPN Free")
     }
@@ -71,8 +70,7 @@ final class InternalAndExternalSignUpTests: ProtonVPNUITests {
             )
             .verify.creatingAccountScreenIsShown()
             .verify.summaryScreenIsShown(time: 190)
-            .skipFullOnboarding()
-        mainRobot
+            .startUsingApp()
             .goToSettingsTab()
             .verify.userIsCreated(randomEmail, "Proton VPN Free")
     }
