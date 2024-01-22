@@ -10,7 +10,6 @@ import Foundation
 
 class SettingsTests: ProtonVPNUITests {
     
-    private let mainRobot = MainRobot()
     private let settingsRobot = SettingsRobot()
     
     private let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
@@ -21,7 +20,6 @@ class SettingsTests: ProtonVPNUITests {
         mainRobot
             .showLogin()
             .verify.loginScreenIsShown()
-        LoginRobot()
             .enterCredentials(credentials[1])
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()

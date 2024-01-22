@@ -21,7 +21,6 @@ import fusion
 
 class PlanTests: ProtonVPNUITests {
 
-    private let mainRobot = MainRobot()
     private let loginRobot = LoginRobot()
 
     private let credentialsBF22 = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials_bf22", withExtension: "plist")!)
@@ -35,12 +34,10 @@ class PlanTests: ProtonVPNUITests {
 
     override func setUp() {
         super.setUp()
-
         setupAtlasEnvironment()
         mainRobot
             .showLogin()
             .verify.loginScreenIsShown()
-
     }
 
     /// Tests that the plan for the VPN Plus user is named "VPN Plus", lasts for 1 year and costs $99.99

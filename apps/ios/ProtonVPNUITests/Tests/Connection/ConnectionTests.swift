@@ -13,7 +13,6 @@ import ProtonCoreTestingToolkitUITestsLogin
 class ConnectionTests: ProtonVPNUITests {
     
     private let loginRobot = LoginRobot()
-    private let mainRobot = MainRobot()
     private let connectionStatusRobot = ConnectionStatusRobot()
     private let countryListRobot = CountryListRobot()
     private let serverListRobot = ServerListRobot()
