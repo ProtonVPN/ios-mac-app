@@ -1382,7 +1382,9 @@
 "_news_title" = "Uutiset";
 
 /* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
-"_offer_ending_" = "Ending %@";
+"_offer_ending_" = "Päättyy %@";
+
+"_quick_settings_title" = "Pika-asetukset";
 
 "_quick_settings_secureCore_description" = "Ohjaa arkaluonteisimmat tietosi tietosuojaa kunnioittavissa maissa sijaitsevien turvallisimpien palvelintemme kautta.";
 

@@ -1382,7 +1382,9 @@
 "_news_title" = "Notícias";
 
 /* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
-"_offer_ending_" = "Ending %@";
+"_offer_ending_" = "Termina %@";
+
+"_quick_settings_title" = "Configurações rápidas";
 
 "_quick_settings_secureCore_description" = "Encaminhe os seus dados mais sensíveis através dos nossos servidores mais seguros em países amigos da privacidade.";
 
