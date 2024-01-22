@@ -43,6 +43,6 @@ let package = Package(
         .testTarget(
             name: "SearchTests",
             dependencies: ["Search", "Overture"]
-            )
+        )
     ]
 )
