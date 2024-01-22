@@ -1382,7 +1382,9 @@
 "_news_title" = "Новости";
 
 /* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
-"_offer_ending_" = "Ending %@";
+"_offer_ending_" = "Заканчивается через %@";
+
+"_quick_settings_title" = "Быстрые настройки";
 
 "_quick_settings_secureCore_description" = "Направляйте свои самые чувствительные данные через наши самые безопасные серверы в странах, уважающих конфиденциальность.";
 

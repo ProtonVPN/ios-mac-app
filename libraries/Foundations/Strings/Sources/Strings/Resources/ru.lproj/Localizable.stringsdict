@@ -84,22 +84,22 @@
       <key>num_countries</key>
       <dict>
         <key>one</key>
-        <string>%d стран</string>
+        <string>%d страна</string>
         <key>few</key>
-        <string>%d стран</string>
-        <key>many</key>
         <string>%d страны</string>
+        <key>many</key>
+        <string>%d стран</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d страны</string>
+        <string>%d стран</string>
       </dict>
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d защищённых сервера</string>
+        <string>%d защищённый сервер</string>
         <key>few</key>
         <string>%d защищённых сервера</string>
         <key>many</key>
@@ -109,7 +109,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d защищенных серверов</string>
+        <string>%d защищённых серверов</string>
       </dict>
     </dict>
     <key>subscription_upgrade_option1</key>
@@ -145,11 +145,11 @@
         <key>one</key>
         <string>%d устройство</string>
         <key>few</key>
-        <string>%d устройств</string>
+        <string>%d устройства</string>
         <key>many</key>
         <string>%d устройств</string>
         <key>other</key>
-        <string>%d устройства</string>
+        <string>%d устройств</string>
       </dict>
     </dict>
     <key>maximum_device_plan_limit_part_2</key>
@@ -165,11 +165,11 @@
         <key>one</key>
         <string>%d устройство</string>
         <key>few</key>
-        <string>%d устройств</string>
+        <string>%d устройства</string>
         <key>many</key>
-        <string>%d устройства</string>
+        <string>%d устройств</string>
         <key>other</key>
-        <string>%d устройства</string>
+        <string>%d устройств</string>
       </dict>
     </dict>
     <key>search_upsell_title</key>
@@ -185,11 +185,11 @@
         <key>one</key>
         <string>%d страна</string>
         <key>few</key>
-        <string>%d стран</string>
+        <string>%d страны</string>
         <key>many</key>
-        <string>%d страны</string>
+        <string>%d стран</string>
         <key>other</key>
-        <string>%d страны</string>
+        <string>%d стран</string>
       </dict>
     </dict>
     <key>_vpnauth_too_many_certs_retry_after</key>
