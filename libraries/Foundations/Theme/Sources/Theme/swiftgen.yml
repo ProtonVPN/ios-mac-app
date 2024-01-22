@@ -2,6 +2,6 @@ xcassets:
   inputs: Resources/Assets.xcassets
   outputs:
     templateName: swift5
-    output: Resources/Assets.swift
+    output: Assets.swift
     params:
       publicAccess: true

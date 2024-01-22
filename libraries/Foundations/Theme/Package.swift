@@ -25,7 +25,8 @@ let package = Package(
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 "Ergonomics",
             ],
-            resources: [],
+            exclude: ["swiftgen.yml"],
+            resources: [.process("Resources")],
             plugins: []
         ),
     ]

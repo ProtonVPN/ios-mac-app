@@ -35,7 +35,9 @@ let package = Package(
         ),
         .target(
             name: "Settings-iOS",
-            dependencies: ["Settings"]
+            dependencies: ["Settings"],
+            exclude: ["swiftgen.yml"],
+            resources: [.process("Resources")]
         ),
         .target(
             name: "Settings-macOS",
