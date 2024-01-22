@@ -22,7 +22,7 @@ import ProtonCoreNetworking
 
 final class AvailableDomainsRequest: Request {
     var path: String {
-        return "/domains/available"
+        return "/core/v4/domains/available"
     }
 
     var isAuth: Bool {

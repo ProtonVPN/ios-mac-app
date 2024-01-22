@@ -52,7 +52,7 @@ class NWTCPConnectionTests: XCTestCase {
     }
 
     func testBasicConnection() {
-        var urlRequest = URLRequest(url: URL(string: "https://vpn-api.proton.me/vpn")!)
+        var urlRequest = URLRequest(url: URL(string: "https://vpn-api.proton.me/vpn/v2")!)
         urlRequest.addValue("Foo", forHTTPHeaderField: "X-Testing-Header")
         urlRequest.addValue("Bar", forHTTPHeaderField: "X-Other-Testing-Header")
         urlRequest.httpMethod = "GET"
@@ -131,7 +131,7 @@ class NWTCPConnectionTests: XCTestCase {
             secondDataTask: XCTestExpectation(description: "Second data task callback should be invoked")
         )
 
-        let apiUrl = URL(string: "https://vpn-api.proton.me/vpn")!
+        let apiUrl = URL(string: "https://vpn-api.proton.me/vpn/v2")!
         var urlRequest = URLRequest(url: apiUrl)
         urlRequest.addValue("Foo", forHTTPHeaderField: "X-Testing-Header")
         urlRequest.addValue("Bar", forHTTPHeaderField: "X-Other-Testing-Header")
@@ -251,7 +251,7 @@ class NWTCPConnectionTests: XCTestCase {
     }
 
     func testConnectionTimeout() {
-        var urlRequest = URLRequest(url: URL(string: "https://vpn-api.proton.me/vpn")!)
+        var urlRequest = URLRequest(url: URL(string: "https://vpn-api.proton.me/vpn/v2")!)
         urlRequest.httpMethod = "GET"
 
         let stateChangeExpectation = XCTestExpectation(description: "Expected to observe state changes")

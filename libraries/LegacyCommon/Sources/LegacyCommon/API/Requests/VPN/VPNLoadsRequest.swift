@@ -31,7 +31,7 @@ final class VPNLoadsRequest: Request {
     }
     
     var path: String {
-        return "/vpn/loads"
+        return "/vpn/v1/loads"
     }
 
     var isAuth: Bool {

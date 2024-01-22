@@ -33,7 +33,6 @@ extension CachedVpnCredentials {
             currency: "Monopoly",
             hasPaymentMethod: true,
             subscribed: nil,
-            needConnectionAllocation: false, 
             businessEvents: false
         )
     }

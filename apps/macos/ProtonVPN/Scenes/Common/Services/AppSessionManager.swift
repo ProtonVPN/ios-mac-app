@@ -131,7 +131,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @MainActor
     private func finishLogin() async throws {
         try await retrieveProperties()
-        try checkForSubuserWithoutSessions()
         try await refreshVpnAuthCertificate()
 
         if sessionStatus == .notEstablished {
@@ -156,30 +155,18 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         }
     }
 
-    private func checkForSubuserWithoutSessions() throws {
-        if let credentials = try? self.vpnKeychain.fetchCached(),
-           credentials.needConnectionAllocation {
-            log.error("User with insufficient sessions detected. Throwing an error instead of logging in.", category: .app)
-            logOutCleanup()
-            throw ProtonVpnError.subuserWithoutSessions
-        }
-    }
-
     private func retrieveProperties() async throws {
         guard let properties = try await getVPNProperties() else {
             await successfulConsecutiveSessionRefreshes.reset()
             return
         }
 
-        if let credentials = properties.vpnCredentials {
-            vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-            await self.serverStorage.store(
-                properties.serverModels,
-                keepStalePaidServers: shouldRefreshServersAccordingToUserTier && credentials.maxTier == CoreAppConstants.VpnTiers.free
-            )
-        } else {
-            self.serverStorage.store(properties.serverModels)
-        }
+        let credentials = properties.vpnCredentials
+        vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
+        await self.serverStorage.store(
+            properties.serverModels,
+            keepStalePaidServers: shouldRefreshServersAccordingToUserTier && credentials.maxTier == CoreAppConstants.VpnTiers.free
+        )
 
         if await appState.isDisconnected {
             propertiesManager.userLocation = properties.location
@@ -223,6 +210,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 lastKnownLocation: location,
                 serversAccordingToTier: shouldRefreshServersAccordingToUserTier
             )
+        } catch ProtonVpnError.subuserWithoutSessions {
+            log.error("User with insufficient sessions detected. Throwing an error instead of logging in.", category: .app)
+            logOutCleanup()
+            throw ProtonVpnError.subuserWithoutSessions
         } catch {
             log.error("Failed to obtain user's VPN properties: \(error.localizedDescription)", category: .app)
             if serverStorage.fetch().isEmpty, self.propertiesManager.userLocation?.ip == nil, (error is KeychainError) {
