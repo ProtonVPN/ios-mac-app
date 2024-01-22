@@ -3,9 +3,9 @@ stages:
   - i18n
   - github
   - lint
+  - deploy
   - build
   - test
-  - deploy
   - test_ui
   - cleanup
 

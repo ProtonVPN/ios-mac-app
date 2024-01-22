@@ -18,7 +18,9 @@
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: never
-    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $CUSTOM_TEST_PLAN # for custom pipeline like subscription should not run all ui tests just specific selected test plan related
+      when: never
+    - if: '$CI_PIPELINE_SOURCE == "schedule" && $CUSTOM_TEST_PLAN == null'
       when: always
     - if: $CI_COMMIT_BRANCH == "develop"
       when: manual

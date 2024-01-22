@@ -20,17 +20,14 @@ import XCTest
 import fusion
 import ProtonCoreTestingToolkitUITestsPaymentsUI
 import ProtonCoreQuarkCommands
-import ProtonCoreEnvironment
 import StoreKitTest
 
 final class SubscriptionTests: ProtonVPNUITests {
 
     private var session: SKTestSession!
-    private let mainRobot = MainRobot()
 
     override func setUp() {
         super.setUp()
-
         setupAtlasEnvironment()
         mainRobot
             .showLogin()
@@ -43,18 +40,17 @@ final class SubscriptionTests: ProtonVPNUITests {
         session.clearTransactions()
     }
 
-    func testUpgradeAccountFromFreeToUnlimited() {
-         createUserVerifySubscription(plan: .unlimited)
+    func testUpgradeAccountFromFreeToUnlimited() throws {
+         try createUserVerifySubscription(plan: .unlimited)
     }
 
-    func testUpgradeAccountFromFreeToVPN2022() {
-         createUserVerifySubscription(plan: .vpn2022)
+    func testUpgradeAccountFromFreeToVPN2022() throws {
+         try createUserVerifySubscription(plan: .vpn2022)
     }
 
-    private func createUserVerifySubscription(plan: PaymentsPlan) {
-        let user = Credentials(username: StringUtils().randomAlphanumericString(length: 10), password: "12l3", plan: "free")
-
-        guard createAccountForTest(doh: doh, accountToBeCreated: .freeWithAddressAndKeys(username: user.username, password: user.password)) else { return }
+    private func createUserVerifySubscription(plan: PaymentsPlan) throws {
+        let user = User(name: StringUtils().randomAlphanumericString(length: 10), password: "12l3")
+        try quarkCommands.userCreate(user: user)
 
         _ = LoginRobot()
             .enterCredentials(user)

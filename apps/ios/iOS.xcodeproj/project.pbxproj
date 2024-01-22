@@ -10,6 +10,7 @@
 		060D071625D34599002B98B8 /* AppSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060D071525D34599002B98B8 /* AppSessionManager.swift */; };
 		132DF0198C25BE40665CB22E /* ProtocolsListRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588875B805CC4143DA2C515E /* ProtocolsListRobot.swift */; };
 		140F5CD9C21275193C0773F6 /* RoundedCornersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11B29AEC814A4370AB62EF3 /* RoundedCornersView.swift */; };
+		1F297A2E2B63B1E100BC487D /* ProtonCoreTestingToolkitUITestsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 1F297A2D2B63B1E100BC487D /* ProtonCoreTestingToolkitUITestsCore */; };
 		20227E9EFF62B5A862052082 /* AnnouncementDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01B66D12FF24C71F902E71AF /* AnnouncementDetailViewController.xib */; };
 		223BDF9C51D60D8AD239D951 /* AnnouncementFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626EBF8E3BDF0DC2F71393A2 /* AnnouncementFeatureView.swift */; };
 		37CC821528F4407C00230335 /* LoginExtAccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CC821428F4407C00230335 /* LoginExtAccountTests.swift */; };
@@ -971,6 +972,7 @@
 				E531EB402A78F74900E56D7D /* ProtonCoreTestingToolkitUnitTestsLoginUI in Frameworks */,
 				E531EB3E2A78EF6300E56D7D /* ProtonCoreTestingToolkitUITestsLogin in Frameworks */,
 				E531EB422A78F98D00E56D7D /* ProtonCoreTestingToolkitUITestsPaymentsUI in Frameworks */,
+				1F297A2E2B63B1E100BC487D /* ProtonCoreTestingToolkitUITestsCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2385,6 +2387,7 @@
 				E531EB3F2A78F74900E56D7D /* ProtonCoreTestingToolkitUnitTestsLoginUI */,
 				E531EB412A78F98D00E56D7D /* ProtonCoreTestingToolkitUITestsPaymentsUI */,
 				AD70D75D2B63238400B39ABA /* PMLogger */,
+				1F297A2D2B63B1E100BC487D /* ProtonCoreTestingToolkitUITestsCore */,
 			);
 			productName = ProtonVPNUITests;
 			productReference = D5811D7D229BBD870087B63A /* ProtonVPNUITests.xctest */;
@@ -4432,6 +4435,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1F297A2D2B63B1E100BC487D /* ProtonCoreTestingToolkitUITestsCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCoreTestingToolkitUITestsCore;
+		};
 		2DC3E67F6A25A4AD4DFCF448 /* NEHelper */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NEHelper;

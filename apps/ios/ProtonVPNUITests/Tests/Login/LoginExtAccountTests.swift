@@ -9,21 +9,21 @@
 import XCTest
 import fusion
 import ProtonCoreTestingToolkitUITestsLogin
+import ProtonCoreTestingToolkitUITestsCore
 
 class LoginExtAccountTests: ProtonVPNUITests {
 
-    let mainRobot = MainRobot()
     let loginRobot = ProtonCoreTestingToolkitUITestsLogin.LoginRobot()
-    
+
     override func setUp() {
-        launchEnvironment = "ExtAccountNotSupportedStub"
+        launchEnvironment = ["ExtAccountNotSupportedStub": "true"]
         super.setUp()
         setupAtlasEnvironment()
         mainRobot
             .showLogin()
             .verify.loginScreenIsShown()
     }
-    
+
     // Sign-in with external account on old iOS version
     func testLoginExtAcountNotSupportedOnOldAppVersion() {
         loginRobot

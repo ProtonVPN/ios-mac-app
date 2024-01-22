@@ -19,11 +19,9 @@
 import fusion
 import ProtonCoreTestingToolkitUITestsLogin
 import ProtonCoreQuarkCommands
-import ProtonCoreEnvironment
 
 final class LoginExternalAccountTests: ProtonVPNUITests {
 
-    private let mainRobot = MainRobot()
     private let loginRobot = LoginRobot()
 
     override func setUp() {
@@ -32,14 +30,14 @@ final class LoginExternalAccountTests: ProtonVPNUITests {
         mainRobot
             .showLogin()
             .verify.loginScreenIsShown()
-        unbanBeforeSignup(doh: doh)
     }
 
-    func testSignInWithInternalAccountWorks() {
+    func testSignInWithInternalAccountWorks() throws {
         let randomUsername = StringUtils().randomAlphanumericString(length: 8)
         let randomPassword = StringUtils().randomAlphanumericString(length: 8)
+        let user = User(name: randomUsername, password: randomPassword)
 
-        guard createAccountForTest(doh: doh, accountToBeCreated: .freeWithAddressAndKeys(username: randomUsername, password: randomPassword)) else { return }
+        try quarkCommands.userCreate(user: user)
 
         _ = SigninExternalAccountsCapability()
             .signInWithAccount(
@@ -54,12 +52,14 @@ final class LoginExternalAccountTests: ProtonVPNUITests {
             .verify.correctUserIsLogedIn(.init(username: randomUsername, password: randomPassword, plan: "Proton VPN Free"))
     }
 
-    func testSignInWithExternalAccountWorks() {
+    func testSignInWithExternalAccountWorks() throws {
 
-        let randomEmail = "\(StringUtils().randomAlphanumericString(length: 8))@proton.uitests"
+        let randomEmail = "\(StringUtils().randomAlphanumericString(length: 8))@gmail.com"
+        let randomName = "\(StringUtils().randomAlphanumericString(length: 8))"
         let randomPassword = StringUtils().randomAlphanumericString(length: 8)
+        let user = User(email: randomEmail, name: randomName, password: randomPassword, isExternal: true)
 
-        guard createAccountForTest(doh: doh, accountToBeCreated: .external(email: randomEmail, password: randomPassword)) else { return }
+        try quarkCommands.userCreate(user: user)
 
         _ = SigninExternalAccountsCapability()
             .signInWithAccount(
@@ -74,11 +74,12 @@ final class LoginExternalAccountTests: ProtonVPNUITests {
             .verify.correctUserIsLogedIn(.init(username: randomEmail, password: randomPassword, plan: "Proton VPN Free"))
     }
 
-    func testSignInWithUsernameAccountWorks() {
+    func testSignInWithUsernameAccountWorks() throws {
         let randomUsername = StringUtils().randomAlphanumericString(length: 8)
         let randomPassword = StringUtils().randomAlphanumericString(length: 8)
+        let user = User(name: randomUsername, password: randomPassword)
 
-        guard createAccountForTest(doh: doh, accountToBeCreated: .freeNoAddressNoKeys(username: randomUsername, password: randomPassword)) else { return }
+        try quarkCommands.userCreate(user: user, createAddress: CreateAddress.noKey)
 
         _ = SigninExternalAccountsCapability()
             .signInWithAccount(

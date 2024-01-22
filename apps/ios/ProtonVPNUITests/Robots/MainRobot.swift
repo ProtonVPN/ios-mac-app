@@ -53,7 +53,7 @@ class MainRobot: CoreElements {
 
     @discardableResult
     func goToSettingsTab() -> SettingsRobot {
-        button(tabSettings).tap()
+        button(tabSettings).waitUntilExists(time: 30).tap()
         return SettingsRobot()
     }
     
