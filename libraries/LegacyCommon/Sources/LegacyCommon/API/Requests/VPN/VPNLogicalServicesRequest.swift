@@ -47,7 +47,7 @@ final class VPNLogicalServicesRequest: Request {
     }
 
     var path: String {
-        let path = URL(string: "/vpn/logicals")!
+        let path = URL(string: "/vpn/v1/logicals")!
 
         let queryItems: [URLQueryItem] = Array(
             ("WithTranslations", nil),

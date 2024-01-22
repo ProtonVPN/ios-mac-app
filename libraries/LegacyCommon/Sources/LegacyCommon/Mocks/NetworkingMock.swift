@@ -197,14 +197,14 @@ public protocol NetworkingMockDelegate: AnyObject {
 
 public class FullNetworkingMockDelegate: NetworkingMockDelegate {
     public enum MockEndpoint: String {
-        case vpn = "/vpn"
+        case vpn = "/vpn/v2"
         case status = "/vpn_status"
-        case location = "/vpn/location"
-        case logicals = "/vpn/logicals"
-        case streamingServices = "/vpn/streamingservices"
+        case location = "/vpn/v1/location"
+        case logicals = "/vpn/v1/logicals"
+        case streamingServices = "/vpn/v1/streamingservices"
         case partners = "/vpn/v1/partners"
         case clientConfig = "/vpn/v2/clientconfig"
-        case loads = "/vpn/loads"
+        case loads = "/vpn/v1/loads"
         case certificate = "/vpn/v1/certificate"
         case sessionCount = "/vpn/sessioncount"
     }
@@ -216,6 +216,8 @@ public class FullNetworkingMockDelegate: NetworkingMockDelegate {
     public var apiServerList: [ServerModel] = []
     public var apiServerLoads: [ContinuousServerProperties] = []
     public var apiCredentials: VpnCredentials?
+
+    public var apiCredentialsResponseError: ResponseError?
     public var apiVpnLocation: MockTestData.VPNLocationResponse?
     public var apiClientConfig: ClientConfig?
 
@@ -244,12 +246,18 @@ public class FullNetworkingMockDelegate: NetworkingMockDelegate {
         }
 
         defer { didHitRoute?(route) }
-
         switch route {
         case .vpn:
             // for fetching client credentials
             guard let apiCredentials = apiCredentials else {
-                return .failure(ResponseError(httpCode: 400, responseCode: 2000, userFacingMessage: nil, underlyingError: nil))
+                guard let apiCredentialsResponseError else {
+                    return .failure(ResponseError(httpCode: HttpStatusCode.badRequest,
+                                                  responseCode: 2000,
+                                                  userFacingMessage: nil,
+                                                  underlyingError: nil)
+                    )
+                }
+                return .failure(apiCredentialsResponseError)
             }
 
             let data = try JSONSerialization.data(withJSONObject: apiCredentials.asDict)

@@ -43,7 +43,6 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
     public let currency: String
     public let hasPaymentMethod: Bool
     public let subscribed: Int?
-    public let needConnectionAllocation: Bool
     public let businessEvents: Bool
 
     override public var description: String {
@@ -60,7 +59,6 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         "Credit: \(credit) (in \(currency))" +
         "Has Payment Method: \(hasPaymentMethod)\n" +
         "Subscribed: \(String(describing: subscribed))" +
-        "Need Connection Allocation: \(needConnectionAllocation)" +
         "BusinessEvents: \(businessEvents)"
     }
 
@@ -80,7 +78,6 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         hasPaymentMethod: Bool,
         planName: String?,
         subscribed: Int?,
-        needConnectionAllocation: Bool,
         businessEvents: Bool
     ) {
         self.status = status
@@ -98,7 +95,6 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         self.hasPaymentMethod = hasPaymentMethod
         self.planName = planName // Saving original string we got from API, because we need to know if it was null
         self.subscribed = subscribed
-        self.needConnectionAllocation = needConnectionAllocation
         self.businessEvents = businessEvents
         super.init()
     }
@@ -124,7 +120,6 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         groupId = try vpnDic.stringOrThrow(key: "GroupID")
         name = try vpnDic.stringOrThrow(key: "Name")
         password = try vpnDic.stringOrThrow(key: "Password")
-        needConnectionAllocation = vpnDic.bool("NeedConnectionAllocation") ?? false
         delinquent = try dic.intOrThrow(key: "Delinquent")
         credit = try dic.intOrThrow(key: "Credit")
         currency = try dic.stringOrThrow(key: "Currency")
@@ -146,7 +141,6 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
                 "GroupID": groupId,
                 "Name": name,
                 "Password": password,
-                "NeedConnectionAllocation": needConnectionAllocation,
                 "BusinessEvents": businessEvents,
             ] as [String: Any],
             "Services": services,
@@ -176,7 +170,6 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         static let currency = "currency"
         static let hasPaymentMethod = "hasPaymentMethod"
         static let subscribed = "subscribed"
-        static let needConnectionAllocation = "needConnectionAllocation"
         static let businessEvents = "businessEvents"
     }
     
@@ -205,7 +198,6 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
             hasPaymentMethod: aDecoder.decodeBool(forKey: CoderKey.hasPaymentMethod),
             planName: planName,
             subscribed: subscribed,
-            needConnectionAllocation: aDecoder.decodeBool(forKey: CoderKey.needConnectionAllocation), 
             businessEvents: aDecoder.decodeBool(forKey: CoderKey.businessEvents)
         )
     }
@@ -237,7 +229,6 @@ public struct CachedVpnCredentials {
     public let currency: String
     public let hasPaymentMethod: Bool
     public let subscribed: Int?
-    public let needConnectionAllocation: Bool
     public let businessEvents: Bool
 
     public var canUsePromoCode: Bool {
@@ -262,8 +253,7 @@ extension CachedVpnCredentials {
             credit: credentials.credit,
             currency: credentials.currency,
             hasPaymentMethod: credentials.hasPaymentMethod,
-            subscribed: credentials.subscribed,
-            needConnectionAllocation: credentials.needConnectionAllocation, 
+            subscribed: credentials.subscribed, 
             businessEvents: credentials.businessEvents
         )
     }

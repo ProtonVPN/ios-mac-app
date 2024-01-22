@@ -163,7 +163,7 @@ class RequestParsingTests: XCTestCase {
             "Content-Type": "text/html; charset=utf8",
             "Date": "Wed, 20 Apr 2022 16:20:00 GMT",
         ]
-        let url = URL(string: "https://vpn-api.proton.me/vpn")!
+        let url = URL(string: "https://vpn-api.proton.me/vpn/v2")!
 
         // Test POST request with body
         do {
@@ -176,7 +176,7 @@ class RequestParsingTests: XCTestCase {
             request.httpBody = requestBody.data(using: .utf8)!
 
             let data = try request.data()
-            let expected = Self.makeRequest(preamble: "POST /vpn HTTP/1.0", host: url.host!, headers: headers, body: requestBody)
+            let expected = Self.makeRequest(preamble: "POST /vpn/v2 HTTP/1.0", host: url.host!, headers: headers, body: requestBody)
             XCTAssertEqual(String(data: data, encoding: .utf8)!, String(data: expected, encoding: .utf8)!)
         }
 
@@ -189,7 +189,7 @@ class RequestParsingTests: XCTestCase {
             request.httpMethod = "GET"
 
             let data = try request.data()
-            let expected = Self.makeRequest(preamble: "GET /vpn HTTP/1.0", host: url.host!, headers: headers, body: nil)
+            let expected = Self.makeRequest(preamble: "GET /vpn/v2 HTTP/1.0", host: url.host!, headers: headers, body: nil)
             XCTAssertEqual(String(data: data, encoding: .utf8)!, String(data: expected, encoding: .utf8)!)
         }
     }

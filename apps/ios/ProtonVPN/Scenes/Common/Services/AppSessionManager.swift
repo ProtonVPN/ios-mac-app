@@ -143,7 +143,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         }
         do {
             try await retrievePropertiesAndLogIn()
-            try checkForSubuserWithoutSessions()
         } catch {
             log.error("Failed to obtain user's auth credentials", category: .user, metadata: ["error": "\(error)"])
             throw error
@@ -196,17 +195,13 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             return
         }
 
-        if let credentials = properties.vpnCredentials {
-            vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-            review.update(plan: credentials.accountPlan.rawValue)
-            serverStorage.store(
-                properties.serverModels,
-                keepStalePaidServers: shouldRefreshServers && credentials.maxTier == CoreAppConstants.VpnTiers.free
-            )
-        } else {
-            serverStorage.store(properties.serverModels)
-        }
-
+        let credentials = properties.vpnCredentials
+        vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
+        review.update(plan: credentials.accountPlan.rawValue)
+        serverStorage.store(
+            properties.serverModels,
+            keepStalePaidServers: shouldRefreshServers && credentials.maxTier == CoreAppConstants.VpnTiers.free
+        )
         propertiesManager.userLocation = properties.location
         await refreshPartners(ifUnknownPartnerLogicalExistsIn: properties.serverModels)
         do {
@@ -267,17 +262,14 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 lastKnownLocation: propertiesManager.userLocation,
                 serversAccordingToTier: shouldRefreshServers
             )
-
-            if let credentials = properties.vpnCredentials {
-                vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-                review.update(plan: credentials.accountPlan.rawValue)
-                serverStorage.store(
-                    properties.serverModels,
-                    keepStalePaidServers: shouldRefreshServers && credentials.maxTier == CoreAppConstants.VpnTiers.free
-                )
-            } else {
-                serverStorage.store(properties.serverModels)
-            }
+            
+            let credentials = properties.vpnCredentials
+            vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
+            review.update(plan: credentials.accountPlan.rawValue)
+            serverStorage.store(
+                properties.serverModels,
+                keepStalePaidServers: shouldRefreshServers && credentials.maxTier == CoreAppConstants.VpnTiers.free
+            )
             propertiesManager.userRole = properties.userRole
             propertiesManager.userAccountCreationDate = properties.userCreateTime
             propertiesManager.userLocation = properties.location
@@ -296,6 +288,10 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 announcementRefresher.tryRefreshing()
             }
 
+        } catch ProtonVpnError.subuserWithoutSessions {
+            log.error("User with insufficient sessions detected. Throwing an error instead of logging in.", category: .app)
+            logOutCleanup()
+            throw ProtonVpnError.subuserWithoutSessions
         } catch {
             // In case getting vpn properties fails, we don't log user out in all cases. Instead
             // check if we can continue.
@@ -357,17 +353,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         // Info: Before refactoring, this method could finish without calling either a success
         // or a failure. Now if finishes successfully in case ifs above haven't finished
         // execution earlier.
-    }
-
-    private func checkForSubuserWithoutSessions() throws {
-        guard let credentials = try? vpnKeychain.fetchCached(),
-            credentials.needConnectionAllocation else {
-            return
-        }
-
-        log.error("User with insufficient sessions detected. Throwing an error instead of logging in.", category: .app)
-        logOutCleanup()
-        throw ProtonVpnError.subuserWithoutSessions
     }
     
     // MARK: - Log out

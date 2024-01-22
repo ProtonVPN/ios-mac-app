@@ -98,9 +98,9 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
                 self.certRefreshCallback?(request, completionHandler)
             case "/auth/refresh":
                 self.tokenRefreshCallback?(request, completionHandler)
-            case "/auth/sessions/forks/\(Self.sessionSelector)":
+            case "/auth/v4/sessions/forks/\(Self.sessionSelector)":
                 self.sessionAuthCallback?(request, completionHandler)
-            case "/vpn/logicals/\(Self.currentLogicalId)/alternatives":
+            case "/vpn/v1/logicals/\(Self.currentLogicalId)/alternatives":
                 self.serverStatusCallback?(request, completionHandler)
             case nil:
                 XCTFail("Received request with no path")

@@ -71,6 +71,7 @@ public class HttpStatusCode { // http status codes returned by the api
     
     public static let badRequest = 400
     public static let invalidAccessToken = 401
+    public static let accessForbidden = 403
     public static let invalidRefreshToken = 422
     public static let tooManyRequests = 429
     public static let internalServerError = 500
@@ -101,4 +102,6 @@ public class ApiErrorCode { // error codes returned by the api
     public static let noActiveSubscription = 22110
     
     public static let vpnIpNotFound = 86031
+    
+    public static let subuserWithoutSessions = 86300
 }
