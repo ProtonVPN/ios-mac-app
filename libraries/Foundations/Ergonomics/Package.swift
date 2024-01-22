@@ -17,7 +17,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../../external/protoncore")
+        .package(path: "../../../external/protoncore")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.

@@ -13,10 +13,10 @@ let package = Package(
             targets: ["Search"]),
     ],
     dependencies: [
-        .package(path: "../Strings"),
+        .package(path: "../Foundations/Strings"),
         .package(name: "Overture",
                  url: "https://github.com/pointfreeco/swift-overture", .exact("0.5.0")),
-        .package(path: "../Theme")
+        .package(path: "../Foundations/Theme")
     ],
     targets: [
         .target(

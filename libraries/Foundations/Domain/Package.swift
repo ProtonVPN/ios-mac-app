@@ -18,14 +18,19 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../Strings"),
-        .package(path: "../Ergonomics")
+        .package(path: "../Ergonomics"),
+        .package(path: "../../../external/protoncore") // Heavy dependency - logic that requires ProtonCore could live as extensions in another package
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "Domain",
-            dependencies: ["Strings", "Ergonomics"]
+            dependencies: [
+                "Strings",
+                "Ergonomics",
+                .product(name: "ProtonCoreUtilities", package: "protoncore")
+            ]
         )
     ]
 )

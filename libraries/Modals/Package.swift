@@ -22,10 +22,10 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../external/protoncore"),
-        .package(path: "../Strings"),
+        .package(path: "../Foundations/Strings"),
         .package(name: "Overture", url: "https://github.com/pointfreeco/swift-overture", .exact("0.5.0")),
-        .package(path: "../Theme"),
-        .package(path: "../Ergonomics"),
+        .package(path: "../Foundations/Theme"),
+        .package(path: "../Foundations/Ergonomics"),
         .package(path: "../SharedViews")
     ],
     targets: [

@@ -22,11 +22,11 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../external/protoncore"),
-        .package(path: "../Theme"),
+        .package(path: "../Foundations/Theme"),
         .package(path: "../SharedViews"),
         .package(path: "../NEHelper"),
-        .package(path: "../Strings"),
-        .package(path: "../Ergonomics"),
+        .package(path: "../Foundations/Strings"),
+        .package(path: "../Foundations/Ergonomics"),
         .package(
             url: "https://github.com/pointfreeco/swift-composable-architecture",
             .upToNextMajor(from: "1.0.0")
@@ -54,6 +54,7 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ],
+            exclude: ["swiftgen.yml"],
             resources: [
                 .process("Resources/Assets.xcassets")
             ]

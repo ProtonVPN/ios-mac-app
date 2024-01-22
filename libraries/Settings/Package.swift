@@ -13,8 +13,8 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../external/protoncore"),
-        .package(path: "../Theme"),
-        .package(path: "../Strings"),
+        .package(path: "../Foundations/Theme"),
+        .package(path: "../Foundations/Strings"),
         .package(path: "../NEHelper"),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.0.0")),
         .package(url: "https://github.com/pointfreeco/swiftui-navigation", exact: "1.0.0"),
