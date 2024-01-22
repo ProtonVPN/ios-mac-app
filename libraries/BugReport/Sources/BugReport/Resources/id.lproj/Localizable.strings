@@ -29,7 +29,7 @@
 "_br_3_email" = "Surel";
 
 /* ReportBug 3rd step (form) username field name */
-"_br_3_username" = "Nama Pengguna";
+"_br_3_username" = "Nama pengguna";
 
 /* ReportBug 3rd step (form) field to ask for includeing logs */
 "_br_3_logs_field" = "Kirim log error";

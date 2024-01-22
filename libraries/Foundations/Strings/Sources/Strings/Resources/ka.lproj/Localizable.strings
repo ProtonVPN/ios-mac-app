@@ -1382,7 +1382,9 @@
 "_news_title" = "სიახლეები";
 
 /* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
-"_offer_ending_" = "Ending %@";
+"_offer_ending_" = "სრულდება %@";
+
+"_quick_settings_title" = "სწრაფი მორგება";
 
 "_quick_settings_secureCore_description" = "დაარაუტეთ თქვენი ყველაზე მგრძნობიარე მონაცემები ჩვენი ყველაზე დაცული სერვერების გავლით.";
 

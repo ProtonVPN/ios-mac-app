@@ -1382,7 +1382,9 @@
 "_news_title" = "Νέα";
 
 /* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
-"_offer_ending_" = "Ending %@";
+"_offer_ending_" = "Τελειώνει σε %@";
+
+"_quick_settings_title" = "Γρήγορες Ρυθμίσεις";
 
 "_quick_settings_secureCore_description" = "Δρομολογήστε τα πιο ευαίσθητα δεδομένα σας μέσω των ασφαλέστερων διακομιστών μας σε χώρες φιλικές με την προστασία προσωπικών δεδομένων.";
 

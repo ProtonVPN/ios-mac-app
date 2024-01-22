@@ -766,7 +766,7 @@
 "_error_session_count_parser" = "Tidak dapat mengurai jumlah sesi";
 
 /* Parsing error */
-"_error_loads" = "Tidak dapat memperbarui muatan server";
+"_error_loads" = "Muatan server tidak dapat diperbarui";
 
 /* API error */
 "_error_api_offline" = "API Proton VPN sedang offline";
@@ -1382,7 +1382,9 @@
 "_news_title" = "Berita";
 
 /* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
-"_offer_ending_" = "Ending %@";
+"_offer_ending_" = "Berakhir %@";
+
+"_quick_settings_title" = "Pengaturan Cepat";
 
 "_quick_settings_secureCore_description" = "Alihkan data paling sensitif Anda melalui server teraman kami di negara ramah privasi.";
 
