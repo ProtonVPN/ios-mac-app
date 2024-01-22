@@ -15,7 +15,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(path: "../../external/protoncore"),
+        .package(path: "../../../external/protoncore"),
         .package(path: "../Ergonomics")
     ],
     targets: [

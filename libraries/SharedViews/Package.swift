@@ -18,10 +18,10 @@ let package = Package(
     dependencies: [
         // Local
         .package(path: "../../external/protoncore"),
-        .package(path: "../Theme"),
-        .package(path: "../Ergonomics"),
+        .package(path: "../Foundations/Theme"),
+        .package(path: "../Foundations/Ergonomics"),
         .package(path: "../NEHelper"),
-        .package(path: "../Strings"),
+        .package(path: "../Foundations/Strings"),
         
         // 3rd party
         .package(
