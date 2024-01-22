@@ -1384,6 +1384,8 @@
 /* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
 "_offer_ending_" = "Endet %@";
 
+"_quick_settings_title" = "Schnelleinstellungen";
+
 "_quick_settings_secureCore_description" = "Leite deine sensibelsten Daten über unsere sichersten Server in datenschutzfreundlichen Ländern weiter.";
 
 "_quick_settings_netShield_description" = "Surfe im Internet ohne Werbung und Malware.";
