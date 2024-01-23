@@ -13,8 +13,8 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../external/protoncore"),
-        .package(path: "../Theme"),
-        .package(path: "../Strings"),
+        .package(path: "../Foundations/Theme"),
+        .package(path: "../Foundations/Strings"),
         .package(path: "../NEHelper"),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.0.0")),
         .package(url: "https://github.com/pointfreeco/swiftui-navigation", exact: "1.0.0"),
@@ -35,7 +35,9 @@ let package = Package(
         ),
         .target(
             name: "Settings-iOS",
-            dependencies: ["Settings"]
+            dependencies: ["Settings"],
+            exclude: ["swiftgen.yml"],
+            resources: [.process("Resources")]
         ),
         .target(
             name: "Settings-macOS",

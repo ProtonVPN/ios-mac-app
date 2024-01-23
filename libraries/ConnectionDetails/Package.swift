@@ -27,9 +27,9 @@ let package = Package(
     dependencies: [
         // Local
         .package(path: "../../external/protoncore"),
-        .package(path: "../Theme"),
+        .package(path: "../Foundations/Theme"),
         .package(path: "../SharedViews"),
-        .package(path: "../Strings"),
+        .package(path: "../Foundations/Strings"),
         .package(path: "../NEHelper"),
 
         // 3rd party
