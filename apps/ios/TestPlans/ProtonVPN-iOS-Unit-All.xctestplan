@@ -152,13 +152,6 @@
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Ergonomics",
-        "identifier" : "ErgonomicsTests",
-        "name" : "ErgonomicsTests"
-      }
-    },
-    {
       "skippedTests" : [
         "LocalizationUtilityTests"
       ],
@@ -166,13 +159,6 @@
         "containerPath" : "container:..\/..\/libraries\/LegacyCommon",
         "identifier" : "LegacyCommonTests",
         "name" : "LegacyCommonTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/LocalFeatureFlags",
-        "identifier" : "LocalFeatureFlagsTests",
-        "name" : "LocalFeatureFlagsTests"
       }
     },
     {
@@ -200,16 +186,6 @@
       }
     },
     {
-      "skippedTests" : [
-        "FileLogHandlerTests"
-      ],
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/PMLogger",
-        "identifier" : "PMLoggerTests",
-        "name" : "PMLoggerTests"
-      }
-    },
-    {
       "target" : {
         "containerPath" : "container:..\/..\/libraries\/Review",
         "identifier" : "ReviewTests",
@@ -225,37 +201,37 @@
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/SharedViews",
-        "identifier" : "SharedViewsTests",
-        "name" : "SharedViewsTests"
+        "containerPath" : "container:..\/..\/libraries\/Foundations\/Ergonomics",
+        "identifier" : "ErgonomicsTests",
+        "name" : "ErgonomicsTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Strings",
-        "identifier" : "StringsTests",
-        "name" : "StringsTests"
+        "containerPath" : "container:..\/..\/libraries\/Foundations\/LocalFeatureFlags",
+        "identifier" : "LocalFeatureFlagsTests",
+        "name" : "LocalFeatureFlagsTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Theme",
-        "identifier" : "ThemeTests",
-        "name" : "ThemeTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Timer",
+        "containerPath" : "container:..\/..\/libraries\/Foundations\/Timer",
         "identifier" : "TimerMockTests",
         "name" : "TimerMockTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Timer",
+        "containerPath" : "container:..\/..\/libraries\/Foundations\/Timer",
         "identifier" : "TimerTests",
         "name" : "TimerTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Foundations\/PMLogger",
+        "identifier" : "PMLoggerTests",
+        "name" : "PMLoggerTests"
       }
     }
   ],
