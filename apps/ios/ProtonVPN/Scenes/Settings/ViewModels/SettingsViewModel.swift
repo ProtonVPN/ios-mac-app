@@ -98,14 +98,12 @@ final class SettingsViewModel {
 
         isAccountRecoveryEnabled = FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.accountRecovery)
 
-
         if appSessionManager.sessionStatus == .established {
             sessionEstablished(vpnGateway: vpnGateway)
         }
 
         if isAccountRecoveryEnabled {
             self.accountRecoveryRepository = AccountRecoveryRepository(apiService: factory.makeNetworking().apiService)
-
             refreshAccountRecoveryState()
         }
         startObserving()
@@ -663,14 +661,14 @@ final class SettingsViewModel {
     }
 
     private func pushAccountRecoveryViewController() {
-        assert(isAccountRecoveryEnabled, "function called with an invalid feature flag value")
+        assert(isAccountRecoveryEnabled, "This function shall only be called when AccountRecovery flag is true.")
         guard let pushHandler = pushHandler else { return }
         let accountRecoveryViewController = AccountRecoveryModule.settingsViewController(networking.apiService)
         pushHandler(accountRecoveryViewController)
     }
 
     private func refreshAccountRecoveryState() {
-        assert(isAccountRecoveryEnabled, "function called with an invalid feature flag value")
+        assert(isAccountRecoveryEnabled, "This function shall only be called when AccountRecovery flag is true.")
         Task {
 
             guard let accountRecoveryRepository = accountRecoveryRepository, let status = await accountRecoveryRepository.accountRecoveryStatus() 
