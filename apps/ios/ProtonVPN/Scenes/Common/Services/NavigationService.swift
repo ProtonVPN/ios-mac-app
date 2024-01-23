@@ -446,7 +446,7 @@ extension NavigationService: LoginServiceDelegate {
         propertiesManager.isOnboardingInProgress = true
         Task {
             let service = await factory.makeTelemetryService()
-            try service.onboardingEvent(.onboardingStart)
+            try await service.onboardingEvent(.onboardingStart)
         }
     }
 }

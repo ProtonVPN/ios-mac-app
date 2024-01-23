@@ -90,7 +90,7 @@ class TelemetryTimerMock: TelemetryTimer {
 class TelemetryServiceTests: XCTestCase {
 
     var container: TelemetryMockFactory!
-    var service: TelemetryService!
+    var service: TelemetryUpsellReporter!
     var appStateManager: AppStateManagerMock!
     var timer: TelemetryTimerMock!
 
@@ -125,12 +125,12 @@ class TelemetryServiceTests: XCTestCase {
         timer = TelemetryTimerMock()
         appStateManager.mockActiveConnection = ConnectionConfiguration.connectionConfig2
         container = TelemetryMockFactory(appStateManager: appStateManager)
-        service = await TelemetryServiceImplementation(factory: container, timer: timer)
+        service = await TelemetryUpsellReporter(factory: container, telemetryEventScheduler: TelemetryEventScheduler(factory: container, isBusiness: false))
     }
 
     @available(iOS 16.0, macOS 13.0, *)
     func testValueTimeouts() async throws {
-        let impl = service as! TelemetryServiceImplementation
+        let impl = service as TelemetryUpsellReporter
         impl.setValueTimeout(0.5)
 
         impl.previousModalSource = .changeServer
