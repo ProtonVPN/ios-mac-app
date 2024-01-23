@@ -105,7 +105,7 @@ open class Container: PropertiesToOverride {
 
     private lazy var telemetrySettings: TelemetrySettings = makeTelemetrySettings()
     private lazy var _telemetryServiceTask = Task {
-        await TelemetryServiceImplementation(factory: self, timer: ConnectionTimer())
+        await TelemetryServiceImplementation(factory: self)
     }
 
     // Transient instances - get allocated as many times as they're referenced
@@ -134,7 +134,7 @@ open class Container: PropertiesToOverride {
                 // The app launched for the first time since the last install.
                 // Since the telemetry is on by default, there is no way of disabling this event.
                 // If we remove the app, we'll still be logged in, but the telemetry settings will be reset to it's default, "On" state.
-                try? telemetryService?.onboardingEvent(.firstLaunch)
+                try? await telemetryService?.onboardingEvent(.firstLaunch)
                 propertiesManager.isSubsequentLaunch = true
             }
         }
