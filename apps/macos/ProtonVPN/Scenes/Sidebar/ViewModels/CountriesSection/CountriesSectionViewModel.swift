@@ -648,21 +648,14 @@ class CountriesSectionViewModel {
     }
 
     private var offerBannerCellModel: CellModel? {
-        guard let offerBanner = announcementManager.fetchCurrentOfferBannerFromStorage(),
-              let url = offerBanner.offer?.panel?.fullScreenImage?.source.first?.url,
-              let imageURL = URL(string: url),
-              let buttonURLString = offerBanner.offer?.panel?.button.url,
-              let buttonURL = URL(string: buttonURLString) else {
-            return nil
-        }
-        return .offerBanner(OfferBannerViewModel(imageURL: imageURL,
-                                                 endTime: offerBanner.endTime,
-                                                 showCountDown: offerBanner.offer?.panel?.showCountDown ?? false,
-                                                 action: { SafariService.openLink(url: buttonURL) },
-                                                 dismiss: { [weak self] in
+        let dismiss: (Announcement) -> Void = { [weak self] offerBanner in
             self?.announcementManager.markAsRead(announcement: offerBanner)
             self?.updateState()
             self?.contentChanged?(ContentChange(reset: true))
-        }))
+        }
+        guard let model = announcementManager.offerBannerViewModel(dismiss: dismiss) else {
+            return nil
+        }
+        return .offerBanner(model)
     }
 }

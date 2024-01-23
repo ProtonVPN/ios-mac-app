@@ -1,5 +1,5 @@
 //
-//  Created on 11/01/2024.
+//  Created on 22/01/2024.
 //
 //  Copyright (c) 2024 Proton AG
 //
@@ -18,10 +18,15 @@
 
 import Foundation
 
-struct OfferBannerViewModel {
-    var imageURL: URL
-    var endTime: Date
-    var showCountDown: Bool
-    var action: () -> Void
-    var dismiss: () -> Void
+public extension CGPoint {
+    enum CoordinateSpace {
+        public static let topLeft = CGPoint(x: 0, y: 0)
+        public static let top = CGPoint(x: 0.5, y: 0)
+        public static let topRight = CGPoint(x: 1, y: 0)
+        public static let right = CGPoint(x: 0, y: 0.5)
+        public static let bottomRight = CGPoint(x: 1, y: 1)
+        public static let bottom = CGPoint(x: 0.5, y: 1)
+        public static let bottomLeft = CGPoint(x: 0, y: 1)
+        public static let left = CGPoint(x: 1, y: 0.5)
+    }
 }

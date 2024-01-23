@@ -34,6 +34,7 @@ enum RowViewModel {
     case serverGroup(CountryItemViewModel)
     case profile(DefaultProfileViewModel)
     case banner(BannerViewModel)
+    case offerBanner(OfferBannerViewModel)
 }
 
 private enum Section {
@@ -119,6 +120,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         & NetShieldPropertyProviderFactory
         & NATTypePropertyProviderFactory
         & SafeModePropertyProviderFactory
+        & AnnouncementManagerFactory
     private let factory: Factory
     
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -132,6 +134,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
     private lazy var natTypePropertyProvider: NATTypePropertyProvider = factory.makeNATTypePropertyProvider()
     private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
+    private lazy var announcementManager: AnnouncementManager = factory.makeAnnouncementManager()
 
     var delegate: CountriesVMDelegate?
 
@@ -353,13 +356,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
             }
         }
 
-        let banner = RowViewModel.banner(BannerViewModel(
-            leftIcon: Modals.Asset.worldwideCoverage,
-            text: Localizable.freeBannerText,
-            action: { [weak self] in
-                self?.presentAllCountriesUpsell()
-            }
-        ))
+        let banner = offerBannerCellModel ?? upsellBanner
 
         switch userTier {
         case 0: // Free
@@ -468,6 +465,27 @@ class CountriesViewModel: SecureCoreToggleHandler {
             ))
         }
         tableData = newTableData
+    }
+
+    private var upsellBanner: RowViewModel {
+        RowViewModel.banner(BannerViewModel(
+            leftIcon: Modals.Asset.worldwideCoverage,
+            text: Localizable.freeBannerText,
+            action: { [weak self] in
+                self?.presentAllCountriesUpsell()
+            }
+        ))
+    }
+
+    private var offerBannerCellModel: RowViewModel? {
+        let dismiss: (Announcement) -> Void = { [weak self] offerBanner in
+            self?.announcementManager.markAsRead(announcement: offerBanner)
+            self?.reloadContent()
+        }
+        guard let model = announcementManager.offerBannerViewModel(dismiss: dismiss) else {
+            return nil
+        }
+        return .offerBanner(model)
     }
 }
 
