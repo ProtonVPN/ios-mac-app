@@ -92,7 +92,10 @@ class AppSessionRefreshTimerTests: XCTestCase {
 
     func checkForSuccessfulServerUpdate() throws {
         for serverUpdate in networkingDelegate.apiServerLoads {
-            guard let server = try repository.server([.logicalID(serverUpdate.serverId)], .fastest) else {
+            guard let server = try repository.getFirstServer(
+                filteredBy: [.logicalID(serverUpdate.serverId)],
+                orderedBy: .fastest
+            ) else {
                 XCTFail("Could not find server with id \(serverUpdate.serverId)")
                 continue
             }

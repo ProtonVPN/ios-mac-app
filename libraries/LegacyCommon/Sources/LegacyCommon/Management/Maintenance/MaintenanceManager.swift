@@ -122,7 +122,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
                         do {
                             @Dependency(\.serverRepository) var repository
                             // keepStalePaidServers: refreshFreeTierInfo -> should we delete old paid servers before inserting?
-                            try repository.insertServers(servers.map { VPNServer(legacyModel: $0) })
+                            try repository.upsert(servers: servers.map { VPNServer(legacyModel: $0) })
                         } catch {
                             log.error("Failed to persist servers", category: .persistence, metadata: ["error": "\(error)"])
                         }

@@ -258,7 +258,7 @@ class CountriesSectionViewModel {
 
         let filters: [VPNServerFilter] = [kind.filter, .features(isSecureCoreEnabled ? .secureCore : .standard)]
         do {
-            let countryServers = try repository.servers(filters, .nameAscending)
+            let countryServers = try repository.getServers(filteredBy: filters, orderedBy: .nameAscending)
 
             let countryCells = countryServers.map { CellModel.server(self.serverViewModel($0)) }
 
@@ -413,7 +413,7 @@ class CountriesSectionViewModel {
         let filters = serverFilters(isSecureCoreEnabled: isSecureCoreEnabled, searchQuery: currentQuery)
 
         do {
-            serverGroups = try repository.groups(filters) // query and cache group information
+            serverGroups = try repository.getGroups(filteredBy: filters) // query and cache group information
         } catch {
             log.error(
                 "Failed to fetch server groups",

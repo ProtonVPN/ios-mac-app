@@ -129,7 +129,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
             case let .success(properties):
                 let loads = properties.map { $0.value }
                 do {
-                    try self.serverRepository.updateLoads(loads)
+                    try self.serverRepository.upsert(loads: loads)
                 } catch {
                     log.error("Failed to update loads of stored logicals", category: .persistence, metadata: ["error": "\(error)"])
                 }

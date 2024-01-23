@@ -157,7 +157,10 @@ class ServerItemViewModel: ServerItemViewModelCore {
         } else {
             NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
             do {
-                guard let server = try repository.server([.logicalID(serverModel.logical.id)], .fastest) else {
+                guard let server = try repository.getFirstServer(
+                    filteredBy: [.logicalID(serverModel.logical.id)],
+                    orderedBy: .fastest
+                ) else {
                     log.error("No server found with logical ID \(serverModel.logical.id)")
                     return
                 }

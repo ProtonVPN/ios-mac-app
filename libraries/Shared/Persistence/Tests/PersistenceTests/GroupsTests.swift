@@ -40,7 +40,7 @@ final class ServersTests: XCTestCase {
     override class func setUp() {
         let servers = try! loadTestServers()
         repository = .liveValue
-        try! repository.insertServers(servers)
+        try! repository.upsert(servers: servers)
     }
 
     var sut: ServerRepository {
@@ -48,7 +48,7 @@ final class ServersTests: XCTestCase {
     }
 
     func testStandardGroups() throws {
-        let groups = try sut.groups([.features(.standard)])
+        let groups = try sut.getGroups(filteredBy: [.features(.standard)])
 
         XCTAssertEqual(groups.count, 8)
 
@@ -79,7 +79,7 @@ final class ServersTests: XCTestCase {
     }
 
     func testSecureCoreGroups() throws {
-        let groups = try sut.groups([.features(.secureCore)])
+        let groups = try sut.getGroups(filteredBy: [.features(.secureCore)])
 
         XCTAssertEqual(groups.count, 1)
 

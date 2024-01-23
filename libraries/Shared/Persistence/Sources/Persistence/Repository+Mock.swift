@@ -42,7 +42,7 @@ extension ServerRepository {
     public static func mock(storage: MockServerStorage) -> Self {
         return .init(
             serverCount: { storage.servers.count },
-            insertServers: { servers in
+            upsertServers: { servers in
                 servers.forEach { storage.servers[$0.id] = $0 }
                 storage.didStoreServers?(servers)
             },
@@ -68,7 +68,7 @@ extension ServerRepository {
                     }
                 }.map { ServerInfo(logical: $0.logical, protocolSupport: $0.supportedProtocols)}
             },
-            updateLoads: { loads in
+            upsertLoads: { loads in
                 let updatedServers: [VPNServer] = loads.compactMap { dynamicInfo in
                     let serverID = dynamicInfo.serverId
                     guard let server = storage.servers[serverID] else {

@@ -56,7 +56,7 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
                 }
                 do {
                     // shouldLeaveStaleEntry: delete existing paid servers before inserting fresh ones?
-                    try self.serverRepository.insertServers(properties.serverModels.map { VPNServer(legacyModel: $0) })
+                    try self.serverRepository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
                     completion(.success)
                 } catch {
                     completion(.failure(error))

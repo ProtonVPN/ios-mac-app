@@ -543,7 +543,7 @@ public class VpnGateway: VpnGatewayProtocol {
                     }
                     do {
                         // keepStalePaidServers: refreshFreeTierInfo -> should we delete old paid servers before inserting?
-                        try repository.insertServers(properties.serverModels.map { VPNServer(legacyModel: $0) })
+                        try repository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
                     } catch {
                         log.error("Failed to persist servers", category: .persistence, metadata: ["error": "\(error)"])
                     }

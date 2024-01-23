@@ -34,7 +34,7 @@ extension ServerRepository {
                     return try Endpoint.fetchCount(db)
                 }
             },
-            insertServers: { vpnServers in
+            upsertServers: { vpnServers in
                 try database.writer().write { db in
                     try vpnServers.forEach { vpnServer in
                         try vpnServer.logicalRecord.insert(db, onConflict: .replace)
@@ -93,7 +93,7 @@ extension ServerRepository {
                     return
                 }
             },
-            updateLoads: { loads in
+            upsertLoads: { loads in
                 try database.writer().write { db in
                     let existingLogicalIDs = try String.fetchSet(db, Logical.select(Logical.Columns.id))
                     try loads

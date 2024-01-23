@@ -105,7 +105,10 @@ class ServerItemViewModel: ServerItemViewModelCore {
             vpnGateway.disconnect()
         } else {
             @Dependency(\.serverRepository) var repository
-            guard let server = try! repository.server([.logicalID(serverModel.logical.id)], .fastest) else {
+            guard let server = try? repository.getFirstServer(
+                filteredBy: [.logicalID(serverModel.logical.id)],
+                orderedBy: .fastest
+            ) else {
                 log.debug("Failed to fetch server information for logical with id: \(serverModel.logical.id)")
                 return
             }

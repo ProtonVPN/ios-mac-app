@@ -30,47 +30,79 @@ import Domain
 ///  - Servers interface for adding/updating/deleting physical servers by ID without touching logicals
 public struct ServerRepository: DependencyKey {
 
-    public var serverCount: () throws -> Int
+    private var serverCount: () throws -> Int
 
-    public var insertServers: ([VPNServer]) throws -> Void
-    public var deleteServers: (Set<String>) throws -> Void
+    private var upsertServers: ([VPNServer]) throws -> Void
+    private var deleteServers: (Set<String>) throws -> Void
 
-    public var updateLoads: ([ContinuousServerProperties]) throws -> Void
+    private var upsertLoads: ([ContinuousServerProperties]) throws -> Void
 
     /// For UI - logicals grouped and annotated with aggregate logical info
-    public var groups: ([VPNServerFilter]) throws -> [ServerGroupInfo]
+    private var groups: ([VPNServerFilter]) throws -> [ServerGroupInfo]
     /// For UI - logical annotated with aggregate server info
-    public var servers: ([VPNServerFilter], VPNServerOrder) throws -> [Domain.ServerInfo]
+    private var servers: ([VPNServerFilter], VPNServerOrder) throws -> [Domain.ServerInfo]
     /// Connectable, includes logical + server, less suitable for UI
-    public var server: ([VPNServerFilter], VPNServerOrder) throws -> VPNServer?
+    private var server: ([VPNServerFilter], VPNServerOrder) throws -> VPNServer?
 
     /// Default unimplemented test value
     public static let testValue = ServerRepository()
 
     public init(
         serverCount: @escaping () throws -> Int = unimplemented(placeholder: 0),
-        insertServers: @escaping ([VPNServer]) throws -> Void = unimplemented(),
+        upsertServers: @escaping ([VPNServer]) throws -> Void = unimplemented(),
         server: @escaping ([VPNServerFilter], VPNServerOrder) throws -> VPNServer? = unimplemented(placeholder: nil),
         servers: @escaping ([VPNServerFilter], VPNServerOrder) throws -> [Domain.ServerInfo] = unimplemented(placeholder: []),
         deleteServers: @escaping (Set<String>) throws -> Void = unimplemented(),
-        updateLoads: @escaping ([ContinuousServerProperties]) throws -> Void = unimplemented(),
+        upsertLoads: @escaping ([ContinuousServerProperties]) throws -> Void = unimplemented(),
         groups: @escaping ([VPNServerFilter]) throws -> [ServerGroupInfo] = unimplemented(placeholder: [])
     ) {
         self.serverCount = serverCount
-        self.insertServers = insertServers
+        self.upsertServers = upsertServers
         self.server = server
         self.servers = servers
         self.deleteServers = deleteServers
-        self.updateLoads = updateLoads
+        self.upsertLoads = upsertLoads
         self.groups = groups
     }
 }
 
+/// Public interface with labels
 extension ServerRepository {
     public var isEmpty: Bool {
         get throws {
             try self.serverCount() == 0
         }
+    }
+
+    public func upsert(servers: [VPNServer]) throws -> Void {
+        try upsertServers(servers)
+    }
+
+    /// Delete servers according to their logical IDs.
+    public func delete(logicalIDs: Set<String>) throws -> Void {
+        try deleteServers(logicalIDs)
+    }
+
+    public func upsert(loads: [ContinuousServerProperties]) throws -> Void {
+        try upsertLoads(loads)
+    }
+
+    public func getGroups(filteredBy filters: [VPNServerFilter]) throws -> [ServerGroupInfo] {
+        try groups(filters)
+    }
+
+    public func getFirstServer(
+        filteredBy filters: [VPNServerFilter],
+        orderedBy order: VPNServerOrder
+    ) throws -> VPNServer? {
+        try server(filters, order)
+    }
+
+    public func getServers(
+        filteredBy filters: [VPNServerFilter],
+        orderedBy order: VPNServerOrder
+    ) throws -> [ServerInfo] {
+        try servers(filters, order)
     }
 }
 

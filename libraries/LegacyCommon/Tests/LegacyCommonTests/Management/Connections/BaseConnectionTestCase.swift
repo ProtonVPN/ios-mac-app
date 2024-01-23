@@ -81,7 +81,7 @@ class BaseConnectionTestCase: XCTestCase {
         container.networkingDelegate.apiVpnLocation = .mock
         container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
         container.serverStorage.populateServers(container.networkingDelegate.apiServerList)
-        try serverRepository.insertServers(container.networkingDelegate.apiServerList.map { VPNServer(legacyModel: $0) })
+        try serverRepository.upsert(servers: container.networkingDelegate.apiServerList.map { VPNServer(legacyModel: $0) })
 
         for name in neVpnEvents {
             NotificationCenter.default.addObserver(self, selector: #selector(handleNEVPNEvent(_:)), name: name, object: nil)
