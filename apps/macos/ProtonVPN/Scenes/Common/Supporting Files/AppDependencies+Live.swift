@@ -61,11 +61,11 @@ extension DoHConfigurationKey: DependencyKey {
 
 extension DoHVPN {
     convenience init(alternativeRouting: Bool, customHost: String?) {
-#if !RELEASE
-        let atlasSecret: String? = ObfuscatedConstants.atlasSecret
-#else
+        #if !RELEASE
+        let atlasSecret = Bundle.main.infoDictionary?["ProtonVPNAtlasSecret"] as? String
+        #else
         let atlasSecret: String? = nil
-#endif
+        #endif
 
         self.init(
             apiHost: ObfuscatedConstants.apiHost,
@@ -73,7 +73,8 @@ extension DoHVPN {
             alternativeRouting: alternativeRouting,
             customHost: customHost,
             atlasSecret: atlasSecret,
-            isConnected: false, // Will get updated once AppStateManager is initialized
+            // Will get updated once AppStateManager is initialized
+            isConnected: false,
             isAppStateNotificationConnected: DoHVPN.isAppStateChangeNotificationInConnectedState
         )
     }

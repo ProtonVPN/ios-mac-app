@@ -242,7 +242,6 @@
 		D5C1FE542A3C4D8C0049AF18 /* SimulatorVPN.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1FE532A3C4D8C0049AF18 /* SimulatorVPN.swift */; };
 		D5C7C8AB2B0B72A100641808 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8AA2B0B72A100641808 /* main.swift */; };
 		D5C7C8AD2B0B73CA00641808 /* TestAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8AC2B0B73CA00641808 /* TestAppDelegate.swift */; };
-		D5C8901429360230009177E4 /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C8901229360230009177E4 /* ObfuscatedConstants.swift */; };
 		D5CECA052BBFEFDE00755292 /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = 34A1BEF96001257E50BD4748 /* Strings */; };
 		D5EE41312AD9619800ECC064 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = D5EE41302AD9619800ECC064 /* WireGuardKit */; };
 		D5F37635254010EF008C7207 /* UIViewController+Announcements.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F37634254010EF008C7207 /* UIViewController+Announcements.swift */; };
@@ -718,8 +717,6 @@
 		D5C1FE532A3C4D8C0049AF18 /* SimulatorVPN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulatorVPN.swift; sourceTree = "<group>"; };
 		D5C7C8AA2B0B72A100641808 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		D5C7C8AC2B0B73CA00641808 /* TestAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAppDelegate.swift; sourceTree = "<group>"; };
-		D5C8901129360230009177E4 /* ObfuscatedConstants.example.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.example.swift; sourceTree = "<group>"; };
-		D5C8901229360230009177E4 /* ObfuscatedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.swift; sourceTree = "<group>"; };
 		D5D4D05322E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrEditProfileViewModelTests.swift; sourceTree = "<group>"; };
 		D5D4D05522E1DAE30034389A /* ProfileServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileServiceMock.swift; sourceTree = "<group>"; };
 		D5F37634254010EF008C7207 /* UIViewController+Announcements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Announcements.swift"; sourceTree = "<group>"; };
@@ -955,6 +952,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C5045922BCD75AF00DE2F16 /* Ergonomics in Frameworks */,
 				E59C7A9129229A940034E56F /* NEHelper in Frameworks */,
 				D5EE41312AD9619800ECC064 /* WireGuardKit in Frameworks */,
 				E9445D5F26528A790075FD31 /* NetworkExtension.framework in Frameworks */,
@@ -1719,8 +1717,6 @@
 			isa = PBXGroup;
 			children = (
 				E9445D6126528A790075FD31 /* PacketTunnelProvider.swift */,
-				D5C8901229360230009177E4 /* ObfuscatedConstants.swift */,
-				D5C8901129360230009177E4 /* ObfuscatedConstants.example.swift */,
 				E9445D6326528A790075FD31 /* Info.plist */,
 				E9445D6426528A790075FD31 /* WireGuardiOS_Extension.entitlements */,
 				E997997A26A6FA870083D61E /* WireguardExtensionSupport */,
@@ -2223,7 +2219,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 791DE603208DDA3200A29EA5 /* Build configuration list for PBXNativeTarget "ProtonVPN" */;
 			buildPhases = (
-				E17FBC5D22DF75160080300A /* Generate Obfuscated Constants */,
 				791DE5D5208DDA3000A29EA5 /* Sources */,
 				791DE5D6208DDA3000A29EA5 /* Frameworks */,
 				791DE5D7208DDA3000A29EA5 /* Resources */,
@@ -2374,7 +2369,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E9445D6826528A790075FD31 /* Build configuration list for PBXNativeTarget "WireGuardiOS Extension" */;
 			buildPhases = (
-				D5C890102935EDD0009177E4 /* Generate Obfuscated Constants */,
 				E9445D5A26528A790075FD31 /* Sources */,
 				E9445D5B26528A790075FD31 /* Frameworks */,
 				E9445D5C26528A790075FD31 /* Resources */,
@@ -2389,6 +2383,7 @@
 			packageProductDependencies = (
 				2DC3E67F6A25A4AD4DFCF448 /* NEHelper */,
 				D5EE41302AD9619800ECC064 /* WireGuardKit */,
+				4C5045912BCD75AF00DE2F16 /* Ergonomics */,
 			);
 			productName = "WireGuardiOS Extension";
 			productReference = E9445D5E26528A790075FD31 /* WireGuardiOS Extension.appex */;
@@ -2747,49 +2742,7 @@
 			shellPath = /bin/sh;
 			shellScript = "SWIFTLINT=${SWIFTLINT:-$(command -v swiftlint)}\n\nif [ -x \"$SWIFTLINT\" ]; then\n\"$SWIFTLINT\" --config ../../.swiftlint.yml\nelse\necho \"Swiftlint not found, skipping...\"\nfi\n";
 		};
-		D5C890102935EDD0009177E4 /* Generate Obfuscated Constants */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Generate Obfuscated Constants";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${PROJECT_DIR}/WireGuardiOS Extension/ObfuscatedConstants.swift",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd ${PROJECT_DIR}/WireGuardiOS\\ Extension/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ..\n";
-			showEnvVarsInLog = 0;
-		};
-		E17FBC5D22DF75160080300A /* Generate Obfuscated Constants */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Generate Obfuscated Constants";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${PROJECT_DIR}/ProtonVPN/ObfuscatedConstants.swift",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd ${PROJECT_DIR}/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ..\n";
-			showEnvVarsInLog = 0;
-		};
-		E9C9FDD7268DE35B005665C6 /* Run Swiftlint */ = {
+		E1025D96230FD565003047B8 /* Run Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -3087,7 +3040,6 @@
 			files = (
 				4CDC8AB62A74554B004F2537 /* WireguardConfig.swift in Sources */,
 				E99799AB26A6FE0C0083D61E /* ErrorNotifier.swift in Sources */,
-				D5C8901429360230009177E4 /* ObfuscatedConstants.swift in Sources */,
 				E9445D6226528A790075FD31 /* PacketTunnelProvider.swift in Sources */,
 				E99799A926A6FE0C0083D61E /* ringlogger.c in Sources */,
 				F31E91202758F5F900140B2E /* WGLogger.swift in Sources */,
@@ -3838,7 +3790,7 @@
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
-				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin:/opt/homebrew/bin";
+				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin:/opt/homebrew/bin:/opt/homebrew/opt/go@$(GO_VERSION)/bin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3854,7 +3806,7 @@
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
-				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin:/opt/homebrew/bin";
+				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin:/opt/homebrew/bin:/opt/homebrew/opt/go@$(GO_VERSION)/bin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Staging;
@@ -3870,7 +3822,7 @@
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
-				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin:/opt/homebrew/bin";
+				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin:/opt/homebrew/bin:/opt/homebrew/opt/go@$(GO_VERSION)/bin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

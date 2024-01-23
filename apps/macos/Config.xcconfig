@@ -9,6 +9,7 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
+GO_VERSION = 1.22
 REDESIGN = 0
 DEPLOYMENT_TARGET0 = 11.0
 DEPLOYMENT_TARGET1 = 12.0

@@ -9,13 +9,13 @@ PRE_COMMIT_FILE="$PWD/.git/hooks/pre-commit"
 if [[ "$1" == "setup" ]]; then
     if [ -f "$PRE_COMMIT_FILE" ]; then
         echo "Found pre-commit hook. Adding our script."
-        echo -e "\n./scripts/pre_commit_lint.sh" >> "$PRE_COMMIT_FILE"
+        echo -e "\n./Integration/Scripts/pre_commit_lint.sh" >> "$PRE_COMMIT_FILE"
 
     else
         echo "Pre-commit hook not found. Will create it now."
 
         echo "#!/bin/bash" > "$PRE_COMMIT_FILE"
-        echo "./scripts/pre_commit_lint.sh" >> "$PRE_COMMIT_FILE"
+        echo "./Integration/Scripts/pre_commit_lint.sh" >> "$PRE_COMMIT_FILE"
         chmod a+x "$PRE_COMMIT_FILE"
     fi
 

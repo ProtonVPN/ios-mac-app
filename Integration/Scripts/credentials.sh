@@ -1,16 +1,17 @@
 #!/bin/bash -e
 #
 # Used for testing credentials. Invoke as you would a `git` command. For example:
-# scripts/credentials.sh push origin main
+# Integration/Scripts/credentials.sh push origin main
 #
 # To setup:
-# ./scripts/credentials.sh setup -p <path to credentials repo> -r <credentials remote>
+# ./Integration/Scripts/credentials.sh setup -p <path to credentials repo> -r <credentials remote>
 #
 # Then:
-# ./scripts/credentials.sh checkout
+# ./Integration/Scripts/credentials.sh checkout
 
 SCRIPT_NAME="$0"
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+REPO_DIR="${SCRIPT_DIR}/../.."
 CONFIG_NAME="vpn.credsdir"
 
 ## Built-in commands
@@ -57,7 +58,7 @@ function setup() {
 
 	echo "== Checking out repository..."
 	# once we've fetched, populate the project directory with the files from the desired branch.
-	git --git-dir="$full_path" --work-tree="$SCRIPT_DIR/.." checkout -f "${DEFAULT_CREDS_BRANCH:-main}"
+	git --git-dir="$full_path" --work-tree="$REPO_DIR" checkout -f "${DEFAULT_CREDS_BRANCH:-main}"
 
 	echo "Credentials repository setup successfully."
 	exit 0
@@ -142,11 +143,9 @@ function setup_usage() {
 
 function set_config() {
 	local full_path="$1"
-	local source_dir="${SCRIPT_DIR}/.."
+	local source_dir="$REPO_DIR"
 
-	# set vpn.credsdir in the protonvpn repo config
-	touch "$source_dir/.gitconfig"
-	git config --file "$source_dir/.gitconfig" vpn.credsdir "$full_path"
+	git config --local vpn.credsdir "$full_path"
 }
 
 function unset_config() {
@@ -161,4 +160,4 @@ case "$1" in
 	*);;
 esac
 
-exec git --git-dir="$(directory)" --work-tree="$SCRIPT_DIR/.." "$@"
+exec git --git-dir="$(directory)" --work-tree="$REPO_DIR" "$@"

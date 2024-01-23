@@ -1,5 +1,13 @@
 #!/bin/bash
 
+SCRIPT_NAME="$0"
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+REPO_DIR="${SCRIPT_DIR}/../.."
+MINTFILE="${REPO_DIR}/Mintfile"
+
+export MINT_PATH="${PWD}/${MINT_PATH}"
+export MINT_LINK_PATH="${PWD}/${MINT_LINK_PATH}"
+
 function process() {
     name=$(basename $2)
     path=$2
@@ -7,7 +15,7 @@ function process() {
     echo "---------- Linting $name ----------"
     
     cd $path
-    mint run -s swiftlint --strict --reporter codeclimate --config ../../.swiftlint.yml > codequality_report.json
+    mint run -m "$MINTFILE" -s swiftlint --strict --reporter codeclimate --config ../../.swiftlint.yml > codequality_report.json
 
     pattern="\"path\" : \""
     replacement="\"path\" : \"$1\/$name\/"

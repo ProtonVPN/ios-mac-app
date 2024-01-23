@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -1162,6 +1162,17 @@
 			name = vpncore;
 			sourceTree = "<group>";
 		};
+		4CCD3DCA2B72412B0002DA4A /* TestPlans */ = {
+			isa = PBXGroup;
+			children = (
+				B2E466D5298055380026ED26 /* ProtonVPN-macOS-Unit-All.xctestplan */,
+				B2E466D6298055750026ED26 /* ProtonVPN-macOS-UI-All.xctestplan */,
+				B2E466D7298055920026ED26 /* ProtonVPN-macOS-UI-Smoke.xctestplan */,
+				7707F8EA2C5107D400668B11 /* ProtonVPN-macOS-UI-Connections.xctestplan */,
+			);
+			path = TestPlans;
+			sourceTree = "<group>";
+		};
 		4CD1F7832A72BE5B00E8AB01 /* LegacyCommon */ = {
 			isa = PBXGroup;
 			children = (
@@ -1357,17 +1368,6 @@
 				B2AA47CF27CE6FE40021E632 /* MapTests.swift */,
 			);
 			path = Components;
-			sourceTree = "<group>";
-		};
-		B2E466D42980550B0026ED26 /* TestPlans */ = {
-			isa = PBXGroup;
-			children = (
-				B2E466D5298055380026ED26 /* ProtonVPN-macOS-Unit-All.xctestplan */,
-				B2E466D6298055750026ED26 /* ProtonVPN-macOS-UI-All.xctestplan */,
-				B2E466D7298055920026ED26 /* ProtonVPN-macOS-UI-Smoke.xctestplan */,
-				7707F8EA2C5107D400668B11 /* ProtonVPN-macOS-UI-Connections.xctestplan */,
-			);
-			name = TestPlans;
 			sourceTree = "<group>";
 		};
 		D5204E6B22A138AB00FFAB99 /* Other classes */ = {
@@ -1720,8 +1720,8 @@
 				EED534831EEC112000013607 /* ProtonVPN */,
 				EEB404C81F77F639006CF513 /* ProtonVPNStarter */,
 				E93D023026A1C8960098520D /* ProtonVPN WireGuard */,
+				4CCD3DCA2B72412B0002DA4A /* TestPlans */,
 				E928092D26B42714008C9F2C /* ExtensionsIPC */,
-				B2E466D42980550B0026ED26 /* TestPlans */,
 				E15B754E20FA83CB0022C406 /* ProtonVPNTests */,
 				D5911707229F9574005829DA /* ProtonVPNUITests */,
 				E5C00F092A15FC6E0030076F /* ProtonVPNmac-redesign-UITests */,
@@ -2741,7 +2741,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EED534901EEC112000013607 /* Build configuration list for PBXNativeTarget "ProtonVPN-mac" */;
 			buildPhases = (
-				E1144E3822E8D0F30087A685 /* Generate Obfuscated Constants */,
 				EED5347D1EEC112000013607 /* Sources */,
 				EED5347E1EEC112000013607 /* Frameworks */,
 				EED5347F1EEC112000013607 /* Resources */,
@@ -3077,27 +3076,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#LOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\n\n# By default, use the configured code signing identity for the project/target\n#IDENTITY=\"${EXPANDED_CODE_SIGN_IDENTITY_NAME}\"\n#if [ \"$IDENTITY\" == \"\" ]\n#then\n# If a code signing identity is not specified, use ad hoc signing\n#IDENTITY=\"-\"\n#fi\n#codesign --verbose --force --deep -o runtime --sign \"$IDENTITY\" \"$LOCATION/Sparkle.framework/Versions/A/Resources/AutoUpdate.app\"\n#codesign --verbose --force -o runtime --sign \"$IDENTITY\" \"$LOCATION/Sparkle.framework/Versions/A\"\n";
-		};
-		E1144E3822E8D0F30087A685 /* Generate Obfuscated Constants */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Generate Obfuscated Constants";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${PROJECT_DIR}/ProtonVPN/ObfuscatedConstants.swift",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd ${PROJECT_DIR}/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ..\n";
-			showEnvVarsInLog = 0;
 		};
 		E148AE5521C2628A007AB65A /* Sentry dSYM upload */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3945,7 +3923,7 @@
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
-				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin:/opt/homebrew/bin";
+				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin:/opt/homebrew/bin:/opt/homebrew/opt/go@$(GO_VERSION)/bin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3964,7 +3942,7 @@
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
-				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin:/opt/homebrew/bin";
+				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin:/opt/homebrew/bin:/opt/homebrew/opt/go@$(GO_VERSION)/bin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3983,7 +3961,7 @@
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
-				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin:/opt/homebrew/bin";
+				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin:/opt/homebrew/bin:/opt/homebrew/opt/go@$(GO_VERSION)/bin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Staging;
