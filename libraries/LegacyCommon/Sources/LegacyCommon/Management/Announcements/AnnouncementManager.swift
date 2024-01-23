@@ -26,6 +26,7 @@ public protocol AnnouncementManager {
     var hasUnreadAnnouncements: Bool { get }
     func fetchCurrentAnnouncementsFromStorage() -> [Announcement]
     func fetchCurrentOfferBannerFromStorage() -> Announcement?
+    func offerBannerViewModel(dismiss: @escaping (Announcement) -> Void) -> OfferBannerViewModel?
     func markAsRead(announcement: Announcement)
     func shouldShowAnnouncementsIcon() -> Bool
 }
@@ -50,6 +51,21 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
 
     public func shouldShowAnnouncementsIcon() -> Bool {
         fetchCurrentAnnouncementsFromStorage().contains(where: { $0.knownType == .default })
+    }
+
+    public func offerBannerViewModel(dismiss: @escaping (Announcement) -> Void) -> OfferBannerViewModel? {
+        guard let offerBanner = fetchCurrentOfferBannerFromStorage(),
+              let url = offerBanner.offer?.panel?.fullScreenImage?.source.first?.url,
+              let imageURL = URL(string: url),
+              let buttonURLString = offerBanner.offer?.panel?.button.url,
+              let buttonURL = URL(string: buttonURLString) else {
+            return nil
+        }
+        return OfferBannerViewModel(imageURL: imageURL,
+                                    endTime: offerBanner.endTime,
+                                    showCountDown: offerBanner.offer?.panel?.showCountDown ?? false,
+                                    action: { SafariService.openLink(url: buttonURL) },
+                                    dismiss: { dismiss(offerBanner) })
     }
 
     public func fetchCurrentOfferBannerFromStorage() -> Announcement? {

@@ -104,6 +104,6 @@
         </customView>
     </objects>
     <resources>
-        <image name="Dismiss button" width="28" height="28"/>
+        <image name="Dismiss button" width="48" height="48"/>
     </resources>
 </document>
