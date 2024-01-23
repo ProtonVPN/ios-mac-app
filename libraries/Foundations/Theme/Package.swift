@@ -15,7 +15,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(path: "../../external/protoncore"),
+        .package(path: "../../../external/protoncore"),
         .package(path: "../Ergonomics")
     ],
     targets: [
@@ -25,7 +25,8 @@ let package = Package(
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 "Ergonomics",
             ],
-            resources: [],
+            exclude: ["swiftgen.yml"],
+            resources: [.process("Resources")],
             plugins: []
         ),
     ]
