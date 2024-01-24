@@ -282,7 +282,11 @@ class WindowServiceImplementation: WindowService {
     func closeWindow(withController controllerType: NSWindowController.Type) {
         activeWindowControllers
             .filter { vc in vc.isKind(of: controllerType) }
-            .forEach { $0.close() }
+            .forEach { vc in
+                Task { @MainActor in
+                    vc.close()
+                }
+            }
         activeWindowControllers = activeWindowControllers.filter { vc in
             !vc.isKind(of: controllerType)
         }
