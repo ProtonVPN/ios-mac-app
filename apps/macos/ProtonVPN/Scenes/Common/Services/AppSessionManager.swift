@@ -100,7 +100,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     override func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
         // Invoke async implementation
-        executeOnUIThread(attemptLogin, success: { completion(.success) }, failure: { completion(.failure($0)) })
+        executeOnUIThread(
+            attemptLogin,
+            success: { completion(.success) },
+            failure: { completion(.failure($0)) }
+        )
     }
 
     func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
@@ -200,6 +204,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         await successfulConsecutiveSessionRefreshes.increment()
     }
 
+    /// Ignore errors unless one of the following is true:
+    /// - API returns `ProtonVpnError.subuserWithoutSessions`
+    /// - Server storage is empty or user IP is not known
+    /// - We hit a keychain error
     private func getVPNProperties() async throws -> VpnProperties? {
         let isDisconnected = await appState.isDisconnected
         let location = propertiesManager.userLocation
@@ -215,9 +223,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             logOutCleanup()
             throw ProtonVpnError.subuserWithoutSessions
         } catch {
-            log.error("Failed to obtain user's VPN properties: \(error.localizedDescription)", category: .app)
-            if serverStorage.fetch().isEmpty, self.propertiesManager.userLocation?.ip == nil, (error is KeychainError) {
-                // only throw if there is a major reason
+            log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
+            if serverStorage.fetch().isEmpty || self.propertiesManager.userLocation?.ip == nil || (error is KeychainError) {
                 throw error
             }
         }
