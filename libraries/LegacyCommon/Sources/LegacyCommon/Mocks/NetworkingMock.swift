@@ -15,6 +15,8 @@ import ProtonCoreFoundations
 import VPNShared
 import ProtonCoreEnvironment
 
+import XCTestDynamicOverlay
+
 public final class NetworkingMock {
     public weak var delegate: NetworkingMockDelegate?
 
@@ -229,7 +231,7 @@ public class FullNetworkingMockDelegate: NetworkingMockDelegate {
         do {
             return try handleMockNetworkingRequestThrowingOnUnexpectedError(request)
         } catch {
-            assertionFailure("Unexpected error occurred: \(error)")
+            XCTFail("Unexpected error occurred: \(error)")
             return .failure(error)
         }
     }
@@ -248,16 +250,17 @@ public class FullNetworkingMockDelegate: NetworkingMockDelegate {
         defer { didHitRoute?(route) }
         switch route {
         case .vpn:
+            if let apiCredentialsResponseError {
+                return .failure(apiCredentialsResponseError)
+            }
             // for fetching client credentials
             guard let apiCredentials = apiCredentials else {
-                guard let apiCredentialsResponseError else {
-                    return .failure(ResponseError(httpCode: HttpStatusCode.badRequest,
-                                                  responseCode: 2000,
-                                                  userFacingMessage: nil,
-                                                  underlyingError: nil)
-                    )
-                }
-                return .failure(apiCredentialsResponseError)
+                return .failure(ResponseError(
+                    httpCode: HttpStatusCode.badRequest,
+                    responseCode: 2000,
+                    userFacingMessage: nil,
+                    underlyingError: nil
+                ))
             }
 
             let data = try JSONSerialization.data(withJSONObject: apiCredentials.asDict)

@@ -26,8 +26,10 @@ import ProtonCoreNetworking
 @testable import ProtonVPN
 
 fileprivate let testData = MockTestData()
-fileprivate let testAuthCredentials = AuthCredentials(username: "username", accessToken: "", refreshToken: "", sessionId: "", userId: "", scopes: [])
-fileprivate let testVPNCredentials = VpnKeychainMock.vpnCredentials(accountPlan: .plus, maxTier: CoreAppConstants.VpnTiers.plus)
+fileprivate func mockAuthCredentials(username: String) -> AuthCredentials {
+    return AuthCredentials(username: username, accessToken: "", refreshToken: "", sessionId: "", userId: "", scopes: [])
+}
+fileprivate var testAuthCredentials: AuthCredentials = mockAuthCredentials(username: "username")
 
 fileprivate let subuserWithoutSessionsResponseError = ResponseError(httpCode: HttpStatusCode.accessForbidden,
                                                                     responseCode: ApiErrorCode.subuserWithoutSessions,
@@ -49,36 +51,34 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
     let asyncTimeout: TimeInterval = 5
 
-    var mockVPNAPIService: VpnApiService {
-        networking = NetworkingMock()
-        networkingDelegate = FullNetworkingMockDelegate()
-        networking.delegate = networkingDelegate
-
-        return VpnApiService(
-            networking: networking,
-            vpnKeychain: VpnKeychainMock(),
-            countryCodeProvider: CountryCodeProviderImplementation(),
-            authKeychain: authKeychain
-        )
-    }
-
     override func setUp() {
         super.setUp()
         propertiesManager = PropertiesManagerMock()
         networking = NetworkingMock()
-        networkingDelegate = FullNetworkingMockDelegate()
-        networking.delegate = networkingDelegate
         authKeychain = AuthKeychainHandleMock()
         unauthKeychain = UnauthKeychainMock()
         vpnKeychain = VpnKeychainMock()
         alertService = AppSessionManagerAlertServiceMock()
         appStateManager = AppStateManagerMock()
 
+
+        networkingDelegate = FullNetworkingMockDelegate()
+        let freeCreds = VpnKeychainMock.vpnCredentials(accountPlan: .free, maxTier: CoreAppConstants.VpnTiers.free)
+        networkingDelegate.apiCredentials = freeCreds
+        networking.delegate = networkingDelegate
+
+        let mockAPIService = VpnApiService(
+            networking: networking,
+            vpnKeychain: VpnKeychainMock(),
+            countryCodeProvider: CountryCodeProviderImplementation(),
+            authKeychain: authKeychain
+        )
+
         manager = withDependencies {
             $0.date = .constant(Date())
         } operation: {
             let factory = ManagerFactoryMock(
-                vpnAPIService: mockVPNAPIService,
+                vpnAPIService: mockAPIService,
                 authKeychain: authKeychain,
                 unauthKeychain: unauthKeychain,
                 vpnKeychain: vpnKeychain,
@@ -110,7 +110,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
 
         manager.finishLogin(
-            authCredentials: testAuthCredentials,
+            authCredentials: mockAuthCredentials(username: "bob"),
             success: {
                 loginExpectation.fulfill()
                 XCTAssertTrue(self.manager.loggedIn)
@@ -122,6 +122,8 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         )
 
         wait(for: [loginExpectation], timeout: asyncTimeout)
+
+        XCTAssertEqual(authKeychain.username, "bob", "Username should have been updated in auth keychain")
     }
 
     func testSuccessfulSilentLoginLogsIn() throws {
@@ -220,9 +222,6 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         appStateManager.state = .connected(differentUserServerDescriptor)
         networkingDelegate.apiVpnLocation = .mock
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
-        let freeCreds = VpnKeychainMock.vpnCredentials(accountPlan: .free,
-                                                       maxTier: CoreAppConstants.VpnTiers.free)
-        networkingDelegate.apiCredentials = freeCreds
         authKeychain.credentials = testAuthCredentials
         alertService.addAlertHandler(for: ActiveSessionWarningAlert.self, handler: { alert in
             activeSessionAlertExpectation.fulfill()
@@ -246,9 +245,6 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         appStateManager.state = .connected(differentUserServerDescriptor)
         networkingDelegate.apiVpnLocation = .mock
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
-        let freeCreds = VpnKeychainMock.vpnCredentials(accountPlan: .free,
-                                                       maxTier: CoreAppConstants.VpnTiers.free)
-        networkingDelegate.apiCredentials = freeCreds
         authKeychain.credentials = testAuthCredentials
         alertService.addAlertHandler(for: ActiveSessionWarningAlert.self, handler: { alert in
             activeSessionAlertExpectation.fulfill()
@@ -451,8 +447,12 @@ class AuthKeychainHandleMock: AuthKeychainHandle {
     var username: String?
     var userId: String?
 
-    func saveToCache(_ credentials: VPNShared.AuthCredentials?) { }
-    func store(_ credentials: VPNShared.AuthCredentials, forContext: VPNShared.AppContext?) throws { }
+    func saveToCache(_ credentials: VPNShared.AuthCredentials?) {
+        self.credentials = credentials
+    }
+    func store(_ credentials: VPNShared.AuthCredentials, forContext: VPNShared.AppContext?) throws {
+        self.credentials = credentials
+    }
     func fetch(forContext: AppContext?) -> AuthCredentials? { return credentials }
     func clear() { }
 }
