@@ -64,7 +64,8 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
         return OfferBannerViewModel(imageURL: imageURL,
                                     endTime: offerBanner.endTime,
                                     showCountDown: offerBanner.offer?.panel?.showCountDown ?? false,
-                                    action: { SafariService.openLink(url: buttonURL) },
+                                    buttonURL: buttonURL,
+                                    offerReference: offerBanner.reference,
                                     dismiss: { dismiss(offerBanner) })
     }
 
