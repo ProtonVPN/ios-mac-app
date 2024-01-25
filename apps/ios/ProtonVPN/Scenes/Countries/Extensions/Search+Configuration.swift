@@ -23,7 +23,7 @@ import LegacyCommon
 import UIKit
 import VPNShared
 
-extension Configuration {
+extension Search.Configuration {
     init() {
         self.init(constants: Constants(numberOfCountries: AccountPlan.plus.countriesCount))
     }

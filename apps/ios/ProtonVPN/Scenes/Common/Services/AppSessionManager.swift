@@ -280,7 +280,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 propertiesManager.maintenanceServerRefreshIntereval = clientConfig.serverRefreshInterval
                 propertiesManager.featureFlags = clientConfig.featureFlags
                 propertiesManager.ratingSettings = clientConfig.ratingSettings
-                review.update(configuration: Configuration(settings: clientConfig.ratingSettings))
+                review.update(configuration: ReviewConfiguration(settings: clientConfig.ratingSettings))
                 @Dependency(\.serverChangeStorage) var storage
                 storage.config = clientConfig.serverChangeConfig
             }
