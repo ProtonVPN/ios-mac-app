@@ -48,11 +48,9 @@ class TelemetryEventScheduler {
 
     /// This should be the single point of reporting telemetry events. Before we do anything with the event,
     /// we need to check if the user agreed to collecting telemetry data or the B2B requires it.
-    func report(event: any TelemetryEvent) throws {
+    func report(event: any TelemetryEvent) async throws {
         if telemetryUsageData {
-            Task {
-                await sendEvent(event)
-            }
+            await sendEvent(event)
         } else {
             throw "Didn't send \(isBusiness ? "Business" : "Telemetry") event, feature disabled"
         }

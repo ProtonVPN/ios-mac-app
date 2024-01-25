@@ -67,25 +67,9 @@ public class VpnApiService {
                   authKeychain: factory.makeAuthKeychainHandle())
     }
 
-    public func vpnProperties(isDisconnected: Bool,
+    public func vpnProperties(isDisconnected: Bool, 
                               lastKnownLocation: UserLocation?,
-                              serversAccordingToTier: Bool,
-                              completion: @MainActor @escaping (Result<VpnProperties, Error>) -> Void) {
-        Task {
-            do {
-                let prop = try await vpnProperties(
-                    isDisconnected: isDisconnected,
-                    lastKnownLocation: lastKnownLocation,
-                    serversAccordingToTier: serversAccordingToTier
-                )
-                await completion(.success(prop))
-            } catch {
-                await completion(.failure(error))
-            }
-        }
-    }
-
-    public func vpnProperties(isDisconnected: Bool, lastKnownLocation: UserLocation?, serversAccordingToTier: Bool) async throws -> VpnProperties {
+                              serversAccordingToTier: Bool) async throws -> VpnProperties {
 
         // Only retrieve IP address when not connected to VPN
         async let asyncLocation = (isDisconnected ? userLocation() : lastKnownLocation) ?? lastKnownLocation

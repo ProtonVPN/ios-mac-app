@@ -32,19 +32,26 @@ public struct OfferBannerViewModel {
     public var imageURL: URL
     public var endTime: Date
     public var showCountDown: Bool
-    public var action: () -> Void
+    public var action: @MainActor () -> Void
     public var dismiss: () -> Void
 
     public init(imageURL: URL,
-         endTime: Date,
-         showCountDown: Bool,
-         action: @escaping () -> Void,
-         dismiss: @escaping () -> Void) {
+                endTime: Date,
+                showCountDown: Bool,
+                buttonURL: URL,
+                offerReference: String?,
+                dismiss: @escaping () -> Void) {
         self.imageURL = imageURL
         self.endTime = endTime
         self.showCountDown = showCountDown
-        self.action = action
         self.dismiss = dismiss
+        self.action = {
+            SafariService.openLink(url: buttonURL)
+            NotificationCenter.default.post(name: .userWasDisplayedAnnouncement,
+                                            object: offerReference)
+            NotificationCenter.default.post(name: .userEngagedWithAnnouncement,
+                                            object: offerReference)
+        }
     }
 
     public func timeLeftString() -> String? {
