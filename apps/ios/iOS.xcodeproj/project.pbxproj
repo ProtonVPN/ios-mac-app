@@ -4360,8 +4360,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 8.16.1;
+				kind = exactVersion;
+				version = 8.18.0;
 			};
 		};
 		4C9754F22A6017260035A61B /* XCRemoteSwiftPackageReference "SwiftOTP" */ = {
