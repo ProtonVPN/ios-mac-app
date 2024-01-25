@@ -20,6 +20,24 @@ import Foundation
 import Combine
 import Reachability
 
+public extension Notification.Name {
+    /// A user initiated a change to the VPN configuration.
+    static let userInitiatedVPNChange: Self = .init("UserInitiatedVPNChange")
+    /// An upsell alert was displayed due to a user clicking on a feature reserved for paid users.
+    static let upsellAlertWasDisplayed: Self = .init("UpsellAlertWasDisplayed")
+    /// A user was displayed a announcement.
+    static let userWasDisplayedAnnouncement: Self = .init("UserWasDisplayedAnnouncement")
+    /// A user was redirected to a payment portal through a notification.
+    static let userEngagedWithAnnouncement: Self = .init("UserEngagedWithAnnouncement")
+    /// A user was upsold by clicking on a paid feature, and proceeded to the "Upgrade" step.
+    static let userEngagedWithUpsellAlert: Self = .init("UserEngagedWithUpsellAlert")
+    /// A user upgraded their plan - it's up to the TelemetryService to figure out if this was the result of an upsell.
+    ///
+    /// In the future it would be best to plumb the upsell result data through the payment portal so that we can know
+    /// for sure if we made the payment roundtrip thanks to the upsell modal.
+    static let userCompletedUpsellAlertJourney: Self = .init("UserCompletedUpsellAlertJourney")
+}
+
 public class TelemetryEventNotifier {
     typealias ModalSource = UpsellEvent.ModalSource
 
@@ -115,34 +133,42 @@ public class TelemetryEventNotifier {
     }
 
     private func upsellDisplayed(_ source: ModalSource?) {
-        do {
-            try telemetryService?.upsellEvent(.display, modalSource: source, newPlanName: nil)
-        } catch {
-            log.debug("No telemetry event triggered for upsell alert: \(String(describing: source)), error: \(error)", category: .telemetry)
+        Task {
+            do {
+                try await telemetryService?.upsellEvent(.display, modalSource: source, newPlanName: nil)
+            } catch {
+                log.debug("No telemetry event triggered for upsell alert: \(String(describing: source)), error: \(error)", category: .telemetry)
+            }
         }
     }
 
     private func announcementDisplayed(_ offerReference: String?) {
-        do {
-            try telemetryService?.upsellEvent(.display, modalSource: .promoOffer, newPlanName: nil, offerReference: offerReference)
-        } catch {
-            log.debug("No telemetry event triggered for announcement offer: \(String(describing: offerReference)), error: \(error)", category: .telemetry)
+        Task {
+            do {
+                try await telemetryService?.upsellEvent(.display, modalSource: .promoOffer, newPlanName: nil, offerReference: offerReference)
+            } catch {
+                log.debug("No telemetry event triggered for announcement offer: \(String(describing: offerReference)), error: \(error)", category: .telemetry)
+            }
         }
     }
 
     private func announcementEngaged(_ offerReference: String?) {
-        do {
-            try telemetryService?.upsellEvent(.upgradeAttempt, modalSource: .promoOffer, newPlanName: nil, offerReference: offerReference)
-        } catch {
-            log.debug("No telemetry event triggered for announcement offer: \(String(describing: offerReference)), error: \(error)", category: .telemetry)
+        Task {
+            do {
+                try await telemetryService?.upsellEvent(.upgradeAttempt, modalSource: .promoOffer, newPlanName: nil, offerReference: offerReference)
+            } catch {
+                log.debug("No telemetry event triggered for announcement offer: \(String(describing: offerReference)), error: \(error)", category: .telemetry)
+            }
         }
     }
 
     private func upsellEngaged(_ source: ModalSource?) {
-        do {
-            try telemetryService?.upsellEvent(.upgradeAttempt, modalSource: source, newPlanName: nil)
-        } catch {
-            log.debug("No telemetry event triggered for upsell alert: \(String(describing: source)), error: \(error)", category: .telemetry)
+        Task {
+            do {
+                try await telemetryService?.upsellEvent(.upgradeAttempt, modalSource: source, newPlanName: nil)
+            } catch {
+                log.debug("No telemetry event triggered for upsell alert: \(String(describing: source)), error: \(error)", category: .telemetry)
+            }
         }
     }
 
@@ -151,13 +177,15 @@ public class TelemetryEventNotifier {
             assertionFailure("Notification object conversion failed in \(#function)")
             return
         }
-        // This will not always schedule an event. Only if the payment is done during the onboarding.
-        try? telemetryService?.onboardingEvent(.paymentDone)
+        Task {
+            // This will not always schedule an event. Only if the payment is done during the onboarding.
+            try? await telemetryService?.onboardingEvent(.paymentDone)
 
-        do {
-            try telemetryService?.upsellEvent(.success, modalSource: source, newPlanName: newPlanName)
-        } catch {
-            log.debug("No telemetry event triggered for upsell alert: \(String(describing: source)), error: \(error)", category: .telemetry)
+            do {
+                try await telemetryService?.upsellEvent(.success, modalSource: source, newPlanName: newPlanName)
+            } catch {
+                log.debug("No telemetry event triggered for upsell alert: \(String(describing: source)), error: \(error)", category: .telemetry)
+            }
         }
     }
 }
