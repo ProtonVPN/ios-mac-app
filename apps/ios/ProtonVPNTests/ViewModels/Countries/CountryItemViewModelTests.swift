@@ -28,7 +28,6 @@ import ProtonCoreUIFoundations
 import TimerMock
 import VPNShared
 import VPNSharedTesting
-import VPNAppCore
 
 import Dependencies
 
