@@ -337,8 +337,8 @@ extension CoreNetworking: AuthDelegate {
         }
     }
     
-    public func credential(sessionUID: String) async -> Credential? {
-        guard let authCredential = await authCredential(sessionUID: sessionUID) else { return nil }
+    public func credential(sessionUID: String) -> Credential? {
+        guard let authCredential = authCredential(sessionUID: sessionUID) else { return nil }
         return .init(authCredential)
     }
 
