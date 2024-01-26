@@ -30,21 +30,21 @@ public protocol AuthKeychainHandle {
     /// We also save them to memory as a quick cache that would save us
     /// a lot of trips to the keychain.
     func saveToCache(_ credentials: AuthCredentials?)
-    func fetch(forContext: AppContext?) async -> AuthCredentials?
-    func store(_ credentials: AuthCredentials, forContext: AppContext?) async throws
-    func clear() async
+    func fetch(forContext: AppContext?) -> AuthCredentials?
+    func store(_ credentials: AuthCredentials, forContext: AppContext?) throws
+    func clear()
 }
 
 public extension AuthKeychainHandle {
-    func fetch() async -> AuthCredentials? {
-        let credentials = await fetch(forContext: nil)
+    func fetch() -> AuthCredentials? {
+        let credentials = fetch(forContext: nil)
         saveToCache(credentials)
         return credentials
     }
 
-    func store(_ credentials: AuthCredentials) async throws {
+    func store(_ credentials: AuthCredentials) throws {
         saveToCache(credentials)
-        try await store(credentials, forContext: nil)
+        try store(credentials, forContext: nil)
     }
 }
 
@@ -86,16 +86,16 @@ public class AuthKeychain {
     public var username: String?
     public var userId: String?
 
-    public static func fetch() async -> AuthCredentials? {
-        await `default`.fetch()
+    public static func fetch() -> AuthCredentials? {
+        `default`.fetch()
     }
 
-    public static func store(_ credentials: AuthCredentials) async throws {
-        try await `default`.store(credentials)
+    public static func store(_ credentials: AuthCredentials) throws {
+        try `default`.store(credentials)
     }
 
-    public static func clear() async {
-        await `default`.clear()
+    public static func clear() {
+        `default`.clear()
     }
     private let keychain = KeychainActor()
 
@@ -116,7 +116,7 @@ extension AuthKeychain: AuthKeychainHandle {
         StorageKey.contextKeys[context]
     }
 
-    public func fetch(forContext context: AppContext?) async -> AuthCredentials? {
+    public func fetch(forContext context: AppContext?) -> AuthCredentials? {
         NSKeyedUnarchiver.setClass(AuthCredentials.self, forClassName: "ProtonVPN.AuthCredentials")
         var key = defaultStorageKey
         if let context = context, let contextKey = storageKey(forContext: context) {
@@ -125,7 +125,7 @@ extension AuthKeychain: AuthKeychainHandle {
 
         let data: Data
         do {
-            guard let keychainData = try await keychain.getData(key) else {
+            guard let keychainData = try keychain.getData(key) else {
                 throw "No data in the keychain"
             }
             data = keychainData
@@ -142,14 +142,14 @@ extension AuthKeychain: AuthKeychainHandle {
                 /// but first let's remove the stored data in case the NSKeyedUnarchiver crashes.
                 /// Next time user launches the app, the credentials will be lost, but at least
                 /// we won't start a crash cycle from which the user can't recover.
-                try? await keychain.remove(key)
+                try? keychain.remove(key)
                 log.info("Removed AuthKeychain storage for \(key) key before attempting to unarchive with NSKeyedUnarchiver", category: .keychain)
                 if let unarchivedObject = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [AuthCredentials.self,
                                                                                              NSString.self,
                                                                                              NSData.self],
                                                                                  from: data),
                    let authCredentials = unarchivedObject as? AuthCredentials {
-                    try? await store(authCredentials, forContext: context) // store in JSON
+                    try? store(authCredentials, forContext: context) // store in JSON
                     log.info("AuthKeychain storage for \(key) migration successful!", category: .keychain)
                     return authCredentials
                 }
@@ -161,7 +161,7 @@ extension AuthKeychain: AuthKeychainHandle {
         return nil
     }
 
-    public func store(_ credentials: AuthCredentials, forContext context: AppContext?) async throws {
+    public func store(_ credentials: AuthCredentials, forContext context: AppContext?) throws {
         var key = defaultStorageKey
         if let context = context, let contextKey = storageKey(forContext: context) {
             key = contextKey
@@ -169,20 +169,20 @@ extension AuthKeychain: AuthKeychainHandle {
 
         do {
             let data = try JSONEncoder().encode(credentials)
-            try await keychain.set(data, key: key)
+            try keychain.set(data, key: key)
         } catch let error {
             log.error("Keychain (auth) write error: \(error). Will clean and retry.", category: .keychain, metadata: ["error": "\(error)"])
             do { // In case of error try to clean keychain and retry with storing data
-                await clear()
+                clear()
                 let data = try JSONEncoder().encode(credentials)
-                try await keychain.set(data, key: key)
+                try keychain.set(data, key: key)
             } catch let error2 {
                 #if os(macOS)
                     log.error("Keychain (auth) write error: \(error2). Will lock keychain to try to recover from this error.", category: .keychain, metadata: ["error": "\(error2)"])
                     do { // Last chance. Locking/unlocking keychain sometimes helps.
                         SecKeychainLock(nil)
                         let data = try JSONEncoder().encode(credentials)
-                        try await keychain.set(data, key: key)
+                        try keychain.set(data, key: key)
                     } catch let error3 {
                         log.error("Keychain (auth) write error. Giving up.", category: .keychain, metadata: ["error": "\(error3)"])
                         throw error3
@@ -195,8 +195,8 @@ extension AuthKeychain: AuthKeychainHandle {
         }
     }
 
-    public func clear() async {
-        await keychain.clear(contextValues: Array<String>(StorageKey.contextKeys.values))
+    public func clear() {
+        keychain.clear(contextValues: Array<String>(StorageKey.contextKeys.values))
         saveToCache(nil)
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: Self.clearNotification, object: nil, userInfo: nil)

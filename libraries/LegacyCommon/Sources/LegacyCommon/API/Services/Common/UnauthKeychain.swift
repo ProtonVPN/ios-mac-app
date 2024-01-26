@@ -26,9 +26,9 @@ public protocol UnauthKeychainHandleFactory {
 }
 
 public protocol UnauthKeychainHandle {
-    func fetch() async -> AuthCredential?
-    func store(_ credentials: AuthCredential) async
-    func clear() async
+    func fetch() -> AuthCredential?
+    func store(_ credentials: AuthCredential)
+    func clear()
 }
 
 public final class UnauthKeychain: UnauthKeychainHandle {
@@ -41,9 +41,9 @@ public final class UnauthKeychain: UnauthKeychainHandle {
 
     public init() { }
 
-    public func fetch() async -> AuthCredential? {
+    public func fetch() -> AuthCredential? {
         do {
-            guard let data = try await keychain.getData(StorageKey.unauthSessionCredentials) else {
+            guard let data = try keychain.getData(StorageKey.unauthSessionCredentials) else {
                 return nil
             }
             return AuthCredential.unarchive(data: data as NSData)
@@ -53,18 +53,18 @@ public final class UnauthKeychain: UnauthKeychainHandle {
         }
     }
 
-    public func store(_ credentials: AuthCredential) async {
+    public func store(_ credentials: AuthCredential) {
         do {
-            try await keychain.set(credentials.archive(), key: StorageKey.unauthSessionCredentials)
+            try keychain.set(credentials.archive(), key: StorageKey.unauthSessionCredentials)
             log.debug("Keychain (unauth) session stored", category: .keychain)
         } catch {
             log.error("Keychain (unauth) write error: \(error)", category: .keychain)
         }
     }
 
-    public func clear() async {
+    public func clear() {
         do {
-            try await keychain.remove(StorageKey.unauthSessionCredentials)
+            try keychain.remove(StorageKey.unauthSessionCredentials)
         } catch {
             log.error("Keychain (unauth) clear error: \(error)", category: .keychain)
         }
