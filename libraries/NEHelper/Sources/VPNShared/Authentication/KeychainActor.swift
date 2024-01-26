@@ -19,7 +19,7 @@
 import Foundation
 import KeychainAccess
 
-public actor KeychainActor {
+public class KeychainActor {
 
     private let keychain: KeychainAccess.Keychain
 
