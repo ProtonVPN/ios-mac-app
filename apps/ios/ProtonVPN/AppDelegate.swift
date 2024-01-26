@@ -348,6 +348,13 @@ extension AppDelegate {
     private func setupCoreIntegration(launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) {
         injectDefaultCryptoImplementation()
 
+        let doh = container.makeDoHVPN()
+        if doh.defaultHost.contains("black") {
+            PMLog.setEnvironment(environment: "black")
+        } else {
+            PMLog.setEnvironment(environment: "production")
+        }
+
         ProtonCoreLog.PMLog.callback = { (message, level) in
             switch level {
             case .debug, .info, .trace, .warn:
