@@ -55,9 +55,7 @@ extension QueryInterfaceRequest {
             return order(statusAlias[LogicalStatus.Columns.status].desc, statusAlias[LogicalStatus.Columns.score].asc)
 
         case .nameAscending:
-            // TODO: slow and flimsy
-            // return order(sortableServerName(logicalAlias[Logical.Columns.name]).asc)
-            return order(logicalAlias[Logical.Columns.name].asc)
+            return order(logicalAlias[Logical.Columns.namePrefix].asc, logicalAlias[Logical.Columns.sequenceNumber].asc)
         }
     }
 }

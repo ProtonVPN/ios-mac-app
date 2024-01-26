@@ -28,7 +28,6 @@ fileprivate func databaseQueue(path: String) -> DatabaseQueue {
         db.add(function: bitwiseOr)
         db.add(function: bitwiseAnd)
         db.add(function: localizedCountryName)
-        db.add(function: sortableServerName)
     }
 
     let queue =  try! DatabaseQueue(path: path, configuration: config)

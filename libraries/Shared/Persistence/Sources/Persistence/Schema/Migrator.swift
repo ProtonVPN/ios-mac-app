@@ -36,6 +36,8 @@ var migrator: DatabaseMigrator {
         try db.create(table: "logical") { t in
             t.column("id", .text).notNull().primaryKey()
             t.column("name", .text).notNull()
+            t.column("namePrefix", .text).notNull()
+            t.column("sequenceNumber", .integer)
             t.column("domain", .text).notNull()
             t.column("entryCountryCode", .text)
             t.column("exitCountryCode", .text).notNull()
@@ -50,6 +52,7 @@ var migrator: DatabaseMigrator {
         }
 
         // Define indexes for fields we sort/filter/group by
+        try db.create(indexOn: "logical", columns: ["namePrefix", "sequenceNumber"]) // sorting servers by name
         try db.create(indexOn: "logical", columns: ["gatewayName", "exitCountryCode"]) // grouping groups
         try db.create(
             index: "logicalGroupSort",

@@ -26,6 +26,8 @@ import Domain
 struct Logical: Codable {
     let id: String
     let name: String
+    let namePrefix: String // Used only for sorting by name. region(-subregion) e.g. DE or US-GA
+    let sequenceNumber: Int? // Used only for sorting by name
     let domain: String
     let entryCountryCode: String
     let exitCountryCode: String

@@ -167,7 +167,6 @@ final class ServerSelectionTests: XCTestCase {
         let serverNames = results.map { $0.logical.name }
 
         // Naive string comparison would result in DE#10 < DE#9
-        // TODO: sortableServerName is slow - decompose name into separate columns
-        // XCTAssertEqual(serverNames, ["DE#9", "DE#10"]) // disabled until name ordering is added
+         XCTAssertEqual(serverNames, ["DE#9", "DE#10"])
     }
 }

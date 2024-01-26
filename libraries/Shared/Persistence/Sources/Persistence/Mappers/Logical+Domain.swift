@@ -21,11 +21,29 @@ import Foundation
 import Domain
 
 extension VPNServer {
+
+    /// The server name, split into the name prefix and sequence number (if it exists).
+    private var splitName: (serverName: String, sequenceNumber: Int?) {
+        let nameArray = logical.name.split(separator: "#")
+        guard nameArray.count == 2 else {
+            return (logical.name, nil)
+        }
+        let serverName = String(nameArray[0])
+        // some of the server sequence numbers might have the trailing "-TOR" - we strip it
+        guard let numberString = nameArray[1].split(separator: "-").first, let number = Int(String(numberString)) else {
+            return (serverName, 0)
+        }
+        return (serverName, number)
+    }
+
     var logicalRecord: Persistence.Logical {
+        let (namePrefix, sequenceNumber) = self.splitName
 
         return .init(
             id: logical.id,
             name: logical.name,
+            namePrefix: namePrefix,
+            sequenceNumber: sequenceNumber,
             domain: logical.domain,
             entryCountryCode: logical.entryCountryCode,
             exitCountryCode: logical.exitCountryCode,

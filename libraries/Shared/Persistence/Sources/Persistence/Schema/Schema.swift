@@ -33,6 +33,8 @@ extension Logical: TableRecord, FetchableRecord, PersistableRecord {
         case hostCountry
         case city
         case name
+        case namePrefix
+        case sequenceNumber
         case translatedCity
         case exitCountryCode
         case gatewayName
