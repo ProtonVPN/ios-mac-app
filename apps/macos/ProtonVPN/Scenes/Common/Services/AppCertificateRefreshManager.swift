@@ -34,17 +34,17 @@ final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshMan
     private var lastRetryInterval: TimeInterval = 10
 
     private var appSessionManager: AppSessionManager
-    private var vpnAuthenticationStorage: VpnAuthenticationStorageAsync
+    private var vpnAuthenticationStorage: VpnAuthenticationStorageSync
     private var timer: Timer?
 
-    init(appSessionManager: AppSessionManager, vpnAuthenticationStorage: VpnAuthenticationStorageAsync) {
+    init(appSessionManager: AppSessionManager, vpnAuthenticationStorage: VpnAuthenticationStorageSync) {
         self.appSessionManager = appSessionManager
         self.vpnAuthenticationStorage = vpnAuthenticationStorage
         self.vpnAuthenticationStorage.delegate = self
     }
 
     func planNextRefresh() async {
-        guard let certificate = await vpnAuthenticationStorage.getStoredCertificate() else {
+        guard let certificate = vpnAuthenticationStorage.getStoredCertificate() else {
             log.info("No current certificate, will try to generate new certificate right now.", category: .userCert)
             await refreshCertificate()
             return
@@ -106,8 +106,10 @@ extension AppCertificateRefreshManagerImplementation {
         stopTimer()
     }
 
-    func certificateStored(_ certificate: VpnCertificate) async {
-        await planNextRefresh()
+    func certificateStored(_ certificate: VpnCertificate) {
+        Task {
+            await planNextRefresh()
+        }
     }
 
 }

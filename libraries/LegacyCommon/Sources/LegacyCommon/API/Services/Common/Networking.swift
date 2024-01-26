@@ -342,11 +342,11 @@ extension CoreNetworking: AuthDelegate {
         return .init(authCredential)
     }
 
-    public func authCredential(sessionUID: String) async -> AuthCredential? {
-        if let authCredentials = await authKeychain.fetch() {
+    public func authCredential(sessionUID: String) -> AuthCredential? {
+        if let authCredentials = authKeychain.fetch() {
             // the app stores credentials in an old format for compatibility reasons, conversion is needed
             return ProtonCoreNetworking.AuthCredential(Credential(authCredentials))
-        } else if let unauthCredentials = await unauthKeychain.fetch() {
+        } else if let unauthCredentials = unauthKeychain.fetch() {
             return unauthCredentials
         } else {
             return nil
