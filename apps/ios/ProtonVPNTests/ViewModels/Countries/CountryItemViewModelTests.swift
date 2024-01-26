@@ -28,8 +28,8 @@ import ProtonCoreUIFoundations
 import TimerMock
 import VPNShared
 import VPNSharedTesting
+
 import Dependencies
-import VPNAppCore
 
 @testable import ProtonVPN
 
@@ -61,7 +61,7 @@ class CountryItemViewModelTests: XCTestCase {
 
     // MARK: Mocks
     // FUTUREFIX: Make/find a factory for creating mocks
-    
+
     private func viewModel(withServers servers: [ServerModel]) -> CountryItemViewModel {
         let country = CountryModel(serverModel: self.serverModel(withStatus: 22))
         let group: ServerGroup = ServerGroup(kind: .country(country), servers: servers)
@@ -79,7 +79,7 @@ class CountryItemViewModelTests: XCTestCase {
             vpnKeychain: vpnKeychain,
             alertService: AlertServiceEmptyStub(),
             propertiesManager: PropertiesManagerMock())
-        
+
         let appStateManager = AppStateManagerImplementation(
             vpnApiService: vpnApiService,
             vpnManager: VpnManagerMock(),
@@ -114,7 +114,7 @@ class CountryItemViewModelTests: XCTestCase {
 
         return viewModel
     }
-    
+
     private func serverModel(withStatus status: Int) -> ServerModel {
         return ServerModel(
             id: "",
@@ -135,5 +135,4 @@ class CountryItemViewModelTests: XCTestCase {
             gatewayName: nil
         )
     }
-    
 }

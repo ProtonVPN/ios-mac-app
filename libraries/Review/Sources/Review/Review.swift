@@ -19,7 +19,7 @@
 import Foundation
 
 public final class Review {
-    private var configuration: Configuration
+    private var configuration: ReviewConfiguration
     private var plan: String?
 
     private let dateProvider: () -> Date
@@ -27,11 +27,11 @@ public final class Review {
     private let dataStorage: ReviewDataStorage
     private let logger: ((String) -> Void)?
 
-    public convenience init(configuration: Configuration, plan: String?, logger: @escaping (String) -> Void) {
+    public convenience init(configuration: ReviewConfiguration, plan: String?, logger: @escaping (String) -> Void) {
         self.init(configuration: configuration, plan: plan, dateProvider: { Date() }, reviewPrompt: AppStoreReviewPrompt(), dataStorage: UserDefaultsReviewDataStorage(), logger: logger)
     }
 
-    init(configuration: Configuration, plan: String?, dateProvider: @escaping () -> Date, reviewPrompt: ReviewPrompt, dataStorage: ReviewDataStorage, logger: ((String) -> Void)? = nil) {
+    init(configuration: ReviewConfiguration, plan: String?, dateProvider: @escaping () -> Date, reviewPrompt: ReviewPrompt, dataStorage: ReviewDataStorage, logger: ((String) -> Void)? = nil) {
         self.configuration = configuration
         self.plan = plan
         self.dateProvider = dateProvider
@@ -69,7 +69,7 @@ public final class Review {
         dataStorage.successConnectionsInARowCount = 0
     }
 
-    public func update(configuration: Configuration) {
+    public func update(configuration: ReviewConfiguration) {
         guard self.configuration != configuration else {
             return
         }

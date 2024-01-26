@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct Configuration: Equatable {
+public struct ReviewConfiguration: Equatable {
     let eligiblePlans: [String]
     let successConnections: Int
     let daysLastReviewPassed: Int

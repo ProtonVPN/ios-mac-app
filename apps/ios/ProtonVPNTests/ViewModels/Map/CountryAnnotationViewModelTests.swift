@@ -24,7 +24,6 @@ import XCTest
 
 import Domain
 import VPNShared
-import VPNAppCore
 import LegacyCommon
 
 import TimerMock
@@ -40,23 +39,23 @@ class CountryAnnotationViewModelTests: XCTestCase {
             serverModel(withStatus: 50),
             serverModel(withStatus: 25),
         ]).underMaintenance, "UnderMaintenance returned true while no server is under maintenance")
-        
+
         XCTAssertFalse(self.viewModel(withServers: [
             serverModel(withStatus: 5),
             serverModel(withStatus: 55),
             serverModel(withStatus: 0),
         ]).underMaintenance, "UnderMaintenance returned true while at least one server is not under maintenance")
-        
+
         XCTAssertTrue(self.viewModel(withServers: [
             serverModel(withStatus: 0),
             serverModel(withStatus: 0),
             serverModel(withStatus: 0),
         ]).underMaintenance, "UnderMaintenance returned false while all servers are under maintenance")
-        
+
     }
 
     // MARK: Mocks
-    
+
     private func viewModel(withServers servers: [ServerModel]) -> CountryAnnotationViewModel {
         let country = CountryModel(serverModel: ServerModel(
             id: "",
@@ -75,8 +74,7 @@ class CountryAnnotationViewModelTests: XCTestCase {
             hostCountry: nil,
             translatedCity: nil,
             gatewayName: nil
-            )
-        )
+        ))
         let authKeychain = MockAuthKeychain()
         let vpnKeychain = VpnKeychainMock()
         let networking = CoreNetworking(
@@ -94,10 +92,10 @@ class CountryAnnotationViewModelTests: XCTestCase {
             propertiesManager: PropertiesManagerMock())
         let appStateManager = AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock(), doh: .mock, serverStorage: ServerStorageMock(), natTypePropertyProvider: NATTypePropertyProviderMock(), netShieldPropertyProvider: NetShieldPropertyProviderMock(), safeModePropertyProvider: SafeModePropertyProviderMock())
         let viewModel = CountryAnnotationViewModel(countryModel: country, servers: servers, serverType: ServerType.standard, vpnGateway: VpnGatewayMock(), appStateManager: appStateManager, enabled: true, alertService: AlertServiceEmptyStub(), connectionStatusService: ConnectionStatusServiceMock())
-        
+
         return viewModel
     }
-    
+
     private func serverModel(withStatus status: Int) -> ServerModel {
         return ServerModel(
             id: "",
@@ -118,5 +116,5 @@ class CountryAnnotationViewModelTests: XCTestCase {
             gatewayName: nil
         )
     }
-    
+
 }
