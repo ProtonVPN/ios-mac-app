@@ -24,7 +24,7 @@ protocol ReviewFactory {
     func makeReview() -> Review
 }
 
-extension Configuration {
+extension ReviewConfiguration {
     init(settings: RatingSettings) {
         self.init(eligiblePlans: settings.eligiblePlans, successConnections: settings.successConnections, daysLastReviewPassed: settings.daysLastReviewPassed, daysConnected: settings.daysConnected, daysFromFirstConnection: settings.daysFromFirstConnection)
     }
