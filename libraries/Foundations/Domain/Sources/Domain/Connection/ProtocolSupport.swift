@@ -53,4 +53,8 @@ extension VpnProtocol {
             return 7
         }
     }
+
+    public var protocolSupport: ProtocolSupport {
+        ProtocolSupport(bitPosition: self.protocolSupportBitPosition)
+    }
 }
