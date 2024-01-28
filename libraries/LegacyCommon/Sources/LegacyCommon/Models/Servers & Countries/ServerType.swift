@@ -124,4 +124,15 @@ public extension ServerType {
             return .standard
         }
     }
+
+    public var serverFilter: VPNServerFilter {
+        switch self {
+        case .secureCore:
+            return .features(.secureCore)
+        case .tor:
+            return .features(.standard(with: .tor))
+        default:
+            return .features(.standard(without: .tor))
+        }
+    }
 }
