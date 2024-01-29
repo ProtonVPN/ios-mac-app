@@ -323,13 +323,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d дня</string>
+        <string>%d дней</string>
         <key>one</key>
         <string>%d день</string>
         <key>few</key>
-        <string>%d дней</string>
-        <key>many</key>
         <string>%d дня</string>
+        <key>many</key>
+        <string>%d дней</string>
       </dict>
     </dict>
     <key>_session_length_days_and_hours</key>
@@ -343,13 +343,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d дня</string>
+        <string>%d дней</string>
         <key>one</key>
         <string>%d день</string>
         <key>few</key>
-        <string>%d дней</string>
-        <key>many</key>
         <string>%d дня</string>
+        <key>many</key>
+        <string>%d дней</string>
       </dict>
       <key>HOURS</key>
       <dict>
@@ -374,17 +374,17 @@
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d мин</string>
+        <string>%d мин.</string>
         <key>few</key>
-        <string>%d мин</string>
+        <string>%d мин.</string>
         <key>many</key>
-        <string>%d мин</string>
+        <string>%d мин.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d мин</string>
+        <string>%d мин.</string>
       </dict>
       <key>HOURS</key>
       <dict>
@@ -429,32 +429,32 @@
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d мин</string>
+        <string>%d мин.</string>
         <key>few</key>
-        <string>%d мин</string>
+        <string>%d мин.</string>
         <key>many</key>
-        <string>%d мин</string>
+        <string>%d мин.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d мин</string>
+        <string>%d мин.</string>
       </dict>
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d сек</string>
+        <string>%d сек.</string>
         <key>few</key>
-        <string>%d сек</string>
+        <string>%d сек.</string>
         <key>many</key>
-        <string>%d сек</string>
+        <string>%d сек.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d сек</string>
+        <string>%d сек.</string>
       </dict>
     </dict>
     <key>_session_length_minutes</key>
@@ -464,17 +464,17 @@
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d мин</string>
+        <string>%d мин.</string>
         <key>few</key>
-        <string>%d мин</string>
+        <string>%d мин.</string>
         <key>many</key>
-        <string>%d мин</string>
+        <string>%d мин.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d мин</string>
+        <string>%d мин.</string>
       </dict>
     </dict>
     <key>_session_length_seconds</key>
@@ -484,17 +484,17 @@
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d сек</string>
+        <string>%d сек.</string>
         <key>few</key>
-        <string>%d сек</string>
+        <string>%d сек.</string>
         <key>many</key>
-        <string>%d сек</string>
+        <string>%d сек.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d сек</string>
+        <string>%d сек.</string>
       </dict>
     </dict>
     <key>_step_of</key>

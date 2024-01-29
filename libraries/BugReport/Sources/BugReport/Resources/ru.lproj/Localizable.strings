@@ -38,7 +38,7 @@
 "_br_3_logs_description" = "Журнал - это тип файла, показывающий нам ваши действия, приведшие к появлению ошибки. Мы используем их только для того, чтобы помочь нашим инженерам исправить ошибки.";
 
 /* ReportBug 3rd step (form): message shown if user disabled logs */
-"_br_3_logs_disabled" = "Журналы ошибок помогают нам разобраться в сути вашей проблемы. Если вы не приложите их, мы не сможем провести полное исследование.";
+"_br_3_logs_disabled" = "Журналы ошибок помогают нам разобраться в причинах вашей проблемы. Если вы их не предоставите, мы не сможем провести полное расследование.";
 
 /* ReportBug success window: title text */
 "_br_success_title" = "Благодарим за отзыв";
@@ -47,7 +47,7 @@
 "_br_success_subtitle" = "Мы свяжемся с вами, как только сможем.";
 
 /* ReportBug success window: button */
-"_br_success_button" = "Применить";
+"_br_success_button" = "Понятно";
 
 /* ReportBug success window: title text */
 "_br_failure_title" = "Ваш отчет не был отправлен";
