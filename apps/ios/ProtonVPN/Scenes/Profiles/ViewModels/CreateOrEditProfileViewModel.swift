@@ -162,7 +162,7 @@ class CreateOrEditProfileViewModel: NSObject {
             return
         }
         
-        let grouping = countries
+        let grouping = serverGroups
 
         let accessTier: Int
         switch serverOffering {
@@ -292,10 +292,10 @@ class CreateOrEditProfileViewModel: NSObject {
             selectedServerOffering = nil
             saveButtonEnabled = true
 
-            guard let row = countries.firstIndex(where: { $0 == selectedCountryGroup }) else {
+            guard let row = serverGroups.firstIndex(where: { $0 == selectedCountryGroup }) else {
                 return
             }
-            countryGroup = countries[row]
+            countryGroup = serverGroups[row]
         }
     }
 
@@ -314,7 +314,7 @@ class CreateOrEditProfileViewModel: NSObject {
         self.name = profile.name
         self.state = profile.serverType == .secureCore ? .secureCore : .standard
         
-        selectedCountryGroup = countries.first(where: {
+        selectedCountryGroup = serverGroups.first(where: {
             switch $0.kind {
             case .country(let countryCode):
                 return countryCode == profile.serverOffering.countryCode
@@ -351,7 +351,7 @@ class CreateOrEditProfileViewModel: NSObject {
         saveButtonEnabled = true
     }
     
-    private var countries: [ServerGroupInfo] {
+    private var serverGroups: [ServerGroupInfo] {
         do {
             return try serverRepository.getGroups(filteredBy: [
                 .features(secureCoreServerFilter),
@@ -486,7 +486,7 @@ class CreateOrEditProfileViewModel: NSObject {
 extension CreateOrEditProfileViewModel {
     
     private var countrySelectionDataSet: SelectionDataSet {
-        let rows: [SelectionRow] = countries.map({ countryGroup in
+        let rows: [SelectionRow] = serverGroups.map({ countryGroup in
             return SelectionRow(title: countryDescriptor(for: countryGroup), object: countryGroup)
         })
                 
