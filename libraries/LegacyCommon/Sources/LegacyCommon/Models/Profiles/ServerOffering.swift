@@ -164,8 +164,8 @@ extension ServerGroup {
 extension ServerGroupInfo {
     public var serverOfferingID: String {
         switch kind {
-        case .country(let code):
-            return code
+        case .country(let countryCode):
+            return countryCode
         case .gateway(let name):
             return "gateway-\(name)"
         }

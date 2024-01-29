@@ -131,8 +131,12 @@ public extension ServerType {
             return .features(.secureCore)
         case .tor:
             return .features(.standard(with: .tor))
-        default:
+        case .standard:
             return .features(.standard(without: .tor))
+        case .p2p:
+            return .features(.standard(with: .p2p))
+        case .unspecified:
+            return .features(.init(required: .zero, excluded: .zero))
         }
     }
 }

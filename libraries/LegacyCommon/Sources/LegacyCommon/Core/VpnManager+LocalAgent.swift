@@ -22,6 +22,8 @@
 
 import Foundation
 
+import Dependencies
+
 import Domain
 import Ergonomics
 import LocalFeatureFlags
@@ -227,11 +229,14 @@ extension VpnManager {
 
     /// Updates last connection config that is used to display proper info in apps UI.
     private func updateActiveConnection(serverId: String, ipId: String) {
-        let servers = serverStorage.fetch()
-        guard let newServer = servers.first(where: { $0.id == serverId }) else {
+        @Dependency(\.serverRepository) var repository
+        let result = try? repository.getFirstServer(filteredBy: [.logicalID(serverId)], orderedBy: .fastest)
+        guard let result else {
             log.warning("Server with such id not found", category: .connection, event: .error, metadata: ["serverId": "\(serverId)"])
             return
         }
+        
+        let newServer = ServerModel(server: result)
         guard let newIp = newServer.ips.first(where: { $0.id == ipId }) else {
             log.warning("Server IP with such id not found", category: .connection, event: .error, metadata: ["ipId": "\(ipId)", "serverId": "\(serverId)"])
             return

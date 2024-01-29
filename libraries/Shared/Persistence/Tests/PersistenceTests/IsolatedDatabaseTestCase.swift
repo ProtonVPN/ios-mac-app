@@ -28,19 +28,19 @@ import Dependencies
 /// Provides a repository based on an in-memory database specific to each test case (but shared across tests within it).
 /// Because of this, it is suitable for tests that either do not modify the repository, or otherwise it should only
 /// define a single test that does.
-class IsolatedDatabaseTestCase: XCTestCase {
+public class IsolatedDatabaseTestCase: XCTestCase {
 
-    static var repository: ServerRepository!
+    public static var repository: ServerRepository!
 
     /// Used to set up an in-memory database unique to each `IsolatedDatabaseTestCase` subclass
     /// By default this identifier is equal to the class name.
-    class var resourceName: String {
+    public class var resourceName: String {
         String("\(Self.self)".split(separator: ".").last!)
     }
 
-    var sut: ServerRepository { Self.repository }
+    public var sut: ServerRepository { Self.repository }
 
-    override class func setUp() {
+    public override class func setUp() {
         super.setUp()
         repository = withDependencies {
             $0.appDB = .newInMemoryInstance()
@@ -54,9 +54,9 @@ class IsolatedDatabaseTestCase: XCTestCase {
 /// the addition of initialising it with data loaded from a test resource named after the name of test case class.
 ///
 /// The resource name can be customised by overriding `resourceName`.
-class IsolatedResourceDrivenDatabaseTestCase: IsolatedDatabaseTestCase {
+public class IsolatedResourceDrivenDatabaseTestCase: IsolatedDatabaseTestCase {
 
-    override class func setUp() {
+    public override class func setUp() {
         super.setUp()
 
         let servers = try! loadServers(fromResourceNamed: resourceName)
@@ -64,7 +64,7 @@ class IsolatedResourceDrivenDatabaseTestCase: IsolatedDatabaseTestCase {
         try! Self.repository.upsert(servers: servers)
     }
 
-    static func loadServers(fromResourceNamed name: String) throws -> [VPNServer] {
+    private static func loadServers(fromResourceNamed name: String) throws -> [VPNServer] {
         let jsonPath = try XCTUnwrap(Bundle.module.path(forResource: name, ofType: "json"))
         let jsonURL = URL(fileURLWithPath: jsonPath)
         let data = try Data(contentsOf: jsonURL)

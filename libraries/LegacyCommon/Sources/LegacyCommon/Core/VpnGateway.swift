@@ -48,8 +48,7 @@ public enum ConnectionStatus {
     }
 }
 
-public enum ResolutionUnavailableReason {
-    
+public enum ResolutionUnavailableReason: Equatable {
     case upgrade(Int)
     case maintenance
     case protocolNotSupported
@@ -408,7 +407,7 @@ public class VpnGateway: VpnGatewayProtocol {
             })
         }
     }
-    
+
     public func connect(with request: ConnectionRequest?) {
         let `protocol` = request?.connectionProtocol ?? globalConnectionProtocol
 
@@ -473,7 +472,6 @@ public class VpnGateway: VpnGatewayProtocol {
             
             let selector = VpnServerSelector(serverType: type,
                                              userTier: currentUserTier,
-                                             serverGrouping: serverManager.grouping(for: type),
                                              connectionProtocol: connectionRequest.connectionProtocol,
                                              smartProtocolConfig: propertiesManager.smartProtocolConfig,
                                              appStateGetter: { [unowned self] in
@@ -776,13 +774,10 @@ fileprivate extension VpnGateway {
         guard let previousServer = oldServer else { return nil }
 
         let tier = downgradeInfo.to.maxTier
-        let serverManager = ServerManagerImplementation.instance(forTier: downgradeInfo.to.maxTier, serverStorage: serverStorage)
         // Beware: selector selects only non-restricted servers atm. This works now, because
         // if users plan is downgraded, he won't have restricted servers anymore (VPNAPPL-1841)
         let selector = VpnServerSelector(serverType: .unspecified,
                                          userTier: tier,
-                                         serverGrouping:
-                                            serverManager.grouping(for: serverTypeToggle),
                                          connectionProtocol: propertiesManager.connectionProtocol,
                                          smartProtocolConfig: propertiesManager.smartProtocolConfig,
                                          appStateGetter: { [unowned self] in
@@ -810,10 +805,10 @@ fileprivate extension VpnGateway {
             safeMode: request.safeMode,
             intent: request.connectionType
         )
-        return ReconnectInfo(fromServer: .init(name: previousServer.name,
-                                               image: .flag(countryCode: previousServer.countryCode) ?? Image()),
-                             toServer: .init(name: toServer.name,
-                                             image: .flag(countryCode: toServer.countryCode) ?? Image()))
+        return ReconnectInfo(
+            fromServer: .init(name: previousServer.name, image: .flag(countryCode: previousServer.countryCode) ?? Image()),
+            toServer: .init(name: toServer.name, image: .flag(countryCode: toServer.exitCountryCode) ?? Image())
+        )
     }
 
     private func showProtocolDeprecatedAlert(request: ConnectionRequest?) {

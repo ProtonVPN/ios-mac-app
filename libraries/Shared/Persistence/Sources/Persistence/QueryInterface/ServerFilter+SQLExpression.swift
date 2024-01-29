@@ -24,6 +24,7 @@ extension VPNServerFilter {
 
     func sqlExpression(
         logical: TableAlias,
+        status: TableAlias,
         overrides: TableAlias
     ) -> SQLExpression {
 
@@ -45,6 +46,9 @@ extension VPNServerFilter {
             let hasAllRequiredFeatures = (supportedFeatures & features.required.rawValue) == features.required.rawValue
             let hasNoExcludedFeatures = (supportedFeatures & features.excluded.rawValue) == 0
             return hasAllRequiredFeatures && hasNoExcludedFeatures
+
+        case .isNotUnderMaintenance:
+            return status[LogicalStatus.Columns.status] != 0
 
         case .supports(let protocolMask):
             return overrides[EndpointOverrides.Columns.endpointId] == nil

@@ -152,7 +152,6 @@ public class VpnGateway2: VpnGatewayProtocol2 {
 
         let selector = VpnServerSelector(serverType: type,
                                          userTier: currentUserTier,
-                                         serverGrouping: serverManager.grouping(for: type),
                                          connectionProtocol: connectionProtocol,
                                          smartProtocolConfig: propertiesManager.smartProtocolConfig,
                                          appStateGetter: { [unowned self] in

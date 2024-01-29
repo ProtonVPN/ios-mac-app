@@ -31,6 +31,8 @@ public enum VPNServerFilter {
 
     case features(ServerFeatureFilter)
 
+    case isNotUnderMaintenance
+
     /// Protocol overrides
     case supports(protocol: ProtocolSupport)
 

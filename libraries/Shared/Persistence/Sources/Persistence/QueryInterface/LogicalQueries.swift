@@ -26,10 +26,11 @@ extension QueryInterfaceRequest {
     public func filterServers(
         _ filters: [VPNServerFilter],
         logicalAlias: TableAlias,
+        statusAlias: TableAlias,
         overrideAlias: TableAlias
     ) -> Self {
         return filters
-            .map { $0.sqlExpression(logical: logicalAlias, overrides: overrideAlias) }
+            .map { $0.sqlExpression(logical: logicalAlias, status: statusAlias, overrides: overrideAlias) }
             .reduce(self) { request, sqlExpression in request.filter(sqlExpression) }
     }
 
@@ -153,7 +154,7 @@ extension GroupInfoResult {
 
         return Endpoint
             .joiningAndAliasing(logicalAlias: logicals, statusAlias: statuses, overrideAlias: overrides)
-            .filterServers(filters, logicalAlias: logicals, overrideAlias: overrides)
+            .filterServers(filters, logicalAlias: logicals, statusAlias: statuses, overrideAlias: overrides)
             .annotatedWithAggregateData(logicalAlias: logicals, statusAlias: statuses, overrideAlias: overrides)
             .groupingByServerType(logicalAlias: logicals)
             .ordering(by: groupOrder, logicalAlias: logicals)
@@ -176,7 +177,7 @@ extension ServerResult {
                     .joining(optional: Endpoint.overrides.aliased(overrideAlias))
             )
             .including(required: Logical.status.aliased(statusAlias))
-            .filterServers(filters, logicalAlias: logicalAlias, overrideAlias: overrideAlias)
+            .filterServers(filters, logicalAlias: logicalAlias, statusAlias: statusAlias, overrideAlias: overrideAlias)
             .asRequest(of: ServerResult.self)
             .group(logicalAlias[Logical.Columns.id])
             .order(order, logicalAlias: logicalAlias, statusAlias: statusAlias)
@@ -193,7 +194,7 @@ extension ServerInfoResult {
             .including(required: Endpoint.logical.aliased(logicalAlias).including(required: Logical.status.aliased(statusAlias)))
             .joining(optional: Endpoint.overrides.aliased(overrideAlias))
             .annotated(with: bitwiseOr(overrideAlias[EndpointOverrides.Columns.protocolMask]).forKey("protocolMask"))
-            .filterServers(filters, logicalAlias: logicalAlias, overrideAlias: overrideAlias)
+            .filterServers(filters, logicalAlias: logicalAlias, statusAlias: statusAlias, overrideAlias: overrideAlias)
             .asRequest(of: ServerInfoResult.self)
             .group(logicalAlias[Logical.Columns.id])
             .order(order, logicalAlias: logicalAlias, statusAlias: statusAlias)
