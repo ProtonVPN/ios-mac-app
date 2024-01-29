@@ -1080,10 +1080,10 @@
 "_highest" = "Наивысшая";
 
 /* Features of account plan */
-"_plus_plan_features" = "Plus серверы\nSecure Core\nTor Серверы";
+"_plus_plan_features" = "Серверы Plus\nSecure Core\nСерверы Tor";
 
 /* Used instead of price for free plans. */
-"_free" = "Бесплатный";
+"_free" = "Free";
 
 /* Alert message during In App Purchase */
 "_do_you_want_to_activate_subscription_for" = "Вы хотите активировать купленную подписку на ";
