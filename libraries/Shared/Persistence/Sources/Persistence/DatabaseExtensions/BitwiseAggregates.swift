@@ -20,6 +20,7 @@ import Foundation
 
 import GRDB
 
+/// Returns nil if no rows contains an honest Int value
 let bitwiseOr = DatabaseFunction(
     "BIT_OR",
     argumentCount: 1,
@@ -27,6 +28,7 @@ let bitwiseOr = DatabaseFunction(
     aggregate: BitwiseOR.self
 )
 
+/// Returns nil if no rows contains an honest Int value
 let bitwiseAnd = DatabaseFunction(
     "BIT_AND",
     argumentCount: 1,
@@ -35,12 +37,12 @@ let bitwiseAnd = DatabaseFunction(
 )
 
 struct BitwiseOR: DatabaseAggregate {
-    var accumulatedValue: Int = 0
+    var accumulatedValue: Int?
 
     mutating func step(_ dbValues: [DatabaseValue]) {
         guard let nextValue = Int.fromDatabaseValue(dbValues[0]) else { return }
 
-        accumulatedValue |= nextValue
+        accumulatedValue = (accumulatedValue ?? nextValue) | nextValue
     }
 
     func finalize() -> DatabaseValueConvertible? {
@@ -49,11 +51,12 @@ struct BitwiseOR: DatabaseAggregate {
 }
 
 struct BitwiseAND: DatabaseAggregate {
-    var accumulatedValue: Int = -1 // initial value of 0xFF...FF
+    var accumulatedValue: Int?
 
     mutating func step(_ dbValues: [DatabaseValue]) {
         guard let nextValue = Int.fromDatabaseValue(dbValues[0]) else { return }
-        accumulatedValue &= nextValue
+
+        accumulatedValue = (accumulatedValue ?? nextValue) & nextValue
     }
 
     func finalize() -> DatabaseValueConvertible? {

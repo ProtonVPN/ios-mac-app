@@ -95,7 +95,7 @@ extension Domain.Logical {
         self.init(
             id: staticInfo.id,
             name: staticInfo.name,
-            domain: staticInfo.name,
+            domain: staticInfo.domain,
             load: dynamicInfo.load,
             entryCountryCode: staticInfo.entryCountryCode,
             exitCountryCode: staticInfo.exitCountryCode,

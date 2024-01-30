@@ -31,6 +31,14 @@ final class ServerSelectionTests: IsolatedResourceDrivenDatabaseTestCase {
 
     // MARK: Filtering & Ordering
 
+    func testFastestOverallServer() throws {
+        let result = try sut.getFirstServer(filteredBy: [], orderedBy: .fastest)
+
+        let server = try XCTUnwrap(result)
+        XCTAssertEqual(server.logical.id, "fastestFeaturelessUSServer")
+        XCTAssertTrue(server.logical.feature.isDisjoint(with: .secureCore))
+    }
+
     func testFastestFreeServer() throws {
         let result = try sut.getFirstServer(
             filteredBy: [
@@ -70,6 +78,17 @@ final class ServerSelectionTests: IsolatedResourceDrivenDatabaseTestCase {
         let endpoint = try XCTUnwrap(result)
         XCTAssertTrue(endpoint.logical.feature.contains(.tor))
         XCTAssertTrue(endpoint.logical.feature.isDisjoint(with: .secureCore))
+    }
+
+    func testFastestStealthServer() throws {
+        let result = try sut.getFirstServer(
+            filteredBy: [.supports(protocol: .wireGuardTLS)],
+            orderedBy: .fastest
+        )
+
+        let server = try XCTUnwrap(result)
+        XCTAssertEqual(server.logical.id, "DE2")
+        XCTAssertTrue(server.supportedProtocols.contains(.wireGuardTLS))
     }
 
     func testRandomServer() throws {
@@ -137,6 +156,38 @@ final class ServerSelectionTests: IsolatedResourceDrivenDatabaseTestCase {
         )
 
         XCTAssertEqual(results.count, 0)
+    }
+
+    func testFiltersServersWithUnsupportedProtocols() throws {
+        let ikeResults = try sut.getServers(
+            filteredBy: [.kind(.standard(country: "DE")), .supports(protocol: .ikev2)],
+            orderedBy: .nameAscending
+        )
+
+        let ikeServerIDs = ikeResults.map { $0.logical.id }
+
+        XCTAssertTrue(ikeResults.allSatisfy { $0.protocolSupport.contains(.ikev2) })
+        XCTAssertEqual(ikeServerIDs, ["DE1"])
+
+        let stealthResults = try sut.getServers(
+            filteredBy: [.kind(.standard(country: "DE")), .supports(protocol: .wireGuardTLS)],
+            orderedBy: .nameAscending
+        )
+
+        let stealthServerIDs = stealthResults.map { $0.logical.id }
+
+        XCTAssertTrue(stealthResults.allSatisfy { $0.protocolSupport.contains(.wireGuardTLS) })
+        XCTAssertEqual(stealthServerIDs, ["DE2"])
+
+        let ikeOrStealthResults = try sut.getServers(
+            filteredBy: [.kind(.standard(country: "DE")), .supports(protocol: [.ikev2, .wireGuardTLS])],
+            orderedBy: .nameAscending
+        )
+
+        let ikeOrStealthIDs = Set(ikeOrStealthResults.map { $0.logical.id })
+
+        XCTAssertTrue(ikeOrStealthResults.allSatisfy { !$0.protocolSupport.isDisjoint(with: [.ikev2, .wireGuardTLS]) })
+        XCTAssertEqual(ikeOrStealthIDs, Set(arrayLiteral: "DE1", "DE2"))
     }
 
     // Ordering servers by name requires additional comparison

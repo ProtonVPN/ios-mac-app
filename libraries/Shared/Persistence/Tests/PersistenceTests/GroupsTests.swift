@@ -52,7 +52,7 @@ final class GroupsTests: IsolatedResourceDrivenDatabaseTestCase {
 
         assert(
             groups[6],
-            isOfKind: .country(code: "AE"), // Verify groups are ordered by localized country name and not code
+            isOfKind: .country(code: "AE"),
             hasServerCount: 1,
             isUnderMaintenance: false,
             supports: [.all]

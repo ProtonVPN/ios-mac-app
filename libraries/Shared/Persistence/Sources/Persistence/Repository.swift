@@ -30,7 +30,7 @@ import Domain
 ///  - Servers interface for adding/updating/deleting physical servers by ID without touching logicals
 public struct ServerRepository: DependencyKey {
 
-    private var serverCount: () throws -> Int
+    public var serverCount: () throws -> Int
 
     private var upsertServers: ([VPNServer]) throws -> Void
     private var deleteServers: (Int, Set<String>) throws -> Int

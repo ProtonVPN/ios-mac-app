@@ -76,7 +76,7 @@ var migrator: DatabaseMigrator {
             t.column("score", .double).notNull()
             t.column("status", .integer).notNull()
             t.column("load", .integer).notNull()
-            t.belongsTo("logical", onDelete: .cascade).notNull() // foreign key (logicalID column)
+            t.belongsTo("logical", onDelete: .cascade).notNull().unique() // foreign key (logicalID column)
         }
 
         // covering index for sorting by fastest server
@@ -85,7 +85,7 @@ var migrator: DatabaseMigrator {
         try db.create(table: "endpointOverrides") { t in
             t.column("protocolMask", .integer)
             t.column("protocolEntries", .text)
-            t.belongsTo("endpoint", onDelete: .cascade).notNull() // foreign key (endpointID column)
+            t.belongsTo("endpoint", onDelete: .cascade).notNull().unique() // foreign key (endpointID column)
         }
     }
 

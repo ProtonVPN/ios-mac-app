@@ -64,7 +64,7 @@ extension Endpoint: TableRecord, FetchableRecord, PersistableRecord {
 }
 
 extension EndpointOverrides: TableRecord, FetchableRecord, PersistableRecord {
-    static let server = hasOne(Endpoint.self)
+    static let endpoint = belongsTo(Endpoint.self)
 
     enum Columns: String, ColumnExpression {
         case endpointId

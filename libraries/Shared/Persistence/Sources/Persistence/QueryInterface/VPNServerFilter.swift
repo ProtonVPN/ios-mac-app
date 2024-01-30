@@ -106,7 +106,7 @@ public enum VPNServerOrder {
     /// Randomised ordering - incurs performance penalty
     case random
 
-    /// Server status (not under maintenance first) then score ascending
+    /// Server score ascending
     case fastest
 
     /// See `Logical.namePrefix` and `Logical.sequenceNumber` obtained from `VPNServer.splitName`

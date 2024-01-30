@@ -80,12 +80,10 @@ extension ServerEndpoint {
             return .all
         }
 
-        let support: ProtocolSupport = []
-            .appending(.ikev2, if: supports(vpnProtocol: .ike))
-            .appending(.wireGuardUDP, if: supports(vpnProtocol: .wireGuard(.udp)))
-            .appending(.wireGuardTCP, if: supports(vpnProtocol: .wireGuard(.tcp)))
-            .appending(.wireGuardTLS, if: supports(vpnProtocol: .wireGuard(.tls)))
-            .reduce(.zero) { $0.union($1) }
-        return support
+        return VpnProtocol.allCases.reduce(into: .zero) {
+            if supports(vpnProtocol: $1) {
+                $0.insert($1.protocolSupport)
+            }
+        }
     }
 }

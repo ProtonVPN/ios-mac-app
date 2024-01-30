@@ -25,125 +25,64 @@ import XCTestDynamicOverlay
 #if DEBUG
 
 /// Provides callbacks required to maintain legacy tests
-public class MockServerStorage {
-
-    public var servers: [String: VPNServer]
-
-    public var shouldFailOnMissingServerDuringLoadsUpdate = true
+///
+/// Historically, a MockServerRepository partially implemented the set of features that the real thing provides, but
+/// it was dropped in favour of using a wrapper that provides necessary callbacks to increase test coverage.
+public class ServerRepositoryWrapper {
 
     public var didStoreServers: (([VPNServer]) -> Void)?
     public var didUpdateLoads: (([VPNServer]) -> Void)?
 
-    public init(servers: [VPNServer] = []) {
-        self.servers = servers.reduce(into: [:]) { result, server in
-            result[server.logical.id] = server
-        }
+    public var repository: ServerRepository
+
+    public init(repository: ServerRepository) {
+        self.repository = repository
     }
 
-    var serverCount: Int { servers.count }
+    public var serverCount: Int { get throws { try repository.serverCount() } }
 
-    private func servers(filteredBy filters: [VPNServerFilter], orderedBy order: VPNServerOrder) -> [VPNServer] {
-        return filters.reduce(Array(servers.values)) { servers, filter in
-            switch filter {
-            case .logicalID(let id):
-                return servers.filter { $0.logical.id == id }
-            default:
-                XCTFail("Unimplemented server filter: \(filter)")
-                return servers
-            }
-        }
+    public func getFirstServer(filteredBy filters: [VPNServerFilter], orderedBy order: VPNServerOrder) throws -> VPNServer? {
+       try repository.getFirstServer(filteredBy: filters, orderedBy: order)
     }
 
-    func upsert(servers: [VPNServer]) {
-        // Care - `servers` argument shadows instance variable of the same name
-        servers.forEach {
-            self.servers[$0.logical.id] = $0
-        }
+    public func getServers(filteredBy filters: [VPNServerFilter], orderedBy order: VPNServerOrder) throws -> [ServerInfo] {
+        try repository.getServers(filteredBy: filters, orderedBy: order)
+    }
+
+    public func upsert(servers: [VPNServer]) throws {
+        try repository.upsert(servers: servers)
         didStoreServers?(servers)
     }
 
-    func getFirstServer(filteredBy filters: [VPNServerFilter], orderedBy order: VPNServerOrder) -> VPNServer? {
-        return servers(filteredBy: filters, orderedBy: order).first
+    public func deleteServers(withMinTier minTier: Int, withIDsNotIn ids: Set<String>) throws -> Int {
+        return try repository.delete(serversWithMinTier: minTier, withIDsNotIn: ids)
     }
 
-    func getServers(filteredBy filters: [VPNServerFilter], orderedBy order: VPNServerOrder) -> [ServerInfo] {
-        return servers(filteredBy: filters, orderedBy: order)
-            .map { ServerInfo(logical: $0.logical, protocolSupport: $0.supportedProtocols) }
-    }
-
-    func deleteServers(withMinTier minTier: Int, withIDsNotIn ids: Set<String>) -> Int {
-        let initialServerCount = servers.count
-        servers = servers.filter { (id, server) in
-            ids.contains(id) || server.logical.tier < minTier
-        }
-        return initialServerCount - servers.count
-    }
-
-    func upsert(loads: [ContinuousServerProperties]) {
-        let updatedServers: [VPNServer] = loads.compactMap { dynamicInfo in
-            let serverID = dynamicInfo.serverId
-            guard let server = servers[serverID] else {
-                if shouldFailOnMissingServerDuringLoadsUpdate {
-                    XCTFail("Failed to update dynamic info - no server with ID \(serverID)")
-                }
-                return nil
-            }
-            let updatedServer = server.with(dynamicInfo: dynamicInfo)
-            servers[serverID] = updatedServer
-            return updatedServer
+    public func upsert(loads: [ContinuousServerProperties]) throws {
+        try repository.upsert(loads: loads)
+        let updatedServers = try loads.compactMap {
+            try repository.getFirstServer(filteredBy: [.logicalID($0.serverId)], orderedBy: .none)
         }
         didUpdateLoads?(updatedServers)
     }
 }
 
 extension ServerRepository {
-    /// Mock repository which partially implements functionality of the real thing.
+    /// Returns a `ServerRepository` which itself wraps a `ServerRepositoryWrapper`. This allows integration tests to
+    /// use real SQL based repository functions, while exposing callbacks such as `didStoreServers`.
     ///
-    /// Suitable for tests where simple changes occur within the repository, or callbacks are required such as whenever
-    /// servers are inserted. Unit tests should instead construct a minimal mock repository.
+    /// Suitable for integration tests, when large changes occur within the repository, or when callbacks are required
+    /// such as whenever servers are inserted.
     ///
-    /// For integration tests, it is preferable to use the live server repository based on an in-memory `AppDatabase`.
-    /// This results in more coverage and easier setup,
-    public static func mock(storage: MockServerStorage) -> Self {
+    /// Unit tests should instead construct a minimal mock repository.
+    public static func wrapped(wrappedWith wrapper: ServerRepositoryWrapper) -> Self {
         return .init(
-            serverCount: { storage.serverCount },
-            upsertServers: storage.upsert,
-            server: storage.getFirstServer,
-            servers: storage.getServers,
-            deleteServers: storage.deleteServers,
-            upsertLoads: storage.upsert
-        )
-    }
-}
-
-extension Domain.VPNServer {
-    func with(dynamicInfo: ContinuousServerProperties) -> Domain.VPNServer {
-        VPNServer(
-            logical: self.logical.with(dynamicInfo: dynamicInfo),
-            endpoints: self.endpoints
-        )
-    }
-}
-
-extension Domain.Logical {
-    func with(dynamicInfo: ContinuousServerProperties) -> Domain.Logical {
-        return Domain.Logical(
-            id: id,
-            name: name,
-            domain: domain,
-            load: dynamicInfo.load,
-            entryCountryCode: entryCountryCode,
-            exitCountryCode: exitCountryCode,
-            tier: tier,
-            score: dynamicInfo.score,
-            status: dynamicInfo.status,
-            feature: feature,
-            city: city,
-            hostCountry: hostCountry,
-            translatedCity: translatedCity,
-            latitude: latitude,
-            longitude: longitude,
-            gatewayName: gatewayName
+            serverCount: { try wrapper.serverCount },
+            upsertServers: wrapper.upsert,
+            server: wrapper.getFirstServer,
+            servers: wrapper.getServers,
+            deleteServers: wrapper.deleteServers,
+            upsertLoads: wrapper.upsert
         )
     }
 }

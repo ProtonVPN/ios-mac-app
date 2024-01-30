@@ -28,9 +28,11 @@ public struct ProtocolSupport: OptionSet, Codable {
     public static let wireGuardUDP = ProtocolSupport(bitPosition: VpnProtocol.wireGuard(.udp).protocolSupportBitPosition)
     public static let wireGuardTCP = ProtocolSupport(bitPosition: VpnProtocol.wireGuard(.tcp).protocolSupportBitPosition)
     public static let wireGuardTLS = ProtocolSupport(bitPosition: VpnProtocol.wireGuard(.tls).protocolSupportBitPosition)
+    public static let openVPNUDP = ProtocolSupport(bitPosition: VpnProtocol.openVpn(.udp).protocolSupportBitPosition)
+    public static let openVPNTCP = ProtocolSupport(bitPosition: VpnProtocol.openVpn(.tcp).protocolSupportBitPosition)
 
     public static let zero = ProtocolSupport([])
-    public static let all = ProtocolSupport([.ikev2, .wireGuardUDP, .wireGuardTCP, .wireGuardTLS])
+    public static let all = ProtocolSupport([.ikev2, .wireGuardUDP, .wireGuardTCP, .wireGuardTLS, .openVPNUDP, .openVPNTCP])
 
     public init(rawValue: Int) {
         self.rawValue = rawValue
@@ -46,7 +48,7 @@ public struct ProtocolSupport: OptionSet, Codable {
 extension VpnProtocol {
     fileprivate var protocolSupportBitPosition: Int {
         switch self {
-        case .ike: 
+        case .ike:
             return 0
         case .wireGuard(.udp):
             return 1
@@ -54,8 +56,10 @@ extension VpnProtocol {
             return 2
         case .wireGuard(.tls):
             return 3
-        case .openVpn:
-            return 7
+        case .openVpn(.udp):
+            return 4
+        case .openVpn(.tcp):
+            return 5
         }
     }
 

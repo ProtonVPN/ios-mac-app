@@ -82,8 +82,8 @@
                 "id": "AEServerIP1",
                 "domain": "ua-01.protonvpn.com",
                 "status": 1,
-                "exitIp": "1.2.3.7",
-
+                "entryIp": "4.3.2.1",
+                "exitIp": "1.2.3.7"
             }
         ],
     },
@@ -108,6 +108,7 @@
                 "id": "slowVancouverServerIP1",
                 "domain": "ca-01.protonvpn.com",
                 "status": 1,
+                "entryIp": "4.3.2.1",
                 "exitIp": "1.2.3.7",
 
             }
@@ -389,7 +390,7 @@
             "load": 59,
             "name": "US-NY#61",
             "tier": 2,
-            "id": "fastestFeatureslessUSServer",
+            "id": "fastestFeaturelessUSServer",
             "entryCountryCode": "US",
             "city": "New York City",
             "feature": 0,
@@ -403,6 +404,11 @@
                 "label": "8",
                 "status": 1,
                 "id": "fastFeaturelessUSServerIP1",
+                "protocolEntries": {
+                    "IKEv2": {
+                        "Ports": [5678]
+                    }
+                },
             }
         ],
     },
@@ -439,11 +445,11 @@
             "exitCountryCode": "DE",
             "status": 1,
             "domain": "node-de-1.protonvpn.net",
-            "score": 0.5,
+            "score": 0.45,
             "load": 59,
             "name": "DE#10",
             "tier": 2,
-            "id": "limitedConnectivityDEServer1",
+            "id": "DE1",
             "entryCountryCode": "DE",
             "city": "Berlin",
             "feature": 14,
@@ -456,7 +462,7 @@
                 "entryIp": "1.7.72.1",
                 "label": "8",
                 "status": 1,
-                "id": "limitedConnectivityDEIKEServer",
+                "id": "DE1s",
                 "protocolEntries": {
                     "IKEv2": {
                         "Ports": [5678]
@@ -471,11 +477,11 @@
             "exitCountryCode": "DE",
             "domain": "node-de-2.protonvpn.net",
             "status": 1,
-            "score": 0.5,
+            "score": 0.475,
             "load": 59,
             "name": "DE#9",
             "tier": 2,
-            "id": "limitedConnectivityDEServer2",
+            "id": "DE2",
             "entryCountryCode": "DE",
             "city": "Berlin",
             "feature": 14,
@@ -487,7 +493,7 @@
                 "exitIp": "1.7.72.1",
                 "entryIp": "1.7.72.1",
                 "status": 1,
-                "id": "limitedConnectivityDEWireGuardTLSServer",
+                "id": "DE2s",
                 "protocolEntries": {
                     "WireGuardTLS": {
                         "Ports": [1234]

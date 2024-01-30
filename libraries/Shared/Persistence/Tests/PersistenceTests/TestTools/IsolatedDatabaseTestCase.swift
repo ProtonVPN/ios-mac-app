@@ -30,13 +30,7 @@ import Dependencies
 /// define a single test that does.
 public class IsolatedDatabaseTestCase: XCTestCase {
 
-    public static var repository: ServerRepository!
-
-    /// Used to set up an in-memory database unique to each `IsolatedDatabaseTestCase` subclass
-    /// By default this identifier is equal to the class name.
-    public class var resourceName: String {
-        String("\(Self.self)".split(separator: ".").last!)
-    }
+    fileprivate static var repository: ServerRepository!
 
     public var sut: ServerRepository { Self.repository }
 
@@ -50,11 +44,33 @@ public class IsolatedDatabaseTestCase: XCTestCase {
     }
 }
 
+/// Provides a repository, based on a fresh in-memory database for each test within this test case. Ideal for unit tests
+/// that modify the database with a small to medium set of data
+public class TestIsolatedDatabaseTestCase: XCTestCase {
+
+    public var sut: ServerRepository!
+
+    public override func setUp() {
+        super.setUp()
+        sut = withDependencies {
+            $0.appDB = .newInMemoryInstance()
+        } operation: {
+            ServerRepository.liveValue
+        }
+    }
+}
+
+
 /// Provides an isolated database shared across test within this test case similarly to `IsolatedDatabaseTestCase`, with
 /// the addition of initialising it with data loaded from a test resource named after the name of test case class.
 ///
 /// The resource name can be customised by overriding `resourceName`.
 public class IsolatedResourceDrivenDatabaseTestCase: IsolatedDatabaseTestCase {
+
+    /// Used to find the resource which contains servers used to initialise this test case with
+    public class var resourceName: String {
+        String("\(Self.self)".split(separator: ".").last!)
+    }
 
     public override class func setUp() {
         super.setUp()
@@ -70,5 +86,4 @@ public class IsolatedResourceDrivenDatabaseTestCase: IsolatedDatabaseTestCase {
         let data = try Data(contentsOf: jsonURL)
         return try JSONDecoder().decode([VPNServer].self, from: data)
     }
-
 }

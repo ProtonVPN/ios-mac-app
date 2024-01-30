@@ -50,6 +50,7 @@ extension ServerRepository {
             },
             server: { filters, order in
                 try database.writer().read { db in
+
                     let request = ServerResult.request(filters: filters, order: order)
                     let result = try ServerResult.fetchOne(db, request)
 

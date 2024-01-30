@@ -47,9 +47,7 @@ extension QueryInterfaceRequest {
             return order(statusAlias[LogicalStatus.Columns.status].desc, SQL("RANDOM()"))
 
         case .fastest:
-            // We could also sort by tier descending, but API should return lower scores for servers with higher tier
-            // It would also require a more complicated cross-table index
-            return order(statusAlias[LogicalStatus.Columns.status].desc, statusAlias[LogicalStatus.Columns.score].asc)
+            return order(statusAlias[LogicalStatus.Columns.score].asc)
 
         case .nameAscending:
             return order(logicalAlias[Logical.Columns.namePrefix].asc, logicalAlias[Logical.Columns.sequenceNumber].asc)
@@ -171,13 +169,10 @@ extension ServerResult {
         let overrideAlias = TableAlias()
 
         return Logical.aliased(logicalAlias)
-            .including(all: Logical.endpoints.including(optional: Endpoint.overrides))
-            .joining(
-                required: Logical.endpoints.aliased(endpointAlias)
-                    .joining(optional: Endpoint.overrides.aliased(overrideAlias))
-            )
-            .including(required: Logical.status.aliased(statusAlias))
+            .joining(required: Logical.endpoints.aliased(endpointAlias).joining(optional: Endpoint.overrides.aliased(overrideAlias)))
             .filterServers(filters, logicalAlias: logicalAlias, statusAlias: statusAlias, overrideAlias: overrideAlias)
+            .including(all: Logical.endpoints.including(optional: Endpoint.overrides.forKey("overrideInfo")))
+            .including(required: Logical.status.aliased(statusAlias))
             .asRequest(of: ServerResult.self)
             .group(logicalAlias[Logical.Columns.id])
             .order(order, logicalAlias: logicalAlias, statusAlias: statusAlias)
@@ -193,7 +188,7 @@ extension ServerInfoResult {
         return Endpoint
             .including(required: Endpoint.logical.aliased(logicalAlias).including(required: Logical.status.aliased(statusAlias)))
             .joining(optional: Endpoint.overrides.aliased(overrideAlias))
-            .annotated(with: bitwiseOr(overrideAlias[EndpointOverrides.Columns.protocolMask]).forKey("protocolMask"))
+            .annotated(with: bitwiseOr(overrideAlias[EndpointOverrides.Columns.protocolMask] ?? ProtocolSupport.all.rawValue).forKey("protocolMask"))
             .filterServers(filters, logicalAlias: logicalAlias, statusAlias: statusAlias, overrideAlias: overrideAlias)
             .asRequest(of: ServerInfoResult.self)
             .group(logicalAlias[Logical.Columns.id])
