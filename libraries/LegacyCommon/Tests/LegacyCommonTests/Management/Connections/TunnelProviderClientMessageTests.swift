@@ -53,7 +53,7 @@ class TunnelProviderClientMessageTests: ConnectionTestCaseDriver {
         populateExpectations(description: "Handle session expired in WireGuard extension",
                              [.vpnConnection, .localAgentConnection, pushSelector, .certificateRefresh])
 
-        container.vpnGateway.connect(with: request)
+        processGatewayConnectionRequestWithOverriddenDependencies(request: request)
 
         awaitExpectations()
 
@@ -72,7 +72,7 @@ class TunnelProviderClientMessageTests: ConnectionTestCaseDriver {
                              [.vpnConnection, .localAgentConnection, .vpnDisconnection,
                               storeKeys, .vpnConnection, .certificateRefresh])
 
-        container.vpnGateway.connect(with: request)
+        processGatewayConnectionRequestWithOverriddenDependencies(request: request)
 
         awaitExpectations()
 
@@ -94,7 +94,7 @@ class TunnelProviderClientMessageTests: ConnectionTestCaseDriver {
         populateExpectations(description: "WireGuard extension tells app that API has asked not to refresh certs so much",
                              [.vpnConnection, .alertDisplayed])
 
-        container.vpnGateway.connect(with: request)
+        processGatewayConnectionRequestWithOverriddenDependencies(request: request)
 
         awaitExpectations()
 

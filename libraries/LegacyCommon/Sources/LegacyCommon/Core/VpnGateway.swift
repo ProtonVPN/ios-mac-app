@@ -556,7 +556,7 @@ public class VpnGateway: VpnGatewayProtocol {
                 }
             }
         }
-        
+
         siriHelper?.donateDisconnect()
         appStateManager.disconnect(completion: completionWrapper)
     }

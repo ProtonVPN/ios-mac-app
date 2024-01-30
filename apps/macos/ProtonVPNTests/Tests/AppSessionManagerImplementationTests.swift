@@ -45,7 +45,6 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     fileprivate var authKeychain: AuthKeychainHandleMock!
     fileprivate var unauthKeychain: UnauthKeychainMock!
     var propertiesManager: PropertiesManagerMock!
-    var serverStorage: MockServerStorage!
     var networking: NetworkingMock!
     var networkingDelegate: FullNetworkingMockDelegate!
     var manager: AppSessionManagerImplementation!
@@ -63,8 +62,6 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         vpnKeychain = VpnKeychainMock()
         alertService = AppSessionManagerAlertServiceMock()
         appStateManager = AppStateManagerMock()
-        serverStorage = MockServerStorage(servers: [])
-
 
         networkingDelegate = FullNetworkingMockDelegate()
         let freeCreds = VpnKeychainMock.vpnCredentials(planName: "free", maxTier: .freeTier)
@@ -80,7 +77,8 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
         manager = withDependencies {
             $0.date = .constant(Date())
-            $0.serverRepository = .mock(storage: serverStorage)
+            $0.appDB = .createInMemoryDatabase()
+            $0.serverRepository = .liveValue
         } operation: {
             let factory = ManagerFactoryMock(
                 vpnAPIService: mockAPIService,
@@ -98,7 +96,6 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         super.tearDown()
         alertService = nil
         propertiesManager = nil
-        serverStorage = nil
         networking = nil
         networkingDelegate = nil
     }
@@ -207,15 +204,22 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         manager.sessionStatus = .established
 
         let loginExpectation = XCTestExpectation(description: "Manager should not time out when attempting a login")
-        let sessionChangedNotificationExpectation = XCTNSNotificationExpectation(name: SessionChanged.name, object: manager)
-        sessionChangedNotificationExpectation.isInverted = true
+
+        let token = NotificationCenter.default.addObserver(for: SessionChanged.name, object: manager) { _ in
+            XCTFail("Manager should not post SessionChanged if already logged in")
+        }
 
         manager.attemptSilentLogIn { result in
             loginExpectation.fulfill()
             guard case .success = result else { return XCTFail("Should succeed silently logging in when already logged in") }
         }
 
-        wait(for: [loginExpectation, sessionChangedNotificationExpectation], timeout: asyncTimeout)
+        wait(for: [loginExpectation], timeout: asyncTimeout)
+
+        // We need to hold a reference to `token` to continue observing for notifications until the end of the test.
+        // Assigning the result of `addObserver` to `_` causes it to be instantly deallocated. This looks dumb, but the
+        // only way I could find to silence the unused_variable warning was to actually use it
+        XCTAssertNotNil(token)
     }
 
     // MARK: Active VPN connection login tests

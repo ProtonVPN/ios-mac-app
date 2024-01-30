@@ -51,16 +51,18 @@ class VpnServerSelectorTests: XCTestCase {
     override class func setUp() {
         super.setUp()
         let mockServers = [
-            server(id: "GB0", countryCode: "GB", tier: 3, score: 1),
-            server(id: "GB1", countryCode: "GB", tier: 2, score: 3, feature: .tor),
-            server(id: "GB2", countryCode: "GB", tier: 1, score: 5, feature: .secureCore),
-            server(id: "DE0", countryCode: "DE", tier: 3, score: 2),
-            server(id: "DE1", countryCode: "DE", tier: 2, score: 4, feature: .tor),
-            server(id: "DE2", countryCode: "DE", tier: 1, score: 6, feature: .secureCore),
-            server(id: "US0", countryCode: "US", tier: 1, score: 7),
-            server(id: "US1", countryCode: "US", tier: 2, score: 6),
-            server(id: "CH0", countryCode: "CH", tier: 2, score: 1.5, status: 0),
-            server(id: "CH1", countryCode: "CH", tier: 2, score: 2, status: 0)
+            makeMockServer(id: "GB0", countryCode: "GB", tier: 3, score: 1),
+            makeMockServer(id: "GB1", countryCode: "GB", tier: 2, score: 3, feature: .tor),
+            makeMockServer(id: "GB2", countryCode: "GB", tier: 1, score: 5, feature: .secureCore),
+            makeMockServer(id: "DE0", countryCode: "DE", tier: 3, score: 2),
+            makeMockServer(id: "DE1", countryCode: "DE", tier: 2, score: 4, feature: .tor),
+            makeMockServer(id: "DE2", countryCode: "DE", tier: 1, score: 6, feature: .secureCore),
+            makeMockServer(id: "US0", countryCode: "US", tier: 1, score: 7),
+            makeMockServer(id: "US1", countryCode: "US", tier: 2, score: 6),
+            makeMockServer(id: "CH0", countryCode: "CH", tier: 2, score: 1.5, status: 0),
+            makeMockServer(id: "CH1", countryCode: "CH", tier: 2, score: 2, status: 0),
+            makeMockServer(id: "PL0", countryCode: "PL", tier: 1, score: 7, protocols: .ikev2),
+            makeMockServer(id: "PL1", countryCode: "PL", tier: 2, score: 6, protocols: [.wireGuardTLS, .openVPNUDP])
         ]
 
         Self.mockServers = mockServers.reduce(into: [:]) { $0[$1.logical.id] = $1 }
@@ -72,6 +74,13 @@ class VpnServerSelectorTests: XCTestCase {
         }
 
         try! repository.upsert(servers: mockServers)
+    }
+
+    func testServersUnchangedByRoundTrip() throws {
+        try servers.values.forEach { server in
+            let serverFromDB = try repository.getFirstServer(filteredBy: [.logicalID(server.logical.id)], orderedBy: .none)
+            XCTAssertEqual(serverFromDB, server)
+        }
     }
 
     func selectServer(
@@ -172,7 +181,7 @@ class VpnServerSelectorTests: XCTestCase {
         let currentUserTier = 3
         let type = ServerType.unspecified
 
-        let specifiedServer = ServerModel(server: servers["DE2"]!)
+        let specifiedServer = ServerModel(server: try XCTUnwrap(servers["DE2"]))
         let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .country("DE", .server(specifiedServer)), connectionProtocol: connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil, trigger: nil)
 
         let server = selectServer(
@@ -230,6 +239,7 @@ class VpnServerSelectorTests: XCTestCase {
             }
         )
 
+        XCTAssertNil(server)
         XCTAssertEqual(notifiedNoResolution, true)
     }
 
@@ -280,7 +290,7 @@ class VpnServerSelectorTests: XCTestCase {
 
     // MARK: - Helpers
 
-    private static func server(
+    private static func makeMockServer(
         id: String,
         countryCode: String,
         gatewayName: String? = nil,
@@ -290,7 +300,7 @@ class VpnServerSelectorTests: XCTestCase {
         status: Int = 1,
         protocols: ProtocolSupport = .all
     ) -> VPNServer {
-        return VPNServer(
+        let server = VPNServer(
             logical: Logical(
                 id: id,
                 name: id,
@@ -311,8 +321,9 @@ class VpnServerSelectorTests: XCTestCase {
             ),
             endpoints: [
                 ServerEndpoint(
-                    id: id,
-                    exitIp: id,
+                    id: UUID().uuidString,
+                    entryIp: "1.1.1.1",
+                    exitIp: "2.2.2.2",
                     domain: id,
                     status: status,
                     protocolEntries: mockProtocolEntries(supporting: protocols)
@@ -320,14 +331,20 @@ class VpnServerSelectorTests: XCTestCase {
             ]
         )
 
+        XCTAssertEqual(server.supportedProtocols, protocols)
+        return server
     }
 
-    private static func mockProtocolEntries(supporting protocols: ProtocolSupport) -> PerProtocolEntries {
+    private static func mockProtocolEntries(supporting protocols: ProtocolSupport) -> PerProtocolEntries? {
+        if protocols == .all {
+            return nil
+        }
+
         let entries: [String: ServerProtocolEntry] = VpnProtocol.allCases
-            .filter { !$0.isDeprecated }
             .reduce(into: [:]) {
-                guard protocols.contains($1.protocolSupport) else { return }
-                $0[$1.apiDescription] = ServerProtocolEntry(ipv4: "1.2.3.4", ports: [25565])
+                if protocols.contains($1.protocolSupport) {
+                    $0[$1.apiDescription] = ServerProtocolEntry(ipv4: nil, ports: [25565])
+                }
             }
 
         return PerProtocolEntries(rawValue: entries)

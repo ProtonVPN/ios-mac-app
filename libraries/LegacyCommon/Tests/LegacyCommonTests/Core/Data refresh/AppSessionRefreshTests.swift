@@ -34,7 +34,7 @@ import VPNSharedTesting
 class AppSessionRefreshTimerTests: XCTestCase {
     var alertService: CoreAlertServiceDummy!
     var propertiesManager: PropertiesManagerMock!
-    var serverStorage: MockServerStorage!
+    var repositoryWrapper: ServerRepositoryWrapper!
     var networking: NetworkingMock!
     var networkingDelegate: FullNetworkingMockDelegate!
     var apiService: VpnApiService!
@@ -43,27 +43,31 @@ class AppSessionRefreshTimerTests: XCTestCase {
     var timerFactory: TimerFactoryMock!
     var appSessionRefreshTimer: AppSessionRefreshTimer!
     var authKeychain: MockAuthKeychain!
-    var repository: ServerRepository!
 
     let testData = MockTestData()
     let location: MockTestData.VPNLocationResponse = .mock
 
-    override func setUp() {
+    override func setUpWithError() throws {
         super.setUp()
         alertService = CoreAlertServiceDummy()
         propertiesManager = PropertiesManagerMock()
         networking = NetworkingMock()
         networkingDelegate = FullNetworkingMockDelegate()
         let initialServers = [testData.server1, testData.server2, testData.server3].map { VPNServer(legacyModel: $0) }
-        serverStorage = MockServerStorage(servers: initialServers)
-        repository = .mock(storage: serverStorage)
+        let repository = withDependencies {
+            $0.appDB = .createInMemoryDatabase()
+        } operation: {
+            ServerRepository.liveValue
+        }
+        try repository.upsert(servers: initialServers)
+        repositoryWrapper = ServerRepositoryWrapper(repository: repository)
 
         networking.delegate = networkingDelegate
         vpnKeychain = VpnKeychainMock()
         authKeychain = MockAuthKeychain()
         apiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation(), authKeychain: authKeychain)
         appSessionRefresher = withDependencies {
-            $0.serverRepository = repository
+            $0.serverRepository = .wrapped(wrappedWith: repositoryWrapper)
         } operation: {
             return AppSessionRefresherMock(factory: self)
         }
@@ -79,7 +83,7 @@ class AppSessionRefreshTimerTests: XCTestCase {
         super.tearDown()
         alertService = nil
         propertiesManager = nil
-        serverStorage = nil
+        repositoryWrapper = nil
         networking = nil
         networkingDelegate = nil
         apiService = nil
@@ -92,7 +96,7 @@ class AppSessionRefreshTimerTests: XCTestCase {
 
     func checkForSuccessfulServerUpdate() throws {
         for serverUpdate in networkingDelegate.apiServerLoads {
-            guard let server = try repository.getFirstServer(
+            guard let server = try repositoryWrapper.getFirstServer(
                 filteredBy: [.logicalID(serverUpdate.serverId)],
                 orderedBy: .fastest
             ) else {
@@ -100,10 +104,10 @@ class AppSessionRefreshTimerTests: XCTestCase {
                 continue
             }
 
-            XCTAssertEqual(serverUpdate.serverId, server.logical.id)
-            XCTAssertEqual(serverUpdate.score, server.logical.score)
-            XCTAssertEqual(serverUpdate.load, server.logical.load)
-            XCTAssertEqual(serverUpdate.status, server.logical.status)
+            XCTAssertEqual(server.logical.id, serverUpdate.serverId)
+            XCTAssertEqual(server.logical.score, serverUpdate.score)
+            XCTAssertEqual(server.logical.load, serverUpdate.load)
+            XCTAssertEqual(server.logical.status, serverUpdate.status)
         }
     }
 
@@ -117,7 +121,7 @@ class AppSessionRefreshTimerTests: XCTestCase {
 
         var (nServerUpdates, nCredUpdates) = (0, 0)
 
-        serverStorage.didUpdateLoads = { _ in
+        repositoryWrapper.didUpdateLoads = { _ in
             guard nServerUpdates < expectations.updateServers.count else {
                 XCTFail("Index out of range")
                 return

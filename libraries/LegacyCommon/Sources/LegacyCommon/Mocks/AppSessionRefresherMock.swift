@@ -18,6 +18,8 @@
 
 import Foundation
 
+import Dependencies
+
 import Domain
 
 /// This exists because the `attemptSilentLogIn()` function needs to be overridden.

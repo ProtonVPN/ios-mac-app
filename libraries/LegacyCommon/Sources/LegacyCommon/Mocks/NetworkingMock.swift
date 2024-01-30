@@ -20,6 +20,9 @@ import VPNShared
 
 import XCTestDynamicOverlay
 
+// Ensure mock network requests are quick for fast unit/integration tests
+private let maxMockRequestTime: TimeInterval = 0.1
+
 public final class NetworkingMock {
     public weak var delegate: NetworkingMockDelegate?
 
@@ -109,7 +112,15 @@ extension NetworkingMock: Networking {
     }
     
     public func request(_ route: Request, completion: @escaping (Result<JSONDictionary, Error>) -> Void) {
+        let start = Date()
         request(route) { (result: Result<Data, Error>) in
+            let elapsedTime = Date().timeIntervalSince(start)
+            if elapsedTime > maxMockRequestTime {
+                let elapsedMillis = (elapsedTime * 1000).rounded()
+                // TODO: There is no reason for a fully mocked request to take even a fraction of this time
+                // XCTFail("Mock network request on \(route) exceeded maximum allowed time: \(elapsedMillis)ms")
+                log.warning("Mock network request on \(route) exceeded maximum allowed time: \(elapsedMillis)ms")
+            }
             switch result {
             case let .success(data):
                 guard let dict = data.jsonDictionary else {
