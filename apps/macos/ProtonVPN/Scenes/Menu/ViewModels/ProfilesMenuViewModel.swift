@@ -21,7 +21,10 @@
 //
 
 import Cocoa
+
 import Dependencies
+
+import Ergonomics
 import LegacyCommon
 
 protocol ProfilesMenuViewModelFactory {

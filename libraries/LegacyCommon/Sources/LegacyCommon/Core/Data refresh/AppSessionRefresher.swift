@@ -22,6 +22,10 @@
 
 import Foundation
 
+import Dependencies
+
+import Ergonomics
+
 /// Classes that confirm to this protocol can refresh data from API into the app
 public protocol AppSessionRefresher: AnyObject {
     var lastDataRefresh: Date? { get }

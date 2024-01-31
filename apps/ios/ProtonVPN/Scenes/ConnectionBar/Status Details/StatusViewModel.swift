@@ -29,6 +29,7 @@ import GSMessages
 import ProtonCoreUIFoundations
 
 import Domain
+import Ergonomics
 import LocalFeatureFlags
 import Strings
 import Home
