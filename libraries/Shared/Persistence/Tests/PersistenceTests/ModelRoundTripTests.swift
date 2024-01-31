@@ -17,16 +17,16 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-
 import XCTest
 
+import PersistenceTestSupport
 @testable import Persistence
 
 /// These tests verify that no information is lost in translation from model, to internal database record, back to model
 final class ModelToRecordRoundTripTests: TestIsolatedDatabaseTestCase {
 
     func testVPNServerWithMultipleOverrides() throws {
-        let serverToInsert = serverWithMultipleEndpointsAndOverrides
+        let serverToInsert = TestData.serverWithMultipleEndpointsAndOverrides
         try repository.upsert(servers: [serverToInsert])
 
         let result = try repository.getFirstServer(filteredBy: [], orderedBy: .none)
@@ -37,7 +37,7 @@ final class ModelToRecordRoundTripTests: TestIsolatedDatabaseTestCase {
     }
 
     func testVPNServerWithLimitedProtocolSupport() throws {
-        let serverToInsert = serverWithLimitedProtocolSupport
+        let serverToInsert = TestData.serverWithLimitedProtocolSupport
         try repository.upsert(servers: [serverToInsert])
 
         let result = try repository.getFirstServer(filteredBy: [], orderedBy: .none)
@@ -48,7 +48,7 @@ final class ModelToRecordRoundTripTests: TestIsolatedDatabaseTestCase {
     }
 
     func testVPNServerWithNoOverrides() throws {
-        let serverToInsert = serverWithNoOverrides
+        let serverToInsert = TestData.serverWithNoOverrides
         try repository.upsert(servers: [serverToInsert])
 
         let result = try repository.getFirstServer(filteredBy: [], orderedBy: .none)

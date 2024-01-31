@@ -28,11 +28,11 @@ import VPNShared
 
 /// - Note: To be implemented with remainder of protocol overrides feature.
 class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
-    override func setUp() async throws {
+    override func setUpWithError() throws {
         #if os(macOS)
         throw XCTSkip("Protocol override tests are skipped on macOS, since there is no cert refresh provider.")
         #endif
-        try await super.setUp()
+        try super.setUpWithError()
 
         let testData = MockTestData()
 
@@ -43,7 +43,7 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
 
         let servers = container.networkingDelegate.apiServerList.map { VPNServer(legacyModel: $0) }
 
-        try wrappedServerRepository.upsert(servers: servers)
+        try repository.upsert(servers: servers)
     }
 
     // Disabled because IKEv2 is not supported on iOS (VPNAPPL-1843)
@@ -83,7 +83,7 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
 
         container.propertiesManager.vpnProtocol = .wireGuard(.tls)
 
-        withDependencies({ $0.serverRepository = wrappedServerRepository }, operation: {
+        withDependencies({ $0.serverRepository = repository }, operation: {
             container.vpnGateway.connectTo(server: testData.server5)
         })
 
@@ -125,7 +125,7 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
         }
 
         container.propertiesManager.vpnProtocol = .wireGuard(.tls)
-        withDependencies({ $0.serverRepository = wrappedServerRepository }, operation: {
+        withDependencies({ $0.serverRepository = repository }, operation: {
             container.vpnGateway.connectTo(server: testData.server6)
         })
 
@@ -198,7 +198,7 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
             managerConfig = vmc
         }
 
-        withDependencies({ $0.serverRepository = wrappedServerRepository }, operation: {
+        withDependencies({ $0.serverRepository = repository }, operation: {
             container.vpnGateway.connectTo(server: testData.server8)
         })
 

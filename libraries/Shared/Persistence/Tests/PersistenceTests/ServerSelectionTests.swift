@@ -22,7 +22,7 @@ import Dependencies
 import GRDB
 
 import Domain
-
+import PersistenceTestSupport
 @testable import Persistence
 
 final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {

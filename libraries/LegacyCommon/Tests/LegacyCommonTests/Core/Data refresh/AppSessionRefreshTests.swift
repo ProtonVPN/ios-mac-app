@@ -27,11 +27,12 @@ import ProtonCoreTestingToolkitUnitTestsCore
 @testable import LegacyCommon
 import Domain
 import Persistence
+import PersistenceTestSupport
 import Timer
 import TimerMock
 import VPNSharedTesting
 
-class AppSessionRefreshTimerTests: XCTestCase {
+class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     var alertService: CoreAlertServiceDummy!
     var propertiesManager: PropertiesManagerMock!
     var repositoryWrapper: ServerRepositoryWrapper!
@@ -54,11 +55,6 @@ class AppSessionRefreshTimerTests: XCTestCase {
         networking = NetworkingMock()
         networkingDelegate = FullNetworkingMockDelegate()
         let initialServers = [testData.server1, testData.server2, testData.server3].map { VPNServer(legacyModel: $0) }
-        let repository = withDependencies {
-            $0.appDB = .createInMemoryDatabase()
-        } operation: {
-            ServerRepository.liveValue
-        }
         try repository.upsert(servers: initialServers)
         repositoryWrapper = ServerRepositoryWrapper(repository: repository)
 

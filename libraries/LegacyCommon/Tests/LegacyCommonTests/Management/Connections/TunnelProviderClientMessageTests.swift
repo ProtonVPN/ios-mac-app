@@ -28,11 +28,11 @@ class TunnelProviderClientMessageTests: ConnectionTestCaseDriver {
     let pushSelector: ExpectationCategory = .custom(name: "push new session selector")
     let storeKeys: ExpectationCategory = .custom(name: "store keys in keychain")
 
-    override func setUp() async throws {
+    override func setUpWithError() throws {
         #if os(macOS)
         throw XCTSkip("Tunnel provider client message are skipped on macOS, since there is no cert refresh provider.")
         #else
-        try await super.setUp()
+        try super.setUpWithError()
 
         container.vpnAuthenticationStorage.keys = VpnKeys.mock()
         container.vpnAuthenticationStorage.keysStored = { [unowned self] _ in

@@ -7,10 +7,8 @@ let package = Package(
     name: "Persistence",
     platforms: [.iOS(.v15), .macOS(.v11)],
     products: [
-        .library(
-            name: "Persistence",
-            targets: ["Persistence"]
-        ),
+        .library(name: "Persistence", targets: ["Persistence"]),
+        .library(name: "PersistenceTestSupport", targets: ["PersistenceTestSupport"])
     ],
     dependencies: [
         .package(path: "../../Foundations/Domain"),
@@ -30,9 +28,13 @@ let package = Package(
                 .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay")
             ]
         ),
+        .target(
+            name: "PersistenceTestSupport",
+            dependencies: ["Persistence"]
+        ),
         .testTarget(
             name: "PersistenceTests",
-            dependencies: ["Persistence"],
+            dependencies: ["Persistence", "PersistenceTestSupport"],
             resources: [.process("Resources")]
         ),
     ]

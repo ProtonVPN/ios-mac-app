@@ -26,6 +26,7 @@ import Persistence
 import VPNShared
 import VPNSharedTesting
 import ProtonCoreNetworking
+import PersistenceTestSupport
 @testable import ProtonVPN
 
 fileprivate let testData = MockTestData()
@@ -39,7 +40,7 @@ fileprivate let subuserWithoutSessionsResponseError = ResponseError(httpCode: Ht
                                                                     userFacingMessage: nil,
                                                                     underlyingError: nil)
 
-final class AppSessionManagerImplementationTests: XCTestCase {
+final class AppSessionManagerImplementationTests: TestIsolatedDatabaseTestCase {
 
     fileprivate var alertService: AppSessionManagerAlertServiceMock!
     fileprivate var authKeychain: AuthKeychainHandleMock!
@@ -53,8 +54,8 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
     let asyncTimeout: TimeInterval = 5
 
-    override func setUp() {
-        super.setUp()
+    override func setUpWithError() throws {
+        try super.setUpWithError()
         propertiesManager = PropertiesManagerMock()
         networking = NetworkingMock()
         authKeychain = AuthKeychainHandleMock()
@@ -77,8 +78,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
         manager = withDependencies {
             $0.date = .constant(Date())
-            $0.appDB = .createInMemoryDatabase()
-            $0.serverRepository = .liveValue
+            $0.serverRepository = repository
         } operation: {
             let factory = ManagerFactoryMock(
                 vpnAPIService: mockAPIService,

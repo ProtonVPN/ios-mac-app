@@ -18,11 +18,24 @@
 
 import Foundation
 
-import XCTest
+import Dependencies
 
-func fetch<T: Decodable>(_ type: T.Type, fromResourceNamed name: String) throws -> T {
-    let jsonPath = try XCTUnwrap(Bundle.module.path(forResource: name, ofType: "json"))
-    let jsonURL = URL(fileURLWithPath: jsonPath)
-    let data = try Data(contentsOf: jsonURL)
-    return try JSONDecoder().decode(T.self, from: data)
+import Persistence
+
+/// Defines shared structure for database test drivers and cases.
+///
+/// Don't conform to this protocol directly unless you are creating a test driver such as
+/// `TestIsolatedDatabaseTestDriver` or a base test case such as `TestIsolatedDatabaseTestCase`.
+///
+/// This protocol has to be public in order for deriving protocols to also be public.
+public protocol AbstractDatabaseTestDriver: AnyObject {
+
+    /// Provides an interface to register callbacks
+    var repositoryWrapper: ServerRepositoryWrapper { get }
+
+    /// Use this for tests
+    var repository: ServerRepository { get }
+
+    func setUpRepository() throws
+    static func setUpRepository() throws
 }

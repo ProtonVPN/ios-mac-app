@@ -22,7 +22,7 @@ import XCTest
 import Dependencies
 
 import Domain
-
+import PersistenceTestSupport
 @testable import Persistence
 
 final class ServerDeletionTests: TestIsolatedDatabaseTestCase {
@@ -30,12 +30,12 @@ final class ServerDeletionTests: TestIsolatedDatabaseTestCase {
     func testDeleteStalePaidServers() throws {
         try repository.upsert(
             servers: [
-                mockServer(withID: "free1", tier: 0),
-                mockServer(withID: "paid1", tier: 1),
-                mockServer(withID: "stale1", tier: 1),
-                mockServer(withID: "paid2", tier: 2),
-                mockServer(withID: "free2", tier: 0),
-                mockServer(withID: "stale2", tier: 2)
+                TestData.createMockServer(withID: "free1", tier: 0),
+                TestData.createMockServer(withID: "paid1", tier: 1),
+                TestData.createMockServer(withID: "stale1", tier: 1),
+                TestData.createMockServer(withID: "paid2", tier: 2),
+                TestData.createMockServer(withID: "free2", tier: 0),
+                TestData.createMockServer(withID: "stale2", tier: 2)
             ]
         )
 

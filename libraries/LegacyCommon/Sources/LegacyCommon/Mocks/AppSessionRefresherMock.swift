@@ -43,32 +43,36 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
             return
         }
 
-        vpnApiService.refreshServerInfo(freeTier: isFreeTier) { result in
-            switch result {
-            case let .success(properties):
-                guard let properties else {
-                    completion(.success)
-                    return
-                }
-                if let userLocation = properties.location {
-                    self.propertiesManager.userLocation = userLocation
-                }
-                if let services = properties.streamingServices {
-                    self.propertiesManager.streamingServices = services.streamingServices
-                }
-                do {
-                    if !isFreeTier {
-                        let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
-                        let deletedServerCount = try self.serverRepository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
-                        log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
+        withEscapedDependencies { dependencies in
+            vpnApiService.refreshServerInfo(freeTier: isFreeTier) { result in
+                dependencies.yield {
+                    switch result {
+                    case let .success(properties):
+                        guard let properties else {
+                            completion(.success)
+                            return
+                        }
+                        if let userLocation = properties.location {
+                            self.propertiesManager.userLocation = userLocation
+                        }
+                        if let services = properties.streamingServices {
+                            self.propertiesManager.streamingServices = services.streamingServices
+                        }
+                        do {
+                            if !isFreeTier {
+                                let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
+                                let deletedServerCount = try self.serverRepository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
+                                log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
+                            }
+                            try self.serverRepository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
+                            completion(.success)
+                        } catch {
+                            completion(.failure(error))
+                        }
+                    case let .failure(error):
+                        completion(.failure(error))
                     }
-                    try self.serverRepository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
-                    completion(.success)
-                } catch {
-                    completion(.failure(error))
                 }
-            case let .failure(error):
-                completion(.failure(error))
             }
         }
     }

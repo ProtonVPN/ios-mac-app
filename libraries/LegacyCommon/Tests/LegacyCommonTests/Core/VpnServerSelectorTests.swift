@@ -31,12 +31,6 @@ import Persistence
 
 @testable import LegacyCommon
 
-/// TODO:
-/// `VpnServerSelector` should be refactored to use new `ConnectionSpec` and throw resolution errors
-/// Most server selection logic is implemented with SQL, and so these test might fit better in the Persistence package.
-/// VpnServerSelectorTests should then focus on resolution errors instead.
-///
-/// In the meantime, this still serves as a decent ServerRepository integration test, although needlessly verbose
 class VpnServerSelectorTests: XCTestCase {
     let connectionProtocol: ConnectionProtocol = .vpnProtocol(.ike)
     let smartProtocolConfig = MockTestData().defaultClientConfig.smartProtocolConfig
@@ -68,7 +62,7 @@ class VpnServerSelectorTests: XCTestCase {
         Self.mockServers = mockServers.reduce(into: [:]) { $0[$1.logical.id] = $1 }
 
         Self.repository = withDependencies {
-            $0.appDB = .createInMemoryDatabase()
+            $0.appDB = .newInMemoryInstance()
         } operation: {
             ServerRepository.liveValue
         }

@@ -19,15 +19,12 @@
 import Foundation
 
 import Domain
-
-import XCTestDynamicOverlay
-
-#if DEBUG
+import Persistence
 
 /// Provides callbacks required to maintain legacy tests
 ///
-/// Historically, a MockServerRepository partially implemented the set of features that the real thing provides, but
-/// it was dropped in favour of using a wrapper that provides necessary callbacks to increase test coverage.
+/// Historically, a `MockServerRepository` partially implemented the set of features that the real thing provides, but
+/// it was dropped in favour of using a wrapper around the real implementation, which provides the necessary callbacks.
 public class ServerRepositoryWrapper {
 
     public var didStoreServers: (([VPNServer]) -> Void)?
@@ -94,5 +91,3 @@ extension ServerRepository {
         )
     }
 }
-
-#endif

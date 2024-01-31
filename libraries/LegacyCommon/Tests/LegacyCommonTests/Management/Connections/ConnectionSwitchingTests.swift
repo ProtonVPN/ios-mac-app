@@ -33,12 +33,11 @@ import VPNSharedTesting
 @testable import LegacyCommon
 
 class ConnectionSwitchingTests: BaseConnectionTestCase {
-    override func setUp() async throws {
+    override func setUpWithError() throws {
         #if os(macOS)
         throw XCTSkip("Connection switching tests are skipped on macOS, since there is no cert refresh provider.")
-        #else
-        try await super.setUp()
         #endif
+        try super.setUpWithError()
     }
 
     func testFirstTimeConnectionWithSmartProtocol() async {
@@ -122,7 +121,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
             return true
         }
 
-        try serverRepositoryWrapper.upsert(servers: [VPNServer(legacyModel: testData.server2)])
+        try repository.upsert(servers: [VPNServer(legacyModel: testData.server2)])
 
         let request = ConnectionRequest(serverType: .standard,
                                         connectionType: .country("CH", .fastest),
@@ -221,7 +220,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         container.availabilityCheckerResolverFactory.checkers[.wireGuard(.udp)]?.availabilityCallback = unavailableCallback
 
         let servers = (container.serverStorage.servers.values + [testData.server2]).map { VPNServer(legacyModel: $0) }
-        try serverRepositoryWrapper.upsert(servers: servers)
+        try repository.upsert(servers: servers)
 
         let expectations = (
             initialConnection: XCTestExpectation(description: "initial connection"),
@@ -335,7 +334,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         }
 
         // reconnect with netshield settings change
-        withDependencies({ $0.serverRepository = wrappedServerRepository }, operation: {
+        withDependencies({ $0.serverRepository = repository }, operation: {
             container.vpnGateway.reconnect(with: NATType.strictNAT)
         })
 
@@ -356,7 +355,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         container.networkingDelegate.apiServerList = [testData.server1, testData.server2UnderMaintenance]
 
         var storedServers: [ServerModel] = []
-        serverRepositoryWrapper.didStoreServers = { newServers in
+        repositoryWrapper.didStoreServers = { newServers in
             storedServers = newServers.map { ServerModel(server: $0) }
             expectations.serverListFetch.fulfill()
         }
@@ -373,7 +372,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         // TODO: Why does awaiting this expectation cause mocked `VPNLogicalServicesRequest` to take over 3s?
         await fulfillment(of: [expectations.serverListFetch], timeout: expectationTimeout)
 
-        XCTAssertEqual(try serverRepositoryWrapper.serverCount, 2)
+        XCTAssertEqual(try repositoryWrapper.serverCount, 2)
         let fetchedServer1 = storedServers.first(where: { $0.name == testData.server1.name })
         let fetchedServer2 = storedServers.first(where: { $0.name == testData.server2.name })
 
@@ -590,7 +589,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         let initialServers = [testData.server1, testData.server3]
         container.networkingDelegate.apiServerList = initialServers
-        try wrappedServerRepository.upsert(servers: initialServers.map { VPNServer(legacyModel: $0) })
+        try repository.upsert(servers: initialServers.map { VPNServer(legacyModel: $0) })
 
         container.vpnKeychain.setVpnCredentials(with: "plus", maxTier: .paidTier)
         container.propertiesManager.vpnProtocol = .wireGuard(.udp)
@@ -715,7 +714,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         let downgrade: VpnDowngradeInfo = (plusCreds, freeCreds)
         DispatchQueue.main.async {
-            withDependencies({ $0.serverRepository = self.wrappedServerRepository }, operation: {
+            withDependencies({ $0.serverRepository = self.repository }, operation: {
                 NotificationCenter.default.post(name: VpnKeychainMock.vpnPlanChanged, object: downgrade)
                 self.container.vpnKeychain.credentials = freeCreds
                 NotificationCenter.default.post(name: VpnKeychainMock.vpnCredentialsChanged, object: freeCreds)
@@ -771,7 +770,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         container.networkingDelegate.apiCredentials = freeCreds
         DispatchQueue.main.async {
-            withDependencies({ $0.serverRepository = self.wrappedServerRepository }, operation: {
+            withDependencies({ $0.serverRepository = self.repository }, operation: {
                 NotificationCenter.default.post(name: VpnKeychainMock.vpnUserDelinquent, object: downgrade)
                 self.container.vpnKeychain.credentials = freeCreds
                 NotificationCenter.default.post(name: VpnKeychainMock.vpnCredentialsChanged, object: freeCreds)
@@ -837,7 +836,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
              nAppStateConnectTransitions) = (0, 0, 0, 0)
 
         var storedServers: [ServerModel] = []
-        serverRepositoryWrapper.didStoreServers = { newServers in
+        repositoryWrapper.didStoreServers = { newServers in
             DispatchQueue.main.async {
                 storedServers = newServers.map { ServerModel(server: $0) }
                 expectations.serverSaves[nServerSaves].fulfill()
@@ -903,7 +902,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         withDependencies {
             $0.authKeychain = MockAuthKeychain()
-            $0.serverRepository = wrappedServerRepository
+            $0.serverRepository = repository
         } operation: {
             container.vpnGateway.quickConnect(trigger: .newConnection)
         }
@@ -955,7 +954,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
             timeout: expectationTimeout
         )
 
-        withDependencies({ $0.serverRepository = wrappedServerRepository }, operation: {
+        withDependencies({ $0.serverRepository = repository }, operation: {
             container.vpnGateway.quickConnect(trigger: .newConnection)
         })
         wait(
@@ -1060,7 +1059,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         await MainActor.run {
             withDependencies {
                 $0.date = .constant(Date())
-                $0.serverRepository = wrappedServerRepository
+                $0.serverRepository = repository
                 $0.featureFlagProvider = .constant(flags: .allEnabled)
             } operation: {
                 container.vpnGateway.connect(
@@ -1081,7 +1080,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         await MainActor.run {
             withDependencies {
                 $0.date = .constant(date)
-                $0.serverRepository = wrappedServerRepository
+                $0.serverRepository = repository
                 $0.featureFlagProvider = .constant(flags: .allEnabled)
             } operation: {
                 container.vpnGateway.connect(

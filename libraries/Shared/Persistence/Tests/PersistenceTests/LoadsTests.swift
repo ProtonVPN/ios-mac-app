@@ -20,14 +20,15 @@ import Foundation
 import XCTest
 
 import Domain
-import Persistence
+import PersistenceTestSupport
+@testable import Persistence
 
 final class LoadsTests: TestIsolatedDatabaseTestCase {
 
     func testLoadsUpdated() throws {
         try repository.upsert(servers: [
-            mockServer(withID: "a", load: 50, score: 2, status: 1),
-            mockServer(withID: "b", load: 25, score: 1, status: 0)
+            TestData.createMockServer(withID: "a", load: 50, score: 2, status: 1),
+            TestData.createMockServer(withID: "b", load: 25, score: 1, status: 0)
         ])
 
         let serverA = try repository.getFirstServer(filteredBy: [.logicalID("a")], orderedBy: .none)

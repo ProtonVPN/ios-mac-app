@@ -72,7 +72,7 @@ let package = Package(
                 "Strings",
                 "Theme",
                 "Timer",
-                "Persistence",
+                .product(name: "Persistence", package: "Persistence"),
 
                 "ExtensionIPC",
                 .product(name: "VPNShared", package: "NEHelper"),
@@ -153,6 +153,8 @@ let package = Package(
             name: "LegacyCommonTests",
             dependencies: [
                 "LegacyCommon",
+                .product(name: "Persistence", package: "Persistence"),
+                .product(name: "PersistenceTestSupport", package: "Persistence"),
                 .product(name: "TimerMock", package: "Timer"),
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
