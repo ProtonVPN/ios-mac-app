@@ -25,13 +25,13 @@ import Persistence
 final class LoadsTests: TestIsolatedDatabaseTestCase {
 
     func testLoadsUpdated() throws {
-        try sut.upsert(servers: [
+        try repository.upsert(servers: [
             mockServer(withID: "a", load: 50, score: 2, status: 1),
             mockServer(withID: "b", load: 25, score: 1, status: 0)
         ])
 
-        let serverA = try sut.getFirstServer(filteredBy: [.logicalID("a")], orderedBy: .none)
-        let serverB = try sut.getFirstServer(filteredBy: [.logicalID("b")], orderedBy: .none)
+        let serverA = try repository.getFirstServer(filteredBy: [.logicalID("a")], orderedBy: .none)
+        let serverB = try repository.getFirstServer(filteredBy: [.logicalID("b")], orderedBy: .none)
 
         XCTAssertEqual(serverA?.logical.load, 50)
         XCTAssertEqual(serverA?.logical.score, 2)
@@ -43,13 +43,13 @@ final class LoadsTests: TestIsolatedDatabaseTestCase {
 
         // Now perform update
 
-        try sut.upsert(loads: [
+        try repository.upsert(loads: [
             .init(serverId: "a", load: 75, score: 3, status: 1),
             .init(serverId: "b", load: 0, score: 0, status: 1)
         ])
 
-        let updatedServerA = try sut.getFirstServer(filteredBy: [.logicalID("a")], orderedBy: .none)
-        let updatedServerB = try sut.getFirstServer(filteredBy: [.logicalID("b")], orderedBy: .none)
+        let updatedServerA = try repository.getFirstServer(filteredBy: [.logicalID("a")], orderedBy: .none)
+        let updatedServerB = try repository.getFirstServer(filteredBy: [.logicalID("b")], orderedBy: .none)
 
         XCTAssertEqual(updatedServerA?.logical.load, 75)
         XCTAssertEqual(updatedServerA?.logical.score, 3)

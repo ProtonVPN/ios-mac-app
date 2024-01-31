@@ -45,7 +45,6 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
         serverModel("serv8", tier: .paidTier, feature: ServerFeature.secureCore, exitCountryCode: "DE", entryCountryCode: "CH"),
         serverModel("serv9", tier: .paidTier, feature: ServerFeature.secureCore, exitCountryCode: "FR", entryCountryCode: "CH"),
     ]
-    lazy var serverStorage = MockServerStorage(servers: servers)
 
     lazy var standardProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .standard, serverOffering: .fastest("US"), name: "", connectionProtocol: ConnectionProtocol.vpnProtocol(.ike))
     lazy var secureCoreProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .secureCore, serverOffering: .fastest("US"), name: "", connectionProtocol: ConnectionProtocol.vpnProtocol(.ike))

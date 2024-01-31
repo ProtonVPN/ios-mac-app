@@ -25,65 +25,110 @@ import Dependencies
 
 @testable import Persistence
 
-/// Provides a repository based on an in-memory database specific to each test case (but shared across tests within it).
-/// Because of this, it is suitable for tests that either do not modify the repository, or otherwise it should only
-/// define a single test that does.
-public class IsolatedDatabaseTestCase: XCTestCase {
+public protocol AbstractDatabaseTestDriver: AnyObject {
+    /// Provides an interface to register callbacks
+    var repositoryWrapper: ServerRepositoryWrapper { get }
+    /// Use this for tests
+    var repository: ServerRepository { get }
 
-    fileprivate static var repository: ServerRepository!
+    func setUpRepository() throws
+    static func setUpRepository() throws
+}
 
-    public var sut: ServerRepository { Self.repository }
+public protocol TestIsolatedDatabaseTestDriver: AbstractDatabaseTestDriver {
+    var internalRepositoryWrapper: ServerRepositoryWrapper? { get set }
+    var internalRepository: ServerRepository? { get set }
+}
 
-    public override class func setUp() {
-        super.setUp()
-        repository = withDependencies {
+extension TestIsolatedDatabaseTestDriver {
+
+    private var setUpErrorMessage: String {
+        "Did you forget to invoke `setUpRepository()` in your test case's overridden `setUp` or `setUpWithError` method?"
+    }
+
+    public var repositoryWrapper: ServerRepositoryWrapper {
+        assert(internalRepositoryWrapper != nil, setUpErrorMessage)
+        return internalRepositoryWrapper!
+    }
+
+    public var repository: ServerRepository {
+        assert(internalRepository != nil, setUpErrorMessage)
+        return internalRepository!
+    }
+
+    public func setUpRepository() throws {
+        let repositoryImplementation = withDependencies {
             $0.appDB = .newInMemoryInstance()
         } operation: {
             ServerRepository.liveValue
         }
+
+        internalRepositoryWrapper = ServerRepositoryWrapper(repository: repositoryImplementation)
+        internalRepository = .wrapped(wrappedWith: internalRepositoryWrapper!)
+    }
+
+    public static func setUpRepository() throws {
+        assertionFailure("Invoke the instance version of this method in the `XCTestCase` instance method `setUp()``")
+    }
+}
+
+/// Provides a repository based on an in-memory database specific to each test case (but shared across tests within it).
+/// Because of this, it is suitable for tests that either do not modify the repository, or otherwise it should only
+/// define a single test that does.
+public protocol CaseIsolatedDatabaseTestDriver: AbstractDatabaseTestDriver {
+    static var internalRepository: ServerRepository! { get set }
+    static var internalRepositoryWrapper: ServerRepositoryWrapper! { get set }
+}
+
+extension CaseIsolatedDatabaseTestDriver {
+    private var setUpErrorMessage: String {
+        "Did you forget to invoke the static `setUpRepository()` in your test case's overridden `setUp` class method?"
+    }
+
+    public static func setUpRepository() {
+        let repositoryImplementation = withDependencies {
+            $0.appDB = .newInMemoryInstance()
+        } operation: {
+            ServerRepository.liveValue
+        }
+
+        internalRepositoryWrapper = ServerRepositoryWrapper(repository: repositoryImplementation)
+        internalRepository = .wrapped(wrappedWith: internalRepositoryWrapper!)
+    }
+
+    public var repository: ServerRepository {
+        assert(Self.internalRepository != nil, setUpErrorMessage)
+        return Self.internalRepository!
+    }
+
+    public var repositoryWrapper: ServerRepositoryWrapper {
+        assert(Self.internalRepository != nil, setUpErrorMessage)
+        return Self.internalRepositoryWrapper!
+    }
+
+    public func setUpRepository() throws {
+        assertionFailure("Invoke the static version of this method in the class method `XCTestCase.setUp()`")
     }
 }
 
 /// Provides a repository, based on a fresh in-memory database for each test within this test case. Ideal for unit tests
 /// that modify the database with a small to medium set of data
-public class TestIsolatedDatabaseTestCase: XCTestCase {
-
-    public var sut: ServerRepository!
-
-    public override func setUp() {
-        super.setUp()
-        sut = withDependencies {
-            $0.appDB = .newInMemoryInstance()
-        } operation: {
-            ServerRepository.liveValue
-        }
-    }
-}
-
-
-/// Provides an isolated database shared across test within this test case similarly to `IsolatedDatabaseTestCase`, with
-/// the addition of initialising it with data loaded from a test resource named after the name of test case class.
-///
-/// The resource name can be customised by overriding `resourceName`.
-public class IsolatedResourceDrivenDatabaseTestCase: IsolatedDatabaseTestCase {
-
-    /// Used to find the resource which contains servers used to initialise this test case with
-    public class var resourceName: String {
-        String("\(Self.self)".split(separator: ".").last!)
-    }
+public class CaseIsolatedDatabaseTestCase: XCTestCase, CaseIsolatedDatabaseTestDriver {
+    public static var internalRepository: ServerRepository!
+    public static var internalRepositoryWrapper: ServerRepositoryWrapper!
 
     public override class func setUp() {
         super.setUp()
-
-        let servers = try! loadServers(fromResourceNamed: resourceName)
-
-        try! Self.repository.upsert(servers: servers)
+        setUpRepository()
     }
+}
 
-    private static func loadServers(fromResourceNamed name: String) throws -> [VPNServer] {
-        let jsonPath = try XCTUnwrap(Bundle.module.path(forResource: name, ofType: "json"))
-        let jsonURL = URL(fileURLWithPath: jsonPath)
-        let data = try Data(contentsOf: jsonURL)
-        return try JSONDecoder().decode([VPNServer].self, from: data)
+public class TestIsolatedDatabaseTestCase: XCTestCase, TestIsolatedDatabaseTestDriver {
+    public var internalRepositoryWrapper: ServerRepositoryWrapper?
+    public var internalRepository: ServerRepository?
+
+    public override func setUpWithError() throws {
+        try super.setUpWithError()
+        try setUpRepository()
     }
 }

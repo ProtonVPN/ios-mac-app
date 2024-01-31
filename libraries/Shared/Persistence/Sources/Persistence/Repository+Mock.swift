@@ -65,6 +65,13 @@ public class ServerRepositoryWrapper {
         }
         didUpdateLoads?(updatedServers)
     }
+
+    public func getGroups(
+        filteredBy filters: [VPNServerFilter],
+        orderedBy groupOrder: VPNServerGroupOrder = .localizedCountryNameAscending
+    ) throws -> [ServerGroupInfo] {
+        try repository.getGroups(filteredBy: filters, orderedBy: groupOrder)
+    }
 }
 
 extension ServerRepository {
@@ -82,7 +89,8 @@ extension ServerRepository {
             server: wrapper.getFirstServer,
             servers: wrapper.getServers,
             deleteServers: wrapper.deleteServers,
-            upsertLoads: wrapper.upsert
+            upsertLoads: wrapper.upsert,
+            groups: wrapper.getGroups
         )
     }
 }

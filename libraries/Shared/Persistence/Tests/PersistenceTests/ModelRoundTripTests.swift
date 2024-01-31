@@ -20,14 +20,16 @@ import Foundation
 
 import XCTest
 
+@testable import Persistence
+
 /// These tests verify that no information is lost in translation from model, to internal database record, back to model
 final class ModelToRecordRoundTripTests: TestIsolatedDatabaseTestCase {
 
     func testVPNServerWithMultipleOverrides() throws {
         let serverToInsert = serverWithMultipleEndpointsAndOverrides
-        try sut.upsert(servers: [serverToInsert])
+        try repository.upsert(servers: [serverToInsert])
 
-        let result = try sut.getFirstServer(filteredBy: [], orderedBy: .none)
+        let result = try repository.getFirstServer(filteredBy: [], orderedBy: .none)
         let server = try XCTUnwrap(result)
 
         XCTAssertEqual(server, serverToInsert)
@@ -36,9 +38,9 @@ final class ModelToRecordRoundTripTests: TestIsolatedDatabaseTestCase {
 
     func testVPNServerWithLimitedProtocolSupport() throws {
         let serverToInsert = serverWithLimitedProtocolSupport
-        try sut.upsert(servers: [serverToInsert])
+        try repository.upsert(servers: [serverToInsert])
 
-        let result = try sut.getFirstServer(filteredBy: [], orderedBy: .none)
+        let result = try repository.getFirstServer(filteredBy: [], orderedBy: .none)
         let server = try XCTUnwrap(result)
 
         XCTAssertEqual(server, serverToInsert)
@@ -47,9 +49,9 @@ final class ModelToRecordRoundTripTests: TestIsolatedDatabaseTestCase {
 
     func testVPNServerWithNoOverrides() throws {
         let serverToInsert = serverWithNoOverrides
-        try sut.upsert(servers: [serverToInsert])
+        try repository.upsert(servers: [serverToInsert])
 
-        let result = try sut.getFirstServer(filteredBy: [], orderedBy: .none)
+        let result = try repository.getFirstServer(filteredBy: [], orderedBy: .none)
         let server = try XCTUnwrap(result)
 
         XCTAssertEqual(server, serverToInsert)

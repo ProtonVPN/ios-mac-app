@@ -25,12 +25,16 @@ import Domain
 
 @testable import Persistence
 
-final class GroupsTests: IsolatedResourceDrivenDatabaseTestCase {
+final class GroupsTests: CaseIsolatedDatabaseTestCase {
 
-    override class var resourceName: String { "TestServers" }
+    override class func setUp() {
+        super.setUp()
+        let servers = try! fetch([VPNServer].self, fromResourceNamed: "TestServers")
+        try! internalRepository.upsert(servers: servers)
+    }
 
     func testStandardGroups() throws {
-        let groups = try sut.getGroups(filteredBy: [.features(.standard)])
+        let groups = try repository.getGroups(filteredBy: [.features(.standard)])
 
         XCTAssertEqual(groups.count, 8)
 
@@ -61,7 +65,7 @@ final class GroupsTests: IsolatedResourceDrivenDatabaseTestCase {
     }
 
     func testSecureCoreGroups() throws {
-        let groups = try sut.getGroups(filteredBy: [.features(.secureCore)])
+        let groups = try repository.getGroups(filteredBy: [.features(.secureCore)])
 
         XCTAssertEqual(groups.count, 1)
 
