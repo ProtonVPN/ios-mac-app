@@ -31,6 +31,7 @@ public struct VpnProperties {
     public let clientConfig: ClientConfig?
     public let userRole: UserRole
     public let userCreateTime: Date?
+    public let userAccountRecovery: AccountRecovery?
 
     public init(serverModels: [ServerModel], vpnCredentials: VpnCredentials, location: UserLocation?, clientConfig: ClientConfig?, user: User?) {
         self.serverModels = serverModels
@@ -38,7 +39,8 @@ public struct VpnProperties {
         self.location = location
         self.clientConfig = clientConfig
         self.userRole = .init(rawValue: user?.role ?? 0) ?? .noOrganization
-        
+        self.userAccountRecovery = user?.accountRecovery
+
         if let createTime = user?.createTime {
             self.userCreateTime = Date(timeIntervalSince1970: createTime)
         } else {

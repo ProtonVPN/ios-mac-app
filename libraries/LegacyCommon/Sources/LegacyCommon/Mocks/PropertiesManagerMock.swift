@@ -169,6 +169,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
         set { queue.sync { _partnerTypes = newValue } }
     }
 
+    public var userAccountRecovery: ProtonCoreDataModel.AccountRecovery?
     public var userRole: UserRole = .noOrganization
     public var excludeLocalNetworks: Bool = true {
         didSet {

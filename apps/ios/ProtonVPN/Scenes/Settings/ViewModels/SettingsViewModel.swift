@@ -25,6 +25,7 @@ import UIKit
 import Dependencies
 
 import ProtonCoreAccountRecovery
+import ProtonCoreDataModel
 import ProtonCoreFeatureFlags
 import ProtonCoreUIFoundations
 
@@ -96,7 +97,7 @@ final class SettingsViewModel {
         self.protocolService = protocolService
         self.vpnGateway = vpnGateway
 
-        isAccountRecoveryEnabled = FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.accountRecovery)
+        isAccountRecoveryEnabled = FeatureFlagsRepository.shared.isEnabled(AccountRecoveryModule.feature)
 
         if appSessionManager.sessionStatus == .established {
             sessionEstablished(vpnGateway: vpnGateway)
@@ -104,7 +105,6 @@ final class SettingsViewModel {
 
         if isAccountRecoveryEnabled {
             self.accountRecoveryRepository = AccountRecoveryRepository(apiService: factory.makeNetworking().apiService)
-            refreshAccountRecoveryState()
         }
         startObserving()
     }
@@ -141,9 +141,15 @@ final class SettingsViewModel {
         return vpnGateway.connection == .connected || vpnGateway.connection == .disconnected
     }
 
-    var shouldShowAccountRecovery: Bool = false
-    var accountRecoveryStateText: String = ""
-    var accountRecoveryImage: UIImage?
+    var shouldShowAccountRecovery: Bool {
+        accountRecoveryStatus?.isVisibleInSettings ?? false
+    }
+    var accountRecoveryStateText: String {
+        accountRecoveryStatus?.valueForSettingsItem ?? ""
+    }
+    var accountRecoveryImage: UIImage? {
+        accountRecoveryStatus?.imageForSettingsItem
+    }
 
     // MARK: - Header section
     func viewForFooter() -> UIView {
@@ -219,9 +225,6 @@ final class SettingsViewModel {
     }
     
     private var accountSection: TableViewSection {
-        if isAccountRecoveryEnabled {
-            refreshAccountRecoveryState()
-        }
 
         let username: String = authKeychain.username ?? Localizable.unavailable
         let accountPlanName: String
@@ -250,7 +253,12 @@ final class SettingsViewModel {
             return TableViewSection(title: Localizable.account, cells: [cell])
         }
     }
-    
+
+    private var accountRecoveryStatus: AccountRecovery? {
+        propertiesManager.userAccountRecovery
+        
+    }
+
     private var securitySection: TableViewSection {
         let vpnProtocol = propertiesManager.vpnProtocol
         
@@ -663,20 +671,8 @@ final class SettingsViewModel {
     private func pushAccountRecoveryViewController() {
         assert(isAccountRecoveryEnabled, "This function shall only be called when AccountRecovery flag is true.")
         guard let pushHandler = pushHandler else { return }
-        let accountRecoveryViewController = AccountRecoveryModule.settingsViewController(networking.apiService)
+        let accountRecoveryViewController = settingsService.makeAccountRecoveryViewController() 
         pushHandler(accountRecoveryViewController)
-    }
-
-    private func refreshAccountRecoveryState() {
-        assert(isAccountRecoveryEnabled, "This function shall only be called when AccountRecovery flag is true.")
-        Task {
-
-            guard let accountRecoveryRepository = accountRecoveryRepository, let status = await accountRecoveryRepository.accountRecoveryStatus() 
-            else { return }
-            shouldShowAccountRecovery = status.shouldShowSettingsItem
-            accountRecoveryStateText = status.valueForSettingsItem
-            accountRecoveryImage = status.imageForSettingsItem
-        }
     }
 
     private func pushProtocolViewController() {
