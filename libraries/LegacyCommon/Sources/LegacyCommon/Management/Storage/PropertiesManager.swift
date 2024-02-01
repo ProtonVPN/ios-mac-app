@@ -84,6 +84,7 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var userDataDisclaimerAgreed: Bool { get set }
     var userRole: UserRole { get set }
     var userAccountCreationDate: Date? { get set }
+    var userAccountRecovery: AccountRecovery? { get set }
 
     var trialWelcomed: Bool { get set }
     var warnedTrialExpiring: Bool { get set }
@@ -246,6 +247,8 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public static let smartProtocolNotification: Notification.Name = Notification.Name("SmartProtocolChanged")
 
     public var onAlternativeRoutingChange: ((Bool) -> Void)?
+
+    public var userAccountRecovery: ProtonCoreDataModel.AccountRecovery?
 
     public var blockOneTimeAnnouncement: Bool {
         defaults.bool(forKey: Keys.blockOneTimeAnnouncement.rawValue)
