@@ -121,7 +121,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         Task {
             let completeOnMain = { result in await MainActor.run { completion(result) } }
 
-            guard await authKeychain.fetch()?.username != nil else {
+            guard authKeychain.fetch()?.username != nil else {
                 await completeOnMain(.failure(ProtonVpnError.userCredentialsMissing))
                 return
             }
@@ -136,8 +136,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
     func finishLogin(authCredentials: AuthCredentials) async throws {
         do {
-            try await authKeychain.store(authCredentials)
-            await unauthKeychain.clear()
+            try authKeychain.store(authCredentials)
+            unauthKeychain.clear()
         } catch {
             throw ProtonVpnError.keychainWriteFailed
         }
@@ -399,12 +399,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
         FeatureFlagsRepository.shared.clearUserId()
 
-        group.enter()
-        Task {
-            await authKeychain.clear()
-            group.leave()
-        }
-        group.wait()
+        authKeychain.clear()
         vpnKeychain.clear()
         announcementRefresher.clear()
         planService.clear()
