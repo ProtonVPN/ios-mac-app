@@ -21,6 +21,7 @@
 //
 
 import fusion
+import PMLogger
 import ProtonCoreDoh
 import ProtonCoreEnvironment
 import ProtonCoreLog
@@ -34,6 +35,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
     let mainRobot = MainRobot()
 
     private static var isAutoFillPasswordsEnabled = true
+    lazy var logFileUrl = LogFileManagerImplementation().getFileUrl(named: "ProtonVPN.log")
 
     /// Runs only once per test run.
     override class func setUp() {
@@ -47,8 +49,9 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
             "-BlockOneTimeAnnouncement", "YES",
             "-BlockUpdatePrompt", "YES",
             "-AppleLanguages", "(en)",
-            "enforceUnauthSessionStrictVerificationOnBackend"
-        ]
+            "enforceUnauthSessionStrictVerificationOnBackend",
+            LogFileManagerImplementation.logDirLaunchArgument, logFileUrl.absoluteString
+       ]
 
         beforeSetUp(bundleIdentifier: "ch.protonmail.vpn.ProtonVPNUITests", launchArguments: launchArguments)
         super.setUp()
@@ -69,6 +72,17 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
         let logoutButton = app.buttons["Sign out"]
         app.swipeUp() // For iphone SE small screen
         logoutButton.tap()
+    }
+
+    override open func tearDownWithError() throws {
+        if let logData = try? Data(contentsOf: logFileUrl),
+           let logString = String(data: logData, encoding: .utf8) {
+            let attachment = XCTAttachment(string: logString)
+            attachment.name = "ProtonVPN.log"
+            attachment.lifetime = .deleteOnSuccess
+            add(attachment)
+        }
+        try super.tearDownWithError()
     }
 
     private static func disableAutoFillPasswords() {
