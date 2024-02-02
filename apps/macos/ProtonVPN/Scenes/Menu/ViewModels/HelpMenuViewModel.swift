@@ -101,9 +101,7 @@ class HelpMenuViewModel {
     func selectClearApplicationData() {
         alertService.push(alert: ClearApplicationDataAlert { [self] in
             self.vpnManager.disconnect { [self] in
-                Task {
-                    await self.clearAllDataAndTerminate()
-                }
+                self.clearAllDataAndTerminate()
             }
         })
     }
@@ -113,19 +111,17 @@ class HelpMenuViewModel {
         navService.showReportBug()
     }
 
-    @MainActor
-    private func clearAllDataAndTerminate() async {
+    private func clearAllDataAndTerminate() {
         if self.systemExtensionManager.uninstallAll(userInitiated: true, timeout: nil) == .timedOut {
             log.error("Timed out waiting for sysext uninstall, proceeding to clear app data", category: .sysex)
         }
 
         // keychain
         self.vpnKeychain.clear()
-        Task {
-            await self.authKeychain.clear()
-        }
-        await self.vpnAuthenticationStorage.deleteCertificate()
-        await self.vpnAuthenticationStorage.deleteKeys()
+        self.authKeychain.clear()
+
+        self.vpnAuthenticationStorage.deleteCertificate()
+        self.vpnAuthenticationStorage.deleteKeys()
 
         // app data
         if let bundleIdentifier = Bundle.main.bundleIdentifier {
