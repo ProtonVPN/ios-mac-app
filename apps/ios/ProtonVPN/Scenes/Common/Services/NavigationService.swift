@@ -381,7 +381,9 @@ extension NavigationService: SettingsService {
     }
 
     func makeAccountRecoveryViewController() -> AccountRecoveryViewController {
-        AccountRecoveryModule.settingsViewController(networking.apiService)
+        AccountRecoveryModule.settingsViewController(networking.apiService) { [weak self] accountRecovery in
+            self?.propertiesManager.userAccountRecovery = accountRecovery
+        }
     }
 }
 
@@ -427,7 +429,7 @@ extension NavigationService: ConnectionStatusService {
 // MARK: Account Recovery
 extension NavigationService {
     func presentAccountRecoveryViewController() {
-        guard FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.accountRecovery) else { return }
+        guard FeatureFlagsRepository.shared.isEnabled(AccountRecoveryModule.feature) else { return }
 
         let viewController = makeAccountRecoveryViewController()
         self.windowService.addToStack(viewController, checkForDuplicates: true)
