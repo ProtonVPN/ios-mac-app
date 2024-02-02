@@ -385,7 +385,8 @@ extension AppDelegate {
         }
         ObservabilityEnv.current.setupWorld(requestPerformer: apiService)
 
-        if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.accountRecovery) {
+        // For now, the Push Notification part of Account Recovery is not ready, so we won't even be registering
+        if false && FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.accountRecovery) {
             pushNotificationService.setup()
 
             let vpnHandler = AccountRecoveryHandler()
