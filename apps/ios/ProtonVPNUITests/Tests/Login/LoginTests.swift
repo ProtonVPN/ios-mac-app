@@ -12,14 +12,14 @@ import ProtonCoreTestingToolkitUITestsLogin
 
 class LoginTests: ProtonVPNUITests {
 
-    private let mainRobot = MainRobot()
     private let loginRobot = LoginRobot()
     
     private let twopassusercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twopassusercredentials", withExtension: "plist")!)
 
+
     override func setUp() {
         super.setUp()
-        setupProdEnvironment()
+        setupProdEnvironment() 
         mainRobot
             .showLogin()
             .verify.loginScreenIsShown()

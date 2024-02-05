@@ -7,16 +7,10 @@
 //
 
 import fusion
-import ProtonCoreDoh
-import ProtonCoreEnvironment
 import ProtonCoreQuarkCommands
 import ProtonCoreTestingToolkitUITestsLogin
 
 class SignupTests: ProtonVPNUITests {
-
-    private let mainRobot = MainRobot()
-    private let signupRobot = SignupRobot()
-    private let onboardingRobot = OnboardingRobot()
 
     override func setUp() {
         super.setUp()
@@ -24,12 +18,10 @@ class SignupTests: ProtonVPNUITests {
         mainRobot
             .showSignup()
             .verify.signupScreenIsShown()
-
-        unbanBeforeSignup(doh: doh)
-     }
+    }
 
     /// Test showing standard plan (not Black Friday 2022 plan) for upgrade after successful signup
-    func testSignupNewExternalAccountUpgrade() {
+    func testSignupNewExternalAccountUpgrade() throws  {
         let email = StringUtils().randomAlphanumericString(length: 7) + "@mail.com"
         let code = "666666"
         let password = StringUtils().randomAlphanumericString(length: 8)
@@ -53,12 +45,14 @@ class SignupTests: ProtonVPNUITests {
             .verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", name: "$99.99")
     }
 
-    func testSignupExistingExternalAccount() {
+    func testSignupExistingExternalAccount() throws {
         let randomEmail = "\(StringUtils().randomAlphanumericString(length: 8))@gmail.com"
+        let randomName = "\(StringUtils().randomAlphanumericString(length: 8))"
         let password = StringUtils().randomAlphanumericString(length: 8)
         let code = "666666"
+        let user = User(email: randomEmail, name: randomName, password: password, isExternal: true)
 
-        guard createAccountForTest(doh: doh, accountToBeCreated: .external(email: randomEmail, password: password)) else { return }
+        try quarkCommands.userCreate(user: user)
 
         ProtonCoreTestingToolkitUITestsLogin.SignupRobot()
             .insertExternalEmail(name: randomEmail)

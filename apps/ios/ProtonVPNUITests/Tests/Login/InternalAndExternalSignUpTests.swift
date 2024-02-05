@@ -19,12 +19,8 @@
 import fusion
 import ProtonCoreTestingToolkitUITestsLogin
 import ProtonCoreQuarkCommands
-import ProtonCoreEnvironment
 
 final class InternalAndExternalSignUpTests: ProtonVPNUITests {
-
-    private let mainRobot = MainRobot()
-    private let loginRobot = LoginRobot()
 
     override func setUp() {
         super.setUp()
@@ -35,8 +31,6 @@ final class InternalAndExternalSignUpTests: ProtonVPNUITests {
     }
 
     func testSignUpWithInternalAccountWorks() {
-        unbanBeforeSignup(doh: doh)
-
         let randomUsername = StringUtils().randomAlphanumericString(length: 8)
         let randomEmail = "\(StringUtils().randomAlphanumericString(length: 8))@proton.uitests"
         let randomPassword = StringUtils().randomAlphanumericString(length: 8)

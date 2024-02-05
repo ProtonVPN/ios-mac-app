@@ -20,23 +20,10 @@ import XCTest
 import fusion
 import ProtonCoreTestingToolkitUITestsLogin
 import ProtonCoreQuarkCommands
-import ProtonCoreEnvironment
 
 class FreeRescopeTests: ProtonVPNUITests {
     
-    private let mainRobot = MainRobot()
     private let loginRobot = LoginRobot()
-    private let profileRobot = ProfileRobot()
-    private let createProfileRobot = CreateProfileRobot()
-    lazy var quarkCommands = QuarkCommands(doh: environment.doh)
-    
-    lazy var environment: Environment = {
-        guard let host = dynamicHost else {
-            return .black
-        }
-
-        return .custom(host)
-    }()
     
     override func setUp() {
         super.setUp()
@@ -47,10 +34,10 @@ class FreeRescopeTests: ProtonVPNUITests {
     }
     
     func testProfileCreationUnavailableForFreeUser() throws {
-        
-        let user = Credentials(username: StringUtils().randomAlphanumericString(length: 10), password: "12l3", plan: "vpnplus")
-        quarkCommands.createUser(username: user.username, password: user.password, protonPlanName: user.plan)
-        
+        let user = User(name: StringUtils().randomAlphanumericString(length: 10), password: "12l3")
+        let quarkUser = try quarkCommands.userCreate(user: user)
+        try quarkCommands.enableSubscription(id: quarkUser!.decryptedUserId, plan: "vpnplus")
+
         loginRobot
             .enterCredentials(user)
             .signIn(robot: MainRobot.self)
