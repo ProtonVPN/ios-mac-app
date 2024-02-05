@@ -29,6 +29,7 @@ import Dependencies
 import GoLibs
 
 import Domain
+import Ergonomics
 import LocalFeatureFlags
 import Timer
 import VPNShared
@@ -63,7 +64,7 @@ protocol LocalAgent {
     func requestStatus(withStats shouldRequestStats: Bool)
 }
 
-public struct NetShieldStatsNotification: StrongNotification {
+public struct NetShieldStatsNotification: TypedNotification {
     public static var name = Notification.Name("ch.protonvpn.localagent.netshieldstats")
     public var data: NetShieldModel
 }

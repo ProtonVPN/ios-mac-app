@@ -21,6 +21,8 @@
 //
 
 import Cocoa
+
+import Ergonomics
 import LegacyCommon
 
 protocol StatusMenuWindowModelFactory {

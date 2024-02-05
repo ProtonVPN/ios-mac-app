@@ -22,10 +22,14 @@
 
 import Cocoa
 import os
-import LegacyCommon
-import PMLogger
-import VPNShared
+
 import ComposableArchitecture
+
+import Ergonomics
+import PMLogger
+import LegacyCommon
+import VPNShared
+
 
 protocol NavigationServiceFactory {
     func makeNavigationService() -> NavigationService
