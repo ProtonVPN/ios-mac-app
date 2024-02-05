@@ -38,7 +38,7 @@
 "_br_3_logs_description" = "Loki on tiedosto, josta näemme virheeseen johtaneet toimenpiteet. Käytämme näitä tietoja ainoastaan ongelmien korjaukseen.";
 
 /* ReportBug 3rd step (form): message shown if user disabled logs */
-"_br_3_logs_disabled" = "Virhelokit auttavat meitä selvittämään ongelmasi perusteellisesti. Jos et halua sisällyttää niitä, emme välttämättä pysty tutkimaan ongelmaa täysin.";
+"_br_3_logs_disabled" = "Virhelokit auttavat meitä selvittämään ongelmasi perusteellisesti. Jos et halua sisällyttää niitä, emme ehkä pysty tutkimaan ongelmaa täysin.";
 
 /* ReportBug success window: title text */
 "_br_success_title" = "Kiitos palautteestasi";
@@ -62,7 +62,7 @@
 "_update_view_title" = "Päivitä Proton VPN";
 
 /* Description text of the view nudging users to update before filling Bug Report */
-"_update_view_description" = "Ongelmien ilmeneminen on todennäköisempää vanhoissa Proton VPN -versioissa.";
+"_update_view_description" = "Ongelmia esiintyy todennäköisesti useammin vanhemmissa Proton VPN -versioissa.";
 
 /* Action button of the view nudging users to update before filling Bug Report */
 "_update_view_button" = "Päivitä";

@@ -1243,7 +1243,7 @@
 "_menu_about" = "Acerca de Proton VPN";
 
 /* Main mac app menu item */
-"_menu_check_updates" = "Buscar actualizaciones...";
+"_menu_check_updates" = "Buscando actualizaciones...";
 
 /* Main mac app menu item */
 "_menu_preferences" = "Preferencias";
