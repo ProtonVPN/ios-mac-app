@@ -38,7 +38,8 @@
         "PlanTests\/testShowUpdatePlansForCurrentFreePlan()",
         "SignupTests\/testSignupExistingInternalAccount()",
         "SignupTests\/testSignupNewExternalAccountUpgrade()",
-        "SignupTests\/testSignupNewInternalAccountUpgradePlans()"
+        "SignupTests\/testSignupNewInternalAccountUpgradePlans()",
+        "SubscriptionTests"
       ],
       "target" : {
         "containerPath" : "container:iOS.xcodeproj",

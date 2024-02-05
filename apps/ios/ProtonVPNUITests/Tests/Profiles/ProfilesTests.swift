@@ -12,7 +12,6 @@ import ProtonCoreTestingToolkitUITestsLogin
 
 class ProfilesTests: ProtonVPNUITests {
     
-    private let mainRobot = MainRobot()
     private let loginRobot = LoginRobot()
     private let profileRobot = ProfileRobot()
     private let createProfileRobot = CreateProfileRobot()

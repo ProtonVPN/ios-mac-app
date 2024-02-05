@@ -69,7 +69,9 @@
     "_applicationInternalID" : "1437005085",
     "_developerTeamID" : "2SB5Z68H26",
     "_failTransactionsEnabled" : false,
-    "_lastSynchronizedDate" : 723981006.60922098,
+    "_lastSynchronizedDate" : 727815041.657493,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
     "_storeKitErrors" : [
       {
         "current" : null,
@@ -135,11 +137,15 @@
           ],
           "displayPrice" : "139.99",
           "familyShareable" : false,
-          "groupNumber" : 2,
+          "groupNumber" : 1,
           "internalID" : "6468678317",
           "introductoryOffer" : null,
           "localizations" : [
-
+            {
+              "description" : "1-year subscription to Proton Unlimited",
+              "displayName" : "Proton Unlimited",
+              "locale" : "en_US"
+            }
           ],
           "productID" : "iosvpn_bundle2022_12_usd_auto_renewing",
           "recurringSubscriptionPeriod" : "P1Y",
@@ -156,11 +162,15 @@
           ],
           "displayPrice" : "11.99",
           "familyShareable" : false,
-          "groupNumber" : 3,
+          "groupNumber" : 2,
           "internalID" : "6468678372",
           "introductoryOffer" : null,
           "localizations" : [
-
+            {
+              "description" : "1-month subscription to VPN Plus",
+              "displayName" : "VPN Plus",
+              "locale" : "en_US"
+            }
           ],
           "productID" : "iosvpn_vpn2022_1_usd_auto_renewing",
           "recurringSubscriptionPeriod" : "P1M",
@@ -177,11 +187,15 @@
           ],
           "displayPrice" : "79.99",
           "familyShareable" : false,
-          "groupNumber" : 1,
+          "groupNumber" : 2,
           "internalID" : "6468663278",
           "introductoryOffer" : null,
           "localizations" : [
-
+            {
+              "description" : "1-year subscription to VPN Plus",
+              "displayName" : "VPN Plus",
+              "locale" : "en_US"
+            }
           ],
           "productID" : "iosvpn_vpn2022_12_usd_auto_renewing",
           "recurringSubscriptionPeriod" : "P1Y",
