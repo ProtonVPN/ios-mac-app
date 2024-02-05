@@ -449,7 +449,7 @@
 "_data_disclaimer_title" = "Lindungi diri Anda saat online";
 
 /* iOS: data disclaimer screen */
-"_data_disclaimer_text" = "Proton VPN berkomitmen untuk melindungi dan menghormati privasi Anda. Ini merupakan kebijakan utama kami untuk mengumpulkan data pengguna sesedikit mungkin untuk memastikan pengalaman pengguna yang pribadi dan anonim dalam penggunaan Aplikasi, khususnya:\n\n%@ – untuk masuk, membantu memulihkan kata sandi yang hilang, dan mengirimkan pembaruan layanan penting.\n\n%@ – untuk laporan kerusakan dan kesalahan saja.\n\nAplikasi Proton VPN tidak memproses informasi pengguna apa pun selain data ini. Kami tidak mencatat aktivitas daring Anda atau informasi pribadi apa pun yang dapat diidentifikasi. Semua data yang tercantum di atas disimpan dan diproses di sistem Proton VPN sendiri, tanpa ada pihak ketiga yang dapat mengaksesnya.";
+"_data_disclaimer_text" = "Proton VPN berkomitmen untuk melindungi dan menghormati privasi Anda. Kami mengusung kebijakan dasar untuk mengumpulkan data pengguna sesedikit mungkin demi memastikan pengalaman pengguna yang pribadi dan anonim dalam penggunaan Aplikasi, khususnya:\n\n%@ – untuk masuk, membantu memulihkan kata sandi yang hilang, dan mengirimkan pembaruan layanan penting.\n\n%@ – hanya untuk pelaporan crash dan error.\n\nAplikasi Proton VPN tidak memproses informasi pengguna apa pun di luar data ini. Kami tidak mencatat aktivitas online Anda atau informasi pribadi apa pun yang dapat diidentifikasi. Seluruh data di atas disimpan dan diproses pada sistem milik Proton VPN, tanpa ada pihak ketiga mana pun yang dapat mengaksesnya.";
 
 /* iOS: data disclaimer screen */
 "_data_disclaimer_user_details" = "Nama pengguna, alamat surel";

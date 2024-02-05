@@ -233,7 +233,7 @@
 "_retry" = "Повторити спробу";
 
 /* iOS: section header in countries list */
-"_free_servers" = "Безплатні сервери";
+"_free_servers" = "Сервери Free";
 
 /* iOS: section header in countries list */
 "_plus_servers" = "Сервери Plus";
@@ -357,7 +357,7 @@
 "_forgot_username" = "Забули ім'я користувача";
 
 /* MacOS: generic failure message for SSO login */
-"_sso_login_failure" = "Не вдалося увійти з SSO. Будь ласка, спробуйте знову.";
+"_sso_login_failure" = "Не вдалося увійти з SSO. Повторіть спробу.";
 
 /* iOS: button in login screen */
 "_forgot_password" = "Забули пароль?";
@@ -1083,7 +1083,7 @@
 "_plus_plan_features" = "Сервери Plus\nSecure Core\nСервери Tor";
 
 /* Used instead of price for free plans. */
-"_free" = "Безкоштовно";
+"_free" = "Free";
 
 /* Alert message during In App Purchase */
 "_do_you_want_to_activate_subscription_for" = "Ви хочете активувати придбану передплату для ";
@@ -1146,10 +1146,10 @@
 "_expired" = "ПРОТЕРМІНОВАНО";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
-"_free_trial_expired_title" = "Ваша безплатна пробна версія %@";
+"_free_trial_expired_title" = "Ваш безплатний пробний період %@";
 
 /* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "Ваш обліковий запис було понижено до Proton VPN FREE.\nОсь, що ви втрачаєте з %@:";
+"_free_trial_expired_description" = "Ваш обліковий запис було змінено на Proton VPN Free.\nОсь, що ви втратите в порівнянні з %@:";
 
 /* Cancel button in trial modals used in both iOS and MacOS */
 "_maybe_later" = "Можливо пізніше";
@@ -1382,9 +1382,9 @@
 "_news_title" = "Новини";
 
 /* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
-"_offer_ending_" = "Ending %@";
+"_offer_ending_" = "Завершується %@";
 
-"_quick_settings_title" = "Quick Settings";
+"_quick_settings_title" = "Швидкі налаштування";
 
 "_quick_settings_secureCore_description" = "Спрямовуйте свої найвразливіші дані через наші найзахищеніші сервери в країнах, що цінують приватність.";
 
@@ -1497,7 +1497,7 @@
 
 "_delinquent_description" = "Ви зможете знову отримати доступ до преміумфункцій після оплати.";
 
-"_delinquent_reconnection_description" = "Ви зможете знову отримати доступ до преміумфункцій після оплати. А зараз ми встановлюємо з'єднання з найшвидшим БЕЗПЛАТНИМ сервером.";
+"_delinquent_reconnection_description" = "Після оплати ви зможете знову отримати доступ до преміальних функцій. А зараз ми встановлюємо з'єднання з найшвидшим сервером Free.";
 
 "_maximum_device_title" = "Ви досягли обмеження кількості пристроїв";
 
@@ -1518,7 +1518,7 @@
 
 "_subscription_upgrade_option3" = "Додаткові функції: NetShield, Secure Core, Tor, P2P";
 
-"_tier_free" = "Безкоштовно";
+"_tier_free" = "Free";
 
 "_tier_plus" = "Plus";
 
@@ -1548,9 +1548,9 @@
 
 "_streaming_servers_extra" = "та інше";
 
-"_feature_free_servers" = "Безплатні сервери";
+"_feature_free_servers" = "Сервери Free";
 
-"_feature_free_servers_description" = "Безпека та приватність для кожного. Безплатні сервери не мають обмежень за обсягом даних, і ми ніколи навмисно не сповільнюватимемо швидкість вашого вебперегляду.";
+"_feature_free_servers_description" = "Безпека та приватність для всіх. Безплатні сервери не мають обмежень за обсягом даних, і ми ніколи навмисно не знижуватимемо швидкість.";
 
 "_feature_smart_routing_description" = "Ця технологія дозволяє Proton VPN забезпечити вищу швидкість та безпеку у країнах з ускладненим обслуговуванням.";
 
@@ -1570,7 +1570,7 @@
 
 "_locations_all" = "Усі розташування";
 
-"_locations_free" = "Безплатні розташування";
+"_locations_free" = "Розташування Free";
 
 "_locations_plus" = "Розташування Plus";
 
@@ -1744,7 +1744,7 @@
 "vpn_feature_cannot_be_set_error" = "Не можна змінити налаштування %@. Повторіть спробу пізніше або під'єднайтеся до іншого сервера";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
-"netshield_stats_hint_ads" = "Рекламні вебсайти використовують куки та елементи стеження, щоб персоналізувати вас.";
+"netshield_stats_hint_ads" = "Рекламні вебсайти використовують файли cookie та елементи стеження, щоб персоналізувати вас.";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
 "netshield_stats_hint_trackers" = "Елементи стеження – це сторонні вебсайти, які збирають, зберігають і продають дані про вашу діяльність в інтернеті.";
@@ -1866,7 +1866,7 @@
 "search_results_cities" = "Міста";
 
 /* Section header in search */
-"_free_servers" = "Безплатні сервери";
+"_free_servers" = "Сервери Free";
 
 /* Section header in search */
 "_plus_servers" = "Сервери Plus";
@@ -2058,7 +2058,7 @@
 "modals_whats_new" = "Що нового";
 
 /* Title of the first section of the "What's new" screen */
-"modals_free_countries" = "Нові безплатні країни";
+"modals_free_countries" = "Нові країни з безплатними серверами";
 
 /* Description of the first section of the "What's new" screen */
 "modals_new_servers" = "Тепер є нові безплатні сервери в Польщі та Румунії.";
@@ -2073,7 +2073,7 @@
 "upsell_specific_location_subtitle" = "Змінюйте сервери без обмежень з VPN Plus";
 
 /* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
-"upsell_specific_location_title" = "Ви досягли максимальної кількості змін безплатних серверів.";
+"upsell_specific_location_title" = "Ви досягли максимальної кількості змін серверів Free.";
 
 /* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
 "upsell_specific_location_change_server_button_title" = "Змінити сервер";
@@ -2112,10 +2112,10 @@
 "welcome_to_proton_subtitle" = "Приватний перегляд, доступ до заблокованого вмісту і задоволення від цифрової свободи.";
 
 /* Welcome to Proton screen shown during onboarding. Banner title label. */
-"welcome_to_proton_banner_title" = "Сертифіковане VPN без журналювання";
+"welcome_to_proton_banner_title" = "Сертифікована VPN без журналювання";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
-"welcome_to_proton_banner_subtitle" = "Ваша активність VPN захищена швейцарськими законами про приватність. Ми ніколи не стежитимемо за вами онлайн, або передавати вашу інформацію третім особам.";
+"welcome_to_proton_banner_subtitle" = "Ваша діяльність у мережі VPN захищається швейцарським законодавством щодо приватності. Ми ніколи не стежитимемо за вашими діями й не передаватимемо дані про вас третім сторонам.";
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Доступно для VPN Business.";
@@ -2136,7 +2136,7 @@
 "free_connections_modal_title" = "Безплатні з'єднання";
 
 /* Modal that lists countries in which servers are available to free users: Description */
-"free_connections_modal_description" = "Proton Free автоматично з'єднає вас із найшвидшим доступним сервером. Зазвичай – це найближчий до вашого розташування сервер.";
+"free_connections_modal_description" = "Proton Free автоматично під'єднається до найшвидшого доступного сервера. Зазвичай – найближчий до вашого розташування.";
 
 /* Modal that lists countries in which servers are available to free users: banner with CTA */
 "free_connections_modal_banner" = "Користуйтеся світовим покриттям з VPN Plus";

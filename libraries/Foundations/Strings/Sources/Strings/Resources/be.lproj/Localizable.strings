@@ -49,7 +49,7 @@
 "_upgrade_subscription" = "Палепшыць падпіску";
 
 /* MacOS: Settings -> Account. Button leading to web interface. */
-"_manage_subscription" = "Кіраванне падпіскай";
+"_manage_subscription" = "Кіраваць падпіскай";
 
 /* iOS & MacOS: text near country or server; MacOS: title of several alerts */
 "_upgrade_required" = "Патрабуецца паляпшэнне";

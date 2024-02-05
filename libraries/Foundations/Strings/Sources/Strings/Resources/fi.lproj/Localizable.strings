@@ -43,7 +43,7 @@
 "_warning" = "Varoitus";
 
 /* Button in many places in both iOS and MacOS apps */
-"_upgrade" = "Päivitä";
+"_upgrade" = "Päivitä tilaus";
 
 /* iOS: Plan selection during plan upgarde, button insettings screen */
 "_upgrade_subscription" = "Päivitä tilaus";
@@ -219,7 +219,7 @@
 "_connected_to_vpn" = "Yhdistetty sijaintiin %@";
 
 /* iOS: connection bar; Main mac app menu item; */
-"_not_connected" = "Ei yhteyttä";
+"_not_connected" = "Ei yhdistetty";
 
 /* MacOS: text in main window */
 "_you_are_not_connected" = "Et ole yhdistänyt";
@@ -653,7 +653,7 @@
 "_profile_name_is_required" = "Syötä nimi";
 
 /* Error in profile create/change form */
-"_profile_name_is_too_long" = "Profiilin nimen enimmäispituus on 25 merkkiä";
+"_profile_name_is_too_long" = "Profiilin nimi voi sisältää enintään 25 merkkiä";
 
 /* Error when user hasn't selected profile country */
 "_country_selection_is_required" = "Valitse maa";
@@ -810,11 +810,11 @@
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Kaikki tässä maassa sijaitsevat palvelimet ovat huollossa. Yhdistä toiseen maahan.";
 
-"_unsecure_wifi" = "Havaittiin suojaamaton Wi-Fi-verkko";
+"_unsecure_wifi" = "Havaittiin suojaamaton Wi-Fi-yhteys";
 
 "_unsecure_wifi_learn_more" = "Lue lisää";
 
-"_unsecure_wifi_title" = "Havaittiin suojaamaton Wi-Fi-verkko";
+"_unsecure_wifi_title" = "Havaittiin suojaamaton Wi-Fi";
 
 "_maintenance_on_server_detected_title" = "VPN-palvelin on huollossa";
 
@@ -1155,7 +1155,7 @@
 "_maybe_later" = "Ehkä myöhemmin";
 
 /* Upgrade button in trial modals used in both iOS and MacOS */
-"_upgrade_now" = "Päivitä nyt";
+"_upgrade_now" = "Päivitä tilaus nyt";
 
 /* MacOS: Button in Upgrade screen */
 "_upgrade_my_plan" = "Päivitä tilaukseni";
@@ -1447,7 +1447,7 @@
 "_smart_protocol_reconnect_modal_body" = "Yhteys muodostetaan uudelleen Smart Protocol -tilan vaihtamiseksi.";
 
 /* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
-"_sysex_description_1" = "Jotta voit käyttää Proton VPN:ää, sinun on otettava **muokatut VPN-protokollat** käyttöön Macissasi.";
+"_sysex_description_1" = "Jotta voit käyttää Proton VPN:ää, sinun on otettava **mukautetut VPN-protokollat** käyttöön Macistasi.";
 
 /* Part 2 of the description of the system extension wizard in mac */
 "_sysex_description_2" = "Mukautetut protokollat mahdollistavat nopeammat ja turvallisemmat yhteydet, ja sinun on otettava ne käyttöön, jotta voit muodostaa yhteyden useimpiin Proton VPN -palvelimiin.";
@@ -1501,10 +1501,10 @@
 
 "_maximum_device_title" = "Olet saavuttanut laitteiden enimmäismäärän";
 
-"_maximum_device_reached_description" = "Katkaise jonkin muun laitteen yhteys yhdistääksesi tämän laitteen.";
+"_maximum_device_reached_description" = "Katkaise yhteys joltakin toiselta laitteeltasi yhdistääksesi tämän laitteen.";
 
 /* Description of user account update screen part 1 */
-"maximum_device_plan_limit_part_1" = "Katkaise jonkin muun laitteen yhteys yhdistääksesi tämän laitteen tai päivitä %@-tilaukseen.";
+"maximum_device_plan_limit_part_1" = "Katkaise yhteys joltakin toiselta laitteeltasi yhdistääksesi tämän laitteen tai päivitä %@-tilaukseen.";
 
 "_reconnect_title" = "Yhdistetään uudelleen nopeimpaan käytettävissä olevaan palvelimeen.";
 
@@ -1603,7 +1603,7 @@
 
 "_local_agent_policy_violation_error_title" = "Käytäntörike";
 
-"_local_agent_policy_violation_error_message" = "Yhteyden muodostusta tähän palvelimeen ei sallita. Valitse toinen palvelin tai päivitä tilauksesi.";
+"_local_agent_policy_violation_error_message" = "Sinulla ei ole oikeutta yhdistää tähän palvelimeen. Valitse eri palvelin tai päivitä tilauksesi.";
 
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
 "_loading_connection_info" = "Ladataan yhteyden tietoja";
@@ -1723,7 +1723,7 @@
 "two_factor_authentication" = "Kaksivaiheinen todennus";
 
 /* Placeholder for the Two Factor text field */
-"two_factor_code" = "Kaksivaiheinen koodi";
+"two_factor_code" = "Toisen vaiheen todennuskoodi";
 
 /* Title for the button to switch to entering two-factor code */
 "use_two_factor_code" = "Käytä kaksivaiheista koodia";
@@ -1794,7 +1794,7 @@
 "_alert_protocol_deprecated_close" = "Sulje";
 
 /* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
-"_bad_interface_ip_range_alert_title" = "Huono verkkoliittymä";
+"_bad_interface_ip_range_alert_title" = "Huono verkkosovitin";
 
 /* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
 "_prompt_kill_switch_due_to_bad_interface_ip_range" = "Paikallinen lähiverkko ei ehkä ole turvallinen (verkkosovittimella \"%@\" on IP-osoite ja etuliite \"%@\") ja lähtevä tietoliikenteesi saattaa kulkea lähiverkossa salaamattomana. Tappokytkimen käyttöönotto estää tämän tietoliikenteen. Lisäksi tämä katkaisee yhteydet lähiverkon laitteisiin.";
@@ -1842,7 +1842,7 @@
 "search_recent_clear" = "Tyhjennä";
 
 /* Title for the alert asking for confirmation before deleting recent searches */
-"search_recent_clear_title" = "Hakuhistoriasi menetetään. Jatketaanko?";
+"search_recent_clear_title" = "Hakuhistoriasi katoaa. Jatketaanko?";
 
 /* Cancel button title in the alert asking for confirmation before deleting recent searches */
 "search_recent_clear_cancel" = "Peruuta";
@@ -1872,7 +1872,7 @@
 "_plus_servers" = "Plus-palvelimet";
 
 /* Upgrade plan button title */
-"modals_get_plus" = "Päivitä";
+"modals_get_plus" = "Päivitä tilaus";
 
 /* Dismiss upsell screen button title */
 "modals_upsell_stay_free" = "Ei nyt";
@@ -1968,10 +1968,10 @@
 "modals_common_get_started" = "Aloita";
 
 /* Description of user account update screen part 1 */
-"maximum_device_plan_limit_part_1" = "Katkaise jonkin muun laitteen yhteys yhdistääksesi tämän laitteen tai päivitä %@-tilaukseen.";
+"maximum_device_plan_limit_part_1" = "Katkaise yhteys joltakin toiselta laitteeltasi yhdistääksesi tämän laitteen tai päivitä %@-tilaukseen.";
 
 /* Description of user account update screen */
-"maximum_device_limit" = "Katkaise jonkin muun laitteen yhteys yhdistääksesi tämän laitteen.";
+"maximum_device_limit" = "Katkaise yhteys joltakin toiselta laitteeltasi yhdistääksesi tämän laitteen.";
 
 /* Title of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_title" = "Selaa vieläkin korkeammilla nopeuksilla (jopa 10 Gbps)";
@@ -2094,10 +2094,10 @@
 "welcome_upgrade_subtitle_plus" = "Nauti laajemmista yksityisyysominaisuuksista, turboahdetusta suorituskyvystä ja seuraavan tason VPN-mukautuksesta.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "Onnittelut! Olet avannut kaikkien Proton-palveluiden premium-tason turvallisuus- ja suorituskykyominaisuudet, sekä 500 Gt kokonaistallennustilaa. \n\nNauti Protonin yksityisyyden parhaista puolista.";
+"welcome_upgrade_subtitle_Unlimited" = "Onnittelut! Avasit kaikkien Proton-palveluiden premium-tason suojaus- ja suorituskykyominaisuudet, sekä 500 gigatavun kokonaistallennustilan. \n\nNauti Proton-yksityisyyden parhaista puolista.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "Onnittelut! Olet avannut kaikkien Proton-palveluiden premium-tason turvallisuus- ja suorituskykyominaisuudet, sekä **500** Gt kokonaistallennustilaa. \n\nNauti Protonin yksityisyyden parhaista puolista.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "Onnittelut! Avasit kaikkien Proton-palveluiden premium-tason suojaus- ja suorituskykyominaisuudet, sekä **500** gigatavun kokonaistallennustilan. \n\nNauti Proton-yksityisyyden parhaista puolista.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 Gt";
@@ -2151,4 +2151,4 @@
 "_wrong_country_banner_subtitle" = "Valitse mikä tahansa palvelin päivittämällä tilauksesi";
 
 /* Text of banner shown on macOS apps to upsell users who want to select a country */
-"_wrong_country_banner_text" = "Eikö tämä ole haluamasi maa? Valitse mikä tahansa palvelin päivittämällä tilauksesi.";
+"_wrong_country_banner_text" = "Eikö tämä ole haluamasi maa? Päivitä tilauksesi ja valitse mikä tahansa palvelin.";
