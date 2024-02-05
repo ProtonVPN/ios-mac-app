@@ -17,7 +17,8 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../../../external/protoncore")
+        .package(path: "../../../external/protoncore"),
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.0.0")),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -25,11 +26,13 @@ let package = Package(
         .target(
             name: "Ergonomics",
             dependencies: [
-                .product(name: "ProtonCoreUtilities", package: "protoncore")
+                .product(name: "ProtonCoreUtilities", package: "protoncore"),
+                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay")
             ]
         ),
         .testTarget(
             name: "ErgonomicsTests",
-            dependencies: ["Ergonomics"]),
+            dependencies: ["Ergonomics"]
+        ),
     ]
 )

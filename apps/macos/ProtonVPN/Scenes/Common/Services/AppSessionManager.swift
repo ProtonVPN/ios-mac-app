@@ -22,10 +22,13 @@
 
 import Cocoa
 import Dependencies
+
+import ProtonCoreFeatureFlags
+import ProtonCoreUtilities
+
+import Ergonomics
 import LegacyCommon
 import VPNShared
-import ProtonCoreUtilities
-import ProtonCoreFeatureFlags
 
 enum SessionStatus {
     case notEstablished
@@ -337,7 +340,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     // End of the logout logic
 
-    private func post(notification: any StrongNotification) {
+    private func post(notification: any TypedNotification) {
         DispatchQueue.main.async {
             NotificationCenter.default.post(notification, object: self)
         }
@@ -394,8 +397,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 }
 
-struct SessionChanged: StrongNotification {
-    static var name: Notification.Name { Notification.Name("AppSessionManagerSessionChanged") }
+struct SessionChanged: TypedNotification {
+    static let name = Notification.Name("AppSessionManagerSessionChanged")
     let data: SessionChangeData
 
     enum SessionChangeData {

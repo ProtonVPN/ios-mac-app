@@ -22,6 +22,12 @@
 
 import Cocoa
 import Dependencies
+
+import Domain
+import Ergonomics
+import Strings
+import Theme
+
 import LegacyCommon
 import Theme
 import Strings

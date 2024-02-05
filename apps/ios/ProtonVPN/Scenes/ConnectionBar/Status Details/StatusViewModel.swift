@@ -29,12 +29,15 @@ import GSMessages
 import ProtonCoreUIFoundations
 
 import Domain
+import Ergonomics
 import LocalFeatureFlags
 import Strings
 import Home
 import Theme
 import VPNShared
 import LegacyCommon
+
+private let connectionDurationRefreshInterval: TimeInterval = 1.0
 
 class StatusViewModel {
     typealias Factory = AppSessionManagerFactory &
@@ -385,7 +388,9 @@ class StatusViewModel {
     // MARK: - Timer
     
     private func runTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(self.timerFired)), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(withTimeInterval: connectionDurationRefreshInterval, repeats: true) { [weak self] _ in
+            self?.timerFired()
+        }
     }
 
     @objc private func serverChangeTimerFired() {
@@ -430,15 +435,17 @@ class StatusViewModel {
     // MARK: - Connection status changes
     
     private func startObserving() {
-        let stateChangeToken = NotificationCenter.default.addObserver(for: .AppStateManager.stateChange, object: nil, handler: stateChanged)
-
-        let connectionChangedTokens = [
+        let notificationNames = [
             VpnGateway.connectionChanged,
             .AppStateManager.displayStateChange,
+            .AppStateManager.stateChange,
             type(of: netShieldPropertyProvider).netShieldNotification,
             type(of: natTypePropertyProvider).natTypeNotification,
             type(of: vpnKeychain).vpnPlanChanged
-        ].map { NotificationCenter.default.addObserver(for: $0, object: nil, handler: connectionChanged) }
+        ]
+        let connectionChangedTokens = NotificationCenter.default.addObservers(for: notificationNames, object: nil) { [weak self] notification in
+            self?.stateChanged(notification: notification)
+        }
 
         let netShieldToken = NotificationCenter.default.addObserver(for: NetShieldStatsNotification.self, object: nil) { [weak self] stats in
             DispatchQueue.main.async {
@@ -447,7 +454,7 @@ class StatusViewModel {
             }
         }
 
-        notificationTokens = connectionChangedTokens + [stateChangeToken, netShieldToken]
+        notificationTokens = connectionChangedTokens + [netShieldToken]
     }
     
     private func stopObserving() {
