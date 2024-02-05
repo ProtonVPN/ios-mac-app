@@ -2109,7 +2109,7 @@
 "welcome_to_proton_title" = "歡迎使用 Proton VPN";
 
 /* Welcome to Proton screen shown during onboarding. Subtitle label. */
-"welcome_to_proton_subtitle" = "Browse privately, access blocked content, and enjoy digital freedom.";
+"welcome_to_proton_subtitle" = "私密瀏覽、存取被封鎖的內容並享受數位自由。";
 
 /* Welcome to Proton screen shown during onboarding. Banner title label. */
 "welcome_to_proton_banner_title" = "驗證無紀錄的VPN";

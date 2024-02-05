@@ -547,17 +547,17 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Розташування безплатних серверів (%d)</string>
+        <string>Розташування серверів Free (%d)</string>
         <key>few</key>
-        <string>Розташування безплатних серверів (%d)</string>
+        <string>Розташування серверів Free (%d)</string>
         <key>many</key>
-        <string>Розташування безплатних серверів (%d)</string>
+        <string>Розташування серверів Free (%d)</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Розташування безплатних серверів (%d)</string>
+        <string>Розташування серверів Free (%d)</string>
       </dict>
     </dict>
   </dict>
