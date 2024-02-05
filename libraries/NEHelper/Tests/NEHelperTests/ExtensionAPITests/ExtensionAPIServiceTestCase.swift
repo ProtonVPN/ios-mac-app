@@ -118,7 +118,7 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
         serverStatusCallback = failCallback
 
         keychain = MockAuthKeychain()
-        try! await keychain.store(AuthCredentials(username: "johnny",
+        try! keychain.store(AuthCredentials(username: "johnny",
                                                   accessToken: "12345",
                                                   refreshToken: "54321",
                                                   sessionId: "15213",

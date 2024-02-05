@@ -751,9 +751,8 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
                 XCTFail("Shouldn't have tried to refresh; operation should have been cancelled")
             }
             expectations.managerStop.fulfill()
+            self.timerFactory.runAllScheduledWork()
         }
-
-        timerFactory.runAllScheduledWork()
         wait(for: [expectations.certRefreshCancelled, expectations.managerStop], timeout: expectationTimeout, enforceOrder: true)
     }
 
