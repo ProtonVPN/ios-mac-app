@@ -35,8 +35,12 @@ extension VPNServerFilter {
             return logical[Logical.Columns.tier] <= tier
 
         case .features(let features):
-            return (logical[Logical.Columns.feature] & features.required.rawValue == features.required.rawValue)
-                && (logical[Logical.Columns.feature] & features.excluded.rawValue == 0)
+            let supportedFeatures = logical[Logical.Columns.feature]
+            // Note that binary AND operator has higher precedence than equality
+            // We must compare against required features rather than > 0 since it's possible that features.required == 0
+            let hasAllRequiredFeatures = supportedFeatures & features.required.rawValue == features.required.rawValue
+            let hasNoExcludedFeatures = supportedFeatures & features.excluded.rawValue == 0
+            return hasAllRequiredFeatures && hasNoExcludedFeatures
 
         case .supports(let protocolMask):
             return overrides[EndpointOverrides.Columns.endpointId] == nil

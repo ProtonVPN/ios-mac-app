@@ -43,14 +43,12 @@ class IsolatedDatabaseTestCase: XCTestCase {
     override class func setUp() {
         super.setUp()
         repository = withDependencies {
-            let databaseName = resourceName
-            $0.appDB = .inMemory(named: databaseName)
+            $0.appDB = .newInMemoryInstance()
         } operation: {
             ServerRepository.liveValue
         }
     }
 }
-
 
 /// Provides an isolated database shared across test within this test case similarly to `IsolatedDatabaseTestCase`, with
 /// the addition of initialising it with data loaded from a test resource named after the name of test case class.

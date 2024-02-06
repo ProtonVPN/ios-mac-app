@@ -78,7 +78,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
         guard let connectedServer = appStateManager.activeConnection()?.server else { return false }
         return !isUsersTierTooLow
             && vpnGateway.connection == .connected
-        && connectedServer.id == serverModel.logical.id
+            && connectedServer.id == serverModel.logical.id
     }
 
     init(serverModel: ServerInfo,

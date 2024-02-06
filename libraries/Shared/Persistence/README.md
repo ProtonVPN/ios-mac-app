@@ -16,11 +16,19 @@ Queries are specified using an array of `VPNServerFilter`, which enables fetchin
 The order of results is controlled using `VPNServerOrder`.
 
 ```
-// All server groups for which every server supports p2p
-repository.groups(filteredBy: [.features(.p2p)]
+// Returns aggregate information about server groups,
+// for which at least one server supports p2p
+// (filters are applied before grouping)
+repository.groups(filteredBy: [.features(.p2p)])
 
 // All free Swiss servers
-repository.servers(filteredBy: [.maxTier(0), .kind(.country("CH"), orderedBy: .nameAscending]
+repository.servers(
+    filteredBy: [
+        .maxTier(0),
+        .kind(.country("CH"))
+    ],
+    orderedBy: .nameAscending
+)
 ```
 
 `RDBPersistence` (Relational Database Persistence), provides an implementation of repositories provided by `Persistence`.

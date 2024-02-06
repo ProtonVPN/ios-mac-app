@@ -151,6 +151,20 @@ extension PropertiesManagerProtocol {
             }
         }
     }
+
+    /// All protocols which should be considered for connection.
+    ///
+    /// This depends on the user's protocol choice, and, if they have chosen smart protocol, the smart protocol
+    /// configuration that comes from the API.
+    public var currentProtocolSupport: ProtocolSupport {
+        switch connectionProtocol {
+        case .smartProtocol:
+            return ProtocolSupport(vpnProtocols: smartProtocolConfig.supportedProtocols)
+
+        case .vpnProtocol(let vpnProtocol):
+            return vpnProtocol.protocolSupport
+        }
+    }
 }
 
 public class PropertiesManager: PropertiesManagerProtocol {

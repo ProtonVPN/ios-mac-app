@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct ContinuousServerProperties {
+public struct ContinuousServerProperties: CustomStringConvertible {
     public let serverId: String
     public let load: Int
     public let score: Double

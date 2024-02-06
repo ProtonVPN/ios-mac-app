@@ -35,6 +35,12 @@ public struct ProtocolSupport: OptionSet, Codable {
     public init(rawValue: Int) {
         self.rawValue = rawValue
     }
+
+    public init(vpnProtocols: [VpnProtocol]) {
+        self.rawValue = vpnProtocols.reduce(.zero) { result, nextValue in
+            result + ProtocolSupport(bitPosition: nextValue.protocolSupportBitPosition)
+        }.rawValue
+    }
 }
 
 extension VpnProtocol {

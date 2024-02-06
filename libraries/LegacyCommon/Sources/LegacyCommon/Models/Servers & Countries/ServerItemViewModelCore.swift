@@ -55,8 +55,7 @@ open class ServerItemViewModelCore {
     }
 
     public var isCurrentProtocolSupported: Bool {
-        fatalError()
-        // return serverModel.supports(connectionProtocol: propertiesManager.connectionProtocol, smartProtocolConfig: propertiesManager.smartProtocolConfig)
+        return !serverModel.protocolSupport.isDisjoint(with: propertiesManager.currentProtocolSupport)
     }
 
     public var alphaOfMainElements: CGFloat {

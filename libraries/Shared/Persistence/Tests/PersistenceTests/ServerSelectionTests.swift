@@ -62,12 +62,12 @@ final class ServerSelectionTests: IsolatedResourceDrivenDatabaseTestCase {
     }
 
     func testFastestTorServer() throws {
-        let result = try! sut.getFirstServer(
+        let result = try sut.getFirstServer(
             filteredBy: [.features(.standard(with: .tor))],
             orderedBy: .fastest
         )
 
-        let endpoint = try! XCTUnwrap(result)
+        let endpoint = try XCTUnwrap(result)
         XCTAssertTrue(endpoint.logical.feature.contains(.tor))
         XCTAssertTrue(endpoint.logical.feature.isDisjoint(with: .secureCore))
     }
