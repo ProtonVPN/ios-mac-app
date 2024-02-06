@@ -126,7 +126,7 @@ test:ui:app:ios:custom:
   extends:
     - .ios_job_template
   rules: &rules_custom
-    - if: $CI_PIPELINE_SOURCE == "schedule" && '$CUSTOM_TEST_PLAN'
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $CUSTOM_TEST_PLAN != null
       when: always
   stage: test_ui
   needs:
