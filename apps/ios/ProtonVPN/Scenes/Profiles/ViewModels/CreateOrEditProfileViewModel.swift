@@ -523,9 +523,10 @@ extension CreateOrEditProfileViewModel {
         guard let countryGroup = selectedCountryGroup else {
             return nil
         }
-        let supportedProtocols = selectedProtocol.vpnProtocol != nil
-            ? [selectedProtocol.vpnProtocol!]
-            : propertiesManager.smartProtocolConfig.supportedProtocols
+        let selected = [selectedProtocol.vpnProtocol].compactMap({ $0 })
+        let supportedProtocols = selected.isEmpty
+            ? propertiesManager.smartProtocolConfig.supportedProtocols
+            : selected
 
         return try? serverRepository.getServers(
             filteredBy: [
@@ -584,7 +585,7 @@ extension CreateOrEditProfileViewModel {
             outer: for section in sections {
                 var rowIndex = 0
                 for row in section.cells {
-                    // Object be be either `ServerInfo` or `ServerOffering`
+                    // Object can be either `ServerInfo` or `ServerOffering`
                     if let object = row.object as? ServerOffering, object == selectedOffering {
                         selectedIndex = IndexPath(row: rowIndex, section: sectionIndex)
                         break outer

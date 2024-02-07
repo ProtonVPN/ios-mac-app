@@ -125,25 +125,14 @@ class CreateNewProfileViewModel {
     }
 
     // Filter currently available servers by their type: standard, secure core, p2p, tor
-    private var serverTypeFilter: VPNServerFilter.ServerFeatureFilter {
-        switch state.serverType {
-        case .standard:
-            return .standard
-        case .secureCore:
-            return .secureCore
-        case .p2p:
-            return .standard(with: .p2p)
-        case .tor:
-            return .standard(with: .tor)
-        case .unspecified:
-            return .standard
-        }
+    private var currentServerTypeFilter: VPNServerFilter.ServerFeatureFilter {
+        state.serverType.serverTypeFilter
     }
 
     private var serverGroups: [ServerGroupInfo] {
         do {
             return try serverRepository.getGroups(filteredBy: [
-                .features(serverTypeFilter),
+                .features(currentServerTypeFilter),
             ])
         } catch {
             log.error("Error while loading countries (groups)", metadata: ["error": "\(error)"])
@@ -180,7 +169,7 @@ class CreateNewProfileViewModel {
 
         return try? serverRepository.getServers(
             filteredBy: [
-                .features(serverTypeFilter), // Secure core or not
+                .features(currentServerTypeFilter), // Secure core or not
                 .supports(protocol: ProtocolSupport(vpnProtocols: supportedProtocols)), // Only the ones supporting selected protocol
                 .kind(countryGroup.kind.serverTypeFilter), // Only from selected country/gateway
             ],
@@ -228,7 +217,7 @@ class CreateNewProfileViewModel {
 
             return PopUpButtonItemViewModel(
                 title: serverDescriptor(for: server),
-                checked: checked, // state.serverOffering?.id == server.serverOfferingID,
+                checked: checked,
                 handler: { [weak self] in
                     // Now that we don't load whole objects from the repository, it became
                     // not effective to pre-fill ServerOffering objects before one is selected,
@@ -412,7 +401,7 @@ class CreateNewProfileViewModel {
         let grouping: [ServerGroupInfo]
         do {
             grouping = try serverRepository.getGroups(filteredBy: [
-                .features(serverTypeFilter),
+                .features(currentServerTypeFilter),
             ])
         } catch {
             log.error("Error while loading countries (groups)", metadata: ["error": "\(error)"])
