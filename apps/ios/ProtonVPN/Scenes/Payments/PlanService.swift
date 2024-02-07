@@ -148,7 +148,7 @@ final class CorePlanService: PlanService {
         }
 
         paymentsUI = createPaymentsUI()
-        paymentsUI?.showUpgradePlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true) { [weak self] response in
+        paymentsUI?.showCurrentPlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true) { [weak self] response in
             self?.handlePaymentsResponse(response: response, modalSource: modalSource)
         }
     }
