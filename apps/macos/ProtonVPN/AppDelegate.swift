@@ -99,7 +99,15 @@ extension AppDelegate: NSApplicationDelegate {
             self.setNSCodingModuleName()
             self.setupDebugHelpers()
 
-            SentryHelper.setupSentry(dsn: ObfuscatedConstants.sentryDsnmacOS)
+            SentryHelper.setupSentry(
+                dsn: ObfuscatedConstants.sentryDsnmacOS,
+                isEnabled: { [weak self] in
+                    self?.container.makeTelemetrySettings().telemetryCrashReports ?? false
+                },
+                getUserId: { [weak self] in
+                    self?.container.makeAuthKeychainHandle().userId
+                }
+            )
 
             AppLaunchRoutine.execute(propertiesManager: self.propertiesManager)
 #if !REDESIGN
