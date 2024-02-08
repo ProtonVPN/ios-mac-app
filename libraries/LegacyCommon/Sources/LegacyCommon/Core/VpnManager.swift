@@ -713,6 +713,7 @@ public class VpnManager: VpnManagerProtocol {
         case .error(let error):
             if case ProtonVpnError.tlsServerVerification = error {
                 self.disconnect {}
+                SentryHelper.shared?.log(error: error)
                 self.alertService?.push(alert: MITMAlert(messageType: .vpn))
                 break
             }
