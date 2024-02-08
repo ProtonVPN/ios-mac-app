@@ -103,8 +103,16 @@ extension AppDelegate: UIApplicationDelegate {
         // Protocol check is placed here for parity with MacOS
         adjustGlobalProtocolIfNecessary()
 
-//        Waiting for https://github.com/getsentry/sentry-cocoa/issues/1892 to be fixed
-//        SentryHelper.setupSentry(dsn: ObfuscatedConstants.sentryDsniOS)
+        SentryHelper.setupSentry(
+            dsn: ObfuscatedConstants.sentryDsniOS,
+            isEnabled: { [weak self] in
+                self?.container.makeTelemetrySettings().telemetryCrashReports ?? false
+            },
+            getUserId: { [weak self] in
+                self?.container.makeAuthKeychainHandle().userId
+            }
+
+        )
         
         AnnouncementButtonViewModel.shared = container.makeAnnouncementButtonViewModel()
 
