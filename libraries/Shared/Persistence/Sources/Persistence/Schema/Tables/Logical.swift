@@ -36,7 +36,7 @@ struct Logical: Codable {
     let city: String?
     let hostCountry: String?
     let translatedCity: String?
-    let longitude: Double
     let latitude: Double
+    let longitude: Double
     let gatewayName: String?
 }

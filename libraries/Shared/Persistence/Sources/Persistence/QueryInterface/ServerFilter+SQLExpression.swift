@@ -36,10 +36,9 @@ extension VPNServerFilter {
 
         case .features(let features):
             let supportedFeatures = logical[Logical.Columns.feature]
-            // Note that binary AND operator has higher precedence than equality
             // We must compare against required features rather than > 0 since it's possible that features.required == 0
-            let hasAllRequiredFeatures = supportedFeatures & features.required.rawValue == features.required.rawValue
-            let hasNoExcludedFeatures = supportedFeatures & features.excluded.rawValue == 0
+            let hasAllRequiredFeatures = (supportedFeatures & features.required.rawValue) == features.required.rawValue
+            let hasNoExcludedFeatures = (supportedFeatures & features.excluded.rawValue) == 0
             return hasAllRequiredFeatures && hasNoExcludedFeatures
 
         case .supports(let protocolMask):
@@ -60,7 +59,7 @@ extension VPNServerFilter {
             return isStandard && logical[Logical.Columns.exitCountryCode] == countryCode
 
         case .matches(let query):
-            // TODO: Text-search improvements:
+            // TODO: VPNAPPL-2097 Text-search improvements:
             // https://github.com/groue/GRDB.swift/blob/master/Documentation/FullTextSearch.md
             // https://github.com/groue/GRDB.swift/blob/master/README.md#string-comparison
             return logical[Logical.Columns.exitCountryCode].like("%\(query)%")

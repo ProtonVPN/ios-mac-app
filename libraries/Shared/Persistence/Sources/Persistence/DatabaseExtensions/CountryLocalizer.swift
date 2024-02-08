@@ -22,6 +22,7 @@ import GRDB
 
 import Strings
 
+/// Lazily initialised the first time a database queue is configured with the custom function `localizedCountryName`
 var convertCodeToLocalizedCountryName: ([DatabaseValue]) throws -> String = {
     let localizer = LocalizationUtility()
     let codeToNameMap: [String: String] = Locale.isoRegionCodes.reduce(into: [:]) { result, code in
@@ -29,7 +30,8 @@ var convertCodeToLocalizedCountryName: ([DatabaseValue]) throws -> String = {
         result[code] = localizer.countryName(forCode: code) ?? "ZZ"
     }
 
-    return { dbValues in
+    // This closure is what is actually passed to SQLite
+    return { [codeToNameMap] dbValues in
         if dbValues.isEmpty {
             throw CountryLocalizationError.missingArgument
         }

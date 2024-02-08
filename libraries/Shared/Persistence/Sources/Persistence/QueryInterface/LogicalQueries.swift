@@ -23,13 +23,6 @@ import GRDB
 import Domain
 
 extension QueryInterfaceRequest {
-    func filter(_ predicate: some SQLSpecificExpressible, if expression: Bool) -> Self {
-        if expression {
-            return self.filter(predicate)
-        }
-        return self
-    }
-
     public func filter(
         _ filters: [VPNServerFilter],
         logicalAlias: TableAlias,

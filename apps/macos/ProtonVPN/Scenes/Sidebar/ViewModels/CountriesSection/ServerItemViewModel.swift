@@ -32,7 +32,19 @@ import LegacyCommon
 class ServerItemViewModel: ServerItemViewModelCore {
 
     private weak var countriesSectionViewModel: CountriesSectionViewModel! // weak to prevent retain cycle
-    
+
+    private var legacyServerModel: ServerModel? {
+        @Dependency(\.serverRepository) var repository
+        guard let server = try? repository.getFirstServer(
+            filteredBy: [.logicalID(serverModel.logical.id)],
+            orderedBy: .fastest
+        ) else {
+            log.debug("Failed to fetch server information for logical with id: \(serverModel.logical.id)")
+            return nil
+        }
+        return ServerModel(server: server)
+    }
+
     fileprivate var canConnect: Bool {
         return !isUsersTierTooLow && !underMaintenance
     }
@@ -94,8 +106,9 @@ class ServerItemViewModel: ServerItemViewModelCore {
     }
     
     func upgradeAction() {
-        fatalError()
-        // countriesSectionViewModel.displayUpgradeMessage(serverModel)
+        if let legacyServerModel {
+            countriesSectionViewModel.displayUpgradeMessage(legacyServerModel)
+        }
     }
 
     func connectAction() {
@@ -104,19 +117,12 @@ class ServerItemViewModel: ServerItemViewModelCore {
             log.debug("Country server in main window clicked. Already connected, so will disconnect from VPN. ", category: .connectionDisconnect, event: .trigger)
             vpnGateway.disconnect()
         } else {
-            @Dependency(\.serverRepository) var repository
-            guard let server = try? repository.getFirstServer(
-                filteredBy: [.logicalID(serverModel.logical.id)],
-                orderedBy: .fastest
-            ) else {
-                log.debug("Failed to fetch server information for logical with id: \(serverModel.logical.id)")
-                return
-            }
+            guard let legacyServerModel else { return }
 
             NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
             log.debug("Country server in main window clicked. Will connect to \(serverModel)", category: .connectionConnect, event: .trigger)
 
-            vpnGateway.connectTo(server: ServerModel(server: server))
+            vpnGateway.connectTo(server: legacyServerModel)
         }
     }
 }

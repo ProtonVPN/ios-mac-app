@@ -77,6 +77,14 @@ extension ServerModel {
     public convenience init(server: Domain.VPNServer) {
         self.init(logical: server.logical, endpoints: server.endpoints)
     }
+
+    public var kind: ServerGroupInfo.Kind {
+        if let gatewayName {
+            return .gateway(name: gatewayName)
+        } else {
+            return .country(code: exitCountryCode)
+        }
+    }
 }
 
 

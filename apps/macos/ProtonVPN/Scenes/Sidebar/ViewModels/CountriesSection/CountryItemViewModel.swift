@@ -98,9 +98,7 @@ final class CountryItemViewModel {
         guard let connectedServer = appStateManager.activeConnection()?.server else { return false }
         return !isTierTooLow && vpnGateway.connection == .connected
             && connectedServer.isSecureCore == false
-            && connectedServer.countryCode == countryCode
-            // We cannot easily determine this. Instead, we should start storing the 'group' that we are currently connected to
-            // && supportedServerModels.contains(where: { $0 == connectedServer })
+            && connectedServer.kind == serversGroup.kind
     }
     
     let displaySeparator: Bool

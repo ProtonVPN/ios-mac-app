@@ -45,15 +45,4 @@ extension GroupInfoResult {
             return .country(code: exitCountryCode)
         }
     }
-
-    /// Returns a filter that can be used to return all servers that make up this group
-    private var kindFilter: VPNServerFilter {
-        switch kind {
-        case .country(let code):
-            return .kind(.standard(country: code))
-
-        case .gateway(let name):
-            return .kind(.gateway(name: name))
-        }
-    }
 }

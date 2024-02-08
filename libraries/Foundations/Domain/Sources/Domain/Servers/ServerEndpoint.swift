@@ -53,9 +53,9 @@ public struct ServerEndpoint: Codable, Equatable, Identifiable {
 
 typealias ProtocolOverrides = [VpnProtocol: ServerProtocolEntry]
 
-
-/// This connection/business logic should probably live in a shared package in a layer above Domain.
-/// Another advantage would be faster compilation of Domain since it would no longer depend on protoncore
+// TODO: VPNAPPL-2099 This connection/business logic should probably live in a shared package in a layer above Domain.
+// This way, packages that rely on Domain could even potentially build faster if the dependency on protoncore is
+// broken (ProtonCoreUtilities)
 extension ServerEndpoint {
 
     public func supports(vpnProtocol: VpnProtocol) -> Bool {

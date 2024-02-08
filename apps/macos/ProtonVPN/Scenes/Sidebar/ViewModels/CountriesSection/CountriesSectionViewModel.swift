@@ -235,7 +235,8 @@ class CountriesSectionViewModel {
         notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: propertiesManager).featureFlagsNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnPlanChanged, object: nil)
         notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnUserDelinquent, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: serverManager.contentChanged, object: nil)
+        // TODO: VPNAPPL-2075 refresh on server list update
+        // notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: serverManager.contentChanged, object: nil)
         updateState()
     }
 
@@ -319,7 +320,13 @@ class CountriesSectionViewModel {
     }
 
     func showStreamingServices(server: ServerItemViewModel) {
-        guard !propertiesManager.secureCoreToggle, server.serverModel.logical.tier > 1, let streamServicesDict = propertiesManager.streamingServices[server.serverModel.logical.exitCountryCode], let key = streamServicesDict.keys.first, let streamServices = streamServicesDict[key] else {
+        guard
+            !propertiesManager.secureCoreToggle, // don't show streaming services when secure core is enabled
+            server.serverModel.logical.tier > CoreAppConstants.VpnTiers.basic, // only available for plus and above
+            let streamServicesDict = propertiesManager.streamingServices[server.serverModel.logical.exitCountryCode],
+            let key = streamServicesDict.keys.first,
+            let streamServices = streamServicesDict[key]
+        else {
             return
         }
 
@@ -330,8 +337,6 @@ class CountriesSectionViewModel {
 
     @discardableResult
     private func refreshTier() -> Int {
-        // Re-subscription happens after userTier is set
-        notificationCenter.removeObserver(self, name: serverManager.contentChanged, object: nil)
         do {
             if (try? vpnKeychain.fetch())?.isDelinquent == true {
                 userTier = .freeTier
@@ -619,11 +624,11 @@ class CountriesSectionViewModel {
     enum UserType {
         case legacyFree // old free plan
         case free // Post-free rescope
-        case plus // Anything paid (basic, plus, visionary etc)
+        case paid // Anything paid (basic, plus, visionary etc)
 
         init(tier: Int, showNewFreePlan: Bool) {
             if tier > CoreAppConstants.VpnTiers.free {
-                self = .plus
+                self = .paid
             } else {
                 self = showNewFreePlan ? .free : .legacyFree
             }
@@ -637,18 +642,18 @@ class CountriesSectionViewModel {
 
     private func sections(for groups: [ServerGroupInfo], userType: UserType) -> [ServerSection?] {
         switch userType {
-        case .plus:
+        case .paid:
             return [
                 gatewaysSection(for: groups),
                 allLocationsSection(for: groups)
             ]
-        case .free:
+        case .legacyFree:
             return [
                 gatewaysSection(for: groups),
                 freeLocationsSection(for: groups),
                 plusLocationsSection(for: groups, minTier: CoreAppConstants.VpnTiers.basic)
             ]
-        case .legacyFree:
+        case .free:
             return [
                 gatewaysSection(for: groups),
                 fastestConnectionSection,
@@ -684,19 +689,38 @@ class CountriesSectionViewModel {
     // MARK: Section Headers
 
     private var gatewaysSectionHeader: CellModel {
-        return .header(CountryHeaderViewModel(Localizable.locationsGateways, totalCountries: nil, buttonType: .gateway, countriesViewModel: self))
+        .header(CountryHeaderViewModel(
+            Localizable.locationsGateways,
+            totalCountries: nil,
+            buttonType: .gateway, countriesViewModel: self
+        ))
     }
 
     private func allLocationsHeader(locationCount: Int) -> CellModel {
-        return .header(CountryHeaderViewModel(Localizable.locationsAll, totalCountries: locationCount, buttonType: .premium, countriesViewModel: self))
+        .header(CountryHeaderViewModel(
+            Localizable.locationsAll,
+            totalCountries: locationCount,
+            buttonType: .premium,
+            countriesViewModel: self
+        ))
     }
 
     private func freeLocationsHeader(locationCount: Int) -> CellModel {
-        return .header(CountryHeaderViewModel(Localizable.locationsFree, totalCountries: locationCount, buttonType: nil, countriesViewModel: self))
+        .header(CountryHeaderViewModel(
+            Localizable.locationsFree,
+            totalCountries: locationCount,
+            buttonType: nil,
+            countriesViewModel: self
+        ))
     }
 
     private func plusLocationsHeader(locationCount: Int) -> CellModel {
-        return .header(CountryHeaderViewModel(Localizable.locationsPlus, totalCountries: locationCount, buttonType: .premium,countriesViewModel: self))
+        .header(CountryHeaderViewModel(
+            Localizable.locationsPlus,
+            totalCountries: locationCount,
+            buttonType: .premium,
+            countriesViewModel: self
+        ))
     }
 
     // MARK: Sections

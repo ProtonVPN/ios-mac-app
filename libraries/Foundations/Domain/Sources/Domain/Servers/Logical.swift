@@ -20,6 +20,7 @@ import Foundation
 
 import Strings
 
+// TODO: VPNAPPL-2100 Domain model refinement
 public struct Logical: Codable, Equatable {
 
     public let id: String
@@ -38,19 +39,6 @@ public struct Logical: Codable, Equatable {
     public let latitude: Double
     public let longitude: Double
     public let gatewayName: String?
-
-    // TODO: Domain model refinement
-    // Since we are no longer bound by limitations of the API representation, we could use enums to model some of
-    // these properties more ergonomically. E.g. leave common properties as they are, and defines a logical type enum:
-    // ```
-    // enum LogicalType {
-    //     gateway(name: String, exitCountryCode: String)
-    //     secureCore(exitCountryCode: String, entryCountryCode: String)
-    //     standard(entryCountryCode: String)
-    // }
-    // ```
-    //
-    // Additionally, enums could be used for fields such as status (e.g. `case maintenance`, `case normal`)
 
     public init(
         id: String,
@@ -83,8 +71,8 @@ public struct Logical: Codable, Equatable {
         self.city = city
         self.hostCountry = hostCountry
         self.translatedCity = translatedCity
-        self.longitude = longitude
         self.latitude = latitude
+        self.longitude = longitude
         self.gatewayName = gatewayName
     }
 
@@ -96,8 +84,8 @@ public struct Logical: Codable, Equatable {
     }
 }
 
-/// This logic depends on both Domain and Strings.
-/// Should it live in Domain, Strings, or a Shared package in the layer above this one?
+// TODO: VPNAPPL-2099 This logic depends on both Domain and Strings.
+// Should it live in Domain, Strings, or a Shared package in the layer above this one?
 extension Logical {
     public var entryCountry: String {
         return LocalizationUtility.default.countryName(forCode: entryCountryCode) ?? ""

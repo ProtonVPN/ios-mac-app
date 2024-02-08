@@ -52,8 +52,8 @@ extension VPNServer {
             city: logical.city,
             hostCountry: logical.hostCountry,
             translatedCity: logical.translatedCity,
-            longitude: logical.longitude,
             latitude: logical.latitude,
+            longitude: logical.longitude,
             gatewayName: logical.gatewayName
         )
     }

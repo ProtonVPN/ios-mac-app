@@ -155,11 +155,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         do {
             return try serverRepository.isEmpty
         } catch {
-            log.error(
-                "Encountered error while checking whether server repository is empty",
-                category: .persistence,
-                metadata: ["error": "\(error)"]
-            )
+            // TODO: VPNAPPL-2075 Refactor database error handling and logging
+            log.error("Failured to check whether repository is empty", category: .persistence, metadata: ["error": "\(error)"])
             return true
         }
     }

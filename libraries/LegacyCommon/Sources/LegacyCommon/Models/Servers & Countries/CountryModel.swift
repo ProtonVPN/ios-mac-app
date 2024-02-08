@@ -43,9 +43,8 @@ public class CountryModel: Comparable, Hashable {
         self.countryCode = countryCode
         self.lowestTier = lowestTier
         self.feature = feature
-        // TODO: use location data provided in logicals response
+        // TODO: VPNAPPL-2105 use location data provided in logicals response
         self.location = location ?? LocationUtility.coordinate(forCountry: countryCode)
-
     }
 
     public func hash(into hasher: inout Hasher) {

@@ -72,12 +72,12 @@ public class MockServerStorage {
     }
 
     func deleteServers(withMinTier minTier: Int, withIDsNotIn ids: Set<String>) -> Int {
-            let initialServerCount = servers.count
-            servers = servers.filter { (id, server) in
-                ids.contains(id) || server.logical.tier < minTier
-            }
-            return initialServerCount - servers.count
+        let initialServerCount = servers.count
+        servers = servers.filter { (id, server) in
+            ids.contains(id) || server.logical.tier < minTier
         }
+        return initialServerCount - servers.count
+    }
 
     func upsert(loads: [ContinuousServerProperties]) {
         let updatedServers: [VPNServer] = loads.compactMap { dynamicInfo in
@@ -141,8 +141,8 @@ extension Domain.Logical {
             city: city,
             hostCountry: hostCountry,
             translatedCity: translatedCity,
-            latitude: longitude,
-            longitude: latitude,
+            latitude: latitude,
+            longitude: longitude,
             gatewayName: gatewayName
         )
     }

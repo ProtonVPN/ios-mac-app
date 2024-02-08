@@ -131,6 +131,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
                 do {
                     try self.serverRepository.upsert(loads: loads)
                 } catch {
+                    // TODO: VPNAPPL-2075 Refactor database error handling and logging
                     log.error("Failed to update loads of stored logicals", category: .persistence, metadata: ["error": "\(error)"])
                 }
 
