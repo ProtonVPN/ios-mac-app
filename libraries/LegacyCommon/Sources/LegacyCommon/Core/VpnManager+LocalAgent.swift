@@ -110,6 +110,7 @@ extension VpnManager {
                 log.error("Failed to refresh certificate in local agent",
                           category: .localAgent, event: .error,
                           metadata: ["error": .string(.init(describing: error))])
+                SentryHelper.shared?.log(error: error)
 
                 if let remoteClientError = error as? AuthenticationRemoteClientError {
                     switch remoteClientError {
@@ -377,6 +378,7 @@ extension VpnManager: LocalAgentDelegate {
                 log.error("Failed to refresh certificate in local agent after receiving features",
                           category: .localAgent, event: .error,
                           metadata: ["error": .string(.init(describing: error))])
+                SentryHelper.shared?.log(error: error)
 
                 guard let remoteClientError = error as? AuthenticationRemoteClientError else {
                     return
