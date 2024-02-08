@@ -149,6 +149,6 @@ final class ServerSelectionTests: IsolatedResourceDrivenDatabaseTestCase {
         let serverNames = results.map { $0.logical.name }
 
         // Naive string comparison would result in DE#10 < DE#9
-         XCTAssertEqual(serverNames, ["DE#9", "DE#10"])
+        XCTAssertEqual(serverNames, ["DE#9", "DE#10"])
     }
 }

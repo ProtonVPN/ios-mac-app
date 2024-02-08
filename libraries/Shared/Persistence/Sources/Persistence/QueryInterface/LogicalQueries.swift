@@ -23,7 +23,7 @@ import GRDB
 import Domain
 
 extension QueryInterfaceRequest {
-    public func filter(
+    public func filterServers(
         _ filters: [VPNServerFilter],
         logicalAlias: TableAlias,
         overrideAlias: TableAlias
@@ -53,9 +53,34 @@ extension QueryInterfaceRequest {
     }
 }
 
-extension GroupInfoResult {
+// MARK: GroupInfoResult
 
-    private static func isVirtual(_ logicalAlias: TableAlias) -> SQLExpression {
+extension Endpoint {
+    /// Define joins on Endpoint, also setting up table aliases so that they can be used to reference columns in future
+    /// operations such as filtering.
+    ///
+    /// Joins performed:
+    /// - Left join with EndpointOverrides
+    /// - Inner join Logical and LogicalStatus (transitively)
+    static func joiningAndAliasing(
+        logicalAlias: TableAlias,
+        statusAlias: TableAlias,
+        overrideAlias: TableAlias
+    ) -> QueryInterfaceRequest<Endpoint> {
+        Endpoint
+            .joining(
+                required: Endpoint.logical
+                    .aliased(logicalAlias).select(Logical.Columns.exitCountryCode, Logical.Columns.gatewayName)
+                    .joining(required: Logical.status.aliased(statusAlias))
+            )
+            .joining(optional: Endpoint.overrides.aliased(overrideAlias))
+    }
+}
+
+extension QueryInterfaceRequest where RowDecoder == Endpoint {
+
+    /// Represents the condition of whether a logical server is virtual (a.k.a. supports smart routing or not)
+    private func isVirtual(_ logicalAlias: TableAlias) -> SQLExpression {
         let exitCountryCode = logicalAlias[Logical.Columns.exitCountryCode]
         let hostCountry = logicalAlias[Logical.Columns.hostCountry]
         return SQL(
@@ -69,19 +94,13 @@ extension GroupInfoResult {
         ).sqlExpression
     }
 
-    static func request(filters: [VPNServerFilter]) -> QueryInterfaceRequest<GroupInfoResult> {
-        let logicalAlias = TableAlias()
-        let statusAlias = TableAlias()
-        let overrideAlias = TableAlias()
-
-        return Endpoint
-            .joining(
-                required: Endpoint.logical
-                    .aliased(logicalAlias).select(Logical.Columns.exitCountryCode, Logical.Columns.gatewayName)
-                    .joining(required: Logical.status.aliased(statusAlias))
-            )
-            .joining(optional: Endpoint.overrides.aliased(overrideAlias))
-            .filter(filters, logicalAlias: logicalAlias, overrideAlias: overrideAlias)
+    /// Annotates the request with aggregate information collected from joined tables using the provided aliases
+    func annotatedWithAggregateData(
+        logicalAlias: TableAlias,
+        statusAlias: TableAlias,
+        overrideAlias: TableAlias
+    ) -> QueryInterfaceRequest<Endpoint> {
+        return self
             .annotated(with: max(statusAlias[LogicalStatus.Columns.status] & Endpoint.Columns.status).forKey("status"))
             .annotated(with: bitwiseAnd(isVirtual(logicalAlias)).forKey("isVirtual"))
             .annotated(with: count(distinct: logicalAlias[Logical.Columns.id]).forKey("serverCount"))
@@ -95,11 +114,31 @@ extension GroupInfoResult {
             .annotated(with: max(logicalAlias[Logical.Columns.tier]).forKey("maxTier"))
             .annotated(with: logicalAlias[Logical.Columns.latitude])
             .annotated(with: logicalAlias[Logical.Columns.longitude])
+    }
+
+    func groupingByServerType(logicalAlias: TableAlias) -> QueryInterfaceRequest<GroupInfoResult> {
+        return self
             .group(logicalAlias[Logical.Columns.gatewayName], logicalAlias[Logical.Columns.exitCountryCode])
             .asRequest(of: GroupInfoResult.self)
-            .order(logicalAlias[Logical.Columns.gatewayName].ascNullsLast, localizedCountryName(logicalAlias[Logical.Columns.exitCountryCode]))
     }
 }
+
+extension GroupInfoResult {
+    static func request(filters: [VPNServerFilter]) -> QueryInterfaceRequest<GroupInfoResult> {
+        let logicals = TableAlias()
+        let statuses = TableAlias()
+        let overrides = TableAlias()
+
+        return Endpoint
+            .joiningAndAliasing(logicalAlias: logicals, statusAlias: statuses, overrideAlias: overrides)
+            .filterServers(filters, logicalAlias: logicals, overrideAlias: overrides)
+            .annotatedWithAggregateData(logicalAlias: logicals, statusAlias: statuses, overrideAlias: overrides)
+            .groupingByServerType(logicalAlias: logicals)
+            .order(logicals[Logical.Columns.gatewayName].ascNullsLast, localizedCountryName(logicals[Logical.Columns.exitCountryCode]))
+    }
+}
+
+// MARK: ServerResult
 
 extension ServerResult {
     static func request(filters: [VPNServerFilter], order: VPNServerOrder) -> QueryInterfaceRequest<ServerResult> {
@@ -115,7 +154,7 @@ extension ServerResult {
                     .joining(optional: Endpoint.overrides.aliased(overrideAlias))
             )
             .including(required: Logical.status.aliased(statusAlias))
-            .filter(filters, logicalAlias: logicalAlias, overrideAlias: overrideAlias)
+            .filterServers(filters, logicalAlias: logicalAlias, overrideAlias: overrideAlias)
             .asRequest(of: ServerResult.self)
             .group(logicalAlias[Logical.Columns.id])
             .order(order, logicalAlias: logicalAlias, statusAlias: statusAlias)
@@ -132,7 +171,7 @@ extension ServerInfoResult {
             .including(required: Endpoint.logical.aliased(logicalAlias).including(required: Logical.status.aliased(statusAlias)))
             .joining(optional: Endpoint.overrides.aliased(overrideAlias))
             .annotated(with: bitwiseOr(overrideAlias[EndpointOverrides.Columns.protocolMask]).forKey("protocolMask"))
-            .filter(filters, logicalAlias: logicalAlias, overrideAlias: overrideAlias)
+            .filterServers(filters, logicalAlias: logicalAlias, overrideAlias: overrideAlias)
             .asRequest(of: ServerInfoResult.self)
             .group(logicalAlias[Logical.Columns.id])
             .order(order, logicalAlias: logicalAlias, statusAlias: statusAlias)
