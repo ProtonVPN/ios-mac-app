@@ -9,6 +9,8 @@
 import Foundation
 import Sentry
 import VPNShared
+import ProtonCoreFeatureFlags
+import Domain
 
 public final class SentryHelper {
 
@@ -35,7 +37,9 @@ public final class SentryHelper {
                 }
 
                 // Remove heaviest part of event to make sure event doesn't reach max request size. Can be removed after the issue is fixed on the infra side (INFSUP-682).
-                event.debugMeta = nil
+                if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.sentryExcludeMetadata) {
+                    event.debugMeta = nil
+                }
 
                 // Add internal, encrypted user ID to Sentry errors
                 if let userId = getUserId() {
