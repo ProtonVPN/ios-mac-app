@@ -30,7 +30,7 @@ import Dependencies
 import VPNShared
 import VPNAppCore
 
-class CountryItemViewModel {
+final class CountryItemViewModel {
     /// Contains information about the region such as the country code, the tier the
     /// country is available for, and what features are available OR a Gateway instead of
     /// a country.
@@ -51,8 +51,8 @@ class CountryItemViewModel {
     fileprivate let appStateManager: AppStateManager
     fileprivate let propertiesManager: PropertiesManagerProtocol
     
-    private let countriesSectionViewModel: CountriesSectionViewModel
-        
+    private weak var countriesSectionViewModel: CountriesSectionViewModel?
+
     var isSmartAvailable: Bool { supportedServerModels.allSatisfy({ $0.isVirtual }) }
     var isTorAvailable: Bool { serversGroup.feature.contains(.tor) }
     var isP2PAvailable: Bool { serversGroup.feature.contains(.p2p) }
@@ -162,11 +162,11 @@ class CountryItemViewModel {
     }
     
     func upgradeAction() {
-        countriesSectionViewModel.displayCountryUpsell(countryCode: countryCode)
+        countriesSectionViewModel?.displayCountryUpsell(countryCode: countryCode)
     }
     
     func changeCellState() {
-        countriesSectionViewModel.toggleCountryCell(for: self)
+        countriesSectionViewModel?.toggleCountryCell(for: self)
         isOpened = !isOpened
     }
 

@@ -23,7 +23,7 @@
 import Cocoa
 import LegacyCommon
 
-protocol CountriesServersHeaderViewModelProtocol {
+protocol CountriesServersHeaderViewModelProtocol: AnyObject {
     var title: String { get }
     var didTapInfoBtn: ( () -> Void )? { get }
 }
@@ -40,18 +40,14 @@ class CountryHeaderViewModel: CountriesServersHeaderViewModelProtocol {
         self.title = title
 
         if let buttonType {
-            switch buttonType {
-            case .premium:
-                didTapInfoBtn = {
-                    countriesViewModel.displayPremiumServices?()
-                }
-            case .gateway:
-                didTapInfoBtn = {
-                    countriesViewModel.displayGatewaysServices?()
-                }
-            case .freeConnections:
-                didTapInfoBtn = {
-                    countriesViewModel.displayFreeServices()
+            didTapInfoBtn = { [weak countriesViewModel] in
+                switch buttonType {
+                case .premium:
+                    countriesViewModel?.displayPremiumServices?()
+                case .gateway:
+                    countriesViewModel?.displayGatewaysServices?()
+                case .freeConnections:
+                    countriesViewModel?.displayFreeServices()
                 }
             }
         }
@@ -71,7 +67,9 @@ class ServerHeaderViewModel: CountriesServersHeaderViewModelProtocol {
     init( _ sectionHeader: String, totalServers: Int, serverGroup: ServerGroup, tier: Int, propertiesManager: PropertiesManagerProtocol, countriesViewModel: CountriesSectionViewModel) {
         title = sectionHeader + " (\(totalServers))"
         guard tier != CoreAppConstants.VpnTiers.free else {
-            didTapInfoBtn = { countriesViewModel.displayFreeServices() }
+            didTapInfoBtn = { [weak countriesViewModel] in
+                countriesViewModel?.displayFreeServices()
+            }
             return
         }
         guard case .country(let country) = serverGroup.kind,
@@ -83,8 +81,8 @@ class ServerHeaderViewModel: CountriesServersHeaderViewModelProtocol {
             return
         }
 
-        didTapInfoBtn = {
-            countriesViewModel.displayStreamingServices?(country.countryName, streamServices, propertiesManager)
+        didTapInfoBtn = { [weak countriesViewModel] in
+            countriesViewModel?.displayStreamingServices?(country.countryName, streamServices, propertiesManager)
         }
     }
 }
