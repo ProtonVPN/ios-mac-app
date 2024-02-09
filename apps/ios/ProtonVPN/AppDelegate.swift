@@ -42,6 +42,7 @@ import ProtonCoreServices
 import ProtonCoreUIFoundations
 
 // Local dependencies
+import Domain
 import LegacyCommon
 import Logging
 import PMLogger
@@ -103,16 +104,17 @@ extension AppDelegate: UIApplicationDelegate {
         // Protocol check is placed here for parity with MacOS
         adjustGlobalProtocolIfNecessary()
 
-        SentryHelper.setupSentry(
-            dsn: ObfuscatedConstants.sentryDsniOS,
-            isEnabled: { [weak self] in
-                self?.container.makeTelemetrySettings().telemetryCrashReports ?? false
-            },
-            getUserId: { [weak self] in
-                self?.container.makeAuthKeychainHandle().userId
-            }
-
-        )
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.sentry) {
+            SentryHelper.setupSentry(
+                dsn: ObfuscatedConstants.sentryDsniOS,
+                isEnabled: { [weak self] in
+                    self?.container.makeTelemetrySettings().telemetryCrashReports ?? false
+                },
+                getUserId: { [weak self] in
+                    self?.container.makeAuthKeychainHandle().userId
+                }
+            )
+        }
         
         AnnouncementButtonViewModel.shared = container.makeAnnouncementButtonViewModel()
 
