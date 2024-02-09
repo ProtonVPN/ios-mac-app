@@ -32,7 +32,11 @@ import ProtonCoreFeatureFlags
 /// Keep in mind that external feature flags update their values only after app restart.
 public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
 
-    /// Enable or disable Sentry integration. If disabled, SentryHelper.default instance will
-    /// be nil, this calls to it will not do anything.
+    /// Enable or disable Sentry integration. If disabled, SentryHelper.default instance
+    /// will be nil, thus calls to it will do nothing.
     case sentry = "Sentry"
+
+    /// Defines if we should exclude full sentry event metadata. Should be disabled
+    /// (and can be deleted completely) only after INFSUP-682 is done.
+    case sentryExcludeMetadata = "SentryExcludeMetadata"
 }
