@@ -28,7 +28,7 @@ import Strings
 import VPNShared
 import LegacyCommon
 
-protocol QuickSettingsDropdownOptionPresenter {
+protocol QuickSettingsDropdownOptionPresenter: AnyObject {
     var title: String! { get }
     var icon: NSImage! { get }
     var active: Bool! { get }

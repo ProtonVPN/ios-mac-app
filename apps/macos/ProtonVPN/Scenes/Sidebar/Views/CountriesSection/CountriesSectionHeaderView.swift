@@ -24,25 +24,41 @@ import Cocoa
 import Theme
 import Ergonomics
 
-class CountriesSectionHeaderView: NSView {
+final class CountriesSectionHeaderView: NSView {
+
+    typealias ActionHandler = () -> Void
 
     @IBOutlet private weak var titleLbl: NSTextField!
     @IBOutlet private weak var informationBtn: NSButton!
-    
-    @IBAction private func didTapInformationBtn(_ sender: Any) {
-        viewModel?.didTapInfoBtn?()
+
+    var didTapInformationButton: ActionHandler?
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        wantsLayer = true
     }
-    
-    var viewModel: CountriesServersHeaderViewModelProtocol? {
-        didSet {
-            wantsLayer = true
-            titleLbl.stringValue = viewModel?.title ?? ""
-            titleLbl.textColor = .color(.text, .hint)
-            DarkAppearance {
-                layer?.backgroundColor = .cgColor(.background, .weak)
-            }
-            informationBtn.isHidden = viewModel?.didTapInfoBtn == nil
-            informationBtn.image = AppTheme.Icon.infoCircleFilled.colored(.hint)
+
+    func configure(with viewModel: CountriesServersHeaderViewModelProtocol) {
+        titleLbl.stringValue = viewModel.title
+        titleLbl.textColor = .color(.text, .hint)
+
+        DarkAppearance {
+            layer?.backgroundColor = .cgColor(.background, .weak)
         }
+
+        if viewModel.didTapInfoBtn != nil {
+            didTapInformationButton = { [weak viewModel] in
+                viewModel?.didTapInfoBtn?()
+            }
+        } else {
+            didTapInformationButton = nil // resetting the property just in case view might get reused
+        }
+
+        informationBtn.isHidden = didTapInformationButton == nil
+        informationBtn.image = AppTheme.Icon.infoCircleFilled.colored(.hint)
+    }
+
+    @IBAction private func didTapInformationBtn(_ sender: Any) {
+        didTapInformationButton?()
     }
 }

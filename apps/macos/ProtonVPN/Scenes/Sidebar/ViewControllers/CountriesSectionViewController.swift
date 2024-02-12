@@ -48,7 +48,7 @@ class QuickSettingsStack: NSStackView {
     }
 }
 
-class CountriesSectionViewController: NSViewController {
+final class CountriesSectionViewController: NSViewController {
 
     fileprivate enum Cell: String, CaseIterable {
         case country = "CountryItemCellView"
@@ -260,20 +260,27 @@ class CountriesSectionViewController: NSViewController {
         serverListTableView.intercellSpacing = NSSize(width: 0, height: 0)
         serverListTableView.backgroundColor = .color(.background, .weak)
         Cell.allCases.forEach { serverListTableView.register($0.nib, forIdentifier: $0.identifier) }
-        
+
         serverListScrollView.backgroundColor = .color(.background, .weak)
         shadowView.shadow(for: serverListScrollView.contentView.bounds.origin.y)
         serverListScrollView.contentView.postsBoundsChangedNotifications = true
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(scrolled(_:)), name: NSView.boundsDidChangeNotification, object: serverListScrollView.contentView)
         viewModel.contentChanged = { [weak self] change in self?.contentChanged(change) }
-        viewModel.displayPremiumServices = { self.presentAsSheet(FeaturesOverlayViewController(viewModel: PremiumFeaturesOverlayViewModel())) }
-        viewModel.displayFreeServicesOverlay = {
+        viewModel.displayPremiumServices = { [weak self] in
+            self?.presentAsSheet(FeaturesOverlayViewController(viewModel: PremiumFeaturesOverlayViewModel()))
+        }
+        viewModel.displayFreeServicesOverlay = { [weak self] in
+            guard let self else { return }
             let freeFeaturesOverlayViewModel = self.viewModel.freeFeaturesOverlayViewModel()
             self.presentAsSheet(FeaturesOverlayViewController(viewModel: freeFeaturesOverlayViewModel))
         }
-        viewModel.displayStreamingServices = { self.presentAsSheet(StreamingServicesOverlayViewController(viewModel: StreamingServicesOverlayViewModel(country: $0, streamServices: $1, propertiesManager: $2))) }
-        viewModel.displayGatewaysServices = { self.presentAsSheet(FeaturesOverlayViewController(viewModel: GatewayFeaturesOverlayViewModel())) }
+        viewModel.displayStreamingServices = { [weak self] in
+            self?.presentAsSheet(StreamingServicesOverlayViewController(viewModel: StreamingServicesOverlayViewModel(country: $0, streamServices: $1, propertiesManager: $2)))
+        }
+        viewModel.displayGatewaysServices = { [weak self] in
+            self?.presentAsSheet(FeaturesOverlayViewController(viewModel: GatewayFeaturesOverlayViewModel()))
+        }
     }
     
     private func setupQuickSettings() {
@@ -287,11 +294,11 @@ class CountriesSectionViewController: NSViewController {
             container?.widthAnchor.constraint(equalTo: vc.view.widthAnchor).isActive = true
             vc.view.translatesAutoresizingMaskIntoConstraints = false
             button?.toolTip = presenter.title
-            button?.callback = { _ in self.didTapSettingButton(index) }
+            button?.callback = { [weak self] _ in self?.didTapSettingButton(index) }
             button?.detailOpened = false
-            presenter.dismiss = {
+            presenter.dismiss = { [weak self] in
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    self.didDisplayQuickSetting(appear: false)
+                    self?.didDisplayQuickSetting(appear: false)
                 }
             }
             self.addChild(vc)
@@ -433,7 +440,7 @@ extension CountriesSectionViewController: NSTableViewDelegate {
             return cell
         case .header(let model):
             let cell = tableView.makeView(withIdentifier: Cell.header.identifier, owner: self) as! CountriesSectionHeaderView
-            cell.viewModel = model
+            cell.configure(with: model)
             return cell
         case .profile(let profileModel):
             let cell = tableView.makeView(withIdentifier: Cell.profile.identifier, owner: nil) as! ProfileItemView
