@@ -48,11 +48,13 @@ class SystemExtensionGuideViewController: NSViewController {
         super.viewDidLoad()
         NotificationCenter.default
             .publisher(for: SystemExtensionManager.allExtensionsInstalled)
-            .sink(receiveValue: allExtensionsInstalled)
+            .sink(receiveValue: { [weak self] _ in
+                self?.allExtensionsInstalled()
+            })
             .store(in: &cancellables)
     }
 
-    func allExtensionsInstalled(_ notification: Notification) {
+    func allExtensionsInstalled() {
         finishedTour = true
         self.view.window?.close()
     }
