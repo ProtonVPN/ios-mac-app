@@ -1332,7 +1332,7 @@
 "_troubleshoot_item_other_link3" = "Twitter";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
-"_netshield_stats_data_saved" = "Datos\nguardados";
+"_netshield_stats_data_saved" = "Datos\nahorrados";
 
 /* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
 "_netshield_feature_description" = "Protégete contra anuncios, malware y rastreadores en sitios web y aplicaciones. Si los sitios web no cargan, intenta desactivar NetShield.\nMás información";
@@ -1752,7 +1752,7 @@
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
 "netshield_stats_hint_data" = "Tamaño estimado de anuncios, rastreadores y malware bloqueado por NetShield.";
 
-"_netshield_stats_data_saved" = "Datos\nguardados";
+"_netshield_stats_data_saved" = "Datos\nahorrados";
 
 /* The count of trackers/ads blocked in thousands */
 "_netshield_stats_blocked_K" = "%@ K";
