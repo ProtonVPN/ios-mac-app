@@ -1603,7 +1603,7 @@
 
 "_local_agent_policy_violation_error_title" = "Pelanggaran kebijakan";
 
-"_local_agent_policy_violation_error_message" = "Anda tidak diizinkan untuk dapat tersambung ke server ini. Pilih server lain atau tingkatkan jenis akun Anda.";
+"_local_agent_policy_violation_error_message" = "Anda tidak diperkenankan untuk terhubung ke server ini. Pilih server lain atau tingkatkan paket Anda.";
 
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
 "_loading_connection_info" = "Memuat informasi koneksi";

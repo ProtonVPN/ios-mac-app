@@ -1350,7 +1350,7 @@
 "_netshield_business_upsell_title" = "Estä mainoksia NetShieldillä";
 
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
-"_netshield_business_upsell_subtitle" = "Kun päivität VPN Business -tilaukseen";
+"_netshield_business_upsell_subtitle" = "Päivittämällä VPN Business -tilaukseen";
 
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
@@ -1878,7 +1878,7 @@
 "modals_upsell_stay_free" = "Ei nyt";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
-"modals_upsell_features_subtitle" = "Kun päivität Plus-tilaukseen";
+"modals_upsell_features_subtitle" = "Päivittämällä Plus-tilaukseen";
 
 /* Subtitle of the Safe Mode upsell screen */
 "modals_upsell_features_safe_mode_subtitle" = "Onko sinulla vaativia tai ammatillisia tietoteknisiä tarpeita, jotka tarvitsevat epätyypillisiä portteja?\n\nPäivitä VPN Plus-tilaukseen käyttääksesi tätä ja muita premium-ominaisuuksia.";
@@ -2031,7 +2031,7 @@
 "upsell_countries_any_location" = "Valitse mikä tahansa sijainti";
 
 /* Feature of Countries upsell modal */
-"upsell_countries_even_higher_speed" = "Vielä korkeampi VPN-nopeus";
+"upsell_countries_even_higher_speed" = "Entistä parempi VPN-nopeus";
 
 /* Feature of Countries upsell modal */
 "upsell_countries_geoblocked_content" = "Käytä estettyä sisältöä";
@@ -2040,7 +2040,7 @@
 "upsell_countries_connect_to" = "Yhdistä %d maahan";
 
 /* Feature of Country upsell modal */
-"upsell_countries_higher_speeds" = "Vielä korkeampi VPN-nopeus";
+"upsell_countries_higher_speeds" = "Entistä parempi VPN-nopeus";
 
 /* Feature of Country upsell modal */
 "upsell_countries_money_back" = "30 päivän rahat takaisin -takuu";
