@@ -84,8 +84,8 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         // Header view model decides when to show a timer for the next free user reconnection. Not to
         // repeat the same logic we have to pass the change to the country list, where we have a banner
         // that changes if server change is not allowed atm.
-        headerViewModel?.changeServerStateUpdated = { viewState in
-            viewModel.changeServerStateUpdated(to: viewState)
+        headerViewModel?.changeServerStateUpdated = { [weak viewModel] viewState in
+            viewModel?.changeServerStateUpdated(to: viewState)
         }
         return countriesViewController
     }()
