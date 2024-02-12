@@ -57,7 +57,7 @@ public class VpnGatewayMock: VpnGatewayProtocol {
     public var lastConnectionRequest: ConnectionRequest?
     public var activeServerType: ServerType
     
-    var _userTier: Int?
+    public var _userTier: Int?
 
     public func userTier() throws -> Int {
         guard let _userTier else { throw VpnGatewayMockError.missingUserTier }

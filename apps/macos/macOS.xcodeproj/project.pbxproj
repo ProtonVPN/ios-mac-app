@@ -107,6 +107,7 @@
 		AD8C78AE29898403008AC0B5 /* AppSessionManagerImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8C78AD29898403008AC0B5 /* AppSessionManagerImplementationTests.swift */; };
 		AD9F19502B55D6770034F329 /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = AD9F194F2B55D6770034F329 /* Persistence */; };
 		ADA1A03E2A95E34000F9A6B6 /* Verifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1A03D2A95E34000F9A6B6 /* Verifier.swift */; };
+		ADDB04AB2B7A533800211434 /* CountriesSectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDB04AA2B7A533800211434 /* CountriesSectionViewModelTests.swift */; };
 		ADE590CC2A616E4B00089165 /* ProtocolDeprecatedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE590CB2A616E4B00089165 /* ProtocolDeprecatedViewController.swift */; };
 		B22F32F8278DC07800DBB8CA /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F32F7278DC07800DBB8CA /* StringUtils.swift */; };
 		B22F32FA278DC19E00DBB8CA /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F32F9278DC19E00DBB8CA /* LoginTests.swift */; };
@@ -646,6 +647,7 @@
 		AD8130FE2A85360800729E03 /* LiveDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveDependencies.swift; sourceTree = "<group>"; };
 		AD8C78AD29898403008AC0B5 /* AppSessionManagerImplementationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionManagerImplementationTests.swift; sourceTree = "<group>"; };
 		ADA1A03D2A95E34000F9A6B6 /* Verifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Verifier.swift; sourceTree = "<group>"; };
+		ADDB04AA2B7A533800211434 /* CountriesSectionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesSectionViewModelTests.swift; sourceTree = "<group>"; };
 		ADE590CB2A616E4B00089165 /* ProtocolDeprecatedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolDeprecatedViewController.swift; sourceTree = "<group>"; };
 		B22F32F7278DC07800DBB8CA /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StringUtils.swift; path = "../../../macos/ProtonVPNUITests/Other classes/StringUtils.swift"; sourceTree = "<group>"; };
 		B22F32F9278DC19E00DBB8CA /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
@@ -1448,6 +1450,7 @@
 			isa = PBXGroup;
 			children = (
 				D54B1E11262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift */,
+				ADDB04AA2B7A533800211434 /* CountriesSectionViewModelTests.swift */,
 			);
 			name = ViewModels;
 			path = ProtonVPNTests/ViewModels;
@@ -3257,6 +3260,7 @@
 				E15B755C20FC8DA00022C406 /* MapCoordinateTranslatorTests.swift in Sources */,
 				D510690E25B7255B00302699 /* UpdateFileSelectorMock.swift in Sources */,
 				D54B1E12262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift in Sources */,
+				ADDB04AB2B7A533800211434 /* CountriesSectionViewModelTests.swift in Sources */,
 				D5C7C8B92B0B9A9600641808 /* AppSessionRefreshTimerMock.swift in Sources */,
 				D5C7C8B52B0B9A8600641808 /* AppCertificateRefreshManagerMock.swift in Sources */,
 				E1683FFA2372DCBD00992E75 /* AlertTests.swift in Sources */,

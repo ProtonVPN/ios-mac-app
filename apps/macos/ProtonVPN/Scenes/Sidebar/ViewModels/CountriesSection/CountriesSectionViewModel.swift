@@ -256,7 +256,9 @@ class CountriesSectionViewModel {
             return cells
         }
 
-        let filters = globalFilters.appending(kind.filter)
+        let filters = globalFilters
+            .appending(kind.filter)
+            .appending(supportedProtocolsFilter) // filter out unsupported servers from showing up individually
 
         do {
             let countryServers = try repository.getServers(filteredBy: filters, orderedBy: .nameAscending)
@@ -511,11 +513,7 @@ class CountriesSectionViewModel {
     }
 
     private var globalFilters: [VPNServerFilter] {
-        return [
-            supportedProtocolsFilter,
-            serverTypeFilter,
-            searchQueryFilter
-        ].compactMap { $0 }
+        return [serverTypeFilter, searchQueryFilter].compactMap { $0 }
     }
 
     // MARK: - Wrong country banner

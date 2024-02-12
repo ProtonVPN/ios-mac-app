@@ -55,7 +55,6 @@ extension VpnProtocol {
         case .wireGuard(.tls):
             return 3
         case .openVpn:
-            assertionFailure("Usage of deprecated protocol: \(self)")
             return 7
         }
     }

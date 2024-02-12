@@ -131,7 +131,8 @@ final class CountryItemViewModel {
         }
 
         self.isOpened = isOpened
-        self.isServerUnderMaintenance = false
+        self.isServerUnderMaintenance = serversGroup.isUnderMaintenance
+            || serversGroup.protocolSupport.isDisjoint(with: propertiesManager.currentProtocolSupport)
         self.displaySeparator = displaySeparator
         self.appStateManager = appStateManager
         self.showCountryConnectButton = showCountryConnectButton
