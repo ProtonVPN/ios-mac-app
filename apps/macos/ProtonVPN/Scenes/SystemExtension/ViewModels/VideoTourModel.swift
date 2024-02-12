@@ -66,11 +66,13 @@ class VideoTourModel {
         player.rate = 0.5
         NotificationCenter.default
             .publisher(for: .AVPlayerItemDidPlayToEndTime, object: player.currentItem)
-            .sink(receiveValue: itemDidPlayToEndTime)
+            .sink(receiveValue: { [weak self] _ in
+                self?.itemDidPlayToEndTime()
+            })
             .store(in: &cancellables)
     }
 
-    private func itemDidPlayToEndTime(_ notification: Notification) {
+    private func itemDidPlayToEndTime() {
         player.seek(to: .zero)
         player.play()
     }
