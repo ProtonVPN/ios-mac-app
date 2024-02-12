@@ -26,7 +26,7 @@ import Theme
 import Ergonomics
 import Strings
 
-class StreamingServicesOverlayViewController: NSViewController {
+final class StreamingServicesOverlayViewController: OverlayViewController {
     @IBOutlet private weak var streamingIcon: NSImageView!
     @IBOutlet private weak var countryLbl: NSTextField!
     @IBOutlet private weak var featuresLbl: NSTextField!

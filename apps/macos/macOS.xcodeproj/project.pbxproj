@@ -96,6 +96,7 @@
 		5553CE25D76277AC1F78D477 /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65229530CD3C602EE8E33CB0 /* AnnouncementDetailViewController.swift */; };
 		5AD7615A4525DAA15F6ED3BF /* AnnouncementFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDB93D66CF4A7DB23EE7AA8 /* AnnouncementFeatureView.swift */; };
 		62A4D59A5CDFD51355EAEA8B /* AnnouncementDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17F6646170F7CB52D5A45560 /* AnnouncementDetailViewController.xib */; };
+		66FEF8792B7A680F00452A8D /* OverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FEF8782B7A680F00452A8D /* OverlayViewController.swift */; };
 		7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7518A5EF1EEF362900E1EB2B /* libc++.tbd */; };
 		79DAC5E0FFC36981E0DC7FC5 /* BannerCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE3F63494AD347F2FCD626D /* BannerCellView.swift */; };
 		7F4D7594012E990A84895535 /* BannerCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E93E4DC7EC79388198005F1 /* BannerCellView.xib */; };
@@ -633,6 +634,7 @@
 		4CE2F42127ECA7B000B21A00 /* GIFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GIFView.swift; path = ../../../../../../macos/ProtonVPN/Scenes/Common/Views/Custom/GIFView.swift; sourceTree = "<group>"; };
 		4CFFC94327E0C0AE0035969B /* CancellationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CancellationButton.swift; path = ../../../../../../macos/ProtonVPN/Scenes/Common/Views/Button/CancellationButton.swift; sourceTree = "<group>"; };
 		65229530CD3C602EE8E33CB0 /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
+		66FEF8782B7A680F00452A8D /* OverlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayViewController.swift; sourceTree = "<group>"; };
 		7518A5EF1EEF362900E1EB2B /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		78C16264DDB60F80353FA5CA /* LogViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogViewHelper.swift; sourceTree = "<group>"; };
 		8E93E4DC7EC79388198005F1 /* BannerCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BannerCellView.xib; sourceTree = "<group>"; };
@@ -1178,6 +1180,7 @@
 		42BEF9452631765C009180A7 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				66FEF8782B7A680F00452A8D /* OverlayViewController.swift */,
 				42BEF94626317670009180A7 /* FeaturesOverlayViewController.swift */,
 				42BEF94726317670009180A7 /* FeaturesOverlayViewController.xib */,
 				42BEF96E26319ADC009180A7 /* StreamingServicesOverlayViewController.swift */,
@@ -3375,6 +3378,7 @@
 				4CB7E00427F1DB2200657A99 /* NET2WarningPopupViewController.swift in Sources */,
 				42C1F2A92553084900793A49 /* SecureCoreDropdownPresenter.swift in Sources */,
 				E187021920E23815000521AC /* StatusMenuProfilesListController.swift in Sources */,
+				66FEF8792B7A680F00452A8D /* OverlayViewController.swift in Sources */,
 				EE4943EE1F29C20200CF980F /* LoginViewController.swift in Sources */,
 				D25B5CBB24583E7C00A3AFB5 /* WrenchIcon.swift in Sources */,
 				E1420A71209B56A600697461 /* ConnectionSettingsViewController.swift in Sources */,
