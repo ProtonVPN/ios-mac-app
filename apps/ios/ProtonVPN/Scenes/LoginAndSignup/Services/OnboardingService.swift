@@ -72,13 +72,8 @@ extension OnboardingModuleService: OnboardingService {
         let countriesCount = self.planService.countriesCount
         let allCountriesUpsell: ModalType = .allCountries(numberOfServers: serversCount, numberOfCountries: countriesCount)
         return ModalsFactory().modalViewController(modalType: allCountriesUpsell) {
-            self.userDidRequestPlanPurchase { action in
-                switch action {
-                case .planPurchased:
-                    self.onboardingCoordinatorDidFinish()
-                case .planPurchaseViewControllerReady(let viewController):
-                    self.windowService.present(modal: viewController)
-                }
+            self.planService.createPlusPlanUI {
+                self.onboardingCoordinatorDidFinish()
             }
         } dismissAction: {
             self.onboardingCoordinatorDidFinish()
@@ -87,24 +82,8 @@ extension OnboardingModuleService: OnboardingService {
 }
 
 extension OnboardingModuleService {
-    func userDidRequestPlanPurchase(completion: @escaping (PlanPurchaseAction) -> Void) {
-        planService.createPlusPlanUI { result in
-            switch result {
-            case let .planPurchaseViewControllerCreated(viewController):
-                completion(.planPurchaseViewControllerReady(viewController))
-            case .planPurchased:
-                completion(.planPurchased)
-            }
-        }
-    }
-
-    func onboardingCoordinatorDidFinish() {
+    private func onboardingCoordinatorDidFinish() {
         log.debug("Onboarding finished", category: .app)
         delegate?.onboardingServiceDidFinish()
     }
-}
-
-enum PlanPurchaseAction {
-    case planPurchaseViewControllerReady(UIViewController)
-    case planPurchased
 }
