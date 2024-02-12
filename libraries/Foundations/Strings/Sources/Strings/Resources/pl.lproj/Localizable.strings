@@ -428,7 +428,7 @@
 "_terms_and_conditions" = "regulamin";
 
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "Korzystając z usługi Proton VPN, akceptujesz nasz\n%@ i %@";
+"_terms_and_conditions_disclaimer" = "Korzystając z usługi Proton VPN, akceptujesz \n%@ i %@";
 
 /* iOS: link inside text under sign-up form */
 "_privacy_policy" = "Polityka prywatności";
