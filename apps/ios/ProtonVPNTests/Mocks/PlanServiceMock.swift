@@ -55,7 +55,7 @@ class PlanServiceMock: PlanService {
 
     }
 
-    func createPlusPlanUI(completion: @escaping (PlusPlanUIResult) -> Void) {
+    func createPlusPlanUI(completion: @escaping () -> Void) {
         
     }
 }

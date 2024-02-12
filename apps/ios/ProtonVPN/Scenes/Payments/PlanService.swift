@@ -37,11 +37,6 @@ protocol PlanServiceDelegate: AnyObject {
     func paymentTransactionDidFinish(modalSource: UpsellEvent.ModalSource?, newPlanName: String?) async
 }
 
-enum PlusPlanUIResult {
-    case planPurchaseViewControllerCreated(UIViewController)
-    case planPurchased
-}
-
 protocol PlanService {
     var allowUpgrade: Bool { get }
     var countriesCount: Int { get }
@@ -50,7 +45,7 @@ protocol PlanService {
     func presentPlanSelection(modalSource: UpsellEvent.ModalSource?)
     func presentSubscriptionManagement()
     func updateServicePlans() async throws
-    func createPlusPlanUI(completion: @escaping (PlusPlanUIResult) -> Void)
+    func createPlusPlanUI(completion: @escaping () -> Void)
 
     func clear()
 }
@@ -160,30 +155,28 @@ final class CorePlanService: PlanService {
         }
     }
 
-    func createPlusPlanUI(completion: @escaping (PlusPlanUIResult) -> Void) {
+    func createPlusPlanUI(completion: @escaping () -> Void) {
         paymentsUI = createPaymentsUI(onlyPlusPlan: true)
-        paymentsUI?.showUpgradePlan(presentationType: PaymentsUIPresentationType.none, backendFetch: true) { [weak self] response in
+        paymentsUI?.showUpgradePlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true) { [weak self] response in
             switch response {
-            case let .open(vc: viewController, opened: false):
-                completion(.planPurchaseViewControllerCreated(viewController))
-            case .open(vc: _, opened: true):
-                assertionFailure("Invalid usage")
+            case let .purchasedPlan(accountPlan: plan):
+                log.debug("Purchased plan: \(plan.protonName)", category: .iap)
+                completion()
+                Task { [weak self] in
+                    await self?.delegate?.paymentTransactionDidFinish(modalSource: nil, newPlanName: plan.protonName)
+                }
             case let .purchaseError(error: error):
                 log.error("Purchase failed", category: .iap, metadata: ["error": "\(error)"])
             case .close:
                 log.debug("Payments closed", category: .iap)
-            case let .purchasedPlan(accountPlan: plan):
-                log.debug("Purchased plan: \(plan.protonName)", category: .iap)
-                completion(.planPurchased)
-                Task { [weak self] in
-                    await self?.delegate?.paymentTransactionDidFinish(modalSource: nil, newPlanName: plan.protonName)
-                }
             case let .planPurchaseProcessingInProgress(accountPlan: plan):
                 log.debug("Purchasing \(plan.protonName)", category: .iap)
             case .toppedUpCredits:
                 log.debug("Credits topped up", category: .iap)
             case let .apiMightBeBlocked(message, error):
                log.error("\(message)", category: .connection, metadata: ["error": "\(error)"])
+            case .open:
+                log.debug("Purchase screen opened", category: .iap)
             }
         }
     }
