@@ -9,20 +9,36 @@
 	<key>INIntentDefinitionNamespace</key>
 	<string>kbrLjS</string>
 	<key>INIntentDefinitionSystemVersion</key>
-	<string>21E230</string>
+	<string>23C64</string>
 	<key>INIntentDefinitionToolsBuildVersion</key>
-	<string>13E113</string>
+	<string>15A507</string>
 	<key>INIntentDefinitionToolsVersion</key>
-	<string>13.3</string>
+	<string>15.0.1</string>
 	<key>INIntents</key>
 	<array>
 		<dict>
 			<key>INIntentCategory</key>
 			<string>generic</string>
+			<key>INIntentConfigurable</key>
+			<true/>
 			<key>INIntentDescription</key>
 			<string>Connect to Proton VPN</string>
 			<key>INIntentDescriptionID</key>
 			<string>jf696t</string>
+			<key>INIntentManagedParameterCombinations</key>
+			<dict>
+				<key></key>
+				<dict>
+					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
+					<true/>
+					<key>INIntentParameterCombinationTitle</key>
+					<string>Quick Connect</string>
+					<key>INIntentParameterCombinationTitleID</key>
+					<string>8tZ81X</string>
+					<key>INIntentParameterCombinationUpdatesLinked</key>
+					<true/>
+				</dict>
+			</dict>
 			<key>INIntentName</key>
 			<string>QuickConnect</string>
 			<key>INIntentParameterCombinations</key>
@@ -67,10 +83,26 @@
 		<dict>
 			<key>INIntentCategory</key>
 			<string>generic</string>
+			<key>INIntentConfigurable</key>
+			<true/>
 			<key>INIntentDescription</key>
 			<string>Disconnect from Proton VPN</string>
 			<key>INIntentDescriptionID</key>
 			<string>ksQcRb</string>
+			<key>INIntentManagedParameterCombinations</key>
+			<dict>
+				<key></key>
+				<dict>
+					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
+					<true/>
+					<key>INIntentParameterCombinationTitle</key>
+					<string>Disconnect</string>
+					<key>INIntentParameterCombinationTitleID</key>
+					<string>1l8xNj</string>
+					<key>INIntentParameterCombinationUpdatesLinked</key>
+					<true/>
+				</dict>
+			</dict>
 			<key>INIntentName</key>
 			<string>Disconnect</string>
 			<key>INIntentParameterCombinations</key>
