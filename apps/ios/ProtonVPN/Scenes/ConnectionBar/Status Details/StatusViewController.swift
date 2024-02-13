@@ -33,7 +33,7 @@ final class StatusViewController: UIViewController {
             viewModel?.messageHandler = { [weak self] text, type, options in
                 self?.showMessage(text, type: type, options: options)
             }
-            viewModel?.contentChanged = { [weak self]  in
+            viewModel?.contentChanged = { [weak self] in
                 self?.updateTableView()
                 self?.tableView?.reloadData()
             }
