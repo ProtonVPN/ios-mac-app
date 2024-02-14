@@ -445,6 +445,7 @@ class StatusViewModel {
         ]
         let connectionChangedTokens = NotificationCenter.default.addObservers(for: notificationNames, object: nil) { [weak self] notification in
             self?.stateChanged(notification: notification)
+            self?.connectionChanged(notification: notification)
         }
 
         let netShieldToken = NotificationCenter.default.addObserver(for: NetShieldStatsNotification.self, object: nil) { [weak self] stats in
