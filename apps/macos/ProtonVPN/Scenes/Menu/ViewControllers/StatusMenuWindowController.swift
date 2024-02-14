@@ -31,17 +31,22 @@ class StatusWindow: NSPanel {
 }
 
 // Responsible for the status icon itself and the window for the status bar app
-class StatusMenuWindowController: WindowController {
-    
+final class StatusMenuWindowController: WindowController {
+
     private var windowModel: StatusMenuWindowModel?
     
     private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
     private let statusMenu = NSMenu()
     
     private let iconManager: StatusBarIconBlinker
-    
+
+    private var eventsMonitor: Any?
+
+    var windowIsVisible: Bool {
+        return window?.isVisible == true
+    }
+
     var lastOpenApplication: NSRunningApplication?
-    var localMouseDownEventMonitor: Any?
 
     weak var windowService: WindowService?
     
@@ -67,9 +72,7 @@ class StatusMenuWindowController: WindowController {
     }
     
     deinit {
-        if let event = localMouseDownEventMonitor {
-            NSEvent.removeMonitor(event)
-        }
+        eventsMonitor.map { NSEvent.removeMonitor($0) }
     }
     
     func update(with windowModel: StatusMenuWindowModel) {
@@ -85,9 +88,16 @@ class StatusMenuWindowController: WindowController {
             }
         }
         
-        self.localMouseDownEventMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) { [weak self] event in
-            if event.isStatusItemClicked(event: event) == self?.statusItem {
-                self?.togglePopover()
+        self.eventsMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .keyDown]) { [weak self] event in
+            switch event.type {
+            case .leftMouseDown:
+                if event.isStatusItemClicked(event: event) == self?.statusItem {
+                    self?.togglePopover()
+                }
+            case .keyDown where event.keyCode == KeyCode.escape.rawValue:
+                self?.dismissPopover()
+            default:
+                break
             }
             
             return event
@@ -101,7 +111,7 @@ class StatusMenuWindowController: WindowController {
     }
     
     private func togglePopover() {
-        if let window = window, window.isVisible {
+        if windowIsVisible {
             dismissPopover()
         } else {
             showPopover()
@@ -118,7 +128,7 @@ class StatusMenuWindowController: WindowController {
     }
     
     private func dismissPopover() {
-        if let window = window, window.isVisible {
+        if windowIsVisible {
             close()
             statusItem.button?.isHighlighted = false
         }

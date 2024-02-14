@@ -18,7 +18,7 @@
 
 import AppKit
 
-private enum KeyCode: UInt16, CaseIterable {
+enum KeyCode: UInt16, CaseIterable {
     case enter = 36
     case escape = 53
 
@@ -30,8 +30,9 @@ private enum KeyCode: UInt16, CaseIterable {
     }
 }
 
-
 class OverlayViewController: NSViewController {
+
+    var shouldDismissOnKeyDownEvent: Bool = true
 
     override var acceptsFirstResponder: Bool {
         return true
@@ -44,7 +45,7 @@ class OverlayViewController: NSViewController {
     }
 
     override func keyDown(with event: NSEvent) {
-        if KeyCode.isEventEligibleForDismiss(event) {
+        if shouldDismissOnKeyDownEvent, KeyCode.isEventEligibleForDismiss(event) {
             dismiss(self)
         } else {
             super.keyDown(with: event)
