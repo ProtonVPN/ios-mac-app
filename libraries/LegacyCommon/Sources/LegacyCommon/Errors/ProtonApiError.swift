@@ -32,29 +32,17 @@ public enum ParseError: LocalizedError {
     case vpnCredentialsParse
     case userIpParse
     case serverParse
-    case partnerParse
-    case sessionCountParse
     case loadsParse
     case clientConfigParse
-    case subscriptionsParse
-    case verificationMethodsParse
     case createPaymentTokenParse
     case stringToDataConversion
 
     public var localizedDescription: String {
         switch self {
         case .serverParse:
-            return Localizable.errorServerInfoParser
-        case .partnerParse:
-            return Localizable.errorPartnerInfoParser
-        case .sessionCountParse:
-            return Localizable.errorSessionCountParser
+            return "Can't parse the servers info"
         case .loadsParse:
-            return Localizable.errorLoads
-        case .subscriptionsParse:
-            return Localizable.errorSubscriptionParser
-        case .verificationMethodsParse:
-            return Localizable.errorVerificationMethodsParser
+            return "Can't update server loads"
         default:
             return Localizable.errorInternalError
         }

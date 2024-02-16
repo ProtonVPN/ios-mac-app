@@ -24,19 +24,9 @@ import Strings
 
 // The errors happend locally
 public enum ProtonVpnError: LocalizedError {
-    
-    // Hash pwd part
-    case modulusSignature
-    case generateSrp
-    case hashPassword
+
     case fetchSession
-    
-    // VPN properties
-    case vpnProperties
-    
-    // Decode
-    case decode(location: String)
-    
+
     // Connections
     case connectionFailed
     case vpnManagerUnavailable
@@ -60,18 +50,8 @@ public enum ProtonVpnError: LocalizedError {
     
     public var errorDescription: String? {
         switch self {
-        case .modulusSignature:
-            return Localizable.errorModulusSignature
-        case .generateSrp:
-            return Localizable.errorGenerateSrp
-        case .hashPassword:
-            return Localizable.errorHashPassword
         case .fetchSession:
             return Localizable.errorFetchSession
-        case .vpnProperties:
-            return Localizable.errorVpnProperties
-        case .decode(let location):
-            return Localizable.errorDecode(location)
         case .connectionFailed:
             return Localizable.connectionFailed
         case .vpnManagerUnavailable:

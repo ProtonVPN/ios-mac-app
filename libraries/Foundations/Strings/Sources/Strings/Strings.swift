@@ -59,10 +59,6 @@ public enum Localizable {
   public static var advanced: String { return Localizable.tr("Localizable", "_advanced", fallback: "Advanced") }
   /// Plan information
   public static var advancedFeatures: String { return Localizable.tr("Localizable", "_advanced_features", fallback: "+ Advanced features") }
-  /// API error
-  public static var aeVpnInfoNotReceived: String { return Localizable.tr("Localizable", "_ae_vpn_info_not_received", fallback: "Unable to obtain VPN information") }
-  /// API error
-  public static var aeWrongLoginCredentials: String { return Localizable.tr("Localizable", "_ae_wrong_login_credentials", fallback: "Wrong username or password") }
   /// Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\).
   public static var alertProtocolDeprecatedBodyIos: String { return Localizable.tr("Localizable", "_alert_protocol_deprecated_body_ios", fallback: "This profile uses a protocol that is outdated and no longer supported. Click \"Update\" to switch to using the default Smart protocol.") }
   /// Body of the deprecated protocol alert on MacOS. Shown when the user attempts to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple
@@ -353,8 +349,6 @@ public enum Localizable {
   public static var enterProfileName: String { return Localizable.tr("Localizable", "_enter_profile_name", fallback: "Enter Profile Name") }
   /// iOS: placeholder for code in human verification code form
   public static var enterVerificationCode: String { return Localizable.tr("Localizable", "_enter_verification_code", fallback: "123 456") }
-  /// API error
-  public static var errorApiOffline: String { return Localizable.tr("Localizable", "_error_api_offline", fallback: "The Proton VPN API is currently offline") }
   /// Error decoding an object
   public static func errorDecode(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_error_decode", String(describing: p1), fallback: "Failed to decode archived data in class: %@")
@@ -363,24 +357,10 @@ public enum Localizable {
   public static var errorEmailVerificationDisabled: String { return Localizable.tr("Localizable", "_error_email_verification_disabled", fallback: "Email verification temporarily disabled") }
   /// Error try to restore user from the session
   public static var errorFetchSession: String { return Localizable.tr("Localizable", "_error_fetch_session", fallback: "Can't find user from the session") }
-  /// The email address is not in the right format
-  public static var errorFieldEmailWrongFormat: String { return Localizable.tr("Localizable", "_error_field_email_wrong_format", fallback: "The email address is not in the right format") }
-  /// Passwords do not match
-  public static var errorFieldPasswordsDontMatch: String { return Localizable.tr("Localizable", "_error_field_passwords_dont_match", fallback: "Passwords do not match") }
-  /// Form validation error
-  public static var errorFieldRequired: String { return Localizable.tr("Localizable", "_error_field_required", fallback: "This field is required") }
-  /// Error when generate srp clint
-  public static var errorGenerateSrp: String { return Localizable.tr("Localizable", "_error_generate_srp", fallback: "SRP generation failed") }
-  /// Error when try to hash password
-  public static var errorHashPassword: String { return Localizable.tr("Localizable", "_error_hash_password", fallback: "Can't hash user password") }
   /// Unknown error that has no better description
   public static var errorInternalError: String { return Localizable.tr("Localizable", "_error_internal_error", fallback: "Internal API error") }
-  /// Keychain error
-  public static var errorKeychainFetch: String { return Localizable.tr("Localizable", "_error_keychain_fetch", fallback: "Keychain error.") }
   /// Error writing to system keychain
   public static var errorKeychainWrite: String { return Localizable.tr("Localizable", "_error_keychain_write", fallback: "Proton couldn't communicate with your device. Please try again later.") }
-  /// Parsing error
-  public static var errorLoads: String { return Localizable.tr("Localizable", "_error_loads", fallback: "Can't update server loads") }
   /// The TLS certificate validation failed when trying to connect to the Proton VPN API. Your current internet connection may be monitored. To keep your data secure, we are preventing the app from accessing the Proton VPN API.
   /// To sign in or access your account, switch to a new network and try to connect again.
   public static var errorMitmDescription: String { return Localizable.tr("Localizable", "_error_mitm_description", fallback: "The TLS certificate validation failed when trying to connect to the Proton VPN API. Your current internet connection may be monitored. To keep your data secure, we are preventing the app from accessing the Proton VPN API.\nTo sign in or access your account, switch to a new network and try to connect again.") }
@@ -389,38 +369,22 @@ public enum Localizable {
   /// The TLS certificate validation failed when trying to connect to the VPN server. Your current internet connection may be monitored. To keep your data secure, we are preventing the app from accessing this VPN server.
   /// Please select other server.
   public static var errorMitmVpnDescription: String { return Localizable.tr("Localizable", "_error_mitm_vpn_description", fallback: "The TLS certificate validation failed when trying to connect to the VPN server. Your current internet connection may be monitored. To keep your data secure, we are preventing the app from accessing this VPN server.\nPlease select other server.") }
-  /// Error when try to parse modulus signature
-  public static var errorModulusSignature: String { return Localizable.tr("Localizable", "_error_modulus_signature", fallback: "Modulus signature is empty") }
-  /// Error when try to parse the partner info
-  public static var errorPartnerInfoParser: String { return Localizable.tr("Localizable", "_error_partner_info_parser", fallback: "Can't parse the partner info") }
-  /// Error when try to parse the server info
-  public static var errorServerInfoParser: String { return Localizable.tr("Localizable", "_error_server_info_parser", fallback: "Can't parse the servers info") }
-  /// Parsing error
-  public static var errorSessionCountParser: String { return Localizable.tr("Localizable", "_error_session_count_parser", fallback: "Can't parse session count") }
   /// Generic sign in error
   public static var errorSignInAgain: String { return Localizable.tr("Localizable", "_error_sign_in_again", fallback: "Sorry, something went wrong. Please sign in again.") }
-  /// Error when try to parse subscription info
-  public static var errorSubscriptionParser: String { return Localizable.tr("Localizable", "_error_subscription_parser", fallback: "Can't parse subscription info") }
   /// Internal error message when there is a problem with initializing tls and connection cannot be established.
   public static var errorTlsInitialisation: String { return Localizable.tr("Localizable", "_error_tls_initialisation", fallback: "TLS initialisation error") }
   /// Internal error message when there is a problem with server certificate and connection cannot be established.
   public static var errorTlsServerVerification: String { return Localizable.tr("Localizable", "_error_tls_server_verification", fallback: "Server certificate can't be verified.") }
   /// General title for several error alerts
   public static var errorUnknownTitle: String { return Localizable.tr("Localizable", "_error_unknown_title", fallback: "Unknown error") }
-  /// Error when the app fails to create a user
-  public static var errorUserCreation: String { return Localizable.tr("Localizable", "_error_user_creation", fallback: "Account creation failed") }
   /// VPN credentials can't be loaded error
   public static var errorUserCredentialsExpired: String { return Localizable.tr("Localizable", "_error_user_credentials_expired", fallback: "User credentials have expired. Please sign in") }
   /// VPN credentials can't be loaded error
   public static var errorUserCredentialsMissing: String { return Localizable.tr("Localizable", "_error_user_credentials_missing", fallback: "User credentials are missing. Unable to sign in") }
   /// Human validation failed
   public static var errorUserFailedHumanValidation: String { return Localizable.tr("Localizable", "_error_user_failed_human_validation", fallback: "We have not been able to verify that you are human. Please try again or purchase a premium plan.") }
-  /// Error when try to parse verification methods
-  public static var errorVerificationMethodsParser: String { return Localizable.tr("Localizable", "_error_verification_methods_parser", fallback: "Can't parse verfication methods") }
   /// VPN credentials can't be loaded error
   public static var errorVpnCredentialsMissing: String { return Localizable.tr("Localizable", "_error_vpn_credentials_missing", fallback: "VPN credentials are missing from the keychain") }
-  /// Default error when vpn properties fetch failed
-  public static var errorVpnProperties: String { return Localizable.tr("Localizable", "_error_vpn_properties", fallback: "Can't fetch VPN properties!") }
   /// VPN session is active error
   public static var errorVpnSessionIsActive: String { return Localizable.tr("Localizable", "_error_vpn_session_is_active", fallback: "Proton VPN session is active") }
   /// Description of the expand/collapse button used by accessibility Voice Over
