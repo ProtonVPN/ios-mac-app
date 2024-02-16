@@ -26,6 +26,7 @@ import ProtonCorePaymentsUI
 import LegacyCommon
 import UIKit
 import VPNShared
+import Modals
 
 protocol PlanServiceFactory {
     func makePlanService() -> PlanService
@@ -40,11 +41,14 @@ protocol PlanService {
     var allowUpgrade: Bool { get }
     var countriesCount: Int { get }
     var delegate: PlanServiceDelegate? { get set }
+    var plansDataSource: PlansDataSourceProtocol? { get }
 
     func presentPlanSelection(modalSource: UpsellEvent.ModalSource?)
     func presentSubscriptionManagement()
     func updateServicePlans() async throws
     func createPlusPlanUI(completion: @escaping () -> Void)
+    func planOptions(with plansDataSource: PlansDataSourceProtocol) async throws -> [PlanOption]
+    func buyPlan(planOption: PlanOption) async -> PurchaseResult
 
     func clear()
 }
@@ -107,6 +111,45 @@ final class CorePlanService: PlanService {
             }
         }
     }
+    
+    var inAppPurchasePlans: [(PlanOption, InAppPurchasePlan)] = []
+
+    func planOptions(with plansDataSource: PlansDataSourceProtocol) async throws -> [PlanOption] {
+        try await plansDataSource.fetchAvailablePlans()
+        let vpn2022 = plansDataSource.availablePlans?.plans.filter { plan in
+            plan.name == "vpn2022"
+        }.first // it's only going to be one with this plan name
+        guard let vpn2022 else { throw "Default plan not found" }
+        inAppPurchasePlans = vpn2022.instances
+            .compactMap { InAppPurchasePlan(availablePlanInstance: $0) }
+            .compactMap { iAP -> (PlanOption, InAppPurchasePlan)? in
+                guard let priceLabel = iAP.priceLabel(from: payments.storeKitManager),
+                      let period = iAP.period else { return nil }
+                let planOption = PlanOption(duration: .init(components: .init(month: Int(period))),
+                                            price: .init(amount: priceLabel.value.doubleValue,
+                                                         currency: iAP.currency ?? "",
+                                                         locale: priceLabel.locale))
+                return (planOption, iAP)
+            }
+        return inAppPurchasePlans.map { $0.0 }
+    }
+
+    func buyPlan(planOption: PlanOption) async -> PurchaseResult {
+        guard !payments.storeKitManager.hasUnfinishedPurchase() else {
+            log.debug("StoreKitManager is not ready to purchase", category: .userPlan)
+            return .purchaseError(error: "StoreKitManager is not ready to purchase", processingPlan: nil)
+        }
+        let plan = inAppPurchasePlans.first { plan, InAppPurchasePlan in
+            plan.fingerprint == planOption.fingerprint
+        }
+        guard let iAP = plan?.1 else {
+            return .purchaseError(error: "StoreKitManager plan not found", processingPlan: nil)
+        }
+        return await withCheckedContinuation {
+            payments.purchaseManager.buyPlan(plan: iAP,
+                                             finishCallback: $0.resume(returning:))
+        }
+    }
 
     private func updateCountriesCount(completion: @escaping (Result<Int, Error>) -> Void) {
         guard case .left(let planService) = payments.planService else { return }
@@ -125,6 +168,13 @@ final class CorePlanService: PlanService {
 
     private enum CountriesCountError: Error {
         case internalError
+    }
+
+    var plansDataSource: PlansDataSourceProtocol? {
+        guard case .right(let plansDataSource) = payments.planService else {
+            return nil
+        }
+        return plansDataSource
     }
 
     func updateServicePlans() async throws {

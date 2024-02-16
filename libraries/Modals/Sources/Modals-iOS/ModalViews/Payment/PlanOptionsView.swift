@@ -49,20 +49,20 @@ struct PlanOptionsView: View {
 #if swift(>=5.9)
 #Preview("Classic") {
     let plans: [PlanOption] = [
-        .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF", discount: 35)),
+        .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
         .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
     ]
-    let client: PlansClient = .init(plansCount: { plans.count }, retrievePlans: { plans })
+    let client: PlansClient = .init(retrievePlans: { plans })
     return PlanOptionsView(modalType: .subscription, viewModel: .init(client: client))
 }
 
 #Preview("Loading") {
     let scheduler: AnySchedulerOf<DispatchQueue> = .main
     let plans: [PlanOption] = [
-        .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF", discount: 35)),
+        .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
         .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
     ]
-    let client: PlansClient = .init(plansCount: { plans.count }, retrievePlans: {
+    let client: PlansClient = .init(retrievePlans: {
         try? await scheduler.sleep(for: .milliseconds((500...2000).randomElement()!))
         return plans
     })
@@ -71,35 +71,35 @@ struct PlanOptionsView: View {
 
 #Preview("Currencies") {
     let plans: [PlanOption] = [
-        .init(duration: .twoYears, price: .init(amount: 145, currency: "USD", discount: 45)),
-        .init(duration: .oneYear, price: .init(amount: 85, currency: "EUR", discount: 35)),
+        .init(duration: .twoYears, price: .init(amount: 145, currency: "USD")),
+        .init(duration: .oneYear, price: .init(amount: 85, currency: "EUR")),
         .init(duration: .threeMonths, price: .init(amount: 33, currency: "JPY")),
         .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF")),
         .init(duration: .init(components: .init(year: 0)), price: .init(amount: 0, currency: "EUR"))
     ]
-    let client: PlansClient = .init(plansCount: { plans.count }, retrievePlans: { plans })
+    let client: PlansClient = .init(retrievePlans: { plans })
     return PlanOptionsView(modalType: .subscription, viewModel: .init(client: client))
 }
 #else
 struct PlansOptionsListView_Previews: PreviewProvider {
     static let scheduler: AnySchedulerOf<DispatchQueue> = .main
     static let classicPlans: [PlanOption] = [
-        .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF", discount: 35)),
+        .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
         .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
     ]
-    static let classicClient: PlansClient = .init(plansCount: { classicPlans.count }, retrievePlans: { classicPlans })
-    static let loadingClient: PlansClient = .init(plansCount: { classicPlans.count }, retrievePlans: {
+    static let classicClient: PlansClient = .init(retrievePlans: { classicPlans })
+    static let loadingClient: PlansClient = .init(retrievePlans: {
         try? await scheduler.sleep(for: .milliseconds((500...2000).randomElement()!))
         return classicPlans
     })
     static let currenciesPlans: [PlanOption] = [
-        .init(duration: .twoYears, price: .init(amount: 145, currency: "USD", discount: 45)),
-        .init(duration: .oneYear, price: .init(amount: 85, currency: "EUR", discount: 35)),
+        .init(duration: .twoYears, price: .init(amount: 145, currency: "USD")),
+        .init(duration: .oneYear, price: .init(amount: 85, currency: "EUR")),
         .init(duration: .threeMonths, price: .init(amount: 33, currency: "JPY")),
         .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF")),
         .init(duration: .init(components: .init(year: 0)), price: .init(amount: 0, currency: "EUR"))
     ]
-    static let currenciesClient: PlansClient = .init(plansCount: { currenciesPlans.count }, retrievePlans: { currenciesPlans })
+    static let currenciesClient: PlansClient = .init(retrievePlans: { currenciesPlans })
 
     static var previews: some View {
         PlanOptionsView(modalType: .subscription, viewModel: .init(client: classicClient))

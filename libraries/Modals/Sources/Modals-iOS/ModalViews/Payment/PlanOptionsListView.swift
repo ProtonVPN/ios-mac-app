@@ -20,11 +20,12 @@ import SwiftUI
 import CombineSchedulers
 import SharedViews
 import Strings
+import Modals
 
 struct PlanOptionsListView: View {
     @ObservedObject var viewModel: PlanOptionsListViewModel
 
-    private var showHeader: Bool { viewModel.plansCount > 1 }
+    private var showHeader: Bool { viewModel.plans.count > 1 }
 
     var body: some View {
         VStack(spacing: .themeSpacing16) {
@@ -55,24 +56,38 @@ struct PlanOptionsListView: View {
     }
 
     private var loadingView: some View {
-        ForEach(0..<viewModel.plansCount, id: \.self) { _ in
-            PlanOptionView(planOption: .loading, isLoading: true, isSelected: false)
+        PlanOptionView(planOption: .loading, isLoading: true, isSelected: false)
+    }
+
+    private func discount(option: PlanOption) -> Int? {
+        var discount: Int?
+        if let mostExpensivePlan = viewModel.mostExpensivePlan {
+            discount = option.discount(comparedTo: mostExpensivePlan)
         }
+        return discount
     }
 
     private var contentView: some View {
         ForEach(viewModel.plans, id: \.self) { option in
             let isSelected: Bool = viewModel.selectedPlan == option
-            PlanOptionView(planOption: option, isLoading: viewModel.isLoading, isSelected: isSelected)
-                .onTapGesture {
-                    withAnimation { viewModel.selectedPlan = option }
-                }
+            PlanOptionView(planOption: option,
+                           isLoading: viewModel.isLoading,
+                           isSelected: isSelected,
+                           discount: discount(option: option))
+            .onTapGesture {
+                withAnimation { viewModel.selectedPlan = option }
+            }
         }
     }
 
     private var buttonsView: some View {
         VStack(spacing: .themeSpacing8) {
-            Button(action: viewModel.validate) {
+            Button {
+                Task {
+                    await viewModel.validate()
+                    // TODO: VPNAPPL-2089 disable UI while waiting for the task to finish
+                }
+            } label: {
                 Text(Localizable.upsellPlansListValidateButton)
             }
             .buttonStyle(PrimaryButtonStyle())
@@ -89,10 +104,10 @@ struct PlanOptionsListView: View {
 #if swift(>=5.9)
 #Preview("Classic") {
     let plans: [PlanOption] = [
-        .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF", discount: 35)),
+        .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
         .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
     ]
-    let client: PlansClient = .init(plansCount: { plans.count }, retrievePlans: { plans })
+    let client: PlansClient = .init(retrievePlans: { plans })
     let viewModel = PlanOptionsListViewModel(client: client)
     return PlanOptionsListView(viewModel: viewModel)
 }
@@ -100,10 +115,10 @@ struct PlanOptionsListView: View {
 #Preview("Loading") {
     let scheduler: AnySchedulerOf<DispatchQueue> = .main
     let plans: [PlanOption] = [
-        .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF", discount: 35)),
+        .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
         .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
     ]
-    let client: PlansClient = .init(plansCount: { plans.count }, retrievePlans: {
+    let client: PlansClient = .init(retrievePlans: {
         try? await scheduler.sleep(for: .milliseconds((500...2000).randomElement()!))
         return plans
     })
@@ -114,11 +129,11 @@ struct PlanOptionsListView: View {
 struct PlanOptionsListView_Provider: PreviewProvider {
     static let scheduler: AnySchedulerOf<DispatchQueue> = .main
     static let plans: [PlanOption] = [
-        .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF", discount: 35)),
+        .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
         .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
     ]
-    static let client: PlansClient = .init(plansCount: { plans.count }, retrievePlans: { plans })
-    static let loadingClient: PlansClient = .init(plansCount: { plans.count }, retrievePlans: {
+    static let client: PlansClient = .init(retrievePlans: { plans })
+    static let loadingClient: PlansClient = .init(retrievePlans: {
         try? await scheduler.sleep(for: .milliseconds((500...2000).randomElement()!))
         return plans
     })

@@ -24,6 +24,10 @@ public struct ModalsFactory {
         return upsell
     }
 
+    public func subscriptionViewController(plansClient: PlansClient) -> UIViewController {
+        UIHostingController(rootView: PlanOptionsView(modalType: .subscription, viewModel: .init(client: plansClient)))
+    }
+
     public func whatsNewViewController() -> UIViewController {
         UIHostingController(rootView: WhatsNewView())
     }

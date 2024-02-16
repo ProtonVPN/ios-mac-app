@@ -22,10 +22,19 @@
 
 import Foundation
 import LegacyCommon
+import Modals
+import Modals_iOS
+import ProtonCorePayments
 
 @testable import ProtonVPN
 
 class PlanServiceMock: PlanService {
+    var plansDataSource: PlansDataSourceProtocol?
+    
+    var payments: ProtonCorePayments.Payments {
+        fatalError()
+    }
+
     weak var delegate: PlanServiceDelegate?
     
     var callbackPresentPlanSelection: (() -> Void)?
@@ -57,5 +66,13 @@ class PlanServiceMock: PlanService {
 
     func createPlusPlanUI(completion: @escaping () -> Void) {
         
+    }
+
+    func planOptions(with plansDataSource: ProtonCorePayments.PlansDataSourceProtocol) async throws -> [Modals.PlanOption] {
+        []
+    }
+
+    func buyPlan(planOption: PlanOption) async -> PurchaseResult {
+        .purchaseCancelled
     }
 }

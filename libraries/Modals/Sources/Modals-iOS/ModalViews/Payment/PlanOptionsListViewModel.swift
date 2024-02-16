@@ -17,10 +17,20 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Combine
+import Modals
 
-struct PlansClient {
-    var plansCount: () -> Int
-    var retrievePlans: () async -> [PlanOption]
+public struct PlansClient {
+    var retrievePlans: () async throws -> [PlanOption]
+    var validate: @MainActor (PlanOption) async -> Void
+    var notNow: () -> Void
+    public init(retrievePlans: @escaping () async throws -> [PlanOption],
+                validate: @MainActor @escaping (PlanOption) async -> Void = { _ in },
+                notNow: @escaping () -> Void = {}
+    ) {
+        self.retrievePlans = retrievePlans
+        self.validate = validate
+        self.notNow = notNow
+    }
 }
 
 final class PlanOptionsListViewModel: ObservableObject {
@@ -29,28 +39,36 @@ final class PlanOptionsListViewModel: ObservableObject {
 
     @Published private(set) var isLoading: Bool = false
 
-    var plansCount: Int {
-        return client.plansCount()
-    }
-
     private let client: PlansClient
+
+    var mostExpensivePlan: PlanOption? {
+        plans.sorted { $0.pricePerMonth > $1.pricePerMonth }.first
+    }
 
     init(client: PlansClient) {
         self.client = client
     }
 
+    @MainActor
     func onAppear() async {
         isLoading = true
-        plans = await client.retrievePlans()
-        selectedPlan = plans.first
-        isLoading = false
+        do {
+            plans = try await client.retrievePlans()
+            selectedPlan = plans.first
+            isLoading = false
+        } catch {
+            // TODO: VPNAPPL-2089 handle failed attempt to `retrievePlans`. Log the error message
+            client.notNow()
+        }
     }
 
-    func validate() {
-
+    func validate() async {
+        // TODO: VPNAPPL-2089 Block the UI until the purchase is complete or cancelled
+        guard let selectedPlan else { return }
+        await client.validate(selectedPlan)
     }
 
     func notNow() {
-
+        client.notNow()
     }
 }
