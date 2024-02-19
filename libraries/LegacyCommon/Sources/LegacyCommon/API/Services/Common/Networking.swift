@@ -116,15 +116,13 @@ public final class CoreNetworking: Networking {
         let challengeParametersProvider: ChallengeParametersProvider = .empty
 #endif
 
-        apiService = PMAPIService.createAPIServiceWithoutSession(
-            doh: doh, challengeParametersProvider: challengeParametersProvider
-        )
-        Task {
-            if let sessionUID = authKeychain.fetch()?.sessionId {
-                apiService.sessionUID = sessionUID
-            } else if let sessionUID = unauthKeychain.fetch()?.sessionID {
-                apiService.sessionUID = sessionUID
-            }
+        if let sessionUID = authKeychain.fetch()?.sessionId ?? unauthKeychain.fetch()?.sessionID {
+            apiService = PMAPIService.createAPIService(doh: doh,
+                                                       sessionUID: sessionUID,
+                                                       challengeParametersProvider: challengeParametersProvider)
+        } else {
+            apiService = PMAPIService.createAPIServiceWithoutSession(doh: doh,
+                                                                     challengeParametersProvider: challengeParametersProvider)
         }
 
         apiService.authDelegate = self
