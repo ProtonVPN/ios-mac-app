@@ -159,8 +159,8 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
             if thisNeedsUpgrade {
                 dropdownBusinessUpsell.isHidden = !presenter.requiresBusinessUpdate
                 view?.blockedStyle(business: presenter.requiresBusinessUpdate)
-                view?.action = { [weak self, weak presenter] in
-                    presenter?.selectCallback?()
+                view?.action = { [weak self] in
+                    presenter.selectCallback?()
                     self?.presenter.dismiss?()
                 }
             } else {
@@ -168,8 +168,8 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
                     view?.selectedStyle()
                 } else {
                     view?.disabledStyle()
-                    view?.action = { [weak self, weak presenter] in
-                        presenter?.selectCallback?()
+                    view?.action = { [weak self] in
+                        presenter.selectCallback?()
                         self?.presenter.dismiss?()
                     }
                 }
