@@ -1384,7 +1384,7 @@
 /* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
 "_offer_ending_" = "Ending %@";
 
-"_quick_settings_title" = "Quick Settings";
+"_quick_settings_title" = "クイック設定";
 
 "_quick_settings_secureCore_description" = "プライバシーフレンドリーな国にある私たちの安全なサーバーを経由して接続します。";
 
@@ -1687,7 +1687,7 @@
 "_settings_mac_crash_reports_tooltip" = "クラッシュレポートはバグを修正し、ファイアウォールを検出し、VPN 検閲を回避するために使用されます。";
 
 /* Section title in Settings */
-"_advanced" = "Advanced";
+"_advanced" = "高度";
 
 /* Non-standard ports feature title in Settings */
 "_non_standard_ports_title" = "標準的ではないポート";

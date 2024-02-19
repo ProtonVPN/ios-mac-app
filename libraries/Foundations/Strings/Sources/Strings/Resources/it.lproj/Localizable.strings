@@ -1341,7 +1341,7 @@
 "_netshield_feature_description_alt_link" = "Scopri di più";
 
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
-"_netshield_upsell_title" = "Naviga senza annunci pubblicitari con NetShield";
+"_netshield_upsell_title" = "Naviga senza elementi indesiderati con NetShield";
 
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
 "_netshield_upsell_subtitle" = "Blocca annunci, tracker e malware su siti web e applicazioni";

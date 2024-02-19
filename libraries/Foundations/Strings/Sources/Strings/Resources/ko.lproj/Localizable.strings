@@ -978,7 +978,7 @@
 "_dns_leak_protection" = "DNS 유출 방지";
 
 /* MacOS: Settings -> Connection: description. */
-"_dns_leak_protection_tooltip" = "제3자에게 DNS 쿼리 정보가 누출되는 것을 방지합니다. 항상 켜져 있습니다.";
+"_dns_leak_protection_tooltip" = "제3자에게 DNS 쿼리 정보가 유출되는 것을 방지합니다. 항상 켜져 있습니다.";
 
 /* iOS Settings: table section header */
 "_security_options" = "보안 설정";
