@@ -52,12 +52,17 @@ actor TelemetryBuffer {
     }
 
     func scheduledEvents(_ events: ([String: Any]) async throws -> Void) async {
+        guard !self.events.isEmpty else {
+            // Simply stop, don't invoke the handler
+            log.info("No telemetry events scheduled", category: .telemetry)
+            return
+        }
         let tempEvents = self.events
         do {
             let all = allEvents()
             self.events = []
             try await events(all)
-            saveToStorage()
+            try saveToStorage()
         } catch {
             log.warning("Failed to send scheduled telemetry events: \(error)", category: .telemetry)
             // we can get a telemetry event in the meantime, append to the existing (most likely empty) array
@@ -85,14 +90,14 @@ actor TelemetryBuffer {
         }
     }
 
-    func save(event: BufferedEvent) {
+    func save(event: BufferedEvent) throws {
         events.append(event)
         // remove the oldest events above the count of 100
         let removeCount = events.count - Constants.maxStoredEvents
         if removeCount > 0 {
             events.removeFirst(removeCount)
         }
-        saveToStorage()
+        try saveToStorage()
     }
 
     func remove(event: BufferedEvent) {
@@ -100,15 +105,15 @@ actor TelemetryBuffer {
             storedEvent.id == event.id
         }) else { return }
         events.remove(at: index)
-        saveToStorage()
+        try? saveToStorage()
     }
 
-    func saveToStorage() {
+    func saveToStorage() throws {
         do {
             let data = try encoder.encode(events)
             try dataManager.save(data, fileUrl)
         } catch {
-            log.warning("Couldn't write Telemetry event to storage: \(error)", category: .telemetry)
+            throw "Couldn't write Telemetry events to storage: \(error)"
         }
     }
 

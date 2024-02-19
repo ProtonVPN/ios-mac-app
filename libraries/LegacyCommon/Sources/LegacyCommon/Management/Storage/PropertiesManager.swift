@@ -285,7 +285,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
             Task {
                 // Add unit test for scenario where user disables telemetry and we need to clear the buffer.
                 let buffer = await TelemetryBuffer(retrievingFromStorage: false, bufferType: .telemetryEvents)
-                await buffer.saveToStorage()
+                try? await buffer.saveToStorage()
             }
         }
         storage.setValue("\(enabled)", forKey: Keys.telemetryUsageData.rawValue + username)

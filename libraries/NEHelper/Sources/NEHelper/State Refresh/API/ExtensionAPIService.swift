@@ -605,16 +605,14 @@ public final class ExtensionAPIService {
         let tokenRequest = TokenRefreshRequest(params: .withRefreshToken(authCredentials.refreshToken))
 
         let retryBlock: () -> Void = { [self] in
-            Task {
-                guard operation?.isCancelled != true else {
-                    completionHandler(.failure(CertificateRefreshError.cancelled))
-                    return
-                }
-
-                self.handleTokenExpired(asPartOf: operation,
-                                        usingCredentialsFrom: context,
-                                        completionHandler: completionHandler)
+            guard operation?.isCancelled != true else {
+                completionHandler(.failure(CertificateRefreshError.cancelled))
+                return
             }
+
+            self.handleTokenExpired(asPartOf: operation,
+                                    usingCredentialsFrom: context,
+                                    completionHandler: completionHandler)
         }
         request(tokenRequest, headers: [(.sessionId, authCredentials.sessionId)]) { [weak self] result in
             switch result {
