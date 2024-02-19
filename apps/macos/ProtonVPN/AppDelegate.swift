@@ -39,6 +39,7 @@ import ProtonCorePushNotifications
 import ProtonCoreCryptoVPNPatchedGoImplementation
 
 // Local dependencies
+import Domain
 import LegacyCommon
 import Logging
 import PMLogger
@@ -99,7 +100,17 @@ extension AppDelegate: NSApplicationDelegate {
             self.setNSCodingModuleName()
             self.setupDebugHelpers()
 
-            SentryHelper.setupSentry(dsn: ObfuscatedConstants.sentryDsnmacOS)
+            if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.sentry) {
+                SentryHelper.setupSentry(
+                    dsn: ObfuscatedConstants.sentryDsnmacOS,
+                    isEnabled: { [weak self] in
+                        self?.container.makeTelemetrySettings().telemetryCrashReports ?? false
+                    },
+                    getUserId: { [weak self] in
+                        self?.container.makeAuthKeychainHandle().userId
+                    }
+                )
+            }
 
             AppLaunchRoutine.execute(propertiesManager: self.propertiesManager)
 #if !REDESIGN

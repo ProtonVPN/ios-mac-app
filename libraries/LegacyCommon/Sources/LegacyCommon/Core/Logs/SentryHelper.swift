@@ -8,28 +8,55 @@
 
 import Foundation
 import Sentry
+import VPNShared
+import ProtonCoreFeatureFlags
+import Domain
 
 public final class SentryHelper {
-    
-    public static func setupSentry(dsn: String) {
-        #if RELEASE // to avoid issues with bitcode uploads not being reliable during development
+
+    private(set) static var shared: SentryHelper?
+
+    public static func setupSentry(dsn: String, isEnabled: @escaping () -> Bool, getUserId: @escaping () -> String?) {
+        guard shared == nil else {
+            assertionFailure("Sentry already setup")
+            return
+        }
+
         SentrySDK.start { (options) in
             options.dsn = dsn
             options.debug = false
             options.enableAutoSessionTracking = false
-            options.attachStacktrace = false
-            options.maxBreadcrumbs = 25
+            options.maxBreadcrumbs = 50
 
             options.beforeSend = { event in
+                // Make sure crash reporting is still enabled.
+                // If not, returning nil will prevent Sentry from sending the report.
+                guard isEnabled() else {
+                    LegacyCommon.log.warning("Crash reports sharing is disabled. Won't send error report.", metadata: ["error": "\(String(describing: event.error))"])
+                    return nil
+                }
+
                 // Remove heaviest part of event to make sure event doesn't reach max request size. Can be removed after the issue is fixed on the infra side (INFSUP-682).
-                event.debugMeta = nil
+                if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.sentryExcludeMetadata) {
+                    event.debugMeta = nil
+                }
+
                 return event
             }
+
+            shared = SentryHelper(isEnabled: isEnabled)
         }
-        #endif
     }
 
-    public static func log(error: Error) {
+    private let sentryEnabled: () -> Bool
+
+    init(isEnabled: @escaping () -> Bool) {
+        sentryEnabled = isEnabled
+    }
+
+    public func log(error: Error) {
+        // Capture is finished by calling `options.beforeSend`, where we check
+        // if crash reporting is enabled.
         SentrySDK.capture(error: error)
     }
 
