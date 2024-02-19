@@ -1669,16 +1669,16 @@
 "_settings_mac_telemetry_learn_more" = "Pelajari lebih lanjut";
 
 /* Telemetry label in the onboarding screen for mac next to a toggle */
-"_onboarding_mac_usage_stats" = "Bagikan statistik pemakaian anonim. Statistik ini dapat membantu kami untuk menangkal pemblokiran VPN dan meningkatkan performa aplikasi.";
+"_onboarding_mac_usage_stats" = "Bagikan statistik pemakaian anonim. Statistik ini membantu kami dalam menangkal pemblokiran VPN dan meningkatkan performa aplikasi.";
 
 /* Telemetry label in the onboarding screen for mac next to a toggle */
-"_onboarding_mac_crash_reports" = "Bagikan laporan crash anonim. Laporan ini dapat membantu kami untuk memperbaiki bug, mendeteksi firewall, dan menangkal pemblokiran VPN.";
+"_onboarding_mac_crash_reports" = "Bagikan laporan crash anonim. Laporan ini membantu kami dalam memperbaiki bug, mendeteksi firewall, dan menangkal pemblokiran VPN.";
 
 /* Telemetry label in the settings window for mac */
 "_settings_mac_usage_stats_title" = "Bagikan statistik pemakaian anonim";
 
 /* Telemetry tooltip in the settings window for mac */
-"_settings_mac_usage_stats_tooltip" = "Data penggunaan dapat membantu kami untuk menangkal pemblokiran VPN dan meningkatkan performa aplikasi.";
+"_settings_mac_usage_stats_tooltip" = "Statistik pemakaian membantu kami dalam menangkal pemblokiran VPN dan meningkatkan performa aplikasi.";
 
 /* Telemetry label in the settings window for mac */
 "_settings_mac_crash_reports_title" = "Bagikan laporan crash anonim";
@@ -1896,7 +1896,7 @@
 "modals_upsell_moderate_nat_subtitle_bold" = "NAT tipe 2";
 
 /* Feature of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_gaming" = "Tingkatkan performa permainan online dan panggilan video Anda";
+"modals_upsell_features_moderate_nat_gaming" = "Tingkatkan performa game online dan panggilan video Anda";
 
 /* Feature of the Moderate NAT upsell screen */
 "modals_upsell_features_moderate_nat_direct_connections" = "NAT Type 2 (moderat) mengoptimalkan kecepatan dan stabilitas koneksi Anda dengan mengukuhkan koneksi langsung antar perangkat";
@@ -2122,7 +2122,7 @@
 
 "onboarding_usage_stats_title" = "Bagikan statistik pemakaian anonim";
 
-"onboarding_usage_stats_description" = "Data penggunaan dapat membantu kami untuk menangkal pemblokiran VPN dan meningkatkan performa aplikasi.";
+"onboarding_usage_stats_description" = "Statistik pemakaian membantu kami dalam menangkal pemblokiran VPN dan meningkatkan performa aplikasi.";
 
 "onboarding_crash_reports_title" = "Bagikan laporan crash anonim";
 
