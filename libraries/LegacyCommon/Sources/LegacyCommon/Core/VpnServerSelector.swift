@@ -169,12 +169,12 @@ extension ConnectionRequest {
         case .country(let countryCode, let requestType):
             switch requestType {
             case .fastest, .random:
-                return [.kind(.standard(country: countryCode))]
+                return [.kind(.country(code: countryCode))]
             case .server(let model):
                 return [.logicalID(model.id)]
             }
         case .city(let countryCode, let city):
-            return [.kind(.standard(country: countryCode)), .city(city)]
+            return [.kind(.country(code: countryCode)), .city(city)]
         case .fastest, .random:
             return []
         }

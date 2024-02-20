@@ -103,8 +103,6 @@
 		85B52BBDF014973A4197164A /* BannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AA91B78C375F475C3F8608 /* BannerViewModel.swift */; };
 		AD5EB4152AA1298100432BCE /* ChangeServerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5EB4142AA1298100432BCE /* ChangeServerButton.swift */; };
 		AD6AE1522AA8AC2A0076B083 /* ClickthroughTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6AE1512AA8AC2A0076B083 /* ClickthroughTextField.swift */; };
-		AD7610232B7ADA460076B257 /* PersistenceTestSupport in Frameworks */ = {isa = PBXBuildFile; productRef = AD7610222B7ADA460076B257 /* PersistenceTestSupport */; };
-		AD7610252B7ADBCF0076B257 /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = AD7610242B7ADBCF0076B257 /* Ergonomics */; };
 		AD8130FF2A85360800729E03 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FE2A85360800729E03 /* LiveDependencies.swift */; };
 		AD8C78AE29898403008AC0B5 /* AppSessionManagerImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8C78AD29898403008AC0B5 /* AppSessionManagerImplementationTests.swift */; };
 		AD9F19502B55D6770034F329 /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = AD9F194F2B55D6770034F329 /* Persistence */; };
@@ -1082,8 +1080,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD7610252B7ADBCF0076B257 /* Ergonomics in Frameworks */,
-				AD7610232B7ADA460076B257 /* PersistenceTestSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2750,8 +2746,6 @@
 			);
 			name = ProtonVPNmacOSTests;
 			packageProductDependencies = (
-				AD7610222B7ADA460076B257 /* PersistenceTestSupport */,
-				AD7610242B7ADBCF0076B257 /* Ergonomics */,
 			);
 			productName = ProtonVPNTests;
 			productReference = E15B754D20FA83CB0022C406 /* ProtonVPNmacOSTests.xctest */;
@@ -4882,14 +4876,6 @@
 		4CD1F79D2A72E57F00E8AB01 /* LegacyCommon */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LegacyCommon;
-		};
-		AD7610222B7ADA460076B257 /* PersistenceTestSupport */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = PersistenceTestSupport;
-		};
-		AD7610242B7ADBCF0076B257 /* Ergonomics */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Ergonomics;
 		};
 		AD9F194F2B55D6770034F329 /* Persistence */ = {
 			isa = XCSwiftPackageProductDependency;

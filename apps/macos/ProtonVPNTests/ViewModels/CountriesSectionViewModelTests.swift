@@ -67,6 +67,7 @@ final class CountriesViewModelTests: XCTestCase {
 
     func testConnectionProtocolChangedUpdatesCountryItems() {
         // Start off with smart protocol enabled and all protocols supported
+        mockPropertiesManager.secureCoreToggle = false
         mockPropertiesManager.connectionProtocol = .smartProtocol
         serverGroups = [MockServerGroup.dev, MockServerGroup.sweden, MockServerGroup.switzerland]
 
