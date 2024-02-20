@@ -434,15 +434,13 @@ extension VpnManager: LocalAgentDelegate {
     }
 
     private func didReceiveFeature(netshield: NetShieldType) {
-        Task {
-            guard netShieldPropertyProvider.netShieldType != netshield else {
-                return
-            }
-
-            log.debug("Netshield was set to \(netShieldPropertyProvider.netShieldType), changing to \(netshield) received from local agent", category: .localAgent, event: .stateChange)
-            updateActiveConnection(netShieldType: netshield)
-            netShieldPropertyProvider.netShieldType = netshield
+        guard netShieldPropertyProvider.netShieldType != netshield else {
+            return
         }
+
+        log.debug("Netshield was set to \(netShieldPropertyProvider.netShieldType), changing to \(netshield) received from local agent", category: .localAgent, event: .stateChange)
+        updateActiveConnection(netShieldType: netshield)
+        netShieldPropertyProvider.netShieldType = netshield
     }
 
     private func didReceiveFeature(natType: NATType) {

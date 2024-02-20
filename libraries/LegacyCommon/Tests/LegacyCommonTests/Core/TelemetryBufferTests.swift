@@ -89,14 +89,14 @@ class TelemetryBufferTests: XCTestCase {
     }
 
     // Test that event is being saved to storage
-    func testBufferSavesEvents() async {
+    func testBufferSavesEvents() async throws {
         let dataManager: DataManager = .mock(data: nil)
-        await withDependencies {
+        try await withDependencies {
             $0.dataManager = dataManager
             $0.date = .constant(Date())
         } operation: {
             let buffer = await TelemetryBuffer(retrievingFromStorage: true, bufferType: .telemetryEvents)
-            await buffer.save(event: .init("test".data(using: .utf8)!, id: UUID()))
+            try await buffer.save(event: .init("test".data(using: .utf8)!, id: UUID()))
             let count = await buffer.events.count
             XCTAssertEqual(count, 1)
             let loaded = try! dataManager.load(URL(string: "some")!)
@@ -106,15 +106,15 @@ class TelemetryBufferTests: XCTestCase {
     }
 
     // Test that event is removed with a given UUID (dependency is UUID)
-    func testBufferRemovesGivenEvent() async {
+    func testBufferRemovesGivenEvent() async throws {
         let dataManager: DataManager = .mock(data: nil)
-        await withDependencies {
+        try await withDependencies {
             $0.dataManager = dataManager
             $0.date = .constant(Date())
         } operation: {
             let buffer = await TelemetryBuffer(retrievingFromStorage: true, bufferType: .telemetryEvents)
-            await buffer.save(event: .init("test".data(using: .utf8)!, id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!))
-            await buffer.save(event: .init("test2".data(using: .utf8)!, id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!))
+            try await buffer.save(event: .init("test".data(using: .utf8)!, id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!))
+            try await buffer.save(event: .init("test2".data(using: .utf8)!, id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!))
             let count = await buffer.events.count
             XCTAssertEqual(count, 2)
             await buffer.remove(event: .init("test2".data(using: .utf8)!, id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!))
@@ -143,19 +143,19 @@ class TelemetryBufferTests: XCTestCase {
     }
 
     // Test that event is being saved to storage
-    func testBufferSavesMax100Events() async {
+    func testBufferSavesMax100Events() async throws {
         let mock = (0...TelemetryBuffer.Constants.maxStoredEvents).map { _ in TelemetryBuffer.BufferedEvent
             .mock()
         }
         let data = try! JSONEncoder().encode(mock)
-        await withDependencies {
+        try await withDependencies {
             $0.dataManager = .mock(data: data)
             $0.date = .constant(Date())
         } operation: {
             let buffer = await TelemetryBuffer(retrievingFromStorage: true, bufferType: .telemetryEvents)
             let count1 = await buffer.events.count
             XCTAssertEqual(count1, 101)
-            await buffer.save(event: .init("test".data(using: .utf8)!, id: UUID()))
+            try await buffer.save(event: .init("test".data(using: .utf8)!, id: UUID()))
             let count2 = await buffer.events.count
             XCTAssertEqual(count2, TelemetryBuffer.Constants.maxStoredEvents)
         }

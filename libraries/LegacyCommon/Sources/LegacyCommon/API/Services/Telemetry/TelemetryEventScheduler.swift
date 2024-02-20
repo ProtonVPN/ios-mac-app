@@ -50,7 +50,7 @@ class TelemetryEventScheduler {
     /// we need to check if the user agreed to collecting telemetry data or the B2B requires it.
     func report(event: any TelemetryEvent) async throws {
         if telemetryUsageData {
-            await sendEvent(event)
+            try await sendEvent(event)
         } else {
             throw "Didn't send \(isBusiness ? "Business" : "Telemetry") event, feature disabled"
         }
@@ -66,7 +66,7 @@ class TelemetryEventScheduler {
     /// and try sending all the buffered events immediately after that.
     ///
     /// If the buffer is empty, try to send the event to out API, if it fails, save it to the buffer.
-    private func sendEvent(_ event: any TelemetryEvent) async {
+    private func sendEvent(_ event: any TelemetryEvent) async throws {
         guard LocalFeatureFlags.isEnabled(TelemetryFeature.useBuffer) else {
             do {
                 let response = try await telemetryAPI.flushEvent(event: event.toJSONDictionary(), isBusiness: isBusiness)
@@ -77,7 +77,7 @@ class TelemetryEventScheduler {
             return
         }
         guard await buffer.events.isEmpty else {
-            await scheduleEvent(event)
+            try await scheduleEvent(event)
             await sendScheduledEvents()
             return
         }
@@ -86,20 +86,19 @@ class TelemetryEventScheduler {
             log.info("Telemetry event sent with response code: \(response.code). Event: \(event)", category: .telemetry)
         } catch {
             log.warning("Failed to send telemetry event, saving to storage: \(event)", category: .telemetry)
-            await scheduleEvent(event)
+            try await scheduleEvent(event)
         }
     }
 
     /// Save the event to local storage
-    private func scheduleEvent(_ event: any TelemetryEvent) async {
+    private func scheduleEvent(_ event: any TelemetryEvent) async throws {
         let bufferedEvent: TelemetryBuffer.BufferedEvent
         do {
             bufferedEvent = .init(try encoder.encode(event), id: UUID())
+            try await buffer.save(event: bufferedEvent)
         } catch {
-            log.warning("Failed to serialize telemetry event: \(event)", category: .telemetry)
-            return
+            throw "Failed scheduling telemetry event: \(event), error: \(error)"
         }
-        await buffer.save(event: bufferedEvent)
         log.debug("Telemetry event scheduled:\n\(String(data: bufferedEvent.data, encoding: .utf8)!)")
     }
 
