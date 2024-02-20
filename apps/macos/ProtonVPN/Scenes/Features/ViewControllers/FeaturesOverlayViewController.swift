@@ -25,7 +25,7 @@ import LegacyCommon
 import Theme
 import Ergonomics
 
-class FeaturesOverlayViewController: NSViewController {
+final class FeaturesOverlayViewController: OverlayViewController {
 
     @IBOutlet private weak var featuresStackView: NSStackView!
     @IBOutlet private weak var featuresTitleTF: NSTextField!
