@@ -118,13 +118,12 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     
     // MARK: - Beginning of the login logic.
     override func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
+        guard authKeychain.fetch()?.username != nil else {
+            completion(.failure(ProtonVpnError.userCredentialsMissing))
+            return
+        }
         Task {
             let completeOnMain = { result in await MainActor.run { completion(result) } }
-
-            guard authKeychain.fetch()?.username != nil else {
-                await completeOnMain(.failure(ProtonVpnError.userCredentialsMissing))
-                return
-            }
             do {
                 try await retrievePropertiesAndLogIn()
                 await completeOnMain(.success)
