@@ -75,13 +75,13 @@ public enum VPNServerFilter {
     public enum ServerTypeFilter {
 
         /// Filter out gateways. Provide a string value to match only servers with the specified exitCountryCode
-        case standard(country: String?)
+        case country(code: String?)
 
         /// Only include gateways. Provide a string value to match only servers belonging to the gateway with that name
         case gateway(name: String?)
 
         /// Matches any standard server, not constrained by the country code
-        public static var standard: Self { .standard(country: nil) }
+        public static var country: Self { .country(code: nil) }
 
         /// Matches any gateway server, not constrained by gateway name
         public static var gateway: Self { .gateway(name: nil) }
@@ -117,7 +117,7 @@ extension ServerGroupInfo.Kind {
     public var serverTypeFilter: VPNServerFilter.ServerTypeFilter {
         switch self {
         case .country(let code):
-            return .standard(country: code)
+            return .country(code: code)
         case .gateway(let name):
             return .gateway(name: name)
         }

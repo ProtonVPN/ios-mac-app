@@ -82,7 +82,7 @@ final class ServerSelectionTests: IsolatedResourceDrivenDatabaseTestCase {
     func testFastestSpecifiedCountryAndFeatureServer() throws {
         let result = try sut.getFirstServer(
             filteredBy: [
-                .kind(.standard(country: "US")),
+                .kind(.country(code: "US")),
                 .features(.standard(with: .tor))
             ],
             orderedBy: .fastest
@@ -130,7 +130,7 @@ final class ServerSelectionTests: IsolatedResourceDrivenDatabaseTestCase {
     func testSpecifiedCountrySecureCoreServers() throws {
         let results = try sut.getServers(
             filteredBy: [
-                .kind(.standard(country: "US")),
+                .kind(.country(code: "US")),
                 .features(.secureCore)
             ],
             orderedBy: .nameAscending
@@ -142,7 +142,7 @@ final class ServerSelectionTests: IsolatedResourceDrivenDatabaseTestCase {
     // Ordering servers by name requires additional comparison
     func testServerNameOrdering() throws {
         let results = try sut.getServers(
-            filteredBy: [.kind(.standard(country: "DE"))],
+            filteredBy: [.kind(.country(code: "DE"))],
             orderedBy: .nameAscending
         )
 

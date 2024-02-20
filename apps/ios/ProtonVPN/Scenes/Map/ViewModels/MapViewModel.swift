@@ -165,7 +165,7 @@ class MapViewModel: SecureCoreToggleHandler {
         let isMapConnectionDisabled = featureFlags[\.showNewFreePlan] && userTier.isFreeTier
 
         let featureFilter = VPNServerFilter.features(type.serverTypeFilter)
-        let kindFilter = VPNServerFilter.kind(.standard) // Exclude gateways
+        let kindFilter = VPNServerFilter.kind(.country) // Exclude gateways
 
         do {
             let serverGroups = try repository.getGroups(filteredBy: [featureFilter, kindFilter])
@@ -238,7 +238,7 @@ class MapViewModel: SecureCoreToggleHandler {
         var entryCountries = Set<SecureCoreEntryCountryModel>()
 
         let isSecureCore = VPNServerFilter.features(.secureCore)
-        let isCountry = VPNServerFilter.kind(.standard) // Exclude gateways
+        let isCountry = VPNServerFilter.kind(.country) // Exclude gateways
 
         do {
             @Dependency(\.serverRepository) var repository

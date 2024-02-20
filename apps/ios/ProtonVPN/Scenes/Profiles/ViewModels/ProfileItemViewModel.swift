@@ -145,7 +145,7 @@ final class ProfileItemViewModel {
                     .features(profile.serverType.serverTypeFilter),
                     // `.standard(country:)` doesn't work with gateways, but atm we
                     // do not support profiles with fastest or random gateway server.
-                    .kind(.standard(country: code)),
+                    .kind(.country(code: code)),
                 ])
                 // There should be only one group matching profile and we want to
                 // check its properties instead of traversing all the servers

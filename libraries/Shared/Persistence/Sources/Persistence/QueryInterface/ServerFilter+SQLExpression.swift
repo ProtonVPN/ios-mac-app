@@ -56,7 +56,7 @@ extension VPNServerFilter {
             }
             return logical[Logical.Columns.gatewayName] == name
 
-        case .kind(.standard(let countryCode)):
+        case .kind(.country(let countryCode)):
             let isStandard: SQLExpression = logical[Logical.Columns.gatewayName] == nil
             guard let countryCode else {
                 return isStandard

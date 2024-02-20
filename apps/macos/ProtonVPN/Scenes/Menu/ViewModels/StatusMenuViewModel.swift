@@ -362,7 +362,7 @@ final class StatusMenuViewModel {
     private func updateCountryList() {
         @Dependency(\.serverRepository) var repository
         // Filter out gateways, because we don't have "Connect to fastest server" for gateways
-        let isCountry = VPNServerFilter.kind(.standard)
+        let isCountry = VPNServerFilter.kind(.country)
         do {
             standardCountries = try repository.getGroups(
                 filteredBy: [.features(.standard), isCountry],

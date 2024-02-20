@@ -189,7 +189,7 @@ class MapSectionViewModel {
     private func standardAnnotations(_ userTier: Int) -> [CountryAnnotationViewModel] {
         @Dependency(\.serverRepository) var repository
         do {
-            let isCountry = VPNServerFilter.kind(.standard)
+            let isCountry = VPNServerFilter.kind(.country)
             let isNotSecureCore = VPNServerFilter.features(.standard)
             let countryGroups = try repository.getGroups(filteredBy: [isCountry, isNotSecureCore])
             return countryGroups.compactMap { group in
@@ -244,7 +244,7 @@ class MapSectionViewModel {
         do {
             @Dependency(\.serverRepository) var repository
             let isSecureCore = VPNServerFilter.features(.secureCore)
-            let isCountry = VPNServerFilter.kind(.standard)
+            let isCountry = VPNServerFilter.kind(.country)
             return try repository.getServers(filteredBy: [isSecureCore, isCountry], orderedBy: .none)
         } catch {
             log.error("Failed to retrieve secure core servers", category: .persistence, metadata: ["error": "\(error)"])
