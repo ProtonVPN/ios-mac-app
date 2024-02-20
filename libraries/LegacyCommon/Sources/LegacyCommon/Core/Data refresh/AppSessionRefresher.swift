@@ -149,7 +149,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     }
     
     @objc public func refreshAccount() {
-        Task {
+        Task { @MainActor in
             lastAccountRefresh = Date()
             do {
                 let credentials = try await self.vpnApiService.clientCredentials()

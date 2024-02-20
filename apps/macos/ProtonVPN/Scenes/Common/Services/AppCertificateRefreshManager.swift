@@ -43,6 +43,7 @@ final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshMan
         self.vpnAuthenticationStorage.delegate = self
     }
 
+    @MainActor
     func planNextRefresh() async {
         guard let certificate = vpnAuthenticationStorage.getStoredCertificate() else {
             log.info("No current certificate, will try to generate new certificate right now.", category: .userCert)
@@ -66,6 +67,7 @@ final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshMan
         }
     }
 
+    @MainActor
     private func refreshCertificate() async {
         do {
             try await appSessionManager.refreshVpnAuthCertificate()
