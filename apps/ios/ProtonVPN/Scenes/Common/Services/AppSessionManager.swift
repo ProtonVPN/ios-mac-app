@@ -133,6 +133,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         }
     }
 
+    @MainActor
     func finishLogin(authCredentials: AuthCredentials) async throws {
         do {
             try authKeychain.store(authCredentials)
@@ -214,6 +215,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         await successfulConsecutiveSessionRefreshes.increment()
     }
 
+    @MainActor
     func refreshVpnAuthCertificate() async throws -> Void {
         guard loggedIn else {
             log.info("Not refreshing vpn certificate - client not logged in")

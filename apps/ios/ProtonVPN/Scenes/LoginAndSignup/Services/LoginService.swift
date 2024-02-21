@@ -103,12 +103,12 @@ final class CoreLoginService {
         WorkBeforeFlow(stepName: Localizable.loginFetchVpnData) { [weak self] (data: LoginData, completion: @escaping @MainActor (Result<Void, Error>) -> Void) -> Void in
             // attempt to use the login data to log in the app
             let authCredentials = AuthCredentials(data)
-            Task { [weak self] in
+            Task { @MainActor [weak self] in
                 do {
                     try await self?.appSessionManager.finishLogin(authCredentials: authCredentials)
-                    await completion(.success(()))
+                    completion(.success(()))
                 } catch {
-                    await completion(.failure(error))
+                    completion(.failure(error))
                 }
             }
         }
@@ -265,7 +265,7 @@ extension CoreLoginService: LoginService {
                 case .success:
                     completion(.loggedIn)
                 case .failure:
-                    Task {
+                    Task { @MainActor in
                         try? await appSessionManager.loadDataWithoutLogin()
                         completion(.notLoggedIn)
                     }

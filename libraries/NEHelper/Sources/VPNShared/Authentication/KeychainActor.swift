@@ -19,6 +19,9 @@
 import Foundation
 import KeychainAccess
 
+/// As you might see this is named `...Actor`, but in fact it's a class. This is due to a revert we did
+/// of the async keychain changes that caused multiple fires in production. The class was left here as
+/// an easy way of resuming the work in the future.
 public class KeychainActor {
 
     private let keychain: KeychainAccess.Keychain

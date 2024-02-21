@@ -225,7 +225,7 @@ extension AppDelegate: UIApplicationDelegate {
         if propertiesManager.featureFlags.pollNotificationAPI, container.makeAuthKeychainHandle().username != nil {
             announcementRefresher.tryRefreshing()
         }
-        Task {
+        Task { @MainActor in
             try? await container.makeAppSessionManager().refreshVpnAuthCertificate()
             container.makeReview().activated()
         }
