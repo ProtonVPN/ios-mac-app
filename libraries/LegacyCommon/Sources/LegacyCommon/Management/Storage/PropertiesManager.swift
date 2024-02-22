@@ -272,12 +272,16 @@ public class PropertiesManager: PropertiesManagerProtocol {
     }
 
     public func getTelemetryUsageData(for username: String?) -> Bool {
-        guard let username,
-              let string = defaults.string(forKey: Keys.telemetryUsageData.rawValue + username),
-              let usageData = Bool(string) else {
-            return true // default value for usage data if the user didn't get through the onboarding
+        guard let username else { return true }
+        let key = Keys.telemetryUsageData.rawValue + username
+        let object = defaults.object(forKey: key)
+        if let string = object as? String {
+            return Bool(string) ?? true
+        } else if let bool = object as? Bool {
+            // checking for bool value for compatibility with old version, where we stored it as a boolean
+            return bool
         }
-        return usageData
+        return true // default value for crash reports if the user didn't get through the onboarding
     }
 
     public func setTelemetryUsageData(for username: String, enabled: Bool) {
@@ -292,12 +296,16 @@ public class PropertiesManager: PropertiesManagerProtocol {
     }
     
     public func getTelemetryCrashReports(for username: String?) -> Bool {
-        guard let username,
-              let string = defaults.string(forKey: Keys.telemetryCrashReports.rawValue + username),
-              let crashReports = Bool(string) else {
-            return true // default value for crash reports if the user didn't get through the onboarding
+        guard let username else { return true }
+        let key = Keys.telemetryCrashReports.rawValue + username
+        let object = defaults.object(forKey: key)
+        if let string = object as? String {
+            return Bool(string) ?? true
+        } else if let bool = object as? Bool {
+            // checking for bool value for compatibility with old version, where we stored it as a boolean
+            return bool
         }
-        return crashReports
+        return true // default value for crash reports if the user didn't get through the onboarding
     }
 
     public func setTelemetryCrashReports(for username: String, enabled: Bool) {
