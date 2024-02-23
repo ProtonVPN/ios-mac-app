@@ -211,21 +211,14 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
         let loginExpectation = XCTestExpectation(description: "Manager should not time out when attempting a login")
 
-        let token = NotificationCenter.default.addObserver(for: SessionChanged.name, object: manager) { _ in
-            XCTFail("Manager should not post SessionChanged if already logged in")
+        assertNotPosted(SessionChanged.name, by: manager!) {
+            manager.attemptSilentLogIn { result in
+                loginExpectation.fulfill()
+                guard case .success = result else { return XCTFail("Should succeed silently logging in when already logged in") }
+            }
+
+            wait(for: [loginExpectation], timeout: asyncTimeout)
         }
-
-        manager.attemptSilentLogIn { result in
-            loginExpectation.fulfill()
-            guard case .success = result else { return XCTFail("Should succeed silently logging in when already logged in") }
-        }
-
-        wait(for: [loginExpectation], timeout: asyncTimeout)
-
-        // We need to hold a reference to `token` to continue observing for notifications until the end of the test.
-        // Assigning the result of `addObserver` to `_` causes it to be instantly deallocated. This looks dumb, but the
-        // only way I could find to silence the unused_variable warning was to actually use it
-        XCTAssertNotNil(token)
     }
 
     // MARK: Active VPN connection login tests
@@ -390,6 +383,26 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
         wait(for: [loginExpectation, sessionChangedNotificationExpectation], timeout: asyncTimeout)
         XCTAssertTrue(manager.loggedIn)
+    }
+
+    /// Invokes `XCTFail` if `notification` is posted any time during the execution of `operation`.
+    /// This helper controls the lifetime of the notification subscription token while avoiding the 'unused variable`
+    /// warning that would arise from assigning a notification token to a variable without accessing it.
+    ///
+    /// Can be moved to `ErgonomicsTestSupport` once app targets are able to link test support targets
+    private func assertNotPosted<T>(
+        _ notification: Notification.Name,
+        by object: Any?,
+        during operation: () -> T
+    ) -> T {
+        let subscribeAndReturnToken = {
+            return NotificationCenter.default.addObserver(for: notification, object: object) { notification in
+                XCTFail("Unexpected notification posted: \(notification)")
+            }
+        }
+        return withExtendedLifetime(subscribeAndReturnToken()) { _ in
+            return operation()
+        }
     }
 }
 

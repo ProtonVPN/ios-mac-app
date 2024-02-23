@@ -166,15 +166,15 @@ extension ConnectionRequest {
 
     var locationFilters: [VPNServerFilter] {
         switch connectionType {
-        case .country(let countryCode, let requestType):
-            switch requestType {
-            case .fastest, .random:
-                return [.kind(.country(code: countryCode))]
-            case .server(let model):
-                return [.logicalID(model.id)]
-            }
+        case .country(let countryCode, .fastest), .country(let countryCode, .random):
+            return [.kind(.country(code: countryCode))]
+
+        case .country(_, .server(let model)):
+            return [.logicalID(model.id)]
+
         case .city(let countryCode, let city):
             return [.kind(.country(code: countryCode)), .city(city)]
+
         case .fastest, .random:
             return []
         }

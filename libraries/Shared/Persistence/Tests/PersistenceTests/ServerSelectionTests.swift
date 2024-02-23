@@ -162,7 +162,12 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
         XCTAssertEqual(results.count, 0)
     }
 
-    func testFiltersServersWithUnsupportedProtocols() throws {
+    /// This test asserts that if the `.supports(protocol)` filter is used, only servers that support at least one of
+    /// the specified protocols are returned.
+    ///
+    /// Note the protocols used here are selected at random and do not represent the set of protocols that are currently
+    /// supported by the app targets.
+    func testReturnsServersAccordingToSpecifiedProtocols() throws {
         let ikeResults = try repository.getServers(
             filteredBy: [.kind(.country(code: "DE")), .supports(protocol: .ikev2)],
             orderedBy: .nameAscending

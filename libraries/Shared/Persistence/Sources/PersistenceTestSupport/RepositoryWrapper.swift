@@ -25,12 +25,12 @@ import Persistence
 ///
 /// Historically, a `MockServerRepository` partially implemented the set of features that the real thing provides, but
 /// it was dropped in favour of using a wrapper around the real implementation, which provides the necessary callbacks.
-public class ServerRepositoryWrapper {
+public final class ServerRepositoryWrapper {
 
     public var didStoreServers: (([VPNServer]) -> Void)?
     public var didUpdateLoads: (([VPNServer]) -> Void)?
 
-    public var repository: ServerRepository
+    public let repository: ServerRepository
 
     public init(repository: ServerRepository) {
         self.repository = repository
