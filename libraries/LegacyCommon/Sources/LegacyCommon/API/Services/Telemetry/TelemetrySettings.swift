@@ -21,10 +21,9 @@ import VPNShared
 
 open class TelemetrySettings {
 
-    public typealias Factory = PropertiesManagerFactory & AuthKeychainHandleFactory & VpnKeychainFactory
+    public typealias Factory = PropertiesManagerFactory & VpnKeychainFactory
     private let factory: Factory
 
-    private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
 
@@ -33,7 +32,7 @@ open class TelemetrySettings {
     }
 
     public var telemetryUsageData: Bool {
-        propertiesManager.getTelemetryUsageData(for: authKeychain.username)
+        propertiesManager.getTelemetryUsageData()
     }
 
     public var businessEvents: Bool {
@@ -41,16 +40,14 @@ open class TelemetrySettings {
     }
 
     public func updateTelemetryUsageData(isOn: Bool) {
-        guard let username = authKeychain.username else { return }
-        propertiesManager.setTelemetryUsageData(for: username, enabled: isOn)
+        Task { await propertiesManager.setTelemetryUsageData(enabled: isOn) }
     }
 
     public var telemetryCrashReports: Bool {
-        propertiesManager.getTelemetryCrashReports(for: authKeychain.username)
+        propertiesManager.getTelemetryCrashReports()
     }
 
     public func updateTelemetryCrashReports(isOn: Bool) {
-        guard let username = authKeychain.username else { return }
-        propertiesManager.setTelemetryCrashReports(for: username, enabled: isOn)
+        propertiesManager.setTelemetryCrashReports(enabled: isOn)
     }
 }
