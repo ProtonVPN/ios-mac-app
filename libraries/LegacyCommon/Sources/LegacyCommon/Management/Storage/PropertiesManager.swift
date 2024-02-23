@@ -73,10 +73,10 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var discourageSecureCore: Bool { get set }
     var showWhatsNewModal: Bool { get set }
 
-    func getTelemetryUsageData(for username: String?) -> Bool
-    func getTelemetryCrashReports(for username: String?) -> Bool
-    func setTelemetryUsageData(for username: String, enabled: Bool)
-    func setTelemetryCrashReports(for username: String, enabled: Bool)
+    func getTelemetryUsageData() -> Bool
+    func getTelemetryCrashReports() -> Bool
+    func setTelemetryUsageData(enabled: Bool) async
+    func setTelemetryCrashReports(enabled: Bool)
     
     // Distinguishes if kill switch should be disabled
     var intentionallyDisconnected: Bool { get set }
@@ -271,45 +271,41 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
     }
 
-    public func getTelemetryUsageData(for username: String?) -> Bool {
-        guard let username else { return true }
-        let key = Keys.telemetryUsageData.rawValue + username
-        let object = defaults.object(forKey: key)
+    public func getTelemetryUsageData() -> Bool {
+        let usageDataDefault = true // default value for crash reports if the user didn't get through the onboarding
+        let object = storage.getUserValue(forKey: Keys.telemetryUsageData.rawValue)
         if let string = object as? String {
-            return Bool(string) ?? true
+            return Bool(string) ?? usageDataDefault
         } else if let bool = object as? Bool {
             // checking for bool value for compatibility with old version, where we stored it as a boolean
             return bool
         }
-        return true // default value for crash reports if the user didn't get through the onboarding
+        return usageDataDefault
     }
 
-    public func setTelemetryUsageData(for username: String, enabled: Bool) {
+    public func setTelemetryUsageData(enabled: Bool) async {
         if !enabled {
-            Task {
-                // Add unit test for scenario where user disables telemetry and we need to clear the buffer.
-                let buffer = await TelemetryBuffer(retrievingFromStorage: false, bufferType: .telemetryEvents)
-                try? await buffer.saveToStorage()
-            }
+            // Add unit test for scenario where user disables telemetry and we need to clear the buffer.
+            let buffer = await TelemetryBuffer(retrievingFromStorage: false, bufferType: .telemetryEvents)
+            try? await buffer.saveToStorage()
         }
-        storage.setValue("\(enabled)", forKey: Keys.telemetryUsageData.rawValue + username)
+        storage.setUserValue(String(enabled), forKey: Keys.telemetryUsageData.rawValue)
     }
     
-    public func getTelemetryCrashReports(for username: String?) -> Bool {
-        guard let username else { return true }
-        let key = Keys.telemetryCrashReports.rawValue + username
-        let object = defaults.object(forKey: key)
+    public func getTelemetryCrashReports() -> Bool {
+        let crashReportsDefault = true // default value for crash reports if the user didn't get through the onboarding
+        let object = storage.getUserValue(forKey: Keys.telemetryCrashReports.rawValue)
         if let string = object as? String {
-            return Bool(string) ?? true
+            return Bool(string) ?? crashReportsDefault
         } else if let bool = object as? Bool {
             // checking for bool value for compatibility with old version, where we stored it as a boolean
             return bool
         }
-        return true // default value for crash reports if the user didn't get through the onboarding
+        return crashReportsDefault
     }
 
-    public func setTelemetryCrashReports(for username: String, enabled: Bool) {
-        storage.setValue("\(enabled)", forKey: Keys.telemetryCrashReports.rawValue + username)
+    public func setTelemetryCrashReports(enabled: Bool) {
+        storage.setUserValue(String(enabled), forKey: Keys.telemetryCrashReports.rawValue)
     }
 
     public var isOnboardingInProgress: Bool = false
