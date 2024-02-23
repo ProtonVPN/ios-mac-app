@@ -26,14 +26,23 @@ import VPNSharedTesting
 class PropertiesManagerTests: XCTestCase {
 
     var sut: PropertiesManagerProtocol!
+    private var userDefaults: UserDefaults!
+
+    static let watershed = CoreAppConstants.WatershedEvent.telemetrySettingDefaultValue.timeIntervalSince1970
 
     override func invokeTest() {
-        withDependencies {
-            $0.storage = MemoryStorage()
-            $0.dataManager = .mock(data: nil) // stores telemetry in buffer, not relevant to telemetry tests here
+        withDependencies { values in
+            values.storage = MemoryStorage()
+            values.dataManager = .mock(data: nil) // stores telemetry in buffer, not relevant to telemetry tests here
             let keychain = MockAuthKeychain()
             keychain.setMockUsername("user")
-            $0.authKeychain = keychain
+            values.authKeychain = keychain
+            userDefaults = UserDefaults(suiteName: #file)
+            userDefaults.removePersistentDomain(forName: #file)
+            userDefaults.setValue(Self.watershed - 1, forKey: "UserAccountCreationDate")
+            values.defaultsProvider = DefaultsProvider(
+                getDefaults: { [self] in userDefaults }
+            )
         } operation: {
             super.invokeTest()
         }
@@ -44,9 +53,16 @@ class PropertiesManagerTests: XCTestCase {
         sut = PropertiesManager()
     }
 
-    func testTelemetrySettingsDefaultValueIsTrue() {
+    func testTelemetrySettingsDefaultValueIsTrueForNewerUsers() {
+        userDefaults.setValue(Self.watershed + 1, forKey: "UserAccountCreationDate")
         XCTAssertTrue(sut.getTelemetryUsageData())
         XCTAssertTrue(sut.getTelemetryCrashReports())
+    }
+
+    func testTelemetrySettingsDefaultValueIsFalseForOlderUsers() {
+        userDefaults.setValue(Self.watershed - 1, forKey: "UserAccountCreationDate")
+        XCTAssertFalse(sut.getTelemetryUsageData())
+        XCTAssertFalse(sut.getTelemetryCrashReports())
     }
 
     func testTelemetrySettingsCanSetToFalse() async throws {
