@@ -99,6 +99,7 @@ public class CoreAppConstants {
 
     public struct WatershedEvent {
         public static let freeRescopeReleaseDate = Date(timeIntervalSince1970: 1_694_044_799) // 6th September 2023, 23:59:59
+        public static let telemetrySettingDefaultValue = Date(timeIntervalSince1970: 1_690_840_800) // 1st August 2023, 00:00:00
     }
 
     public struct Maintenance {

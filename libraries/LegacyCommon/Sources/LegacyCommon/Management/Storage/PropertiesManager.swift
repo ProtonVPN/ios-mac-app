@@ -272,15 +272,21 @@ public class PropertiesManager: PropertiesManagerProtocol {
     }
 
     public func getTelemetryUsageData() -> Bool {
-        let usageDataDefault = true // default value for crash reports if the user didn't get through the onboarding
+        var usageDataDefault = { [weak self] in
+            guard let userAccountCreationDate = self?.userAccountCreationDate else { return false }
+            if userAccountCreationDate < CoreAppConstants.WatershedEvent.telemetrySettingDefaultValue {
+                return false
+            }
+            return true // default value for usage data if the user didn't previously selected one
+        }
         let object = storage.getUserValue(forKey: Keys.telemetryUsageData.rawValue)
         if let string = object as? String {
-            return Bool(string) ?? usageDataDefault
+            return Bool(string) ?? usageDataDefault()
         } else if let bool = object as? Bool {
             // checking for bool value for compatibility with old version, where we stored it as a boolean
             return bool
         }
-        return usageDataDefault
+        return usageDataDefault()
     }
 
     public func setTelemetryUsageData(enabled: Bool) async {
@@ -293,15 +299,21 @@ public class PropertiesManager: PropertiesManagerProtocol {
     }
     
     public func getTelemetryCrashReports() -> Bool {
-        let crashReportsDefault = true // default value for crash reports if the user didn't get through the onboarding
+        var crashReportsDefault = { [weak self] in
+            guard let userAccountCreationDate = self?.userAccountCreationDate else { return false }
+            if userAccountCreationDate < CoreAppConstants.WatershedEvent.telemetrySettingDefaultValue {
+                return false
+            }
+            return true // default value for crash reports if the user didn't previously selected one
+        }
         let object = storage.getUserValue(forKey: Keys.telemetryCrashReports.rawValue)
         if let string = object as? String {
-            return Bool(string) ?? crashReportsDefault
+            return Bool(string) ?? crashReportsDefault()
         } else if let bool = object as? Bool {
             // checking for bool value for compatibility with old version, where we stored it as a boolean
             return bool
         }
-        return crashReportsDefault
+        return crashReportsDefault()
     }
 
     public func setTelemetryCrashReports(enabled: Bool) {
