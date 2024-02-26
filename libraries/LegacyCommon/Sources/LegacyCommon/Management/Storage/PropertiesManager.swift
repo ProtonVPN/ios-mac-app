@@ -75,7 +75,7 @@ public protocol PropertiesManagerProtocol: AnyObject {
 
     func getTelemetryUsageData() -> Bool
     func getTelemetryCrashReports() -> Bool
-    func setTelemetryUsageData(enabled: Bool) async
+    func setTelemetryUsageData(enabled: Bool)
     func setTelemetryCrashReports(enabled: Bool)
     
     // Distinguishes if kill switch should be disabled
@@ -272,7 +272,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     }
 
     public func getTelemetryUsageData() -> Bool {
-        var usageDataDefault = { [weak self] in
+        let usageDataDefault = { [weak self] in
             guard let userAccountCreationDate = self?.userAccountCreationDate else { return false }
             if userAccountCreationDate < CoreAppConstants.WatershedEvent.telemetrySettingDefaultValue {
                 return false
@@ -289,17 +289,19 @@ public class PropertiesManager: PropertiesManagerProtocol {
         return usageDataDefault()
     }
 
-    public func setTelemetryUsageData(enabled: Bool) async {
+    public func setTelemetryUsageData(enabled: Bool) {
         if !enabled {
-            // Add unit test for scenario where user disables telemetry and we need to clear the buffer.
-            let buffer = await TelemetryBuffer(retrievingFromStorage: false, bufferType: .telemetryEvents)
-            try? await buffer.saveToStorage()
+            Task {
+                // Add unit test for scenario where user disables telemetry and we need to clear the buffer.
+                let buffer = await TelemetryBuffer(retrievingFromStorage: false, bufferType: .telemetryEvents)
+                try? await buffer.saveToStorage()
+            }
         }
         storage.setUserValue(String(enabled), forKey: Keys.telemetryUsageData.rawValue)
     }
     
     public func getTelemetryCrashReports() -> Bool {
-        var crashReportsDefault = { [weak self] in
+        let crashReportsDefault = { [weak self] in
             guard let userAccountCreationDate = self?.userAccountCreationDate else { return false }
             if userAccountCreationDate < CoreAppConstants.WatershedEvent.telemetrySettingDefaultValue {
                 return false

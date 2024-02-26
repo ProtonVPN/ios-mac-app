@@ -40,7 +40,7 @@ open class TelemetrySettings {
     }
 
     public func updateTelemetryUsageData(isOn: Bool) {
-        Task { await propertiesManager.setTelemetryUsageData(enabled: isOn) }
+        propertiesManager.setTelemetryUsageData(enabled: isOn)
     }
 
     public var telemetryCrashReports: Bool {
