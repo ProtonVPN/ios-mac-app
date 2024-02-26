@@ -30,7 +30,6 @@ public class ErrorCode {
     public static let userCredentialsMissing = 30
     public static let userCredentialsExpired = 31
     public static let vpnCredentialsMissing = 32
-    public static let keychainFetchFailure = 40
     public static let decodeFailure = 50
     
     public static let authProperties = 60

@@ -185,8 +185,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
             let models = self.serverStorage.fetch()
             guard !models.isEmpty, // only fail if there is a major reason
-                  propertiesManager.userLocation?.ip != nil,
-                  !(error is LegacyCommon.KeychainError) else {
+                  propertiesManager.userLocation?.ip != nil else {
                 throw error
             }
 
@@ -304,9 +303,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
             let models = serverStorage.fetch()
             guard !models.isEmpty, // only fail if there is a major reason
-                  propertiesManager.userLocation?.ip != nil,
-                  !(error is LegacyCommon.KeychainError) else {
-
+                  propertiesManager.userLocation?.ip != nil else {
                 throw error
             }
         }

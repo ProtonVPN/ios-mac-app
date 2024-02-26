@@ -702,12 +702,6 @@
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "VPN credentials are missing from the keychain";
 
-
-/* Form validation error */
-"_error_field_required" = "This field is required";
-"_error_field_email_wrong_format" = "The email address is not in the right format";
-"_error_field_passwords_dont_match" = "Passwords do not match";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "We have not been able to verify that you are human. Please try again or purchase a premium plan.";
 
@@ -719,17 +713,6 @@
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton couldn't communicate with your device. Please try again later.";
-
-// MARK: Password encoding errors
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "Modulus signature is empty";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "SRP generation failed";
-
-/* Error when try to hash password */
-"_error_hash_password" = "Can't hash user password";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Can't find user from the session";
@@ -750,44 +733,6 @@
 
 /* Network error */
 "_ne_couldnt_reach_server" = "We could not reach Proton servers";
-
-// MARK: API errors
-
-/* API error */
-"_ae_wrong_login_credentials" = "Wrong username or password";
-
-/* API error */
-"_ae_vpn_info_not_received" = "Unable to obtain VPN information";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "Can't parse the servers info";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "Can't parse the partner info";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "Can't fetch VPN properties!";
-
-/* Parsing error */
-"_error_session_count_parser" = "Can't parse session count";
-
-/* Parsing error */
-"_error_loads" = "Can't update server loads";
-
-/* API error */
-"_error_api_offline" = "The Proton VPN API is currently offline";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "Can't parse subscription info";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "Can't parse verfication methods";
-
-/* Keychain error */
-"_error_keychain_fetch" = "Keychain error.";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "Account creation failed";
 
 // MARK: Unknown error
 

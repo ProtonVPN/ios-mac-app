@@ -304,8 +304,7 @@ final class LoginViewModel {
     }
     
     private func specialErrorCaseNotification(_ error: Error) {
-        if error is KeychainError ||
-            (error as NSError).code == NetworkErrorCode.timedOut ||
+        if (error as NSError).code == NetworkErrorCode.timedOut ||
             (error as NSError).code == ApiErrorCode.apiVersionBad ||
             (error as NSError).code == ApiErrorCode.appVersionBad {
             logInFailureWithSupport?(error.localizedDescription)
