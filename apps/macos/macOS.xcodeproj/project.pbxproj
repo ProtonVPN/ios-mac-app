@@ -4745,7 +4745,7 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-dependencies.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 1.2.1;
 			};
 		};
 		E5A4AD222A3B369E00CC91D7 /* XCRemoteSwiftPackageReference "swiftui-navigation" */ = {
