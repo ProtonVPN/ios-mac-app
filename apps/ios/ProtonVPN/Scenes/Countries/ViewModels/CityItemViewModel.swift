@@ -35,11 +35,11 @@ final class CityItemViewModel: CityViewModel {
     let translatedCityName: String?
 
     var countryName: String {
-        return LocalizationUtility.default.countryName(forCode: countryModel.countryCode) ?? ""
+        return LocalizationUtility.default.countryName(forCode: countryCode) ?? ""
     }
 
     var countryFlag: UIImage? {
-        return UIImage.flag(countryCode: countryModel.countryCode)
+        return UIImage.flag(countryCode: countryCode)
     }
 
     var isUsersTierTooLow: Bool {
@@ -93,12 +93,12 @@ final class CityItemViewModel: CityViewModel {
     }
 
     private let servers: [ServerItemViewModel]
-    private let countryModel: CountryModel
+    private let countryCode: String
 
-    init(cityName: String, translatedCityName: String?, countryModel: CountryModel, servers: [ServerItemViewModel], alertService: AlertService, vpnGateway: VpnGatewayProtocol, connectionStatusService: ConnectionStatusService) {
+    init(cityName: String, translatedCityName: String?, countryCode: String, servers: [ServerItemViewModel], alertService: AlertService, vpnGateway: VpnGatewayProtocol, connectionStatusService: ConnectionStatusService) {
         self.cityName = cityName
         self.translatedCityName = translatedCityName
-        self.countryModel = countryModel
+        self.countryCode = countryCode
         self.servers = servers
         self.alertService = alertService
         self.vpnGateway = vpnGateway
@@ -127,7 +127,7 @@ final class CityItemViewModel: CityViewModel {
         } else {
             NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
             log.debug("Will connect to city: \(cityName) in country: \(countryName)", category: .connectionConnect, event: .trigger)
-            vpnGateway.connectTo(country: countryModel.countryCode, city: cityName)
+            vpnGateway.connectTo(country: countryCode, city: cityName)
             connectionStatusService.presentStatusViewController()
         }
     }

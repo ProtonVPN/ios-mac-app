@@ -108,9 +108,9 @@ class CountryAnnotationViewModel: CustomStyleContext {
         }
     }
     
-    init(appStateManager: AppStateManager, country: CountryModel, minTier: Int, userTier: Int, coordinate: CLLocationCoordinate2D) {
+    init(appStateManager: AppStateManager, countryCode: String, minTier: Int, userTier: Int, coordinate: CLLocationCoordinate2D) {
         self.appStateManager = appStateManager
-        self.countryCode = country.countryCode
+        self.countryCode = countryCode
         @Dependency(\.featureFlagProvider) var featureFlags
         if userTier == 0 && featureFlags[\.showNewFreePlan] {
             self.available = false
@@ -167,9 +167,9 @@ class ConnectableAnnotationViewModel: CountryAnnotationViewModel {
     
     fileprivate let vpnGateway: VpnGatewayProtocol
     
-    init(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, country: CountryModel, minTier: Int, userTier: Int, coordinate: CLLocationCoordinate2D) {
+    init(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, countryCode: String, minTier: Int, userTier: Int, coordinate: CLLocationCoordinate2D) {
         self.vpnGateway = vpnGateway
-        super.init(appStateManager: appStateManager, country: country, minTier: minTier, userTier: userTier, coordinate: coordinate)
+        super.init(appStateManager: appStateManager, countryCode: countryCode, minTier: minTier, userTier: userTier, coordinate: coordinate)
     }
 }
 
@@ -224,9 +224,9 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
             && appStateManager.activeConnection()?.server.countryCode == countryCode
     }
     
-    init(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, country: CountryModel, minTier: Int, servers: [ServerInfo], userTier: Int, coordinate: CLLocationCoordinate2D) {
+    init(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, countryCode: String, minTier: Int, servers: [ServerInfo], userTier: Int, coordinate: CLLocationCoordinate2D) {
         self.servers = servers
-        super.init(appStateManager: appStateManager, vpnGateway: vpnGateway, country: country, minTier: minTier, userTier: userTier, coordinate: coordinate)
+        super.init(appStateManager: appStateManager, vpnGateway: vpnGateway, countryCode: countryCode, minTier: minTier, userTier: userTier, coordinate: coordinate)
     }
     
     func serverConnectAction(forRow row: Int) {

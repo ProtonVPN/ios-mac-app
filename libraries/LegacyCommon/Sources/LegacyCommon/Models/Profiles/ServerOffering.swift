@@ -150,17 +150,6 @@ extension ServerOffering {
     }
 }
 
-extension ServerGroup {
-    public var serverOfferingId: String {
-        switch kind {
-        case .country(let countryModel):
-            return countryModel.countryCode
-        case .gateway(let name):
-            return "gateway-\(name)"
-        }
-    }
-}
-
 extension ServerGroupInfo {
     public var serverOfferingID: String {
         switch kind {

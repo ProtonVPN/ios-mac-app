@@ -35,7 +35,8 @@ class CountryAnnotationViewModel: AnnotationViewModel {
         case selected
     }
     
-    private let countryModel: CountryModel
+    let countryCode: String
+    let coordinate: CLLocationCoordinate2D
     private let groupInfo: ServerGroupInfo
     private let serverType: ServerType
     private var vpnGateway: VpnGatewayProtocol
@@ -47,10 +48,6 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     
     var buttonStateChanged: (() -> Void)?
     var countryTapped: ((CountryAnnotationViewModel) -> Void)?
-    
-    var coordinate: CLLocationCoordinate2D {
-        return countryModel.location
-    }
     
     /// Under maintenance if all servers are
     var underMaintenance: Bool {
@@ -69,10 +66,6 @@ class CountryAnnotationViewModel: AnnotationViewModel {
                 }
             }
         }
-    }
-
-    var countryCode: String {
-        return countryModel.countryCode
     }
     
     var isConnected: Bool {
@@ -166,7 +159,7 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     let showAnchor: Bool = true
     
     init(
-        countryModel: CountryModel,
+        countryCode: String,
         groupInfo: ServerGroupInfo,
         serverType: ServerType,
         vpnGateway: VpnGatewayProtocol,
@@ -175,7 +168,7 @@ class CountryAnnotationViewModel: AnnotationViewModel {
         alertService: AlertService,
         connectionStatusService: ConnectionStatusService
     ) {
-        self.countryModel = countryModel
+        self.countryCode = countryCode
         self.groupInfo = groupInfo
         self.serverType = serverType
         self.vpnGateway = vpnGateway
@@ -183,7 +176,8 @@ class CountryAnnotationViewModel: AnnotationViewModel {
         self.requiresUpgrade = !enabled
         self.alertService = alertService
         self.connectionStatusService = connectionStatusService
-        
+        self.coordinate = LocationUtility.coordinate(forCountry: countryCode)
+
         startObserving()
     }
     

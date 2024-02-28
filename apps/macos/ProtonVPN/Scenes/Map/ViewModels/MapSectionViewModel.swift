@@ -200,7 +200,7 @@ class MapSectionViewModel {
                 return StandardCountryAnnotationViewModel(
                     appStateManager: appStateManager,
                     vpnGateway: vpnGateway,
-                    country: CountryModel(countryCode: code),
+                    countryCode: code,
                     minTier: group.minTier,
                     userTier: userTier,
                     coordinate: group.location
@@ -262,16 +262,15 @@ class MapSectionViewModel {
 
         let exitCountryAnnotations: [CountryAnnotationViewModel] = exitCountryCodes.map { exitCountryCode in
             let servers = secureCoreServers.filter { $0.logical.exitCountryCode == exitCountryCode }
-            let countryModel = CountryModel(countryCode: exitCountryCode)
 
             let annotation = SCExitCountryAnnotationViewModel(
                 appStateManager: appStateManager,
                 vpnGateway: vpnGateway,
-                country: countryModel,
+                countryCode: exitCountryCode,
                 minTier: servers.map(\.logical.tier).min() ?? .freeTier,
                 servers: servers,
                 userTier: userTier,
-                coordinate: countryModel.location
+                coordinate: LocationUtility.coordinate(forCountry: exitCountryCode)
             )
             annotation.externalViewStateChange = { [weak self] selection in
                 self?.secureCoreExitSelectionChange(selection)

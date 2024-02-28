@@ -197,7 +197,7 @@ class MapViewModel: SecureCoreToggleHandler {
         }
 
         let annotationViewModel = CountryAnnotationViewModel(
-            countryModel: CountryModel(countryCode: countryCode),
+            countryCode: countryCode,
             groupInfo: countryGroup,
             serverType: activeView,
             vpnGateway: vpnGateway,

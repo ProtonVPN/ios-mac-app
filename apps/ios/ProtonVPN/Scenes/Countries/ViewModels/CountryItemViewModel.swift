@@ -289,7 +289,7 @@ class CountryItemViewModel {
             return CityItemViewModel(
                 cityName: $0.key,
                 translatedCityName: translatedCityName,
-                countryModel: CountryModel(countryCode: code),
+                countryCode: countryCode,
                 servers: $0.value,
                 alertService: self.alertService,
                 vpnGateway: self.vpnGateway,
