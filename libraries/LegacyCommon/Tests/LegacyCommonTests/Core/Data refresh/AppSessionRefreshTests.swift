@@ -26,6 +26,7 @@ import ProtonCoreTestingToolkitUnitTestsCore
 
 @testable import LegacyCommon
 import Domain
+import Localization
 import Persistence
 import PersistenceTestSupport
 import Timer

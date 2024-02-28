@@ -23,6 +23,7 @@
 import Cocoa
 
 import Domain
+import Localization
 import Strings
 
 import LegacyCommon

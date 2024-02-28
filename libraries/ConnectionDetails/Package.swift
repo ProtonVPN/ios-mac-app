@@ -27,6 +27,7 @@ let package = Package(
         // Local
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Strings"),
+        .package(path: "../Shared/Localization"),
         .package(path: "../Shared/Persistence"),
         .package(path: "../SharedViews"),
         .package(path: "../NEHelper"),
@@ -39,8 +40,9 @@ let package = Package(
         .target(
             name: "ConnectionDetails",
             dependencies: [
-                "Strings",
+                "Localization",
                 "Persistence",
+                "Strings",
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
@@ -48,24 +50,18 @@ let package = Package(
         .target(
             name: "ConnectionDetails-iOS",
             dependencies: [
-                "Strings",
-                "Persistence",
                 "ConnectionDetails",
                 "SharedViews",
                 .product(name: "Theme", package: "Theme"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
-                // 3rd party
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ],
             resources: []
         ),
         .target(
             name: "ConnectionDetails-macOS",
             dependencies: [
-                "Persistence",
                 "ConnectionDetails",
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Theme", package: "Theme"),
             ],
             resources: []

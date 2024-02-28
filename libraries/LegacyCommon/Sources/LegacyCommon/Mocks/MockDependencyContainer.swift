@@ -23,6 +23,7 @@ import NetworkExtension
 import Dependencies
 
 import Domain
+import Localization
 import Timer
 import TimerMock
 import VPNShared

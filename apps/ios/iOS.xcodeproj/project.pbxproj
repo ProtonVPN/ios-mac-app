@@ -159,6 +159,11 @@
 		A264F1C92E772DA03634D8A8 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */; };
 		AD37FAC329B63E1100D4DE4E /* NetShieldStatsItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */; };
 		AD37FAC529B7310200D4DE4E /* NetShieldStatsItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */; };
+		AD51BE4A2B907FDB002E40FD /* Localization in Frameworks */ = {isa = PBXBuildFile; productRef = AD51BE492B907FDB002E40FD /* Localization */; };
+		AD51BE4C2B908075002E40FD /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = AD51BE4B2B908075002E40FD /* Domain */; };
+		AD51BE4E2B908075002E40FD /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = AD51BE4D2B908075002E40FD /* Ergonomics */; };
+		AD51BE502B908075002E40FD /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = AD51BE4F2B908075002E40FD /* Persistence */; };
+		AD51BE522B9085C3002E40FD /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = AD51BE512B9085C3002E40FD /* Strings */; };
 		AD6099FB299B2343007E46BC /* ImageSubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6099FA299B2343007E46BC /* ImageSubtitleTableViewCell.swift */; };
 		AD609A03299B89C0007E46BC /* ImageSubtitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD609A02299B89C0007E46BC /* ImageSubtitleTableViewCell.xib */; };
 		AD70D75E2B63238400B39ABA /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = AD70D75D2B63238400B39ABA /* PMLogger */; };
@@ -172,14 +177,11 @@
 		ADA7343729B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADA7343629B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib */; };
 		ADA7343929B1896300CF8F77 /* NetShieldStatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA7343829B1896300CF8F77 /* NetShieldStatsTableViewCell.swift */; };
 		ADDB04A72B768CC200211434 /* CountriesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDB04A62B768CC200211434 /* CountriesViewModelTests.swift */; };
-		ADDB04A92B768D0700211434 /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = ADDB04A82B768D0700211434 /* Persistence */; };
 		ADEB35D42B62832A0044ABD4 /* ProtonCorePaymentsUI in Frameworks */ = {isa = PBXBuildFile; productRef = ADEB35D32B62832A0044ABD4 /* ProtonCorePaymentsUI */; };
 		ADEB35E62B62842C0044ABD4 /* TimerMock in Frameworks */ = {isa = PBXBuildFile; productRef = ADEB35E52B62842C0044ABD4 /* TimerMock */; };
 		ADEB35EA2B6284420044ABD4 /* VPNSharedTesting in Frameworks */ = {isa = PBXBuildFile; productRef = ADEB35E92B6284420044ABD4 /* VPNSharedTesting */; };
 		ADFC97B82B62E1A100CEBC16 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */ = {isa = PBXBuildFile; productRef = ADFC97B72B62E1A100CEBC16 /* ProtonCoreCryptoVPNPatchedGoImplementation */; };
-		ADFE22D92B631B9B00B962BA /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = ADE98F1F2B63058D00601881 /* Domain */; };
 		ADFE22DA2B631B9B00B962BA /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = ADE98F212B6306CA00601881 /* Dependencies */; };
-		ADFE22DB2B631B9B00B962BA /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = ADE98F232B6306CD00601881 /* Strings */; };
 		ADFE22DC2B631B9B00B962BA /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = ADE98F252B6306D800601881 /* PMLogger */; };
 		B20C28F52799947A00157BD1 /* OnboardingRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20C28F42799947A00157BD1 /* OnboardingRobot.swift */; };
 		B22F331827906E9100DBB8CA /* RecoveryRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F331727906E9100DBB8CA /* RecoveryRobot.swift */; };
@@ -934,13 +936,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD51BE502B908075002E40FD /* Persistence in Frameworks */,
+				AD51BE4C2B908075002E40FD /* Domain in Frameworks */,
 				ADFE22DC2B631B9B00B962BA /* PMLogger in Frameworks */,
-				ADFE22DB2B631B9B00B962BA /* Strings in Frameworks */,
-				ADDB04A92B768D0700211434 /* Persistence in Frameworks */,
+				AD51BE4A2B907FDB002E40FD /* Localization in Frameworks */,
 				ADFE22DA2B631B9B00B962BA /* Dependencies in Frameworks */,
-				ADFE22D92B631B9B00B962BA /* Domain in Frameworks */,
 				ADEB35E62B62842C0044ABD4 /* TimerMock in Frameworks */,
+				AD51BE522B9085C3002E40FD /* Strings in Frameworks */,
 				ADEB35EA2B6284420044ABD4 /* VPNSharedTesting in Frameworks */,
+				AD51BE4E2B908075002E40FD /* Ergonomics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2324,11 +2328,13 @@
 			packageProductDependencies = (
 				ADEB35E52B62842C0044ABD4 /* TimerMock */,
 				ADEB35E92B6284420044ABD4 /* VPNSharedTesting */,
-				ADE98F1F2B63058D00601881 /* Domain */,
 				ADE98F212B6306CA00601881 /* Dependencies */,
-				ADE98F232B6306CD00601881 /* Strings */,
 				ADE98F252B6306D800601881 /* PMLogger */,
-				ADDB04A82B768D0700211434 /* Persistence */,
+				AD51BE492B907FDB002E40FD /* Localization */,
+				AD51BE4B2B908075002E40FD /* Domain */,
+				AD51BE4D2B908075002E40FD /* Ergonomics */,
+				AD51BE4F2B908075002E40FD /* Persistence */,
+				AD51BE512B9085C3002E40FD /* Strings */,
 			);
 			productName = ProtonVPNTests;
 			productReference = 791DE5EF208DDA3200A29EA5 /* ProtonVPNTests.xctest */;
@@ -4522,25 +4528,37 @@
 			productName = ProtonCoreTelemetry;
 		};
 		AD70D75D2B63238400B39ABA /* PMLogger */ = {
+            isa = XCSwiftPackageProductDependency;
+            productName = Localization;
+        };
+		AD51BE492B907FDB002E40FD /* Localization */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = PMLogger;
+			productName = Localization;
 		};
-		ADDB04A82B768D0700211434 /* Persistence */ = {
+		AD51BE4B2B908075002E40FD /* Domain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Domain;
+		};
+		AD51BE4D2B908075002E40FD /* Ergonomics */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Ergonomics;
+		};
+		AD51BE4F2B908075002E40FD /* Persistence */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Persistence;
 		};
-		ADE98F1F2B63058D00601881 /* Domain */ = {
+		AD51BE512B9085C3002E40FD /* Strings */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Domain;
+			productName = Strings;
+		};
+		AD70D75D2B63238400B39ABA /* PMLogger */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PMLogger;
 		};
 		ADE98F212B6306CA00601881 /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E5A4AD2A2A3C48B400CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
 			productName = Dependencies;
-		};
-		ADE98F232B6306CD00601881 /* Strings */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Strings;
 		};
 		ADE98F252B6306D800601881 /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;

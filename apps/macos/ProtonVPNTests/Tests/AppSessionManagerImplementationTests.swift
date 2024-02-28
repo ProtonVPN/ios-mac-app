@@ -22,6 +22,7 @@ import Dependencies
 
 import Ergonomics
 import LegacyCommon
+import Localization
 import Persistence
 import VPNShared
 import VPNSharedTesting

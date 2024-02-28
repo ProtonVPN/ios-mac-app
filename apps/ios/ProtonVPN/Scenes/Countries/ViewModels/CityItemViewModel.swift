@@ -20,6 +20,7 @@ import Foundation
 import UIKit
 import Search
 import LegacyCommon
+import Localization
 import ProtonCoreUIFoundations
 import Strings
 import Theme

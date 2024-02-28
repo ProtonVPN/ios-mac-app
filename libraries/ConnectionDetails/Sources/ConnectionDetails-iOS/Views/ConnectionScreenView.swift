@@ -23,6 +23,7 @@ import ComposableArchitecture
 import ProtonCoreUIFoundations
 
 import Domain
+import Localization
 import Strings
 import Theme
 import ConnectionDetails

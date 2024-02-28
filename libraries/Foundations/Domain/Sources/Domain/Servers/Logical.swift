@@ -18,8 +18,6 @@
 
 import Foundation
 
-import Strings
-
 // TODO: VPNAPPL-2100 Domain model refinement
 public struct Logical: Codable, Equatable {
 
@@ -81,21 +79,5 @@ public struct Logical: Codable, Equatable {
             return true
         }
         return false
-    }
-}
-
-// TODO: VPNAPPL-2099 This logic depends on both Domain and Strings.
-// Should it live in Domain, Strings, or a Shared package in the layer above this one?
-extension Logical {
-    public var entryCountry: String {
-        return LocalizationUtility.default.countryName(forCode: entryCountryCode) ?? ""
-    }
-
-    public var exitCountry: String {
-        return LocalizationUtility.default.countryName(forCode: exitCountryCode) ?? ""
-    }
-
-    public var country: String {
-        return LocalizationUtility.default.countryName(forCode: exitCountryCode) ?? ""
     }
 }

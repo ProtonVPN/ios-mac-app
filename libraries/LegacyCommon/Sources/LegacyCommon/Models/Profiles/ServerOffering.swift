@@ -136,7 +136,6 @@ extension ServerOffering {
             }
             assert(grouping.serverOfferingID == countryCode, "Mismatched grouping while checking server protocol support (\(grouping.kind))")
 
-            @Dependency(\.serverRepository) var serverRepository
             let supportedProtocols = connectionProtocol.vpnProtocol != nil
                 ? [connectionProtocol.vpnProtocol!]
                 : smartProtocolConfig.supportedProtocols

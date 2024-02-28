@@ -23,6 +23,7 @@ import Foundation
 
 import Domain
 import Strings
+import Localization
 import VPNShared
 import VPNAppCore
 

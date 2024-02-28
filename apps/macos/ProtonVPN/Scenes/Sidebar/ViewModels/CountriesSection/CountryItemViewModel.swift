@@ -25,6 +25,7 @@ import Cocoa
 import LegacyCommon
 
 import Domain
+import Localization
 import Strings
 import Dependencies
 import Ergonomics

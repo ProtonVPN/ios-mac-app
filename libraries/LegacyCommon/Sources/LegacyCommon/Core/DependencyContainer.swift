@@ -19,6 +19,7 @@
 import Foundation
 import NetworkExtension
 import Timer
+import Localization
 import PMLogger
 import VPNShared
 import Dependencies
@@ -530,5 +531,11 @@ extension Container: TelemetryAPIFactory {
 extension Container: NetworkInterfacePropertiesProviderFactory {
     public func makeInterfacePropertiesProvider() -> NetworkInterfacePropertiesProvider {
         NetworkInterfacePropertiesProviderImplementation()
+    }
+}
+
+extension Container: CountryCodeProviderFactory {
+    public func makeCountryCodeProvider() -> CountryCodeProvider {
+        CountryCodeProviderImplementation()
     }
 }

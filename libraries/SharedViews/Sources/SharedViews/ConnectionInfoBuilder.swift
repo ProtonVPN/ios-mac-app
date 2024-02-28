@@ -22,6 +22,7 @@ import Dependencies
 
 import Domain
 import Strings
+import Localization
 import Theme
 import VPNAppCore
 
@@ -65,7 +66,7 @@ public struct ConnectionInfoBuilder {
     private var showFeatureP2P: Bool {
         if intent.features.contains(.p2p) {
             if let vpnConnectionActual {
-                return vpnConnectionActual.feature.contains(.p2p)
+                return vpnConnectionActual.feature.contains(ServerFeature.p2p)
             } else {
                 return true
             }
@@ -78,7 +79,7 @@ public struct ConnectionInfoBuilder {
     private var showFeatureTor: Bool {
         if intent.features.contains(.tor) {
             if let vpnConnectionActual {
-                return vpnConnectionActual.feature.contains(.tor)
+                return vpnConnectionActual.feature.contains(ServerFeature.tor)
             } else {
                 return true
             }

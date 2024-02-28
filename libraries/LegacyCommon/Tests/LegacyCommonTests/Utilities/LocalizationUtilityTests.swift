@@ -19,6 +19,7 @@
 import Foundation
 import XCTest
 @testable import LegacyCommon
+import Localization
 import Strings
 
 class LocalizationUtilityTests: XCTestCase {

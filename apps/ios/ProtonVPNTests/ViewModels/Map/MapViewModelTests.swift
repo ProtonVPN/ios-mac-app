@@ -26,6 +26,7 @@ import XCTest
 import Dependencies
 
 import Domain
+import Localization
 import Persistence
 import TimerMock
 

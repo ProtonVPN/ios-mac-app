@@ -18,7 +18,7 @@
 
 #if DEBUG
 import Foundation
-import Strings
+import Localization
 
 fileprivate let locales: [String: LocaleWrapperMock] = [
     "en-US": LocaleWrapperMock(

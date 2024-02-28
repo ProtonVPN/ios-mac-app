@@ -23,6 +23,7 @@
 import Foundation
 import Intents
 import LegacyCommon
+import Localization
 import NetworkExtension
 import VPNShared
 import ProtonCoreCryptoVPNPatchedGoImplementation

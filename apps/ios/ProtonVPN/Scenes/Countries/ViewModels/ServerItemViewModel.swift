@@ -35,6 +35,7 @@ import Persistence
 
 import Search
 import LegacyCommon
+import Localization
 
 class ServerItemViewModel: ServerItemViewModelCore {
 

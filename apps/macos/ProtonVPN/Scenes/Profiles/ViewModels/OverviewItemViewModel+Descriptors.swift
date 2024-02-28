@@ -22,6 +22,7 @@
 
 import Cocoa
 import LegacyCommon
+import Localization
 import Theme
 import Strings
 

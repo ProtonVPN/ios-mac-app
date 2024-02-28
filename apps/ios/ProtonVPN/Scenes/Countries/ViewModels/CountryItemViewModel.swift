@@ -31,6 +31,7 @@ import Ergonomics
 import Strings
 import Theme
 
+import Localization
 import Persistence
 import Search
 import VPNShared

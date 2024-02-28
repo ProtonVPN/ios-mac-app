@@ -27,6 +27,7 @@ import Domain
 import Strings
 
 import LegacyCommon
+import Localization
 
 class CountryAnnotationViewModel: AnnotationViewModel {
     

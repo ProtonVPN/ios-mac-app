@@ -21,6 +21,7 @@
 
 @testable import LegacyCommon
 import XCTest
+import Localization
 import TimerMock
 import VPNSharedTesting
 

@@ -27,6 +27,7 @@ import Theme
 import Strings
 import ProtonCoreUIFoundations
 import Domain
+import Localization
 
 // FUTUREDO: This is very similar to what we have on iOS.
 // We should work on merging code into one.

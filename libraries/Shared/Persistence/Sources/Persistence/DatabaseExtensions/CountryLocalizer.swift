@@ -20,7 +20,7 @@ import Foundation
 
 import GRDB
 
-import Strings
+import Localization
 
 /// Lazily initialised the first time a database queue is configured with the custom function `localizedCountryName`
 var convertCodeToLocalizedCountryName: ([DatabaseValue]) throws -> String = {

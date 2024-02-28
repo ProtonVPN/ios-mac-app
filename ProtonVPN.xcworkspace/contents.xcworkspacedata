@@ -52,6 +52,9 @@
             location = "group:libraries/Shared/ExtensionIPC">
          </FileRef>
          <FileRef
+            location = "group:libraries/Shared/Localization">
+         </FileRef>
+         <FileRef
             location = "group:libraries/Shared/Persistence">
          </FileRef>
       </Group>

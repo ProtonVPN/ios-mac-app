@@ -25,6 +25,7 @@ import UIKit
 import Dependencies
 import ProtonCoreUIFoundations
 import LegacyCommon
+import Localization
 import Strings
 import Theme
 import Persistence

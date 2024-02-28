@@ -26,6 +26,7 @@ import UIKit
 import ProtonCoreUIFoundations
 import Strings
 import Domain
+import Localization
 
 extension CreateOrEditProfileViewModel {
     private var fontSize: CGFloat {

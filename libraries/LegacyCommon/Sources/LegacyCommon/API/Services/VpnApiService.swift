@@ -28,6 +28,7 @@ import ProtonCoreDataModel
 import Domain
 import Ergonomics
 import LocalFeatureFlags
+import Localization
 import VPNShared
 
 public protocol VpnApiServiceFactory {

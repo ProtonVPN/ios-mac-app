@@ -28,6 +28,7 @@ import Dependencies
 
 import Domain
 import Strings
+import Localization
 import Theme
 
 import LegacyCommon

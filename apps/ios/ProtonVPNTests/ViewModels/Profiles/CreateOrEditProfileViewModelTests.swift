@@ -24,6 +24,7 @@ import XCTest
 
 import Domain
 import Strings
+import Localization
 import LegacyCommon
 
 import TimerMock
