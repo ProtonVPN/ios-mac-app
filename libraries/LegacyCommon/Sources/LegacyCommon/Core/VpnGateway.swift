@@ -120,10 +120,6 @@ public class VpnGateway: VpnGatewayProtocol {
         return (try? userTier()) ?? .freeTier
     }
 
-    private var serverManager: ServerManager {
-        return ServerManagerImplementation.instance(forTier: tier, serverStorage: serverStorage)
-    }
-   
     private var serverTypeToggle: ServerType {
         return propertiesManager.secureCoreToggle ? .secureCore : .standard
     }

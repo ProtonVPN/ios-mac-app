@@ -58,7 +58,6 @@ class UserAccountUpdateViewController: NSViewController {
     @IBOutlet weak var toServerIV: NSImageView!
     @IBOutlet weak var toServerLbl: NSTextField!
 
-    private lazy var serverManager: ServerManager = ServerManagerImplementation.instance(forTier: 2, serverStorage: ServerStorageConcrete())
     private let alert: UserAccountUpdateAlert
     private let sessionService: SessionService
 
@@ -115,7 +114,7 @@ class UserAccountUpdateViewController: NSViewController {
         feature3View.isHidden = !alert.displayFeatures
         featuresTitleLbl.isHidden = !alert.displayFeatures
         guard alert.displayFeatures else { return }
-        feature1Lbl.stringValue = Localizable.subscriptionUpgradeOption1(serverManager.grouping(for: .standard).count)
+        feature1Lbl.stringValue = Localizable.subscriptionUpgradeOption1(AccountPlan.plus.countriesCount)
         feature2Lbl.stringValue = Localizable.subscriptionUpgradeOption2(AccountPlan.plus.devicesCount)
         feature3Lbl.stringValue = Localizable.subscriptionUpgradeOption3
     }

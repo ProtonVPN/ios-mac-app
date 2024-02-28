@@ -23,6 +23,7 @@
 import Foundation
 import Dependencies
 import LegacyCommon
+import Persistence
 
 class AbstractProfileViewModel {
     @Dependency(\.profileAuthorizer) var authorizer
@@ -47,19 +48,21 @@ class AbstractProfileViewModel {
                 break
             }
             
-            let serverManager = ServerManagerImplementation.instance(forTier: .paidTier, serverStorage: ServerStorageConcrete())
-            
-            var minTier = Int.max
+            var minTier = Int.internalTier
             var allServersUnderMaintenance = true
-            let serversOfProfileType = serverManager.grouping(for: profile.serverType)
-            let serversOfProfileTypeAndCountry = serversOfProfileType.first { group -> Bool in
-                return group.serverOfferingId == code
-            }?.servers
+            let filters: [VPNServerFilter] = [
+                .kind(.country(code: countryCode)),
+                .features(profile.serverType.serverTypeFilter)
+            ]
+
+            @Dependency(\.serverRepository) var repository
+            let serversOfProfileTypeAndCountry = try? repository.getServers(filteredBy: filters, orderedBy: .none)
+
             serversOfProfileTypeAndCountry?.forEach { (server) in
-                if minTier > server.tier {
-                    minTier = server.tier
+                if minTier > server.logical.tier {
+                    minTier = server.logical.tier
                 }
-                if !server.underMaintenance {
+                if server.logical.status == 0 {
                     allServersUnderMaintenance = false
                 }
             }

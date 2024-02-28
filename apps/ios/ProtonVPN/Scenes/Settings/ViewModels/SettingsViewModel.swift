@@ -85,7 +85,6 @@ final class SettingsViewModel {
 
     private var vpnGateway: VpnGatewayProtocol
     private var profileManager: ProfileManager?
-    private var serverManager: ServerManager?
     private var accountRecoveryRepository: AccountRecoveryRepositoryProtocol? = nil
     private let isAccountRecoveryEnabled: Bool
 
@@ -193,17 +192,12 @@ final class SettingsViewModel {
     private func sessionEstablished(vpnGateway: VpnGatewayProtocol) {
         self.vpnGateway = vpnGateway
         
-        guard let tier = try? vpnKeychain.fetchCached().maxTier else { return }
-
-        serverManager = ServerManagerImplementation.instance(forTier: tier, serverStorage: ServerStorageConcrete())
         profileManager = factory.makeProfileManager()
         
         NotificationCenter.default.addObserver(self, selector: #selector(reload),
                                                name: VpnGateway.connectionChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reload),
                                                name: profileManager!.contentChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reload),
-                                               name: serverManager!.contentChanged, object: nil)
     }
     
     private func sessionEnded() {
@@ -211,12 +205,8 @@ final class SettingsViewModel {
         if let profileManager {
             NotificationCenter.default.removeObserver(self, name: profileManager.contentChanged, object: nil)
         }
-        if let serverManager {
-            NotificationCenter.default.removeObserver(self, name: serverManager.contentChanged, object: nil)
-        }
 
         profileManager = nil
-        serverManager = nil
     }
 
     @objc private func reload() {

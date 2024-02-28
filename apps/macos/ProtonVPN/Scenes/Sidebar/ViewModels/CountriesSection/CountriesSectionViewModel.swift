@@ -181,16 +181,7 @@ class CountriesSectionViewModel {
     private var serverGroups: [ServerGroupInfo]? // cache containing summaries about each gateway or country
     private var servers: [String: [CellModel]] = [:] // cache for server information for previously expanded groups
     private var data: [CellModel] = [] // source of information for the view
-    private var userTier: Int = .freeTier {
-        didSet {
-            notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: serverManager.contentChanged, object: nil)
-        }
-    }
-
-    private var serverManager: ServerManager {
-        return ServerManagerImplementation.instance(forTier: userTier, serverStorage: ServerStorageConcrete())
-    }
-
+    private var userTier: Int = .freeTier
     private var connectedServer: ServerModel?
 
     typealias Factory = VpnGatewayFactory

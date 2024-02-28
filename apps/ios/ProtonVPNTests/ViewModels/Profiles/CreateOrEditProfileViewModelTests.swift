@@ -86,7 +86,6 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        ServerManagerImplementation.reset() // Use new server manager
         profileService = ProfileServiceMock() // Ensures dataSet isn't carried over from previously run tests
     }
 

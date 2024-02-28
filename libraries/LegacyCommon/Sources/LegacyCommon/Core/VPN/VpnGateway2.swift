@@ -142,11 +142,6 @@ public class VpnGateway2: VpnGatewayProtocol2 {
 
         let type = intent.serverType
 
-        let serverManager: ServerManager = ServerManagerImplementation.instance(
-            forTier: currentUserTier,
-            serverStorage: serverStorage
-        )
-
         // todo: when old code is deleted, refactor server selector to throw directly
         var notifyResolutionUnavailableCalled: (forSpecificCountry: Bool, type: ServerType, reason: ResolutionUnavailableReason)?
 
