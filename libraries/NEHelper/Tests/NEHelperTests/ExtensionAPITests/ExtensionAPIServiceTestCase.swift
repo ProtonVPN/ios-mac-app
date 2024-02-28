@@ -73,6 +73,17 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
         mockDataTaskFactory
     }
 
+    // For testing if the feature flag works, can be safely removed once the `CertificateRefreshForceRenew` feature
+    // flag is no longer in use
+    var forceRenew: Bool {
+        get {
+            ExtensionAPIService.forceEvictAnyPreviousSessionAssociatedKeysToAvoidConflictErrors
+        }
+        set {
+            ExtensionAPIService.forceEvictAnyPreviousSessionAssociatedKeysToAvoidConflictErrors = newValue
+        }
+    }
+
     struct MockAPIEndpointError: Error {
         let httpError: APIHTTPErrorCode
         let apiError: APIError?

@@ -23,6 +23,7 @@
 import Foundation
 
 import ProtonCoreNetworking
+import ProtonCoreFeatureFlags
 
 import Domain
 import VPNShared
@@ -67,6 +68,11 @@ final class CertificateRequest: Request {
         
         if let duration = CertificateConstants.certificateDuration {
             params["Duration"] = duration
+        }
+
+        // Prevents 409 conflict errors
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.certificateRefreshForceRenew) {
+            params["Renew"] = true
         }
         
         return params

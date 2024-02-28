@@ -53,6 +53,9 @@ public final class ExtensionAPIService {
     /// For example: Retry-After: 60 => 60 * 0.2 = 12, time spent waiting = 60 + random(12)
     public static var retryAfterJitterRate = 0.2
 
+    /// Corresponds to the `CertificateRefreshForceRenew` feature flag.
+    public static var forceEvictAnyPreviousSessionAssociatedKeysToAvoidConflictErrors = false
+
     /// If not empty will be added as a header to all requests
     public let atlasSecret: String
     
@@ -540,9 +543,18 @@ public final class ExtensionAPIService {
             return
         }
 
-        let certificateRequest = CertificateRefreshRequest(params: .withPublicKey(publicKey,
-                                                                                  deviceName: appInfo.modelName,
-                                                                                  features: operation.features))
+        if Self.forceEvictAnyPreviousSessionAssociatedKeysToAvoidConflictErrors {
+            log.info("Certificate will be refreshed using `renew: true`.")
+        }
+
+        let certificateRequest = CertificateRefreshRequest(
+            params: .withPublicKey(
+                publicKey,
+                deviceName: appInfo.modelName,
+                features: operation.features,
+                evictAnyPreviousKeys: Self.forceEvictAnyPreviousSessionAssociatedKeysToAvoidConflictErrors
+            )
+        )
 
         let retryBlock: (Bool) -> Void = { handleTokenRefreshInRetry in
             guard !operation.isCancelled else {

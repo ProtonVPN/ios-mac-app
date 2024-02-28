@@ -81,7 +81,7 @@ extension NETunnelProviderProtocol {
             return nil
         }
 
-        log.info("Using new configuration format (\(String(describing: version))")
+        log.info("Using configuration format \(String(describing: version)).")
 
         guard case .v1 = version else {
             log.info("Version \(version) is not yet supported.")
