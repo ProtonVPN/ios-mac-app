@@ -3,7 +3,7 @@
         "logical": {
             "name": "CA#1",
             "city": "Toronto",
-            "entryCountryCode": "CA",
+            "kind": {"country": {}},
             "score": 1.5,
             "load": 50,
             "longitude": -79.3611,
@@ -31,7 +31,6 @@
                 "domain": "ca-01.protonvpn.com",
                 "status": 1,
                 "exitIp": "1.2.3.4",
-
             }
         ],
     },
@@ -39,7 +38,7 @@
         "logical": {
             "name": "CA#2",
             "city": "Vancouver",
-            "entryCountryCode": "CA",
+            "kind": {"country": {}},
             "score": 0.8,
             "load": 50,
             "longitude": -79.3611,
@@ -57,7 +56,6 @@
                 "domain": "ca-01.protonvpn.com",
                 "status": 1,
                 "exitIp": "1.2.3.7",
-
             }
         ],
     },
@@ -65,7 +63,7 @@
         "logical": {
             "name": "AE#1",
             "city": "Abu Dhabi",
-            "entryCountryCode": "CA",
+            "kind": {"country": {}},
             "score": 0.8,
             "load": 50,
             "longitude": -79.3611,
@@ -91,7 +89,7 @@
         "logical": {
             "name": "CA#3",
             "city": "Vancouver",
-            "entryCountryCode": "CA",
+            "kind": {"country": {}},
             "score": 0.9,
             "load": 50,
             "longitude": -79.3611,
@@ -110,7 +108,6 @@
                 "status": 1,
                 "entryIp": "4.3.2.1",
                 "exitIp": "1.2.3.7",
-
             }
         ],
     },
@@ -128,7 +125,7 @@
             "score": 1.6,
             "id": "fastestFreeWireGuardUDPServer",
             "hostCountry": "SG",
-            "entryCountryCode": "KR",
+            "kind": {"country": {}},
             "feature": 12
         },
         "endpoints": [
@@ -146,7 +143,7 @@
         "logical": {
             "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111112==",
             "city": "Hong Kong",
-            "entryCountryCode": "HK",
+            "kind": {"country": {}},
             "longitude": 114.142271,
             "load": 25,
             "exitCountryCode": "HK",
@@ -172,7 +169,7 @@
             "latitude": 38.28,
             "exitCountryCode": "JP",
             "domain": "jp-04.protonvpn.com",
-            "entryCountryCode": "JP",
+            "kind": {"country": {}},
             "longitude": 140.46,
             "load": 25,
             "tier": 2,
@@ -194,7 +191,7 @@
     },
     {
         "logical": {
-            "entryCountryCode": "JP",
+            "kind": {"country": {}},
             "status": 1,
             "feature": 0,
             "load": 75,
@@ -237,7 +234,7 @@
             "status": 1,
             "tier": 2,
             "longitude": -79.3611,
-            "entryCountryCode": "CH",
+            "kind": {"country": {}},
             "exitCountryCode": "CA",
             "name": "CH-CA#5",
             "domain": "ch-ca-05.protonvpn.com",
@@ -257,7 +254,6 @@
                 "domain": "ch-ca-01b.protonvpn.com"
             }
         ]
-
     },
     {
         "logical": {
@@ -269,7 +265,7 @@
             "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111116==",
             "longitude": 140.46,
             "city": "Tokyo",
-            "entryCountryCode": "JP",
+            "kind": {"country": {}},
             "score": 1.5,
             "domain": "jp-07.protonvpn.com",
             "tier": 2,
@@ -308,7 +304,7 @@
             "tier": 2,
             "longitude": 140.46,
             "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111117==",
-            "entryCountryCode": "JP"
+            "kind": {"country": {}},
         },
         "endpoints": [
             {
@@ -333,18 +329,16 @@
             "score": 1.5,
             "name": "GTW#1",
             "city": "Vancouver",
-            "gatewayName": "Mega Gateway 2000",
             "latitude": 38.28,
             "load": 65,
             "domain": "US-GTW-01.protonvpn.com",
             "tier": 2,
             "exitCountryCode": "CA",
             "feature": 32,
-            "entryCountryCode": "CA",
+            "kind": { "gateway": { "name": "Mega Gateway 2000" } },
             "id": "1abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111118==",
             "longitude": 140.46
         },
-
         "endpoints": [
             {
                 "exitIp": "1.2.3.13",
@@ -368,8 +362,7 @@
             "city": "Tokyo",
             "longitude": 140.46,
             "exitCountryCode": "CA",
-            "entryCountryCode": "CA",
-            "gatewayName": "Mega Gateway 2000"
+            "kind": { "gateway": { "name": "Mega Gateway 2000" } },
         },
         "endpoints": [
             {
@@ -391,7 +384,7 @@
             "name": "US-NY#61",
             "tier": 2,
             "id": "fastestFeaturelessUSServer",
-            "entryCountryCode": "US",
+            "kind": {"country": {}},
             "city": "New York City",
             "feature": 0,
             "longitude": -73.93
@@ -423,7 +416,7 @@
             "name": "US-NY#61",
             "tier": 2,
             "id": "featureRichUSServer",
-            "entryCountryCode": "US",
+            "kind": {"country": {}},
             "city": "New York City",
             "feature": 14,
             "longitude": -73.93
@@ -450,7 +443,7 @@
             "name": "DE#10",
             "tier": 2,
             "id": "DE1",
-            "entryCountryCode": "DE",
+            "kind": {"country": {}},
             "city": "Berlin",
             "feature": 14,
             "longitude": -73.93
@@ -482,7 +475,7 @@
             "name": "DE#9",
             "tier": 2,
             "id": "DE2",
-            "entryCountryCode": "DE",
+            "kind": {"country": {}},
             "city": "Berlin",
             "feature": 14,
             "longitude": -73.93

@@ -75,7 +75,6 @@ extension ServerRepository {
                     let request = ServerInfoResult.request(filters: filters, order: order)
 
                     let results = try ServerInfoResult.fetchAll(db, request)
-
                     return results.map {
                         Domain.ServerInfo(
                             logical: Domain.Logical(

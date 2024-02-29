@@ -111,10 +111,34 @@ extension Domain.Logical {
             gatewayName: staticInfo.gatewayName
         )
     }
+
+    /// For non-secure core logicals, this is equal to `exitCountryCode`. The access modifier is public while
+    /// LegacyCommon code still relies on `entryCountryCode` directly rather than `kind`.
+    public var entryCountryCode: String { kind.entryCountryCode ?? exitCountryCode }
+
+    /// Returns nil if this logical is not a gateway. The access modifier is public while LegacyCommon code still relies
+    /// on `gatewayName` directly rather than `kind`.
+    public var gatewayName: String? { kind.gatewayName }
 }
 
 extension ContinuousServerProperties {
     var databaseRecord: LogicalStatus {
         return LogicalStatus(logicalID: serverId, status: status, load: load, score: score)
+    }
+}
+
+extension Domain.Logical.Kind {
+    public var entryCountryCode: String? {
+        if case .secureCore(let entryCountryCode) = self {
+            return entryCountryCode
+        }
+        return nil
+    }
+
+    public var gatewayName: String? {
+        if case .gateway(let name) = self {
+            return name
+        }
+        return nil
     }
 }

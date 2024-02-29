@@ -202,7 +202,7 @@ public struct MockTestData {
               name: "exclusive plus server",
               domain: "withrelay3.protonvpn.ch",
               load: 42,
-              entryCountryCode: "CH",
+              entryCountryCode: "IS",
               exitCountryCode: "CH",
               tier: .paidTier,
               feature: [.ipv6, .p2p, .partner, .restricted, .secureCore, .streaming, .tor],

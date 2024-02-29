@@ -68,16 +68,17 @@ extension VPNServerFilter {
             return isStandard && logical[Logical.Columns.exitCountryCode] == countryCode
 
         case .matches(let query):
-            // TODO: VPNAPPL-2097 Text-search improvements:
+            // VPNAPPL-2097 Matching substrings can be expensive, since this operation cannot use indexes.
+            // Should we use something like FTS4?
             // https://github.com/groue/GRDB.swift/blob/master/Documentation/FullTextSearch.md
-            // https://github.com/groue/GRDB.swift/blob/master/README.md#string-comparison
             return logical[Logical.Columns.exitCountryCode].like("%\(query)%")
                 || logical[Logical.Columns.city].like("%\(query)%")
                 || logical[Logical.Columns.gatewayName].like("%\(query)%")
                 || logical[Logical.Columns.hostCountry].like("%\(query)%")
+                || logical[Logical.Columns.translatedCity].like("%\(query)%")
 
         case .city(let name):
-            return logical[Logical.Columns.city].like("%\(name)%")
+            return logical[Logical.Columns.city] == name
         }
 
     }

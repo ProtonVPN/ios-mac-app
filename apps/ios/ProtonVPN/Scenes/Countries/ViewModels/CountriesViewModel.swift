@@ -335,7 +335,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
         var defaultServersFilter: ((ServerModel) -> Bool)?
         let gatewaysServersFilter: ((ServerModel) -> Bool)? = { $0.feature.contains(.restricted) }
 
-        let requiredProtocols = propertiesManager.currentProtocolSupport
         var currentContent = state.currentContent
 
         let gatewayContent = currentContent

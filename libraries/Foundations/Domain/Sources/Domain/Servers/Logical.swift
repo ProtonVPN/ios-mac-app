@@ -18,14 +18,12 @@
 
 import Foundation
 
-// TODO: VPNAPPL-2100 Domain model refinement
 public struct Logical: Codable, Equatable {
-
     public let id: String
+    public let kind: Kind
     public let name: String
     public let domain: String
     public let load: Int
-    public let entryCountryCode: String // use when feature.secureCore is true
     public let exitCountryCode: String
     public let tier: Int
     public let score: Double
@@ -36,7 +34,12 @@ public struct Logical: Codable, Equatable {
     public let translatedCity: String?
     public let latitude: Double
     public let longitude: Double
-    public let gatewayName: String?
+
+    public enum Kind: Codable, Equatable {
+        case country
+        case secureCore(entryCountryCode: String)
+        case gateway(name: String)
+    }
 
     public init(
         id: String,
@@ -60,7 +63,6 @@ public struct Logical: Codable, Equatable {
         self.name = name
         self.domain = domain
         self.load = load
-        self.entryCountryCode = entryCountryCode
         self.exitCountryCode = exitCountryCode
         self.tier = tier
         self.score = score
@@ -71,7 +73,14 @@ public struct Logical: Codable, Equatable {
         self.translatedCity = translatedCity
         self.latitude = latitude
         self.longitude = longitude
-        self.gatewayName = gatewayName
+
+        if feature.contains(.secureCore) {
+            self.kind = .secureCore(entryCountryCode: entryCountryCode)
+        } else if let gatewayName {
+            self.kind = .gateway(name: gatewayName)
+        } else {
+            self.kind = .country
+        }
     }
 
     public var isVirtual: Bool {
