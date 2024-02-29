@@ -128,7 +128,6 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     }
     public var apiEndpoint: String?
     public var lastAppVersion = "0.0.0"
-    public var lastTimeForeground: Date?
     public var featureFlags: FeatureFlags = FeatureFlags() {
         didSet {
             NotificationCenter.default.post(name: Self.featureFlagsNotification, object: featureFlags)

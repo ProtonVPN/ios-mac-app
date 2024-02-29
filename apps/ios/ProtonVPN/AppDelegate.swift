@@ -205,7 +205,6 @@ extension AppDelegate: UIApplicationDelegate {
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         log.info("applicationDidEnterBackground", category: .os)
-        container.makePropertiesManager().lastTimeForeground = Date()
         vpnManager.appBackgroundStateDidChange(isBackground: true)
     }
     
@@ -213,15 +212,6 @@ extension AppDelegate: UIApplicationDelegate {
         log.info("applicationDidBecomeActive", category: .os)
         vpnManager.appBackgroundStateDidChange(isBackground: false)
 
-        // If the app was on a closed state, we'll have to wait for the configuration to be established
-        appStateManager.onVpnStateChanged = { [weak self] state in
-            self?.appStateManager.onVpnStateChanged = nil
-            self?.checkStuckConnection(state)
-        }
-        
-        // Otherwise just  check directly  the connection
-        self.checkStuckConnection(vpnManager.state)
-        
         // Refresh API announcements
         let announcementRefresher = self.container.makeAnnouncementRefresher() // This creates refresher that is persisted in DI container
         if propertiesManager.featureFlags.pollNotificationAPI, container.makeAuthKeychainHandle().username != nil {
@@ -322,30 +312,6 @@ fileprivate extension AppDelegate {
         default:
             NotificationCenter.default.removeObserver(self)
             return
-        }
-    }
-    
-    func checkStuckConnection( _ state: VpnState) {
-
-        let propertiesManager = container.makePropertiesManager()
-        guard case VpnState.connecting(_) = state else {
-            propertiesManager.lastTimeForeground = nil
-            return
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + AppConstants.Time.waitingTimeForConnectionStuck) {
-            guard case .connecting = self.vpnManager.state else {
-                propertiesManager.lastTimeForeground = nil
-                return
-            }
-            
-            let lastTime = propertiesManager.lastTimeForeground
-            
-            if lastTime == nil || lastTime!.timeIntervalSinceNow > AppConstants.Time.timeForForegroundStuck {
-                self.container.makeVpnGateway().quickConnect(trigger: .quick)
-            }
-                
-            propertiesManager.lastTimeForeground = nil
         }
     }
 
