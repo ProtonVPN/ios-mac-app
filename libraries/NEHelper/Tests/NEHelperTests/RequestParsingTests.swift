@@ -195,16 +195,24 @@ class RequestParsingTests: XCTestCase {
     }
 
     func testJsonRequestKeysArePascalCased() throws {
-        checkKeysArePascalCasedForRequest(CertificateRefreshRequest(params: .init(clientPublicKey: "hello",
-                                                                clientPublicKeyMode: "world",
-                                                                deviceName: "Johnny Appleseed's JetPack Pro",
-                                                                mode: "Fun Mode",
-                                                                duration: "4000 years",
-                                                                features: .init(netshield: .level1,
-                                                                                vpnAccelerator: true,
-                                                                                bouncing: "bouncing",
-                                                                                natType: .moderateNAT,
-                                                                                safeMode: true))))
+        checkKeysArePascalCasedForRequest(
+            CertificateRefreshRequest(
+                params: .init(
+                    clientPublicKey: "hello",
+                    clientPublicKeyMode: "world",
+                    deviceName: "Johnny Appleseed's JetPack Pro",
+                    mode: "Fun Mode",
+                    duration: "4000 years",
+                    features: .init(
+                        netshield: .level1,
+                        vpnAccelerator: true,
+                        bouncing: "bouncing",
+                        natType: .moderateNAT,
+                        safeMode: true),
+                    renew: true
+                )
+            )
+        )
         checkKeysArePascalCasedForRequest(TokenRefreshRequest(params: .init(responseType: "response",
                                                                         grantType: "grant",
                                                                         refreshToken: "refresh",

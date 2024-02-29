@@ -39,4 +39,8 @@ public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
     /// Defines if we should exclude full sentry event metadata. Should be disabled
     /// (and can be deleted completely) only after INFSUP-682 is done.
     case sentryExcludeMetadata = "SentryExcludeMetadata"
+
+    /// If we're using a public key that was associated with a previous session UID, tell the backend that it's okay to
+    /// evict the previous session UID and associate the key with the current one.
+    case certificateRefreshForceRenew = "CertificateRefreshForceRenew"
 }

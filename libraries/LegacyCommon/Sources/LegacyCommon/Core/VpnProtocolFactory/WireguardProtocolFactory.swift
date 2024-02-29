@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  Core
+//  WireguardProtocolFactory.swift
+//  LegacyCommon
 //
 //  Created by Jaroslav on 2021-05-17.
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
@@ -8,9 +8,11 @@
 
 import Foundation
 import NetworkExtension
+import ProtonCoreFeatureFlags
 
 import ExtensionIPC
 import VPNShared
+import Domain
 
 public protocol WireguardProtocolFactoryCreator {
     func makeWireguardProtocolFactory() -> WireguardProtocolFactory
@@ -67,6 +69,12 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
         protocolConfiguration.connectedLogicalId = configuration.serverId
         protocolConfiguration.connectedServerIpId = configuration.ipId
         protocolConfiguration.featureFlagOverrides = propertiesManager.featureFlags.localOverrides
+
+        // Future: remove this flag and the plumbing that goes all the way to CertificateRefreshRequest.withPublicKey
+        // in the NEHelper module and in `parameters` in the CertificateRequest struct in LegacyCommon. (VPNAPPL-2134)
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.certificateRefreshForceRenew, reloadValue: true) {
+            protocolConfiguration.unleashFeatureFlagShouldForceConflictRefresh = true
+        }
 
         return protocolConfiguration
     }

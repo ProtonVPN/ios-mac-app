@@ -27,6 +27,7 @@ extension NETunnelProviderProtocol {
         case uidKey = "UID"
         case wgProtocolKey = "wg-protocol"
         case featureFlagOverridesKey = "FeatureFlagOverrides"
+        case forceConflictRefreshKey = "ShouldForceConflictRefresh"
     }
 
     private func ensureProviderConfig() {
@@ -83,6 +84,16 @@ extension NETunnelProviderProtocol {
         set {
             ensureProviderConfig()
             providerConfiguration?[.featureFlagOverridesKey] = newValue
+        }
+    }
+
+    public var unleashFeatureFlagShouldForceConflictRefresh: Bool {
+        get {
+            (providerConfiguration?[.forceConflictRefreshKey] as? Bool) ?? false
+        }
+        set {
+            ensureProviderConfig()
+            providerConfiguration?[.forceConflictRefreshKey] = newValue
         }
     }
 

@@ -39,6 +39,13 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
                                                           keychain: keychain)
     }
 
+    /// We have to use this because the VPNConnectionFeatures in the request parameters has a decode function that is
+    /// meant for local storage, not for decoding the request sent to the API. This can be removed once the
+    /// CertificateRefreshForceRenew feature flag isn't needed anymore.
+    struct RenewParameter: Decodable {
+        let renew: Bool
+    }
+
     func testNormalCertRefresh() {
         let expectations = (
             certRefresh: XCTestExpectation(description: "Wait for certificate refresh request"),
@@ -51,11 +58,34 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             validUntil: Date().addingTimeInterval(20)
         )
 
-        certRefreshCallback = mockEndpoint(CertificateRefreshRequest.self,
-                                           result: .success([\.certificate: testValues.cert,
-                                                             \.refreshTime: testValues.refreshTime,
-                                                             \.validUntil: testValues.validUntil]),
-                                           expectationToFulfill: expectations.certRefresh)
+        let callback = mockEndpoint(
+            CertificateRefreshRequest.self,
+            result: .success([\.certificate: testValues.cert,
+                              \.refreshTime: testValues.refreshTime,
+                              \.validUntil: testValues.validUntil]),
+            expectationToFulfill: expectations.certRefresh
+        )
+
+        // We can remove this part of the test once the CertificateRefreshForceRenew feature flag is no longer used
+        forceRenew = true
+
+        certRefreshCallback = { request, completionHandler in
+            guard let body = request.httpBody else {
+                XCTFail("Request should have had a body")
+                return
+            }
+
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .decapitaliseFirstLetter
+            guard let params = try? decoder.decode(RenewParameter.self, from: body) else {
+                XCTFail("Couldn't decode renew parameter")
+                return
+            }
+
+            XCTAssert(params.renew)
+
+            callback(request, completionHandler)
+        }
 
         manager.start {
             self.manager.checkRefreshCertificateNow(features: self.authenticationStorage.features!) { result in
