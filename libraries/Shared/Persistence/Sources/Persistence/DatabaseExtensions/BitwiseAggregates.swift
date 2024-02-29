@@ -20,7 +20,7 @@ import Foundation
 
 import GRDB
 
-/// Returns nil if no rows contains an honest Int value
+/// Returns nil if all rows contain a nil value
 let bitwiseOr = DatabaseFunction(
     "BIT_OR",
     argumentCount: 1,
@@ -28,7 +28,7 @@ let bitwiseOr = DatabaseFunction(
     aggregate: BitwiseOR.self
 )
 
-/// Returns nil if no rows contains an honest Int value
+/// Returns nil if all rows contain a nil value
 let bitwiseAnd = DatabaseFunction(
     "BIT_AND",
     argumentCount: 1,

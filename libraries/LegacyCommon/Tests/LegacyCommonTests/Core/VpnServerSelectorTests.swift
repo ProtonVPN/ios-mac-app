@@ -45,6 +45,7 @@ class VpnServerSelectorTests: XCTestCase {
     override class func setUp() {
         super.setUp()
         let mockServers = [
+            makeMockServer(id: "GBX", countryCode: "GB", gatewayName: "X", tier: 3, score: 1, feature: .restricted),
             makeMockServer(id: "GB0", countryCode: "GB", tier: 3, score: 1),
             makeMockServer(id: "GB1", countryCode: "GB", tier: 2, score: 3, feature: .tor),
             makeMockServer(id: "GB2", countryCode: "GB", tier: 1, score: 5, feature: .secureCore),
@@ -188,6 +189,49 @@ class VpnServerSelectorTests: XCTestCase {
         )
 
         XCTAssertEqual(server?.id, "DE2")
+    }
+
+    func testOnlyReturnsGatewaysWhenGatewayServerExplicitlySpecified() throws {
+        let currentUserTier = 3
+        let type = ServerType.unspecified
+
+        let fastestConnectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .country("GB", .fastest), connectionProtocol: connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil, trigger: nil)
+
+        let fastestServer = selectServer(
+            connectionRequest: fastestConnectionRequest,
+            serverType: type,
+            userTier: currentUserTier,
+            connectionProtocol: connectionProtocol,
+            smartProtocolConfig: smartProtocolConfig,
+            appStateGetter: appStateGetter
+        )
+
+        // GBX is faster, but it's a gateway so it should be ignored since we're specifying 'fastest' or 'random'
+        XCTAssertEqual(fastestServer?.id, "GB0")
+
+        let requestedGatewayServer = try XCTUnwrap(servers["GBX"])
+        let gatewayConnectionRequest = ConnectionRequest(
+            serverType: .unspecified,
+            connectionType: .country("GB", .server(ServerModel(server: requestedGatewayServer))),
+            connectionProtocol: connectionProtocol,
+            netShieldType: .off,
+            natType: .default,
+            safeMode: true,
+            profileId: nil,
+            trigger: nil
+        )
+
+        let gatewayServer = selectServer(
+            connectionRequest: gatewayConnectionRequest,
+            serverType: type,
+            userTier: currentUserTier,
+            connectionProtocol: connectionProtocol,
+            smartProtocolConfig: smartProtocolConfig,
+            appStateGetter: appStateGetter
+        )
+
+        // We explicitly requested the gateway server, so it should be returned
+        XCTAssertEqual(gatewayServer?.id, "GBX")
     }
 
     func testReturnsNilForEmptyCountry() throws {

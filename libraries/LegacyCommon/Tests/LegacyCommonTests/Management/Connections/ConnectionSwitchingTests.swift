@@ -368,7 +368,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         XCTAssertEqual(currentStatus, .disconnected, "VPN status should be disconnected")
 
-        // TODO: Why does awaiting this expectation cause mocked `VPNLogicalServicesRequest` to take over 3s?
+        // VPNAPPL-2129: Why does awaiting this expectation cause mocked `VPNLogicalServicesRequest` to take over 3s?
         await fulfillment(of: [expectations.serverListFetch], timeout: expectationTimeout)
 
         XCTAssertEqual(try repositoryWrapper.serverCount, 2)

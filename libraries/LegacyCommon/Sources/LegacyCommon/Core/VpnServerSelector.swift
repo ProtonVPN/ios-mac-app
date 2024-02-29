@@ -31,6 +31,9 @@ import Persistence
 import VPNAppCore
 
 /// Selects the most suitable server to connect to
+///
+/// - Note: Does not select gateway servers unless the request explicitly specified a gateway server using
+/// `CountryConnectionRequestType.server)`
 class VpnServerSelector {
     @Dependency(\.serverRepository) var repository
 
@@ -140,7 +143,7 @@ class VpnServerSelector {
 
             let serversNotRequiringUpgrade = serversSupportingProtocol.filter { userTier >= $0.logical.tier }
             if serversNotRequiringUpgrade.isEmpty {
-                let lowestTier = serversSupportingProtocol.map(\.logical.tier).min() ?? Int.max
+                let lowestTier = serversSupportingProtocol.map(\.logical.tier).min() ?? CoreAppConstants.VpnTiers.visionary
                 notifyResolutionUnavailable?(forSpecificCountry, type, .upgrade(lowestTier))
                 return
             }
@@ -167,7 +170,7 @@ extension ConnectionRequest {
     var locationFilters: [VPNServerFilter] {
         switch connectionType {
         case .country(let countryCode, .fastest), .country(let countryCode, .random):
-            return [.kind(.country(code: countryCode))]
+            return [.kind(.country(code: countryCode))] // inherently excludes gateways
 
         case .country(_, .server(let model)):
             return [.logicalID(model.id)]
@@ -176,7 +179,8 @@ extension ConnectionRequest {
             return [.kind(.country(code: countryCode)), .city(city)]
 
         case .fastest, .random:
-            return []
+            // Exclude gateways. We could also use the .kind(.country) filter for this purpose.
+            return [.features(.init(required: .zero, excluded: .restricted))]
         }
     }
 

@@ -43,9 +43,13 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
             return
         }
 
+        // The completion handler of vpnApiService.refreshServerInfo is escaping, so it's necessary to manually
+        // propagate dependencies here
         withEscapedDependencies { dependencies in
             vpnApiService.refreshServerInfo(freeTier: isFreeTier) { result in
+                // Inside this closure, dependencies defined on this object are now not guaranteed to be what we expect
                 dependencies.yield {
+                    // Access correct dependencies (e.g. those applied with withDependencies inside tests)
                     switch result {
                     case let .success(properties):
                         guard let properties else {

@@ -117,7 +117,7 @@ extension NetworkingMock: Networking {
             let elapsedTime = Date().timeIntervalSince(start)
             if elapsedTime > maxMockRequestTime {
                 let elapsedMillis = (elapsedTime * 1000).rounded()
-                // TODO: There is no reason for a fully mocked request to take even a fraction of this time
+                // VPNAPPL-2129: There is no reason for a fully mocked request to take even a fraction of this time
                 // XCTFail("Mock network request on \(route) exceeded maximum allowed time: \(elapsedMillis)ms")
                 log.warning("Mock network request on \(route) exceeded maximum allowed time: \(elapsedMillis)ms")
             }
