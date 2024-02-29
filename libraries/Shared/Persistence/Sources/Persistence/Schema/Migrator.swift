@@ -28,7 +28,10 @@ var migrator: DatabaseMigrator {
 #if DEBUG
     // Speed up development by nuking the database when migrations change
     // https://swiftpackageindex.com/groue/grdb.swift/documentation/grdb/migrations
-    migrator.eraseDatabaseOnSchemaChange = true
+    // Turn this on while working on schema changes, but don't forget to turn it off after finalising the migration.
+    // Keeping this off allows us to experience migrations (during development) as real users would, as well prevent us
+    // from inadvertantly making changes to the schema
+    migrator.eraseDatabaseOnSchemaChange = false
 #endif
 
     migrator.registerMigration("initial schema") { db in
