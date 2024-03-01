@@ -22,6 +22,7 @@
 import Foundation
 
 import Domain
+import Ergonomics
 import Strings
 import Localization
 import VPNShared
@@ -412,4 +413,18 @@ public class ServerModel: NSObject, NSCoding, Codable {
         }
         return lhsSeqNum < rhsSeqNum
     }
+}
+
+public struct ServerListUpdateNotification: TypedNotification {
+    public static let name = Notification.Name("ProtonVPN.ServerListUpdate")
+    public let data: ServerListUpdate
+
+    public init(data: ServerListUpdate) {
+        self.data = data
+    }
+}
+
+public enum ServerListUpdate {
+    case servers
+    case loads
 }

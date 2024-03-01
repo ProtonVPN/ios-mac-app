@@ -537,6 +537,7 @@ public class VpnGateway: VpnGatewayProtocol {
                             log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
                         }
                         try repository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
+                        NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
                     } catch {
                         log.error("Failed to persist servers", category: .persistence, metadata: ["error": "\(error)"])
                     }
@@ -714,8 +715,8 @@ fileprivate extension VpnGateway {
                 switch result {
                 case .success(let properties):
                     guard let servers = properties?.serverModels else { break }
-                    self?.repository.upsert(servers: servers.map { VPNServer(legacyModel: $0) })
-                    // VPNAPPL-2075 - refresh UI on server list update
+                    try? self?.repository.upsert(servers: servers.map { VPNServer(legacyModel: $0) })
+                    NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
                 case .failure(let error):
                     log.error("Encountered error refreshing server list on plan upgrade: \(error)")
                 }

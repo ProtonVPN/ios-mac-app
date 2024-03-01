@@ -151,13 +151,13 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
     /// This test should show than when trying to determine the best port for Wireguard if pings for all the ports fail
     /// the checker tries one more time and if the pings for all the ports fail again the connection fails with an error
-    func testWireguardAvailablityCheckerRetryChoosingBestPortWhenAllFailAndFailTheConnectionWhenTheyAllFailAgain() {
+    func testWireguardAvailablityCheckerRetryChoosingBestPortWhenAllFailAndFailTheConnectionWhenTheyAllFailAgain() throws {
         container.availabilityCheckerResolverFactory.checkers[.wireGuard(.udp)]?.pingCallback = { serverIp, port in
             // fail all the pings
             return false
         }
 
-        repository.upsert(servers: [VPNServer(legacyModel: testData.server2)])
+        try repository.upsert(servers: [VPNServer(legacyModel: testData.server2)])
 
         let request = ConnectionRequest(serverType: .standard,
                                         connectionType: .country("CH", .fastest),

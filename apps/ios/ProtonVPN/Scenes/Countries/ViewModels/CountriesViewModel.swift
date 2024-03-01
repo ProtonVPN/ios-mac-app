@@ -297,8 +297,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                                                name: VpnGateway.activeServerTypeChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadContent),
                                                name: VpnKeychain.vpnPlanChanged, object: nil)
-        // Refreshing views on server list updates is to be re-enabled in VPNAPPL-2075 along with serverManager removal
-        // NotificationCenter.default.addObserver(self, selector: #selector(reloadContent), name: serverManager.contentChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadContent), name: ServerListUpdateNotification.name, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadContent), name: PropertiesManager.vpnProtocolNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadContent), name: PropertiesManager.smartProtocolNotification, object: nil)
     }
@@ -324,10 +323,13 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
 
     @objc private func reloadContent() {
-        refreshTier()
-        setStateOf(type: propertiesManager.serverTypeToggle)
-        fillTableData()
-        delegate?.onContentChange()
+        executeOnUIThread { [weak self] in
+            guard let self else { return }
+            self.refreshTier()
+            self.setStateOf(type: propertiesManager.serverTypeToggle)
+            self.fillTableData()
+            self.delegate?.onContentChange()
+        }
     }
 
     private func fillTableData() { // swiftlint:disable:this function_body_length

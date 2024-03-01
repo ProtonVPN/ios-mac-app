@@ -139,8 +139,7 @@ class MapViewModel: SecureCoreToggleHandler {
                                                name: VpnGateway.activeServerTypeChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged),
                                                name: VpnGateway.connectionChanged, object: nil)
-        // Refreshing views on server list updates is to be re-enabled in VPNAPPL-2075 along with serverManager removal
-        // NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState), name: serverManager.contentChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState), name: ServerListUpdateNotification.name, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState),
                                                name: VpnKeychain.vpnPlanChanged, object: nil)
     }
@@ -281,8 +280,11 @@ class MapViewModel: SecureCoreToggleHandler {
     }
     
     @objc private func resetCurrentState() {
-        setStateOf(type: propertiesManager.serverTypeToggle)
-        contentChanged?()
+        executeOnUIThread { [weak self] in
+            guard let self else { return }
+            setStateOf(type: propertiesManager.serverTypeToggle)
+            contentChanged?()
+        }
     }
     
     @objc private func connectionChanged() {

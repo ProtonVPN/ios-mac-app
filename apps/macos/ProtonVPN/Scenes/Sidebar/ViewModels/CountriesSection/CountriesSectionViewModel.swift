@@ -227,8 +227,7 @@ class CountriesSectionViewModel {
         notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: propertiesManager).featureFlagsNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnPlanChanged, object: nil)
         notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnUserDelinquent, object: nil)
-        // TODO: VPNAPPL-2075 refresh on server list update
-        // notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: serverManager.contentChanged, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: ServerListUpdateNotification.name, object: nil)
         updateState()
     }
 
@@ -349,11 +348,14 @@ class CountriesSectionViewModel {
     }
 
     @objc private func reloadDataOnChange() {
-        expandedCountries = []
-        servers = [:]
-        updateState()
-        let contentChange = ContentChange(reset: true)
-        self.contentChanged?(contentChange)
+        executeOnUIThread { [weak self] in
+            guard let self else { return }
+            expandedCountries = []
+            servers = [:]
+            updateState()
+            let contentChange = ContentChange(reset: true)
+            self.contentChanged?(contentChange)
+        }
     }
 
     private func updateSecureCoreState() {

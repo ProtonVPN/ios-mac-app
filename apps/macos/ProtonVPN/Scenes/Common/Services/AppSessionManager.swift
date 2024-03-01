@@ -177,7 +177,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             let deletedServerCount = try serverRepository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
             log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
         }
+
         try self.serverRepository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
+        NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
 
         if await appState.isDisconnected {
             propertiesManager.userLocation = properties.location

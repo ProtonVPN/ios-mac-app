@@ -69,10 +69,12 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
                                 log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
                             }
                             try self.serverRepository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
+                            NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
                             completion(.success)
                         } catch {
                             completion(.failure(error))
                         }
+                        completion(.success)
                     case let .failure(error):
                         completion(.failure(error))
                     }

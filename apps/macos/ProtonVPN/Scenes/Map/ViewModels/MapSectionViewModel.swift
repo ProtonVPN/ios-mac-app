@@ -26,6 +26,7 @@ import MapKit
 import Dependencies
 
 import Domain
+import Localization
 import Persistence
 import LegacyCommon
 
@@ -90,8 +91,7 @@ class MapSectionViewModel {
                                                using: appStateChanged)
         NotificationCenter.default.addObserver(self, selector: #selector(viewToggled(_:)),
                                                name: viewToggle, object: nil)
-        // Refreshing views on server list updates is to be re-enabled in VPNAPPL-2075 along with serverManager removal
-        // NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState), name: serverManager.contentChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState), name: ServerListUpdateNotification.name, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState),
                                                name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
         
@@ -123,8 +123,11 @@ class MapSectionViewModel {
     }
     
     @objc private func resetCurrentState() {
-        setView(activeView)
-        updateConnections()
+        executeOnUIThread { [weak self] in
+            guard let self else { return }
+            self.setView(activeView)
+            self.updateConnections()
+        }
     }
     
     private func updateConnections() {

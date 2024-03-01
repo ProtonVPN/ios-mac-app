@@ -404,8 +404,7 @@ final class StatusMenuViewModel {
         if let profileManager = profileManager {
             NotificationCenter.default.removeObserver(self, name: profileManager.contentChanged, object: nil)
         }
-        // Refreshing views on server list updates is to be re-enabled in VPNAPPL-2075 along with serverManager removal
-        // NotificationCenter.default.removeObserver(self, name: serverManager.contentChanged, object: nil)
+        NotificationCenter.default.removeObserver(self, name: ServerListUpdateNotification.name, object: nil)
 
         profileManager = nil
     }
@@ -434,7 +433,9 @@ final class StatusMenuViewModel {
     }
     
     @objc private func handleDataChange() {
-        updateCountryList()
+        DispatchQueue.main.async { [weak self] in
+            self?.updateCountryList()
+        }
     }
     
     private func formIpAddress() -> NSAttributedString {

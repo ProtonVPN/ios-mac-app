@@ -208,7 +208,9 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             let deletedServerCount = try serverRepository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
             log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
         }
+
         try serverRepository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
+        NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
 
         propertiesManager.userLocation = properties.location
         await refreshPartners(ifUnknownPartnerLogicalExistsIn: properties.serverModels)
@@ -280,7 +282,9 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 let deletedServerCount = try serverRepository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
                 log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
             }
+
             try serverRepository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
+            NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
 
             propertiesManager.userRole = properties.userRole
             propertiesManager.userAccountCreationDate = properties.userCreateTime

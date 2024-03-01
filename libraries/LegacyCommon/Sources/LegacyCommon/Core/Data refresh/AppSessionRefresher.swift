@@ -130,11 +130,10 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
                 let loads = properties.map { $0.value }
                 do {
                     try self.serverRepository.upsert(loads: loads)
+                    NotificationCenter.default.post(ServerListUpdateNotification(data: .loads), object: nil)
                 } catch {
-                    // TODO: VPNAPPL-2075 Refactor database error handling and logging
                     log.error("Failed to update loads of stored logicals", category: .persistence, metadata: ["error": "\(error)"])
                 }
-
             case let .failure(error):
                 log.error("RefreshServerLoads error", category: .app, metadata: ["error": "\(error)"])
             }

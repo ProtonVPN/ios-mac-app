@@ -126,6 +126,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
                                 log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
                             }
                             try repository.upsert(servers: servers.map { VPNServer(legacyModel: $0) })
+                            NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
                         } catch {
                             log.error("Failed to persist servers", category: .persistence, metadata: ["error": "\(error)"])
                         }

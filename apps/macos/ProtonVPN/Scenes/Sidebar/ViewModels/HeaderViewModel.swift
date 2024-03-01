@@ -210,8 +210,7 @@ final class HeaderViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(contentChangedNotification), name: type(of: propertiesManager).userIpNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(contentChangedNotification), name: type(of: propertiesManager).activeConnectionChangedNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(contentChangedNotification), name: profileManager.contentChanged, object: nil)
-        // VPNAPPL-2075: Refresh UI when server list is updated
-        // NotificationCenter.default.addObserver(self, selector: #selector(contentChangedNotification), name: serverStorage.contentChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(contentChangedNotification), name: ServerListUpdateNotification.name, object: nil)
     }
     
     @objc private func vpnConnectionChanged() {
@@ -230,7 +229,9 @@ final class HeaderViewModel {
     }
     
     @objc private func contentChangedNotification() {
-        contentChanged?()
+        executeOnUIThread { [weak self] in
+            self?.contentChanged?()
+        }
     }
     
     private func formBitrateLabel(with bitrate: Bitrate) -> NSAttributedString {
