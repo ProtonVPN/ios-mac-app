@@ -101,7 +101,7 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
     }
 
     var alert: UpsellAlert {
-        assertionFailure("This variable should not be used directly. Please inherit and provide your own implementation of `alert`")
+        log.assertionFailure("This variable should not be used directly. Please inherit and provide your own implementation of `alert`")
         return UpsellAlert()
     }
 

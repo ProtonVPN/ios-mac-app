@@ -116,7 +116,7 @@ extension StatusBarAppConnectButton: CustomStyleContext {
                 break
             }
         }
-        assertionFailure("Context not handled: \(context)")
+        log.assertionFailure("Context not handled: \(context)")
         return .normal
     }
 }
@@ -196,7 +196,7 @@ extension StatusBarAppProfileDropdownButton: CustomStyleContext {
             }
         }
 
-        assertionFailure("Context not handled: \(context)")
+        log.assertionFailure("Context not handled: \(context)")
         return .normal
     }
 }

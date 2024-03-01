@@ -229,7 +229,7 @@ final class ConnectionSettingsViewModel {
 
     func protocolIndex(for vpnProtocol: ConnectionProtocol) -> Int {
         guard let result = availableConnectionProtocols.firstIndex(of: vpnProtocol) else {
-            assertionFailure("Protocol \(vpnProtocol) was not in available protocols list")
+            log.assertionFailure("Protocol \(vpnProtocol) was not in available protocols list")
             return 0
         }
 

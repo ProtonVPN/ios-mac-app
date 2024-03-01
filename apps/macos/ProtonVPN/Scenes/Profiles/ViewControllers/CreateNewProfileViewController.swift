@@ -290,7 +290,7 @@ final class CreateNewProfileViewController: NSViewController {
             case \.protocolMenuItems:
                 list = protocolList
             default:
-                assertionFailure("Unhandled content update with key path \(update)")
+                log.assertionFailure("Unhandled content update with key path \(update)")
                 continue
             }
 

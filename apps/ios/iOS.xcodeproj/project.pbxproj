@@ -330,6 +330,7 @@
 		E532A8AD29252FFD00096D2D /* InformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */; };
 		E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C42811698F0060C463 /* Modals-iOS */; };
 		E551EB0529AF583D00B6612D /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0429AF583D00B6612D /* Assets.swift */; };
+		E55B1A652B922031001EF2C6 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = E55B1A642B922031001EF2C6 /* PMLogger */; };
 		E5814EDD2B481F4E00ACF2A7 /* OfferBannerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5814EDB2B481F4D00ACF2A7 /* OfferBannerViewCell.xib */; };
 		E5814EDE2B481F4E00ACF2A7 /* OfferBannerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5814EDC2B481F4D00ACF2A7 /* OfferBannerViewCell.swift */; };
 		E589747A2A812A870017987D /* OHHTTPStubsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E58974792A812A870017987D /* OHHTTPStubsSwift */; };
@@ -930,6 +931,7 @@
 				4C8C314C2A73BA1F006AD628 /* ConnectionDetails in Frameworks */,
 				E198D6B12163B31A00F2F0E0 /* libc++.tbd in Frameworks */,
 				E18006E7218B0B7B009E01E3 /* StoreKit.framework in Frameworks */,
+				E55B1A652B922031001EF2C6 /* PMLogger in Frameworks */,
 				4C05E5682A716995009102EB /* LegacyCommon in Frameworks */,
 				F348C9D627D8E54200622584 /* Search in Frameworks */,
 				E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */,
@@ -2311,6 +2313,7 @@
 				E58974792A812A870017987D /* OHHTTPStubsSwift */,
 				57BC69892B1F33CB0049485C /* ProtonCoreAccountRecovery */,
 				ADEB35D32B62832A0044ABD4 /* ProtonCorePaymentsUI */,
+				E55B1A642B922031001EF2C6 /* PMLogger */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -4597,6 +4600,10 @@
 		E53D64C42811698F0060C463 /* Modals-iOS */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Modals-iOS";
+		};
+		E55B1A642B922031001EF2C6 /* PMLogger */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PMLogger;
 		};
 		E58974792A812A870017987D /* OHHTTPStubsSwift */ = {
 			isa = XCSwiftPackageProductDependency;

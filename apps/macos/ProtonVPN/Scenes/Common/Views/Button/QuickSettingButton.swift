@@ -123,7 +123,7 @@ class QuickSettingButton: NSButton {
 extension QuickSettingButton: CustomStyleContext {
     func customStyle(context: AppTheme.Context) -> AppTheme.Style {
         guard context == .background else {
-            assertionFailure("Context not handled: \(context)")
+            log.assertionFailure("Context not handled: \(context)")
             return .normal
         }
 

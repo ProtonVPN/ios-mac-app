@@ -77,7 +77,7 @@ extension ChangeServerView: CustomStyleContext {
             break
         }
 
-        assertionFailure("Context not handled: \(context)")
+        log.assertionFailure("Context not handled: \(context)")
         return .normal
     }
 }
@@ -109,7 +109,7 @@ extension ChangeServerButton: CustomStyleContext {
             break
         }
 
-        assertionFailure("Context not handled: \(context)")
+        log.assertionFailure("Context not handled: \(context)")
         return .normal
     }
 }

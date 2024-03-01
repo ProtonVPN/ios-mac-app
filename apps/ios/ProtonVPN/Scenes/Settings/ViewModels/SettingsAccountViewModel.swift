@@ -158,7 +158,7 @@ final class SettingsAccountViewModel {
     
     private func deleteAccount() {
         guard let viewController = viewControllerFetcher?() else {
-            assertionFailure("SettingsViewModel.viewControllerFetcher must be set for account deletion flow to be presented")
+            log.assertionFailure("SettingsViewModel.viewControllerFetcher must be set for account deletion flow to be presented")
             return
         }
         

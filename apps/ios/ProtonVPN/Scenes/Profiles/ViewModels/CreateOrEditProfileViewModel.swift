@@ -431,7 +431,7 @@ class CreateOrEditProfileViewModel: NSObject {
         }) {
             self.selectedProtocol = firstSupportedProtocol
         } else {
-            assertionFailure("A server exists that doesn't support any connection protocols.")
+            log.assertionFailure("A server exists that doesn't support any connection protocols.")
             self.selectedProtocol = .smartProtocol
         }
     }
