@@ -93,6 +93,9 @@ extension AppDelegate: UIApplicationDelegate {
         setupLogsForApp()
         setupDebugHelpers()
 
+        // Make sure AppStateManager is ready and is created on the main thread
+        _ = appStateManager
+
         SiriHelper.quickConnectIntent = QuickConnectIntent()
         SiriHelper.disconnectIntent = DisconnectIntent()
 #if !REDESIGN // moved over to ProtonVPNApp init
