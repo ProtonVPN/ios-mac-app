@@ -206,7 +206,7 @@ class MapSectionViewModel {
                     countryCode: code,
                     minTier: group.minTier,
                     userTier: userTier,
-                    coordinate: group.location
+                    coordinate: LocationUtility.coordinate(forCountry: code)
                 )
             }
         } catch {
