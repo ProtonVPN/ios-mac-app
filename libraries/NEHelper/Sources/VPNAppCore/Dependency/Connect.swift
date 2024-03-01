@@ -33,7 +33,7 @@ extension DependencyValues {
 public enum ConnectToVPNKey: DependencyKey {
     public static let liveValue: @Sendable (ConnectionSpec) async throws -> Void = { specs in
         // After Accounts SPM migration, real implementation should live here
-        assertionFailure("Use real implementation from VPNCore")
+        log.assertionFailure("Use real implementation from VPNCore")
     }
 
     public static let testValue: @Sendable (ConnectionSpec) async throws -> Void = { specs in

@@ -37,7 +37,7 @@ extension DependencyValues {
 
 public enum VPNConnectionStatusKey: DependencyKey {
     public static let liveValue: @Sendable () async -> VPNConnectionStatus = {
-        assertionFailure("Override this dependency!")
+        log.assertionFailure("Override this dependency!")
         return .disconnected
     }
 }
@@ -55,7 +55,7 @@ private enum GetServerByIdKey: DependencyKey {
 
 public enum WatchAppStateChangesKey: DependencyKey {
     public static let liveValue: @Sendable () async -> AsyncStream<VPNConnectionStatus> = {
-        assertionFailure("Override this dependency!")
+        log.assertionFailure("Override this dependency!")
         // Actual implementation sits in the app, to reduce the scope of thing this library depends on
         return AsyncStream<VPNConnectionStatus> { _ in }
     }

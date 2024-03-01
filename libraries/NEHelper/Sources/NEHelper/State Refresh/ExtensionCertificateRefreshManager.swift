@@ -126,7 +126,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
     public func newSession(withSelector selector: String, sessionCookie: HTTPCookie?, completionHandler: @escaping ((Result<(), Error>) -> Void)) {
         let timeOutInterval = Self.intervals.refreshWaitTimeout
         guard semaphore.wait(timeout: .now() + timeOutInterval) == .success else {
-            assertionFailure("Timed out waiting for semaphore while starting new session")
+            log.assertionFailure("Timed out waiting for semaphore while starting new session")
             completionHandler(.failure(CertificateRefreshError.timedOut))
             return
         }
@@ -239,12 +239,10 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
                     break
                 // This shouldn't happen from here; the caller should be managing the semaphore.
                 case .timedOut:
-                    assertionFailure("Should not encounter \(certError) here; we aren't managing synchronization")
-                    log.error("Should not encounter \(certError) here; we aren't managing synchronization", category: .userCert)
+                    log.assertionFailure("Should not encounter \(certError) here; we aren't managing synchronization", category: .userCert)
                 // These errors should "never happen" in practice.
                 case .internalError:
-                    assertionFailure("Encountered internal error: \(error)")
-                    log.error("Encountered internal error: \(error)", category: .userCert)
+                    log.assertionFailure("Encountered internal error: \(error)", category: .userCert)
                 }
 
                 completion(.failure(certError))
@@ -303,7 +301,7 @@ class CertificateRefreshAsyncOperation: AsyncOperation {
     override func main() {
         let timeOutInterval = ExtensionCertificateRefreshManager.intervals.refreshWaitTimeout
         guard manager.semaphore.wait(timeout: .now() + timeOutInterval) == .success else {
-            assertionFailure("Timed out waiting for semaphore while performing certificate refresh")
+            log.assertionFailure("Timed out waiting for semaphore while performing certificate refresh")
             finish(.failure(.timedOut))
             return
         }
