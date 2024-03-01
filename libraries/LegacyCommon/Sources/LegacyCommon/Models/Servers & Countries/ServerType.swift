@@ -87,7 +87,7 @@ public enum ServerType: Int, Codable, CustomStringConvertible {
     }
     
     public func encode(with aCoder: NSCoder) {
-        assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
+        log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
     
     // MARK: - Codable

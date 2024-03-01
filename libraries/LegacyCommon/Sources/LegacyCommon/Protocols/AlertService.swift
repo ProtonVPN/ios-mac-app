@@ -773,7 +773,7 @@ public class UpsellAlert: SystemAlert {
     public let isError = false
     public var dismiss: (() -> Void)?
     public var modalSource: UpsellEvent.ModalSource? {
-        assertionFailure("Not implemented")
+        log.assertionFailure("Not implemented")
 
         return nil
     }

@@ -266,7 +266,7 @@ public class WireguardProviderMessageSenderMock: ProviderMessageSender {
         switch response {
         case .success(let wireguardResponse):
             guard let genericResponse = wireguardResponse as? R.Response else {
-                assertionFailure("This shouldn't be possible because `message` is a `WireguardProviderRequest`")
+                log.assertionFailure("This shouldn't be possible because `message` is a `WireguardProviderRequest`")
                 return
             }
             completion?(.success(genericResponse))

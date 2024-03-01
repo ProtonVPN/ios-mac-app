@@ -117,7 +117,7 @@ extension VpnProtocol {
     }
     
     public func encode(with aCoder: NSCoder) {
-        assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
+        log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
 }
 
@@ -143,8 +143,9 @@ extension OpenVpnTransport {
     }
 
     public func encode(with aCoder: NSCoder) {
-        assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
-    }}
+        log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
+    }
+}
 
 extension WireGuardTransport {
 
@@ -170,5 +171,6 @@ extension WireGuardTransport {
     }
 
     public func encode(with aCoder: NSCoder) {
-        assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
-    }}
+        log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
+    }
+}

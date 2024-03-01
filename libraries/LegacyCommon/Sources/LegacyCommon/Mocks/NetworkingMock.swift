@@ -343,7 +343,7 @@ public class FullNetworkingMockDelegate: NetworkingMockDelegate {
                       ipDigits + dot + zero // e.g., 123.123.123.0
 
         guard ip.hasMatches(for: pattern) else {
-            assertionFailure("'\(ip)' does not match regex \(pattern), is it being masked properly?")
+            log.assertionFailure("'\(ip)' does not match regex \(pattern), is it being masked properly?")
             return false
         }
         return true
