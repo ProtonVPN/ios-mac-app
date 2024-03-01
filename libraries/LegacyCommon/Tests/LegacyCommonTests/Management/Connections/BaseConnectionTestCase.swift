@@ -93,7 +93,7 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
         container.networkingDelegate.apiVpnLocation = .mock
         container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
 
-        try repository.upsert(servers: initialServers.map { VPNServer(legacyModel: $0) })
+        repository.upsert(servers: initialServers.map { VPNServer(legacyModel: $0) })
 
         for name in neVpnEvents {
             NotificationCenter.default.addObserver(self, selector: #selector(handleNEVPNEvent(_:)), name: name, object: nil)

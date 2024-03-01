@@ -157,26 +157,18 @@ class ServerItemViewModel: ServerItemViewModelCore {
             log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.stopConnecting(userInitiated: true)
         } else {
-            do {
-                guard let server = try repository.getFirstServer(
-                    filteredBy: [.logicalID(serverModel.logical.id)],
-                    orderedBy: .fastest
-                ) else {
-                    log.error("No server found with logical ID \(serverModel.logical.id)")
-                    return
-                }
-                let legacyModel = ServerModel(server: server)
-                log.debug("Will connect to \(legacyModel.logDescription)", category: .connectionConnect, event: .trigger)
-                NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
-                vpnGateway.connectTo(server: legacyModel)
-                connectionStatusService.presentStatusViewController()
-            } catch {
-                log.error(
-                    "Failed to retrieve endpoint information for server",
-                    category: .persistence,
-                    metadata: ["error": "\(error)", "logicalID": "\(serverModel.logical.id)"]
-                )
+            guard let server = repository.getFirstServer(
+                filteredBy: [.logicalID(serverModel.logical.id)],
+                orderedBy: .fastest
+            ) else {
+                log.error("No server found with logical ID \(serverModel.logical.id)")
+                return
             }
+            let legacyModel = ServerModel(server: server)
+            log.debug("Will connect to \(legacyModel.logDescription)", category: .connectionConnect, event: .trigger)
+            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
+            vpnGateway.connectTo(server: legacyModel)
+            connectionStatusService.presentStatusViewController()
         }
     }
     

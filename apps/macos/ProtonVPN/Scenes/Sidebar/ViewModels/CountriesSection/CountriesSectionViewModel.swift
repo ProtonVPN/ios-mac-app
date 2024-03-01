@@ -251,22 +251,13 @@ class CountriesSectionViewModel {
             .appending(kind.filter)
             .appending(supportedProtocolsFilter) // filter out unsupported servers from showing up individually
 
-        do {
-            let countryServers = try repository.getServers(filteredBy: filters, orderedBy: .nameAscending)
+        let countryServers = repository.getServers(filteredBy: filters, orderedBy: .nameAscending)
 
-            let countryCells = countryServers.map { CellModel.server(self.serverViewModel($0)) }
+        let countryCells = countryServers.map { CellModel.server(self.serverViewModel($0)) }
 
-            self.servers[cacheID] = countryCells
+        self.servers[cacheID] = countryCells
 
-            return countryCells
-        } catch {
-            log.error(
-                "Failed to fetch servers",
-                category: .persistence,
-                metadata: ["error": "\(error)", "filters": "\(filters)", "group": "\(kind)"]
-            )
-            return []
-        }
+        return countryCells
     }
 
     func toggleCountryCell(for countryViewModel: CountryItemViewModel) {
@@ -414,17 +405,8 @@ class CountriesSectionViewModel {
         refreshTier()
         let filters = globalFilters
 
-        do {
-            // query and cache group information
-            serverGroups = try repository.getGroups(filteredBy: filters)
-        } catch {
-            log.error(
-                "Failed to fetch server groups",
-                category: .persistence,
-                metadata: ["error": "\(error)", "filters": "\(filters)"]
-            )
-            data = []
-        }
+        // query and cache group information
+        serverGroups = repository.getGroups(filteredBy: filters)
 
         data = makeSections()
     }

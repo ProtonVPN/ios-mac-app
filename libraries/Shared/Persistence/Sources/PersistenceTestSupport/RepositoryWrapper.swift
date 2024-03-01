@@ -36,29 +36,29 @@ public final class ServerRepositoryWrapper {
         self.repository = repository
     }
 
-    public var serverCount: Int { get throws { try repository.serverCount() } }
+    public var serverCount: Int { repository.serverCount() }
 
-    public func getFirstServer(filteredBy filters: [VPNServerFilter], orderedBy order: VPNServerOrder) throws -> VPNServer? {
-       try repository.getFirstServer(filteredBy: filters, orderedBy: order)
+    public func getFirstServer(filteredBy filters: [VPNServerFilter], orderedBy order: VPNServerOrder) -> VPNServer? {
+        repository.getFirstServer(filteredBy: filters, orderedBy: order)
     }
 
-    public func getServers(filteredBy filters: [VPNServerFilter], orderedBy order: VPNServerOrder) throws -> [ServerInfo] {
-        try repository.getServers(filteredBy: filters, orderedBy: order)
+    public func getServers(filteredBy filters: [VPNServerFilter], orderedBy order: VPNServerOrder) -> [ServerInfo] {
+        repository.getServers(filteredBy: filters, orderedBy: order)
     }
 
-    public func upsert(servers: [VPNServer]) throws {
-        try repository.upsert(servers: servers)
+    public func upsert(servers: [VPNServer]) {
+        repository.upsert(servers: servers)
         didStoreServers?(servers)
     }
 
-    public func deleteServers(withMinTier minTier: Int, withIDsNotIn ids: Set<String>) throws -> Int {
-        return try repository.delete(serversWithMinTier: minTier, withIDsNotIn: ids)
+    public func deleteServers(withMinTier minTier: Int, withIDsNotIn ids: Set<String>) -> Int {
+        return repository.delete(serversWithMinTier: minTier, withIDsNotIn: ids)
     }
 
-    public func upsert(loads: [ContinuousServerProperties]) throws {
-        try repository.upsert(loads: loads)
-        let updatedServers = try loads.compactMap {
-            try repository.getFirstServer(filteredBy: [.logicalID($0.serverId)], orderedBy: .none)
+    public func upsert(loads: [ContinuousServerProperties]) {
+        repository.upsert(loads: loads)
+        let updatedServers = loads.compactMap {
+            repository.getFirstServer(filteredBy: [.logicalID($0.serverId)], orderedBy: .none)
         }
         didUpdateLoads?(updatedServers)
     }
@@ -66,8 +66,8 @@ public final class ServerRepositoryWrapper {
     public func getGroups(
         filteredBy filters: [VPNServerFilter],
         orderedBy groupOrder: VPNServerGroupOrder = .localizedCountryNameAscending
-    ) throws -> [ServerGroupInfo] {
-        try repository.getGroups(filteredBy: filters, orderedBy: groupOrder)
+    ) -> [ServerGroupInfo] {
+        repository.getGroups(filteredBy: filters, orderedBy: groupOrder)
     }
 }
 
@@ -81,7 +81,7 @@ extension ServerRepository {
     /// Unit tests should instead construct a minimal mock repository.
     public static func wrapped(wrappedWith wrapper: ServerRepositoryWrapper) -> Self {
         return .init(
-            serverCount: { try wrapper.serverCount },
+            serverCount: { wrapper.serverCount },
             upsertServers: wrapper.upsert,
             server: wrapper.getFirstServer,
             servers: wrapper.getServers,

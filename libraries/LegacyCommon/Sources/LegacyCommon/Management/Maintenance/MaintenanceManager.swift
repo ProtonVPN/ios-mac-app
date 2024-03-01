@@ -118,18 +118,14 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
                 ) { result in
                     switch result {
                     case let .success(servers):
-                        do {
-                            @Dependency(\.serverRepository) var repository
-                            if !isFree {
-                                let updatedServerIDs = servers.reduce(into: Set<String>(), { $0.insert($1.id) })
-                                let deletedServerCount = try repository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
-                                log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
-                            }
-                            try repository.upsert(servers: servers.map { VPNServer(legacyModel: $0) })
-                            NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
-                        } catch {
-                            log.error("Failed to persist servers", category: .persistence, metadata: ["error": "\(error)"])
+                        @Dependency(\.serverRepository) var repository
+                        if !isFree {
+                            let updatedServerIDs = servers.reduce(into: Set<String>(), { $0.insert($1.id) })
+                            let deletedServerCount = repository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
+                            log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
                         }
+                        repository.upsert(servers: servers.map { VPNServer(legacyModel: $0) })
+                        NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
                         completion?(true)
                     case let .failure(error):
                         failure?(error)

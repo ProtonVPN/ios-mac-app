@@ -33,7 +33,7 @@ public struct ServerWrapper: Codable {
     private var _server: ServerModel
     public var server: ServerModel {
         @Dependency(\.serverRepository) var serverRepository: ServerRepository
-        if let vpnServer = try? serverRepository.getFirstServer(
+        if let vpnServer = serverRepository.getFirstServer(
             filteredBy: [.logicalID(_server.id)],
             orderedBy: .fastest
         ){

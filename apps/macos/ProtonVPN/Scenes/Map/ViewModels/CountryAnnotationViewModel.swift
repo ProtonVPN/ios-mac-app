@@ -236,18 +236,14 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
             vpnGateway.disconnect()
         } else {
             let serverID = servers[row].logical.id
-            do {
-                @Dependency(\.serverRepository) var repository
-                guard let server = try repository.getFirstServer(filteredBy: [.logicalID(serverID)], orderedBy: .none) else {
-                    log.error("No server found with id \(serverID)", category: .connectionConnect)
-                    return
-                }
-                let serverLegacyModel = ServerModel(server: server)
-                log.debug("Server on the map clicked. Will connect to \(serverLegacyModel.logDescription)", category: .connectionConnect, event: .trigger)
-                vpnGateway.connectTo(server: serverLegacyModel)
-            } catch {
-                log.error("Failed to retrieve server with id \(serverID)", category: .persistence, metadata: ["error": "\(error)"])
+            @Dependency(\.serverRepository) var repository
+            guard let server = repository.getFirstServer(filteredBy: [.logicalID(serverID)], orderedBy: .none) else {
+                log.error("No server found with id \(serverID)", category: .connectionConnect)
+                return
             }
+            let serverLegacyModel = ServerModel(server: server)
+            log.debug("Server on the map clicked. Will connect to \(serverLegacyModel.logDescription)", category: .connectionConnect, event: .trigger)
+            vpnGateway.connectTo(server: serverLegacyModel)
         }
     }
     

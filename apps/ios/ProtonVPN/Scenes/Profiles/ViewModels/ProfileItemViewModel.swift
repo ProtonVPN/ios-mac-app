@@ -140,22 +140,18 @@ final class ProfileItemViewModel {
             var minTier = Int.max
             var allServersUnderMaintenance = true
 
-            do {
-                @Dependency(\.serverRepository) var serverRepository: ServerRepository
-                let groups = try serverRepository.getGroups(filteredBy: [
-                    .features(profile.serverType.serverTypeFilter),
-                    // `.standard(country:)` doesn't work with gateways, but atm we
-                    // do not support profiles with fastest or random gateway server.
-                    .kind(.country(code: code)),
-                ])
-                // There should be only one group matching profile and we want to
-                // check its properties instead of traversing all the servers
-                if let groupInfo = groups.first {
-                    minTier = groupInfo.minTier
-                    allServersUnderMaintenance = groupInfo.isUnderMaintenance
-                }
-            } catch {
-                log.error("Error while loading countries (groups)", metadata: ["error": "\(error)"])
+            @Dependency(\.serverRepository) var serverRepository: ServerRepository
+            let groups = serverRepository.getGroups(filteredBy: [
+                .features(profile.serverType.serverTypeFilter),
+                // `.standard(country:)` doesn't work with gateways, but atm we
+                // do not support profiles with fastest or random gateway server.
+                .kind(.country(code: code)),
+            ])
+            // There should be only one group matching profile and we want to
+            // check its properties instead of traversing all the servers
+            if let groupInfo = groups.first {
+                minTier = groupInfo.minTier
+                allServersUnderMaintenance = groupInfo.isUnderMaintenance
             }
 
             self.lowestServerTier = minTier

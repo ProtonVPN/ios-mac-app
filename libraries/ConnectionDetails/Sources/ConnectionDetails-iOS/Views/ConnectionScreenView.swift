@@ -165,7 +165,7 @@ public struct ConnectionScreenFeature: Reducer {
                 }
                 return .run { send in
                     @Dependency(\.serverRepository) var repository
-                    let vpnServer = try? repository.getFirstServer(
+                    let vpnServer = repository.getFirstServer(
                         filteredBy: [.logicalID(serverId)],
                         orderedBy: .fastest
                     )

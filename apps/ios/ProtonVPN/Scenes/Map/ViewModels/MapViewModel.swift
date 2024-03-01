@@ -166,22 +166,13 @@ class MapViewModel: SecureCoreToggleHandler {
         let featureFilter = VPNServerFilter.features(type.serverTypeFilter)
         let kindFilter = VPNServerFilter.kind(.country) // Exclude gateways
 
-        do {
-            let serverGroups = try repository.getGroups(filteredBy: [featureFilter, kindFilter])
-            return serverGroups.compactMap { group in
-                makeAnnotationViewModel(
-                    countryGroup: group,
-                    isMapConnectionDisabled: isMapConnectionDisabled,
-                    userTier: userTier
-                )
-            }
-        } catch {
-            log.error(
-                "Failed to retrieve server groups for map annotations",
-                category: .persistence,
-                metadata: ["error": "\(error)"]
+        let serverGroups = repository.getGroups(filteredBy: [featureFilter, kindFilter])
+        return serverGroups.compactMap { group in
+            makeAnnotationViewModel(
+                countryGroup: group,
+                isMapConnectionDisabled: isMapConnectionDisabled,
+                userTier: userTier
             )
-            return []
         }
     }
 
@@ -239,30 +230,26 @@ class MapViewModel: SecureCoreToggleHandler {
         let isSecureCore = VPNServerFilter.features(.secureCore)
         let isCountry = VPNServerFilter.kind(.country) // Exclude gateways
 
-        do {
-            @Dependency(\.serverRepository) var repository
-            let secureCoreServers = try repository.getServers(filteredBy: [isSecureCore, isCountry], orderedBy: .none)
-            secureCoreServers.forEach { server in
-                var entryCountry = SecureCoreEntryCountryModel(
-                    appStateManager: appStateManager,
-                    countryCode: server.logical.entryCountryCode,
-                    location: LocationUtility.coordinate(forCountry: server.logical.entryCountryCode),
-                    vpnGateway: vpnGateway
-                )
-                if let oldEntry = entryCountries.first(where: { (element) -> Bool in return entryCountry == element }) {
-                    entryCountry = oldEntry
-                }
-                entryCountry.addExitCountryCode(server.logical.exitCountryCode)
-                entryCountries.update(with: entryCountry)
+        @Dependency(\.serverRepository) var repository
+        let secureCoreServers = repository.getServers(filteredBy: [isSecureCore, isCountry], orderedBy: .none)
+        secureCoreServers.forEach { server in
+            var entryCountry = SecureCoreEntryCountryModel(
+                appStateManager: appStateManager,
+                countryCode: server.logical.entryCountryCode,
+                location: LocationUtility.coordinate(forCountry: server.logical.entryCountryCode),
+                vpnGateway: vpnGateway
+            )
+            if let oldEntry = entryCountries.first(where: { (element) -> Bool in return entryCountry == element }) {
+                entryCountry = oldEntry
             }
-
-            let entriesArray = [SecureCoreEntryCountryModel](entryCountries)
-            secureCoreConnections = entriesArray.enumerated().map({ (offset: Int, element: SecureCoreEntryCountryModel) -> ConnectionViewModel in
-                return ConnectionViewModel(.connected, between: element, and: entriesArray[(offset + 1) % entriesArray.count])
-            })
-        } catch {
-            log.error("Failed to load secure core servers", category: .persistence, metadata: ["error": "\(error)"])
+            entryCountry.addExitCountryCode(server.logical.exitCountryCode)
+            entryCountries.update(with: entryCountry)
         }
+
+        let entriesArray = [SecureCoreEntryCountryModel](entryCountries)
+        secureCoreConnections = entriesArray.enumerated().map({ (offset: Int, element: SecureCoreEntryCountryModel) -> ConnectionViewModel in
+            return ConnectionViewModel(.connected, between: element, and: entriesArray[(offset + 1) % entriesArray.count])
+        })
 
         return entryCountries
     }

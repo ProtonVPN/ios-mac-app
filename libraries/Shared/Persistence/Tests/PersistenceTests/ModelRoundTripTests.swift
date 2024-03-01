@@ -27,9 +27,9 @@ final class ModelToRecordRoundTripTests: TestIsolatedDatabaseTestCase {
 
     func testVPNServerWithMultipleOverrides() throws {
         let serverToInsert = TestData.serverWithMultipleEndpointsAndOverrides
-        try repository.upsert(servers: [serverToInsert])
+        repository.upsert(servers: [serverToInsert])
 
-        let result = try repository.getFirstServer(filteredBy: [], orderedBy: .none)
+        let result = repository.getFirstServer(filteredBy: [], orderedBy: .none)
         let server = try XCTUnwrap(result)
 
         XCTAssertEqual(server, serverToInsert)
@@ -38,9 +38,9 @@ final class ModelToRecordRoundTripTests: TestIsolatedDatabaseTestCase {
 
     func testVPNServerWithLimitedProtocolSupport() throws {
         let serverToInsert = TestData.serverWithLimitedProtocolSupport
-        try repository.upsert(servers: [serverToInsert])
+        repository.upsert(servers: [serverToInsert])
 
-        let result = try repository.getFirstServer(filteredBy: [], orderedBy: .none)
+        let result = repository.getFirstServer(filteredBy: [], orderedBy: .none)
         let server = try XCTUnwrap(result)
 
         XCTAssertEqual(server, serverToInsert)
@@ -49,9 +49,9 @@ final class ModelToRecordRoundTripTests: TestIsolatedDatabaseTestCase {
 
     func testVPNServerWithNoOverrides() throws {
         let serverToInsert = TestData.serverWithNoOverrides
-        try repository.upsert(servers: [serverToInsert])
+        repository.upsert(servers: [serverToInsert])
 
-        let result = try repository.getFirstServer(filteredBy: [], orderedBy: .none)
+        let result = repository.getFirstServer(filteredBy: [], orderedBy: .none)
         let server = try XCTUnwrap(result)
 
         XCTAssertEqual(server, serverToInsert)

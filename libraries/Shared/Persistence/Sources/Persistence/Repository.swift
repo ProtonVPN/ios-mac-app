@@ -30,31 +30,31 @@ import Domain
 ///  - Servers interface for adding/updating/deleting physical servers by ID without touching logicals
 public struct ServerRepository: DependencyKey {
 
-    public var serverCount: () throws -> Int
+    public var serverCount: () -> Int
 
-    private var upsertServers: ([VPNServer]) throws -> Void
-    private var deleteServers: (Int, Set<String>) throws -> Int
+    private var upsertServers: ([VPNServer]) -> Void
+    private var deleteServers: (Int, Set<String>) -> Int
 
-    private var upsertLoads: ([ContinuousServerProperties]) throws -> Void
+    private var upsertLoads: ([ContinuousServerProperties]) -> Void
 
     /// For UI - logicals grouped and annotated with aggregate logical info
-    private var groups: ([VPNServerFilter], VPNServerGroupOrder) throws -> [ServerGroupInfo]
+    private var groups: ([VPNServerFilter], VPNServerGroupOrder) -> [ServerGroupInfo]
     /// For UI - logical annotated with aggregate server info
-    private var servers: ([VPNServerFilter], VPNServerOrder) throws -> [Domain.ServerInfo]
+    private var servers: ([VPNServerFilter], VPNServerOrder) -> [Domain.ServerInfo]
     /// Connectable, includes logical + server, less suitable for UI
-    private var server: ([VPNServerFilter], VPNServerOrder) throws -> VPNServer?
+    private var server: ([VPNServerFilter], VPNServerOrder) -> VPNServer?
 
     /// Default unimplemented test value
     public static let testValue = ServerRepository()
 
     public init(
-        serverCount: @escaping () throws -> Int = unimplemented(placeholder: 0),
-        upsertServers: @escaping ([VPNServer]) throws -> Void = unimplemented(),
-        server: @escaping ([VPNServerFilter], VPNServerOrder) throws -> VPNServer? = unimplemented(placeholder: nil),
-        servers: @escaping ([VPNServerFilter], VPNServerOrder) throws -> [Domain.ServerInfo] = unimplemented(placeholder: []),
-        deleteServers: @escaping (Int, Set<String>) throws -> Int = unimplemented(placeholder: 0),
-        upsertLoads: @escaping ([ContinuousServerProperties]) throws -> Void = unimplemented(),
-        groups: @escaping ([VPNServerFilter], VPNServerGroupOrder) throws -> [ServerGroupInfo] = unimplemented(placeholder: [])
+        serverCount: @escaping () -> Int = unimplemented(placeholder: 0),
+        upsertServers: @escaping ([VPNServer]) -> Void = unimplemented(),
+        server: @escaping ([VPNServerFilter], VPNServerOrder) -> VPNServer? = unimplemented(placeholder: nil),
+        servers: @escaping ([VPNServerFilter], VPNServerOrder) -> [Domain.ServerInfo] = unimplemented(placeholder: []),
+        deleteServers: @escaping (Int, Set<String>) -> Int = unimplemented(placeholder: 0),
+        upsertLoads: @escaping ([ContinuousServerProperties]) -> Void = unimplemented(),
+        groups: @escaping ([VPNServerFilter], VPNServerGroupOrder) -> [ServerGroupInfo] = unimplemented(placeholder: [])
     ) {
         self.serverCount = serverCount
         self.upsertServers = upsertServers
@@ -69,42 +69,42 @@ public struct ServerRepository: DependencyKey {
 /// Public interface with labels
 extension ServerRepository {
     public var isEmpty: Bool {
-        get throws {
-            try self.serverCount() == 0
+        get {
+            self.serverCount() == 0
         }
     }
 
-    public func upsert(servers: [VPNServer]) throws -> Void {
-        try upsertServers(servers)
+    public func upsert(servers: [VPNServer]) -> Void {
+        upsertServers(servers)
     }
 
-    public func delete(serversWithMinTier tier: Int, withIDsNotIn ids: Set<String>) throws -> Int {
-        try deleteServers(tier, ids)
+    public func delete(serversWithMinTier tier: Int, withIDsNotIn ids: Set<String>) -> Int {
+        deleteServers(tier, ids)
     }
 
-    public func upsert(loads: [ContinuousServerProperties]) throws -> Void {
-        try upsertLoads(loads)
+    public func upsert(loads: [ContinuousServerProperties]) -> Void {
+        upsertLoads(loads)
     }
 
     public func getGroups(
         filteredBy filters: [VPNServerFilter],
         orderedBy order: VPNServerGroupOrder = .localizedCountryNameAscending
-    ) throws -> [ServerGroupInfo] {
-        try groups(filters, order)
+    ) -> [ServerGroupInfo] {
+        groups(filters, order)
     }
 
     public func getFirstServer(
         filteredBy filters: [VPNServerFilter],
         orderedBy order: VPNServerOrder
-    ) throws -> VPNServer? {
-        try server(filters, order)
+    ) -> VPNServer? {
+        server(filters, order)
     }
 
     public func getServers(
         filteredBy filters: [VPNServerFilter],
         orderedBy order: VPNServerOrder
-    ) throws -> [ServerInfo] {
-        try servers(filters, order)
+    ) -> [ServerInfo] {
+        servers(filters, order)
     }
 }
 

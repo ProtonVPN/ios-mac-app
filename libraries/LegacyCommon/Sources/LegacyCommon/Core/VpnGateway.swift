@@ -530,17 +530,13 @@ public class VpnGateway: VpnGatewayProtocol {
                     if let services = properties.streamingServices {
                         self.propertiesManager.streamingServices = services.streamingServices
                     }
-                    do {
-                        if refreshFreeTierInfo {
-                            let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
-                            let deletedServerCount = try repository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
-                            log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
-                        }
-                        try repository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
-                        NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
-                    } catch {
-                        log.error("Failed to persist servers", category: .persistence, metadata: ["error": "\(error)"])
+                    if refreshFreeTierInfo {
+                        let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
+                        let deletedServerCount = repository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
+                        log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
                     }
+                    repository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
+                    NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
                     self.profileManager.refreshProfiles()
                 case .failure:
                     // Ignore failures as this is a non-critical call

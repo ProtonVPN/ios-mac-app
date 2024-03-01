@@ -150,15 +150,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         }
     }
 
-    private var isServerRepositoryEmpty: Bool {
-        do {
-            return try serverRepository.isEmpty
-        } catch {
-            // TODO: VPNAPPL-2075 Refactor database error handling and logging
-            log.error("Failured to check whether repository is empty", category: .persistence, metadata: ["error": "\(error)"])
-            return true
-        }
-    }
+    private var isServerRepositoryEmpty: Bool { serverRepository.isEmpty }
 
     func loadDataWithoutFetching() -> Bool {
         if isServerRepositoryEmpty || self.propertiesManager.userLocation?.ip == nil {
@@ -205,11 +197,11 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
         if !shouldRefreshServers || credentials.maxTier.isPaidTier {
             let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
-            let deletedServerCount = try serverRepository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
+            let deletedServerCount = serverRepository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
             log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
         }
 
-        try serverRepository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
+        serverRepository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
         NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
 
         propertiesManager.userLocation = properties.location
@@ -279,7 +271,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             review.update(plan: credentials.planName)
             if !shouldRefreshServers || credentials.maxTier.isPaidTier {
                 let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
-                let deletedServerCount = try serverRepository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
+                let deletedServerCount = serverRepository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
                 log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
             }
 

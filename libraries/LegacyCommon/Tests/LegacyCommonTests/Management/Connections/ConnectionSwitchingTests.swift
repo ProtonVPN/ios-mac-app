@@ -121,7 +121,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
             return true
         }
 
-        try repository.upsert(servers: [VPNServer(legacyModel: testData.server2)])
+        repository.upsert(servers: [VPNServer(legacyModel: testData.server2)])
 
         let request = ConnectionRequest(serverType: .standard,
                                         connectionType: .country("CH", .fastest),
@@ -219,7 +219,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         container.availabilityCheckerResolverFactory.checkers[.wireGuard(.udp)]?.availabilityCallback = unavailableCallback
 
-        try repository.upsert(servers: [VPNServer(legacyModel: testData.server2)])
+        repository.upsert(servers: [VPNServer(legacyModel: testData.server2)])
 
         let expectations = (
             initialConnection: XCTestExpectation(description: "initial connection"),
@@ -371,7 +371,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         // VPNAPPL-2129: Why does awaiting this expectation cause mocked `VPNLogicalServicesRequest` to take over 3s?
         await fulfillment(of: [expectations.serverListFetch], timeout: expectationTimeout)
 
-        XCTAssertEqual(try repositoryWrapper.serverCount, 2)
+        XCTAssertEqual(repositoryWrapper.serverCount, 2)
         let fetchedServer1 = storedServers.first(where: { $0.name == testData.server1.name })
         let fetchedServer2 = storedServers.first(where: { $0.name == testData.server2.name })
 
@@ -588,7 +588,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         let initialServers = [testData.server1, testData.server3]
         container.networkingDelegate.apiServerList = initialServers
-        try repository.upsert(servers: initialServers.map { VPNServer(legacyModel: $0) })
+        repository.upsert(servers: initialServers.map { VPNServer(legacyModel: $0) })
 
         container.vpnKeychain.setVpnCredentials(with: "plus", maxTier: .paidTier)
         container.propertiesManager.vpnProtocol = .wireGuard(.udp)

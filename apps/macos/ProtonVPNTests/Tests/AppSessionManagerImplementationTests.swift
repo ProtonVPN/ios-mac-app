@@ -58,7 +58,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     override func setUpWithError() throws {
         try super.setUpWithError()
         repository = withDependencies {
-            $0.appDB = .newInMemoryInstance()
+            $0.databaseConfiguration = .withTestExecutor(databaseType: .ephemeral)
         } operation: {
             ServerRepository.liveValue
         }

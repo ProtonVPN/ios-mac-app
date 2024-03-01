@@ -35,7 +35,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
 
     private var legacyServerModel: ServerModel? {
         @Dependency(\.serverRepository) var repository
-        guard let server = try? repository.getFirstServer(
+        guard let server = repository.getFirstServer(
             filteredBy: [.logicalID(serverModel.logical.id)],
             orderedBy: .fastest
         ) else {

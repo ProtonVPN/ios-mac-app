@@ -129,14 +129,7 @@ class CreateNewProfileViewModel {
     }
 
     private var serverGroups: [ServerGroupInfo] {
-        do {
-            return try serverRepository.getGroups(filteredBy: [
-                .features(currentServerTypeFilter),
-            ])
-        } catch {
-            log.error("Error while loading countries (groups)", metadata: ["error": "\(error)"])
-            return []
-        }
+        return serverRepository.getGroups(filteredBy: [.features(currentServerTypeFilter)])
     }
 
     /// Contains one placeholder item at the beginning, followed by all available countries.
@@ -166,7 +159,7 @@ class CreateNewProfileViewModel {
             ? [state.connectionProtocol!.vpnProtocol!]
             : propertiesManager.smartProtocolConfig.supportedProtocols
 
-        return try? serverRepository.getServers(
+        return serverRepository.getServers(
             filteredBy: [
                 .features(currentServerTypeFilter), // Secure core or not
                 .supports(protocol: ProtocolSupport(vpnProtocols: supportedProtocols)), // Only the ones supporting selected protocol
@@ -221,18 +214,13 @@ class CreateNewProfileViewModel {
                     // Now that we don't load whole objects from the repository, it became
                     // not effective to pre-fill ServerOffering objects before one is selected,
                     // so we do it here, only for the selected object.
-                    do {
-                        if let vpnServer = try self?.serverRepository.getFirstServer(
-                                filteredBy: [.logicalID(server.logical.id)],
-                                orderedBy: .fastest) {
-                            let serverModel = ServerModel(server: vpnServer)
-                            let offering = ServerOffering.custom(ServerWrapper(server: serverModel))
-                            self?.update(serverOffering: offering)
-                        }
-                    } catch {
-                        log.error("Server with given logical id not found", metadata: ["error": "\(error)"])
+                    if let vpnServer = self?.serverRepository.getFirstServer(
+                            filteredBy: [.logicalID(server.logical.id)],
+                            orderedBy: .fastest) {
+                        let serverModel = ServerModel(server: vpnServer)
+                        let offering = ServerOffering.custom(ServerWrapper(server: serverModel))
+                        self?.update(serverOffering: offering)
                     }
-
                 }
             )
         }
@@ -398,14 +386,7 @@ class CreateNewProfileViewModel {
         }
 
         let grouping: [ServerGroupInfo]
-        do {
-            grouping = try serverRepository.getGroups(filteredBy: [
-                .features(currentServerTypeFilter),
-            ])
-        } catch {
-            log.error("Error while loading countries (groups)", metadata: ["error": "\(error)"])
-            return
-        }
+        grouping = serverRepository.getGroups(filteredBy: [.features(currentServerTypeFilter)])
 
         var connectionProtocol: ConnectionProtocol? = profile.connectionProtocol
 

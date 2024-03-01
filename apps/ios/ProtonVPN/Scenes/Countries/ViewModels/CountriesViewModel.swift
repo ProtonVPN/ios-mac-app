@@ -304,16 +304,12 @@ class CountriesViewModel: SecureCoreToggleHandler {
     
     internal func setStateOf(type: ServerType) {
         @Dependency(\.serverRepository) var repository
-        do {
-            let groups = try repository.getGroups(filteredBy: [.features(type.serverTypeFilter)])
-            switch type {
-            case .standard, .p2p, .tor, .unspecified:
-                self.state = .standard(groups)
-            case .secureCore:
-                self.state = .secureCore(groups)
-            }
-        } catch {
-            log.error("Failed to retrieve server groups: ", category: .persistence, metadata: ["error": "\(error)"])
+        let groups = repository.getGroups(filteredBy: [.features(type.serverTypeFilter)])
+        switch type {
+        case .standard, .p2p, .tor, .unspecified:
+            self.state = .standard(groups)
+        case .secureCore:
+            self.state = .secureCore(groups)
         }
     }
     

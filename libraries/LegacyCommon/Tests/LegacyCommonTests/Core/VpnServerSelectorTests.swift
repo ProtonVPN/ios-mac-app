@@ -63,17 +63,17 @@ class VpnServerSelectorTests: XCTestCase {
         Self.mockServers = mockServers.reduce(into: [:]) { $0[$1.logical.id] = $1 }
 
         Self.repository = withDependencies {
-            $0.appDB = .newInMemoryInstance()
+            $0.databaseConfiguration = .withTestExecutor(databaseType: .ephemeral)
         } operation: {
             ServerRepository.liveValue
         }
 
-        try! repository.upsert(servers: mockServers)
+        repository.upsert(servers: mockServers)
     }
 
     func testServersUnchangedByRoundTrip() throws {
-        try servers.values.forEach { server in
-            let serverFromDB = try repository.getFirstServer(filteredBy: [.logicalID(server.logical.id)], orderedBy: .none)
+        servers.values.forEach { server in
+            let serverFromDB = repository.getFirstServer(filteredBy: [.logicalID(server.logical.id)], orderedBy: .none)
             XCTAssertEqual(serverFromDB, server)
         }
     }

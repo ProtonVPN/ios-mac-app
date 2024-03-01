@@ -98,22 +98,19 @@ func testSUTDoesntBurnWhenServerListIsEmpty() {
 For integration tests, using the live implementation of the server repository is preferred, as long as an in-memory database is specified.
 This results in higher test coverage and less likelihood of incorrectly implementing a mock.
 
+`PersistenceTestSupport` provides specialised `XCTestCase` subclasses that manage an in-memory repository for you.
+See `TestIsolatedDatabaseTestCase` and `CaseIsolatedDatabaseTestCase` for more details.
+
+Alternatively, if you must subclass a different `XCTestCase`, you can implement the `TestIsolatedDatabaseTestDriver` or `CaseIsolatedDatabaseTestDriver` protocols instead.
+There is also the possibility to override the `DatabaseConfigurationKey` dependency yourself:
+
 ```
-func testIntegrationOfABunchOfThings() {
-    withDependencies {
-        $0.appDB = .testValue // global in-memory database
-        $0.serverRepository = .liveValue
-    } operation: {
-        ...
-    }
+let repositoryImplementation = withDependencies {
+    $0.databaseConfiguration = .withTestExecutor(databaseType: .ephemeral)
+} operation: {
+    ServerRepository.liveValue
 }
 ```
-
-### Isolated Database Test Cases
-
-`PersistenceTests` provides `IsolatedDatabaseTestCase` which defines a static repository, shared across tests within the test case, but specific to that test case.
-`IsolatedResourceDrivenDatabaseTestCase` builds on top of this to also initialise the repository with servers loaded from a resource file.
-Care needs to be taken with tests that modify the state of the repository, since these should not use a repository that is shared across tests within a test case.
 
 ## FAQ
 

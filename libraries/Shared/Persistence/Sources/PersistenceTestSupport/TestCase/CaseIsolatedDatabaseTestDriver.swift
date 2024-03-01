@@ -39,7 +39,7 @@ extension CaseIsolatedDatabaseTestDriver {
 
     public static func setUpRepository() {
         let repositoryImplementation = withDependencies {
-            $0.appDB = .newInMemoryInstance()
+            $0.databaseConfiguration = .withTestExecutor(databaseType: .ephemeral)
         } operation: {
             ServerRepository.liveValue
         }

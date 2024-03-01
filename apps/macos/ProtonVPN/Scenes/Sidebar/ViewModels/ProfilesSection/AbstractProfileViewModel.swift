@@ -56,9 +56,9 @@ class AbstractProfileViewModel {
             ]
 
             @Dependency(\.serverRepository) var repository
-            let serversOfProfileTypeAndCountry = try? repository.getServers(filteredBy: filters, orderedBy: .none)
+            let serversOfProfileTypeAndCountry = repository.getServers(filteredBy: filters, orderedBy: .none)
 
-            serversOfProfileTypeAndCountry?.forEach { (server) in
+            serversOfProfileTypeAndCountry.forEach { (server) in
                 if minTier > server.logical.tier {
                     minTier = server.logical.tier
                 }

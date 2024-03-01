@@ -352,14 +352,7 @@ class CreateOrEditProfileViewModel: NSObject {
     }
     
     private var serverGroups: [ServerGroupInfo] {
-        do {
-            return try serverRepository.getGroups(filteredBy: [
-                .features(secureCoreServerFilter),
-            ])
-        } catch {
-            log.error("Error while loading countries (groups)", metadata: ["error": "\(error)"])
-            return []
-        }
+        return serverRepository.getGroups(filteredBy: [.features(secureCoreServerFilter)])
     }
 
     var countryGroup: ServerGroupInfo?
@@ -412,16 +405,12 @@ class CreateOrEditProfileViewModel: NSObject {
             // Now that we don't load whole objects from the repository, it became
             // not effective to pre-fill ServerOffering objects before one is selected,
             // so we do it here, only for the selected object.
-            do {
-                if let serverInfo = selectedObject as? ServerInfo,
-                   let vpnServer = try serverRepository.getFirstServer(
-                        filteredBy: [.logicalID(serverInfo.logical.id)],
-                        orderedBy: .fastest) {
-                    let serverModel = ServerModel(server: vpnServer)
-                    self.selectedServerOffering = ServerOffering.custom(ServerWrapper(server: serverModel))
-                }
-            } catch {
-                log.error("Server with given logical id not found", metadata: ["error": "\(error)"])
+            if let serverInfo = selectedObject as? ServerInfo,
+               let vpnServer = serverRepository.getFirstServer(
+                    filteredBy: [.logicalID(serverInfo.logical.id)],
+                    orderedBy: .fastest) {
+                let serverModel = ServerModel(server: vpnServer)
+                self.selectedServerOffering = ServerOffering.custom(ServerWrapper(server: serverModel))
             }
 
             // Default profiles are given as prepared ServerOffering objects
@@ -528,7 +517,7 @@ extension CreateOrEditProfileViewModel {
             ? propertiesManager.smartProtocolConfig.supportedProtocols
             : selected
 
-        return try? serverRepository.getServers(
+        return serverRepository.getServers(
             filteredBy: [
                 .features(secureCoreServerFilter), // Secure core or not
                 .supports(protocol: ProtocolSupport(vpnProtocols: supportedProtocols)), // Only the ones supporting selected protocol

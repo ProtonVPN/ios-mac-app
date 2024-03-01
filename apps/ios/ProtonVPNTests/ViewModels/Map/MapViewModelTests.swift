@@ -59,13 +59,13 @@ class MapViewModelTests: XCTestCase {
         try super.setUpWithError()
 
         repository = withDependencies {
-            $0.appDB = .newInMemoryInstance()
+            $0.databaseConfiguration = .withTestExecutor(databaseType: .ephemeral)
         } operation: {
             .liveValue
         }
 
         let serversToInsert = try serversFromFile()
-        try repository.upsert(servers: serversToInsert)
+        repository.upsert(servers: serversToInsert)
 
         let vpnApiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation(), authKeychain: MockAuthKeychain())
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String

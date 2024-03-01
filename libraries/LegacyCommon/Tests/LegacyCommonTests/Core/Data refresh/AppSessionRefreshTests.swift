@@ -56,7 +56,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
         networking = NetworkingMock()
         networkingDelegate = FullNetworkingMockDelegate()
         let initialServers = [testData.server1, testData.server2, testData.server3].map { VPNServer(legacyModel: $0) }
-        try repository.upsert(servers: initialServers)
+        repository.upsert(servers: initialServers)
         repositoryWrapper = ServerRepositoryWrapper(repository: repository)
 
         networking.delegate = networkingDelegate
@@ -93,7 +93,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
 
     func checkForSuccessfulServerUpdate() throws {
         for serverUpdate in networkingDelegate.apiServerLoads {
-            guard let server = try repositoryWrapper.getFirstServer(
+            guard let server = repositoryWrapper.getFirstServer(
                 filteredBy: [.logicalID(serverUpdate.serverId)],
                 orderedBy: .fastest
             ) else {

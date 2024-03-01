@@ -174,11 +174,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
         if await !shouldRefreshServersAccordingToUserTier || credentials.maxTier != .freeTier {
             let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
-            let deletedServerCount = try serverRepository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
+            let deletedServerCount = serverRepository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
             log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
         }
 
-        try self.serverRepository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
+        self.serverRepository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
         NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
 
         if await appState.isDisconnected {
@@ -233,7 +233,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             throw ProtonVpnError.subuserWithoutSessions
         } catch {
             log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
-            if try serverRepository.isEmpty || propertiesManager.userLocation?.ip == nil {
+            if serverRepository.isEmpty || propertiesManager.userLocation?.ip == nil {
                 // only throw if there is a major reason
                 throw error
             }

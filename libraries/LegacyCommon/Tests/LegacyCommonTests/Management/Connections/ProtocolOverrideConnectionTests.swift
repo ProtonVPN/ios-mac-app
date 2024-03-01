@@ -43,7 +43,7 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
 
         let servers = container.networkingDelegate.apiServerList.map { VPNServer(legacyModel: $0) }
 
-        try repository.upsert(servers: servers)
+        repository.upsert(servers: servers)
     }
 
     // Disabled because IKEv2 is not supported on iOS (VPNAPPL-1843)

@@ -128,12 +128,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
             switch result {
             case let .success(properties):
                 let loads = properties.map { $0.value }
-                do {
-                    try self.serverRepository.upsert(loads: loads)
-                    NotificationCenter.default.post(ServerListUpdateNotification(data: .loads), object: nil)
-                } catch {
-                    log.error("Failed to update loads of stored logicals", category: .persistence, metadata: ["error": "\(error)"])
-                }
+                self.serverRepository.upsert(loads: loads)
             case let .failure(error):
                 log.error("RefreshServerLoads error", category: .app, metadata: ["error": "\(error)"])
             }

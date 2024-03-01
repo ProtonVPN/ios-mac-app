@@ -25,17 +25,21 @@ import Domain
 import Ergonomics
 
 extension ServerRepository {
+
     public static var liveValue: ServerRepository {
-        @Dependency(\.appDB) var database
+        @Dependency(\.databaseConfiguration) var config
+
+        let dbWriter = DatabaseQueue.from(databaseType: config.databaseType)
+        let executor = config.executor
 
         return ServerRepository(
             serverCount: {
-                try database.writer().read { db in
+                return executor.read(dbWriter: dbWriter) { db in
                     return try Endpoint.fetchCount(db)
                 }
             },
             upsertServers: { vpnServers in
-                try database.writer().write { db in
+                executor.write(dbWriter: dbWriter) { db in
                     try vpnServers.forEach { vpnServer in
                         try vpnServer.logicalRecord.insert(db, onConflict: .replace)
                         try vpnServer.logicalStatus.insert(db, onConflict: .replace)
@@ -49,8 +53,7 @@ extension ServerRepository {
                 }
             },
             server: { filters, order in
-                try database.writer().read { db in
-
+                return executor.read(dbWriter: dbWriter) { db in
                     let request = ServerResult.request(filters: filters, order: order)
                     let result = try ServerResult.fetchOne(db, request)
 
@@ -71,7 +74,7 @@ extension ServerRepository {
                 }
             },
             servers: { filters, order in
-                try database.writer().read { db in
+                return executor.read(dbWriter: dbWriter) { db in
                     let request = ServerInfoResult.request(filters: filters, order: order)
 
                     let results = try ServerInfoResult.fetchAll(db, request)
@@ -87,7 +90,7 @@ extension ServerRepository {
                 }
             },
             deleteServers: { minTier, ids in
-                return try database.writer().write { db in
+                return executor.write(dbWriter: dbWriter) { db in
                     return try Logical
                         .filter(!ids.contains(Logical.Columns.id))
                         .filter(Logical.Columns.tier >= minTier)
@@ -95,7 +98,7 @@ extension ServerRepository {
                 }
             },
             upsertLoads: { loads in
-                try database.writer().write { db in
+                executor.write(dbWriter: dbWriter) { db in
                     let existingLogicalIDs = try String.fetchSet(db, Logical.select(Logical.Columns.id))
                     try loads
                         .filter { existingLogicalIDs.contains($0.serverId) }
@@ -103,7 +106,7 @@ extension ServerRepository {
                 }
             },
             groups: { filters, order in
-                try database.writer().read { db in
+                return executor.read(dbWriter: dbWriter) { db in
                     let request = GroupInfoResult.request(filters: filters, groupOrder: order)
 
                     return try GroupInfoResult.fetchAll(db, request)

@@ -31,11 +31,11 @@ final class GroupsTests: CaseIsolatedDatabaseTestCase {
     override class func setUp() {
         super.setUp()
         let servers = try! fetch([VPNServer].self, fromResourceNamed: "TestServers")
-        try! internalRepository.upsert(servers: servers)
+        internalRepository.upsert(servers: servers)
     }
 
     func testStandardGroups() throws {
-        let groups = try repository.getGroups(filteredBy: [.features(.standard)])
+        let groups = repository.getGroups(filteredBy: [.features(.standard)])
 
         XCTAssertEqual(groups.count, 8)
 
@@ -66,7 +66,7 @@ final class GroupsTests: CaseIsolatedDatabaseTestCase {
     }
 
     func testSecureCoreGroups() throws {
-        let groups = try repository.getGroups(filteredBy: [.features(.secureCore)])
+        let groups = repository.getGroups(filteredBy: [.features(.secureCore)])
 
         XCTAssertEqual(groups.count, 1)
 

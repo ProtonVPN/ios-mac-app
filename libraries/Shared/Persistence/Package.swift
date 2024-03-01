@@ -12,6 +12,8 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../Foundations/Domain"),
+        .package(path: "../../Foundations/PMLogger"),
+        .package(url: "https://github.com/apple/swift-log.git", exact: "1.4.4"),
         .package(path: "../../Shared/Localization"), // LocaleWrapper is required for country code mappings
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.0.0")),
         .package(url: "https://github.com/groue/GRDB.swift", exact: "6.23.0"),
@@ -22,6 +24,8 @@ let package = Package(
             name: "Persistence",
             dependencies: [
                 "Domain",
+                "PMLogger",
+                .product(name: "Logging", package: "swift-log"),
                 "Localization",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "GRDB", package: "GRDB.swift"),

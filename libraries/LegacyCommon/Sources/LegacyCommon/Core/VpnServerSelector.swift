@@ -102,64 +102,49 @@ class VpnServerSelector {
             ]
         )
 
-        do {
-            let result = try repository.getFirstServer(filteredBy: filters, orderedBy: order)
+        let result = repository.getFirstServer(filteredBy: filters, orderedBy: order)
 
-            guard let server = result else {
-                log.error("No servers satisfy requested criteria", category: .persistence)
+        guard let server = result else {
+            log.error("No servers satisfy requested criteria", category: .persistence)
 
-                determineAndNotifyUnavailabilityReason(
-                    forSpecificCountry: true,
-                    type: type,
-                    baseFilters: baseFilters
-                )
-                return nil
-            }
-
-            changeActiveServerType?(type)
-            return ServerModel(server: server)
-        } catch {
-            log.error("Failed to select server", category: .persistence, metadata: ["error": "\(error)"])
+            determineAndNotifyUnavailabilityReason(
+                forSpecificCountry: true,
+                type: type,
+                baseFilters: baseFilters
+            )
             return nil
         }
-    }
 
+        changeActiveServerType?(type)
+        return ServerModel(server: server)
+    }
 
     private func determineAndNotifyUnavailabilityReason(
         forSpecificCountry: Bool,
         type: ServerType,
         baseFilters: [VPNServerFilter]
     ) {
-        do {
-            let servers = try repository.getServers(filteredBy: baseFilters, orderedBy: .none)
+        let servers = repository.getServers(filteredBy: baseFilters, orderedBy: .none)
 
-            // If servers are already empty, we will return `protocolNotSupported` unless we add a new `locationNotFound`
+        // If servers are already empty, we will return `protocolNotSupported` unless we add a new `locationNotFound`
 
-            let serversSupportingProtocol = servers.filter { !$0.protocolSupport.isDisjoint(with: supportedProtocols) }
-            if serversSupportingProtocol.isEmpty {
-                notifyResolutionUnavailable?(forSpecificCountry, type, .protocolNotSupported)
-                return
-            }
+        let serversSupportingProtocol = servers.filter { !$0.protocolSupport.isDisjoint(with: supportedProtocols) }
+        if serversSupportingProtocol.isEmpty {
+            notifyResolutionUnavailable?(forSpecificCountry, type, .protocolNotSupported)
+            return
+        }
 
-            let serversNotRequiringUpgrade = serversSupportingProtocol.filter { userTier >= $0.logical.tier }
-            if serversNotRequiringUpgrade.isEmpty {
-                let lowestTier = serversSupportingProtocol.map(\.logical.tier).min() ?? CoreAppConstants.VpnTiers.visionary
-                notifyResolutionUnavailable?(forSpecificCountry, type, .upgrade(lowestTier))
-                return
-            }
+        let serversNotRequiringUpgrade = serversSupportingProtocol.filter { userTier >= $0.logical.tier }
+        if serversNotRequiringUpgrade.isEmpty {
+            let lowestTier = serversSupportingProtocol.map(\.logical.tier).min() ?? CoreAppConstants.VpnTiers.visionary
+            notifyResolutionUnavailable?(forSpecificCountry, type, .upgrade(lowestTier))
+            return
+        }
 
-            let serversWithoutMaintenance = serversNotRequiringUpgrade.filter { $0.logical.status != 0 }
-            if serversWithoutMaintenance.isEmpty {
-                notifyResolutionUnavailable?(forSpecificCountry, type, .maintenance)
-                return
-            }
-
-        } catch {
-            log.error(
-                "Failed to retrieve servers while determining unavailability reason",
-                category: .persistence,
-                metadata: ["error": "\(error)"]
-            )
+        let serversWithoutMaintenance = serversNotRequiringUpgrade.filter { $0.logical.status != 0 }
+        if serversWithoutMaintenance.isEmpty {
+            notifyResolutionUnavailable?(forSpecificCountry, type, .maintenance)
+            return
         }
     }
     

@@ -363,19 +363,15 @@ final class StatusMenuViewModel {
         @Dependency(\.serverRepository) var repository
         // Filter out gateways, because we don't have "Connect to fastest server" for gateways
         let isCountry = VPNServerFilter.kind(.country)
-        do {
-            standardCountries = try repository.getGroups(
-                filteredBy: [.features(.standard), isCountry],
-                orderedBy: .exitCountryCodeAscending
-            )
-            secureCoreCountries = try repository.getGroups(
-                filteredBy: [.features(.secureCore), isCountry],
-                orderedBy: .exitCountryCodeAscending
-            )
-        } catch {
-            log.error("Failed to fetch server groups", category: .persistence, metadata: ["error": "\(error)"])
-        }
-        let tier = (try? vpnKeychain.fetchCached().maxTier) ?? .freeTier
+
+        standardCountries = repository.getGroups(
+            filteredBy: [.features(.standard), isCountry],
+            orderedBy: .exitCountryCodeAscending
+        )
+        secureCoreCountries = repository.getGroups(
+            filteredBy: [.features(.secureCore), isCountry],
+            orderedBy: .exitCountryCodeAscending
+        )
 
         contentChanged?()
     }

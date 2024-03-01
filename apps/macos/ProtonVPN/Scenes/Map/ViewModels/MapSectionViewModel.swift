@@ -191,31 +191,22 @@ class MapSectionViewModel {
     
     private func standardAnnotations(_ userTier: Int) -> [CountryAnnotationViewModel] {
         @Dependency(\.serverRepository) var repository
-        do {
-            let isCountry = VPNServerFilter.kind(.country)
-            let isNotSecureCore = VPNServerFilter.features(.standard)
-            let countryGroups = try repository.getGroups(filteredBy: [isCountry, isNotSecureCore])
-            return countryGroups.compactMap { group in
-                guard case .country(let code) = group.kind else {
-                    assertionFailure("Gateways should have been filtered out but we got: \(group.kind)")
-                    return nil
-                }
-                return StandardCountryAnnotationViewModel(
-                    appStateManager: appStateManager,
-                    vpnGateway: vpnGateway,
-                    countryCode: code,
-                    minTier: group.minTier,
-                    userTier: userTier,
-                    coordinate: LocationUtility.coordinate(forCountry: code)
-                )
+        let isCountry = VPNServerFilter.kind(.country)
+        let isNotSecureCore = VPNServerFilter.features(.standard)
+        let countryGroups = repository.getGroups(filteredBy: [isCountry, isNotSecureCore])
+        return countryGroups.compactMap { group in
+            guard case .country(let code) = group.kind else {
+                assertionFailure("Gateways should have been filtered out but we got: \(group.kind)")
+                return nil
             }
-        } catch {
-            log.error(
-                "Failed to retrieve groups for map annotations",
-                category: .persistence,
-                metadata: ["error": "\(error)"]
+            return StandardCountryAnnotationViewModel(
+                appStateManager: appStateManager,
+                vpnGateway: vpnGateway,
+                countryCode: code,
+                minTier: group.minTier,
+                userTier: userTier,
+                coordinate: LocationUtility.coordinate(forCountry: code)
             )
-            return []
         }
     }
     
@@ -244,15 +235,10 @@ class MapSectionViewModel {
     }
 
     private func fetchSecureCoreServers() -> [ServerInfo] {
-        do {
-            @Dependency(\.serverRepository) var repository
-            let isSecureCore = VPNServerFilter.features(.secureCore)
-            let isCountry = VPNServerFilter.kind(.country)
-            return try repository.getServers(filteredBy: [isSecureCore, isCountry], orderedBy: .none)
-        } catch {
-            log.error("Failed to retrieve secure core servers", category: .persistence, metadata: ["error": "\(error)"])
-            return []
-        }
+        @Dependency(\.serverRepository) var repository
+        let isSecureCore = VPNServerFilter.features(.secureCore)
+        let isCountry = VPNServerFilter.kind(.country)
+        return repository.getServers(filteredBy: [isSecureCore, isCountry], orderedBy: .none)
     }
 
     /// Let's refactor this during the redesign, or when we trigger the secure core server count assertion.

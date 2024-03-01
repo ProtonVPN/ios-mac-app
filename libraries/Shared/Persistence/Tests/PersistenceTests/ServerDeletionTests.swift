@@ -28,7 +28,7 @@ import PersistenceTestSupport
 final class ServerDeletionTests: TestIsolatedDatabaseTestCase {
 
     func testDeleteStalePaidServers() throws {
-        try repository.upsert(
+        repository.upsert(
             servers: [
                 TestData.createMockServer(withID: "free1", tier: 0),
                 TestData.createMockServer(withID: "paid1", tier: 1),
@@ -39,14 +39,14 @@ final class ServerDeletionTests: TestIsolatedDatabaseTestCase {
             ]
         )
 
-        let deletedServerCount = try repository.delete(
+        let deletedServerCount = repository.delete(
             serversWithMinTier: 1,
             withIDsNotIn: .init(arrayLiteral: "free1", "paid1", "paid2")
         )
 
         XCTAssertEqual(deletedServerCount, 2)
 
-        let remainingServers = try repository.getServers(filteredBy: [], orderedBy: .nameAscending)
+        let remainingServers = repository.getServers(filteredBy: [], orderedBy: .nameAscending)
         let remainingServerIDs = remainingServers.map { $0.logical.id }
         XCTAssertEqual(remainingServerIDs, ["free1", "free2", "paid1", "paid2"])
     }

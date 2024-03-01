@@ -30,13 +30,13 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
     override class func setUp() {
         super.setUp()
         let servers = try! fetch([VPNServer].self, fromResourceNamed: "TestServers")
-        try! internalRepository.upsert(servers: servers)
+        internalRepository.upsert(servers: servers)
     }
 
     // MARK: Filtering & Ordering
 
     func testFastestOverallServer() throws {
-        let result = try repository.getFirstServer(filteredBy: [], orderedBy: .fastest)
+        let result = repository.getFirstServer(filteredBy: [], orderedBy: .fastest)
 
         let server = try XCTUnwrap(result)
         XCTAssertEqual(server.logical.id, "fastestFeaturelessUSServer")
@@ -44,7 +44,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
     }
 
     func testFastestFreeServer() throws {
-        let result = try repository.getFirstServer(
+        let result = repository.getFirstServer(
             filteredBy: [
                 .features(.standard),
                 .tier(.max(tier: 0))
@@ -59,7 +59,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
 
     /// The fastest server in our list has overrides indicating that WireGuard UDP is not supported
     func testFastestFreeServerForWireGuardUDP() throws {
-        let result = try repository.getFirstServer(
+        let result = repository.getFirstServer(
             filteredBy: [
                 .features(.standard),
                 .supports(protocol: [.wireGuardUDP]),
@@ -74,7 +74,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
     }
 
     func testFastestTorServer() throws {
-        let result = try repository.getFirstServer(
+        let result = repository.getFirstServer(
             filteredBy: [.features(.standard(with: .tor))],
             orderedBy: .fastest
         )
@@ -85,7 +85,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
     }
 
     func testFastestStealthServer() throws {
-        let result = try repository.getFirstServer(
+        let result = repository.getFirstServer(
             filteredBy: [.supports(protocol: .wireGuardTLS)],
             orderedBy: .fastest
         )
@@ -96,14 +96,14 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
     }
 
     func testRandomServer() throws {
-        let result = try repository.getFirstServer(filteredBy: [], orderedBy: .random)
+        let result = repository.getFirstServer(filteredBy: [], orderedBy: .random)
 
         // We can't make many solid assertions about the resulting server since it will be chosen at random
         XCTAssertNotNil(result)
     }
 
     func testFastestSpecifiedCountryAndFeatureServer() throws {
-        let result = try repository.getFirstServer(
+        let result = repository.getFirstServer(
             filteredBy: [
                 .kind(.country(code: "US")),
                 .features(.standard(with: .tor))
@@ -117,7 +117,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
     }
 
     func testFastestSpecifiedCityServer() throws {
-        let result = try repository.getFirstServer(
+        let result = repository.getFirstServer(
             filteredBy: [.city("Vancouver")],
             orderedBy: .fastest
         )
@@ -128,7 +128,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
     }
 
     func testFastestSpecifiedGatewayServer() throws {
-        let result = try repository.getFirstServer(
+        let result = repository.getFirstServer(
             filteredBy: [.kind(.gateway(name: "Mega Gateway 2000"))],
             orderedBy: .fastest
         )
@@ -139,7 +139,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
     }
 
     func testFreeTorServers() throws {
-        let results = try repository.getServers(
+        let results = repository.getServers(
             filteredBy: [
                 .features(.standard(with: .tor)),
                 .tier(.max(tier: 0))
@@ -151,7 +151,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
     }
 
     func testSpecifiedCountrySecureCoreServers() throws {
-        let results = try repository.getServers(
+        let results = repository.getServers(
             filteredBy: [
                 .kind(.country(code: "US")),
                 .features(.secureCore)
@@ -168,7 +168,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
     /// Note the protocols used here are selected at random and do not represent the set of protocols that are currently
     /// supported by the app targets.
     func testReturnsServersAccordingToSpecifiedProtocols() throws {
-        let ikeResults = try repository.getServers(
+        let ikeResults = repository.getServers(
             filteredBy: [.kind(.country(code: "DE")), .supports(protocol: .ikev2)],
             orderedBy: .nameAscending
         )
@@ -178,7 +178,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
         XCTAssertTrue(ikeResults.allSatisfy { $0.protocolSupport.contains(.ikev2) })
         XCTAssertEqual(ikeServerIDs, ["DE1"])
 
-        let stealthResults = try repository.getServers(
+        let stealthResults = repository.getServers(
             filteredBy: [.kind(.country(code: "DE")), .supports(protocol: .wireGuardTLS)],
             orderedBy: .nameAscending
         )
@@ -188,7 +188,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
         XCTAssertTrue(stealthResults.allSatisfy { $0.protocolSupport.contains(.wireGuardTLS) })
         XCTAssertEqual(stealthServerIDs, ["DE2"])
 
-        let ikeOrStealthResults = try repository.getServers(
+        let ikeOrStealthResults = repository.getServers(
             filteredBy: [.kind(.country(code: "DE")), .supports(protocol: [.ikev2, .wireGuardTLS])],
             orderedBy: .nameAscending
         )
@@ -201,7 +201,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
 
     // Ordering servers by name requires additional comparison
     func testServerNameOrdering() throws {
-        let results = try repository.getServers(
+        let results = repository.getServers(
             filteredBy: [.kind(.country(code: "DE"))],
             orderedBy: .nameAscending
         )

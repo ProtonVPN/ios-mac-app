@@ -230,7 +230,7 @@ extension VpnManager {
     /// Updates last connection config that is used to display proper info in apps UI.
     private func updateActiveConnection(serverId: String, ipId: String) {
         @Dependency(\.serverRepository) var repository
-        let result = try? repository.getFirstServer(filteredBy: [.logicalID(serverId)], orderedBy: .fastest)
+        let result = repository.getFirstServer(filteredBy: [.logicalID(serverId)], orderedBy: .fastest)
         guard let result else {
             log.warning("Server with such id not found", category: .connection, event: .error, metadata: ["serverId": "\(serverId)"])
             return
