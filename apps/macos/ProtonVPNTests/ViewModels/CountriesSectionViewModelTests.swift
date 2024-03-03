@@ -118,7 +118,7 @@ final class CountriesViewModelTests: XCTestCase {
     }
 }
 
-class DependencyFactory: CountriesSectionViewModel.Factory, ProfileManagerFactory, ProfileStorageFactory, ServerStorageFactory {
+class DependencyFactory: CountriesSectionViewModel.Factory, ProfileManagerFactory, ProfileStorageFactory {
     let propertiesManager: PropertiesManagerProtocol
 
     init(propertiesManager: PropertiesManagerMock) {
@@ -138,7 +138,6 @@ class DependencyFactory: CountriesSectionViewModel.Factory, ProfileManagerFactor
     func makeNetShieldPropertyProvider() -> NetShieldPropertyProvider { NetShieldPropertyProviderMock() }
     func makeProfileManager() -> LegacyCommon.ProfileManager { ProfileManager(self) }
     func makeProfileStorage() -> LegacyCommon.ProfileStorage { ProfileStorage(authKeychain: AuthKeychainHandleMock()) }
-    func makeServerStorage() -> LegacyCommon.ServerStorage { ServerStorageMock() }
     func makeSystemExtensionManager() -> LegacyCommon.SystemExtensionManager { SystemExtensionManagerMock(factory: self) }
     func makeVpnManager() -> LegacyCommon.VpnManagerProtocol { VpnManagerMock() }
     func makeVpnStateConfiguration() -> LegacyCommon.VpnStateConfiguration { fatalError() }

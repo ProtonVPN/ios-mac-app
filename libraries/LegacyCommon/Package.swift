@@ -163,7 +163,6 @@ let package = Package(
             resources: [
                 .copy("Resources/test_log_1.log"),
                 .copy("Resources/test_log_2.log"),
-                .copy("Resources/ServerManagerTestServers.json")
             ]
         ),
     ]

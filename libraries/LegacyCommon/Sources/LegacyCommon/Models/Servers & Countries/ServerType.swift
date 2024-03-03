@@ -125,7 +125,7 @@ public extension ServerType {
         }
     }
 
-    public var serverFilter: VPNServerFilter {
+    var serverFilter: VPNServerFilter {
         switch self {
         case .secureCore:
             return .features(.secureCore)

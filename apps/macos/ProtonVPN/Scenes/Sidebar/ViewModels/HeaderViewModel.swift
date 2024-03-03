@@ -43,8 +43,6 @@ final class HeaderViewModel {
     public typealias Factory = AnnouncementManagerFactory & AppStateManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & ProfileManagerFactory & NavigationServiceFactory & VpnGatewayFactory & AnnouncementsViewModelFactory
     private let factory: Factory
     
-    private let serverStorage = ServerStorageConcrete()
-    
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
@@ -212,7 +210,8 @@ final class HeaderViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(contentChangedNotification), name: type(of: propertiesManager).userIpNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(contentChangedNotification), name: type(of: propertiesManager).activeConnectionChangedNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(contentChangedNotification), name: profileManager.contentChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(contentChangedNotification), name: serverStorage.contentChanged, object: nil)
+        // VPNAPPL-2075: Refresh UI when server list is updated
+        // NotificationCenter.default.addObserver(self, selector: #selector(contentChangedNotification), name: serverStorage.contentChanged, object: nil)
     }
     
     @objc private func vpnConnectionChanged() {

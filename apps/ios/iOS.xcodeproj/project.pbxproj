@@ -347,7 +347,6 @@
 		E5BBFED52B333B2200FA9CF8 /* ProtocolServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14CC340233E723600306EAD /* ProtocolServiceMock.swift */; };
 		E5BBFED62B333B2200FA9CF8 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C182285918C0002C095 /* AlertService.swift */; };
 		E5BBFED72B333B2200FA9CF8 /* AppSessionManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F568A22327833100795953 /* AppSessionManagerMock.swift */; };
-		E5BBFED82B333B2200FA9CF8 /* ServerStorageArrayMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05722E1E3E40034389A /* ServerStorageArrayMock.swift */; };
 		E5BBFEDA2B33422100FA9CF8 /* XCTestExpectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BF950F23559AAF00C7D1E7 /* XCTestExpectation.swift */; };
 		E5CF14862949E68700AF6912 /* QuarkCommands+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CF14852949E68700AF6912 /* QuarkCommands+Async.swift */; };
 		E5DEF0612A739A08006FC9DC /* DictionaryCoder in Frameworks */ = {isa = PBXBuildFile; productRef = E5DEF0602A739A08006FC9DC /* DictionaryCoder */; };
@@ -752,7 +751,6 @@
 		D5C8901229360230009177E4 /* ObfuscatedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.swift; sourceTree = "<group>"; };
 		D5D4D05322E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrEditProfileViewModelTests.swift; sourceTree = "<group>"; };
 		D5D4D05522E1DAE30034389A /* ProfileServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileServiceMock.swift; sourceTree = "<group>"; };
-		D5D4D05722E1E3E40034389A /* ServerStorageArrayMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerStorageArrayMock.swift; sourceTree = "<group>"; };
 		D5F37634254010EF008C7207 /* UIViewController+Announcements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Announcements.swift"; sourceTree = "<group>"; };
 		D5F3763B254028E5008C7207 /* AnnouncementButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementButtonViewModel.swift; sourceTree = "<group>"; };
 		D5F56898232620C600795953 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
@@ -1471,7 +1469,6 @@
 				E197BD4322C0DFD6004E0FE7 /* PlanServiceMock.swift */,
 				D5D4D05522E1DAE30034389A /* ProfileServiceMock.swift */,
 				E14CC340233E723600306EAD /* ProtocolServiceMock.swift */,
-				D5D4D05722E1E3E40034389A /* ServerStorageArrayMock.swift */,
 				D550A1B1256551F800FE2D54 /* ConnectionStatusServiceMock.swift */,
 			);
 			path = Mocks;
@@ -3113,7 +3110,6 @@
 				E5BBFED02B333AD700FA9CF8 /* StringBundleIdTests.swift in Sources */,
 				E5BBFED22B333B2200FA9CF8 /* TroubleshootCoordinatorMock.swift in Sources */,
 				E52508A42B3439E6006E6998 /* MapViewModelTests.swift in Sources */,
-				E5BBFED82B333B2200FA9CF8 /* ServerStorageArrayMock.swift in Sources */,
 				E5BBFED42B333B2200FA9CF8 /* ConnectionStatusServiceMock.swift in Sources */,
 				E5BBFED52B333B2200FA9CF8 /* ProtocolServiceMock.swift in Sources */,
 			);

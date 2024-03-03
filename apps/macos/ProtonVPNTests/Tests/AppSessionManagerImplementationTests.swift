@@ -424,7 +424,6 @@ fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     let appSessionRefreshTimerMock = AppSessionRefreshTimerMock()
 
     let profileManager = ProfileManager(
-        serverStorage: ServerStorageMock(),
         propertiesManager: propertiesManagerMock,
         profileStorage: ProfileStorage(authKeychain: MockAuthKeychain())
     )
@@ -439,7 +438,6 @@ fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     func makeCoreAlertService() -> CoreAlertService { alertService }
     func makeProfileManager() -> ProfileManager { profileManager }
     func makePropertiesManager() -> PropertiesManagerProtocol { propertiesManagerMock }
-    func makeServerStorage() -> ServerStorage { ServerStorageMock() }
     func makeSystemExtensionManager() -> SystemExtensionManager { SystemExtensionManagerMock(factory: self) }
     func makeVpnAuthentication() -> VpnAuthentication { VpnAuthenticationMock() }
     func makeVpnGateway() -> VpnGatewayProtocol { VpnGatewayMock() }

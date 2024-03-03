@@ -63,24 +63,20 @@ public class ProfileManager {
         return defaultProfiles + customProfiles
     }
 
-    public typealias Factory = ServerStorageFactory & PropertiesManagerFactory & ProfileStorageFactory
+    public typealias Factory = PropertiesManagerFactory & ProfileStorageFactory
 
     public convenience init(_ factory: Factory) {
-        self.init(serverStorage: factory.makeServerStorage(),
-                  propertiesManager: factory.makePropertiesManager(),
-                  profileStorage: factory.makeProfileStorage())
+        self.init(propertiesManager: factory.makePropertiesManager(), profileStorage: factory.makeProfileStorage())
     }
     
-    public init(serverStorage: ServerStorage,
-                propertiesManager: PropertiesManagerProtocol,
-                profileStorage: ProfileStorage) {
+    public init(propertiesManager: PropertiesManagerProtocol, profileStorage: ProfileStorage) {
         self.propertiesManager = propertiesManager
         self.profileStorage = profileStorage
 
         NotificationCenter.default.addObserver(self, selector: #selector(profilesChanged(_:)),
                                                name: ProfileStorage.contentChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(serversChanged(_:)),
-                                               name: serverStorage.contentChanged, object: nil)
+        // VPNAPPL-2075 - refresh UI on server list update
+        // NotificationCenter.default.addObserver(self, selector: #selector(serversChanged(_:)), name: serverStorage.contentChanged, object: nil)
         refreshProfiles()
     }
     

@@ -73,10 +73,10 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
         propertiesManager: propertiesManager)
 
     var appStateManager: AppStateManager {
-        return AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock(), doh: .mock, serverStorage: ServerStorageMock(), natTypePropertyProvider: NATTypePropertyProviderMock(), netShieldPropertyProvider: NetShieldPropertyProviderMock(), safeModePropertyProvider: SafeModePropertyProviderMock())
+        return AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock(), doh: .mock, natTypePropertyProvider: NATTypePropertyProviderMock(), netShieldPropertyProvider: NetShieldPropertyProviderMock(), safeModePropertyProvider: SafeModePropertyProviderMock())
     }
 
-    lazy var profileManager = ProfileManager(serverStorage: ServerStorageConcrete(), propertiesManager: propertiesManager, profileStorage: ProfileStorage(authKeychain: authKeychain))
+    lazy var profileManager = ProfileManager(propertiesManager: propertiesManager, profileStorage: ProfileStorage(authKeychain: authKeychain))
     lazy var propertiesManager = PropertiesManagerMock()
 
     var profileService: ProfileServiceMock!

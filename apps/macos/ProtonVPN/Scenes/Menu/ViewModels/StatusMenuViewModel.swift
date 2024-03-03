@@ -385,24 +385,17 @@ final class StatusMenuViewModel {
         
         serverType = propertiesManager.serverTypeToggle
         
-        do {
-            let tier = try vpnKeychain.fetchCached().maxTier
+        profileManager = factory.makeProfileManager()
 
-            profileManager = factory.makeProfileManager()
-            
-            updateCountryList()
+        updateCountryList()
 
-            NotificationCenter.default.addObserver(self, selector: #selector(handleVpnChange),
-                                                   name: VpnGateway.activeServerTypeChanged, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(handleVpnChange),
-                                                   name: VpnGateway.connectionChanged, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange),
-                                                   name: profileManager!.contentChanged, object: nil)
-            // Refreshing views on server list updates is to be re-enabled in VPNAPPL-2075 along with serverManager removal
-            // NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange), name: serverManager!.contentChanged, object: nil)
-        } catch {
-            alertService.push(alert: CannotAccessVpnCredentialsAlert())
-        }
+        NotificationCenter.default.addObserver(self, selector: #selector(handleVpnChange),
+                                               name: VpnGateway.activeServerTypeChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleVpnChange),
+                                               name: VpnGateway.connectionChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange),
+                                               name: profileManager!.contentChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange), name: ServerListUpdateNotification.name, object: nil)
     }
 
     private func sessionEnded() {

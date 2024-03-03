@@ -50,11 +50,12 @@ class MapViewModelTests: XCTestCase {
     var appStateManager: AppStateManager!
     var repository: ServerRepository!
 
+    func serversFromFile() throws -> [VPNServer] {
+        LegacyServerLoader.parseFromJsonFile("LiveServers", bundle: Bundle(for: Self.self))
+    }
+
     override func setUpWithError() throws {
         try super.setUpWithError()
-
-        let serversFromFile = ServerStorageMock(fileName: "LiveServers", bundle: Bundle(for: type(of: self))).servers
-        let serversToInsert = serversFromFile.values.map { VPNServer(legacyModel: $0) }
 
         repository = withDependencies {
             $0.appDB = .newInMemoryInstance()
@@ -62,6 +63,7 @@ class MapViewModelTests: XCTestCase {
             .liveValue
         }
 
+        let serversToInsert = try serversFromFile()
         try repository.upsert(servers: serversToInsert)
 
         let vpnApiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation(), authKeychain: MockAuthKeychain())
@@ -70,7 +72,7 @@ class MapViewModelTests: XCTestCase {
             vpnKeychain: VpnKeychainMock(),
             alertService: AlertServiceEmptyStub(),
             propertiesManager: PropertiesManagerMock())
-        appStateManager = AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock(), doh: .mock, serverStorage: ServerStorageMock(), natTypePropertyProvider: NATTypePropertyProviderMock(), netShieldPropertyProvider: NetShieldPropertyProviderMock(), safeModePropertyProvider: SafeModePropertyProviderMock())
+        appStateManager = AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock(), doh: .mock, natTypePropertyProvider: NATTypePropertyProviderMock(), netShieldPropertyProvider: NetShieldPropertyProviderMock(), safeModePropertyProvider: SafeModePropertyProviderMock())
     }
     
     func testSecureCoreAnnotationLocations() throws {

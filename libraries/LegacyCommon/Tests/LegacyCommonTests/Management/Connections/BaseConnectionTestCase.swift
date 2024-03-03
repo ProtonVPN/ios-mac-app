@@ -92,7 +92,6 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
         container.networkingDelegate.apiServerList = initialServers
         container.networkingDelegate.apiVpnLocation = .mock
         container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
-        container.serverStorage.populateServers(container.networkingDelegate.apiServerList)
 
         try repository.upsert(servers: initialServers.map { VPNServer(legacyModel: $0) })
 

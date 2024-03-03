@@ -77,7 +77,6 @@ public class AppStateManagerImplementation: AppStateManager {
     private let vpnApiService: VpnApiService
     private var vpnManager: VpnManagerProtocol
     private let propertiesManager: PropertiesManagerProtocol
-    private let serverStorage: ServerStorage
     private let timerFactory: TimerFactory
     private let vpnKeychain: VpnKeychainProtocol
     private let configurationPreparer: VpnManagerConfigurationPreparer
@@ -148,7 +147,6 @@ public class AppStateManagerImplementation: AppStateManager {
         VpnManagerConfigurationPreparerFactory &
         VpnAuthenticationFactory &
         DoHVPNFactory &
-        ServerStorageFactory &
         NATTypePropertyProviderFactory &
         NetShieldPropertyProviderFactory &
         SafeModePropertyProviderFactory
@@ -164,13 +162,26 @@ public class AppStateManagerImplementation: AppStateManager {
                   configurationPreparer: factory.makeVpnManagerConfigurationPreparer(),
                   vpnAuthentication: factory.makeVpnAuthentication(),
                   doh: factory.makeDoHVPN(),
-                  serverStorage: factory.makeServerStorage(),
                   natTypePropertyProvider: factory.makeNATTypePropertyProvider(),
                   netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
                   safeModePropertyProvider: factory.makeSafeModePropertyProvider())
     }
     
-    public init(vpnApiService: VpnApiService, vpnManager: VpnManagerProtocol, networking: Networking, alertService: CoreAlertService, timerFactory: TimerFactory, propertiesManager: PropertiesManagerProtocol, vpnKeychain: VpnKeychainProtocol, configurationPreparer: VpnManagerConfigurationPreparer, vpnAuthentication: VpnAuthentication, doh: DoHVPN, serverStorage: ServerStorage, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, safeModePropertyProvider: SafeModePropertyProvider) {
+    public init(
+        vpnApiService: VpnApiService,
+        vpnManager: VpnManagerProtocol,
+        networking: Networking,
+        alertService: CoreAlertService,
+        timerFactory: TimerFactory,
+        propertiesManager: PropertiesManagerProtocol,
+        vpnKeychain: VpnKeychainProtocol,
+        configurationPreparer: VpnManagerConfigurationPreparer,
+        vpnAuthentication: VpnAuthentication,
+        doh: DoHVPN,
+        natTypePropertyProvider: NATTypePropertyProvider,
+        netShieldPropertyProvider: NetShieldPropertyProvider,
+        safeModePropertyProvider: SafeModePropertyProvider
+    ) {
         self.vpnApiService = vpnApiService
         self.vpnManager = vpnManager
         self.networking = networking
@@ -181,7 +192,6 @@ public class AppStateManagerImplementation: AppStateManager {
         self.configurationPreparer = configurationPreparer
         self.vpnAuthentication = vpnAuthentication
         self.doh = doh
-        self.serverStorage = serverStorage
         self.natTypePropertyProvider = natTypePropertyProvider
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
@@ -274,12 +284,13 @@ public class AppStateManagerImplementation: AppStateManager {
         
         attemptingConnection = true
         
-        let serverAge = serverStorage.fetchAge()
-        if Date().timeIntervalSince1970 - serverAge > (2 * 60 * 60) {
-            // if this is too common, then we should pick a random server instead of using really old score values
-            log.warning("Connecting with scores older than 2 hours", category: .app, metadata: ["serverAge": "\(serverAge)"])
-        }
-                
+        // ServerStorage no longer exists. If we want to continue logging this, we should use the timestamp stored for VPNAPPL-2078
+        // let serverAge = serverStorage.fetchAge()
+        // if Date().timeIntervalSince1970 - serverAge > (2 * 60 * 60) {
+        //     if this is too common, then we should pick a random server instead of using really old score values
+        //     log.warning("Connecting with scores older than 2 hours", category: .app, metadata: ["serverAge": "\(serverAge)"])
+        // }
+
         switch configuration.vpnProtocol.authenticationType {
         case .credentials:
             log.info("VPN connect started", category: .connectionConnect, metadata: ["protocol": "\(configuration.vpnProtocol)", "authenticationType": "\(configuration.vpnProtocol.authenticationType)"])

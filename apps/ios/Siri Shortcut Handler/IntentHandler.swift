@@ -56,7 +56,6 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         let openVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.openVpn
         let wireguardVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.wireguard
         let appGroup = AppConstants.AppGroups.main
-        let serverStorage = ServerStorageConcrete()
         let propertiesManager = PropertiesManager()
         let vpnKeychain = VpnKeychain.instance
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
@@ -106,8 +105,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
             localAgentConnectionFactory: LocalAgentConnectionFactoryImplementation(),
             natTypePropertyProvider: natTypePropertyProvider,
             netShieldPropertyProvider: netShieldPropertyProvider,
-            safeModePropertyProvider: safeModePropertyProvider,
-            serverStorage: ServerStorageConcrete()
+            safeModePropertyProvider: safeModePropertyProvider
         )
 
         let countryCodeProvider = dependencyFactory.makeCountryCodeProvider()
@@ -129,14 +127,12 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
             natTypePropertyProvider: natTypePropertyProvider,
             safeModePropertyProvider: safeModePropertyProvider,
             profileManager: ProfileManager(
-                serverStorage: ServerStorageConcrete(),
                 propertiesManager: propertiesManager,
                 profileStorage: ProfileStorage(
                     authKeychain: dependencyFactory.makeAuthKeychainHandle()
                 )
             ),
             doh: doh,
-            serverStorage: serverStorage,
             availabilityCheckerResolverFactory: dependencyFactory
         )
 

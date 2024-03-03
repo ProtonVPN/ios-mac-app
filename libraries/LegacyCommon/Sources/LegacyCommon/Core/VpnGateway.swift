@@ -111,7 +111,6 @@ public class VpnGateway: VpnGatewayProtocol {
     private let authKeychain: AuthKeychainHandle
     private let availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory
     
-    private let serverStorage: ServerStorage
     private let propertiesManager: PropertiesManagerProtocol
 
     private let siriHelper: SiriHelperProtocol?
@@ -181,7 +180,6 @@ public class VpnGateway: VpnGatewayProtocol {
         PropertiesManagerFactory &
         ProfileManagerFactory &
         AvailabilityCheckerResolverFactory &
-        ServerStorageFactory &
         VpnConnectionInterceptDelegate
 
     public convenience init(_ factory: Factory) {
@@ -198,7 +196,6 @@ public class VpnGateway: VpnGatewayProtocol {
             propertiesManager: factory.makePropertiesManager(),
             profileManager: factory.makeProfileManager(),
             availabilityCheckerResolverFactory: factory,
-            serverStorage: factory.makeServerStorage(),
             connectionIntercepts: factory.vpnConnectionInterceptPolicies
         )
     }
@@ -216,7 +213,6 @@ public class VpnGateway: VpnGatewayProtocol {
         propertiesManager: PropertiesManagerProtocol,
         profileManager: ProfileManager,
         availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory,
-        serverStorage: ServerStorage,
         connectionIntercepts: [VpnConnectionInterceptPolicyItem] = []
     ) {
         self.vpnApiService = vpnApiService
@@ -237,7 +233,6 @@ public class VpnGateway: VpnGatewayProtocol {
 
         let state = appStateManager.state
         self.connection = ConnectionStatus.forAppState(state)
-        self.serverStorage = serverStorage
         /// Sometimes when launching the app, the `AppStateManager` will post `.AppStateManager.stateChange` notification
         /// before `VPNGateway` has a chance of registering for that notification. For this event we're posting it here.
         postConnectionInformation()
@@ -719,7 +714,8 @@ fileprivate extension VpnGateway {
                 switch result {
                 case .success(let properties):
                     guard let servers = properties?.serverModels else { break }
-                    self?.serverStorage.store(servers)
+                    self?.repository.upsert(servers: servers.map { VPNServer(legacyModel: $0) })
+                    // VPNAPPL-2075 - refresh UI on server list update
                 case .failure(let error):
                     log.error("Encountered error refreshing server list on plan upgrade: \(error)")
                 }

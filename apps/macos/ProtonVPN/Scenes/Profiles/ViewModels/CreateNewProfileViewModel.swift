@@ -50,8 +50,7 @@ class CreateNewProfileViewModel {
         VpnGatewayFactory &
         ProfileManagerFactory &
         SystemExtensionManagerFactory &
-        SessionServiceFactory &
-        ServerStorageFactory
+        SessionServiceFactory
     private let factory: Factory
     
     typealias MenuContentUpdate = Set<KeyPath<CreateNewProfileViewModel, [PopUpButtonItemViewModel]>>

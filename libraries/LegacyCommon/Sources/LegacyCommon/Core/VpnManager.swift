@@ -173,7 +173,6 @@ public class VpnManager: VpnManagerProtocol {
             }
         }
     }
-    let serverStorage: ServerStorage // Used to find new server/ip in case NE had to reconnect to another server
 
     var notificationCenter: NotificationCenter = .default
     private var tokens: [UUID: NotificationToken] = [:]
@@ -192,7 +191,6 @@ public class VpnManager: VpnManagerProtocol {
         & NATTypePropertyProviderFactory
         & NetShieldPropertyProviderFactory
         & SafeModePropertyProviderFactory
-        & ServerStorageFactory
 
     public convenience init(_ factory: Factory, config: Container.Config) {
         self.init(
@@ -210,8 +208,7 @@ public class VpnManager: VpnManagerProtocol {
             localAgentConnectionFactory: factory.makeLocalAgentConnectionFactory(),
             natTypePropertyProvider: factory.makeNATTypePropertyProvider(),
             netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
-            safeModePropertyProvider: factory.makeSafeModePropertyProvider(),
-            serverStorage: factory.makeServerStorage()
+            safeModePropertyProvider: factory.makeSafeModePropertyProvider()
         )
     }
     
@@ -230,8 +227,7 @@ public class VpnManager: VpnManagerProtocol {
         localAgentConnectionFactory: LocalAgentConnectionFactory,
         natTypePropertyProvider: NATTypePropertyProvider,
         netShieldPropertyProvider: NetShieldPropertyProvider,
-        safeModePropertyProvider: SafeModePropertyProvider,
-        serverStorage: ServerStorage
+        safeModePropertyProvider: SafeModePropertyProvider
     ) {
         readyGroup?.enter()
 
@@ -250,8 +246,7 @@ public class VpnManager: VpnManagerProtocol {
         self.natTypePropertyProvider = natTypePropertyProvider
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
-        self.serverStorage = serverStorage
-        
+
         prepareManagers(forSetup: true)
     }
 

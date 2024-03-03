@@ -130,8 +130,7 @@ public class MockDependencyContainer {
         localAgentConnectionFactory: localAgentConnectionFactory,
         natTypePropertyProvider: natProvider,
         netShieldPropertyProvider: netShieldProvider,
-        safeModePropertyProvider: safeModeProvider,
-        serverStorage: ServerStorageMock()
+        safeModePropertyProvider: safeModeProvider
     )
 
     public lazy var vpnManagerConfigurationPreparer = VpnManagerConfigurationPreparer(
@@ -139,8 +138,6 @@ public class MockDependencyContainer {
         alertService: alertService,
         propertiesManager: propertiesManager
     )
-
-    public lazy var serverStorage = ServerStorageMock(servers: [])
 
     public lazy var appStateManager = AppStateManagerImplementation(
         vpnApiService: vpnApiService,
@@ -153,7 +150,6 @@ public class MockDependencyContainer {
         configurationPreparer: vpnManagerConfigurationPreparer,
         vpnAuthentication: vpnAuthentication,
         doh: dohVpn,
-        serverStorage: serverStorage,
         natTypePropertyProvider: natProvider,
         netShieldPropertyProvider: netShieldProvider,
         safeModePropertyProvider: safeModeProvider
@@ -161,7 +157,7 @@ public class MockDependencyContainer {
 
     public lazy var authKeychain = MockAuthKeychain(context: .mainApp)
 
-    public lazy var profileManager = ProfileManager(serverStorage: serverStorage, propertiesManager: propertiesManager, profileStorage: ProfileStorage(authKeychain: authKeychain))
+    public lazy var profileManager = ProfileManager(propertiesManager: propertiesManager, profileStorage: ProfileStorage(authKeychain: authKeychain))
 
     public lazy var checkers = [
         AvailabilityCheckerMock(vpnProtocol: .ike, availablePorts: [500]),
@@ -185,8 +181,7 @@ public class MockDependencyContainer {
         safeModePropertyProvider: safeModeProvider,
         propertiesManager: propertiesManager,
         profileManager: profileManager,
-        availabilityCheckerResolverFactory: availabilityCheckerResolverFactory,
-        serverStorage: serverStorage
+        availabilityCheckerResolverFactory: availabilityCheckerResolverFactory
     ) } }()
 
     public init() {}
@@ -228,7 +223,7 @@ extension MockFactory: CountryCodeProviderFactory {
     }
 }
 
-// public typealias Factory = VpnApiServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & CoreAlertServiceFactory
+// public typealias Factory = VpnApiServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & CoreAlertServiceFactory
 extension MockFactory: CoreAlertServiceFactory {
     func makeCoreAlertService() -> CoreAlertService {
         container.alertService
@@ -250,12 +245,6 @@ extension MockFactory: VpnKeychainFactory {
 extension MockFactory: PropertiesManagerFactory {
     func makePropertiesManager() -> PropertiesManagerProtocol {
         container.propertiesManager
-    }
-}
-
-extension MockFactory: ServerStorageFactory {
-    func makeServerStorage() -> ServerStorage {
-        container.serverStorage
     }
 }
 

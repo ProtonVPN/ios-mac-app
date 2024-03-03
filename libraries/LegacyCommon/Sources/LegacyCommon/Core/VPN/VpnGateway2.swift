@@ -39,7 +39,6 @@ public protocol VpnGateway2Factory {
 public class VpnGateway2: VpnGatewayProtocol2 {
 
     private let appStateManager: AppStateManager
-    private let serverStorage: ServerStorage
     private let propertiesManager: PropertiesManagerProtocol
     private let serverTierChecker: ServerTierChecker
     private let availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory
@@ -52,12 +51,10 @@ public class VpnGateway2: VpnGatewayProtocol2 {
         SafeModePropertyProviderFactory &
         PropertiesManagerFactory &
         AvailabilityCheckerResolverFactory &
-        ServerStorageFactory &
         ServerTierCheckerFactory
 
     init(_ factory: Factory) {
         self.appStateManager = factory.makeAppStateManager()
-        self.serverStorage = factory.makeServerStorage()
         self.propertiesManager = factory.makePropertiesManager()
         self.serverTierChecker = factory.makeServerTierChecker()
         self.availabilityCheckerResolverFactory = factory

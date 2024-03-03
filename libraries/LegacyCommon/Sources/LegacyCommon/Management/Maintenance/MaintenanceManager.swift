@@ -39,7 +39,7 @@ public protocol MaintenanceManagerProtocol {
 
 public class MaintenanceManager: MaintenanceManagerProtocol {
     
-    public typealias Factory = VpnApiServiceFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & ServerStorageFactory & VpnKeychainFactory
+    public typealias Factory = VpnApiServiceFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & VpnKeychainFactory
     
     private let factory: Factory
     
@@ -48,7 +48,6 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
     private lazy var vpnGateWay: VpnGatewayProtocol = self.factory.makeVpnGateway()
     private lazy var vpnKeychain: VpnKeychainProtocol = self.factory.makeVpnKeychain()
     private lazy var alertService: CoreAlertService = self.factory.makeCoreAlertService()
-    private lazy var serverStorage: ServerStorage = self.factory.makeServerStorage()
     
     private var timer: Timer?
     

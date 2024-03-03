@@ -108,11 +108,6 @@ open class Container: PropertiesToOverride {
         await TelemetryServiceImplementation(factory: self)
     }
 
-    // Transient instances - get allocated as many times as they're referenced
-    private var serverStorage: ServerStorage {
-        ServerStorageConcrete()
-    }
-
     private var telemetryService: TelemetryService?
 
     // Should be set in apps to the Container object
@@ -226,12 +221,6 @@ extension Container: AuthKeychainHandleFactory {
 extension Container: UnauthKeychainHandleFactory {
     public func makeUnauthKeychainHandle() -> UnauthKeychainHandle {
         unauthKeychain
-    }
-}
-
-extension Container: ServerStorageFactory {
-    public func makeServerStorage() -> ServerStorage {
-        serverStorage
     }
 }
 

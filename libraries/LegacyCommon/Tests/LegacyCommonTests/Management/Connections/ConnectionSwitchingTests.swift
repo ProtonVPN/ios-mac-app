@@ -157,7 +157,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
             return false
         }
 
-        container.serverStorage.populateServers(container.serverStorage.servers.values + [testData.server2])
+        repository.upsert(servers: [VPNServer(legacyModel: testData.server2)])
 
         let request = ConnectionRequest(serverType: .standard,
                                         connectionType: .country("CH", .fastest),
@@ -219,8 +219,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         container.availabilityCheckerResolverFactory.checkers[.wireGuard(.udp)]?.availabilityCallback = unavailableCallback
 
-        let servers = (container.serverStorage.servers.values + [testData.server2]).map { VPNServer(legacyModel: $0) }
-        try repository.upsert(servers: servers)
+        try repository.upsert(servers: [VPNServer(legacyModel: testData.server2)])
 
         let expectations = (
             initialConnection: XCTestExpectation(description: "initial connection"),
