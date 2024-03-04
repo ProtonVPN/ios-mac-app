@@ -190,7 +190,7 @@ extension QuickSettingsDropdownOption: CustomStyleContext {
         default:
             break
         }
-        assertionFailure("Context not handled: \(context)")
+        log.assertionFailure("Context not handled: \(context)")
         return .normal
     }
 }

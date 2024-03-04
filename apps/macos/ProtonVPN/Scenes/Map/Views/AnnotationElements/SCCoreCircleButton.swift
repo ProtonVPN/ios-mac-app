@@ -83,7 +83,7 @@ class SCCoreCircleButton: HoverDetectionButtonAdvanced {
 extension SCCoreCircleButton: CustomStyleContext {
     func customStyle(context: AppTheme.Context) -> AppTheme.Style {
         guard context == .icon || context == .background else {
-            assertionFailure("Context not handled: \(context)")
+            log.assertionFailure("Context not handled: \(context)")
             return .normal
         }
 

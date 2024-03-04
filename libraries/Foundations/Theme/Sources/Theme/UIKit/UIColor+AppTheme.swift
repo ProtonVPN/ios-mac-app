@@ -19,6 +19,7 @@
 import Foundation
 import SwiftUI
 import ProtonCoreUIFoundations
+import PMLogger
 #if canImport(UIKit)
 import UIKit
 
@@ -65,7 +66,7 @@ private extension AppTheme.Style {
         } else if contains(.info) {
             return ColorProvider.NotificationNorm
         }
-        assertionFailure("notification color not handled")
+        log.assertionFailure("notification color not handled")
         return ColorProvider.NotificationNorm
     }
 

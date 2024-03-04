@@ -60,7 +60,20 @@ public extension Logging.Logger {
         
         self.log(level: .error, message(), metadata: getMeta(metadata, category: category, event: event)(), source: source(), file: file, function: function, line: line)
     }
-    
+
+    func assertionFailure(_ message: String,
+                          category: Logger.Category? = nil,
+                          event: Logger.Event? = nil,
+                          metadata: @autoclosure @escaping () -> Metadata? = nil,
+                          source: @autoclosure () -> String? = nil,
+                          file: String = #file, function: String = #function, line: UInt = #line) {
+        
+        self.log(level: .critical, .init(stringLiteral: message), metadata: getMeta(metadata, category: category, event: event)(), source: source(), file: file, function: function, line: line)
+#if DEBUG
+        Swift.assertionFailure(message)
+#endif
+    }
+
     /// Metadata predefined keys
     enum MetaKey: String {
         case category

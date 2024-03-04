@@ -288,7 +288,7 @@ extension SwitchButton: CustomStyleContext {
         default:
             break
         }
-        assertionFailure("Unhandled context: \(context)")
+        log.assertionFailure("Unhandled context: \(context)")
         return .normal
     }
 }

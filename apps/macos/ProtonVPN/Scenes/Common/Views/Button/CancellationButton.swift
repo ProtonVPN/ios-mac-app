@@ -88,7 +88,7 @@ extension CancellationButton: CustomStyleContext {
             break
         }
 
-        assertionFailure("Context not handled: \(context)")
+        log.assertionFailure("Context not handled: \(context)")
         return .normal
     }
 }

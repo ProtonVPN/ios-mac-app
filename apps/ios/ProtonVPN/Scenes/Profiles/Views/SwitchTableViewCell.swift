@@ -69,8 +69,7 @@ final class SwitchTableViewCell: UITableViewCell {
     func setup(with model: PaidFeatureDisplayState) {
         switch model {
         case .disabled:
-            log.warning("We shouldn't display cells for disabled features")
-            assertionFailure("We shouldn't display cells for disabled features")
+            log.assertionFailure("We shouldn't display cells for disabled features")
             // We shouldn't be showing UI for a feature that has been disabled, so just fall back to showing upsell
             fallthrough
         case .upsell:

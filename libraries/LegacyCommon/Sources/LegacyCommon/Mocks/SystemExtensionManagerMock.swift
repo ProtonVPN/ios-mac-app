@@ -102,7 +102,7 @@ public class SystemExtensionManagerMock: SystemExtensionManager {
         }
 
         guard let info = info else {
-            assertionFailure("Attempted to approve a request that wasn't in pending requests")
+            log.assertionFailure("Attempted to approve a request that wasn't in pending requests")
             return
         }
 

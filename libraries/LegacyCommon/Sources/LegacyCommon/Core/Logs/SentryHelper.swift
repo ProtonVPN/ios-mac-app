@@ -18,7 +18,7 @@ public final class SentryHelper {
 
     public static func setupSentry(dsn: String, isEnabled: @escaping () -> Bool, getUserId: @escaping () -> String?) {
         guard shared == nil else {
-            assertionFailure("Sentry already setup")
+            LegacyCommon.log.assertionFailure("Sentry already setup")
             return
         }
 

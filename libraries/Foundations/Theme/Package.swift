@@ -16,7 +16,9 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../../external/protoncore"),
-        .package(path: "../Ergonomics")
+        .package(path: "../Ergonomics"),
+        .package(url: "https://github.com/apple/swift-log.git", exact: "1.4.4"),
+        .package(path: "../PMLogger"),
     ],
     targets: [
         .target(
@@ -24,6 +26,8 @@ let package = Package(
             dependencies: [
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 "Ergonomics",
+                "PMLogger",
+                .product(name: "Logging", package: "swift-log")
             ],
             exclude: ["swiftgen.yml"],
             resources: [.process("Resources")],

@@ -174,7 +174,7 @@ public class TelemetryEventNotifier {
 
     private func upsellCompleted(_ notification: Notification) {
         guard let (source, newPlanName) = notification.object as? (ModalSource?, String?) else {
-            assertionFailure("Notification object conversion failed in \(#function)")
+            log.assertionFailure("Notification object conversion failed in \(#function)")
             return
         }
         Task {

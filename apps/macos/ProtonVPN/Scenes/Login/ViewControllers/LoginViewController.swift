@@ -304,7 +304,7 @@ final class LoginViewController: NSViewController {
             viewModel.logIn(username: usernameTextField.stringValue, password: passwordEntry)
         case .ssoSignin:
             guard isSSOEnabled else {
-                assertionFailure("This action should never be called if sso signin is not enabled")
+                log.assertionFailure("This action should never be called if sso signin is not enabled")
                 return
             }
             viewModel.logInWithSSO(username: usernameTextField.stringValue)
@@ -384,7 +384,7 @@ final class LoginViewController: NSViewController {
     
     @objc private func signInWithSSOButtonAction() {
         guard isSSOEnabled else {
-            assertionFailure("This action should never be called if sso signin is not enabled")
+            log.assertionFailure("This action should never be called if sso signin is not enabled")
             return
         }
         switch signInVariant {

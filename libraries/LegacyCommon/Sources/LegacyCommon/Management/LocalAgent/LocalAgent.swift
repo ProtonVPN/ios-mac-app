@@ -124,7 +124,7 @@ public final class LocalAgentConnectionFactoryImplementation: LocalAgentConnecti
         }
 
         guard let result = result else {
-            assertionFailure("LocalAgentNewAgentConnection should have returned error")
+            log.assertionFailure("LocalAgentNewAgentConnection should have returned error")
             throw LocalAgentError.serverError
         }
 

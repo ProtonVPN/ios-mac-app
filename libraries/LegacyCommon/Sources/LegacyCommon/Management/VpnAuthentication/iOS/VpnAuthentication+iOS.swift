@@ -207,12 +207,12 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
                 case .error(let message):
                     completionHandler(.failure(ProviderMessageError.remoteError(message: message)))
                 case .errorTooManyCertRequests:
-                    assertionFailure("Received \(response) after trying to renew session?")
+                    log.assertionFailure("Received \(response) after trying to renew session?")
                     completionHandler(.failure(AuthenticationRemoteClientError.tooManyCertRequests(retryAfter: nil)))
                 case .errorSessionExpired, .errorNeedKeyRegeneration:
                     // We should only ever expect these responses for cert refreshes, not for this entry point.
                     // If we're hitting this, something is very wrong.
-                    assertionFailure("Received \(response) after trying to renew session?")
+                    log.assertionFailure("Received \(response) after trying to renew session?")
                     completionHandler(.failure(ProtonVpnError.userCredentialsExpired))
                 }
             case .failure(let error):
@@ -231,7 +231,7 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
             // This is not great, but we should still continue with removing the items from the keychain if it fails.
             if case let .failure(error) = result {
                 log.error("Could not stop manager remotely: \(error)", category: .userCert)
-                assertionFailure("Could not stop manager remotely: \(error)")
+                log.assertionFailure("Could not stop manager remotely: \(error)")
             }
 
             closure()
@@ -239,7 +239,7 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
             self?.connectionProvider?.send(WireguardProviderRequest.restartRefreshes, completion: { result in
                 if case let .failure(error) = result {
                     log.error("Could not stop manager remotely: \(error)", category: .userCert)
-                    assertionFailure("Could not stop manager remotely: \(error)")
+                    log.assertionFailure("Could not stop manager remotely: \(error)")
                     return
                 }
                 finished?()

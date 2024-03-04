@@ -5,24 +5,34 @@ import PackageDescription
 
 let package = Package(
     name: "LocalFeatureFlags",
+    platforms: [
+        .iOS(.v15),
+        .macOS(.v11)
+    ],
     products: [
         .library(
             name: "LocalFeatureFlags",
             targets: ["LocalFeatureFlags"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/protonjohn/plistutil", exact: "0.0.2")
+        .package(url: "https://github.com/protonjohn/plistutil", exact: "0.0.2"),
+        .package(url: "https://github.com/apple/swift-log.git", exact: "1.4.4"),
+        .package(path: "../PMLogger"),
     ],
     targets: [
         .target(
             name: "LocalFeatureFlags",
+            dependencies: [
+                "PMLogger",
+                .product(name: "Logging", package: "swift-log")
+            ],
             resources: [
                 .process("Resources")
             ]
         ),
         .testTarget(
             name: "LocalFeatureFlagsTests",
-            dependencies: ["LocalFeatureFlags"]
+            dependencies: ["LocalFeatureFlags", "PMLogger"]
 //            resources: [
 //                .copy("LocalFeatureFlags/Resources")
 //            ]

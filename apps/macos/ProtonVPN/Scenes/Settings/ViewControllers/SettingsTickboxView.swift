@@ -104,11 +104,11 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
         switch model.state {
         case .disabled:
             log.warning("Feature is disabled, we shouldn't be showing a view for its state")
-            assertionFailure("Disabled features shouldn't be shown")
+            log.assertionFailure("Disabled features shouldn't be shown")
             fallthrough // show upsell instead
         case .upsell:
             guard let upsellImageView else {
-                assertionFailure("Upsellable features must link to an upsell image view")
+                log.assertionFailure("Upsellable features must link to an upsell image view")
                 return
             }
             upsellImageView.imageClicked = { [weak self] in self?.upsellImageViewTapped() }

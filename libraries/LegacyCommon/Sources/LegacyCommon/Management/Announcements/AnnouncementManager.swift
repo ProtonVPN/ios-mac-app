@@ -77,7 +77,7 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
         }
         if offers.count > 1 {
             let errorMessage = "There should only ever be one or none welcome offer banner, having more is an error."
-            assertionFailure(errorMessage)
+            log.assertionFailure(errorMessage)
             log.error(.init(stringLiteral: errorMessage), category: .api)
         }
         // Only return the one with closest endTime. If the offer was read, return nothing, though there might be others in queue.

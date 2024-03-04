@@ -85,7 +85,7 @@ public class SystemExtensionManager: NSObject {
             case .failed(let error):
                 accumulator = .failure(.installationError(internalError: error))
             default:
-                assertionFailure("\(type.rawValue) had unexpected final state \(installationResult)")
+                log.assertionFailure("\(type.rawValue) had unexpected final state \(installationResult)")
             }
         }
     }

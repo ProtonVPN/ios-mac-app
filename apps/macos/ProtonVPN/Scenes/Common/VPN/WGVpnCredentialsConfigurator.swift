@@ -32,8 +32,7 @@ final class WGVpnCredentialsConfigurator: VpnCredentialsConfigurator {
             let encoder = JSONEncoder()
             configData.append(try encoder.encode(storedConfig))
         } catch {
-            log.error("Couldn't encode wireguard config: \(error)")
-            assertionFailure("Couldn't encode wireguard config: \(error)")
+            log.assertionFailure("Couldn't encode wireguard config: \(error)")
             completionHandler(protocolConfig)
         }
 

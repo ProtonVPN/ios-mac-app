@@ -52,7 +52,7 @@ final class OVPNCredentialsConfigurator: VpnCredentialsConfigurator {
                 guard let tunnelProviderProtocol = protocolConfig as? NETunnelProviderProtocol,
                       let providerConfig = tunnelProviderProtocol.providerConfiguration else {
                     log.error("ProtocolConfiguration not set")
-                    assertionFailure("Wrong protocol configuration was passed")
+                    log.assertionFailure("Wrong protocol configuration was passed")
                     completionHandler(protocolConfig)
                     return
                 }
@@ -62,7 +62,7 @@ final class OVPNCredentialsConfigurator: VpnCredentialsConfigurator {
                     ovpnConfig = try DictionaryDecoder().decode(OpenVPN.Configuration.self, from: providerConfig)
                 } catch let error {
                     log.error("Can't parse OpenVPN config from given NETunnelProviderProtocol: \(error)")
-                    assertionFailure("OpenVPNTunnelProvider.Configuration was not saved in tunnelProviderProtocol.providerConfiguration")
+                    log.assertionFailure("OpenVPNTunnelProvider.Configuration was not saved in tunnelProviderProtocol.providerConfiguration")
                     completionHandler(protocolConfig)
                     return
                 }
