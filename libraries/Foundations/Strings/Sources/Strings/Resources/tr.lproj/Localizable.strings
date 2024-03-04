@@ -701,13 +701,6 @@
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "Anahtar zincirinde VPN kimlik doğrulama bilgileri eksik";
 
-/* Form validation error */
-"_error_field_required" = "Bu alan zorunludur";
-
-"_error_field_email_wrong_format" = "E-posta adresinin biçimi doğru değil";
-
-"_error_field_passwords_dont_match" = "Parola ile onayı aynı değil";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "İnsan olduğunuzu doğrulayamadık. Lütfen yeniden deneyin ya da ücretli bir tarifeye geçin.";
 
@@ -719,15 +712,6 @@
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton aygıtınızla iletişim kuramadı. Lütfen bir süre sonra yeniden deneyin.";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "Modül imzası boş";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "SRP oluşturulamadı";
-
-/* Error when try to hash password */
-"_error_hash_password" = "Kullanıcı parolası karılamadı";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Oturum kullanıcısı bulunamadı";
@@ -746,42 +730,6 @@
 
 /* Network error */
 "_ne_couldnt_reach_server" = "Proton sunucularına erişemedik";
-
-/* API error */
-"_ae_wrong_login_credentials" = "Kullanıcı adı veya parola yanlış";
-
-/* API error */
-"_ae_vpn_info_not_received" = "VPN bilgileri alınamadı";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "Sunucu bilgileri işlenemedi";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "İş ortağı bilgileri işlenemedi";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "VPN özellikleri alınamadı!";
-
-/* Parsing error */
-"_error_session_count_parser" = "Oturum sayısı işlenemedi";
-
-/* Parsing error */
-"_error_loads" = "Sunucu yükleri güncellenemedi";
-
-/* API error */
-"_error_api_offline" = "Proton VPN API şu anda çevrim dışı";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "Abonelik bilgileri işlenemedi";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "Doğrulama yöntemleri işlenemedi";
-
-/* Keychain error */
-"_error_keychain_fetch" = "Anahtarlık sorunu.";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "Hesap açılamadı";
 
 /* General title for several error alerts */
 "_error_unknown_title" = "Bilinmeyen sorun";

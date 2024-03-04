@@ -701,13 +701,6 @@
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "VPN-inloggningsuppgifter saknas från nyckelkedjan";
 
-/* Form validation error */
-"_error_field_required" = "Detta fält är obligatoriskt";
-
-"_error_field_email_wrong_format" = "E-postadressen är inte i rätt format";
-
-"_error_field_passwords_dont_match" = "Lösenorden matchar inte";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Vi har inte kunnat verifiera att du är en människa. Vänligen försök igen eller köp en premiumplan.";
 
@@ -719,15 +712,6 @@
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton kunde inte kommunicera med din enhet. Försök igen senare.";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "Modulsignatur är tom";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "SRP-generering misslyckades";
-
-/* Error when try to hash password */
-"_error_hash_password" = "Kan inte hash användarlösenord";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Kan inte hitta användare från sessionen";
@@ -746,42 +730,6 @@
 
 /* Network error */
 "_ne_couldnt_reach_server" = "Vi kunde inte nå Proton-servrar";
-
-/* API error */
-"_ae_wrong_login_credentials" = "Fel användarnamn eller lösenord";
-
-/* API error */
-"_ae_vpn_info_not_received" = "Kan inte få VPN-information";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "Kan inte tolka serverinformationen";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "Kan inte analysera partnerinformationen";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "Kan inte hämta VPN-egenskaper!";
-
-/* Parsing error */
-"_error_session_count_parser" = "Kan inte tolka antal sessioner";
-
-/* Parsing error */
-"_error_loads" = "Kan inte uppdatera serverbelastning";
-
-/* API error */
-"_error_api_offline" = "Proton VPN API är för närvarande offline";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "Kan inte tolka prenumerationsinformation";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "Kan inte tolka verfieringsmetoder";
-
-/* Keychain error */
-"_error_keychain_fetch" = "Nyckelringsfel.";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "Misslyckades skapa konto";
 
 /* General title for several error alerts */
 "_error_unknown_title" = "Okänt fel";

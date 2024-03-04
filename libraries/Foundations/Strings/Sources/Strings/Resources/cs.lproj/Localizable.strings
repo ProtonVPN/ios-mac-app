@@ -701,13 +701,6 @@
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "V klíčence chybí pověření VPN";
 
-/* Form validation error */
-"_error_field_required" = "Toto pole je povinné";
-
-"_error_field_email_wrong_format" = "E-mailová adresa není ve správném formátu";
-
-"_error_field_passwords_dont_match" = "Hesla se neshodují";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Nepodařilo se nám ověřit, zda jste člověk. Zkuste to prosím znovu nebo si zakupte prémiový tarif.";
 
@@ -719,15 +712,6 @@
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton nedokázal komunikovat s vaším zařízením. Prosím zkuste to později.";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "Podpis Modulusu je prázdný";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "Generování SRP selhalo";
-
-/* Error when try to hash password */
-"_error_hash_password" = "Nelze vytvořit hash uživatelského hesla";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Nelze nalézt uživatele z relace";
@@ -746,42 +730,6 @@
 
 /* Network error */
 "_ne_couldnt_reach_server" = "Nemohli jsme se připojit k Proton serverům";
-
-/* API error */
-"_ae_wrong_login_credentials" = "Špatné uživatelské jméno nebo heslo";
-
-/* API error */
-"_ae_vpn_info_not_received" = "Nelze získat informace o VPN";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "Nelze dodat informace serveru";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "Nelze analyzovat informace o partnerovi";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "Nelze načíst vlastnosti VPN!";
-
-/* Parsing error */
-"_error_session_count_parser" = "Nelze analyzovat počet relací";
-
-/* Parsing error */
-"_error_loads" = "Nelze aktualizovat vytížení serverů";
-
-/* API error */
-"_error_api_offline" = "Proton VPN API je nyní nedostupné";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "Nelze analyzovat informace o předplatném";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "Nelze analyzovat metody ověřování";
-
-/* Keychain error */
-"_error_keychain_fetch" = "Keychain chyba.";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "Vytvoření účtu selhalo";
 
 /* General title for several error alerts */
 "_error_unknown_title" = "Neznámá chyba";

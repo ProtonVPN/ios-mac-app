@@ -535,7 +535,7 @@
 "_p2p_server" = "Servidor P2P";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_tor_server" = "Tor Server";
+"_tor_server" = "Servidor Tor";
 
 /* MacOS Profiles Overview: Table column header */
 "_profile" = "Perfil";
@@ -701,13 +701,6 @@
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "Credenciais VPN em falta no chaveiro";
 
-/* Form validation error */
-"_error_field_required" = "Este campo é obrigatório";
-
-"_error_field_email_wrong_format" = "O endereço de e-mail não está no formato correto.";
-
-"_error_field_passwords_dont_match" = "As palavra-passe não correspondem.";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Foi impossível verificar se é um ser humano. Tente novamente ou compre um plano superior.";
 
@@ -719,15 +712,6 @@
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "O Proton não conseguiu comunicar com o seu dispositivo. Tente novamente mais tarde.";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "A assinatura do módulo está vazia";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "Erro ao gerar SRP";
-
-/* Error when try to hash password */
-"_error_hash_password" = "Não é possível criar hash da palavra-passe";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Não é possível encontrar utilizador da sessão";
@@ -746,42 +730,6 @@
 
 /* Network error */
 "_ne_couldnt_reach_server" = "Não é possível aceder aos servidores Proton";
-
-/* API error */
-"_ae_wrong_login_credentials" = "Erro de otilizador ou palavra-passe";
-
-/* API error */
-"_ae_vpn_info_not_received" = "Não é possível obter informações da VPN.";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "Não é possível analisar a informação dos servidores";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "Não é possível analisar a informação do parceiro";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "Não é possível obter as propriedades VPN!";
-
-/* Parsing error */
-"_error_session_count_parser" = "Não é possível analisar total da sessão";
-
-/* Parsing error */
-"_error_loads" = "Não é possível actualizar cargas do servidor";
-
-/* API error */
-"_error_api_offline" = "A API do Proton VPN está actualmente desligada.";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "Não é possível analisar a informação da subscrição";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "Não é possível analisar métodos de verificação";
-
-/* Keychain error */
-"_error_keychain_fetch" = "Erro do chaveiro.";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "Erro ao criar a conta";
 
 /* General title for several error alerts */
 "_error_unknown_title" = "Unknown error";
@@ -1687,7 +1635,7 @@
 "_settings_mac_crash_reports_tooltip" = "Os relatórios de falhas ajudam-nos a corrigir erros, a detetar firewalls e a evitar bloqueios de VPN.";
 
 /* Section title in Settings */
-"_advanced" = "Advanced";
+"_advanced" = "Avançado";
 
 /* Non-standard ports feature title in Settings */
 "_non_standard_ports_title" = "Portas não padrão";

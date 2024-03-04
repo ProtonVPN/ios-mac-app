@@ -309,7 +309,7 @@
 "_release_date" = "릴리즈 날짜:";
 
 /* MacOS: About window */
-"_changelog" = "변경 내역";
+"_changelog" = "변경기록";
 
 /* MacOS: About window */
 "_acknowledgements" = "감사의 인사";
@@ -701,13 +701,6 @@
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "키체인의 VPN 자격 증명이 없습니다";
 
-/* Form validation error */
-"_error_field_required" = "필수 항목";
-
-"_error_field_email_wrong_format" = "올바른 형식의 이메일 주소가 아닙니다";
-
-"_error_field_passwords_dont_match" = "비밀번호가 일치하지 않습니다";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "사용자가 사람인지 인증할 수 없습니다. 다시 시도하거나 프리미엄 플랜을 구입해 주십시오.";
 
@@ -719,15 +712,6 @@
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton이 기기와 통신할 수 없습니다. 잠시 후 다시 시도하십시오.";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "모듈 서명이 비었습니다";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "SRP 생성 실패";
-
-/* Error when try to hash password */
-"_error_hash_password" = "비밀번호를 해싱할 수 없습니다";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "세션으로부터 사용자를 찾을 수 없음";
@@ -746,42 +730,6 @@
 
 /* Network error */
 "_ne_couldnt_reach_server" = "Proton 서버에 도달할 수 없습니다";
-
-/* API error */
-"_ae_wrong_login_credentials" = "잘못된 사용자 이름 또는 비밀번호";
-
-/* API error */
-"_ae_vpn_info_not_received" = "VPN 정보를 수집할 수 없습니다";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "서버 정보를 분석할 수 없습니다";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "파트너 정보를 불러올 수 없음";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "VPN 속성을 가져올 수 없음!";
-
-/* Parsing error */
-"_error_session_count_parser" = "세션 수를 분석할 수 없습니다";
-
-/* Parsing error */
-"_error_loads" = "서버 로드를 업데이트 할 수 없음";
-
-/* API error */
-"_error_api_offline" = "Proton VPN API는 현재 오프라인입니다";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "구독 정보를 분석할 수 없음";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "인증 방법을 분석할 수 없음";
-
-/* Keychain error */
-"_error_keychain_fetch" = "키체인 오류";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "계정 생성 실패";
 
 /* General title for several error alerts */
 "_error_unknown_title" = "알 수 없는 오류";

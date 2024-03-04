@@ -701,13 +701,6 @@
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "Le credenziali VPN mancano dal portachiavi";
 
-/* Form validation error */
-"_error_field_required" = "Questo campo è obbligatorio";
-
-"_error_field_email_wrong_format" = "Il formato dell'indirizzo email non è valido";
-
-"_error_field_passwords_dont_match" = "Le password non corrispondono";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Non siamo stati in grado di verificare che tu sia un essere umano. Riprova o acquista un piano premium.";
 
@@ -719,15 +712,6 @@
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton non è riuscito a comunicare con il tuo dispositivo. Riprova più tardi.";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "La firma del modulo è vuota";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "Generazione SRP fallita";
-
-/* Error when try to hash password */
-"_error_hash_password" = "Impossibile generare l'hash dalla password dell'utente";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Impossibile trovare l'utente dalla sessione";
@@ -746,42 +730,6 @@
 
 /* Network error */
 "_ne_couldnt_reach_server" = "Impossibile raggiungere i server di Proton";
-
-/* API error */
-"_ae_wrong_login_credentials" = "Nome utente o password errati";
-
-/* API error */
-"_ae_vpn_info_not_received" = "Impossibile ottenere le informazioni sulla VPN";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "Impossibile analizzare le informazioni dei server";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "Impossibile analizzare le informazioni sul partner";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "Impossibile recuperare le proprietà della VPN!";
-
-/* Parsing error */
-"_error_session_count_parser" = "Impossibile analizzare il conteggio delle sessioni";
-
-/* Parsing error */
-"_error_loads" = "Impossibile aggiornare i carichi dei server";
-
-/* API error */
-"_error_api_offline" = "Le API di Proton VPN sono attualmente offline";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "Impossibile analizzare le informazioni di abbonamento";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "Impossibile analizzare i metodi di verifica";
-
-/* Keychain error */
-"_error_keychain_fetch" = "Errore del portachiavi.";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "Creazione dell'account non riuscita";
 
 /* General title for several error alerts */
 "_error_unknown_title" = "Errore sconosciuto";

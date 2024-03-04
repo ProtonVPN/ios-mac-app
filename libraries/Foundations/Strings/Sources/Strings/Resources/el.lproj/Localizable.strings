@@ -701,13 +701,6 @@
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "Τα διαπιστευτήρια VPN λείπουν από την κλειδοθήκη (keychain)";
 
-/* Form validation error */
-"_error_field_required" = "Αυτό το πεδίο είναι υποχρεωτικό";
-
-"_error_field_email_wrong_format" = "Η διεύθυνση email δεν έχει τη σωστή μορφή";
-
-"_error_field_passwords_dont_match" = "Οι κωδικοί πρόσβασης δεν ταιριάζουν";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Δεν μπορέσαμε να επαληθεύσουμε ότι είστε άνθρωπος. Δοκιμάστε ξανά ή αγοράστε ένα πακέτο premium.";
 
@@ -719,15 +712,6 @@
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Το Proton δεν μπόρεσε να επικοινωνήσει με τη συσκευή σας. Παρακαλώ δοκιμάστε ξανά αργότερα.";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "Η υπογραφή Modulus είναι κενή";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "Η δημιουργία SRP απέτυχε";
-
-/* Error when try to hash password */
-"_error_hash_password" = "Δεν είναι δυνατό το hash του κωδικού χρήστη";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Δεν είναι δυνατή η εύρεση του χρήστη από τη συνεδρία";
@@ -746,42 +730,6 @@
 
 /* Network error */
 "_ne_couldnt_reach_server" = "Δεν ήταν δυνατή η πρόσβαση στους διακομιστές Proton";
-
-/* API error */
-"_ae_wrong_login_credentials" = "Λανθασμένο όνομα χρήστη ή κωδικός πρόσβασης";
-
-/* API error */
-"_ae_vpn_info_not_received" = "Δεν είναι δυνατή η λήψη πληροφοριών VPN";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "Δεν είναι δυνατή η ανάλυση πληροφοριών των διακομιστών";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "Δεν είναι δυνατή η ανάλυση των πληροφοριών των συνεργατών";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "Δεν είναι δυνατή η λήψη ιδιοτήτων VPN!";
-
-/* Parsing error */
-"_error_session_count_parser" = "Δεν είναι δυνατή η ανάλυση του αριθμού συνεδριών";
-
-/* Parsing error */
-"_error_loads" = "Δεν είναι δυνατή η ενημέρωση των φορτίων διακομιστή";
-
-/* API error */
-"_error_api_offline" = "Το API του Proton VPN, είναι προσωρινά εκτός σύνδεσης";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "Δεν είναι δυνατή η ανάλυση των πληροφοριών συνδρομής";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "Δεν είναι δυνατή η ανάλυση μεθόδων επαλήθευσης";
-
-/* Keychain error */
-"_error_keychain_fetch" = "Σφάλμα κλειδιού.";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "Η Δημιουργία λογαριασμού απέτυχε";
 
 /* General title for several error alerts */
 "_error_unknown_title" = "Άγνωστο σφάλμα";

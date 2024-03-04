@@ -701,13 +701,6 @@
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "VPN‐Anmeldedaten fehlen im Schlüsselbund";
 
-/* Form validation error */
-"_error_field_required" = "Dieses Feld ist erforderlich";
-
-"_error_field_email_wrong_format" = "Die E-Mail-Adresse hat nicht das korrekte Format";
-
-"_error_field_passwords_dont_match" = "Passwörter stimmen nicht überein";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Es konnte nicht festgestellt werden, ob du ein Mensch bist. Bitte versuche es erneut oder erwerbe ein Premium‐Abonnement.";
 
@@ -719,15 +712,6 @@
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton konnte nicht mit deinem Gerät kommunizieren. Bitte versuche es später noch einmal.";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "Modulsignatur ist leer";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "SRP‐Generierung fehlgeschlagen";
-
-/* Error when try to hash password */
-"_error_hash_password" = "Benutzerpasswort kann nicht gehasht werden";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Benutzer aus Sitzung kann nicht gefunden werden";
@@ -746,42 +730,6 @@
 
 /* Network error */
 "_ne_couldnt_reach_server" = "Proton-Server konnten nicht erreicht werden";
-
-/* API error */
-"_ae_wrong_login_credentials" = "Ungültiger Benutzername oder falsches Passwort";
-
-/* API error */
-"_ae_vpn_info_not_received" = "VPN‐Informationen konnten nicht abgerufen werden";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "Serverinformationen können nicht verarbeitet werden";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "Partnerinformationen können nicht analysiert werden.";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "VPN‐Eigenschaften können nicht abgerufen werden!";
-
-/* Parsing error */
-"_error_session_count_parser" = "Sitzungszähler kann nicht verarbeitet werden";
-
-/* Parsing error */
-"_error_loads" = "Serverauslastungen können nicht aktualisiert werden";
-
-/* API error */
-"_error_api_offline" = "Die Proton VPN‐API ist derzeit offline";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "Abonnementinformation kann nicht verarbeitet werden";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "Verifizierungsmethoden können nicht verarbeitet werden";
-
-/* Keychain error */
-"_error_keychain_fetch" = "Schlüsselbund‐Fehler.";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "Kontoerstellung fehlgeschlagen";
 
 /* General title for several error alerts */
 "_error_unknown_title" = "Unbekannter Fehler";

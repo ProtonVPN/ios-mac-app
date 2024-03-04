@@ -701,13 +701,6 @@
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "VPN vjerodajnice nedostaju iz privjeska ključeva";
 
-/* Form validation error */
-"_error_field_required" = "Ovo polje je obavezno";
-
-"_error_field_email_wrong_format" = "Ova adresa e-pošte nije u pravilnom formatu";
-
-"_error_field_passwords_dont_match" = "Lozinke se ne poklapaju";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Nismo uspjeli potvrditi da ste čovjek. Pokušajte ponovo ili kupite Premium plan.";
 
@@ -719,15 +712,6 @@
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton nije mogao komunicirati s vašim uređajem. Molimo pokušajte ponovo kasnije.";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "Modulus potpis je prazan";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "Neuspješno stvaranje SRP-a";
-
-/* Error when try to hash password */
-"_error_hash_password" = "Neuspješno hashiranje lozinke korisnika";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Nije moguće pronaći korisnika iz sesije";
@@ -746,42 +730,6 @@
 
 /* Network error */
 "_ne_couldnt_reach_server" = "Neuspješno dohvaćanje Proton poslužitelja";
-
-/* API error */
-"_ae_wrong_login_credentials" = "Pogrešno korisničko ime ili lozinka";
-
-/* API error */
-"_ae_vpn_info_not_received" = "Unable to obtain VPN information";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "Neuspješno prikazivanje podataka o poslužitelju";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "Can't parse the partner info";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "Neuspješno dohvaćanje VPN svojstava!";
-
-/* Parsing error */
-"_error_session_count_parser" = "Neuspješno prikazivanje broja sesija";
-
-/* Parsing error */
-"_error_loads" = "Neuspješno ažuriranje opterećenja poslužitelja";
-
-/* API error */
-"_error_api_offline" = "Proton VPN API je trenutno van mreže";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "Neuspješno prikazivanje podataka o pretplati";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "Neuspješno prikazivanje metoda potvrde";
-
-/* Keychain error */
-"_error_keychain_fetch" = "Pogreška privjeska ključeva.";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "Neuspješno stvaranje računa";
 
 /* General title for several error alerts */
 "_error_unknown_title" = "Unknown error";

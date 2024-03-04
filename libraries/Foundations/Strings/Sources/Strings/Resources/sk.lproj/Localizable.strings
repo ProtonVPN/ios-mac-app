@@ -701,13 +701,6 @@
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "V kľúčenke chýbajú prihlasovacie údaje VPN";
 
-/* Form validation error */
-"_error_field_required" = "Toto pole je povinné";
-
-"_error_field_email_wrong_format" = "Emailová adresa nie je v správnom formáte";
-
-"_error_field_passwords_dont_match" = "Heslá sa nezhodujú";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Nepodarilo sa nám overiť, či ste človek. Skúste to znova alebo si zakúpte prémiový plán.";
 
@@ -719,15 +712,6 @@
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton nemôže komunikovať s vaším zariadením. Skúste to neskôr, prosím.";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "Podpis modulu je prázdny";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "Generovanie SRP zlyhalo";
-
-/* Error when try to hash password */
-"_error_hash_password" = "Nie je možné vytvoriť hash hesla používateľa";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Nie je možné nájsť používateľa z relácie";
@@ -746,42 +730,6 @@
 
 /* Network error */
 "_ne_couldnt_reach_server" = "Nemohli sme sa dostať na servery spoločnosti Proton";
-
-/* API error */
-"_ae_wrong_login_credentials" = "Nesprávne používateľské meno alebo heslo";
-
-/* API error */
-"_ae_vpn_info_not_received" = "Nie je možné získať informácie o sieti VPN";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "Nie je možné analyzovať informácie o serveroch";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "Nie je možné analyzovať informácie o partneroch";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "Nie je možné načítať vlastnosti VPN!";
-
-/* Parsing error */
-"_error_session_count_parser" = "Nie je možné analyzovať počet relácií";
-
-/* Parsing error */
-"_error_loads" = "Nie je možné aktualizovať záťaž serverov";
-
-/* API error */
-"_error_api_offline" = "Rozhranie API Proton VPN je momentálne offline";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "Nie je možné analyzovať informácie o predplatnom";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "Nie je možné analyzovať metódy overenia";
-
-/* Keychain error */
-"_error_keychain_fetch" = "Chyba kľúčenky.";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "Vytvorenie účtu zlyhalo";
 
 /* General title for several error alerts */
 "_error_unknown_title" = "Neznáma chyba";

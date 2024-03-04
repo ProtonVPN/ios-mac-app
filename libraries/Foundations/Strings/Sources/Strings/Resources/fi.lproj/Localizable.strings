@@ -701,13 +701,6 @@
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "VPN-tunnistetiedot puuttuvat avainketjusta";
 
-/* Form validation error */
-"_error_field_required" = "Tämä kenttä vaaditaan";
-
-"_error_field_email_wrong_format" = "Sähköpostiosoite ei ole oikeassa muodossa";
-
-"_error_field_passwords_dont_match" = "Salasanat eivät täsmää";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Emme voineet vahvistaa, että olet ihminen. Yritä uudelleen tai osta premium-tilaus.";
 
@@ -719,15 +712,6 @@
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton ei voinut viestiä laitteesi kanssa. Yritä myöhemmin uudelleen.";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "Modulus-allekirjoitus on tyhjä";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "SRP-generointi epäonnistui";
-
-/* Error when try to hash password */
-"_error_hash_password" = "Käyttäjän salasanaa ei voida hajauttaa";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Käyttäjää ei löydy istunnosta";
@@ -746,42 +730,6 @@
 
 /* Network error */
 "_ne_couldnt_reach_server" = "Emme tavoittaneet Protonin palvelimia";
-
-/* API error */
-"_ae_wrong_login_credentials" = "Virheellinen käyttäjätunnus tai salasana";
-
-/* API error */
-"_ae_vpn_info_not_received" = "VPN-tietoja ei saatu";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "Palvelintietoja ei voida jäsentää";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "Kumppanitietoja ei voida jäsentää";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "VPN-ominaisuuksia ei voida noutaa!";
-
-/* Parsing error */
-"_error_session_count_parser" = "Istuntomäärää ei voida jäsentää";
-
-/* Parsing error */
-"_error_loads" = "Palvelinkuormituksia ei voida päivittää";
-
-/* API error */
-"_error_api_offline" = "Proton VPN -rajapintaa ei tällä hetkellä tavoiteta.";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "Tilaustietoja ei voida jäsentää";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "Vahvistustapoja ei voida jäsentää";
-
-/* Keychain error */
-"_error_keychain_fetch" = "Avainketjuvirhe.";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "Tilin luonti epäonnistui";
 
 /* General title for several error alerts */
 "_error_unknown_title" = "Tuntematon virhe";
@@ -1735,7 +1683,7 @@
 "use_recovery_code" = "Käytä palautuskoodia";
 
 /* Button to confirm two-factor or recovery code in login */
-"authenticate" = "Todenna";
+"authenticate" = "Tunnistaudu";
 
 /* Error message shown when tryng to log in with an unsupported method */
 "login_unsupported_state" = "Virheellinen kirjautumismenetelmä. Ota yhteyttä tukeen.";
