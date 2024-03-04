@@ -98,7 +98,7 @@ private extension AppTheme.Style {
                 return CP.SignalInfo
             }
         }
-        assertionFailure("Signal color not handled")
+        log.assertionFailure("Signal color not handled")
         return CP.TextNorm
     }
 
