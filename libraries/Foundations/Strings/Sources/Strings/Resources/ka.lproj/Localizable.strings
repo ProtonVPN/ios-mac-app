@@ -701,13 +701,6 @@
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "გასაღებების ბრელოკში VPN-ის მომხმარებელი და პაროლი მითითებული არაა";
 
-/* Form validation error */
-"_error_field_required" = "ეს ველი აუცილებელია";
-
-"_error_field_email_wrong_format" = "ელფოსტის მისამართს არასწორი ფორმატი";
-
-"_error_field_passwords_dont_match" = "პაროლები არ ემთხვევა";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "ჩვენ ვერ შევამოწმეთ, ბრძანდებით თუ არა ადამიანი. თავიდან სცადეთ ან შეიძინეთ პრემიუმ ტარიფი.";
 
@@ -719,15 +712,6 @@
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton-ი თქვენს მოწყობილობას ვერ უკავშირდება. თავიდან სცადეთ.";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "ფანჯრის ხელმოწერა ცარიელია";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "SRP-ის გენერაციის შეცდომა";
-
-/* Error when try to hash password */
-"_error_hash_password" = "მომხმარებლის პაროლის ჰეშირების შეცდომა";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "მომხმარებელი ამ სესიიდან ვერ ვიპოვე";
@@ -746,42 +730,6 @@
 
 /* Network error */
 "_ne_couldnt_reach_server" = "Proton-ის სერვერები მიუწვდომელია";
-
-/* API error */
-"_ae_wrong_login_credentials" = "არასწორი მომხმარებელი და პაროლი";
-
-/* API error */
-"_ae_vpn_info_not_received" = "VPN-ის ინფორმაციის მიღება შეუძლებელია";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "სერვერების ინფორმაციის დამუშავების შეცდომა";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "პარტნიორის ინფორმაციის დამუშავების შეცდომა";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "VPN-ის თვისებების გამოთხოვის შეცდომა!";
-
-/* Parsing error */
-"_error_session_count_parser" = "სესიების რაოდენობის დამუშავების პრობლემა";
-
-/* Parsing error */
-"_error_loads" = "სერვერის დატვირთვის განახლების შეცდომა";
-
-/* API error */
-"_error_api_offline" = "Proton VPN API ამჟამად გამორთულია";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "გამოწერის ინფორმაციის დამუშავების შეცდომა";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "გადამოწმების მეთოდების დამუშავების შეცდომა";
-
-/* Keychain error */
-"_error_keychain_fetch" = "გასაღებების ბრელოკის შეცდომა.";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "ანგარიშის შექმნის შეცდომა";
 
 /* General title for several error alerts */
 "_error_unknown_title" = "უცნობი შეცდომა";

@@ -701,13 +701,6 @@
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "Acreditările VPN lipsesc din lanțul de cehei";
 
-/* Form validation error */
-"_error_field_required" = "Acest câmp este obligatoriu";
-
-"_error_field_email_wrong_format" = "Adresa de e-mail nu este în formatul corect";
-
-"_error_field_passwords_dont_match" = "Parolele nu coincid.";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Nu am reușit să verificăm dacă sunteți o persoană. Reîncercați sau achiziționați un abonament premium.";
 
@@ -719,15 +712,6 @@
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton nu a putut contacta dispozitivul. Reîncercați mai târziu.";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "Semnătura modulului este goală";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "Generare SRP eșuată";
-
-/* Error when try to hash password */
-"_error_hash_password" = "Nu se poate aplica funcția hash la parola utilizatorului";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Nu se poate găsi utilizatorul din sesiune.";
@@ -746,42 +730,6 @@
 
 /* Network error */
 "_ne_couldnt_reach_server" = "Nu s-au putut contacta serverele Proton.";
-
-/* API error */
-"_ae_wrong_login_credentials" = "Nume de utilizator sau parolă incorecte";
-
-/* API error */
-"_ae_vpn_info_not_received" = "Nu s-au putut obține informații VPN";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "Nu se pot prelua informațiile serverelor";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "Nu se pot prelua informațiile partenerului.";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "Nu se pot obține proprietățile VPN!";
-
-/* Parsing error */
-"_error_session_count_parser" = "Nu se poate prelua numărul de sesiuni";
-
-/* Parsing error */
-"_error_loads" = "Nu se poate actualiza încărcarea serverelor";
-
-/* API error */
-"_error_api_offline" = "API-ul Proton VPN este în prezent oprit.";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "Nu se pot prelua informațiile abonamentului";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "Nu se pot analiza metodele de verificare";
-
-/* Keychain error */
-"_error_keychain_fetch" = "Eroare lanț chei.";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "Crearea contului a eșuat.";
 
 /* General title for several error alerts */
 "_error_unknown_title" = "Eroare necunoscută.";

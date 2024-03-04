@@ -701,13 +701,6 @@
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "VPN-legitimasjon mangler fra nøkkelringen";
 
-/* Form validation error */
-"_error_field_required" = "Dette feltet er obligatorisk";
-
-"_error_field_email_wrong_format" = "E-postadressen er ikke i riktig format";
-
-"_error_field_passwords_dont_match" = "Passordene samsvarer ikke";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Vi har ikke kunnet bekrefte at du er et menneske. Vennligst prøv igjen eller kjøp en premiumplan.";
 
@@ -719,15 +712,6 @@
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton kunne ikke kommunisere med enheten din. Vennligst prøv igjen senere.";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "Modulussignaturen er tom";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "SRP-generering mislyktes";
-
-/* Error when try to hash password */
-"_error_hash_password" = "Kan ikke hashe brukerpassord";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Kan ikke finne bruker fra økten";
@@ -746,42 +730,6 @@
 
 /* Network error */
 "_ne_couldnt_reach_server" = "Vi kunne ikke nå Proton-tjenere";
-
-/* API error */
-"_ae_wrong_login_credentials" = "Feil brukernavn eller passord";
-
-/* API error */
-"_ae_vpn_info_not_received" = "Kan ikke hente VPN-informasjon";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "Kan ikke tolke tjenerinformasjonen";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "Kan ikke tolke partnerinformasjonen";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "Kan ikke hente VPN-egenskaper!";
-
-/* Parsing error */
-"_error_session_count_parser" = "Kan ikke tolke antall økter";
-
-/* Parsing error */
-"_error_loads" = "Kan ikke oppdatere tjenerbelastninger";
-
-/* API error */
-"_error_api_offline" = "Proton VPN-API er for øyeblikket frakoblet";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "Kan ikke tolke abonnementsinformasjonen";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "Kan ikke tolke verifiseringsmetoder";
-
-/* Keychain error */
-"_error_keychain_fetch" = "Nøkkelring feil";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "Opprettelse av konto mislyktes";
 
 /* General title for several error alerts */
 "_error_unknown_title" = "Ukjent feil";

@@ -357,7 +357,7 @@
 "_forgot_username" = "忘記使用者名稱";
 
 /* MacOS: generic failure message for SSO login */
-"_sso_login_failure" = "Failed to log in with SSO. Please try again.";
+"_sso_login_failure" = "使用單一登入登入失敗。請再試一次。";
 
 /* iOS: button in login screen */
 "_forgot_password" = "忘記密碼？";
@@ -701,13 +701,6 @@
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "鑰匙圈中遺失 VPN 認證";
 
-/* Form validation error */
-"_error_field_required" = "此欄位必填";
-
-"_error_field_email_wrong_format" = "電郵位址格式錯誤。";
-
-"_error_field_passwords_dont_match" = "密碼不一致";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "我們未能驗證您是真人。請再試一次或購買尊享方案。";
 
@@ -719,15 +712,6 @@
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton 無法與您的裝置溝通。請稍後再試。";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "模組簽名為空白";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "SRP 生成失敗";
-
-/* Error when try to hash password */
-"_error_hash_password" = "無法加密用戶密碼";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "在往來對話中未找到使用者";
@@ -746,42 +730,6 @@
 
 /* Network error */
 "_ne_couldnt_reach_server" = "我們無法連接 Proton 伺服器";
-
-/* API error */
-"_ae_wrong_login_credentials" = "錯誤的使用者名稱或密碼";
-
-/* API error */
-"_ae_vpn_info_not_received" = "無法取得 VPN 資訊";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "無法解析伺服器訊息";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "無法解析伺服器訊息";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "無法獲取 VPN 屬性！";
-
-/* Parsing error */
-"_error_session_count_parser" = "無法解析對話計數";
-
-/* Parsing error */
-"_error_loads" = "無法更新伺服器負荷";
-
-/* API error */
-"_error_api_offline" = "Proton VPN API 目前處於離線狀態";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "無法解析訂閱訊息";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "無法解析驗證方式";
-
-/* Keychain error */
-"_error_keychain_fetch" = "鑰匙圈錯誤。";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "帳號創建失敗";
 
 /* General title for several error alerts */
 "_error_unknown_title" = "未知的錯誤";
@@ -1129,7 +1077,7 @@
 
 "_no_thanks" = "不用了，謝謝";
 
-"_welcome_description" = "Thanks for using Proton VPN.";
+"_welcome_description" = "感謝您使用 Proton VPN。";
 
 /* Plus word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "Plus";

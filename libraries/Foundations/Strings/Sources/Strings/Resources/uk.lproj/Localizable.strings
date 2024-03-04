@@ -26,7 +26,7 @@
 "_edit" = "Редагувати";
 
 /* Common word */
-"_ok" = "Гаразд";
+"_ok" = "OK";
 
 /* Common word */
 "_save" = "Зберегти";
@@ -701,13 +701,6 @@
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "Облікові дані VPN відсутні у в'язці ключів";
 
-/* Form validation error */
-"_error_field_required" = "Це поле обов'язкове";
-
-"_error_field_email_wrong_format" = "Адреса е-пошти має неправильний формат";
-
-"_error_field_passwords_dont_match" = "Паролі відрізняються";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Ми не змогли перевірити, що ви людина. Спробуйте знову, або придбайте тарифний план преміум.";
 
@@ -719,15 +712,6 @@
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton не зміг встановити з'єднання з вашим пристроєм. Спробуйте знову пізніше.";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "Підпис модуля порожній";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "Не вдалося генерувати SRP";
-
-/* Error when try to hash password */
-"_error_hash_password" = "Неможливо хешувати пароль користувача";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Неможливо знайти користувача з сеансу";
@@ -746,42 +730,6 @@
 
 /* Network error */
 "_ne_couldnt_reach_server" = "Не вдалося зв'язатися з серверами Proton";
-
-/* API error */
-"_ae_wrong_login_credentials" = "Неправильне ім'я користувача або пароль";
-
-/* API error */
-"_ae_vpn_info_not_received" = "Не вдається отримати інформацію про VPN";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "Неможливо проаналізувати інформацію сервера";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "Неможливо проаналізувати інформацію про партнера";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "Неможливо отримати властивості VPN!";
-
-/* Parsing error */
-"_error_session_count_parser" = "Неможливо проаналізувати кількість сеансів";
-
-/* Parsing error */
-"_error_loads" = "Неможливо оновити навантаженість сервера";
-
-/* API error */
-"_error_api_offline" = "Proton VPN API зараз офлайн";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "Неможливо проаналізувати інформацію про передплату";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "Неможливо проаналізувати способи перевірки";
-
-/* Keychain error */
-"_error_keychain_fetch" = "Помилка В'язки ключів.";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "Не вдалося створити обліковий запис";
 
 /* General title for several error alerts */
 "_error_unknown_title" = "Невідома помилка";

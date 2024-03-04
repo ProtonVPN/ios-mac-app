@@ -701,13 +701,6 @@
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "اطلاعات احرازهویت VPN در صندوق امن ابزار شما پیدا نشد";
 
-/* Form validation error */
-"_error_field_required" = "این قسمت الزامی است";
-
-"_error_field_email_wrong_format" = "آدرس ایمیل در قالب درستی";
-
-"_error_field_passwords_dont_match" = "رمزهای عبور مطابقت ندارند";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "ما نتوانستیم تایید کنیم که شما انسان هستید. لطفاً دوباره سعی کنید یا یک طرح ویژه خریداری کنید.";
 
@@ -719,15 +712,6 @@
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton نتوانست با دستگاه شما ارتباط برقرار کند. لطفاً بعداً دوباره امتحان کنید.";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "امضا یا کلید خصوصی ماژول خالی است";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "تولید SRP انجام نشد";
-
-/* Error when try to hash password */
-"_error_hash_password" = "امکان هش‌کردن رمزعبور کاربر وجود ندارد";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "حساب کاربری از طریق نشست مربوطه پیدا نشد";
@@ -746,42 +730,6 @@
 
 /* Network error */
 "_ne_couldnt_reach_server" = "ما نتوانستیم به سرور‌های Proton دست یابیم";
-
-/* API error */
-"_ae_wrong_login_credentials" = "نام کاربری یا رمزعبور اشتباه است";
-
-/* API error */
-"_ae_vpn_info_not_received" = "Unable to obtain VPN information";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "امکان دریافت اطلاعات از سرور وجود ندارد";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "امکان تجزیه اطلاعات طرفِ شراکت وجود ندارد";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "عدم توانایی در گرفتن ویژگی‌های VPN!";
-
-/* Parsing error */
-"_error_session_count_parser" = "امکان دریافت تعداد جلسه‌ها از سرور وجود ندارد";
-
-/* Parsing error */
-"_error_loads" = "وضعیت بار بر روی سرور به‌روز نشد";
-
-/* API error */
-"_error_api_offline" = "در حال حاضر API برای Proton VPN آفلاین است";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "امکان دریافت اطلاعات مربوط به اشتراک حساب وجود ندارد";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "روش‌های تایید بی‌نتیجه‌اند";
-
-/* Keychain error */
-"_error_keychain_fetch" = "خطای keychain.";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "ساخت حساب کاربری ناموفق بود";
 
 /* General title for several error alerts */
 "_error_unknown_title" = "Unknown error";

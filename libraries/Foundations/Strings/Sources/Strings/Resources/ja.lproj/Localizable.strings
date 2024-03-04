@@ -701,13 +701,6 @@
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "キーチェーンにVPN認証情報がありません";
 
-/* Form validation error */
-"_error_field_required" = "この項目の入力は必須です";
-
-"_error_field_email_wrong_format" = "メールアドレスが有効な形式ではありません";
-
-"_error_field_passwords_dont_match" = "パスワードが一致しません";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "人による操作であることが確認できません。再試行するかPREMIUMプランを購入してください。";
 
@@ -719,15 +712,6 @@
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton はお使いのデバイスと通信できませんでした。 後でもう一度試してください。";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "Modulus 署名が空です";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "SRP の生成に失敗しました";
-
-/* Error when try to hash password */
-"_error_hash_password" = "ユーザーパスワードをハッシュ化できません";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "セッションからユーザーが見つかりません";
@@ -746,42 +730,6 @@
 
 /* Network error */
 "_ne_couldnt_reach_server" = "Protonサーバーにアクセスできませんでした";
-
-/* API error */
-"_ae_wrong_login_credentials" = "ユーザー名またはパスワードが間違っています";
-
-/* API error */
-"_ae_vpn_info_not_received" = "VPN 情報が取得できません";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "サーバー情報を解析できません";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "パートナー情報を解析できません";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "VPN の詳細を取得できません！";
-
-/* Parsing error */
-"_error_session_count_parser" = "セッションカウントを解析できません";
-
-/* Parsing error */
-"_error_loads" = "サーバー負荷情報を更新できませんでした";
-
-/* API error */
-"_error_api_offline" = "Proton VPN API は現在オフラインです";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "サブスクリプション情報を解析できません";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "検証方法を解析できません";
-
-/* Keychain error */
-"_error_keychain_fetch" = "キーチェーンでエラーが発生しました。";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "アカウントの作成に失敗しました";
 
 /* General title for several error alerts */
 "_error_unknown_title" = "不明なエラー";

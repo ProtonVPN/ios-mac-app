@@ -701,13 +701,6 @@
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "Kredensial VPN hilang dari keychain";
 
-/* Form validation error */
-"_error_field_required" = "Kolom ini wajib diisi";
-
-"_error_field_email_wrong_format" = "Alamat surel tidak ditulis dalam format yang benar";
-
-"_error_field_passwords_dont_match" = "Sandi tidak sama";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Kami tidak dapat memverifikasi bahwa Anda manusia. Silahkan coba kembali atau beli paket premium.";
 
@@ -719,15 +712,6 @@
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton tidak dapat berkomunikasi dengan perangkat Anda. Coba lagi nanti.";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "Modulus tanda tangan kosong";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "Gagal menghasilkan SRP";
-
-/* Error when try to hash password */
-"_error_hash_password" = "Kata sandi pengguna tidak dapat di-hash";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Tidak dapat menemukan pengguna sesi";
@@ -746,42 +730,6 @@
 
 /* Network error */
 "_ne_couldnt_reach_server" = "Kami tidak dapat menjangkau server Proton VPN";
-
-/* API error */
-"_ae_wrong_login_credentials" = "Nama pengguna atau kata sandi salah";
-
-/* API error */
-"_ae_vpn_info_not_received" = "Tidak dapat menerima informasi VPN";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "Tidak dapat mengurai info server";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "Tidak dapat mengurai info mitra";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "Tidak dapat mengambil properti VPN!";
-
-/* Parsing error */
-"_error_session_count_parser" = "Tidak dapat mengurai jumlah sesi";
-
-/* Parsing error */
-"_error_loads" = "Muatan server tidak dapat diperbarui";
-
-/* API error */
-"_error_api_offline" = "API Proton VPN sedang offline";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "Tidak dapat mengurai info langganan";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "Tidak dapat mengurai metode verifikasi";
-
-/* Keychain error */
-"_error_keychain_fetch" = "Terdapat kesalahan pada keychain.";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "Pembuatan akun gagal";
 
 /* General title for several error alerts */
 "_error_unknown_title" = "Kesalahan tidak diketahui";

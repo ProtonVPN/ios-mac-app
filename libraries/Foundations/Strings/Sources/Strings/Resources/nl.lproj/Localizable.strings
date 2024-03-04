@@ -357,7 +357,7 @@
 "_forgot_username" = "Gebruikersnaam vergeten";
 
 /* MacOS: generic failure message for SSO login */
-"_sso_login_failure" = "Failed to log in with SSO. Please try again.";
+"_sso_login_failure" = "Kon niet inloggen met SSO. Probeer het opnieuw.";
 
 /* iOS: button in login screen */
 "_forgot_password" = "Wachtwoord vergeten?";
@@ -701,13 +701,6 @@
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "VPN-inloggegevens ontbreken in de keychain";
 
-/* Form validation error */
-"_error_field_required" = "Dit invullen is verplicht";
-
-"_error_field_email_wrong_format" = "Het e-mailadres is niet in het juiste formaat";
-
-"_error_field_passwords_dont_match" = "Wachtwoorden komen niet overeen";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "We hebben niet kunnen verifiëren of u menselijk bent. Probeer het opnieuw of koop een premium-abonnement.";
 
@@ -719,15 +712,6 @@
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton kon niet communiceren met uw apparaat. Probeer het later opnieuw.";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "Modulushandtekening is leeg";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "SRP generatie mislukt";
-
-/* Error when try to hash password */
-"_error_hash_password" = "Kan geen hash genereren van het gebruikerswachtwoord";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Kan gebruiker niet vinden uit de sessie";
@@ -746,42 +730,6 @@
 
 /* Network error */
 "_ne_couldnt_reach_server" = "We konden geen Proton servers bereiken";
-
-/* API error */
-"_ae_wrong_login_credentials" = "Verkeerde gebruikersnaam of wachtwoord";
-
-/* API error */
-"_ae_vpn_info_not_received" = "Niet in staat om VPN-informatie op te halen";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "Kan de serverinfo niet verwerken";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "Kan de partnerinfo niet verwerken";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "Kan VPN-eigenschappen niet ophalen!";
-
-/* Parsing error */
-"_error_session_count_parser" = "Kan sessiecount niet verwerken";
-
-/* Parsing error */
-"_error_loads" = "Kan serverloads niet bijwerken";
-
-/* API error */
-"_error_api_offline" = "De Proton VPN-API is momenteel offline";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "Kan de abonnementsinformatie niet verwerken";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "Kan de verificatiemethoden niet verwerken";
-
-/* Keychain error */
-"_error_keychain_fetch" = "Fout met keychain.";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "Account aanmaken is mislukt";
 
 /* General title for several error alerts */
 "_error_unknown_title" = "Onbekende fout";
@@ -1129,7 +1077,7 @@
 
 "_no_thanks" = "Nee, bedankt";
 
-"_welcome_description" = "Thanks for using Proton VPN.";
+"_welcome_description" = "Bedankt dat u Proton VPN gebruikt.";
 
 /* Plus word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "Plus";
@@ -1382,9 +1330,9 @@
 "_news_title" = "Nieuws";
 
 /* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
-"_offer_ending_" = "Ending %@";
+"_offer_ending_" = "Eindigend %@";
 
-"_quick_settings_title" = "Quick Settings";
+"_quick_settings_title" = "Snelle Instellingen";
 
 "_quick_settings_secureCore_description" = "Stuur uw meest gevoelige gegevens door onze veiligste servers in privacy-vriendelijke landen.";
 

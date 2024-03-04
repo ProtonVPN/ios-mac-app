@@ -701,13 +701,6 @@
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "Brak danych logowania VPN w łańcuchu klucza";
 
-/* Form validation error */
-"_error_field_required" = "Pole jest wymagane";
-
-"_error_field_email_wrong_format" = "Format adresu e-mail jest nieprawidłowy";
-
-"_error_field_passwords_dont_match" = "Hasła nie pasują do siebie";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Nie byliśmy w stanie zweryfikować, czy jesteś człowiekiem. Spróbuj ponownie lub zdecyduj się na zakup planu premium.";
 
@@ -719,15 +712,6 @@
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Aplikacja Proton nie mogła połączyć się z Twoim urządzeniem. Spróbuj ponownie później.";
-
-/* Error when try to parse modulus signature */
-"_error_modulus_signature" = "Podpis modułu jest pusty";
-
-/* Error when generate srp clint */
-"_error_generate_srp" = "Wygenerowanie SRP nie powiodło się";
-
-/* Error when try to hash password */
-"_error_hash_password" = "Nie można przetworzyć hasła";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Nie można odnaleźć użytkownika sesji";
@@ -746,42 +730,6 @@
 
 /* Network error */
 "_ne_couldnt_reach_server" = "Serwery Proton są niedostępne";
-
-/* API error */
-"_ae_wrong_login_credentials" = "Nieprawidłowa nazwa użytkownika lub hasło";
-
-/* API error */
-"_ae_vpn_info_not_received" = "Nie można uzyskać informacji o usłudze VPN";
-
-/* Error when try to parse the server info */
-"_error_server_info_parser" = "Nie można przetworzyć informacji o serwerach";
-
-/* Error when try to parse the partner info */
-"_error_partner_info_parser" = "Nie można przetworzyć informacji o partnerze";
-
-/* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "Nie można pobrać ustawień VPN!";
-
-/* Parsing error */
-"_error_session_count_parser" = "Nie można przetworzyć informacji o liczbie połączeń";
-
-/* Parsing error */
-"_error_loads" = "Nie można zaktualizować obciążenia serwera";
-
-/* API error */
-"_error_api_offline" = "Interfejs API Proton VPN jest obecnie niedostępny";
-
-/* Error when try to parse subscription info */
-"_error_subscription_parser" = "Nie można przetworzyć informacji o subskrypcji";
-
-/* Error when try to parse verification methods */
-"_error_verification_methods_parser" = "Nie można przetworzyć metod weryfikacji";
-
-/* Keychain error */
-"_error_keychain_fetch" = "Błąd łańcucha klucza.";
-
-/* Error when the app fails to create a user */
-"_error_user_creation" = "Tworzenie konta nie powiodło się";
 
 /* General title for several error alerts */
 "_error_unknown_title" = "Wystąpił nieznany błąd";
