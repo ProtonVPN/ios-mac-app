@@ -1,6 +1,6 @@
 import Foundation
 import System
-import os.log
+import PMLogger
 
 /// A `FeatureFlag` has a category that the feature falls into, as well as a short string key describing that feature.
 public protocol FeatureFlag {
@@ -80,7 +80,7 @@ private enum FeatureFlagsData {
 
     static let featureFlags: [String: Any] = {
         guard let featureFlagsURL else {
-            assertionFailure("Couldn't find feature flags plist")
+            log.assertionFailure("Couldn't find feature flags plist")
             return [:]
         }
 
