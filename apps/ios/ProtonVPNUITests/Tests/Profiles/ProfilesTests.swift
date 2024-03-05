@@ -104,7 +104,7 @@ class ProfilesTests: ProtonVPNUITests {
             .verify.profileIsCreated()
     }
 
-    func testFreeUserCannotCreateProfileWithSecureCore() {
+    func testFreeUserCannotCreateProfile() {
         let profileName = StringUtils().randomAlphanumericString(length: 10)
 
         loginRobot
@@ -113,8 +113,7 @@ class ProfilesTests: ProtonVPNUITests {
             .verify.connectionStatusNotConnected()
             .goToProfilesTab()
             .addNewProfile()
-            .setSecureCoreProfile(profileName)
-            .verify.isShowingUpsellModal(ofType: .secureCore)
+            .verify.isShowingUpsellModal(ofType: .profiles)
     }
     
     func testRecommendedProfiles() {

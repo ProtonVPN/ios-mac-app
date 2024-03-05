@@ -34,6 +34,7 @@
     {
       "skippedTests" : [
         "ConnectionTests",
+        "FreeRescopeTests\/testProfileCreationUnavailableForFreeUser()",
         "PlanTests\/testShowCurrentPlanForVPNPlusUser()",
         "PlanTests\/testShowUpdatePlansForCurrentFreePlan()",
         "SignupTests\/testSignupExistingInternalAccount()",

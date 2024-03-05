@@ -119,7 +119,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
         }
         isAutoFillPasswordsEnabled = false
     }
-
+    
     func setupAtlasEnvironment() {
         let url = doh.getCurrentlyUsedHostUrl()
         if staticText(url).exists() {
