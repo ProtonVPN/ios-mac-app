@@ -18,6 +18,7 @@
 
 import Foundation
 import VPNShared
+import ProtonCoreTelemetry
 
 open class TelemetrySettings {
 
@@ -41,6 +42,7 @@ open class TelemetrySettings {
 
     public func updateTelemetryUsageData(isOn: Bool) {
         propertiesManager.setTelemetryUsageData(enabled: isOn)
+        updateCoreTelemetryUsage(isOn: isOn)
     }
 
     public var telemetryCrashReports: Bool {
@@ -49,5 +51,9 @@ open class TelemetrySettings {
 
     public func updateTelemetryCrashReports(isOn: Bool) {
         propertiesManager.setTelemetryCrashReports(enabled: isOn)
+    }
+
+    private func updateCoreTelemetryUsage(isOn: Bool) {
+        ProtonCoreTelemetry.TelemetryService.shared.setTelemetryEnabled(isOn)
     }
 }

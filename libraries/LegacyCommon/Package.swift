@@ -107,6 +107,7 @@ let package = Package(
                 .core(module: "Services"),
                 .core(module: "UIFoundations"),
                 .core(module: "Utilities"),
+                .core(module: "Telemetry"),
 
                 // External
                 .product(name: "Clocks", package: "swift-clocks"),
