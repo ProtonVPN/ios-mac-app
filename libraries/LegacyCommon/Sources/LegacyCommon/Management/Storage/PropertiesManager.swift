@@ -101,8 +101,7 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var apiEndpoint: String? { get set }
     
     var lastAppVersion: String { get set }
-    var lastTimeForeground: Date? { get set }
-    
+
     var humanValidationFailed: Bool { get set }
     var alternativeRouting: Bool { get set }
     var smartProtocol: Bool { get set }
@@ -197,9 +196,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
         
         // Migration
         case lastAppVersion = "LastAppVersion"
-        
-        // AppState
-        case lastTimeForeground = "LastTimeForeground"
 
         // Discourage Secure Core
         case discourageSecureCore = "DiscourageSecureCore"
@@ -411,7 +407,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
         set { _lastAppVersion = newValue }
     }
     
-    @DateProperty(.lastTimeForeground) public var lastTimeForeground
     @DateProperty(.userAccountCreationDate) public var userAccountCreationDate
 
     @InitializedProperty(.featureFlags,
