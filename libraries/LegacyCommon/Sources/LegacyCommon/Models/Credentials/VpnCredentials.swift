@@ -29,8 +29,8 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
     public static var supportsSecureCoding: Bool = true
 
     public let status: Int
-    public let accountPlan: AccountPlan
-    public let planName: String?
+    public let planTitle: String
+    public let planName: String
     public let maxConnect: Int
     public let maxTier: Int
     public let services: Int
@@ -46,7 +46,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
 
     override public var description: String {
         "Status: \(status)\n" +
-        "Account plan: \(accountPlan.description) (\(planName ?? "unknown"))\n" +
+        "Plan title: \(planTitle)\n" +
         "Max connect: \(maxConnect)\n" +
         "Max tier: \(maxTier)\n" +
         "Services: \(services)\n" +
@@ -62,7 +62,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
 
     public init(
         status: Int,
-        accountPlan: AccountPlan,
+        planTitle: String,
         maxConnect: Int,
         maxTier: Int,
         services: Int,
@@ -73,12 +73,12 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         credit: Int,
         currency: String,
         hasPaymentMethod: Bool,
-        planName: String?,
+        planName: String,
         subscribed: Int?,
         businessEvents: Bool
     ) {
         self.status = status
-        self.accountPlan = accountPlan
+        self.planTitle = planTitle
         self.maxConnect = maxConnect
         self.maxTier = maxTier
         self.services = services
@@ -98,19 +98,11 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
     init(dic: JSONDictionary) throws {
         let vpnDic = try dic.jsonDictionaryOrThrow(key: "VPN")
 
-        let accountPlan: AccountPlan
-        if let planName = vpnDic.string("PlanName"), let plan = AccountPlan(rawValue: planName) {
-            accountPlan = plan
-            self.planName = planName
-        } else {
-            accountPlan = AccountPlan.unknown // affects only plan name in settings
-            self.planName = nil
-        }
-        self.accountPlan = accountPlan
-        
+        planTitle = vpnDic.string("PlanTitle") ?? "Proton VPN Free"
+        planName = vpnDic.string("PlanName") ?? "free"
         status = try vpnDic.intOrThrow(key: "Status")
         maxConnect = try vpnDic.intOrThrow(key: "MaxConnect")
-        maxTier = vpnDic.int(key: "MaxTier") ?? accountPlan.defaultTier
+        maxTier = vpnDic.int(key: "MaxTier") ?? CoreAppConstants.VpnTiers.free
         services = try dic.intOrThrow(key: "Services")
         groupId = try vpnDic.stringOrThrow(key: "GroupID")
         name = try vpnDic.stringOrThrow(key: "Name")
@@ -128,7 +120,8 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
     var asDict: JSONDictionary {
         ([
             "VPN": [
-                "PlanName": accountPlan.rawValue,
+                "PlanName": planName,
+                "PlanTitle": planTitle,
                 "Status": status,
                 "MaxConnect": maxConnect,
                 "MaxTier": maxTier,
@@ -150,7 +143,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
     // MARK: - NSCoding
     private struct CoderKey {
         static let status = "status"
-        static let accountPlan = "accountPlan"
+        static let planTitle = "planTitle"
         static let planName = "planName"
         static let maxConnect = "maxConnect"
         static let maxTier = "maxTier"
@@ -171,12 +164,13 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
               let name = aDecoder.decodeObject(forKey: CoderKey.name) as? String,
               let password = aDecoder.decodeObject(forKey: CoderKey.password) as? String,
               let planName = aDecoder.decodeObject(forKey: CoderKey.planName) as? String,
+              let planTitle = aDecoder.decodeObject(forKey: CoderKey.planTitle) as? String,
               let subscribed = aDecoder.decodeObject(forKey: CoderKey.subscribed) as? Int else {
             return nil
         }
         self.init(
             status: aDecoder.decodeInteger(forKey: CoderKey.status),
-            accountPlan: AccountPlan(coder: aDecoder),
+            planTitle: planTitle,
             maxConnect: aDecoder.decodeInteger(forKey: CoderKey.maxConnect),
             maxTier: aDecoder.decodeInteger(forKey: CoderKey.maxTier),
             services: aDecoder.decodeInteger(forKey: CoderKey.services),
@@ -210,8 +204,8 @@ extension VpnCredentials {
 /// roundtrip to securityd.
 public struct CachedVpnCredentials {
     public let status: Int
-    public let accountPlan: AccountPlan
-    public let planName: String?
+    public let planName: String
+    public let planTitle: String
     public let maxConnect: Int
     public let maxTier: Int
     public let services: Int
@@ -235,8 +229,8 @@ extension CachedVpnCredentials {
     init(credentials: VpnCredentials) {
         self.init(
             status: credentials.status,
-            accountPlan: credentials.accountPlan,
-            planName: credentials.planName,
+            planName: credentials.planName, 
+            planTitle: credentials.planTitle,
             maxConnect: credentials.maxConnect,
             maxTier: credentials.maxTier,
             services: credentials.services,

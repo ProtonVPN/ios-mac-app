@@ -96,7 +96,7 @@ class MapViewModel: SecureCoreToggleHandler {
     init(appStateManager: AppStateManager, alertService: AlertService, serverStorage: ServerStorage, vpnGateway: VpnGatewayProtocol, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService) {
         self.appStateManager = appStateManager
         self.alertService = alertService
-        self.serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: serverStorage)
+        self.serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.internal, serverStorage: serverStorage)
         self.vpnGateway = vpnGateway
         self.vpnKeychain = vpnKeychain
         self.propertiesManager = propertiesManager

@@ -28,9 +28,9 @@ public class CoreAppConstants {
         public static let free = 0
         public static let basic = 1
         public static let plus = 2
-        public static let visionary = 3
-        
-        public static let allCases = [free, basic, plus, visionary]
+        public static let `internal` = 3
+
+        public static let allCases = [free, basic, plus, `internal`]
     }
     
     public struct ProtonMailLinks {

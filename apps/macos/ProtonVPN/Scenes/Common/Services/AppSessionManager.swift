@@ -389,7 +389,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             let modalSource: UpsellEvent.ModalSource? = nil
             NotificationCenter.default.post(
                 name: .userCompletedUpsellAlertJourney,
-                object: (modalSource, downgradeInfo.to.accountPlan.rawValue)
+                object: (modalSource, downgradeInfo.to.planName)
             )
         }
 

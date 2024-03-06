@@ -297,7 +297,7 @@ extension NavigationService: ProfileService {
             return nil
         }
 
-        let serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary,
+        let serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.internal,
                                                                  serverStorage: ServerStorageConcrete())
 
         createProfileViewController.viewModel = CreateOrEditProfileViewModel(username: username,

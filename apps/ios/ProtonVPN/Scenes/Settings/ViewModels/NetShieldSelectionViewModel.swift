@@ -84,7 +84,7 @@ final class NetShieldSelectionViewModel {
     private var netShieldUpsellSection: TableViewSection {
         @Dependency(\.credentialsProvider) var credentialsProvider
         let upsellCell: TableViewCellModel
-        if credentialsProvider.plan.isBusiness {
+        if credentialsProvider.planName.isBusiness {
             upsellCell = TableViewCellModel.imageSubtitleImage(
                 title: Localizable.netshieldBusinessUpsellTitle,
                 subtitle: Localizable.netshieldBusinessUpsellSubtitle,

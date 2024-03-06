@@ -196,7 +196,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
         let credentials = properties.vpnCredentials
         vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-        review.update(plan: credentials.accountPlan.rawValue)
+        review.update(plan: credentials.planName)
         serverStorage.store(
             properties.serverModels,
             keepStalePaidServers: shouldRefreshServers && credentials.maxTier == CoreAppConstants.VpnTiers.free
@@ -265,7 +265,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             
             let credentials = properties.vpnCredentials
             vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-            review.update(plan: credentials.accountPlan.rawValue)
+            review.update(plan: credentials.planName)
             serverStorage.store(
                 properties.serverModels,
                 keepStalePaidServers: shouldRefreshServers && credentials.maxTier == CoreAppConstants.VpnTiers.free

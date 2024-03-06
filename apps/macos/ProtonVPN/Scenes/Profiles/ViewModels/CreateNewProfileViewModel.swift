@@ -80,7 +80,7 @@ class CreateNewProfileViewModel {
     let colorPickerViewModel = ColorPickerViewModel()
     lazy var secureCoreWarningViewModel = SecureCoreWarningViewModel(sessionService: factory.makeSessionService())
 
-    private var userTier: Int = CoreAppConstants.VpnTiers.visionary
+    private var userTier: Int = CoreAppConstants.VpnTiers.internal
     private var profileId: String?
     private var state: ModelState {
         didSet {

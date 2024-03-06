@@ -278,7 +278,7 @@ extension IosAlertService: CoreAlertService {
                                                   numberOfDevices: AccountPlan.plus.devicesCount)
             }
         case let alert as MaxSessionsAlert:
-            if alert.accountPlan == .free {
+            if alert.accountTier == CoreAppConstants.VpnTiers.free {
                 viewModel = .reachedDevicePlanLimit(planName: Localizable.plus, numberOfDevices: AccountPlan.plus.devicesCount)
             } else {
                 viewModel = .reachedDeviceLimit

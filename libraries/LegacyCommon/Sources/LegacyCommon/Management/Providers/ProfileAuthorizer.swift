@@ -32,7 +32,7 @@ extension ProfileAuthorizer: DependencyKey {
         @Dependency(\.credentialsProvider) var credentials
         @Dependency(\.featureFlagProvider) var featureFlags
 
-        let shouldAllowProfiles: () -> Bool = { featureFlags[\.showNewFreePlan] ? credentials.plan.paid : true }
+        let shouldAllowProfiles: () -> Bool = { featureFlags[\.showNewFreePlan] ? credentials.planName.paid : true }
 
         return ProfileAuthorizer(
             shouldAllowProfiles: shouldAllowProfiles,

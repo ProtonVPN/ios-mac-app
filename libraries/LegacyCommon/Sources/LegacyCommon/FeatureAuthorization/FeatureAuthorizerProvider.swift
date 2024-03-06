@@ -85,14 +85,14 @@ public struct Authorizer<Feature: ModularAppFeature> {
 
 /// Represents a feature with no sub-features or 'levels' that may need authorization logic
 public protocol AppFeature {
-    static func canUse(onPlan plan: AccountPlan, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult
+    static func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult
 }
 
 public protocol PaidAppFeature: AppFeature {
     static var featureFlag: KeyPath<FeatureFlags, Bool>? { get }
     static func minTier(featureFlags: FeatureFlags) -> Int
-    static var includedAccountPlans: [AccountPlan]? { get }
-    static var excludedAccountPlans: [AccountPlan]? { get }
+    static var includedAccountPlans: [String]? { get }
+    static var excludedAccountPlans: [String]? { get }
 }
 
 extension PaidAppFeature {
@@ -104,15 +104,15 @@ extension PaidAppFeature {
         CoreAppConstants.VpnTiers.basic
     }
 
-    public static var includedAccountPlans: [AccountPlan]? {
+    public static var includedAccountPlans: [String]? {
         nil
     }
 
-    public static var excludedAccountPlans: [AccountPlan]? {
+    public static var excludedAccountPlans: [String]? {
         nil
     }
 
-    public static func canUse(onPlan plan: AccountPlan, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    public static func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         if let featureFlag {
             guard featureFlags[keyPath: featureFlag] else {
                 return .failure(.featureDisabled)
@@ -141,7 +141,7 @@ extension PaidAppFeature {
 
 /// Represents a feature that may contains a number of related features, or 'levels'.
 public protocol ModularAppFeature: CaseIterable {
-    func canUse(onPlan plan: AccountPlan, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult
+    func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult
 }
 
 public enum FeatureAuthorizerKey: DependencyKey {

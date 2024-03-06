@@ -569,7 +569,7 @@ class StatusViewModel {
     }
 
     private var netShieldV2UpsellBannerCell: TableViewCellModel {
-        if let vpnCredentials = try? vpnKeychain.fetch(), vpnCredentials.accountPlan.isBusiness {
+        if let vpnCredentials = try? vpnKeychain.fetch(), vpnCredentials.planName.isBusiness {
             return .imageSubtitleImage(
                 title: Localizable.netshieldBusinessUpsellTitle,
                 subtitle: Localizable.netshieldBusinessUpsellSubtitle,

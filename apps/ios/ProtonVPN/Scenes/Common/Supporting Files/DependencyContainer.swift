@@ -85,7 +85,7 @@ final class DependencyContainer: Container {
         return doh
     }()
     private lazy var searchStorage = SearchModuleStorage()
-    private lazy var review = Review(configuration: ReviewConfiguration(settings: makePropertiesManager().ratingSettings), plan: (try? makeVpnKeychain().fetchCached().accountPlan.description), logger: { message in log.debug("\(message)", category: .review) })
+    private lazy var review = Review(configuration: ReviewConfiguration(settings: makePropertiesManager().ratingSettings), plan: (try? makeVpnKeychain().fetchCached().planTitle), logger: { message in log.debug("\(message)", category: .review) })
 
     init() {
         let prefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String

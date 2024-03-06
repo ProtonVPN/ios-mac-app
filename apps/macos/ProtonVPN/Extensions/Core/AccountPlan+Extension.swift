@@ -24,17 +24,19 @@ import LegacyCommon
 import AppKit
 import Theme
 
-extension AccountPlan {
+extension Int {
     var styleForUI: AppTheme.Style {
         switch self {
-        case .free:
+        case CoreAppConstants.VpnTiers.free:
             return .weak
-        case .basic:
+        case CoreAppConstants.VpnTiers.basic:
             return .info
-        case .trial, .plus, .vpnPlus, .family, .bundlePro, .enterprise2022, .vpnbiz2023, .vpnpro2023, .vpnpass2023, .unknown:
+        case CoreAppConstants.VpnTiers.plus:
             return .success
-        case .visionary, .unlimited, .visionary2022:
+        case CoreAppConstants.VpnTiers.internal:
             return .interactive
+        default:
+            return .weak
         }
     }
 }

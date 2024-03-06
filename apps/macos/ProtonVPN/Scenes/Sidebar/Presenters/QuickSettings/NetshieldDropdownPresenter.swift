@@ -118,8 +118,8 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
             netShieldPropertyProvider: netShieldPropertyProvider,
             vpnStateConfiguration: vpnStateConfiguration,
             isActive: netShieldPropertyProvider.netShieldType == level,
-            currentUserTier: credentials?.maxTier ?? CoreAppConstants.VpnTiers.free,
-            currentAccountPlan: credentials?.accountPlan ?? .unknown,
+            currentUserTier: credentialsProvider.tier,
+            currentPlanName: credentialsProvider.planName,
             openUpgradeLink: presentUpsellAlert
         )
     }

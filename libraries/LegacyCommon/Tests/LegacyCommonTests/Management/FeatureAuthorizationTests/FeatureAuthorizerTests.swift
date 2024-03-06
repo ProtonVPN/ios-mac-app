@@ -23,8 +23,8 @@ import VPNShared
 
 // Feature with no sub features
 enum TestB2BFeature: AppFeature {
-    static func canUse(onPlan plan: AccountPlan, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
-        if plan == .vpnbiz2023 {
+    static func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+        if plan == "vpnbiz2023" {
             return .success
         }
         return .failure(.requiresUpgrade)
@@ -36,7 +36,7 @@ enum TestNetShieldType: ModularAppFeature {
     case level1
     case level2
 
-    func canUse(onPlan plan: AccountPlan, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         guard featureFlags.netShield else {
             return .failure(.featureDisabled)
         }

@@ -73,7 +73,7 @@ class TelemetryUpsellReporter {
         }
 
         let cached = try? vpnKeychain.fetchCached()
-        let accountPlan = cached?.accountPlan ?? .free
+        let planName = cached?.planName ?? "free"
 
         let daysSinceAccountCreation = Date().timeIntervalSince(accountCreationDate) / .days(1)
 
@@ -81,7 +81,7 @@ class TelemetryUpsellReporter {
             event: event,
             dimensions: .init(
                 modalSource: modalSource,
-                userPlan: accountPlan,
+                userPlan: planName,
                 vpnStatus: vpnStatus,
                 userCountry: propertiesManager.userLocation?.country ?? "",
                 newFreePlanUi: propertiesManager.featureFlags.showNewFreePlan,

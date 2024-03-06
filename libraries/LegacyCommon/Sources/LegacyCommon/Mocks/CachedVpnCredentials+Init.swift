@@ -20,13 +20,13 @@ import Foundation
 
 #if DEBUG
 extension CachedVpnCredentials {
-    static func plan(_ plan: AccountPlan) -> Self {
+    static func plan(_ tier: Int) -> Self {
         .init(
             status: 0,
-            accountPlan: plan,
-            planName: "Awesome",
+            planName: "Awesome", 
+            planTitle: "does it matter?",
             maxConnect: 10,
-            maxTier: plan.defaultTier,
+            maxTier: tier,
             services: 1,
             delinquent: 0,
             credit: 1,

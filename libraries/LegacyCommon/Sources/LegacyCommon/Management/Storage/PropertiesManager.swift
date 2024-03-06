@@ -61,8 +61,8 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var lastPreparedServer: ServerModel? { get set }
     var lastConnectionRequest: ConnectionRequest? { get set }
 
-    func getLastAccountPlan(for username: String) -> AccountPlan?
-    func setLastAccountPlan(for username: String, plan: AccountPlan?)
+    func getLastAccountPlan(for username: String) -> String?
+    func setLastAccountPlan(for username: String, plan: String?)
 
     func getQuickConnect(for username: String) -> String? // profile + username (incase multiple users are using the app)
     func setQuickConnect(for username: String, quickConnect: String?)
@@ -342,15 +342,12 @@ public class PropertiesManager: PropertiesManagerProtocol {
     @Property(.lastPreparingServer) public var lastPreparedServer: ServerModel?
     @Property(.lastConnectionRequest) public var lastConnectionRequest: ConnectionRequest?
 
-    public func getLastAccountPlan(for username: String) -> AccountPlan? {
-        guard let result = defaults.string(forKey: Keys.lastUserAccountPlan.rawValue + username) else {
-            return nil
-        }
-        return AccountPlan(rawValue: result)
+    public func getLastAccountPlan(for username: String) -> String? {
+        return defaults.string(forKey: Keys.lastUserAccountPlan.rawValue + username)
     }
 
-    public func setLastAccountPlan(for username: String, plan: AccountPlan?) {
-        storage.setValue(plan?.rawValue, forKey: Keys.lastUserAccountPlan.rawValue + username)
+    public func setLastAccountPlan(for username: String, plan: String?) {
+        storage.setValue(plan, forKey: Keys.lastUserAccountPlan.rawValue + username)
     }
 
     public func getQuickConnect(for username: String) -> String? {

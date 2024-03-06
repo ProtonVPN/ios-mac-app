@@ -151,8 +151,8 @@ public class DynamicBugReportManager {
                                email: data.email,
                                country: propertiesManager.userLocation?.country ?? "",
                                ISP: propertiesManager.userLocation?.isp ?? "",
-                               plan: (try? vpnKeychain.fetchCached().accountPlan.description) ?? "")
-        
+                               plan: (try? vpnKeychain.fetchCached().planTitle) ?? "")
+
         return report
     }
     

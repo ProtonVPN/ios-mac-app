@@ -659,12 +659,13 @@ public class MaxSessionsAlert: UserAccountUpdateAlert {
     public var actions: [AlertAction] = []
     public var isError: Bool = false
     public var dismiss: (() -> Void)?
-    public var accountPlan: AccountPlan
-    
-    public init(accountPlan: AccountPlan) {
-        self.accountPlan = accountPlan
-        switch accountPlan {
-        case .free, .basic:
+    public var accountTier: Int
+
+    public init(accountTier: Int) {
+        self.accountTier = accountTier
+        switch accountTier {
+        case CoreAppConstants.VpnTiers.free, 
+            CoreAppConstants.VpnTiers.basic:
             message = Localizable.maximumDevicePlanLimitPart1(Localizable.tierPlus) + Localizable.maximumDevicePlanLimitPart2(AccountPlan.plus.devicesCount)
         default:
             message = Localizable.maximumDeviceReachedDescription
@@ -805,12 +806,12 @@ public class WelcomeScreenAlert: UpsellAlert {
 
 public extension WelcomeScreenAlert.Plan {
     init?(info: VpnDowngradeInfo) {
-        if info.to.accountPlan == .vpnPlus || info.to.accountPlan == .plus {
-            self = .plus(numberOfServers: AccountPlan.plus.serversCount,
-                            numberOfDevices: AccountPlan.plus.devicesCount,
-                            numberOfCountries: AccountPlan.plus.countriesCount)
-        } else if info.to.accountPlan == .unlimited {
+        if info.to.planName == "unlimited" {
             self = .unlimited
+        } else if info.to.maxTier == CoreAppConstants.VpnTiers.plus {
+            self = .plus(numberOfServers: AccountPlan.plus.serversCount,
+                         numberOfDevices: AccountPlan.plus.devicesCount,
+                         numberOfCountries: AccountPlan.plus.countriesCount)
         } else if info.to.maxTier > info.from.maxTier {
             self = .fallback
         } else {

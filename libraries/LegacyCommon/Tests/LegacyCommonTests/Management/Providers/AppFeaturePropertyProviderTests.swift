@@ -29,14 +29,14 @@ fileprivate enum TestFeature: String, ProvidableFeature {
     case freeDefault
     case paidDefault
 
-    static func canUse(onPlan plan: AccountPlan, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    static func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         if userTier == 0 {
             return .failure(.requiresUpgrade)
         }
         return .success
     }
 
-    func canUse(onPlan plan: AccountPlan, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         switch self {
         case .on, .paidDefault:
             return .failure(.requiresUpgrade)

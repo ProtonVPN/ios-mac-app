@@ -230,8 +230,7 @@ final class SettingsViewModel {
         let accountPlanName: String
         
         if let vpnCredentials = try? vpnKeychain.fetchCached() {
-            accountPlanName = vpnCredentials.accountPlan.description
-
+            accountPlanName = vpnCredentials.planTitle
         } else {
             accountPlanName = Localizable.unavailable
         }
