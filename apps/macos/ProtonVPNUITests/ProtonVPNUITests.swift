@@ -219,7 +219,7 @@ class ProtonVPNUITests: XCTestCase {
     }
     
     func dismissPopups() {
-        let dismissButtons = ["Cancel", "No thanks", "Take a Tour"]
+        let dismissButtons = ["Cancel", "No thanks", "Take a Tour", "Got it!"]
         
         for button in dismissButtons {
             if app.buttons[button].exists {

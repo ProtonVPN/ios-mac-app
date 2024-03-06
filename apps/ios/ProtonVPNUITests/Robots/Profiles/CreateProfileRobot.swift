@@ -22,6 +22,8 @@ fileprivate let secureCoreToggle = "Secure Core"
 fileprivate let defaultProfileToggle = "Make Default Profile"
 fileprivate let okButton = "OK"
 fileprivate let protocolCell = "Protocol"
+fileprivate let upgradeButton = "Upgrade"
+fileprivate let notNowButton = "Not now"
 
 class CreateProfileRobot: CoreElements {
     
