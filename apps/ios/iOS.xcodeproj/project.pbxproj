@@ -188,6 +188,7 @@
 		B28688CC2AC1C56600C1BA37 /* InternalAndExternalSignUpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28688CB2AC1C56600C1BA37 /* InternalAndExternalSignUpTests.swift */; };
 		B28688CE2AC1C65300C1BA37 /* LoginExternalAccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28688CD2AC1C65300C1BA37 /* LoginExternalAccountTests.swift */; };
 		B29CD6AF2654109600978637 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CD6AE2654109600978637 /* StringUtils.swift */; };
+		B29D298B2B989F47000BA715 /* HumanVerificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29D298A2B989F47000BA715 /* HumanVerificationTests.swift */; };
 		B2BCF09928B546200041A635 /* Generate2FACode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BCF09828B546200041A635 /* Generate2FACode.swift */; };
 		B2BCF09C28B547F00041A635 /* twofausercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = B2BCF09B28B547F00041A635 /* twofausercredentials.plist */; };
 		B2BCF09E28B549C90041A635 /* twopasstwofausercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = B2BCF09D28B549C90041A635 /* twopasstwofausercredentials.plist */; };
@@ -676,6 +677,7 @@
 		B28688CB2AC1C56600C1BA37 /* InternalAndExternalSignUpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalAndExternalSignUpTests.swift; sourceTree = "<group>"; };
 		B28688CD2AC1C65300C1BA37 /* LoginExternalAccountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginExternalAccountTests.swift; sourceTree = "<group>"; };
 		B29CD6AE2654109600978637 /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtils.swift; sourceTree = "<group>"; };
+		B29D298A2B989F47000BA715 /* HumanVerificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumanVerificationTests.swift; sourceTree = "<group>"; };
 		B2BCF09828B546200041A635 /* Generate2FACode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generate2FACode.swift; sourceTree = "<group>"; };
 		B2BCF09B28B547F00041A635 /* twofausercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = twofausercredentials.plist; sourceTree = "<group>"; };
 		B2BCF09D28B549C90041A635 /* twopasstwofausercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = twopasstwofausercredentials.plist; sourceTree = "<group>"; };
@@ -2120,6 +2122,7 @@
 				37CC821428F4407C00230335 /* LoginExtAccountTests.swift */,
 				B2FCF5432940E91300EAC786 /* TokenRefreshTests.swift */,
 				B28688CD2AC1C65300C1BA37 /* LoginExternalAccountTests.swift */,
+				B29D298A2B989F47000BA715 /* HumanVerificationTests.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -3138,6 +3141,7 @@
 				F3B783F626E6428C006768A8 /* SettingsRobot.swift in Sources */,
 				F3B783FF26E6428C006768A8 /* SignupRobot.swift in Sources */,
 				FA46A2072B270C8000929229 /* SubscriptionTests.swift in Sources */,
+				B29D298B2B989F47000BA715 /* HumanVerificationTests.swift in Sources */,
 				D5AAA12B229D28E400EA839A /* Credentials.swift in Sources */,
 				F36AC257264BF41B008CFCD3 /* SnapshotHelper.swift in Sources */,
 				B2D4572E2771D8D50065FEC2 /* CreatingAccountRobot.swift in Sources */,
