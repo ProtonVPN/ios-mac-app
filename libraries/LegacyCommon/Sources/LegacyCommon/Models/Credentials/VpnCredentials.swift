@@ -29,7 +29,6 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
     public static var supportsSecureCoding: Bool = true
 
     public let status: Int
-    public let expirationTime: Date
     public let accountPlan: AccountPlan
     public let planName: String?
     public let maxConnect: Int
@@ -47,7 +46,6 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
 
     override public var description: String {
         "Status: \(status)\n" +
-        "Expiration time: \(String(describing: expirationTime))\n" +
         "Account plan: \(accountPlan.description) (\(planName ?? "unknown"))\n" +
         "Max connect: \(maxConnect)\n" +
         "Max tier: \(maxTier)\n" +
@@ -64,7 +62,6 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
 
     public init(
         status: Int,
-        expirationTime: Date,
         accountPlan: AccountPlan,
         maxConnect: Int,
         maxTier: Int,
@@ -81,7 +78,6 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         businessEvents: Bool
     ) {
         self.status = status
-        self.expirationTime = expirationTime
         self.accountPlan = accountPlan
         self.maxConnect = maxConnect
         self.maxTier = maxTier
@@ -113,7 +109,6 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         self.accountPlan = accountPlan
         
         status = try vpnDic.intOrThrow(key: "Status")
-        expirationTime = try vpnDic.unixTimestampOrThrow(key: "ExpirationTime")
         maxConnect = try vpnDic.intOrThrow(key: "MaxConnect")
         maxTier = vpnDic.int(key: "MaxTier") ?? accountPlan.defaultTier
         services = try dic.intOrThrow(key: "Services")
@@ -135,7 +130,6 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
             "VPN": [
                 "PlanName": accountPlan.rawValue,
                 "Status": status,
-                "ExpirationTime": Int(expirationTime.timeIntervalSince1970),
                 "MaxConnect": maxConnect,
                 "MaxTier": maxTier,
                 "GroupID": groupId,
@@ -156,7 +150,6 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
     // MARK: - NSCoding
     private struct CoderKey {
         static let status = "status"
-        static let expirationTime = "expirationTime"
         static let accountPlan = "accountPlan"
         static let planName = "planName"
         static let maxConnect = "maxConnect"
@@ -174,8 +167,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
     }
     
     public required convenience init?(coder aDecoder: NSCoder) {
-        guard let expirationTime = aDecoder.decodeObject(of: NSDate.self, forKey: CoderKey.expirationTime),
-              let groupId = aDecoder.decodeObject(forKey: CoderKey.groupId) as? String,
+        guard let groupId = aDecoder.decodeObject(forKey: CoderKey.groupId) as? String,
               let name = aDecoder.decodeObject(forKey: CoderKey.name) as? String,
               let password = aDecoder.decodeObject(forKey: CoderKey.password) as? String,
               let planName = aDecoder.decodeObject(forKey: CoderKey.planName) as? String,
@@ -184,7 +176,6 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         }
         self.init(
             status: aDecoder.decodeInteger(forKey: CoderKey.status),
-            expirationTime: expirationTime as Date,
             accountPlan: AccountPlan(coder: aDecoder),
             maxConnect: aDecoder.decodeInteger(forKey: CoderKey.maxConnect),
             maxTier: aDecoder.decodeInteger(forKey: CoderKey.maxTier),

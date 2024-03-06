@@ -109,7 +109,6 @@ public class VpnKeychainMock: VpnKeychainProtocol {
     public static func vpnCredentials(accountPlan: AccountPlan, maxTier: Int) -> VpnCredentials {
         return VpnCredentials(
             status: 0,
-            expirationTime: Date(),
             accountPlan: accountPlan,
             maxConnect: 1,
             maxTier: maxTier,
