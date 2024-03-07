@@ -44,7 +44,7 @@ extension CredentialsProvider: DependencyKey {
     }
 
     #if DEBUG
-    public static var testValue: CredentialsProvider = .constant(credentials: .plan(CoreAppConstants.VpnTiers.plus))
+    public static var testValue: CredentialsProvider = .constant(credentials: .tier(CoreAppConstants.VpnTiers.plus))
 
     static func constant(credentials: CachedVpnCredentials?) -> CredentialsProvider {
         CredentialsProvider(getCredentials: { credentials })

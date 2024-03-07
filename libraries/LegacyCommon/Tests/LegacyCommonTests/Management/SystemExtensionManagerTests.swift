@@ -37,7 +37,7 @@ class SystemExtensionManagerTests: XCTestCase {
         super.setUp()
         propertiesManager = PropertiesManagerMock()
         alertService = CoreAlertServiceDummy()
-        vpnKeychain = VpnKeychainMock(accountPlan: .free, maxTier: CoreAppConstants.VpnTiers.free)
+        vpnKeychain = VpnKeychainMock(planName: "free", maxTier: CoreAppConstants.VpnTiers.free)
         sysextManager = SystemExtensionManagerMock(factory: self)
         profileManager = ProfileManager(serverStorage: ServerStorageMock(),
                                         propertiesManager: propertiesManager,

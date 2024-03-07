@@ -250,7 +250,7 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
         try await super.setUp()
 
         mockProviderState.shouldRefresh = false
-        container.vpnKeychain.setVpnCredentials(with: .plus, maxTier: CoreAppConstants.VpnTiers.plus)
+        container.vpnKeychain.setVpnCredentials(with: "plus", maxTier: CoreAppConstants.VpnTiers.plus)
         container.propertiesManager.hasConnected = true
         shouldNotDisconnect = false
 

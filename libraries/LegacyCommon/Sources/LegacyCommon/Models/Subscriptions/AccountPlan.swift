@@ -40,7 +40,7 @@ public enum AccountPlan {
     public var serversCount: Int {
         switch self {
         case .plus:
-            return 400
+            return 4000
         }
     }
 }
@@ -53,8 +53,5 @@ public extension String {
 
     var hasNetShield: Bool {
         !["free", "trial", "vpnpro2023"].contains(self)
-    }
-    var paid: Bool {
-        !["free", "trial"].contains(self)
     }
 }

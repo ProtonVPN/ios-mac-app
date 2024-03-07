@@ -35,7 +35,7 @@ public class ServerChangeAuthorizerTests: XCTestCase {
 
         withDependencies {
             $0.date = .constant(now)
-            $0.credentialsProvider = .constant(credentials: .plan(CoreAppConstants.VpnTiers.free))
+            $0.credentialsProvider = .constant(credentials: .tier(CoreAppConstants.VpnTiers.free))
             $0.featureFlagProvider = .constant(flags: .allDisabled.enabling(\.showNewFreePlan))
             $0.serverChangeStorage = .init(
                 getConfig: { config },
@@ -60,7 +60,7 @@ public class ServerChangeAuthorizerTests: XCTestCase {
 
         withDependencies {
             $0.date = .constant(start)
-            $0.credentialsProvider = .constant(credentials: .plan(CoreAppConstants.VpnTiers.free))
+            $0.credentialsProvider = .constant(credentials: .tier(CoreAppConstants.VpnTiers.free))
             $0.featureFlagProvider = .constant(flags: .allDisabled.enabling(\.showNewFreePlan))
             $0.serverChangeStorage = .init(
                 getConfig: { config },
@@ -96,7 +96,7 @@ public class ServerChangeAuthorizerTests: XCTestCase {
 
         withDependencies {
             $0.date = .constant(start)
-            $0.credentialsProvider = .constant(credentials: .plan(CoreAppConstants.VpnTiers.free))
+            $0.credentialsProvider = .constant(credentials: .tier(CoreAppConstants.VpnTiers.free))
             $0.featureFlagProvider = .constant(flags: .allDisabled.enabling(\.showNewFreePlan))
             $0.serverChangeStorage = .init(
                 getConfig: { config },
@@ -132,7 +132,7 @@ public class ServerChangeAuthorizerTests: XCTestCase {
 
             withDependencies {
                 $0.date = .constant(start)
-                $0.credentialsProvider = .constant(credentials: .plan(CoreAppConstants.VpnTiers.free))
+                $0.credentialsProvider = .constant(credentials: .tier(CoreAppConstants.VpnTiers.free))
                 $0.featureFlagProvider = .constant(flags: .allDisabled.enabling(\.showNewFreePlan))
                 $0.serverChangeStorage = .init(
                     getConfig: { config },
@@ -144,7 +144,7 @@ public class ServerChangeAuthorizerTests: XCTestCase {
 
         withDependencies {
             $0.date = .constant(start)
-            $0.credentialsProvider = .constant(credentials: .plan(CoreAppConstants.VpnTiers.plus))
+            $0.credentialsProvider = .constant(credentials: .tier(CoreAppConstants.VpnTiers.plus))
             $0.featureFlagProvider = .constant(flags: .allDisabled.enabling(\.showNewFreePlan))
             $0.serverChangeStorage = .init(
                 getConfig: { config },
@@ -156,7 +156,7 @@ public class ServerChangeAuthorizerTests: XCTestCase {
 
         withDependencies {
             $0.date = .constant(start)
-            $0.credentialsProvider = .constant(credentials: .plan(CoreAppConstants.VpnTiers.free))
+            $0.credentialsProvider = .constant(credentials: .tier(CoreAppConstants.VpnTiers.free))
             $0.featureFlagProvider = .constant(flags: .allEnabled.disabling(\.showNewFreePlan))
             $0.serverChangeStorage = .init(
                 getConfig: { config },
@@ -182,7 +182,7 @@ public class ServerChangeAuthorizerTests: XCTestCase {
 
         withDependencies {
             $0.date = .constant(start)
-            $0.credentialsProvider = .constant(credentials: .plan(CoreAppConstants.VpnTiers.free))
+            $0.credentialsProvider = .constant(credentials: .tier(CoreAppConstants.VpnTiers.free))
             $0.featureFlagProvider = .constant(flags: .allDisabled.enabling(\.showNewFreePlan))
             $0.serverChangeStorage = .init(
                 getConfig: { config },
@@ -194,7 +194,7 @@ public class ServerChangeAuthorizerTests: XCTestCase {
 
         withDependencies {
             $0.date = .constant(midDelay)
-            $0.credentialsProvider = .constant(credentials: .plan(CoreAppConstants.VpnTiers.free))
+            $0.credentialsProvider = .constant(credentials: .tier(CoreAppConstants.VpnTiers.free))
             $0.featureFlagProvider = .constant(flags: .allDisabled.enabling(\.showNewFreePlan))
             $0.serverChangeStorage = .init(
                 getConfig: { config },
@@ -206,7 +206,7 @@ public class ServerChangeAuthorizerTests: XCTestCase {
 
         withDependencies {
             $0.date = .constant(delayExpiryDate)
-            $0.credentialsProvider = .constant(credentials: .plan(CoreAppConstants.VpnTiers.free))
+            $0.credentialsProvider = .constant(credentials: .tier(CoreAppConstants.VpnTiers.free))
             $0.featureFlagProvider = .constant(flags: .allDisabled.enabling(\.showNewFreePlan))
             $0.serverChangeStorage = .init(
                 getConfig: { config },
@@ -231,7 +231,7 @@ public class ServerChangeAuthorizerTests: XCTestCase {
         )
 
         withDependencies {
-            $0.credentialsProvider = .constant(credentials: .plan(CoreAppConstants.VpnTiers.free))
+            $0.credentialsProvider = .constant(credentials: .tier(CoreAppConstants.VpnTiers.free))
             $0.featureFlagProvider = .constant(flags: .allDisabled.enabling(\.showNewFreePlan))
             $0.serverChangeStorage = .init(
                 getConfig: { config },

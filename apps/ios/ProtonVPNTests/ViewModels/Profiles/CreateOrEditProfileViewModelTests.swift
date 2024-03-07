@@ -53,7 +53,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
 
     lazy var authKeychain: AuthKeychainHandle = MockAuthKeychain()
 
-    lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychainMock(accountPlan: .visionary, maxTier: 4)
+    lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychainMock(planName: "visionary", maxTier: 4)
 
     lazy var networking = CoreNetworking(
         delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()),

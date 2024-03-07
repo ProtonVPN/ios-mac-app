@@ -47,6 +47,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
     override public var description: String {
         "Status: \(status)\n" +
         "Plan title: \(planTitle)\n" +
+        "Plan name: \(planName)\n" +
         "Max connect: \(maxConnect)\n" +
         "Max tier: \(maxTier)\n" +
         "Services: \(services)\n" +

@@ -506,7 +506,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
             .with(featureFlags: .wireGuardTlsDisabled, smartProtocolConfig: .onlyWgTcpAndTls)
         container.authKeychain.setMockUsername("user")
-        let freeCreds = VpnKeychainMock.vpnCredentials(accountPlan: .free,
+        let freeCreds = VpnKeychainMock.vpnCredentials(planName: "free",
                                                        maxTier: CoreAppConstants.VpnTiers.free)
         container.networkingDelegate.apiCredentials = freeCreds
 
@@ -587,7 +587,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         container.serverStorage.populateServers([testData.server1, testData.server3])
         container.networkingDelegate.apiServerList = [testData.server1, testData.server3]
 
-        container.vpnKeychain.setVpnCredentials(with: .plus, maxTier: CoreAppConstants.VpnTiers.plus)
+        container.vpnKeychain.setVpnCredentials(with: "plus", maxTier: CoreAppConstants.VpnTiers.plus)
         container.propertiesManager.vpnProtocol = .wireGuard(.udp)
         container.propertiesManager.hasConnected = true
         container.authKeychain.setMockUsername("user")
@@ -702,10 +702,10 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         XCTAssertEqual(currentManager?.protocolConfiguration?.serverAddress, testData.server3.ips.first?.entryIp)
 
         let plusCreds = try! container.vpnKeychain.fetch()
-        XCTAssertEqual(plusCreds.accountPlan, .plus)
+        XCTAssertEqual(plusCreds.planName, "plus")
         XCTAssertEqual(plusCreds.maxTier, CoreAppConstants.VpnTiers.plus)
 
-        let freeCreds = VpnKeychainMock.vpnCredentials(accountPlan: .free,
+        let freeCreds = VpnKeychainMock.vpnCredentials(planName: "free",
                                                        maxTier: CoreAppConstants.VpnTiers.free)
         container.networkingDelegate.apiCredentials = freeCreds
 
@@ -792,16 +792,16 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
     func testUserPlanChangingFromFreeToPlusAndConnectingToPaidServerThruQuickConnect() { // swiftlint:disable:this function_body_length
         container.networkingDelegate.apiServerList = [testData.server1, testData.server3]
 
-        container.vpnKeychain.setVpnCredentials(with: .free, maxTier: CoreAppConstants.VpnTiers.free)
+        container.vpnKeychain.setVpnCredentials(with: "free", maxTier: CoreAppConstants.VpnTiers.free)
         container.propertiesManager.vpnProtocol = .wireGuard(.udp)
         container.propertiesManager.hasConnected = true
         container.authKeychain.setMockUsername("user")
 
         let freeCreds = try! container.vpnKeychain.fetch()
-        XCTAssertEqual(freeCreds.accountPlan, .free)
+        XCTAssertEqual(freeCreds.planName, "free")
         XCTAssertEqual(freeCreds.maxTier, CoreAppConstants.VpnTiers.free)
 
-        let plusCreds = VpnKeychainMock.vpnCredentials(accountPlan: .plus, maxTier: CoreAppConstants.VpnTiers.plus)
+        let plusCreds = VpnKeychainMock.vpnCredentials(planName: "plus", maxTier: CoreAppConstants.VpnTiers.plus)
 
         let (totalConnections, totalDisconnections) = (2, 2)
 
@@ -962,12 +962,12 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
     func testFreeUserImmediateReconnectsAreThrottledAccordingToClientConfig() async { // swiftlint:disable:this function_body_length
         container.authKeychain.setMockUsername("user")
-        container.vpnKeychain.setVpnCredentials(with: .free, maxTier: CoreAppConstants.VpnTiers.free)
+        container.vpnKeychain.setVpnCredentials(with: "free", maxTier: CoreAppConstants.VpnTiers.free)
 
         let oldAuthKeychain = AuthKeychainHandleDependencyKey.testValue
         AuthKeychainHandleDependencyKey.testValue = container.authKeychain
         let oldCredentialsProvider = CredentialsProvider.testValue
-        CredentialsProvider.testValue = .constant(credentials: .plan(.free))
+        CredentialsProvider.testValue = .constant(credentials: .tier(CoreAppConstants.VpnTiers.free))
 
         var until: Date?
         var observedStatuses: [NEVPNStatus] = []

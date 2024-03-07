@@ -44,7 +44,7 @@ enum TestNetShieldType: ModularAppFeature {
         case .off:
             return .success
         case .level1, .level2:
-            if plan.paid {
+            if userTier > CoreAppConstants.VpnTiers.free {
                 return .success
             }
             return .failure(.requiresUpgrade)
@@ -56,7 +56,7 @@ class FeatureAuthorizerProviderTests: XCTestCase {
 
     func testAuthorizationOfFeatureWithNoSubFeatures() throws {
         let provider = withDependencies {
-            $0.credentialsProvider = .constant(credentials: .plan(.plus))
+            $0.credentialsProvider = .constant(credentials: .tier(CoreAppConstants.VpnTiers.plus))
             $0.featureFlagProvider = .constant(flags: .allDisabled)
         } operation: {
             LiveFeatureAuthorizerProvider()
@@ -67,7 +67,7 @@ class FeatureAuthorizerProviderTests: XCTestCase {
         XCTAssertEqual(canUseB2B(), .failure(.requiresUpgrade))
 
         withDependencies {
-            $0.credentialsProvider = .constant(credentials: .plan(.vpnbiz2023))
+            $0.credentialsProvider = .constant(credentials: .tier(CoreAppConstants.VpnTiers.free, planName: "vpnbiz2023"))
         } operation: {
             XCTAssertEqual(canUseB2B(), .success)
         }
@@ -75,7 +75,7 @@ class FeatureAuthorizerProviderTests: XCTestCase {
 
     func testAuthorizationBasedOnFeatureFlags() throws {
         let provider = withDependencies {
-            $0.credentialsProvider = .constant(credentials: .plan(.plus))
+            $0.credentialsProvider = .constant(credentials: .tier(CoreAppConstants.VpnTiers.plus))
             $0.featureFlagProvider = .constant(flags: .allDisabled)
         } operation: {
             LiveFeatureAuthorizerProvider()
@@ -94,7 +94,7 @@ class FeatureAuthorizerProviderTests: XCTestCase {
 
     func testSubFeatureAuthorization() throws {
         let provider = withDependencies {
-            $0.credentialsProvider = .constant(credentials: .plan(.free))
+            $0.credentialsProvider = .constant(credentials: .tier(CoreAppConstants.VpnTiers.free))
             $0.featureFlagProvider = .constant(flags: .allEnabled)
         } operation: {
             LiveFeatureAuthorizerProvider()
@@ -108,7 +108,7 @@ class FeatureAuthorizerProviderTests: XCTestCase {
         XCTAssertEqual(authorizer.canUse(.level1), .failure(.requiresUpgrade))
 
         withDependencies {
-            $0.credentialsProvider = .constant(credentials: .plan(.plus))
+            $0.credentialsProvider = .constant(credentials: .tier(CoreAppConstants.VpnTiers.plus))
         } operation: {
             XCTAssertEqual(authorizer.canUseAllSubFeatures, .success)
             XCTAssertEqual(authorizer.canUse(.level1), .success)

@@ -28,7 +28,7 @@ import VPNSharedTesting
 
 final class NATTypePropertyProviderImplementationTests: XCTestCase {
     static let username = "user1"
-    private let paidPlans: [AccountPlan] = [.basic, .plus, .visionary]
+    private let paidTiers: [Int] = [CoreAppConstants.VpnTiers.basic, CoreAppConstants.VpnTiers.plus, CoreAppConstants.VpnTiers.internal]
 
     override func setUp() {
         super.setUp()
@@ -40,22 +40,22 @@ final class NATTypePropertyProviderImplementationTests: XCTestCase {
         let variants: [NATType] = NATType.allCases
 
         for type in variants {
-            withProvider(natType: type, plan: .plus) {
+            withProvider(natType: type, tier: CoreAppConstants.VpnTiers.plus) {
                 XCTAssertEqual($0.natType, type)
             }
         }
     }
 
     func testWhenNothingIsSetReturnsStrict() throws {
-        for plan in paidPlans {
-            withProvider(natType: nil, plan: plan) { provider in
+        for tier in paidTiers {
+            withProvider(natType: nil, tier: tier) { provider in
                 XCTAssertEqual(provider.natType, NATType.strictNAT)
             }
         }
     }
 
     func testSavesValueToStorage() {
-        withProvider(natType: nil, plan: .plus) { provider in
+        withProvider(natType: nil, tier: CoreAppConstants.VpnTiers.plus) { provider in
             var provider = provider
             for type in NATType.allCases {
                 provider.natType = type
@@ -67,23 +67,23 @@ final class NATTypePropertyProviderImplementationTests: XCTestCase {
     }
 
     func testFreeUserCantTurnModerateNATOn() throws {
-        XCTAssertEqual(getAuthorizer(plan: .free), .failure(.requiresUpgrade))
+        XCTAssertEqual(getAuthorizer(tier: CoreAppConstants.VpnTiers.free), .failure(.requiresUpgrade))
     }
 
     func testPaidUserCanTurnModerateNATOn() throws {
-        let accountPlans: [AccountPlan] = [.basic, .plus, .visionary]
-        for plan in accountPlans {
-            XCTAssertEqual(getAuthorizer(plan: plan), .success)
+        let tiers: [Int] = [CoreAppConstants.VpnTiers.basic, CoreAppConstants.VpnTiers.plus, CoreAppConstants.VpnTiers.internal]
+        for tier in tiers {
+            XCTAssertEqual(getAuthorizer(tier: tier), .success)
         }
     }
 
-    func withProvider(natType: NATType?, plan: AccountPlan, flags: FeatureFlags = .allDisabled, closure: @escaping (NATTypePropertyProvider) -> Void) {
+    func withProvider(natType: NATType?, tier: Int, flags: FeatureFlags = .allDisabled, closure: @escaping (NATTypePropertyProvider) -> Void) {
         withDependencies {
             let authKeychain = MockAuthKeychain()
             authKeychain.setMockUsername(Self.username)
             $0.authKeychain = authKeychain
 
-            $0.credentialsProvider = .constant(credentials: .plan(plan))
+            $0.credentialsProvider = .constant(credentials: .tier(tier))
             $0.featureFlagProvider = .constant(flags: flags)
             $0.featureAuthorizerProvider = LiveFeatureAuthorizerProvider()
         } operation: {
@@ -95,10 +95,10 @@ final class NATTypePropertyProviderImplementationTests: XCTestCase {
         }
     }
 
-    func getAuthorizer(plan: AccountPlan) -> FeatureAuthorizationResult {
+    func getAuthorizer(tier: Int) -> FeatureAuthorizationResult {
         withDependencies {
             $0.featureFlagProvider = .constant(flags: .allEnabled)
-            $0.credentialsProvider = .constant(credentials: .plan(plan))
+            $0.credentialsProvider = .constant(credentials: .tier(tier))
         } operation: {
             let authorizer = LiveFeatureAuthorizerProvider()
                 .authorizer(for: NATFeature.self)
