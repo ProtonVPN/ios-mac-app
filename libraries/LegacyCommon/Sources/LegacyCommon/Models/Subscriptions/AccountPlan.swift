@@ -52,6 +52,6 @@ public extension String {
     }
 
     var hasNetShield: Bool {
-        !["free", "trial", "vpnpro2023"].contains(self)
+        !["free", "vpnpro2023"].contains(self)
     }
 }

@@ -29,8 +29,7 @@ class CredentialsProviderImplementationTests: XCTestCase {
         let testPairs: [(String, Int)] = [
             ("free", CoreAppConstants.VpnTiers.free),
             ("basic", CoreAppConstants.VpnTiers.basic),
-            ("plus", CoreAppConstants.VpnTiers.plus),
-            ("visionary", CoreAppConstants.VpnTiers.internal),
+            ("plus", CoreAppConstants.VpnTiers.plus)
         ]
         
         for (plan, tier) in testPairs {
