@@ -89,6 +89,11 @@ class AppDelegate: UIResponder {
 extension AppDelegate: UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // WARNING: Be sure `setUpNSCoding` is run before there is a slight chance that we'll be decoding ANYTHING.
+#if !REDESIGN // moved over to ProtonVPNApp init
+        // Force all encoded objects to be decoded and recoded using the ProtonVPN module name
+        setUpNSCoding(withModuleName: "ProtonVPN")
+#endif
         setupCoreIntegration(launchOptions: launchOptions)
         setupLogsForApp()
         setupDebugHelpers()
@@ -98,10 +103,6 @@ extension AppDelegate: UIApplicationDelegate {
 
         SiriHelper.quickConnectIntent = QuickConnectIntent()
         SiriHelper.disconnectIntent = DisconnectIntent()
-#if !REDESIGN // moved over to ProtonVPNApp init
-        // Force all encoded objects to be decoded and recoded using the ProtonVPN module name
-        setUpNSCoding(withModuleName: "ProtonVPN")
-#endif
         LegacyDefaultsMigration.migrateLargeData(from: defaultsProvider.getDefaults())
 
         // Protocol check is placed here for parity with MacOS
