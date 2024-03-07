@@ -67,6 +67,13 @@ class AppDelegate: UIResponder {
     private lazy var appStateManager: AppStateManager = container.makeAppStateManager()
     private lazy var planService: PlanService = container.makePlanService()
     private lazy var pushNotificationService = container.makePushNotificationService()
+
+    override init() {
+        super.init()
+        // WARNING: Be sure `setUpNSCoding` is run before there is a slight chance that we'll be decoding ANYTHING.
+        // Force all encoded objects to be decoded and recoded using the ProtonVPN module name
+        setUpNSCoding(withModuleName: "ProtonVPN")
+    }
 }
 #else
 class AppDelegate: UIResponder {
@@ -98,10 +105,6 @@ extension AppDelegate: UIApplicationDelegate {
 
         SiriHelper.quickConnectIntent = QuickConnectIntent()
         SiriHelper.disconnectIntent = DisconnectIntent()
-#if !REDESIGN // moved over to ProtonVPNApp init
-        // Force all encoded objects to be decoded and recoded using the ProtonVPN module name
-        setUpNSCoding(withModuleName: "ProtonVPN")
-#endif
         LegacyDefaultsMigration.migrateLargeData(from: defaultsProvider.getDefaults())
 
         // Protocol check is placed here for parity with MacOS
