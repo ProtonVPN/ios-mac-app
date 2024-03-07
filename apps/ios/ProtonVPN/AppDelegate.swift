@@ -67,6 +67,13 @@ class AppDelegate: UIResponder {
     private lazy var appStateManager: AppStateManager = container.makeAppStateManager()
     private lazy var planService: PlanService = container.makePlanService()
     private lazy var pushNotificationService = container.makePushNotificationService()
+
+    override init() {
+        super.init()
+        // WARNING: Be sure `setUpNSCoding` is run before there is a slight chance that we'll be decoding ANYTHING.
+        // Force all encoded objects to be decoded and recoded using the ProtonVPN module name
+        setUpNSCoding(withModuleName: "ProtonVPN")
+    }
 }
 #else
 class AppDelegate: UIResponder {
@@ -89,11 +96,6 @@ class AppDelegate: UIResponder {
 extension AppDelegate: UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // WARNING: Be sure `setUpNSCoding` is run before there is a slight chance that we'll be decoding ANYTHING.
-#if !REDESIGN // moved over to ProtonVPNApp init
-        // Force all encoded objects to be decoded and recoded using the ProtonVPN module name
-        setUpNSCoding(withModuleName: "ProtonVPN")
-#endif
         setupCoreIntegration(launchOptions: launchOptions)
         setupLogsForApp()
         setupDebugHelpers()
