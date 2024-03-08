@@ -53,7 +53,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
 
     func testServerAlpha0_5() throws {
         let gatewayMock = VpnGatewayMock()
-        gatewayMock._userTier = CoreAppConstants.VpnTiers.free
+        gatewayMock._userTier = .freeTier
         let sut = ServerItemViewModelCore(serverModel: MockTestData().server7(),
                                           vpnGateway: gatewayMock,
                                           appStateManager: AppStateManagerMock(),
@@ -64,7 +64,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
 
     func testServerAlpha0_25() throws {
         let gatewayMock = VpnGatewayMock()
-        gatewayMock._userTier = CoreAppConstants.VpnTiers.free
+        gatewayMock._userTier = .freeTier
         let sut = ServerItemViewModelCore(serverModel: MockTestData().server2UnderMaintenance,
                                           vpnGateway: gatewayMock,
                                           appStateManager: AppStateManagerMock(),

@@ -117,7 +117,7 @@ public class VpnGateway: VpnGatewayProtocol {
     private let siriHelper: SiriHelperProtocol?
     
     private var tier: Int {
-        return (try? userTier()) ?? CoreAppConstants.VpnTiers.free
+        return (try? userTier()) ?? .freeTier
     }
 
     private var serverManager: ServerManager {
@@ -517,8 +517,8 @@ public class VpnGateway: VpnGatewayProtocol {
                 return
             }
 
-            let refreshFreeTierInfo = (try? vpnKeychain.fetchCached().isFreeTier) ?? false
-            
+            let refreshFreeTierInfo = (try? vpnKeychain.fetchCached().maxTier.isFreeTier) ?? false
+
             self.vpnApiService.refreshServerInfo(
                 ifIpHasChangedFrom: self.propertiesManager.userLocation?.ip,
                 freeTier: refreshFreeTierInfo
@@ -701,7 +701,7 @@ fileprivate extension VpnGateway {
         guard let downgradeInfo = notification.object as? VpnDowngradeInfo else { return }
         let (oldTier, newTier) = (downgradeInfo.from.maxTier, downgradeInfo.to.maxTier)
 
-        if newTier < CoreAppConstants.VpnTiers.plus {
+        if newTier.isFreeTier {
             propertiesManager.secureCoreToggle = false
         }
 
@@ -710,7 +710,7 @@ fileprivate extension VpnGateway {
 
         // If user is upgrading from a free account, the server list needs to be updated to contain the paid servers.
         // CAREFUL: refresh server info's continuation is asynchronous here.
-        if oldTier == CoreAppConstants.VpnTiers.free && newTier > CoreAppConstants.VpnTiers.free {
+        if oldTier.isFreeTier && newTier.isPaidTier {
             vpnApiService.refreshServerInfo(freeTier: false) { [weak self] result in
                 switch result {
                 case .success(let properties):

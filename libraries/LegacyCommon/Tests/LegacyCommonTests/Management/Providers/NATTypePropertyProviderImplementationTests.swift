@@ -40,7 +40,7 @@ final class NATTypePropertyProviderImplementationTests: XCTestCase {
         let variants: [NATType] = NATType.allCases
 
         for type in variants {
-            withProvider(natType: type, tier: CoreAppConstants.VpnTiers.plus) {
+            withProvider(natType: type, tier: .paidTier) {
                 XCTAssertEqual($0.natType, type)
             }
         }
@@ -55,7 +55,7 @@ final class NATTypePropertyProviderImplementationTests: XCTestCase {
     }
 
     func testSavesValueToStorage() {
-        withProvider(natType: nil, tier: CoreAppConstants.VpnTiers.plus) { provider in
+        withProvider(natType: nil, tier: .paidTier) { provider in
             var provider = provider
             for type in NATType.allCases {
                 provider.natType = type

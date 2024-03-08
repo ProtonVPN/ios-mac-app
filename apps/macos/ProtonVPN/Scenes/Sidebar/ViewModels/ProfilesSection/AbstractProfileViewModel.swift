@@ -47,7 +47,7 @@ class AbstractProfileViewModel {
                 break
             }
             
-            let serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.plus, serverStorage: ServerStorageConcrete())
+            let serverManager = ServerManagerImplementation.instance(forTier: .paidTier, serverStorage: ServerStorageConcrete())
             
             var minTier = Int.max
             var allServersUnderMaintenance = true

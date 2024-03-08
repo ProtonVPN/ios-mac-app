@@ -67,7 +67,7 @@ class CountryItemViewModel {
         do {
             return try vpnGateway.userTier()
         } catch {
-            return CoreAppConstants.VpnTiers.free
+            return .freeTier
         }
     }
     
@@ -201,14 +201,14 @@ class CountryItemViewModel {
     
     private lazy var freeServerViewModels: [ServerItemViewModel] = {
         let freeServers = supportedServerModels.filter { (serverModel) -> Bool in
-            serverModel.tier == CoreAppConstants.VpnTiers.free
+            serverModel.tier.isFreeTier
         }
         return serverViewModels(for: freeServers)
     }()
     
     private lazy var plusServerViewModels: [ServerItemViewModel] = {
         let plusServers = supportedServerModels.filter({ (serverModel) -> Bool in
-            serverModel.tier >= CoreAppConstants.VpnTiers.plus
+            serverModel.tier.isPaidTier
         })
         return serverViewModels(for: plusServers)
     }()
@@ -314,11 +314,11 @@ class CountryItemViewModel {
     }
 
     func isServerPlusOrAbove( for section: Int) -> Bool {
-        return serverViewModels[section].tier > CoreAppConstants.VpnTiers.basic
+        return serverViewModels[section].tier.isPaidTier
     }
 
     func isServerFree( for section: Int) -> Bool {
-        return serverViewModels[section].tier == CoreAppConstants.VpnTiers.free
+        return serverViewModels[section].tier.isFreeTier
     }
     
     func cellModel(for row: Int, section: Int) -> ServerItemViewModel {
@@ -435,14 +435,7 @@ extension CountryItemViewModel: CountryViewModel {
 
     func getServers() -> [ServerTier: [ServerViewModel]] {
         let convertTier = { (tier: Int) -> ServerTier in
-            switch tier {
-            case CoreAppConstants.VpnTiers.free:
-                return .free
-            case CoreAppConstants.VpnTiers.plus:
-                return .plus
-            default:
-                return .plus
-            }
+            tier.isFreeTier ? .free : .plus
         }
 
         return serverViewModels.reduce(into: [ServerTier: [ServerViewModel]]()) {

@@ -41,7 +41,7 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
 
     func testReturnsSettingFromProperties() throws {
         for type in NetShieldType.allCases {
-            withProvider(netShieldType: type, tier: CoreAppConstants.VpnTiers.plus) {
+            withProvider(netShieldType: type, tier: .paidTier) {
                 XCTAssertEqual($0.netShieldType, type)
             }
         }
@@ -68,7 +68,7 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
     }
     
     func testSavesValueToStorage() {
-        withProvider(netShieldType: nil, tier: CoreAppConstants.VpnTiers.plus) { provider in
+        withProvider(netShieldType: nil, tier: .paidTier) { provider in
             var provider = provider
             @Dependency(\.defaultsProvider) var defaultsProvider
             for type in NetShieldType.allCases {
@@ -99,12 +99,12 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
 
     func testNetShieldSetToOffAfterDowngrade() {
         withProvider(netShieldType: .level2, tier: CoreAppConstants.VpnTiers.basic) {
-            $0.adjustAfterPlanChange(from: CoreAppConstants.VpnTiers.plus, to: CoreAppConstants.VpnTiers.basic)
+            $0.adjustAfterPlanChange(from: .paidTier, to: CoreAppConstants.VpnTiers.basic)
             XCTAssertEqual($0.netShieldType, .level2)
         }
 
         withProvider(netShieldType: .level2, tier: CoreAppConstants.VpnTiers.free) {
-            $0.adjustAfterPlanChange(from: CoreAppConstants.VpnTiers.plus, to: CoreAppConstants.VpnTiers.free)
+            $0.adjustAfterPlanChange(from: .paidTier, to: CoreAppConstants.VpnTiers.free)
             XCTAssertEqual($0.netShieldType, .off)
         }
     }
@@ -117,8 +117,8 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
     }
 
     func testNetShieldNotChangedFromLevel2OnUpgradeFromBasic() {
-        withProvider(netShieldType: .level2, tier: CoreAppConstants.VpnTiers.plus) {
-            $0.adjustAfterPlanChange(from: CoreAppConstants.VpnTiers.basic, to: CoreAppConstants.VpnTiers.plus)
+        withProvider(netShieldType: .level2, tier: .paidTier) {
+            $0.adjustAfterPlanChange(from: CoreAppConstants.VpnTiers.basic, to: .paidTier)
             XCTAssertEqual($0.netShieldType, .level2)
         }
     }

@@ -78,7 +78,7 @@ final class SettingsAccountViewModel {
         
         if let vpnCredentials = try? vpnKeychain.fetch() {
             accountPlanName = vpnCredentials.planTitle
-            allowPlanManagement = vpnCredentials.maxTier > CoreAppConstants.VpnTiers.free
+            allowPlanManagement = vpnCredentials.maxTier.isPaidTier
             allowUpgrade = planService.allowUpgrade && !allowPlanManagement
         } else {
             accountPlanName = Localizable.unavailable

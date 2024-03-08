@@ -33,7 +33,7 @@ public enum AccountPlan {
     public var countriesCount: Int {
         switch self {
         case .plus:
-            return 83
+            return 85
         }
     }
 

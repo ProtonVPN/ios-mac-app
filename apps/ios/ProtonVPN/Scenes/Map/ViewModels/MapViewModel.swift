@@ -96,7 +96,7 @@ class MapViewModel: SecureCoreToggleHandler {
     init(appStateManager: AppStateManager, alertService: AlertService, serverStorage: ServerStorage, vpnGateway: VpnGatewayProtocol, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService) {
         self.appStateManager = appStateManager
         self.alertService = alertService
-        self.serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.internal, serverStorage: serverStorage)
+        self.serverManager = ServerManagerImplementation.instance(forTier: .paidTier, serverStorage: serverStorage)
         self.vpnGateway = vpnGateway
         self.vpnKeychain = vpnKeychain
         self.propertiesManager = propertiesManager
@@ -138,8 +138,8 @@ class MapViewModel: SecureCoreToggleHandler {
     
     private func refreshAnnotations(forView viewType: ServerType) {
         let vpnCredentials = try? vpnKeychain.fetchCached()
-        let userTier = vpnCredentials?.maxTier ?? CoreAppConstants.VpnTiers.plus
-        
+        let userTier = vpnCredentials?.maxTier ?? .paidTier
+
         countryExitAnnotations = exitAnnotations(type: viewType, userTier: userTier)
         
         switch viewType {
@@ -152,7 +152,7 @@ class MapViewModel: SecureCoreToggleHandler {
     
     private func exitAnnotations(type: ServerType, userTier: Int) -> [CountryAnnotationViewModel] {
         @Dependency(\.featureFlagProvider) var featureFlags
-        let isMapConnectionDisabled = featureFlags[\.showNewFreePlan] && userTier == CoreAppConstants.VpnTiers.free
+        let isMapConnectionDisabled = featureFlags[\.showNewFreePlan] && userTier.isFreeTier
 
         return serverManager.grouping(for: type).compactMap {
             guard case ServerGroup.Kind.country(let countryModel) = $0.kind else {

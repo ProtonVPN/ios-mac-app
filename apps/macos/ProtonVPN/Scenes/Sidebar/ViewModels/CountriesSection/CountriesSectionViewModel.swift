@@ -179,7 +179,7 @@ class CountriesSectionViewModel {
     private var serverGroups: [ServerGroup] = []
     private var data: [CellModel] = []
     private var servers: [String: [CellModel]] = [:]
-    private var userTier: Int = CoreAppConstants.VpnTiers.free {
+    private var userTier: Int = .freeTier {
         didSet {
             notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: serverManager.contentChanged, object: nil)
         }
@@ -297,12 +297,12 @@ class CountriesSectionViewModel {
         notificationCenter.removeObserver(self, name: serverManager.contentChanged, object: nil) // Re-subscription happens after userTier is set
         do {
             if (try? vpnKeychain.fetch())?.isDelinquent == true {
-                userTier = CoreAppConstants.VpnTiers.free
+                userTier = .freeTier
                 return
             }
             userTier = try vpnGateway.userTier()
         } catch {
-            userTier = CoreAppConstants.VpnTiers.free
+            userTier = .freeTier
         }
     }
 

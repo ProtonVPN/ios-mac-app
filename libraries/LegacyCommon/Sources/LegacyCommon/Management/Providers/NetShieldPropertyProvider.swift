@@ -103,11 +103,11 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
     
     public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
         // Turn NetShield off on downgrade to free plan
-        if tier <= CoreAppConstants.VpnTiers.free {
+        if tier.isFreeTier {
             netShieldType = .off
         }
         // On upgrade from the free plan, switch NetShield to the default value for the new tier
-        if tier > oldTier && oldTier <= CoreAppConstants.VpnTiers.free {
+        if tier > oldTier && oldTier.isFreeTier {
             netShieldType = .level2
         }
     }

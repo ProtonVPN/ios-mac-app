@@ -103,7 +103,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         planName = vpnDic.string("PlanName") ?? "free"
         status = try vpnDic.intOrThrow(key: "Status")
         maxConnect = try vpnDic.intOrThrow(key: "MaxConnect")
-        maxTier = vpnDic.int(key: "MaxTier") ?? CoreAppConstants.VpnTiers.free
+        maxTier = vpnDic.int(key: "MaxTier") ?? .freeTier
         services = try dic.intOrThrow(key: "Services")
         groupId = try vpnDic.stringOrThrow(key: "GroupID")
         name = try vpnDic.stringOrThrow(key: "Name")
@@ -219,10 +219,6 @@ public struct CachedVpnCredentials {
 
     public var canUsePromoCode: Bool {
         return !isDelinquent && !hasPaymentMethod && credit == 0 && subscribed == 0
-    }
-
-    public var isFreeTier: Bool {
-        return maxTier == CoreAppConstants.VpnTiers.free
     }
 }
 

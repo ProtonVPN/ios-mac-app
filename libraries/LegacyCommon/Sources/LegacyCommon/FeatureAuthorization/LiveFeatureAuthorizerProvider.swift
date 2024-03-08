@@ -27,7 +27,7 @@ public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
         let credentials = credentialsProvider.credentials
         return (
             credentials?.planName ?? "free",
-            credentials?.maxTier ?? CoreAppConstants.VpnTiers.free
+            credentials?.maxTier ?? .freeTier
         )
     }
 

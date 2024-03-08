@@ -172,7 +172,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
         await self.serverStorage.store(
             properties.serverModels,
-            keepStalePaidServers: shouldRefreshServersAccordingToUserTier && credentials.maxTier == CoreAppConstants.VpnTiers.free
+            keepStalePaidServers: shouldRefreshServersAccordingToUserTier && credentials.maxTier.isFreeTier
         )
 
         if await appState.isDisconnected {

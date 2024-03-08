@@ -56,9 +56,9 @@ extension SecureCoreToggleHandler {
         do {
             userTier = try vpnGateway.userTier()
         } catch {
-            userTier = CoreAppConstants.VpnTiers.plus // not logged in
+            userTier = .paidTier // not logged in
         }
-        let insufficientPlan = activeView == .standard && userTier < CoreAppConstants.VpnTiers.plus
+        let insufficientPlan = activeView == .standard && userTier.isFreeTier
         let isNotConnectedToVPN = vpnGateway.connection != .connected
         return (insufficientPlan, isNotConnectedToVPN)
     }

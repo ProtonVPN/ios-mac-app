@@ -29,9 +29,9 @@ extension VPNAccelerator: PaidAppFeature {
 
     public static func minTier(featureFlags: FeatureFlags) -> Int {
         if featureFlags.showNewFreePlan {
-            return CoreAppConstants.VpnTiers.basic
+            return .paidTier
         }
-        return CoreAppConstants.VpnTiers.free
+        return .freeTier
     }
 }
 

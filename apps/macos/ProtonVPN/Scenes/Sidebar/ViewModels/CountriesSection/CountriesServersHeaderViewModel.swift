@@ -66,7 +66,7 @@ class ServerHeaderViewModel: CountriesServersHeaderViewModelProtocol {
     
     init( _ sectionHeader: String, totalServers: Int, serverGroup: ServerGroup, tier: Int, propertiesManager: PropertiesManagerProtocol, countriesViewModel: CountriesSectionViewModel) {
         title = sectionHeader + " (\(totalServers))"
-        guard tier != CoreAppConstants.VpnTiers.free else {
+        guard tier.isPaidTier else {
             didTapInfoBtn = { [weak countriesViewModel] in
                 countriesViewModel?.displayFreeServices()
             }
@@ -74,7 +74,7 @@ class ServerHeaderViewModel: CountriesServersHeaderViewModelProtocol {
         }
         guard case .country(let country) = serverGroup.kind,
               !propertiesManager.secureCoreToggle,
-              tier > CoreAppConstants.VpnTiers.basic,
+              tier.isPaidTier,
               let streamServicesDict = propertiesManager.streamingServices[country.countryCode],
               let key = streamServicesDict.keys.first,
               let streamServices = streamServicesDict[key] else {

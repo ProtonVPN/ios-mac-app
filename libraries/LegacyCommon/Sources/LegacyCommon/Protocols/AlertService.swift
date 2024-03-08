@@ -663,11 +663,9 @@ public class MaxSessionsAlert: UserAccountUpdateAlert {
 
     public init(accountTier: Int) {
         self.accountTier = accountTier
-        switch accountTier {
-        case CoreAppConstants.VpnTiers.free, 
-            CoreAppConstants.VpnTiers.basic:
+        if accountTier.isFreeTier {
             message = Localizable.maximumDevicePlanLimitPart1(Localizable.tierPlus) + Localizable.maximumDevicePlanLimitPart2(AccountPlan.plus.devicesCount)
-        default:
+        } else {
             message = Localizable.maximumDeviceReachedDescription
         }
         
@@ -808,7 +806,7 @@ public extension WelcomeScreenAlert.Plan {
     init?(info: VpnDowngradeInfo) {
         if info.to.planName == "unlimited" {
             self = .unlimited
-        } else if info.to.maxTier == CoreAppConstants.VpnTiers.plus {
+        } else if info.to.maxTier.isPaidTier {
             self = .plus(numberOfServers: AccountPlan.plus.serversCount,
                          numberOfDevices: AccountPlan.plus.devicesCount,
                          numberOfCountries: AccountPlan.plus.countriesCount)

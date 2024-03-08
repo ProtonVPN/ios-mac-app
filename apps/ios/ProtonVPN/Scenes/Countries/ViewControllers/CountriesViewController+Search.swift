@@ -52,11 +52,9 @@ extension CountriesViewController: SearchCoordinatorDelegate {
             return .secureCore
         }
 
-        switch viewModel.maxTier {
-        case CoreAppConstants.VpnTiers.free:
+        if viewModel.maxTier.isFreeTier {
             return .standard(.free)
-        default:
-            return .standard(.plus)
         }
+        return .standard(.plus)
     }
 }

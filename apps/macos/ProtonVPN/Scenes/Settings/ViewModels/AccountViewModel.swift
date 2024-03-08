@@ -53,7 +53,7 @@ final class AccountViewModel {
 
         username = Localizable.unavailable
         planTitle = nil
-        maxTier = CoreAppConstants.VpnTiers.free
+        maxTier = .freeTier
 
         reload()
     }
@@ -74,12 +74,12 @@ final class AccountViewModel {
                 maxTier = vpnCredentials.maxTier
             } catch {
                 planTitle = nil
-                maxTier = CoreAppConstants.VpnTiers.free
+                maxTier = .freeTier
             }
         } else {
             username = Localizable.unavailable
             planTitle = nil
-            maxTier = CoreAppConstants.VpnTiers.free
+            maxTier = .freeTier
         }
 
         reloadNeeded?()

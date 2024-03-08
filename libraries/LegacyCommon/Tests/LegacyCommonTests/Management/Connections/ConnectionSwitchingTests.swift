@@ -587,7 +587,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         container.serverStorage.populateServers([testData.server1, testData.server3])
         container.networkingDelegate.apiServerList = [testData.server1, testData.server3]
 
-        container.vpnKeychain.setVpnCredentials(with: "plus", maxTier: CoreAppConstants.VpnTiers.plus)
+        container.vpnKeychain.setVpnCredentials(with: "plus", maxTier: .paidTier)
         container.propertiesManager.vpnProtocol = .wireGuard(.udp)
         container.propertiesManager.hasConnected = true
         container.authKeychain.setMockUsername("user")
@@ -801,7 +801,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         XCTAssertEqual(freeCreds.planName, "free")
         XCTAssertEqual(freeCreds.maxTier, CoreAppConstants.VpnTiers.free)
 
-        let plusCreds = VpnKeychainMock.vpnCredentials(planName: "plus", maxTier: CoreAppConstants.VpnTiers.plus)
+        let plusCreds = VpnKeychainMock.vpnCredentials(planName: "plus", maxTier: .paidTier)
 
         let (totalConnections, totalDisconnections) = (2, 2)
 

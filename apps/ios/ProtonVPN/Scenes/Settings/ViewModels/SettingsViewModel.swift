@@ -787,7 +787,7 @@ final class SettingsViewModel {
             return try vpnKeychain.fetchCached().maxTier
         } catch {
             log.warning("Failed to retrieve user tier, defaulting to free tier.", category: .keychain)
-            return CoreAppConstants.VpnTiers.free
+            return .freeTier
         }
     }
 

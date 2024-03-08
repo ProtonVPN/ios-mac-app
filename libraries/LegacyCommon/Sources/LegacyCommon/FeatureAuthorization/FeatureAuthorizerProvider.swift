@@ -101,7 +101,7 @@ extension PaidAppFeature {
     }
 
     public static func minTier(featureFlags: FeatureFlags) -> Int {
-        CoreAppConstants.VpnTiers.basic
+        .paidTier
     }
 
     public static var includedAccountPlans: [String]? {

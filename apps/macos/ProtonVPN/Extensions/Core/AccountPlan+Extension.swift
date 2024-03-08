@@ -26,17 +26,13 @@ import Theme
 
 extension Int {
     var styleForUI: AppTheme.Style {
-        switch self {
-        case CoreAppConstants.VpnTiers.free:
-            return .weak
-        case CoreAppConstants.VpnTiers.basic:
-            return .info
-        case CoreAppConstants.VpnTiers.plus:
-            return .success
-        case CoreAppConstants.VpnTiers.internal:
+        if self == .internalTier {
             return .interactive
-        default:
+        }
+        if isFreeTier {
             return .weak
+        } else {
+            return .success
         }
     }
 }

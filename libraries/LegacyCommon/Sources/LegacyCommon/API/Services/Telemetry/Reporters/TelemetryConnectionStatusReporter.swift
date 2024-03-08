@@ -157,18 +157,11 @@ class TelemetryConnectionStatusReporter {
 
     private func userTier() -> ConnectionDimensions.UserTier {
         let cached = try? vpnKeychain.fetchCached()
-        switch cached?.maxTier ?? 0 {
-        case CoreAppConstants.VpnTiers.free:
-            return .free
-        case CoreAppConstants.VpnTiers.basic:
-            return .paid
-        case CoreAppConstants.VpnTiers.plus:
-            return .paid
-        case CoreAppConstants.VpnTiers.internal:
-            return .internal
-        default:
+        let tier = cached?.maxTier ?? .freeTier
+        if tier == .internalTier {
             return .internal
         }
+        return tier.isFreeTier ? .free : .paid
     }
 
     private func connection(eventType: ConnectionEvent.Event) -> ConnectionConfiguration? {

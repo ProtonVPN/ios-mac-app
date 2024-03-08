@@ -29,7 +29,7 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
         let variants: [Bool] = [true, false]
 
         for type in variants {
-            withProvider(safeMode: type, tier: CoreAppConstants.VpnTiers.plus) {
+            withProvider(safeMode: type, tier: .paidTier) {
                 XCTAssertEqual($0.safeMode, type)
             }
         }
@@ -39,7 +39,7 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
         let variants: [Bool] = [true, false]
 
         for type in variants {
-            withProvider(safeMode: type, tier: CoreAppConstants.VpnTiers.plus, flags: .init(safeMode: false)) {
+            withProvider(safeMode: type, tier: .paidTier, flags: .init(safeMode: false)) {
                 XCTAssertNil($0.safeMode)
             }
         }
@@ -64,7 +64,7 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
     }
 
     func testSavesValueToStorage() {
-        withProvider(safeMode: nil, tier: CoreAppConstants.VpnTiers.plus) { provider in
+        withProvider(safeMode: nil, tier: .paidTier) { provider in
             var provider = provider
             @Dependency(\.defaultsProvider) var defaultsProvider
 
@@ -82,7 +82,7 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
 
     func testPaidUserCanTurnOffSafeMode() throws {
         XCTAssertEqual(getAuthorizer(tier: CoreAppConstants.VpnTiers.basic), .success)
-        XCTAssertEqual(getAuthorizer(tier: CoreAppConstants.VpnTiers.plus), .success)
+        XCTAssertEqual(getAuthorizer(tier: .paidTier), .success)
         XCTAssertEqual(getAuthorizer(tier: CoreAppConstants.VpnTiers.internal), .success)
     }
 

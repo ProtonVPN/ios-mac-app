@@ -292,7 +292,7 @@ class StatusViewModel {
     private var isConnected: Bool { appStateManager.state.isConnected }
 
     var shouldShowChangeServer: Bool {
-        isConnected && featureFlags[\.showNewFreePlan] && credentials.tier == CoreAppConstants.VpnTiers.free
+        isConnected && featureFlags[\.showNewFreePlan] && credentials.tier.isFreeTier
     }
     
     private var saveAsProfileCell: TableViewCellModel {

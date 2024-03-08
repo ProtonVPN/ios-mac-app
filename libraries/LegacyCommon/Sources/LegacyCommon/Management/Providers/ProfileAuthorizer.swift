@@ -32,7 +32,7 @@ extension ProfileAuthorizer: DependencyKey {
         @Dependency(\.credentialsProvider) var credentials
         @Dependency(\.featureFlagProvider) var featureFlags
 
-        let shouldAllowProfiles: () -> Bool = { featureFlags[\.showNewFreePlan] ? credentials.tier > CoreAppConstants.VpnTiers.free : true }
+        let shouldAllowProfiles: () -> Bool = { featureFlags[\.showNewFreePlan] ? credentials.tier.isPaidTier : true }
 
         return ProfileAuthorizer(
             shouldAllowProfiles: shouldAllowProfiles,

@@ -79,7 +79,7 @@ public class VpnApiService {
         return await VpnProperties(
             serverModels: try serverInfo(
                 ip: asyncLocation?.ip,
-                freeTier: asyncCredentials.maxTier == CoreAppConstants.VpnTiers.free && serversAccordingToTier
+                freeTier: asyncCredentials.maxTier.isFreeTier && serversAccordingToTier
             ),
             vpnCredentials: asyncCredentials,
             location: asyncLocation,
