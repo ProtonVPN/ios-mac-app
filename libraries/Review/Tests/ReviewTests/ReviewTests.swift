@@ -24,7 +24,7 @@ final class ReviewTests: XCTestCase {
         let date = Date()
         let prompt = ReviewPromptMock()
         let storage = ReviewDataStorageMock()
-        let review = Review(configuration: ReviewConfiguration(eligiblePlans: ["plus"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt, dataStorage: storage)
+        let review = Review(configuration: ReviewConfiguration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt, dataStorage: storage)
 
         XCTAssertFalse(prompt.shown)
 
@@ -49,7 +49,7 @@ final class ReviewTests: XCTestCase {
         var date = Date()
         let prompt = ReviewPromptMock()
         let storage = ReviewDataStorageMock()
-        let review = Review(configuration: ReviewConfiguration(eligiblePlans: ["plus"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt, dataStorage: storage)
+        let review = Review(configuration: ReviewConfiguration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt, dataStorage: storage)
 
         XCTAssertFalse(prompt.shown)
 
@@ -105,7 +105,7 @@ final class ReviewTests: XCTestCase {
         var date = Date()
         let prompt = ReviewPromptMock()
         let storage = ReviewDataStorageMock()
-        let review = Review(configuration: ReviewConfiguration(eligiblePlans: ["plus"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt, dataStorage: storage)
+        let review = Review(configuration: ReviewConfiguration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt, dataStorage: storage)
 
         review.connected()
         XCTAssertFalse(prompt.shown)
@@ -120,7 +120,7 @@ final class ReviewTests: XCTestCase {
         var date = Date()
         let prompt = ReviewPromptMock()
         let storage = ReviewDataStorageMock()
-        let review = Review(configuration: ReviewConfiguration(eligiblePlans: ["plus"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt, dataStorage: storage)
+        let review = Review(configuration: ReviewConfiguration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt, dataStorage: storage)
 
         review.connected()
         XCTAssertFalse(prompt.shown)
@@ -158,7 +158,7 @@ final class ReviewTests: XCTestCase {
         var date = Date()
         let prompt = ReviewPromptMock()
         let storage = ReviewDataStorageMock()
-        let review = Review(configuration: ReviewConfiguration(eligiblePlans: ["plus"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt, dataStorage: storage)
+        let review = Review(configuration: ReviewConfiguration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt, dataStorage: storage)
 
         review.connected()
         XCTAssertFalse(prompt.shown)
@@ -176,7 +176,7 @@ final class ReviewTests: XCTestCase {
         var date = Date()
         let prompt = ReviewPromptMock()
         let storage = ReviewDataStorageMock()
-        let review = Review(configuration: ReviewConfiguration(eligiblePlans: ["plus"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt, dataStorage: storage)
+        let review = Review(configuration: ReviewConfiguration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt, dataStorage: storage)
 
         XCTAssertFalse(prompt.shown)
 

@@ -63,7 +63,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
 
         networkingDelegate = FullNetworkingMockDelegate()
-        let freeCreds = VpnKeychainMock.vpnCredentials(planName: "free", maxTier: CoreAppConstants.VpnTiers.free)
+        let freeCreds = VpnKeychainMock.vpnCredentials(planName: "free", maxTier: .freeTier)
         networkingDelegate.apiCredentials = freeCreds
         networking.delegate = networkingDelegate
 

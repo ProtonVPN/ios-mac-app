@@ -46,20 +46,14 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
     }
 
     func testWhenNothingIsSetReturnsTrue() throws {
-        let tiers: [Int] = [CoreAppConstants.VpnTiers.basic, CoreAppConstants.VpnTiers.plus, CoreAppConstants.VpnTiers.internal]
-        for tier in tiers {
-            withProvider(safeMode: nil, tier: tier) {
-                XCTAssertTrue($0.safeMode ?? false)
-            }
+        withProvider(safeMode: nil, tier: .paidTier) {
+            XCTAssertTrue($0.safeMode ?? false)
         }
     }
 
     func testWhenNothingIsSetReturnsFalseWhenDisabledByFeatureFlag() throws {
-        let tiers: [Int] = [CoreAppConstants.VpnTiers.basic, CoreAppConstants.VpnTiers.plus, CoreAppConstants.VpnTiers.internal]
-        for tier in tiers {
-            withProvider(safeMode: nil, tier: tier, flags: .init(safeMode: false)) {
-                XCTAssertNil($0.safeMode)
-            }
+        withProvider(safeMode: nil, tier: .paidTier, flags: .init(safeMode: false)) {
+            XCTAssertNil($0.safeMode)
         }
     }
 
@@ -77,13 +71,11 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
     }
 
     func testFreeUserCantTurnOffSafeMode() throws {
-        XCTAssertEqual(getAuthorizer(tier: CoreAppConstants.VpnTiers.free), .failure(.requiresUpgrade))
+        XCTAssertEqual(getAuthorizer(tier: .freeTier), .failure(.requiresUpgrade))
     }
 
     func testPaidUserCanTurnOffSafeMode() throws {
-        XCTAssertEqual(getAuthorizer(tier: CoreAppConstants.VpnTiers.basic), .success)
         XCTAssertEqual(getAuthorizer(tier: .paidTier), .success)
-        XCTAssertEqual(getAuthorizer(tier: CoreAppConstants.VpnTiers.internal), .success)
     }
 
     // MARK: -

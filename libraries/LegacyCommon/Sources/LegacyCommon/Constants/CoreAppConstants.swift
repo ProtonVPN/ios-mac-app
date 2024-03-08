@@ -31,7 +31,7 @@ public extension Int {
     }
     static var freeTier: Int = .freeTier
     static var paidTier: Int = CoreAppConstants.VpnTiers.plus // 1 was historically used for basic plans, which no longer exist
-    static var internalTier: Int = CoreAppConstants.VpnTiers.internal // Dev
+    static var internalTier: Int = CoreAppConstants.VpnTiers.internal // Dev-only
 }
 
 public class CoreAppConstants {
@@ -40,8 +40,6 @@ public class CoreAppConstants {
         static let free = 0
         static let plus = 2 // also visionary
         static let `internal` = 3
-
-//        public static let allCases = [free, plus]
     }
     
     public struct ProtonMailLinks {

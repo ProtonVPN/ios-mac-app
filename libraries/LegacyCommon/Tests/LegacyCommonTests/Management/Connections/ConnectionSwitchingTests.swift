@@ -507,7 +507,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
             .with(featureFlags: .wireGuardTlsDisabled, smartProtocolConfig: .onlyWgTcpAndTls)
         container.authKeychain.setMockUsername("user")
         let freeCreds = VpnKeychainMock.vpnCredentials(planName: "free",
-                                                       maxTier: CoreAppConstants.VpnTiers.free)
+                                                       maxTier: .freeTier)
         container.networkingDelegate.apiCredentials = freeCreds
 
         await retrieveAndSetVpnProperties()
@@ -703,10 +703,10 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         let plusCreds = try! container.vpnKeychain.fetch()
         XCTAssertEqual(plusCreds.planName, "plus")
-        XCTAssertEqual(plusCreds.maxTier, CoreAppConstants.VpnTiers.plus)
+        XCTAssertEqual(plusCreds.maxTier, .paidTier)
 
         let freeCreds = VpnKeychainMock.vpnCredentials(planName: "free",
-                                                       maxTier: CoreAppConstants.VpnTiers.free)
+                                                       maxTier: .freeTier)
         container.networkingDelegate.apiCredentials = freeCreds
 
         let downgrade: VpnDowngradeInfo = (plusCreds, freeCreds)
@@ -792,14 +792,14 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
     func testUserPlanChangingFromFreeToPlusAndConnectingToPaidServerThruQuickConnect() { // swiftlint:disable:this function_body_length
         container.networkingDelegate.apiServerList = [testData.server1, testData.server3]
 
-        container.vpnKeychain.setVpnCredentials(with: "free", maxTier: CoreAppConstants.VpnTiers.free)
+        container.vpnKeychain.setVpnCredentials(with: "free", maxTier: .freeTier)
         container.propertiesManager.vpnProtocol = .wireGuard(.udp)
         container.propertiesManager.hasConnected = true
         container.authKeychain.setMockUsername("user")
 
         let freeCreds = try! container.vpnKeychain.fetch()
         XCTAssertEqual(freeCreds.planName, "free")
-        XCTAssertEqual(freeCreds.maxTier, CoreAppConstants.VpnTiers.free)
+        XCTAssertEqual(freeCreds.maxTier, .freeTier)
 
         let plusCreds = VpnKeychainMock.vpnCredentials(planName: "plus", maxTier: .paidTier)
 
@@ -962,12 +962,12 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
     func testFreeUserImmediateReconnectsAreThrottledAccordingToClientConfig() async { // swiftlint:disable:this function_body_length
         container.authKeychain.setMockUsername("user")
-        container.vpnKeychain.setVpnCredentials(with: "free", maxTier: CoreAppConstants.VpnTiers.free)
+        container.vpnKeychain.setVpnCredentials(with: "free", maxTier: .freeTier)
 
         let oldAuthKeychain = AuthKeychainHandleDependencyKey.testValue
         AuthKeychainHandleDependencyKey.testValue = container.authKeychain
         let oldCredentialsProvider = CredentialsProvider.testValue
-        CredentialsProvider.testValue = .constant(credentials: .tier(CoreAppConstants.VpnTiers.free))
+        CredentialsProvider.testValue = .constant(credentials: .tier(.freeTier))
 
         var until: Date?
         var observedStatuses: [NEVPNStatus] = []

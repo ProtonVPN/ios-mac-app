@@ -27,9 +27,8 @@ class CredentialsProviderImplementationTests: XCTestCase {
 
     func testReturnsTierSavedInKeychain() throws {
         let testPairs: [(String, Int)] = [
-            ("free", CoreAppConstants.VpnTiers.free),
-            ("basic", CoreAppConstants.VpnTiers.basic),
-            ("plus", CoreAppConstants.VpnTiers.plus)
+            ("free", .freeTier),
+            ("plus", .paidTier)
         ]
         
         for (plan, tier) in testPairs {
@@ -45,7 +44,7 @@ class CredentialsProviderImplementationTests: XCTestCase {
     }
     
     func testReturnsFreeTierIfNoneIsAvilable() throws {
-        let keychain = VpnKeychainMock(planName: "plus", maxTier: CoreAppConstants.VpnTiers.internal)
+        let keychain = VpnKeychainMock(planName: "plus", maxTier: .internalTier)
         keychain.throwsOnFetch = true
 
         let provider = CredentialsProvider {
@@ -53,6 +52,6 @@ class CredentialsProviderImplementationTests: XCTestCase {
         }
 
         XCTAssertEqual(provider.planName, "free")
-        XCTAssertEqual(provider.tier, CoreAppConstants.VpnTiers.free)
+        XCTAssertEqual(provider.tier, .freeTier)
     }
 }

@@ -45,7 +45,7 @@ public enum AccountPlan {
     }
 }
 
-// This is an "exception", we don't want to keep this.
+// This is an "exception", we don't want to keep this. VPNAPPL-2142
 public extension String {
     var isBusiness: Bool {
         ["vpnpro2023", "vpnbiz2023"].contains(self)

@@ -28,7 +28,6 @@ import VPNSharedTesting
 
 final class NATTypePropertyProviderImplementationTests: XCTestCase {
     static let username = "user1"
-    private let paidTiers: [Int] = [CoreAppConstants.VpnTiers.basic, CoreAppConstants.VpnTiers.plus, CoreAppConstants.VpnTiers.internal]
 
     override func setUp() {
         super.setUp()
@@ -47,10 +46,8 @@ final class NATTypePropertyProviderImplementationTests: XCTestCase {
     }
 
     func testWhenNothingIsSetReturnsStrict() throws {
-        for tier in paidTiers {
-            withProvider(natType: nil, tier: tier) { provider in
-                XCTAssertEqual(provider.natType, NATType.strictNAT)
-            }
+        withProvider(natType: nil, tier: .paidTier) { provider in
+            XCTAssertEqual(provider.natType, NATType.strictNAT)
         }
     }
 
@@ -67,14 +64,11 @@ final class NATTypePropertyProviderImplementationTests: XCTestCase {
     }
 
     func testFreeUserCantTurnModerateNATOn() throws {
-        XCTAssertEqual(getAuthorizer(tier: CoreAppConstants.VpnTiers.free), .failure(.requiresUpgrade))
+        XCTAssertEqual(getAuthorizer(tier: .freeTier), .failure(.requiresUpgrade))
     }
 
     func testPaidUserCanTurnModerateNATOn() throws {
-        let tiers: [Int] = [CoreAppConstants.VpnTiers.basic, CoreAppConstants.VpnTiers.plus, CoreAppConstants.VpnTiers.internal]
-        for tier in tiers {
-            XCTAssertEqual(getAuthorizer(tier: tier), .success)
-        }
+        XCTAssertEqual(getAuthorizer(tier: .paidTier), .success)
     }
 
     func withProvider(natType: NATType?, tier: Int, flags: FeatureFlags = .allDisabled, closure: @escaping (NATTypePropertyProvider) -> Void) {

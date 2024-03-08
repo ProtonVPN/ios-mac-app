@@ -804,6 +804,7 @@ public class WelcomeScreenAlert: UpsellAlert {
 
 public extension WelcomeScreenAlert.Plan {
     init?(info: VpnDowngradeInfo) {
+        // Replace hardcoded string with a proper solution VPNAPPL-2142
         if info.to.planName == "unlimited" {
             self = .unlimited
         } else if info.to.maxTier.isPaidTier {

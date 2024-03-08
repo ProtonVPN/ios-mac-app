@@ -31,7 +31,6 @@ import VPNSharedTesting
 
 final class NetShieldPropertyProviderImplementationTests: XCTestCase {
     static let username = "user1"
-    let paidTiers: [Int] = CoreAppConstants.VpnTiers.allCases.removing(CoreAppConstants.VpnTiers.free)
 
     override func setUp() {
         super.setUp()
@@ -48,21 +47,19 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
     }
     
     func testWhenNothingIsSetReturnsLevel1ForPaidUsers() throws {
-        for tier in paidTiers {
-            withProvider(netShieldType: nil, tier: tier) {
-                XCTAssertEqual($0.netShieldType, .level1)
-            }
+        withProvider(netShieldType: nil, tier: .paidTier) {
+            XCTAssertEqual($0.netShieldType, .level1)
         }
     }
-    
+
     func testWhenNothingIsSetReturnsOffForFreeUsers() throws {
-        withProvider(netShieldType: nil, tier: CoreAppConstants.VpnTiers.free) {
+        withProvider(netShieldType: nil, tier: .freeTier) {
             XCTAssertEqual($0.netShieldType, NetShieldType.off)
         }
     }
     
     func testWhenUnavailableOptionIsSetReturnsDefault() throws {
-        withProvider(netShieldType: .level2, tier: CoreAppConstants.VpnTiers.free) {
+        withProvider(netShieldType: .level2, tier: .freeTier) {
             XCTAssertEqual($0.netShieldType, NetShieldType.off)
         }
     }
@@ -83,42 +80,40 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
         let levels: [NetShieldType] = [.level1, .level2]
         for level in levels {
             XCTAssertEqual(
-                getAuthorizer(tier: CoreAppConstants.VpnTiers.free).canUse(level),
+                getAuthorizer(tier: .freeTier).canUse(level),
                 .failure(.requiresUpgrade)
             )
         }
     }
     
     func testPaidUserCanTurnNetShieldOn() throws {
-        for tier in paidTiers {
-            XCTAssertEqual(getAuthorizer(tier: tier).canUseAllSubFeatures, .success)
-        }
+        XCTAssertEqual(getAuthorizer(tier: .paidTier).canUseAllSubFeatures, .success)
     }
 
     // MARK: - Plan Change tests
 
     func testNetShieldSetToOffAfterDowngrade() {
-        withProvider(netShieldType: .level2, tier: CoreAppConstants.VpnTiers.basic) {
-            $0.adjustAfterPlanChange(from: .paidTier, to: CoreAppConstants.VpnTiers.basic)
+        withProvider(netShieldType: .level2, tier: .paidTier) {
+            $0.adjustAfterPlanChange(from: .paidTier, to: .paidTier)
             XCTAssertEqual($0.netShieldType, .level2)
         }
 
-        withProvider(netShieldType: .level2, tier: CoreAppConstants.VpnTiers.free) {
-            $0.adjustAfterPlanChange(from: .paidTier, to: CoreAppConstants.VpnTiers.free)
+        withProvider(netShieldType: .level2, tier: .freeTier) {
+            $0.adjustAfterPlanChange(from: .paidTier, to: .freeTier)
             XCTAssertEqual($0.netShieldType, .off)
         }
     }
 
     func testNetShieldSetToLevel2AfterUpgradeFromFree() {
-        withProvider(netShieldType: .off, tier: CoreAppConstants.VpnTiers.basic) {
-            $0.adjustAfterPlanChange(from: CoreAppConstants.VpnTiers.free, to: CoreAppConstants.VpnTiers.basic)
+        withProvider(netShieldType: .off, tier: .paidTier) {
+            $0.adjustAfterPlanChange(from: .freeTier, to: .paidTier)
             XCTAssertEqual($0.netShieldType, .level2)
         }
     }
 
-    func testNetShieldNotChangedFromLevel2OnUpgradeFromBasic() {
+    func testNetShieldNotChangedFromLevel2OnUpgradeFromPaid() {
         withProvider(netShieldType: .level2, tier: .paidTier) {
-            $0.adjustAfterPlanChange(from: CoreAppConstants.VpnTiers.basic, to: .paidTier)
+            $0.adjustAfterPlanChange(from: .paidTier, to: .paidTier)
             XCTAssertEqual($0.netShieldType, .level2)
         }
     }

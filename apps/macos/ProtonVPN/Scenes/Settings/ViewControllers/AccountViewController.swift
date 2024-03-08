@@ -83,9 +83,13 @@ final class AccountViewController: NSViewController {
         accountPlanSeparator.fillColor = .color(.border, .weak)
         
         if let planTitle = viewModel.planTitle {
-            accountPlanValue.attributedStringValue = planTitle.styled(viewModel.maxTier.styleForUI, font: .themeFont(.heading4), alignment: .right)
+            accountPlanValue.attributedStringValue = planTitle.styled(AppTheme.Style(viewModel.maxTier),
+                                                                      font: .themeFont(.heading4),
+                                                                      alignment: .right)
         } else {
-            accountPlanValue.attributedStringValue = Localizable.unavailable.styled(.weak, font: .themeFont(.heading4), alignment: .right)
+            accountPlanValue.attributedStringValue = Localizable.unavailable.styled(.weak, 
+                                                                                    font: .themeFont(.heading4),
+                                                                                    alignment: .right)
         }
     }
     
@@ -118,9 +122,13 @@ final class AccountViewController: NSViewController {
         usernameValue.attributedStringValue = viewModel.username.styled(.weak, font: .themeFont(.heading4), alignment: .right)
 
         if let planTitle = viewModel.planTitle {
-            accountPlanValue.attributedStringValue = planTitle.styled(viewModel.maxTier.styleForUI, font: .themeFont(.heading4), alignment: .right)
+            accountPlanValue.attributedStringValue = planTitle.styled(AppTheme.Style(viewModel.maxTier),
+                                                                      font: .themeFont(.heading4),
+                                                                      alignment: .right)
         } else {
-            accountPlanValue.attributedStringValue = Localizable.unavailable.styled(.weak, font: .themeFont(.heading4), alignment: .right)
+            accountPlanValue.attributedStringValue = Localizable.unavailable.styled(.weak, 
+                                                                                    font: .themeFont(.heading4),
+                                                                                    alignment: .right)
         }
 
         useCouponButton.isHidden = !viewModel.canUsePromo

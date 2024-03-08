@@ -38,23 +38,23 @@ public struct MockTestData {
 
     /// free server with relatively high latency score and not under maintenance.
     public var server1 = ServerModel(id: "abcd",
-                                     name: "free server",
-                                     domain: "swiss.protonvpn.ch",
-                                     load: 15,
-                                     entryCountryCode: "CH",
-                                     exitCountryCode: "CH",
-                                     tier: .freeTier,
-                                     feature: .zero,
-                                     city: "Palézieux",
-                                     ips: [.init(id: "abcd", entryIp: "10.0.0.1", exitIp: "10.0.0.2",
-                                                 domain: "swiss.protonvpn.ch", status: 1,
-                                                 x25519PublicKey: "this is a public key".data(using: .utf8)!.base64EncodedString())],
-                                     score: 50,
-                                     status: 1, // 0 == under maintenance
-                                     location: ServerLocation(lat: 46.33, long: 6.5),
-                                     hostCountry: "Switzerland",
-                                     translatedCity: "Not The Eyes",
-                                     gatewayName: nil
+                              name: "free server",
+                              domain: "swiss.protonvpn.ch",
+                              load: 15,
+                              entryCountryCode: "CH",
+                              exitCountryCode: "CH",
+                              tier: .freeTier,
+                              feature: .zero,
+                              city: "Palézieux",
+                              ips: [.init(id: "abcd", entryIp: "10.0.0.1", exitIp: "10.0.0.2",
+                                          domain: "swiss.protonvpn.ch", status: 1,
+                                          x25519PublicKey: "this is a public key".data(using: .utf8)!.base64EncodedString())],
+                              score: 50,
+                              status: 1, // 0 == under maintenance
+                              location: ServerLocation(lat: 46.33, long: 6.5),
+                              hostCountry: "Switzerland",
+                              translatedCity: "Not The Eyes",
+                              gatewayName: nil
     )
 
     /// free server with relatively low latency score and not under maintenance.
@@ -64,7 +64,7 @@ public struct MockTestData {
                               load: 80,
                               entryCountryCode: "CH",
                               exitCountryCode: "CH",
-                                     tier: .freeTier,
+                              tier: .freeTier,
                               feature: .zero,
                               city: "Gland",
                               ips: [.init(id: "efgh", entryIp: "10.0.0.3", exitIp: "10.0.0.4",
@@ -107,7 +107,7 @@ public struct MockTestData {
                               load: 42,
                               entryCountryCode: "CH",
                               exitCountryCode: "CH",
-                                     tier: .paidTier,
+                              tier: .paidTier,
                               feature: .zero,
                               city: "Zurich",
                               ips: [.init(id: "ijkl", entryIp: "10.0.0.5", exitIp: "10.0.0.6",
