@@ -528,8 +528,8 @@ public class AppStateManagerImplementation: AppStateManager {
                 }
 
                 if let sessionCount = rSessionCount, sessionCount >= (rVpnCredentials?.maxConnect ?? vpnCredentials.maxConnect) {
-                    let accountPlan = rVpnCredentials?.accountPlan ?? vpnCredentials.accountPlan
-                    self.maxSessionsReached(accountPlan: accountPlan)
+                    let accountTier = rVpnCredentials?.maxTier ?? vpnCredentials.maxTier
+                    self.maxSessionsReached(accountTier: accountTier)
                 } else if let newVpnCredentials = rVpnCredentials, newVpnCredentials.password != vpnCredentials.password {
                     self.vpnKeychain.storeAndDetectDowngrade(vpnCredentials: newVpnCredentials)
                     guard let lastConfiguration = self.lastAttemptedConfiguration else {
@@ -547,12 +547,12 @@ public class AppStateManagerImplementation: AppStateManager {
         }
     }
 
-    private func maxSessionsReached(accountPlan: AccountPlan) {
+    private func maxSessionsReached(accountTier: Int) {
         #if canImport(AppKit)
         let notification = Notification(name: NSApplication.didChangeOcclusionStateNotification)
         NotificationCenter.default.post(notification)
         #endif
-        let alert = MaxSessionsAlert(accountPlan: accountPlan)
+        let alert = MaxSessionsAlert(accountTier: accountTier)
         self.alertService?.push(alert: alert)
         self.connectionFailed()
     }

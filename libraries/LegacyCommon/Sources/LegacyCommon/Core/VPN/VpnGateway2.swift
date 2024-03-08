@@ -138,7 +138,7 @@ public class VpnGateway2: VpnGatewayProtocol2 {
     private func selectServer(intent: ConnectionSpec, connectionProtocol: ConnectionProtocol) throws -> ServerModel {
 
         @Dependency(\.getCurrentUserTier) var getCurrentUserTier
-        let currentUserTier = (try? getCurrentUserTier()) ?? CoreAppConstants.VpnTiers.free
+        let currentUserTier = (try? getCurrentUserTier()) ?? .freeTier
 
         let type = intent.serverType
 

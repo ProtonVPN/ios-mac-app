@@ -123,8 +123,8 @@ class AppSessionRefreshTimerTests: XCTestCase {
             expectations.displayAlert.fulfill()
         }
 
-        networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(accountPlan: .plus,
-                                                                           maxTier: CoreAppConstants.VpnTiers.plus)
+        networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(planName: "plus",
+                                                                           maxTier: .paidTier)
 
         appSessionRefresher.loggedIn = true
         appSessionRefreshTimer.start(now: true) // should immediately proceed to refresh credentials
@@ -139,8 +139,8 @@ class AppSessionRefreshTimerTests: XCTestCase {
             .init(serverId: testData.server2.id, load: 20, score: 2.3456, status: 1),
             .init(serverId: testData.server3.id, load: 30, score: 3.4567, status: 2),
         ]
-        networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(accountPlan: .visionary,
-                                                                           maxTier: CoreAppConstants.VpnTiers.visionary)
+        networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(planName: "visionary",
+                                                                           maxTier: .paidTier)
         timerFactory.runRepeatingTimers()
         wait(for: [expectations.updateServers[0],
                    expectations.updateCredentials[1]], timeout: 10)

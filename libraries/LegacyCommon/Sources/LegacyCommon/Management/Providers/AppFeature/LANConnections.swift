@@ -25,12 +25,12 @@ public enum ExcludeLocalNetworks: String, Codable, ToggleableFeature {
     /// LAN Traffic is 'allowed' to bypass tunnel: 'Allow LAN connections' is on in the UI.
     case on
 
-    public func canUse(onPlan plan: AccountPlan, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    public func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         switch self {
         case .off:
             return .success
         case .on:
-            if featureFlags.showNewFreePlan && userTier < CoreAppConstants.VpnTiers.basic {
+            if featureFlags.showNewFreePlan && userTier.isFreeTier {
                 return .failure(.requiresUpgrade)
             }
             return .success
@@ -42,22 +42,22 @@ extension ExcludeLocalNetworks: ProvidableFeature {
 
     public static let legacyConversion: ((Bool) -> Self)? = { $0 ? .on : .off }
 
-    public static func canUse(onPlan plan: AccountPlan, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    public static func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         guard #available(iOS 14.2, *) else {
             return .failure(.featureDisabled)
         }
-        if featureFlags.showNewFreePlan && userTier < CoreAppConstants.VpnTiers.basic {
+        if featureFlags.showNewFreePlan && userTier.isFreeTier {
             return .failure(.requiresUpgrade)
         }
         return .success
     }
 
     public static func defaultValue(
-        onPlan plan: AccountPlan,
+        onPlan plan: String,
         userTier: Int,
         featureFlags: FeatureFlags
     ) -> ExcludeLocalNetworks {
-        if featureFlags.showNewFreePlan && userTier < CoreAppConstants.VpnTiers.basic {
+        if featureFlags.showNewFreePlan && userTier.isFreeTier {
             return .off
         }
         return .on

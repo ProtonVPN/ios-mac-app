@@ -33,7 +33,7 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
 
         let isFreeTier: Bool
         do {
-            isFreeTier = try vpnKeychain.fetchCached().isFreeTier
+            isFreeTier = try vpnKeychain.fetchCached().maxTier.isFreeTier
         } catch {
             completion(.failure(error))
             return

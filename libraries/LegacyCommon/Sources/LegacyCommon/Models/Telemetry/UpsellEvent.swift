@@ -77,7 +77,7 @@ public struct UpsellEvent: TelemetryEvent, Encodable {
         }
 
         public let modalSource: ModalSource
-        public let userPlan: AccountPlan
+        public let userPlan: String
         public let vpnStatus: VPNStatus
         public let userCountry: String
         public let newFreePlanUi: Bool

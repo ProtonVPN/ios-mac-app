@@ -67,7 +67,7 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
         vpnStateConfiguration: VpnStateConfiguration,
         isActive: Bool,
         currentUserTier: Int,
-        currentAccountPlan plan: AccountPlan,
+        currentPlanName planName: String,
         openUpgradeLink: @escaping () -> Void
     ) {
         var netShieldPropertyProvider = netShieldPropertyProvider
@@ -97,7 +97,7 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
             icon: icon,
             active: isActive,
             requiresUpdate: level.isUserTierTooLow(currentUserTier),
-            requiresBusinessUpdate: level != .off && plan.isBusiness && !plan.hasNetShield,
+            requiresBusinessUpdate: level != .off && planName.isBusiness && !planName.hasNetShield,
             selectCallback: {
                 guard !level.isUserTierTooLow(currentUserTier) else {
                     openUpgradeLink()

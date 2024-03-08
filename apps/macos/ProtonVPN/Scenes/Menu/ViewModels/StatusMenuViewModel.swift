@@ -77,7 +77,7 @@ final class StatusMenuViewModel {
 
     var shouldShowProfileDropdown: Bool { profileAuthorizer.canUseProfiles }
     var shouldShowChangeServer: Bool {
-        isConnected && featureFlags[\.showNewFreePlan] && credentials.tier == CoreAppConstants.VpnTiers.free
+        isConnected && featureFlags[\.showNewFreePlan] && credentials.tier.isFreeTier
     }
 
     private var serverChangeTimer: Timer?
@@ -253,9 +253,8 @@ final class StatusMenuViewModel {
     }
 
     private func isSufficientTierLevel() -> Bool {
-        let freeTier = CoreAppConstants.VpnTiers.free
-        let userTier: Int = (try? vpnGateway.userTier()) ?? freeTier
-        return userTier >= CoreAppConstants.VpnTiers.plus
+        let userTier: Int = (try? vpnGateway.userTier()) ?? .freeTier
+        return userTier.isPaidTier
     }
 
     private func presentDiscourageSecureCoreAlert(onActivate: (() -> Void)?) {
@@ -368,9 +367,9 @@ final class StatusMenuViewModel {
         secureCoreCountries = serverManager?.grouping(for: .secureCore)
             .filter { !$0.feature.contains(.restricted) }
         
-        let tier = (try? vpnKeychain.fetchCached().maxTier) ?? CoreAppConstants.VpnTiers.free
-        
-        if tier == CoreAppConstants.VpnTiers.free {
+        let tier = (try? vpnKeychain.fetchCached().maxTier) ?? .freeTier
+
+        if tier.isFreeTier {
             standardCountries = standardCountries?.sorted(by: { (countryGroup1, countryGroup2) -> Bool in
                 switch (countryGroup1.kind, countryGroup2.kind) {
                 case (.country(let country1), .country(let country2)):
@@ -438,7 +437,7 @@ final class StatusMenuViewModel {
             let tier = try vpnKeychain.fetchCached().maxTier
 
             // if Secure Core was enabled but the tier no longer allows its use
-            if propertiesManager.secureCoreToggle, tier < CoreAppConstants.VpnTiers.plus {
+            if propertiesManager.secureCoreToggle, tier.isFreeTier {
                 log.debug("Disabling Secure Core because the changed plan does not allow its use anymore", category: .app)
                 propertiesManager.secureCoreToggle = false
                 serverType = .standard

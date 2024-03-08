@@ -659,14 +659,13 @@ public class MaxSessionsAlert: UserAccountUpdateAlert {
     public var actions: [AlertAction] = []
     public var isError: Bool = false
     public var dismiss: (() -> Void)?
-    public var accountPlan: AccountPlan
-    
-    public init(accountPlan: AccountPlan) {
-        self.accountPlan = accountPlan
-        switch accountPlan {
-        case .free, .basic:
+    public var accountTier: Int
+
+    public init(accountTier: Int) {
+        self.accountTier = accountTier
+        if accountTier.isFreeTier {
             message = Localizable.maximumDevicePlanLimitPart1(Localizable.tierPlus) + Localizable.maximumDevicePlanLimitPart2(AccountPlan.plus.devicesCount)
-        default:
+        } else {
             message = Localizable.maximumDeviceReachedDescription
         }
         
@@ -805,12 +804,13 @@ public class WelcomeScreenAlert: UpsellAlert {
 
 public extension WelcomeScreenAlert.Plan {
     init?(info: VpnDowngradeInfo) {
-        if info.to.accountPlan == .vpnPlus || info.to.accountPlan == .plus {
-            self = .plus(numberOfServers: AccountPlan.plus.serversCount,
-                            numberOfDevices: AccountPlan.plus.devicesCount,
-                            numberOfCountries: AccountPlan.plus.countriesCount)
-        } else if info.to.accountPlan == .unlimited {
+        // Replace hardcoded string with a proper solution VPNAPPL-2142
+        if info.to.planName == "unlimited" {
             self = .unlimited
+        } else if info.to.maxTier.isPaidTier {
+            self = .plus(numberOfServers: AccountPlan.plus.serversCount,
+                         numberOfDevices: AccountPlan.plus.devicesCount,
+                         numberOfCountries: AccountPlan.plus.countriesCount)
         } else if info.to.maxTier > info.from.maxTier {
             self = .fallback
         } else {

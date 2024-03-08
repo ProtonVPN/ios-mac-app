@@ -40,8 +40,8 @@ public class VpnKeychainMock: VpnKeychainProtocol {
     
     public var credentials: VpnCredentials?
     
-    public init(accountPlan: AccountPlan = .free, maxTier: Int = 0) {
-        credentials = VpnKeychainMock.vpnCredentials(accountPlan: accountPlan, maxTier: maxTier)
+    public init(planName: String = "free", maxTier: Int = 0) {
+        credentials = VpnKeychainMock.vpnCredentials(planName: planName, maxTier: maxTier)
     }
     
     public func fetch() throws -> VpnCredentials {
@@ -77,7 +77,7 @@ public class VpnKeychainMock: VpnKeychainProtocol {
                 let downgradeInfo: VpnDowngradeInfo = (oldCredentials, newCredentials)
                 NotificationCenter.default.post(name: Self.vpnUserDelinquent, object: downgradeInfo)
             }
-            if oldCredentials.accountPlan != newCredentials.accountPlan {
+            if oldCredentials.planName != newCredentials.planName {
                 let downgradeInfo: VpnDowngradeInfo = (oldCredentials, newCredentials)
                 NotificationCenter.default.post(name: Self.vpnPlanChanged, object: downgradeInfo)
             }
@@ -102,15 +102,14 @@ public class VpnKeychainMock: VpnKeychainProtocol {
         credentials = nil
     }
     
-    public func setVpnCredentials(with accountPlan: AccountPlan, maxTier: Int = 0) {
-        credentials = VpnKeychainMock.vpnCredentials(accountPlan: accountPlan, maxTier: maxTier)
+    public func setVpnCredentials(with planName: String, maxTier: Int = 0) {
+        credentials = VpnKeychainMock.vpnCredentials(planName: planName, maxTier: maxTier)
     }
     
-    public static func vpnCredentials(accountPlan: AccountPlan, maxTier: Int) -> VpnCredentials {
+    public static func vpnCredentials(planName: String, maxTier: Int) -> VpnCredentials {
         return VpnCredentials(
             status: 0,
-            expirationTime: Date(),
-            accountPlan: accountPlan,
+            planTitle: planName,
             maxConnect: 1,
             maxTier: maxTier,
             services: 0,
@@ -121,7 +120,7 @@ public class VpnKeychainMock: VpnKeychainProtocol {
             credit: 0,
             currency: "",
             hasPaymentMethod: false,
-            planName: accountPlan.rawValue,
+            planName: planName,
             subscribed: 0,
             businessEvents: false
         )

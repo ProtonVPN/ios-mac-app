@@ -1,10 +1,7 @@
 //
-//  AccountPlan+Extension.swift
-//  ProtonVPN - Created on 08/07/2019.
+//  Created on 08/03/2024.
 //
-//  Copyright (c) 2019 Proton Technologies AG
-//
-//  This file is part of ProtonVPN.
+//  Copyright (c) 2024 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -18,23 +15,20 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
-//
 
 import LegacyCommon
 import AppKit
 import Theme
 
-extension AccountPlan {
-    var styleForUI: AppTheme.Style {
-        switch self {
-        case .free:
-            return .weak
-        case .basic:
-            return .info
-        case .trial, .plus, .vpnPlus, .family, .bundlePro, .enterprise2022, .vpnbiz2023, .vpnpro2023, .vpnpass2023, .unknown:
-            return .success
-        case .visionary, .unlimited, .visionary2022:
-            return .interactive
+public extension AppTheme.Style {
+    init(_ tier: Int) {
+        if tier == .internalTier {
+            self = .interactive
+        }
+        if tier.isFreeTier {
+            self = .weak
+        } else {
+            self = .success
         }
     }
 }

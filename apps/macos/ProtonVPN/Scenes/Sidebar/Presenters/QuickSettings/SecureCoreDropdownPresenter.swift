@@ -105,11 +105,11 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     
     private func requiresUpdate(secureCore isOn: Bool) -> Bool {
         return isOn
-            ? currentUserTier < CoreAppConstants.VpnTiers.plus
-            : false
+        ? currentUserTier.isFreeTier
+        : false
     }
     
     private var currentUserTier: Int {
-        return(try? vpnGateway.userTier()) ?? CoreAppConstants.VpnTiers.free
+        return(try? vpnGateway.userTier()) ?? .freeTier
     }
 }

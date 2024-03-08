@@ -37,7 +37,7 @@ open class ReportBugViewModel {
     private let logContentProvider: LogContentProvider
     private let logSources: [LogSource]
     
-    private var plan: AccountPlan?
+    private var planTitle: String?
 
     public typealias Factory = PropertiesManagerFactory &
         ReportsApiServiceFactory &
@@ -67,13 +67,13 @@ open class ReportBugViewModel {
         let username = authKeychain.username ?? ""
 
         do {
-            plan = try vpnKeychain.fetchCached().accountPlan
+            planTitle = try vpnKeychain.fetchCached().planTitle
         } catch let error {
             log.error("\(error)", category: .ui)
         }
         
         let clientVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
-        bug = ReportBug(os: os, osVersion: osVersion, client: "App", clientVersion: clientVersion, clientType: 2, title: "Report from \(os) app", description: "", username: username, email: propertiesManager.reportBugEmail ?? "", country: "", ISP: "", plan: plan?.description ?? "")
+        bug = ReportBug(os: os, osVersion: osVersion, client: "App", clientVersion: clientVersion, clientType: 2, title: "Report from \(os) app", description: "", username: username, email: propertiesManager.reportBugEmail ?? "", country: "", ISP: "", plan: planTitle ?? "")
     }
     
     public func set(description: String) {
@@ -112,13 +112,13 @@ open class ReportBugViewModel {
         return bug.clientVersion
     }
     
-    public func set(accountPlan: AccountPlan) {
-        plan = accountPlan
-        bug.plan = plan?.description ?? ""
+    public func set(planTitle: String) {
+        self.planTitle = planTitle
+        bug.plan = planTitle
     }
     
-    public func getAccountPlan() -> AccountPlan? {
-        return plan
+    public func getPlanTitle() -> String? {
+        return planTitle
     }
     
     public var isSendingPossible: Bool {

@@ -29,14 +29,14 @@ fileprivate enum TestFeature: String, ProvidableFeature {
     case freeDefault
     case paidDefault
 
-    static func canUse(onPlan plan: AccountPlan, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    static func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         if userTier == 0 {
             return .failure(.requiresUpgrade)
         }
         return .success
     }
 
-    func canUse(onPlan plan: AccountPlan, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         switch self {
         case .on, .paidDefault:
             return .failure(.requiresUpgrade)
@@ -45,7 +45,7 @@ fileprivate enum TestFeature: String, ProvidableFeature {
         }
     }
 
-    static func defaultValue(onPlan plan: AccountPlan, userTier: Int, featureFlags: FeatureFlags) -> TestFeature {
+    static func defaultValue(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> TestFeature {
         if userTier == 0 {
             return .freeDefault
         }
@@ -63,7 +63,7 @@ class AppFeaturePropertyProviderTests: XCTestCase {
 
     func testReturnsUserSpecificValueFromStorage() {
         withDependencies {
-            $0.credentialsProvider = .constant(credentials: .plan(.plus))
+            $0.credentialsProvider = .constant(credentials: .tier(.paidTier))
             $0.authKeychain = mockKeychain(withUsername: "billy")
             $0.featureFlagProvider = .constant(flags: .allEnabled)
             $0.storage = MemoryStorage(initialValue: ["featurebilly": encodedOff])
@@ -76,7 +76,7 @@ class AppFeaturePropertyProviderTests: XCTestCase {
 
     func testReturnsLegacyGlobalValueFromStorageWhenNoUserSpecificValueIsStored() {
         withDependencies {
-            $0.credentialsProvider = .constant(credentials: .plan(.plus))
+            $0.credentialsProvider = .constant(credentials: .tier(.paidTier))
             $0.authKeychain = mockKeychain(withUsername: "billy")
             $0.featureFlagProvider = .constant(flags: .allEnabled)
             $0.storage = MemoryStorage(initialValue: ["feature": false]) // value encoded using legacy storage type
@@ -89,7 +89,7 @@ class AppFeaturePropertyProviderTests: XCTestCase {
 
     func testReturnsDecodableGlobalValueFromStorage() {
         withDependencies {
-            $0.credentialsProvider = .constant(credentials: .plan(.plus))
+            $0.credentialsProvider = .constant(credentials: .tier(.paidTier))
             $0.authKeychain = mockKeychain(withUsername: "billy")
             $0.featureFlagProvider = .constant(flags: .allEnabled)
             $0.storage = MemoryStorage(initialValue: ["feature": encodedOff])
@@ -102,7 +102,7 @@ class AppFeaturePropertyProviderTests: XCTestCase {
 
     func testReturnsDefaultValueWhenNoValueIsStored() throws {
         withDependencies {
-            $0.credentialsProvider = .constant(credentials: .plan(.plus))
+            $0.credentialsProvider = .constant(credentials: .tier(.paidTier))
             $0.authKeychain = mockKeychain(withUsername: "billy")
             $0.featureFlagProvider = .constant(flags: .allEnabled)
             $0.storage = MemoryStorage(initialValue: [:])
@@ -113,7 +113,7 @@ class AppFeaturePropertyProviderTests: XCTestCase {
         }
 
         withDependencies {
-            $0.credentialsProvider = .constant(credentials: .plan(.free))
+            $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
             $0.authKeychain = mockKeychain(withUsername: "billy")
             $0.featureFlagProvider = .constant(flags: .allEnabled)
             $0.storage = MemoryStorage(initialValue: [:])
@@ -126,7 +126,7 @@ class AppFeaturePropertyProviderTests: XCTestCase {
 
     func testReturnsDefaultValueWhenStoredValueRequiresUpgrade() throws {
         withDependencies {
-            $0.credentialsProvider = .constant(credentials: .plan(.free))
+            $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
             $0.authKeychain = mockKeychain(withUsername: "billy")
             $0.featureFlagProvider = .constant(flags: .allEnabled)
             $0.storage = MemoryStorage(initialValue: ["featurebilly": encodedOn])
@@ -140,7 +140,7 @@ class AppFeaturePropertyProviderTests: XCTestCase {
     func testStoresValueToUserSpecificStorage() {
         let storage = MemoryStorage(initialValue: [:])
         withDependencies {
-            $0.credentialsProvider = .constant(credentials: .plan(.free))
+            $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
             $0.authKeychain = mockKeychain(withUsername: "billy")
             $0.featureFlagProvider = .constant(flags: .allEnabled)
             $0.storage = storage
@@ -156,7 +156,7 @@ class AppFeaturePropertyProviderTests: XCTestCase {
     func testSendsNotificationWhenUpdatingStoredValue() throws {
         let storage = MemoryStorage(initialValue: [:])
         withDependencies {
-            $0.credentialsProvider = .constant(credentials: .plan(.free))
+            $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
             $0.authKeychain = mockKeychain(withUsername: "billy")
             $0.featureFlagProvider = .constant(flags: .allEnabled)
             $0.storage = storage

@@ -42,7 +42,7 @@ public struct ServerGroup: Equatable {
             case .country(let countryModel):
                 return countryModel.lowestTier
             case .gateway:
-                return CoreAppConstants.VpnTiers.plus
+                return .paidTier
             }
         }
     }

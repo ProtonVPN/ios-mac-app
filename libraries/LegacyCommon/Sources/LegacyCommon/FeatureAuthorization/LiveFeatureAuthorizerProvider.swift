@@ -23,11 +23,11 @@ public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
     @Dependency(\.credentialsProvider) var credentialsProvider
     @Dependency(\.featureFlagProvider) var featureFlagProvider
 
-    private var accountDetails: (plan: AccountPlan, tier: Int) {
+    private var accountDetails: (plan: String, tier: Int) {
         let credentials = credentialsProvider.credentials
         return (
-            credentials?.accountPlan ?? .free,
-            credentials?.maxTier ?? CoreAppConstants.VpnTiers.free
+            credentials?.planName ?? "free",
+            credentials?.maxTier ?? .freeTier
         )
     }
 

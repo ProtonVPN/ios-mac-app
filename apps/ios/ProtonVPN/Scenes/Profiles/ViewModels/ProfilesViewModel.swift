@@ -46,7 +46,7 @@ class ProfilesViewModel {
         do {
             return try vpnGateway.userTier()
         } catch {
-            return CoreAppConstants.VpnTiers.free
+            return .freeTier
         }
     }
     

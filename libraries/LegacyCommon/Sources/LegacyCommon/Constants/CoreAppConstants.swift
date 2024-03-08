@@ -22,15 +22,24 @@
 import Foundation
 import Strings
 
+public extension Int {
+    var isPaidTier: Bool {
+        !isFreeTier
+    }
+    var isFreeTier: Bool {
+        self == Int.freeTier
+    }
+    static var freeTier: Int = .freeTier
+    static var paidTier: Int = CoreAppConstants.VpnTiers.plus // 1 was historically used for basic plans, which no longer exist
+    static var internalTier: Int = CoreAppConstants.VpnTiers.internal // Dev-only
+}
+
 public class CoreAppConstants {
         
-    public struct VpnTiers {
-        public static let free = 0
-        public static let basic = 1
-        public static let plus = 2
-        public static let visionary = 3
-        
-        public static let allCases = [free, basic, plus, visionary]
+    fileprivate struct VpnTiers {
+        static let free = 0
+        static let plus = 2 // also visionary
+        static let `internal` = 3
     }
     
     public struct ProtonMailLinks {

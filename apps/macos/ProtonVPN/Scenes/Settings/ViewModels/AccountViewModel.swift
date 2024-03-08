@@ -28,7 +28,8 @@ import Strings
 final class AccountViewModel {
     
     private(set) var username: String
-    private(set) var accountPlan: AccountPlan?
+    private(set) var planTitle: String?
+    private(set) var maxTier: Int
 
     var canUsePromo: Bool {
         return propertiesManager.featureFlags.promoCode && (try? vpnKeychain.fetchCached())?.canUsePromoCode ?? false
@@ -51,7 +52,8 @@ final class AccountViewModel {
         self.authKeychain = authKeychain
 
         username = Localizable.unavailable
-        accountPlan = nil
+        planTitle = nil
+        maxTier = .freeTier
 
         reload()
     }
@@ -68,13 +70,16 @@ final class AccountViewModel {
             self.username = username
             do {
                 let vpnCredentials = try vpnKeychain.fetchCached()
-                accountPlan = vpnCredentials.accountPlan
+                planTitle = vpnCredentials.planTitle
+                maxTier = vpnCredentials.maxTier
             } catch {
-                accountPlan = nil
+                planTitle = nil
+                maxTier = .freeTier
             }
         } else {
             username = Localizable.unavailable
-            accountPlan = nil
+            planTitle = nil
+            maxTier = .freeTier
         }
 
         reloadNeeded?()

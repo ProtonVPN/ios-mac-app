@@ -114,7 +114,7 @@ final class ConnectionSettingsViewModel {
             // On the free plan, post-rescope, we should only show the 'fastest' auto-connect option
             return [ProfileConstants.fastestProfile(
                 connectionProtocol: propertiesManager.connectionProtocol,
-                defaultProfileAccessTier: CoreAppConstants.VpnTiers.free
+                defaultProfileAccessTier: .freeTier
             )]
         }
         return profileManager.allProfiles
@@ -479,7 +479,7 @@ final class ConnectionSettingsViewModel {
         do {
             return try vpnGateway.userTier()
         } catch {
-            return CoreAppConstants.VpnTiers.free
+            return .freeTier
         }
     }
 

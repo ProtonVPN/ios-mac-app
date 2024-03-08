@@ -304,7 +304,7 @@ extension VpnManager: LocalAgentDelegate {
                 log.error("Cannot show max session alert because getting credentials failed", category: .localAgent, event: .error)
                 return
             }
-            alertService?.push(alert: MaxSessionsAlert(accountPlan: credentials.accountPlan))
+            alertService?.push(alert: MaxSessionsAlert(accountTier: credentials.maxTier))
         case .serverError:
             log.error("Server error occurred, showing the user an alert and disconnecting", category: .localAgent, event: .error)
             disconnectWithAlert(alert: VpnServerErrorAlert())

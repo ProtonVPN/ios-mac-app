@@ -48,11 +48,9 @@ extension NetShieldType {
     public var lowestTier: Int {
         switch self {
         case .off:
-            return CoreAppConstants.VpnTiers.free
-        case .level1:
-            return CoreAppConstants.VpnTiers.basic
-        case .level2:
-            return CoreAppConstants.VpnTiers.basic
+            return .freeTier
+        default:
+            return .paidTier
         }
     }
     

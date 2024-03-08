@@ -172,7 +172,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
         await self.serverStorage.store(
             properties.serverModels,
-            keepStalePaidServers: shouldRefreshServersAccordingToUserTier && credentials.maxTier == CoreAppConstants.VpnTiers.free
+            keepStalePaidServers: shouldRefreshServersAccordingToUserTier && credentials.maxTier.isFreeTier
         )
 
         if await appState.isDisconnected {
@@ -389,7 +389,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             let modalSource: UpsellEvent.ModalSource? = nil
             NotificationCenter.default.post(
                 name: .userCompletedUpsellAlertJourney,
-                object: (modalSource, downgradeInfo.to.accountPlan.rawValue)
+                object: (modalSource, downgradeInfo.to.planName)
             )
         }
 

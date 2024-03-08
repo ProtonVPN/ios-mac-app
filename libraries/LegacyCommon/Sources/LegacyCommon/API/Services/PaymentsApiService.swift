@@ -55,7 +55,7 @@ public final class PaymentsApiServiceImplementation: PaymentsApiService {
 
     public func applyPromoCode(code: String, completion: @escaping (Result<PaymentsApiServiceSuccess, Error>) -> Void) {
         // store the user account plan before applying the promo code
-        let originalPlan = (try? vpnKeychain.fetchCached())?.accountPlan
+        let originalPlan = (try? vpnKeychain.fetchCached())?.planName
 
         // apply the promo code on the backend
         networking.request(PromoCodeRequest(code: code)) { [weak self] (result: Result<PromoCodeResponse, Error>) in
@@ -75,7 +75,7 @@ public final class PaymentsApiServiceImplementation: PaymentsApiService {
         }
     }
 
-    private func checkPlanUpgraded(originalPlan: AccountPlan?, retries: Int, completion: @escaping (PaymentsApiServiceSuccess) -> Void) {
+    private func checkPlanUpgraded(originalPlan: String?, retries: Int, completion: @escaping (PaymentsApiServiceSuccess) -> Void) {
         // makes sure we do not try indefinitely
         guard retries >= 0 else {
             log.debug("No more retries to check if the plan is upgraded after applying promo code", category: .app)
@@ -92,7 +92,7 @@ public final class PaymentsApiServiceImplementation: PaymentsApiService {
             do {
                 let credentials = try await self.vpnApiService.clientCredentials()
                 // the plan is still not upgraded, try again
-                if credentials.accountPlan == originalPlan {
+                if credentials.planName == originalPlan {
                     log.debug("The plan is not yet upgraded after applying promo code, trying again", category: .app)
                     self.checkPlanUpgraded(originalPlan: originalPlan, retries: retries - 1, completion: completion)
                 } else { // the plan has been upgraded

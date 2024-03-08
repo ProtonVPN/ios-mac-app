@@ -23,8 +23,8 @@ public struct CredentialsProvider {
     private var getCredentials: () -> CachedVpnCredentials?
 
     public var credentials: CachedVpnCredentials? { getCredentials() }
-    public var plan: AccountPlan { getCredentials()?.accountPlan ?? .free }
-    public var tier: Int { getCredentials()?.maxTier ?? CoreAppConstants.VpnTiers.free }
+    public var planName: String { getCredentials()?.planName ?? "free" }
+    public var tier: Int { getCredentials()?.maxTier ?? .freeTier }
 
     public init(getCredentials: @escaping () -> CachedVpnCredentials?) {
         self.getCredentials = getCredentials
@@ -44,7 +44,7 @@ extension CredentialsProvider: DependencyKey {
     }
 
     #if DEBUG
-    public static var testValue: CredentialsProvider = .constant(credentials: .plan(.vpnPlus))
+    public static var testValue: CredentialsProvider = .constant(credentials: .tier(.paidTier))
 
     static func constant(credentials: CachedVpnCredentials?) -> CredentialsProvider {
         CredentialsProvider(getCredentials: { credentials })

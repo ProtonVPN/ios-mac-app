@@ -42,7 +42,7 @@ extension ConnectionAuthorizer: DependencyKey {
             @Dependency(\.serverChangeAuthorizer) var serverChangeAuthorizer
 
             let isNewFreePlanActive: () -> Bool = {
-                credentials.tier == CoreAppConstants.VpnTiers.free && featureFlags[\.showNewFreePlan]
+                credentials.tier.isFreeTier && featureFlags[\.showNewFreePlan]
             }
 
             switch request.connectionType {

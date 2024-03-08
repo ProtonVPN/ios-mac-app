@@ -26,34 +26,32 @@ import XCTest
 class CredentialsProviderImplementationTests: XCTestCase {
 
     func testReturnsTierSavedInKeychain() throws {
-        let testPairs: [(AccountPlan, Int)] = [
-            (AccountPlan.free, CoreAppConstants.VpnTiers.free),
-            (AccountPlan.basic, CoreAppConstants.VpnTiers.basic),
-            (AccountPlan.plus, CoreAppConstants.VpnTiers.visionary),
-            (AccountPlan.visionary, CoreAppConstants.VpnTiers.visionary),
+        let testPairs: [(String, Int)] = [
+            ("free", .freeTier),
+            ("plus", .paidTier)
         ]
         
         for (plan, tier) in testPairs {
-            let keychain = VpnKeychainMock(accountPlan: plan, maxTier: tier)
+            let keychain = VpnKeychainMock(planName: plan, maxTier: tier)
 
             let provider = CredentialsProvider {
                 try? keychain.fetchCached()
             }
 
             XCTAssertEqual(provider.tier, tier)
-            XCTAssertEqual(provider.plan, plan)
+            XCTAssertEqual(provider.planName, plan)
         }
     }
     
     func testReturnsFreeTierIfNoneIsAvilable() throws {
-        let keychain = VpnKeychainMock(accountPlan: AccountPlan.plus, maxTier: CoreAppConstants.VpnTiers.visionary)
+        let keychain = VpnKeychainMock(planName: "plus", maxTier: .internalTier)
         keychain.throwsOnFetch = true
 
         let provider = CredentialsProvider {
             try? keychain.fetchCached()
         }
 
-        XCTAssertEqual(provider.plan, .free)
-        XCTAssertEqual(provider.tier, CoreAppConstants.VpnTiers.free)
+        XCTAssertEqual(provider.planName, "free")
+        XCTAssertEqual(provider.tier, .freeTier)
     }
 }

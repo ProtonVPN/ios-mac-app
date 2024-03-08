@@ -35,15 +35,13 @@ import VPNSharedTesting
 class CreateOrEditProfileViewModelTests: XCTestCase {
 
     lazy var serverStorage: ServerStorageArrayMock = ServerStorageArrayMock(servers: [
-        serverModel("serv1", tier: CoreAppConstants.VpnTiers.basic, feature: ServerFeature.zero, exitCountryCode: "US", entryCountryCode: "CH"),
-        serverModel("serv2", tier: CoreAppConstants.VpnTiers.basic, feature: ServerFeature.zero, exitCountryCode: "UK", entryCountryCode: "CH"),
-        serverModel("serv3", tier: CoreAppConstants.VpnTiers.free, feature: ServerFeature.zero, exitCountryCode: "US", entryCountryCode: "CH"),
-        serverModel("serv4", tier: CoreAppConstants.VpnTiers.free, feature: ServerFeature.zero, exitCountryCode: "UK", entryCountryCode: "CH"),
-        serverModel("serv5", tier: CoreAppConstants.VpnTiers.free, feature: ServerFeature.zero, exitCountryCode: "DE", entryCountryCode: "CH"),
-        serverModel("serv6", tier: CoreAppConstants.VpnTiers.plus, feature: ServerFeature.secureCore, exitCountryCode: "US", entryCountryCode: "BE"),
-        serverModel("serv7", tier: CoreAppConstants.VpnTiers.plus, feature: ServerFeature.secureCore, exitCountryCode: "UK", entryCountryCode: "CH"),
-        serverModel("serv8", tier: CoreAppConstants.VpnTiers.plus, feature: ServerFeature.secureCore, exitCountryCode: "DE", entryCountryCode: "CH"),
-        serverModel("serv9", tier: CoreAppConstants.VpnTiers.plus, feature: ServerFeature.secureCore, exitCountryCode: "FR", entryCountryCode: "CH"),
+        serverModel("serv3", tier: .freeTier, feature: ServerFeature.zero, exitCountryCode: "US", entryCountryCode: "CH"),
+        serverModel("serv4", tier: .freeTier, feature: ServerFeature.zero, exitCountryCode: "UK", entryCountryCode: "CH"),
+        serverModel("serv5", tier: .freeTier, feature: ServerFeature.zero, exitCountryCode: "DE", entryCountryCode: "CH"),
+        serverModel("serv6", tier: .paidTier, feature: ServerFeature.secureCore, exitCountryCode: "US", entryCountryCode: "BE"),
+        serverModel("serv7", tier: .paidTier, feature: ServerFeature.secureCore, exitCountryCode: "UK", entryCountryCode: "CH"),
+        serverModel("serv8", tier: .paidTier, feature: ServerFeature.secureCore, exitCountryCode: "DE", entryCountryCode: "CH"),
+        serverModel("serv9", tier: .paidTier, feature: ServerFeature.secureCore, exitCountryCode: "FR", entryCountryCode: "CH"),
     ])
 
     lazy var standardProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .standard, serverOffering: .fastest("US"), name: "", connectionProtocol: ConnectionProtocol.vpnProtocol(.ike))
@@ -53,7 +51,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
 
     lazy var authKeychain: AuthKeychainHandle = MockAuthKeychain()
 
-    lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychainMock(accountPlan: .visionary, maxTier: 4)
+    lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychainMock(planName: "visionary", maxTier: 4)
 
     lazy var networking = CoreNetworking(
         delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()),
@@ -85,7 +83,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
                                                               protocolSelectionService: ProtocolServiceMock(),
                                                               alertService: AlertServiceEmptyStub(),
                                                               vpnKeychain: vpnKeychain,
-                                                              serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.plus, serverStorage: serverStorage),
+                                                              serverManager: ServerManagerImplementation.instance(forTier: .paidTier, serverStorage: serverStorage),
                                                               appStateManager: appStateManager,
                                                               vpnGateway: VpnGatewayMock(propertiesManager: propertiesManager, activeServerType: .unspecified, connection: .disconnected),
                                                               profileManager: profileManager,
@@ -96,7 +94,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
                                                               protocolSelectionService: ProtocolServiceMock(),
                                                               alertService: AlertServiceEmptyStub(),
                                                               vpnKeychain: vpnKeychain,
-                                                              serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.plus, serverStorage: serverStorage),
+                                                              serverManager: ServerManagerImplementation.instance(forTier: .paidTier, serverStorage: serverStorage),
                                                               appStateManager: appStateManager,
                                                               vpnGateway: VpnGatewayMock(propertiesManager: propertiesManager, activeServerType: .unspecified, connection: .disconnected),
                                                               profileManager: profileManager,
@@ -133,10 +131,9 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
         triggerDataSetCreation(secureCore: false, dataSetType: .server)
 
         let dataSet = profileService.dataSet!
-        XCTAssertEqual(3, dataSet.data.count)
+        XCTAssertEqual(2, dataSet.data.count)
         XCTAssertEqual(2, dataSet.data[0].cells.count) // Random and fastest
         XCTAssertEqual(1, dataSet.data[1].cells.count)
-        XCTAssertEqual(1, dataSet.data[2].cells.count)
     }
 
     func testServersList_secureCore() {

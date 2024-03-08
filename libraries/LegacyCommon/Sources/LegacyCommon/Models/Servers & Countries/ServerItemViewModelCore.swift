@@ -97,7 +97,7 @@ open class ServerItemViewModelCore {
         do {
             return try vpnGateway.userTier()
         } catch {
-            return CoreAppConstants.VpnTiers.free
+            return .freeTier
         }
     }
 }

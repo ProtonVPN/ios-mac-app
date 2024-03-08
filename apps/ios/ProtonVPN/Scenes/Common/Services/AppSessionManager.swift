@@ -196,10 +196,10 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
         let credentials = properties.vpnCredentials
         vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-        review.update(plan: credentials.accountPlan.rawValue)
+        review.update(plan: credentials.planName)
         serverStorage.store(
             properties.serverModels,
-            keepStalePaidServers: shouldRefreshServers && credentials.maxTier == CoreAppConstants.VpnTiers.free
+            keepStalePaidServers: shouldRefreshServers && credentials.maxTier.isFreeTier
         )
         propertiesManager.userLocation = properties.location
         await refreshPartners(ifUnknownPartnerLogicalExistsIn: properties.serverModels)
@@ -265,10 +265,10 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             
             let credentials = properties.vpnCredentials
             vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-            review.update(plan: credentials.accountPlan.rawValue)
+            review.update(plan: credentials.planName)
             serverStorage.store(
                 properties.serverModels,
-                keepStalePaidServers: shouldRefreshServers && credentials.maxTier == CoreAppConstants.VpnTiers.free
+                keepStalePaidServers: shouldRefreshServers && credentials.maxTier.isFreeTier
             )
             propertiesManager.userRole = properties.userRole
             propertiesManager.userAccountCreationDate = properties.userCreateTime

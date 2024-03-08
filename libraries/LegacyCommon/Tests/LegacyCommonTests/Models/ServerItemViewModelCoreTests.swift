@@ -36,7 +36,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
         XCTAssertFalse(sut.isUsersTierTooLow)
         XCTAssertEqual(sut.alphaOfMainElements, 1.0)
         XCTAssertEqual(sut.partners, [])
-        XCTAssertEqual(sut.userTier, CoreAppConstants.VpnTiers.free)
+        XCTAssertEqual(sut.userTier, .freeTier)
     }
 
     func testServerFeatures() throws {
@@ -53,18 +53,18 @@ final class ServerItemViewModelCoreTests: XCTestCase {
 
     func testServerAlpha0_5() throws {
         let gatewayMock = VpnGatewayMock()
-        gatewayMock._userTier = CoreAppConstants.VpnTiers.free
+        gatewayMock._userTier = .freeTier
         let sut = ServerItemViewModelCore(serverModel: MockTestData().server7(),
                                           vpnGateway: gatewayMock,
                                           appStateManager: AppStateManagerMock(),
                                           propertiesManager: PropertiesManagerMock())
         XCTAssertEqual(sut.alphaOfMainElements, 0.5)
-        XCTAssertEqual(sut.userTier, CoreAppConstants.VpnTiers.free)
+        XCTAssertEqual(sut.userTier, .freeTier)
     }
 
     func testServerAlpha0_25() throws {
         let gatewayMock = VpnGatewayMock()
-        gatewayMock._userTier = CoreAppConstants.VpnTiers.free
+        gatewayMock._userTier = .freeTier
         let sut = ServerItemViewModelCore(serverModel: MockTestData().server2UnderMaintenance,
                                           vpnGateway: gatewayMock,
                                           appStateManager: AppStateManagerMock(),
@@ -74,12 +74,12 @@ final class ServerItemViewModelCoreTests: XCTestCase {
 
     func testUserTierPlus() throws {
         let gatewayMock = VpnGatewayMock()
-        gatewayMock._userTier = CoreAppConstants.VpnTiers.plus
+        gatewayMock._userTier = .paidTier
         let sut = ServerItemViewModelCore(serverModel: MockTestData().server1,
                                           vpnGateway: gatewayMock,
                                           appStateManager: AppStateManagerMock(),
                                           propertiesManager: PropertiesManagerMock())
-        XCTAssertEqual(sut.userTier, CoreAppConstants.VpnTiers.plus)
+        XCTAssertEqual(sut.userTier, .paidTier)
     }
 
     func testEmptyPartners() throws {

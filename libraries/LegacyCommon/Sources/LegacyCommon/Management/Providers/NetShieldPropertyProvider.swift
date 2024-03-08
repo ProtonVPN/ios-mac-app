@@ -103,11 +103,11 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
     
     public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
         // Turn NetShield off on downgrade to free plan
-        if tier <= CoreAppConstants.VpnTiers.free {
+        if tier.isFreeTier {
             netShieldType = .off
         }
         // On upgrade from the free plan, switch NetShield to the default value for the new tier
-        if tier > oldTier && oldTier <= CoreAppConstants.VpnTiers.free {
+        if tier > oldTier && oldTier.isFreeTier {
             netShieldType = .level2
         }
     }
@@ -142,7 +142,7 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
 }
 
 extension NetShieldType: ModularAppFeature {
-    public func canUse(onPlan plan: AccountPlan, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    public func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         if !featureFlags.netShield {
             return .failure(.featureDisabled)
         }
@@ -160,7 +160,7 @@ extension NetShieldType: ModularAppFeature {
 }
 
 extension NetShieldType: PaidAppFeature {
-    public static func canUse(onPlan plan: AccountPlan, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    public static func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         if !featureFlags.netShield {
             return .failure(.featureDisabled)
         }

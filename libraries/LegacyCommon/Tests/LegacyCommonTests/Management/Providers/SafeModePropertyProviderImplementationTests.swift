@@ -29,7 +29,7 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
         let variants: [Bool] = [true, false]
 
         for type in variants {
-            withProvider(safeMode: type, plan: .plus) {
+            withProvider(safeMode: type, tier: .paidTier) {
                 XCTAssertEqual($0.safeMode, type)
             }
         }
@@ -39,32 +39,26 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
         let variants: [Bool] = [true, false]
 
         for type in variants {
-            withProvider(safeMode: type, plan: .plus, flags: .init(safeMode: false)) {
+            withProvider(safeMode: type, tier: .paidTier, flags: .init(safeMode: false)) {
                 XCTAssertNil($0.safeMode)
             }
         }
     }
 
     func testWhenNothingIsSetReturnsTrue() throws {
-        let plans: [AccountPlan] = [.basic, .plus, .visionary]
-        for plan in plans {
-            withProvider(safeMode: nil, plan: plan) {
-                XCTAssertTrue($0.safeMode ?? false)
-            }
+        withProvider(safeMode: nil, tier: .paidTier) {
+            XCTAssertTrue($0.safeMode ?? false)
         }
     }
 
     func testWhenNothingIsSetReturnsFalseWhenDisabledByFeatureFlag() throws {
-        let plans: [AccountPlan] = [.basic, .plus, .visionary]
-        for plan in plans {
-            withProvider(safeMode: nil, plan: plan, flags: .init(safeMode: false)) {
-                XCTAssertNil($0.safeMode)
-            }
+        withProvider(safeMode: nil, tier: .paidTier, flags: .init(safeMode: false)) {
+            XCTAssertNil($0.safeMode)
         }
     }
 
     func testSavesValueToStorage() {
-        withProvider(safeMode: nil, plan: .plus) { provider in
+        withProvider(safeMode: nil, tier: .paidTier) { provider in
             var provider = provider
             @Dependency(\.defaultsProvider) var defaultsProvider
 
@@ -77,25 +71,22 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
     }
 
     func testFreeUserCantTurnOffSafeMode() throws {
-        XCTAssertEqual(getAuthorizer(plan: .free), .failure(.requiresUpgrade))
+        XCTAssertEqual(getAuthorizer(tier: .freeTier), .failure(.requiresUpgrade))
     }
 
     func testPaidUserCanTurnOffSafeMode() throws {
-        XCTAssertEqual(getAuthorizer(plan: .basic), .success)
-        XCTAssertEqual(getAuthorizer(plan: .plus), .success)
-        XCTAssertEqual(getAuthorizer(plan: .visionary), .success)
-        XCTAssertEqual(getAuthorizer(plan: .vpnbiz2023), .success)
+        XCTAssertEqual(getAuthorizer(tier: .paidTier), .success)
     }
 
     // MARK: -
 
-    func withProvider(safeMode: Bool?, plan: AccountPlan, flags: FeatureFlags = .allEnabled, closure: @escaping (SafeModePropertyProvider) -> Void) {
+    func withProvider(safeMode: Bool?, tier: Int, flags: FeatureFlags = .allEnabled, closure: @escaping (SafeModePropertyProvider) -> Void) {
         withDependencies {
             let authKeychain = MockAuthKeychain()
             authKeychain.setMockUsername(Self.username)
             $0.authKeychain = authKeychain
 
-            $0.credentialsProvider = .constant(credentials: .plan(plan))
+            $0.credentialsProvider = .constant(credentials: .tier(tier))
             $0.featureFlagProvider = .constant(flags: flags)
             $0.featureAuthorizerProvider = LiveFeatureAuthorizerProvider()
         } operation: {
@@ -107,10 +98,10 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
         }
     }
 
-    func getAuthorizer(plan: AccountPlan) -> FeatureAuthorizationResult {
+    func getAuthorizer(tier: Int) -> FeatureAuthorizationResult {
         withDependencies {
             $0.featureFlagProvider = .constant(flags: .allEnabled)
-            $0.credentialsProvider = .constant(credentials: .plan(plan))
+            $0.credentialsProvider = .constant(credentials: .tier(tier))
         } operation: {
             let authorizer = LiveFeatureAuthorizerProvider()
                 .authorizer(for: SafeModeFeature.self)

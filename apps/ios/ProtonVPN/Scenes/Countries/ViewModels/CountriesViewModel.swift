@@ -94,7 +94,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         }
     }
     
-    private let serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: ServerStorageConcrete())
+    private let serverManager = ServerManagerImplementation.instance(forTier: .paidTier, serverStorage: ServerStorageConcrete())
     private var userTier: Int = 0
     private var state: ModelState = .standard([])
     
@@ -106,8 +106,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
         return state.serverType == .secureCore
     }
 
-    var accountPlan: AccountPlan {
-        return (try? keychain.fetchCached().accountPlan) ?? .unknown
+    var maxTier: Int {
+        return (try? keychain.fetchCached().maxTier) ?? .freeTier
     }
 
     public typealias Factory = AppStateManagerFactory
@@ -262,12 +262,12 @@ class CountriesViewModel: SecureCoreToggleHandler {
     private func setTier() {
         do {
             if (try keychain.fetchCached()).isDelinquent {
-                userTier = CoreAppConstants.VpnTiers.free
+                userTier = .freeTier
                 return
             }
             userTier = try vpnGateway.userTier()
         } catch {
-            userTier = CoreAppConstants.VpnTiers.free
+            userTier = .freeTier
         }
     }
 

@@ -99,7 +99,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
         let serverID = activeConnection.serverIp.id
 
         // This doesn't need to be a strict check, it's just to reduce load on the API
-        let isFree = (try? vpnKeychain.fetchCached().isFreeTier) ?? false
+        let isFree = (try? vpnKeychain.fetchCached().maxTier.isFreeTier) ?? false
 
         vpnApiService.serverState(serverId: serverID) { result in
             switch result {

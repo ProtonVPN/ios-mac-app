@@ -35,11 +35,11 @@ public final class NetShieldPropertyProviderMock: NetShieldPropertyProvider {
 
     public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
         // Turn NetShield off on downgrade to free plan
-        if tier <= CoreAppConstants.VpnTiers.free {
+        if tier.isFreeTier {
             netShieldType = .off
         }
         // Switch NetShield to level 1 on any upgrade from free plan
-        if tier > oldTier && oldTier <= CoreAppConstants.VpnTiers.free {
+        if tier > oldTier && oldTier.isFreeTier {
             netShieldType = .level1
         }
     }

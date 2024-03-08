@@ -29,15 +29,15 @@ extension VPNAccelerator: PaidAppFeature {
 
     public static func minTier(featureFlags: FeatureFlags) -> Int {
         if featureFlags.showNewFreePlan {
-            return CoreAppConstants.VpnTiers.basic
+            return .paidTier
         }
-        return CoreAppConstants.VpnTiers.free
+        return .freeTier
     }
 }
 
 extension VPNAccelerator: ModularAppFeature, DefaultableFeature, StorableFeature {
     public static func defaultValue(
-        onPlan plan: AccountPlan,
+        onPlan plan: String,
         userTier: Int,
         featureFlags: FeatureFlags
     ) -> VPNAccelerator {
@@ -47,7 +47,7 @@ extension VPNAccelerator: ModularAppFeature, DefaultableFeature, StorableFeature
     public static let storageKey: String = "VpnAcceleratorEnabled"
     public static let notificationName: Notification.Name? = Notification.Name("ch.protonvpn.feature.vpnaccelerator.changed")
 
-    public func canUse(onPlan plan: AccountPlan, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    public func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         switch self {
         case .off:
             // This feature can only be turned off by paying users post-free rescope

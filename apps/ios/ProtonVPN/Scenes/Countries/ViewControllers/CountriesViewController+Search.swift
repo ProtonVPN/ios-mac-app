@@ -18,6 +18,7 @@
 
 import Foundation
 import Search
+import LegacyCommon
 
 extension CountriesViewController: SearchCoordinatorDelegate {
     func userDidRequestPlanPurchase() {
@@ -51,11 +52,9 @@ extension CountriesViewController: SearchCoordinatorDelegate {
             return .secureCore
         }
 
-        switch viewModel.accountPlan {
-        case .free, .trial, .basic, .unknown:
+        if viewModel.maxTier.isFreeTier {
             return .standard(.free)
-        case .plus, .vpnPlus, .family, .bundlePro, .enterprise2022, .visionary, .unlimited, .visionary2022, .vpnpro2023, .vpnbiz2023, .vpnpass2023:
-            return .standard(.plus)
         }
+        return .standard(.plus)
     }
 }

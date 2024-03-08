@@ -321,7 +321,7 @@ class CreateOrEditProfileViewModel: NSObject {
     
     private func toggleState(completion: @escaping (Bool) -> Void) {
         if case .standard = state {
-            guard userTier >= CoreAppConstants.VpnTiers.plus else {
+            guard userTier.isPaidTier else {
                 alertService.push(alert: SecureCoreUpsellAlert())
                 return
             }
@@ -355,7 +355,7 @@ class CreateOrEditProfileViewModel: NSObject {
 
         let serversAll = countryGroup.servers
 
-        return CoreAppConstants.VpnTiers.allCases.compactMap { tier in
+        return [Int.paidTier, Int.freeTier].compactMap { tier in
             let servers = serversAll.filter { $0.tier == tier }
             if servers.isEmpty {
                 return nil

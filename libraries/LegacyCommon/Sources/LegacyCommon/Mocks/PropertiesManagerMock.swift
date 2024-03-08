@@ -73,12 +73,12 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var lastPreparedServer: ServerModel?
     public var lastConnectionRequest: ConnectionRequest?
 
-    var lastUserAccountPlan: AccountPlan?
-    public func getLastAccountPlan(for username: String) -> AccountPlan? {
+    var lastUserAccountPlan: String?
+    public func getLastAccountPlan(for username: String) -> String? {
         lastUserAccountPlan
     }
 
-    public func setLastAccountPlan(for username: String, plan: AccountPlan?) {
+    public func setLastAccountPlan(for username: String, plan: String?) {
         lastUserAccountPlan = plan
     }
 

@@ -74,7 +74,7 @@ extension UpsellEvent {
 extension UpsellEvent.Dimensions {
     public static let upsellEventDimensionsMock1: Self = .init(
         modalSource: .changeServer,
-        userPlan: .free,
+        userPlan: "free",
         vpnStatus: .off,
         userCountry: "ZZ",
         newFreePlanUi: true,
@@ -85,7 +85,7 @@ extension UpsellEvent.Dimensions {
 
     public static let upsellEventDimensionsMock2: Self = .init(
         modalSource: .changeServer,
-        userPlan: .free,
+        userPlan: "free",
         vpnStatus: .off,
         userCountry: "ZZ",
         newFreePlanUi: true,

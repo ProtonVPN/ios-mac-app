@@ -38,7 +38,7 @@ public struct OnboardingEvent: TelemetryEvent, Encodable {
             case userPlan = "user_plan"
         }
         public let userCountry: String
-        public let userPlan: AccountPlan
+        public let userPlan: String
     }
 
     public var values: Values { Values() }
