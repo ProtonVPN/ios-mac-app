@@ -5,7 +5,7 @@
     <key>welcome_screen_feature_devices</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Up to %#@VARIABLE@ at once</string>
+      <string>До %#@VARIABLE@ одновременно</string>
       <key>VARIABLE</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -13,13 +13,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 device</string>
+        <string>1 устройство</string>
         <key>few</key>
-        <string>%d устройств</string>
+        <string>%d устройства</string>
         <key>many</key>
-        <string>%d устройства</string>
+        <string>%d устройств</string>
         <key>other</key>
-        <string>%d устройства</string>
+        <string>%d устройств</string>
       </dict>
     </dict>
     <key>welcome_screen_feature_servers_countries</key>
@@ -48,13 +48,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d+ new server</string>
+        <string>%d+ новый сервер</string>
         <key>few</key>
         <string>%d+ новых сервера</string>
         <key>many</key>
-        <string>%d+ нового сервера</string>
+        <string>%d+ новых серверов</string>
         <key>other</key>
-        <string>%d+ нового сервера</string>
+        <string>%d+ новых серверов</string>
       </dict>
     </dict>
     <key>modals_upsell_all_countries_feature_multipleDevices</key>
@@ -64,17 +64,17 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Protect up to %d devices</string>
+        <string>Защитите до %d устройства</string>
         <key>few</key>
-        <string>Protect up to %d devices</string>
+        <string>Защитите до %d устройств</string>
         <key>many</key>
-        <string>Protect up to %d devices</string>
+        <string>Защитите до %d устройств</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Protect up to %d devices</string>
+        <string>Защитите до %d устройств</string>
       </dict>
     </dict>
     <key>modals_upsell_all_countries_title</key>

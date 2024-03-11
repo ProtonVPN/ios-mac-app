@@ -1724,13 +1724,13 @@
 "_alert_protocol_deprecated_title" = "Protokol Tidak Tersedia";
 
 /* Body of the deprecated protocol alert on MacOS. Shown when the user attempts to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
-"_alert_protocol_deprecated_body_macos" = "Profil ini menggunakan protokol yang lawas dan tidak didukung lagi. Klik \"Perbarui\" untuk ganti ke protokol Smart bawaan. Pelajari lebih lanjut";
+"_alert_protocol_deprecated_body_macos" = "Profil ini menggunakan protokol yang telah lawas dan tidak lagi didukung. Klik \"Perbarui\" untuk mengubah protokol ke protokol Smart bawaan. Pelajari lebih lanjut";
 
 /* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
 "_alert_protocol_deprecated_link_text" = "Pelajari lebih lanjut";
 
 /* Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
-"_alert_protocol_deprecated_body_ios" = "Profil ini menggunakan protokol yang sudah lawas dan tidak didukung lagi. Klik \"Perbarui\" untuk ganti ke protokol Smart bawaan.";
+"_alert_protocol_deprecated_body_ios" = "Profil ini menggunakan protokol yang telah lawas dan tidak lagi didukung. Klik \"Perbarui\" untuk mengubah protokol ke protokol Smart bawaan.";
 
 /* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
 "_alert_protocol_deprecated_enable_smart" = "Perbarui";
