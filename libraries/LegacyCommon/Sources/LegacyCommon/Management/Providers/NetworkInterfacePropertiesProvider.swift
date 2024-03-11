@@ -68,15 +68,18 @@ extension NetworkInterface {
     private static func ip(_ sockaddrPtr: UnsafeMutablePointer<sockaddr>!) -> IPAddress? {
         guard let sockaddrPtr else { return nil }
 
-        if let ipv4 = IPv4Address(sockaddrPtr.pointee) {
-            return ipv4
+        switch Int32(sockaddrPtr.pointee.sa_family) {
+        case AF_INET:
+            return sockaddrPtr.withMemoryRebound(to: sockaddr_in.self, capacity: 1) {
+                IPv4Address($0.pointee)
+            }
+        case AF_INET6:
+            return sockaddrPtr.withMemoryRebound(to: sockaddr_in6.self, capacity: 1) {
+                IPv6Address($0.pointee)
+            }
+        default:
+            return nil
         }
-
-        if let ipv6 = IPv6Address(sockaddrPtr.pointee) {
-            return ipv6
-        }
-
-        return nil
     }
 
     init(_ interface: ifaddrs) {
@@ -94,14 +97,10 @@ extension NetworkInterface {
 }
 
 extension IPv4Address {
-    init?(_ addr: sockaddr) {
-        var addr = addr
-        guard addr.sa_family == AF_INET else { return nil }
-
-        let data = withUnsafeBytes(of: &addr) { addrBytes in
-            let offset = MemoryLayout<sockaddr_in>.offset(of: \.sin_addr)!
-            let pointer = addrBytes.baseAddress?.advanced(by: offset)
-            return Data(bytes: pointer!, count: MemoryLayout<in_addr>.size)
+    init?(_ addr: sockaddr_in) {
+        assert(addr.sin_family == AF_INET)
+        let data = withUnsafePointer(to: addr.sin_addr) {
+            Data(bytes: $0, count: MemoryLayout<in_addr>.size)
         }
 
         self.init(data)
@@ -109,14 +108,10 @@ extension IPv4Address {
 }
 
 extension IPv6Address {
-    init?(_ addr: sockaddr) {
-        var addr = addr
-        guard addr.sa_family == AF_INET6 else { return nil }
-
-        let data = withUnsafeBytes(of: &addr) { addrBytes in
-            let offset = MemoryLayout<sockaddr_in6>.offset(of: \.sin6_addr)!
-            let pointer = addrBytes.baseAddress?.advanced(by: offset)
-            return Data(bytes: pointer!, count: MemoryLayout<in6_addr>.size)
+    init?(_ addr: sockaddr_in6) {
+        assert(addr.sin6_family == AF_INET6)
+        let data = withUnsafePointer(to: addr.sin6_addr) {
+            Data(bytes: $0, count: MemoryLayout<in6_addr>.size)
         }
 
         self.init(data)
