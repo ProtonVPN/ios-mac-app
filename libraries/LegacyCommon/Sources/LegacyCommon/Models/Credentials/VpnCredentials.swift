@@ -29,7 +29,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
     public static var supportsSecureCoding: Bool = true
 
     public let status: Int
-    public let planTitle: String
+    public let planTitle: String?
     public let planName: String
     public let maxConnect: Int
     public let maxTier: Int
@@ -46,7 +46,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
 
     override public var description: String {
         "Status: \(status)\n" +
-        "Plan title: \(planTitle)\n" +
+        "Plan title: \(planTitle ?? "<null>")\n" +
         "Plan name: \(planName)\n" +
         "Max connect: \(maxConnect)\n" +
         "Max tier: \(maxTier)\n" +
@@ -99,7 +99,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
     init(dic: JSONDictionary) throws {
         let vpnDic = try dic.jsonDictionaryOrThrow(key: "VPN")
 
-        planTitle = vpnDic.string("PlanTitle") ?? "Proton VPN Free"
+        planTitle = vpnDic.string("PlanTitle") ?? Localizable.freeTierPlanTitle
         planName = vpnDic.string("PlanName") ?? "free"
         status = try vpnDic.intOrThrow(key: "Status")
         maxConnect = try vpnDic.intOrThrow(key: "MaxConnect")
@@ -122,7 +122,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         ([
             "VPN": [
                 "PlanName": planName,
-                "PlanTitle": planTitle,
+                "PlanTitle": planTitle ?? Localizable.freeTierPlanTitle,
                 "Status": status,
                 "MaxConnect": maxConnect,
                 "MaxTier": maxTier,
@@ -165,13 +165,13 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
               let name = aDecoder.decodeObject(forKey: CoderKey.name) as? String,
               let password = aDecoder.decodeObject(forKey: CoderKey.password) as? String,
               let planName = aDecoder.decodeObject(forKey: CoderKey.planName) as? String,
-              let planTitle = aDecoder.decodeObject(forKey: CoderKey.planTitle) as? String,
               let subscribed = aDecoder.decodeObject(forKey: CoderKey.subscribed) as? Int else {
             return nil
         }
+        let planTitle = aDecoder.decodeObject(forKey: CoderKey.planTitle) as? String
         self.init(
             status: aDecoder.decodeInteger(forKey: CoderKey.status),
-            planTitle: planTitle,
+            planTitle: planTitle ?? Localizable.freeTierPlanTitle,
             maxConnect: aDecoder.decodeInteger(forKey: CoderKey.maxConnect),
             maxTier: aDecoder.decodeInteger(forKey: CoderKey.maxTier),
             services: aDecoder.decodeInteger(forKey: CoderKey.services),
@@ -227,7 +227,7 @@ extension CachedVpnCredentials {
         self.init(
             status: credentials.status,
             planName: credentials.planName, 
-            planTitle: credentials.planTitle,
+            planTitle: credentials.planTitle ?? Localizable.freeTierPlanTitle,
             maxConnect: credentials.maxConnect,
             maxTier: credentials.maxTier,
             services: credentials.services,

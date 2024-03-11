@@ -282,6 +282,9 @@
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Switch to OpenVPN and retry";
 
+/* Free tier plan title */
+"free_tier_plan_title" = "Proton VPN Free";
+
 // MARK: Notifications
 
 /* Disconnect notification */
