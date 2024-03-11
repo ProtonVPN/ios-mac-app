@@ -1621,6 +1621,8 @@ public enum Localizable {
   }
   /// Modal that lists countries in which servers are available to free users: Title
   public static var freeConnectionsModalTitle: String { return Localizable.tr("Localizable", "free_connections_modal_title", fallback: "Free connections") }
+  /// Free tier plan title
+  public static var freeTierPlanTitle: String { return Localizable.tr("Localizable", "free_tier_plan_title", fallback: "Proton VPN Free") }
   /// Configuring your VPN access
   public static var loginFetchVpnData: String { return Localizable.tr("Localizable", "login_fetch_vpn_data", fallback: "Configuring your VPN access") }
   /// Start using Proton VPN
