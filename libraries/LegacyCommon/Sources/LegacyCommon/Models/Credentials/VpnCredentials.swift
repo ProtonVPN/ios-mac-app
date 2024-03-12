@@ -29,7 +29,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
     public static var supportsSecureCoding: Bool = true
 
     public let status: Int
-    public let planTitle: String?
+    public let planTitle: String
     public let planName: String
     public let maxConnect: Int
     public let maxTier: Int
@@ -46,7 +46,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
 
     override public var description: String {
         "Status: \(status)\n" +
-        "Plan title: \(planTitle ?? "<null>")\n" +
+        "Plan title: \(planTitle)\n" +
         "Plan name: \(planName)\n" +
         "Max connect: \(maxConnect)\n" +
         "Max tier: \(maxTier)\n" +
@@ -59,6 +59,25 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         "Has Payment Method: \(hasPaymentMethod)\n" +
         "Subscribed: \(String(describing: subscribed))" +
         "BusinessEvents: \(businessEvents)"
+    }
+
+    required public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.status = try container.decode(Int.self, forKey: .status)
+        self.planTitle = (try? container.decodeIfPresent(String.self, forKey: .planTitle)) ?? Localizable.freeTierPlanTitle
+        self.planName = (try? container.decodeIfPresent(String.self, forKey: .planName)) ?? "free"
+        self.maxConnect = try container.decode(Int.self, forKey: .maxConnect)
+        self.maxTier = try container.decode(Int.self, forKey: .maxTier)
+        self.services = try container.decode(Int.self, forKey: .services)
+        self.groupId = try container.decode(String.self, forKey: .groupId)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.password = try container.decode(String.self, forKey: .password)
+        self.delinquent = try container.decode(Int.self, forKey: .delinquent)
+        self.credit = try container.decode(Int.self, forKey: .credit)
+        self.currency = try container.decode(String.self, forKey: .currency)
+        self.hasPaymentMethod = try container.decode(Bool.self, forKey: .hasPaymentMethod)
+        self.subscribed = try container.decodeIfPresent(Int.self, forKey: .subscribed)
+        self.businessEvents = try container.decode(Bool.self, forKey: .businessEvents)
     }
 
     public init(
@@ -122,7 +141,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         ([
             "VPN": [
                 "PlanName": planName,
-                "PlanTitle": planTitle ?? Localizable.freeTierPlanTitle,
+                "PlanTitle": planTitle,
                 "Status": status,
                 "MaxConnect": maxConnect,
                 "MaxTier": maxTier,
@@ -156,6 +175,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         static let credit = "credit"
         static let currency = "currency"
         static let hasPaymentMethod = "hasPaymentMethod"
+        static let accountPlan = "accountPlan"
         static let subscribed = "subscribed"
         static let businessEvents = "businessEvents"
     }
@@ -164,14 +184,12 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         guard let groupId = aDecoder.decodeObject(forKey: CoderKey.groupId) as? String,
               let name = aDecoder.decodeObject(forKey: CoderKey.name) as? String,
               let password = aDecoder.decodeObject(forKey: CoderKey.password) as? String,
-              let planName = aDecoder.decodeObject(forKey: CoderKey.planName) as? String,
               let subscribed = aDecoder.decodeObject(forKey: CoderKey.subscribed) as? Int else {
             return nil
         }
-        let planTitle = aDecoder.decodeObject(forKey: CoderKey.planTitle) as? String
         self.init(
             status: aDecoder.decodeInteger(forKey: CoderKey.status),
-            planTitle: planTitle ?? Localizable.freeTierPlanTitle,
+            planTitle: Localizable.freeTierPlanTitle,
             maxConnect: aDecoder.decodeInteger(forKey: CoderKey.maxConnect),
             maxTier: aDecoder.decodeInteger(forKey: CoderKey.maxTier),
             services: aDecoder.decodeInteger(forKey: CoderKey.services),
@@ -182,7 +200,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
             credit: aDecoder.decodeInteger(forKey: CoderKey.credit),
             currency: aDecoder.decodeObject(forKey: CoderKey.currency) as? String ?? "",
             hasPaymentMethod: aDecoder.decodeBool(forKey: CoderKey.hasPaymentMethod),
-            planName: planName,
+            planName: aDecoder.decodeObject(forKey: CoderKey.accountPlan) as? String ?? "free",
             subscribed: subscribed,
             businessEvents: aDecoder.decodeBool(forKey: CoderKey.businessEvents)
         )
@@ -227,7 +245,7 @@ extension CachedVpnCredentials {
         self.init(
             status: credentials.status,
             planName: credentials.planName, 
-            planTitle: credentials.planTitle ?? Localizable.freeTierPlanTitle,
+            planTitle: credentials.planTitle,
             maxConnect: credentials.maxConnect,
             maxTier: credentials.maxTier,
             services: credentials.services,
