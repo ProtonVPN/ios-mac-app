@@ -891,7 +891,9 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         }
 
-        container.appSessionRefreshTimer.start(now: true)
+        container.appSessionRefreshTimer.startTimers()
+        container.timerFactory.runRepeatingTimers()
+
         withDependencies {
             $0.authKeychain = MockAuthKeychain()
         } operation: {

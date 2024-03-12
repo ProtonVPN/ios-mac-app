@@ -389,7 +389,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     
     private func logOutCleanup() {
         let group = DispatchGroup()
-        refreshTimer.stop()
+        refreshTimer.stopTimers()
         loggedIn = false
 
         if let userId = authKeychain.userId {
@@ -434,7 +434,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             postNotification(name: sessionChanged, object: reason)
         }
         
-        refreshTimer.start(now: false)
+        refreshTimer.startTimers()
     }
 
     private func postNotification(name: Notification.Name, object: Any?) {

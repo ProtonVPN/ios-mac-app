@@ -147,7 +147,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             post(notification: SessionChanged(data: .established(gateway: self.factory.makeVpnGateway())))
         }
 
-        appSessionRefreshTimer.start(now: false)
+        appSessionRefreshTimer.startTimers()
         profileManager.refreshProfiles()
         await appCertificateRefreshManager.planNextRefresh()
     }
@@ -309,13 +309,12 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private func logoutRoutine(reason: String?) {
         sessionStatus = .notEstablished
         post(notification: SessionChanged(data: .lost(reason: reason)))
-        appSessionRefreshTimer.start(now: false)
         logOutCleanup()
     }
 
     private func logOutCleanup() {
         let group = DispatchGroup()
-        appSessionRefreshTimer.stop()
+        appSessionRefreshTimer.stopTimers()
         
         if let userId = authKeychain.userId {
             FeatureFlagsRepository.shared.resetFlags(for: userId)

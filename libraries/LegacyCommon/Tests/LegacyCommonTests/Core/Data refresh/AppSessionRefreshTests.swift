@@ -94,7 +94,7 @@ class AppSessionRefreshTimerTests: XCTestCase {
     func testRefreshTimer() { // swiftlint:disable:this function_body_length
         let expectations = (
             updateServers: (1...2).map { XCTestExpectation(description: "update server list #\($0)") },
-            updateCredentials: (1...2).map { XCTestExpectation(description: "update vpn credentials #\($0)") },
+            updateCredentials: XCTestExpectation(description: "update vpn credentials"),
             displayAlert: XCTestExpectation(description: "Alert displayed for old app version")
         )
         authKeychain.setMockUsername("user")
@@ -111,11 +111,7 @@ class AppSessionRefreshTimerTests: XCTestCase {
         }
 
         vpnKeychain.didStoreCredentials = { _ in
-            guard nCredUpdates < expectations.updateCredentials.count else {
-                XCTFail("Index out of range")
-                return
-            }
-            expectations.updateCredentials[nCredUpdates].fulfill()
+            expectations.updateCredentials.fulfill()
             nCredUpdates += 1
         }
 
@@ -127,12 +123,7 @@ class AppSessionRefreshTimerTests: XCTestCase {
                                                                            maxTier: .paidTier)
 
         appSessionRefresher.loggedIn = true
-        appSessionRefreshTimer.start(now: true) // should immediately proceed to refresh credentials
-
-        wait(for: [expectations.updateCredentials[0]], timeout: 10)
-        XCTAssertNotNil(vpnKeychain.credentials)
-        XCTAssertEqual(vpnKeychain.credentials?.description,
-                       networkingDelegate.apiCredentials?.description)
+        appSessionRefreshTimer.startTimers()
 
         networkingDelegate.apiServerLoads = [
             .init(serverId: testData.server1.id, load: 10, score: 1.2345, status: 0),
@@ -142,8 +133,7 @@ class AppSessionRefreshTimerTests: XCTestCase {
         networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(planName: "visionary",
                                                                            maxTier: .paidTier)
         timerFactory.runRepeatingTimers()
-        wait(for: [expectations.updateServers[0],
-                   expectations.updateCredentials[1]], timeout: 10)
+        wait(for: [expectations.updateServers[0], expectations.updateCredentials], timeout: 10)
         XCTAssertNotNil(vpnKeychain.credentials)
         XCTAssertEqual(vpnKeychain.credentials?.description,
                        networkingDelegate.apiCredentials?.description)
@@ -175,7 +165,7 @@ class AppSessionRefreshTimerTests: XCTestCase {
 
         XCTAssertEqual(alert.message, message, "Should have displayed alert returned from API")
 
-        appSessionRefreshTimer.stop()
+        appSessionRefreshTimer.stopTimers()
 
         for timer in timerFactory.repeatingTimers {
             XCTAssertFalse(timer.isValid, "Should have stopped all timers")
