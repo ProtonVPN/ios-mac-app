@@ -346,13 +346,6 @@ extension DependencyContainer: ProtonReachabilityCheckerFactory {
     }
 }
 
-// MARK: CouponViewModelFactory
-extension DependencyContainer: CouponViewModelFactory {
-    func makeCouponViewModel() -> CouponViewModel {
-        return CouponViewModel(paymentsApiService: makePaymentsApiService(), appSessionRefresher: appSessionManager)
-    }
-}
-
 // MARK: StatusMenuViewModelFactory
 extension DependencyContainer: StatusMenuViewModelFactory {
     func makeStatusMenuViewModel() -> StatusMenuViewModel {

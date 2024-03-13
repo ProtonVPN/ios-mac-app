@@ -468,8 +468,6 @@
 		F34AC17727F33E360007FF93 /* ProtonReachabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34AC17627F33E350007FF93 /* ProtonReachabilityChecker.swift */; };
 		F34AC17927F345BB0007FF93 /* NSProgressIndicator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34AC17827F345BB0007FF93 /* NSProgressIndicator+Extensions.swift */; };
 		F3747C0426D4E45100EF2F00 /* macOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C0326D4E45100EF2F00 /* macOSNetworkingDelegate.swift */; };
-		F397EA61280564980072D511 /* CouponViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F397EA60280564980072D511 /* CouponViewController.swift */; };
-		F397EA67280565E50072D511 /* CouponViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F397EA66280565E50072D511 /* CouponViewController.xib */; };
 		F3B3BEB7279EBD5200F85BDF /* UpsellGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B3BEB6279EBD5200F85BDF /* UpsellGradientView.swift */; };
 		F3F48B1D2806D76500E0B814 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F48B1C2806D76500E0B814 /* BannerView.swift */; };
 		FDF60D012BBC201E0EC1E1CE /* LogViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C16264DDB60F80353FA5CA /* LogViewHelper.swift */; };
@@ -1015,8 +1013,6 @@
 		F34AC17827F345BB0007FF93 /* NSProgressIndicator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSProgressIndicator+Extensions.swift"; path = "../../../macos/ProtonVPN/Extensions/NSProgressIndicator+Extensions.swift"; sourceTree = "<group>"; };
 		F3747C0326D4E45100EF2F00 /* macOSNetworkingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = macOSNetworkingDelegate.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/Services/macOSNetworkingDelegate.swift; sourceTree = "<group>"; };
 		F38BB451265C0D8F00329619 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../macos/Config.xcconfig; sourceTree = "<group>"; };
-		F397EA60280564980072D511 /* CouponViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CouponViewController.swift; path = ../../../../../macos/ProtonVPN/Scenes/Settings/ViewControllers/CouponViewController.swift; sourceTree = "<group>"; };
-		F397EA66280565E50072D511 /* CouponViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CouponViewController.xib; path = ../../../../../macos/ProtonVPN/Scenes/Settings/Views/CouponViewController.xib; sourceTree = "<group>"; };
 		F3B3BEB6279EBD5200F85BDF /* UpsellGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpsellGradientView.swift; sourceTree = "<group>"; };
 		F3F48B1C2806D76500E0B814 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BannerView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/Views/BannerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2022,7 +2018,6 @@
 				EE27DB461F47095300D2FF2B /* AccountViewController.swift */,
 				F315847427C7939400D1F6CC /* AdvancedSettingsViewController.swift */,
 				E1420A70209B56A600697461 /* ConnectionSettingsViewController.swift */,
-				F397EA60280564980072D511 /* CouponViewController.swift */,
 				EE98CFD41F14F7C1000D6688 /* GeneralSettingsViewController.swift */,
 				EE27DB3A1F4706E400D2FF2B /* SettingsContainerViewController.swift */,
 				E5F1112D27CE3A1D007DEC0D /* SettingsDropDownView.swift */,
@@ -2397,7 +2392,6 @@
 				EE27DB471F47095300D2FF2B /* Account.xib */,
 				F315847627C793BE00D1F6CC /* AdvancedSettings.xib */,
 				E1420A72209B57B100697461 /* ConnectionSettings.xib */,
-				F397EA66280565E50072D511 /* CouponViewController.xib */,
 				EE98CFD11F14E247000D6688 /* GeneralSettings.xib */,
 				EE27DB3B1F4706E400D2FF2B /* SettingsContainer.xib */,
 				EE27DB4D1F47187600D2FF2B /* SettingsTabBar.xib */,
@@ -3060,7 +3054,6 @@
 				E53D7457291925380006E499 /* FeatureRowView.xib in Resources */,
 				EEA556371F1F4E100061F43F /* ColorPicker.xib in Resources */,
 				4C7CAEC128006E5C0008778E /* LoadingAnimationFrames in Resources */,
-				F397EA67280565E50072D511 /* CouponViewController.xib in Resources */,
 				42BEF94926317670009180A7 /* FeaturesOverlayViewController.xib in Resources */,
 				EE24A3981F1BC7D000B70949 /* FooterItemView.xib in Resources */,
 				E156C19C20BDA5920054E935 /* StatusMenu.xib in Resources */,
@@ -3322,7 +3315,6 @@
 				4C54383327C3DC0600D7A88D /* ModelIDChecker.swift in Sources */,
 				EE8EF1ED1F1FB8800057CD94 /* HoverDetectionButton.swift in Sources */,
 				E1F59B5920E11B7600798435 /* StatusBarAppConnectButton.swift in Sources */,
-				F397EA61280564980072D511 /* CouponViewController.swift in Sources */,
 				F320E02D26F08D7A00336F7A /* WelcomeViewController.swift in Sources */,
 				E180D14A212497CC00F4D1C7 /* ClearCancellationButton.swift in Sources */,
 				E567FFAC2B9B3A2700ECD823 /* AppTheme.Style+Tier.swift in Sources */,

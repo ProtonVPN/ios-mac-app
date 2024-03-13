@@ -51,10 +51,10 @@ final class SettingsContainerViewController: NSViewController {
         fatalError("Unsupported initializer")
     }
     
-    required init(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, accountViewModel: AccountViewModel, couponViewModel: CouponViewModel) {
+    required init(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, accountViewModel: AccountViewModel) {
         self.viewModel = viewModel
         self.tabBarViewModel = tabBarViewModel
-        self.accountViewController = AccountViewController(accountViewModel: accountViewModel, couponViewModel: couponViewModel)
+        self.accountViewController = AccountViewController(accountViewModel: accountViewModel)
         super.init(nibName: NSNib.Name("SettingsContainer"), bundle: nil)
     }
     

@@ -54,7 +54,6 @@ final class SettingsViewModel {
     NATTypePropertyProviderFactory &
     SafeModePropertyProviderFactory &
     PaymentsApiServiceFactory &
-    CouponViewModelFactory &
     AuthKeychainHandleFactory &
     NetworkingFactory
 

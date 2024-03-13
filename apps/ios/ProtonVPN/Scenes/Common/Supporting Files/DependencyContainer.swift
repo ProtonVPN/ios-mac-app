@@ -279,10 +279,3 @@ extension DependencyContainer: ReviewFactory {
         return review
     }
 }
-
-// MARK: CouponViewModelFactory
-extension DependencyContainer: CouponViewModelFactory {
-    func makeCouponViewModel() -> CouponViewModel {
-        return CouponViewModel(paymentsApiService: makePaymentsApiService(), appSessionRefresher: appSessionManager)
-    }
-}

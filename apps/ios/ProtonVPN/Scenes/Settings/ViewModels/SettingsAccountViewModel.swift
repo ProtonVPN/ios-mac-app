@@ -37,7 +37,6 @@ final class SettingsAccountViewModel {
                         PlanServiceFactory &
                         PropertiesManagerFactory &
                         VpnKeychainFactory &
-                        CouponViewModelFactory &
                         AuthKeychainHandleFactory
 
     private var factory: Factory
@@ -104,13 +103,7 @@ final class SettingsAccountViewModel {
                 self?.manageSubscriptionAction()
             }))
         }
-        
-        if propertiesManager.featureFlags.promoCode, let credentials = try? vpnKeychain.fetchCached(), credentials.canUsePromoCode {
-            cells.append(TableViewCellModel.button(title: Localizable.useCoupon, accessibilityIdentifier: "Use coupon", color: .textAccent(), handler: { [weak self] in
-                self?.pushCouponViewController()
-            }))
-        }
-        
+
         return TableViewSection(title: Localizable.account.uppercased(), cells: cells)
     }
     
@@ -149,10 +142,6 @@ final class SettingsAccountViewModel {
     /// Open screen with info about current plan
     private func manageSubscriptionAction() {
         planService.presentSubscriptionManagement()
-    }
-    
-    private func pushCouponViewController() {
-        pushHandler?(CouponViewController(viewModel: factory.makeCouponViewModel()))
     }
     
     private func deleteAccount() {

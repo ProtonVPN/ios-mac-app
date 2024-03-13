@@ -127,7 +127,7 @@ fileprivate class WindowServiceMock: WindowService {
     func showSidebar(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol) {}
     func openAbout(factory: AboutViewController.Factory) {}
     func openAcknowledgements() {}
-    func openSettingsWindow(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, accountViewModel: AccountViewModel, couponViewModel: CouponViewModel) { }
+    func openSettingsWindow(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, accountViewModel: AccountViewModel) { }
     func openProfilesWindow(viewModel: ProfilesContainerViewModel) {}
     func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService) {}
     func openWhatsNewWindow() { }
