@@ -362,7 +362,7 @@ extension AppDelegate {
                         try await FeatureFlagsRepository.shared.fetchFlags()
                         self.registerForPushNotificationsIfNeeded()
                     } catch {
-                        log.error("Could not retrieve feature flags", category: .core, event: .error)
+                        log.error("Could not retrieve feature flags: \(error)", category: .core, event: .error)
                     }
                 }
             case .failure(let error):
@@ -376,7 +376,6 @@ extension AppDelegate {
 
     private func registerForPushNotificationsIfNeeded() {
         if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.pushNotifications) {
-            pushNotificationService.setup()
 
             if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.accountRecovery) {
                 let vpnHandler = AccountRecoveryHandler()
