@@ -26,7 +26,7 @@ let package = Package(
         // 3rd party
         .package(
           url: "https://github.com/pointfreeco/swift-dependencies.git",
-          from: "1.0.0"
+          from: "1.2.1"
         ),
     ],
     targets: [

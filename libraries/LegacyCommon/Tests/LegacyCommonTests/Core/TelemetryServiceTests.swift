@@ -109,7 +109,7 @@ class TelemetryServiceTests: XCTestCase {
     override func invokeTest() {
         withDependencies { values in
             values.date = .constant(.now)
-            values.dataManager = .mock(data: nil)
+            values[DataManager.self] = .mock(data: nil)
         } operation: {
             super.invokeTest()
         }

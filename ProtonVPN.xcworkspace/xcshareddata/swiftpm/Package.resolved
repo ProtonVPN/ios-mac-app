@@ -258,8 +258,8 @@
         "repositoryURL": "https://github.com/pointfreeco/swift-dependencies.git",
         "state": {
           "branch": null,
-          "revision": "4e1eb6e28afe723286d8cc60611237ffbddba7c5",
-          "version": "1.0.0"
+          "revision": "09e49dd46932adfe80ce672b4b3772d79ee6c21a",
+          "version": "1.2.1"
         }
       },
       {

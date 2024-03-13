@@ -25,7 +25,7 @@ actor TelemetryBuffer {
         static let maxStorageDuration: TimeInterval = .days(7)
         static let measurementGroup: String = "vpn.any.connection"
     }
-    @Dependency(\.dataManager) var dataManager
+    @Dependency(DataManager.self) var dataManager
     @Dependency(\.date) var date
 
     var events: [BufferedEvent] = []

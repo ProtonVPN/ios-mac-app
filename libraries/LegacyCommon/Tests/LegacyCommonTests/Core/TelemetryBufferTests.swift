@@ -53,7 +53,7 @@ class TelemetryBufferTests: XCTestCase {
     // When initialized, buffer is loaded with events from storage
     func testBufferLoadsEventsFromMemory() async {
         await withDependencies {
-            $0.dataManager = .mock(data: TelemetryBuffer.BufferedEvent.mockBufferedEvents)
+            $0[DataManager.self] = .mock(data: TelemetryBuffer.BufferedEvent.mockBufferedEvents)
             $0.date = .constant(Date())
         } operation: {
             let buffer = await TelemetryBuffer(retrievingFromStorage: true, bufferType: .telemetryEvents)
@@ -65,7 +65,7 @@ class TelemetryBufferTests: XCTestCase {
     // When initialized, buffer is not loaded with events from storage
     func testBufferDoesntLoadEventsFromMemory() async {
         await withDependencies {
-            $0.dataManager = .mock(data: TelemetryBuffer.BufferedEvent.mockBufferedEvents)
+            $0[DataManager.self] = .mock(data: TelemetryBuffer.BufferedEvent.mockBufferedEvents)
             $0.date = .constant(Date())
         } operation: {
             let buffer = await TelemetryBuffer(retrievingFromStorage: false, bufferType: .telemetryEvents)
@@ -77,7 +77,7 @@ class TelemetryBufferTests: XCTestCase {
     // When loading from storage, remove events older then a week (dependency is Date())
     func testBufferRemovesOldEventsWhenLoadingFromMemory() async {
         await withDependencies {
-            $0.dataManager = .mock(data: TelemetryBuffer.BufferedEvent.mockBufferedEvents)
+            $0[DataManager.self] = .mock(data: TelemetryBuffer.BufferedEvent.mockBufferedEvents)
             $0.date = .constant(Date()
                 .addingTimeInterval(TelemetryBuffer.Constants.maxStorageDuration)
                 .addingTimeInterval(1))
@@ -92,7 +92,7 @@ class TelemetryBufferTests: XCTestCase {
     func testBufferSavesEvents() async throws {
         let dataManager: DataManager = .mock(data: nil)
         try await withDependencies {
-            $0.dataManager = dataManager
+            $0[DataManager.self] = dataManager
             $0.date = .constant(Date())
         } operation: {
             let buffer = await TelemetryBuffer(retrievingFromStorage: true, bufferType: .telemetryEvents)
@@ -109,7 +109,7 @@ class TelemetryBufferTests: XCTestCase {
     func testBufferRemovesGivenEvent() async throws {
         let dataManager: DataManager = .mock(data: nil)
         try await withDependencies {
-            $0.dataManager = dataManager
+            $0[DataManager.self] = dataManager
             $0.date = .constant(Date())
         } operation: {
             let buffer = await TelemetryBuffer(retrievingFromStorage: true, bufferType: .telemetryEvents)
@@ -133,7 +133,7 @@ class TelemetryBufferTests: XCTestCase {
         let data = try! JSONEncoder().encode(mock)
 
         await withDependencies {
-            $0.dataManager = .mock(data: data)
+            $0[DataManager.self] = .mock(data: data)
             $0.date = .constant(Date())
         } operation: {
             let buffer = await TelemetryBuffer(retrievingFromStorage: true, bufferType: .telemetryEvents)
@@ -149,7 +149,7 @@ class TelemetryBufferTests: XCTestCase {
         }
         let data = try! JSONEncoder().encode(mock)
         try await withDependencies {
-            $0.dataManager = .mock(data: data)
+            $0[DataManager.self] = .mock(data: data)
             $0.date = .constant(Date())
         } operation: {
             let buffer = await TelemetryBuffer(retrievingFromStorage: true, bufferType: .telemetryEvents)

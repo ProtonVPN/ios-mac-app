@@ -53,7 +53,7 @@ let package = Package(
         .github("kishikawakatsumi", repo: "KeychainAccess", exact: "4.2.2"),
         .github("pointfreeco", repo: "swift-clocks", .upToNextMajor(from: "1.0.0")),
         .github("pointfreeco", repo: "swift-composable-architecture", .upToNextMajor(from: "1.0.0")),
-        .github("pointfreeco", repo: "swift-dependencies", .upToNextMajor(from: "1.0.0")),
+        .github("pointfreeco", repo: "swift-dependencies", .upToNextMajor(from: "1.2.1")),
         .github("SDWebImage", repo: "SDWebImage", .upTo("5.16.0")),
         .github("ProtonMail", repo: "TrustKit", revision: "d107d7cc825f38ae2d6dc7c54af71d58145c3506"),
         .github("almazrafi", repo: "DictionaryCoder", exact: "1.1.0"),

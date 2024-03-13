@@ -33,7 +33,7 @@ class PropertiesManagerTests: XCTestCase {
     override func invokeTest() {
         withDependencies { values in
             values.storage = MemoryStorage()
-            values.dataManager = .mock(data: nil) // stores telemetry in buffer, not relevant to telemetry tests here
+            values[DataManager.self] = .mock(data: nil) // stores telemetry in buffer, not relevant to telemetry tests here
             let keychain = MockAuthKeychain()
             keychain.setMockUsername("user")
             values.authKeychain = keychain
