@@ -32,6 +32,10 @@ let package = Package(
                 .product(name: "ProtonCoreUtilities", package: "protoncore"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
             ]
-        )
+        ),
+        .testTarget(
+            name: "DomainTests",
+            dependencies: ["Domain"]
+        ),
     ]
 )

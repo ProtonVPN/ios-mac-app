@@ -48,6 +48,7 @@ public enum ConnectionProtocol: Equatable, Hashable, CaseIterable, Sendable, Cod
         }
     }
 
+    /// Returns concrete VPN protocol or nil if Smart is selected
     public var vpnProtocol: VpnProtocol? {
         guard case let .vpnProtocol(vpnProtocol) = self else {
             return nil

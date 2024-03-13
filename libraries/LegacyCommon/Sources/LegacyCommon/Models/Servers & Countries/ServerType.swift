@@ -106,7 +106,7 @@ public enum ServerType: Int, Codable, CustomStringConvertible {
 }
 
 // Map to new domain model
-extension ServerType {
+public extension ServerType {
 
     var domainModel: ServerFeature {
         switch self {

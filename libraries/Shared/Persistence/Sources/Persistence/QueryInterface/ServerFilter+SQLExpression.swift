@@ -31,8 +31,13 @@ extension VPNServerFilter {
         case .logicalID(let id):
             return logical[Logical.Columns.id] == id
 
-        case .maximumTier(let tier):
-            return logical[Logical.Columns.tier] <= tier
+        case .tier(let tierFilter):
+            switch tierFilter {
+            case .max(let tier):
+                return logical[Logical.Columns.tier] <= tier
+            case .exact(let tier):
+                return logical[Logical.Columns.tier] == tier
+            }
 
         case .features(let features):
             let supportedFeatures = logical[Logical.Columns.feature]

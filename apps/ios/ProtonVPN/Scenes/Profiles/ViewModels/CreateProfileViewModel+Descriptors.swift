@@ -25,6 +25,7 @@ import LegacyCommon
 import UIKit
 import ProtonCoreUIFoundations
 import Strings
+import Domain
 
 extension CreateOrEditProfileViewModel {
     private var fontSize: CGFloat {
@@ -34,21 +35,23 @@ extension CreateOrEditProfileViewModel {
         return 4
     }
 
-    internal func countryDescriptor(for group: ServerGroup) -> NSAttributedString {
+    // MARK: - Country
+
+    internal func countryDescriptor(for group: ServerGroupInfo) -> NSAttributedString {
         let imageAttributedString: NSAttributedString
         let countryString: String
 
         switch group.kind {
-        case .country(let country):
-            imageAttributedString = embededImageIcon(image: UIImage.flag(countryCode: country.countryCode))
-            countryString = "  " + country.countryName
+        case .country(let countryCode):
+            imageAttributedString = embededImageIcon(image: UIImage.flag(countryCode: countryCode))
+            countryString = "  " + (LocalizationUtility.default.countryName(forCode: countryCode) ?? "")
         case .gateway(let name):
             imageAttributedString = embededImageIcon(image: IconProvider.servers)
             countryString = "  " + name
         }
 
         let nameAttributedString: NSAttributedString
-        if group.kind.lowestTier <= userTier {
+        if group.minTier <= userTier {
             nameAttributedString = NSMutableAttributedString(
                 string: countryString,
                 attributes: [
@@ -69,54 +72,84 @@ extension CreateOrEditProfileViewModel {
         }
         return NSAttributedString.concatenate(imageAttributedString, nameAttributedString)
     }
-    
+
+    // MARK: - Server
+
     internal func serverDescriptor(for server: ServerModel) -> NSAttributedString {
-        if server.isSecureCore {
-            let via = NSMutableAttributedString(
-                string: "\(Localizable.via)  ",
-                attributes: [
-                    .font: UIFont.systemFont(ofSize: fontSize),
-                    .baselineOffset: baselineOffset,
-                    .foregroundColor: UIColor.normalTextColor()
-                ]
+        return server.isSecureCore
+            ? serverDescriptorForSecureCore(
+                entryCountry: server.entryCountry,
+                entryCountryCode: server.entryCountryCode
             )
-            let entryCountryFlag = embededImageIcon(image: UIImage.flag(countryCode: server.entryCountryCode))
-            let entryCountry = NSMutableAttributedString(
-                string: "  " + server.entryCountry,
-                attributes: [
-                    .font: UIFont.systemFont(ofSize: fontSize),
-                    .baselineOffset: baselineOffset,
-                    .foregroundColor: UIColor.normalTextColor()
-                ]
+            : serverDescriptorForStandard(
+                serverName: server.name,
+                countryCode: server.countryCode,
+                serverTier: server.tier
             )
-            return NSAttributedString.concatenate(via, entryCountryFlag, entryCountry)
-        } else {
-            let countryFlag = embededImageIcon(image: UIImage.flag(countryCode: server.countryCode))
-            let serverString = "  " + server.name
-            let serverDescriptor: NSAttributedString
-            if server.tier <= userTier {
-                serverDescriptor = NSMutableAttributedString(
-                    string: serverString,
-                    attributes: [
-                        .font: UIFont.systemFont(ofSize: fontSize),
-                        .baselineOffset: baselineOffset,
-                        .foregroundColor: UIColor.normalTextColor()
-                    ]
-                )
-            } else {
-                serverDescriptor = NSMutableAttributedString(
-                    string: serverString + " (\(Localizable.upgradeRequired))",
-                    attributes: [
-                        .font: UIFont.systemFont(ofSize: fontSize),
-                        .baselineOffset: baselineOffset,
-                        .foregroundColor: UIColor.weakTextColor()
-                    ]
-                )
-            }
-            return NSAttributedString.concatenate(countryFlag, serverDescriptor)
-        }
     }
-    
+
+    internal func serverDescriptor(for server: ServerInfo) -> NSAttributedString {
+        return server.logical.feature.contains(.secureCore)
+            ? serverDescriptorForSecureCore(
+                entryCountry: server.logical.entryCountry,
+                entryCountryCode: server.logical.entryCountryCode
+            )
+            : serverDescriptorForStandard(
+                serverName: server.logical.name,
+                countryCode: server.logical.exitCountryCode,
+                serverTier: server.logical.tier
+            )
+    }
+
+    private func serverDescriptorForSecureCore(entryCountry: String, entryCountryCode: String) -> NSAttributedString {
+        let via = NSMutableAttributedString(
+            string: "\(Localizable.via)  ",
+            attributes: [
+                .font: UIFont.systemFont(ofSize: fontSize),
+                .baselineOffset: baselineOffset,
+                .foregroundColor: UIColor.normalTextColor()
+            ]
+        )
+        let entryCountryFlag = embededImageIcon(image: UIImage.flag(countryCode: entryCountryCode))
+        let entryCountry = NSMutableAttributedString(
+            string: "  " + entryCountry,
+            attributes: [
+                .font: UIFont.systemFont(ofSize: fontSize),
+                .baselineOffset: baselineOffset,
+                .foregroundColor: UIColor.normalTextColor()
+            ]
+        )
+        return NSAttributedString.concatenate(via, entryCountryFlag, entryCountry)
+    }
+
+    private func serverDescriptorForStandard(serverName: String, countryCode: String, serverTier: Int) -> NSAttributedString {
+        let countryFlag = embededImageIcon(image: UIImage.flag(countryCode: countryCode))
+        let serverString = "  " + serverName
+        let serverDescriptor: NSAttributedString
+        if serverTier <= userTier {
+            serverDescriptor = NSMutableAttributedString(
+                string: serverString,
+                attributes: [
+                    .font: UIFont.systemFont(ofSize: fontSize),
+                    .baselineOffset: baselineOffset,
+                    .foregroundColor: UIColor.normalTextColor()
+                ]
+            )
+        } else {
+            serverDescriptor = NSMutableAttributedString(
+                string: serverString + " (\(Localizable.upgradeRequired))",
+                attributes: [
+                    .font: UIFont.systemFont(ofSize: fontSize),
+                    .baselineOffset: baselineOffset,
+                    .foregroundColor: UIColor.weakTextColor()
+                ]
+            )
+        }
+        return NSAttributedString.concatenate(countryFlag, serverDescriptor)
+    }
+
+    // MARK: - Pre-set
+
     internal func defaultServerDescriptor(forIndex index: Int) -> NSAttributedString {
         let image: UIImage
         let name: String
@@ -142,6 +175,8 @@ extension CreateOrEditProfileViewModel {
 
         return nameAttributedString
     }
+
+    // MARK: - Icon
     
     private func embededImageIcon(image: UIImage?) -> NSAttributedString {
         if let image = image {

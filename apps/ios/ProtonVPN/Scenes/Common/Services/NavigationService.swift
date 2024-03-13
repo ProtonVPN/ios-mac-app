@@ -297,16 +297,12 @@ extension NavigationService: ProfileService {
             return nil
         }
 
-        let serverManager = ServerManagerImplementation.instance(forTier: .paidTier,
-                                                                 serverStorage: ServerStorageConcrete())
-
         createProfileViewController.viewModel = CreateOrEditProfileViewModel(username: username,
                                                                              for: profile,
                                                                              profileService: self,
                                                                              protocolSelectionService: self,
                                                                              alertService: alertService,
                                                                              vpnKeychain: vpnKeychain,
-                                                                             serverManager: serverManager,
                                                                              appStateManager: appStateManager,
                                                                              vpnGateway: vpnGateway,
                                                                              profileManager: profileManager,

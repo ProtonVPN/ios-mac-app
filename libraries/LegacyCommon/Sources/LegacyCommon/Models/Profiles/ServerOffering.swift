@@ -104,26 +104,6 @@ public enum ServerOffering: Equatable, Codable {
     public func encode(with aCoder: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
-
-    public func supports(connectionProtocol: ConnectionProtocol,
-                         withCountryGroup grouping: ServerGroup?,
-                         smartProtocolConfig: SmartProtocolConfig) -> Bool {
-        switch self {
-        case .fastest(let countryCode), .random(let countryCode):
-            guard let grouping else {
-                return true
-            }
-            assert(grouping.serverOfferingId == countryCode, "Mismatched grouping while checking server protocol support (\(grouping.kind))")
-            return grouping.servers.contains {
-                $0.supports(connectionProtocol: connectionProtocol,
-                            smartProtocolConfig: smartProtocolConfig)
-            }
-
-        case .custom(let wrapper):
-            return wrapper.server.supports(connectionProtocol: connectionProtocol,
-                                           smartProtocolConfig: smartProtocolConfig)
-        }
-    }
     
     // MARK: - Static functions
     public static func == (lhs: ServerOffering, rhs: ServerOffering) -> Bool {

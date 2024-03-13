@@ -26,8 +26,8 @@ public enum VPNServerFilter {
     /// Filter by logical ID
     case logicalID(String)
 
-    /// Limits results to servers with a tier equal to or lower than this value
-    case maximumTier(Int)
+    /// Filter results by servers tier
+    case tier(ServerTierFilter)
 
     case features(ServerFeatureFilter)
 
@@ -86,10 +86,32 @@ public enum VPNServerFilter {
         /// Matches any gateway server, not constrained by gateway name
         public static var gateway: Self { .gateway(name: nil) }
     }
+
+    public enum ServerTierFilter {
+
+        /// Only servers with this exact tier value
+        case exact(tier: Int)
+
+        /// Servers with tier equal to or lower than given value
+        case max(tier: Int)
+    }
 }
 
 public enum VPNServerOrder {
     case random
     case fastest
     case nameAscending
+}
+
+extension ServerGroupInfo.Kind {
+
+    /// Convert Kind of server group into a filter for repository
+    public var serverTypeFilter: VPNServerFilter.ServerTypeFilter {
+        switch self {
+        case .country(let code):
+            return .standard(country: code)
+        case .gateway(let name):
+            return .gateway(name: name)
+        }
+    }
 }
