@@ -38,7 +38,7 @@ public struct ServerRepository: DependencyKey {
     private var upsertLoads: ([ContinuousServerProperties]) throws -> Void
 
     /// For UI - logicals grouped and annotated with aggregate logical info
-    private var groups: ([VPNServerFilter]) throws -> [ServerGroupInfo]
+    private var groups: ([VPNServerFilter], VPNServerGroupOrder) throws -> [ServerGroupInfo]
     /// For UI - logical annotated with aggregate server info
     private var servers: ([VPNServerFilter], VPNServerOrder) throws -> [Domain.ServerInfo]
     /// Connectable, includes logical + server, less suitable for UI
@@ -54,7 +54,7 @@ public struct ServerRepository: DependencyKey {
         servers: @escaping ([VPNServerFilter], VPNServerOrder) throws -> [Domain.ServerInfo] = unimplemented(placeholder: []),
         deleteServers: @escaping (Int, Set<String>) throws -> Int = unimplemented(placeholder: 0),
         upsertLoads: @escaping ([ContinuousServerProperties]) throws -> Void = unimplemented(),
-        groups: @escaping ([VPNServerFilter]) throws -> [ServerGroupInfo] = unimplemented(placeholder: [])
+        groups: @escaping ([VPNServerFilter], VPNServerGroupOrder) throws -> [ServerGroupInfo] = unimplemented(placeholder: [])
     ) {
         self.serverCount = serverCount
         self.upsertServers = upsertServers
@@ -86,8 +86,11 @@ extension ServerRepository {
         try upsertLoads(loads)
     }
 
-    public func getGroups(filteredBy filters: [VPNServerFilter]) throws -> [ServerGroupInfo] {
-        try groups(filters)
+    public func getGroups(
+        filteredBy filters: [VPNServerFilter],
+        orderedBy order: VPNServerGroupOrder = .localizedCountryNameAscending
+    ) throws -> [ServerGroupInfo] {
+        try groups(filters, order)
     }
 
     public func getFirstServer(

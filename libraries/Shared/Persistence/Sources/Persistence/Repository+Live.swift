@@ -102,9 +102,9 @@ extension ServerRepository {
                         .forEach { try $0.databaseRecord.insert(db, onConflict: .replace) }
                 }
             },
-            groups: { filters in
+            groups: { filters, order in
                 try database.writer().read { db in
-                    let request = GroupInfoResult.request(filters: filters)
+                    let request = GroupInfoResult.request(filters: filters, groupOrder: order)
 
                     return try GroupInfoResult.fetchAll(db, request)
                         .map { $0.domainModel }

@@ -364,28 +364,19 @@ final class StatusMenuViewModel {
         // Filter out gateways, because we don't have "Connect to fastest server" for gateways
         let isCountry = VPNServerFilter.kind(.standard)
         do {
-            standardCountries = try repository.getGroups(filteredBy: [.features(.standard), isCountry])
-            secureCoreCountries = try repository.getGroups(filteredBy: [.features(.secureCore), isCountry])
+            standardCountries = try repository.getGroups(
+                filteredBy: [.features(.standard), isCountry],
+                orderedBy: .exitCountryCodeAscending
+            )
+            secureCoreCountries = try repository.getGroups(
+                filteredBy: [.features(.secureCore), isCountry],
+                orderedBy: .exitCountryCodeAscending
+            )
         } catch {
             log.error("Failed to fetch server groups", category: .persistence, metadata: ["error": "\(error)"])
         }
         let tier = (try? vpnKeychain.fetchCached().maxTier) ?? .freeTier
 
-        if tier.isFreeTier {
-            standardCountries = standardCountries?.sorted(by: { (countryGroup1, countryGroup2) -> Bool in
-                switch (countryGroup1.kind, countryGroup2.kind) {
-                case (.country(let countryCode1), .country(let countryCode2)):
-                    return countryCode1 < countryCode2
-                case (.gateway(let name1), .gateway(let name2)):
-                    return name1 < name2
-                case (.country, .gateway):
-                    return false
-                case (.gateway, .country):
-                    return true
-                }
-            })
-        }
-        
         contentChanged?()
     }
     
@@ -407,8 +398,8 @@ final class StatusMenuViewModel {
                                                    name: VpnGateway.connectionChanged, object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange),
                                                    name: profileManager!.contentChanged, object: nil)
-            //            NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange),
-            //                                                   name: serverManager!.contentChanged, object: nil)
+            // Refreshing views on server list updates is to be re-enabled in VPNAPPL-2075 along with serverManager removal
+            // NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange), name: serverManager!.contentChanged, object: nil)
         } catch {
             alertService.push(alert: CannotAccessVpnCredentialsAlert())
         }
@@ -420,9 +411,8 @@ final class StatusMenuViewModel {
         if let profileManager = profileManager {
             NotificationCenter.default.removeObserver(self, name: profileManager.contentChanged, object: nil)
         }
-        //        if let serverManager = serverManager {
-        //            NotificationCenter.default.removeObserver(self, name: serverManager.contentChanged, object: nil)
-        //        }
+        // Refreshing views on server list updates is to be re-enabled in VPNAPPL-2075 along with serverManager removal
+        // NotificationCenter.default.removeObserver(self, name: serverManager.contentChanged, object: nil)
 
         profileManager = nil
     }

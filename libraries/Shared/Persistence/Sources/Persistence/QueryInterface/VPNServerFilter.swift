@@ -123,3 +123,11 @@ extension ServerGroupInfo.Kind {
         }
     }
 }
+
+public enum VPNServerGroupOrder {
+    /// Sorted by gateways first, then by exit country code
+    case exitCountryCodeAscending
+
+    /// Sorted by gateways first, then by localized country name (from the exit country code), ascending
+    case localizedCountryNameAscending
+}

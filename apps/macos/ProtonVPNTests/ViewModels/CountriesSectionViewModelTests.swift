@@ -52,7 +52,7 @@ final class CountriesViewModelTests: XCTestCase {
                 servers: { _, _ in [] },
                 deleteServers: { _, _ in 0 },
                 upsertLoads: { _ in },
-                groups: { _ in self.serverGroups }
+                groups: { _, _ in self.serverGroups }
             )
         } operation: {
             operation()

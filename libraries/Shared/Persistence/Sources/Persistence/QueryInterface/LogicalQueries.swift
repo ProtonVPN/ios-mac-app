@@ -54,6 +54,21 @@ extension QueryInterfaceRequest {
             return order(logicalAlias[Logical.Columns.namePrefix].asc, logicalAlias[Logical.Columns.sequenceNumber].asc)
         }
     }
+
+    func ordering(by groupOrder: VPNServerGroupOrder, logicalAlias: TableAlias) -> Self {
+        switch groupOrder {
+        case .exitCountryCodeAscending:
+            return order(
+                logicalAlias[Logical.Columns.gatewayName].ascNullsLast,
+                logicalAlias[Logical.Columns.exitCountryCode].asc
+            )
+        case .localizedCountryNameAscending:
+            return order(
+                logicalAlias[Logical.Columns.gatewayName].ascNullsLast,
+                localizedCountryName(logicalAlias[Logical.Columns.exitCountryCode]).asc
+            )
+        }
+    }
 }
 
 // MARK: GroupInfoResult
@@ -127,7 +142,11 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
 }
 
 extension GroupInfoResult {
-    static func request(filters: [VPNServerFilter]) -> QueryInterfaceRequest<GroupInfoResult> {
+
+    static func request(
+        filters: [VPNServerFilter],
+        groupOrder: VPNServerGroupOrder
+    ) -> QueryInterfaceRequest<GroupInfoResult> {
         let logicals = TableAlias()
         let statuses = TableAlias()
         let overrides = TableAlias()
@@ -137,7 +156,7 @@ extension GroupInfoResult {
             .filterServers(filters, logicalAlias: logicals, overrideAlias: overrides)
             .annotatedWithAggregateData(logicalAlias: logicals, statusAlias: statuses, overrideAlias: overrides)
             .groupingByServerType(logicalAlias: logicals)
-            .order(logicals[Logical.Columns.gatewayName].ascNullsLast, localizedCountryName(logicals[Logical.Columns.exitCountryCode]))
+            .ordering(by: groupOrder, logicalAlias: logicals)
     }
 }
 

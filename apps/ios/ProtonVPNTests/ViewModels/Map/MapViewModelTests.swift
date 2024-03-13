@@ -50,8 +50,8 @@ class MapViewModelTests: XCTestCase {
     var appStateManager: AppStateManager!
     var repository: ServerRepository!
 
-    override func setUp() {
-        super.setUp()
+    override func setUpWithError() throws {
+        try super.setUpWithError()
 
         let serversFromFile = ServerStorageMock(fileName: "LiveServers", bundle: Bundle(for: type(of: self))).servers
         let serversToInsert = serversFromFile.values.map { VPNServer(legacyModel: $0) }
@@ -62,7 +62,7 @@ class MapViewModelTests: XCTestCase {
             .liveValue
         }
 
-        try! repository.upsert(servers: serversToInsert)
+        try repository.upsert(servers: serversToInsert)
 
         let vpnApiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation(), authKeychain: MockAuthKeychain())
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
