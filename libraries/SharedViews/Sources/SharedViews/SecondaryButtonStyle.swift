@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+#if !os(macOS)
 import SwiftUI
 import Theme
 
-#if canImport(UIKit)
 public struct SecondaryButtonStyle: ButtonStyle {
     public init() { }
 
@@ -28,7 +28,7 @@ public struct SecondaryButtonStyle: ButtonStyle {
             .label
             .foregroundColor(Color(.text, .interactive))
             .frame(maxWidth: .infinity, minHeight: .themeSpacing32)
-            .font(.body1())
+            .font(.body2())
             .padding(.vertical, .themeSpacing8)
     }
 }

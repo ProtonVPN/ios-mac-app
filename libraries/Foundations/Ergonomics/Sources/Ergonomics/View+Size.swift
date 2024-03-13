@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
+#if canImport(SwiftUI)
 import SwiftUI
 
 @available(iOS 13.0, macOS 10.15, *)
@@ -42,3 +42,4 @@ public extension View {
         modifier(SizeCalculator(size: size))
     }
 }
+#endif

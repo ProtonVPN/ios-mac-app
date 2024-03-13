@@ -35,6 +35,7 @@ public enum ModalType {
     case customization
     case profiles
     case cantSkip(before: Date, duration: TimeInterval, longSkip: Bool)
+    case subscription
 
     public func modalModel() -> ModalModel {
         ModalModel(
@@ -95,6 +96,8 @@ public enum ModalType {
             return Localizable.welcomeUpgradeTitleFallback
         case .welcomeToProton:
             return Localizable.welcomeToProtonTitle
+        case .subscription:
+            return Localizable.upsellPlansListTitle
         }
     }
 
@@ -138,6 +141,8 @@ public enum ModalType {
             return .init(text: Localizable.welcomeUpgradeSubtitleFallback, boldText: [])
         case .welcomeToProton:
             return .init(text: Localizable.welcomeToProtonSubtitle, boldText: [])
+        case .subscription:
+            return .init(text: Localizable.upsellPlansListSubtitle, boldText: [])
         }
     }
 
@@ -180,6 +185,8 @@ public enum ModalType {
             return []
         case .welcomeToProton:
             return [.banner]
+        case .subscription:
+            return []
         }
     }
 
@@ -222,6 +229,10 @@ public enum ModalType {
             Asset.welcomeFallback.swiftUIImage
         case .welcomeToProton:
             Asset.welcome.swiftUIImage
+        case .subscription:
+            Asset.welcomePlus.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
         }
     }
 

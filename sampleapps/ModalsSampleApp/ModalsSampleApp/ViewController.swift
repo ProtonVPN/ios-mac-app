@@ -37,7 +37,8 @@ class ViewController: UITableViewController {
         (.customization, "Customization"),
         (.profiles, "Profiles"),
         (.cantSkip(before: Date().addingTimeInterval(10), duration: 10, longSkip: false), "Server Roulette"),
-        (.cantSkip(before: Date().addingTimeInterval(15), duration: 15, longSkip: true), "Server Roulette (Too many skips)")]
+        (.cantSkip(before: Date().addingTimeInterval(15), duration: 15, longSkip: true), "Server Roulette (Too many skips)"),
+        (.subscription, title: "Subscription")]
     let upgrades: [(type: UserAccountUpdateViewModel, title: String)] = [
         (.subscriptionDowngradedReconnecting(numberOfCountries: 63,
                                              numberOfDevices: 5,

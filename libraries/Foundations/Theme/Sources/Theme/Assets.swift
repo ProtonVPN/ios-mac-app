@@ -29,6 +29,7 @@ public enum Asset {
   public static let offerBannerGradientRight = ColorAsset(name: "OfferBannerGradientRight")
   public static let upsellGradientBottom = ColorAsset(name: "UpsellGradientBottom")
   public static let upsellGradientTop = ColorAsset(name: "UpsellGradientTop")
+  public static let vpnGreen = ColorAsset(name: "VpnGreen")
   public enum Flags {
     public static let ad = ImageAsset(name: "Flags/AD")
     public static let ae = ImageAsset(name: "Flags/AE")

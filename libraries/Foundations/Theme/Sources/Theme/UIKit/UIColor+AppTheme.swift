@@ -97,6 +97,8 @@ private extension AppTheme.Style {
             return ColorProvider.TextAccent
         } else if contains(.success) {
             return ColorProvider.NotificationSuccess
+        } else if contains(.vpnGreen) {
+            return Asset.vpnGreen.color
         } else {
             return ColorProvider.TextNorm
         }

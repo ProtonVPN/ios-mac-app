@@ -1105,7 +1105,6 @@
 /* MacOS: Button in Upgrade screen */
 "_upgrade_my_plan" = "Upgrade My Plan";
 
-
 /* MacOS: \Trial about to expire\ screen title */
 "_free_trial_about_to_expire_title" = "Your free trial is about to expire!";
 
@@ -2250,6 +2249,23 @@
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "Your VPN activity is protected by Swiss privacy laws. We’ll never track you online or share your information with third parties.";
 
+/* Title of paid plans list. */
+"upsell_plans_list_title" = "Upgrade your privacy";
+
+/* Subtitle of paid plans list. */
+"upsell_plans_list_subtitle" = "Get advanced privacy features and higher speed with VPN Plus.";
+
+/* Header of paid plans list where there are more than 1 plan option to pick from. */
+"upsell_plans_list_section_header" = "Select your plan";
+
+/* Main Button of paid plans list allowing user to start payments process. */
+"upsell_plans_list_validate_button" = "Get VPN Plus";
+
+/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
+"upsell_plans_list_option_amountPerMonth" = " /month";
+
+/* Trailing text of the paid plan option amount indicating the amount per year. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
+"upsell_plans_list_option_amountPerYear" = " /year";
 
 // MARK: Onboarding
 

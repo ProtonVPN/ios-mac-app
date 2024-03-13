@@ -30,9 +30,11 @@ public struct ModalsFactory {
 
     // This method uses the new `ModalView` and eventually all upsell modals should be migrated to this one
     // For now, only the welcome(plus/unlimited/fallback) modals use it.
-    public func modalViewController(modalType: ModalType,
-                                    primaryAction: (() -> Void)? = nil,
-                                    dismissAction: (() -> Void)? = nil) -> UIViewController {
+    public func modalViewController(
+        modalType: ModalType,
+        primaryAction: (() -> Void)? = nil,
+        dismissAction: (() -> Void)? = nil
+    ) -> UIViewController {
         UIHostingController(rootView: ModalView(modalType: modalType, primaryAction: primaryAction, dismissAction: dismissAction))
     }
 
