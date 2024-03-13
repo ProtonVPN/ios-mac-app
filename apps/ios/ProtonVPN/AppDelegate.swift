@@ -33,7 +33,6 @@ import ProtonCoreAccountRecovery
 import ProtonCoreCryptoVPNPatchedGoImplementation
 import ProtonCoreEnvironment
 import ProtonCoreFeatureFlags
-import ProtonCoreFeatureSwitch
 import ProtonCoreLog
 import ProtonCoreNetworking
 import ProtonCoreObservability
@@ -358,8 +357,13 @@ extension AppDelegate {
                     FeatureFlagsRepository.shared.setUserId(authCredential.userID)
                 }
 
-                Task {
-                    try await FeatureFlagsRepository.shared.fetchFlags()
+                Task { [self] in
+                     do {
+                        try await FeatureFlagsRepository.shared.fetchFlags()
+                        self.registerForPushNotificationsIfNeeded()
+                    } catch {
+                        log.error("Could not retrieve feature flags", category: .core, event: .error)
+                    }
                 }
             case .failure(let error):
                 log.error("acquireSessionIfNeeded didn't succeed and therefore feature flags didn't get fetched", category: .api, event: .response, metadata: ["error": "\(error)"])
@@ -368,19 +372,24 @@ extension AppDelegate {
             }
         }
         ObservabilityEnv.current.setupWorld(requestPerformer: apiService)
+    }
 
-        // For now, the Push Notification part of Account Recovery is not ready, so we won't even be registering
-        if false && FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.accountRecovery) {
+    private func registerForPushNotificationsIfNeeded() {
+        if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.pushNotifications) {
             pushNotificationService.setup()
 
-            let vpnHandler = AccountRecoveryHandler()
-            vpnHandler.handler = { _ in
-                // for now, for all notification types, we take the same action
-                self.navigationService.presentAccountRecoveryViewController()
-                return .success(())
+            if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.accountRecovery) {
+                let vpnHandler = AccountRecoveryHandler()
+                vpnHandler.handler = { _ in
+                    // for now, for all notification types, we take the same action
+                    self.navigationService.presentAccountRecoveryViewController()
+                    return .success(())
+                }
+                
+                NotificationType.allAccountRecoveryTypes.forEach {
+                    pushNotificationService.registerHandler(vpnHandler, forType: $0)
+                }
             }
-
-            pushNotificationService.registerHandler(vpnHandler, forType: NotificationType.accountRecoveryInitiated)
         }
     }
 }

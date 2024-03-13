@@ -23,7 +23,6 @@ import Foundation
 import ProtonCoreDataModel
 import ProtonCorePayments
 import ProtonCorePaymentsUI
-import ProtonCoreFeatureSwitch
 import LegacyCommon
 import UIKit
 import VPNShared
