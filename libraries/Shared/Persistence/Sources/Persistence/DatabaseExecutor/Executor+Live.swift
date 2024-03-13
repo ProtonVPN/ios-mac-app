@@ -39,23 +39,23 @@ public struct ErrorHandlingAndLoggingDatabaseExecutor: DatabaseExecutor {
             // This helps "uncover programmer errors, false assumptions, and prevent misuses"
             return try operation()
         } catch let error as DatabaseError {
-            // DatabaseErros: SQLite errors e.g. constraint violations
+            // DatabaseErros: mostly SQLite errors e.g. constraint violations
+            // Also includes errors thrown from custom database functions (see `convertCodeToLocalizedCountryName`)
+            logError?("Caught DatabaseError", error)
             assertionFailure("DatabaseError are thrown on SQLite errors and should be handled inside `operation`")
-            logError?("Caught SQLite error", error)
-            return fallback
 
         } catch let error as RecordError {
             // RecordErrors: attempting to update a record that doesn't exist, or modifying one inside read transactions
-            assertionFailure("Record errors should be handled inside `operation`")
             logError?("Caught RecordError", error)
-            return fallback
+            assertionFailure("Record errors should be handled inside `operation`")
 
         } catch {
             // From GRDB docs: GRDB can throw DatabaseError, RecordError, or crash your program with a fatal error.
             // Since we are catching Database and Record errors above, we should never trigger this block.
-            assertionFailure("Unexpected error: \(error)")
             logError?("Uncaught persistence error", error)
-            return fallback
+            assertionFailure("Unexpected error: \(error)")
         }
+
+        return fallback
     }
 }

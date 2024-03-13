@@ -18,16 +18,35 @@
 
 import Foundation
 
+import Dependencies
 import GRDB
 
 import Localization
 
-/// Lazily initialised the first time a database queue is configured with the custom function `localizedCountryName`
-var convertCodeToLocalizedCountryName: ([DatabaseValue]) throws -> String = {
-    let localizer = LocalizationUtility()
-    let codeToNameMap: [String: String] = Locale.isoRegionCodes.reduce(into: [:]) { result, code in
+typealias DatabaseExecutable = ([DatabaseValue]) throws -> String
+
+/// Computed once per database queue initialisation. See custom database function `localizedCountryName`
+///
+/// This cannot be a lazy var since we sometimes want to create additional databases that use a different country name
+/// localization implementation, e.g. for tests.
+func createLocalizedCountryNameDatabaseFunction() -> DatabaseExecutable {
+    log.debug("Baking country code to localized country name map", category: .persistence)
+
+    @Dependency(\.countryNameProvider) var countryNameProvider
+
+    // Codes for countries returned by our API, but missing from Locale.isoRegionCodes
+    let additionalRegionCodes = [
+        "UK" // Missing from `Locale.isoRegionCodes`. Possibly due to "GB" being the real ISO code for United Kingdom?
+    ]
+    let knownRegionCodes = Locale.isoRegionCodes.appending(additionalRegionCodes)
+
+    // One time pre-baking of a mapping from known iso codes to country names according to the user's current locale
+    let codeToNameMap: [String: String] = knownRegionCodes.reduce(into: [:]) { result, code in
+        // Remove diacritics. This is okay since we only use this transform for sorting and filtering.
+        let normalizedCountryName = countryNameProvider.countryName(forCode: code)?.normalized
+
         // Mapping of unknown country codes to ZZ places them last in the countries list
-        result[code] = localizer.countryName(forCode: code) ?? "ZZ"
+        result[code] = normalizedCountryName ?? "ZZ"
     }
 
     // This closure is what is actually passed to SQLite
@@ -40,32 +59,34 @@ var convertCodeToLocalizedCountryName: ([DatabaseValue]) throws -> String = {
         }
         guard let countryName = codeToNameMap[code] else {
             // We could throw here to catch unexpected country codes, but the app would be unusable in debug since the
-            // API already returns a server with country code XX to test how we handle edge cases 🙃
-            // #if DEBUG
-            // throw unknownCountryCode(code: code)
-            // #endif
+            // API already returns a server with country code XX to test how we handle edge cases.
+            // We could modify our DatabaseExecutor implementation to not crash DEBUG builds on this particular error,
+            // but it is rethrown as a DatabaseError with code = 1, and would pollute logs (thrown every time a row with
+            // an unknown country code encountered)
 
-            // Instead, even in DEBUG, fall back to the country code, since this transform is only used for sorting
+            // Instead, even in DEBUG, fall back to the country code, since this transform is only used for sorting.
             return code
         }
         return countryName
     }
-}()
+}
 
 enum CountryLocalizationError: Error {
     case missingArgument
     case invalidArgument(value: DatabaseValue)
-    case unknownCountryCode(code: String) // Unused at the moment.
 }
 
-/// Pure function that maps registered country codes to localized country names. Use this mapping for sorting results by
-/// localized country name according to the user's locale.
+/// Generate a pure function that maps registered country codes to localized country names. Use this mapping for sorting
+/// and filtering by localized country name according to the user's current locale. Returns a GRDB `DatabaseFunction`
+/// based on the aforementioned generated pure function.
 ///
 /// Mapping is generated at runtime according to country codes and names provided by the OS. See
 /// `convertCodeToLocalizedCountryName` for details.
-let localizedCountryName = DatabaseFunction(
-    "LOCALIZED_COUNTRY_NAME",
-    argumentCount: 1,
-    pure: true,
-    function: convertCodeToLocalizedCountryName
-)
+var localizedCountryName: DatabaseFunction {
+    return DatabaseFunction(
+        "LOCALIZED_COUNTRY_NAME",
+        argumentCount: 1,
+        pure: true,
+        function: createLocalizedCountryNameDatabaseFunction()
+    )
+}

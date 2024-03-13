@@ -14,12 +14,17 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../Foundations/Domain"),
-        .package(path: "../../Foundations/Strings")
+        .package(path: "../../Foundations/Strings"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.0.0"))
     ],
     targets: [
         .target(
             name: "Localization",
-            dependencies: ["Domain", "Strings"]
+            dependencies: [
+                "Domain",
+                "Strings",
+                .product(name: "Dependencies", package: "swift-dependencies")
+            ]
         ),
         .testTarget(
             name: "LocalizationTests",

@@ -23,6 +23,7 @@ import Domain
 public enum TestData {
     public static func createMockServer(
         withID id: String,
+        countryCode: String = "CH",
         tier: Int = 0,
         load: Int = 0,
         score: Double = 1,
@@ -34,8 +35,8 @@ public enum TestData {
                 name: id,
                 domain: "a",
                 load: load,
-                entryCountryCode: "CH",
-                exitCountryCode: "CH",
+                entryCountryCode: countryCode,
+                exitCountryCode: countryCode,
                 tier: tier,
                 score: score,
                 status: status,

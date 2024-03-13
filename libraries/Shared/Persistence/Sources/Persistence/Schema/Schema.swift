@@ -37,6 +37,7 @@ extension Logical: TableRecord, FetchableRecord, PersistableRecord {
         case sequenceNumber
         case translatedCity
         case exitCountryCode
+        case entryCountryCode
         case gatewayName
         case feature
         case latitude

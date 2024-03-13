@@ -25,7 +25,7 @@ import GRDB
 /// Every :memory: database is distinct from every other. So, opening two database connections each with the filename
 /// ":memory:" will create two independent in-memory databases.
 /// [In-Memory Databases](https://www.sqlite.org/inmemorydb.html)
-public enum DatabaseType {
+public enum DatabaseType: CustomStringConvertible {
 
     /// Global in-memory database shared across all `DatabaseWriter` instances initialised with this type
     case inMemory
@@ -44,6 +44,17 @@ public enum DatabaseType {
     /// manually.
     /// [iOS Storage Best Practices](https://developer.apple.com/videos/play/tech-talks/204?time=225)
     case physical(filePath: String)
+
+    public var description: String {
+        switch self {
+        case .inMemory:
+            return "inMemory"
+        case .ephemeral:
+            return "ephemeral"
+        case .physical(let filePath):
+            return "physical(\(filePath.redactingUsername)"
+        }
+    }
 }
 
 extension DatabaseWriter {
@@ -67,6 +78,8 @@ extension DatabaseWriter {
 
     private static func prepareQueue(withDatabaseType type: DatabaseType) -> DatabaseQueue {
         var config = Configuration()
+
+        log.info("Preparing database queue", category: .persistence, metadata: ["type": "\(type)"])
 
         config.prepareDatabase { db in
             db.add(function: bitwiseOr)

@@ -42,7 +42,7 @@ public enum VPNServerFilter {
     /// Filter by city name
     case city(String)
 
-    /// Filters by substring on country code, gateway name, city or country name.
+    /// Text search filter - filters by country code, or substring of gateway name, city or localized country name
     case matches(String)
 
     public struct ServerFeatureFilter {

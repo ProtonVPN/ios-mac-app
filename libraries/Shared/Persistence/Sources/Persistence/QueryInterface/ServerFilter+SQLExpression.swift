@@ -68,14 +68,16 @@ extension VPNServerFilter {
             return isStandard && logical[Logical.Columns.exitCountryCode] == countryCode
 
         case .matches(let query):
-            // VPNAPPL-2097 Matching substrings can be expensive, since this operation cannot use indexes.
-            // Should we use something like FTS4?
-            // https://github.com/groue/GRDB.swift/blob/master/Documentation/FullTextSearch.md
-            return logical[Logical.Columns.exitCountryCode].like("%\(query)%")
-                || logical[Logical.Columns.city].like("%\(query)%")
-                || logical[Logical.Columns.gatewayName].like("%\(query)%")
-                || logical[Logical.Columns.hostCountry].like("%\(query)%")
-                || logical[Logical.Columns.translatedCity].like("%\(query)%")
+            // VPNAPPL-2097 - Improve performance by matching prefixes instead of substrings, if possible
+            let substringPattern = "%\(query)%" // use for filtering against columns containing diacritics
+            let normalizedSubstringPattern = "%\(query.normalized)%" // filter against diacritic stripped columns
+            return logical[Logical.Columns.exitCountryCode] == query.uppercased() // match country codes only exactly
+                || logical[Logical.Columns.entryCountryCode] == query.uppercased() // match country codes only exactly
+                || logical[Logical.Columns.city].like(normalizedSubstringPattern)
+                || logical[Logical.Columns.gatewayName].like(normalizedSubstringPattern)
+                || logical[Logical.Columns.translatedCity].like(substringPattern) // likely to contain diacritics
+                || localizedCountryName(logical[Logical.Columns.exitCountryCode]).like(normalizedSubstringPattern)
+                || localizedCountryName(logical[Logical.Columns.entryCountryCode]).like(normalizedSubstringPattern)
 
         case .city(let name):
             return logical[Logical.Columns.city] == name

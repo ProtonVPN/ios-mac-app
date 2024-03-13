@@ -20,6 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 
 public class LocalizationUtility {
     public static let `default` = LocalizationUtility()
@@ -92,4 +93,35 @@ public class LocalizationUtility {
         }
     }
 
+}
+
+public struct CountryNameProvider {
+    var localizedCountryName: (String) -> String?
+}
+
+extension CountryNameProvider {
+    public func countryName(forCode countryCode: String) -> String? {
+        localizedCountryName(countryCode)
+    }
+}
+
+extension CountryNameProvider: DependencyKey {
+    public static var liveValue: CountryNameProvider {
+        let localizationUtility = LocalizationUtility.default
+
+        return CountryNameProvider(localizedCountryName: localizationUtility.countryName(forCode:))
+    }
+
+    public static var testValue: CountryNameProvider { .liveValue } // Use real implementation for tests by default
+
+    public static func mock(codeToNameDictionary: [String: String]) -> CountryNameProvider {
+        return CountryNameProvider(localizedCountryName: { code in codeToNameDictionary[code] })
+    }
+}
+
+extension DependencyValues {
+    public var countryNameProvider: CountryNameProvider {
+        get { self[CountryNameProvider.self] }
+        set { self[CountryNameProvider.self] = newValue }
+    }
 }
