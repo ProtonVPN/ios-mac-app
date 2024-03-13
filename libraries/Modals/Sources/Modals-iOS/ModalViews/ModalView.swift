@@ -25,15 +25,20 @@ import ProtonCoreUIFoundations
 
 struct ModalView: View {
 
-    let modalType: ModalType
-    var modalModel: ModalModel {
-        modalType.modalModel()
-    }
-
     private static let maxContentWidth: CGFloat = 480
 
-    var primaryAction: (() -> Void)?
-    var dismissAction: (() -> Void)?
+    let modalType: ModalType
+    let modalModel: ModalModel
+
+    private let primaryAction: (() -> Void)?
+    private let dismissAction: (() -> Void)?
+
+    init(modalType: ModalType, primaryAction: (() -> Void)? = nil, dismissAction: (() -> Void)? = nil) {
+        self.modalType = modalType
+        self.modalModel = modalType.modalModel()
+        self.primaryAction = primaryAction
+        self.dismissAction = dismissAction
+    }
 
     var body: some View {
         UpsellBackgroundView(showGradient: modalModel.shouldAddGradient) {
@@ -51,14 +56,30 @@ struct ModalView: View {
     }
 }
 
+#if swift(>=5.9)
+#Preview("Welcome plus") {
+    ModalView(modalType: .welcomePlus(
+        numberOfServers: 1800,
+        numberOfDevices: 10,
+        numberOfCountries: 68
+    ))
+}
+
+#Preview("Welcome unlimited") {
+    ModalView(modalType: .welcomeUnlimited)
+        .previewDisplayName("Welcome unlimited")
+}
+#else
 struct ModalView_Previews: PreviewProvider {
     static var previews: some View {
-        ModalView(modalType: .welcomePlus(numberOfServers: 1800,
-                                          numberOfDevices: 10,
-                                          numberOfCountries: 68))
-        .previewDisplayName("Welcome plus")
+        ModalView(modalType: .welcomePlus(
+            numberOfServers: 1800,
+            numberOfDevices: 10,
+            numberOfCountries: 68
+        )).previewDisplayName("Welcome plus")
 
         ModalView(modalType: .welcomeUnlimited)
-        .previewDisplayName("Welcome unlimited")
+            .previewDisplayName("Welcome unlimited")
     }
 }
+#endif

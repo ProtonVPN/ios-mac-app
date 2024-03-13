@@ -52,7 +52,7 @@ public final class UpsellViewController: UIViewController, Identifiable {
         }
     }
 
-    let gradientLayer = CAGradientLayer.gradientLayer()
+    private let gradientLayer = CAGradientLayer.gradientLayer()
     @IBOutlet private weak var gradientView: UIView!
     @IBOutlet private weak var featureView: UIView!
     @IBOutlet private weak var scrollView: CenteringScrollView!

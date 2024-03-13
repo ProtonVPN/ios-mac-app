@@ -22,14 +22,24 @@ import Modals
 struct ModalBodyView: View {
 
     let modalType: ModalType
-    var modalModel: ModalModel {
-        modalType.modalModel()
+
+    private let imagePadding: EdgeInsets?
+    private let modalModel: ModalModel
+
+    init(modalType: ModalType, imagePadding: EdgeInsets? = nil) {
+        self.modalType = modalType
+        self.imagePadding = imagePadding
+        self.modalModel = modalType.modalModel()
     }
 
     var body: some View {
         VerticallyCenteringScrollView {
             VStack(spacing: 0) {
-                modalType.artImage()
+                if let imagePadding {
+                    modalType.artImage().padding(imagePadding)
+                } else {
+                    modalType.artImage()
+                }
 
                 VStack(spacing: .themeSpacing8) {
                     Text(modalModel.title)

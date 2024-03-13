@@ -54,6 +54,6 @@ let package = Package(
         .testTarget(
             name: "ModalsTests",
             dependencies: ["Modals", "Overture", "Theme"]
-            )
+        )
     ]
 )

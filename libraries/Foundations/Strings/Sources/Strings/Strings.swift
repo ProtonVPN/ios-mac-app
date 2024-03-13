@@ -1739,6 +1739,14 @@ public enum Localizable {
   public static var onboardingUsageStatsDescription: String { return Localizable.tr("Localizable", "onboarding_usage_stats_description", fallback: "Usage data helps us overcome VPN blocks and improve app performance.") }
   /// Share anonymous usage statistics
   public static var onboardingUsageStatsTitle: String { return Localizable.tr("Localizable", "onboarding_usage_stats_title", fallback: "Share anonymous usage statistics") }
+  /// Plural format key: "%#@plan_duration_month@"
+  public static func planDurationMonth(_ p1: Int) -> String {
+    return Localizable.tr("Localizable", "plan_duration_month", p1, fallback: "Plural format key: \"%#@plan_duration_month@\"")
+  }
+  /// Plural format key: "%#@plan_duration_year@"
+  public static func planDurationYear(_ p1: Int) -> String {
+    return Localizable.tr("Localizable", "plan_duration_year", p1, fallback: "Plural format key: \"%#@plan_duration_year@\"")
+  }
   /// Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable
   public static var protonWebsiteUnreachable: String { return Localizable.tr("Localizable", "proton_website_unreachable", fallback: "The Proton VPN website might be temporarily unreachable due to network restrictions. Please use the mobile app to create a new Proton account.") }
   /// Placeholder for the Recovery code text field
@@ -1839,6 +1847,18 @@ public enum Localizable {
   public static var upsellCustomizationTitle: String { return Localizable.tr("Localizable", "upsell_customization_title", fallback: "Unlock advanced VPN customization") }
   /// Button title when user is on lower tier than the server requires [Redesign_2023]
   public static var upsellGetPlus: String { return Localizable.tr("Localizable", "upsell_get_plus", fallback: "Get Plus") }
+  /// Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly.
+  public static var upsellPlansListOptionAmountPerMonth: String { return Localizable.tr("Localizable", "upsell_plans_list_option_amountPerMonth", fallback: " /month") }
+  /// Trailing text of the paid plan option amount indicating the amount per year. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly.
+  public static var upsellPlansListOptionAmountPerYear: String { return Localizable.tr("Localizable", "upsell_plans_list_option_amountPerYear", fallback: " /year") }
+  /// Header of paid plans list where there are more than 1 plan option to pick from.
+  public static var upsellPlansListSectionHeader: String { return Localizable.tr("Localizable", "upsell_plans_list_section_header", fallback: "Select your plan") }
+  /// Subtitle of paid plans list.
+  public static var upsellPlansListSubtitle: String { return Localizable.tr("Localizable", "upsell_plans_list_subtitle", fallback: "Get advanced privacy features and higher speed with VPN Plus.") }
+  /// Title of paid plans list.
+  public static var upsellPlansListTitle: String { return Localizable.tr("Localizable", "upsell_plans_list_title", fallback: "Upgrade your privacy") }
+  /// Main Button of paid plans list allowing user to start payments process.
+  public static var upsellPlansListValidateButton: String { return Localizable.tr("Localizable", "upsell_plans_list_validate_button", fallback: "Get VPN Plus") }
   /// Feature of Profiles upsell modal
   public static var upsellProfilesFeatureAutoConnect: String { return Localizable.tr("Localizable", "upsell_profiles_feature_auto_connect", fallback: "Set up auto-connect for even faster access.") }
   /// Feature of Profiles upsell modal

@@ -26,8 +26,6 @@ struct ModalButtonsView: View {
     var primaryAction: (() -> Void)?
     var dismissAction: (() -> Void)?
 
-    @Environment(\.dismiss) var dismiss
-
     var body: some View {
         VStack {
             if let primaryAction {

@@ -49,6 +49,7 @@ public enum AppTheme {
         /// Static color, not changing together with appearance change. For text it's always white
         public static let primary = Self(bitPosition: 7)
         public static let dropdown = Self(bitPosition: 8)
+        public static let vpnGreen = Self(bitPosition: 9)
 
         // Action contexts
         public static let interactive = Self(bitPosition: 10)
@@ -73,10 +74,10 @@ public enum AppTheme {
         case leftSidebarWidth = 160
 
         case connectionCardMaxWidth = 620
-        public static var connectionCardMinWidth = Self.mainContainerMinWidth
+        public static let connectionCardMinWidth = Self.mainContainerMinWidth
 
         case mainAppDefaultHeight = 580
-        public static var mainAppDefaultWidth = Self.connectionCardMaxWidth
+        public static let mainAppDefaultWidth = Self.connectionCardMaxWidth
     }
 
     public enum CornerRadius: CGFloat {
