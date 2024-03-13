@@ -268,7 +268,7 @@ class MapSectionViewModel {
                 appStateManager: appStateManager,
                 vpnGateway: vpnGateway,
                 country: countryModel,
-                minTier: servers.map(\.logical.tier).min() ?? CoreAppConstants.VpnTiers.free,
+                minTier: servers.map(\.logical.tier).min() ?? .freeTier,
                 servers: servers,
                 userTier: userTier,
                 coordinate: countryModel.location

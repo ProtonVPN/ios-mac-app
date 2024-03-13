@@ -324,7 +324,7 @@ class CountriesSectionViewModel {
     func showStreamingServices(server: ServerItemViewModel) {
         guard
             !propertiesManager.secureCoreToggle, // don't show streaming services when secure core is enabled
-            server.serverModel.logical.tier > CoreAppConstants.VpnTiers.basic, // only available for plus and above
+            server.serverModel.logical.tier.isPaidTier, // only available for plus and above
             let streamServicesDict = propertiesManager.streamingServices[server.serverModel.logical.exitCountryCode],
             let key = streamServicesDict.keys.first,
             let streamServices = streamServicesDict[key]
@@ -625,7 +625,7 @@ class CountriesSectionViewModel {
         case paid // Anything paid (basic, plus, visionary etc)
 
         init(tier: Int, showNewFreePlan: Bool) {
-            if tier > CoreAppConstants.VpnTiers.free {
+            if tier.isPaidTier {
                 self = .paid
             } else {
                 self = showNewFreePlan ? .free : .legacyFree
@@ -649,13 +649,13 @@ class CountriesSectionViewModel {
             return [
                 gatewaysSection(for: groups),
                 freeLocationsSection(for: groups),
-                plusLocationsSection(for: groups, minTier: CoreAppConstants.VpnTiers.basic)
+                plusLocationsSection(for: groups, minTier: .paidTier)
             ]
         case .free:
             return [
                 gatewaysSection(for: groups),
                 fastestConnectionSection,
-                plusLocationsSection(for: groups, minTier: CoreAppConstants.VpnTiers.free)
+                plusLocationsSection(for: groups, minTier: .freeTier)
             ]
         }
     }
@@ -741,7 +741,7 @@ class CountriesSectionViewModel {
     }
 
     private func freeLocationsSection(for groups: [ServerGroupInfo]) -> ServerSection {
-        let cellModels = cells(forCountriesInGroups: groups, minTierFilter: { $0 == CoreAppConstants.VpnTiers.free } )
+        let cellModels = cells(forCountriesInGroups: groups, minTierFilter: { $0 == .freeTier } )
         return ServerSection(
             header: freeLocationsHeader(locationCount: cellModels.count),
             cells: cellModels

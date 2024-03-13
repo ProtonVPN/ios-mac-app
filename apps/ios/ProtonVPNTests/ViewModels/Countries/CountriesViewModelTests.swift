@@ -133,7 +133,7 @@ class DependencyFactory: CountriesViewModel.Factory {
     func makeNetShieldPropertyProvider() -> NetShieldPropertyProvider { NetShieldPropertyProviderMock() }
     func makePropertiesManager() -> PropertiesManagerProtocol { propertiesManager }
     func makeSafeModePropertyProvider() -> SafeModePropertyProvider { SafeModePropertyProviderMock() }
-    func makeVpnKeychain() -> VpnKeychainProtocol { VpnKeychainMock(accountPlan: .vpnPlus, maxTier: 2) }
+    func makeVpnKeychain() -> VpnKeychainProtocol { VpnKeychainMock(maxTier: .paidTier) }
     func makeConnectionStatusService() -> ConnectionStatusService { ConnectionStatusServiceMock() }
     func makePlanService() -> PlanService { PlanServiceMock() }
     func makeSearchStorage() -> SearchStorage { SearchModuleStorage() }
@@ -156,15 +156,15 @@ struct CountryServiceMock: CountryService {
 enum MockServerGroup {
 
     static var dev: ServerGroupInfo {
-        .init(kind: .gateway(name: "Dev"), featureIntersection: .restricted, featureUnion: .restricted, minTier: 2, maxTier: 2, serverCount: 2, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: false, isUnderMaintenance: false, protocolSupport: .wireGuardUDP)
+        .init(kind: .gateway(name: "Dev"), featureIntersection: .restricted, featureUnion: .restricted, minTier: .paidTier, maxTier: .paidTier, serverCount: 2, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: false, isUnderMaintenance: false, protocolSupport: .wireGuardUDP)
     }
 
     static var sweden: ServerGroupInfo {
-        .init(kind: .country(code: "SE"), featureIntersection: .zero, featureUnion: .zero, minTier: 1, maxTier: 2, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: true, isUnderMaintenance: false, protocolSupport: .all)
+        .init(kind: .country(code: "SE"), featureIntersection: .zero, featureUnion: .zero, minTier: .paidTier, maxTier: .paidTier, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: true, isUnderMaintenance: false, protocolSupport: .all)
     }
 
     static var switzerland: ServerGroupInfo {
-        .init(kind: .country(code: "CH"), featureIntersection: .zero, featureUnion: .zero, minTier: 1, maxTier: 2, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: true, isUnderMaintenance: false, protocolSupport: .ikev2)
+        .init(kind: .country(code: "CH"), featureIntersection: .zero, featureUnion: .zero, minTier: .paidTier, maxTier: .paidTier, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: true, isUnderMaintenance: false, protocolSupport: .ikev2)
     }
 
 }

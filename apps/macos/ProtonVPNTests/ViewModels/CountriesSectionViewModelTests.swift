@@ -144,7 +144,7 @@ class DependencyFactory: CountriesSectionViewModel.Factory, ProfileManagerFactor
     func makeVpnStateConfiguration() -> LegacyCommon.VpnStateConfiguration { fatalError() }
     func makeModelIdChecker() -> ProtonVPN.ModelIdCheckerProtocol { fatalError() }
     func makePropertiesManager() -> PropertiesManagerProtocol { propertiesManager }
-    func makeVpnKeychain() -> VpnKeychainProtocol { VpnKeychainMock(accountPlan: .vpnPlus, maxTier: 2) }
+    func makeVpnKeychain() -> VpnKeychainProtocol { VpnKeychainMock(maxTier: .paidTier) }
 }
 
 struct AnnouncementManagerMock: AnnouncementManager {
@@ -159,15 +159,15 @@ struct AnnouncementManagerMock: AnnouncementManager {
 enum MockServerGroup {
 
     static var dev: ServerGroupInfo {
-        .init(kind: .gateway(name: "Dev"), featureIntersection: .restricted, featureUnion: .restricted, minTier: 2, maxTier: 2, serverCount: 2, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: false, isUnderMaintenance: false, protocolSupport: .wireGuardUDP)
+        .init(kind: .gateway(name: "Dev"), featureIntersection: .restricted, featureUnion: .restricted, minTier: .paidTier, maxTier: .paidTier, serverCount: 2, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: false, isUnderMaintenance: false, protocolSupport: .wireGuardUDP)
     }
 
     static var sweden: ServerGroupInfo {
-        .init(kind: .country(code: "SE"), featureIntersection: .zero, featureUnion: .zero, minTier: 1, maxTier: 2, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: true, isUnderMaintenance: false, protocolSupport: [.wireGuardTCP, .wireGuardUDP, .wireGuardTLS])
+        .init(kind: .country(code: "SE"), featureIntersection: .zero, featureUnion: .zero, minTier: .paidTier, maxTier: .paidTier, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: true, isUnderMaintenance: false, protocolSupport: [.wireGuardTCP, .wireGuardUDP, .wireGuardTLS])
     }
 
     static var switzerland: ServerGroupInfo {
-        .init(kind: .country(code: "CH"), featureIntersection: .zero, featureUnion: .zero, minTier: 1, maxTier: 2, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: true, isUnderMaintenance: false, protocolSupport: .ikev2)
+        .init(kind: .country(code: "CH"), featureIntersection: .zero, featureUnion: .zero, minTier: .paidTier, maxTier: .paidTier, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: true, isUnderMaintenance: false, protocolSupport: .ikev2)
     }
 
 }
