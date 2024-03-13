@@ -379,9 +379,9 @@ extension AppDelegate {
 
             if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.accountRecovery) {
                 let vpnHandler = AccountRecoveryHandler()
-                vpnHandler.handler = { _ in
+                vpnHandler.handler = { [weak self] _ in
                     // for now, for all notification types, we take the same action
-                    self.navigationService.presentAccountRecoveryViewController()
+                    self?.navigationService.presentAccountRecoveryViewController()
                     return .success(())
                 }
                 
