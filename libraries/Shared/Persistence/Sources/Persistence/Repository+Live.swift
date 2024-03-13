@@ -86,11 +86,12 @@ extension ServerRepository {
                     }
                 }
             },
-            deleteServers: { ids in
-                try database.writer().write { db in
-                    try Logical.filter(ids.contains(Logical.Columns.id))
+            deleteServers: { minTier, ids in
+                return try database.writer().write { db in
+                    return try Logical
+                        .filter(!ids.contains(Logical.Columns.id))
+                        .filter(Logical.Columns.tier >= minTier)
                         .deleteAll(db)
-                    return
                 }
             },
             upsertLoads: { loads in

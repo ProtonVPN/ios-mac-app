@@ -55,7 +55,11 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
                     self.propertiesManager.streamingServices = services.streamingServices
                 }
                 do {
-                    // shouldLeaveStaleEntry: delete existing paid servers before inserting fresh ones?
+                    if !isFreeTier {
+                        let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
+                        let deletedServerCount = try self.serverRepository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
+                        log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
+                    }
                     try self.serverRepository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
                     completion(.success)
                 } catch {

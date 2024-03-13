@@ -172,7 +172,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         let credentials = properties.vpnCredentials
         vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-        // TODO: keepStaleServers: delete existing paid servers before inserting fresh ones?
+        if await !shouldRefreshServersAccordingToUserTier || credentials.maxTier != CoreAppConstants.VpnTiers.free {
+            let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
+            let deletedServerCount = try serverRepository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
+            log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
+        }
         try self.serverRepository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
 
         if await appState.isDisconnected {

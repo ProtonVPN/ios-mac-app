@@ -9,17 +9,18 @@ The interface uses domain models from `Domain` such as 'VPNServer' instead of th
 
 This comes with a performance overhead due to the need to convert between representations, but it should be negligable for normal use cases where the number of objects is not excessive.
 
-## Interface Design
+## Interface Design & Usage
 
 `ServerRepository` provides what is essentially a subset of CRUD operations for Logicals, Servers and Loads along with some grouping queries.
-Query are specified using an array of `VPNServerFilter`, which enables fetching servers, or groups of servers, filtered by parameters such as tier, server features, or country.
+Queries are specified using an array of `VPNServerFilter`, which enables fetching servers, or groups of servers, filtered by parameters such as tier, server features, or country.
+The order of results is controlled using `VPNServerOrder`.
 
 ```
-// All sever groups for which every server supports p2p
-repository.groups([.features(.p2p)]
+// All server groups for which every server supports p2p
+repository.groups(filteredBy: [.features(.p2p)]
 
 // All free Swiss servers
-repository.servers([.maxTier(0), .kind(.country("CH")]
+repository.servers(filteredBy: [.maxTier(0), .kind(.country("CH"), orderedBy: .nameAscending]
 ```
 
 `RDBPersistence` (Relational Database Persistence), provides an implementation of repositories provided by `Persistence`.
@@ -27,36 +28,84 @@ It's built using [GRDB](https://swiftpackageindex.com/groue/grdb.swift).
 
 It makes heavy use of the [Query Interface DSL](https://swiftpackageindex.com/groue/grdb.swift#user-content-the-query-interface), so it is recommended to familiarise yourself with their documentation.
 
+### VPNServer vs ServerInfo
+
+The main functions of interest are:
+
+```
+getFirstServer(filteredBy filters: [VPNServerFilter], orderedBy: VPNServerOrder) throws -> VPNServer?
+getServers(filteredBy filters: [VPNServerFilter], orderedBy: VPNServerOrder) throws -> [ServerInfo]
+getGroups(filteredBy filters: [VPNServerFilter]) -> [ServerGroupInfo]
+
+```
+
+The schema is designed for efficient selection of:
+- aggregate information about groups of servers (`getGroups`)
+- aggregate information about a set of servers and their endpoints (`getServers`)
+
+It is possible to scan the whole logicals table and retrieve information about all groups with a single `SELECT` statement.
+The same is true for selecting a group of servers.
+Wherever possible, these methods should be used instead of retrieving full information about a server and its endpoints using `getFirstServer`.
+At the present moment, this requires an additional `SELECT`, although this could be improved in the future if it is ever necessary to retrieve full information about a set of servers.
+
+See [Schema](#schema) for more details.
+
 ## Schema
 
 We define four tables, each of which is used with a record type.
- `Logical` (holds the static information for each `Domain.Logical`), `Endpoint` (represents `Domain.ServerEndpoint`), `LogicalStatus` which holds the dynamic information from `Domain.Logical`, and `OverrideInfo` which holds per protocol override information for each endpoint.
+`Logical` (holds the static information for each `Domain.Logical`), `Endpoint` (represents `Domain.ServerEndpoint`), `LogicalStatus` which holds the dynamic information from `Domain.Logical`, and `OverrideInfo` which holds per protocol override information for each endpoint.
 
 In addition to these record types, Persistence defines some additional result types.
-do not have corresponding tables in the database, but are used to decode query results of table joins, along with associated objects, or annotated aggregate values.
+These do not have corresponding tables in the database, but are used to decode query results of table joins, along with associated objects, or annotated aggregate values.
 
 These include:
 - `GroupInfoResult` - Contains aggregate information about a group of logicals and their endpoints, such as the range of features it supports
 - `ServerInfoResult` - Contains information about a `Logical` and aggregated endpoint information. Only one `SELECT` statement is required to fetch a set of server results, which makes this appropriate for e.g. displaying a list of servers in the UI
 - `ServerResult` - Useful for cases where full information about a `Logical` and all of its endpoints is required, e.g. when attempting to connect to a selected `Logical`
 
+These result types correspond to the following `Domain` models:
+- `GroupInfoResult` - `ServerGroupInfo`
+- `ServerInfoResult` - `ServerInfo`
+- `ServerResult` - `VPNServerResult`
+
 Refer to [Recommended Practices](https://swiftpackageindex.com/groue/grdb.swift/v6.23.0/documentation/grdb/recordrecommendedpractices#How-to-Model-Graphs-of-Objects) when making changes to the schema.
 
 ## Testing
 
 `Dependencies` will auto-fail any logic that accesses `serverRepository` without providing a mock implementation.
-We use value types to define `serverRepository` instead of a protocol, meaning only the methods which are actually used by the system under test, need to be implemented:
+We use value types to define `serverRepository` instead of a protocol, meaning only the methods which are actually used by the system under test, need to be implemented.
+For unit tests, it's sufficient to provide a minimal interface:
 
 ```
-func testXDoesntBurnWhenServerListIsEmpty() {
+func testSUTDoesntBurnWhenServerListIsEmpty() {
     withDependencies {
         $0.serverRepository = .init(servers: [])
     } operation: {
-        ... // something in operation invokes serverRepository.servers
+        ... // something in operation invokes serverRepository.getServers(filteredBy: ..., orderedBy: ...)
     }
 }
 
 ```
+
+For integration tests, using the live implementation of the server repository is preferred, as long as an in-memory database is specified.
+This results in higher test coverage and less likelihood of incorrectly implementing a mock.
+
+```
+func testIntegrationOfABunchOfThings() {
+    withDependencies {
+        $0.appDB = .testValue // global in-memory database
+        $0.serverRepository = .liveValue
+    } operation: {
+        ...
+    }
+}
+```
+
+### Isolated Database Test Cases
+
+`PersistenceTests` provides `IsolatedDatabaseTestCase` which defines a static repository, shared across tests within the test case, but specific to that test case.
+`IsolatedResourceDrivenDatabaseTestCase` builds on top of this to also initialise the repository with servers loaded from a resource file.
+Care needs to be taken with tests that modify the state of the repository, since these should not use a repository that is shared across tests within a test case.
 
 ## FAQ
 
@@ -78,7 +127,6 @@ Implementation specific structs such as `Logical` live in the RDBPersistence/Log
 
 - Investigate adding further indexes, using the `EXPLAIN QUERY PLAN` feature of SQLite to highlight areas of concern
 - Improve text search (see `sqlExpression` implementation of `VPNServerFilter.matches`)
-- Ordering servers by name cannot be done with naive string comparison: `DE#10 < DE#9`
 
 ### Additional Candidates for Persistence
 

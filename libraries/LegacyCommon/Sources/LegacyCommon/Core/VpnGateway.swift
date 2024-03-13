@@ -542,7 +542,11 @@ public class VpnGateway: VpnGatewayProtocol {
                         self.propertiesManager.streamingServices = services.streamingServices
                     }
                     do {
-                        // keepStalePaidServers: refreshFreeTierInfo -> should we delete old paid servers before inserting?
+                        if refreshFreeTierInfo {
+                            let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
+                            let deletedServerCount = try repository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
+                            log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
+                        }
                         try repository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
                     } catch {
                         log.error("Failed to persist servers", category: .persistence, metadata: ["error": "\(error)"])

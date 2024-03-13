@@ -25,27 +25,9 @@ import Domain
 
 @testable import Persistence
 
-final class ServersTests: XCTestCase {
+final class GroupsTests: IsolatedResourceDrivenDatabaseTestCase {
 
-    class func loadTestServers() throws -> [VPNServer] {
-        let jsonPath = try XCTUnwrap(Bundle.module.path(forResource: "TestServers", ofType: "json"))
-        let jsonURL = URL(fileURLWithPath: jsonPath)
-        let data = try Data(contentsOf: jsonURL)
-        return try JSONDecoder().decode([VPNServer].self, from: data)
-    }
-
-    static var repository: ServerRepository!
-
-    // Define a static repository and initialise it once since we don't modify it during tests
-    override class func setUp() {
-        let servers = try! loadTestServers()
-        repository = .liveValue
-        try! repository.upsert(servers: servers)
-    }
-
-    var sut: ServerRepository {
-        Self.repository
-    }
+    override class var resourceName: String { "TestServers" }
 
     func testStandardGroups() throws {
         let groups = try sut.getGroups(filteredBy: [.features(.standard)])

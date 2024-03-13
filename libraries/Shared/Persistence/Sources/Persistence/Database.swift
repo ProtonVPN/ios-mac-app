@@ -35,11 +35,11 @@ fileprivate func databaseQueue(path: String) -> DatabaseQueue {
     return queue
 }
 
-fileprivate let testWriter: DatabaseWriter = {
+private let testWriter: DatabaseWriter = {
     return databaseQueue(path: ":memory:")
 }()
 
-fileprivate let liveWriter: DatabaseWriter = {
+private let liveWriter: DatabaseWriter = {
     guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
         // We should probably just crash instead of falling back to in-memory db
         return testWriter
@@ -56,6 +56,10 @@ public struct Database: DependencyKey {
     // In-memory database for tests
     public static var testValue: Database {
         return Database(writer: { testWriter })
+    }
+
+    public static func inMemory(named name: String) -> Database {
+        return Database(writer: { databaseQueue(path: ":memory:\(name)") })
     }
 
     public static var liveValue: Database {

@@ -176,11 +176,11 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         }
         return true
     }
-    
+
     func canPreviewApp() -> Bool {
         return !isServerRepositoryEmpty && self.propertiesManager.userLocation?.ip != nil
     }
-    
+
     func loadDataWithoutLogin() async throws {
         let shouldRefreshServers = await shouldRefreshServersAccordingToUserTier
         let appState = await appStateManager.stateThreadSafe
@@ -206,8 +206,12 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         let credentials = properties.vpnCredentials
         vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
         review.update(plan: credentials.planName)
-        // TODO: // keepStalePaidServers: shouldRefreshServers && credentials.maxTier == CoreAppConstants.VpnTiers.free
-        // TODO: should we do catch here or let the whole login method fail? probably need to wrap the error in a user friendly one?
+
+        if !shouldRefreshServers || credentials.maxTier.isPaidTier {
+            let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
+            let deletedServerCount = try serverRepository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
+            log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
+        }
         try serverRepository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
 
         propertiesManager.userLocation = properties.location
@@ -275,8 +279,11 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             let credentials = properties.vpnCredentials
             vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
             review.update(plan: credentials.planName)
-            // TODO: keepStalePaidServers: shouldRefreshServers && credentials.maxTier == CoreAppConstants.VpnTiers.free
-            // TODO: should a fialure to store servers be caught here? Probably yes, since this specific error might be displayed in the UI?
+            if !shouldRefreshServers || credentials.maxTier.isPaidTier {
+                let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
+                let deletedServerCount = try serverRepository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
+                log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
+            }
             try serverRepository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
 
             propertiesManager.userRole = properties.userRole
