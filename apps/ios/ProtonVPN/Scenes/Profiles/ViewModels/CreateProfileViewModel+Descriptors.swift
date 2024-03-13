@@ -35,7 +35,7 @@ extension CreateOrEditProfileViewModel {
         return 4
     }
 
-    // MARK: - Country
+    // MARK: - Country / Gateway
 
     internal func countryDescriptor(for group: ServerGroupInfo) -> NSAttributedString {
         let imageAttributedString: NSAttributedString

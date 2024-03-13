@@ -23,6 +23,8 @@ import Foundation
 
 import Domain
 import VPNAppCore
+import Persistence
+import Dependencies
 
 // This is needed to maintain compatibility with how profiles are stored on disk
 // whilst improving them with dynamic server models
@@ -30,10 +32,12 @@ public struct ServerWrapper: Codable {
     
     private var _server: ServerModel
     public var server: ServerModel {
-        if let latestServerModel = ServerManagerImplementation.instance(forTier: .paidTier, serverStorage: ServerStorageConcrete()).servers.first(where: { (serverModel) -> Bool in
-            return _server == serverModel
-        }) {
-            return latestServerModel
+        @Dependency(\.serverRepository) var serverRepository: ServerRepository
+        if let vpnServer = try? serverRepository.getFirstServer(
+            filteredBy: [.logicalID(_server.id)],
+            orderedBy: .fastest
+        ){
+            return ServerModel(server: vpnServer)
         } else {
             return _server
         }
@@ -119,6 +123,32 @@ public enum ServerOffering: Equatable, Codable {
     }
 }
 
+extension ServerOffering {
+
+    /// Check if offering can find any actually available server/protocol
+    public func supports(connectionProtocol: ConnectionProtocol,
+                         withCountryGroup grouping: ServerGroupInfo?,
+                         smartProtocolConfig: SmartProtocolConfig) -> Bool {
+        switch self {
+        case .fastest(let countryCode), .random(let countryCode):
+            guard let grouping else {
+                return true
+            }
+            assert(grouping.serverOfferingID == countryCode, "Mismatched grouping while checking server protocol support (\(grouping.kind))")
+
+            @Dependency(\.serverRepository) var serverRepository
+            let supportedProtocols = connectionProtocol.vpnProtocol != nil
+                ? [connectionProtocol.vpnProtocol!]
+                : smartProtocolConfig.supportedProtocols
+
+            return !grouping.protocolSupport.isDisjoint(with: ProtocolSupport(vpnProtocols: supportedProtocols))
+
+        case .custom(let wrapper):
+            return wrapper.server.supports(connectionProtocol: connectionProtocol,
+                                           smartProtocolConfig: smartProtocolConfig)
+        }
+    }
+}
 
 extension ServerGroup {
     public var serverOfferingId: String {

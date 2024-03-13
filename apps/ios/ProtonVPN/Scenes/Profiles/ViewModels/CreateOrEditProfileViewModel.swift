@@ -369,22 +369,11 @@ class CreateOrEditProfileViewModel: NSObject {
             return true
         }
 
-        switch selectedServerOffering {
-        case .fastest(let countryCode), .random(let countryCode):
-            guard let grouping = self.countryGroup else {
-                return true
-            }
-            assert(grouping.serverOfferingID == countryCode, "Mismatched grouping while checking server protocol support (\(grouping.kind))")
-
-            let supportedProtocols = selectedProtocol.vpnProtocol != nil
-                ? [selectedProtocol.vpnProtocol!]
-                : propertiesManager.smartProtocolConfig.supportedProtocols
-            return !grouping.protocolSupport.isDisjoint(with: ProtocolSupport(vpnProtocols: supportedProtocols))
-
-        case .custom(let wrapper):
-            return wrapper.server.supports(connectionProtocol: connectionProtocol,
-                                           smartProtocolConfig: propertiesManager.smartProtocolConfig)
-        }
+        return selectedServerOffering.supports(
+            connectionProtocol: connectionProtocol,
+            withCountryGroup: self.countryGroup,
+            smartProtocolConfig: propertiesManager.smartProtocolConfig
+        )
     }
     
     private func serverName(forServerOffering serverOffering: ServerOffering) -> NSAttributedString {

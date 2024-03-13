@@ -28,6 +28,8 @@ import Theme
 import LegacyCommon
 import VPNShared
 import VPNAppCore
+import Persistence
+import Dependencies
 
 protocol CreateNewProfileViewModelFactory {
     func makeCreateNewProfileViewModel(editProfile: Notification.Name) -> CreateNewProfileViewModel
@@ -66,9 +68,6 @@ class CreateNewProfileViewModel {
 
     let sessionFinished = NSNotification.Name("CreateNewProfileViewModelSessionFinished") // two observers
 
-    private lazy var serverManager: ServerManager =
-        ServerManagerImplementation.instance(forTier: userTier,
-                                             serverStorage: factory.makeServerStorage())
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -76,6 +75,7 @@ class CreateNewProfileViewModel {
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
     private let propertiesManager: PropertiesManagerProtocol
+    @Dependency(\.serverRepository) private var serverRepository
 
     let colorPickerViewModel = ColorPickerViewModel()
     lazy var secureCoreWarningViewModel = SecureCoreWarningViewModel(sessionService: factory.makeSessionService())
@@ -93,15 +93,12 @@ class CreateNewProfileViewModel {
 
     // MARK: Getters derived from model state
 
-    var selectedServerGrouping: [ServerGroup] {
-        serverManager.grouping(for: state.serverType)
-    }
-
-    var selectedCountryGroup: ServerGroup? {
-        guard let countryIndex = state.countryIndex else {
+    var selectedGroup: ServerGroupInfo? {
+        guard let countryIndex = state.countryIndex,
+              countryIndex > 0 && countryIndex < serverGroups.count else {
             return nil
         }
-        return selectedServerGrouping[countryIndex]
+        return serverGroups[countryIndex]
     }
 
     var profileName: String? {
@@ -127,6 +124,33 @@ class CreateNewProfileViewModel {
         }
     }
 
+    // Filter currently available servers by their type: standard, secure core, p2p, tor
+    private var serverTypeFilter: VPNServerFilter.ServerFeatureFilter {
+        switch state.serverType {
+        case .standard:
+            return .standard
+        case .secureCore:
+            return .secureCore
+        case .p2p:
+            return .standard(with: .p2p)
+        case .tor:
+            return .standard(with: .tor)
+        case .unspecified:
+            return .standard
+        }
+    }
+
+    private var serverGroups: [ServerGroupInfo] {
+        do {
+            return try serverRepository.getGroups(filteredBy: [
+                .features(serverTypeFilter),
+            ])
+        } catch {
+            log.error("Error while loading countries (groups)", metadata: ["error": "\(error)"])
+            return []
+        }
+    }
+
     /// Contains one placeholder item at the beginning, followed by all available countries.
     var countryMenuItems: [PopUpButtonItemViewModel] {
         // Placeholder item
@@ -136,7 +160,7 @@ class CreateNewProfileViewModel {
             handler: { [weak self] in self?.update(countryIndex: nil) }
         )] +
         // Countries by index in their grouping
-        serverManager.grouping(for: state.serverType).enumerated().map { (index, grouping) in
+        serverGroups.enumerated().map { (index, grouping) in
             PopUpButtonItemViewModel(
                 title: countryDescriptor(for: grouping),
                 checked: state.countryIndex == index,
@@ -145,28 +169,87 @@ class CreateNewProfileViewModel {
         }
     }
 
+    /// Helper function to get the list of servers according to a group (country) selected
+    private var currentGroupServers: [ServerInfo]? {
+        guard let countryGroup = selectedGroup else {
+            return nil
+        }
+        let supportedProtocols = state.connectionProtocol?.vpnProtocol != nil
+            ? [state.connectionProtocol!.vpnProtocol!]
+            : propertiesManager.smartProtocolConfig.supportedProtocols
+
+        return try? serverRepository.getServers(
+            filteredBy: [
+                .features(serverTypeFilter), // Secure core or not
+                .supports(protocol: ProtocolSupport(vpnProtocols: supportedProtocols)), // Only the ones supporting selected protocol
+                .kind(countryGroup.kind.serverTypeFilter), // Only from selected country/gateway
+            ],
+            orderedBy: .nameAscending
+        )
+    }
+
     /// Contains one placeholder item at the beginning. If a country is selected, the placeholder will
     /// be followed by the `fastest` offering, the `random` offering, and then the list of all servers
     /// for that country.
     var serverMenuItems: [PopUpButtonItemViewModel] {
-        let placeholder: PopUpButtonItemViewModel =
-        PopUpButtonItemViewModel(
+        var result = [PopUpButtonItemViewModel]()
+
+        // Placeholder
+        result += [PopUpButtonItemViewModel(
             title: menuStyle(Localizable.selectServer),
             checked: state.serverOffering == nil,
             handler: { [weak self] in self?.update(serverOffering: nil) }
-        )
+        )]
 
-        guard let group = selectedCountryGroup else { return [placeholder] }
+        guard let group = selectedGroup else { return result }
 
-        let offerings: [ServerOffering] = [.fastest(group.serverOfferingId), .random(group.serverOfferingId)]
-            + group.servers.map { .custom(.init(server: $0)) }
+        // Default "profiles": fastest and random
+        result += [
+            ServerOffering.fastest(group.serverOfferingID),
+            ServerOffering.random(group.serverOfferingID)
+        ].map { offering in
+            PopUpButtonItemViewModel(
+                title: serverDescriptor(for: offering),
+                checked: state.serverOffering == offering,
+                handler: { [weak self] in self?.update(serverOffering: offering) }
+            )
+        }
 
-        return [placeholder]
-            + offerings.map { offering in
-                PopUpButtonItemViewModel(title: serverDescriptor(for: offering),
-                      checked: state.serverOffering == offering,
-                      handler: { [weak self] in self?.update(serverOffering: offering) })
+        guard let currentGroupServers else {
+            return result
+        }
+
+        // List all available servers
+        result += currentGroupServers.map { server in
+            var checked = false
+            if case .custom(let selectedServerWrapper) = state.serverOffering {
+                checked = selectedServerWrapper.server.id == server.logical.id
             }
+
+            return PopUpButtonItemViewModel(
+                title: serverDescriptor(for: server),
+                checked: checked, // state.serverOffering?.id == server.serverOfferingID,
+                handler: { [weak self] in
+                    // Now that we don't load whole objects from the repository, it became
+                    // not effective to pre-fill ServerOffering objects before one is selected,
+                    // so we do it here, only for the selected object.
+                    do {
+                        if let vpnServer = try self?.serverRepository.getFirstServer(
+                                filteredBy: [.logicalID(server.logical.id)],
+                                orderedBy: .fastest) {
+                            let serverModel = ServerModel(server: vpnServer)
+                            let offering = ServerOffering.custom(ServerWrapper(server: serverModel))
+                            self?.update(serverOffering: offering)
+                        }
+                    } catch {
+                        log.error("Server with given logical id not found", metadata: ["error": "\(error)"])
+                    }
+
+                }
+            )
+        }
+
+        return result
     }
 
     /// If the selected offering does not support a given protocol or a required feature flag is disabled,
@@ -178,7 +261,7 @@ class CreateNewProfileViewModel {
             .filter { `protocol` in
                 state.serverOffering?.supports(
                     connectionProtocol: `protocol`,
-                    withCountryGroup: selectedCountryGroup,
+                    withCountryGroup: selectedGroup,
                     smartProtocolConfig: propertiesManager.smartProtocolConfig
                 ) != false
             }.map { `protocol` in
@@ -200,12 +283,16 @@ class CreateNewProfileViewModel {
         userTier.isPaidTier
     }
 
-    func userTierSupports(group: ServerGroup) -> Bool {
-        group.kind.lowestTier <= userTier
+    func userTierSupports(group: ServerGroupInfo) -> Bool {
+        group.minTier <= userTier
     }
 
     func userTierSupports(server: ServerModel) -> Bool {
-        server.tier <= userTier
+        userTierSupports(serverWithTier: server.tier)
+    }
+
+    func userTierSupports(serverWithTier tier: Int) -> Bool {
+        tier <= userTier
     }
 
     private func setupUserTier() {
@@ -244,20 +331,20 @@ class CreateNewProfileViewModel {
         }
 
         state = state.updating(serverType: type,
-                               newTypeGrouping: serverManager.grouping(for: type),
-                               selectedCountryGroup: selectedCountryGroup,
+                               newTypeGrouping: serverGroups,
+                               selectedCountryGroup: selectedGroup,
                                smartProtocolConfig: propertiesManager.smartProtocolConfig)
     }
 
     private func update(countryIndex: Int?) {
         state = state.updating(countryIndex: countryIndex,
-                               selectedCountryGroup: selectedCountryGroup,
+                               selectedCountryGroup: selectedGroup,
                                smartProtocolConfig: propertiesManager.smartProtocolConfig)
     }
 
     private func update(serverOffering: ServerOffering?) {
         state = state.updating(serverOffering: serverOffering,
-                               selectedCountryGroup: selectedCountryGroup,
+                               selectedCountryGroup: selectedGroup,
                                smartProtocolConfig: propertiesManager.smartProtocolConfig)
     }
 
@@ -322,15 +409,24 @@ class CreateNewProfileViewModel {
             return
         }
 
-        let grouping = serverManager.grouping(for: profile.serverType)
+        let grouping: [ServerGroupInfo]
+        do {
+            grouping = try serverRepository.getGroups(filteredBy: [
+                .features(serverTypeFilter),
+            ])
+        } catch {
+            log.error("Error while loading countries (groups)", metadata: ["error": "\(error)"])
+            return
+        }
+
         var connectionProtocol: ConnectionProtocol? = profile.connectionProtocol
 
         var countryIndex: Int?
         if profile.serverOffering.countryCode != nil {
             countryIndex = grouping.firstIndex {
                 switch $0.kind {
-                case .country(let country):
-                    return country.countryCode == profile.serverOffering.countryCode
+                case .country(let countryCode):
+                    return countryCode == profile.serverOffering.countryCode
                 case .gateway(let name):
                     return name == profile.serverOffering.countryCode
                 }
@@ -380,7 +476,7 @@ class CreateNewProfileViewModel {
 
     func createProfile() {
         guard let name = profileName,
-              let selectedCountryGroup,
+              let selectedGroup,
               let connectionProtocol = state.connectionProtocol,
               let serverOffering = state.serverOffering else {
             return
@@ -391,7 +487,7 @@ class CreateNewProfileViewModel {
         let accessTier: Int
         switch serverOffering {
         case .fastest, .random:
-            accessTier = selectedCountryGroup.kind.lowestTier
+            accessTier = selectedGroup.minTier
         case .custom(let wrapper):
             accessTier = wrapper.server.tier
         }
@@ -450,15 +546,12 @@ fileprivate struct ModelState {
 /// These update functions call one other in a tree, according to which updates may impact other selected values.
 extension ModelState {
     func updating(serverType: ServerType,
-                  newTypeGrouping: [ServerGroup],
-                  selectedCountryGroup: ServerGroup?,
+                  newTypeGrouping: [ServerGroupInfo],
+                  selectedCountryGroup: ServerGroupInfo?,
                   smartProtocolConfig: SmartProtocolConfig) -> Self {
-        var countryIndex = countryIndex
 
         // Re-select country/gateway if it's still there after ServerType change
-        if let selectedGroupCode = selectedCountryGroup?.serverOfferingId {
-            countryIndex = newTypeGrouping.firstIndex { $0.serverOfferingId == selectedGroupCode }
-        }
+        var countryIndex = newTypeGrouping.firstIndex { $0 == selectedCountryGroup }
 
         return ModelState(profileName: self.profileName,
                           serverType: serverType,
@@ -471,7 +564,7 @@ extension ModelState {
     }
 
     func updating(countryIndex: Int?,
-                  selectedCountryGroup: ServerGroup?,
+                  selectedCountryGroup: ServerGroupInfo?,
                   smartProtocolConfig: SmartProtocolConfig) -> Self {
         var serverOffering = serverOffering
         if self.countryIndex != countryIndex {
@@ -489,7 +582,7 @@ extension ModelState {
     }
 
     func updating(serverOffering: ServerOffering?,
-                  selectedCountryGroup: ServerGroup?,
+                  selectedCountryGroup: ServerGroupInfo?,
                   smartProtocolConfig: SmartProtocolConfig) -> Self {
         var connectionProtocol = connectionProtocol
         if self.serverOffering != serverOffering,

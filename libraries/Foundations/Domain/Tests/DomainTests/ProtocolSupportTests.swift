@@ -43,7 +43,11 @@ final class ProtocolSupportTests: XCTestCase {
             ProtocolSupport(vpnProtocols: [.ike, .wireGuard(.udp)]),
             ProtocolSupport([.wireGuardUDP, .ikev2])
         )
-
+        // Two of the same protocols, should not cause troubles
+        XCTAssertEqual(
+            ProtocolSupport(vpnProtocols: [.wireGuard(.tcp), .ike, .wireGuard(.tcp)]),
+            ProtocolSupport([.wireGuardTCP, .ikev2])
+        )
     }
 
 }
