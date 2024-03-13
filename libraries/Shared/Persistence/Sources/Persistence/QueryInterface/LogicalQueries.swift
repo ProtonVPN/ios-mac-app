@@ -39,6 +39,9 @@ extension QueryInterfaceRequest {
         statusAlias: TableAlias
     ) -> Self {
         switch serverOrder {
+        case .none:
+            return self
+
         case .random:
             return order(statusAlias[LogicalStatus.Columns.status].desc, SQL("RANDOM()"))
 

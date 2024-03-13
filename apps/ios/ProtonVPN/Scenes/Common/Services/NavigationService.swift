@@ -274,7 +274,7 @@ extension NavigationService: CountryService {
 extension NavigationService: MapService {
     func makeMapViewController() -> MapViewController {
         let mapViewController = mainStoryboard.instantiateViewController(withIdentifier: String(describing: MapViewController.self)) as! MapViewController
-        mapViewController.viewModel = MapViewModel(appStateManager: appStateManager, alertService: alertService, serverStorage: ServerStorageConcrete(), vpnGateway: vpnGateway, vpnKeychain: vpnKeychain, propertiesManager: propertiesManager, connectionStatusService: self)
+        mapViewController.viewModel = MapViewModel(appStateManager: appStateManager, alertService: alertService, vpnGateway: vpnGateway, vpnKeychain: vpnKeychain, propertiesManager: propertiesManager, connectionStatusService: self)
         mapViewController.connectionBarViewController = makeConnectionBarViewController()
         return mapViewController
     }

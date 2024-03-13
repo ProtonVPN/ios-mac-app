@@ -181,16 +181,16 @@ class MapSectionViewModel {
     }
     
     private func standardAnnotations(_ userTier: Int) -> [CountryAnnotationViewModel] {
-        return serverManager.grouping(for: .standard).compactMap {
-            guard case ServerGroup.Kind.country(let countryModel) = $0.kind else {
+        return serverManager.groups(filters: [.kind(.standard)]).compactMap {
+            guard case .country(let code) = $0.kind else {
                 return nil
             }
             return StandardCountryAnnotationViewModel(
                 appStateManager: appStateManager,
                 vpnGateway: vpnGateway,
-                country: countryModel,
+                country: CountryModel(countryCode: code, lowestTier: $0.minTier, feature: $0.featureUnion, location: $0.location),
                 userTier: userTier,
-                coordinate: countryModel.location
+                coordinate: $0.location
             )
         }
     }
@@ -220,7 +220,7 @@ class MapSectionViewModel {
     }
     
     private func secureCoreAnnotations(_ userTier: Int) -> [CountryAnnotationViewModel] {
-        let exitCountries = serverManager.grouping(for: .secureCore).compactMap {
+        let exitCountries = serverManager.grouping(for: .secureCore, query: nil).compactMap {
             guard case ServerGroup.Kind.country(let countryModel) = $0.kind else {
                 return nil
             }
@@ -243,7 +243,7 @@ class MapSectionViewModel {
         } as [CountryAnnotationViewModel]
         
         var scEntryCountries: [String: [String]] = [:]
-        for group in serverManager.grouping(for: .secureCore) {
+        for group in serverManager.grouping(for: .secureCore, query: nil) {
             for server in group.servers where server.isSecureCore {
                 if scEntryCountries[server.entryCountryCode] != nil {
                     scEntryCountries[server.entryCountryCode]!.append(server.exitCountryCode)

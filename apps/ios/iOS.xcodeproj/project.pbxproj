@@ -338,7 +338,6 @@
 		E59C7A932923B1650034E56F /* ServersInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59C7A922923B1650034E56F /* ServersInformationViewController.swift */; };
 		E59C7A972923B1BB0034E56F /* ServersInformationViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E59C7A962923B1BB0034E56F /* ServersInformationViewController.storyboard */; };
 		E5B3049D28BF628E0093517A /* AnnouncementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B3049C28BF628E0093517A /* AnnouncementViewController.swift */; };
-		E5BBFECE2B333A4F00FA9CF8 /* CountryAnnotationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C1222858D0B0002C095 /* CountryAnnotationViewModelTests.swift */; };
 		E5BBFECF2B333A9F00FA9CF8 /* LogSelectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9492EE2266A14E800500E7D /* LogSelectionViewModelTests.swift */; };
 		E5BBFED02B333AD700FA9CF8 /* StringBundleIdTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E82FA82820273600D9EFBB /* StringBundleIdTests.swift */; };
 		E5BBFED12B333B2200FA9CF8 /* PlanServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E197BD4322C0DFD6004E0FE7 /* PlanServiceMock.swift */; };
@@ -697,7 +696,6 @@
 		B2FCF5432940E91300EAC786 /* TokenRefreshTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRefreshTests.swift; sourceTree = "<group>"; };
 		D32078B0341D91947B720055 /* AccountVerificationRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountVerificationRobot.swift; sourceTree = "<group>"; };
 		D5110850246150DE0018872A /* Date+Formatters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Formatters.swift"; sourceTree = "<group>"; };
-		D5136C1222858D0B0002C095 /* CountryAnnotationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryAnnotationViewModelTests.swift; sourceTree = "<group>"; };
 		D5136C182285918C0002C095 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 		D5136C8D2285A2620002C095 /* ColorPickerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewModelTests.swift; sourceTree = "<group>"; };
 		D5136C9622895C3A0002C095 /* ExtensionAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionAlertService.swift; sourceTree = "<group>"; };
@@ -1459,7 +1457,6 @@
 		D5136C1122858CF00002C095 /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				D5136C1222858D0B0002C095 /* CountryAnnotationViewModelTests.swift */,
 				E129C66922A8E8EA00D8437E /* MapViewModelTests.swift */,
 			);
 			path = Map;
@@ -3104,7 +3101,6 @@
 			files = (
 				E5BBFED72B333B2200FA9CF8 /* AppSessionManagerMock.swift in Sources */,
 				E5BBFEDA2B33422100FA9CF8 /* XCTestExpectation.swift in Sources */,
-				E5BBFECE2B333A4F00FA9CF8 /* CountryAnnotationViewModelTests.swift in Sources */,
 				E5BBFECF2B333A9F00FA9CF8 /* LogSelectionViewModelTests.swift in Sources */,
 				D5C7C8AD2B0B73CA00641808 /* TestAppDelegate.swift in Sources */,
 				E5BBFED62B333B2200FA9CF8 /* AlertService.swift in Sources */,

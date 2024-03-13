@@ -21,8 +21,12 @@
 //
 
 import Foundation
-import Dependencies
 import MapKit
+
+import Dependencies
+
+import Domain
+import Persistence
 import LegacyCommon
 
 class MapPin: NSObject, MKAnnotation {
@@ -48,7 +52,6 @@ class MapViewModel: SecureCoreToggleHandler {
     var activeView: ServerType = .standard
     
     private let appStateManager: AppStateManager
-    private let serverManager: ServerManager
     private let vpnKeychain: VpnKeychainProtocol
     internal let propertiesManager: PropertiesManagerProtocol
     
@@ -93,10 +96,16 @@ class MapViewModel: SecureCoreToggleHandler {
     var connectionStateChanged: (() -> Void)?
     var reorderAnnotations: (() -> Void)?
 
-    init(appStateManager: AppStateManager, alertService: AlertService, serverStorage: ServerStorage, vpnGateway: VpnGatewayProtocol, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService) {
+    init(
+        appStateManager: AppStateManager,
+        alertService: AlertService, 
+        vpnGateway: VpnGatewayProtocol,
+        vpnKeychain: VpnKeychainProtocol,
+        propertiesManager: PropertiesManagerProtocol,
+        connectionStatusService: ConnectionStatusService
+    ) {
         self.appStateManager = appStateManager
         self.alertService = alertService
-        self.serverManager = ServerManagerImplementation.instance(forTier: .paidTier, serverStorage: serverStorage)
         self.vpnGateway = vpnGateway
         self.vpnKeychain = vpnKeychain
         self.propertiesManager = propertiesManager
@@ -130,8 +139,8 @@ class MapViewModel: SecureCoreToggleHandler {
                                                name: VpnGateway.activeServerTypeChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged),
                                                name: VpnGateway.connectionChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState),
-                                               name: serverManager.contentChanged, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState),
+//                                               name: serverManager.contentChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState),
                                                name: VpnKeychain.vpnPlanChanged, object: nil)
     }
@@ -152,72 +161,113 @@ class MapViewModel: SecureCoreToggleHandler {
     
     private func exitAnnotations(type: ServerType, userTier: Int) -> [CountryAnnotationViewModel] {
         @Dependency(\.featureFlagProvider) var featureFlags
+        @Dependency(\.serverRepository) var repository
         let isMapConnectionDisabled = featureFlags[\.showNewFreePlan] && userTier.isFreeTier
 
-        return serverManager.grouping(for: type).compactMap {
-            guard case ServerGroup.Kind.country(let countryModel) = $0.kind else {
-                return nil
-            }
+        let featureFilter = VPNServerFilter.features(type.serverTypeFilter)
+        let kindFilter = VPNServerFilter.kind(.standard) // Exclude gateways
 
-            let annotationViewModel = CountryAnnotationViewModel(
-                countryModel: countryModel,
-                servers: $0.servers,
-                serverType: activeView,
-                vpnGateway: vpnGateway,
-                appStateManager: appStateManager,
-                enabled: isMapConnectionDisabled ? false : $0.kind.lowestTier <= userTier,
-                alertService: alertService,
-                connectionStatusService: connectionStatusService
+        do {
+            let serverGroups = try repository.getGroups(filteredBy: [featureFilter, kindFilter])
+            return serverGroups.compactMap { group in
+                makeAnnotationViewModel(
+                    countryGroup: group,
+                    isMapConnectionDisabled: isMapConnectionDisabled,
+                    userTier: userTier
+                )
+            }
+        } catch {
+            log.error(
+                "Failed to retrieve server groups for map annotations",
+                category: .persistence,
+                metadata: ["error": "\(error)"]
             )
-            
-            if let oldAnnotationViewModel = countryExitAnnotations.first(where: { (oldAnnotationViewModel) -> Bool in
-                return oldAnnotationViewModel.countryCode == annotationViewModel.countryCode
-            }) {
-                annotationViewModel.viewState = oldAnnotationViewModel.viewState
-            }
-            
-            annotationViewModel.countryTapped = { [unowned self] tappedAnnotationViewModel in
-                self.countryExitAnnotations.forEach({ (annotation) in
-                    if annotation !== tappedAnnotationViewModel {
-                        annotation.deselect()
-                    }
-                })
-                
-                self.secureCoreEntryAnnotations.forEach({ (annotation) in
-                    if let activeServer = self.appStateManager.activeConnection()?.server, vpnGateway.connection == .connected, tappedAnnotationViewModel.countryCode == activeServer.exitCountryCode, annotation.countryCode == activeServer.entryCountryCode {
-                        annotation.highlight(true)
-                    } else {
-                        annotation.highlight(false)
-                    }
-                })
-                
-                self.reorderAnnotations?()
-            }
-            return annotationViewModel
+            return []
         }
     }
-    
+
+    private func makeAnnotationViewModel(
+        countryGroup: ServerGroupInfo,
+        isMapConnectionDisabled: Bool,
+        userTier: Int
+    ) -> CountryAnnotationViewModel? {
+        guard case .country(let countryCode) = countryGroup.kind else {
+            assertionFailure("We should have filtered out gateways, but we found a: \(countryGroup.kind)")
+            return nil
+        }
+
+        let annotationViewModel = CountryAnnotationViewModel(
+            countryModel: CountryModel(countryCode: countryCode, lowestTier: countryGroup.minTier),
+            groupInfo: countryGroup,
+            serverType: activeView,
+            vpnGateway: vpnGateway,
+            appStateManager: appStateManager,
+            enabled: isMapConnectionDisabled ? false : countryGroup.minTier <= userTier,
+            alertService: alertService,
+            connectionStatusService: connectionStatusService
+        )
+
+        if let oldAnnotationViewModel = countryExitAnnotations.first(where: { (oldAnnotationViewModel) -> Bool in
+            return oldAnnotationViewModel.countryCode == annotationViewModel.countryCode
+        }) {
+            annotationViewModel.viewState = oldAnnotationViewModel.viewState
+        }
+
+        annotationViewModel.countryTapped = { [unowned self] tappedAnnotationViewModel in
+            self.countryExitAnnotations.forEach({ (annotation) in
+                if annotation !== tappedAnnotationViewModel {
+                    annotation.deselect()
+                }
+            })
+
+            self.secureCoreEntryAnnotations.forEach({ (annotation) in
+                if let activeServer = self.appStateManager.activeConnection()?.server, vpnGateway.connection == .connected, tappedAnnotationViewModel.countryCode == activeServer.exitCountryCode, annotation.countryCode == activeServer.entryCountryCode {
+                    annotation.highlight(true)
+                } else {
+                    annotation.highlight(false)
+                }
+            })
+
+            self.reorderAnnotations?()
+        }
+
+        return annotationViewModel
+    }
+
     private func secureCoreEntryAnnotations(_ userTier: Int) -> Set<SecureCoreEntryCountryModel> {
         var entryCountries = Set<SecureCoreEntryCountryModel>()
-        serverManager.grouping(for: .secureCore).forEach { group in
-            group.servers.forEach { (server) in
-                var entryCountry = SecureCoreEntryCountryModel(appStateManager: appStateManager, countryCode: server.entryCountryCode, location: LocationUtility.coordinate(forCountry: server.entryCountryCode), vpnGateway: vpnGateway)
+
+        let isSecureCore = VPNServerFilter.features(.secureCore)
+        let isCountry = VPNServerFilter.kind(.standard) // Exclude gateways
+
+        do {
+            @Dependency(\.serverRepository) var repository
+            let secureCoreServers = try repository.getServers(filteredBy: [isSecureCore, isCountry], orderedBy: .none)
+            secureCoreServers.forEach { server in
+                var entryCountry = SecureCoreEntryCountryModel(
+                    appStateManager: appStateManager,
+                    countryCode: server.logical.entryCountryCode,
+                    location: LocationUtility.coordinate(forCountry: server.logical.entryCountryCode),
+                    vpnGateway: vpnGateway
+                )
                 if let oldEntry = entryCountries.first(where: { (element) -> Bool in return entryCountry == element }) {
                     entryCountry = oldEntry
                 }
-                entryCountry.addExitCountryCode(server.exitCountryCode)
+                entryCountry.addExitCountryCode(server.logical.exitCountryCode)
                 entryCountries.update(with: entryCountry)
             }
+
+            let entriesArray = [SecureCoreEntryCountryModel](entryCountries)
+            secureCoreConnections = entriesArray.enumerated().map({ (offset: Int, element: SecureCoreEntryCountryModel) -> ConnectionViewModel in
+                return ConnectionViewModel(.connected, between: element, and: entriesArray[(offset + 1) % entriesArray.count])
+            })
+        } catch {
+            log.error("Failed to load secure core servers", category: .persistence, metadata: ["error": "\(error)"])
         }
-        
-        let entriesArray = [SecureCoreEntryCountryModel](entryCountries)
-        secureCoreConnections = entriesArray.enumerated().map({ (offset: Int, element: SecureCoreEntryCountryModel) -> ConnectionViewModel in
-            return ConnectionViewModel(.connected, between: element, and: entriesArray[(offset + 1) % entriesArray.count])
-        })
-        
+
         return entryCountries
     }
-    
+
     func setStateOf(type: ServerType) {
         activeView = type
         refreshAnnotations(forView: activeView)

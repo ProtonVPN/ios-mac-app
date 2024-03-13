@@ -296,8 +296,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
                                                name: VpnGateway.activeServerTypeChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadContent),
                                                name: VpnKeychain.vpnPlanChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadContent),
-                                               name: serverManager.contentChanged, object: nil)
+        // Refreshing views on server list updates is to be re-enabled in VPNAPPL-2075 along with serverManager removal
+        // NotificationCenter.default.addObserver(self, selector: #selector(reloadContent), name: serverManager.contentChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadContent), name: PropertiesManager.vpnProtocolNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadContent), name: PropertiesManager.smartProtocolNotification, object: nil)
     }
