@@ -28,11 +28,13 @@ import Dependencies
 import ProtonCoreUIFoundations
 
 import Domain
-import Persistence
-import LegacyCommon
-import Search
 import Strings
 import Theme
+
+import Persistence
+
+import Search
+import LegacyCommon
 
 class ServerItemViewModel: ServerItemViewModelCore {
 
@@ -121,7 +123,6 @@ class ServerItemViewModel: ServerItemViewModelCore {
         propertiesManager: PropertiesManagerProtocol,
         planService: PlanService
     ) {
-
         self.alertService = alertService
         self.connectionStatusService = connectionStatusService
         self.planService = planService
@@ -155,7 +156,6 @@ class ServerItemViewModel: ServerItemViewModelCore {
             log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.stopConnecting(userInitiated: true)
         } else {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
             do {
                 guard let server = try repository.getFirstServer(
                     filteredBy: [.logicalID(serverModel.logical.id)],
@@ -166,6 +166,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
                 }
                 let legacyModel = ServerModel(server: server)
                 log.debug("Will connect to \(legacyModel.logDescription)", category: .connectionConnect, event: .trigger)
+                NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
                 vpnGateway.connectTo(server: legacyModel)
                 connectionStatusService.presentStatusViewController()
             } catch {

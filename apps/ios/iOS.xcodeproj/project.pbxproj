@@ -159,14 +159,9 @@
 		A264F1C92E772DA03634D8A8 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */; };
 		AD37FAC329B63E1100D4DE4E /* NetShieldStatsItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */; };
 		AD37FAC529B7310200D4DE4E /* NetShieldStatsItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */; };
-		AD445CA32B5B25C5004A2BA7 /* LegacyCommon in Frameworks */ = {isa = PBXBuildFile; productRef = AD445CA22B5B25C5004A2BA7 /* LegacyCommon */; };
 		AD6099FB299B2343007E46BC /* ImageSubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6099FA299B2343007E46BC /* ImageSubtitleTableViewCell.swift */; };
 		AD609A03299B89C0007E46BC /* ImageSubtitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD609A02299B89C0007E46BC /* ImageSubtitleTableViewCell.xib */; };
 		AD70D75E2B63238400B39ABA /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = AD70D75D2B63238400B39ABA /* PMLogger */; };
-		AD626C762B167DEF006E11FC /* ExtensionIPC in Frameworks */ = {isa = PBXBuildFile; productRef = AD626C752B167DEF006E11FC /* ExtensionIPC */; };
-		AD626C782B167DF5006E11FC /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = AD626C772B167DF5006E11FC /* Domain */; };
-		AD626C7A2B167DFC006E11FC /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = AD626C792B167DFC006E11FC /* Domain */; };
-		AD626C7C2B167E00006E11FC /* ExtensionIPC in Frameworks */ = {isa = PBXBuildFile; productRef = AD626C7B2B167E00006E11FC /* ExtensionIPC */; };
 		AD80107E2AC6CEAD000DB179 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* LiveDependencies.swift */; };
 		AD80107F2AC6CEAE000DB179 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* LiveDependencies.swift */; };
 		AD8010802AC6CEAE000DB179 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* LiveDependencies.swift */; };
@@ -176,6 +171,8 @@
 		ADA1A0402A95E4EB00F9A6B6 /* Verifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1A03F2A95E4EB00F9A6B6 /* Verifier.swift */; };
 		ADA7343729B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADA7343629B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib */; };
 		ADA7343929B1896300CF8F77 /* NetShieldStatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA7343829B1896300CF8F77 /* NetShieldStatsTableViewCell.swift */; };
+		ADDB04A72B768CC200211434 /* CountriesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDB04A62B768CC200211434 /* CountriesViewModelTests.swift */; };
+		ADDB04A92B768D0700211434 /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = ADDB04A82B768D0700211434 /* Persistence */; };
 		ADEB35D42B62832A0044ABD4 /* ProtonCorePaymentsUI in Frameworks */ = {isa = PBXBuildFile; productRef = ADEB35D32B62832A0044ABD4 /* ProtonCorePaymentsUI */; };
 		ADEB35E62B62842C0044ABD4 /* TimerMock in Frameworks */ = {isa = PBXBuildFile; productRef = ADEB35E52B62842C0044ABD4 /* TimerMock */; };
 		ADEB35EA2B6284420044ABD4 /* VPNSharedTesting in Frameworks */ = {isa = PBXBuildFile; productRef = ADEB35E92B6284420044ABD4 /* VPNSharedTesting */; };
@@ -352,7 +349,6 @@
 		E5BBFED62B333B2200FA9CF8 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C182285918C0002C095 /* AlertService.swift */; };
 		E5BBFED72B333B2200FA9CF8 /* AppSessionManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F568A22327833100795953 /* AppSessionManagerMock.swift */; };
 		E5BBFED82B333B2200FA9CF8 /* ServerStorageArrayMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05722E1E3E40034389A /* ServerStorageArrayMock.swift */; };
-		E5BBFED92B3340A300FA9CF8 /* CountryItemViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C942285AEA10002C095 /* CountryItemViewModelTests.swift */; };
 		E5BBFEDA2B33422100FA9CF8 /* XCTestExpectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BF950F23559AAF00C7D1E7 /* XCTestExpectation.swift */; };
 		E5CF14862949E68700AF6912 /* QuarkCommands+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CF14852949E68700AF6912 /* QuarkCommands+Async.swift */; };
 		E5DEF0612A739A08006FC9DC /* DictionaryCoder in Frameworks */ = {isa = PBXBuildFile; productRef = E5DEF0602A739A08006FC9DC /* DictionaryCoder */; };
@@ -681,6 +677,7 @@
 		ADA1A03F2A95E4EB00F9A6B6 /* Verifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Verifier.swift; sourceTree = "<group>"; };
 		ADA7343629B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetShieldStatsTableViewCell.xib; sourceTree = "<group>"; };
 		ADA7343829B1896300CF8F77 /* NetShieldStatsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldStatsTableViewCell.swift; sourceTree = "<group>"; };
+		ADDB04A62B768CC200211434 /* CountriesViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountriesViewModelTests.swift; sourceTree = "<group>"; };
 		AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AnnouncementFeatureView.xib; path = ../../../../../ios/ProtonVPN/Scenes/Announcements/Views/AnnouncementFeatureView.xib; sourceTree = "<group>"; };
 		B20C28F42799947A00157BD1 /* OnboardingRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRobot.swift; sourceTree = "<group>"; };
 		B22F331727906E9100DBB8CA /* RecoveryRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryRobot.swift; sourceTree = "<group>"; };
@@ -703,7 +700,6 @@
 		D5136C1222858D0B0002C095 /* CountryAnnotationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryAnnotationViewModelTests.swift; sourceTree = "<group>"; };
 		D5136C182285918C0002C095 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 		D5136C8D2285A2620002C095 /* ColorPickerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewModelTests.swift; sourceTree = "<group>"; };
-		D5136C942285AEA10002C095 /* CountryItemViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryItemViewModelTests.swift; sourceTree = "<group>"; };
 		D5136C9622895C3A0002C095 /* ExtensionAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionAlertService.swift; sourceTree = "<group>"; };
 		D51DA68F2541A66900B4A421 /* BadgedBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgedBarButtonItem.swift; sourceTree = "<group>"; };
 		D5209C6F26CBBCF900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IOSVpnCredentialsConfiguratorFactory.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/VPN/IOSVpnCredentialsConfiguratorFactory.swift; sourceTree = "<group>"; };
@@ -944,6 +940,7 @@
 			files = (
 				ADFE22DC2B631B9B00B962BA /* PMLogger in Frameworks */,
 				ADFE22DB2B631B9B00B962BA /* Strings in Frameworks */,
+				ADDB04A92B768D0700211434 /* Persistence in Frameworks */,
 				ADFE22DA2B631B9B00B962BA /* Dependencies in Frameworks */,
 				ADFE22D92B631B9B00B962BA /* Domain in Frameworks */,
 				ADEB35E62B62842C0044ABD4 /* TimerMock in Frameworks */,
@@ -1347,6 +1344,14 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		ADDB04A52B768CAC00211434 /* Countries */ = {
+			isa = PBXGroup;
+			children = (
+				ADDB04A62B768CC200211434 /* CountriesViewModelTests.swift */,
+			);
+			path = Countries;
+			sourceTree = "<group>";
+		};
 		B20C28F62799B59000157BD1 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -1443,7 +1448,7 @@
 		D5136C1022858CDD0002C095 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				D5136C932285AE8C0002C095 /* Countries */,
+				ADDB04A52B768CAC00211434 /* Countries */,
 				D5136C1122858CF00002C095 /* Map */,
 				D5136C8C2285A23F0002C095 /* Profiles */,
 				E9492EE1266A14BC00500E7D /* Settings */,
@@ -1482,14 +1487,6 @@
 				D5D4D05322E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift */,
 			);
 			path = Profiles;
-			sourceTree = "<group>";
-		};
-		D5136C932285AE8C0002C095 /* Countries */ = {
-			isa = PBXGroup;
-			children = (
-				D5136C942285AEA10002C095 /* CountryItemViewModelTests.swift */,
-			);
-			path = Countries;
 			sourceTree = "<group>";
 		};
 		D5209C6E26CBBCDD00AD14EA /* VPN */ = {
@@ -2337,6 +2334,7 @@
 				ADE98F212B6306CA00601881 /* Dependencies */,
 				ADE98F232B6306CD00601881 /* Strings */,
 				ADE98F252B6306D800601881 /* PMLogger */,
+				ADDB04A82B768D0700211434 /* Persistence */,
 			);
 			productName = ProtonVPNTests;
 			productReference = 791DE5EF208DDA3200A29EA5 /* ProtonVPNTests.xctest */;
@@ -3113,12 +3111,12 @@
 				E52508A32B3439E6006E6998 /* CreateOrEditProfileViewModelTests.swift in Sources */,
 				AD81310D2A853E2C00729E03 /* AlertTests.swift in Sources */,
 				E52508A52B3439E6006E6998 /* ColorPickerViewModelTests.swift in Sources */,
+				ADDB04A72B768CC200211434 /* CountriesViewModelTests.swift in Sources */,
 				E5BBFED32B333B2200FA9CF8 /* ProfileServiceMock.swift in Sources */,
 				E5BBFED12B333B2200FA9CF8 /* PlanServiceMock.swift in Sources */,
 				E5BBFED02B333AD700FA9CF8 /* StringBundleIdTests.swift in Sources */,
 				E5BBFED22B333B2200FA9CF8 /* TroubleshootCoordinatorMock.swift in Sources */,
 				E52508A42B3439E6006E6998 /* MapViewModelTests.swift in Sources */,
-				E5BBFED92B3340A300FA9CF8 /* CountryItemViewModelTests.swift in Sources */,
 				E5BBFED82B333B2200FA9CF8 /* ServerStorageArrayMock.swift in Sources */,
 				E5BBFED42B333B2200FA9CF8 /* ConnectionStatusServiceMock.swift in Sources */,
 				E5BBFED52B333B2200FA9CF8 /* ProtocolServiceMock.swift in Sources */,
@@ -4534,6 +4532,10 @@
 		AD70D75D2B63238400B39ABA /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PMLogger;
+		};
+		ADDB04A82B768D0700211434 /* Persistence */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Persistence;
 		};
 		ADE98F1F2B63058D00601881 /* Domain */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -87,7 +87,6 @@ extension ServerModel {
     }
 }
 
-
 extension Domain.ServerEndpoint {
 
     /// Instantiates a legacy model (DTO) object from a domain model

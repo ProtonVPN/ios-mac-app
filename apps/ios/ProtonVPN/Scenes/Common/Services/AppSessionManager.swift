@@ -69,7 +69,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                         AppStateManagerFactory &
                         VpnKeychainFactory &
                         PropertiesManagerFactory &
-                        ServerStorageFactory &
                         VpnGatewayFactory &
                         CoreAlertServiceFactory &
                         NavigationServiceFactory &

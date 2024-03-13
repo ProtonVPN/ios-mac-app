@@ -48,10 +48,12 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch viewModel.status {
         case .noResults, .placeholder:
-            fatalError("Invalid usage")
+            assertionFailure("Invalid usage")
+            return UITableViewCell()
         case let .recentSearches(data):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: RecentSearchCell.identifier) as? RecentSearchCell else {
-                fatalError("Invalid configuration")
+                assertionFailure("Invalid configuration")
+                return UITableViewCell()
             }
             cell.title = data[indexPath.row]
             return cell
@@ -60,35 +62,40 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             switch item {
             case let .countries(countries: countries):
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryCell.identifier) as? CountryCell else {
-                    fatalError("Invalid configuration")
+                    assertionFailure("Invalid configuration")
+                    return UITableViewCell()
                 }
                 cell.searchText = searchBar.text
                 cell.viewModel = countries[indexPath.row]
                 return cell
             case let .servers(tier: _, servers: servers):
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: ServerCell.identifier) as? ServerCell else {
-                    fatalError("Invalid configuration")
+                    assertionFailure("Invalid configuration")
+                    return UITableViewCell()
                 }
                 cell.searchText = searchBar.text
                 cell.viewModel = servers[indexPath.row]
                 return cell
             case let .secureCoreCountries(servers: servers):
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: ServerCell.identifier) as? ServerCell else {
-                    fatalError("Invalid configuration")
+                    assertionFailure("Invalid configuration")
+                    return UITableViewCell()
                 }
                 cell.searchText = searchBar.text
                 cell.viewModel = servers[indexPath.row]
                 return cell
             case let .cities(cities: cities):
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: CityCell.identifier) as? CityCell else {
-                    fatalError("Invalid configuration")
+                    assertionFailure("Invalid configuration")
+                    return UITableViewCell()
                 }
                 cell.searchText = searchBar.text
                 cell.viewModel = cities[indexPath.row]
                 return cell
             case .upsell:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: UpsellCell.identifier) as? UpsellCell else {
-                    fatalError("Invalid configuration")
+                    assertionFailure("Invalid configuration")
+                    return UITableViewCell()
                 }
                 cell.numberOfCountries = viewModel.numberOfCountries
                 return cell

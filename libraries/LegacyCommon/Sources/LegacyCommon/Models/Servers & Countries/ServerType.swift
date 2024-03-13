@@ -24,6 +24,7 @@ import Foundation
 import Domain
 import Persistence
 import Strings
+import Persistence
 
 public enum ServerType: Int, Codable, CustomStringConvertible {
     case standard = 0
@@ -107,26 +108,6 @@ public enum ServerType: Int, Codable, CustomStringConvertible {
 }
 
 public extension ServerType {
-
-    /// Map to new domain model
-    var domainModel: ServerFeature {
-        switch self {
-        case .standard:
-            return .zero
-
-        case .p2p:
-            return .p2p
-
-        case .secureCore:
-            return .secureCore
-
-        case .tor:
-            return .tor
-
-        case .unspecified:
-            return .zero
-        }
-    }
 
     /// Feature filter for searching the repository
     var serverTypeFilter: VPNServerFilter.ServerFeatureFilter {
