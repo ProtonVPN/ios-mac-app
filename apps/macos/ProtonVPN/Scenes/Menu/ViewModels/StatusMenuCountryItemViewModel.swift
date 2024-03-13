@@ -21,20 +21,24 @@
 //
 
 import Cocoa
-import LegacyCommon
-import Theme
+
 import ProtonCoreUIFoundations
+
+import Domain
+import Theme
+
+import LegacyCommon
 
 class StatusMenuCountryItemViewModel {
     
-    private let serverGroup: ServerGroup
+    private let serverGroup: ServerGroupInfo
     private let type: ServerType
     private let vpnGateway: VpnGatewayProtocol
     
     var flag: NSImage {
         switch serverGroup.kind {
-        case .country(let country):
-            return AppTheme.Icon.flag(countryCode: country.countryCode) ?? NSImage()
+        case .country(let code):
+            return AppTheme.Icon.flag(countryCode: code) ?? NSImage()
         case .gateway:
             return IconProvider.servers
         }
@@ -44,7 +48,7 @@ class StatusMenuCountryItemViewModel {
         return formDescription()
     }
     
-    init(countryGroup: ServerGroup, type: ServerType, vpnGateway: VpnGatewayProtocol) {
+    init(countryGroup: ServerGroupInfo, type: ServerType, vpnGateway: VpnGatewayProtocol) {
         self.serverGroup = countryGroup
         self.type = type
         self.vpnGateway = vpnGateway
@@ -54,8 +58,8 @@ class StatusMenuCountryItemViewModel {
         log.debug("Connect requested by selecting a country in status menu. Will connect to country: \(serverGroup) serverType: \(type)", category: .connectionConnect, event: .trigger)
 
         switch serverGroup.kind {
-        case .country(let country):
-            vpnGateway.connectTo(country: country.countryCode, ofType: type, trigger: .country)
+        case .country(let code):
+            vpnGateway.connectTo(country: code, ofType: type, trigger: .country)
 
         case .gateway:
             log.assertionFailure("Connect requested by selecting a gateway in status menu. This is not supported.", category: .connectionConnect, event: .trigger)
@@ -69,8 +73,8 @@ class StatusMenuCountryItemViewModel {
 
         let name: String
         switch serverGroup.kind {
-        case .country(let country):
-            name = country.countryCode
+        case .country(let code):
+            name = code
         case .gateway(let gatewayName):
             name = gatewayName
         }
