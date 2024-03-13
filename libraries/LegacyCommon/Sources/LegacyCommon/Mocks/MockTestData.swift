@@ -19,6 +19,8 @@
 #if DEBUG
 import Foundation
 
+import Domain
+
 public struct MockTestData {
     public struct VPNLocationResponse: Codable, Equatable {
         let ip: String
@@ -345,4 +347,16 @@ extension SmartProtocolConfig {
     public static let onlyWgTcpAndTls = SmartProtocolConfig(openVPN: false, iKEv2: false, wireGuardUdp: false, wireGuardTcp: true, wireGuardTls: true)
     public static let onlyIke = SmartProtocolConfig(openVPN: false, iKEv2: true, wireGuardUdp: false, wireGuardTcp: false, wireGuardTls: false)
 }
+
+extension ServerModel {
+    var serverInfo: ServerInfo {
+        let vpnServer = VPNServer(legacyModel: self)
+
+        return ServerInfo(
+            logical: vpnServer.logical,
+            protocolSupport: vpnServer.supportedProtocols
+        )
+    }
+}
+
 #endif

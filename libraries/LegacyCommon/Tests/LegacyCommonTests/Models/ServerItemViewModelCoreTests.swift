@@ -22,7 +22,7 @@ import XCTest
 final class ServerItemViewModelCoreTests: XCTestCase {
 
     func testBasicServer() throws {
-        let sut = ServerItemViewModelCore(serverModel: MockTestData().server1,
+        let sut = ServerItemViewModelCore(serverModel: MockTestData().server1.serverInfo,
                                           vpnGateway: VpnGatewayMock(),
                                           appStateManager: AppStateManagerMock(),
                                           propertiesManager: PropertiesManagerMock())
@@ -40,7 +40,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
     }
 
     func testServerFeatures() throws {
-        let sut = ServerItemViewModelCore(serverModel: MockTestData().server7(),
+        let sut = ServerItemViewModelCore(serverModel: MockTestData().server7().serverInfo,
                                           vpnGateway: VpnGatewayMock(),
                                           appStateManager: AppStateManagerMock(),
                                           propertiesManager: PropertiesManagerMock())
@@ -54,7 +54,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
     func testServerAlpha0_5() throws {
         let gatewayMock = VpnGatewayMock()
         gatewayMock._userTier = .freeTier
-        let sut = ServerItemViewModelCore(serverModel: MockTestData().server7(),
+        let sut = ServerItemViewModelCore(serverModel: MockTestData().server7().serverInfo,
                                           vpnGateway: gatewayMock,
                                           appStateManager: AppStateManagerMock(),
                                           propertiesManager: PropertiesManagerMock())
@@ -65,7 +65,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
     func testServerAlpha0_25() throws {
         let gatewayMock = VpnGatewayMock()
         gatewayMock._userTier = .freeTier
-        let sut = ServerItemViewModelCore(serverModel: MockTestData().server2UnderMaintenance,
+        let sut = ServerItemViewModelCore(serverModel: MockTestData().server2UnderMaintenance.serverInfo,
                                           vpnGateway: gatewayMock,
                                           appStateManager: AppStateManagerMock(),
                                           propertiesManager: PropertiesManagerMock())
@@ -75,7 +75,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
     func testUserTierPlus() throws {
         let gatewayMock = VpnGatewayMock()
         gatewayMock._userTier = .paidTier
-        let sut = ServerItemViewModelCore(serverModel: MockTestData().server1,
+        let sut = ServerItemViewModelCore(serverModel: MockTestData().server1.serverInfo,
                                           vpnGateway: gatewayMock,
                                           appStateManager: AppStateManagerMock(),
                                           propertiesManager: PropertiesManagerMock())
@@ -83,7 +83,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
     }
 
     func testEmptyPartners() throws {
-        let sut = ServerItemViewModelCore(serverModel: MockTestData().server1,
+        let sut = ServerItemViewModelCore(serverModel: MockTestData().server1.serverInfo,
                                           vpnGateway: VpnGatewayMock(),
                                           appStateManager: AppStateManagerMock(),
                                           propertiesManager: PropertiesManagerMock())
@@ -93,7 +93,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
     func testPartnersWithOneMatch() throws {
         let propertiesManager = PropertiesManagerMock()
         propertiesManager.partnerTypes = [.onePartner(logicalIDs: ["someId"])]
-        let sut = ServerItemViewModelCore(serverModel: MockTestData().server7(id: "someId"),
+        let sut = ServerItemViewModelCore(serverModel: MockTestData().server7(id: "someId").serverInfo,
                                           vpnGateway: VpnGatewayMock(),
                                           appStateManager: AppStateManagerMock(),
                                           propertiesManager: propertiesManager)
@@ -103,7 +103,7 @@ final class ServerItemViewModelCoreTests: XCTestCase {
     func testPartnersWithNoMatch() throws {
         let propertiesManager = PropertiesManagerMock()
         propertiesManager.partnerTypes = [.onePartner(logicalIDs: ["someId"])]
-        let sut = ServerItemViewModelCore(serverModel: MockTestData().server7(id: "someOtherId"),
+        let sut = ServerItemViewModelCore(serverModel: MockTestData().server7(id: "someOtherId").serverInfo,
                                           vpnGateway: VpnGatewayMock(),
                                           appStateManager: AppStateManagerMock(),
                                           propertiesManager: propertiesManager)

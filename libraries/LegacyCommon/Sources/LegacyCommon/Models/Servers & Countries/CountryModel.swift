@@ -29,11 +29,25 @@ import VPNAppCore
 
 // FUTURETODO: get rid of this class and rely only on ServerGroup
 public class CountryModel: Comparable, Hashable {
-    
     public let countryCode: String
     public var lowestTier: Int
     public var feature: ServerFeature = ServerFeature.zero // This is signal keyword feature
-    
+    public let location: CLLocationCoordinate2D
+
+    public init(
+        countryCode: String,
+        lowestTier: Int,
+        feature: ServerFeature = ServerFeature.zero,
+        location: CLLocationCoordinate2D? = nil
+    ) {
+        self.countryCode = countryCode
+        self.lowestTier = lowestTier
+        self.feature = feature
+        // TODO: use location data provided in logicals response
+        self.location = location ?? LocationUtility.coordinate(forCountry: countryCode)
+
+    }
+
     public func hash(into hasher: inout Hasher) {
         hasher.combine(countryCode)
     }
@@ -54,14 +68,13 @@ public class CountryModel: Comparable, Hashable {
             .replacingOccurrences(of: "ł", with: "l")
     }()
 
-    // FUTURETODO: need change to load from server response. right not the response didnt in used
-    public var location: CLLocationCoordinate2D {
-        return LocationUtility.coordinate(forCountry: countryCode)
-    }
-    
-    public init(serverModel: ServerModel) {
+    public init(serverModel: ServerModel, location: CLLocationCoordinate2D? = nil) {
         countryCode = serverModel.countryCode
         lowestTier = serverModel.tier
+        self.location = location ?? CLLocationCoordinate2D(
+            latitude: serverModel.location.lat,
+            longitude: serverModel.location.long
+        )
         feature = self.extractKeyword(serverModel)
     }
     

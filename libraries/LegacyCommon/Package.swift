@@ -40,6 +40,7 @@ let package = Package(
         .package(path: "../Foundations/Timer"),
 
         .package(path: "../Shared/ExtensionIPC"),
+        .package(path: "../Shared/Persistence"),
 
         .package(path: "../BugReport"),
         .package(path: "../Modals"),
@@ -71,6 +72,7 @@ let package = Package(
                 "Strings",
                 "Theme",
                 "Timer",
+                "Persistence",
 
                 "ExtensionIPC",
                 .product(name: "VPNShared", package: "NEHelper"),

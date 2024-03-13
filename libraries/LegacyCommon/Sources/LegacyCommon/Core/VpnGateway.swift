@@ -102,7 +102,8 @@ public protocol VpnGatewayFactory {
 
 public class VpnGateway: VpnGatewayProtocol {
     @Dependency(\.profileAuthorizer) var profileAuthorizer
-    
+    @Dependency(\.serverRepository) var repository
+
     private let vpnApiService: VpnApiService
     private let appStateManager: AppStateManager
     private let profileManager: ProfileManager
@@ -540,7 +541,12 @@ public class VpnGateway: VpnGatewayProtocol {
                     if let services = properties.streamingServices {
                         self.propertiesManager.streamingServices = services.streamingServices
                     }
-                    self.serverStorage.store(properties.serverModels, keepStalePaidServers: refreshFreeTierInfo)
+                    do {
+                        // keepStalePaidServers: refreshFreeTierInfo -> should we delete old paid servers before inserting?
+                        try repository.insertServers(properties.serverModels.map { VPNServer(legacyModel: $0) })
+                    } catch {
+                        log.error("Failed to persist servers", category: .persistence, metadata: ["error": "\(error)"])
+                    }
                     self.profileManager.refreshProfiles()
                 case .failure:
                     // Ignore failures as this is a non-critical call

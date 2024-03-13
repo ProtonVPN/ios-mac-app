@@ -18,44 +18,45 @@
 
 import Foundation
 
+import Domain
+
 open class ServerItemViewModelCore {
-    public let serverModel: ServerModel
+    public let serverModel: ServerInfo
     public var vpnGateway: VpnGatewayProtocol
     public let appStateManager: AppStateManager
     public let propertiesManager: PropertiesManagerProtocol
 
-    public var isSmartAvailable: Bool { serverModel.isVirtual }
-    public var isTorAvailable: Bool { serverModel.feature.contains(.tor) }
-    public var isP2PAvailable: Bool { serverModel.feature.contains(.p2p) }
-    public var isPartnerServer: Bool { serverModel.feature.contains(.partner) }
+    public var isSmartAvailable: Bool { serverModel.logical.isVirtual }
+    public var isTorAvailable: Bool { serverModel.logical.feature.contains(.tor) }
+    public var isP2PAvailable: Bool { serverModel.logical.feature.contains(.p2p) }
+    public var isPartnerServer: Bool { serverModel.logical.feature.contains(.partner) }
 
     public var isSecureCoreEnabled: Bool {
-        return serverModel.isSecureCore
+        return serverModel.logical.feature.contains(.secureCore)
     }
 
     public var load: Int {
-        return serverModel.load
+        return serverModel.logical.load
     }
 
     public var underMaintenance: Bool {
-        return serverModel.underMaintenance
+        return serverModel.logical.status == 0
     }
 
     public var isUsersTierTooLow: Bool {
-        return userTier < serverModel.tier
+        return userTier < serverModel.logical.tier
     }
 
     public var isStreamingAvailable: Bool {
-        guard !isSecureCoreEnabled,
-              serverModel.feature.contains(.streaming) else { return false }
-        let tier = String(serverModel.tier)
-        let countryCode = serverModel.countryCode
+        guard !isSecureCoreEnabled, serverModel.logical.feature.contains(.streaming) else { return false }
+        let tier = String(serverModel.logical.tier)
+        let countryCode = serverModel.logical.exitCountryCode
         return propertiesManager.streamingServices[countryCode]?[tier] != nil
     }
 
     public var isCurrentProtocolSupported: Bool {
-        return serverModel.supports(connectionProtocol: propertiesManager.connectionProtocol,
-                                    smartProtocolConfig: propertiesManager.smartProtocolConfig)
+        fatalError()
+        // return serverModel.supports(connectionProtocol: propertiesManager.connectionProtocol, smartProtocolConfig: propertiesManager.smartProtocolConfig)
     }
 
     public var alphaOfMainElements: CGFloat {
@@ -70,7 +71,7 @@ open class ServerItemViewModelCore {
         return 1.0
     }
 
-    public init(serverModel: ServerModel,
+    public init(serverModel: ServerInfo,
                 vpnGateway: VpnGatewayProtocol,
                 appStateManager: AppStateManager,
                 propertiesManager: PropertiesManagerProtocol) {
@@ -89,7 +90,7 @@ open class ServerItemViewModelCore {
                 $0.partners
             }
             .filter {
-                $0.logicalIDs.contains(serverModel.id)
+                $0.logicalIDs.contains(serverModel.logical.id)
             }
     }
 

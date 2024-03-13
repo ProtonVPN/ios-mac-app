@@ -233,6 +233,13 @@
         "identifier" : "PMLoggerTests",
         "name" : "PMLoggerTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Shared\/Persistence",
+        "identifier" : "PersistenceTests",
+        "name" : "PersistenceTests"
+      }
     }
   ],
   "version" : 1

@@ -23,12 +23,6 @@ import Dependencies
 import Domain
 
 extension DependencyValues {
-    /// Get publisher emitting `VpnServer` with a given ID
-    public var getServerById: @Sendable (String) -> AnyPublisher<VpnServer, Never> {
-        get { self[GetServerByIdKey.self] }
-        set { self[GetServerByIdKey.self] = newValue }
-    }
-
     var vpnConnectionStatus: @Sendable () async -> VPNConnectionStatus {
         get { self[VPNConnectionStatusKey.self] }
         set { self[VPNConnectionStatusKey.self] = newValue }
@@ -39,17 +33,6 @@ public enum VPNConnectionStatusKey: DependencyKey {
     public static let liveValue: @Sendable () async -> VPNConnectionStatus = {
         log.assertionFailure("Override this dependency!")
         return .disconnected
-    }
-}
-
-private enum GetServerByIdKey: DependencyKey {
-    static let liveValue: @Sendable (String) -> AnyPublisher<VpnServer, Never> = { serverId in
-#if !targetEnvironment(simulator)
-        // Without `#if targetEnvironment(simulator)` SwiftUI previews crash
-        assert(false, "Override this dependency!")
-#endif
-        // Actual implementation sits in the app, to reduce the scope of things this library depends on
-        return Empty<VpnServer, Never>().eraseToAnyPublisher()
     }
 }
 

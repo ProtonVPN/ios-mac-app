@@ -25,6 +25,7 @@ import ProtonCoreNetworking
 import ProtonCoreAuthentication
 import ProtonCoreDataModel
 
+import Domain
 import Ergonomics
 import LocalFeatureFlags
 import VPNShared

@@ -25,6 +25,7 @@ import Foundation
 import Dependencies
 
 import Ergonomics
+import Persistence
 
 /// Classes that confirm to this protocol can refresh data from API into the app
 public protocol AppSessionRefresher: AnyObject {
@@ -56,7 +57,7 @@ public protocol AppSessionRefresherFactory {
 }
 
 open class AppSessionRefresherImplementation: AppSessionRefresher {
-    
+    @Dependency(\.serverRepository) public var serverRepository
     public var loggedIn = false
     public var successfulConsecutiveSessionRefreshes = CounterActor()
 
@@ -73,20 +74,18 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     public var vpnApiService: VpnApiService
     public var vpnKeychain: VpnKeychainProtocol
     public var propertiesManager: PropertiesManagerProtocol
-    public var serverStorage: ServerStorage
     public var alertService: CoreAlertService
 
     private var notificationCenter: NotificationCenter = .default
 
     private var observation: NotificationToken?
 
-    public typealias Factory = VpnApiServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & CoreAlertServiceFactory
+    public typealias Factory = VpnApiServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & CoreAlertServiceFactory
         
     public init(factory: Factory) {
         vpnApiService = factory.makeVpnApiService()
         vpnKeychain = factory.makeVpnKeychain()
         propertiesManager = factory.makePropertiesManager()
-        serverStorage = factory.makeServerStorage()
         alertService = factory.makeCoreAlertService()
 
         observation = notificationCenter.addObserver(
@@ -128,7 +127,13 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
         vpnApiService.loads(lastKnownIp: propertiesManager.userLocation?.ip) { result in
             switch result {
             case let .success(properties):
-                self.serverStorage.update(continuousServerProperties: properties)
+                let loads = properties.map { $0.value }
+                do {
+                    try self.serverRepository.updateLoads(loads)
+                } catch {
+                    log.error("Failed to update loads of stored logicals", category: .persistence, metadata: ["error": "\(error)"])
+                }
+
             case let .failure(error):
                 log.error("RefreshServerLoads error", category: .app, metadata: ["error": "\(error)"])
             }

@@ -105,6 +105,7 @@
 		AD6AE1522AA8AC2A0076B083 /* ClickthroughTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6AE1512AA8AC2A0076B083 /* ClickthroughTextField.swift */; };
 		AD8130FF2A85360800729E03 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FE2A85360800729E03 /* LiveDependencies.swift */; };
 		AD8C78AE29898403008AC0B5 /* AppSessionManagerImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8C78AD29898403008AC0B5 /* AppSessionManagerImplementationTests.swift */; };
+		AD9F19502B55D6770034F329 /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = AD9F194F2B55D6770034F329 /* Persistence */; };
 		ADA1A03E2A95E34000F9A6B6 /* Verifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1A03D2A95E34000F9A6B6 /* Verifier.swift */; };
 		ADE590CC2A616E4B00089165 /* ProtocolDeprecatedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE590CB2A616E4B00089165 /* ProtocolDeprecatedViewController.swift */; };
 		B22F32F8278DC07800DBB8CA /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F32F7278DC07800DBB8CA /* StringUtils.swift */; };
@@ -1130,6 +1131,7 @@
 				4C2599982A7AA27500A31895 /* TunnelKitOpenVPN in Frameworks */,
 				E59447542A86217A00E1E241 /* ProtonCoreLoginUI in Frameworks */,
 				4CD1F7872A72BEDA00E8AB01 /* BugReport in Frameworks */,
+				AD9F19502B55D6770034F329 /* Persistence in Frameworks */,
 				4C7D40592A60251700ACDBED /* SDWebImage in Frameworks */,
 				4CD1F78B2A72BF0100E8AB01 /* LegacyCommon in Frameworks */,
 				4C8571DC2A7CEC5B0057FED6 /* TrustKit in Frameworks */,
@@ -2851,6 +2853,7 @@
 				4C25999B2A7AA29800A31895 /* Dependencies */,
 				4C8571DB2A7CEC5B0057FED6 /* TrustKit */,
 				E59447532A86217A00E1E241 /* ProtonCoreLoginUI */,
+				AD9F194F2B55D6770034F329 /* Persistence */,
 			);
 			productName = ProtonVPN;
 			productReference = EED534811EEC112000013607 /* ProtonVPN.app */;
@@ -4867,6 +4870,10 @@
 		4CD1F79D2A72E57F00E8AB01 /* LegacyCommon */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LegacyCommon;
+		};
+		AD9F194F2B55D6770034F329 /* Persistence */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Persistence;
 		};
 		D50B8020295DC3F900D85D29 /* NEHelper */ = {
 			isa = XCSwiftPackageProductDependency;

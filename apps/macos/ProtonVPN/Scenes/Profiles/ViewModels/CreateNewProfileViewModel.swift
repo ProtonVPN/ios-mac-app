@@ -63,7 +63,7 @@ class CreateNewProfileViewModel {
 
     var secureCoreWarning: (() -> Void)?
     var alreadyPresentedSecureCoreWarning = false
-    
+
     let sessionFinished = NSNotification.Name("CreateNewProfileViewModelSessionFinished") // two observers
 
     private lazy var serverManager: ServerManager =

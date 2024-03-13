@@ -216,12 +216,15 @@ class CountryItemViewModel {
     
     private func serverViewModels(for servers: [ServerModel]) -> [ServerItemViewModel] {
         return servers.map { (server) -> ServerItemViewModel in
+            let fullServerInfo = VPNServer(legacyModel: server)
+            let serverInfo = ServerInfo(logical: fullServerInfo.logical, protocolSupport: fullServerInfo.supportedProtocols)
+
             switch serverType {
             case .standard, .p2p, .tor, .unspecified:
-                return ServerItemViewModel(serverModel: server, vpnGateway: vpnGateway, appStateManager: appStateManager,
+                return ServerItemViewModel(serverModel: serverInfo, vpnGateway: vpnGateway, appStateManager: appStateManager,
                                            alertService: alertService, connectionStatusService: connectionStatusService, propertiesManager: propertiesManager, planService: planService)
             case .secureCore:
-                return SecureCoreServerItemViewModel(serverModel: server, vpnGateway: vpnGateway, appStateManager: appStateManager,
+                return SecureCoreServerItemViewModel(serverModel: serverInfo, vpnGateway: vpnGateway, appStateManager: appStateManager,
                                                      alertService: alertService, connectionStatusService: connectionStatusService, propertiesManager: propertiesManager, planService: planService)
             }
         }

@@ -18,6 +18,8 @@
 
 import Foundation
 
+import Domain
+
 /// This exists because the `attemptSilentLogIn()` function needs to be overridden.
 class AppSessionRefresherMock: AppSessionRefresherImplementation {
     var didAttemptLogin: (() -> Void)?
@@ -52,8 +54,13 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
                 if let services = properties.streamingServices {
                     self.propertiesManager.streamingServices = services.streamingServices
                 }
-                self.serverStorage.store(properties.serverModels, keepStalePaidServers: isFreeTier)
-                completion(.success)
+                do {
+                    // shouldLeaveStaleEntry: delete existing paid servers before inserting fresh ones?
+                    try self.serverRepository.insertServers(properties.serverModels.map { VPNServer(legacyModel: $0) })
+                    completion(.success)
+                } catch {
+                    completion(.failure(error))
+                }
             case let .failure(error):
                 completion(.failure(error))
             }

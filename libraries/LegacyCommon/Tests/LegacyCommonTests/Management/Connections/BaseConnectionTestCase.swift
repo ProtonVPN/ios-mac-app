@@ -25,6 +25,7 @@ import GoLibs
 
 import Domain
 import ExtensionIPC
+import Persistence
 import VPNShared
 
 @testable import LegacyCommon
@@ -48,6 +49,7 @@ class BaseConnectionTestCase: XCTestCase {
 
     var testData = MockTestData()
     var container: MockDependencyContainer!
+    var serverStorage: MockServerStorage!
 
     var tunnelManagerCreated: ((NETunnelProviderManagerMock) -> Void)?
     var connectionCreated: ((NEVPNConnectionMock) -> Void)?
@@ -65,7 +67,13 @@ class BaseConnectionTestCase: XCTestCase {
 
     override func setUp() async throws {
         try await super.setUp()
-        container = MockDependencyContainer()
+        serverStorage = MockServerStorage()
+        let serverRepository = ServerRepository.mock(storage: serverStorage)
+        container = withDependencies {
+            $0.serverRepository = serverRepository
+        } operation: {
+            MockDependencyContainer()
+        }
         container.propertiesManager.featureFlags = testData.defaultClientConfig.featureFlags
 
         container.networkingDelegate.didHitRoute = didHitRoute
@@ -73,6 +81,7 @@ class BaseConnectionTestCase: XCTestCase {
         container.networkingDelegate.apiVpnLocation = .mock
         container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
         container.serverStorage.populateServers(container.networkingDelegate.apiServerList)
+        try serverRepository.insertServers(container.networkingDelegate.apiServerList.map { VPNServer(legacyModel: $0) })
 
         for name in neVpnEvents {
             NotificationCenter.default.addObserver(self, selector: #selector(handleNEVPNEvent(_:)), name: name, object: nil)

@@ -147,15 +147,13 @@ public class ServerModel: NSObject, NSCoding, Codable {
         ips.contains { $0.supports(vpnProtocol: vpnProtocol) }
     }
 
-    public func supports(connectionProtocol: ConnectionProtocol,
-                         smartProtocolConfig: SmartProtocolConfig) -> Bool {
+    public func supports(connectionProtocol: ConnectionProtocol, smartProtocolConfig: SmartProtocolConfig) -> Bool {
         if let vpnProtocol = connectionProtocol.vpnProtocol {
             return supports(vpnProtocol: vpnProtocol)
         }
 
         return ips.contains {
-            $0.supports(connectionProtocol: connectionProtocol,
-                        smartProtocolConfig: smartProtocolConfig)
+            $0.supports(connectionProtocol: connectionProtocol, smartProtocolConfig: smartProtocolConfig)
         }
     }
 

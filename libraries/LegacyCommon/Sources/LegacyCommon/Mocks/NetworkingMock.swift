@@ -8,12 +8,15 @@
 
 #if DEBUG
 import Foundation
+
+import ProtonCoreAuthentication
+import ProtonCoreEnvironment
+import ProtonCoreFoundations
 import ProtonCoreNetworking
 import ProtonCoreServices
-import ProtonCoreAuthentication
-import ProtonCoreFoundations
+
+import Domain
 import VPNShared
-import ProtonCoreEnvironment
 
 import XCTestDynamicOverlay
 

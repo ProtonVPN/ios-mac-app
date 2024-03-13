@@ -20,6 +20,8 @@
 import Foundation
 import NetworkExtension
 
+import Dependencies
+
 import Domain
 import Timer
 import TimerMock
@@ -27,6 +29,8 @@ import VPNShared
 import VPNSharedTesting
 
 public class MockDependencyContainer {
+
+    @Dependency(\.serverRepository) var serverRepository
     public static let appGroup = "test"
     public static let wireguardProviderBundleId = "ch.protonvpn.test.wireguard"
     public static let openvpnProviderBundleId = "ch.protonvpn.test.openvpn"
@@ -43,7 +47,12 @@ public class MockDependencyContainer {
     }()
 
     public lazy var alertService = CoreAlertServiceDummy()
-    lazy var appSessionRefresher = AppSessionRefresherMock(factory: MockFactory(container: self))
+    lazy var appSessionRefresher = { withDependencies {
+        $0.serverRepository = self.serverRepository
+    } operation: {
+        AppSessionRefresherMock(factory: MockFactory(container: self))
+    } }()
+
     lazy var appSessionRefreshTimer = {
         let result = AppSessionRefreshTimerImplementation(
             factory: MockFactory(container: self),
@@ -165,7 +174,7 @@ public class MockDependencyContainer {
 
     public lazy var availabilityCheckerResolverFactory = AvailabilityCheckerResolverFactoryMock(checkers: checkers)
 
-    public lazy var vpnGateway = VpnGateway(
+    public lazy var vpnGateway = { withDependencies { $0.serverRepository = self.serverRepository } operation: { VpnGateway(
         vpnApiService: vpnApiService,
         appStateManager: appStateManager,
         alertService: alertService,
@@ -178,7 +187,7 @@ public class MockDependencyContainer {
         profileManager: profileManager,
         availabilityCheckerResolverFactory: availabilityCheckerResolverFactory,
         serverStorage: serverStorage
-    )
+    ) } }()
 
     public init() {}
 }

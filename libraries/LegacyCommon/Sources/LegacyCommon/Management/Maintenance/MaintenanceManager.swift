@@ -22,6 +22,10 @@
 
 import Foundation
 
+import Dependencies
+
+import Domain
+
 public protocol MaintenanceManagerFactory {
     func makeMaintenanceManager() -> MaintenanceManagerProtocol
 }
@@ -115,7 +119,13 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
                 ) { result in
                     switch result {
                     case let .success(servers):
-                        self.serverStorage.store(servers, keepStalePaidServers: isFree)
+                        do {
+                            @Dependency(\.serverRepository) var repository
+                            // keepStalePaidServers: refreshFreeTierInfo -> should we delete old paid servers before inserting?
+                            try repository.insertServers(servers.map { VPNServer(legacyModel: $0) })
+                        } catch {
+                            log.error("Failed to persist servers", category: .persistence, metadata: ["error": "\(error)"])
+                        }
                         completion?(true)
                     case let .failure(error):
                         failure?(error)

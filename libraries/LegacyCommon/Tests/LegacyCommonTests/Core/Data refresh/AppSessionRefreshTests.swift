@@ -17,18 +17,24 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-@testable import LegacyCommon
 import XCTest
+
+import Dependencies
+
+import ProtonCoreNetworking
+import ProtonCoreTestingToolkitUnitTestsCore
+
+@testable import LegacyCommon
+import Domain
+import Persistence
 import Timer
 import TimerMock
 import VPNSharedTesting
-import ProtonCoreNetworking
-import ProtonCoreTestingToolkitUnitTestsCore
 
 class AppSessionRefreshTimerTests: XCTestCase {
     var alertService: CoreAlertServiceDummy!
     var propertiesManager: PropertiesManagerMock!
-    var serverStorage: ServerStorageMock!
+    var serverStorage: MockServerStorage!
     var networking: NetworkingMock!
     var networkingDelegate: FullNetworkingMockDelegate!
     var apiService: VpnApiService!
@@ -37,6 +43,7 @@ class AppSessionRefreshTimerTests: XCTestCase {
     var timerFactory: TimerFactoryMock!
     var appSessionRefreshTimer: AppSessionRefreshTimer!
     var authKeychain: MockAuthKeychain!
+    var repository: ServerRepository!
 
     let testData = MockTestData()
     let location: MockTestData.VPNLocationResponse = .mock
@@ -45,15 +52,21 @@ class AppSessionRefreshTimerTests: XCTestCase {
         super.setUp()
         alertService = CoreAlertServiceDummy()
         propertiesManager = PropertiesManagerMock()
-        serverStorage = ServerStorageMock(servers: [testData.server1, testData.server2, testData.server3])
         networking = NetworkingMock()
         networkingDelegate = FullNetworkingMockDelegate()
+        let initialServers = [testData.server1, testData.server2, testData.server3].map { VPNServer(legacyModel: $0) }
+        serverStorage = MockServerStorage(servers: initialServers)
+        repository = .mock(storage: serverStorage)
 
         networking.delegate = networkingDelegate
         vpnKeychain = VpnKeychainMock()
         authKeychain = MockAuthKeychain()
         apiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation(), authKeychain: authKeychain)
-        appSessionRefresher = AppSessionRefresherMock(factory: self)
+        appSessionRefresher = withDependencies {
+            $0.serverRepository = repository
+        } operation: {
+            return AppSessionRefresherMock(factory: self)
+        }
         timerFactory = TimerFactoryMock()
         appSessionRefreshTimer = AppSessionRefreshTimerImplementation(
             factory: self,
@@ -77,21 +90,21 @@ class AppSessionRefreshTimerTests: XCTestCase {
         appSessionRefreshTimer = nil
     }
 
-    func checkForSuccessfulServerUpdate() {
+    func checkForSuccessfulServerUpdate() throws {
         for serverUpdate in networkingDelegate.apiServerLoads {
-            guard let server = serverStorage.servers[serverUpdate.serverId] else {
+            guard let server = try repository.server([.logicalID(serverUpdate.serverId)], .fastest) else {
                 XCTFail("Could not find server with id \(serverUpdate.serverId)")
                 continue
             }
 
-            XCTAssertEqual(serverUpdate.serverId, server.id)
-            XCTAssertEqual(serverUpdate.score, server.score)
-            XCTAssertEqual(serverUpdate.load, server.load)
-            XCTAssertEqual(serverUpdate.status, server.status)
+            XCTAssertEqual(serverUpdate.serverId, server.logical.id)
+            XCTAssertEqual(serverUpdate.score, server.logical.score)
+            XCTAssertEqual(serverUpdate.load, server.logical.load)
+            XCTAssertEqual(serverUpdate.status, server.logical.status)
         }
     }
 
-    func testRefreshTimer() { // swiftlint:disable:this function_body_length
+    func testRefreshTimer() throws { // swiftlint:disable:this function_body_length
         let expectations = (
             updateServers: (1...2).map { XCTestExpectation(description: "update server list #\($0)") },
             updateCredentials: XCTestExpectation(description: "update vpn credentials"),
@@ -101,7 +114,7 @@ class AppSessionRefreshTimerTests: XCTestCase {
 
         var (nServerUpdates, nCredUpdates) = (0, 0)
 
-        serverStorage.didUpdateServers = { _ in
+        serverStorage.didUpdateLoads = { _ in
             guard nServerUpdates < expectations.updateServers.count else {
                 XCTFail("Index out of range")
                 return
@@ -135,9 +148,8 @@ class AppSessionRefreshTimerTests: XCTestCase {
         timerFactory.runRepeatingTimers()
         wait(for: [expectations.updateServers[0], expectations.updateCredentials], timeout: 10)
         XCTAssertNotNil(vpnKeychain.credentials)
-        XCTAssertEqual(vpnKeychain.credentials?.description,
-                       networkingDelegate.apiCredentials?.description)
-        checkForSuccessfulServerUpdate()
+        XCTAssertEqual(vpnKeychain.credentials?.description, networkingDelegate.apiCredentials?.description)
+        try checkForSuccessfulServerUpdate()
 
         networkingDelegate.apiServerLoads = [
             .init(serverId: testData.server3.id, load: 10, score: 1.2345, status: 0),
@@ -156,7 +168,7 @@ class AppSessionRefreshTimerTests: XCTestCase {
 
         timerFactory.runRepeatingTimers()
         wait(for: [expectations.updateServers[1], expectations.displayAlert], timeout: 10)
-        checkForSuccessfulServerUpdate()
+        try checkForSuccessfulServerUpdate()
 
         guard let alert = alertService.alerts.last as? AppUpdateRequiredAlert else {
             XCTFail("Displayed wrong kind of alert during app info refresh")
@@ -195,7 +207,7 @@ class AppSessionRefreshTimerTests: XCTestCase {
     }
 }
 
-extension AppSessionRefreshTimerTests: VpnApiServiceFactory, VpnKeychainFactory, PropertiesManagerFactory, ServerStorageFactory, CoreAlertServiceFactory, AppSessionRefresherFactory, TimerFactoryCreator {
+extension AppSessionRefreshTimerTests: VpnApiServiceFactory, VpnKeychainFactory, PropertiesManagerFactory, CoreAlertServiceFactory, AppSessionRefresherFactory, TimerFactoryCreator {
 
     func makeTimerFactory() -> TimerFactory {
         return timerFactory
@@ -207,10 +219,6 @@ extension AppSessionRefreshTimerTests: VpnApiServiceFactory, VpnKeychainFactory,
 
     func makePropertiesManager() -> PropertiesManagerProtocol {
         return propertiesManager
-    }
-
-    func makeServerStorage() -> ServerStorage {
-        return serverStorage
     }
 
     func makeVpnApiService() -> VpnApiService {

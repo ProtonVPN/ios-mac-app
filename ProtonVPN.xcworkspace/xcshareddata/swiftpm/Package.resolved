@@ -65,6 +65,15 @@
         }
       },
       {
+        "package": "GRDB",
+        "repositoryURL": "https://github.com/groue/GRDB.swift",
+        "state": {
+          "branch": null,
+          "revision": "eacbdf23af4228dea3bd0e5feb17c0f953829c15",
+          "version": "6.23.0"
+        }
+      },
+      {
         "package": "GSMessages",
         "repositoryURL": "https://github.com/wxxsw/GSMessages",
         "state": {

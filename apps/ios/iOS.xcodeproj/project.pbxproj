@@ -153,16 +153,20 @@
 		79FD80E521108049003B16E2 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FD80E421108049003B16E2 /* LaunchViewController.swift */; };
 		79FF145320C41ECE00BA3623 /* ProfilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FF145220C41ECE00BA3623 /* ProfilesViewController.swift */; };
 		79FF145520C41EE200BA3623 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FF145420C41EE200BA3623 /* SettingsViewController.swift */; };
-		86B07CD2711C002F53844E95 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */; };
 		89926E3756CED95AB662D371 /* PasswordRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */; };
 		8BC65CDA2B97645D005F2533 /* ProtonCoreTelemetry in Frameworks */ = {isa = PBXBuildFile; productRef = 8BC65CD92B97645D005F2533 /* ProtonCoreTelemetry */; };
 		A01D7C58C3C1AEBA17A6C5AF /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E128E9975D2A268D9FB56F0 /* AnnouncementDetailViewController.swift */; };
 		A264F1C92E772DA03634D8A8 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */; };
 		AD37FAC329B63E1100D4DE4E /* NetShieldStatsItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */; };
 		AD37FAC529B7310200D4DE4E /* NetShieldStatsItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */; };
+		AD445CA32B5B25C5004A2BA7 /* LegacyCommon in Frameworks */ = {isa = PBXBuildFile; productRef = AD445CA22B5B25C5004A2BA7 /* LegacyCommon */; };
 		AD6099FB299B2343007E46BC /* ImageSubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6099FA299B2343007E46BC /* ImageSubtitleTableViewCell.swift */; };
 		AD609A03299B89C0007E46BC /* ImageSubtitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD609A02299B89C0007E46BC /* ImageSubtitleTableViewCell.xib */; };
 		AD70D75E2B63238400B39ABA /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = AD70D75D2B63238400B39ABA /* PMLogger */; };
+		AD626C762B167DEF006E11FC /* ExtensionIPC in Frameworks */ = {isa = PBXBuildFile; productRef = AD626C752B167DEF006E11FC /* ExtensionIPC */; };
+		AD626C782B167DF5006E11FC /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = AD626C772B167DF5006E11FC /* Domain */; };
+		AD626C7A2B167DFC006E11FC /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = AD626C792B167DFC006E11FC /* Domain */; };
+		AD626C7C2B167E00006E11FC /* ExtensionIPC in Frameworks */ = {isa = PBXBuildFile; productRef = AD626C7B2B167E00006E11FC /* ExtensionIPC */; };
 		AD80107E2AC6CEAD000DB179 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* LiveDependencies.swift */; };
 		AD80107F2AC6CEAE000DB179 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* LiveDependencies.swift */; };
 		AD8010802AC6CEAE000DB179 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* LiveDependencies.swift */; };
@@ -307,7 +311,6 @@
 		E1D187EC2301A26D00C5F492 /* VpnProtocolViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D187EB2301A26D00C5F492 /* VpnProtocolViewModel.swift */; };
 		E1D187F12301AB2E00C5F492 /* CheckmarkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D187EF2301AB2E00C5F492 /* CheckmarkTableViewCell.swift */; };
 		E1D187F32301AB2E00C5F492 /* CheckmarkTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1D187F02301AB2E00C5F492 /* CheckmarkTableViewCell.xib */; };
-		E1D187F42301AB2E00C5F492 /* CheckmarkTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1D187F02301AB2E00C5F492 /* CheckmarkTableViewCell.xib */; };
 		E1D21AAD21830E72000C389B /* SecureCoreEntryCountryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D21AAC21830E72000C389B /* SecureCoreEntryCountryModel.swift */; };
 		E1D21AB121831039000C389B /* AnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D21AB021831039000C389B /* AnnotationView.swift */; };
 		E1D21AB321831DA2000C389B /* AnnotationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D21AB221831DA2000C389B /* AnnotationViewModel.swift */; };
@@ -317,10 +320,8 @@
 		E1EB9E7B23015FF2009E704F /* LogsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EB9E7A23015FF2009E704F /* LogsViewModel.swift */; };
 		E1FB547B230C000E00153F4D /* TitleTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FB5479230C000E00153F4D /* TitleTextFieldTableViewCell.swift */; };
 		E1FB547C230C000E00153F4D /* TitleTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB547A230C000E00153F4D /* TitleTextFieldTableViewCell.xib */; };
-		E1FB547E230C001E00153F4D /* TitleTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB547A230C000E00153F4D /* TitleTextFieldTableViewCell.xib */; };
 		E1FB5481230C2DD000153F4D /* ColorPickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FB547F230C2DD000153F4D /* ColorPickerTableViewCell.swift */; };
 		E1FB5483230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
-		E1FB5484230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
 		E52508A32B3439E6006E6998 /* CreateOrEditProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05322E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift */; };
 		E52508A42B3439E6006E6998 /* MapViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E129C66922A8E8EA00D8437E /* MapViewModelTests.swift */; };
 		E52508A52B3439E6006E6998 /* ColorPickerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C8D2285A2620002C095 /* ColorPickerViewModelTests.swift */; };
@@ -387,7 +388,6 @@
 		E99799AA26A6FE0C0083D61E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99799A026A6FE0C0083D61E /* Logger.swift */; };
 		E99799AB26A6FE0C0083D61E /* ErrorNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99799A226A6FE0C0083D61E /* ErrorNotifier.swift */; };
 		E9F88DE527B517C0003E5179 /* Colors+BugReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F88DE427B517C0003E5179 /* Colors+BugReport.swift */; };
-		ED1BD7A5112EE2E929DFBEA8 /* AnnouncementDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01B66D12FF24C71F902E71AF /* AnnouncementDetailViewController.xib */; };
 		F3082A6F27E2293D001A83DF /* CityItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3082A6E27E2293D001A83DF /* CityItemViewModel.swift */; };
 		F314141927B170FC007424E9 /* NetShieldSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141827B170FC007424E9 /* NetShieldSelectionViewModel.swift */; };
 		F314141B27B17380007424E9 /* NetShieldSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141A27B17380007424E9 /* NetShieldSelectionViewController.swift */; };
@@ -2726,11 +2726,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E129C6D422A933F200D8437E /* LiveServers.json in Resources */,
-				E1FB5484230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */,
-				E1FB547E230C001E00153F4D /* TitleTextFieldTableViewCell.xib in Resources */,
-				E1D187F42301AB2E00C5F492 /* CheckmarkTableViewCell.xib in Resources */,
-				86B07CD2711C002F53844E95 /* AnnouncementFeatureView.xib in Resources */,
-				ED1BD7A5112EE2E929DFBEA8 /* AnnouncementDetailViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

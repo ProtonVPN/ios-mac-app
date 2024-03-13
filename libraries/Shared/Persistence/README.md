@@ -1,3 +1,86 @@
 # Persistence
 
 Implementation of and interfaces for persisting models such as information about servers.
+
+## Architecture
+
+`Persistence` defines interfaces for repositories used to fetch and persist servers as well as aggregate information such as groups and server endpoints.
+The interface uses domain models from `Domain` such as 'VPNServer' instead of the internal record structures that implementations might use.
+
+This comes with a performance overhead due to the need to convert between representations, but it should be negligable for normal use cases where the number of objects is not excessive.
+
+## Interface Design
+
+`ServerRepository` provides what is essentially a subset of CRUD operations for Logicals, Servers and Loads along with some grouping queries.
+Query are specified using an array of `VPNServerFilter`, which enables fetching servers, or groups of servers, filtered by parameters such as tier, server features, or country.
+
+```
+// All sever groups for which every server supports p2p
+repository.groups([.features(.p2p)]
+
+// All free Swiss servers
+repository.servers([.maxTier(0), .kind(.country("CH")]
+```
+
+`RDBPersistence` (Relational Database Persistence), provides an implementation of repositories provided by `Persistence`.
+It's built using [GRDB](https://swiftpackageindex.com/groue/grdb.swift).
+
+It makes heavy use of the [Query Interface DSL](https://swiftpackageindex.com/groue/grdb.swift#user-content-the-query-interface), so it is recommended to familiarise yourself with their documentation.
+
+## Schema
+
+We define four tables, each of which is used with a record type.
+ `Logical` (holds the static information for each `Domain.Logical`), `Endpoint` (represents `Domain.ServerEndpoint`), `LogicalStatus` which holds the dynamic information from `Domain.Logical`, and `OverrideInfo` which holds per protocol override information for each endpoint.
+
+In addition to these record types, Persistence defines some additional result types.
+do not have corresponding tables in the database, but are used to decode query results of table joins, along with associated objects, or annotated aggregate values.
+
+These include:
+- `GroupInfoResult` - Contains aggregate information about a group of logicals and their endpoints, such as the range of features it supports
+- `ServerInfoResult` - Contains information about a `Logical` and aggregated endpoint information. Only one `SELECT` statement is required to fetch a set of server results, which makes this appropriate for e.g. displaying a list of servers in the UI
+- `ServerResult` - Useful for cases where full information about a `Logical` and all of its endpoints is required, e.g. when attempting to connect to a selected `Logical`
+
+Refer to [Recommended Practices](https://swiftpackageindex.com/groue/grdb.swift/v6.23.0/documentation/grdb/recordrecommendedpractices#How-to-Model-Graphs-of-Objects) when making changes to the schema.
+
+## Testing
+
+`Dependencies` will auto-fail any logic that accesses `serverRepository` without providing a mock implementation.
+We use value types to define `serverRepository` instead of a protocol, meaning only the methods which are actually used by the system under test, need to be implemented:
+
+```
+func testXDoesntBurnWhenServerListIsEmpty() {
+    withDependencies {
+        $0.serverRepository = .init(servers: [])
+    } operation: {
+        ... // something in operation invokes serverRepository.servers
+    }
+}
+
+```
+
+## FAQ
+
+### Why Synchronous API?
+
+Disk-based SQLite with optimised tables and queries should be very fast, even with very large statements and queries.
+If we hit a performance roadblock, we can always start loading the database to memory on app init, perform queries and updates in-memory, and persist after updating when necessary.
+
+Some of the larger operations like persisting the whole initial server list can always be wrapped in a task and performed in the background, without the repository interface needing to be asynchronous.
+
+### Record Structs & DSL
+
+Separating domain models and database records and relying on GRDB's query interface has ergonomic benefits but requires using multiple intermediate representations.
+Implementation specific structs such as `Logical` live in the RDBPersistence/Logicals/Schema folder.
+
+## Future Work
+
+### Relational DB Optimization
+
+- Investigate adding further indexes, using the `EXPLAIN QUERY PLAN` feature of SQLite to highlight areas of concern
+- Improve text search (see `sqlExpression` implementation of `VPNServerFilter.matches`)
+- Ordering servers by name cannot be done with naive string comparison: `DE#10 < DE#9`
+
+### Additional Candidates for Persistence
+
+ - Profiles/Recents
+   - Or at least refer to them by ID instead of serializing the whole object with `NSCoding`

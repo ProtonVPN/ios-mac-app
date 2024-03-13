@@ -17,11 +17,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import XCTest
-import LegacyCommon
 
-import VPNShared
 import Dependencies
+
 import Ergonomics
+import LegacyCommon
+import Persistence
+import VPNShared
 import VPNSharedTesting
 import ProtonCoreNetworking
 @testable import ProtonVPN
@@ -43,7 +45,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     fileprivate var authKeychain: AuthKeychainHandleMock!
     fileprivate var unauthKeychain: UnauthKeychainMock!
     var propertiesManager: PropertiesManagerMock!
-    var serverStorage: ServerStorageMock!
+    var serverStorage: MockServerStorage!
     var networking: NetworkingMock!
     var networkingDelegate: FullNetworkingMockDelegate!
     var manager: AppSessionManagerImplementation!
@@ -61,6 +63,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         vpnKeychain = VpnKeychainMock()
         alertService = AppSessionManagerAlertServiceMock()
         appStateManager = AppStateManagerMock()
+        serverStorage = MockServerStorage(servers: [])
 
 
         networkingDelegate = FullNetworkingMockDelegate()
@@ -77,6 +80,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
         manager = withDependencies {
             $0.date = .constant(Date())
+            $0.serverRepository = .mock(storage: serverStorage)
         } operation: {
             let factory = ManagerFactoryMock(
                 vpnAPIService: mockAPIService,

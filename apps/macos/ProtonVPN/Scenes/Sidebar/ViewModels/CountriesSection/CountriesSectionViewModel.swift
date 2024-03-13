@@ -28,6 +28,7 @@ import Dependencies
 import Domain
 import Strings
 import Theme
+import Persistence
 import LegacyCommon
 import VPNShared
 import VPNAppCore
@@ -72,7 +73,9 @@ protocol CountriesSettingsDelegate: AnyObject {
 }
 
 class CountriesSectionViewModel {
-        
+
+    @Dependency(\.serverRepository) var repository
+
     private let vpnGateway: VpnGatewayProtocol
     private let appStateManager: AppStateManager
     private let alertService: CoreAlertService
@@ -92,14 +95,15 @@ class CountriesSectionViewModel {
     var displayFreeServicesOverlay: (() -> Void)? // Old behaviour, before free rescope
     var displayGatewaysServices: (() -> Void)?
     let contentSwitch = Notification.Name("CountriesSectionViewModelContentSwitch")
-    
+
     var isSecureCoreEnabled: Bool {
         return propertiesManager.secureCoreToggle
     }
-    
+
     var isNetShieldEnabled: Bool {
         return propertiesManager.featureFlags.netShield
     }
+
 
     /// This function constructs the view model for the informative modal about the free servers features
     /// At minimum it will include the static `FreeServersFeatureCellViewModel` and if the `v1/partners/` endpoint
@@ -146,24 +150,24 @@ class CountriesSectionViewModel {
     }
 
     private var freeCountries: [(String, NSImage?)] {
-        return serverGroups.compactMap { (serverGroup: ServerGroup) -> (String, NSImage?)? in
+        return serverGroups?.compactMap { (serverGroup: ServerGroupInfo) -> (String, NSImage?)? in
             switch serverGroup.kind {
-            case .country(let countryModel):
-                guard countryModel.lowestTier == 0 else {
+            case .country(let countryCode):
+                guard serverGroup.minTier == 0 else {
                     return nil
                 }
                 return (
-                    LocalizationUtility.default.countryName(forCode: countryModel.countryCode) ?? Localizable.unavailable,
-                    AppTheme.Icon.flag(countryCode: countryModel.countryCode)
+                    LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable,
+                    AppTheme.Icon.flag(countryCode: countryCode)
                 )
             case .gateway:
                 return nil
             }
-        }
+        } ?? []
     }
-    
+
     // MARK: - QuickSettings presenters
-    
+
     var secureCorePresenter: QuickSettingDropdownPresenter {
         return SecureCoreDropdownPresenter(factory)
     }
@@ -173,12 +177,12 @@ class CountriesSectionViewModel {
     var killSwitchPresenter: QuickSettingDropdownPresenter {
         return KillSwitchDropdownPresenter(factory)
     }
-    
+
     var notificationCenter: NotificationCenter = .default
     private var secureCoreState: Bool
-    private var serverGroups: [ServerGroup] = []
-    private var data: [CellModel] = []
-    private var servers: [String: [CellModel]] = [:]
+    private var serverGroups: [ServerGroupInfo]? // cache containing summaries about each gateway or country
+    private var servers: [String: [CellModel]] = [:] // cache for server information for previously expanded groups
+    private var data: [CellModel] = [] // source of information for the view
     private var userTier: Int = .freeTier {
         didSet {
             notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: serverManager.contentChanged, object: nil)
@@ -190,22 +194,22 @@ class CountriesSectionViewModel {
     }
 
     private var connectedServer: ServerModel?
-    
-    typealias Factory = VpnGatewayFactory &
-        CoreAlertServiceFactory &
-        PropertiesManagerFactory &
-        AppStateManagerFactory &
-        NetShieldPropertyProviderFactory &
-        CoreAlertServiceFactory &
-        VpnKeychainFactory &
-        VpnManagerFactory &
-        VpnStateConfigurationFactory &
-        ModelIdCheckerFactory &
-        SystemExtensionManagerFactory &
-        AnnouncementManagerFactory
+
+    typealias Factory = VpnGatewayFactory
+        & CoreAlertServiceFactory
+        & PropertiesManagerFactory
+        & AppStateManagerFactory
+        & NetShieldPropertyProviderFactory
+        & CoreAlertServiceFactory
+        & VpnKeychainFactory
+        & VpnManagerFactory
+        & VpnStateConfigurationFactory
+        & ModelIdCheckerFactory
+        & SystemExtensionManagerFactory
+        & AnnouncementManagerFactory
 
     private let factory: Factory
-    
+
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
 
     init(factory: Factory) {
@@ -244,18 +248,47 @@ class CountriesSectionViewModel {
     func displayCountryUpsell(countryCode: String) {
         alertService.push(alert: CountryUpsellAlert(countryFlag: .flag(countryCode: countryCode)!))
     }
-    
+
+    func cellsForGroup(of kind: ServerGroupInfo.Kind) -> [CellModel] {
+        let cacheID = kind.cacheID
+
+        if let cells = servers[cacheID] {
+            return cells
+        }
+
+        let filters: [VPNServerFilter] = [kind.filter, .features(isSecureCoreEnabled ? .secureCore : .standard)]
+        do {
+            let countryServers = try repository.servers(filters, .nameAscending)
+
+            let countryCells = countryServers.map { CellModel.server(self.serverViewModel($0)) }
+
+            self.servers[cacheID] = countryCells
+
+            return countryCells
+        } catch {
+            log.error(
+                "Failed to fetch servers",
+                category: .persistence,
+                metadata: ["error": "\(error)", "filters": "\(filters)", "group": "\(kind)"]
+            )
+            return []
+        }
+    }
+
     func toggleCountryCell(for countryViewModel: CountryItemViewModel) {
         guard let index = data.firstIndex(where: {
             if case .country(let countryVM) = $0, countryVM.id == countryViewModel.id { return true }
             return false
         }) else {
+            log.error("Cannot toggle country cell - failed to find index for country: \(countryViewModel.id)")
             return
         }
 
+        let cells = cellsForGroup(of: countryViewModel.groupKind)
+
         if !expandedCountries.contains(countryViewModel.id) {
             expandedCountries.insert(countryViewModel.id)
-            let offset = insertServers(index + 1, countryCode: countryViewModel.id, serversFilter: countryViewModel.serversFilter)
+            let offset = insertServers(index + 1, serverCells: cells)
             let contentChange = ContentChange(insertedRows: IndexSet(integersIn: index + 1 ..< index + offset + 1))
             contentChanged?(contentChange)
         } else {
@@ -267,7 +300,7 @@ class CountriesSectionViewModel {
             }
         }
     }
-    
+
     func filterContent(forQuery query: String) {
         let pastCount = totalRowCount
         expandedCountries.removeAll()
@@ -277,96 +310,42 @@ class CountriesSectionViewModel {
         let contentChange = ContentChange(insertedRows: IndexSet(integersIn: 0..<newCount), removedRows: IndexSet(integersIn: 0..<pastCount))
         contentChanged?(contentChange)
     }
-        
+
     var cellCount: Int { return totalRowCount }
-    
+
     func cellModel(forRow row: Int) -> CellModel? {
         return data[row]
     }
 
     func showStreamingServices(server: ServerItemViewModel) {
-        guard !propertiesManager.secureCoreToggle, server.serverModel.tier > 1, let streamServicesDict = propertiesManager.streamingServices[server.serverModel.countryCode], let key = streamServicesDict.keys.first, let streamServices = streamServicesDict[key] else {
+        guard !propertiesManager.secureCoreToggle, server.serverModel.logical.tier > 1, let streamServicesDict = propertiesManager.streamingServices[server.serverModel.logical.exitCountryCode], let key = streamServicesDict.keys.first, let streamServices = streamServicesDict[key] else {
             return
         }
 
-        displayStreamingServices?(server.serverModel.country, streamServices, propertiesManager)
+        displayStreamingServices?(server.serverModel.logical.country, streamServices, propertiesManager)
     }
-    
+
     // MARK: - Private functions
-    private func setTier() {
-        notificationCenter.removeObserver(self, name: serverManager.contentChanged, object: nil) // Re-subscription happens after userTier is set
+
+    @discardableResult
+    private func refreshTier() -> Int {
+        // Re-subscription happens after userTier is set
+        notificationCenter.removeObserver(self, name: serverManager.contentChanged, object: nil)
         do {
             if (try? vpnKeychain.fetch())?.isDelinquent == true {
                 userTier = .freeTier
-                return
+                return userTier
             }
             userTier = try vpnGateway.userTier()
         } catch {
             userTier = .freeTier
         }
+
+        return userTier
     }
 
     private var currentConnectionProtocol: ConnectionProtocol {
         propertiesManager.connectionProtocol
-    }
-    
-    private func setupServers(containsGateways: Bool) {
-        servers = [:]
-        self.serverGroups.forEach { group in
-            let availableServers = group.servers.filter {
-                $0.supports(connectionProtocol: currentConnectionProtocol,
-                            smartProtocolConfig: propertiesManager.smartProtocolConfig)
-            }
-
-            let freeServers: [CellModel] = availableServers
-                .filter { $0.tier == 0 && !$0.feature.contains(.restricted) }
-                .map { .server(self.serverViewModel($0)) }
-
-            let plusServers: [CellModel] = availableServers
-                .filter { $0.tier > 1 && !$0.feature.contains(.restricted) }
-                .map { .server(self.serverViewModel($0)) }
-
-            let gatewayServers: [CellModel] = availableServers
-                .filter { $0.feature.contains(.restricted) }
-                .map { .server(self.serverViewModel($0)) }
-
-            let freeHeaderVM = ServerHeaderViewModel(Localizable.freeServers, totalServers: freeServers.count, serverGroup: group, tier: 0, propertiesManager: propertiesManager, countriesViewModel: self)
-            let plusHeaderVM = ServerHeaderViewModel(Localizable.plusServers, totalServers: plusServers.count, serverGroup: group, tier: 2, propertiesManager: propertiesManager, countriesViewModel: self)
-
-            var cells = [CellModel]()
-
-            let addFree = {
-                if freeServers.isEmpty { return }
-                cells.append(.header(freeHeaderVM))
-                cells.append(contentsOf: freeServers)
-            }
-
-            let addPlus = {
-                if plusServers.isEmpty { return }
-                cells.append(.header(plusHeaderVM))
-                cells.append(contentsOf: plusServers)
-            }
-
-            let addGateways = {
-                if gatewayServers.isEmpty { return }
-                cells.append(contentsOf: gatewayServers)
-            }
-
-            // Gateways always go first.
-            // Then depending on user tier we first show best available servers
-            switch userTier {
-            case 0, 1:
-                addGateways()
-                addFree()
-                addPlus()
-            default:
-                addGateways()
-                addPlus()
-                addFree()
-            }
-
-            self.servers[group.serverOfferingId] = cells
-        }
     }
 
     @objc private func reloadDataOnChange() {
@@ -386,20 +365,20 @@ class CountriesSectionViewModel {
 
         notificationCenter.post(name: self.contentSwitch, object: nil)
     }
-    
+
     @objc private func vpnConnectionChanged() {
         if secureCoreState != propertiesManager.secureCoreToggle {
             secureCoreState = propertiesManager.secureCoreToggle
             updateSecureCoreState()
         }
-        
+
         if case .disconnected = appStateManager.state {
             guard let currentServer = self.connectedServer else { return }
             reloadData([currentServer])
             self.connectedServer = nil
             return
         }
-        
+
         if case .connected = appStateManager.state {
             guard let newServer = appStateManager.activeConnection()?.server, newServer.id != connectedServer?.id else { return }
             var servers = [newServer]
@@ -416,111 +395,140 @@ class CountriesSectionViewModel {
             case .country(let countryVM):
                 return servers.first(where: { $0.countryCode == countryVM.countryCode }) != nil ? offset : nil
             case .server(let serverVM):
-                return servers.first(where: { $0.id == serverVM.serverModel.id }) != nil ? offset : nil
+                return servers.first(where: { $0.id == serverVM.serverModel.logical.id }) != nil ? offset : nil
             default:
                 return nil
             }
         }
         self.contentChanged?(ContentChange(reload: IndexSet(indexes)))
     }
-    
+
     private var totalRowCount: Int {
         return data.count
     }
-    
+
     private func updateState() {
-        setTier()
-        let serverType: ServerType = isSecureCoreEnabled ? .secureCore : .standard
-        self.serverGroups = serverManager.grouping(for: serverType, query: currentQuery)
-        let groupResult = groupCountryGroupsIntoSections(self.serverGroups, serverType: serverType)
-        data = groupResult.0
-        setupServers(containsGateways: groupResult.1)
+        refreshTier()
+
+        let filters = serverFilters(isSecureCoreEnabled: isSecureCoreEnabled, searchQuery: currentQuery)
+
+        do {
+            serverGroups = try repository.groups(filters) // query and cache group information
+        } catch {
+            log.error(
+                "Failed to fetch server groups",
+                category: .persistence,
+                metadata: ["error": "\(error)", "filters": "\(filters)"]
+            )
+            data = []
+        }
+
+        data = makeSections()
     }
-    
+
+    private func serverFilters(isSecureCoreEnabled: Bool, searchQuery: String?) -> [VPNServerFilter] {
+        let serverTypeFilter: VPNServerFilter = .features(isSecureCoreEnabled ? .secureCore : .standard)
+        if let searchQuery {
+            return [serverTypeFilter, .matches(searchQuery)]
+        }
+        return [serverTypeFilter]
+    }
+
+    private func insertServers(_ index: Int, serverCells: [CellModel]) -> Int {
+        data.insert(contentsOf: serverCells, at: index)
+        return serverCells.count
+    }
+
     private func insertServers(_ index: Int, countryCode: String, serversFilter: ((ServerModel) -> Bool)?) -> Int {
         guard let cells = self.servers[countryCode] else { return 0 }
         data.insert(contentsOf: cells, at: index)
         return cells.count
     }
-    
+
     private func removeServers(_ index: Int) -> Int {
         let secondIndex = data[(index + 1)...].firstIndex(where: {
             if case .country = $0 { return true }
             if case .header(let vm) = $0, vm is CountryHeaderViewModel { return true }
             return false
         }) ?? data.count
-        
+
         let range = (index + 1 ..< secondIndex)
         data.removeSubrange(range)
         return range.count
     }
 
-    // todo: this can be refactored and simplified, because now `[ServerGroup]` that comes from
-    // server manager, already has restricted servers grouped into Gateways.
-    // swiftlint:disable:next function_body_length
-    private func groupCountryGroupsIntoSections(_ countries: [ServerGroup], serverType: ServerType ) -> ([CellModel], Bool) {
+    private func makeSections() -> [CellModel] {
+        guard let serverGroups else { return [] }
         var gatewaysSection = [CellModel]()
-        var defaultServersFilter: ((ServerModel) -> Bool)?
-        var containsGateways = false
 
-        let gatewayContent = countries.filter { $0.servers.contains(where: { $0.feature.contains(.restricted) }) }
+        let gatewayContent = serverGroups.filter { $0.isGateway }
         if !gatewayContent.isEmpty {
-            containsGateways = true
-            gatewaysSection = [ .header(CountryHeaderViewModel(Localizable.locationsGateways, totalCountries: nil, buttonType: .gateway, countriesViewModel: self)) ]
+            gatewaysSection = [.header(CountryHeaderViewModel(
+                Localizable.locationsGateways,
+                totalCountries: nil,
+                buttonType: .gateway,
+                countriesViewModel: self
+            ))]
             gatewaysSection += gatewayContent.enumerated().map { index, group -> CellModel in
-                return .country(self.countryViewModel(group, displaySeparator: index != 0, serversFilter: { $0.feature.contains(.restricted) }, showCountryConnectButton: false))
+                return .country(
+                    self.countryViewModel(
+                        group,
+                        displaySeparator: index != 0,
+                        showCountryConnectButton: false
+                    )
+                )
             }
-
-            // In case we found restricted servers, we should not only add them to the front of
-            // the list, but also remove them from the bottom part
-            defaultServersFilter = { !$0.feature.contains(.restricted) }
         }
+
+        let countries = serverGroups.filter { !$0.isGateway }
 
         if userTier > 1 {
             // PLUS VISIONARY
-            let headerVM = CountryHeaderViewModel(Localizable.locationsAll, totalCountries: countries.count, buttonType: .premium, countriesViewModel: self)
-            return (gatewaysSection
-                + [ .header(headerVM) ]
-                + countries.enumerated().compactMap { index, group -> CellModel? in
-                    if let filter = defaultServersFilter, !group.servers.contains(where: filter) {
-                        return nil
-                    }
-                    return .country(self.countryViewModel(group, displaySeparator: index != 0, serversFilter: defaultServersFilter, showCountryConnectButton: true))
-                }, containsGateways)
+            let headerVM = CountryHeaderViewModel(
+                Localizable.locationsAll,
+                totalCountries: countries.count,
+                buttonType: .premium,
+                countriesViewModel: self
+            )
+
+            return gatewaysSection
+            + [ .header(headerVM) ]
+            + countries.enumerated().compactMap { index, group -> CellModel? in
+                return .country(
+                    self.countryViewModel(
+                        group,
+                        displaySeparator: index != 0,
+                        showCountryConnectButton: true
+                    )
+                )
+            }
         }
 
         if userTier == 1 {
             // BASIC
-            let plusLocations = countries.filter { $0.kind.lowestTier > 1 }
+            let plusLocations = countries.filter { $0.minTier > 0 }
             let headerPlusVM = CountryHeaderViewModel(Localizable.locationsPlus, totalCountries: plusLocations.count, buttonType: .premium, countriesViewModel: self)
 
-            return (gatewaysSection
+            return gatewaysSection
                 + [ .header(headerPlusVM) ]
                 + plusLocations.enumerated().compactMap { index, group -> CellModel? in
-                    if let filter = defaultServersFilter, !group.servers.contains(where: filter) {
-                        return nil
-                    }
-                    return .country(self.countryViewModel(group, displaySeparator: index != 0, serversFilter: defaultServersFilter, showCountryConnectButton: true))
-                }, containsGateways)
+                    return .country(self.countryViewModel(group, displaySeparator: index != 0, showCountryConnectButton: true))
+                }
         }
-
         // FREE
-        let plusLocations: [ServerGroup]
+        let plusLocations: [ServerGroupInfo]
         let freePart: [CellModel]
         let banner = (offerBannerCellModel ?? freeUserBannerCellModel)
 
         @Dependency(\.featureFlagProvider) var featureFlagProvider
         if !featureFlagProvider[\.showNewFreePlan] { // old
-            let freeLocations = countries.filter { $0.kind.lowestTier == 0 }
-            plusLocations = countries.filter { $0.kind.lowestTier != 0 }
+            let freeLocations = countries.filter { $0.minTier == 0 }
+            plusLocations = countries.filter { $0.minTier != 0 }
 
             let headerFreeVM = CountryHeaderViewModel(Localizable.locationsFree, totalCountries: freeLocations.count, buttonType: nil, countriesViewModel: self)
             freePart = [ .header(headerFreeVM) ]
                 + freeLocations.enumerated().compactMap { index, group -> CellModel? in
-                    if let filter = defaultServersFilter, !group.servers.contains(where: filter) {
-                        return nil
-                    }
-                    return .country(self.countryViewModel(group, displaySeparator: index != 0, serversFilter: defaultServersFilter, showCountryConnectButton: true))
+                    return .country(self.countryViewModel(group, displaySeparator: index != 0, showCountryConnectButton: true))
                 }
         } else { // new
             // Free part
@@ -544,23 +552,23 @@ class CountriesSectionViewModel {
 
         let headerPlusVM = CountryHeaderViewModel(Localizable.locationsPlus, totalCountries: plusLocations.count, buttonType: .premium, countriesViewModel: self)
         let plusCells = plusLocations.enumerated().compactMap { index, group -> CellModel? in
-            if let filter = defaultServersFilter, !group.servers.contains(where: filter) {
-                return nil
-            }
-            return .country(self.countryViewModel(group, displaySeparator: index != 0, serversFilter: defaultServersFilter, showCountryConnectButton: true))
+            return .country(self.countryViewModel(group, displaySeparator: index != 0, showCountryConnectButton: true))
         }
 
-        return (gatewaysSection
-                + freePart
-                + [ .header(headerPlusVM) ]
-                + [banner]
-                + plusCells,
-                containsGateways)
+        return gatewaysSection
+            + freePart
+            + [ .header(headerPlusVM) ]
+            + [banner]
+            + plusCells
     }
-    
-    private func countryViewModel(_ serversGroup: ServerGroup, displaySeparator: Bool, serversFilter: ((ServerModel) -> Bool)?, showCountryConnectButton: Bool) -> CountryItemViewModel {
+
+    private func countryViewModel(
+        _ serversGroup: ServerGroupInfo,
+        displaySeparator: Bool,
+        showCountryConnectButton: Bool
+    ) -> CountryItemViewModel {
         return CountryItemViewModel(
-            id: serversGroup.serverOfferingId,
+            id: serversGroup.serverOfferingID,
             serversGroup: serversGroup,
             vpnGateway: self.vpnGateway,
             appStateManager: self.appStateManager,
@@ -569,13 +577,12 @@ class CountriesSectionViewModel {
             userTier: self.userTier,
             isOpened: false,
             displaySeparator: displaySeparator,
-            serversFilter: serversFilter,
             showCountryConnectButton: showCountryConnectButton,
             showFeatureIcons: showCountryConnectButton // Currently it's used only on Gateway rows, so if we hide connect button, we also hide feature icons
         )
     }
     
-    private func serverViewModel( _ server: ServerModel ) -> ServerItemViewModel {
+    private func serverViewModel( _ server: ServerInfo) -> ServerItemViewModel {
         return ServerItemViewModel(serverModel: server,
                                    vpnGateway: vpnGateway,
                                    appStateManager: appStateManager,
@@ -657,5 +664,34 @@ class CountriesSectionViewModel {
             return nil
         }
         return .offerBanner(model)
+    }
+}
+
+extension ServerGroupInfo {
+    var isGateway: Bool {
+        if case .gateway = kind {
+            return true
+        }
+        return false
+    }
+}
+
+extension ServerGroupInfo.Kind {
+    var cacheID: String {
+        switch self {
+        case .country(let code):
+            return code
+        case .gateway(let name):
+            return "gateway-\(name)"
+        }
+    }
+
+    var filter: VPNServerFilter {
+        switch self {
+        case .country(let code):
+            return .kind(.standard(country: code))
+        case .gateway(let name):
+            return .kind(.gateway(name: name))
+        }
     }
 }

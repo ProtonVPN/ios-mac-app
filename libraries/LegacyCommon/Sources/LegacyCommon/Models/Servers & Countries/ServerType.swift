@@ -20,6 +20,8 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+
+import Domain
 import Strings
 
 public enum ServerType: Int, Codable, CustomStringConvertible {
@@ -101,4 +103,28 @@ public enum ServerType: Int, Codable, CustomStringConvertible {
         var container = encoder.container(keyedBy: CoderKey.self)
         try container.encode(self.rawValue, forKey: .serverType)
     }
+}
+
+// Map to new domain model
+extension ServerType {
+
+    var domainModel: ServerFeature {
+        switch self {
+        case .standard:
+            return .zero
+
+        case .p2p:
+            return .p2p
+
+        case .secureCore:
+            return .secureCore
+
+        case .tor:
+            return .tor
+
+        case .unspecified:
+            return .zero
+        }
+    }
+
 }
