@@ -35,7 +35,7 @@ final class ServerSelectionTests: IsolatedResourceDrivenDatabaseTestCase {
         let result = try sut.getFirstServer(
             filteredBy: [
                 .features(.standard),
-                .maximumTier(0)
+                .tier(.max(tier: 0))
             ],
             orderedBy: .fastest
         )
@@ -51,7 +51,7 @@ final class ServerSelectionTests: IsolatedResourceDrivenDatabaseTestCase {
             filteredBy: [
                 .features(.standard),
                 .supports(protocol: [.wireGuardUDP]),
-                .maximumTier(0)
+                .tier(.max(tier: 0))
             ],
             orderedBy: .fastest
         )
@@ -119,7 +119,7 @@ final class ServerSelectionTests: IsolatedResourceDrivenDatabaseTestCase {
         let results = try sut.getServers(
             filteredBy: [
                 .features(.standard(with: .tor)),
-                .maximumTier(0)
+                .tier(.max(tier: 0))
             ],
             orderedBy: .nameAscending
         )

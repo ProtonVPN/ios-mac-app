@@ -240,6 +240,13 @@
         "identifier" : "PersistenceTests",
         "name" : "PersistenceTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Foundations\/Domain",
+        "identifier" : "DomainTests",
+        "name" : "DomainTests"
+      }
     }
   ],
   "version" : 1
