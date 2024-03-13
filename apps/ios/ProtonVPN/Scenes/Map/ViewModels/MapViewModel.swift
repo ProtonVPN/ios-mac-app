@@ -139,8 +139,8 @@ class MapViewModel: SecureCoreToggleHandler {
                                                name: VpnGateway.activeServerTypeChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged),
                                                name: VpnGateway.connectionChanged, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState),
-//                                               name: serverManager.contentChanged, object: nil)
+        // Refreshing views on server list updates is to be re-enabled in VPNAPPL-2075 along with serverManager removal
+        // NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState), name: serverManager.contentChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState),
                                                name: VpnKeychain.vpnPlanChanged, object: nil)
     }
@@ -197,7 +197,7 @@ class MapViewModel: SecureCoreToggleHandler {
         }
 
         let annotationViewModel = CountryAnnotationViewModel(
-            countryModel: CountryModel(countryCode: countryCode, lowestTier: countryGroup.minTier),
+            countryModel: CountryModel(countryCode: countryCode),
             groupInfo: countryGroup,
             serverType: activeView,
             vpnGateway: vpnGateway,

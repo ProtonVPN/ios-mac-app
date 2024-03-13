@@ -36,15 +36,6 @@ public struct ServerGroup: Equatable {
     public enum Kind: Equatable, Hashable {
         case country(CountryModel)
         case gateway(String)
-
-        public var lowestTier: Int {
-            switch self {
-            case .country(let countryModel):
-                return countryModel.lowestTier
-            case .gateway:
-                return .paidTier
-            }
-        }
     }
 
     public static func == (lhs: ServerGroup, rhs: ServerGroup) -> Bool {

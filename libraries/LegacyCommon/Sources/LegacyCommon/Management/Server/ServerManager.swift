@@ -145,21 +145,6 @@ public class ServerManagerImplementation: ServerManager {
                 }
             }
 
-            switch kind {
-            case .country(let countryModel):
-                // The hash function for country models doesn't take their tier into account, just
-                // the country code. So, depending on which server comes first in serverModels, the
-                // lowestTier of the country model could be inconsistent with what's actually in the
-                // grouping of servers by country.
-                countryModel.lowestTier = servers.reduce(into: Int.max) { minTier, server in
-                    if server.tier < minTier {
-                        minTier = server.tier
-                    }
-                }
-            default:
-                break
-            }
-
             return ServerGroup(
                 kind: kind,
                 servers: servers,

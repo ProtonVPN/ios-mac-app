@@ -30,32 +30,23 @@ import VPNAppCore
 // FUTURETODO: get rid of this class and rely only on ServerGroup
 public class CountryModel: Comparable, Hashable {
     public let countryCode: String
-    public var lowestTier: Int
-    public var feature: ServerFeature = ServerFeature.zero // This is signal keyword feature
     public let location: CLLocationCoordinate2D
 
-    public init(
-        countryCode: String,
-        lowestTier: Int,
-        feature: ServerFeature = ServerFeature.zero,
-        location: CLLocationCoordinate2D? = nil
-    ) {
+    public init(countryCode: String, location: CLLocationCoordinate2D? = nil) {
         self.countryCode = countryCode
-        self.lowestTier = lowestTier
-        self.feature = feature
         // TODO: VPNAPPL-2105 use location data provided in logicals response
         self.location = location ?? LocationUtility.coordinate(forCountry: countryCode)
     }
 
+    public convenience init(serverModel: ServerModel, location: CLLocationCoordinate2D? = nil) {
+        self.init(
+            countryCode: serverModel.countryCode,
+            location: CLLocationCoordinate2D(latitude: serverModel.location.lat, longitude: serverModel.location.long)
+        )
+    }
+
     public func hash(into hasher: inout Hasher) {
         hasher.combine(countryCode)
-    }
-    
-    public var description: String {
-        return
-            "Country code: \(countryCode)\n" +
-            "Lowest tier: \(lowestTier)\n" +
-            "Feature: \(feature)\n"
     }
 
     public lazy var countryName: String = {
@@ -66,16 +57,6 @@ public class CountryModel: Comparable, Hashable {
         countryName
             .replacingOccurrences(of: "ł", with: "l")
     }()
-
-    public init(serverModel: ServerModel, location: CLLocationCoordinate2D? = nil) {
-        countryCode = serverModel.countryCode
-        lowestTier = serverModel.tier
-        self.location = location ?? CLLocationCoordinate2D(
-            latitude: serverModel.location.lat,
-            longitude: serverModel.location.long
-        )
-        feature = self.extractKeyword(serverModel)
-    }
     
     public func matches(searchQuery: String) -> Bool {
         return countrySearchName.localizedStandardContains(searchQuery.replacingOccurrences(of: "ł", with: "l"))

@@ -57,7 +57,7 @@ class MapViewModelTests: XCTestCase {
         let serversToInsert = serversFromFile.values.map { VPNServer(legacyModel: $0) }
 
         repository = withDependencies {
-            $0.appDB = .inMemory(named: "MapViewModelRepository")
+            $0.appDB = .newInMemoryInstance()
         } operation: {
             .liveValue
         }

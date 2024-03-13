@@ -20,13 +20,17 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-import CoreLocation
-import Dependencies
-import LegacyCommon
 import Cocoa
-import Theme
+import CoreLocation
+import Foundation
+
+import Dependencies
+
+import Domain
 import Strings
+import Theme
+
+import LegacyCommon
 
 class CountryAnnotationViewModel: CustomStyleContext {
     
@@ -104,14 +108,14 @@ class CountryAnnotationViewModel: CustomStyleContext {
         }
     }
     
-    init(appStateManager: AppStateManager, country: CountryModel, userTier: Int, coordinate: CLLocationCoordinate2D) {
+    init(appStateManager: AppStateManager, country: CountryModel, minTier: Int, userTier: Int, coordinate: CLLocationCoordinate2D) {
         self.appStateManager = appStateManager
         self.countryCode = country.countryCode
         @Dependency(\.featureFlagProvider) var featureFlags
         if userTier == 0 && featureFlags[\.showNewFreePlan] {
             self.available = false
         } else {
-            self.available = country.lowestTier <= userTier
+            self.available = minTier <= userTier
         }
         self.coordinate = MapCoordinateTranslator.mapImageCoordinate(from: coordinate)
     }
@@ -163,9 +167,9 @@ class ConnectableAnnotationViewModel: CountryAnnotationViewModel {
     
     fileprivate let vpnGateway: VpnGatewayProtocol
     
-    init(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, country: CountryModel, userTier: Int, coordinate: CLLocationCoordinate2D) {
+    init(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, country: CountryModel, minTier: Int, userTier: Int, coordinate: CLLocationCoordinate2D) {
         self.vpnGateway = vpnGateway
-        super.init(appStateManager: appStateManager, country: country, userTier: userTier, coordinate: coordinate)
+        super.init(appStateManager: appStateManager, country: country, minTier: minTier, userTier: userTier, coordinate: coordinate)
     }
 }
 
@@ -209,8 +213,8 @@ struct SCEntryCountrySelection {
 
 class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
     
-    let servers: [ServerModel]
-    
+    let servers: [ServerInfo]
+
     // triggered by ui-based views' state changes
     var externalViewStateChange: ((SCExitCountrySelection) -> Void)?
     
@@ -220,9 +224,9 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
             && appStateManager.activeConnection()?.server.countryCode == countryCode
     }
     
-    init(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, country: CountryModel, servers: [ServerModel], userTier: Int, coordinate: CLLocationCoordinate2D) {
+    init(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, country: CountryModel, minTier: Int, servers: [ServerInfo], userTier: Int, coordinate: CLLocationCoordinate2D) {
         self.servers = servers
-        super.init(appStateManager: appStateManager, vpnGateway: vpnGateway, country: country, userTier: userTier, coordinate: coordinate)
+        super.init(appStateManager: appStateManager, vpnGateway: vpnGateway, country: country, minTier: minTier, userTier: userTier, coordinate: coordinate)
     }
     
     func serverConnectAction(forRow row: Int) {
@@ -230,8 +234,19 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
             log.debug("Server on the map clicked. Already connected, so will disconnect from VPN. ", category: .connectionDisconnect, event: .trigger)
             vpnGateway.disconnect()
         } else {
-            log.debug("Server on the map clicked. Will connect to \(servers[row].logDescription)", category: .connectionConnect, event: .trigger)
-            vpnGateway.connectTo(server: servers[row])
+            let serverID = servers[row].logical.id
+            do {
+                @Dependency(\.serverRepository) var repository
+                guard let server = try repository.getFirstServer(filteredBy: [.logicalID(serverID)], orderedBy: .none) else {
+                    log.error("No server found with id \(serverID)", category: .connectionConnect)
+                    return
+                }
+                let serverLegacyModel = ServerModel(server: server)
+                log.debug("Server on the map clicked. Will connect to \(serverLegacyModel.logDescription)", category: .connectionConnect, event: .trigger)
+                vpnGateway.connectTo(server: serverLegacyModel)
+            } catch {
+                log.error("Failed to retrieve server with id \(serverID)", category: .persistence, metadata: ["error": "\(error)"])
+            }
         }
     }
     
@@ -243,7 +258,7 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
         guard servers.count > row else { return NSAttributedString() }
         let font = NSFont.themeFont()
         let doubleArrows = AppTheme.Icon.chevronsRight.asAttachment(style: available ? .normal : .weak, size: .square(14), centeredVerticallyForFont: font)
-        let serverName = (" " + servers[row].name).styled(available ? .normal : [.interactive, .weak, .disabled], font: font)
+        let serverName = (" " + servers[row].logical.name).styled(available ? .normal : [.interactive, .weak, .disabled], font: font)
         let title = NSMutableAttributedString(attributedString: NSAttributedString.concatenate(doubleArrows, serverName))
         let range = (title.string as NSString).range(of: title.string)
         title.setAlignment(.center, range: range)
@@ -257,8 +272,8 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
     func serverIsConnected(for row: Int) -> Bool {
         guard servers.count > row else { return false }
         return appStateManager.state.isConnected
-            && appStateManager.activeConnection()?.server.countryCode == servers[row].countryCode
-            && appStateManager.activeConnection()?.server.entryCountryCode == servers[row].entryCountryCode
+            && appStateManager.activeConnection()?.server.exitCountryCode == servers[row].logical.exitCountryCode
+            && appStateManager.activeConnection()?.server.entryCountryCode == servers[row].logical.entryCountryCode
     }
     
     override func uiStateUpdate(_ state: CountryAnnotationViewModel.ViewState) {
