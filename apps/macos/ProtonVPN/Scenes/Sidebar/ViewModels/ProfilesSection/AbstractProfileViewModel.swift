@@ -42,7 +42,7 @@ class AbstractProfileViewModel {
             self.underMaintenance = serverWrapper.server.underMaintenance
 
         case .fastest(let countryCode), .random(let countryCode):
-            guard let code = countryCode else {
+            if countryCode == nil {
                 self.lowestServerTier = 0
                 self.underMaintenance = false
                 break
@@ -62,7 +62,7 @@ class AbstractProfileViewModel {
                 if minTier > server.logical.tier {
                     minTier = server.logical.tier
                 }
-                if server.logical.status == 0 {
+                if !server.logical.isUnderMaintenance {
                     allServersUnderMaintenance = false
                 }
             }

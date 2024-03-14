@@ -23,13 +23,21 @@ import GRDB
 
 import Localization
 
-typealias DatabaseExecutable = ([DatabaseValue]) throws -> String
-
-/// Computed once per database queue initialisation. See custom database function `localizedCountryName`
+/// Generate a pure function that maps registered country codes to localized country names. Use this mapping for sorting
+/// and filtering by localized country name according to the user's current locale. Returns a GRDB `DatabaseFunction`
+/// based on the aforementioned generated pure function.
 ///
-/// This cannot be a lazy var since we sometimes want to create additional databases that use a different country name
-/// localization implementation, e.g. for tests.
-func createLocalizedCountryNameDatabaseFunction() -> DatabaseExecutable {
+/// Mapping is generated at runtime according to country codes and names provided by the OS. See
+/// `convertCodeToLocalizedCountryName` for details.
+
+let localizedCountryName = DatabaseExtension(
+    name: "LOCALIZED_COUNTRY_NAME",
+    argumentCount: 1,
+    isPure: true,
+    implementationGenerator: generateLocalizedCountryNameDatabaseExecutable
+)
+
+private func generateLocalizedCountryNameDatabaseExecutable() -> DatabaseExecutable {
     log.debug("Baking country code to localized country name map", category: .persistence)
 
     @Dependency(\.countryNameProvider) var countryNameProvider
@@ -74,19 +82,4 @@ func createLocalizedCountryNameDatabaseFunction() -> DatabaseExecutable {
 enum CountryLocalizationError: Error {
     case missingArgument
     case invalidArgument(value: DatabaseValue)
-}
-
-/// Generate a pure function that maps registered country codes to localized country names. Use this mapping for sorting
-/// and filtering by localized country name according to the user's current locale. Returns a GRDB `DatabaseFunction`
-/// based on the aforementioned generated pure function.
-///
-/// Mapping is generated at runtime according to country codes and names provided by the OS. See
-/// `convertCodeToLocalizedCountryName` for details.
-var localizedCountryName: DatabaseFunction {
-    return DatabaseFunction(
-        "LOCALIZED_COUNTRY_NAME",
-        argumentCount: 1,
-        pure: true,
-        function: createLocalizedCountryNameDatabaseFunction()
-    )
 }

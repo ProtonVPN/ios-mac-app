@@ -89,4 +89,8 @@ public struct Logical: Codable, Equatable {
         }
         return false
     }
+
+    public var isUnderMaintenance: Bool {
+        return status == 0
+    }
 }
