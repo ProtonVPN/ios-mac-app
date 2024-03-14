@@ -155,6 +155,7 @@
 		79FF145520C41EE200BA3623 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FF145420C41EE200BA3623 /* SettingsViewController.swift */; };
 		86B07CD2711C002F53844E95 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */; };
 		89926E3756CED95AB662D371 /* PasswordRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */; };
+		8BC65CDA2B97645D005F2533 /* ProtonCoreTelemetry in Frameworks */ = {isa = PBXBuildFile; productRef = 8BC65CD92B97645D005F2533 /* ProtonCoreTelemetry */; };
 		A01D7C58C3C1AEBA17A6C5AF /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E128E9975D2A268D9FB56F0 /* AnnouncementDetailViewController.swift */; };
 		A264F1C92E772DA03634D8A8 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */; };
 		AD37FAC329B63E1100D4DE4E /* NetShieldStatsItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */; };
@@ -920,6 +921,7 @@
 				4C8C314E2A73BA1F006AD628 /* ConnectionDetails-iOS in Frameworks */,
 				F34AC17B27F439810007FF93 /* Review in Frameworks */,
 				4C8C31522A73BA24006AD628 /* Settings-iOS in Frameworks */,
+				8BC65CDA2B97645D005F2533 /* ProtonCoreTelemetry in Frameworks */,
 				4C8C31542A73BA36006AD628 /* ProtonCoreLoginUI in Frameworks */,
 				4C8C31582A73BAB9006AD628 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */,
 				E589747A2A812A870017987D /* OHHTTPStubsSwift in Frameworks */,
@@ -2314,6 +2316,7 @@
 				57BC69892B1F33CB0049485C /* ProtonCoreAccountRecovery */,
 				ADEB35D32B62832A0044ABD4 /* ProtonCorePaymentsUI */,
 				E55B1A642B922031001EF2C6 /* PMLogger */,
+				8BC65CD92B97645D005F2533 /* ProtonCoreTelemetry */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -4535,6 +4538,10 @@
 		57BC69892B1F33CB0049485C /* ProtonCoreAccountRecovery */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCoreAccountRecovery;
+		};
+		8BC65CD92B97645D005F2533 /* ProtonCoreTelemetry */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCoreTelemetry;
 		};
 		AD70D75D2B63238400B39ABA /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;

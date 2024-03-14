@@ -39,6 +39,7 @@ import ProtonCoreObservability
 import ProtonCorePushNotifications
 import ProtonCoreServices
 import ProtonCoreUIFoundations
+import ProtonCoreTelemetry
 
 // Local dependencies
 import Domain
@@ -352,7 +353,7 @@ extension AppDelegate {
             switch result {
             case .success(.sessionAlreadyPresent(let authCredential)), .success(.sessionFetchedAndAvailable(let authCredential)):
                 FeatureFlagsRepository.shared.setApiService(apiService)
-                
+
                 if !authCredential.userID.isEmpty {
                     FeatureFlagsRepository.shared.setUserId(authCredential.userID)
                 }
@@ -365,6 +366,10 @@ extension AppDelegate {
                         log.error("Could not retrieve feature flags: \(error)", category: .core, event: .error)
                     }
                 }
+
+                let telemetrySettings = self.container.makeTelemetrySettings()
+                TelemetryService.shared.setApiService(apiService: apiService)
+                TelemetryService.shared.setTelemetryEnabled(telemetrySettings.telemetryUsageData)
             case .failure(let error):
                 log.error("acquireSessionIfNeeded didn't succeed and therefore feature flags didn't get fetched", category: .api, event: .response, metadata: ["error": "\(error)"])
             default:
