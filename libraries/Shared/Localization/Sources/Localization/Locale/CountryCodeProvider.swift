@@ -32,7 +32,7 @@ public protocol CountryCodeProviderFactory {
 }
 
 public class CountryCodeProviderImplementation: CountryCodeProvider {
-    public var countryCodes: [String]
+    public private (set) var countryCodes: [String]
 
     private static let localeResolver = LocaleResolverImplementation.default
 

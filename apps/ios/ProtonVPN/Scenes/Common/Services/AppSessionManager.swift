@@ -197,7 +197,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
         if !shouldRefreshServers || credentials.maxTier.isPaidTier {
             let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
-            let deletedServerCount = serverRepository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
+            let deletedServerCount = serverRepository.delete(serversWithMinTier: .paidTier, withIDsNotIn: updatedServerIDs)
             log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
         }
 
@@ -271,11 +271,11 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             review.update(plan: credentials.planName)
             if !shouldRefreshServers || credentials.maxTier.isPaidTier {
                 let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
-                let deletedServerCount = serverRepository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
+                let deletedServerCount = serverRepository.delete(serversWithMinTier: .paidTier, withIDsNotIn: updatedServerIDs)
                 log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
             }
 
-            try serverRepository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
+            serverRepository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
             NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
 
             propertiesManager.userRole = properties.userRole

@@ -172,9 +172,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         let credentials = properties.vpnCredentials
         vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-        if await !shouldRefreshServersAccordingToUserTier || credentials.maxTier != .freeTier {
+        if await !shouldRefreshServersAccordingToUserTier || credentials.maxTier.isPaidTier {
             let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
-            let deletedServerCount = serverRepository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
+            let deletedServerCount = serverRepository.delete(serversWithMinTier: .paidTier, withIDsNotIn: updatedServerIDs)
             log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
         }
 

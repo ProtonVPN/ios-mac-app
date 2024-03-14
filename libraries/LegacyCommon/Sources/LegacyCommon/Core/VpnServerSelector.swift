@@ -136,7 +136,7 @@ class VpnServerSelector {
 
         let serversNotRequiringUpgrade = serversSupportingProtocol.filter { userTier >= $0.logical.tier }
         if serversNotRequiringUpgrade.isEmpty {
-            let lowestTier = serversSupportingProtocol.map(\.logical.tier).min() ?? CoreAppConstants.VpnTiers.visionary
+            let lowestTier = serversSupportingProtocol.map(\.logical.tier).min()! // we already checked it's not empty
             notifyResolutionUnavailable?(forSpecificCountry, type, .upgrade(lowestTier))
             return
         }

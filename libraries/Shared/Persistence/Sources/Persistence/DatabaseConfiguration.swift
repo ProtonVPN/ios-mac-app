@@ -54,11 +54,11 @@ private enum DatabaseConfigurationKey: DependencyKey {
             fatalError("Failed to initialise app DB: cannot find URL for application support directory")
         }
 
-        if !FileManager.default.fileExists(atPath: directoryURL.relativePath) {
+        if !FileManager.default.fileExists(atPath: directoryURL.absoluteString) {
             try! FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true)
         }
 
-        let databasePath = directoryURL.appendingPathComponent("database.sqlite").relativePath
+        let databasePath = directoryURL.appendingPathComponent("database.sqlite").absoluteString
 
         let executor = ErrorHandlingAndLoggingDatabaseExecutor(
             logError: { message, error in

@@ -121,7 +121,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
                         @Dependency(\.serverRepository) var repository
                         if !isFree {
                             let updatedServerIDs = servers.reduce(into: Set<String>(), { $0.insert($1.id) })
-                            let deletedServerCount = repository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
+                            let deletedServerCount = repository.delete(serversWithMinTier: .paidTier, withIDsNotIn: updatedServerIDs)
                             log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
                         }
                         repository.upsert(servers: servers.map { VPNServer(legacyModel: $0) })

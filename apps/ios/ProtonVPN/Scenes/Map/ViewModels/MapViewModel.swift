@@ -267,10 +267,9 @@ class MapViewModel: SecureCoreToggleHandler {
     }
     
     @objc private func resetCurrentState() {
-        executeOnUIThread { [weak self] in
-            guard let self else { return }
-            setStateOf(type: propertiesManager.serverTypeToggle)
-            contentChanged?()
+        executeOnUIThread {
+            self.setStateOf(type: self.propertiesManager.serverTypeToggle)
+            self.contentChanged?()
         }
     }
     

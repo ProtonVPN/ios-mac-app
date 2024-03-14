@@ -123,9 +123,8 @@ class MapSectionViewModel {
     }
     
     @objc private func resetCurrentState() {
-        executeOnUIThread { [weak self] in
-            guard let self else { return }
-            self.setView(activeView)
+        executeOnUIThread {
+            self.setView(self.activeView)
             self.updateConnections()
         }
     }

@@ -229,8 +229,8 @@ final class HeaderViewModel {
     }
     
     @objc private func contentChangedNotification() {
-        executeOnUIThread { [weak self] in
-            self?.contentChanged?()
+        executeOnUIThread {
+            self.contentChanged?()
         }
     }
     

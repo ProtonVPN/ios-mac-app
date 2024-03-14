@@ -20,7 +20,8 @@ import Foundation
 
 import GRDB
 
-/// Returns nil if all rows contain a nil value
+/// Performs the bitwise OR operation on a collection of values.
+/// If no values are passed, or all values passed are nil, nil is returned as the result.
 let bitwiseOr = DatabaseFunction(
     "BIT_OR",
     argumentCount: 1,
@@ -28,7 +29,8 @@ let bitwiseOr = DatabaseFunction(
     aggregate: BitwiseOR.self
 )
 
-/// Returns nil if all rows contain a nil value
+/// Performs the bitwise AND operation on a collection of values. These values are allowed to be nil.
+/// If no values are passed, or all values passed are nil, nil is returned as the result.
 let bitwiseAnd = DatabaseFunction(
     "BIT_AND",
     argumentCount: 1,
@@ -36,7 +38,7 @@ let bitwiseAnd = DatabaseFunction(
     aggregate: BitwiseAND.self
 )
 
-struct BitwiseOR: DatabaseAggregate {
+private struct BitwiseOR: DatabaseAggregate {
     var accumulatedValue: Int?
 
     mutating func step(_ dbValues: [DatabaseValue]) {
@@ -50,7 +52,7 @@ struct BitwiseOR: DatabaseAggregate {
     }
 }
 
-struct BitwiseAND: DatabaseAggregate {
+private struct BitwiseAND: DatabaseAggregate {
     var accumulatedValue: Int?
 
     mutating func step(_ dbValues: [DatabaseValue]) {

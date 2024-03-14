@@ -99,8 +99,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         }
     }
     
-    private let serverManager = ServerManagerImplementation.instance(forTier: .paidTier, serverStorage: ServerStorageConcrete())
-    private var userTier: Int = 0
+    private var userTier: Int = .freeTier
     private var state: ModelState = .standard([])
     
     var activeView: ServerType {
@@ -174,7 +173,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         return state.currentContent.compactMap { (serverGroup: ServerGroupInfo) -> (String, UIImage?)? in
             switch serverGroup.kind {
             case .country(let code):
-                guard serverGroup.minTier == 0 else {
+                guard serverGroup.minTier.isFreeTier else {
                     return nil
                 }
                 return (
@@ -319,10 +318,9 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
 
     @objc private func reloadContent() {
-        executeOnUIThread { [weak self] in
-            guard let self else { return }
+        executeOnUIThread {
             self.refreshTier()
-            self.setStateOf(type: propertiesManager.serverTypeToggle)
+            self.setStateOf(type: self.propertiesManager.serverTypeToggle)
             self.fillTableData()
             self.delegate?.onContentChange()
         }

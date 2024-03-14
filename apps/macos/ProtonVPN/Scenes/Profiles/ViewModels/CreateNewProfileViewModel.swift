@@ -220,6 +220,8 @@ class CreateNewProfileViewModel {
                         let serverModel = ServerModel(server: vpnServer)
                         let offering = ServerOffering.custom(ServerWrapper(server: serverModel))
                         self?.update(serverOffering: offering)
+                    } else {
+                        log.error("No server found with ID \(server.logical.id)", category: .persistence)
                     }
                 }
             )

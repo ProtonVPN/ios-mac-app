@@ -152,7 +152,7 @@ class CountriesSectionViewModel {
         return serverGroups?.compactMap { (serverGroup: ServerGroupInfo) -> (String, NSImage?)? in
             switch serverGroup.kind {
             case .country(let countryCode):
-                guard serverGroup.minTier == 0 else {
+                guard serverGroup.minTier.isFreeTier else {
                     return nil
                 }
                 return (
@@ -339,11 +339,10 @@ class CountriesSectionViewModel {
     }
 
     @objc private func reloadDataOnChange() {
-        executeOnUIThread { [weak self] in
-            guard let self else { return }
-            expandedCountries = []
-            servers = [:]
-            updateState()
+        executeOnUIThread {
+            self.expandedCountries = []
+            self.servers = [:]
+            self.updateState()
             let contentChange = ContentChange(reset: true)
             self.contentChanged?(contentChange)
         }

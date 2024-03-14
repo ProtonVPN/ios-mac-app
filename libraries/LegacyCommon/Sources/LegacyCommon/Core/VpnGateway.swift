@@ -532,7 +532,7 @@ public class VpnGateway: VpnGatewayProtocol {
                     }
                     if refreshFreeTierInfo {
                         let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
-                        let deletedServerCount = repository.delete(serversWithMinTier: 1, withIDsNotIn: updatedServerIDs)
+                        let deletedServerCount = repository.delete(serversWithMinTier: .paidTier, withIDsNotIn: updatedServerIDs)
                         log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
                     }
                     repository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
