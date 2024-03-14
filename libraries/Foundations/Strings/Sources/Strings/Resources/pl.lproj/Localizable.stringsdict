@@ -560,5 +560,45 @@ zatrzymanych</string>
         <string>Lokalizacje planu Free (%d)</string>
       </dict>
     </dict>
+    <key>plan_duration_month</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@plan_duration_month@</string>
+      <key>plan_duration_month</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d miesiąc</string>
+        <key>few</key>
+        <string>%d miesiąca</string>
+        <key>many</key>
+        <string>%d miesiąca</string>
+        <key>other</key>
+        <string>%d miesięcy</string>
+      </dict>
+    </dict>
+    <key>plan_duration_year</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@plan_duration_year@</string>
+      <key>plan_duration_year</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d rok</string>
+        <key>few</key>
+        <string>%d roku</string>
+        <key>many</key>
+        <string>%d roku</string>
+        <key>other</key>
+        <string>%d lat</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

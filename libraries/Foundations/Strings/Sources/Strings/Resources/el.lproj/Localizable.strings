@@ -290,6 +290,9 @@
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Μεταβείτε στο OpenVPN και δοκιμάστε ξανά";
 
+/* Free tier plan title */
+"free_tier_plan_title" = "Proton VPN Free";
+
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Το Kill switch μπλοκάρει όλες τις συνδέσεις";
 
@@ -2065,6 +2068,24 @@
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "Η δραστηριότητά σας VPN προστατεύεται από τους ελβετικούς νόμους περί απορρήτου. Δε θα σας παρακολουθούμε ποτέ στο διαδίκτυο ούτε θα μοιραστούμε τις πληροφορίες σας με τρίτους.";
 
+/* Title of paid plans list. */
+"upsell_plans_list_title" = "Αναβαθμίστε το απόρρητό σας";
+
+/* Subtitle of paid plans list. */
+"upsell_plans_list_subtitle" = "Αποκτήστε προηγμένες λειτουργίες απορρήτου και υψηλότερη ταχύτητα με το VPN Plus.";
+
+/* Header of paid plans list where there are more than 1 plan option to pick from. */
+"upsell_plans_list_section_header" = "Επιλέξτε το πλάνο σας";
+
+/* Main Button of paid plans list allowing user to start payments process. */
+"upsell_plans_list_validate_button" = "Αποκτήστε το VPN Plus";
+
+/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
+"upsell_plans_list_option_amountPerMonth" = " /μήνα";
+
+/* Trailing text of the paid plan option amount indicating the amount per year. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
+"upsell_plans_list_option_amountPerYear" = " /έτος";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Διαθέσιμο με VPN Business.";
 
@@ -2100,3 +2121,72 @@
 
 /* Text of banner shown on macOS apps to upsell users who want to select a country */
 "_wrong_country_banner_text" = "Δεν είναι η χώρα που θέλατε; Αναβαθμίστε για να επιλέξετε οποιονδήποτε διακομιστή";
+
+/* ReportBugwindow title */
+"_br_window_title" = "Αναφορά προβλήματος";
+
+/* ReportBug 1st step title */
+"_br_1_title" = "Τι πρόβλημα αντιμετωπίζεται;";
+
+/* ReportBug 2nd step (Quick fixes) title */
+"_br_2_title" = "Πρόχειρες λύσεις";
+
+/* ReportBug 2nd step (Quick fixes) subtitle */
+"_br_2_subtitle" = "Αυτές οι υποδείξεις μπορεί να βοηθήσουν στην ταχύτερη επίλυση του προβλήματός σας.";
+
+/* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
+"_br_2_footer" = "Δε δούλεψε;";
+
+/* ReportBug 2nd step (Quick fixes) button to go to the next step */
+"_br_2_button_next" = "Επικοινωνήστε μαζί μας";
+
+/* ReportBug 2nd step (Quick fixes) cancel button */
+"_br_2_button_cancel" = "Ακύρωση";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_send" = "Αποστολή αναφοράς";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_sending" = "Γίνεται αποστολή";
+
+/* ReportBug 3rd step (form) email field name */
+"_br_3_email" = "Email";
+
+/* ReportBug 3rd step (form) username field name */
+"_br_3_username" = "Όνομα χρήστη";
+
+/* ReportBug 3rd step (form) field to ask for includeing logs */
+"_br_3_logs_field" = "Αποστολή καταχωρήσεων σφαλμάτων";
+
+/* ReportBug 3rd step (form) logs description */
+"_br_3_logs_description" = "Η καταχώρηση είναι ένα τύπος αρχείου το οποίο μας υποδεικνύει τις ενέργειες που έγιναν και οδήγησαν σε σφάλμα. Θα χρησιμοποιήσουμε αυτά τα αρχεία, μόνο, για να βοηθήσουμε τους τεχνικούς μας στην επίλυση σφαλμάτων.";
+
+/* ReportBug 3rd step (form): message shown if user disabled logs */
+"_br_3_logs_disabled" = "Οι καταχωρήσεις σφαλμάτων μας βοηθούν στην επίλυση του θέματός σας! Αν δεν τα συμπεριλάβετε, ίσως να μην μπορούμε να το ερευνήσουμε πλήρως.";
+
+/* ReportBug success window: title text */
+"_br_success_title" = "Ευχαριστούμε για τα σχόλιά σας";
+
+/* ReportBug success window: subtitle text */
+"_br_success_subtitle" = "Θα σας απαντήσουμε αμέσως μόλις μπορέσουμε.";
+
+/* ReportBug success window: button */
+"_br_success_button" = "Το κατάλαβα";
+
+/* ReportBug success window: title text */
+"_br_failure_title" = "Η αναφορά σας δε στάλθηκε.";
+
+/* ReportBug success window: retry button */
+"_br_failure_button_retry" = "Δοκιμάστε ξανά";
+
+/* ReportBug success window: troubleshoot button */
+"_br_failure_button_troubleshoot" = "Αντιμετώπιση προβλημάτων";
+
+/* Title of the view nudging users to update before filling Bug Report */
+"_update_view_title" = "Ενημέρωση Proton VPN";
+
+/* Description text of the view nudging users to update before filling Bug Report */
+"_update_view_description" = "Σε παλαιότερες εκδόσεις του Proton VPN, είναι πιο πιθανό να έχετε προβλήματα.";
+
+/* Action button of the view nudging users to update before filling Bug Report */
+"_update_view_button" = "Ενημέρωση";

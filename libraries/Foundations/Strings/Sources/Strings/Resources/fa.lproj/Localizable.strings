@@ -290,6 +290,9 @@
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "به OpenVPN تغییر دهید و دوباره امتحان کنید";
 
+/* Free tier plan title */
+"free_tier_plan_title" = "Proton VPN Free";
+
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Kill Switch همه ارتباطات را مسدود کرده است";
 
@@ -2065,6 +2068,24 @@
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "Your VPN activity is protected by Swiss privacy laws. We’ll never track you online or share your information with third parties.";
 
+/* Title of paid plans list. */
+"upsell_plans_list_title" = "حريم خصوصی خود را ارتقا دهید";
+
+/* Subtitle of paid plans list. */
+"upsell_plans_list_subtitle" = "با VPN Plus ویژگی‌های حریم خصوصی پیشرفته و سرعت بیشتر بگیرید.";
+
+/* Header of paid plans list where there are more than 1 plan option to pick from. */
+"upsell_plans_list_section_header" = "Select your plan";
+
+/* Main Button of paid plans list allowing user to start payments process. */
+"upsell_plans_list_validate_button" = "Get VPN Plus";
+
+/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
+"upsell_plans_list_option_amountPerMonth" = " /month";
+
+/* Trailing text of the paid plan option amount indicating the amount per year. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
+"upsell_plans_list_option_amountPerYear" = " /year";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Available with VPN Business.";
 
@@ -2100,3 +2121,72 @@
 
 /* Text of banner shown on macOS apps to upsell users who want to select a country */
 "_wrong_country_banner_text" = "Not the country you wanted? Upgrade to choose any server";
+
+/* ReportBugwindow title */
+"_br_window_title" = "گزارش یک اشکال";
+
+/* ReportBug 1st step title */
+"_br_1_title" = "مشکل چیست؟";
+
+/* ReportBug 2nd step (Quick fixes) title */
+"_br_2_title" = "راه‌حل‌های سریع";
+
+/* ReportBug 2nd step (Quick fixes) subtitle */
+"_br_2_subtitle" = "این راه‌کارها می‌توانند به حل سریع‌تر مشکل شما کمک کنند.";
+
+/* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
+"_br_2_footer" = "کار نکرد؟";
+
+/* ReportBug 2nd step (Quick fixes) button to go to the next step */
+"_br_2_button_next" = "تماس با ما";
+
+/* ReportBug 2nd step (Quick fixes) cancel button */
+"_br_2_button_cancel" = "لغو";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_send" = "ارسال گزارش";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_sending" = "درحال ارسال";
+
+/* ReportBug 3rd step (form) email field name */
+"_br_3_email" = "ایمیل";
+
+/* ReportBug 3rd step (form) username field name */
+"_br_3_username" = "نام‌کاربری";
+
+/* ReportBug 3rd step (form) field to ask for includeing logs */
+"_br_3_logs_field" = "ارسال لاگ‌های خطا";
+
+/* ReportBug 3rd step (form) logs description */
+"_br_3_logs_description" = "Log یا ثبت وقایع فایلی است که اقداماتی که شما انجام داده اید که باعث وقوع یک خطا شده است را به ما نشان می دهد. تنها زمانی از آنها استفاده میکنیم که به مهندسین‌مان کمک کنیم تا مشکلات را رفع کنند.";
+
+/* ReportBug 3rd step (form): message shown if user disabled logs */
+"_br_3_logs_disabled" = "ثبت وقایع خطاها به ما کمک میکنند ریشه مشکلات را شناسایی کنیم. اگر آنها را ضمیمه نکنید، ما قادر به بررسی کامل مشکلات نخواهیم بود.";
+
+/* ReportBug success window: title text */
+"_br_success_title" = "از بازخوردتان سپاس‌گزاریم";
+
+/* ReportBug success window: subtitle text */
+"_br_success_subtitle" = "در سریع ترین زمان ممکن به شما پاسخ خواهیم داد.";
+
+/* ReportBug success window: button */
+"_br_success_button" = "فهمیدم";
+
+/* ReportBug success window: title text */
+"_br_failure_title" = "گزارش شما ارسال نشد";
+
+/* ReportBug success window: retry button */
+"_br_failure_button_retry" = "تلاش دوباره";
+
+/* ReportBug success window: troubleshoot button */
+"_br_failure_button_troubleshoot" = "عیب یابی";
+
+/* Title of the view nudging users to update before filling Bug Report */
+"_update_view_title" = "به‌روزرسانی Proton VPN";
+
+/* Description text of the view nudging users to update before filling Bug Report */
+"_update_view_description" = "اگر از نسخه‌های قدیمی‌تر Proton VPN استفاده می‌کنید احتمال برخورد با اشکال برای شما بالاتر است.";
+
+/* Action button of the view nudging users to update before filling Bug Report */
+"_update_view_button" = "بروزرسانی";

@@ -290,6 +290,9 @@
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Пераключыцца на пратакол OpenVPN і паспрабаваць зноў";
 
+/* Free tier plan title */
+"free_tier_plan_title" = "Proton VPN Free";
+
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Kill Switch блакіруе ўсе падключэнні";
 
@@ -2065,6 +2068,24 @@
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "Ваша актыўнасць VPN абаронена швейцарскімі законамі аб прыватнасці. Мы ніколі не будзем адсочваць вашу дзейнасць у інтэрнэце або дзяліцца гэтай інфармацыяй з іншымі асобамі.";
 
+/* Title of paid plans list. */
+"upsell_plans_list_title" = "Палепшыце сваю прыватнасць";
+
+/* Subtitle of paid plans list. */
+"upsell_plans_list_subtitle" = "Атрымайце дадатковыя функцыі прыватнасці і найвышэйшую хуткасць з VPN Plus.";
+
+/* Header of paid plans list where there are more than 1 plan option to pick from. */
+"upsell_plans_list_section_header" = "Выбар тарыфынага плана";
+
+/* Main Button of paid plans list allowing user to start payments process. */
+"upsell_plans_list_validate_button" = "Атрымаць VPN Plus";
+
+/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
+"upsell_plans_list_option_amountPerMonth" = " /месяц";
+
+/* Trailing text of the paid plan option amount indicating the amount per year. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
+"upsell_plans_list_option_amountPerYear" = " /год";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Даступна з VPN Business.";
 
@@ -2100,3 +2121,72 @@
 
 /* Text of banner shown on macOS apps to upsell users who want to select a country */
 "_wrong_country_banner_text" = "Не тая краіна, якую хацелі? Палепшыце свой тарыфны план, каб выбіраць любы сервер";
+
+/* ReportBugwindow title */
+"_br_window_title" = "Паведаміць пра праблему";
+
+/* ReportBug 1st step title */
+"_br_1_title" = "У чым ваша праблема?";
+
+/* ReportBug 2nd step (Quick fixes) title */
+"_br_2_title" = "Хуткія выпраўленні";
+
+/* ReportBug 2nd step (Quick fixes) subtitle */
+"_br_2_subtitle" = "Гэтыя парады дапамогуць хутчэй вырашыць вашу праблему.";
+
+/* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
+"_br_2_footer" = "Не працуе?";
+
+/* ReportBug 2nd step (Quick fixes) button to go to the next step */
+"_br_2_button_next" = "Звязацца з намі";
+
+/* ReportBug 2nd step (Quick fixes) cancel button */
+"_br_2_button_cancel" = "Скасаваць";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_send" = "Адправіць справаздачу";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_sending" = "Адпраўка";
+
+/* ReportBug 3rd step (form) email field name */
+"_br_3_email" = "Электронная пошта";
+
+/* ReportBug 3rd step (form) username field name */
+"_br_3_username" = "Імя карыстальніка";
+
+/* ReportBug 3rd step (form) field to ask for includeing logs */
+"_br_3_logs_field" = "Адправіць журнал з памылкай";
+
+/* ReportBug 3rd step (form) logs description */
+"_br_3_logs_description" = "Журнал - гэта тып файла, які паказвае нам дзеянні, якія былі зроблены вамі і прывялі да памылкі. Мы заўсёды выкарыстоўваем яго толькі для таго, каб дапамагчы нашым інжынерам выправіць памылкі.";
+
+/* ReportBug 3rd step (form): message shown if user disabled logs */
+"_br_3_logs_disabled" = "Журнал з памылкамі дазваляе нам зразумець самую сутнасць вашай праблемы. Калі вы не ўключыце яго, то ў нас не будзе магчымасці даследаваць праблему цалкам.";
+
+/* ReportBug success window: title text */
+"_br_success_title" = "Дзякуй за ваш водгук";
+
+/* ReportBug success window: subtitle text */
+"_br_success_subtitle" = "Мы звяжамся з вамі ў самы бліжэйшы час.";
+
+/* ReportBug success window: button */
+"_br_success_button" = "Зразумела";
+
+/* ReportBug success window: title text */
+"_br_failure_title" = "Ваша справаздача не адпраўлена";
+
+/* ReportBug success window: retry button */
+"_br_failure_button_retry" = "Паспрабаваць яшчэ раз";
+
+/* ReportBug success window: troubleshoot button */
+"_br_failure_button_troubleshoot" = "Выпраўленне непаладак";
+
+/* Title of the view nudging users to update before filling Bug Report */
+"_update_view_title" = "Абнавіць Proton VPN";
+
+/* Description text of the view nudging users to update before filling Bug Report */
+"_update_view_description" = "Хутчэй за ўсё ў вас з'явяцца праблемы са старымі версіямі Proton VPN.";
+
+/* Action button of the view nudging users to update before filling Bug Report */
+"_update_view_button" = "Абнавіць";

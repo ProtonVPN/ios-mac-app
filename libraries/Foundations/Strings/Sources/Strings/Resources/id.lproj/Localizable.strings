@@ -290,6 +290,9 @@
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Beralih ke OpenVPN dan coba kembali";
 
+/* Free tier plan title */
+"free_tier_plan_title" = "Proton VPN Free";
+
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Kill switch memblokir seluruh koneksi";
 
@@ -2065,6 +2068,24 @@
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "Aktivitas VPN Anda dilindungi oleh undang-undang privasi Swiss. Kami tidak akan pernah melacak Anda secara online atau membagikan informasi pribadi Anda dengan pihak ketiga.";
 
+/* Title of paid plans list. */
+"upsell_plans_list_title" = "Tingkatkan privasi Anda";
+
+/* Subtitle of paid plans list. */
+"upsell_plans_list_subtitle" = "Dapatkan berbagai fitur privasi mutakhir dan kecepatan yang lebih tinggi dengan VPN Plus.";
+
+/* Header of paid plans list where there are more than 1 plan option to pick from. */
+"upsell_plans_list_section_header" = "Pilih paket Anda";
+
+/* Main Button of paid plans list allowing user to start payments process. */
+"upsell_plans_list_validate_button" = "Dapatkan VPN Plus";
+
+/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
+"upsell_plans_list_option_amountPerMonth" = " /bulan";
+
+/* Trailing text of the paid plan option amount indicating the amount per year. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
+"upsell_plans_list_option_amountPerYear" = " /tahun";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Tersedia dengan VPN Business.";
 
@@ -2100,3 +2121,72 @@
 
 /* Text of banner shown on macOS apps to upsell users who want to select a country */
 "_wrong_country_banner_text" = "Bukan negara yang Anda inginkan? Tingkatkan akun Anda untuk bebas memilih server mana pun";
+
+/* ReportBugwindow title */
+"_br_window_title" = "Laporkan masalah";
+
+/* ReportBug 1st step title */
+"_br_1_title" = "Masalah apa yang Anda hadapi?";
+
+/* ReportBug 2nd step (Quick fixes) title */
+"_br_2_title" = "Solusi instan";
+
+/* ReportBug 2nd step (Quick fixes) subtitle */
+"_br_2_subtitle" = "Tips berikut dapat membantu untuk menyelesaikan masalah Anda dengan cepat.";
+
+/* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
+"_br_2_footer" = "Tidak membantu?";
+
+/* ReportBug 2nd step (Quick fixes) button to go to the next step */
+"_br_2_button_next" = "Hubungi kami";
+
+/* ReportBug 2nd step (Quick fixes) cancel button */
+"_br_2_button_cancel" = "Batalkan";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_send" = "Kirim laporan";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_sending" = "Mengirim";
+
+/* ReportBug 3rd step (form) email field name */
+"_br_3_email" = "Surel";
+
+/* ReportBug 3rd step (form) username field name */
+"_br_3_username" = "Nama pengguna";
+
+/* ReportBug 3rd step (form) field to ask for includeing logs */
+"_br_3_logs_field" = "Kirim log error";
+
+/* ReportBug 3rd step (form) logs description */
+"_br_3_logs_description" = "Log merupakan berkas yang merekam berbagai tindakan yang memicu terjadinya error. Kami hanya akan menggunakan berkas log Anda untuk membantu para pakar kami dalam memperbaiki bug.";
+
+/* ReportBug 3rd step (form): message shown if user disabled logs */
+"_br_3_logs_disabled" = "Log error membantu kami dalam menumpaskan masalah Anda hingga ke akar-akarnya. Apabila Anda tidak menyertakan log error yang ada, kami mungkin tidak akan dapat menganalisa masalah Anda secara menyeluruh.";
+
+/* ReportBug success window: title text */
+"_br_success_title" = "Terima kasih atas tanggapan Anda";
+
+/* ReportBug success window: subtitle text */
+"_br_success_subtitle" = "Kami akan menghubungi Anda kembali sesegera mungkin.";
+
+/* ReportBug success window: button */
+"_br_success_button" = "Paham";
+
+/* ReportBug success window: title text */
+"_br_failure_title" = "Laporan Anda tidak terkirim";
+
+/* ReportBug success window: retry button */
+"_br_failure_button_retry" = "Coba lagi";
+
+/* ReportBug success window: troubleshoot button */
+"_br_failure_button_troubleshoot" = "Troubleshoot";
+
+/* Title of the view nudging users to update before filling Bug Report */
+"_update_view_title" = "Perbarui Proton VPN";
+
+/* Description text of the view nudging users to update before filling Bug Report */
+"_update_view_description" = "Anda akan cenderung lebih rentan terhadap berbagai masalah apabila Anda menggunakan Proton VPN versi lama.";
+
+/* Action button of the view nudging users to update before filling Bug Report */
+"_update_view_button" = "Perbarui";
