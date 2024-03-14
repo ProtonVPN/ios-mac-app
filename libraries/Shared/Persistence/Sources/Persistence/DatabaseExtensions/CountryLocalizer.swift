@@ -23,13 +23,6 @@ import GRDB
 
 import Localization
 
-/// Generate a pure function that maps registered country codes to localized country names. Use this mapping for sorting
-/// and filtering by localized country name according to the user's current locale. Returns a GRDB `DatabaseFunction`
-/// based on the aforementioned generated pure function.
-///
-/// Mapping is generated at runtime according to country codes and names provided by the OS. See
-/// `convertCodeToLocalizedCountryName` for details.
-
 let localizedCountryName = DatabaseExtension(
     name: "LOCALIZED_COUNTRY_NAME",
     argumentCount: 1,
@@ -37,6 +30,8 @@ let localizedCountryName = DatabaseExtension(
     implementationGenerator: generateLocalizedCountryNameDatabaseExecutable
 )
 
+/// Generate a pure function that maps registered country codes to normalized, localized country names, appropriate for
+/// sorting and filtering by localized country name according to the user's current locale.
 private func generateLocalizedCountryNameDatabaseExecutable() -> DatabaseExecutable {
     log.debug("Baking country code to localized country name map", category: .persistence)
 

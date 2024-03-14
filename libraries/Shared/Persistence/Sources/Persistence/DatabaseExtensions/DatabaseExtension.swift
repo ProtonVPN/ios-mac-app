@@ -22,20 +22,40 @@ import GRDB
 
 typealias DatabaseExecutable = ([DatabaseValue]) throws -> String
 
-/// Used to define pure database functions that require dependencies to pre-bake information.
+/// Used to define pure database functions that require a `@Dependency` to precompute information.
 ///
-/// This manages
+/// These cannot be a lazily generated `GRDB.DatabaseFunction`, because their implementation depends on a `@Dependency`.
+/// This means that they must be re-created every time we create a `DatabaseQueue`, but not when these functions are
+/// used in GRDB's Query Interface, since this would negate any performance improvements we gain through precomputing.
+/// The alternative to doing this would be to have `Database` or `DatabaseConfig` hold these `DatabaseFunction`
+/// instances, and refer to them also using `@Dependency`.
+///
+/// Usage:
+/// - Construct a global instance of DatabaseExtension.
+///   ```
+///   private func generator() -> DatabaseExecutable  { ... } // something that uses a @Dependency to pre-compute a
+///   let incrementer = DatabaseExtension(name: "INC", argumentCount: 1, isPure: true, implementationGenerator: generator)
+///   ```
+///
+/// - Use `createFunctionForRegistration` when configuring databases. This initialises and this passes the real
+///   implementation to SQL, based on the current `@Dependency` values.
+///   ```
+///   config.prepareDatabase { db in
+///       db.add(function: localizedCountryName.functionForRegistration())
+///   }
+///   ```
+///
+/// - Use this instance to evaluate some `SQLExpression` e.g. to transform columns in Interface Query language. GRDB
+///   translates the query, which is evaluated using the registered function implementation without us having to compute
+///   `generator` again.
+///   ```
+///   Int.fetchAll(incrementer(sqlExpression)
+///   ```
 struct DatabaseExtension {
     private let name: String
     private let argumentCount: Int
     private let isPure: Bool
-
-    /// Computed once per database queue initialisation.
-    ///
-    /// This cannot be a lazy var since we sometimes want to create additional databases that use a different country
-    /// name localization implementation, e.g. for tests.
     private let implementationGenerator: () -> DatabaseExecutable
-
     private let placeholderFunction: DatabaseFunction
 
     init(
@@ -60,18 +80,28 @@ struct DatabaseExtension {
 
 extension DatabaseExtension {
 
-    func functionForRegistration() -> DatabaseFunction {
+    /// Creates a `DatabaseFunction` instance, passing the real implementation that is created with the current
+    /// `@Dependency` environment. This is the implementation that is executed by the database whenever this instance
+    /// is used to  evaluate `SQLExpressions` using `callAsFunction`
+    ///
+    /// Do **NOT** use this to evaluate `SQLExpressions`, it will evaluate `implementationGenerator` for no reason.
+    func createFunctionForRegistration() -> DatabaseFunction {
         DatabaseFunction(name, argumentCount: argumentCount, pure: isPure, function: implementationGenerator())
     }
 
+    /// Use the `DatabaseFunction` created with a placeholder implementation to allow GRDB to evaluate SQL expressions
+    /// involving this function, without invoking the precomputation in `implementationGenerator`.
     func callAsFunction(_ arguments: any SQLExpressible) -> SQLExpression {
-        placeholderFunction(arguments)
+        return placeholderFunction.callAsFunction(arguments)
     }
 
     private static var placeholderImplementation: DatabaseExecutable {
         return { _ in
-            assertionFailure("Placeholder implementations should never be executed")
-            return ""
+            throw DatabaseExtensionError.placeholderInvoked
         }
     }
+}
+
+enum DatabaseExtensionError: Error {
+    case placeholderInvoked
 }

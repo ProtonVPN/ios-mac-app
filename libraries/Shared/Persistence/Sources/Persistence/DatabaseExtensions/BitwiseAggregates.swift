@@ -20,7 +20,7 @@ import Foundation
 
 import GRDB
 
-/// Performs the bitwise OR operation on a collection of values.
+/// Performs the bitwise OR operation on a collection of values. These values are allowed to be nil.
 /// If no values are passed, or all values passed are nil, nil is returned as the result.
 let bitwiseOr = DatabaseFunction(
     "BIT_OR",

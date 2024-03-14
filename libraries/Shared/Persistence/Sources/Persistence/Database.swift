@@ -84,7 +84,7 @@ extension DatabaseWriter {
         config.prepareDatabase { db in
             db.add(function: bitwiseOr)
             db.add(function: bitwiseAnd)
-            db.add(function: localizedCountryName.functionForRegistration())
+            db.add(function: localizedCountryName.createFunctionForRegistration())
         }
 
         let queue = try! createQueue(databaseType: type, configuration: config)
