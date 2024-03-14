@@ -21,5 +21,9 @@ let package = Package(
             name: "Localization",
             dependencies: ["Domain", "Strings"]
         ),
+        .testTarget(
+            name: "LocalizationTests",
+            dependencies: ["Localization"]
+        )
     ]
 )

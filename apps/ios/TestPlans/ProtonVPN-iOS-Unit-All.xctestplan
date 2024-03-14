@@ -247,6 +247,13 @@
         "identifier" : "DomainTests",
         "name" : "DomainTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Shared\/Localization",
+        "identifier" : "LocalizationTests",
+        "name" : "LocalizationTests"
+      }
     }
   ],
   "version" : 1
