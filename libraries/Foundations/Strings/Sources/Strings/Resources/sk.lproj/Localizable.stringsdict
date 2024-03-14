@@ -556,5 +556,45 @@ zastavené</string>
         <string>Bezplatné umiestnenia serverov (%d)</string>
       </dict>
     </dict>
+    <key>plan_duration_month</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@plan_duration_month@</string>
+      <key>plan_duration_month</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d mesiac</string>
+        <key>few</key>
+        <string>%d mesiacov</string>
+        <key>many</key>
+        <string>%d mesiace</string>
+        <key>other</key>
+        <string>%d mesiacov</string>
+      </dict>
+    </dict>
+    <key>plan_duration_year</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@plan_duration_year@</string>
+      <key>plan_duration_year</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d rok</string>
+        <key>few</key>
+        <string>%d rokov</string>
+        <key>many</key>
+        <string>%d roky</string>
+        <key>other</key>
+        <string>%d rokov</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

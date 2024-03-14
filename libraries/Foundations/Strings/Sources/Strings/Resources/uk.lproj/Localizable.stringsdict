@@ -560,5 +560,45 @@
         <string>Розташування серверів Free (%d)</string>
       </dict>
     </dict>
+    <key>plan_duration_month</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@plan_duration_month@</string>
+      <key>plan_duration_month</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d місяць</string>
+        <key>few</key>
+        <string>%d місяці</string>
+        <key>many</key>
+        <string>%d місяців</string>
+        <key>other</key>
+        <string>%d місяців</string>
+      </dict>
+    </dict>
+    <key>plan_duration_year</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@plan_duration_year@</string>
+      <key>plan_duration_year</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d рік</string>
+        <key>few</key>
+        <string>%d роки</string>
+        <key>many</key>
+        <string>%d років</string>
+        <key>other</key>
+        <string>%d років</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

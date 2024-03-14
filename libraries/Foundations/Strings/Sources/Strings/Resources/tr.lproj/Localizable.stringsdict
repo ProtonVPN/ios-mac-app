@@ -440,5 +440,37 @@ izleyici</string>
         <string>Free sunucuları konumları (%d)</string>
       </dict>
     </dict>
+    <key>plan_duration_month</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@plan_duration_month@</string>
+      <key>plan_duration_month</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d ay</string>
+        <key>other</key>
+        <string>%d ay</string>
+      </dict>
+    </dict>
+    <key>plan_duration_year</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@plan_duration_year@</string>
+      <key>plan_duration_year</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d yıl</string>
+        <key>other</key>
+        <string>%d yıl</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

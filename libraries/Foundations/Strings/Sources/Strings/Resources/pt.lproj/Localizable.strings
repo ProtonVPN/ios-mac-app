@@ -290,6 +290,9 @@
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Mude para o OpenVPN e tente novamente";
 
+/* Free tier plan title */
+"free_tier_plan_title" = "Proton VPN Free";
+
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Kill switch a bloquear todas as ligações";
 
@@ -2065,6 +2068,24 @@
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "Your VPN activity is protected by Swiss privacy laws. We’ll never track you online or share your information with third parties.";
 
+/* Title of paid plans list. */
+"upsell_plans_list_title" = "Upgrade your privacy";
+
+/* Subtitle of paid plans list. */
+"upsell_plans_list_subtitle" = "Get advanced privacy features and higher speed with VPN Plus.";
+
+/* Header of paid plans list where there are more than 1 plan option to pick from. */
+"upsell_plans_list_section_header" = "Selecione o seu plano";
+
+/* Main Button of paid plans list allowing user to start payments process. */
+"upsell_plans_list_validate_button" = "Get VPN Plus";
+
+/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
+"upsell_plans_list_option_amountPerMonth" = " /month";
+
+/* Trailing text of the paid plan option amount indicating the amount per year. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
+"upsell_plans_list_option_amountPerYear" = " /year";
+
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Disponível com a VPN Business.";
 
@@ -2100,3 +2121,72 @@
 
 /* Text of banner shown on macOS apps to upsell users who want to select a country */
 "_wrong_country_banner_text" = "Não é o país que pretendia? Faça 'upgrade' para escolher qualquer servidor";
+
+/* ReportBugwindow title */
+"_br_window_title" = "Reportar um problema";
+
+/* ReportBug 1st step title */
+"_br_1_title" = "Qual é o problema?";
+
+/* ReportBug 2nd step (Quick fixes) title */
+"_br_2_title" = "Correcções rápidas";
+
+/* ReportBug 2nd step (Quick fixes) subtitle */
+"_br_2_subtitle" = "Estas dicas poderão ajudá-lo a resolver mais rapidamente o seu problema.";
+
+/* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
+"_br_2_footer" = "Não funcionou?";
+
+/* ReportBug 2nd step (Quick fixes) button to go to the next step */
+"_br_2_button_next" = "Contacte-nos";
+
+/* ReportBug 2nd step (Quick fixes) cancel button */
+"_br_2_button_cancel" = "Cancel";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_send" = "Enviar relatório";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_sending" = "Envio";
+
+/* ReportBug 3rd step (form) email field name */
+"_br_3_email" = "E-mail";
+
+/* ReportBug 3rd step (form) username field name */
+"_br_3_username" = "Nome de utilizador";
+
+/* ReportBug 3rd step (form) field to ask for includeing logs */
+"_br_3_logs_field" = "Enviar diários de erro";
+
+/* ReportBug 3rd step (form) logs description */
+"_br_3_logs_description" = "Um registo é um tipo de ficheiro que nos mostra as acções que realizou e que conduziram a um erro. Só os utilizaremos para ajudar os nossos engenheiros a corrigir erros.";
+
+/* ReportBug 3rd step (form): message shown if user disabled logs */
+"_br_3_logs_disabled" = "Os registos de erros ajudam-nos a resolver o seu problema. Se não os incluir, é possível que não consigamos investigar totalmente o problema.";
+
+/* ReportBug success window: title text */
+"_br_success_title" = "Agradecemos os seus comentários";
+
+/* ReportBug success window: subtitle text */
+"_br_success_subtitle" = "Entraremos em contacto consigo logo que possível.";
+
+/* ReportBug success window: button */
+"_br_success_button" = "Got it";
+
+/* ReportBug success window: title text */
+"_br_failure_title" = "O seu relatório não foi enviado.";
+
+/* ReportBug success window: retry button */
+"_br_failure_button_retry" = "Tente de novo";
+
+/* ReportBug success window: troubleshoot button */
+"_br_failure_button_troubleshoot" = "Troubleshoot";
+
+/* Title of the view nudging users to update before filling Bug Report */
+"_update_view_title" = "Actualizar o Proton VPN";
+
+/* Description text of the view nudging users to update before filling Bug Report */
+"_update_view_description" = "É provável que tenha problemas com versões mais antigas do Proton VPN.";
+
+/* Action button of the view nudging users to update before filling Bug Report */
+"_update_view_button" = "Actualizar";

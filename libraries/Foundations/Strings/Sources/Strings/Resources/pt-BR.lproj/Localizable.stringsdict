@@ -440,5 +440,37 @@ parados</string>
         <string>Localizações dos servidores gratuitos (%d)</string>
       </dict>
     </dict>
+    <key>plan_duration_month</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@plan_duration_month@</string>
+      <key>plan_duration_month</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d mês</string>
+        <key>other</key>
+        <string>%d messes</string>
+      </dict>
+    </dict>
+    <key>plan_duration_year</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@plan_duration_year@</string>
+      <key>plan_duration_year</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d ano</string>
+        <key>other</key>
+        <string>%d anos</string>
+      </dict>
+    </dict>
   </dict>
 </plist>
