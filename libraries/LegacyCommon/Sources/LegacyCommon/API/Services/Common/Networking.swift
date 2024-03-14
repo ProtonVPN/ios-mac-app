@@ -16,7 +16,6 @@ import ProtonCoreNetworking
 import ProtonCoreServices
 import ProtonCoreAuthentication
 import ProtonCoreEnvironment
-import ProtonCoreFeatureSwitch
 import ProtonCoreUtilities
 #if os(iOS)
 import ProtonCoreChallenge
