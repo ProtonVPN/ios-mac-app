@@ -184,16 +184,18 @@ class CreateNewProfileViewModel {
 
         guard let group = selectedGroup else { return result }
 
-        // Default "profiles": fastest and random
-        result += [
-            ServerOffering.fastest(group.serverOfferingID),
-            ServerOffering.random(group.serverOfferingID)
-        ].map { offering in
-            PopUpButtonItemViewModel(
-                title: serverDescriptor(for: offering),
-                checked: state.serverOffering == offering,
-                handler: { [weak self] in self?.update(serverOffering: offering) }
-            )
+        if case .country = group.kind {
+            // Default "profiles": fastest and random
+            result += [
+                ServerOffering.fastest(group.serverOfferingID),
+                ServerOffering.random(group.serverOfferingID)
+            ].map { offering in
+                PopUpButtonItemViewModel(
+                    title: serverDescriptor(for: offering),
+                    checked: state.serverOffering == offering,
+                    handler: { [weak self] in self?.update(serverOffering: offering) }
+                )
+            }
         }
 
         guard let currentGroupServers else {
