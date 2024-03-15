@@ -39,7 +39,12 @@ public struct ServerFeature: OptionSet, Codable {
     }
 }
 
-extension ServerFeature {
+extension ServerFeature: CustomStringConvertible {
+
+    public var description: String {
+        return "\(elements().map(\.featureName))"
+    }
+
     private var featureName: String {
         switch self {
         case .secureCore:

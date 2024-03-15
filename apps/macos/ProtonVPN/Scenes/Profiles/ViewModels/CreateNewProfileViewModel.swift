@@ -94,10 +94,10 @@ class CreateNewProfileViewModel {
 
     var selectedGroup: ServerGroupInfo? {
         guard let countryIndex = state.countryIndex,
-              countryIndex >= 0 && countryIndex < serverGroups.count else {
+              countryIndex >= 0 && countryIndex < state.serverGroups.count else {
             return nil
         }
-        return serverGroups[countryIndex]
+        return state.serverGroups[countryIndex]
     }
 
     var profileName: String? {
@@ -107,6 +107,7 @@ class CreateNewProfileViewModel {
         set {
             state = ModelState(profileName: newValue,
                                serverType: state.serverType,
+                               serverGroups: state.serverGroups,
                                countryIndex: state.countryIndex,
                                serverOffering: state.serverOffering,
                                connectionProtocol: state.connectionProtocol)
@@ -124,12 +125,8 @@ class CreateNewProfileViewModel {
     }
 
     // Filter currently available servers by their type: standard, secure core, p2p, tor
-    private var currentServerTypeFilter: VPNServerFilter.ServerFeatureFilter {
-        state.serverType.serverTypeFilter
-    }
-
-    private var serverGroups: [ServerGroupInfo] {
-        return serverRepository.getGroups(filteredBy: [.features(currentServerTypeFilter)])
+    private func serverGroups(for type: ServerType) -> [ServerGroupInfo] {
+        return serverRepository.getGroups(filteredBy: [.features(type.serverTypeFilter)])
     }
 
     /// Contains one placeholder item at the beginning, followed by all available countries.
@@ -141,7 +138,7 @@ class CreateNewProfileViewModel {
             handler: { [weak self] in self?.update(countryIndex: nil) }
         )] +
         // Countries by index in their grouping
-        serverGroups.enumerated().map { (index, grouping) in
+        state.serverGroups.enumerated().map { (index, grouping) in
             PopUpButtonItemViewModel(
                 title: countryDescriptor(for: grouping),
                 checked: state.countryIndex == index,
@@ -161,7 +158,7 @@ class CreateNewProfileViewModel {
 
         return serverRepository.getServers(
             filteredBy: [
-                .features(currentServerTypeFilter), // Secure core or not
+                .features(state.serverType.serverTypeFilter), // Standard / Secure Core / P2P / TOR
                 .supports(protocol: ProtocolSupport(vpnProtocols: supportedProtocols)), // Only the ones supporting selected protocol
                 .kind(countryGroup.kind.serverTypeFilter), // Only from selected country/gateway
             ],
@@ -185,7 +182,7 @@ class CreateNewProfileViewModel {
         guard let group = selectedGroup else { return result }
 
         if case .country = group.kind {
-            // Default "profiles": fastest and random
+            // Add default "profiles": fastest and random (only for countries, not gateways)
             result += [
                 ServerOffering.fastest(group.serverOfferingID),
                 ServerOffering.random(group.serverOfferingID)
@@ -288,8 +285,12 @@ class CreateNewProfileViewModel {
 
         let propertiesManager = factory.makePropertiesManager()
         self.propertiesManager = propertiesManager
+
+        let state = ModelState.default
+
         self.state = .default
             .updating(connectionProtocol: propertiesManager.connectionProtocol)
+        update(type: self.state.serverType) // populate initial server groups
 
         // Check is required here, as the didSet check is not invoked when assigning inside the constructor
         checkSystemExtensionOrResetProtocol(newProtocol: state.connectionProtocol, shouldStartTour: false)
@@ -311,7 +312,7 @@ class CreateNewProfileViewModel {
         }
 
         state = state.updating(serverType: type,
-                               newTypeGrouping: serverGroups,
+                               newTypeGrouping: serverGroups(for: type),
                                selectedCountryGroup: selectedGroup,
                                smartProtocolConfig: propertiesManager.smartProtocolConfig)
     }
@@ -390,7 +391,7 @@ class CreateNewProfileViewModel {
         }
 
         let grouping: [ServerGroupInfo]
-        grouping = serverRepository.getGroups(filteredBy: [.features(currentServerTypeFilter)])
+        grouping = serverRepository.getGroups(filteredBy: [.features(state.serverType.serverTypeFilter)])
 
         var connectionProtocol: ConnectionProtocol? = profile.connectionProtocol
 
@@ -418,6 +419,7 @@ class CreateNewProfileViewModel {
 
         state = ModelState(profileName: profile.name,
                            serverType: profile.serverType,
+                           serverGroups: grouping,
                            countryIndex: countryIndex,
                            serverOffering: profile.serverOffering,
                            connectionProtocol: connectionProtocol)
@@ -503,12 +505,14 @@ extension CreateNewProfileViewModel: CustomStyleContext {
 fileprivate struct ModelState {
     let profileName: String?
     let serverType: ServerType
+    let serverGroups: [ServerGroupInfo]
     let countryIndex: Int?
     let serverOffering: ServerOffering?
     let connectionProtocol: ConnectionProtocol?
 
     static let `default` = Self(profileName: nil,
                                 serverType: .standard,
+                                serverGroups: [],
                                 countryIndex: nil,
                                 serverOffering: nil,
                                 connectionProtocol: nil)
@@ -524,10 +528,11 @@ extension ModelState {
                   smartProtocolConfig: SmartProtocolConfig) -> Self {
 
         // Re-select country/gateway if it's still there after ServerType change
-        var countryIndex = newTypeGrouping.firstIndex { $0 == selectedCountryGroup }
+        let countryIndex = newTypeGrouping.firstIndex { $0 == selectedCountryGroup }
 
         return ModelState(profileName: self.profileName,
                           serverType: serverType,
+                          serverGroups: newTypeGrouping,
                           countryIndex: self.countryIndex,
                           serverOffering: self.serverOffering,
                           connectionProtocol: self.connectionProtocol)
@@ -546,6 +551,7 @@ extension ModelState {
 
         return ModelState(profileName: self.profileName,
                           serverType: self.serverType,
+                          serverGroups: self.serverGroups,
                           countryIndex: countryIndex,
                           serverOffering: self.serverOffering,
                           connectionProtocol: self.connectionProtocol)
@@ -569,6 +575,7 @@ extension ModelState {
 
         return ModelState(profileName: self.profileName,
                           serverType: self.serverType,
+                          serverGroups: self.serverGroups,
                           countryIndex: self.countryIndex,
                           serverOffering: serverOffering,
                           connectionProtocol: self.connectionProtocol)
@@ -578,6 +585,7 @@ extension ModelState {
     func updating(connectionProtocol: ConnectionProtocol?) -> Self {
         Self(profileName: self.profileName,
              serverType: self.serverType,
+             serverGroups: self.serverGroups,
              countryIndex: self.countryIndex,
              serverOffering: self.serverOffering,
              connectionProtocol: connectionProtocol)
