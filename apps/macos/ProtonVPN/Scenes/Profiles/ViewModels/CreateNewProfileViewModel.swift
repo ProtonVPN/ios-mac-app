@@ -94,7 +94,7 @@ class CreateNewProfileViewModel {
 
     var selectedGroup: ServerGroupInfo? {
         guard let countryIndex = state.countryIndex,
-              countryIndex > 0 && countryIndex < serverGroups.count else {
+              countryIndex >= 0 && countryIndex < serverGroups.count else {
             return nil
         }
         return serverGroups[countryIndex]
