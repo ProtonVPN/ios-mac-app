@@ -381,6 +381,7 @@ extension AppDelegate {
 
     private func registerForPushNotificationsIfNeeded() {
         if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.pushNotifications) {
+            pushNotificationService.setup()
 
             if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.accountRecovery) {
                 let vpnHandler = AccountRecoveryHandler()
