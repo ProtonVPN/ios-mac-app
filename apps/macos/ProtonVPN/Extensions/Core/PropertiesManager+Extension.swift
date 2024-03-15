@@ -99,15 +99,43 @@ extension PropertiesManagerProtocol {
     
     // MARK: - Private
     private func setLoginItem(enabled: Bool) {
-        let launcherAppIdentifier = "ch.protonvpn.ProtonVPNStarter"
-        if SMLoginItemSetEnabled(launcherAppIdentifier as CFString, enabled) {
+        if #available(macOS 13.0, *) {
             if enabled {
-                log.info("Successfully add login item.", category: .app)
+                registerLoginItem()
             } else {
-                log.info("Successfully remove login item.", category: .app)
+                unregisterLoginItem()
             }
         } else {
-            log.error("Failed to add login item.", category: .app)
+            let launcherAppIdentifier = "ch.protonvpn.ProtonVPNStarter"
+            if SMLoginItemSetEnabled(launcherAppIdentifier as CFString, enabled) {
+                if enabled {
+                    log.info("Successfully add login item.", category: .app)
+                } else {
+                    log.info("Successfully remove login item.", category: .app)
+                }
+            } else {
+                log.error("Failed to add login item.", category: .app)
+            }
+        }
+    }
+
+    @available(macOS 13.0, *)
+    private func registerLoginItem() {
+        do {
+            let service = SMAppService()
+            try service.register()
+        } catch {
+            log.error("Failed to register login item: \(error)", category: .app)
+        }
+    }
+
+    @available(macOS 13.0, *)
+    private func unregisterLoginItem() {
+        do {
+            let service = SMAppService()
+            try service.unregister()
+        } catch {
+            log.error("Failed to unregister login item: \(error)", category: .app)
         }
     }
 }
