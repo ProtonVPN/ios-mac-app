@@ -34,10 +34,6 @@ public class CoreApiServiceMock: CoreApiService {
         })
     }
 
-    public func getApiFeature<T: Codable>(feature: CoreApiFeature, completion: @escaping (Result<T, Error>) -> Void) {
-
-    }
-
     public init() {}
 }
 #endif

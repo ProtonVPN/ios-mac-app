@@ -29,7 +29,6 @@ public protocol CoreApiServiceFactory {
 
 public protocol CoreApiService {
     func getApiNotifications(completion: @escaping (Result<GetApiNotificationsResponse, Error>) -> Void)
-    func getApiFeature<T: Codable>(feature: CoreApiFeature, completion: @escaping (Result<T, Error>) -> Void)
 }
 
 public class CoreApiServiceImplementation: CoreApiService {
@@ -56,17 +55,6 @@ public class CoreApiServiceImplementation: CoreApiService {
                     log.error("Error parsing announcements, not retrying", category: .api, metadata: ["error": "\(error)"])
                     completion(.success(.init(notifications: [])))
                 }
-            case let .failure(error):
-                completion(.failure(error))
-            }
-        }
-    }
-
-    public func getApiFeature<T: Codable>(feature: CoreApiFeature, completion: @escaping (Result<T, Error>) -> Void) {
-        networking.request(CoreApiFeatureRequest(feature: feature)) { (result: Result<CoreApiFeatureRespone<T>, Error>) in
-            switch result {
-            case let .success(data):
-                completion(.success(data.feature.value))
             case let .failure(error):
                 completion(.failure(error))
             }
