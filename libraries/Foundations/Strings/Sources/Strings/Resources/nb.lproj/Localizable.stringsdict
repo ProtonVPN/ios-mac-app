@@ -415,13 +415,13 @@ stoppet</string>
       <key>STEP</key>
       <dict>
         <key>one</key>
-        <string>Steg %d</string>
+        <string>Trinn %d</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Steg %d</string>
+        <string>Trinn %d</string>
       </dict>
     </dict>
     <key>free_connections_modal_subtitle</key>

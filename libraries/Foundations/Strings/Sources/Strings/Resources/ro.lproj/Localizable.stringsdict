@@ -513,9 +513,9 @@ blocate</string>
         <key>one</key>
         <string>%d lună</string>
         <key>few</key>
-        <string>%d de luni</string>
-        <key>other</key>
         <string>%d luni</string>
+        <key>other</key>
+        <string>%d de luni</string>
       </dict>
     </dict>
     <key>plan_duration_year</key>
@@ -531,9 +531,9 @@ blocate</string>
         <key>one</key>
         <string>%d an</string>
         <key>few</key>
-        <string>%d de ani</string>
-        <key>other</key>
         <string>%d ani</string>
+        <key>other</key>
+        <string>%d de ani</string>
       </dict>
     </dict>
   </dict>

@@ -2063,7 +2063,7 @@
 "welcome_to_proton_subtitle" = "Surfa privat, åtkomst till blockerat innehåll och njut av digital frihet.";
 
 /* Welcome to Proton screen shown during onboarding. Banner title label. */
-"welcome_to_proton_banner_title" = "Certified no-logs VPN";
+"welcome_to_proton_banner_title" = "Certifierat VPN utan loggning";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "Din VPN-aktivitet skyddas av schweiziska integritetslagar. Vi kommer aldrig att spåra dig online eller dela din information med tredje part.";

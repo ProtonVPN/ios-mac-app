@@ -2075,7 +2075,7 @@
 "upsell_plans_list_subtitle" = "Атрымайце дадатковыя функцыі прыватнасці і найвышэйшую хуткасць з VPN Plus.";
 
 /* Header of paid plans list where there are more than 1 plan option to pick from. */
-"upsell_plans_list_section_header" = "Выбар тарыфынага плана";
+"upsell_plans_list_section_header" = "Выберыце тарыфны план";
 
 /* Main Button of paid plans list allowing user to start payments process. */
 "upsell_plans_list_validate_button" = "Атрымаць VPN Plus";
