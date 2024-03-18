@@ -2078,7 +2078,7 @@
 "upsell_plans_list_section_header" = "プランを選択してください";
 
 /* Main Button of paid plans list allowing user to start payments process. */
-"upsell_plans_list_validate_button" = "Get VPN Plus";
+"upsell_plans_list_validate_button" = "VPN Plus を入手";
 
 /* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
 "upsell_plans_list_option_amountPerMonth" = " /month";

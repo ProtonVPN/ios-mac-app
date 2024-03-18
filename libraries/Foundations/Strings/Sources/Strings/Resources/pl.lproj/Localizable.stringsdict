@@ -573,11 +573,11 @@ zatrzymanych</string>
         <key>one</key>
         <string>%d miesiąc</string>
         <key>few</key>
-        <string>%d miesiąca</string>
+        <string>%d miesiące</string>
         <key>many</key>
-        <string>%d miesiąca</string>
+        <string>%d miesiący</string>
         <key>other</key>
-        <string>%d miesięcy</string>
+        <string>%d miesięca</string>
       </dict>
     </dict>
     <key>plan_duration_year</key>
@@ -593,11 +593,11 @@ zatrzymanych</string>
         <key>one</key>
         <string>%d rok</string>
         <key>few</key>
-        <string>%d roku</string>
+        <string>%d lata</string>
         <key>many</key>
-        <string>%d roku</string>
-        <key>other</key>
         <string>%d lat</string>
+        <key>other</key>
+        <string>%d roku</string>
       </dict>
     </dict>
   </dict>

@@ -573,11 +573,11 @@ zastaveno</string>
         <key>one</key>
         <string>%d měsíc</string>
         <key>few</key>
-        <string>%d měsíců</string>
+        <string>%d měsíce</string>
         <key>many</key>
-        <string>%d měsíce</string>
+        <string>%d měsíců</string>
         <key>other</key>
-        <string>%d měsíce</string>
+        <string>%d měsíců</string>
       </dict>
     </dict>
     <key>plan_duration_year</key>
@@ -593,11 +593,11 @@ zastaveno</string>
         <key>one</key>
         <string>%d rok</string>
         <key>few</key>
-        <string>%d let</string>
+        <string>%d roky</string>
         <key>many</key>
-        <string>%d roky</string>
+        <string>%d roků</string>
         <key>other</key>
-        <string>%d roky</string>
+        <string>%d roků</string>
       </dict>
     </dict>
   </dict>

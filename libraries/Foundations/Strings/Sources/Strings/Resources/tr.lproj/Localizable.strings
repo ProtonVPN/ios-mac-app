@@ -2072,19 +2072,19 @@
 "upsell_plans_list_title" = "Gizlilik düzeyinizi yükseltin";
 
 /* Subtitle of paid plans list. */
-"upsell_plans_list_subtitle" = "VPN Plus tarifesi ile gelişmiş gizlilik özelliklerine ve daha yüksek hızlara erişin.";
+"upsell_plans_list_subtitle" = "VPN Plus tarifesi ile gelişmiş gizlilik özelliklerine ve daha yüksek hıza erişin.";
 
 /* Header of paid plans list where there are more than 1 plan option to pick from. */
 "upsell_plans_list_section_header" = "Tarifenizi seçin";
 
 /* Main Button of paid plans list allowing user to start payments process. */
-"upsell_plans_list_validate_button" = "VPN Plus'ı edinin";
+"upsell_plans_list_validate_button" = "VPN Plus edinin";
 
 /* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerMonth" = " /month";
+"upsell_plans_list_option_amountPerMonth" = " /ay";
 
 /* Trailing text of the paid plan option amount indicating the amount per year. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerYear" = " /year";
+"upsell_plans_list_option_amountPerYear" = " /yıl";
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "VPN Business ile kullanılabilir.";
