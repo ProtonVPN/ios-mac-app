@@ -1641,8 +1641,6 @@ public enum Localizable {
   public static var wrongCountryBannerTitle: String { return Localizable.tr("Localizable", "_wrong_country_banner_title", fallback: "Not the country you wanted?") }
   /// MacOS: text in main window
   public static var youAreNotConnected: String { return Localizable.tr("Localizable", "_you_are_not_connected", fallback: "You are not connected") }
-  /// Button to apply coupon
-  public static var applyCoupon: String { return Localizable.tr("Localizable", "apply_coupon", fallback: "Apply") }
   /// Button to confirm two-factor or recovery code in login
   public static var authenticate: String { return Localizable.tr("Localizable", "authenticate", fallback: "Authenticate") }
   /// Connection status title when user is connected to a VPN [Redesign_2023]
@@ -1651,12 +1649,6 @@ public enum Localizable {
   public static var connectionStatusProtecting: String { return Localizable.tr("Localizable", "connection_status_protecting", fallback: "Protecting your digital identity") }
   /// Connection status title when user is not connected to a VPN [Redesign_2023]
   public static var connectionStatusUnprotected: String { return Localizable.tr("Localizable", "connection_status_unprotected", fallback: "You are unprotected") }
-  /// Banner shown after coupon is applied
-  public static var couponApplied: String { return Localizable.tr("Localizable", "coupon_applied", fallback: "Coupon has been applied successfully.") }
-  /// Banner shown after coupon is applied but the plan is not yet upgraded
-  public static var couponAppliedPlanNotUpgradedYet: String { return Localizable.tr("Localizable", "coupon_applied_plan_not_upgraded_yet", fallback: "Coupon has been applied successfully. Your subscription will be upgraded within a few minutes.") }
-  /// Title of the screen to apply a coupon
-  public static var couponCode: String { return Localizable.tr("Localizable", "coupon_code", fallback: "Coupon code") }
   /// Modal that lists countries in which servers are available to free users: banner with CTA
   public static var freeConnectionsModalBanner: String { return Localizable.tr("Localizable", "free_connections_modal_banner", fallback: "Get worldwide coverage with VPN Plus") }
   /// Modal that lists countries in which servers are available to free users: Description
@@ -1933,8 +1925,6 @@ public enum Localizable {
   public static var upsellVpnAcceleratorIncreaseConnectionSpeedsBold: String { return Localizable.tr("Localizable", "upsell_vpn_accelerator_increase_connection_speeds_bold", fallback: "VPN Accelerator.") }
   /// Title of VPN Accelerator upsell modal
   public static var upsellVpnAcceleratorTitle: String { return Localizable.tr("Localizable", "upsell_vpn_accelerator_title", fallback: "Browse at even higher speeds (up to 10 Gbps)") }
-  /// Title of the Use coupon button in Settings
-  public static var useCoupon: String { return Localizable.tr("Localizable", "use_coupon", fallback: "Use coupon") }
   /// Title for the button to switch to entering recovery code
   public static var useRecoveryCode: String { return Localizable.tr("Localizable", "use_recovery_code", fallback: "Use recovery code") }
   /// Title for the button to switch to entering two-factor code

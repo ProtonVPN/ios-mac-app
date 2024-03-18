@@ -60,7 +60,6 @@ class NavigationService {
         & SafeModePropertyProviderFactory
         & ProtonReachabilityCheckerFactory
         & NetworkingFactory
-        & CouponViewModelFactory
         & SessionServiceFactory
         & AuthKeychainHandleFactory
         & TelemetrySettingsFactory
@@ -224,8 +223,7 @@ extension NavigationService {
                                          accountViewModel: AccountViewModel(vpnKeychain: factory.makeVpnKeychain(),
                                                                             propertiesManager: factory.makePropertiesManager(),
                                                                             sessionService: factory.makeSessionService(),
-                                                                            authKeychain: factory.makeAuthKeychainHandle()),
-                                         couponViewModel: factory.makeCouponViewModel())
+                                                                            authKeychain: factory.makeAuthKeychainHandle()))
     }
     
     func logOutRequested() {

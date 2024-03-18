@@ -37,8 +37,6 @@ final class AccountViewController: NSViewController {
     @IBOutlet private weak var accountPlanSeparator: NSBox!
     
     @IBOutlet private weak var manageSubscriptionButton: InteractiveActionButton!
-    @IBOutlet private weak var useCouponButton: InteractiveActionButton!
-    private let couponViewController: CouponViewController
     private var banner: BannerView?
     
     private let viewModel: AccountViewModel
@@ -47,9 +45,8 @@ final class AccountViewController: NSViewController {
         fatalError("Unsupported initializer")
     }
     
-    required init(accountViewModel: AccountViewModel, couponViewModel: CouponViewModel) {
+    required init(accountViewModel: AccountViewModel) {
         viewModel = accountViewModel
-        couponViewController = CouponViewController(viewModel: couponViewModel)
         super.init(nibName: NSNib.Name("Account"), bundle: nil)
 
         viewModel.reloadNeeded = { [weak self] in
@@ -99,23 +96,12 @@ final class AccountViewController: NSViewController {
         manageSubscriptionButton.action = #selector(manageSubscriptionButtonAction)
 
         manageSubscriptionButton.title = Localizable.manageSubscription
-        useCouponButton.title = Localizable.useCoupon
-
-        couponViewController.delegate = self
-        couponViewController.viewWillAppear()
-        couponViewController.view.isHidden = true
-        view.addSubview(couponViewController.view)
-        couponViewController.view.frame.size = NSSize(width: AppConstants.Windows.sidebarWidth, height: 200)
-        couponViewController.view.frame.origin = .zero
-        addChild(couponViewController)
     }
 
     private func setupActions() {
         manageSubscriptionButton.target = self
         manageSubscriptionButton.action = #selector(manageSubscriptionButtonAction)
 
-        useCouponButton.target = self
-        useCouponButton.action = #selector(useCoupon)
     }
     
     private func setupData() {
@@ -130,36 +116,9 @@ final class AccountViewController: NSViewController {
                                                                                     font: .themeFont(.heading4),
                                                                                     alignment: .right)
         }
-
-        useCouponButton.isHidden = !viewModel.canUsePromo
     }
     
     @objc private func manageSubscriptionButtonAction() {
         viewModel.manageSubscriptionAction()
-    }
-
-    @objc private func useCoupon() {
-        couponViewController.view.frame.origin = CGPoint(x: (view.frame.size.width - AppConstants.Windows.sidebarWidth) / 2, y: 48)
-        couponViewController.view.isHidden = false
-        DispatchQueue.main.async { [weak self] in
-            self?.couponViewController.focus()
-        }
-    }
-}
-
-// MARK: CouponViewControllerDelegate
-extension AccountViewController: CouponViewControllerDelegate {
-    func couponDidApply(message: String) {
-        userDidCloseCouponViewController()
-        viewModel.reload()
-
-        banner?.dismiss()
-        banner = BannerView(message: message)
-        // one level up is the bottom part of the settings container and another level up is the actual container
-        banner?.show(from: view.superview?.superview ?? view)
-    }
-
-    func userDidCloseCouponViewController() {
-        couponViewController.view.isHidden = true
     }
 }

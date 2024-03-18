@@ -118,12 +118,6 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
 
             timerFunction()
         }
-
-        // refresh account if the subscribed flag is missing to ensure proper data migration
-        if !refreshed.contains(\.timerAccountRefresh),
-           let credentials = try? factory.makeVpnKeychain().fetchCached(), credentials.subscribed == nil {
-            refreshAccount()
-        }
     }
     
     public func stop() {

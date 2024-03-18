@@ -33,7 +33,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
     public let planName: String
     public let maxConnect: Int
     public let maxTier: Int
-    public let services: Int
+    public let services: Int?
     public let groupId: String
     public let name: String
     public let password: String
@@ -85,7 +85,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         planTitle: String,
         maxConnect: Int,
         maxTier: Int,
-        services: Int,
+        services: Int?,
         groupId: String,
         name: String,
         password: String,
@@ -227,7 +227,7 @@ public struct CachedVpnCredentials {
     public let planTitle: String
     public let maxConnect: Int
     public let maxTier: Int
-    public let services: Int
+    public let services: Int?
     public let delinquent: Int
     public let credit: Int
     public let currency: String

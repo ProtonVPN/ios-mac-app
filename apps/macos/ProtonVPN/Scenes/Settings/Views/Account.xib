@@ -12,7 +12,6 @@
                 <outlet property="accountPlanSeparator" destination="E7f-qz-dkT" id="6P6-Uv-ARw"/>
                 <outlet property="accountPlanValue" destination="bHC-2m-Qdn" id="foe-9C-Qu5"/>
                 <outlet property="manageSubscriptionButton" destination="KP6-ou-7qP" id="qp3-9A-Xhg"/>
-                <outlet property="useCouponButton" destination="CjQ-Jp-Ar9" id="vTq-kH-QUz"/>
                 <outlet property="usernameLabel" destination="KwT-jo-bPa" id="s5E-BI-LPm"/>
                 <outlet property="usernameSeparator" destination="TzG-qg-j0x" id="NJV-KT-KtO"/>
                 <outlet property="usernameValue" destination="UhW-14-BIc" id="W4L-6f-k3g"/>
@@ -125,18 +124,11 @@
                     <rect key="frame" x="0.0" y="0.0" width="511" height="146"/>
                     <subviews>
                         <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sUs-v0-wfZ">
-                            <rect key="frame" x="0.0" y="28" width="511" height="48"/>
+                            <rect key="frame" x="0.0" y="28" width="511" height="16"/>
                             <subviews>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KP6-ou-7qP" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="169" y="32" width="174" height="16"/>
+                                    <rect key="frame" x="169" y="0.0" width="174" height="16"/>
                                     <buttonCell key="cell" type="bevel" title="Manage subscription button" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="hSy-yP-2y2">
-                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="system"/>
-                                    </buttonCell>
-                                </button>
-                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CjQ-Jp-Ar9" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="217" y="0.0" width="77" height="16"/>
-                                    <buttonCell key="cell" type="bevel" title="Use coupon" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="zXc-qo-nJs">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
@@ -144,10 +136,8 @@
                             </subviews>
                             <visibilityPriorities>
                                 <integer value="1000"/>
-                                <integer value="1000"/>
                             </visibilityPriorities>
                             <customSpacing>
-                                <real value="3.4028234663852886e+38"/>
                                 <real value="3.4028234663852886e+38"/>
                             </customSpacing>
                         </stackView>

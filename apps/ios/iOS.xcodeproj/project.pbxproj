@@ -396,8 +396,6 @@
 		F316A07326DFB0E900669386 /* UserCachedStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316A06F26DFB05E00669386 /* UserCachedStatus.swift */; };
 		F316A07526DFBCB600669386 /* PlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316A07426DFBCB600669386 /* PlanService.swift */; };
 		F31E91202758F5F900140B2E /* WGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31E911F2758F5F900140B2E /* WGLogger.swift */; };
-		F330F01627FC85AE00C3AA33 /* CouponViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F330F01527FC85AE00C3AA33 /* CouponViewController.swift */; };
-		F330F01827FC884700C3AA33 /* CouponViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F330F01727FC884700C3AA33 /* CouponViewController.xib */; };
 		F330F01C27FD752E00C3AA33 /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F330F01B27FD752E00C3AA33 /* UINavigationController+Extensions.swift */; };
 		F348C9D327D7B63300622584 /* CountriesViewController+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = F348C9D227D7B63300622584 /* CountriesViewController+Search.swift */; };
 		F348C9D627D8E54200622584 /* Search in Frameworks */ = {isa = PBXBuildFile; productRef = F348C9D527D8E54200622584 /* Search */; };
@@ -873,8 +871,6 @@
 		F316A06F26DFB05E00669386 /* UserCachedStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserCachedStatus.swift; path = ../../../../ios/ProtonVPN/Scenes/Payments/UserCachedStatus.swift; sourceTree = "<group>"; };
 		F316A07426DFBCB600669386 /* PlanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlanService.swift; path = ../../../../ios/ProtonVPN/Scenes/Payments/PlanService.swift; sourceTree = "<group>"; };
 		F31E911F2758F5F900140B2E /* WGLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WGLogger.swift; sourceTree = "<group>"; };
-		F330F01527FC85AE00C3AA33 /* CouponViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CouponViewController.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/ViewControllers/CouponViewController.swift; sourceTree = "<group>"; };
-		F330F01727FC884700C3AA33 /* CouponViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CouponViewController.xib; path = ../../../../../ios/ProtonVPN/Scenes/Settings/ViewControllers/CouponViewController.xib; sourceTree = "<group>"; };
 		F330F01B27FD752E00C3AA33 /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UINavigationController+Extensions.swift"; path = "../../../ios/ProtonVPN/Extensions/UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
 		F348C9D227D7B63300622584 /* CountriesViewController+Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CountriesViewController+Search.swift"; path = "../../../../../ios/ProtonVPN/Scenes/Countries/ViewControllers/CountriesViewController+Search.swift"; sourceTree = "<group>"; };
 		F34AC17C27F439B40007FF93 /* Review+Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Review+Configuration.swift"; path = "../../../ios/ProtonVPN/Extensions/Review+Configuration.swift"; sourceTree = "<group>"; };
@@ -1209,8 +1205,6 @@
 		791DE610208E08E600A29EA5 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				F330F01527FC85AE00C3AA33 /* CouponViewController.swift */,
-				F330F01727FC884700C3AA33 /* CouponViewController.xib */,
 				E1EB9E7422FF096A009E704F /* LogSelectionViewController.swift */,
 				E1A4BF5A21ADBE05004D187F /* LogsViewController.swift */,
 				F314141A27B17380007424E9 /* NetShieldSelectionViewController.swift */,
@@ -2723,7 +2717,6 @@
 				DE0AD1BB435AE75C8DD9BDB4 /* Environments.storyboard in Resources */,
 				A264F1C92E772DA03634D8A8 /* AnnouncementFeatureView.xib in Resources */,
 				20227E9EFF62B5A862052082 /* AnnouncementDetailViewController.xib in Resources */,
-				F330F01827FC884700C3AA33 /* CouponViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3014,7 +3007,6 @@
 				E1D187EC2301A26D00C5F492 /* VpnProtocolViewModel.swift in Sources */,
 				E532A8AD29252FFD00096D2D /* InformationTableViewCell.swift in Sources */,
 				F348C9D327D7B63300622584 /* CountriesViewController+Search.swift in Sources */,
-				F330F01627FC85AE00C3AA33 /* CouponViewController.swift in Sources */,
 				428DF98B262F031600944379 /* ServersStreamingFeaturesViewModel.swift in Sources */,
 				E134558921889EC500FEEECE /* Data+Extension.swift in Sources */,
 				79AFDA9420DB3809002F8751 /* ProfileItemViewModel.swift in Sources */,

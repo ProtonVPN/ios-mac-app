@@ -31,9 +31,6 @@ final class AccountViewModel {
     private(set) var planTitle: String?
     private(set) var maxTier: Int
 
-    var canUsePromo: Bool {
-        return propertiesManager.featureFlags.promoCode && (try? vpnKeychain.fetchCached())?.canUsePromoCode ?? false
-    }
 
     private let vpnKeychain: VpnKeychainProtocol
     private let propertiesManager: PropertiesManagerProtocol

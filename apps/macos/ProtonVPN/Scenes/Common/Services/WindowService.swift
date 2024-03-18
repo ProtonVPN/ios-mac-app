@@ -48,7 +48,7 @@ protocol WindowService: WindowControllerDelegate {
     
     func openAbout(factory: AboutViewController.Factory)
     func openAcknowledgements()
-    func openSettingsWindow(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, accountViewModel: AccountViewModel, couponViewModel: CouponViewModel)
+    func openSettingsWindow(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, accountViewModel: AccountViewModel)
     func openProfilesWindow(viewModel: ProfilesContainerViewModel)
     func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService)
     func openSystemExtensionGuideWindow(cancelledHandler: @escaping () -> Void)
@@ -208,10 +208,10 @@ class WindowServiceImplementation: WindowService {
         windowController.showWindow(self)
     }
     
-    func openSettingsWindow(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, accountViewModel: AccountViewModel, couponViewModel: CouponViewModel) {
+    func openSettingsWindow(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, accountViewModel: AccountViewModel) {
         NSApp.setActivationPolicy(.regular)
         
-        let viewController = SettingsContainerViewController(viewModel: viewModel, tabBarViewModel: tabBarViewModel, accountViewModel: accountViewModel, couponViewModel: couponViewModel)
+        let viewController = SettingsContainerViewController(viewModel: viewModel, tabBarViewModel: tabBarViewModel, accountViewModel: accountViewModel)
         let windowController = SettingsWindowController(viewController: viewController)
         windowController.delegate = self
         activeWindowControllers.insert(windowController)
