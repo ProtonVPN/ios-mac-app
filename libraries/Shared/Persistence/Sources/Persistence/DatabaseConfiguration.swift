@@ -32,14 +32,23 @@ import Ergonomics
 public struct DatabaseConfiguration {
     public let databaseType: DatabaseType
     let executor: DatabaseExecutor
+    let schemaVersion: SchemaVersion
 
-    public init(executor: DatabaseExecutor, databaseType: DatabaseType) {
+    public init(executor: DatabaseExecutor, databaseType: DatabaseType, schemaVersion: SchemaVersion) {
         self.executor = executor
         self.databaseType = databaseType
+        self.schemaVersion = schemaVersion
     }
 
-    public static func withTestExecutor(databaseType: DatabaseType) -> DatabaseConfiguration {
-        return DatabaseConfiguration(executor: TestDatabaseExecutor(), databaseType: databaseType)
+    public static func withTestExecutor(
+        databaseType: DatabaseType,
+        schemaVersion: SchemaVersion = .latest
+    ) -> DatabaseConfiguration {
+        return DatabaseConfiguration(
+            executor: TestDatabaseExecutor(),
+            databaseType: databaseType,
+            schemaVersion: schemaVersion
+        )
     }
 }
 
@@ -71,7 +80,11 @@ private enum DatabaseConfigurationKey: DependencyKey {
             }
         )
 
-        return DatabaseConfiguration(executor: executor, databaseType: .physical(filePath: databasePath))
+        return DatabaseConfiguration(
+            executor: executor,
+            databaseType: .physical(filePath: databasePath),
+            schemaVersion: .latest
+        )
     }
 }
 

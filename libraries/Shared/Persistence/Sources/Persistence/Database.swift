@@ -30,8 +30,8 @@ public enum DatabaseType: CustomStringConvertible {
     /// Global in-memory database shared across all `DatabaseWriter` instances initialised with this type
     case inMemory
 
-    /// Isolated in-memory database instance
-    case ephemeral
+    /// Isolated in-memory database instance (optionally initialised from a physical file)
+    case ephemeral(filePath: String?)
 
     /// Database initialised from, and persisted to, a physical file.
     ///
@@ -44,6 +44,10 @@ public enum DatabaseType: CustomStringConvertible {
     /// manually.
     /// [iOS Storage Best Practices](https://developer.apple.com/videos/play/tech-talks/204?time=225)
     case physical(filePath: String)
+
+    /// Convenience overload of `ephemeral(filePath: String?)`. New in-memory database instance, not based off an
+    /// existing file
+    public static var ephemeral: Self { .ephemeral(filePath: nil) }
 
     public var description: String {
         switch self {
@@ -59,16 +63,15 @@ public enum DatabaseType: CustomStringConvertible {
 
 extension DatabaseWriter {
 
-    public static func from(databaseType: DatabaseType) -> DatabaseQueue {
-        return prepareQueue(withDatabaseType: databaseType)
-    }
-
     private static func createQueue(databaseType: DatabaseType, configuration: Configuration) throws -> DatabaseQueue {
         switch databaseType {
         case .inMemory:
             return try DatabaseQueue(named: "global", configuration: configuration)
 
-        case .ephemeral:
+        case .ephemeral(let path):
+            if let path {
+                return try DatabaseQueue.inMemoryCopy(fromPath: path, configuration: configuration)
+            }
             return try DatabaseQueue(configuration: configuration)
 
         case .physical(let path):
@@ -76,10 +79,12 @@ extension DatabaseWriter {
         }
     }
 
-    private static func prepareQueue(withDatabaseType type: DatabaseType) -> DatabaseQueue {
-        var config = Configuration()
+    public static func from(databaseConfiguration: DatabaseConfiguration) -> DatabaseQueue {
+        let databaseType = databaseConfiguration.databaseType
 
-        log.info("Preparing database queue", category: .persistence, metadata: ["type": "\(type)"])
+        log.info("Preparing database queue", category: .persistence, metadata: ["type": "\(databaseType)"])
+
+        var config = Configuration() // GRDB config, not to be confused with our `DatabaseConfiguration`
 
         config.prepareDatabase { db in
             db.add(function: bitwiseOr)
@@ -87,9 +92,12 @@ extension DatabaseWriter {
             db.add(function: localizedCountryName.createFunctionForRegistration())
         }
 
-        let queue = try! createQueue(databaseType: type, configuration: config)
+        let queue = try! createQueue(databaseType: databaseType, configuration: config)
 
-        try! migrator.migrate(queue)
+        let schemaVersion = databaseConfiguration.schemaVersion
+        log.info("Migrating database", category: .persistence, metadata: ["version": "\(schemaVersion)"])
+
+        try! Migrator().migrate(queue, upTo: schemaVersion)
 
         return queue
     }

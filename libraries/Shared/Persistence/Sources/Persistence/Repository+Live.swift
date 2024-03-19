@@ -29,7 +29,7 @@ extension ServerRepository {
     public static var liveValue: ServerRepository {
         @Dependency(\.databaseConfiguration) var config
 
-        let dbWriter = DatabaseQueue.from(databaseType: config.databaseType)
+        let dbWriter = DatabaseQueue.from(databaseConfiguration: config)
         let executor = config.executor
 
         return ServerRepository(
