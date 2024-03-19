@@ -601,13 +601,12 @@ public final class ExtensionAPIService {
 
     // MARK: - API Token refresh
 
-    private func handleTokenExpired(authCredentials: AuthCredentials? = nil,
+    private func handleTokenExpired(authCredentials partialCredentials: AuthCredentials? = nil,
                                     asPartOf operation: CertificateRefreshAsyncOperation? = nil,
                                     usingCredentialsFrom context: AppContext = .wireGuardExtension,
                                     completionHandler: @escaping (Result<Void, Error>) -> Void) {
         log.debug("Will try to refresh API token", category: .api)
-        let keychainCredentials = keychain.fetch(forContext: context)
-        guard let authCredentials = authCredentials ?? keychainCredentials else {
+        guard let authCredentials = partialCredentials ?? keychain.fetch(forContext: context) else {
             log.info("Can't load API credentials from keychain. Won't refresh certificate.", category: .api)
             sessionExpired = true
             completionHandler(.failure(CertificateRefreshError.sessionExpiredOrMissing))
@@ -622,9 +621,12 @@ public final class ExtensionAPIService {
                 return
             }
 
-            self.handleTokenExpired(asPartOf: operation,
-                                    usingCredentialsFrom: context,
-                                    completionHandler: completionHandler)
+            self.handleTokenExpired(
+                authCredentials: partialCredentials,
+                asPartOf: operation,
+                usingCredentialsFrom: context,
+                completionHandler: completionHandler
+            )
         }
         request(tokenRequest, headers: [(.sessionId, authCredentials.sessionId)]) { [weak self] result in
             switch result {
