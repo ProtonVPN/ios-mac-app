@@ -28,12 +28,6 @@ import Ergonomics
 
 /// Classes that confirm to this protocol can refresh data from API into the app
 public protocol AppSessionRefresher: AnyObject {
-    var lastDataRefresh: Date? { get }
-    var lastServerLoadsRefresh: Date? { get }
-    var lastAccountRefresh: Date? { get }
-    var lastStreamingInfoRefresh: Date? { get }
-    var lastPartnersInfoRefresh: Date? { get }
-
     func refreshData()
     func refreshServerLoads()
     func refreshAccount()
@@ -62,11 +56,6 @@ public protocol AppSessionRefresherFactory {
 }
 
 open class AppSessionRefresherImplementation: AppSessionRefresher {
-    public var lastDataRefresh: Date?
-    public var lastServerLoadsRefresh: Date?
-    public var lastAccountRefresh: Date?
-    public var lastStreamingInfoRefresh: Date?
-    public var lastPartnersInfoRefresh: Date?
     
     public var loggedIn = false
     public var successfulConsecutiveSessionRefreshes = CounterActor()
@@ -110,7 +99,6 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     }
     
     @objc public func refreshData() {
-        lastDataRefresh = Date()
         attemptSilentLogIn { [weak self] result in
             switch result {
             case .success:
@@ -136,8 +124,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     
     @objc public func refreshServerLoads() {
         guard loggedIn else { return }
-        lastServerLoadsRefresh = Date()
-        
+
         vpnApiService.loads(lastKnownIp: propertiesManager.userLocation?.ip) { result in
             switch result {
             case let .success(properties):
@@ -150,7 +137,6 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     
     @objc public func refreshAccount() {
         Task { @MainActor in
-            lastAccountRefresh = Date()
             do {
                 let credentials = try await self.vpnApiService.clientCredentials()
                 self.vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
@@ -163,7 +149,6 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     @objc public func refreshStreamingServices() {
         guard loggedIn else { return }
 
-        lastStreamingInfoRefresh = Date()
         Task { [weak self] in
             do {
                 guard let streamingResponse = try await self?.vpnApiService.virtualServices() else { return }
@@ -189,7 +174,6 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
             guard shouldRefreshPartners else { return }
         }
 
-        lastPartnersInfoRefresh = Date()
         do {
             let partnerServices = try await vpnApiService.partnersServices()
             propertiesManager.partnerTypes = partnerServices.partnerTypes

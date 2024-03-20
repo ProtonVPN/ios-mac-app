@@ -22,16 +22,16 @@ import LegacyCommon
 class AppSessionRefreshTimerMock: AppSessionRefreshTimer {
 
     // Callbacks
-    var startCalled: ((Bool) -> Void)?
+    var startCalled: (() -> Void)?
     var stopCalled: (() -> Void)?
 
     // AppSessionRefreshTimer
 
-    func start(now: Bool) {
-        startCalled?(now)
+    func startTimers() {
+        startCalled?()
     }
 
-    func stop() {
+    func stopTimers() {
         stopCalled?()
     }
 }

@@ -91,12 +91,6 @@ class StatusMenuWindowModel {
         return vpnGateway.connection == .connecting
     }
     
-    func requiresRefreshes(_ required: Bool) {
-        if required {
-            factory.makeAppSessionRefreshTimer().start(now: true)
-        }
-    }
-    
     // MARK: - Private functions
     private func startObserving() {
         notificationTokens.append(NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged))

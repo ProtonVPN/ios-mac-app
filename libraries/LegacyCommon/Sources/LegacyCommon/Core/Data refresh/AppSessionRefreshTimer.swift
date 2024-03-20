@@ -44,8 +44,15 @@ public extension AppSessionRefreshTimerDelegate {
 }
 
 public protocol AppSessionRefreshTimer {
-    func start(now: Bool)
-    func stop()
+    /// Start app session refresh timers
+    ///
+    /// Renamed from just start() to make it easier to search for usages in code.
+    func startTimers()
+
+    /// Stop app session refresh timers
+    ///
+    /// Renamed from just stop() to make it easier to search for usages in code.
+    func stopTimers()
 }
 
 public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
@@ -87,17 +94,16 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
         self.delegate = delegate
     }
     
-    public func start(now: Bool) {
+    public func startTimers() {
         let refreshes = [
-            (\AppSessionRefreshTimerImplementation.timerAccountRefresh, refreshAccount, refreshIntervals.account, appSessionRefresher.lastAccountRefresh),
-            (\AppSessionRefreshTimerImplementation.timerFullRefresh, refreshFull, refreshIntervals.full, appSessionRefresher.lastDataRefresh),
-            (\AppSessionRefreshTimerImplementation.timerLoadsRefresh, refreshLoads, refreshIntervals.loads, appSessionRefresher.lastServerLoadsRefresh),
-            (\AppSessionRefreshTimerImplementation.timerStreamingRefresh, refreshStreaming, refreshIntervals.streaming, appSessionRefresher.lastStreamingInfoRefresh),
-            (\AppSessionRefreshTimerImplementation.timerPartnersRefresh, refreshPartners, refreshIntervals.partners, appSessionRefresher.lastPartnersInfoRefresh)
+            (\AppSessionRefreshTimerImplementation.timerAccountRefresh, refreshAccount, refreshIntervals.account),
+            (\AppSessionRefreshTimerImplementation.timerFullRefresh, refreshFull, refreshIntervals.full),
+            (\AppSessionRefreshTimerImplementation.timerLoadsRefresh, refreshLoads, refreshIntervals.loads),
+            (\AppSessionRefreshTimerImplementation.timerStreamingRefresh, refreshStreaming, refreshIntervals.streaming),
+            (\AppSessionRefreshTimerImplementation.timerPartnersRefresh, refreshPartners, refreshIntervals.partners)
         ]
 
-        var refreshed: Set<KeyPath<AppSessionRefreshTimerImplementation, BackgroundTimer?>> = []
-        for (timerPath, timerFunction, refreshInterval, lastRefresh) in refreshes {
+        for (timerPath, timerFunction, refreshInterval) in refreshes {
             let timer = self[keyPath: timerPath]
 
             if timer == nil || !timer!.isValid {
@@ -108,19 +114,10 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
                     timerFunction
                 )
             }
-
-            guard now else { continue }
-            guard lastRefresh == nil || lastRefresh!.addingTimeInterval(refreshInterval) < Date() else { continue }
-            // We don't need to refresh loads if the full refresh has already been made.
-            guard timerPath != \.timerLoadsRefresh || !refreshed.contains(\.timerFullRefresh) else { continue }
-
-            refreshed.insert(timerPath)
-
-            timerFunction()
         }
     }
     
-    public func stop() {
+    public func stopTimers() {
         timerFullRefresh?.invalidate()
         timerLoadsRefresh?.invalidate()
         timerAccountRefresh?.invalidate()

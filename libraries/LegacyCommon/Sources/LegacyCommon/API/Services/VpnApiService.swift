@@ -221,7 +221,7 @@ public class VpnApiService {
         }
     }
 
-    public func userLocation(completion: @escaping (Result<UserLocation, Error>) -> Void) {
+    private func userLocation(completion: @escaping (Result<UserLocation, Error>) -> Void) {
         networking.request(VPNLocationRequest()) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(response):

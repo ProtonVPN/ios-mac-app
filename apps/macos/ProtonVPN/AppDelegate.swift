@@ -181,7 +181,6 @@ extension AppDelegate: NSApplicationDelegate {
         log.info("applicationDidBecomeActive", category: .os)
         updateRecentlyActive(true)
 
-        container.makeAppSessionRefreshTimer().start(now: true) // refresh data if time passed
         // Refresh API announcements
         if propertiesManager.featureFlags.pollNotificationAPI, container.makeAuthKeychainHandle().username != nil {
             container.makeAnnouncementRefresher().tryRefreshing()

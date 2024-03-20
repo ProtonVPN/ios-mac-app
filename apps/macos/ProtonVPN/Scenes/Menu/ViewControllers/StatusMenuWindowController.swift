@@ -123,8 +123,6 @@ final class StatusMenuWindowController: WindowController {
         
         button.isHighlighted = true
         showWindow(self, relativeTo: frame)
-        
-        windowModel?.requiresRefreshes(true)
     }
     
     private func dismissPopover() {
@@ -132,8 +130,6 @@ final class StatusMenuWindowController: WindowController {
             close()
             statusItem.button?.isHighlighted = false
         }
-        
-        windowModel?.requiresRefreshes(false)
     }
     
     private func showWindow(_ sender: Any?, relativeTo frame: CGRect) {
