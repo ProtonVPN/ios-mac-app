@@ -28,8 +28,8 @@ import GRDB
 ///
 /// The `databaseType` defines what type of database should be instantiated when a `ServerRepository` is constructed.
 public struct DatabaseConfiguration {
-    var executor: DatabaseExecutor
-    var databaseType: DatabaseType
+    public let databaseType: DatabaseType
+    let executor: DatabaseExecutor
 
     public init(executor: DatabaseExecutor, databaseType: DatabaseType) {
         self.executor = executor
@@ -54,11 +54,14 @@ private enum DatabaseConfigurationKey: DependencyKey {
             fatalError("Failed to initialise app DB: cannot find URL for application support directory")
         }
 
-        if !FileManager.default.fileExists(atPath: directoryURL.absoluteString) {
+        if !FileManager.default.fileExists(atPath: directoryURL.path) {
             try! FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true)
         }
 
-        let databasePath = directoryURL.appendingPathComponent("database.sqlite").absoluteString
+        let databasePath = directoryURL
+            .appendingPathComponent("database")
+            .appendingPathExtension("sqlite")
+            .path
 
         let executor = ErrorHandlingAndLoggingDatabaseExecutor(
             logError: { message, error in

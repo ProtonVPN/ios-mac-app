@@ -44,6 +44,10 @@ public struct ServerRepository: DependencyKey {
     /// Connectable, includes logical + server, less suitable for UI
     private var server: ([VPNServerFilter], VPNServerOrder) -> VPNServer?
 
+    /// Close the underlying database connection. It is considered a fatal error to continue using other repository
+    /// functions after invoking this.
+    public var closeConnection: () throws -> Void
+
     /// Default unimplemented test value
     public static let testValue = ServerRepository()
 
@@ -54,7 +58,8 @@ public struct ServerRepository: DependencyKey {
         servers: @escaping ([VPNServerFilter], VPNServerOrder) -> [Domain.ServerInfo] = unimplemented(placeholder: []),
         deleteServers: @escaping (Int, Set<String>) -> Int = unimplemented(placeholder: 0),
         upsertLoads: @escaping ([ContinuousServerProperties]) -> Void = unimplemented(),
-        groups: @escaping ([VPNServerFilter], VPNServerGroupOrder) -> [ServerGroupInfo] = unimplemented(placeholder: [])
+        groups: @escaping ([VPNServerFilter], VPNServerGroupOrder) -> [ServerGroupInfo] = unimplemented(placeholder: []),
+        closeConnection: @escaping () throws -> Void = unimplemented()
     ) {
         self.serverCount = serverCount
         self.upsertServers = upsertServers
@@ -63,6 +68,7 @@ public struct ServerRepository: DependencyKey {
         self.deleteServers = deleteServers
         self.upsertLoads = upsertLoads
         self.groups = groups
+        self.closeConnection = closeConnection
     }
 }
 

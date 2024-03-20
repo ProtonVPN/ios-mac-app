@@ -112,7 +112,8 @@ extension ServerRepository {
                     return try GroupInfoResult.fetchAll(db, request)
                         .map { $0.domainModel }
                 }
-            }
+            },
+            closeConnection: { try dbWriter.close() }
         )
     }
 }

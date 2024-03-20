@@ -135,23 +135,18 @@ class HelpMenuViewModel {
             }
         }
 
-        // Delete Caches folder
-        do {
-            try FileManager.default.removeItem(at: FileManager.cachesDirectoryURL)
-        } catch {
-            log.error("Error deleting caches", category: .app)
+
+        let itemsToDelete = [
+            FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.path, // legacy: old server storage
+            AppConstants.FilePaths.sandbox, // legacy
+            AppConstants.FilePaths.starterSandbox // legacy
+        ]
+
+        itemsToDelete.compactMap { $0 }.forEach { path in
+            deleteItems(atPath: path)
         }
 
-        do {
-            try FileManager.default.removeItem(atPath: AppConstants.FilePaths.sandbox) // legacy
-        } catch {
-            log.error("Error deleting sandbox files", category: .app)
-        }
-        do {
-            try FileManager.default.removeItem(atPath: AppConstants.FilePaths.starterSandbox) // legacy
-        } catch {
-            log.error("Error deleting starter sandbox files", category: .app)
-        }
+        nukeServerDatabase()
 
         // vpn profile
         self.vpnManager.removeConfigurations { _ in
@@ -160,5 +155,35 @@ class HelpMenuViewModel {
                 NSApplication.shared.terminate(self)
             }
         }
+    }
+
+    private func deleteItems(atPath path: String) {
+        do {
+            try FileManager.default.removeItem(atPath: path)
+        } catch {
+            log.error(
+                "Failed to delete item",
+                category: .persistence,
+                metadata: ["path": "\(path)", "error": "\(error)"]
+            )
+        }
+    }
+
+    private func nukeServerDatabase() {
+        @Dependency(\.databaseConfiguration) var config
+        guard case .physical(let path) = config.databaseType else {
+            assertionFailure("We should be using a persistence database in the app target")
+            return
+        }
+
+        do {
+            @Dependency(\.serverRepository) var repository
+            try repository.closeConnection()
+        } catch {
+            log.error("Failed to close database connection", category: .persistence, metadata: ["error": "\(error)"])
+        }
+
+        // Let's try to delete the database file even if we failed to close the database connection
+        deleteItems(atPath: path)
     }
 }
