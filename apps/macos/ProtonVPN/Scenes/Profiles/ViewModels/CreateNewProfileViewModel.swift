@@ -93,6 +93,9 @@ class CreateNewProfileViewModel {
     }
 
     /// Consults the server repository and properties manager to create an empty/starting model state.
+    /// We could make this a static initializer on `ModelState` since we now have `@Dependency(\.propertiesManager)` and
+    /// `@Dependency(\.serverRepository)`, but it's probably not worth getting carried away with non-essential refactors
+    /// on viewmodels that will be removed during redesign.
     private func createStartingState() -> ModelState {
         let defaultServerType = ModelState.default.serverType
 
@@ -107,14 +110,6 @@ class CreateNewProfileViewModel {
     }
 
     // MARK: Getters derived from model state
-
-    var selectedGroup: ServerGroupInfo? {
-        guard let countryIndex = state.countryIndex,
-              countryIndex >= 0 && countryIndex < state.serverGroups.count else {
-            return nil
-        }
-        return state.serverGroups[countryIndex]
-    }
 
     var profileName: String? {
         get {
@@ -165,7 +160,7 @@ class CreateNewProfileViewModel {
 
     /// Helper function to get the list of servers according to a group (country) selected
     private var currentGroupServers: [ServerInfo]? {
-        guard let countryGroup = selectedGroup else {
+        guard let countryGroup = state.selectedGroup else {
             return nil
         }
         let supportedProtocols = state.connectionProtocol?.vpnProtocol != nil
@@ -195,7 +190,7 @@ class CreateNewProfileViewModel {
             handler: { [weak self] in self?.update(serverOffering: nil) }
         )]
 
-        guard let group = selectedGroup else { return result }
+        guard let group = state.selectedGroup else { return result }
 
         if case .country = group.kind {
             // Add default "profiles": fastest and random (only for countries, not gateways)
@@ -254,7 +249,7 @@ class CreateNewProfileViewModel {
             .filter { `protocol` in
                 state.serverOffering?.supports(
                     connectionProtocol: `protocol`,
-                    withCountryGroup: selectedGroup,
+                    withCountryGroup: state.selectedGroup,
                     smartProtocolConfig: propertiesManager.smartProtocolConfig
                 ) != false
             }.map { `protocol` in
@@ -302,8 +297,8 @@ class CreateNewProfileViewModel {
         let propertiesManager = factory.makePropertiesManager()
         self.propertiesManager = propertiesManager
 
-        self.state = ModelState.default
-        state = createStartingState()
+        self.state = ModelState.default // initialize all stored properties so we can use createStartingState
+        self.state = self.createStartingState()
 
         // Check is required here, as the didSet check is not invoked when assigning inside the constructor
         checkSystemExtensionOrResetProtocol(newProtocol: state.connectionProtocol, shouldStartTour: false)
@@ -326,19 +321,19 @@ class CreateNewProfileViewModel {
 
         state = state.updating(serverType: type,
                                newTypeGrouping: serverGroups(for: type),
-                               selectedCountryGroup: selectedGroup,
+                               selectedCountryGroup: state.selectedGroup,
                                smartProtocolConfig: propertiesManager.smartProtocolConfig)
     }
 
     private func update(countryIndex: Int?) {
         state = state.updating(countryIndex: countryIndex,
-                               selectedCountryGroup: selectedGroup,
+                               selectedCountryGroup: state.selectedGroup,
                                smartProtocolConfig: propertiesManager.smartProtocolConfig)
     }
 
     private func update(serverOffering: ServerOffering?) {
         state = state.updating(serverOffering: serverOffering,
-                               selectedCountryGroup: selectedGroup,
+                               selectedCountryGroup: state.selectedGroup,
                                smartProtocolConfig: propertiesManager.smartProtocolConfig)
     }
 
@@ -464,10 +459,9 @@ class CreateNewProfileViewModel {
 
     func createProfile() {
         guard let name = profileName,
-              let selectedGroup,
+              let selectedGroup = state.selectedGroup,
               let connectionProtocol = state.connectionProtocol,
               let serverOffering = state.serverOffering else {
-            log.error("Unable to create profile: missing server offering")
             return
         }
 
@@ -603,6 +597,13 @@ extension ModelState {
              countryIndex: self.countryIndex,
              serverOffering: self.serverOffering,
              connectionProtocol: connectionProtocol)
+    }
+
+    var selectedGroup: ServerGroupInfo? {
+        guard let countryIndex = countryIndex, countryIndex >= 0 && countryIndex < serverGroups.count else {
+            return nil
+        }
+        return serverGroups[countryIndex]
     }
 
     func menuContentUpdate(forNewValue newValue: Self) -> CreateNewProfileViewModel.MenuContentUpdate? {
