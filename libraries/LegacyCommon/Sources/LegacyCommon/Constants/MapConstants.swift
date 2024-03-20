@@ -21,8 +21,8 @@
 
 import CoreLocation
 
-public class MapConstants {
-    
+public enum MapConstants {
+
     public static let countryCoordinates: [String: CLLocationCoordinate2D] = [
         "AD": CLLocationCoordinate2D(latitude: 42.546245, longitude: 1.601554),
         "AE": CLLocationCoordinate2D(latitude: 24.091352, longitude: 54.123035),
@@ -227,6 +227,7 @@ public class MapConstants {
         "SN": CLLocationCoordinate2D(latitude: 14.497401, longitude: -14.452362),
         "SO": CLLocationCoordinate2D(latitude: 5.152149, longitude: 46.199616),
         "SR": CLLocationCoordinate2D(latitude: 3.919305, longitude: -56.027783),
+        "SS": CLLocationCoordinate2D(latitude: 4.849999, longitude: 31.57),
         "ST": CLLocationCoordinate2D(latitude: 0.18636, longitude: 6.613081),
         "SV": CLLocationCoordinate2D(latitude: 13.794185, longitude: -88.89653),
         "SY": CLLocationCoordinate2D(latitude: 34.802075, longitude: 38.996815),
