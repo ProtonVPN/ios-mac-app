@@ -83,11 +83,27 @@ class CreateNewProfileViewModel {
     private var profileId: String?
     private var state: ModelState {
         didSet {
-            checkSystemExtensionOrResetProtocol(newProtocol: state.connectionProtocol, shouldStartTour: false)
+            if oldValue.connectionProtocol != state.connectionProtocol {
+                checkSystemExtensionOrResetProtocol(newProtocol: state.connectionProtocol, shouldStartTour: false)
+            }
             if let contentUpdate = oldValue.menuContentUpdate(forNewValue: state) {
                 menuContentChanged?(contentUpdate)
             }
         }
+    }
+
+    /// Consults the server repository and properties manager to create an empty/starting model state.
+    private func createStartingState() -> ModelState {
+        let defaultServerType = ModelState.default.serverType
+
+        return ModelState.default
+            .updating(
+                serverType: defaultServerType,
+                newTypeGrouping: serverGroups(for: defaultServerType),
+                selectedCountryGroup: nil,
+                smartProtocolConfig: propertiesManager.smartProtocolConfig
+            )
+            .updating(connectionProtocol: propertiesManager.connectionProtocol)
     }
 
     // MARK: Getters derived from model state
@@ -286,11 +302,8 @@ class CreateNewProfileViewModel {
         let propertiesManager = factory.makePropertiesManager()
         self.propertiesManager = propertiesManager
 
-        let state = ModelState.default
-
-        self.state = .default
-            .updating(connectionProtocol: propertiesManager.connectionProtocol)
-        update(type: self.state.serverType) // populate initial server groups
+        self.state = ModelState.default
+        state = createStartingState()
 
         // Check is required here, as the didSet check is not invoked when assigning inside the constructor
         checkSystemExtensionOrResetProtocol(newProtocol: state.connectionProtocol, shouldStartTour: false)
@@ -337,8 +350,7 @@ class CreateNewProfileViewModel {
     }
 
     func clearContent() {
-        state = .default
-            .updating(connectionProtocol: propertiesManager.connectionProtocol)
+        state = createStartingState()
         profileId = nil
         colorPickerViewModel.select(index: 0)
         NotificationCenter.default.post(name: sessionFinished, object: nil)
@@ -366,9 +378,10 @@ class CreateNewProfileViewModel {
 
                 self.protocolPending?(false)
                 switch result {
-                case .failure:
+                case .failure(let error):
                     // In the future, we should tell the user when we're setting the protocol because
                     // we aren't in the /Applications folder.
+                    log.warning("Resetting protocol due to sysex failure", metadata: ["error": "\(error)"])
                     resetProtocol()
                 case .success:
                     break
@@ -454,6 +467,7 @@ class CreateNewProfileViewModel {
               let selectedGroup,
               let connectionProtocol = state.connectionProtocol,
               let serverOffering = state.serverOffering else {
+            log.error("Unable to create profile: missing server offering")
             return
         }
 
