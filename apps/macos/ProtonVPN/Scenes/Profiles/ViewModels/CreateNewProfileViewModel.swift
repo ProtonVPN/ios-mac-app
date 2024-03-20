@@ -542,7 +542,7 @@ extension ModelState {
                   smartProtocolConfig: SmartProtocolConfig) -> Self {
 
         // Re-select country/gateway if it's still there after ServerType change
-        let countryIndex = newTypeGrouping.firstIndex { $0 == selectedCountryGroup }
+        let countryIndex = newTypeGrouping.firstIndex { $0.kind == selectedCountryGroup?.kind }
 
         return ModelState(profileName: self.profileName,
                           serverType: serverType,
