@@ -22,6 +22,8 @@ import Logging
 import Dependencies
 import GRDB
 
+import Ergonomics
+
 /// `DatabaseConfig` defines an `executor` and `databaseType`.
 ///
 /// The `executor` is responsible for generic logging and error handling.
@@ -54,14 +56,14 @@ private enum DatabaseConfigurationKey: DependencyKey {
             fatalError("Failed to initialise app DB: cannot find URL for application support directory")
         }
 
-        if !FileManager.default.fileExists(atPath: directoryURL.path) {
+        if !FileManager.default.fileExists(atPath: directoryURL.absolutePath) {
             try! FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true)
         }
 
         let databasePath = directoryURL
             .appendingPathComponent("database")
             .appendingPathExtension("sqlite")
-            .path
+            .absolutePath
 
         let executor = ErrorHandlingAndLoggingDatabaseExecutor(
             logError: { message, error in

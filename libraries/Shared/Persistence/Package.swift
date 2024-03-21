@@ -12,6 +12,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../Foundations/Domain"),
+        .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/PMLogger"),
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.4.4"),
         .package(path: "../../Shared/Localization"), // LocaleWrapper is required for country code mappings
@@ -24,6 +25,7 @@ let package = Package(
             name: "Persistence",
             dependencies: [
                 "Domain",
+                "Ergonomics",
                 "PMLogger",
                 .product(name: "Logging", package: "swift-log"),
                 "Localization",
