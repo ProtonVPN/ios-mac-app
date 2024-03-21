@@ -25,6 +25,7 @@ import NetworkExtension
 import os
 import WireGuardKit
 import PMLogger
+import NEHelper
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
     override init() {
@@ -114,7 +115,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     }
 
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
-        wg_log(.info, staticMessage: "Stopping tunnel")
+        wg_log(.info, message: "Stopping tunnel. Reason: \(reason)")
 
         adapter.stop { error in
             ErrorNotifier.removeLastErrorFile()

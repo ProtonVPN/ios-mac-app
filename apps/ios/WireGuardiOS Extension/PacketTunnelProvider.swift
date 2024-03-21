@@ -343,7 +343,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
     }
 
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
-        wg_log(.info, staticMessage: "Stopping tunnel")
+        wg_log(.info, message: "Stopping tunnel. Reason: \(reason)")
         #if CHECK_CONNECTIVITY
         self.stopTestingConnectivity()
         #endif
