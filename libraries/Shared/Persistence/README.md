@@ -112,6 +112,31 @@ let repositoryImplementation = withDependencies {
 }
 ```
 
+## Migrations
+
+Every time a new app version is shipped, where the schema has been changed since the last version, we must create an explicit migration.
+This includes beta releases, and builds that revert to an older schema version.
+
+In the case where the app discovers the database has been updated to an unknown version, beyond what the current build has knowledge of:
+ - RELEASE builds will log an error and attempt to delete the existing database and recreate an empty one, even if we might have been able to continue without errors (it's possible the migration may have been compatible, e.g. if a column or index was added)
+ - DEBUG builds will trigger an assertion failure for visibility. There is no point in continuing in this scenario - it would be a serious error to release a build to production that removes/changes existing migrations
+
+ The only situation where this can happen in production, is when a user intentionally installs an older app version without first clearing app data.
+
+### How to Ship Reverts
+
+Reverts describe the scenario where a serious issue is discovered with an app version that has been released to the public, and a new version must be pushed out that is based on an earlier schema version.
+
+Given the following events:
+ - App version A1 is released with schema version S1
+ - App version A2 is released with schema version S2
+   - Provides schema migration S1 -> S2
+   - A2 is discovered to contain a serious issue that must be reverted
+   - A1 is the earliest safe candidate to revert to
+
+The migration from S1 -> S2 must **NOT** be reverted.
+Additionally, if S2 is not compatible with A1 (e.g. a column has been removed or renamed), an explicit S2 -> S3 migration must be provided, where S3 is equivalent to S1.
+
 ## FAQ
 
 ### Why Synchronous API?

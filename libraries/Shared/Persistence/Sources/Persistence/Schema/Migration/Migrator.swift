@@ -25,6 +25,8 @@ import Domain
 /// Wrapper around `DatabaseMigrator` that registers all known `SchemaVersion`s
 struct Migrator {
 
+    static let `default` = Migrator() // A single instance is able to handle migrating to any known version
+
     private let migrator: DatabaseMigrator
 
     init() {
@@ -47,8 +49,40 @@ struct Migrator {
         self.migrator = migrator
     }
 
-    func migrate(_ writer: DatabaseWriter, upTo version: SchemaVersion) throws {
-        try migrator.migrate(writer, upTo: version.identifier)
+    func containsUnknownMigrations(_ writer: DatabaseWriter) throws -> Bool {
+        let containsUnknownMigrations = try writer.read { db in try migrator.hasBeenSuperseded(db) }
+
+        if !containsUnknownMigrations {
+            return false
+        }
+
+        // Our database has been migrated beyond what the app understands. Let's gather some more information.
+        let appliedMigrations = try writer.read { db in try migrator.appliedMigrations(db) }
+
+        log.error(
+            "Database has unknown migrations",
+            category: .persistence,
+            metadata: [
+                "appliedMigrations": "\(appliedMigrations)",
+                "registeredMigrations": "\(migrator.migrations)"
+            ]
+        )
+
+        return true
+    }
+
+    func migrate(_ writer: DatabaseWriter, upTo targetVersion: SchemaVersion) throws {
+        let appliedMigrations = try writer.read { db in try migrator.appliedMigrations(db) }
+        log.info(
+            "Migrating database",
+            category: .persistence,
+            metadata: [
+                "currentVersion": "\(appliedMigrations.last ?? "-")",
+                "targetVersion": "\(targetVersion.identifier)"
+            ]
+        )
+
+        try migrator.migrate(writer, upTo: targetVersion.identifier)
     }
 }
 
@@ -56,6 +90,11 @@ typealias MigrationBlock = (Database) throws -> Void
 
 /// Defines an `identifier` identifying the state of the schema at a certain point in time, along with a
 /// `migrationBlock` that defines changes from the previous version.
+///
+/// When registering migrations that involve custom functions:
+///  - Refer to the function's name using a String literal in case the function definition is ever changed
+///  - Only use deterministic functions: e.g. do *NOT* create a permanent index based on a function the output of which
+///  depend on the current locale
 ///
 /// > A good migration is a migration that is never modified once it has shipped.
 /// >
@@ -66,8 +105,7 @@ public struct SchemaVersion {
     let identifier: String
     let migrationBlock: MigrationBlock
 
-    /// Order of migrations is important! Make sure new migrations are added 
-    /// at the end of this array.
+    /// Order of migrations is important! Make sure new migrations are added at the end of this array.
     public static let all: [SchemaVersion] = [.v1]
 
     public static let latest: SchemaVersion = .all.last!
