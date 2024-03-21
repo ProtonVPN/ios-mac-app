@@ -79,6 +79,8 @@ class ServiceChecker {
                 if text.starts(with: "<!--P2P_WARNING-->") {
                     self?.alertService.push(alert: P2pBlockedAlert())
                     self?.p2pShown = true
+                } else if text.starts(with: "<!-- This is a blank file -->") {
+                    log.debug("VPN status: connected through a VPN IP.")
                 }
             case let .failure(error):
                 log.error("\(error)", category: .ui)
