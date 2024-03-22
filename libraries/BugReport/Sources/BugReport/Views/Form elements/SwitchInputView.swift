@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+import Strings
 
 /// Toggle input styled for usage in bug report form.
 struct SwitchInputView: View {
@@ -53,11 +54,11 @@ struct SwitchInputView_Previews: PreviewProvider {
 
     static var previews: some View {
         SwitchInputView(
-            field: InputField(label: LocalizedString.br3LogsField,
+            field: InputField(label: Localizable.br3LogsField,
                               submitLabel: "logs",
                               type: .switch,
                               isMandatory: false,
-                              placeholder: LocalizedString.br3LogsDescription),
+                              placeholder: Localizable.br3LogsDescription),
             value: $text
         )
         .preferredColorScheme(.dark)

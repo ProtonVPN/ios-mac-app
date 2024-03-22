@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+import Strings
 
 struct UpdateAvailableView: View {
 
@@ -43,18 +44,18 @@ struct UpdateAvailableView: View {
                 Image(Asset.appIcon.name, bundle: Bundle.module)
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(LocalizedString.updateViewTitle)
+                    Text(Localizable.updateViewTitle)
                         .font(.system(size: 13, weight: .bold, design: .default))
                         .foregroundColor(colors.textPrimary)
 
-                    Text(LocalizedString.updateViewDescription)
+                    Text(Localizable.updateViewDescription)
                         .foregroundColor(colors.textSecondary)
                         .font(.system(size: 11))
                 }
 
                 Spacer()
 
-                Button(LocalizedString.updateViewButton, action: { CurrentEnv.bugReportDelegate?.updateApp() })
+                Button(Localizable.updateViewButton, action: { CurrentEnv.bugReportDelegate?.updateApp() })
                     .buttonStyle(UpdateButtonStyle())
                     .accessibilityIdentifier("Update app button")
 

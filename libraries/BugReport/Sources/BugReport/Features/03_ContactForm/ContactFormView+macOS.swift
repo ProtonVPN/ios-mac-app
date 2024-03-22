@@ -20,6 +20,7 @@
 import Foundation
 import ComposableArchitecture
 import SwiftUI
+import Strings
 
 public struct ContactFormView: View {
 
@@ -56,7 +57,7 @@ public struct ContactFormView: View {
                             Image(Asset.icInfoCircle.name, bundle: Bundle.module)
                                 .padding(0)
 
-                            Text(LocalizedString.br3LogsDisabled)
+                            Text(Localizable.br3LogsDisabled)
                                 .font(.footnote)
                                 .foregroundColor(colors.textSecondary)
                                 .padding(.leading, 8)
@@ -68,7 +69,7 @@ public struct ContactFormView: View {
                     Button(action: {
                         viewStore.send(.send, animation: .default)
 
-                    }, label: { Text(viewStore.isSending ? LocalizedString.br3ButtonSending : LocalizedString.br3ButtonSend) })
+                    }, label: { Text(viewStore.isSending ? Localizable.br3ButtonSending : Localizable.br3ButtonSend) })
                     .disabled(!viewStore.isSending && !viewStore.canBeSent)
                     .buttonStyle(PrimaryButtonStyle())
                     .padding(.horizontal)

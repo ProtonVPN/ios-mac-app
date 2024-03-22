@@ -20,6 +20,7 @@
 import Foundation
 import SwiftUI
 import ComposableArchitecture
+import Strings
 
 // Mac view is a little bit different. Plus it doesn't have Navigation links and all
 // navigation is handled by root view.
@@ -33,7 +34,7 @@ public struct WhatsTheIssueView: View {
 
         VStack(alignment: .center) {
 
-            Text(LocalizedString.br1Title)
+            Text(Localizable.br1Title)
                 .font(.title2)
                 .fontWeight(.bold)
                 .foregroundColor(colors.textPrimary)

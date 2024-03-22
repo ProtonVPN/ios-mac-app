@@ -19,6 +19,7 @@
 import Foundation
 import ComposableArchitecture
 import SwiftUI
+import Strings
 
 struct ContactFormFeature: Reducer {
 
@@ -115,7 +116,7 @@ extension ContactFormFeature.State {
         // Email field is always first
         formFields.append(FormInputField(
             inputField: InputField(
-                label: LocalizedString.br3Email,
+                label: Localizable.br3Email,
                 submitLabel: emailFieldName,
                 type: .textSingleLine,
                 isMandatory: true,
@@ -127,7 +128,7 @@ extension ContactFormFeature.State {
         // Username field is always second
         formFields.append(FormInputField(
             inputField: InputField(
-                label: LocalizedString.br3Username,
+                label: Localizable.br3Username,
                 submitLabel: usernameFieldName,
                 type: .textSingleLine,
                 isMandatory: false,
@@ -145,11 +146,11 @@ extension ContactFormFeature.State {
         // Logs field is always last
         formFields.append(FormInputField(
             inputField: InputField(
-                label: LocalizedString.br3LogsField,
+                label: Localizable.br3LogsField,
                 submitLabel: logsFieldName,
                 type: .switch,
                 isMandatory: false,
-                placeholder: LocalizedString.br3LogsDescription),
+                placeholder: Localizable.br3LogsDescription),
             boolValue: true)
         )
 

@@ -1,15 +1,3 @@
-strings:
-  inputs:
-    - Sources/BugReport/Resources/en.lproj/Localizable.strings
-    - Sources/BugReport/Resources/en.lproj/Localizable.stringsdict
-  outputs:
-    params:
-      publicAccess: true
-      enumName: LocalizedString
-      lookupFunction: localizeStringAndFallbackToEn
-    templateName: structured-swift5
-    output: Sources/BugReport/Extensions/LocalizedString.swift
-
 xcassets:
   inputs: Sources/BugReport/Resources/Media.xcassets
   outputs:

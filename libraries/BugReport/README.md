@@ -6,12 +6,6 @@ Minimum iOS version is set to 12, but in reality it will return ViewController o
 
 For usage example please see `BugReportSampleApp` project.
 
-
-## Translations
-
-This package contains all translations that it needs. If you add new translation, you should regenerate `LocalizedString.swift` file by going to this libs folder and running swiftgen: `../../Pods/SwiftGen/bin/swiftgen`.
-
-
 ## Assets
 
 This package contains all assets that it needs. If you add new translation, you should regenerate `Assets.swift` file by going to this libs folder and running swiftgen: `../../Pods/SwiftGen/bin/swiftgen`.

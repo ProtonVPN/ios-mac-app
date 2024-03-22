@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+import Strings
 
 /// View representing progress of process that has steps.
 struct StepProgress: View {
@@ -45,7 +46,7 @@ struct StepProgress: View {
             .frame(height: barHeight)
             .cornerRadius(16)
 
-            Text(LocalizedString.stepOf(Int(step), Int(steps)))
+            Text(Localizable.stepOf(Int(step), Int(steps)))
                 .font(font)
                 .foregroundColor(colorText)
                 .padding(.horizontal)

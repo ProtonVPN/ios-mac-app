@@ -20,6 +20,7 @@
 import Foundation
 import ComposableArchitecture
 import SwiftUI
+import Strings
 
 struct QuickFixesView: View {
     let store: StoreOf<QuickFixesFeature>
@@ -32,10 +33,10 @@ struct QuickFixesView: View {
         VStack(alignment: .center) {
 
             VStack(alignment: .center, spacing: 8) {
-                Text(LocalizedString.br2Title)
+                Text(Localizable.br2Title)
                     .font(.title2)
                     .fontWeight(.bold)
-                Text(LocalizedString.br2Subtitle)
+                Text(Localizable.br2Subtitle)
                     .font(.subheadline)
             }
             .padding(.horizontal)
@@ -91,7 +92,7 @@ struct QuickFixesView: View {
             .padding(.top, 32)
             .padding(.bottom, 16)
 
-            Text(LocalizedString.br2Footer)
+            Text(Localizable.br2Footer)
                 .foregroundColor(colors.textSecondary)
                 .font(.footnote)
                 .frame(maxWidth: .infinity, alignment: .center)
@@ -100,7 +101,7 @@ struct QuickFixesView: View {
             Button(action: {
                 viewStore.send(.next, animation: .default)
             }, label: {
-                Text(LocalizedString.br2ButtonNext)
+                Text(Localizable.br2ButtonNext)
             })
             .buttonStyle(PrimaryButtonStyle())
             .padding(.horizontal)
