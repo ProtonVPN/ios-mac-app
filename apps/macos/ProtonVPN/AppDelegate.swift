@@ -107,7 +107,7 @@ extension AppDelegate: NSApplicationDelegate {
                         self?.container.makeTelemetrySettings().telemetryCrashReports ?? false
                     },
                     getUserId: { [weak self] in
-                        self?.container.makeAuthKeychainHandle().userId.value
+                        self?.container.makeAuthKeychainHandle().userId
                     }
                 )
             }

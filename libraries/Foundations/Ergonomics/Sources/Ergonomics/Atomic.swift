@@ -18,6 +18,7 @@
 
 import Foundation
 
+/// Solution inspired by https://www.objc.io/blog/2018/12/18/atomic-variables/
 final public class Atomic<A> {
     private let queue: DispatchQueue
     private var _value: A

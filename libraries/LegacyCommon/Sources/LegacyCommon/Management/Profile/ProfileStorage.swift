@@ -79,7 +79,7 @@ public class ProfileStorage {
     
     // MARK: - Private functions
     private func storageKey() -> String? {
-        guard let username = authKeychain.username.value else { return nil }
+        guard let username = authKeychain.username else { return nil }
         return "profiles_" + username
     }
     

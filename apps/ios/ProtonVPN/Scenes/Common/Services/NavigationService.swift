@@ -289,7 +289,7 @@ extension NavigationService: ProfileService {
     }
     
     func makeCreateProfileViewController(for profile: Profile?) -> CreateProfileViewController? {
-        guard let username = authKeychain.username.value else {
+        guard let username = authKeychain.username else {
             return nil
         }
 

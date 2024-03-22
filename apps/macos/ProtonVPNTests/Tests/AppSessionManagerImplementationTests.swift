@@ -124,7 +124,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
         wait(for: [loginExpectation], timeout: asyncTimeout)
 
-        XCTAssertEqual(authKeychain.username.value, "bob", "Username should have been updated in auth keychain")
+        XCTAssertEqual(authKeychain.username, "bob", "Username should have been updated in auth keychain")
     }
 
     func testSuccessfulSilentLoginLogsIn() throws {
@@ -169,7 +169,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         networkingDelegate.apiVpnLocation = .mock
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
         networkingDelegate.apiCredentialsResponseError = subuserWithoutSessionsResponseError
-        authKeychain.username.mutate { $0 = "testUsername" }
+        authKeychain.username = "testUsername"
         manager.finishLogin(
             authCredentials: testAuthCredentials,
             success: {
@@ -441,12 +441,12 @@ fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
 class AuthKeychainHandleMock: AuthKeychainHandle {
     var credentials: AuthCredentials? {
         didSet {
-            username.mutate { $0 = credentials?.username }
-            userId.mutate { $0 = credentials?.userId }
+            username = credentials?.username
+            userId = credentials?.userId
         }
     }
-    var username: Atomic<String?> = .init(nil)
-    var userId: Atomic<String?> = .init(nil)
+    var username: String?
+    var userId: String?
 
     func saveToCache(_ credentials: VPNShared.AuthCredentials?) {
         self.credentials = credentials

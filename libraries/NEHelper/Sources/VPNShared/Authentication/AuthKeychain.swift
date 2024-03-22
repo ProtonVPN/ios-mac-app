@@ -25,8 +25,8 @@ import Dependencies
 import Ergonomics
 
 public protocol AuthKeychainHandle {
-    var username: Atomic<String?> { get }
-    var userId: Atomic<String?> { get }
+    var username: String? { get }
+    var userId: String? { get }
     /// Whenever we try storing credentials or fetching them from keychain
     /// We also save them to memory as a quick cache that would save us
     /// a lot of trips to the keychain.
@@ -84,8 +84,24 @@ public class AuthKeychain {
 
     public static let `default`: AuthKeychainHandle = AuthKeychain()
 
-    public var username: Atomic<String?> = .init(nil, queueLabel: "ch.protonvpn.VPNShared.AuthKeychain")
-    public var userId: Atomic<String?> = .init(nil, queueLabel: "ch.protonvpn.VPNShared.AuthKeychain")
+    private var usernameAtomic: Atomic<String?> = .init(nil, queueLabel: "ch.protonvpn.VPNShared.AuthKeychain")
+    private var userIdAtomic: Atomic<String?> = .init(nil, queueLabel: "ch.protonvpn.VPNShared.AuthKeychain")
+
+    public var username: String? {
+        get {
+            usernameAtomic.value
+        } set {
+            usernameAtomic.mutate { $0 = newValue }
+        }
+    }
+
+    public var userId: String? {
+        get {
+            userIdAtomic.value
+        } set {
+            userIdAtomic.mutate { $0 = newValue }
+        }
+    }
 
     public static func fetch() -> AuthCredentials? {
         `default`.fetch()
@@ -105,8 +121,8 @@ public class AuthKeychain {
 
 extension AuthKeychain: AuthKeychainHandle {
     public func saveToCache(_ credentials: AuthCredentials?) {
-        self.username.mutate { $0 = credentials?.username }
-        self.userId.mutate { $0 = credentials?.userId }
+        self.username = credentials?.username
+        self.userId = credentials?.userId
     }
     
     private var defaultStorageKey: String {

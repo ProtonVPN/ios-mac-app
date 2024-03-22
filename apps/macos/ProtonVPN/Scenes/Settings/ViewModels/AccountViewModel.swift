@@ -63,7 +63,7 @@ final class AccountViewModel {
     }
 
     func reload() {
-        if let username = authKeychain.username.value {
+        if let username = authKeychain.username {
             self.username = username
             do {
                 let vpnCredentials = try vpnKeychain.fetchCached()

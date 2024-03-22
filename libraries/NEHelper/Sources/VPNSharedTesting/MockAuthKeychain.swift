@@ -18,11 +18,10 @@
 
 import Foundation
 import VPNShared
-import Ergonomics
 
 public class MockAuthKeychain: AuthKeychainHandle {
-    public var username: Atomic<String?> = .init(nil)
-    public var userId: Atomic<String?> = .init(nil)
+    public var username: String?
+    public var userId: String?
 
     public func saveToCache(_ credentials: VPNShared.AuthCredentials?) { }
 
@@ -43,7 +42,7 @@ public class MockAuthKeychain: AuthKeychainHandle {
 
     public func store(_ credentials: AuthCredentials, forContext context: AppContext?) throws {
         let context = context ?? defaultContext
-        self.username.mutate { $0 = credentials.username }
+        self.username = credentials.username
         self.credentials[context] = credentials
         credentialsWereStored?()
     }
@@ -55,7 +54,7 @@ public class MockAuthKeychain: AuthKeychainHandle {
 
 public extension MockAuthKeychain {
     func setMockUsername(_ username: String) {
-        self.username.mutate { $0 = username }
+        self.username = username
         self.credentials[defaultContext] = .init(username: username,
                                                  accessToken: "",
                                                  refreshToken: "",
