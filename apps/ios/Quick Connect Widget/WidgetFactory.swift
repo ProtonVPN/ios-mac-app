@@ -71,9 +71,7 @@ extension WidgetFactory: NETunnelProviderManagerWrapperFactory {
         NETunnelProviderManager()
     }
 
-    func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void) {
-        NETunnelProviderManager.loadAllFromPreferences { managers, error in
-            completionHandler(managers, error)
-        }
+    func loadManagersFromPreferences() async throws -> [NETunnelProviderManagerWrapper] {
+        try await NETunnelProviderManager.loadAllFromPreferences()
     }
 }

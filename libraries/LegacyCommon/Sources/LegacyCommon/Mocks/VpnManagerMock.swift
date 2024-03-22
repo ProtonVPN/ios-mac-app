@@ -78,7 +78,8 @@ public class VpnManagerMock: VpnManagerProtocol {
     }
     
     public func refreshManagers() {}
-    public func whenReady(queue: DispatchQueue, completion: @escaping () -> Void) { }
+    
+    public var prepareManagersTask: Task<(), Never>?
 
     public func set(vpnAccelerator: Bool) {
 

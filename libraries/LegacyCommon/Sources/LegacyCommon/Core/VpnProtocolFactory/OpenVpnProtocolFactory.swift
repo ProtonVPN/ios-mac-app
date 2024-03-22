@@ -136,16 +136,13 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         return neProtocol
     }
     
-    public func vpnProviderManager(for requirement: VpnProviderManagerRequirement, completion: @escaping (NEVPNManagerWrapper?, Error?) -> Void) {
-        if requirement == .status, let vpnManager = vpnManager {
-            completion(vpnManager, nil)
+    public func vpnProviderManager(for requirement: VpnProviderManagerRequirement) async throws -> NEVPNManagerWrapper {
+        if requirement == .status, let vpnManager {
+            return vpnManager
         } else {
-            vpnManagerFactory.tunnelProviderManagerWrapper(forProviderBundleIdentifier: self.bundleId) { manager, error in
-                if let manager = manager {
-                    self.vpnManager = manager
-                }
-                completion(manager, error)
-            }
+            let vpnManager = try await vpnManagerFactory.tunnelProviderManagerWrapper(forProviderBundleIdentifier: self.bundleId)
+            self.vpnManager = vpnManager
+            return vpnManager
         }
     }
     

@@ -52,26 +52,26 @@ extension NETunnelProviderManager: NETunnelProviderManagerWrapper {
 
 public protocol NETunnelProviderManagerWrapperFactory {
     func makeNewManager() -> NETunnelProviderManagerWrapper
-    func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void)
+    func loadManagersFromPreferences() async throws -> [NETunnelProviderManagerWrapper]
 }
 
 extension NETunnelProviderManagerWrapperFactory {
-    func tunnelProviderManagerWrapper(forProviderBundleIdentifier bundleId: String, completionHandler: @escaping (NETunnelProviderManagerWrapper?, Error?) -> Void) {
-        loadManagersFromPreferences { (managers, error) in
-            if let error = error {
+    func tunnelProviderManagerWrapper(forProviderBundleIdentifier bundleId: String) async throws -> NETunnelProviderManagerWrapper {
+        let managers = try await loadManagersFromPreferences()
+        return managers.first(where: { (manager) -> Bool in
+            return (manager.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier == bundleId
+        }) ?? self.makeNewManager()
+    }
+}
+
+extension NETunnelProviderManagerWrapperFactory {
+    func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void) {
+        Task { @MainActor in
+            do {
+                completionHandler(try await loadManagersFromPreferences(), nil)
+            } catch {
                 completionHandler(nil, error)
-                return
             }
-            guard let managers = managers else {
-                completionHandler(nil, ProtonVpnError.vpnManagerUnavailable)
-                return
-            }
-
-            let vpnManager = managers.first(where: { (manager) -> Bool in
-                return (manager.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier == bundleId
-            }) ?? self.makeNewManager()
-
-            completionHandler(vpnManager, nil)
         }
     }
 }
@@ -81,10 +81,8 @@ extension NETunnelProviderManager: NETunnelProviderManagerWrapperFactory {
         NETunnelProviderManager()
     }
 
-    public func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void) {
-        Self.loadAllFromPreferences { managers, error in
-            completionHandler(managers, error)
-        }
+    public func loadManagersFromPreferences() async throws -> [NETunnelProviderManagerWrapper] {
+        try await Self.loadAllFromPreferences()
     }
 }
 

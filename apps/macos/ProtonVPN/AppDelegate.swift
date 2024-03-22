@@ -132,7 +132,8 @@ extension AppDelegate: NSApplicationDelegate {
             // Check sysex approval and protocol deprecation and revert to Smart or IKE if necessary
             self.checkSysexAndAdjustGlobalProtocol()
 
-            self.container.makeVpnManager().whenReady(queue: DispatchQueue.main) {
+            Task { @MainActor in
+                await self.container.makeVpnManager().prepareManagersTask?.value
                 self.navigationService.launched()
             }
 

@@ -210,7 +210,9 @@ final class NavigationService {
     }
     
     @objc private func refreshVpnManager(_ notification: Notification) {
-        vpnManager.refreshManagers()
+        Task { @MainActor in
+            await self.vpnManager.refreshManagers()
+        }
     }
     
     private func setupTabs() {

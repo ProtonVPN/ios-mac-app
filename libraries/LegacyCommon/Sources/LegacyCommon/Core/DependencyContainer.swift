@@ -263,10 +263,8 @@ extension Container: NETunnelProviderManagerWrapperFactory {
         NETunnelProviderManager()
     }
 
-    public func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void) {
-        NETunnelProviderManager.loadAllFromPreferences { managers, error in
-            completionHandler(managers, error)
-        }
+    public func loadManagersFromPreferences() async throws -> [NETunnelProviderManagerWrapper] {
+        try await NETunnelProviderManager.loadAllFromPreferences()
     }
 }
 

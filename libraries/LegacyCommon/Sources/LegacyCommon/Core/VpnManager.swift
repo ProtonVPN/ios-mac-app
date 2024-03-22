@@ -50,12 +50,12 @@ public protocol VpnManagerProtocol {
     func disconnect(completion: @escaping () -> Void)
     func connectedDate() async -> Date?
     func refreshState()
-    func refreshManagers()
+    func refreshManagers() async
     func removeConfigurations(completionHandler: ((Error?) -> Void)?)
 
-    /// Called when `VpnManager` is ready and has finished querying the device's VPN connection state.
-    /// - Note: Only call this function once over the course of `VpnManager`'s lifetime.
-    func whenReady(queue: DispatchQueue, completion: @escaping () -> Void)
+    /// Task used to track when the managers are ready. Retrieve the value of the task to be sure
+    /// the `VpnManager` is ready and has finished querying the device's VPN connection state.
+    var prepareManagersTask: Task<(), Never>? { get }
 
     func set(vpnAccelerator: Bool)
     func set(netShieldType: NetShieldType)
@@ -118,7 +118,8 @@ public class VpnManager: VpnManagerProtocol {
     }
 
     public private(set) var state: VpnState = .invalid
-    public var readyGroup: DispatchGroup? = DispatchGroup()
+
+    public var prepareManagersTask: Task<(), Never>?
 
     public var currentVpnProtocol: VpnProtocol? {
         didSet {
@@ -231,7 +232,6 @@ public class VpnManager: VpnManagerProtocol {
         netShieldPropertyProvider: NetShieldPropertyProvider,
         safeModePropertyProvider: SafeModePropertyProvider
     ) {
-        readyGroup?.enter()
 
         self.ikeProtocolFactory = ikeFactory
         self.openVpnProtocolFactory = openVpnFactory
@@ -249,7 +249,9 @@ public class VpnManager: VpnManagerProtocol {
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
 
-        prepareManagers(forSetup: true)
+        prepareManagersTask = Task {
+            await prepareManagers(forSetup: true)
+        }
     }
 
     // App was moved to/from the background mode (iOS only)
@@ -331,53 +333,31 @@ public class VpnManager: VpnManagerProtocol {
         }
     }
 
-    @available(*, deprecated, renamed: "connectedDate()")
-    private func connectedDate(completion: @escaping (Date?) -> Void) {
-        guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
-            completion(nil)
-            return
+    public func connectedDate() async -> Date? {
+        guard let currentVpnProtocolFactory else {
+            return nil
         }
-        
-        currentVpnProtocolFactory.vpnProviderManager(for: .status) { [weak self] vpnManager, error in
-            guard let self = self else {
-                completion(nil)
-                return
-            }
-
-            if error != nil {
-                completion(nil)
-                return
-            }
-
-            guard let vpnManager = vpnManager else {
-                completion(nil)
-                return
-            }
-            
+        do {
+            let vpnManager = try await currentVpnProtocolFactory.vpnProviderManager(for: .status)
             // Returns a date if currently connected
             if case VpnState.connected(_) = self.state {
-                completion(vpnManager.vpnConnection.connectedDate)
-            } else {
-                completion(nil)
+                return vpnManager.vpnConnection.connectedDate
             }
+        } catch {
+            log.debug("Couldn't retrieve vpnProviderManager \(error)", category: .connection)
         }
-    }
-
-    public func connectedDate() async -> Date? {
-        await withCheckedContinuation { continuation in
-            connectedDate(completion: continuation.resume)
-        }
+        return nil
     }
     
     public func refreshState() {
         setState()
     }
     
-    public func refreshManagers() {
+    public func refreshManagers() async {
         // Stop recieving status updates until the manager is prepared
         notificationCenter.removeObserver(self, name: NSNotification.Name.NEVPNStatusDidChange, object: nil)
         
-        prepareManagers()
+        await prepareManagers()
     }
 
     public func set(vpnAccelerator: Bool) {
@@ -758,43 +738,27 @@ public class VpnManager: VpnManagerProtocol {
      *  Upon initiation of VPN manager, VPN configuration from manager needs
      *  to be loaded in order for storing of further configurations to work.
      */
-    private func prepareManagers(forSetup: Bool = false) {
-        // Note the double-negative: not-not defaulting to IKEv2. We want to gradually roll out noDefault as a feature.
-        let defaultToIke = !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.noDefaultToIke)
-        let defaulting = defaultToIke ? "Defaulting" : "Not defaulting"
-        log.info("Preparing managers for setup. \(defaulting) to IKEv2 if no provider available.")
-        vpnStateConfiguration.determineActiveVpnProtocol(defaultToIke: defaultToIke) { [weak self] vpnProtocol in
-            guard let self = self else {
-                return
-            }
+    @MainActor
+    private func prepareManagers(forSetup: Bool = false) async {
+        let vpnProtocol = await vpnStateConfiguration.determineActiveVpnProtocol(defaultToIke: true)
 
-            self.currentVpnProtocol = vpnProtocol
-            self.setState()
+        self.currentVpnProtocol = vpnProtocol
+        self.setState()
 
-            notificationCenter.removeObserver(
-                self,
-                name: NSNotification.Name.NEVPNStatusDidChange,
-                object: nil
-            )
-            notificationCenter.addObserver(
-                self,
-                selector: #selector(self.vpnStatusChanged),
-                name: NSNotification.Name.NEVPNStatusDidChange,
-                object: nil
-            )
+        notificationCenter.removeObserver(
+            self,
+            name: NSNotification.Name.NEVPNStatusDidChange,
+            object: nil
+        )
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(self.vpnStatusChanged),
+            name: NSNotification.Name.NEVPNStatusDidChange,
+            object: nil
+        )
 
-            if forSetup {
-                self.readyGroup?.leave()
-            }
-        }
     }
 
-    public func whenReady(queue: DispatchQueue, completion: @escaping () -> Void) {
-        self.readyGroup?.notify(queue: queue) {
-            completion()
-            self.readyGroup = nil
-        }
-    }
     
     @objc private func vpnStatusChanged() {
         setState()
