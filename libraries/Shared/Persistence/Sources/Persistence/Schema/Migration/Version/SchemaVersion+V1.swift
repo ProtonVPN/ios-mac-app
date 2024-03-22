@@ -45,11 +45,6 @@ extension SchemaVersion {
             // Define indexes for fields we sort/filter/group by
             try db.create(indexOn: "logical", columns: ["namePrefix", "sequenceNumber"]) // sorting servers by name
             try db.create(indexOn: "logical", columns: ["gatewayName", "exitCountryCode"]) // grouping groups
-            try db.create(
-                index: "logicalGroupSort",
-                on: "logical",
-                expressions: [Column("gatewayName"), SQL(sql: "LOCALIZED_COUNTRY_NAME(exitCountryCode)")]
-            ) // sorting groups
 
             try db.create(table: "endpoint") { t in
                 t.column("id", .text).notNull().primaryKey()
