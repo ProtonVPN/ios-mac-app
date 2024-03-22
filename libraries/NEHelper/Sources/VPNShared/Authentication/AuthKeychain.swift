@@ -70,6 +70,7 @@ extension DependencyValues {
 }
 
 public class AuthKeychain {
+    let fetchCachedAuthCredentialsSyncSerialQueue = DispatchQueue(label: "ch.protonvpn.VPNShared.AuthKeychain", qos: .userInitiated)
     public static let clearNotification = Notification.Name("AuthKeychain.clear")
 
     private struct StorageKey {
@@ -83,8 +84,30 @@ public class AuthKeychain {
 
     public static let `default`: AuthKeychainHandle = AuthKeychain()
 
-    public var username: String?
-    public var userId: String?
+    private var _username: String?
+    public var username: String? {
+        get {
+            self.fetchCachedAuthCredentialsSyncSerialQueue.sync {
+                _username
+            }
+        } set {
+            self.fetchCachedAuthCredentialsSyncSerialQueue.sync {
+                _username = newValue
+            }
+        }
+    }
+    private var _userId: String?
+    public var userId: String? {
+        get {
+            self.fetchCachedAuthCredentialsSyncSerialQueue.sync {
+                _userId
+            }
+        } set {
+            self.fetchCachedAuthCredentialsSyncSerialQueue.sync {
+                _userId = newValue
+            }
+        }
+    }
 
     public static func fetch() -> AuthCredentials? {
         `default`.fetch()
