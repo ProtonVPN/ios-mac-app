@@ -124,7 +124,7 @@ public class VpnApiService {
     }
 
     public func clientCredentials() async throws -> VpnCredentials {
-        guard authKeychain.username != nil else {
+        guard authKeychain.username.value != nil else {
             throw VpnApiServiceError.endpointRequiresAuthentication
         }
 

@@ -50,7 +50,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         "Plan name: \(planName)\n" +
         "Max connect: \(maxConnect)\n" +
         "Max tier: \(maxTier)\n" +
-        "Services: \(services)\n" +
+        "Services: \(services ?? -1)\n" +
         "Group ID: \(groupId)\n" +
         "Name: \(name)\n" +
         "Password: \(password)\n" +
@@ -150,7 +150,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
                 "Password": password,
                 "BusinessEvents": businessEvents,
             ] as [String: Any],
-            "Services": services,
+            "Services": services ?? -1,
             "Delinquent": delinquent,
             "Credit": credit,
             "Currency": currency,

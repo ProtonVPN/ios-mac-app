@@ -225,11 +225,11 @@ final class SettingsViewModel {
     
     private var accountSection: TableViewSection {
 
-        let username: String = authKeychain.username ?? Localizable.unavailable
+        let username: String = authKeychain.username.value ?? Localizable.unavailable
         let accountPlanName: String
         
         if let vpnCredentials = try? vpnKeychain.fetchCached() {
-            accountPlanName = vpnCredentials.planTitle ?? Localizable.freeTierPlanTitle
+            accountPlanName = vpnCredentials.planTitle
         } else {
             accountPlanName = Localizable.unavailable
         }

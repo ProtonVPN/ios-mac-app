@@ -21,6 +21,7 @@ import LegacyCommon
 
 import VPNShared
 import Dependencies
+import Ergonomics
 import VPNSharedTesting
 import ProtonCoreNetworking
 @testable import ProtonVPN
@@ -123,7 +124,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
         wait(for: [loginExpectation], timeout: asyncTimeout)
 
-        XCTAssertEqual(authKeychain.username, "bob", "Username should have been updated in auth keychain")
+        XCTAssertEqual(authKeychain.username.value, "bob", "Username should have been updated in auth keychain")
     }
 
     func testSuccessfulSilentLoginLogsIn() throws {
@@ -168,7 +169,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         networkingDelegate.apiVpnLocation = .mock
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
         networkingDelegate.apiCredentialsResponseError = subuserWithoutSessionsResponseError
-        authKeychain.username = "testUsername"
+        authKeychain.username.mutate { $0 = "testUsername" }
         manager.finishLogin(
             authCredentials: testAuthCredentials,
             success: {
@@ -440,12 +441,12 @@ fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
 class AuthKeychainHandleMock: AuthKeychainHandle {
     var credentials: AuthCredentials? {
         didSet {
-            username = credentials?.username
-            userId = credentials?.userId
+            username.mutate { $0 = credentials?.username }
+            userId.mutate { $0 = credentials?.userId }
         }
     }
-    var username: String?
-    var userId: String?
+    var username: Atomic<String?> = .init(nil)
+    var userId: Atomic<String?> = .init(nil)
 
     func saveToCache(_ credentials: VPNShared.AuthCredentials?) {
         self.credentials = credentials

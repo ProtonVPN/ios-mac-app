@@ -224,14 +224,14 @@ extension CorePlanService: StoreKitManagerDelegate {
     }
 
     var isSignedIn: Bool {
-        authKeychain.username != nil
+        authKeychain.username.value != nil
     }
 
     var activeUsername: String? {
-        authKeychain.username
+        authKeychain.username.value
     }
 
     var userId: String? {
-        authKeychain.userId
+        authKeychain.userId.value
     }
 }

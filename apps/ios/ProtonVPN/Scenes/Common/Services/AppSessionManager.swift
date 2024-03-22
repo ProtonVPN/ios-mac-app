@@ -392,7 +392,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         refreshTimer.stopTimers()
         loggedIn = false
 
-        if let userId = authKeychain.userId {
+        if let userId = authKeychain.userId.value {
             FeatureFlagsRepository.shared.resetFlags(for: userId)
         }
 

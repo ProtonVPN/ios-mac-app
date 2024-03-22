@@ -316,7 +316,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         let group = DispatchGroup()
         appSessionRefreshTimer.stopTimers()
         
-        if let userId = authKeychain.userId {
+        if let userId = authKeychain.userId.value {
             FeatureFlagsRepository.shared.resetFlags(for: userId)
             FeatureFlagsRepository.shared.clearUserId()
         }

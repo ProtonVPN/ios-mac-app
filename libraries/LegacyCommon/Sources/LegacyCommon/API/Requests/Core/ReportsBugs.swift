@@ -56,7 +56,7 @@ public final class ReportsBugs: Request {
     }
 
     public var isAuth: Bool {
-        authKeychain.username != nil
+        authKeychain.username.value != nil
     }
 
     public var retryPolicy: ProtonRetryPolicy.RetryMode {
