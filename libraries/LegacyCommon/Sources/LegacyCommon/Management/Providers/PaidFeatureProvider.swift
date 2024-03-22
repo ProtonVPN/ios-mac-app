@@ -18,6 +18,7 @@
 
 import Foundation
 import Dependencies
+import Ergonomics
 
 public protocol AppFeaturePropertyProvider {
     func getValue<T: ProvidableFeature>(for feature: T.Type) -> T

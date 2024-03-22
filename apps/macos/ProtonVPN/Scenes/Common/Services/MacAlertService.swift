@@ -22,6 +22,7 @@
 
 import Foundation
 import Dependencies
+import Ergonomics
 import LegacyCommon
 import AppKit
 import Modals

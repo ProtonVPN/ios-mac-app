@@ -25,6 +25,7 @@ import Foundation
 import Dependencies
 
 import Domain
+import Ergonomics
 import LocalFeatureFlags
 import VPNShared
 

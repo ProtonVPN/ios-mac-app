@@ -18,6 +18,7 @@
 
 import Foundation
 import Dependencies
+import Ergonomics
 import VPNShared
 
 public protocol SafeModePropertyProvider: FeaturePropertyProvider {

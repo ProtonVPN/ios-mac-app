@@ -65,14 +65,14 @@ class PropertiesManagerTests: XCTestCase {
         XCTAssertFalse(sut.getTelemetryCrashReports())
     }
 
-    func testTelemetrySettingsCanSetToFalse() async throws {
+    func testTelemetrySettingsCanSetToFalse() {
         sut.setTelemetryUsageData(enabled: false)
         sut.setTelemetryCrashReports(enabled: false)
         XCTAssertFalse(sut.getTelemetryUsageData())
         XCTAssertFalse(sut.getTelemetryCrashReports())
     }
 
-    func testTelemetrySettingsCanSetToTrue() async throws {
+    func testTelemetrySettingsCanSetToTrue() {
         sut.setTelemetryUsageData(enabled: true)
         sut.setTelemetryCrashReports(enabled: true)
         XCTAssertTrue(sut.getTelemetryUsageData())

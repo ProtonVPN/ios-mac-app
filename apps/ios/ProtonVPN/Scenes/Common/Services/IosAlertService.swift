@@ -20,6 +20,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Ergonomics
 import Foundation
 import LegacyCommon
 import Modals

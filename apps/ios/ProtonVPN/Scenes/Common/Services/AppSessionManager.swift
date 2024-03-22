@@ -27,6 +27,7 @@ import Dependencies
 
 import ProtonCoreFeatureFlags
 
+import Ergonomics
 import ExtensionIPC
 import Search
 import Review

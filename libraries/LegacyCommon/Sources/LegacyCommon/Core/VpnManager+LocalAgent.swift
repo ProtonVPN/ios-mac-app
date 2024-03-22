@@ -23,6 +23,7 @@
 import Foundation
 
 import Domain
+import Ergonomics
 import LocalFeatureFlags
 import ExtensionIPC
 import VPNShared

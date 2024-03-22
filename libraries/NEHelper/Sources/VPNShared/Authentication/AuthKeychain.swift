@@ -84,24 +84,13 @@ public class AuthKeychain {
 
     public static let `default`: AuthKeychainHandle = AuthKeychain()
 
-    private var usernameAtomic: Atomic<String?> = .init(nil, queueLabel: "ch.protonvpn.VPNShared.AuthKeychain")
-    private var userIdAtomic: Atomic<String?> = .init(nil, queueLabel: "ch.protonvpn.VPNShared.AuthKeychain")
+    static let dispatchQueue = DispatchQueue(label: "ch.protonvpn.VPNShared.AuthKeychain",
+                                             attributes: .concurrent)
+    @ConcurrentlyReadable(queue: AuthKeychain.dispatchQueue)
+    public var username: String? = nil
 
-    public var username: String? {
-        get {
-            usernameAtomic.value
-        } set {
-            usernameAtomic.mutate { $0 = newValue }
-        }
-    }
-
-    public var userId: String? {
-        get {
-            userIdAtomic.value
-        } set {
-            userIdAtomic.mutate { $0 = newValue }
-        }
-    }
+    @ConcurrentlyReadable(queue: AuthKeychain.dispatchQueue)
+    public var userId: String? = nil
 
     public static func fetch() -> AuthCredentials? {
         `default`.fetch()
@@ -121,8 +110,10 @@ public class AuthKeychain {
 
 extension AuthKeychain: AuthKeychainHandle {
     public func saveToCache(_ credentials: AuthCredentials?) {
-        self.username = credentials?.username
-        self.userId = credentials?.userId
+        AuthKeychain.dispatchQueue.sync(flags: .barrier) {
+            self._username.unsafeUpdateNoSync { $0 = credentials?.username }
+            self._userId.unsafeUpdateNoSync { $0 = credentials?.userId }
+        }
     }
     
     private var defaultStorageKey: String {

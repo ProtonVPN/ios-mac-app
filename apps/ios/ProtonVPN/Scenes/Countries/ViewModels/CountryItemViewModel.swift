@@ -27,6 +27,7 @@ import Dependencies
 import ProtonCoreUIFoundations
 
 import Domain
+import Ergonomics
 import Strings
 import Theme
 import Search
