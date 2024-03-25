@@ -24,7 +24,7 @@
 import Foundation
 
 /// Object to call inside the app that manages responses from XPC service.
-class XPCServiceUser {
+final class XPCServiceUser {
     private let machServiceName: String
     private let log: (String) -> Void
 
@@ -98,6 +98,16 @@ class XPCServiceUser {
 
         // The remote object is the provider's IPCConnection instance.
         newConnection.remoteObjectInterface = NSXPCInterface(with: ProviderCommunication.self)
+
+        newConnection.invalidationHandler = { [weak self] in
+            guard let self else { return }
+            log("XPC invalidated for mach service \(machServiceName)")
+        }
+
+        newConnection.interruptionHandler = { [weak self] in
+            guard let self else { return }
+            log("XPC connection interrupted for mach service \(machServiceName)")
+        }
 
         currentConnection = newConnection
         newConnection.resume()
