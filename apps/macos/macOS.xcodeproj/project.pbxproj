@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -244,7 +244,7 @@
 		E567FFAC2B9B3A2700ECD823 /* AppTheme.Style+Tier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E567FFAB2B9B3A2600ECD823 /* AppTheme.Style+Tier.swift */; };
 		E5772AE429B0B9A90076D824 /* SystemExtensionTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5772AE329B0B9A90076D824 /* SystemExtensionTutorialView.swift */; };
 		E57B263229C3188D00533B7C /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E57B263129C3188D00533B7C /* AVKit.framework */; };
-		E581886A2AFA49EB00B981EB /* Empty.xib in Resources */ = {isa = PBXBuildFile; fileRef = E581886C2AFA49EB00B981EB /* Empty.xib */; };
+		E582BF3D2BB16FE800C95CD7 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E582BF3C2BB16FE300C95CD7 /* InfoPlist.xcstrings */; };
 		E59447542A86217A00E1E241 /* ProtonCoreLoginUI in Frameworks */ = {isa = PBXBuildFile; productRef = E59447532A86217A00E1E241 /* ProtonCoreLoginUI */; };
 		E5C00F0B2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F0A2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift */; };
 		E5C00F0D2A15FC6E0030076F /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -797,14 +797,13 @@
 		E567FFAB2B9B3A2600ECD823 /* AppTheme.Style+Tier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppTheme.Style+Tier.swift"; sourceTree = "<group>"; };
 		E5772AE329B0B9A90076D824 /* SystemExtensionTutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionTutorialView.swift; sourceTree = "<group>"; };
 		E57B263129C3188D00533B7C /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
-		E581886B2AFA49EB00B981EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Empty.xib; sourceTree = "<group>"; };
+		E582BF3C2BB16FE300C95CD7 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		E5BDD80A2A67FD3700F3BB7C /* ProtonVPN-mac-redesign-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "ProtonVPN-mac-redesign-Info.plist"; sourceTree = "<group>"; };
 		E5C00F002A15FB680030076F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "ProtonVPNmac-redesign-UITests/Info.plist"; sourceTree = SOURCE_ROOT; };
 		E5C00F082A15FC6E0030076F /* ProtonVPNmac-redesign-UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ProtonVPNmac-redesign-UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5C00F0A2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNmac_redesign_UITests.swift; sourceTree = "<group>"; };
 		E5C00F142A1612950030076F /* NavigationRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRobot.swift; sourceTree = "<group>"; };
 		E5C3415D29FBBADE00A26614 /* ProtonVPN_redesignApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtonVPN_redesignApp.swift; sourceTree = "<group>"; };
-		E5C4954F2B31A8BF00C9366C /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/Empty.xcstrings; sourceTree = "<group>"; };
 		E5C4EF3A29B611C20013ACB2 /* SystemExtensionGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionGuideViewController.swift; sourceTree = "<group>"; };
 		E5C4EF3C29B882AF0013ACB2 /* LinkButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkButtonStyle.swift; sourceTree = "<group>"; };
 		E5C4EF3E29B882C10013ACB2 /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
@@ -1766,7 +1765,7 @@
 				D5C7C8B02B0B87FD00641808 /* main.m */,
 				D58496A025935F8000CFAFDE /* ProtonVPN-release.entitlements */,
 				EECCBA751F070FA1007829E0 /* ProtonVPN.entitlements */,
-				E581886C2AFA49EB00B981EB /* Empty.xib */,
+				E582BF3C2BB16FE300C95CD7 /* InfoPlist.xcstrings */,
 			);
 			path = ProtonVPN;
 			sourceTree = "<group>";
@@ -2902,7 +2901,6 @@
 				Base,
 				fr,
 				it,
-				pl,
 				"pt-BR",
 				es,
 				nl,
@@ -2930,6 +2928,7 @@
 				"zh-Hant",
 				ka,
 				nb,
+				pl,
 			);
 			mainGroup = EED534781EEC112000013607;
 			packageReferences = (
@@ -3019,7 +3018,6 @@
 				E1FFCF82202DAF17001B8108 /* ServerInfo.xib in Resources */,
 				EEFE81CD1F3F361A0052A7A6 /* MapHeader.xib in Resources */,
 				42BEF9812631AB1A009180A7 /* StreamOptionCVItem.xib in Resources */,
-				E581886A2AFA49EB00B981EB /* Empty.xib in Resources */,
 				4CD1F7852A72BE7D00E8AB01 /* ProtonVPN_ike_root.der in Resources */,
 				E1454CEE206FC6A900E6D396 /* HelpPopover.xib in Resources */,
 				EEBB82E81F1DF5A60041432A /* Overview.xib in Resources */,
@@ -3042,6 +3040,7 @@
 				D5AC137A23794B2900244066 /* text-template.html in Resources */,
 				EE24A3941F1BC7A700B70949 /* ProfileItemView.xib in Resources */,
 				42498A522518E96B00ACB7EC /* ExpandableContentPopup.xib in Resources */,
+				E582BF3D2BB16FE800C95CD7 /* InfoPlist.xcstrings in Resources */,
 				EE27DB3D1F4706E400D2FF2B /* SettingsContainer.xib in Resources */,
 				E187021E20E26201000521AC /* StatusMenuProfileViewItem.xib in Resources */,
 				EEF7814B1F1A701900E77B59 /* CountriesSection.xib in Resources */,
@@ -3589,15 +3588,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		E581886C2AFA49EB00B981EB /* Empty.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E581886B2AFA49EB00B981EB /* Base */,
-				E5C4954F2B31A8BF00C9366C /* mul */,
-			);
-			name = Empty.xib;
-			sourceTree = "<group>";
-		};
 		EEB404CF1F77F639006CF513 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
