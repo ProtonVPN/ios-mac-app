@@ -22,6 +22,7 @@
 
 import Cocoa
 import Dependencies
+import Ergonomics
 import LegacyCommon
 import VPNShared
 import Theme

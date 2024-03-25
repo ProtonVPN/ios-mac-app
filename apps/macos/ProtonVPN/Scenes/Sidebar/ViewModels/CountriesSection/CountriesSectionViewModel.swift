@@ -26,6 +26,7 @@ import Foundation
 import Dependencies
 
 import Domain
+import Ergonomics
 import Localization
 import Strings
 import Theme

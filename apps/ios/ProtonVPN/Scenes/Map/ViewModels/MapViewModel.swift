@@ -26,6 +26,7 @@ import MapKit
 import Dependencies
 
 import Domain
+import Ergonomics
 import Persistence
 import LegacyCommon
 

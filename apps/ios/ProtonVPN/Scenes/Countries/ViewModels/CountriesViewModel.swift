@@ -26,6 +26,7 @@ import UIKit
 import Dependencies
 
 import Domain
+import Ergonomics
 import Strings
 
 import Localization
