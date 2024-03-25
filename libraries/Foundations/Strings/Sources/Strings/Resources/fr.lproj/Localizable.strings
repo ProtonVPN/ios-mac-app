@@ -1655,21 +1655,6 @@
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Le site web de Proton VPN peut être temporairement indisponible à cause de restrictions réseau. Nous vous invitons à utiliser l'application mobile pour créer un nouveau compte Proton.";
 
-/* Title of the Use coupon button in Settings */
-"use_coupon" = "Utiliser un code promotionnel";
-
-/* Title of the screen to apply a coupon */
-"coupon_code" = "Code promotionnel";
-
-/* Button to apply coupon */
-"apply_coupon" = "Appliquer";
-
-/* Banner shown after coupon is applied */
-"coupon_applied" = "Le code promotionnel a été appliqué.";
-
-/* Banner shown after coupon is applied but the plan is not yet upgraded */
-"coupon_applied_plan_not_upgraded_yet" = "Le code promotionnel a été appliqué. Votre abonnement sera mis à niveau dans quelques minutes.";
-
 /* Title for the Two-factor authentication screen */
 "two_factor_authentication" = "Authentification à deux facteurs";
 
@@ -2069,16 +2054,16 @@
 "welcome_to_proton_banner_subtitle" = "Quand vous utilisez le VPN, vos activités en ligne sont protégées par les lois suisses sur la protection de la vie privée. Nous ne suivrons jamais vos activités et nous ne partagerons jamais vos informations avec des tiers.";
 
 /* Title of paid plans list. */
-"upsell_plans_list_title" = "Faites passer le respect de votre vie privée au niveau supérieur";
+"upsell_plans_list_title" = "Faites passer le respect de votre vie privée au niveau supérieur.";
 
 /* Subtitle of paid plans list. */
-"upsell_plans_list_subtitle" = "Bénéficiez de fonctionnalités avancées de protection de la vie privée et gagnez en vitesse avec VPN Plus.";
+"upsell_plans_list_subtitle" = "Bénéficiez de fonctionnalités avancées pour protéger votre vie privée et gagner en vitesse avec VPN Plus.";
 
 /* Header of paid plans list where there are more than 1 plan option to pick from. */
-"upsell_plans_list_section_header" = "Choisissez votre abonnement";
+"upsell_plans_list_section_header" = "Je choisis mon abonnement";
 
 /* Main Button of paid plans list allowing user to start payments process. */
-"upsell_plans_list_validate_button" = "Obtenir VPN Plus";
+"upsell_plans_list_validate_button" = "Profiter de VPN Plus";
 
 /* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
 "upsell_plans_list_option_amountPerMonth" = " /mois";

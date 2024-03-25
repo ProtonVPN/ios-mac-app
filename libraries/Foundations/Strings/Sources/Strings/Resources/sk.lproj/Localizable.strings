@@ -1444,7 +1444,7 @@
 
 "_upgrade_again" = "AKTUALIZOVAŤ ZNOVA";
 
-"_delinquent_title" = "Na vašom účte VPN sú nevybavené faktúry";
+"_delinquent_title" = "Váš VPN účet má neuhradené faktúry";
 
 "_delinquent_description" = "Po ich zaplatení budete mať opäť prístup k prémiovým funkciám.";
 
@@ -1654,21 +1654,6 @@
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Webová stránka Proton VPN môže byť dočasne nedostupná z dôvodu sieťových obmedzení. Na vytvorenie nového konta Proton použite mobilnú aplikáciu.";
-
-/* Title of the Use coupon button in Settings */
-"use_coupon" = "Použiť kupón";
-
-/* Title of the screen to apply a coupon */
-"coupon_code" = "Kód kupónu";
-
-/* Button to apply coupon */
-"apply_coupon" = "Použiť";
-
-/* Banner shown after coupon is applied */
-"coupon_applied" = "Kupón bol úspešne uplatnený.";
-
-/* Banner shown after coupon is applied but the plan is not yet upgraded */
-"coupon_applied_plan_not_upgraded_yet" = "Kupón bol úspešne uplatnený. Vaše predplatné bude inovované v priebehu niekoľkých minút.";
 
 /* Title for the Two-factor authentication screen */
 "two_factor_authentication" = "Dvojstupňové overenie";

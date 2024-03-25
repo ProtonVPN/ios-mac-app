@@ -1655,21 +1655,6 @@
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "O sítio web do Proton VPN pode estar temporariamente inacessível devido a restrições de rede. Utilize a aplicação móvel para criar uma nova conta Proton.";
 
-/* Title of the Use coupon button in Settings */
-"use_coupon" = "Usar cupão";
-
-/* Title of the screen to apply a coupon */
-"coupon_code" = "Código do cupão";
-
-/* Button to apply coupon */
-"apply_coupon" = "Aplicar";
-
-/* Banner shown after coupon is applied */
-"coupon_applied" = "O cupão foi utilizado.";
-
-/* Banner shown after coupon is applied but the plan is not yet upgraded */
-"coupon_applied_plan_not_upgraded_yet" = "O cupão foi aplicado. A sua subscrição será actualizada dentro de alguns minutos.";
-
 /* Title for the Two-factor authentication screen */
 "two_factor_authentication" = "Autenticação em dois passos";
 
