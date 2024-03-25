@@ -1655,21 +1655,6 @@
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Вэб-сайт Proton VPN можа быць часова недаступны па прычыне абмежаванняў сеткі. Скарыстайцеся мабільнай праграмай, каб стварыць уліковы запіс Proton.";
 
-/* Title of the Use coupon button in Settings */
-"use_coupon" = "Выкарыстаць купон";
-
-/* Title of the screen to apply a coupon */
-"coupon_code" = "Код купона";
-
-/* Button to apply coupon */
-"apply_coupon" = "Ужыць";
-
-/* Banner shown after coupon is applied */
-"coupon_applied" = "Купон быў паспяхова ўжыты.";
-
-/* Banner shown after coupon is applied but the plan is not yet upgraded */
-"coupon_applied_plan_not_upgraded_yet" = "Купон быў паспяхова ўжыты. Ваша падпіска будзе палепшана на працягу некалькіх хвілін.";
-
 /* Title for the Two-factor authentication screen */
 "two_factor_authentication" = "Двухфактарная аўтэнтыфікацыя";
 
@@ -1689,7 +1674,7 @@
 "authenticate" = "Аўтэнтыфікацыя";
 
 /* Error message shown when tryng to log in with an unsupported method */
-"login_unsupported_state" = "Памылковы метад уваходу. Звярніцеся ў службу падтрымкі.";
+"login_unsupported_state" = "Памылковы спосаб уваходу. Звярніцеся ў службу падтрымкі.";
 
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "Не атрымалася змяніць наладу %@. Паспрабуйце яшчэ раз пазней або падключыцеся да іншага сервера";

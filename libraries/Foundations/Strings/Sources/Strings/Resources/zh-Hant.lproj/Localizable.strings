@@ -1655,21 +1655,6 @@
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "由於網路限制， Proton VPN 網站可能暫時造訪不了。請使用手機版 app 創建一個新的 Proton 帳戶。";
 
-/* Title of the Use coupon button in Settings */
-"use_coupon" = "使用折扣碼";
-
-/* Title of the screen to apply a coupon */
-"coupon_code" = "優惠代碼";
-
-/* Button to apply coupon */
-"apply_coupon" = "套用";
-
-/* Banner shown after coupon is applied */
-"coupon_applied" = "已成功使用折扣碼。";
-
-/* Banner shown after coupon is applied but the plan is not yet upgraded */
-"coupon_applied_plan_not_upgraded_yet" = "已成功使用優惠券。您的訂購授權將於數分鐘後升級。";
-
 /* Title for the Two-factor authentication screen */
 "two_factor_authentication" = "兩步驟驗證";
 
@@ -2027,7 +2012,7 @@
 "upsell_specific_location_title" = "您目前已達免費伺服器變更的最大數量。";
 
 /* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
-"upsell_specific_location_change_server_button_title" = "切換服務器";
+"upsell_specific_location_change_server_button_title" = "變更伺服器";
 
 /* The name of one of the features in the Welcome screen that the user sees after upgrading */
 "welcome_upgrade_advanced_features" = "進階安全功能";

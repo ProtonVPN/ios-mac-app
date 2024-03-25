@@ -1655,21 +1655,6 @@
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Η ιστοσελίδα του Proton VPN ίσως είναι προσωρινά απρόσιτη, λόγω περιορισμών δικτύου. Για δημιουργία νέου λογαριασμού Proton, παρακαλούμε χρησιμοποιείστε την εφαρμογή κινητού.";
 
-/* Title of the Use coupon button in Settings */
-"use_coupon" = "Χρήση κουπονιού";
-
-/* Title of the screen to apply a coupon */
-"coupon_code" = "Κωδικός κουπονιού";
-
-/* Button to apply coupon */
-"apply_coupon" = "Εφαρμογή";
-
-/* Banner shown after coupon is applied */
-"coupon_applied" = "Επιτυχής εφαρμογή κουπονιού.";
-
-/* Banner shown after coupon is applied but the plan is not yet upgraded */
-"coupon_applied_plan_not_upgraded_yet" = "Επιτυχής εφαρμογή κουπονιού. Η συνδρομή σας θα αναβαθμιστεί εντός ολίγων λεπτών.";
-
 /* Title for the Two-factor authentication screen */
 "two_factor_authentication" = "Ταυτοποίηση δύο παραγόντων";
 

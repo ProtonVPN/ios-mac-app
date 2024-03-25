@@ -1188,7 +1188,7 @@
 "_report_field_placeholder" = "Mulai mengetik...";
 
 /* Mag bug report: attach logs checkbox */
-"_report_attachments_checkbox" = "Termasuk log aplikasi dan detail sistem";
+"_report_attachments_checkbox" = "Meliputi log aplikasi dan rincian sistem";
 
 /* Main mac app menu item */
 "_menu_about" = "Tentang Proton VPN";
@@ -1654,21 +1654,6 @@
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Situs web Proton VPN terindikasi sedang tidak dapat dijangkau karena batasan jaringan. Mohon gunakan aplikasi mobile kami untuk membuat akun Proton yang baru.";
-
-/* Title of the Use coupon button in Settings */
-"use_coupon" = "Gunakan kupon";
-
-/* Title of the screen to apply a coupon */
-"coupon_code" = "Kode kupon";
-
-/* Button to apply coupon */
-"apply_coupon" = "Terapkan";
-
-/* Banner shown after coupon is applied */
-"coupon_applied" = "Kupon telah berhasil digunakan.";
-
-/* Banner shown after coupon is applied but the plan is not yet upgraded */
-"coupon_applied_plan_not_upgraded_yet" = "Kupon telah berhasil digunakan. Jenis akun Anda akan segera ditingkatkan dalam beberapa menit ke depan.";
 
 /* Title for the Two-factor authentication screen */
 "two_factor_authentication" = "Autentikasi dua-faktor";

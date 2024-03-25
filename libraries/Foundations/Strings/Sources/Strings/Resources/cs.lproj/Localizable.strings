@@ -1655,21 +1655,6 @@
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Webové stránky Proton VPN mohou být dočasně nedostupné z důvodu síťových omezení. Pro vytvoření nového účtu Proton použijte mobilní aplikaci.";
 
-/* Title of the Use coupon button in Settings */
-"use_coupon" = "Použít kupón";
-
-/* Title of the screen to apply a coupon */
-"coupon_code" = "Kód kupónu";
-
-/* Button to apply coupon */
-"apply_coupon" = "Použít";
-
-/* Banner shown after coupon is applied */
-"coupon_applied" = "Kupón byl úspěšně uplatněn.";
-
-/* Banner shown after coupon is applied but the plan is not yet upgraded */
-"coupon_applied_plan_not_upgraded_yet" = "Kupón byl úspěšně uplatněn. Vaše předplatné bude aktualizováno během několika minut.";
-
 /* Title for the Two-factor authentication screen */
 "two_factor_authentication" = "Dvoufázové ověření";
 

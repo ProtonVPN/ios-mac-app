@@ -1655,21 +1655,6 @@
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Proton VPN 웹사이트가 네트워크 제한으로 인해 일시적으로 접속할 수 없을 수 있습니다. 모바일 앱을 사용하여 새 Proton 계정을 만드세요.";
 
-/* Title of the Use coupon button in Settings */
-"use_coupon" = "쿠폰 사용";
-
-/* Title of the screen to apply a coupon */
-"coupon_code" = "쿠폰 코드";
-
-/* Button to apply coupon */
-"apply_coupon" = "적용";
-
-/* Banner shown after coupon is applied */
-"coupon_applied" = "쿠폰이 성공적으로 적용되었습니다.";
-
-/* Banner shown after coupon is applied but the plan is not yet upgraded */
-"coupon_applied_plan_not_upgraded_yet" = "쿠폰이 성공적으로 적용되었습니다. 구독이 몇 분 내로 업그레이드됩니다.";
-
 /* Title for the Two-factor authentication screen */
 "two_factor_authentication" = "2단계 인증";
 

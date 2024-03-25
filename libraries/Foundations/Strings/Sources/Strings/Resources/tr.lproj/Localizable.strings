@@ -1655,21 +1655,6 @@
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Ağ kısıtlamaları nedeniyle Proton VPN sitesine geçici olarak erişlemeyebilir. Lütfen yeni bir Proton hesabı açmak için mobil uygulamayı kullanın.";
 
-/* Title of the Use coupon button in Settings */
-"use_coupon" = "Kupon kullan";
-
-/* Title of the screen to apply a coupon */
-"coupon_code" = "Kupon kodu";
-
-/* Button to apply coupon */
-"apply_coupon" = "Uygula";
-
-/* Banner shown after coupon is applied */
-"coupon_applied" = "Kupon uygulandı.";
-
-/* Banner shown after coupon is applied but the plan is not yet upgraded */
-"coupon_applied_plan_not_upgraded_yet" = "Kupon uygulandı. Aboneliğiniz birkaç dakika içinde yükseltilecek.";
-
 /* Title for the Two-factor authentication screen */
 "two_factor_authentication" = "İki adımlı doğrulama";
 
