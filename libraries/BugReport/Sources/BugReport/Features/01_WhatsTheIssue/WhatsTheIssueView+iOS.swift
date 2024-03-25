@@ -20,6 +20,7 @@
 import Foundation
 import SwiftUI
 import ComposableArchitecture
+import Strings
 
 public struct WhatsTheIssueView: View {
 
@@ -39,7 +40,7 @@ public struct WhatsTheIssueView: View {
 
                     UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
 
-                    Text(LocalizedString.br1Title)
+                    Text(Localizable.br1Title)
                         .font(.title2)
                         .fontWeight(.bold)
                         .foregroundColor(colors.textPrimary)
@@ -61,7 +62,7 @@ public struct WhatsTheIssueView: View {
                         .background(nextView(viewStore))
                     })
                 }
-                .navigationTitle(Text(LocalizedString.brWindowTitle))
+                .navigationTitle(Text(Localizable.brWindowTitle))
                 .navigationBarTitleDisplayMode(.inline)
             }
     }

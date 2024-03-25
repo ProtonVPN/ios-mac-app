@@ -21,6 +21,8 @@ import ComposableArchitecture
 import SwiftUI
 import SwiftUINavigation
 
+import Strings
+
 public struct BugReportResultView: View {
 
     let store: StoreOf<BugReportResultFeature>
@@ -50,16 +52,16 @@ public struct BugReportResultView: View {
                 VStack(spacing: 8) {
                     FinalIcon(state: .success)
                         .padding(.bottom, 32)
-                    Text(LocalizedString.brSuccessTitle)
+                    Text(Localizable.brSuccessTitle)
                         .font(.title2)
                         .fontWeight(.bold)
-                    Text(LocalizedString.brSuccessSubtitle)
+                    Text(Localizable.brSuccessSubtitle)
                         .font(.body)
                 }
                 .foregroundColor(colors.textPrimary)
                 .frame(maxHeight: .infinity, alignment: .center)
 
-                Button(action: { viewStore.send(.finish) }, label: { Text(LocalizedString.brSuccessButton) })
+                Button(action: { viewStore.send(.finish) }, label: { Text(Localizable.brSuccessButton) })
                     .buttonStyle(PrimaryButtonStyle())
                     .padding(.horizontal)
                     .padding(.bottom, 32)
@@ -76,7 +78,7 @@ public struct BugReportResultView: View {
                     VStack(spacing: 8) {
                         FinalIcon(state: .failure)
                             .padding(.bottom, 32)
-                        Text(LocalizedString.brFailureTitle)
+                        Text(Localizable.brFailureTitle)
                             .font(.title2)
                             .fontWeight(.bold)
                         Text(error)
@@ -88,10 +90,10 @@ public struct BugReportResultView: View {
                     Spacer()
 
                     VStack {
-                        Button(action: { viewStore.send(.retry) }, label: { Text(LocalizedString.brFailureButtonRetry) })
+                        Button(action: { viewStore.send(.retry) }, label: { Text(Localizable.brFailureButtonRetry) })
                             .buttonStyle(PrimaryButtonStyle())
 
-                        Button(action: { viewStore.send(.troubleshoot) }, label: { Text(LocalizedString.brFailureButtonTroubleshoot) })
+                        Button(action: { viewStore.send(.troubleshoot) }, label: { Text(Localizable.brFailureButtonTroubleshoot) })
                             .buttonStyle(SecondaryButtonStyle())
                     }
                     .padding(.horizontal)

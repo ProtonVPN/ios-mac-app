@@ -20,6 +20,7 @@
 import Foundation
 import ComposableArchitecture
 import SwiftUI
+import Strings
 
 public struct QuickFixesView: View {
 
@@ -44,10 +45,10 @@ public struct QuickFixesView: View {
                     UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
 
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(LocalizedString.br2Title)
+                        Text(Localizable.br2Title)
                             .font(.title2)
                             .fontWeight(.bold)
-                        Text(LocalizedString.br2Subtitle)
+                        Text(Localizable.br2Subtitle)
                             .font(.subheadline)
                             .foregroundColor(colors.textSecondary)
                     }.padding(.horizontal)
@@ -92,7 +93,7 @@ public struct QuickFixesView: View {
                     .padding(.top, 36)
                     .padding(.bottom, 24)
 
-                    Text(LocalizedString.br2Footer)
+                    Text(Localizable.br2Footer)
                         .foregroundColor(colors.textSecondary)
                         .font(.footnote)
                         .frame(maxWidth: .infinity, alignment: .center)
@@ -114,7 +115,7 @@ public struct QuickFixesView: View {
                                        then: { store in ContactFormView(store: store) })
                             },
                                        label: {
-                                Text(LocalizedString.br2ButtonNext)
+                                Text(Localizable.br2ButtonNext)
                                     .frame(maxWidth: .infinity, minHeight: 48, alignment: .center)
                                     .padding(.horizontal, 16)
                                     .background(colors.interactive)
@@ -123,7 +124,7 @@ public struct QuickFixesView: View {
                         })
 
                         Button(action: { self.dismiss() },
-                               label: { Text(LocalizedString.br2ButtonCancel) })
+                               label: { Text(Localizable.br2ButtonCancel) })
                         .buttonStyle(SecondaryButtonStyle())
                     }
                     .padding(.horizontal)
