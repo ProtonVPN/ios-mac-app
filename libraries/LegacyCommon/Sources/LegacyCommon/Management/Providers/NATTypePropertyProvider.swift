@@ -21,6 +21,7 @@ import Foundation
 import Dependencies
 
 import Domain
+import Ergonomics
 import VPNShared
 
 public protocol NATTypePropertyProvider: FeaturePropertyProvider {

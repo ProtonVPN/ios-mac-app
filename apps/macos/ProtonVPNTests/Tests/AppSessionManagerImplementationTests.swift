@@ -21,6 +21,7 @@ import LegacyCommon
 
 import VPNShared
 import Dependencies
+import Ergonomics
 import VPNSharedTesting
 import ProtonCoreNetworking
 @testable import ProtonVPN

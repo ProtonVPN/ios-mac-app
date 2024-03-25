@@ -72,7 +72,7 @@ class SystemExtensionManagerTests: XCTestCase {
 
         wait(for: approvalRequired, timeout: expectationTimeout)
 
-        guard alertService.alerts.count == 1, let alert = alertService.alerts.first as? SystemExtensionTourAlert else {
+        guard alertService.alerts.count == 1, alertService.alerts.first is SystemExtensionTourAlert else {
             XCTFail("Expected only alert to be SystemExtensionTourAlert: \(String(describing: alertService.alerts))")
             return
         }
@@ -136,7 +136,7 @@ class SystemExtensionManagerTests: XCTestCase {
             sysextManager.approve(request: request)
         }
 
-        guard alertService.alerts.count == 1, let alert = alertService.alerts.first as? SystemExtensionTourAlert else {
+        guard alertService.alerts.count == 1, alertService.alerts.first is SystemExtensionTourAlert else {
             XCTFail("Expected only alert to be SystemExtensionTourAlert: \(String(describing: alertService.alerts))")
             return
         }
@@ -180,7 +180,7 @@ class SystemExtensionManagerTests: XCTestCase {
 
         wait(for: [approvalRequired], timeout: expectationTimeout)
 
-        guard alertService.alerts.count == 1, let alert = alertService.alerts.first as? SystemExtensionTourAlert else {
+        guard alertService.alerts.count == 1, alertService.alerts.first is SystemExtensionTourAlert else {
             XCTFail("Expected only alert to be SystemExtensionTourAlert: \(String(describing: alertService.alerts))")
             return
         }

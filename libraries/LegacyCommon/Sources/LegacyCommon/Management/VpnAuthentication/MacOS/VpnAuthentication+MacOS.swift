@@ -19,6 +19,7 @@
 import Foundation
 
 import Domain
+import Ergonomics
 import VPNShared
 
 #if os(macOS)

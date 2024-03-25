@@ -60,8 +60,7 @@ public class ConcurrentReaders<T> {
     private var value: T
 
     /// Concurrent queue for accessing the value.
-    private let queue = DispatchQueue(label: "ch.protonvpn.rwsync.\(String(describing: T.self)).\(UUID().uuidString)",
-                                      attributes: .concurrent)
+    private let queue: DispatchQueue
 
     /// Schedule a synchronous operation on the queue and return the value.
     private var sync: ((() -> T) -> T)!
@@ -72,8 +71,10 @@ public class ConcurrentReaders<T> {
     /// Schedule an asynchronous operation on the queue, inserting a barrier before and after the operation.
     private var asyncBarrier: ((@escaping () -> Void) -> Void)!
 
-    public init(_ value: T) {
+    public init(_ value: T, queue: DispatchQueue? = nil) {
         self.value = value
+        let label = "ch.protonvpn.rwsync.\(String(describing: T.self)).\(UUID().uuidString)"
+        self.queue = queue ?? DispatchQueue(label: label, attributes: .concurrent)
 
         self.sync = { [unowned self] in
             self.queue.sync(execute: $0)
@@ -99,6 +100,10 @@ public class ConcurrentReaders<T> {
     public func updateAsync(_ closure: @escaping ((inout T) -> Void)) {
         asyncBarrier { [unowned self] in closure(&self.value) }
     }
+
+    public func unsafeUpdateNoSync(_ closure: @escaping ((inout T) -> Void)) {
+        closure(&self.value)
+    }
 }
 
 @propertyWrapper
@@ -120,7 +125,11 @@ public class ConcurrentlyReadable<T> {
         _wrappedValue.updateAsync(closure)
     }
 
-    public init(wrappedValue: T) {
-        self._wrappedValue = ConcurrentReaders(wrappedValue)
+    public func unsafeUpdateNoSync(_ closure: @escaping ((inout T) -> Void)) {
+        _wrappedValue.unsafeUpdateNoSync(closure)
+    }
+
+    public init(wrappedValue: T, queue: DispatchQueue? = nil) {
+        self._wrappedValue = ConcurrentReaders(wrappedValue, queue: queue)
     }
 }

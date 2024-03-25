@@ -26,6 +26,7 @@ import Dependencies
 import ProtonCoreDataModel
 
 import Domain
+import Ergonomics
 import VPNShared
 import VPNAppCore
 
