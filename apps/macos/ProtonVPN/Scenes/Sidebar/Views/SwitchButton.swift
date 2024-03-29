@@ -109,23 +109,11 @@ class SwitchButton: NSView, CAAnimationDelegate {
     override open func awakeFromNib() {
         super.awakeFromNib()
         clipToBounds()
+    }
 
-        let trackingArea = NSTrackingArea(rect: bounds,
-                                          options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeAlways],
-                                          owner: self,
-                                          userInfo: nil)
-        self.addTrackingArea(trackingArea)
-    }
-    
-    override open func mouseEntered(with event: NSEvent) {
+    override func resetCursorRects() {
         if enabled {
-            self.addCursorRect(bounds, cursor: NSCursor.pointingHand)
-        }
-    }
-    
-    override open func mouseExited(with event: NSEvent) {
-        if enabled {
-            self.addCursorRect(bounds, cursor: NSCursor.arrow)
+            addCursorRect(bounds, cursor: .pointingHand)
         }
     }
     
@@ -210,6 +198,7 @@ class SwitchButton: NSView, CAAnimationDelegate {
     fileprivate func getButtonView() -> NSButton {
         let button = NSButton(frame: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight))
         
+        button.isBordered = false
         button.title = ""
      
         registerButtonHandlers(button)
