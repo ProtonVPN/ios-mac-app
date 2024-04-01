@@ -1444,7 +1444,7 @@
 
 "_upgrade_again" = "TINGKATKAN LAGI";
 
-"_delinquent_title" = "Akun VPN anda memiliki tagihan tertunda";
+"_delinquent_title" = "Akun VPN Anda memiliki faktur yang tertunggak";
 
 "_delinquent_description" = "Anda akan kembali dapat mengakses berbagai fitur premium setelah tagihan-tagihan ini dilunasi.";
 
@@ -1838,7 +1838,7 @@
 "modals_upsell_features_moderate_nat_direct_connections" = "NAT Type 2 (moderat) mengoptimalkan kecepatan dan stabilitas koneksi Anda dengan mengukuhkan koneksi langsung antar perangkat";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_streaming" = "Streaming film kesayangan Anda";
+"modals_upsell_all_countries_feature_streaming" = "Tonton film streaming kesayangan Anda";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_highSpeed" = "Jelajahi internet pada kecepatan tertinggi (10 Gbps)";
@@ -2030,10 +2030,10 @@
 "welcome_upgrade_subtitle_plus" = "Nikmati berbagai fitur privasi tambahan, performa yang jauh lebih cepat, dan opsi kostumisasi VPN lanjutan.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "Selamat! Anda telah membuka berbagai fitur keamanan dan performa premium pada seluruh layanan Proton, beserta dengan kuota penyimpanan total 500 GB.\n\nNikmati privasi terbaik yang ditawarkan oleh Proton.";
+"welcome_upgrade_subtitle_Unlimited" = "Selamat! Anda telah memperoleh akses menuju berbagai fitur keamanan dan performa premium pada seluruh layanan Proton, beserta dengan total ruang penyimpanan 500 GB.\n\nNikmati privasi terbaik yang ditawarkan oleh Proton.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "Selamat! Anda telah membuka berbagai fitur keamanan dan performa premium pada seluruh layanan Proton, beserta dengan kuota penyimpanan total **500 GB**.\n\nNikmati privasi terbaik yang ditawarkan oleh Proton.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "Selamat! Anda telah memperoleh akses menuju berbagai fitur keamanan dan performa premium pada seluruh layanan Proton, beserta dengan total ruang penyimpanan **500 GB**.\n\nNikmati privasi terbaik yang ditawarkan oleh Proton.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
