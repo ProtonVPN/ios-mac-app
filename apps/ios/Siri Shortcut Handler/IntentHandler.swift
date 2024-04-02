@@ -22,134 +22,27 @@
 
 import Foundation
 import Intents
-import LegacyCommon
-import Localization
 import NetworkExtension
-import VPNShared
-import ProtonCoreCryptoVPNPatchedGoImplementation
+import Strings
 
 class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHandling, GetConnectionStatusIntentHandling {
     
-    let siriHandlerViewModel: SiriHandlerViewModel
-    
-    override init() { // swiftlint:disable:this function_body_length
-        #if TLS_PIN_DISABLE
-        let pin = false
-        #else
-        let pin = true
-        #endif
-
-
-        AppContext.default = .siriIntentHandler
-
-        setUpNSCoding(withModuleName: "ProtonVPN")
-        injectDefaultCryptoImplementation()
-        let dependencyFactory = SiriIntentHandlerDependencyFactory()
-        let doh = DoHVPN(apiHost: "", verifyHost: "", alternativeRouting: false, appState: .disconnected)
-        let networking = CoreNetworking(
-            delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()),
-            appInfo: dependencyFactory.makeAppInfo(),
-            doh: doh,
-            authKeychain: dependencyFactory.makeAuthKeychainHandle(),
-            unauthKeychain: dependencyFactory.makeUnauthKeychainHandle(),
-            pinApiEndpoints: pin
-        )
-        let openVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.openVpn
-        let wireguardVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.wireguard
-        let appGroup = AppConstants.AppGroups.main
-        let propertiesManager = PropertiesManager()
-        let vpnKeychain = VpnKeychain.instance
-        let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
-        let authKeychain = AuthKeychain.default
-        let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN",
-                                                        vpnKeysGenerator: ExtensionVPNKeysGenerator())
-        let netShieldPropertyProvider = NetShieldPropertyProviderImplementation()
-        let natTypePropertyProvider = NATTypePropertyProviderImplementation()
-        let safeModePropertyProvider = SafeModePropertyProviderImplementation()
-        let vpnWrapperFactory = VPNWrapperFactory()
-        let ikeFactory = IkeProtocolFactory(factory: vpnWrapperFactory)
-        let openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager, vpnManagerFactory: vpnWrapperFactory)
-        let wireguardVpnFactory = WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager, vpnManagerFactory: vpnWrapperFactory)
-        let vpnStateConfiguration = VpnStateConfigurationManager(
-            ikeProtocolFactory: ikeFactory,
-            openVpnProtocolFactory: openVpnFactory,
-            wireguardProtocolFactory: wireguardVpnFactory,
-            propertiesManager: propertiesManager,
-            appGroup: appGroup
-        )
-        let sessionService = SessionServiceImplementation(appInfoFactory: dependencyFactory, networking: networking, doh: doh)
-
-        let remoteClient = VpnAuthenticationRemoteClient(
-            sessionService: sessionService,
-            authenticationStorage: vpnAuthKeychain
-        )
-
-        let vpnManager = VpnManager(
-            ikeFactory: ikeFactory,
-            openVpnFactory: openVpnFactory,
-            wireguardProtocolFactory: wireguardVpnFactory,
-            appGroup: appGroup,
-            vpnAuthentication: remoteClient,
-            vpnAuthenticationStorage: vpnAuthKeychain,
-            vpnKeychain: vpnKeychain,
-            propertiesManager: propertiesManager,
-            vpnStateConfiguration: vpnStateConfiguration,
-            vpnCredentialsConfiguratorFactory:
-                IOSVpnCredentialsConfiguratorFactory(
-                    propertiesManager: propertiesManager,
-                    vpnKeychain: vpnKeychain,
-                    vpnAuthentication: VpnAuthenticationRemoteClient(
-                        sessionService: sessionService,
-                        authenticationStorage: vpnAuthKeychain
-                    )
-                ),
-            localAgentConnectionFactory: LocalAgentConnectionFactoryImplementation(),
-            natTypePropertyProvider: natTypePropertyProvider,
-            netShieldPropertyProvider: netShieldPropertyProvider,
-            safeModePropertyProvider: safeModePropertyProvider
-        )
-
-        let countryCodeProvider = dependencyFactory.makeCountryCodeProvider()
-
-        siriHandlerViewModel = SiriHandlerViewModel(
-            networking: networking,
-            vpnApiService: VpnApiService(
-                networking: networking,
-                vpnKeychain: vpnKeychain,
-                countryCodeProvider: countryCodeProvider,
-                authKeychain: authKeychain
-            ),
-            vpnManager: vpnManager,
-            vpnKeychain: vpnKeychain,
-            authKeychain: authKeychain,
-            propertiesManager: propertiesManager,
-            sessionService: sessionService,
-            netShieldPropertyProvider: netShieldPropertyProvider,
-            natTypePropertyProvider: natTypePropertyProvider,
-            safeModePropertyProvider: safeModePropertyProvider,
-            profileManager: ProfileManager(
-                propertiesManager: propertiesManager,
-                profileStorage: ProfileStorage(
-                    authKeychain: dependencyFactory.makeAuthKeychainHandle()
-                )
-            ),
-            doh: doh,
-            availabilityCheckerResolverFactory: dependencyFactory
-        )
-
-        super.init()
-    }
-    
     func handle(intent: QuickConnectIntent, completion: @escaping (QuickConnectIntentResponse) -> Void) {
-        siriHandlerViewModel.connect(completion)
+        let activity = NSUserActivity(activityType: "com.protonmail.vpn.connect")
+        completion(QuickConnectIntentResponse(code: .continueInApp, userActivity: activity))
     }
     
     func handle(intent: DisconnectIntent, completion: @escaping (DisconnectIntentResponse) -> Void) {
-        siriHandlerViewModel.disconnect(completion)
+        let activity = NSUserActivity(activityType: "com.protonmail.vpn.disconnect")
+        completion(DisconnectIntentResponse(code: .continueInApp, userActivity: activity))
     }
 
     func handle(intent: GetConnectionStatusIntent, completion: @escaping (GetConnectionStatusIntentResponse) -> Void) {
-        siriHandlerViewModel.getConnectionStatus(completion)
+        Task {
+            let status = await getVpnStatus()
+            let text = self.getConnectionStatusString(status: status)
+            completion(GetConnectionStatusIntentResponse.success(status: text))
+        }
     }
 
     override func handler(for intent: INIntent) -> Any {
@@ -158,52 +51,46 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         
         return self
     }
-    
-}
 
-fileprivate class VPNWrapperFactory: NEVPNManagerWrapperFactory, NETunnelProviderManagerWrapperFactory {
-    func makeNewManager() -> NETunnelProviderManagerWrapper {
-        NETunnelProviderManager()
+    // MARK: -
+
+    /// Overall, we don't expect to have more that one vpn provider manager at a time, but:
+    ///
+    /// We can have more than one connection configured, so OS returns array of vpn provider managers.
+    /// There is also a personal VPN section that is managed not by `NETunnelProviderManager`,
+    /// but by `NEVPNManager` which is used by IKEv2, so we add this as well.
+    private func getVpnStatus() async -> NEVPNStatus? {
+        var statuses = (try? await NETunnelProviderManager.loadAllFromPreferences().map { $0.connection.status }) ?? []
+
+        // Add "personal" VPN status to the mix (IKEv2)
+        let personal = NEVPNManager.shared()
+        try? await personal.loadFromPreferences()
+        statuses.append(personal.connection.status)
+
+        // Two most important statuses are: connected and disconnected,
+        // and connected > disconnected, so we can take max value, to
+        // detect if we are connected to any of the configs.
+        let result = statuses.max { $0.rawValue < $1.rawValue }
+        return result
     }
 
-    func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void) {
-        NETunnelProviderManager.loadAllFromPreferences { managers, error in
-            completionHandler(managers, error)
+    /// Convert VPN status into human readable string used in UI
+    private func getConnectionStatusString(status: NEVPNStatus?) -> String {
+        guard let status else {
+            return Localizable.disconnected
+        }
+        switch status {
+        case .connected:
+            return Localizable.connected
+        case .disconnected, .invalid:
+            return Localizable.disconnected
+        case .connecting, .reasserting:
+            return Localizable.connecting
+        case .disconnecting:
+            return Localizable.disconnecting
+        @unknown default:
+            return Localizable.disconnected
         }
     }
 
-    func makeNEVPNManagerWrapper() -> NEVPNManagerWrapper {
-        NEVPNManager.shared()
-    }
-}
-
-fileprivate class SiriIntentHandlerDependencyFactory {
-}
-
-extension SiriIntentHandlerDependencyFactory: AppInfoFactory, CountryCodeProviderFactory {
-    func makeAppInfo(context: AppContext) -> AppInfo {
-        AppInfoImplementation(context: context)
-    }
-
-    func makeCountryCodeProvider() -> CountryCodeProvider {
-        CountryCodeProviderImplementation()
-    }
-}
-
-extension SiriIntentHandlerDependencyFactory: AvailabilityCheckerResolverFactory {
-    func makeAvailabilityCheckerResolver(openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig) -> AvailabilityCheckerResolver {
-        AvailabilityCheckerResolverImplementation(openVpnConfig: openVpnConfig, wireguardConfig: wireguardConfig)
-    }
-}
-
-extension SiriIntentHandlerDependencyFactory: AuthKeychainHandleFactory {
-    func makeAuthKeychainHandle() -> AuthKeychainHandle {
-        AuthKeychain.default
-    }
-}
-
-extension SiriIntentHandlerDependencyFactory: UnauthKeychainHandleFactory {
-    func makeUnauthKeychainHandle() -> UnauthKeychainHandle {
-        UnauthKeychain()
-    }
 }
