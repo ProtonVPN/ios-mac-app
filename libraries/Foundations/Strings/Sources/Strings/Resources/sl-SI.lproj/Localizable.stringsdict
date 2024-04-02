@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>welcome_screen_feature_devices</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Do %#@VARIABLE@ naenkrat</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>naprava</string>
+        <key>two</key>
+        <string>%d napravi</string>
+        <key>few</key>
+        <string>%d naprav</string>
+        <key>other</key>
+        <string>%d naprav</string>
+      </dict>
+    </dict>
+    <key>welcome_screen_feature_servers_countries</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@num_servers@ v %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d država</string>
+        <key>two</key>
+        <string>%d državi</string>
+        <key>few</key>
+        <string>%d države</string>
+        <key>other</key>
+        <string>%d držav</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d novi strežnik</string>
+        <key>two</key>
+        <string>%d nova strežnika</string>
+        <key>few</key>
+        <string>%d novi strežniki</string>
+        <key>other</key>
+        <string>%d novi strežniki</string>
+      </dict>
+    </dict>
+    <key>modals_upsell_all_countries_feature_multipleDevices</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>one</key>
+        <string>Zaščitite do %d napravo</string>
+        <key>two</key>
+        <string>Zaščitite do %d napravi</string>
+        <key>few</key>
+        <string>Zaščitite do %d naprav</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Zaščitite do %d naprav</string>
+      </dict>
+    </dict>
+    <key>modals_upsell_all_countries_title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Dostop prek %#@num_servers@ v %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>one</key>
+        <string>%d držav</string>
+        <key>two</key>
+        <string>%d državi</string>
+        <key>few</key>
+        <string>%d držav</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d države</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>one</key>
+        <string>%d varen strežnik</string>
+        <key>two</key>
+        <string>%d varna strežnika</string>
+        <key>few</key>
+        <string>%d varni strežniki</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d varni strežniki</string>
+      </dict>
+    </dict>
+    <key>subscription_upgrade_option1</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Več sto strežnikov v %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d država</string>
+        <key>two</key>
+        <string>%d državi</string>
+        <key>few</key>
+        <string>%d države</string>
+        <key>other</key>
+        <string>%d držav</string>
+      </dict>
+    </dict>
+    <key>subscription_upgrade_option2</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Sočasno se povežite s %#@num_devices@ napravami</string>
+      <key>num_devices</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d naprava</string>
+        <key>two</key>
+        <string>%d napravi</string>
+        <key>few</key>
+        <string>%d naprave</string>
+        <key>other</key>
+        <string>%d naprav</string>
+      </dict>
+    </dict>
+    <key>maximum_device_plan_limit_part_2</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string> da hkrati povežete do %#@num_devices@.</string>
+      <key>num_devices</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d naprava</string>
+        <key>two</key>
+        <string>%d napravi</string>
+        <key>few</key>
+        <string>%d naprave</string>
+        <key>other</key>
+        <string>%d naprav</string>
+      </dict>
+    </dict>
+    <key>search_upsell_title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Dostop do %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d država</string>
+        <key>two</key>
+        <string>%d držav</string>
+        <key>few</key>
+        <string>%d držav</string>
+        <key>other</key>
+        <string>%d države</string>
+      </dict>
+    </dict>
+    <key>_vpnauth_too_many_certs_retry_after</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Dosegli ste največje število sprememb nastavitev. Poskusite znova po vsaj %d minuti.</string>
+        <key>two</key>
+        <string>Dosegli ste največje število sprememb nastavitev. Poskusite znova po vsaj %d minutah.</string>
+        <key>few</key>
+        <string>Dosegli ste največje število sprememb nastavitev. Poskusite znova po vsaj %d minutah.</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>other</key>
+        <string>Dosegli ste največje število sprememb nastavitev. Poskusite znova po vsaj %d minutah.</string>
+      </dict>
+    </dict>
+    <key>_countries_count_plus</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d+ država</string>
+        <key>two</key>
+        <string>%d+ državi</string>
+        <key>few</key>
+        <string>%d+ države</string>
+        <key>other</key>
+        <string>%d+ držav</string>
+      </dict>
+    </dict>
+    <key>_countries_count</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d država</string>
+        <key>two</key>
+        <string>%d državi</string>
+        <key>few</key>
+        <string>%d države</string>
+        <key>other</key>
+        <string>%d države</string>
+      </dict>
+    </dict>
+    <key>_plans_connections</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d povezava</string>
+        <key>two</key>
+        <string>%d povezavi</string>
+        <key>few</key>
+        <string>%d povezave</string>
+        <key>other</key>
+        <string>%d povezav</string>
+      </dict>
+    </dict>
+    <key>_netshield_stats_ads_blocked</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Oglas
+blokiran</string>
+        <key>two</key>
+        <string>Oglasa
+blokirana</string>
+        <key>few</key>
+        <string>Oglasi
+blokirani</string>
+        <key>other</key>
+        <string>Oglasi
+blokirani</string>
+      </dict>
+    </dict>
+    <key>_netshield_stats_trackers_stopped</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Sledilnik
+ustavljen</string>
+        <key>two</key>
+        <string>Sledilnika
+ustavljena</string>
+        <key>few</key>
+        <string>Sledilniki
+ustavljeni</string>
+        <key>other</key>
+        <string>Sledilniki
+ustavljeni</string>
+      </dict>
+    </dict>
+    <key>_session_length_days</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@DAYS@</string>
+      <key>DAYS</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d dni</string>
+        <key>one</key>
+        <string>%d dan</string>
+        <key>two</key>
+        <string>%d dneva</string>
+        <key>few</key>
+        <string>%d dnevi</string>
+      </dict>
+    </dict>
+    <key>_session_length_days_and_hours</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@DAYS@ %#@HOURS@</string>
+      <key>DAYS</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d dni</string>
+        <key>one</key>
+        <string>%d dan</string>
+        <key>two</key>
+        <string>%d dneva</string>
+        <key>few</key>
+        <string>%d dnevi</string>
+      </dict>
+      <key>HOURS</key>
+      <dict>
+        <key>one</key>
+        <string>%d h</string>
+        <key>two</key>
+        <string>%d h</string>
+        <key>few</key>
+        <string>%d h</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d h</string>
+      </dict>
+    </dict>
+    <key>_session_length_hours_and_minutes</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@HOURS@ %#@MINUTES@</string>
+      <key>MINUTES</key>
+      <dict>
+        <key>one</key>
+        <string>%d min.</string>
+        <key>two</key>
+        <string>%d min.</string>
+        <key>few</key>
+        <string>%d min.</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d min.</string>
+      </dict>
+      <key>HOURS</key>
+      <dict>
+        <key>one</key>
+        <string>%d h</string>
+        <key>two</key>
+        <string>%d h</string>
+        <key>few</key>
+        <string>%d h</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d h</string>
+      </dict>
+    </dict>
+    <key>_session_length_hours</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@HOURS@</string>
+      <key>HOURS</key>
+      <dict>
+        <key>one</key>
+        <string>%d h</string>
+        <key>two</key>
+        <string>%d h</string>
+        <key>few</key>
+        <string>%d h</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d h</string>
+      </dict>
+    </dict>
+    <key>_session_length_minutes_and_seconds</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@MINUTES@ %#@SECONDS@</string>
+      <key>MINUTES</key>
+      <dict>
+        <key>one</key>
+        <string>%d min.</string>
+        <key>two</key>
+        <string>%d min.</string>
+        <key>few</key>
+        <string>%d min.</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d min.</string>
+      </dict>
+      <key>SECONDS</key>
+      <dict>
+        <key>one</key>
+        <string>%d sek.</string>
+        <key>two</key>
+        <string>%d sek.</string>
+        <key>few</key>
+        <string>%d sek.</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d sek.</string>
+      </dict>
+    </dict>
+    <key>_session_length_minutes</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@MINUTES@</string>
+      <key>MINUTES</key>
+      <dict>
+        <key>one</key>
+        <string>%d min.</string>
+        <key>two</key>
+        <string>%d min.</string>
+        <key>few</key>
+        <string>%d min.</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d min.</string>
+      </dict>
+    </dict>
+    <key>_session_length_seconds</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@SECONDS@</string>
+      <key>SECONDS</key>
+      <dict>
+        <key>one</key>
+        <string>%d sek.</string>
+        <key>two</key>
+        <string>%d sek.</string>
+        <key>few</key>
+        <string>%d sek.</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d sek.</string>
+      </dict>
+    </dict>
+    <key>_step_of</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@STEP@ %#@STEPS@</string>
+      <key>STEPS</key>
+      <dict>
+        <key>one</key>
+        <string>od %d</string>
+        <key>two</key>
+        <string>od %d</string>
+        <key>few</key>
+        <string>od %d</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>od %d</string>
+      </dict>
+      <key>STEP</key>
+      <dict>
+        <key>one</key>
+        <string>Korak %d</string>
+        <key>two</key>
+        <string>Koraka %d</string>
+        <key>few</key>
+        <string>Korakov %d</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Korakov %d</string>
+      </dict>
+    </dict>
+    <key>free_connections_modal_subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@VARIABLE@</string>
+      <key>VARIABLE</key>
+      <dict>
+        <key>one</key>
+        <string>Lokacije brezplačnih serverjev (%d)</string>
+        <key>two</key>
+        <string>Lokacije brezplačnih serverjev (%d)</string>
+        <key>few</key>
+        <string>Lokacije brezplačnih serverjev (%d)</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Lokacije brezplačnih serverjev (%d)</string>
+      </dict>
+    </dict>
+    <key>plan_duration_month</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@plan_duration_month@</string>
+      <key>plan_duration_month</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d mesec</string>
+        <key>two</key>
+        <string>%d meseca</string>
+        <key>few</key>
+        <string>%d meseci</string>
+        <key>other</key>
+        <string>%d mesecev</string>
+      </dict>
+    </dict>
+    <key>plan_duration_year</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@plan_duration_year@</string>
+      <key>plan_duration_year</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d leto</string>
+        <key>two</key>
+        <string>%d leti</string>
+        <key>few</key>
+        <string>%d leta</string>
+        <key>other</key>
+        <string>%d let</string>
+      </dict>
+    </dict>
+  </dict>
+</plist>

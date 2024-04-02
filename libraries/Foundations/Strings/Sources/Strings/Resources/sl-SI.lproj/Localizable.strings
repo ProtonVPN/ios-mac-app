@@ -1,0 +1,2177 @@
+/* Common word */
+"_cancel" = "Prekliči";
+
+/* Common word */
+"_connect" = "Poveži";
+
+/* Common word */
+"_connected" = "Povezano";
+
+/* Common word */
+"_delete" = "Izbriši";
+
+/* Common word */
+"_disconnect" = "Prekini";
+
+/* Common word */
+"_disconnected" = "Prekinjeno";
+
+/* Status of VPN connection reported by Siri */
+"_disconnecting" = "Prekinjanje povezave";
+
+/* Common word */
+"_done" = "Opravljeno";
+
+/* Common word */
+"_edit" = "Urejanje";
+
+/* Common word */
+"_ok" = "V REDU";
+
+/* Common word */
+"_save" = "Shrani";
+
+/* Common word */
+"_unavailable" = "Ni na voljo";
+
+/* Description of the expand/collapse button used by accessibility Voice Over */
+"_expand_list_of_servers" = "Razširite seznam strežnikov";
+
+"_collapse_list_of_servers" = "Strni seznam strežnikov";
+
+/* Used as a title in alerts/modals */
+"_warning" = "Opozorilo";
+
+/* Button in many places in both iOS and MacOS apps */
+"_upgrade" = "Nadgradi";
+
+/* iOS: Plan selection during plan upgarde, button insettings screen */
+"_upgrade_subscription" = "Nadgradnja naročnine";
+
+/* MacOS: Settings -> Account. Button leading to web interface. */
+"_manage_subscription" = "Upravljaj naročnino";
+
+/* iOS & MacOS: text near country or server; MacOS: title of several alerts */
+"_upgrade_required" = "Zahtevana je nadgradnja";
+
+/* MacOS: voice over indication for a country or server on maintenance */
+"_on_maintenance" = "Vzdrževalna dela v teku";
+
+/* iOS & MacOS: text that requires restart connection */
+"_reconnection_required" = "Potrebna je ponovna povezava";
+
+/* Server status in many places in iOS and MacOS apps */
+"_maintenance" = "Vzdrževanje";
+
+/* MacOS: quit application button in custom status menu */
+"_quit" = "Končaj";
+
+/* MacOS: alert show before quitting app if VPN is connected */
+"_quit_warning" = "Odjava iz aplikacije bo prekinila aktivno povezavo VPN. Želite nadaljevati?";
+
+/* Common word */
+"_enabled" = "Omogočeno";
+
+/* Common word */
+"_disabled" = "Onemogočeno";
+
+/* Button in some alerts */
+"_disable" = "Onemogočite";
+
+/* Button in Kill switch error alert */
+"_report" = "Poročilo";
+
+/* Button in Kill switch error alert */
+"_ignore" = "Prezri";
+
+"_continue" = "Nadaljujte";
+
+/* Button in some alerts */
+"_show_instructions" = "Prikaži navodila";
+
+/* iOS: quick connect widget */
+"_network_unreachable" = "Omrežje je nedosegljivo";
+
+/* Title in no internet alert */
+"_not_connected_to_the_internet" = "Povezave VPN ni mogoče vzpostaviti. Niste povezani z internetom.";
+
+/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
+"_vpn_connection_active" = "Povezava VPN je aktivna";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
+"_vpn_protocol_not_supported_title" = "Protokol VPN ni podprt";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
+"_vpn_protocol_not_supported_text" = "Protokol VPN ni na voljo za povezavo, ki ste jo izbrali. Za povezavo poskusite spremeniti protokol ali strežnik.";
+
+/* iOS: button in settings screen */
+"_log_out" = "Odjava";
+
+/* iOS: Logout alert */
+"_log_out_warning" = "Če izbrišete svoj račun, se vaša seja VPN konča.";
+
+/* MacOS: Logout alert */
+"_log_out_warning_long" = "Odjava iz aplikacije bo prekinila aktivno povezavo VPN. Želite nadaljevati?";
+
+/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
+"_change_protocol_disconnect_warning" = "Spreminjanje protokolov bo končalo vašo trenutno sejo VPN.";
+
+/* Slogan text under the logo in may places in iOS and MacOS apps */
+"_loading_screen_slogan" = "Varen internet kjerkoli";
+
+/* Main mac app menu item */
+"_report_an_issue" = "Prijavite težavo...";
+
+/* Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page. */
+"_help" = "Pomoč";
+
+/* MacOS: link in login screen */
+"_learn_more" = "Izvedi več";
+
+/* iOS: Status view */
+"_ip" = "IP";
+
+/* Common word */
+"_close" = "Zapri";
+
+/* Changing settings title */
+"_change_settings" = "Spremeni nastavitve";
+
+/* Suggest the user to upgrade account for new features */
+"_get_plus_for_feature" = "Pridobite Proton VPN Plus, da odklenete to in druge funkcije.";
+
+/* Display more information */
+"_more_info" = "Več informacij";
+
+/* Display less information */
+"_less_info" = "Manj informacij";
+
+/* Text addressing to contact costumer support on several sites of the app */
+"_contact_our_support" = "Kontaktirajte podporo";
+
+"_turn_on" = "Vklopi";
+
+"_not_now" = "Ne zdaj";
+
+"_allow" = "Dovoli";
+
+/* %@ is an IP address e.g. IP: 123.45.67.890 */
+"_ip_value" = "IP: %@";
+
+/* %@ is an IP address e.g. Public IP: 123.45.67.890 */
+"_public_ip" = "Javni IP: %@";
+
+/* Several places in both iOS and Mac apps */
+"_quick_connect" = "Hitro povezovanje";
+
+/* Title of the change server button */
+"_change_server" = "Spremeni strežnik";
+
+/* Used in many places in MacOS app */
+"_secure_core" = "Secure Core";
+
+/* %@ is a country e.g. Secure Core Switzerland */
+"_secure_core_country" = "Secure Core %@";
+
+/* Profile create/edit menu */
+"_country" = "Država";
+
+"_show_protonvpn" = "Pokaži Proton VPN";
+
+/* Main mac app menu item */
+"_clear_application_data" = "Počisti podatke o aplikaciji";
+
+/* Main mac app menu item */
+"_system_extension_tutorial_menu_item" = "Vadnica za razširitev sistema";
+
+/* MacOS: connecting overlay */
+"_preparing_connection" = "Preverjanje razpoložljivosti strežnika";
+
+/* iOS: main button in tabbar during connecting to vpn phase */
+"_connecting" = "Povezovanje";
+
+"_connectingDotDotDot" = "Povezujem...";
+
+/* iOS: countries list section header */
+"_countries_free" = "Brezplačne države";
+
+/* iOS: countries list section header */
+"_countries_premium" = "Premium države";
+
+/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
+"_connecting_vpn" = "Povezovanje z %@";
+
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
+"_connecting_to" = "Povezovanje z %@";
+
+"_reconnecting_to" = "Ponovna povezava z %@";
+
+/* iOS status view */
+"_connected_to" = "Povezano z";
+
+/* macOS: Text on connection overlay shown after connection timed out */
+"_connection_timed_out" = "Povezava je potekla";
+
+/* Text that should be bold in _connection_timed_out string */
+"_connection_timed_out_bold" = "čas je potekel.";
+
+/* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
+"_connected_to_vpn" = "Povezano z %@";
+
+/* iOS: connection bar; Main mac app menu item; */
+"_not_connected" = "Niste povezani";
+
+/* MacOS: text in main window */
+"_you_are_not_connected" = "Niste povezani";
+
+/* MacOS: button in connecting overlay */
+"_try_again" = "Poskusite ponovno";
+
+"_try_again_without_killswitch" = "Onemogočite stikalo za izklop in poskusite znova";
+
+/* Button in some alerts */
+"_retry" = "Poskusite znova";
+
+/* iOS: section header in countries list */
+"_free_servers" = "Brezplačni strežniki";
+
+/* iOS: section header in countries list */
+"_plus_servers" = "Plus strežniki";
+
+/* iOS: section header in countries list */
+"_test_servers" = "TESTNI strežniki";
+
+/* MacOS: connecting overlay */
+"_initializing_connection" = "Vzpostavljanje povezave...";
+
+/* MacOS: connecting overlay */
+"_successfully_connected" = "Uspešno vzpostavljena povezava";
+
+/* MacOS: connecting overlay */
+"_failed" = "neuspešno";
+
+/* Connection error translation. iOS quick connect widget: text shown on error. */
+"_connection_failed" = "Povezovanje ni uspelo";
+
+/* iOS status view */
+"_security" = "Varnost";
+
+/* iOS status view */
+"_status" = "Stanje";
+
+/* iOS status view */
+"_session_time" = "Čas seje";
+
+/* iOS status view */
+"_location" = "Lokacija";
+
+/* iOS status view */
+"_city" = "Mesto";
+
+/* iOS status view */
+"_technical_details" = "Tehnične podrobnosti";
+
+/* Main mac app menu item */
+"_open_app_to_log_in" = "Pokaži Proton VPN za prijavo...";
+
+/* Main mac app menu item */
+"_upgrade_to_plus" = "Nadgradite na Plus";
+
+/* Main mac app menu item */
+"_upgrade_for_secure_core" = "za uporabo Secure Core";
+
+"_switch_side_button_on" = "VKOPLJENO";
+
+"_switch_side_button_off" = "IZKLOPLEJNO";
+
+/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
+"_timeout_ks_ike_descritpion" = "Druga aplikacija morda moti stikalo za izklop. Če želite odpraviti to težavo, preklopite na protokol OpenVPN ali onemogočite stikalo za izklop in poskusite znova.";
+
+/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
+"_timeout_ks_ike_switch_protocol" = "Preklopite na OpenVPN in poskusite znova";
+
+/* Free tier plan title */
+"free_tier_plan_title" = "Proton VPN Free";
+
+/* Disconnect notification */
+"_kill_switch_blocking_connection" = "Prekini stikalo, ki blokira vse povezave";
+
+/* Disconnect notification */
+"_always_on_will_reconnect" = "Vedno vključen VPN vas bo samodejno ponovno povezal.";
+
+/* MacOS: About window title */
+"_about" = "O nas";
+
+/* iOS setting: after this word actual version and build number are appended */
+"_version" = "Različica";
+
+/* MacOS: About window */
+"_version_current" = "Trenutna različica:";
+
+/* MacOS: About window */
+"_release_date" = "Datum izdaje:";
+
+/* MacOS: About window */
+"_changelog" = "Dnevnik sprememb";
+
+/* MacOS: About window */
+"_acknowledgements" = "Zasluge";
+
+/* Used in sign-in, sign-up and in settings */
+"_username" = "Uporabniško ime";
+
+/* Used in sign-in, sign-up */
+"_password" = "Geslo";
+
+/* Sign-up form */
+"_password_confirm" = "Potrdi geslo";
+
+/* Show/hide password switch */
+"_show" = "POKAŽI";
+
+/* Show/hide password switch */
+"_hide" = "SKRIJ";
+
+/* MacOS: Login button */
+"_login" = "Prijava";
+
+/* iOS: Login button in several places */
+"_log_in" = "Prijava";
+
+/* MacOS: label in login and settings screens */
+"_remember_login" = "Zapomni si prijavo";
+
+/* MacOS: label in login and settings screens */
+"_start_on_boot" = "Vključi ob zagonu";
+
+/* MacOS: button in login screen */
+"_create_account" = "Ustvari račun";
+
+/* MacOS: button in login screen */
+"_need_help" = "Potrebujete pomoč?";
+
+/* MacOS: button in login screen */
+"_reset_password" = "Ponastavi geslo";
+
+/* MacOS: button in login screen */
+"_common_issues" = "Pogoste težave pri vpisu";
+
+/* MacOS: button in login screen */
+"_forgot_username" = "Pozabljeno uporabniško ime";
+
+/* MacOS: generic failure message for SSO login */
+"_sso_login_failure" = "Prijava z SSO ni uspela. Prosim poskusite ponovno.";
+
+/* iOS: button in login screen */
+"_forgot_password" = "Ste pozabili geslo?";
+
+/* iOS: button in login and onboarding screens */
+"_sign_up" = "Registracija";
+
+/* MacOS: alert shown during login if already connected to VPN */
+"_warning_vpn_session_is_active" = "V tej napravi je aktivna seja Proton VPN drugega uporabnika. Če nadaljujete s prijavo, se trenutna seja konča. Želite nadaljevati?";
+
+/* iOS: placeholder for email field in signup and email verification screens */
+"_enter_email_address" = "Vnesite e-poštni naslov";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_country_code_placeholder" = "Koda";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_number_placeholder" = "Vnesite telefonsko številko";
+
+/* iOS: title of phone country code selection screen */
+"_select_phone_country_code" = "Izberite kodo države";
+
+/* iOS: placeholder in phone country code selection screen */
+"_search_phone_country_code_placeholder" = "Iskanje po državah";
+
+/* iOS: button for switching from sign-up to sign-in screen */
+"_already_have_account" = "Račun že imam";
+
+/* iOS: Button in email verification screen */
+"_get_verification_email" = "Pridobite potrditveno e-pošto";
+
+/* iOS: Button in SMS verification screen */
+"_get_verification_sms" = "Prejmi potrditveni SMS";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option" = "Za nadaljevanje izberite možnost preverjanja:";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option_top_message" = "Da preprečite zlorabo, morate potrditi, da ste človek.";
+
+/* iOS: human verification option select button */
+"_use_captcha_verification" = "Preverite s CAPTCHA";
+
+/* iOS: human verification option select button */
+"_use_other_email_address" = "Preverjanje po e-pošti";
+
+"_use_sms_verification" = "Preveri s SMS-om";
+
+/* iOS: human verification option select button */
+"_request_invitation" = "Zahtevaj ročno aktivacijo.";
+
+/* iOS: placeholder for code in human verification code form */
+"_enter_verification_code" = "123 456";
+
+/* iOS: button in human verification code form */
+"_submit_verification_code" = "Pošlji";
+
+/* iOS: button in human verification code form */
+"_resend_no_code" = "Niste prejeli kode?";
+
+/* iOS: button in human verification code form */
+"_resend_code" = "Zahtevaj novo kodo";
+
+/* iOS: message after human verification code resending */
+"_resend_success" = "Zahtevana je nova koda";
+
+/* iOS: link inside text under sign-up form */
+"_terms_and_conditions" = "Pravila in pogoji";
+
+/* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
+"_terms_and_conditions_disclaimer" = "Z uporabo Proton VPN se strinjate z našimi\n%@ in %@";
+
+/* iOS: link inside text under sign-up form */
+"_privacy_policy" = "Pravilnik o zasebnosti";
+
+/* iOS: text in human verification code form */
+"_verification_instructions" = "Poslana vam je bila potrditvena koda, vnesite jo spodaj.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete" = "Namestitev je končana";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_free" = "Zdaj ste prijavljeni na brezplačen paket Proton VPN. Za začetek uživajte v sedmih dneh našega paketa Proton VPN Plus brezplačno.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_plus" = "Vaš nakup je uspel. Vaš načrt Proton VPN Plus je zdaj aktiven.";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_title" = "Zaščitite se na spletu";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_text" = "Proton VPN je zavezan varovanju in spoštovanju vaše zasebnosti. Naša prevladujoča politika je zbiranje čim manj uporabniških podatkov, da zagotovimo zasebno in anonimno uporabniško izkušnjo pri uporabi aplikacije, zlasti:\n\n%@ – za prijavo, pomoč pri obnovitvi izgubljenega gesla , in pošiljanje pomembnih posodobitev storitev.\n\n%@ – samo za poročila o zrušitvah in napakah.\n\nAplikacija Proton VPN ne obdeluje nobenih uporabniških informacij razen teh podatkov. Ne beležimo vaše spletne dejavnosti niti nobenih osebnih podatkov. Vsi zgoraj našteti podatki so shranjeni in obdelani v lastnem sistemu Proton VPN, pri čemer nobena tretja oseba nima dostopa do njih.";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_user_details" = "Uporabniško ime, e-poštni naslov";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_device_details" = "Vaš model naprave in različica OS";
+
+/* iOS: data disclaimer screen button */
+"_data_disclaimer_agree" = "Sprejmi in nadaljuj";
+
+/* iOS: Map screen title and tabbar item */
+"_map" = "Zemljevid";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_show" = "Pokaži zemljevid";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_hide" = "Skrij zemljevid";
+
+/* Description shown together with server info icon */
+"_tor_description" = "Povezuje se z omrežjem TOR";
+
+/* Description shown together with server info icon */
+"_p2p_description" = "Podpira promet P2P";
+
+/* Description shown together with server info icon */
+"_premium_description" = "Premium server";
+
+/* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
+"_via_country" = "preko %@";
+
+/* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
+"_via" = "preko";
+
+/* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
+"_server_load_percentage" = "%@%% Nalaganje";
+
+/* iOS: Home screen title, tab bar item title; MacOS: TabBar tab title; */
+"_home" = "Domov";
+
+/* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
+"_countries" = "Države";
+
+"_no_servers_to_show" = "Trenutno ni strežnikov za prikaz tukaj.";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_plan_does_not_include_secure_core" = "Vaš načrt ne vključuje funkcije Secure Core.";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_learn_more_about_secure_core" = "Izvedite več o Secure Core";
+
+/* MacOS: placeholder for country search */
+"_search_for_country" = "Poišči državo";
+
+/* MacOS: secure core tooltip */
+"_secure_core_info" = "Zagotavlja dodatno zaščito pred ogrožanjem strežnika VPN z usmerjanjem prometa prek našega Secure Core omrežja";
+
+/* Text in warning screen before actions that will disconnect VPN */
+"_view_toggle_will_cause_disconnect" = "Preklop Secure Core bo prekinil vašo trenutno povezavo.";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_load" = "Obremenitev strežnika:";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_ip" = "IP stežnika:";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_auto_assigned" = "Samodejno dodeli";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_premium_server" = "Premium server";
+
+/* MacOS profile form: feature selection value */
+"_standard" = "Standard";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_p2p" = "P2P";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_tor" = "Tor";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_p2p_server" = "P2P strežnik";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_tor_server" = "Tor server";
+
+/* MacOS Profiles Overview: Table column header */
+"_profile" = "Profil";
+
+/* MacOS: menu item, profiles window main header, sidebar tab title; iOS: Profiles screen title and tabbar item title; */
+"_profiles" = "Profili";
+
+/* iOS: table header section in profiles screen */
+"_recommended" = "Priporočeno";
+
+/* iOS: table header section in profiles screen */
+"_my_profiles" = "Moji profili";
+
+/* Button */
+"_save_as_profile" = "Shrani kot profil";
+
+/* Button */
+"_delete_profile" = "Izbriši profil";
+
+/* iOS: Success message on profile deletion */
+"_profile_deleted_successfully" = "Profil je bil izbrisan";
+
+/* iOS: Error message if profile can't be deleted */
+"_profile_deletion_failed" = "Profila ni bilo mogoče izbrisati";
+
+/* MacOS: Buttons in several places; iOS: profile creation screen title */
+"_create_new_profile" = "Ustvari profil";
+
+/* MacOS: button in profiles tab in main window */
+"_manage_profiles" = "Upravljaj profile";
+
+/* MacOS: profiles window title */
+"_profiles_overview" = "Pregled profilov";
+
+/* iOS: success message after profile is saved */
+"_profile_created_successfully" = "Nov profil je shranjen";
+
+/* iOS: failure message after profile is saved */
+"_profile_creation_failed" = "Profila ni bilo mogoče ustvariti";
+
+/* iOS: success message after profile is saved */
+"_profile_edited_successfully" = "Profil je posodobljen";
+
+/* MacOS menu item; MacOS Profiles tab title; */
+"_overview" = "Pregled";
+
+/* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
+"_connection" = "Povezava";
+
+/* MacOS Profiles Overview: Table header for buttons column */
+"_action" = "Dejanje";
+
+/* Used for both profile description when fastest server option is selected and Plan speed description */
+"_fastest" = "Najhitrejše";
+
+/* Profile create/change form */
+"_fastest_available_server" = "Najhitrejši dostopni strežnik";
+
+/* iOS: Predefined profile with fastest connection */
+"_fastest_connection" = "Najhitrejše";
+
+/* Profile create/change form and other places describing profile */
+"_random" = "Naključno";
+
+/* Profile create/change form */
+"_random_available_server" = "Naključno razpoložljiv strežnik";
+
+/* iOS: Predefined profile with random server */
+"_random_connection" = "Naključno";
+
+/* Profile create/change form */
+"_different_server_each_time" = "Vsakih drug strežnik";
+
+/* Text used when no active server information is available */
+"_no_description_available" = "Opis ni na voljo";
+
+"_create_profile" = "Ustvari profil";
+
+/* Profile create/change form */
+"_profile_settings" = "Nastavitve profila";
+
+/* Profile create/change form */
+"_connection_settings" = "Nastavitve povezave";
+
+/* Profile create/change form */
+"_name" = "Ime";
+
+/* Profile create/change form */
+"_enter_profile_name" = "Vnesite ime profila";
+
+/* Profile create/change form */
+"_color" = "Barva";
+
+/* Profile create/change form */
+"_make_default_profile" = "Naredi privzeti profil";
+
+/* Profile create/change form */
+"_default_profile_tooltip" = "Gumb »Hitra povezava« uporablja privzeti profil.\n";
+
+"_feature" = "Funkcija";
+
+/* Profile create/change form */
+"_use_secure_core" = "Secure Core";
+
+/* Profile create/change form */
+"_select_country" = "Izberite državo";
+
+/* Profile create/change form */
+"_server" = "Strežnik";
+
+/* Profile create/change form */
+"_select_server" = "Izberi strežnik";
+
+/* Error in profile create/change form */
+"_profile_name_is_required" = "Vnesite ime";
+
+/* Error in profile create/change form */
+"_profile_name_is_too_long" = "Največja dovoljeno številko znakov v imenu je 25";
+
+/* Error when user hasn't selected profile country */
+"_country_selection_is_required" = "Izberite državo";
+
+/* Error when user hasn't selected profile server */
+"_server_selection_is_required" = "Izberite strežnik";
+
+"_profile_name_needs_to_be_unique" = "Profil z istim imenom že obstaja";
+
+/* MacOS: profile creation cancel alert text */
+"_current_selection_will_be_lost" = "Če nadaljujete, bo trenutna izbira izgubljena. Želite nadaljevati?";
+
+/* iOS: new profkle can't be created because not all required fields are filled */
+"_check_if_fields_present" = "Preverite, ali so vsa polja izpolnjena";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_header" = "Izbriši profil";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_warning" = "Profil bo trajno izbrisan. Želite nadaljevati?";
+
+/* iOS: new profile screen */
+"_select_profile_color" = "Izberite barvo profila";
+
+/* Plan speed */
+"_plan_speed_medium" = "Srednja hitrost";
+
+/* Plan speed */
+"_plan_speed_high" = "Visoka hitrost";
+
+"_plan_speed_fastest" = "Največja hitrost";
+
+/* Unknown error that has no better description */
+"_error_internal_error" = "Notranja napaka API";
+
+/* VPN session is active error */
+"_error_vpn_session_is_active" = "Seja Proton VPN je aktivna";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_missing" = "Manjkajo uporabniške poverilnice. Prijava ni mogoča";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_expired" = "Uporabniške poverilnice so potekle. Prosim prijavite se";
+
+/* VPN credentials can't be loaded error */
+"_error_vpn_credentials_missing" = "V obesku za ključe manjkajo poverilnice VPN";
+
+/* Human validation failed */
+"_error_user_failed_human_validation" = "Nismo mogli preveriti, ali ste človek. Poskusite znova ali kupite premium paket.";
+
+/* Error decoding an object */
+"_error_decode" = "Napaka pri razčlenjevanju arhiviranih podatkov v razredu: %@";
+
+/* Internal application error */
+"_error_email_verification_disabled" = "E-poštno preverjanje je začasno onemogočeno";
+
+/* Error writing to system keychain */
+"_error_keychain_write" = "Proton ni mogel vzpostaviti komunikacije z vašo napravo. Prosimo, poskusite znova kasneje.";
+
+/* Error try to restore user from the session */
+"_error_fetch_session" = "Uporabnika iz seje ni mogoče najti.";
+
+/* Network error */
+"_ne_request_timed_out" = "Omrežna zahteva je potekla";
+
+/* Network error */
+"_ne_unable_to_connect_to_host" = "Storitev je nedosegljiva";
+
+/* Network error */
+"_ne_network_connection_lost" = "Omrežna povezava je prekinjena";
+
+/* Network error */
+"_ne_not_connected_to_the_internet" = "Ni povezan z internetom";
+
+/* Network error */
+"_ne_couldnt_reach_server" = "Strežnikov Proton nismo mogli doseči";
+
+/* General title for several error alerts */
+"_error_unknown_title" = "Neznana napaka";
+
+/* Delinquent user alert */
+"_delinquent_user_title" = "Neporavnani račun";
+
+/* Delinquent user alert */
+"_delinquent_user_description" = "Vaš račun trenutno ima neporavnano fakturo. Prosimo, poravnajte vse neporavnane fakture na account.protonvpn.com.";
+
+/* Generic sign in error */
+"_error_sign_in_again" = "Oprostite! Nekaj je šlo narobe. Poskusi znova.";
+
+"_p2p_detected_popup_title" = "Promet P2P na tem strežniku ni dovoljen";
+
+"_p2p_detected_popup_body" = "Vaša povezava je bila onemogočena, ker uporabljate strežnik, ki ne podpira prometa enakovrednih (P2P). P2P ni podprt na brezplačnih strežnikih ali strežnikih s številko 100 ali več.";
+
+"_p2p_forwarded_popup_title" = "Povezava je preusmerjena";
+
+/* Under maintenance alert */
+"_server_under_maintenance" = "Poteka vzdrževanje strežnika";
+
+/* macOS: plan upgrade required alert */
+"_upgrade_plan_to_access_server" = "Žal ta strežnik ni na voljo za vašo naročniško raven. Če želite dostopati do več strežnikov, razmislite o nadgradnji naročnine.";
+
+/* Under maintenance alert */
+"_all_servers_in_country_under_maintenance" = "Vsi strežniki v tej državi so v vzdrževanju. Povežite se z drugo državo.";
+
+"_unsecure_wifi" = "Zaznana nezaščitena povezava WiFi";
+
+"_unsecure_wifi_learn_more" = "Več informacij";
+
+"_unsecure_wifi_title" = "Zaznan nevaren WiFi";
+
+"_maintenance_on_server_detected_title" = "Strežnik VPN je v vzdrževanju";
+
+"_maintenance_on_server_detected_subtitle" = "Strežnik, s katerim ste bili povezani, je na vzdrževanju";
+
+"_maintenance_on_server_detected_description" = "Ponovna povezava z najhitrejšim razpoložljivim strežnikom.";
+
+/* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
+"_reconnect_on_settings_change_body" = "Za uveljavitev sprememb je potrebno ponovno zagnati povezavo.";
+
+/* Under maintenance alert */
+"_country_servers_under_maintenance" = "%@ strežniki v vzdrževanju";
+
+/* Under maintenance alert */
+"_all_servers_in_profile_under_maintenance" = "Strežniki, shranjeni v profilu, se vzdržujejo";
+
+/* Under maintenance alert */
+"_all_servers_under_maintenance" = "Vsi strežniki so v vzdrževanju. To običajno pomeni, da obstajajo tehnične težave s strani Proton VPN ali da je vaše omrežje omejeno.";
+
+"_p2p_forwarded_popup_body" = "Vaša povezava je bila samodejno preusmerjena prek drugega strežnika, ker nekateri strežniki ne podpirajo prometa P2P. To lahko zmanjša hitrost vaše povezave. Prosimo, uporabite strežnike z oznako P2P, da se izognete preusmerjanju.";
+
+"_p2p_forwarded_popup_body_p1" = "Vaša povezava je bila samodejno preusmerjena prek drugega strežnika, ker nekateri strežniki ne podpirajo prometa P2P. To lahko zmanjša hitrost vaše povezave. Prosimo, uporabite strežnike z";
+
+"_p2p_forwarded_popup_body_p2" = "ikona, da preprečite preusmeritev prometa.";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_title" = "Napaka povezave";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_body" = "Vaša naprava ni uspela prekiniti prejšnje seje VPN. Preden lahko vzpostavite novo povezavo VPN, boste morali znova zagnati napravo.";
+
+"_update_required" = "Zahtevana je posodobitev";
+
+"_update_required_no_longer_supported" = "Ta različica aplikacije ni več podprta, če jo želite še naprej uporabljati, jo najprej posodobite.";
+
+/* Secondary button title in the App update required alert  */
+"_update_required_support" = "Kontakt za podporo";
+
+/* Primary button title in the App update required alert  */
+"_update_required_update" = "Posodobi";
+
+"_invalid_refresh_token_please_login" = "Minilo je že nekaj časa, odkar ste nazadnje uporabljali aplikacijo Proton VPN. Prosimo, prijavite se znova.";
+
+"_error_mitm_title" = "Ne-varna povezava.";
+
+"_error_mitm_description" = "Pri poskusu povezave s Proton API je bilo preverjanje potrdila TLS neuspešno. Vaša trenutna povezava z internetom je morda nadzorovana. Da bi zagotovili varnost vaših podatkov, aplikaciji preprečujemo dostop do Proton API.\nČe se želite prijaviti ali dostopati do svojega računa, preklopite na novo omrežje in se poskusite znova povezati.";
+
+"_error_mitm_vpn_description" = "Preverjanje potrdila TLS ni uspelo pri poskusu povezave s strežnikom VPN. Vaša trenutna internetna povezava se lahko spremlja. Zaradi zaščite vaših podatkov aplikaciji preprečujemo dostop do tega strežnika VPN.\nIzberite drug strežnik.";
+
+/* Internal error message when there is a problem with initializing tls and connection cannot be established. */
+"_error_tls_initialisation" = "Napaka pri inicializaciji TLS";
+
+/* Internal error message when there is a problem with server certificate and connection cannot be established. */
+"_error_tls_server_verification" = "Strežnikovega certifikata ni mogoče preveriti.";
+
+/* Mac: neagent help screen. The numbers refer to a text field and button in an image displayed above this text. Final string with filled in variables looks like this: "You may be asked to provide your computer account password\nto connect to the Proton VPN service. If this request appears,\nenter your Mac password (1) and click ‘Always Allow’ (2)." */
+"_neagent_description" = "Morda boste morali vnesti svoj %@\nza povezavo s storitvijo Proton VPN. Če se pojavi ta zahteva,\nvnesite svoj %@ %@ in kliknite '%@' %@.";
+
+/* Mac: neagent help screen */
+"_neagent_password" = "geslo za računalniški račun";
+
+/* Mac: neagent help screen */
+"_mac_password" = "Geslo za Mac";
+
+/* Mac: neagent help screen */
+"_neagent_first_step" = "(1)";
+
+/* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
+"_neagent_always_allow" = "Vedno dovoli";
+
+/* Mac: neagent help screen */
+"_neagent_second_step" = "(2)";
+
+/* Button in several different alerts */
+"_got_it" = "Razumem!";
+
+/* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
+"_upgrade_unavailable_title" = "Nadgradnja ni na voljo v aplikaciji";
+
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_body" = "Vaše naročnine na Proton VPN ni mogoče nadgraditi znotraj aplikacije. Za nadgradnjo obiščite account.protonvpn.com.";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_title" = "Počisti podatke o aplikaciji";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_body" = "Vsi podatki Proton VPN bodo izbrisani in aplikacija se bo zaprla. Želite nadaljevati?";
+
+/* MacOS: killswitch blocking alert button */
+"_kill_switch_disable" = "Onemogoči stikalo za izklop";
+
+/* iOS and macOS: Enable kill switch on badly-routed networks */
+"_kill_switch_enable" = "Omogoči stikalo za izklop";
+
+/* MacOS: Settings screen title */
+"_preferences" = "Nastavitve";
+
+/* iOS: Settings screen title and tab title */
+"_settings" = "Nastavitve";
+
+/* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
+"_account" = "Račun";
+
+/* Alert title for account deletion error */
+"_account_deletion_error" = "Napaka";
+
+/* iOS: Message explaining that deleting account closes the VPN connection */
+"_account_deletion_connection_warning" = "Če izbrišete svoj račun, se vaša seja VPN konča.";
+
+/* MacOS: General tab in setting window */
+"_general" = "Splošno";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_type" = "Vrsta računa";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_plan" = "Vrsta naročnine";
+
+"_manage_subscription_on_web" = "Upravljajte svojo naročnino na spletni nadzorni plošči";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_kill_switch" = "Stikalo za izklop";
+
+/* MacOS: Settings -> Connection. Kill switch functionality description. */
+"_kill_switch_tooltip" = "Blokira ves omrežni promet, ko je tunel VPN izgubljen.";
+
+/* iOS Settings: toggle name */
+"_always_on_vpn" = "Vedno vključen VPN";
+
+/* iOS Settinsg screen: always-on description under the switch */
+"_always_on_vpn_tooltip_ios" = "Vedno vključen VPN ponovno vzpostavi varno VPN povezavo hitro in samodejno. Zaradi vaše varnosti je ta funkcija vedno vklopljena.";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_auto_connect" = "Samodejna povezava";
+
+/* MacOS: Settings -> Connection: description. */
+"_auto_connect_tooltip" = "Ob zagonu aplikacije ste povezani na izbrani profil.";
+
+/* MacOS: Settings -> Connection: description. */
+"_quick_connect_tooltip" = "Gumb za hitro povezavo vas poveže z izbranim profilom";
+
+/* MacOS: Settings -> General: name of field. */
+"_start_minimized" = "Začni pomanjšano";
+
+/* MacOS: Settings -> General: name of field. */
+"_system_notifications" = "Obvestila sistema";
+
+/* MacOS: Settings -> General: name of field. */
+"_early_access" = "Zgodnji dostop";
+
+/* MacOS: Settings -> General: description. */
+"_early_access_tooltip" = "Bodite prvi, ki prejme najnovejše posodobitve. Upoštevajte, da so zgodnje različice morda manj stabilne.";
+
+/* MacOS: Settings -> General: name of field. */
+"_unprotected_network" = "Obvesti o nezaščitenih omrežjih";
+
+/* MacOS: Settings -> General: description */
+"_unprotected_network_tooltip" = "Prejmite obvestilo, ko Proton VPN zazna, da ste povezani v nezaščiteno omrežje.";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_dns_leak_protection" = "Zaščita pred uhajanjem DNS";
+
+/* MacOS: Settings -> Connection: description. */
+"_dns_leak_protection_tooltip" = "Prepreči razkrivanje podrobnosti poizvedb DNS tretjim osebam. Vedno aktivno.";
+
+/* iOS Settings: table section header */
+"_security_options" = "Varnostne možnosti";
+
+/* iOS Settings -> Connection: name of field. */
+"_subscription_plan" = "Naročnina";
+
+/* iOS plan selection: header */
+"_choose_plan" = "Izberite naročnino";
+
+"_protocol" = "Protokol";
+
+/* iOS Settings -> Protocol: screen title */
+"_vpn_protocol" = "Protokol VPN";
+
+"_openvpn" = "OpenVPN";
+
+/* iOS Settings -> Protocol: IKEv2 option */
+"_ikev2" = "IKEv2";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: TCP option */
+"_tcp" = "TCP";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: UDP option */
+"_udp" = "UDP";
+
+/* iOS Settings -> Protocol -> WireGuard: TLS option */
+"_tls" = "TLS";
+
+/* iOS Settings -> Protocol: WireGuard option */
+"_wireguard" = "WireGuard";
+
+/* Settings -> Protocol: WireGuard TLS Option called "Stealth". Should not be translated. */
+"_wireguard_tls" = "Stealth";
+
+/* MacOS menu item; iOS setting screen item */
+"_view_logs" = "Ogled dnevnika";
+
+/* iOS logs screen title */
+"_logs" = "Dnevniki";
+
+/* iOS Settings: applications logs row */
+"_application_logs" = "Dnevniki aplikacij";
+
+/* iOS Settings: OpenVPN logs row */
+"_open_vpn_logs" = "Dnevniki OpenVPN";
+
+/* iOS Settings: WireGuard logs row */
+"_wireguard_logs" = "Dnevniki WireGuard";
+
+/* iOS widget help screen: title */
+"_activate_widget" = "Aktiviraj gradnik";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_1" = "Če si želite ogledati pripomočke, pojdite z začetnega zaslona na skrajno levi zaslon.";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_2" = "Pomaknite se na dno in kliknite gumb Uredi.";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_3" = "Dodaj gradnik ProtonVPN na seznam aktivnih gradnikov.";
+
+/* Report bug screen title; iOS settings screen: item; */
+"_report_bug" = "Prijava napake";
+
+"_allow_lan_title" = "Dovoli LAN povezave.";
+
+"_allow_lan_info" = "Omogočite da se zaobide VPN in se povežite z napravami v vašem lokalnem omrežju, kot je vaš tiskalnik.";
+
+"_allow_lan_description" = "Če želite omogočiti dostop do omrežja LAN, mora biti stikalo za izklop izklopljeno.\n\nNadaljevati?";
+
+"_allow_lan_note" = "Upoštevajte, da morate za uveljavitev te spremembe znova zagnati povezavo";
+
+/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_title" = "Vklopiti stikalo za izklop?";
+
+/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_description" = "Če aktivirate stikalo za izklop, ne boste mogli dostopati do naprav v lokalnem omrežju. \n\nNadaljuj?";
+
+/* %@ is a plan name e.g. Get Plus Plan */
+"_get_plan" = "Pridobite naročnino %@.";
+
+/* Account plan description */
+"_free_countries" = "3 Držav";
+
+/* Account plan description */
+"_all_countries" = "60+ držav";
+
+/* %@ is a speed description e.g. Speed: Highest */
+"_speed" = "%@ hitrost";
+
+/* Value of speed in _speed */
+"_medium" = "Srednje";
+
+/* Value of speed in _speed */
+"_high" = "Visoka";
+
+/* Value of speed in _speed */
+"_highest" = "Najvišje";
+
+/* Features of account plan */
+"_plus_plan_features" = "Plus strežniki\nSecure Core\nTor strežniki";
+
+/* Used instead of price for free plans. */
+"_free" = "Brezplačno";
+
+/* Alert message during In App Purchase */
+"_do_you_want_to_activate_subscription_for" = "Ali želite aktivirati kupljeno naročnino za ";
+
+/* Label in Plan information */
+"_most_popular" = "Prodajne uspešnice";
+
+/* Button in plan selection */
+"_select_plan" = "Izberi paket";
+
+/* Plan information */
+"_advanced_features" = "+ napredne možnosti";
+
+/* Plan information */
+"_adblocker_netshield_feature" = "Blokiranje oglasov (NetShield)";
+
+/* Text description in plan selection screen */
+"_plans_footer" = "Ko potrdite nakup izbrane naročnine, bo vaš račun iTunes bremenjen za prikazani znesek, ki vključuje davke in dodatne pristojbine platforme (ki jih Proton ne zaračuna neposredno). Po opravljenem nakupu boste samodejno nadgrajeni na izbrani paket za obdobje 1 leta, po tem času pa ga lahko obnovite ali prekličete prek spleta ali prek naše aplikacije za iOS.";
+
+/* Per year. Appended to plan price. */
+"_per_year_short" = "/ leto";
+
+/* iOS plan feature */
+"_feature_server_count" = "Povežite se s strežniki v";
+
+/* iOS plan feature */
+"_feature_speed" = "Hitrost";
+
+/* iOS plan feature */
+"_feature_connections" = "Hkratne povezave VPN";
+
+/* iOS plan feature */
+"_feature_secure_streaming" = "Pretočni prenos je varen";
+
+/* iOS plan feature */
+"_feature_tor" = "Tor prekoVPN";
+
+/* iOS plan feature */
+"_feature_secure_core" = "Secure Core";
+
+/* MacOS welcome screen: title */
+"_welcome_title" = "DOBRODOŠLI NA NADZORNI PLOŠČI!";
+
+"_no_thanks" = "Ne, hvala";
+
+"_welcome_description" = "Hvala, ker ste namestili Proton VPN.";
+
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Plus";
+
+/* MacOS: Used ir trial welcome and trial expired screens */
+"_p2p_servers" = "P2P strežniki";
+
+"_5_connections" = "5 povezav";
+
+/* Mac: Used in several Trial screens */
+"_multiple_countries" = "Več držav";
+
+/* MAC: is inserted into _free_trial_expired_title insteadof %@ */
+"_expired" = "POTEKEL";
+
+/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
+"_free_trial_expired_title" = "Vaš brezplačni preizkus %@";
+
+/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "Vaš račun je bil znižan na Proton VPN Free.\nTole boste pogrešali %@:";
+
+/* Cancel button in trial modals used in both iOS and MacOS */
+"_maybe_later" = "Mogoče kasneje";
+
+/* Upgrade button in trial modals used in both iOS and MacOS */
+"_upgrade_now" = "Nadgradi zdaj";
+
+/* MacOS: Button in Upgrade screen */
+"_upgrade_my_plan" = "Nadgradite trenutni paket";
+
+/* MacOS: \Trial about to expire\ screen title */
+"_free_trial_about_to_expire_title" = "Vaše brezplačno poskusno obdobje se bo kmalu izteklo!";
+
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
+"_free_trial_about_to_expire_description" = "Nadgradite na %@ in še naprej uživajte v teh funkcijah:";
+
+"_5_connections_description" = "Povežite do 5 naprav\nhkrati";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_core_description" = "Izjemno varni strežniki,\nki jih gostimo mi";
+
+/* MacOS: \Trial about to expire\ screen */
+"_multiple_servers_title" = "Več strežnikov";
+
+/* MacOS: \Trial about to expire\ screen */
+"_multiple_servers_description" = "Na stotine strežnikov\npo vsem svetu";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_title" = "Varni pretočni prenos";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_description" = "Varno pretakanje vaše\npriljubljene vsebine";
+
+/* iOS: Table header in settings screen */
+"_extensions" = "Razširitve";
+
+/* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
+"_widget" = "pripomoček za iOS";
+
+/* Menu point in settings screen */
+"_usage_statistics" = "Statistika uporabe";
+
+/* iOS widget: text for not-logged-in user */
+"_log_in_to_use_widget" = "Če želite začeti, se prijavite";
+
+"_vpnstatus_not_loggedin" = "Niste prijavljeni v Proton VPN. Odprite aplikacijo Proton VPN in se prijavite.";
+
+/* Bug report attachments */
+"_report_attachments" = "Priponke";
+
+/* iOS bug report: header before logs description */
+"_report_logs" = "Dnevniki VPN";
+
+/* iOS bug report: description of log selection switch */
+"_report_logs_description" = "Če to omogočite, boste v to poročilo dodali VPN dnevnike na strani odjemalca";
+
+/* iOS bug report: Title before report bug form */
+"_report_report" = "Poročilo o napaki";
+
+/* iOS bug report: Placeholder for email form field */
+"_report_placeholder_email" = "Kontaktni e-poštni naslov";
+
+/* Bug report: Placeholder for text form field */
+"_report_placeholder_message" = "Vaše sporočilo";
+
+/* Bug report: Send report button text */
+"_report_send" = "Pošlji poročilo";
+
+/* Bug report: Success message after report was sent */
+"_report_success" = "Hvala za vaše poročilo.";
+
+/* Mac bug report: description text before bug report form */
+"_report_description" = "Če navedete naslednje podrobnosti, lahko naša ekipa prepozna vašo težavo in možno rešitev z večjimi možnostmi in krajšim časom:\n• Dnevniki aplikacije Proton VPN\n• Dnevniki OpenVPN\n• Dnevniki WireGuard";
+
+/* Mac bug report: email field label */
+"_report_field_email" = "E-pošta:";
+
+/* Mac bug report: feedback field label */
+"_report_field_feedback" = "Katere težave so nastale?";
+
+/* Mac bug report: steps field label */
+"_report_field_steps" = "Natančno katere korake ste izvedli?";
+
+/* Mag bug report: textfields placeholder */
+"_report_field_placeholder" = "Začnite tipkati...";
+
+/* Mag bug report: attach logs checkbox */
+"_report_attachments_checkbox" = "Vključite dnevnike aplikacij in podrobnosti o sistemu";
+
+/* Main mac app menu item */
+"_menu_about" = "O Proton VPN";
+
+/* Main mac app menu item */
+"_menu_check_updates" = "Preveri za posodobitve…";
+
+/* Main mac app menu item */
+"_menu_preferences" = "Nastavitve";
+
+/* Main mac app menu item */
+"_menu_hide_self" = "Skrij Proton VPN";
+
+/* Main mac app menu item */
+"_menu_hide_others" = "Skrij druge";
+
+/* Main mac app menu item */
+"_menu_show_all" = "Pokaži vse";
+
+/* Main mac app menu item */
+"_menu_logout" = "Odjava";
+
+/* Main mac app menu item */
+"_menu_quit" = "Zaprite Proton VPN";
+
+/* Main mac app menu item */
+"_menu_window" = "Okno";
+
+/* Main mac app menu item */
+"_menu_minimize" = "Minimiraj";
+
+"_subscription_will_expire" = "Trenutna naročnina poteče dne %@.";
+
+"_subscription_will_renew" = "Vaa naročnina se bo samodejno obnovila dne %@.";
+
+"_subscription_description" = "Kupite lahko več kreditov za samodejno podaljšanje trenutnega načrta. Ob koncu vašega trenutnega naročniškega obdobja bodo ti krediti uporabljeni za nadaljevanje vašega načrta.";
+
+"_subscription_button" = "Podaljšaj načrt za 1 leto \n%@.";
+
+"_subscription_extended_success" = "Uspešno ste kupili kredite za podaljšanje trenutnega načrta.";
+
+/* Button on alert after a problem with internet connection */
+"_ne_troubleshoot" = "Odpravljanje težav";
+
+/* Title of connection troubleshooting screen */
+"_troubleshoot_title" = "Odpravljanje težav";
+
+"_troubleshoot_item_alt_title" = "Dovoli alternativno usmerjanje";
+
+"_troubleshoot_item_alt_description" = "Če so spletna mesta Proton blokirana, ta nastavitev aplikaciji omogoča, da poskuša z alternativnim usmerjanjem omrežja doseči Proton, kar je lahko koristno za izogibanje požarnim zidovom ali težavam z omrežjem. Priporočamo, da zaradi večje zanesljivosti pustite to nastavitev omogočeno.\nVeč informacij";
+
+"_troubleshoot_item_alt_link1" = "Izvedi več";
+
+"_troubleshoot_item_nointernet_title" = "Ni spletne povezave";
+
+"_troubleshoot_item_nointernet_description" = "Prepričajte se, da vaša internetna povezava deluje.";
+
+"_troubleshoot_item_isp_title" = "Težava s ponudnikom spletnih storitev (ISP)";
+
+"_troubleshoot_item_isp_description" = "Poskusite se povezati s Protonom iz drugega omrežja (ali uporabite Tor).";
+
+"_troubleshoot_item_isp_link1" = "Tor";
+
+"_troubleshoot_item_gov_title" = "Blokada s strani države";
+
+"_troubleshoot_item_gov_description" = "Vaša država morda blokira dostop do Protona. Poskusite uporabiti Tor za dostop do Protona.";
+
+"_troubleshoot_item_gov_link1" = "Tor";
+
+"_troubleshoot_item_antivirus_title" = "Protivirusne motnje";
+
+"_troubleshoot_item_antivirus_description" = "Začasno onemogočite ali odstranite antivirusni program.";
+
+"_troubleshoot_item_proxy_title" = "Motnje na povezavi posredniškega strežnika ali požarnega zidu";
+
+"_troubleshoot_item_proxy_description" = "Onemogočite posredniške strežnike ali požarne zidove oziroma se obrnite na skrbnika omrežja.";
+
+"_troubleshoot_item_proton_title" = "Proton ne deluje";
+
+"_troubleshoot_item_proton_description" = "Preverite Proton Status za stanje našega sistema.";
+
+"_troubleshoot_item_proton_link1" = "Stanje Protona";
+
+"_troubleshoot_item_other_title" = "Še vedno ne najdem rešitve";
+
+"_troubleshoot_item_other_description" = "Pišite nam neposredno prek obrazca za podporo, e-pošta (%@) ali Twitterja.";
+
+"_troubleshoot_item_other_link1" = "obrazec za podporo";
+
+"_troubleshoot_item_other_link2" = "e-pošta";
+
+"_troubleshoot_item_other_link3" = "Twitter";
+
+/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
+"_netshield_stats_data_saved" = "Podatki\nshranjeni";
+
+/* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
+"_netshield_feature_description" = "Zaščitite se pred oglasi, zlonamerno programsko opremo in sledilci na spletnih mestih in v aplikacijah. Če se spletna mesta ne naložijo, poskusite onemogočiti NetShield.\nVeč o tem";
+
+/* Link with more info in the NetShield Feature description */
+"_netshield_feature_description_alt_link" = "Več informacij";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_upsell_title" = "Brskajte brez oglasov z NetShield";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_upsell_subtitle" = "Blokirajte oglase, sledilce in zlonamerno programsko opremo na spletnih mestih in v aplikacijah";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_business_upsell_title" = "Blokirajte oglase z NetShield";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_business_upsell_subtitle" = "Ko nadgradite na VPN Business";
+
+/* Settings -> Netshield: name of field. */
+"_netshield_title" = "NetShield";
+
+"_netshield_title_tooltip" = "Blokirajte oglase, sledilce in zlonamerno programsko opremo";
+
+/* Settings -> Netshield, Status -> NetShield: Off */
+"_netshield_off" = "Izk";
+
+/* Status -> Netshield: On */
+"_netshield_on" = "Vklopljeno";
+
+/* Settings -> Netshield: Block malware */
+"_netshield_level1" = "Blokiraj zlonamerno programsko opremo";
+
+/* Settings -> Netshield: Block malware, ads, trackers */
+"_netshield_level2" = "Blokiraj zlonamerne programe, oglase in sledilnike.";
+
+"_netshield_alert_reconnect_description_on" = "Vaša povezava se bo znova zagnala, da se spremeni način NetShield.\nOpomba: Če se nekatera spletna mesta ne naložijo, poskusite onemogočiti NetShield.";
+
+"_netshield_alert_reconnect_description_off" = "Vaša povezava se bo znova zagnala, da se spremeni način NetShield.";
+
+"_netshield_alert_upgrade_description" = "NetShield poveča vašo zasebnost z blokiranjem oglasov in sledilnikov.";
+
+/* Netshield section title in iOS connection screen */
+"_netshield_section_title" = "Zaviralec zlonamerne programske opreme in oglasov";
+
+/* Title of the screen with news and offers. */
+"_news_title" = "Novice";
+
+/* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
+"_offer_ending_" = "Konec %@";
+
+"_quick_settings_title" = "Hitre nastavitve";
+
+"_quick_settings_secureCore_description" = "Usmerite svoje najbolj občutljive podatke prek naših najvarnejših strežnikov do zasebnosti prijaznih državah.";
+
+"_quick_settings_netShield_description" = "Brskajte po internetu brez oglasov in zlonamerne programske opreme.";
+
+"_quick_settings_killSwitch_description" = "Onemogoči internet, če povezava VPN prekine, da prepreči nenamerno uhajanje IP-ja.";
+
+"_quick_settings_secureCore_note" = "Secure Core lahko zmanjša hitrost VPN.";
+
+"_quick_settings_netShield_note" = "Če se spletna mesta ne naložijo, poskusite onemogočiti NetShield.";
+
+"_quick_settings_killSwitch_note" = "Če se ne morete povezati z napravami v lokalnem omrežju, poskusite onemogočiti stikalo za izklop.";
+
+"_quick_settings_get_plus" = "Pridobite Plus";
+
+"_applying_settings_" = "Uporabi nastavitve";
+
+"_reestablish_vpn_connection_" = "Ponovna vzpostavitev povezave VPN.";
+
+"_ip_will_not_be_exposed" = "Vaš IP ne bo izpostavljen.";
+
+"_cancel_reconnection" = "S tem boste preklicali vse poskuse ponovne povezave in boste ostali nepovezani";
+
+"_quick_settings_netshield_option_off" = "Ne blokiraj";
+
+"_quick_settings_netshield_option_level1" = "Blokiraj samo zlonamerne programe.";
+
+"_quick_settings_netshield_option_level2" = "Blokiraj zlonamerne programe, oglase in sledilnike.";
+
+"_upgrade_required_securecore_description" = "Secure Core je na voljo s paketom Plus. Nadgradite zdaj za usmerjanje prometa prek naših najvarnejših strežnikov v zasebno prijaznih državah.";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection_header" = "Stikalo za izklop ščiti vaš IP";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection" = "Vaša internetna povezava se bo nadaljevala takoj, ko bo Proton VPN znova vzpostavil povezavo s strežnikom.\nČe želite uporabljati internet brez VPN in zaščite stikala za izklop prekličite ponovno povezavo s strežnikom.";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold1" = "brez";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold2" = "Zaščita stikala za izklop";
+
+/* MacOS: connection screen - cancel button */
+"_kill_switch_reconnection_cancel" = "Prekliči ponovno povezavo";
+
+/* Title for Smart Protocol in Settings */
+"_smart_protocol_title" = "Smart Protocol";
+
+/* Shortened title for Smart Protocol on Settings configuration */
+"_smart_title" = "Smart";
+
+/* Description for Smart Protocol in Settings */
+"_smart_protocol_description" = "Omogočite pametni protokol za samodejno uporabo protokola in vrat, ki nudijo najboljšo povezljivost.";
+
+/* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
+"_smart_protocol_reconnect_modal_title" = "Potrebna je ponovna povezava";
+
+/* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
+"_smart_protocol_reconnect_modal_body" = "Povezava se bo znova zagnala, da se spremeni način pametnega protokola.";
+
+/* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
+"_sysex_description_1" = "Če želite uporabljati Proton VPN, morate omogočiti **protokole VPN po meri** na vašem Macu.";
+
+/* Part 2 of the description of the system extension wizard in mac */
+"_sysex_description_2" = "Protokoli po meri omogočajo hitrejše in varnejše povezave in jih boste morali omogočiti za povezavo z večino strežnikov Proton VPN.";
+
+/* Part 3 of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
+"_sysex_description_3" = "Za nadaljevanje kliknite **Odpri sistemske nastavitve** in sledite video navodilom na tem zaslonu.";
+
+/* Alternative for Part 3 for pre-ventura of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
+"_sysex_description_4" = "Za nadaljevanje kliknite **Odpri varnostne nastavitve** in sledite video navodilom na tem zaslonu.";
+
+/* Title of the system extension wizard in mac */
+"_sysex_set_up_proton_vpn" = "Pripravi Proton VPN";
+
+/* Default action in the system extension wizard in mac. Pre-macOS Ventura */
+"_sysex_open_system_settings" = "Odpri sistemske nastavitve";
+
+/* Default action in the system extension wizard in mac. macOS Ventura */
+"_sysex_open_security_preferences" = "Odpri varnostne nastavitve";
+
+"_sysex_settings_description" = "Proton VPN zahteva nalaganje sistemske razširitve za uporabo Smart Protocol, OpenVPN in WireGuard.";
+
+"_sysex_enabled_title" = "Konfiguracija končana";
+
+"_sysex_enabled_description" = "Konfiguracija končana. Zdaj lahko brskate po internetu hitreje z najboljšimi tehnologijami VPN.";
+
+"_sysex_cannot_enable" = "Sistemske razširitve ni mogoče omogočiti";
+
+"_sysex_error_description" = "Med nameščanjem sistemske razširitve je prišlo do napake.\nZnova namestite Proton VPN in se prepričajte, da se nahaja v mapi aplikacij, da odpravite to težavo. Druga možnost je, da se obrnete na našo podporo.";
+
+"_vpnauth_certfail_title" = "Napaka pri preverjanju pristnosti";
+
+"_vpnauth_certfail_description" = "Potrdila VPN ni bilo mogoče osvežiti. Preverite povezavo";
+
+"_vpnauth_too_many_certs_title" = "Napaka pri preverjanju pristnosti";
+
+"_vpnauth_too_many_certs_description" = "Dosegli ste največje število sprememb v nastavitvah. Poskusite znova čez nekaj minut";
+
+"_from_server_title" = "Iz strežnika:";
+
+"_to_server_title" = "Na strežnik:";
+
+"_update_billing" = "POSODOBITE MOJE OBRAČUNAVANJE";
+
+"_upgrade_again" = "ZNOVA NADGRADITE";
+
+"_delinquent_title" = "Vaš VPN račun ima neporavnane račune.";
+
+"_delinquent_description" = "Po plačilu boste lahko znova dostopali do premium funkcij.";
+
+"_delinquent_reconnection_description" = "Po plačilu boste lahko znova dostopali do premium funkcij. Trenutno se ponovno povezujemo z najhitrejšim bezplačnim strežnikom, ki je na voljo.";
+
+"_maximum_device_title" = "Dosegli ste največjo omejitev naprave";
+
+"_maximum_device_reached_description" = "Odklopite drugo napravo, da povežete to.";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Če želite vzpostaviti povezavo s to napravo, najprej prekinite povezavo v drugi napravi ali pa nadgradite na %@";
+
+"_reconnect_title" = "Ponovno se povezujemo z najhitrejšim razpoložljivim strežnikom.";
+
+"_subscription_expired_title" = "Vaša izbrana naročnina VPN je potekela";
+
+"_subscription_expired_description" = "Vaša naročnina je bila znižana.";
+
+"_subscription_expired_reconnection_description" = "Vaša naročnina je bila znižana, zato se ponovno povezujemo z najhitrejšim razpoložljivim strežnikom.";
+
+"_subscription_upgrade_title" = "Znova nadgradite in uživajte v vseh funkcijah:";
+
+"_subscription_upgrade_option3" = "Napredne funkcije: NetShield, Secure Core, Tor, P2P";
+
+"_tier_free" = "Brezplačno";
+
+"_tier_plus" = "Plus";
+
+"_tier_visionary" = "Visionary";
+
+"_information_title" = "Informacija";
+
+"_features_title" = "Funkcije";
+
+"_performance_title" = "Zmogljivost";
+
+"_smart_routing_title" = "Smart Routing";
+
+"_streaming_title" = "Pretočni prenos";
+
+"_p2p_title" = "P2P/BitTorrent";
+
+"_tor_title" = "Tor";
+
+"_server_load_title" = "Obremenitev strežnika";
+
+"_dw-partner-2022_partners_title" = "Naši partnerji";
+
+"_streaming_servers_description" = "Za začetek pretakanja se povežite s strežnikom Plus v tej državi.";
+
+"_streaming_servers_note" = "Opomba: izklopite lokacijsko storitev in počistite predpomnilnik aplikacij za pretakanje, da zagotovite prikaz nove vsebine.";
+
+"_streaming_servers_extra" = "in več";
+
+"_feature_free_servers" = "Brezplačni strežniki";
+
+"_feature_free_servers_description" = "Varnost in zasebnost za vse. Brezplačni strežniki nimajo podatkovnih omejitev in nikoli ne bomo namerno upočasnili vaše hitrosti brskanja.";
+
+"_feature_smart_routing_description" = "Ta tehnologija omogoča Proton VPN, da zagotavlja višjo hitrost in varnost v državah, kjer je storitev otežena.";
+
+"_feature_streaming_description" = "Poleg tega strežniki podpirajo pretakanje (Netflix, Disney+ itd.) od kjer koli na svetu.";
+
+"_feature_p2p_description" = "Ti strežniki zagotavljajo najboljšo zmogljivost za BitTorrent za skupno rabo datotek.";
+
+"_feature_tor_description" = "Usmerite svoj internetni promet prek omrežja Tor. Počasneje, a bolj zasebno.";
+
+"_performance_load_description" = "Strežniki z visoko obremenitvijo so počasnejši od strežnikov z nizko obremenitvijo.";
+
+"_performance_load_low" = "Nizko";
+
+"_performance_load_medium" = "Srednje";
+
+"_performance_load_high" = "Visoka";
+
+"_locations_all" = "Vse lokacije";
+
+"_locations_free" = "Brezplačne lokacije";
+
+"_locations_plus" = "Plus lokacije";
+
+"_locations_gateways" = "Prehodi";
+
+/* Header before the list of connections available for free users (in the country list) */
+"_connections_free" = "Brezplačne povezave";
+
+/* Gateways info modals title (both iOS and macOS) */
+"_gateways_modal_title" = "Kaj je prehod?";
+
+/* Gateways info modals text (both iOS and macOS) */
+"_gateways_modal_text" = "Prehod VPN je varna povezava, ki omogoča nadzorovan dostop do podatkov in storitev vašega podjetja prek namenskih strežnikov";
+
+"_vpn_accelerator_title" = "VPN Accelerator";
+
+"_vpn_accelerator_change_title" = "Spremenite pospeševalnik VPN";
+
+/* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
+"_vpn_accelerator_description" = "Pospeševalec VPN omogoča nabor edinstvenih tehnologij za izboljšanje zmogljivosti, ki lahko povečajo hitrost VPN do 400%%.\nVeč o tem";
+
+/* Link with more info in the VPN Accelerator description */
+"_vpn_accelerator_description_alt_link" = "Izvedi več";
+
+"_action_requires_reconnect" = "Za uveljavitev sprememb je potrebno ponovno zagnati povezavo";
+
+"_local_agent_server_error_title" = "Napaka strežnika";
+
+"_local_agent_server_error_message" = "Prišlo je do napake na strežniku. Povežite se z drugim strežnikom.";
+
+"_local_agent_policy_violation_error_title" = "Kršitev pravilnika";
+
+"_local_agent_policy_violation_error_message" = "Nimate dovoljenja za povezavo s strežnikom. Izberite drug strežnik ali nadgradite svoj načrt.";
+
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info" = "Nalaganje informacij o povezavi";
+
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info_for" = "Nalaganje informacij o povezavi %@";
+
+/* Shown on the Welcome screen as the screen headline */
+"_welcome_headline" = "Zaščitite se na spletu";
+
+/* Shown on the Welcome screen as the longer screen text */
+"_welcome_body" = "Hitri švicarski VPN, ki varuje vašo zasebnost s šifriranjem internetne povezave.";
+
+"_force_upgrade_title" = "Potrebna je nadgradnja aplikacije";
+
+"_force_upgrade_message" = "Različica aplikacije Proton VPN, ki jo trenutno uporabljate, ni več podprta. Posodobite na najnovejšo različico.";
+
+"login_fetch_vpn_data" = "Nastavite vaš dostop VPN";
+
+"login_summary_button" = "Začnite uporabljati ProtonVPN";
+
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
+"_wgks_ks_off" = "Onemogoči stikalo za izklop";
+
+/* NetworkExtension + KillSwitch on T2 Macs */
+"_neks_t2_title" = "Stikalo za izklop Opozorilo o stabilnosti";
+
+/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
+"_neks_t2_hyperlink" = "Varnostni čip T2";
+
+"_neks_t2_description" = "Uporaba stikala za izklop je v tej napravi nestabilna.\n\nVaša naprava ima varnostni čip T2, kar lahko povzroči težave s stabilnostjo sistema, če Proton VPN uporablja funkcijo stikala za izklop macOS.";
+
+"_neks_t2_connect" = "Vseeno omogoči";
+
+"_subuser_alert_title" = "Hvala za nadgradnjo na Business/Visionary";
+
+"_subuser_alert_description1" = "Če želite začeti svojo pot s Proton VPN, dodelite povezave VPN svojemu računu ali kateremu koli drugemu pod računu.";
+
+"_subuser_alert_description2" = "Ta korak bo trajal le nekaj minut. Po tem se boste lahko prijavili in zaščitili vse svoje naprave.";
+
+"_subuser_alert_description3" = "Za ta račun trenutno ni omogočena povezava VPN. Če želite začeti svojo pot s Proton VPN, se obrnite na skrbnika.";
+
+"_subuser_alert_enable_connections_button" = "Omogoči povezave VPN";
+
+"_subuser_alert_login_button" = "Ponovno se prijavite";
+
+/* Moderate NAT feature title in Settings */
+"_moderate_nat_title" = "Zmerni NAT";
+
+/* Explanation for the Moderate NAT feature shown next to the feature in Settings */
+"_moderate_nat_explanation" = "Zmerni NAT onemogoči naključno preslikavo lokalnih naslovov. To lahko nekoliko zmanjša vašo varnost, vendar omogoča P2P aplikacijam, kot so spletne igre, da vzpostavijo neposredne povezave. \nVeč o tem";
+
+/* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
+"_moderate_nat_explanation_link" = "Izvedi več";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_enable_title" = "Omogoči zmerni NAT";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_change_title" = "Omogoči zmerni NAT";
+
+/* Clickable label title in the onboarding screen for mac */
+"_settings_mac_telemetry_learn_more" = "Več informacij";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_usage_stats" = "Delite anonimno statistiko uporabe. To nam pomaga premagati blokade VPN in izboljšati delovanje aplikacije.";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_crash_reports" = "Poročila o zrušitvah nam pomagajo odpraviti napake, zaznati požarne zidove in se izogniti blokadam VPN.";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_usage_stats_title" = "Pošlji anonime podatke o uporabi?";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_usage_stats_tooltip" = "Podatki o uporabi nam pomagajo premagati blokade VPN in izboljšati delovanje aplikacije.";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_crash_reports_title" = "Delite anonimna poročila o zrušitvah";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_crash_reports_tooltip" = "Poročila o zrušitvah nam pomagajo odpraviti napake, zaznati požarne zidove in se izogniti blokadam VPN.";
+
+/* Section title in Settings */
+"_advanced" = "Napredno";
+
+/* Non-standard ports feature title in Settings */
+"_non_standard_ports_title" = "Nestandardna vrata";
+
+/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
+"_non_standard_ports_explanation" = "Uporabite Proton VPN za kakršne koli posebne potrebe, tako da omogočite promet do nestandardnih vrat prek omrežja VPN. \nVeč o tem";
+
+/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
+"_non_standard_ports_explanation_link" = "Izvedi več";
+
+/* Title for alert shown when enabling Non-standard ports requires reconnection */
+"_non_standard_ports_change_title" = "Omogoči nestandardna vrata";
+
+/* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
+"proton_website_unreachable" = "Spletno mesto Proton VPN je morda začasno nedosegljivo zaradi omrežnih omejitev. Za ustvarjanje novega računa Proton uporabite mobilno aplikacijo.";
+
+/* Title for the Two-factor authentication screen */
+"two_factor_authentication" = "Dvojno preverjanja pristnosti";
+
+/* Placeholder for the Two Factor text field */
+"two_factor_code" = "Geslo za dvojno preverjanje pristnosti";
+
+/* Title for the button to switch to entering two-factor code */
+"use_two_factor_code" = "Uporabite kodo za dvostopenjsko preverjanje";
+
+/* Placeholder for the Recovery code text field */
+"recovery_code" = "Koda za obnovitev";
+
+/* Title for the button to switch to entering recovery code */
+"use_recovery_code" = "Uporabite kode za obnovitev";
+
+/* Button to confirm two-factor or recovery code in login */
+"authenticate" = "Preverjanje pristnosti";
+
+/* Error message shown when tryng to log in with an unsupported method */
+"login_unsupported_state" = "Neveljaven način prijave. Obrnite se na podporo.";
+
+/* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
+"vpn_feature_cannot_be_set_error" = "Nastavitev %@ ni bilo mogoče spremeniti. Poskusite znova pozneje ali se povežite z drugim strežnikom";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
+"netshield_stats_hint_ads" = "Oglaševalska spletna mesta uporabljajo piškotke in sledilnike, da ciljajo na vas.";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
+"netshield_stats_hint_trackers" = "Sledilniki so spletna mesta tretjih oseb, ki zbirajo, shranjujejo in prodajajo podatke o vaši spletni dejavnosti.";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
+"netshield_stats_hint_data" = "Ocenjeno število oglasov, sledilnikov in zlonamerne programske opreme, ki jih je NetShield blokiral.";
+
+"_netshield_stats_data_saved" = "Podatki\nshranjeni";
+
+/* The count of trackers/ads blocked in thousands */
+"_netshield_stats_blocked_K" = "%@ tisoč";
+
+/* The count of trackers/ads blocked in millions */
+"_netshield_stats_blocked_M" = "%@ milijon";
+
+/* The count of trackers/ads blocked in billions */
+"_netshield_stats_blocked_G" = "%@ giga";
+
+/* The count of trackers/ads blocked in trillions */
+"_netshield_stats_blocked_T" = "%@ tera";
+
+/* The count of trackers/ads blocked in quadrillions */
+"_netshield_stats_blocked_P" = "%@ peta";
+
+/* The count of trackers/ads blocked in sextillions */
+"_netshield_stats_blocked_E" = "%@ exa";
+
+/* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
+"_alert_protocol_deprecated_title" = "Protokol ni na voljo";
+
+/* Body of the deprecated protocol alert on MacOS. Shown when the user attempts to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
+"_alert_protocol_deprecated_body_macos" = "Ta profil uporablja protokol, ki je zastarel in ni več podprt. Kliknite »Posodobi«, da preklopite na uporabo privzetega pametnega protokola. Nauči se več";
+
+/* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
+"_alert_protocol_deprecated_link_text" = "Več informacij";
+
+/* Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
+"_alert_protocol_deprecated_body_ios" = "Ta profil uporablja protokol, ki je zastarel in ni več podprt. Kliknite »Posodobi«, da preklopite na uporabo privzetega pametnega protokola. Nauči se več";
+
+/* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
+"_alert_protocol_deprecated_enable_smart" = "Posodobi";
+
+/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser */
+"_alert_protocol_deprecated_learn_more" = "Več informacij";
+
+/* Text for the 'Close' action of the deprecated protocol alert. */
+"_alert_protocol_deprecated_close" = "Zapri";
+
+/* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
+"_bad_interface_ip_range_alert_title" = "Slab omrežni vmesnik";
+
+/* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Vaše lokalno omrežje morda ni varno (vmesnik '%@' ima IP in predpono '%@'). Vaši podatki so lahko poslani nešifrirani prek lokalnega omrežja. Če omogočite stikalo za izklop, boste blokirali ta promet. Povezave z lokalnimi zunanjimi napravami bodo prekinjene.";
+
+/* Title of the search screen */
+"search_title" = "Iskanje";
+
+/* Title of the Search screen infographic */
+"search_subtitle" = "Poiščite poljubno lokacijo";
+
+/* Section header in search */
+"search_countries" = "Države";
+
+/* Sample countries the user can search for */
+"search_countries_sample" = "Switzerland, United States, Italy...";
+
+/* Section header in search */
+"search_cities" = "Mesta";
+
+/* Sample cities the user can search for */
+"search_cities_sample" = "New York, London, Tokio...";
+
+/* Section header in Search */
+"search_servers" = "Strežniki";
+
+/* Sample servers the user can search for */
+"search_servers_sample" = "JP#50, CA#3, IT#14...";
+
+/* Section header in search */
+"search_us_regions" = "Regije ZDA";
+
+/* Sample US regions the user can search for */
+"search_us_regions_sample" = "Kalifornija, Florida, Kolorado...";
+
+/* Title shown when nothing is found in search */
+"search_no_results_title" = "Ni najdenih rezultatov";
+
+/* Subtitle shown when nothing is found in search */
+"search_no_results_subtitle" = "Poskusite z drugo ključno besedo";
+
+/* Header for the recent searches section in search */
+"search_recent_header" = "Nedavno ogledano";
+
+/* Button to clear recent searches history */
+"search_recent_clear" = "Počisti";
+
+/* Title for the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_title" = "Vaša zgodovina iskanja bo izgubljena. Nadaljujem?";
+
+/* Cancel button title in the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_cancel" = "Prekliči";
+
+/* Confirmation button title in alert asking for confirmation before deleting recent searches */
+"search_recent_clear_continue" = "Nadaljujte";
+
+/* Placeholder text showing in the search bar on the search screen */
+"search_bar_placeholder" = "Država, mesto ali server";
+
+/* Subtitle for the upsell banner shown to free users in search */
+"search_upsell_subtitle" = "Več lokacij = več neblokirane vsebine + dodatna varnost + višje hitrosti";
+
+/* Section header in search */
+"search_secure_core_countries" = "Secure Core države";
+
+/* Section header in search */
+"search_results_countries" = "Države";
+
+/* Section header in search */
+"search_results_cities" = "Mesta";
+
+/* Section header in search */
+"_free_servers" = "Brezplačni strežniki";
+
+/* Section header in search */
+"_plus_servers" = "Plus strežniki";
+
+/* Upgrade plan button title */
+"modals_get_plus" = "Nadgradnja";
+
+/* Dismiss upsell screen button title */
+"modals_upsell_stay_free" = "Ne zdaj";
+
+/* Subtitle of All Countries, NetShield and Secure Core upsell screens */
+"modals_upsell_features_subtitle" = "Ko nadgradite na Plus";
+
+/* Subtitle of the Safe Mode upsell screen */
+"modals_upsell_features_safe_mode_subtitle" = "Imate napredne ali profesionalne računalniške potrebe, ki zahtevajo nestandardna vrata?\n\n Nadgradite na VPN Plus za dostop do te in drugih premium funkcij.";
+
+/* Title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_title" = "Dovoli promet do nestandardnih vrat";
+
+/* Title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_title" = "Izboljšajte svojo igralno izkušnjo";
+
+/* Subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle" = "Odkleni NAT tip 2 z VPN Plus";
+
+/* Bold part of the subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle_bold" = "NAT tip 2";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_gaming" = "Izboljšajte delovanje spletnih iger in video klicev";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_direct_connections" = "NAT tipa 2 (zmerno) optimizira hitrost in stabilnost z omogočanjem neposrednih povezav med napravami";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_streaming" = "Pretakajte svoje najljubše filme";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_highSpeed" = "Brskajte pri še višjih hitrostih (do 10 Gbps)";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_netshield" = "Blokiranje oglasov in zlonamerne programske opreme s pomočjo NetShield";
+
+/* Title of the NetShield upsell screen */
+"modals_upsell_net_shield_title" = "Uživajte v brskanju brez oglasov z NetShield";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_ads" = "Blokiraj oglase in sledilnike";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_malware" = "Zaščitite svojo napravo pred zlonamerno programsko opremo";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_highSpeed" = "Brskajte pri še višjih hitrostih";
+
+/* Title of the Secure Core upsell screen */
+"modals_upsell_secure_core_title" = "Podvojite šifriranje s Secure Core";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_route" = "Uporabljate izjemno varne strežnike v Švici, na Švedskem in Islandiji";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_layer" = "Dodajte še eno plast šifriranja svoji VPN povezavi s Secure Core";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_attacks" = "Zaščitite se pred omrežnimi napadi";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "Opomba o hitrosti…";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "Secure Core ponuja najvišjo raven varnosti in zasebnosti, vendar lahko zmanjša hitrost interneta. Če potrebujete več zmogljivosti, lahko onemogočite Secure Core.";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "Ne prikaži več";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "Aktivirajte Secure Core";
+
+/* Title of the New Brand screen */
+"new_plans_brand_title" = "Posodobljeni Proton, poenotena zaščita";
+
+/* Subtitle of the New Brand screen */
+"new_plans_brand_subtitle" = "Predstavljamo Protonov osveženi videz. \nVeliko storitev, ena misija. Dobrodošli na internetu, kjer je zasebnost privzeta.";
+
+/* Title of "done" button in New Brand screen */
+"new_plans_brand_got_it" = "Razumem";
+
+/* Common button title */
+"modals_common_cancel" = "Prekliči";
+
+/* Common button title */
+"modals_common_learn_more" = "Izvedi več";
+
+/* Common button title */
+"modals_common_next" = "Naprej";
+
+/* Common button title */
+"modals_common_get_started" = "Začnite";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Če želite vzpostaviti povezavo s to napravo, najprej prekinite povezavo v drugi napravi ali pa nadgradite na %@";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "Odklopite drugo napravo, da povežete to.";
+
+/* Title of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_title" = "Brskajte pri še višjih hitrostih (do 10 Gbps)";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_faster_servers" = "Dostopajte do hitrejših in manj natrpanih strežnikov.";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds" = "Povečajte hitrost povezave do 400%% s pospeševalnikom VPN.";
+
+/* Bold part of the feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds_bold" = "VPN pospeševalnik.";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_distant_servers" = "Izboljšana hitrost in stabilnost pri povezavi z oddaljenimi strežniki.";
+
+/* Title of Customization upsell modal */
+"upsell_customization_title" = "Odklenite napredno prilagoditev VPN";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_access_LAN" = "Dostop do naprav v lokalnem omrežju (LAN)";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_access_LAN_bold" = "lokalno omrežje (LAN)";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_profiles" = "Shranite pogosto uporabljene povezave s profili";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_profiles_bold" = "profili";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_quick_connect" = "Pridobite hitrejši dostop do svojih profilov s hitro povezavo";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_quick_connect_bold" = "Hitro povezovanje";
+
+/* Title of Profiles upsell modal */
+"upsell_profiles_title" = "Zagotovite si hiter dostop do pogostih povezav";
+
+/* Subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle" = "Odklenite profile z VPN Plus";
+
+/* Bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold" = "profili";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_location" = "Shranite želeni strežnik, mesto ali državo.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_protocols" = "Varno brskanje po spletu in premijske funkcije VPN.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_auto_connect" = "Nastavite samodejno povezavo za še hitrejši dostop.";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_any_location" = "Izberite poljubno lokacijo";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_even_higher_speed" = "Še večja hitrost VPN";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_geoblocked_content" = "Dostop do blokirane vsebine";
+
+/* Feature of Country upsell modal */
+"upsell_countries_connect_to" = "Povežite se z %d državami";
+
+/* Feature of Country upsell modal */
+"upsell_countries_higher_speeds" = "Še večja hitrost VPN";
+
+/* Feature of Country upsell modal */
+"upsell_countries_money_back" = "30-dnevno jamstvo za vračilo denarja";
+
+/* Feature of Country upsell modal */
+"upsell_country_feature_title" = "Želite izbrati določeno državo?";
+
+/* Feature of Country upsell modal */
+"upsell_country_feature_subtitle" = "Odklenite izbrano državo z VPN Plus";
+
+/* Bold part of the feature of Country upsell modal */
+"upsell_country_feature_subtitle_bold" = "izbira držav";
+
+/* Title of the "What's new" screen */
+"modals_whats_new" = "Kaj je novega";
+
+/* Title of the first section of the "What's new" screen */
+"modals_free_countries" = "Nove brezplačne države";
+
+/* Description of the first section of the "What's new" screen */
+"modals_new_servers" = "Na Poljskem in v Romuniji so zdaj brezplačni strežniki.";
+
+/* Title of the second section of the "What's new" screen */
+"modals_server_selection" = "Spremembe izbire strežnika";
+
+/* Description of the second section of the "What's new" screen */
+"modals_server_crowding" = "Da bi preprečili gnečo na strežniku in zagotovili, da ima vsakdo dostop do hitrega in varnega brskanja, smo odstranili ročno izbiro države in naredili velike izboljšave pri samodejni izbiri strežnika.";
+
+/* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
+"upsell_specific_location_subtitle" = "Pridobite neomejene spremembe z VPN Plus";
+
+/* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
+"upsell_specific_location_title" = "Dosegli ste trenutno največje število brezplačnih sprememb strežnika.";
+
+/* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
+"upsell_specific_location_change_server_button_title" = "Spremeni strežnik";
+
+/* The name of one of the features in the Welcome screen that the user sees after upgrading */
+"welcome_upgrade_advanced_features" = "Napredne varnostne funkcije";
+
+/* The title of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_title_plus" = "Dobrodošli pri Proton Plus";
+
+/* The title of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_title_unlimited" = "Dobrodošli v Proton Unlimited";
+
+/* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_title_fallback" = "Čestitamo!";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_subtitle_plus" = "Uživajte v dodatnih funkcijah zasebnosti, izjemno zmogljivosti in prilagoditvi VPN naslednje stopnje.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited" = "Čestitke! Odklenili ste prvovrstne varnostne in zmogljive funkcije za vse storitve Proton ter skupno GB prostora za shranjevanje.\n\n\nUživajte v najboljši zasebnosti Proton.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
+"welcome_upgrade_subtitle_Unlimited_markdown" = "Čestitke! Odklenili ste prvovrstne varnostne in zmogljive funkcije za vse storitve Proton ter skupno **500 GB** prostora za shranjevanje.\n\nUživajte v najboljši zasebnosti Proton.";
+
+/* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
+
+/* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_subtitle_fallback" = "Nadgradili ste naročnino. Uživajte v naprednih funkcijah zasebnosti in zmogljivosti naslednje ravni.";
+
+/* Welcome to Proton screen shown during onboarding. Title label. */
+"welcome_to_proton_title" = "Dobrodošli v Proton VPN";
+
+/* Welcome to Proton screen shown during onboarding. Subtitle label. */
+"welcome_to_proton_subtitle" = "Brskajte zasebno, dostopajte do blokirane vsebine in uživajte v digitalni svobodi.";
+
+/* Welcome to Proton screen shown during onboarding. Banner title label. */
+"welcome_to_proton_banner_title" = "Certificiran VPN brez prijav";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle" = "Vaša dejavnost ob uporabi VPN je zaščitena s švicarskimi zakoni o zasebnosti. Nikoli vam ne bomo sledili na spletu ali vaših podatkov delili s tretjimi osebami.";
+
+/* Title of paid plans list. */
+"upsell_plans_list_title" = "Nadgradite svojo zasebnost";
+
+/* Subtitle of paid plans list. */
+"upsell_plans_list_subtitle" = "Zagotovite si napredne funkcije zasebnosti in večjo hitrost z VPN Plus.";
+
+/* Header of paid plans list where there are more than 1 plan option to pick from. */
+"upsell_plans_list_section_header" = "Izberite svoj paket";
+
+/* Main Button of paid plans list allowing user to start payments process. */
+"upsell_plans_list_validate_button" = "Pridobi VPN Plus";
+
+/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
+"upsell_plans_list_option_amountPerMonth" = " /mesečno";
+
+/* Trailing text of the paid plan option amount indicating the amount per year. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
+"upsell_plans_list_option_amountPerYear" = " /leto";
+
+/* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
+"_available_with_vpn_business_tooltip" = "Na voljo z VPN Business.";
+
+"onboarding_usage_stats_title" = "Pošlji anonime podatke o uporabi?";
+
+"onboarding_usage_stats_description" = "Podatki o uporabi nam pomagajo premagati blokade VPN in izboljšati delovanje aplikacije.";
+
+"onboarding_crash_reports_title" = "Delite anonimna poročila o zrušitvah";
+
+"onboarding_crash_reports_description" = "Poročila o zrušitvah nam pomagajo odpraviti napake, zaznati požarne zidove in se izogniti blokadam VPN.";
+
+"onboarding_footer" = "Ti statistični podatki ne vsebujejo vašega naslova IP in jih ni mogoče uporabiti za vašo identifikacijo. Nikoli jih ne bomo delili s tretjimi osebami. Več o tem";
+
+"onboarding_footer_learn_more" = "Več informacij";
+
+/* Modal that lists countries in which servers are available to free users: Title */
+"free_connections_modal_title" = "Brezplačne povezave";
+
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_description" = "Brezplačen Proton vas samodejno poveže z najhitrejšim razpoložljivim strežnikom. To bo običajno najbližji strežnik vaši lokaciji.";
+
+/* Modal that lists countries in which servers are available to free users: banner with CTA */
+"free_connections_modal_banner" = "Zagotovite si svetovno pokritost z VPN Plus";
+
+/* Text on upsell banner in country list */
+"_free_banner_text" = "Zagotovite si svetovno pokritost z VPN Plus";
+
+/* Title of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_title" = "Ni država, ki ste jo želeli?";
+
+/* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_subtitle" = "Nadgradite, da izberete kateri koli strežnik";
+
+/* Text of banner shown on macOS apps to upsell users who want to select a country */
+"_wrong_country_banner_text" = "Ni država, ki ste jo želeli? Nadgradite, da izberete kateri koli strežnik";
+
+/* ReportBugwindow title */
+"_br_window_title" = "Prijava napake";
+
+/* ReportBug 1st step title */
+"_br_1_title" = "Kaj je narobe?";
+
+/* ReportBug 2nd step (Quick fixes) title */
+"_br_2_title" = "Hitri popravki";
+
+/* ReportBug 2nd step (Quick fixes) subtitle */
+"_br_2_subtitle" = "Ti nasveti vam lahko pomagajo rešiti vašo težavo hitreje.";
+
+/* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
+"_br_2_footer" = "Ni delovalo?";
+
+/* ReportBug 2nd step (Quick fixes) button to go to the next step */
+"_br_2_button_next" = "Kontaktirajte nas";
+
+/* ReportBug 2nd step (Quick fixes) cancel button */
+"_br_2_button_cancel" = "Prekliči";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_send" = "Pošlji poročilo";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_sending" = "Pošiljanje";
+
+/* ReportBug 3rd step (form) email field name */
+"_br_3_email" = "E-pošta";
+
+/* ReportBug 3rd step (form) username field name */
+"_br_3_username" = "Uporabniško ime";
+
+/* ReportBug 3rd step (form) field to ask for includeing logs */
+"_br_3_logs_field" = "Pošlji dnevnik z napakami";
+
+/* ReportBug 3rd step (form) logs description */
+"_br_3_logs_description" = "Dnevnik je vrsta datoteke, ki nam prikazuje dejanja, ki ste jih izvedli in so povzročila napako. Uporabljali jih bomo samo za pomoč našim inženirjem pri odpravljanju napak.";
+
+/* ReportBug 3rd step (form): message shown if user disabled logs */
+"_br_3_logs_disabled" = "Dnevniške datoteke nam pomagajo priti do jedra vaše težave. Če jih ne vključite, morda ne bomo mogli temeljito preiskati.";
+
+/* ReportBug success window: title text */
+"_br_success_title" = "Hvala za vaše povratne informacije.";
+
+/* ReportBug success window: subtitle text */
+"_br_success_subtitle" = "Vrnili vam bomo odgovor, takoj ko bo mogoče.";
+
+/* ReportBug success window: button */
+"_br_success_button" = "Razumem";
+
+/* ReportBug success window: title text */
+"_br_failure_title" = "Vaše poročilo ni bilo poslano.";
+
+/* ReportBug success window: retry button */
+"_br_failure_button_retry" = "Poskusite ponovno";
+
+/* ReportBug success window: troubleshoot button */
+"_br_failure_button_troubleshoot" = "Odpravljanje težav";
+
+/* Title of the view nudging users to update before filling Bug Report */
+"_update_view_title" = "Posodobi Proton VPN.";
+
+/* Description text of the view nudging users to update before filling Bug Report */
+"_update_view_description" = "Verjetneje boste imeli težave na starejših različicah Proton VPN.";
+
+/* Action button of the view nudging users to update before filling Bug Report */
+"_update_view_button" = "Posodobi";
