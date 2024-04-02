@@ -38,12 +38,11 @@ final class PlanOptionsListViewModel: ObservableObject {
     @Published var selectedPlan: PlanOption?
 
     @Published private(set) var isLoading: Bool = false
+    @Published private(set) var isPurchaseInProgress: Bool = false // TODO: VPNAPPL-2089 Block the UI until the purchase is complete or cancelled
 
     private let client: PlansClient
 
-    var mostExpensivePlan: PlanOption? {
-        plans.sorted { $0.pricePerMonth > $1.pricePerMonth }.first
-    }
+    var mostExpensivePlan: PlanOption?
 
     init(client: PlansClient) {
         self.client = client
@@ -55,6 +54,7 @@ final class PlanOptionsListViewModel: ObservableObject {
         do {
             plans = try await client.retrievePlans()
             selectedPlan = plans.first
+            mostExpensivePlan = plans.sorted { $0.pricePerMonth > $1.pricePerMonth }.first
             isLoading = false
         } catch {
             // TODO: VPNAPPL-2089 handle failed attempt to `retrievePlans`. Log the error message
@@ -63,9 +63,10 @@ final class PlanOptionsListViewModel: ObservableObject {
     }
 
     func validate() async {
-        // TODO: VPNAPPL-2089 Block the UI until the purchase is complete or cancelled
         guard let selectedPlan else { return }
+        isPurchaseInProgress = true
         await client.validate(selectedPlan)
+        isPurchaseInProgress = false
     }
 
     func notNow() {

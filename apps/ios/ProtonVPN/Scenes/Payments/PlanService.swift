@@ -139,7 +139,7 @@ final class CorePlanService: PlanService {
             log.debug("StoreKitManager is not ready to purchase", category: .userPlan)
             return .purchaseError(error: "StoreKitManager is not ready to purchase", processingPlan: nil)
         }
-        let plan = inAppPurchasePlans.first { plan, InAppPurchasePlan in
+        let plan = inAppPurchasePlans.first { plan, _ in
             plan.fingerprint == planOption.fingerprint
         }
         guard let iAP = plan?.1 else {

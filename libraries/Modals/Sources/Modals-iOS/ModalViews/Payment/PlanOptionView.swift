@@ -78,13 +78,9 @@ private struct PlanOptionLoadedView: View {
 
             VStack(alignment: .trailing) {
                 HStack(alignment: .bottom, spacing: .zero) {
-                    Text(PriceFormatter.formatPlanPrice(price: planPrice.amount,
-                                                        locale: planPrice.locale))
+                    Text(PriceFormatter.formatPlanPrice(price: planPrice.amount, locale: planPrice.locale))
                         .themeFont(.body1(.bold))
-                    let text = planDuration.components.isMoreThanOneMonth
-                    ? Localizable.upsellPlansListOptionAmountPerYear
-                    : Localizable.upsellPlansListOptionAmountPerMonth
-                    Text(text)
+                    Text(planDuration.periodDescription)
                         .themeFont(.body3())
                         .foregroundColor(Color(.text, .weak))
                 }
@@ -117,7 +113,7 @@ private struct PlanOptionLoadedView: View {
 }
 
 enum PriceFormatter {
-    static var formatter: NumberFormatter = {
+    private static var formatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         return formatter
@@ -196,6 +192,14 @@ private extension DateComponents {
             assertionFailure("This components receiver is invalid")
         }
         return duration
+    }
+}
+
+extension PlanDuration {
+    var periodDescription: String {
+        components.isMoreThanOneMonth 
+            ? Localizable.upsellPlansListOptionAmountPerYear
+            : Localizable.upsellPlansListOptionAmountPerMonth
     }
 }
 

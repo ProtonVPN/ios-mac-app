@@ -344,6 +344,7 @@
 		E5BBFED62B333B2200FA9CF8 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C182285918C0002C095 /* AlertService.swift */; };
 		E5BBFED72B333B2200FA9CF8 /* AppSessionManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F568A22327833100795953 /* AppSessionManagerMock.swift */; };
 		E5BBFEDA2B33422100FA9CF8 /* XCTestExpectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BF950F23559AAF00C7D1E7 /* XCTestExpectation.swift */; };
+		E5BE14942BBE99A00093F30F /* OneClickPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BE14932BBE99A00093F30F /* OneClickPayment.swift */; };
 		E5CF14862949E68700AF6912 /* QuarkCommands+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CF14852949E68700AF6912 /* QuarkCommands+Async.swift */; };
 		E5DEF0612A739A08006FC9DC /* DictionaryCoder in Frameworks */ = {isa = PBXBuildFile; productRef = E5DEF0602A739A08006FC9DC /* DictionaryCoder */; };
 		E5E7EFEE28B8EDA4005249D3 /* AnnouncementImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E7EFED28B8EDA4005249D3 /* AnnouncementImageViewController.swift */; };
@@ -817,6 +818,7 @@
 		E59C7A922923B1650034E56F /* ServersInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServersInformationViewController.swift; sourceTree = "<group>"; };
 		E59C7A962923B1BB0034E56F /* ServersInformationViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ServersInformationViewController.storyboard; sourceTree = "<group>"; };
 		E5B3049C28BF628E0093517A /* AnnouncementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementViewController.swift; sourceTree = "<group>"; };
+		E5BE14932BBE99A00093F30F /* OneClickPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneClickPayment.swift; sourceTree = "<group>"; };
 		E5CF14852949E68700AF6912 /* QuarkCommands+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QuarkCommands+Async.swift"; sourceTree = "<group>"; };
 		E5E7EFED28B8EDA4005249D3 /* AnnouncementImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementImageViewController.swift; sourceTree = "<group>"; };
 		E5E7EFEF28B8EDEC005249D3 /* AnnouncementImageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementImageViewController.xib; sourceTree = "<group>"; };
@@ -2218,6 +2220,7 @@
 				F316A06F26DFB05E00669386 /* UserCachedStatus.swift */,
 				F37EC5B0272FF2AD002A5B8E /* TokenStorage.swift */,
 				F316A07426DFBCB600669386 /* PlanService.swift */,
+				E5BE14932BBE99A00093F30F /* OneClickPayment.swift */,
 			);
 			path = Payments;
 			sourceTree = "<group>";
@@ -2969,6 +2972,7 @@
 				E5FFB24429F80185000C65A9 /* ProtonVPNApp.swift in Sources */,
 				F3BC534D278598E4009E49B4 /* OnboardingService.swift in Sources */,
 				79312B782118823B00E79D09 /* SwitchTableViewCell.swift in Sources */,
+				E5BE14942BBE99A00093F30F /* OneClickPayment.swift in Sources */,
 				E1EB9E7B23015FF2009E704F /* LogsViewModel.swift in Sources */,
 				79AFDA9820DC31ED002F8751 /* NSAttributedString+Extension.swift in Sources */,
 				AD4770B72BBED3AF005575BC /* AppDependencies+Live.swift in Sources */,
