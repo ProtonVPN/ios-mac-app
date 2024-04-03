@@ -46,6 +46,7 @@ public protocol Networking: APIServiceDelegate {
     var apiService: PMAPIService { get }
 
     func request(_ route: Request, completion: @escaping (_ result: Result<JSONDictionary, Error>) -> Void)
+    func request(_ route: ConditionalRequest, completion: @escaping (_ result: Result<IfModifiedSinceResponse<JSONDictionary>, Error>) -> Void)
     func request<T>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable
     func request(_ route: URLRequest, completion: @escaping (_ result: Result<String, Error>) -> Void)
     func request<T>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable
@@ -163,6 +164,63 @@ public final class CoreNetworking: Networking {
                 completion(.success(result))
             case .failure(let error):
                 log.error("Request failed", category: .net, event: .response, metadata: ["error": "\(error)", "url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
+                completion(.failure(error))
+            }
+        }
+    }
+
+    public func request(
+        _ route: ConditionalRequest,
+        completion: @escaping (_ result: Result<IfModifiedSinceResponse<JSONDictionary>, Error>) -> Void
+    ) {
+        let url = fullUrl(route)
+        log.debug("Request started", category: .net, metadata: [
+            "url": "\(url)",
+            "method": "\(route.method.rawValue.uppercased())",
+            "condition": "\(route.condition)"
+        ])
+
+        apiService.request(
+            method: route.method,
+            path: route.path,
+            parameters: route.parameters,
+            headers: route.header,
+            authenticated: route.isAuth,
+            authRetry: route.authRetry,
+            customAuthCredential: route.authCredential,
+            nonDefaultTimeout: nil,
+            retryPolicy: route.retryPolicy
+        ) { (_ task: URLSessionDataTask?, _ result: Result<JSONDictionary, NSError>) in
+            let httpResponse = task?.response as? HTTPURLResponse
+            let statusCode = httpResponse?.statusCode
+            let lastModified = httpResponse?.headers["Last-Modified"]
+            switch result {
+            case .success(let data):
+                log.debug("Request finished OK", category: .net, metadata: [
+                    "url": "\(url)",
+                    "method": "\(route.method.rawValue.uppercased())",
+                    "Last-Modified": "\(lastModified ?? "nil")"
+                ])
+                completion(.success(.modified(at: lastModified, value: data)))
+
+            case .failure(let error):
+                if let lastModified, case HttpStatusCode.notModified = statusCode {
+                    log.debug("Request finished - not modified", category: .net, event: .response, metadata: [
+                        "error": "\(error)",
+                        "url": "\(url)",
+                        "method": "\(route.method.rawValue.uppercased())",
+                        "Last-Modified": "\(lastModified)"
+                    ])
+                    completion(.success(.notModified(since: lastModified)))
+                    return
+                }
+
+                log.error("Request failed", category: .net, event: .response, metadata: [
+                    "error": "\(error)",
+                    "url": "\(url)",
+                    "method": "\(route.method.rawValue.uppercased())",
+                    "code": "\(statusCode ?? -1)"
+                ])
                 completion(.failure(error))
             }
         }
