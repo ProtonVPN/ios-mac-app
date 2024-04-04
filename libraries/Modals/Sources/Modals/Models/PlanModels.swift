@@ -19,14 +19,17 @@
 import Foundation
 
 public struct PlanDuration: Hashable {
-    public static let oneMonth: Self = .init(components: .init(month: 1))
-    public static let threeMonths: Self = .init(components: .init(month: 3))
-    public static let oneYear: Self = .init(components: .init(year: 1))
-    public static let twoYears: Self = .init(components: .init(year: 2))
+    public static let oneMonth: Self = .init(components: .init(month: 1))!
+    public static let threeMonths: Self = .init(components: .init(month: 3))!
+    public static let oneYear: Self = .init(components: .init(year: 1))!
+    public static let twoYears: Self = .init(components: .init(year: 2))!
 
     public let components: DateComponents
 
-    public init(components: DateComponents) {
+    public init?(components: DateComponents) {
+        guard components.amountOfMonths > 0 else {
+            return nil
+        }
         self.components = components
     }
 }
@@ -38,8 +41,6 @@ extension PlanDuration: CustomStringConvertible {
 }
 
 public struct PlanPrice: Hashable {
-    static let loading: Self = .init(amount: 10, currency: "CHF")
-
     public let amount: Double
     public let currency: String
     public let locale: Locale
@@ -52,12 +53,10 @@ public struct PlanPrice: Hashable {
 }
 
 public struct PlanOption: Hashable {
+    private static let minimumVisibleDiscount = 5
+
     public let duration: PlanDuration
     public let price: PlanPrice
-
-    static let minimumVisibleDiscount = 5
-
-    public static let loading: Self = .init(duration: .oneYear, price: .loading)
 
     public var pricePerMonth: Double {
         price.amount / Double(duration.components.amountOfMonths)
@@ -83,8 +82,22 @@ public struct PlanOption: Hashable {
     }
 }
 
+// MARK: - Helpers
+
 public extension DateComponents {
     var amountOfMonths: Int {
         (year ?? 0) * 12 + (month ?? 0)
     }
 }
+
+// MARK: - Mocks
+
+#if DEBUG
+extension PlanPrice {
+    static let loading: Self = .init(amount: 10, currency: "CHF")
+}
+
+extension PlanOption {
+    public static let loading: Self = .init(duration: .oneYear, price: .loading)
+}
+#endif

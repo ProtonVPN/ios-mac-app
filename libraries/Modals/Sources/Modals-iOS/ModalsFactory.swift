@@ -2,7 +2,10 @@ import Modals
 import UIKit
 import SwiftUI
 
-public class ModalsFactory {
+@MainActor
+public final class ModalsFactory {
+
+    public init() {}
 
     // MARK: Properties
 
@@ -18,8 +21,6 @@ public class ModalsFactory {
     private lazy var freeConnectionsViewStoryboard: UIStoryboard = {
         UIStoryboard(name: "FreeConnectionsViewController", bundle: Bundle.module)
     }()
-
-    public init() { }
 
     public func upsellViewController(modalType: ModalType) -> UpsellViewController {
         let upsell = upsellStoryboard.instantiate(controllerType: UpsellViewController.self)

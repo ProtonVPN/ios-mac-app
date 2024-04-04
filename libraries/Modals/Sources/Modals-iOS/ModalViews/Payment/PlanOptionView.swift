@@ -237,7 +237,7 @@ extension PlanDuration {
 
 #Preview("Annoying Duration") {
     let planOption = PlanOption(
-        duration: .init(components: DateComponents(year: 2, month: 6)),
+        duration: .init(components: DateComponents(year: 2, month: 6))!,
         price: .init(amount: 85, currency: "CHF")
     )
     return PlanOptionView(planOption: planOption, isLoading: false, isSelected: false, discount: 35)

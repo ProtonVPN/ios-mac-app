@@ -22,6 +22,7 @@ import SharedViews
 import Strings
 import Modals
 
+@MainActor
 struct PlanOptionsListView: View {
     @ObservedObject var viewModel: PlanOptionsListViewModel
 
@@ -60,11 +61,7 @@ struct PlanOptionsListView: View {
     }
 
     private func discount(option: PlanOption) -> Int? {
-        var discount: Int?
-        if let mostExpensivePlan = viewModel.mostExpensivePlan {
-            discount = option.discount(comparedTo: mostExpensivePlan)
-        }
-        return discount
+        return viewModel.mostExpensivePlan.flatMap { option.discount(comparedTo: $0) }
     }
 
     private var contentView: some View {
@@ -80,20 +77,23 @@ struct PlanOptionsListView: View {
         }
     }
 
+    private var shouldDisableValidateButton: Bool {
+        viewModel.selectedPlan == nil
+    }
+
     private var buttonsView: some View {
         VStack(spacing: .themeSpacing8) {
-            Button {
-                Task {
-                    await viewModel.validate()
-                    // TODO: VPNAPPL-2089 disable UI while waiting for the task to finish
-                }
+            AsyncButton {
+                await viewModel.validate()
             } label: {
                 Text(Localizable.upsellPlansListValidateButton)
             }
             .buttonStyle(PrimaryButtonStyle())
-            .disabled(viewModel.selectedPlan == nil)
+            .disabled(shouldDisableValidateButton)
 
-            Button(action: viewModel.notNow) {
+            Button {
+                viewModel.notNow()
+            } label: {
                 Text(Localizable.modalsUpsellStayFree)
             }
             .buttonStyle(SecondaryButtonStyle())
@@ -107,7 +107,7 @@ struct PlanOptionsListView: View {
         .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
         .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
     ]
-    let client: PlansClient = .init(retrievePlans: { plans })
+    let client: PlansClient = .init(retrievePlans: { plans }, validate: { _ in () })
     let viewModel = PlanOptionsListViewModel(client: client)
     return PlanOptionsListView(viewModel: viewModel)
 }
@@ -118,10 +118,14 @@ struct PlanOptionsListView: View {
         .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
         .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
     ]
-    let client: PlansClient = .init(retrievePlans: {
-        try? await scheduler.sleep(for: .milliseconds((500...2000).randomElement()!))
-        return plans
-    })
+    let client: PlansClient = .init(
+        retrievePlans: {
+            try? await scheduler.sleep(for: .milliseconds((500...2000).randomElement()!))
+            return plans
+        },
+        validate: { _ in
+            try? await scheduler.sleep(for: .milliseconds((2000...3000).randomElement()!))
+        })
     let viewModel = PlanOptionsListViewModel(client: client)
     return PlanOptionsListView(viewModel: viewModel)
 }
@@ -132,11 +136,15 @@ struct PlanOptionsListView_Provider: PreviewProvider {
         .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
         .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
     ]
-    static let client: PlansClient = .init(retrievePlans: { plans })
-    static let loadingClient: PlansClient = .init(retrievePlans: {
-        try? await scheduler.sleep(for: .milliseconds((500...2000).randomElement()!))
-        return plans
-    })
+    static let client: PlansClient = .init(retrievePlans: { plans }, validate: { _ in () })
+    static let loadingClient: PlansClient = .init(
+        retrievePlans: {
+            try? await scheduler.sleep(for: .milliseconds((500...2000).randomElement()!))
+            return plans
+        },
+        validate: { _ in
+            try? await scheduler.sleep(for: .milliseconds((2000...3000).randomElement()!))
+        })
     static let viewModel = PlanOptionsListViewModel(client: client)
     static let loadingViewModel = PlanOptionsListViewModel(client: loadingClient)
 

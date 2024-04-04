@@ -21,11 +21,12 @@ import Modals
 
 public struct PlansClient {
     var retrievePlans: () async throws -> [PlanOption]
-    var validate: @MainActor (PlanOption) async -> Void
+    var validate: (PlanOption) async -> Void
     var notNow: () -> Void
-    public init(retrievePlans: @escaping () async throws -> [PlanOption],
-                validate: @MainActor @escaping (PlanOption) async -> Void = { _ in },
-                notNow: @escaping () -> Void = {}
+    public init(
+        retrievePlans: @escaping () async throws -> [PlanOption],
+        validate: @escaping (PlanOption) async -> Void,
+        notNow: @escaping () -> Void = {}
     ) {
         self.retrievePlans = retrievePlans
         self.validate = validate
@@ -33,6 +34,7 @@ public struct PlansClient {
     }
 }
 
+@MainActor
 final class PlanOptionsListViewModel: ObservableObject {
     @Published private(set) var plans: [PlanOption] = []
     @Published var selectedPlan: PlanOption?
@@ -42,13 +44,12 @@ final class PlanOptionsListViewModel: ObservableObject {
 
     private let client: PlansClient
 
-    var mostExpensivePlan: PlanOption?
+    private(set) var mostExpensivePlan: PlanOption?
 
     init(client: PlansClient) {
         self.client = client
     }
 
-    @MainActor
     func onAppear() async {
         isLoading = true
         do {

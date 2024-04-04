@@ -8,7 +8,8 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [
         .iOS(.v15),
-        .macOS(.v11)],
+        .macOS(.v11)
+    ],
     products: [
         .library(
             name: "Modals",
@@ -21,7 +22,6 @@ let package = Package(
             targets: ["Modals-iOS"])
     ],
     dependencies: [
-        .package(path: "../../external/protoncore"),
         .package(path: "../Foundations/Strings"),
         .package(name: "Overture", url: "https://github.com/pointfreeco/swift-overture", .exact("0.5.0")),
         .package(path: "../Foundations/Theme"),
@@ -32,7 +32,6 @@ let package = Package(
         .target(
             name: "Modals",
             dependencies: [
-                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 "Overture",
                 "Strings",
                 "Theme"

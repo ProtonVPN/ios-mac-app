@@ -20,12 +20,14 @@ import SwiftUI
 import CombineSchedulers
 import Modals
 
+@MainActor
 struct PlanOptionsView: View {
     private static let maxContentWidth: CGFloat = 480
     private static let imagePadding: EdgeInsets = .init(top: 0, leading: 52, bottom: 24, trailing: 52)
 
     let modalType: ModalType
-    let viewModel: PlanOptionsListViewModel
+
+    @ObservedObject var viewModel: PlanOptionsListViewModel
 
     var body: some View {
         let modalModel = modalType.modalModel()
@@ -42,17 +44,38 @@ struct PlanOptionsView: View {
             .padding(.bottom, .themeSpacing8)
             .frame(maxWidth: Self.maxContentWidth)
         }
+        .overlay(
+            purchaseInProgressView
+                .transition(.opacity)
+                .animation(.easeInOut, value: viewModel.isPurchaseInProgress)
+        )
         .background(Color(.background))
+    }
+
+    @ViewBuilder
+    private var purchaseInProgressView: some View {
+        if viewModel.isPurchaseInProgress {
+            ZStack {
+                Color(white: 0, opacity: 0.75)
+                ProgressView()
+                    .tint(.primary)
+                    .controlSize(.large)
+            }
+            .ignoresSafeArea()
+        }
     }
 }
 
 #if swift(>=5.9)
 #Preview("Classic") {
+    let scheduler: AnySchedulerOf<DispatchQueue> = .main
     let plans: [PlanOption] = [
         .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
         .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
     ]
-    let client: PlansClient = .init(retrievePlans: { plans })
+    let client: PlansClient = .init(retrievePlans: { plans }, validate: { _ in
+        try? await scheduler.sleep(for: .milliseconds((2000...3000).randomElement()!))
+    })
     return PlanOptionsView(modalType: .subscription, viewModel: .init(client: client))
 }
 
@@ -62,10 +85,14 @@ struct PlanOptionsView: View {
         .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
         .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
     ]
-    let client: PlansClient = .init(retrievePlans: {
-        try? await scheduler.sleep(for: .milliseconds((500...2000).randomElement()!))
-        return plans
-    })
+    let client: PlansClient = .init(
+        retrievePlans: {
+            try? await scheduler.sleep(for: .milliseconds((500...2000).randomElement()!))
+            return plans
+        },
+        validate: { _ in
+            try? await scheduler.sleep(for: .milliseconds((2000...3000).randomElement()!))
+        })
     return PlanOptionsView(modalType: .subscription, viewModel: .init(client: client))
 }
 
@@ -74,10 +101,9 @@ struct PlanOptionsView: View {
         .init(duration: .twoYears, price: .init(amount: 145, currency: "USD")),
         .init(duration: .oneYear, price: .init(amount: 85, currency: "EUR")),
         .init(duration: .threeMonths, price: .init(amount: 33, currency: "JPY")),
-        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF")),
-        .init(duration: .init(components: .init(year: 0)), price: .init(amount: 0, currency: "EUR"))
+        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
     ]
-    let client: PlansClient = .init(retrievePlans: { plans })
+    let client: PlansClient = .init(retrievePlans: { plans }, validate: { _ in () })
     return PlanOptionsView(modalType: .subscription, viewModel: .init(client: client))
 }
 #else
@@ -87,11 +113,17 @@ struct PlansOptionsListView_Previews: PreviewProvider {
         .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
         .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
     ]
-    static let classicClient: PlansClient = .init(retrievePlans: { classicPlans })
-    static let loadingClient: PlansClient = .init(retrievePlans: {
-        try? await scheduler.sleep(for: .milliseconds((500...2000).randomElement()!))
-        return classicPlans
+    static let classicClient: PlansClient = .init(retrievePlans: { classicPlans }, validate: { _ in
+        try? await scheduler.sleep(for: .milliseconds((2000...3000).randomElement()!))
     })
+    static let loadingClient: PlansClient = .init(
+        retrievePlans: {
+            try? await scheduler.sleep(for: .milliseconds((500...2000).randomElement()!))
+            return classicPlans
+        },
+        validate: { _ in
+            try? await scheduler.sleep(for: .milliseconds((2000...3000).randomElement()!))
+        })
     static let currenciesPlans: [PlanOption] = [
         .init(duration: .twoYears, price: .init(amount: 145, currency: "USD")),
         .init(duration: .oneYear, price: .init(amount: 85, currency: "EUR")),
