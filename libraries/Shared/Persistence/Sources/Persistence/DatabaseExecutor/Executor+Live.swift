@@ -27,9 +27,9 @@ import GRDB
 /// For more information about types of potential errors thrown within `operation`, visit:
 /// [Error Handling](https://github.com/groue/GRDB.swift/blob/master/README.md#error-handling)
 public struct ErrorHandlingAndLoggingDatabaseExecutor: DatabaseExecutor {
-    let logError: ((String, Error?) -> Void)?
+    let logError: ((String, Error) -> Void)?
 
-    public init(logError: @escaping (String, Error?) -> Void) {
+    public init(logError: @escaping (String, Error) -> Void) {
         self.logError = logError
     }
 

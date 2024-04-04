@@ -1,7 +1,7 @@
 //
-//  Created on 09/08/2023.
+//  Created on 03/03/2024.
 //
-//  Copyright (c) 2023 Proton AG
+//  Copyright (c) 2024 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,14 +17,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import VPNShared
+
 import Dependencies
 
-extension DefaultsProvider: DependencyKey {
-    public static var liveValue: DefaultsProvider = DefaultsProvider(
-        getDefaults: {
-            // Use shared defaults
-            UserDefaults(suiteName: AppConstants.AppGroups.main)!
-        }
-    )
+import LegacyCommon
+import Persistence
+
+// MARK: Live implementations of app dependencies
+
+extension DatabaseConfigurationKey: DependencyKey {
+    public static let liveValue: DatabaseConfiguration = .live
 }

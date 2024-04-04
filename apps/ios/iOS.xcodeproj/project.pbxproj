@@ -159,6 +159,7 @@
 		A264F1C92E772DA03634D8A8 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */; };
 		AD37FAC329B63E1100D4DE4E /* NetShieldStatsItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */; };
 		AD37FAC529B7310200D4DE4E /* NetShieldStatsItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */; };
+		AD4770B72BBED3AF005575BC /* AppDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4770B62BBED3AF005575BC /* AppDependencies+Live.swift */; };
 		AD51BE4A2B907FDB002E40FD /* Localization in Frameworks */ = {isa = PBXBuildFile; productRef = AD51BE492B907FDB002E40FD /* Localization */; };
 		AD51BE4C2B908075002E40FD /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = AD51BE4B2B908075002E40FD /* Domain */; };
 		AD51BE4E2B908075002E40FD /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = AD51BE4D2B908075002E40FD /* Ergonomics */; };
@@ -167,11 +168,11 @@
 		AD6099FB299B2343007E46BC /* ImageSubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6099FA299B2343007E46BC /* ImageSubtitleTableViewCell.swift */; };
 		AD609A03299B89C0007E46BC /* ImageSubtitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD609A02299B89C0007E46BC /* ImageSubtitleTableViewCell.xib */; };
 		AD70D75E2B63238400B39ABA /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = AD70D75D2B63238400B39ABA /* PMLogger */; };
-		AD80107E2AC6CEAD000DB179 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* LiveDependencies.swift */; };
-		AD80107F2AC6CEAE000DB179 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* LiveDependencies.swift */; };
-		AD8010802AC6CEAE000DB179 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* LiveDependencies.swift */; };
-		AD8010812AC6CEAF000DB179 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* LiveDependencies.swift */; };
-		AD8130FD2A852E4F00729E03 /* LiveDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* LiveDependencies.swift */; };
+		AD80107E2AC6CEAD000DB179 /* SharedDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* SharedDependencies+Live.swift */; };
+		AD80107F2AC6CEAE000DB179 /* SharedDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* SharedDependencies+Live.swift */; };
+		AD8010802AC6CEAE000DB179 /* SharedDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* SharedDependencies+Live.swift */; };
+		AD8010812AC6CEAF000DB179 /* SharedDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* SharedDependencies+Live.swift */; };
+		AD8130FD2A852E4F00729E03 /* SharedDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* SharedDependencies+Live.swift */; };
 		AD81310D2A853E2C00729E03 /* AlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A7E6F2374C150008A0DA0 /* AlertTests.swift */; };
 		ADA1A0402A95E4EB00F9A6B6 /* Verifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1A03F2A95E4EB00F9A6B6 /* Verifier.swift */; };
 		ADA7343729B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADA7343629B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib */; };
@@ -671,9 +672,10 @@
 		9E128E9975D2A268D9FB56F0 /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnouncementDetailViewController.swift; path = ../../../../ios/ProtonVPN/Scenes/Announcements/AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
 		AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetShieldStatsItemView.xib; sourceTree = "<group>"; };
 		AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldStatsItemView.swift; sourceTree = "<group>"; };
+		AD4770B62BBED3AF005575BC /* AppDependencies+Live.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDependencies+Live.swift"; sourceTree = "<group>"; };
 		AD6099FA299B2343007E46BC /* ImageSubtitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSubtitleTableViewCell.swift; sourceTree = "<group>"; };
 		AD609A02299B89C0007E46BC /* ImageSubtitleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageSubtitleTableViewCell.xib; sourceTree = "<group>"; };
-		AD8130FC2A852E4F00729E03 /* LiveDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveDependencies.swift; sourceTree = "<group>"; };
+		AD8130FC2A852E4F00729E03 /* SharedDependencies+Live.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SharedDependencies+Live.swift"; sourceTree = "<group>"; };
 		ADA1A03F2A95E4EB00F9A6B6 /* Verifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Verifier.swift; sourceTree = "<group>"; };
 		ADA7343629B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetShieldStatsTableViewCell.xib; sourceTree = "<group>"; };
 		ADA7343829B1896300CF8F77 /* NetShieldStatsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldStatsTableViewCell.swift; sourceTree = "<group>"; };
@@ -1924,9 +1926,10 @@
 		F36ECC992611C65D0089B898 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AD4770B62BBED3AF005575BC /* AppDependencies+Live.swift */,
 				D5C137692334A54D00D20514 /* Coordinator.swift */,
 				D5F56898232620C600795953 /* DependencyContainer.swift */,
-				AD8130FC2A852E4F00729E03 /* LiveDependencies.swift */,
+				AD8130FC2A852E4F00729E03 /* SharedDependencies+Live.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -2984,6 +2987,7 @@
 				79312B782118823B00E79D09 /* SwitchTableViewCell.swift in Sources */,
 				E1EB9E7B23015FF2009E704F /* LogsViewModel.swift in Sources */,
 				79AFDA9820DC31ED002F8751 /* NSAttributedString+Extension.swift in Sources */,
+				AD4770B72BBED3AF005575BC /* AppDependencies+Live.swift in Sources */,
 				F316A07526DFBCB600669386 /* PlanService.swift in Sources */,
 				422395822446E9E00089002F /* URLConstants.swift in Sources */,
 				E1D21AAD21830E72000C389B /* SecureCoreEntryCountryModel.swift in Sources */,
@@ -3030,7 +3034,7 @@
 				4C3474932A93C25B008BDE78 /* ImageSubtitleImageTableViewCell.swift in Sources */,
 				793ECF412148EA0B00C186A7 /* ButtonTableViewCell.swift in Sources */,
 				79848BAC20D1B9DC00EF6F9F /* CountriesViewModel.swift in Sources */,
-				AD8130FD2A852E4F00729E03 /* LiveDependencies.swift in Sources */,
+				AD8130FD2A852E4F00729E03 /* SharedDependencies+Live.swift in Sources */,
 				7950441721183E6E0022ED35 /* ColorPickerItem.swift in Sources */,
 				79C559A420B1BD1600E6D3F6 /* WindowService.swift in Sources */,
 				E17DB1B821592772006B3617 /* ProtonButton.swift in Sources */,
@@ -3130,7 +3134,7 @@
 				D5136C9722895C3A0002C095 /* ExtensionAlertService.swift in Sources */,
 				F3747C0226D4E1A900EF2F00 /* URLConstants.swift in Sources */,
 				D5209C7226CBBE1900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift in Sources */,
-				AD8010812AC6CEAF000DB179 /* LiveDependencies.swift in Sources */,
+				AD8010812AC6CEAF000DB179 /* SharedDependencies+Live.swift in Sources */,
 				D5209C7626CBCB3D00AD14EA /* OVPNiOSCredentialsConfigurator.swift in Sources */,
 				4CF297FD2A7D39F700DEB23F /* Intents.intentdefinition in Sources */,
 				D554556222804DF2006574F9 /* SiriHandlerViewModel.swift in Sources */,
@@ -3199,7 +3203,7 @@
 				D555C48A297E75ED000593EF /* OpenVPNConstants.swift in Sources */,
 				D555C490297E78FF000593EF /* OVPNLogger.swift in Sources */,
 				D555C48F297E78FF000593EF /* OVPNLogFormatter.swift in Sources */,
-				AD80107E2AC6CEAD000DB179 /* LiveDependencies.swift in Sources */,
+				AD80107E2AC6CEAD000DB179 /* SharedDependencies+Live.swift in Sources */,
 				E9492ED82669178000500E7D /* AppConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3214,7 +3218,7 @@
 				D5209C7926CBD7C000AD14EA /* WGiOSVpnCredentialsConfigurator.swift in Sources */,
 				4CD71C612AC73B16007979C0 /* SecureDeepLinkGenerator.swift in Sources */,
 				E14C2AA521E4E72400E8578E /* ProtonButton.swift in Sources */,
-				AD8010802AC6CEAE000DB179 /* LiveDependencies.swift in Sources */,
+				AD8010802AC6CEAE000DB179 /* SharedDependencies+Live.swift in Sources */,
 				E17A259E2295670100D78C19 /* ExtensionAlertService.swift in Sources */,
 				D5209C7126CBBE1800AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift in Sources */,
 				E1C983B921E4D77400C81666 /* UIKitString+Extension.swift in Sources */,
@@ -3247,7 +3251,7 @@
 				E99799A626A6FE0C0083D61E /* TunnelConfiguration+WgQuickConfig.swift in Sources */,
 				E99799AA26A6FE0C0083D61E /* Logger.swift in Sources */,
 				E99799A326A6FE0C0083D61E /* FileManager+Extension.swift in Sources */,
-				AD80107F2AC6CEAE000DB179 /* LiveDependencies.swift in Sources */,
+				AD80107F2AC6CEAE000DB179 /* SharedDependencies+Live.swift in Sources */,
 				E99799A826A6FE0C0083D61E /* String+ArrayConversion.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4527,10 +4531,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCoreTelemetry;
 		};
-		AD70D75D2B63238400B39ABA /* PMLogger */ = {
-            isa = XCSwiftPackageProductDependency;
-            productName = Localization;
-        };
 		AD51BE492B907FDB002E40FD /* Localization */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Localization;
