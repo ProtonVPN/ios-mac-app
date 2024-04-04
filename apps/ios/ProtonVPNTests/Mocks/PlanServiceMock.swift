@@ -67,12 +67,4 @@ class PlanServiceMock: PlanService {
     func createPlusPlanUI(completion: @escaping () -> Void) {
         
     }
-
-    func planOptions(with plansDataSource: ProtonCorePayments.PlansDataSourceProtocol) async throws -> [Modals.PlanOption] {
-        []
-    }
-
-    func buyPlan(planOption: PlanOption) async -> PurchaseResult {
-        .purchaseCancelled
-    }
 }

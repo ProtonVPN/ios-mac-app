@@ -16,43 +16,43 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
+import UIKit
 
 import Domain
 import Modals
 import Modals_iOS
+import LegacyCommon
 
 import ProtonCoreFeatureFlags
 import ProtonCorePayments
 
 class OneClickPayment {
-    typealias Factory = WindowServiceFactory & PlanServiceFactory
+    typealias Factory = PlanServiceFactory & CoreAlertServiceFactory
 
-    private let windowService: WindowService
+    private let alertService: CoreAlertService
     private let planService: PlanService
+    private let payments: Payments
     private var completionHandler: (() -> Void)?
 
-    var unfinishedPurchasePlan: InAppPurchasePlan?
-
-    init(factory: Factory) {
-        windowService = factory.makeWindowService()
+    init(factory: Factory, payments: Payments) {
         planService = factory.makePlanService()
+        alertService = factory.makeCoreAlertService()
+        self.payments = payments
     }
 
-    func presentOneClickIAP(completionHandler: @escaping () -> Void) throws {
+    func presentOneClickIAP(completionHandler: @escaping () -> Void) throws -> UIViewController {
         guard FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.oneClickPayment),
-              let plansDataSource = planService.plansDataSource else {
+              let plansDataSource else {
             throw "OneClickAIAP or DynamicPlan FF disabled!"
         }
         self.completionHandler = completionHandler
-        let subscriptionViewController = ModalsFactory().subscriptionViewController(plansClient: plansClient(plansDataSource))
-        windowService.addToStack(subscriptionViewController, checkForDuplicates: false)
+        return ModalsFactory().subscriptionViewController(plansClient: plansClient(plansDataSource))
     }
 
     private func plansClient(_ plansDataSource: PlansDataSourceProtocol) -> PlansClient {
         PlansClient(retrievePlans: { [weak self] in
             guard let self else { throw "Onboarding was dismissed" }
-            return try await self.planService.planOptions(with: plansDataSource)
+            return try await self.planOptions(with: plansDataSource)
         }, validate: { [weak self] in
             await self?.validate(selectedPlan: $0)
         }, notNow: { [weak self] in
@@ -62,13 +62,7 @@ class OneClickPayment {
 
     @MainActor
     func validate(selectedPlan: PlanOption) async -> Void {
-        guard unfinishedPurchasePlan == nil else {
-            // purchase already started, don't start it again, report back that we're in progress
-//            finishCallback(.planPurchaseProcessingInProgress(processingPlan: unfinishedPurchasePlan!))
-            completionHandler?()
-            return
-        }
-        let result = await self.planService.buyPlan(planOption: selectedPlan)
+        let result = await self.buyPlan(planOption: selectedPlan)
         await self.buyPlanResultHandler(result)
     }
 
@@ -76,35 +70,73 @@ class OneClickPayment {
     private func buyPlanResultHandler(_ result: PurchaseResult) async {
         switch result {
         case .purchasedPlan(let plan):
-            unfinishedPurchasePlan = nil
+            log.debug("Purchased plan: \(plan.protonName)", category: .iap)
             await planService.delegate?.paymentTransactionDidFinish(modalSource: nil,
                                                                     newPlanName: plan.protonName)
             completionHandler?()
         case .toppedUpCredits:
-            print("pj toppedUpCredits")
             assertionFailure("This flow only supports subscriptions, got `toppedUpCredits` result")
             break
-        case .planPurchaseProcessingInProgress(let processingPlan):
-            // TODO: VPNAPPL-2089 should we do anything?
-            // Should we allow the user to close the modal before the transaction is finished?
-            // It will be easier if we won't
-            print("pj planPurchaseProcessingInProgress")
-            unfinishedPurchasePlan = processingPlan
-        case let .purchaseError(error, processingPlan):
-            print("pj purchaseError")
-            // TODO: VPNAPPL-2089 present the error to the user and stay at the screen
-            unfinishedPurchasePlan = nil
+        case .planPurchaseProcessingInProgress(let plan):
+            log.debug("Purchasing \(plan.protonName)", category: .iap)
+            alertService.push(alert: PaymentAlert(message: "Processing plan purchase in progress...", isError: false))
             break
-        case let .apiMightBeBlocked(message, originalError, processingPlan):
-            print("pj apiMightBeBlocked")
-            // TODO: VPNAPPL-2089 present the error to the user with alert service
-            unfinishedPurchasePlan = processingPlan
+        case let .purchaseError(error, _):
+            log.error("Purchase failed", category: .iap, metadata: ["error": "\(error)"])
+            alertService.push(alert: PaymentAlert(message: error.localizedDescription, isError: true))
+            break
+        case let .apiMightBeBlocked(message, originalError, _):
+            log.error("\(message)", category: .connection, metadata: ["error": "\(originalError)"])
+            alertService.push(alert: PaymentAlert(message: message, isError: true))
             break
         case .purchaseCancelled:
-            // show alert "transaction cancelled"
-            print("pj purchaseCancelled")
-            unfinishedPurchasePlan = nil
             break
         }
+    }
+
+    var inAppPurchasePlans: [(PlanOption, InAppPurchasePlan)] = []
+
+    func planOptions(with plansDataSource: PlansDataSourceProtocol) async throws -> [PlanOption] {
+        try await plansDataSource.fetchAvailablePlans()
+        let vpn2022 = plansDataSource.availablePlans?.plans.filter { plan in
+            plan.name == "vpn2022"
+        }.first // it's only going to be one with this plan name
+        guard let vpn2022 else { throw "Default plan not found" }
+        inAppPurchasePlans = vpn2022.instances
+            .compactMap { InAppPurchasePlan(availablePlanInstance: $0) }
+            .compactMap { iAP -> (PlanOption, InAppPurchasePlan)? in
+                guard let priceLabel = iAP.priceLabel(from: payments.storeKitManager),
+                      let period = iAP.period else { return nil }
+                let planOption = PlanOption(duration: .init(components: .init(month: Int(period))),
+                                            price: .init(amount: priceLabel.value.doubleValue,
+                                                         currency: iAP.currency ?? "",
+                                                         locale: priceLabel.locale))
+                return (planOption, iAP)
+            }
+        return inAppPurchasePlans.map { $0.0 }
+    }
+
+    func buyPlan(planOption: PlanOption) async -> PurchaseResult {
+        guard !payments.storeKitManager.hasUnfinishedPurchase() else {
+            log.debug("StoreKitManager is not ready to purchase", category: .userPlan)
+            return .purchaseError(error: "StoreKitManager is not ready to purchase", processingPlan: nil)
+        }
+        let plan = inAppPurchasePlans.first { plan, _ in
+            plan.fingerprint == planOption.fingerprint
+        }
+        guard let iAP = plan?.1 else {
+            return .purchaseError(error: "StoreKitManager plan not found", processingPlan: nil)
+        }
+        return await withCheckedContinuation {
+            payments.purchaseManager.buyPlan(plan: iAP,
+                                             finishCallback: $0.resume(returning:))
+        }
+    }
+
+    var plansDataSource: PlansDataSourceProtocol? {
+        guard case .right(let plansDataSource) = payments.planService else {
+            return nil
+        }
+        return plansDataSource
     }
 }

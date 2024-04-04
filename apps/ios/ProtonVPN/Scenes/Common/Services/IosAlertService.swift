@@ -120,9 +120,6 @@ extension IosAlertService: CoreAlertService {
         case is BugReportSentAlert:
             showDefaultSystemAlert(alert)
             
-        case is UnknownErrortAlert:
-            showDefaultSystemAlert(alert)
-            
         case let reportBugAlert as ReportBugAlert:
             show(reportBugAlert)
 
@@ -246,6 +243,9 @@ extension IosAlertService: CoreAlertService {
 
         case let alert as FreeConnectionsAlert:
             show(alert)
+
+        case let alert as PaymentAlert:
+            showDefaultSystemAlert(alert)
 
         default:
             #if DEBUG

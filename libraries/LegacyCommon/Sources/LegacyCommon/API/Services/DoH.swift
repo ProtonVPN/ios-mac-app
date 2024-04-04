@@ -28,6 +28,7 @@ public protocol DoHVPNFactory {
 }
 
 public class DoHVPN: DoH, ServerConfig {
+    public var proxyToken: String?
     public let liveURL: String = "https://vpn-api.proton.me"
     public let signupDomain: String = "protonmail.com"
     public let defaultPath: String = ""

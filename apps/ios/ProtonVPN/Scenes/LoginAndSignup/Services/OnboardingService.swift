@@ -18,14 +18,11 @@
 
 import Foundation
 import UIKit
-import Domain
 import LegacyCommon
 import LocalFeatureFlags
 import VPNShared
 import Modals
 import Modals_iOS
-import ProtonCoreFeatureFlags
-import ProtonCorePayments
 
 protocol OnboardingServiceFactory: AnyObject {
     func makeOnboardingService() -> OnboardingService
@@ -42,7 +39,7 @@ protocol OnboardingService: AnyObject {
 }
 
 final class OnboardingModuleService {
-    typealias Factory = WindowServiceFactory & PlanServiceFactory
+    typealias Factory = WindowServiceFactory & PlanServiceFactory & CoreAlertServiceFactory
 
     private let windowService: WindowService
     private let planService: PlanService
@@ -53,7 +50,7 @@ final class OnboardingModuleService {
     init(factory: Factory) {
         windowService = factory.makeWindowService()
         planService = factory.makePlanService()
-        oneClickPayment = OneClickPayment(factory: factory)
+        oneClickPayment = OneClickPayment(factory: factory, payments: planService.payments)
     }
 }
 
@@ -73,14 +70,16 @@ extension OnboardingModuleService: OnboardingService {
     }
 
     func welcomeToProtonPrimaryAction() {
+        var viewController: UIViewController
         do {
-            try oneClickPayment.presentOneClickIAP { [weak self] in
+            viewController = try oneClickPayment.presentOneClickIAP { [weak self] in
                 self?.onboardingCoordinatorDidFinish()
             }
         } catch {
             log.warning("Couldn't present OneClickAIAP, falling back to old, full payment flow. Error: \(error)")
-            windowService.addToStack(allCountriesUpsellViewController(), checkForDuplicates: false)
+            viewController = allCountriesUpsellViewController()
         }
+        windowService.addToStack(viewController, checkForDuplicates: false)
     }
 
     private func allCountriesUpsellViewController() -> UIViewController {
