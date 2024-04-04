@@ -52,39 +52,11 @@ public struct DatabaseConfiguration {
     }
 }
 
-private enum DatabaseConfigurationKey: DependencyKey {
+public enum DatabaseConfigurationKey: TestDependencyKey {
 
     /// Configured with global/shared in-memory database
     public static var testValue: DatabaseConfiguration {
         .withTestExecutor(databaseType: .inMemory)
-    }
-
-    public static var liveValue: DatabaseConfiguration {
-        let directoryURLs = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
-        guard let directoryURL = directoryURLs.first else {
-            fatalError("Failed to initialise app DB: cannot find URL for application support directory")
-        }
-
-        if !FileManager.default.fileExists(atPath: directoryURL.absolutePath) {
-            try! FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true)
-        }
-
-        let databasePath = directoryURL
-            .appendingPathComponent("database")
-            .appendingPathExtension("sqlite")
-            .absolutePath
-
-        let executor = ErrorHandlingAndLoggingDatabaseExecutor(
-            logError: { message, error in
-                log.error("\(message)", category: .persistence, metadata: ["error": "\(String(describing: error))"])
-            }
-        )
-
-        return DatabaseConfiguration(
-            executor: executor,
-            databaseType: .physical(filePath: databasePath),
-            schemaVersion: .latest
-        )
     }
 }
 
