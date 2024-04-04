@@ -37,6 +37,7 @@
         "FreeRescopeTests\/testProfileCreationUnavailableForFreeUser()",
         "PlanTests\/testShowCurrentPlanForVPNPlusUser()",
         "PlanTests\/testShowUpdatePlansForCurrentFreePlan()",
+        "ProfilesTests",
         "SignupTests\/testSignupExistingInternalAccount()",
         "SignupTests\/testSignupNewExternalAccountUpgrade()",
         "SignupTests\/testSignupNewInternalAccountUpgradePlans()",

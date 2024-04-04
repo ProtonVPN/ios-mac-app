@@ -1,0 +1,498 @@
+[
+    {
+        "logical": {
+            "name": "CA#1",
+            "city": "Toronto",
+            "kind": {"country": {}},
+            "score": 1.5,
+            "load": 50,
+            "longitude": -79.3611,
+            "domain": "ca-01.protonvpn.com",
+            "tier": 0,
+            "feature": 0,
+            "id": "fastestFreeServer",
+            "status": 1,
+            "exitCountryCode": "CA",
+            "latitude": 43.6329
+        },
+        "endpoints": [
+            {
+                "id": "fastestFreeServerIP1",
+                "protocolEntries": {
+                    "OpenVPNUDP": {},
+                    "WireGuardTCP": {
+                        "IPv4": "1.2.3.13",
+                        "Ports": [
+                            1234,
+                            5678
+                        ]
+                    }
+                },
+                "domain": "ca-01.protonvpn.com",
+                "status": 1,
+                "exitIp": "1.2.3.4",
+            }
+        ],
+    },
+    {
+        "logical": {
+            "name": "CA#2",
+            "city": "Vancouver",
+            "kind": {"country": {}},
+            "score": 0.8,
+            "load": 50,
+            "longitude": -79.3611,
+            "domain": "ca-01.protonvpn.com",
+            "tier": 2,
+            "feature": 0,
+            "id": "fastestVancouverServer",
+            "status": 1,
+            "exitCountryCode": "CA",
+            "latitude": 43.6329
+        },
+        "endpoints": [
+            {
+                "id": "fastestVancouverServerIP1",
+                "domain": "ca-01.protonvpn.com",
+                "status": 1,
+                "exitIp": "1.2.3.7",
+            }
+        ],
+    },
+    {
+        "logical": {
+            "name": "AE#1",
+            "city": "Abu Dhabi",
+            "kind": {"country": {}},
+            "score": 0.8,
+            "load": 50,
+            "longitude": -79.3611,
+            "domain": "ua-01.protonvpn.com",
+            "tier": 2,
+            "feature": 0,
+            "id": "AEServer",
+            "status": 1,
+            "exitCountryCode": "AE",
+            "latitude": 43.6329
+        },
+        "endpoints": [
+            {
+                "id": "AEServerIP1",
+                "domain": "ua-01.protonvpn.com",
+                "status": 1,
+                "entryIp": "4.3.2.1",
+                "exitIp": "1.2.3.7"
+            }
+        ],
+    },
+    {
+        "logical": {
+            "name": "CA#3",
+            "city": "Vancouver",
+            "kind": {"country": {}},
+            "score": 0.9,
+            "load": 50,
+            "longitude": -79.3611,
+            "domain": "ca-01.protonvpn.com",
+            "tier": 2,
+            "feature": 0,
+            "id": "slowVancouverServer",
+            "status": 1,
+            "exitCountryCode": "CA",
+            "latitude": 43.6329
+        },
+        "endpoints": [
+            {
+                "id": "slowVancouverServerIP1",
+                "domain": "ca-01.protonvpn.com",
+                "status": 1,
+                "entryIp": "4.3.2.1",
+                "exitIp": "1.2.3.7",
+            }
+        ],
+    },
+    {
+        "logical": {
+            "domain": "node-kr-03.protonvpn.net",
+            "tier": 0,
+            "longitude": 126.999,
+            "load": 17,
+            "latitude": 37.546,
+            "exitCountryCode": "KR",
+            "city": "Seoul",
+            "name": "KR#13",
+            "status": 1,
+            "score": 1.6,
+            "id": "fastestFreeWireGuardUDPServer",
+            "hostCountry": "SG",
+            "kind": {"country": {}},
+            "feature": 12
+        },
+        "endpoints": [
+            {
+                "entryIp": "5.7.3.1",
+                "id": "",
+                "status": 1,
+                "domain": "node-kr-03.protonvpn.net",
+                "label": "0",
+                "exitIp": "2.5.3.9"
+            }
+        ]
+    },
+    {
+        "logical": {
+            "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111112==",
+            "city": "Hong Kong",
+            "kind": {"country": {}},
+            "longitude": 114.142271,
+            "load": 25,
+            "exitCountryCode": "HK",
+            "status": 1,
+            "score": 0.5,
+            "feature": 0,
+            "tier": 2,
+            "latitude": 22.358535,
+            "name": "HK#3",
+            "domain": "hk-03.protonvpn.com"
+        },
+        "endpoints": [
+            {
+                "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111112==",
+                "exitIp": "1.2.3.6",
+                "domain": "hk-03.protonvpn.com",
+                "status": 1
+            }
+        ]
+    },
+    {
+        "logical": {
+            "latitude": 38.28,
+            "exitCountryCode": "JP",
+            "domain": "jp-04.protonvpn.com",
+            "kind": {"country": {}},
+            "longitude": 140.46,
+            "load": 25,
+            "tier": 2,
+            "feature": 0,
+            "name": "JP#4",
+            "city": "Tokyo",
+            "status": 1,
+            "score": 0.5,
+            "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111113==",
+        },
+        "endpoints": [
+            {
+                "status": 1,
+                "exitIp": "1.2.3.7",
+                "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111113==",
+                "domain": "jp-04.protonvpn.com"
+            }
+        ]
+    },
+    {
+        "logical": {
+            "kind": {"country": {}},
+            "status": 1,
+            "feature": 0,
+            "load": 75,
+            "name": "JP#5",
+            "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111114==",
+            "score": 2,
+            "latitude": 35.65,
+            "tier": 0,
+            "longitude": 139.83,
+            "domain": "jp-05.protonvpn.com",
+            "exitCountryCode": "JP"
+        },
+        "endpoints": [
+            {
+                "exitIp": "1.2.4.8",
+                "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111124==",
+                "status": 1,
+                "domain": "jp-09.protonvpn.com"
+            },
+            {
+                "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111134==",
+                "domain": "jp-10.protonvpn.com",
+                "status": 1,
+                "exitIp": "1.2.5.8"
+            },
+            {
+                "status": 0,
+                "domain": "jp-11.protonvpn.com",
+                "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111144==",
+                "exitIp": "1.2.6.8"
+            }
+        ]
+    },
+    {
+        "logical": {
+            "latitude": 43.6329,
+            "score": 1.5,
+            "load": 15,
+            "feature": 1,
+            "status": 1,
+            "tier": 2,
+            "longitude": -79.3611,
+            "kind": {"country": {}},
+            "exitCountryCode": "CA",
+            "name": "CH-CA#5",
+            "domain": "ch-ca-05.protonvpn.com",
+            "id": "secureCoreCAServer1"
+        },
+        "endpoints": [
+            {
+                "status": 1,
+                "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111125==",
+                "exitIp": "1.2.4.9",
+                "domain": "ch-ca-01a.protonvpn.com"
+            },
+            {
+                "status": 1,
+                "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111135==",
+                "exitIp": "1.2.4.10",
+                "domain": "ch-ca-01b.protonvpn.com"
+            }
+        ]
+    },
+    {
+        "logical": {
+            "latitude": 38.28,
+            "feature": 4,
+            "name": "JP#7",
+            "status": 1,
+            "exitCountryCode": "JP",
+            "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111116==",
+            "longitude": 140.46,
+            "city": "Tokyo",
+            "kind": {"country": {}},
+            "score": 1.5,
+            "domain": "jp-07.protonvpn.com",
+            "tier": 2,
+            "load": 25
+        },
+        "endpoints": [
+            {
+                "status": 1,
+                "protocolEntries": {
+                    "OpenVPNUDP": {},
+                    "WireGuardTCP": {
+                        "IPv4": "1.2.3.13",
+                        "Ports": [
+                            1234,
+                            5678
+                        ]
+                    }
+                },
+                "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111116==",
+                "exitIp": "1.2.3.12",
+                "domain": "jp-07.protonvpn.com"
+            }
+        ],
+    },
+    {
+        "logical": {
+            "city": "Tokyo",
+            "name": "JP#8",
+            "latitude": 38.28,
+            "status": 1,
+            "exitCountryCode": "JP",
+            "feature": 2,
+            "domain": "jp-08.protonvpn.com",
+            "score": 1.4,
+            "load": 65,
+            "tier": 2,
+            "longitude": 140.46,
+            "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111117==",
+            "kind": {"country": {}},
+        },
+        "endpoints": [
+            {
+                "status": 1,
+                "exitIp": "1.2.3.13",
+                "domain": "jp-08.protonvpn.com",
+                "protocolEntries": {
+                    "WireGuardUDP": {
+                        "Ports": [
+                            1234,
+                            5678
+                        ]
+                    }
+                },
+                "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111117=="
+            }
+        ]
+    },
+    {
+        "logical": {
+            "status": 1,
+            "score": 1.5,
+            "name": "GTW#1",
+            "city": "Vancouver",
+            "latitude": 38.28,
+            "load": 65,
+            "domain": "US-GTW-01.protonvpn.com",
+            "tier": 2,
+            "exitCountryCode": "CA",
+            "feature": 32,
+            "kind": { "gateway": { "name": "Mega Gateway 2000" } },
+            "id": "1abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111118==",
+            "longitude": 140.46
+        },
+        "endpoints": [
+            {
+                "exitIp": "1.2.3.13",
+                "id": "1abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111118==",
+                "status": 1,
+                "domain": "US-GTW-01.protonvpn.com"
+            }
+        ]
+    },
+    {
+        "logical": {
+            "feature": 32,
+            "domain": "US-GTW-02.protonvpn.com",
+            "name": "GTW#2",
+            "score": 1.4,
+            "tier": 2,
+            "id": "fastestMegaGateway2000Server",
+            "latitude": 38.28,
+            "load": 65,
+            "status": 1,
+            "city": "Tokyo",
+            "longitude": 140.46,
+            "exitCountryCode": "CA",
+            "kind": { "gateway": { "name": "Mega Gateway 2000" } },
+        },
+        "endpoints": [
+            {
+                "exitIp": "1.2.3.13",
+                "status": 1,
+                "id": "fastestMegaGateway2000ServerIP1",
+                "domain": "US-GTW-02.protonvpn.com"
+            }
+        ]
+    },
+    {
+        "logical": {
+            "latitude": 40.73,
+            "domain": "node-us-144.protonvpn.net",
+            "exitCountryCode": "US",
+            "status": 1,
+            "score": 0.4,
+            "load": 59,
+            "name": "US-NY#61",
+            "tier": 2,
+            "id": "fastestFeaturelessUSServer",
+            "kind": {"country": {}},
+            "city": "New York City",
+            "feature": 0,
+            "longitude": -73.93
+        },
+        "endpoints": [
+            {
+                "domain": "node-us-144.protonvpn.net",
+                "exitIp": "1.70.7.131",
+                "entryIp": "1.70.7.130",
+                "label": "8",
+                "status": 1,
+                "id": "fastFeaturelessUSServerIP1",
+                "protocolEntries": {
+                    "IKEv2": {
+                        "Ports": [5678]
+                    }
+                },
+            }
+        ],
+    },
+    {
+        "logical": {
+            "latitude": 40.73,
+            "domain": "node-us-144.protonvpn.net",
+            "exitCountryCode": "US",
+            "status": 1,
+            "score": 0.5,
+            "load": 59,
+            "name": "US-NY#61",
+            "tier": 2,
+            "id": "featureRichUSServer",
+            "kind": {"country": {}},
+            "city": "New York City",
+            "feature": 14,
+            "longitude": -73.93
+        },
+        "endpoints": [
+            {
+                "domain": "node-us-144.protonvpn.net",
+                "exitIp": "1.7.72.131",
+                "entryIp": "1.7.72.130",
+                "label": "8",
+                "status": 1,
+                "id": "featureRichUSServerIP1"
+            }
+        ],
+    },
+    {
+        "logical": {
+            "latitude": 40.73,
+            "exitCountryCode": "DE",
+            "status": 1,
+            "domain": "node-de-1.protonvpn.net",
+            "score": 0.45,
+            "load": 59,
+            "name": "DE#10",
+            "tier": 2,
+            "id": "DE1",
+            "kind": {"country": {}},
+            "city": "Berlin",
+            "feature": 14,
+            "longitude": -73.93
+        },
+        "endpoints": [
+            {
+                "domain": "node-de-1.protonvpn.net",
+                "exitIp": "1.7.72.1",
+                "entryIp": "1.7.72.1",
+                "label": "8",
+                "status": 1,
+                "id": "DE1s",
+                "protocolEntries": {
+                    "IKEv2": {
+                        "Ports": [5678]
+                    }
+                },
+            }
+        ],
+    },
+    {
+        "logical": {
+            "latitude": 40.73,
+            "exitCountryCode": "DE",
+            "domain": "node-de-2.protonvpn.net",
+            "status": 1,
+            "score": 0.475,
+            "load": 59,
+            "name": "DE#9",
+            "tier": 2,
+            "id": "DE2",
+            "kind": {"country": {}},
+            "city": "Berlin",
+            "feature": 14,
+            "longitude": -73.93
+        },
+        "endpoints": [
+            {
+                "domain": "node-de-2.protonvpn.net",
+                "exitIp": "1.7.72.1",
+                "entryIp": "1.7.72.1",
+                "status": 1,
+                "id": "DE2s",
+                "protocolEntries": {
+                    "WireGuardTLS": {
+                        "Ports": [1234]
+                    }
+                },
+            }
+        ],
+    }
+]

@@ -21,14 +21,25 @@
 //
 
 import UIKit
-import LegacyCommon
-import Search
-import ProtonCoreUIFoundations
+
 import AlamofireImage
+import Dependencies
+
+import ProtonCoreUIFoundations
+
+import Domain
 import Strings
 import Theme
 
+import Persistence
+
+import Search
+import LegacyCommon
+import Localization
+
 class ServerItemViewModel: ServerItemViewModelCore {
+
+    @Dependency(\.serverRepository) var repository
 
     private let alertService: AlertService
     private let connectionStatusService: ConnectionStatusService
@@ -39,7 +50,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
     var isConnected: Bool {
         if vpnGateway.connection == .connected,
            let activeServer = appStateManager.activeConnection()?.server,
-           activeServer.id == serverModel.id {
+           activeServer.id == serverModel.logical.id {
             return true
         }
 
@@ -51,7 +62,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
            vpnGateway.connection == .connecting,
            case ConnectionRequestType.country(_, let countryRequestType) = activeConnection.connectionType,
            case CountryConnectionRequestType.server(let activeServer) = countryRequestType,
-           activeServer == serverModel {
+           activeServer.id == serverModel.logical.id {
             return true
         }
         return false
@@ -74,16 +85,16 @@ class ServerItemViewModel: ServerItemViewModelCore {
     
     // MARK: First line in the TableCell
     
-    var description: String { return serverModel.name }
-    
+    var description: String { return serverModel.logical.name }
+
     var city: String {
-        return serverModel.city ?? ""
+        return serverModel.logical.city ?? ""
     }
     
     var loadColor: UIColor {
-        if serverModel.load > 90 {
+        if serverModel.logical.load > 90 {
             return .notificationErrorColor()
-        } else if serverModel.load > 75 {
+        } else if serverModel.logical.load > 75 {
             return .notificationWarningColor()
         } else {
             return .notificationOKColor()
@@ -103,23 +114,26 @@ class ServerItemViewModel: ServerItemViewModelCore {
     var textInPlaceOfConnectIcon: String? {
         return isUsersTierTooLow ? Localizable.upgrade : nil
     }
-    
-    init(serverModel: ServerModel,
-         vpnGateway: VpnGatewayProtocol,
-         appStateManager: AppStateManager,
-         alertService: AlertService,
-         connectionStatusService: ConnectionStatusService,
-         propertiesManager: PropertiesManagerProtocol,
-         planService: PlanService) {
 
+    init(
+        serverModel: ServerInfo,
+        vpnGateway: VpnGatewayProtocol,
+        appStateManager: AppStateManager,
+        alertService: AlertService,
+        connectionStatusService: ConnectionStatusService,
+        propertiesManager: PropertiesManagerProtocol,
+        planService: PlanService
+    ) {
         self.alertService = alertService
         self.connectionStatusService = connectionStatusService
         self.planService = planService
 
-        super.init(serverModel: serverModel,
-                   vpnGateway: vpnGateway,
-                   appStateManager: appStateManager,
-                   propertiesManager: propertiesManager)
+        super.init(
+            serverModel: serverModel,
+            vpnGateway: vpnGateway,
+            appStateManager: appStateManager,
+            propertiesManager: propertiesManager
+        )
         if canConnect {
             startObserving()
         }
@@ -143,9 +157,17 @@ class ServerItemViewModel: ServerItemViewModelCore {
             log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.stopConnecting(userInitiated: true)
         } else {
+            guard let server = repository.getFirstServer(
+                filteredBy: [.logicalID(serverModel.logical.id)],
+                orderedBy: .fastest
+            ) else {
+                log.error("No server found with logical ID \(serverModel.logical.id)")
+                return
+            }
+            let legacyModel = ServerModel(server: server)
+            log.debug("Will connect to \(legacyModel.logDescription)", category: .connectionConnect, event: .trigger)
             NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
-            log.debug("Will connect to \(serverModel.logDescription)", category: .connectionConnect, event: .trigger)
-            vpnGateway.connectTo(server: serverModel)
+            vpnGateway.connectTo(server: legacyModel)
             connectionStatusService.presentStatusViewController()
         }
     }
@@ -169,7 +191,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
 class SecureCoreServerItemViewModel: ServerItemViewModel {
         
     override var viaCountry: (name: String, code: String)? {
-        return isSecureCoreEnabled ? (serverModel.entryCountry, serverModel.entryCountryCode) : nil
+        return isSecureCoreEnabled ? (serverModel.logical.entryCountry, serverModel.logical.entryCountryCode) : nil
     }
 
     override fileprivate func startObserving() {
@@ -223,15 +245,15 @@ extension ServerItemViewModel: ServerViewModel {
     }
 
     var countryName: String {
-        return LocalizationUtility.default.countryName(forCode: serverModel.countryCode) ?? ""
+        return LocalizationUtility.default.countryName(forCode: serverModel.logical.exitCountryCode) ?? ""
     }
 
     var countryFlag: UIImage? {
-        return UIImage.flag(countryCode: serverModel.countryCode)
+        return UIImage.flag(countryCode: serverModel.logical.exitCountryCode)
     }
 
     var translatedCity: String? {
-        return serverModel.translatedCity
+        return serverModel.logical.translatedCity
     }
 
     var textColor: UIColor {

@@ -25,6 +25,7 @@ let package = Package(
         .package(path: "../Foundations/PMLogger"),
         .package(path: "../Foundations/Strings"),
         .package(path: "../Foundations/Timer"),
+        .package(path: "../Shared/Localization"),
 
         .package(path: "../Shared/ExtensionIPC"),
 
@@ -67,6 +68,7 @@ let package = Package(
                 "VPNShared",
                 "VPNCrypto",
                 "Strings",
+                "Localization",
                 .product(name: "ProtonCoreUtilities", package: "protoncore"),
                 .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay")
             ]

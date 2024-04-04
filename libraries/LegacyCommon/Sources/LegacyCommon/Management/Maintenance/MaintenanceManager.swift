@@ -22,6 +22,10 @@
 
 import Foundation
 
+import Dependencies
+
+import Domain
+
 public protocol MaintenanceManagerFactory {
     func makeMaintenanceManager() -> MaintenanceManagerProtocol
 }
@@ -35,7 +39,7 @@ public protocol MaintenanceManagerProtocol {
 
 public class MaintenanceManager: MaintenanceManagerProtocol {
     
-    public typealias Factory = VpnApiServiceFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & ServerStorageFactory & VpnKeychainFactory
+    public typealias Factory = VpnApiServiceFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & VpnKeychainFactory
     
     private let factory: Factory
     
@@ -44,7 +48,6 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
     private lazy var vpnGateWay: VpnGatewayProtocol = self.factory.makeVpnGateway()
     private lazy var vpnKeychain: VpnKeychainProtocol = self.factory.makeVpnKeychain()
     private lazy var alertService: CoreAlertService = self.factory.makeCoreAlertService()
-    private lazy var serverStorage: ServerStorage = self.factory.makeServerStorage()
     
     private var timer: Timer?
     
@@ -115,7 +118,14 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
                 ) { result in
                     switch result {
                     case let .success(servers):
-                        self.serverStorage.store(servers, keepStalePaidServers: isFree)
+                        @Dependency(\.serverRepository) var repository
+                        if !isFree {
+                            let updatedServerIDs = servers.reduce(into: Set<String>(), { $0.insert($1.id) })
+                            let deletedServerCount = repository.delete(serversWithMinTier: .paidTier, withIDsNotIn: updatedServerIDs)
+                            log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
+                        }
+                        repository.upsert(servers: servers.map { VPNServer(legacyModel: $0) })
+                        NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
                         completion?(true)
                     case let .failure(error):
                         failure?(error)

@@ -23,6 +23,8 @@ import Foundation
 
 import Domain
 import VPNAppCore
+import Persistence
+import Dependencies
 
 // This is needed to maintain compatibility with how profiles are stored on disk
 // whilst improving them with dynamic server models
@@ -30,10 +32,12 @@ public struct ServerWrapper: Codable {
     
     private var _server: ServerModel
     public var server: ServerModel {
-        if let latestServerModel = ServerManagerImplementation.instance(forTier: .paidTier, serverStorage: ServerStorageConcrete()).servers.first(where: { (serverModel) -> Bool in
-            return _server == serverModel
-        }) {
-            return latestServerModel
+        @Dependency(\.serverRepository) var serverRepository: ServerRepository
+        if let vpnServer = serverRepository.getFirstServer(
+            filteredBy: [.logicalID(_server.id)],
+            orderedBy: .fastest
+        ){
+            return ServerModel(server: vpnServer)
         } else {
             return _server
         }
@@ -104,26 +108,6 @@ public enum ServerOffering: Equatable, Codable {
     public func encode(with aCoder: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
-
-    public func supports(connectionProtocol: ConnectionProtocol,
-                         withCountryGroup grouping: ServerGroup?,
-                         smartProtocolConfig: SmartProtocolConfig) -> Bool {
-        switch self {
-        case .fastest(let countryCode), .random(let countryCode):
-            guard let grouping else {
-                return true
-            }
-            assert(grouping.serverOfferingId == countryCode, "Mismatched grouping while checking server protocol support (\(grouping.kind))")
-            return grouping.servers.contains {
-                $0.supports(connectionProtocol: connectionProtocol,
-                            smartProtocolConfig: smartProtocolConfig)
-            }
-
-        case .custom(let wrapper):
-            return wrapper.server.supports(connectionProtocol: connectionProtocol,
-                                           smartProtocolConfig: smartProtocolConfig)
-        }
-    }
     
     // MARK: - Static functions
     public static func == (lhs: ServerOffering, rhs: ServerOffering) -> Bool {
@@ -139,11 +123,37 @@ public enum ServerOffering: Equatable, Codable {
     }
 }
 
-extension ServerGroup {
-    public var serverOfferingId: String {
+extension ServerOffering {
+
+    /// Check if offering can find any actually available server/protocol
+    public func supports(connectionProtocol: ConnectionProtocol,
+                         withCountryGroup grouping: ServerGroupInfo?,
+                         smartProtocolConfig: SmartProtocolConfig) -> Bool {
+        switch self {
+        case .fastest(let countryCode), .random(let countryCode):
+            guard let grouping else {
+                return true
+            }
+            assert(grouping.serverOfferingID == countryCode, "Mismatched grouping while checking server protocol support (\(grouping.kind))")
+
+            let supportedProtocols = connectionProtocol.vpnProtocol != nil
+                ? [connectionProtocol.vpnProtocol!]
+                : smartProtocolConfig.supportedProtocols
+
+            return !grouping.protocolSupport.isDisjoint(with: ProtocolSupport(vpnProtocols: supportedProtocols))
+
+        case .custom(let wrapper):
+            return wrapper.server.supports(connectionProtocol: connectionProtocol,
+                                           smartProtocolConfig: smartProtocolConfig)
+        }
+    }
+}
+
+extension ServerGroupInfo {
+    public var serverOfferingID: String {
         switch kind {
-        case .country(let countryModel):
-            return countryModel.countryCode
+        case .country(let countryCode):
+            return countryCode
         case .gateway(let name):
             return "gateway-\(name)"
         }

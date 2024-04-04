@@ -23,6 +23,7 @@
 import Foundation
 import Reachability
 import LegacyCommon
+import Localization
 import Strings
 import os.log
 

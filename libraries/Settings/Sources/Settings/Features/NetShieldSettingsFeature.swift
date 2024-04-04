@@ -20,6 +20,7 @@ import Foundation
 
 import ComposableArchitecture
 
+import Localization
 import Strings
 
 public enum NetShieldType: LocalizedStringConvertible {

@@ -18,6 +18,10 @@
 
 import Foundation
 
+import Dependencies
+
+import Domain
+
 /// This exists because the `attemptSilentLogIn()` function needs to be overridden.
 class AppSessionRefresherMock: AppSessionRefresherImplementation {
     var didAttemptLogin: (() -> Void)?
@@ -39,23 +43,37 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
             return
         }
 
-        vpnApiService.refreshServerInfo(freeTier: isFreeTier) { result in
-            switch result {
-            case let .success(properties):
-                guard let properties else {
-                    completion(.success)
-                    return
+        // The completion handler of vpnApiService.refreshServerInfo is escaping, so it's necessary to manually
+        // propagate dependencies here
+        withEscapedDependencies { dependencies in
+            vpnApiService.refreshServerInfo(freeTier: isFreeTier) { result in
+                // Inside this closure, dependencies defined on this object are now not guaranteed to be what we expect
+                dependencies.yield {
+                    // Access correct dependencies (e.g. those applied with withDependencies inside tests)
+                    switch result {
+                    case let .success(properties):
+                        guard let properties else {
+                            completion(.success)
+                            return
+                        }
+                        if let userLocation = properties.location {
+                            self.propertiesManager.userLocation = userLocation
+                        }
+                        if let services = properties.streamingServices {
+                            self.propertiesManager.streamingServices = services.streamingServices
+                        }
+                        if !isFreeTier {
+                            let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
+                            let deletedServerCount = self.serverRepository.delete(serversWithMinTier: .paidTier, withIDsNotIn: updatedServerIDs)
+                            log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
+                        }
+                        self.serverRepository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
+                        NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
+                        completion(.success)
+                    case let .failure(error):
+                        completion(.failure(error))
+                    }
                 }
-                if let userLocation = properties.location {
-                    self.propertiesManager.userLocation = userLocation
-                }
-                if let services = properties.streamingServices {
-                    self.propertiesManager.streamingServices = services.streamingServices
-                }
-                self.serverStorage.store(properties.serverModels, keepStalePaidServers: isFreeTier)
-                completion(.success)
-            case let .failure(error):
-                completion(.failure(error))
             }
         }
     }

@@ -22,12 +22,21 @@
 
 import Foundation
 
+import Dependencies
+
+import Ergonomics
 import Domain
+
+import Persistence
 import VPNAppCore
 
 /// Selects the most suitable server to connect to
+///
+/// - Note: Does not select gateway servers unless the request explicitly specified a gateway server using
+/// `CountryConnectionRequestType.server)`
 class VpnServerSelector {
-    
+    @Dependency(\.serverRepository) var repository
+
     // Callbacks
     public var changeActiveServerType: ((_ serverType: ServerType) -> Void)?
     public var getCurrentAppState: AppStateGetter
@@ -38,142 +47,148 @@ class VpnServerSelector {
     // Settings for selection
     private var serverTypeToggle: ServerType
     private var userTier: Int
-    private var serverGrouping: [ServerGroup]
     private var connectionProtocol: ConnectionProtocol
     private var smartProtocolConfig: SmartProtocolConfig
     
-    public init(serverType: ServerType,
-                userTier: Int,
-                serverGrouping: [ServerGroup],
-                connectionProtocol: ConnectionProtocol,
-                smartProtocolConfig: SmartProtocolConfig,
-                appStateGetter: @escaping AppStateGetter) {
+    public init(
+        serverType: ServerType,
+        userTier: Int,
+        connectionProtocol: ConnectionProtocol,
+        smartProtocolConfig: SmartProtocolConfig,
+        appStateGetter: @escaping AppStateGetter
+    ) {
         self.serverTypeToggle = serverType
         self.userTier = userTier
-        self.serverGrouping = serverGrouping
         self.getCurrentAppState = appStateGetter
         self.connectionProtocol = connectionProtocol
         self.smartProtocolConfig = smartProtocolConfig
     }
-    
-    /// Returns a server that best suits connection request.
-    /// Servers list is set in constructor, so this is a one time use object.
+
+    private var supportedProtocols: ProtocolSupport {
+        switch connectionProtocol {
+        case .vpnProtocol(let vpnProtocol):
+            return vpnProtocol.protocolSupport
+        case .smartProtocol:
+            return smartProtocolConfig.supportedProtocols
+                .reduce(.zero, { $0.union($1.protocolSupport) })
+        }
+    }
+
+    private var supportsCurrentProtocol: VPNServerFilter {
+        return .supports(protocol: supportedProtocols)
+    }
+
+    /// Returns a server that best suits connection request
     public func selectServer(connectionRequest: ConnectionRequest) -> ServerModel? {
         // use the ui to determine connection type if unspecified
         let type = connectionRequest.serverType == .unspecified ? serverTypeToggle : connectionRequest.serverType
-        
-        var sortedServers: [ServerModel]
-        let forSpecificCountry: Bool
 
-        switch connectionRequest.connectionType {
-        case ConnectionRequestType.country(let countryCode, _): // TODO: add connection by gateway
-            guard let countryGroup = userAccessibleGrouping(type, countryCode: countryCode, serverGrouping: serverGrouping) else {
-                return nil
-            }
-            sortedServers = countryGroup.servers.sorted(by: { ($1.tier, $0.score) < ($0.tier, $1.score) }) // sort by highest tier first, then lowest score
-            forSpecificCountry = true
-        case let .city(country: countryCode, city: city):
-            guard let countryGroup = userAccessibleGrouping(type, countryCode: countryCode, serverGrouping: serverGrouping) else {
-                return nil
-            }
-            sortedServers = countryGroup.servers.filter({ $0.city == city }).sorted(by: { ($1.tier, $0.score) < ($0.tier, $1.score) }) // sort by highest tier first, then lowest score
-            forSpecificCountry = false
-        default:
-            sortedServers = serverGrouping
-                .map({ $0.servers })
-                .flatMap({ $0 })
-                .sorted(by: { $0.score < $1.score }) // sort by highest tier first, then lowest score
-            forSpecificCountry = false
-        }
+        let baseFilters = connectionRequest.locationFilters + [type.serverFilter]
+        let order: VPNServerOrder = connectionRequest.ordering
 
-        // Don't include restricted servers. They are selected only manually atm (VPNAPPL-1841)
-        sortedServers = sortedServers.filter { !$0.feature.contains(.restricted) }
-            
-        let servers = filter(servers: sortedServers, forSpecificCountry: forSpecificCountry, type: type)
-        
-        guard !servers.isEmpty else {
+        // Additional filters that make the query blazingly fast by letting us determine if there is a single best
+        // server to connect to. If not, we can run the query again without these to determine the unavailability reason
+        let additionalFilters = [supportsCurrentProtocol, .tier(.max(tier: userTier)), .isNotUnderMaintenance]
+
+        let filters = baseFilters + additionalFilters
+
+        log.info(
+            "Selecting server",
+            category: .persistence,
+            metadata: [
+                "connectionRequest": "\(connectionRequest)",
+                "filters": "\(filters)",
+                "order": "\(order)"
+            ]
+        )
+
+        let result = repository.getFirstServer(filteredBy: filters, orderedBy: order)
+
+        guard let server = result else {
+            log.error("No servers satisfy requested criteria", category: .persistence)
+
+            determineAndNotifyUnavailabilityReason(
+                forSpecificCountry: true,
+                type: type,
+                baseFilters: baseFilters
+            )
             return nil
         }
-        
-        let filtered: [ServerModel]
-        if type != .tor {
-            filtered = servers.filter { $0.feature.contains(.tor) == false } // only include tor servers if those are the servers we explicitly want
-        } else {
-            filtered = servers
-        }
-        
+
         changeActiveServerType?(type)
-        
-        if !filtered.isEmpty {
-            return pickServer(from: filtered, connectionRequest: connectionRequest)
-        }
-        
-        if case AppState.preparingConnection = getCurrentAppState() {
-            return pickServer(from: servers, connectionRequest: connectionRequest)
-        } else {
-            return nil
-        }
+        return ServerModel(server: server)
     }
-    
-    private func userAccessibleGrouping(_ type: ServerType, countryCode: String, serverGrouping: [ServerGroup]) -> ServerGroup? {
-        return serverGrouping
-            .filter {
-                if case .country(let country) = $0.kind {
-                    return country.countryCode == countryCode
-                }
-                return false
-            }
-            .first
-    }
-    
-    private func pickServer(from servers: [ServerModel], connectionRequest: ConnectionRequest) -> ServerModel? {
-        switch connectionRequest.connectionType {
-        case .fastest:
-            return servers.first
-        case .random:
-            return servers.randomElement()
-        case .country(_, let countryType):
-            switch countryType {
-            case .fastest:
-                return servers.first
-            case .random:
-                return servers.randomElement()
-            case .server(let server):
-                return server
-            }
-        case .city:
-            return servers.first
-        }
-    }
-    
-    private func filter(servers: [ServerModel],
-                        forSpecificCountry: Bool,
-                        type: ServerType) -> [ServerModel] {
-        let serversSupportingProtocol = servers.filter {
-            $0.supports(connectionProtocol: connectionProtocol,
-                        smartProtocolConfig: smartProtocolConfig)
-        }
 
-        guard !serversSupportingProtocol.isEmpty else {
+    private func determineAndNotifyUnavailabilityReason(
+        forSpecificCountry: Bool,
+        type: ServerType,
+        baseFilters: [VPNServerFilter]
+    ) {
+        let servers = repository.getServers(filteredBy: baseFilters, orderedBy: .none)
+
+        // If servers are already empty, we will return `protocolNotSupported` unless we add a new `locationNotFound`
+
+        let serversSupportingProtocol = servers.filter { !$0.protocolSupport.isDisjoint(with: supportedProtocols) }
+        if serversSupportingProtocol.isEmpty {
             notifyResolutionUnavailable?(forSpecificCountry, type, .protocolNotSupported)
-            return []
+            return
         }
 
-        let serversWithoutUpgrades = serversSupportingProtocol.filter { $0.tier <= userTier }
-        guard !serversWithoutUpgrades.isEmpty else {
-            notifyResolutionUnavailable?(forSpecificCountry, type, .upgrade(servers.reduce(Int.max, { (lowestTier, server) -> Int in
-                return lowestTier > server.tier ? server.tier : lowestTier
-            })))
-            return []
+        let serversNotRequiringUpgrade = serversSupportingProtocol.filter { userTier >= $0.logical.tier }
+        if serversNotRequiringUpgrade.isEmpty {
+            let lowestTier = serversSupportingProtocol.map(\.logical.tier).min()! // we already checked it's not empty
+            notifyResolutionUnavailable?(forSpecificCountry, type, .upgrade(lowestTier))
+            return
         }
 
-        let serversWithoutMaintenance = serversWithoutUpgrades.filter { !$0.underMaintenance }
-        guard !serversWithoutMaintenance.isEmpty else {
+        let serversWithoutMaintenance = serversNotRequiringUpgrade.filter { $0.logical.status != 0 }
+        if serversWithoutMaintenance.isEmpty {
             notifyResolutionUnavailable?(forSpecificCountry, type, .maintenance)
-            return []
+            return
         }
-
-        return serversWithoutMaintenance
     }
     
+}
+
+extension ConnectionRequest {
+
+    var locationFilters: [VPNServerFilter] {
+        switch connectionType {
+        case .country(let countryCode, .fastest), .country(let countryCode, .random):
+            return [.kind(.country(code: countryCode))] // inherently excludes gateways
+
+        case .country(_, .server(let model)):
+            return [.logicalID(model.id)]
+
+        case .city(let countryCode, let city):
+            return [.kind(.country(code: countryCode)), .city(city)]
+
+        case .fastest, .random:
+            // Exclude gateways. We could also use the .kind(.country) filter for this purpose.
+            return [.features(.init(required: .zero, excluded: .restricted))]
+        }
+    }
+
+    var ordering: VPNServerOrder {
+        switch connectionType {
+        case .country(_, let requestType):
+            switch requestType {
+            case .fastest:
+                return .fastest
+            case .random:
+                return .random
+            case .server:
+                return .fastest
+            }
+
+        case .city(_, _):
+            return .fastest
+
+        case .fastest:
+            return .fastest
+
+        case .random:
+            return .random
+        }
+    }
 }

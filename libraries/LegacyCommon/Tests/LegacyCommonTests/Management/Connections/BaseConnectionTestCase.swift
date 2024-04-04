@@ -25,13 +25,15 @@ import GoLibs
 
 import Domain
 import ExtensionIPC
+import Persistence
+import PersistenceTestSupport
 import VPNShared
 
 @testable import LegacyCommon
 
 /// This class has no test cases, it's meant to be subclassed as it contains all of the
 /// base dependencies required for fully mocking business logic & connection flows.
-class BaseConnectionTestCase: XCTestCase {
+class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
     let expectationTimeout: TimeInterval = 10
     let neVpnEvents = [NEVPNConnectionMock.connectionCreatedNotification,
                        NEVPNConnectionMock.tunnelStateChangeNotification,
@@ -63,16 +65,35 @@ class BaseConnectionTestCase: XCTestCase {
                                     profileId: nil,
                                     trigger: nil)
 
-    override func setUp() async throws {
-        try await super.setUp()
-        container = MockDependencyContainer()
+    func disconnectGatewayWithOverriddenDependencies(_ completion: @escaping () -> Void = {}) {
+        withDependencies { $0.serverRepository = repository } operation: {
+            container.vpnGateway.disconnect(completion: completion)
+        }
+    }
+
+    func processGatewayConnectionRequestWithOverriddenDependencies(request: ConnectionRequest) -> Void {
+        withDependencies { $0.serverRepository = repository } operation: {
+            container.vpnGateway.connect(with: request)
+        }
+    }
+
+    override func setUpWithError() throws {
+        try super.setUpWithError()
+
+        container = withDependencies {
+            $0.serverRepository = repository
+        } operation: {
+            return MockDependencyContainer()
+        }
         container.propertiesManager.featureFlags = testData.defaultClientConfig.featureFlags
 
+        let initialServers = [testData.server1]
         container.networkingDelegate.didHitRoute = didHitRoute
-        container.networkingDelegate.apiServerList = [testData.server1]
+        container.networkingDelegate.apiServerList = initialServers
         container.networkingDelegate.apiVpnLocation = .mock
         container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
-        container.serverStorage.populateServers(container.networkingDelegate.apiServerList)
+
+        repository.upsert(servers: initialServers.map { VPNServer(legacyModel: $0) })
 
         for name in neVpnEvents {
             NotificationCenter.default.addObserver(self, selector: #selector(handleNEVPNEvent(_:)), name: name, object: nil)
@@ -246,8 +267,8 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
     let localAgentEventQueue = DispatchQueue(label: "local agent testing event queue")
     let laConsts = LocalAgentConstants()!
 
-    override func setUp() async throws {
-        try await super.setUp()
+    override func setUpWithError() throws {
+        try super.setUpWithError()
 
         mockProviderState.shouldRefresh = false
         container.vpnKeychain.setVpnCredentials(with: "plus", maxTier: .paidTier)
@@ -331,7 +352,10 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
     }
 
     func awaitExpectations() {
-        wait(for: expectationsToAwait, timeout: expectationTimeout)
+        withDependencies({ $0.serverRepository = repository }, operation: {
+            wait(for: expectationsToAwait, timeout: expectationTimeout)
+        })
+
 
         Self.expectationManagementQueue.sync {
             expectationsToFulfill = [:]
@@ -348,7 +372,9 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
         populateExpectations(description: subcase.description, subcase.expectations)
         currentSubcaseDescription = "\(subcase.description)"
 
-        subcase.closure()
+        withDependencies({ $0.serverRepository = repository }, operation: {
+            subcase.closure()
+        })
 
         guard !expectationsToFulfill.isEmpty else { return }
 
@@ -371,7 +397,7 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
         }
 
         populateExpectations(description: "test case connection for \(caller)", expectations)
-        container.vpnGateway.connect(with: request)
+        processGatewayConnectionRequestWithOverriddenDependencies(request: request)
         awaitExpectations()
 
         guard let protocolConfig = self.manager?.protocolConfiguration as? NETunnelProviderProtocol else {
@@ -387,7 +413,10 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
 
     func disconnectSynchronously(_ caller: String = #function) {
         populateExpectations(description: "disconnect for \(caller)", [.vpnDisconnection])
-        container.vpnGateway.disconnect()
+
+        withDependencies({ $0.serverRepository = repository }, operation: {
+            container.vpnGateway.disconnect()
+        })
         awaitExpectations()
         
         expectationsToFulfill = [:]

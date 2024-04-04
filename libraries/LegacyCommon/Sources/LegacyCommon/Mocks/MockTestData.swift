@@ -19,6 +19,8 @@
 #if DEBUG
 import Foundation
 
+import Domain
+
 public struct MockTestData {
     public struct VPNLocationResponse: Codable, Equatable {
         let ip: String
@@ -155,7 +157,7 @@ public struct MockTestData {
                               tier: .paidTier,
                               feature: .zero,
                               city: "Zurich",
-                              ips: [.init(id: "mnop",
+                              ips: [.init(id: "qrst",
                                           entryIp: "10.0.0.10",
                                           exitIp: "10.0.0.11",
                                           domain: "withrelay2.protonvpn.net",
@@ -180,7 +182,7 @@ public struct MockTestData {
                               tier: .paidTier,
                               feature: .zero,
                               city: "Zurich",
-                              ips: [.init(id: "mnop",
+                              ips: [.init(id: "uvwx",
                                           entryIp: "10.0.0.13",
                                           exitIp: "10.0.0.14",
                                           domain: "withrelay3.protonvpn.net",
@@ -200,12 +202,12 @@ public struct MockTestData {
               name: "exclusive plus server",
               domain: "withrelay3.protonvpn.ch",
               load: 42,
-              entryCountryCode: "CH",
+              entryCountryCode: "IS",
               exitCountryCode: "CH",
               tier: .paidTier,
               feature: [.ipv6, .p2p, .partner, .restricted, .secureCore, .streaming, .tor],
               city: "Zurich",
-              ips: [.init(id: "mnop",
+              ips: [.init(id: "yzab",
                           entryIp: "10.0.0.13",
                           exitIp: "10.0.0.14",
                           domain: "withrelay3.protonvpn.net",
@@ -232,7 +234,7 @@ public struct MockTestData {
                               tier: .paidTier,
                               feature: .zero,
                               city: "Zurich",
-                              ips: [.init(id: "mnop",
+                              ips: [.init(id: "zyxw",
                                           entryIp: "10.0.0.13",
                                           exitIp: "10.0.0.14",
                                           domain: "withrelay3.protonvpn.net",
@@ -345,4 +347,16 @@ extension SmartProtocolConfig {
     public static let onlyWgTcpAndTls = SmartProtocolConfig(openVPN: false, iKEv2: false, wireGuardUdp: false, wireGuardTcp: true, wireGuardTls: true)
     public static let onlyIke = SmartProtocolConfig(openVPN: false, iKEv2: true, wireGuardUdp: false, wireGuardTcp: false, wireGuardTls: false)
 }
+
+extension ServerModel {
+    var serverInfo: ServerInfo {
+        let vpnServer = VPNServer(legacyModel: self)
+
+        return ServerInfo(
+            logical: vpnServer.logical,
+            protocolSupport: vpnServer.supportedProtocols
+        )
+    }
+}
+
 #endif

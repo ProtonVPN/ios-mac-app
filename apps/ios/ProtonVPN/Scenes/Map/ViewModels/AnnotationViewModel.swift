@@ -23,6 +23,7 @@
 import UIKit
 import CoreLocation
 import LegacyCommon
+import Localization
 import Strings
 
 enum AnnotationViewState {

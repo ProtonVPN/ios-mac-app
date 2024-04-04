@@ -39,7 +39,6 @@ public protocol VpnGateway2Factory {
 public class VpnGateway2: VpnGatewayProtocol2 {
 
     private let appStateManager: AppStateManager
-    private let serverStorage: ServerStorage
     private let propertiesManager: PropertiesManagerProtocol
     private let serverTierChecker: ServerTierChecker
     private let availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory
@@ -52,12 +51,10 @@ public class VpnGateway2: VpnGatewayProtocol2 {
         SafeModePropertyProviderFactory &
         PropertiesManagerFactory &
         AvailabilityCheckerResolverFactory &
-        ServerStorageFactory &
         ServerTierCheckerFactory
 
     init(_ factory: Factory) {
         self.appStateManager = factory.makeAppStateManager()
-        self.serverStorage = factory.makeServerStorage()
         self.propertiesManager = factory.makePropertiesManager()
         self.serverTierChecker = factory.makeServerTierChecker()
         self.availabilityCheckerResolverFactory = factory
@@ -142,17 +139,11 @@ public class VpnGateway2: VpnGatewayProtocol2 {
 
         let type = intent.serverType
 
-        let serverManager: ServerManager = ServerManagerImplementation.instance(
-            forTier: currentUserTier,
-            serverStorage: serverStorage
-        )
-
         // todo: when old code is deleted, refactor server selector to throw directly
         var notifyResolutionUnavailableCalled: (forSpecificCountry: Bool, type: ServerType, reason: ResolutionUnavailableReason)?
 
         let selector = VpnServerSelector(serverType: type,
                                          userTier: currentUserTier,
-                                         serverGrouping: serverManager.grouping(for: type),
                                          connectionProtocol: connectionProtocol,
                                          smartProtocolConfig: propertiesManager.smartProtocolConfig,
                                          appStateGetter: { [unowned self] in

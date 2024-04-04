@@ -16,7 +16,6 @@ let package = Package(
         .library(
             name: "ConnectionDetails",
             targets: ["ConnectionDetails"]),
-
         .library(
             name: "ConnectionDetails-iOS",
             targets: ["ConnectionDetails-iOS"]),
@@ -26,11 +25,13 @@ let package = Package(
     ],
     dependencies: [
         // Local
-        .package(path: "../../external/protoncore"),
         .package(path: "../Foundations/Theme"),
-        .package(path: "../SharedViews"),
         .package(path: "../Foundations/Strings"),
+        .package(path: "../Shared/Localization"),
+        .package(path: "../Shared/Persistence"),
+        .package(path: "../SharedViews"),
         .package(path: "../NEHelper"),
+        .package(path: "../../external/protoncore"),
 
         // 3rd party
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.0.0")),
@@ -39,6 +40,8 @@ let package = Package(
         .target(
             name: "ConnectionDetails",
             dependencies: [
+                "Localization",
+                "Persistence",
                 "Strings",
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
@@ -47,14 +50,11 @@ let package = Package(
         .target(
             name: "ConnectionDetails-iOS",
             dependencies: [
-                "Strings",
                 "ConnectionDetails",
                 "SharedViews",
                 .product(name: "Theme", package: "Theme"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
-                // 3rd party
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ],
             resources: []
         ),
@@ -62,7 +62,6 @@ let package = Package(
             name: "ConnectionDetails-macOS",
             dependencies: [
                 "ConnectionDetails",
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Theme", package: "Theme"),
             ],
             resources: []

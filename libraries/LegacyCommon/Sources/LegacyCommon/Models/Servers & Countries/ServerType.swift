@@ -20,7 +20,11 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+
+import Domain
+import Persistence
 import Strings
+import Persistence
 
 public enum ServerType: Int, Codable, CustomStringConvertible {
     case standard = 0
@@ -100,5 +104,39 @@ public enum ServerType: Int, Codable, CustomStringConvertible {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CoderKey.self)
         try container.encode(self.rawValue, forKey: .serverType)
+    }
+}
+
+public extension ServerType {
+
+    /// Feature filter for searching the repository
+    var serverTypeFilter: VPNServerFilter.ServerFeatureFilter {
+        switch self {
+        case .standard:
+            return .standard
+        case .secureCore:
+            return .secureCore
+        case .p2p:
+            return .standard(with: .p2p)
+        case .tor:
+            return .standard(with: .tor)
+        case .unspecified:
+            return .standard
+        }
+    }
+
+    var serverFilter: VPNServerFilter {
+        switch self {
+        case .secureCore:
+            return .features(.secureCore)
+        case .tor:
+            return .features(.standard(with: .tor))
+        case .standard:
+            return .features(.standard(without: .tor))
+        case .p2p:
+            return .features(.standard(with: .p2p))
+        case .unspecified:
+            return .features(.init(required: .zero, excluded: .zero))
+        }
     }
 }

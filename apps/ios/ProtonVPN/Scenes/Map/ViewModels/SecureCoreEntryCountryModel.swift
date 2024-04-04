@@ -23,6 +23,7 @@
 import CoreLocation
 import UIKit
 import LegacyCommon
+import Localization
 import Strings
 
 class SecureCoreEntryCountryModel: AnnotationViewModel, Hashable {

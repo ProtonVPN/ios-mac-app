@@ -48,8 +48,7 @@ public enum ConnectionStatus {
     }
 }
 
-public enum ResolutionUnavailableReason {
-    
+public enum ResolutionUnavailableReason: Equatable {
     case upgrade(Int)
     case maintenance
     case protocolNotSupported
@@ -102,7 +101,8 @@ public protocol VpnGatewayFactory {
 
 public class VpnGateway: VpnGatewayProtocol {
     @Dependency(\.profileAuthorizer) var profileAuthorizer
-    
+    @Dependency(\.serverRepository) var repository
+
     private let vpnApiService: VpnApiService
     private let appStateManager: AppStateManager
     private let profileManager: ProfileManager
@@ -111,7 +111,6 @@ public class VpnGateway: VpnGatewayProtocol {
     private let authKeychain: AuthKeychainHandle
     private let availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory
     
-    private let serverStorage: ServerStorage
     private let propertiesManager: PropertiesManagerProtocol
 
     private let siriHelper: SiriHelperProtocol?
@@ -120,10 +119,6 @@ public class VpnGateway: VpnGatewayProtocol {
         return (try? userTier()) ?? .freeTier
     }
 
-    private var serverManager: ServerManager {
-        return ServerManagerImplementation.instance(forTier: tier, serverStorage: serverStorage)
-    }
-   
     private var serverTypeToggle: ServerType {
         return propertiesManager.secureCoreToggle ? .secureCore : .standard
     }
@@ -185,7 +180,6 @@ public class VpnGateway: VpnGatewayProtocol {
         PropertiesManagerFactory &
         ProfileManagerFactory &
         AvailabilityCheckerResolverFactory &
-        ServerStorageFactory &
         VpnConnectionInterceptDelegate
 
     public convenience init(_ factory: Factory) {
@@ -202,7 +196,6 @@ public class VpnGateway: VpnGatewayProtocol {
             propertiesManager: factory.makePropertiesManager(),
             profileManager: factory.makeProfileManager(),
             availabilityCheckerResolverFactory: factory,
-            serverStorage: factory.makeServerStorage(),
             connectionIntercepts: factory.vpnConnectionInterceptPolicies
         )
     }
@@ -220,7 +213,6 @@ public class VpnGateway: VpnGatewayProtocol {
         propertiesManager: PropertiesManagerProtocol,
         profileManager: ProfileManager,
         availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory,
-        serverStorage: ServerStorage,
         connectionIntercepts: [VpnConnectionInterceptPolicyItem] = []
     ) {
         self.vpnApiService = vpnApiService
@@ -241,7 +233,6 @@ public class VpnGateway: VpnGatewayProtocol {
 
         let state = appStateManager.state
         self.connection = ConnectionStatus.forAppState(state)
-        self.serverStorage = serverStorage
         /// Sometimes when launching the app, the `AppStateManager` will post `.AppStateManager.stateChange` notification
         /// before `VPNGateway` has a chance of registering for that notification. For this event we're posting it here.
         postConnectionInformation()
@@ -407,7 +398,7 @@ public class VpnGateway: VpnGatewayProtocol {
             })
         }
     }
-    
+
     public func connect(with request: ConnectionRequest?) {
         let `protocol` = request?.connectionProtocol ?? globalConnectionProtocol
 
@@ -472,7 +463,6 @@ public class VpnGateway: VpnGatewayProtocol {
             
             let selector = VpnServerSelector(serverType: type,
                                              userTier: currentUserTier,
-                                             serverGrouping: serverManager.grouping(for: type),
                                              connectionProtocol: connectionRequest.connectionProtocol,
                                              smartProtocolConfig: propertiesManager.smartProtocolConfig,
                                              appStateGetter: { [unowned self] in
@@ -540,7 +530,13 @@ public class VpnGateway: VpnGatewayProtocol {
                     if let services = properties.streamingServices {
                         self.propertiesManager.streamingServices = services.streamingServices
                     }
-                    self.serverStorage.store(properties.serverModels, keepStalePaidServers: refreshFreeTierInfo)
+                    if refreshFreeTierInfo {
+                        let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
+                        let deletedServerCount = repository.delete(serversWithMinTier: .paidTier, withIDsNotIn: updatedServerIDs)
+                        log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
+                    }
+                    repository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
+                    NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
                     self.profileManager.refreshProfiles()
                 case .failure:
                     // Ignore failures as this is a non-critical call
@@ -548,7 +544,7 @@ public class VpnGateway: VpnGatewayProtocol {
                 }
             }
         }
-        
+
         siriHelper?.donateDisconnect()
         appStateManager.disconnect(completion: completionWrapper)
     }
@@ -715,7 +711,8 @@ fileprivate extension VpnGateway {
                 switch result {
                 case .success(let properties):
                     guard let servers = properties?.serverModels else { break }
-                    self?.serverStorage.store(servers)
+                    try? self?.repository.upsert(servers: servers.map { VPNServer(legacyModel: $0) })
+                    NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
                 case .failure(let error):
                     log.error("Encountered error refreshing server list on plan upgrade: \(error)")
                 }
@@ -766,13 +763,10 @@ fileprivate extension VpnGateway {
         guard let previousServer = oldServer else { return nil }
 
         let tier = downgradeInfo.to.maxTier
-        let serverManager = ServerManagerImplementation.instance(forTier: downgradeInfo.to.maxTier, serverStorage: serverStorage)
         // Beware: selector selects only non-restricted servers atm. This works now, because
         // if users plan is downgraded, he won't have restricted servers anymore (VPNAPPL-1841)
         let selector = VpnServerSelector(serverType: .unspecified,
                                          userTier: tier,
-                                         serverGrouping:
-                                            serverManager.grouping(for: serverTypeToggle),
                                          connectionProtocol: propertiesManager.connectionProtocol,
                                          smartProtocolConfig: propertiesManager.smartProtocolConfig,
                                          appStateGetter: { [unowned self] in
@@ -800,10 +794,10 @@ fileprivate extension VpnGateway {
             safeMode: request.safeMode,
             intent: request.connectionType
         )
-        return ReconnectInfo(fromServer: .init(name: previousServer.name,
-                                               image: .flag(countryCode: previousServer.countryCode) ?? Image()),
-                             toServer: .init(name: toServer.name,
-                                             image: .flag(countryCode: toServer.countryCode) ?? Image()))
+        return ReconnectInfo(
+            fromServer: .init(name: previousServer.name, image: .flag(countryCode: previousServer.countryCode) ?? Image()),
+            toServer: .init(name: toServer.name, image: .flag(countryCode: toServer.exitCountryCode) ?? Image())
+        )
     }
 
     private func showProtocolDeprecatedAlert(request: ConnectionRequest?) {

@@ -26,7 +26,13 @@ import AppKit
 import Theme
 import Strings
 import ProtonCoreUIFoundations
+import Domain
+import Localization
 
+// FUTUREDO: This is very similar to what we have on iOS.
+// We should work on merging code into one.
+// I'm not doing it now, because there is a high chance
+// that this code will be completely deleted during redesign.
 extension CreateNewProfileViewModel {
     private var fontSize: AppTheme.FontSize {
         return .heading4
@@ -40,14 +46,16 @@ extension CreateNewProfileViewModel {
         AppTheme.Icon.flag(countryCode: countryCode)?.asAttachment(size: .profileIconSize) ?? NSAttributedString(string: "")
     }
 
-    internal func countryDescriptor(for group: ServerGroup) -> NSAttributedString {
+    // MARK: - Country / Gateway
+
+    internal func countryDescriptor(for group: ServerGroupInfo) -> NSAttributedString {
         let imageAttributedString: NSAttributedString
         let countryString: String
 
         switch group.kind {
-        case .country(let country):
-            imageAttributedString = AppTheme.Icon.flag(countryCode: country.countryCode)?.asAttachment(size: .profileIconSize) ?? NSAttributedString(string: "")
-            countryString = "  " + country.countryName
+        case .country(let countryCode):
+            imageAttributedString = AppTheme.Icon.flag(countryCode: countryCode)?.asAttachment(size: .profileIconSize) ?? NSAttributedString(string: "")
+            countryString = "  " + (LocalizationUtility.default.countryName(forCode: countryCode) ?? "")
         case .gateway(let name):
             imageAttributedString = IconProvider.servers.asAttachment(style: .normal, size: .profileIconSize)
             countryString = "  " + name
@@ -76,6 +84,8 @@ extension CreateNewProfileViewModel {
         return NSAttributedString.concatenate(imageAttributedString, nameAttributedString)
     }
 
+    // MARK: - Server
+
     internal func serverDescriptor(for serverOffering: ServerOffering) -> NSAttributedString {
         switch serverOffering {
         case .custom(let serverWrapper):
@@ -88,50 +98,77 @@ extension CreateNewProfileViewModel {
     }
     
     internal func serverDescriptor(for server: ServerModel) -> NSAttributedString {
-        if server.isSecureCore {
-            let via = NSMutableAttributedString(
-                string: "via  ",
+        server.isSecureCore
+            ? serverDescriptorForSecureCore(
+                entryCountry: server.entryCountry,
+                entryCountryCode: server.entryCountryCode
+            )
+            : serverDescriptorForStandard(
+                serverName: server.name,
+                countryCode: server.countryCode,
+                serverTier: server.tier
+            )
+    }
+
+    internal func serverDescriptor(for server: ServerInfo) -> NSAttributedString {
+        return server.logical.feature.contains(.secureCore)
+            ? serverDescriptorForSecureCore(
+                entryCountry: server.logical.entryCountry,
+                entryCountryCode: server.logical.entryCountryCode
+            )
+            : serverDescriptorForStandard(
+                serverName: server.logical.name,
+                countryCode: server.logical.exitCountryCode,
+                serverTier: server.logical.tier
+            )
+    }
+
+    private func serverDescriptorForSecureCore(entryCountry: String, entryCountryCode: String) -> NSAttributedString {
+        let via = NSMutableAttributedString(
+            string: "via  ",
+            attributes: [
+                .font: NSFont.themeFont(fontSize),
+                .baselineOffset: baselineOffset,
+                .foregroundColor: self.color(.text)
+            ]
+        )
+        let entryCountryFlag = flagString(entryCountryCode)
+        let entryCountry = NSMutableAttributedString(
+            string: "  " + entryCountry,
+            attributes: [
+                .font: NSFont.themeFont(fontSize),
+                .baselineOffset: baselineOffset,
+                .foregroundColor: self.color(.text)
+            ]
+        )
+        return NSAttributedString.concatenate(via, entryCountryFlag, entryCountry)
+    }
+
+    private func serverDescriptorForStandard(serverName: String, countryCode: String, serverTier: Int) -> NSAttributedString {
+        let countryFlag = flagString(countryCode)
+        let serverString = "  " + serverName
+        let serverDescriptor: NSAttributedString
+        if userTierSupports(serverWithTier: serverTier) {
+            serverDescriptor = NSMutableAttributedString(
+                string: serverString,
                 attributes: [
                     .font: NSFont.themeFont(fontSize),
                     .baselineOffset: baselineOffset,
                     .foregroundColor: self.color(.text)
                 ]
             )
-            let entryCountryFlag = flagString(server.entryCountryCode)
-            let entryCountry = NSMutableAttributedString(
-                string: "  " + server.entryCountry,
-                attributes: [
-                    .font: NSFont.themeFont(fontSize),
-                    .baselineOffset: baselineOffset,
-                    .foregroundColor: self.color(.text)
-                ]
-            )
-            return NSAttributedString.concatenate(via, entryCountryFlag, entryCountry)
         } else {
-            let countryFlag = flagString(server.countryCode)
-            let serverString = "  " + server.name
-            let serverDescriptor: NSAttributedString
-            if userTierSupports(server: server) {
-                serverDescriptor = NSMutableAttributedString(
-                    string: serverString,
-                    attributes: [
-                        .font: NSFont.themeFont(fontSize),
-                        .baselineOffset: baselineOffset,
-                        .foregroundColor: self.color(.text)
-                    ]
-                )
-            } else {
-                serverDescriptor = NSMutableAttributedString(
-                    string: serverString + " (\(Localizable.upgradeRequired))",
-                    attributes: [
-                        .font: NSFont.themeFont(fontSize),
-                        .baselineOffset: baselineOffset,
-                        .foregroundColor: self.color(.text)
-                    ]
-                )
-            }
-            return NSAttributedString.concatenate(countryFlag, serverDescriptor)
+            serverDescriptor = NSMutableAttributedString(
+                string: serverString + " (\(Localizable.upgradeRequired))",
+                attributes: [
+                    .font: NSFont.themeFont(fontSize),
+                    .baselineOffset: baselineOffset,
+                    .foregroundColor: self.color(.text)
+                ]
+            )
         }
+        return NSAttributedString.concatenate(countryFlag, serverDescriptor)
+
     }
 
     internal func defaultServerDescriptor(image: NSImage, name: String) -> NSAttributedString {

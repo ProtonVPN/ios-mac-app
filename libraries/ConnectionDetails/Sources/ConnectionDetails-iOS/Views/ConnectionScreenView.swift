@@ -23,9 +23,11 @@ import ComposableArchitecture
 import ProtonCoreUIFoundations
 
 import Domain
+import Localization
 import Strings
 import Theme
 import ConnectionDetails
+import Persistence
 import SharedViews
 import VPNAppCore
 import VPNShared
@@ -36,7 +38,7 @@ public struct ConnectionScreenFeature: Reducer {
         public var ipViewState: IPViewFeature.State
         public var connectionSpec: ConnectionSpec
         public var vpnConnectionActual: VPNConnectionActual?
-        public var vpnServer: VpnServer?
+        public var vpnServer: VPNServer?
 
         public init(ipViewState: IPViewFeature.State, connectionSpec: ConnectionSpec, vpnConnectionActual: VPNConnectionActual?) {
             self.ipViewState = ipViewState
@@ -49,10 +51,10 @@ public struct ConnectionScreenFeature: Reducer {
             if let vpnServer {
                 return ConnectionDetailsFeature.State(
                     connectedSince: Date(timeIntervalSinceNow: -180), // todo:
-                    country: "\(LocalizationUtility().countryName(forCode: vpnServer.exitCountryCode) ?? vpnServer.exitCountryCode)",
-                    city: "\(vpnServer.translatedCity ?? "-")",
-                    server: vpnServer.name,
-                    serverLoad: vpnServer.load,
+                    country: "\(LocalizationUtility().countryName(forCode: vpnServer.logical.exitCountryCode) ?? vpnServer.logical.exitCountryCode)",
+                    city: "\(vpnServer.logical.translatedCity ?? "-")",
+                    server: vpnServer.logical.name,
+                    serverLoad: vpnServer.logical.load,
                     protocolName: "\(vpnConnectionActual?.vpnProtocol.description ?? "")"
                 )
             }
@@ -103,7 +105,7 @@ public struct ConnectionScreenFeature: Reducer {
                 }
             }
 
-            if vpnServer?.isVirtual == true {
+            if vpnServer?.logical.isVirtual == true {
                 features.append(.smart)
             }
 
@@ -124,7 +126,7 @@ public struct ConnectionScreenFeature: Reducer {
         /// Watch changes in the connected server
         case watchServerChanges(String?)
         /// Fill in new server info
-        case newServer(VpnServer)
+        case newServer(VPNServer)
     }
 
     public init() {
@@ -162,10 +164,12 @@ public struct ConnectionScreenFeature: Reducer {
                     return .none // todo: cancel previous task
                 }
                 return .run { send in
-                     @Dependency(\.getServerById) var getServerByIdPublisher
-                     for await vpnServer in getServerByIdPublisher(serverId).values {
-                         await send(.newServer(vpnServer), animation: .default)
-                     }
+                    @Dependency(\.serverRepository) var repository
+                    let vpnServer = repository.getFirstServer(
+                        filteredBy: [.logicalID(serverId)],
+                        orderedBy: .fastest
+                    )
+                    await send(.newServer(vpnServer!), animation: .default)
                 }
 
             case .newServer(let vpnServer):

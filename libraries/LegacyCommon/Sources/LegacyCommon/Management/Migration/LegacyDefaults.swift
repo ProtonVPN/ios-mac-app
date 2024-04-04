@@ -40,21 +40,15 @@ public enum LegacyDefaultsMigration {
     #endif
 
     public static func migrateLargeData(from userDefaults: UserDefaults) {
-        @Dependency(\.dataStorage) var dataStorage
-        // Migrate values of large objects that may potentially cause issues if left in user defaults
-        let keysToMigrate = [
+        // Remove values of large objects that may potentially cause issues if left in user defaults
+        let keysForDataToRemove = [
             "servers" // iOS version ~4.1.18, vpn/logicals response grew beyond user defaults XPC limits: VPNAPPL-1676
             // In the future, we may choose to migrate Profiles too.
         ] // hardcoded in case the keys are changed in the future
-        keysToMigrate.forEach { key in
+        keysForDataToRemove.forEach { key in
             if let data = userDefaults.data(forKey: key) {
-                log.debug("Migrating value for key \(key)", category: .persistence)
+                log.debug("Removing value for key \(key)", category: .persistence)
                 userDefaults.removeObject(forKey: key)
-                do {
-                    try dataStorage.store(data, forKey: key)
-                } catch {
-                    log.error("Failed to migrate value for key \(key)", category: .persistence)
-                }
             }
         }
     }

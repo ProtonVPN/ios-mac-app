@@ -40,6 +40,8 @@ let package = Package(
         .package(path: "../Foundations/Timer"),
 
         .package(path: "../Shared/ExtensionIPC"),
+        .package(path: "../Shared/Localization"),
+        .package(path: "../Shared/Persistence"),
 
         .package(path: "../BugReport"),
         .package(path: "../Modals"),
@@ -71,6 +73,8 @@ let package = Package(
                 "Strings",
                 "Theme",
                 "Timer",
+                .product(name: "Persistence", package: "Persistence"),
+                "Localization",
 
                 "ExtensionIPC",
                 .product(name: "VPNShared", package: "NEHelper"),
@@ -151,6 +155,8 @@ let package = Package(
             name: "LegacyCommonTests",
             dependencies: [
                 "LegacyCommon",
+                .product(name: "Persistence", package: "Persistence"),
+                .product(name: "PersistenceTestSupport", package: "Persistence"),
                 .product(name: "TimerMock", package: "Timer"),
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
@@ -159,7 +165,6 @@ let package = Package(
             resources: [
                 .copy("Resources/test_log_1.log"),
                 .copy("Resources/test_log_2.log"),
-                .copy("Resources/ServerManagerTestServers.json")
             ]
         ),
     ]

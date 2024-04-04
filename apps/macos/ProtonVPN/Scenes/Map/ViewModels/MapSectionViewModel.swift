@@ -22,10 +22,19 @@
 
 import Foundation
 import MapKit
+
+import Dependencies
+
+import Domain
+import Ergonomics
+import Localization
+import Persistence
 import LegacyCommon
 
+// Refactor annotation O(n^2) grouping logic when number of secure core servers ever exceed this value
+private let maximumSecureCoreServerCount = 512
+
 struct AnnotationChange {
-    
     let oldAnnotations: [CountryAnnotationViewModel]
     let newAnnotations: [CountryAnnotationViewModel]
 }
@@ -51,7 +60,6 @@ class MapSectionViewModel {
     private let countrySelected = Notification.Name("MapSectionViewModelCountrySelected")
     private let scEntryCountrySelected = Notification.Name("MapSectionViewModelScEntryCountrySelected")
     private let scExitCountrySelected = Notification.Name("MapSectionViewModelScExitCountrySelected")
-    private let serverManager = ServerManagerImplementation.instance(forTier: .paidTier, serverStorage: ServerStorageConcrete())
     private let appStateManager: AppStateManager
     private let vpnGateway: VpnGatewayProtocol
     private let navService: NavigationService
@@ -84,8 +92,7 @@ class MapSectionViewModel {
                                                using: appStateChanged)
         NotificationCenter.default.addObserver(self, selector: #selector(viewToggled(_:)),
                                                name: viewToggle, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState),
-                                               name: serverManager.contentChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState), name: ServerListUpdateNotification.name, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState),
                                                name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
         
@@ -117,8 +124,10 @@ class MapSectionViewModel {
     }
     
     @objc private func resetCurrentState() {
-        setView(activeView)
-        updateConnections()
+        executeOnUIThread {
+            self.setView(self.activeView)
+            self.updateConnections()
+        }
     }
     
     private func updateConnections() {
@@ -181,16 +190,22 @@ class MapSectionViewModel {
     }
     
     private func standardAnnotations(_ userTier: Int) -> [CountryAnnotationViewModel] {
-        return serverManager.grouping(for: .standard).compactMap {
-            guard case ServerGroup.Kind.country(let countryModel) = $0.kind else {
+        @Dependency(\.serverRepository) var repository
+        let isCountry = VPNServerFilter.kind(.country)
+        let isNotSecureCore = VPNServerFilter.features(.standard)
+        let countryGroups = repository.getGroups(filteredBy: [isCountry, isNotSecureCore])
+        return countryGroups.compactMap { group in
+            guard case .country(let code) = group.kind else {
+                assertionFailure("Gateways should have been filtered out but we got: \(group.kind)")
                 return nil
             }
             return StandardCountryAnnotationViewModel(
                 appStateManager: appStateManager,
                 vpnGateway: vpnGateway,
-                country: countryModel,
+                countryCode: code,
+                minTier: group.minTier,
                 userTier: userTier,
-                coordinate: countryModel.location
+                coordinate: LocationUtility.coordinate(forCountry: code)
             )
         }
     }
@@ -218,57 +233,61 @@ class MapSectionViewModel {
         
         updateConnections()
     }
-    
+
+    private func fetchSecureCoreServers() -> [ServerInfo] {
+        @Dependency(\.serverRepository) var repository
+        let isSecureCore = VPNServerFilter.features(.secureCore)
+        let isCountry = VPNServerFilter.kind(.country)
+        return repository.getServers(filteredBy: [isSecureCore, isCountry], orderedBy: .none)
+    }
+
+    /// Let's refactor this during the redesign, or when we trigger the secure core server count assertion.
     private func secureCoreAnnotations(_ userTier: Int) -> [CountryAnnotationViewModel] {
-        let exitCountries = serverManager.grouping(for: .secureCore).compactMap {
-            guard case ServerGroup.Kind.country(let countryModel) = $0.kind else {
-                return nil
-            }
+        let secureCoreServers = fetchSecureCoreServers()
+        assert(secureCoreServers.count < maximumSecureCoreServerCount, "Refactor O(n^2) grouping algorithm")
+
+        let exitCountryCodes = secureCoreServers.map(\.logical.exitCountryCode).uniqued
+        let entryCountryCodes = secureCoreServers.map(\.logical.entryCountryCode).uniqued
+
+        let exitCountryAnnotations: [CountryAnnotationViewModel] = exitCountryCodes.map { exitCountryCode in
+            let servers = secureCoreServers.filter { $0.logical.exitCountryCode == exitCountryCode }
+
             let annotation = SCExitCountryAnnotationViewModel(
                 appStateManager: appStateManager,
                 vpnGateway: vpnGateway,
-                country: countryModel,
-                servers: $0.servers,
+                countryCode: exitCountryCode,
+                minTier: servers.map(\.logical.tier).min() ?? .freeTier,
+                servers: servers,
                 userTier: userTier,
-                coordinate: countryModel.location
+                coordinate: LocationUtility.coordinate(forCountry: exitCountryCode)
             )
             annotation.externalViewStateChange = { [weak self] selection in
-                guard let self = self else {
-                    return
-                }
-
-                self.secureCoreExitSelectionChange(selection)
+                self?.secureCoreExitSelectionChange(selection)
             }
             return annotation
-        } as [CountryAnnotationViewModel]
-        
-        var scEntryCountries: [String: [String]] = [:]
-        for group in serverManager.grouping(for: .secureCore) {
-            for server in group.servers where server.isSecureCore {
-                if scEntryCountries[server.entryCountryCode] != nil {
-                    scEntryCountries[server.entryCountryCode]!.append(server.exitCountryCode)
-                } else {
-                    scEntryCountries[server.entryCountryCode] = [server.exitCountryCode]
-                }
-            }
+        }
+
+        // e.g [CH: [CA, UK, US], IS: [DE, LT]]
+        let entryToExitCountryCodeMap = entryCountryCodes.reduce(into: [:]) { map, entryCode in
+            map[entryCode] = secureCoreServers
+                .filter { $0.logical.entryCountryCode == entryCode }
+                .map(\.logical.exitCountryCode)
         }
         
-        let entryCountries = scEntryCountries.map {
-            let annotation = SCEntryCountryAnnotationViewModel(appStateManager: appStateManager,
-                                                                                   countryCode: $0,
-                                                                              exitCountryCodes: $1,
-                                                                                    coordinate: LocationUtility.coordinate(forCountry: $0))
+        let entryCountryAnnotations: [CountryAnnotationViewModel] = entryToExitCountryCodeMap.map { entry, exits in
+            let annotation = SCEntryCountryAnnotationViewModel(
+                appStateManager: appStateManager,
+                countryCode: entry,
+                exitCountryCodes: exits,
+                coordinate: LocationUtility.coordinate(forCountry: entry)
+            )
             annotation.externalViewStateChange = { [weak self] selection in
-                guard let self = self else {
-                    return
-                }
-
-                self.secureCoreEntrySelectionChange(selection)
+                self?.secureCoreEntrySelectionChange(selection)
             }
             return annotation
-        } as [CountryAnnotationViewModel]
+        }
         
-        return entryCountries + exitCountries
+        return entryCountryAnnotations + exitCountryAnnotations
     }
     
     private func standardConnections() -> [ConnectionViewModel] {

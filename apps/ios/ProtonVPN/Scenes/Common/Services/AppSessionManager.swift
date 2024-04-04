@@ -27,6 +27,7 @@ import Dependencies
 
 import ProtonCoreFeatureFlags
 
+import Domain
 import Ergonomics
 import ExtensionIPC
 import Search
@@ -63,12 +64,11 @@ protocol AppSessionManager {
 }
 
 class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
-    
+
     typealias Factory = VpnApiServiceFactory &
                         AppStateManagerFactory &
                         VpnKeychainFactory &
                         PropertiesManagerFactory &
-                        ServerStorageFactory &
                         VpnGatewayFactory &
                         CoreAlertServiceFactory &
                         NavigationServiceFactory &
@@ -105,9 +105,9 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
     let sessionRefreshed = Notification.Name("AppSessionManagerSessionRefreshed")
     let dataReloaded = Notification.Name("AppSessionManagerDataReloaded")
-        
+
     var sessionStatus: SessionStatus = .notEstablished
-    
+
     init(factory: Factory) {
         self.factory = factory
         super.init(factory: factory)
@@ -116,7 +116,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
         NotificationCenter.default.addObserver(forName: .AppStateManager.stateChange, object: nil, queue: nil, using: updateState)
     }
-    
+
     // MARK: - Beginning of the login logic.
     override func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
         guard authKeychain.fetch()?.username != nil else {
@@ -149,11 +149,11 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             throw error
         }
     }
-    
+
+    private var isServerRepositoryEmpty: Bool { serverRepository.isEmpty }
+
     func loadDataWithoutFetching() -> Bool {
-        let models = serverStorage.fetch()
-        guard !models.isEmpty,
-              self.propertiesManager.userLocation?.ip != nil else {
+        if isServerRepositoryEmpty || self.propertiesManager.userLocation?.ip == nil {
             return false
         }
 
@@ -164,15 +164,11 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         }
         return true
     }
-    
+
     func canPreviewApp() -> Bool {
-        let models = serverStorage.fetch()
-        guard !models.isEmpty, self.propertiesManager.userLocation?.ip != nil else {
-            return false
-        }
-        return true
+        return !isServerRepositoryEmpty && self.propertiesManager.userLocation?.ip != nil
     }
-    
+
     func loadDataWithoutLogin() async throws {
         let shouldRefreshServers = await shouldRefreshServersAccordingToUserTier
         let appState = await appStateManager.stateThreadSafe
@@ -184,9 +180,9 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 serversAccordingToTier: shouldRefreshServers)
         } catch {
             log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
-            let models = self.serverStorage.fetch()
-            guard !models.isEmpty, // only fail if there is a major reason
-                  propertiesManager.userLocation?.ip != nil else {
+
+            // only fail if there is a major reason
+            if isServerRepositoryEmpty || propertiesManager.userLocation?.ip == nil {
                 throw error
             }
 
@@ -198,10 +194,16 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         let credentials = properties.vpnCredentials
         vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
         review.update(plan: credentials.planName)
-        serverStorage.store(
-            properties.serverModels,
-            keepStalePaidServers: shouldRefreshServers && credentials.maxTier.isFreeTier
-        )
+
+        if !shouldRefreshServers || credentials.maxTier.isPaidTier {
+            let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
+            let deletedServerCount = serverRepository.delete(serversWithMinTier: .paidTier, withIDsNotIn: updatedServerIDs)
+            log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
+        }
+
+        serverRepository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
+        NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
+
         propertiesManager.userLocation = properties.location
         await refreshPartners(ifUnknownPartnerLogicalExistsIn: properties.serverModels)
         do {
@@ -267,10 +269,15 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             let credentials = properties.vpnCredentials
             vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
             review.update(plan: credentials.planName)
-            serverStorage.store(
-                properties.serverModels,
-                keepStalePaidServers: shouldRefreshServers && credentials.maxTier.isFreeTier
-            )
+            if !shouldRefreshServers || credentials.maxTier.isPaidTier {
+                let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
+                let deletedServerCount = serverRepository.delete(serversWithMinTier: .paidTier, withIDsNotIn: updatedServerIDs)
+                log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
+            }
+
+            serverRepository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
+            NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
+
             propertiesManager.userRole = properties.userRole
             propertiesManager.userAccountCreationDate = properties.userCreateTime
             propertiesManager.userLocation = properties.location
@@ -302,9 +309,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             // Also the error has to be not keychain related, because if there is a problem with
             // the keychain, use most probably will not be able to use API nor VPN connection.
             log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
-            let models = serverStorage.fetch()
-            guard !models.isEmpty, // only fail if there is a major reason
-                  propertiesManager.userLocation?.ip != nil else {
+            if isServerRepositoryEmpty || propertiesManager.userLocation?.ip == nil {
                 throw error
             }
         }

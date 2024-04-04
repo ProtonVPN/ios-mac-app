@@ -19,6 +19,7 @@
 import Foundation
 import NetworkExtension
 import Timer
+import Localization
 import PMLogger
 import VPNShared
 import Dependencies
@@ -106,11 +107,6 @@ open class Container: PropertiesToOverride {
     private lazy var telemetrySettings: TelemetrySettings = makeTelemetrySettings()
     private lazy var _telemetryServiceTask = Task {
         await TelemetryServiceImplementation(factory: self)
-    }
-
-    // Transient instances - get allocated as many times as they're referenced
-    private var serverStorage: ServerStorage {
-        ServerStorageConcrete()
     }
 
     private var telemetryService: TelemetryService?
@@ -226,12 +222,6 @@ extension Container: AuthKeychainHandleFactory {
 extension Container: UnauthKeychainHandleFactory {
     public func makeUnauthKeychainHandle() -> UnauthKeychainHandle {
         unauthKeychain
-    }
-}
-
-extension Container: ServerStorageFactory {
-    public func makeServerStorage() -> ServerStorage {
-        serverStorage
     }
 }
 
@@ -541,5 +531,11 @@ extension Container: TelemetryAPIFactory {
 extension Container: NetworkInterfacePropertiesProviderFactory {
     public func makeInterfacePropertiesProvider() -> NetworkInterfacePropertiesProvider {
         NetworkInterfacePropertiesProviderImplementation()
+    }
+}
+
+extension Container: CountryCodeProviderFactory {
+    public func makeCountryCodeProvider() -> CountryCodeProvider {
+        CountryCodeProviderImplementation()
     }
 }

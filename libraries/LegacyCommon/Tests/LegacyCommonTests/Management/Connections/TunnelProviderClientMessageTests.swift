@@ -28,11 +28,11 @@ class TunnelProviderClientMessageTests: ConnectionTestCaseDriver {
     let pushSelector: ExpectationCategory = .custom(name: "push new session selector")
     let storeKeys: ExpectationCategory = .custom(name: "store keys in keychain")
 
-    override func setUp() async throws {
+    override func setUpWithError() throws {
         #if os(macOS)
         throw XCTSkip("Tunnel provider client message are skipped on macOS, since there is no cert refresh provider.")
         #else
-        try await super.setUp()
+        try super.setUpWithError()
 
         container.vpnAuthenticationStorage.keys = VpnKeys.mock()
         container.vpnAuthenticationStorage.keysStored = { [unowned self] _ in
@@ -53,7 +53,7 @@ class TunnelProviderClientMessageTests: ConnectionTestCaseDriver {
         populateExpectations(description: "Handle session expired in WireGuard extension",
                              [.vpnConnection, .localAgentConnection, pushSelector, .certificateRefresh])
 
-        container.vpnGateway.connect(with: request)
+        processGatewayConnectionRequestWithOverriddenDependencies(request: request)
 
         awaitExpectations()
 
@@ -72,7 +72,7 @@ class TunnelProviderClientMessageTests: ConnectionTestCaseDriver {
                              [.vpnConnection, .localAgentConnection, .vpnDisconnection,
                               storeKeys, .vpnConnection, .certificateRefresh])
 
-        container.vpnGateway.connect(with: request)
+        processGatewayConnectionRequestWithOverriddenDependencies(request: request)
 
         awaitExpectations()
 
@@ -94,7 +94,7 @@ class TunnelProviderClientMessageTests: ConnectionTestCaseDriver {
         populateExpectations(description: "WireGuard extension tells app that API has asked not to refresh certs so much",
                              [.vpnConnection, .alertDisplayed])
 
-        container.vpnGateway.connect(with: request)
+        processGatewayConnectionRequestWithOverriddenDependencies(request: request)
 
         awaitExpectations()
 

@@ -21,11 +21,13 @@
 //
 
 import Cocoa
+
 import Dependencies
 
 import ProtonCoreFeatureFlags
 import ProtonCoreUtilities
 
+import Domain
 import Ergonomics
 import LegacyCommon
 import VPNShared
@@ -58,7 +60,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                         AppStateManagerFactory &
                         VpnKeychainFactory &
                         PropertiesManagerFactory &
-                        ServerStorageFactory &
                         VpnGatewayFactory &
                         CoreAlertServiceFactory &
                         NetworkingFactory &
@@ -171,10 +172,14 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         let credentials = properties.vpnCredentials
         vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-        await self.serverStorage.store(
-            properties.serverModels,
-            keepStalePaidServers: shouldRefreshServersAccordingToUserTier && credentials.maxTier.isFreeTier
-        )
+        if await !shouldRefreshServersAccordingToUserTier || credentials.maxTier.isPaidTier {
+            let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
+            let deletedServerCount = serverRepository.delete(serversWithMinTier: .paidTier, withIDsNotIn: updatedServerIDs)
+            log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
+        }
+
+        self.serverRepository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
+        NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
 
         if await appState.isDisconnected {
             propertiesManager.userLocation = properties.location
@@ -228,7 +233,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             throw ProtonVpnError.subuserWithoutSessions
         } catch {
             log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
-            if serverStorage.fetch().isEmpty || self.propertiesManager.userLocation?.ip == nil {
+            if serverRepository.isEmpty || propertiesManager.userLocation?.ip == nil {
+                // only throw if there is a major reason
                 throw error
             }
         }

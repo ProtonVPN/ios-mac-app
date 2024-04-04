@@ -21,6 +21,11 @@
 //
 
 import Cocoa
+
+import Domain
+import Localization
+import Strings
+
 import LegacyCommon
 
 protocol CountriesServersHeaderViewModelProtocol: AnyObject {
@@ -32,7 +37,12 @@ class CountryHeaderViewModel: CountriesServersHeaderViewModelProtocol {
     let title: String
     var didTapInfoBtn: (() -> Void)?
     
-    init(_ sectionHeader: String, totalCountries: Int?, buttonType: InfoButtonType?, countriesViewModel: CountriesSectionViewModel) {
+    init(
+        _ sectionHeader: String,
+        totalCountries: Int?,
+        buttonType: InfoButtonType?,
+        countriesViewModel: CountriesSectionViewModel
+    ) {
         var title = sectionHeader
         if let totalCountries {
             title += " (\(totalCountries))"
@@ -64,7 +74,14 @@ class ServerHeaderViewModel: CountriesServersHeaderViewModelProtocol {
     let title: String
     var didTapInfoBtn: (() -> Void)?
     
-    init( _ sectionHeader: String, totalServers: Int, serverGroup: ServerGroup, tier: Int, propertiesManager: PropertiesManagerProtocol, countriesViewModel: CountriesSectionViewModel) {
+    init(
+        _ sectionHeader: String,
+        totalServers: Int,
+        kind: ServerGroupInfo.Kind,
+        tier: Int,
+        propertiesManager: PropertiesManagerProtocol,
+        countriesViewModel: CountriesSectionViewModel
+    ) {
         title = sectionHeader + " (\(totalServers))"
         guard tier.isPaidTier else {
             didTapInfoBtn = { [weak countriesViewModel] in
@@ -72,17 +89,19 @@ class ServerHeaderViewModel: CountriesServersHeaderViewModelProtocol {
             }
             return
         }
-        guard case .country(let country) = serverGroup.kind,
+
+        guard case .country(let code) = kind,
               !propertiesManager.secureCoreToggle,
               tier.isPaidTier,
-              let streamServicesDict = propertiesManager.streamingServices[country.countryCode],
+              let streamServicesDict = propertiesManager.streamingServices[code],
               let key = streamServicesDict.keys.first,
               let streamServices = streamServicesDict[key] else {
             return
         }
 
         didTapInfoBtn = { [weak countriesViewModel] in
-            countriesViewModel?.displayStreamingServices?(country.countryName, streamServices, propertiesManager)
+            let countryName = LocalizationUtility().countryName(forCode: code) ?? ""
+            countriesViewModel?.displayStreamingServices?(countryName, streamServices, propertiesManager)
         }
     }
 }

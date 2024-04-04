@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+
 import Dependencies
 
 import Domain
@@ -28,9 +29,9 @@ import Ergonomics
 import Strings
 import Theme
 
+import Persistence
+
 import LegacyCommon
-import Theme
-import Strings
 
 protocol StatusMenuViewModelFactory {
      func makeStatusMenuViewModel() -> StatusMenuViewModel
@@ -55,7 +56,6 @@ final class StatusMenuViewModel {
     @Dependency(\.credentialsProvider) private var credentials
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
 
-    private let maxCharCount = 20
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var navService: NavigationService = factory.makeNavigationService()
@@ -72,8 +72,8 @@ final class StatusMenuViewModel {
     var unsecureWiFiWarning: ((WarningPopupViewModel) -> Void)?
     
     var serverType: ServerType = .standard
-    var standardCountries: [ServerGroup]?
-    var secureCoreCountries: [ServerGroup]?
+    var standardCountries: [ServerGroupInfo]?
+    var secureCoreCountries: [ServerGroupInfo]?
 
     var shouldShowProfileDropdown: Bool { profileAuthorizer.canUseProfiles }
     var shouldShowChangeServer: Bool {
@@ -103,7 +103,6 @@ final class StatusMenuViewModel {
     weak var viewController: StatusMenuViewControllerProtocol?
 
     private var profileManager: ProfileManager?
-    private var serverManager: ServerManager?
 
     private var notificationTokens: [NotificationToken] = []
     
@@ -361,29 +360,19 @@ final class StatusMenuViewModel {
     }
     
     private func updateCountryList() {
+        @Dependency(\.serverRepository) var repository
         // Filter out gateways, because we don't have "Connect to fastest server" for gateways
-        standardCountries = serverManager?.grouping(for: .standard)
-            .filter { !$0.feature.contains(.restricted) }
-        secureCoreCountries = serverManager?.grouping(for: .secureCore)
-            .filter { !$0.feature.contains(.restricted) }
-        
-        let tier = (try? vpnKeychain.fetchCached().maxTier) ?? .freeTier
+        let isCountry = VPNServerFilter.kind(.country)
 
-        if tier.isFreeTier {
-            standardCountries = standardCountries?.sorted(by: { (countryGroup1, countryGroup2) -> Bool in
-                switch (countryGroup1.kind, countryGroup2.kind) {
-                case (.country(let country1), .country(let country2)):
-                    return country1.countryCode < country2.countryCode
-                case (.gateway(let name1), .gateway(let name2)):
-                    return name1 < name2
-                case (.country, .gateway):
-                    return false
-                case (.gateway, .country):
-                    return true
-                }
-            })
-        }
-        
+        standardCountries = repository.getGroups(
+            filteredBy: [.features(.standard), isCountry],
+            orderedBy: .exitCountryCodeAscending
+        )
+        secureCoreCountries = repository.getGroups(
+            filteredBy: [.features(.secureCore), isCountry],
+            orderedBy: .exitCountryCodeAscending
+        )
+
         contentChanged?()
     }
     
@@ -392,39 +381,28 @@ final class StatusMenuViewModel {
         
         serverType = propertiesManager.serverTypeToggle
         
-        do {
-            let tier = try vpnKeychain.fetchCached().maxTier
+        profileManager = factory.makeProfileManager()
 
-            serverManager = ServerManagerImplementation.instance(forTier: tier, serverStorage: ServerStorageConcrete())
-            profileManager = factory.makeProfileManager()
-            
-            updateCountryList()
-            
-            NotificationCenter.default.addObserver(self, selector: #selector(handleVpnChange),
-                                                   name: VpnGateway.activeServerTypeChanged, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(handleVpnChange),
-                                                   name: VpnGateway.connectionChanged, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange),
-                                                   name: profileManager!.contentChanged, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange),
-                                                   name: serverManager!.contentChanged, object: nil)
-        } catch {
-            alertService.push(alert: CannotAccessVpnCredentialsAlert())
-        }
+        updateCountryList()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(handleVpnChange),
+                                               name: VpnGateway.activeServerTypeChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleVpnChange),
+                                               name: VpnGateway.connectionChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange),
+                                               name: profileManager!.contentChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange), name: ServerListUpdateNotification.name, object: nil)
     }
-    
+
     private func sessionEnded() {
         NotificationCenter.default.removeObserver(self, name: VpnGateway.connectionChanged, object: nil)
         NotificationCenter.default.removeObserver(self, name: VpnGateway.activeServerTypeChanged, object: nil)
         if let profileManager = profileManager {
             NotificationCenter.default.removeObserver(self, name: profileManager.contentChanged, object: nil)
         }
-        if let serverManager = serverManager {
-            NotificationCenter.default.removeObserver(self, name: serverManager.contentChanged, object: nil)
-        }
+        NotificationCenter.default.removeObserver(self, name: ServerListUpdateNotification.name, object: nil)
 
         profileManager = nil
-        serverManager = nil
     }
     
     @objc private func handleVpnChange() {
@@ -444,7 +422,6 @@ final class StatusMenuViewModel {
                 vpnGateway.changeActiveServerType(.standard)
             }
 
-            serverManager = ServerManagerImplementation.instance(forTier: tier, serverStorage: ServerStorageConcrete())
             updateCountryList()
         } catch {
             alertService.push(alert: CannotAccessVpnCredentialsAlert())
@@ -452,7 +429,9 @@ final class StatusMenuViewModel {
     }
     
     @objc private func handleDataChange() {
-        updateCountryList()
+        DispatchQueue.main.async { [weak self] in
+            self?.updateCountryList()
+        }
     }
     
     private func formIpAddress() -> NSAttributedString {

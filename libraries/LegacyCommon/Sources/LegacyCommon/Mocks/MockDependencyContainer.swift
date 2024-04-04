@@ -20,13 +20,18 @@
 import Foundation
 import NetworkExtension
 
+import Dependencies
+
 import Domain
+import Localization
 import Timer
 import TimerMock
 import VPNShared
 import VPNSharedTesting
 
 public class MockDependencyContainer {
+
+    @Dependency(\.serverRepository) var serverRepository
     public static let appGroup = "test"
     public static let wireguardProviderBundleId = "ch.protonvpn.test.wireguard"
     public static let openvpnProviderBundleId = "ch.protonvpn.test.openvpn"
@@ -43,7 +48,12 @@ public class MockDependencyContainer {
     }()
 
     public lazy var alertService = CoreAlertServiceDummy()
-    lazy var appSessionRefresher = AppSessionRefresherMock(factory: MockFactory(container: self))
+    lazy var appSessionRefresher = { withDependencies {
+        $0.serverRepository = self.serverRepository
+    } operation: {
+        AppSessionRefresherMock(factory: MockFactory(container: self))
+    } }()
+
     lazy var appSessionRefreshTimer = {
         let result = AppSessionRefreshTimerImplementation(
             factory: MockFactory(container: self),
@@ -121,8 +131,7 @@ public class MockDependencyContainer {
         localAgentConnectionFactory: localAgentConnectionFactory,
         natTypePropertyProvider: natProvider,
         netShieldPropertyProvider: netShieldProvider,
-        safeModePropertyProvider: safeModeProvider,
-        serverStorage: ServerStorageMock()
+        safeModePropertyProvider: safeModeProvider
     )
 
     public lazy var vpnManagerConfigurationPreparer = VpnManagerConfigurationPreparer(
@@ -130,8 +139,6 @@ public class MockDependencyContainer {
         alertService: alertService,
         propertiesManager: propertiesManager
     )
-
-    public lazy var serverStorage = ServerStorageMock(servers: [])
 
     public lazy var appStateManager = AppStateManagerImplementation(
         vpnApiService: vpnApiService,
@@ -144,7 +151,6 @@ public class MockDependencyContainer {
         configurationPreparer: vpnManagerConfigurationPreparer,
         vpnAuthentication: vpnAuthentication,
         doh: dohVpn,
-        serverStorage: serverStorage,
         natTypePropertyProvider: natProvider,
         netShieldPropertyProvider: netShieldProvider,
         safeModePropertyProvider: safeModeProvider
@@ -152,7 +158,7 @@ public class MockDependencyContainer {
 
     public lazy var authKeychain = MockAuthKeychain(context: .mainApp)
 
-    public lazy var profileManager = ProfileManager(serverStorage: serverStorage, propertiesManager: propertiesManager, profileStorage: ProfileStorage(authKeychain: authKeychain))
+    public lazy var profileManager = ProfileManager(propertiesManager: propertiesManager, profileStorage: ProfileStorage(authKeychain: authKeychain))
 
     public lazy var checkers = [
         AvailabilityCheckerMock(vpnProtocol: .ike, availablePorts: [500]),
@@ -165,7 +171,7 @@ public class MockDependencyContainer {
 
     public lazy var availabilityCheckerResolverFactory = AvailabilityCheckerResolverFactoryMock(checkers: checkers)
 
-    public lazy var vpnGateway = VpnGateway(
+    public lazy var vpnGateway = { withDependencies { $0.serverRepository = self.serverRepository } operation: { VpnGateway(
         vpnApiService: vpnApiService,
         appStateManager: appStateManager,
         alertService: alertService,
@@ -176,9 +182,8 @@ public class MockDependencyContainer {
         safeModePropertyProvider: safeModeProvider,
         propertiesManager: propertiesManager,
         profileManager: profileManager,
-        availabilityCheckerResolverFactory: availabilityCheckerResolverFactory,
-        serverStorage: serverStorage
-    )
+        availabilityCheckerResolverFactory: availabilityCheckerResolverFactory
+    ) } }()
 
     public init() {}
 }
@@ -219,7 +224,7 @@ extension MockFactory: CountryCodeProviderFactory {
     }
 }
 
-// public typealias Factory = VpnApiServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & CoreAlertServiceFactory
+// public typealias Factory = VpnApiServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & CoreAlertServiceFactory
 extension MockFactory: CoreAlertServiceFactory {
     func makeCoreAlertService() -> CoreAlertService {
         container.alertService
@@ -241,12 +246,6 @@ extension MockFactory: VpnKeychainFactory {
 extension MockFactory: PropertiesManagerFactory {
     func makePropertiesManager() -> PropertiesManagerProtocol {
         container.propertiesManager
-    }
-}
-
-extension MockFactory: ServerStorageFactory {
-    func makeServerStorage() -> ServerStorage {
-        container.serverStorage
     }
 }
 

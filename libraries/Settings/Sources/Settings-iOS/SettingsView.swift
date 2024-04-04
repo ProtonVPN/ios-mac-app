@@ -21,6 +21,7 @@ import SwiftUI
 import ComposableArchitecture
 import SwiftUINavigation
 
+import Localization
 import Settings
 import Strings
 import Theme

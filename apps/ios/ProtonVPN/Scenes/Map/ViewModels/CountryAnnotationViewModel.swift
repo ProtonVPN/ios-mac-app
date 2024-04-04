@@ -22,8 +22,12 @@
 
 import CoreLocation
 import UIKit
-import LegacyCommon
+
+import Domain
 import Strings
+
+import LegacyCommon
+import Localization
 
 class CountryAnnotationViewModel: AnnotationViewModel {
     
@@ -32,8 +36,10 @@ class CountryAnnotationViewModel: AnnotationViewModel {
         case selected
     }
     
-    private let countryModel: CountryModel
-    private let serverModels: [ServerModel]
+    let countryCode: String
+    let coordinate: CLLocationCoordinate2D
+    private let groupInfo: ServerGroupInfo
+    private let serverType: ServerType
     private var vpnGateway: VpnGatewayProtocol
     private let appStateManager: AppStateManager
     private let alertService: AlertService
@@ -44,15 +50,9 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     var buttonStateChanged: (() -> Void)?
     var countryTapped: ((CountryAnnotationViewModel) -> Void)?
     
-    var coordinate: CLLocationCoordinate2D {
-        return countryModel.location
-    }
-    
-    let serverType: ServerType
-    
     /// Under maintenance if all servers are
     var underMaintenance: Bool {
-        return !serverModels.contains { !$0.underMaintenance }
+        return groupInfo.isUnderMaintenance
     }
     
     var available: Bool {
@@ -67,10 +67,6 @@ class CountryAnnotationViewModel: AnnotationViewModel {
                 }
             }
         }
-    }
-    
-    var countryCode: String {
-        return countryModel.countryCode
     }
     
     var isConnected: Bool {
@@ -163,16 +159,26 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     
     let showAnchor: Bool = true
     
-    init(countryModel: CountryModel, servers: [ServerModel], serverType: ServerType, vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager, enabled: Bool, alertService: AlertService, connectionStatusService: ConnectionStatusService) {
-        self.countryModel = countryModel
-        self.serverModels = servers
+    init(
+        countryCode: String,
+        groupInfo: ServerGroupInfo,
+        serverType: ServerType,
+        vpnGateway: VpnGatewayProtocol,
+        appStateManager: AppStateManager,
+        enabled: Bool,
+        alertService: AlertService,
+        connectionStatusService: ConnectionStatusService
+    ) {
+        self.countryCode = countryCode
+        self.groupInfo = groupInfo
+        self.serverType = serverType
         self.vpnGateway = vpnGateway
         self.appStateManager = appStateManager
         self.requiresUpgrade = !enabled
         self.alertService = alertService
-        self.serverType = serverType
         self.connectionStatusService = connectionStatusService
-        
+        self.coordinate = LocationUtility.coordinate(forCountry: countryCode)
+
         startObserving()
     }
     

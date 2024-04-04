@@ -30,6 +30,9 @@ import Domain
 import Ergonomics
 import Strings
 import Theme
+
+import Localization
+import Persistence
 import Search
 import VPNShared
 import VPNAppCore
@@ -39,10 +42,19 @@ class CountryItemViewModel {
     /// Contains information about the region such as the country code, the tier the
     /// country is available for, and what features are available OR a Gateway instead of
     /// a country.
-    private let serversGroup: ServerGroup
-    /// All of the server models available for a given country.
-    /// - Note: It's likely you want to access `supportedServerModels` instead.
-    private let serverModels: [ServerModel]
+    let serversGroup: ServerGroupInfo
+
+    private lazy var servers: [ServerInfo] = {
+        @Dependency(\.serverRepository) var repository
+
+        let kindFilter = serversGroup.kind.filter
+        let protocolFilter = VPNServerFilter.supports(protocol: propertiesManager.currentProtocolSupport)
+        let featureFilter = VPNServerFilter.features(propertiesManager.secureCoreToggle ? .secureCore : .standard)
+        let filters = [kindFilter, featureFilter, protocolFilter]
+
+        return repository.getServers(filteredBy: filters, orderedBy: .nameAscending)
+    }()
+
     /// If not nil, will filter servers to only the ones that contain given feature
     private let serversFilter: ((ServerModel) -> Bool)?
     /// In gateways countries there is no connect button
@@ -74,12 +86,12 @@ class CountryItemViewModel {
     
     var isUsersTierTooLow: Bool {
         switch serversGroup.kind {
-        case .country(let countryModel):
+        case .country:
             @Dependency(\.featureFlagProvider) var featureFlagProvider
             if featureFlagProvider[\.showNewFreePlan] {
                 return userTier < 1 // No countries are shown as available to free users
             } else {
-                return userTier < countryModel.lowestTier
+                return userTier < serversGroup.minTier
             }
         case .gateway:
             return false // atm only users who have gateways received them from api
@@ -87,23 +99,22 @@ class CountryItemViewModel {
     }
 
     var underMaintenance: Bool {
-        return supportedServerModels.allSatisfy { $0.underMaintenance }
+        return serversGroup.isUnderMaintenance
+            || serversGroup.protocolSupport.isDisjoint(with: propertiesManager.currentProtocolSupport)
     }
 
-    /// The server models that are supported using currently set connection protocol.
-    /// Gets updated every time the protocol changes.
-    @ConcurrentlyReadable private var supportedServerModels = [ServerModel]()
-    
     private var isConnected: Bool {
-        if vpnGateway.connection == .connected, let activeServer = appStateManager.activeConnection()?.server, activeServer.countryCode == countryCode {
-            return serverModels.filter(serversFilter).contains(where: { $0 == activeServer })
+        guard vpnGateway.connection == .connected, let activeServer = appStateManager.activeConnection()?.server else {
+            return false
         }
 
-        return false
+        return activeServer.kind == serversGroup.kind
     }
     
     private var isConnecting: Bool {
         if let activeConnection = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting, case ConnectionRequestType.country(let activeCountryCode, _) = activeConnection.connectionType, activeCountryCode == countryCode {
+            // If a connect button is ever added to gateway groups, this check will also need to verify that the last
+            // connection request was specifically a gateway connection request
             return true
         }
         return false
@@ -117,8 +128,8 @@ class CountryItemViewModel {
     
     var countryCode: String {
         switch serversGroup.kind {
-        case .country(let countryModel):
-            return countryModel.countryCode
+        case .country(let code):
+            return code
         case .gateway:
             return ""
         }
@@ -126,8 +137,8 @@ class CountryItemViewModel {
     
     var countryName: String {
         switch serversGroup.kind {
-        case .country(let countryModel):
-            return LocalizationUtility.default.countryName(forCode: countryModel.countryCode) ?? ""
+        case .country(let code):
+            return LocalizationUtility.default.countryName(forCode: code) ?? ""
         case .gateway:
             return ""
         }
@@ -135,8 +146,8 @@ class CountryItemViewModel {
     
     var description: String {
         switch serversGroup.kind {
-        case .country(let countryModel):
-            return LocalizationUtility.default.countryName(forCode: countryModel.countryCode) ?? Localizable.unavailable
+        case .country(let code):
+            return LocalizationUtility.default.countryName(forCode: code) ?? Localizable.unavailable
         case .gateway(let name):
             return name
         }
@@ -147,15 +158,15 @@ class CountryItemViewModel {
     }
 
     var torAvailable: Bool {
-        serversGroup.feature.contains(.tor)
+        serversGroup.featureIntersection.contains(.tor)
     }
     
     var p2pAvailable: Bool {
-        serversGroup.feature.contains(.p2p)
+        serversGroup.featureIntersection.contains(.p2p)
     }
     
     var isSmartAvailable: Bool {
-        return supportedServerModels.allSatisfy { $0.isVirtual }
+        serversGroup.supportsSmartRouting
     }
     
     var streamingAvailable: Bool {
@@ -201,28 +212,37 @@ class CountryItemViewModel {
     }
     
     private lazy var freeServerViewModels: [ServerItemViewModel] = {
-        let freeServers = supportedServerModels.filter { (serverModel) -> Bool in
-            serverModel.tier.isFreeTier
-        }
-        return serverViewModels(for: freeServers)
+        return serverViewModels(for: servers.filter { $0.logical.tier.isFreeTier })
     }()
     
     private lazy var plusServerViewModels: [ServerItemViewModel] = {
-        let plusServers = supportedServerModels.filter({ (serverModel) -> Bool in
-            serverModel.tier.isPaidTier
-        })
-        return serverViewModels(for: plusServers)
+        return serverViewModels(for: servers.filter { $0.logical.tier.isPaidTier })
     }()
     
-    private func serverViewModels(for servers: [ServerModel]) -> [ServerItemViewModel] {
-        return servers.map { (server) -> ServerItemViewModel in
+    private func serverViewModels(for servers: [ServerInfo]) -> [ServerItemViewModel] {
+        return servers.map { (serverInfo) -> ServerItemViewModel in
             switch serverType {
             case .standard, .p2p, .tor, .unspecified:
-                return ServerItemViewModel(serverModel: server, vpnGateway: vpnGateway, appStateManager: appStateManager,
-                                           alertService: alertService, connectionStatusService: connectionStatusService, propertiesManager: propertiesManager, planService: planService)
+                return ServerItemViewModel(
+                    serverModel: serverInfo,
+                    vpnGateway: vpnGateway,
+                    appStateManager: appStateManager,
+                    alertService: alertService,
+                    connectionStatusService: connectionStatusService,
+                    propertiesManager: propertiesManager,
+                    planService: planService
+                )
+
             case .secureCore:
-                return SecureCoreServerItemViewModel(serverModel: server, vpnGateway: vpnGateway, appStateManager: appStateManager,
-                                                     alertService: alertService, connectionStatusService: connectionStatusService, propertiesManager: propertiesManager, planService: planService)
+                return SecureCoreServerItemViewModel(
+                    serverModel: serverInfo,
+                    vpnGateway: vpnGateway,
+                    appStateManager: appStateManager,
+                    alertService: alertService,
+                    connectionStatusService: connectionStatusService,
+                    propertiesManager: propertiesManager,
+                    planService: planService
+                )
             }
         }
     }
@@ -248,31 +268,31 @@ class CountryItemViewModel {
         return serverTypes
     }()
 
+    // This could be optimised using a city grouping in `Persistence.ServerRepository`
     private lazy var cityItemViewModels: [CityViewModel] = {
-        guard case let ServerGroup.Kind.country(countryModel) = serversGroup.kind else {
+        guard case .country(let code) = serversGroup.kind else {
             return []
         }
 
         let servers = serverViewModels.flatMap({ $1 }).filter({ !$0.city.isEmpty })
         let groups = Dictionary(grouping: servers, by: { $0.city })
-        return groups.map({
+        return groups.map {
             let translatedCityName = $0.value.compactMap({ $0.translatedCity }).first
             return CityItemViewModel(
                 cityName: $0.key,
                 translatedCityName: translatedCityName,
-                countryModel: countryModel,
+                countryCode: countryCode,
                 servers: $0.value,
                 alertService: self.alertService,
                 vpnGateway: self.vpnGateway,
                 connectionStatusService: self.connectionStatusService
             )
-        }).sorted(by: { $0.cityName < $1.cityName })
+        }.sorted(by: { $0.cityName < $1.cityName })
     }()
 
     // MARK: Init routine
     init(
-        serversGroup: ServerGroup,
-        servers: [ServerModel],
+        serversGroup: ServerGroupInfo,
         serverType: ServerType,
         appStateManager: AppStateManager,
         vpnGateway: VpnGatewayProtocol,
@@ -285,7 +305,6 @@ class CountryItemViewModel {
         showFeatureIcons: Bool
     ) {
         self.serversGroup = serversGroup
-        self.serverModels = servers
         self.appStateManager = appStateManager
         self.vpnGateway = vpnGateway
         self.alertService = alertService
@@ -296,7 +315,6 @@ class CountryItemViewModel {
         self.serversFilter = serversFilter
         self.showCountryConnectButton = showCountryConnectButton
         self.showFeatureIcons = showFeatureIcons
-        self.populateSupportedServerModels(supporting: propertiesManager.connectionProtocol)
         startObserving()
     }
 
@@ -352,52 +370,26 @@ class CountryItemViewModel {
     }
     
     // MARK: - Private functions
-    
+
     fileprivate func startObserving() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(stateChanged),
-                                               name: VpnGateway.connectionChanged,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(connectionProtocolChanged),
-                                               name: PropertiesManager.vpnProtocolNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(connectionProtocolChanged),
-                                               name: PropertiesManager.smartProtocolNotification,
-                                               object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(stateChanged),
+            name: VpnGateway.connectionChanged,
+            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(stateChanged),
+            name: VpnGateway.connectionChanged,
+            object: nil
+        )
     }
-    
+
     @objc fileprivate func stateChanged() {
         if let connectionChanged = connectionChanged {
             DispatchQueue.main.async {
                 connectionChanged()
             }
-        }
-    }
-
-    @objc private func connectionProtocolChanged(_ notification: Notification) {
-        switch notification.name {
-        case PropertiesManager.vpnProtocolNotification:
-            guard let vpnProtocol = notification.object as? VpnProtocol else { return }
-            populateSupportedServerModels(supporting: .vpnProtocol(vpnProtocol))
-        case PropertiesManager.smartProtocolNotification:
-            guard let smartProtocol = notification.object as? Bool else { return }
-            if smartProtocol {
-                populateSupportedServerModels(supporting: .smartProtocol)
-            } else {
-                populateSupportedServerModels(supporting: .vpnProtocol(propertiesManager.vpnProtocol))
-            }
-        default:
-            return
-        }
-    }
-
-    private func populateSupportedServerModels(supporting connectionProtocol: ConnectionProtocol) {
-        supportedServerModels = serverModels.filter {
-            return $0.supports(connectionProtocol: connectionProtocol,
-                        smartProtocolConfig: propertiesManager.smartProtocolConfig)
-            && (serversFilter?($0) ?? true)
         }
     }
 }
@@ -438,7 +430,6 @@ extension CountryItemViewModel: CountryViewModel {
         let convertTier = { (tier: Int) -> ServerTier in
             tier.isFreeTier ? .free : .plus
         }
-
         return serverViewModels.reduce(into: [ServerTier: [ServerViewModel]]()) {
             $0[convertTier($1.tier)] = $1.viewModels
         }
@@ -450,8 +441,8 @@ extension CountryItemViewModel: CountryViewModel {
 
     var flag: UIImage? {
         switch serversGroup.kind {
-        case .country(let countryModel):
-            return UIImage.flag(countryCode: countryModel.countryCode)
+        case .country(let countryCode):
+            return UIImage.flag(countryCode: countryCode)
         case .gateway:
             return IconProvider.servers
         }
@@ -472,6 +463,6 @@ extension CountryItemViewModel: CountryViewModel {
     }
 
     var isSecureCoreCountry: Bool {
-        return supportedServerModels.allSatisfy({ $0.serverType == .secureCore })
+        serversGroup.featureIntersection.contains(.secureCore)
     }
 }

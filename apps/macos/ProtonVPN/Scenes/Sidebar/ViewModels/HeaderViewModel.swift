@@ -22,6 +22,7 @@
 
 import Cocoa
 import Dependencies
+import Ergonomics
 import LegacyCommon
 import VPNShared
 import Theme
@@ -42,8 +43,6 @@ final class HeaderViewModel {
     
     public typealias Factory = AnnouncementManagerFactory & AppStateManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & ProfileManagerFactory & NavigationServiceFactory & VpnGatewayFactory & AnnouncementsViewModelFactory
     private let factory: Factory
-    
-    private let serverStorage = ServerStorageConcrete()
     
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -212,7 +211,7 @@ final class HeaderViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(contentChangedNotification), name: type(of: propertiesManager).userIpNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(contentChangedNotification), name: type(of: propertiesManager).activeConnectionChangedNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(contentChangedNotification), name: profileManager.contentChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(contentChangedNotification), name: serverStorage.contentChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(contentChangedNotification), name: ServerListUpdateNotification.name, object: nil)
     }
     
     @objc private func vpnConnectionChanged() {
@@ -231,7 +230,9 @@ final class HeaderViewModel {
     }
     
     @objc private func contentChangedNotification() {
-        contentChanged?()
+        executeOnUIThread {
+            self.contentChanged?()
+        }
     }
     
     private func formBitrateLabel(with bitrate: Bitrate) -> NSAttributedString {

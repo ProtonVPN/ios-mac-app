@@ -19,16 +19,20 @@
 import Foundation
 import XCTest
 import NetworkExtension
+
+import Dependencies
+
+import Domain
 import VPNShared
 @testable import LegacyCommon
 
 /// - Note: To be implemented with remainder of protocol overrides feature.
 class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
-    override func setUp() async throws {
+    override func setUpWithError() throws {
         #if os(macOS)
         throw XCTSkip("Protocol override tests are skipped on macOS, since there is no cert refresh provider.")
-        #else
-        try await super.setUp()
+        #endif
+        try super.setUpWithError()
 
         let testData = MockTestData()
 
@@ -36,7 +40,10 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
             testData.server1, testData.server3, testData.server4,
             testData.server5, testData.server6, testData.server8,
         ]
-        #endif
+
+        let servers = container.networkingDelegate.apiServerList.map { VPNServer(legacyModel: $0) }
+
+        repository.upsert(servers: servers)
     }
 
     // Disabled because IKEv2 is not supported on iOS (VPNAPPL-1843)
@@ -75,7 +82,10 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
         }
 
         container.propertiesManager.vpnProtocol = .wireGuard(.tls)
-        container.vpnGateway.connectTo(server: testData.server5)
+
+        withDependencies({ $0.serverRepository = repository }, operation: {
+            container.vpnGateway.connectTo(server: testData.server5)
+        })
 
         awaitExpectations()
 
@@ -115,7 +125,9 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
         }
 
         container.propertiesManager.vpnProtocol = .wireGuard(.tls)
-        container.vpnGateway.connectTo(server: testData.server6)
+        withDependencies({ $0.serverRepository = repository }, operation: {
+            container.vpnGateway.connectTo(server: testData.server6)
+        })
 
         awaitExpectations()
 
@@ -186,7 +198,9 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
             managerConfig = vmc
         }
 
-        container.vpnGateway.connectTo(server: testData.server8)
+        withDependencies({ $0.serverRepository = repository }, operation: {
+            container.vpnGateway.connectTo(server: testData.server8)
+        })
 
         awaitExpectations()
 

@@ -21,9 +21,16 @@
 //
 
 import CoreLocation
-import LegacyCommon
 import XCTest
+
+import Dependencies
+
+import Domain
+import Localization
+import Persistence
 import TimerMock
+
+import LegacyCommon
 import VPNShared
 import VPNSharedTesting
 
@@ -41,13 +48,24 @@ class MapViewModelTests: XCTestCase {
     )
     lazy var vpnKeychain = VpnKeychainMock()
 
-    var serverStorage: ServerStorage!
     var appStateManager: AppStateManager!
-    
-    override func setUp() {
-        super.setUp()
-        ServerManagerImplementation.reset()
-        serverStorage = ServerStorageMock(fileName: "LiveServers", bundle: Bundle(for: type(of: self)))
+    var repository: ServerRepository!
+
+    func serversFromFile() throws -> [VPNServer] {
+        LegacyServerLoader.parseFromJsonFile("LiveServers", bundle: Bundle(for: Self.self))
+    }
+
+    override func setUpWithError() throws {
+        try super.setUpWithError()
+
+        repository = withDependencies {
+            $0.databaseConfiguration = .withTestExecutor(databaseType: .ephemeral)
+        } operation: {
+            .liveValue
+        }
+
+        let serversToInsert = try serversFromFile()
+        repository.upsert(servers: serversToInsert)
 
         let vpnApiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation(), authKeychain: MockAuthKeychain())
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
@@ -55,30 +73,37 @@ class MapViewModelTests: XCTestCase {
             vpnKeychain: VpnKeychainMock(),
             alertService: AlertServiceEmptyStub(),
             propertiesManager: PropertiesManagerMock())
-        appStateManager = AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock(), doh: .mock, serverStorage: serverStorage, natTypePropertyProvider: NATTypePropertyProviderMock(), netShieldPropertyProvider: NetShieldPropertyProviderMock(), safeModePropertyProvider: SafeModePropertyProviderMock())
+        appStateManager = AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock(), doh: .mock, natTypePropertyProvider: NATTypePropertyProviderMock(), netShieldPropertyProvider: NetShieldPropertyProviderMock(), safeModePropertyProvider: SafeModePropertyProviderMock())
     }
     
-    func testSecureCoreAnnotationLocations() {
-        let mapViewModel = MapViewModel(appStateManager: appStateManager,
-                                        alertService: AlertServiceEmptyStub(),
-                                        serverStorage: serverStorage,
-                                        vpnGateway: VpnGatewayMock(),
-                                        vpnKeychain: vpnKeychain,
-                                        propertiesManager: PropertiesManagerMock(),
-                                        connectionStatusService: ConnectionStatusServiceMock())
-        mapViewModel.setStateOf(type: .secureCore)
+    func testSecureCoreAnnotationLocations() throws {
+        let mapViewModel = withDependencies {
+            $0.serverRepository = repository
+        } operation: {
+            let viewModel = MapViewModel(
+                appStateManager: appStateManager,
+                alertService: AlertServiceEmptyStub(),
+                vpnGateway: VpnGatewayMock(),
+                vpnKeychain: vpnKeychain,
+                propertiesManager: PropertiesManagerMock(),
+                connectionStatusService: ConnectionStatusServiceMock()
+            )
+
+            viewModel.setStateOf(type: .secureCore)
+            return viewModel
+        }
         
         let annotations = mapViewModel.annotations
         let secureCoreAnnotations = annotations.filter { (annotation) -> Bool in
             return annotation is SecureCoreEntryCountryModel
         }
         
-        XCTAssert(secureCoreAnnotations.count == 3)
-        
-        let switzerland = secureCoreAnnotations.first { $0.countryCode == "CH" }!
-        let iceland = secureCoreAnnotations.first { $0.countryCode == "IS" }!
-        let sweden = secureCoreAnnotations.first { $0.countryCode == "SE" }!
-        
+        XCTAssertEqual(secureCoreAnnotations.count, 3)
+
+        let switzerland = try XCTUnwrap(secureCoreAnnotations.first { $0.countryCode == "CH" })
+        let iceland = try XCTUnwrap(secureCoreAnnotations.first { $0.countryCode == "IS" })
+        let sweden = try XCTUnwrap(secureCoreAnnotations.first { $0.countryCode == "SE" })
+
         XCTAssert(switzerland.coordinate == CLLocationCoordinate2D(latitude: 46.715779, longitude: 8.402655))
         XCTAssert(iceland.coordinate == CLLocationCoordinate2D(latitude: 64.809637, longitude: -18.372633))
         XCTAssert(sweden.coordinate == CLLocationCoordinate2D(latitude: 62.736314, longitude: 15.365470))

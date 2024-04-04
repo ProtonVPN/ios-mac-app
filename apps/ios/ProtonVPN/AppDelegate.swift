@@ -89,6 +89,7 @@ class AppDelegate: UIResponder {
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
     private lazy var appStateManager: AppStateManager = container.makeAppStateManager()
     private lazy var planService: PlanService = container.makePlanService()
+    private lazy var pushNotificationService = container.makePushNotificationService()
 }
 #endif
 

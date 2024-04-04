@@ -28,13 +28,14 @@ import Domain
 import Strings
 import VPNAppCore
 import LegacyCommon
+import Persistence
+import Dependencies
 
 class CreateOrEditProfileViewModel: NSObject {
     
     private let username: String?
     private let profileService: ProfileService
     private let protocolService: ProtocolService
-    private let serverManager: ServerManager
     private let profileManager: ProfileManager
     private let propertiesManager: PropertiesManagerProtocol
     private let alertService: AlertService
@@ -42,11 +43,19 @@ class CreateOrEditProfileViewModel: NSObject {
     private let vpnKeychain: VpnKeychainProtocol
     private let appStateManager: AppStateManager
     private var vpnGateway: VpnGatewayProtocol
+    @Dependency(\.serverRepository) private var serverRepository
     
     private var state: ServerType = .standard {
         didSet {
             saveButtonEnabled = true
         }
+    }
+
+    // We show either standard servers or secure core servers, not both at the same time
+    private var secureCoreServerFilter: VPNServerFilter.ServerFeatureFilter {
+        state == .standard
+            ? .standard
+            : .secureCore
     }
     
     private var colorPickerViewModel: ColorPickerViewModel
@@ -73,14 +82,13 @@ class CreateOrEditProfileViewModel: NSObject {
         return editedProfile != nil
     }
 
-    init(username: String?, for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, vpnKeychain: VpnKeychainProtocol, serverManager: ServerManager, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager, propertiesManager: PropertiesManagerProtocol) {
+    init(username: String?, for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, vpnKeychain: VpnKeychainProtocol, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager, propertiesManager: PropertiesManagerProtocol) {
         self.username = username
         self.editedProfile = profile
         self.profileService = profileService
         self.protocolService = protocolSelectionService
         self.alertService = alertService
         self.vpnKeychain = vpnKeychain
-        self.serverManager = serverManager
         self.appStateManager = appStateManager
         self.vpnGateway = vpnGateway
         self.profileManager = profileManager
@@ -154,15 +162,15 @@ class CreateOrEditProfileViewModel: NSObject {
             return
         }
         
-        let grouping = serverManager.grouping(for: state)
+        let grouping = serverGroups
 
         let accessTier: Int
         switch serverOffering {
         case .fastest(let countryCode):
-            accessTier = grouping.first(where: { $0.serverOfferingId == countryCode })?.kind.lowestTier ?? 1
+            accessTier = grouping.first(where: { $0.serverOfferingID == countryCode })?.minTier ?? 1
 
         case .random(let countryCode):
-            accessTier = grouping.first(where: { $0.serverOfferingId == countryCode })?.kind.lowestTier ?? 1
+            accessTier = grouping.first(where: { $0.serverOfferingID == countryCode })?.minTier ?? 1
 
         case .custom(let serverWrapper):
             accessTier = serverWrapper.server.tier
@@ -279,15 +287,15 @@ class CreateOrEditProfileViewModel: NSObject {
         return TableViewCellModel.tooltip(text: Localizable.defaultProfileTooltip)
     }
     
-    private var selectedCountryGroup: ServerGroup? {
+    private var selectedCountryGroup: ServerGroupInfo? {
         didSet {
             selectedServerOffering = nil
             saveButtonEnabled = true
 
-            guard let row = countries.firstIndex(where: { $0 == selectedCountryGroup }) else {
+            guard let row = serverGroups.firstIndex(where: { $0 == selectedCountryGroup }) else {
                 return
             }
-            countryGroup = countries[row]
+            countryGroup = serverGroups[row]
         }
     }
 
@@ -306,10 +314,10 @@ class CreateOrEditProfileViewModel: NSObject {
         self.name = profile.name
         self.state = profile.serverType == .secureCore ? .secureCore : .standard
         
-        selectedCountryGroup = countries.first(where: {
+        selectedCountryGroup = serverGroups.first(where: {
             switch $0.kind {
-            case .country(let country):
-                return country.countryCode == profile.serverOffering.countryCode
+            case .country(let countryCode):
+                return countryCode == profile.serverOffering.countryCode
             case .gateway(let name):
                 return name == profile.serverOffering.countryCode
             }
@@ -343,38 +351,22 @@ class CreateOrEditProfileViewModel: NSObject {
         saveButtonEnabled = true
     }
     
-    private var countries: [ServerGroup] {
-        serverManager.grouping(for: state)
+    private var serverGroups: [ServerGroupInfo] {
+        return serverRepository.getGroups(filteredBy: [.features(secureCoreServerFilter)])
     }
 
-    var countryGroup: ServerGroup?
-
-    private var serversByTier: [(tier: Int, servers: [ServerModel])]? {
-        // Get newest data, because servers list may have been updated since selected group was set
-        guard let countryGroup else { return nil }
-
-        let serversAll = countryGroup.servers
-
-        return [Int.paidTier, Int.freeTier].compactMap { tier in
-            let servers = serversAll.filter { $0.tier == tier }
-            if servers.isEmpty {
-                return nil
-            }
-            return (tier, servers)
-        }.sorted(by: { (server1, server2) -> Bool in
-            if userTier >= server1.tier && userTier >= server2.tier ||
-                userTier < server1.tier && userTier < server2.tier { // sort within available then non-available groups
-                return server1.tier > server2.tier
-            } else {
-                return server1.tier < server2.tier
-            }
-        })
-    }
+    var countryGroup: ServerGroupInfo?
 
     private func selectedServerOfferingSupports(connectionProtocol: ConnectionProtocol) -> Bool {
-        selectedServerOffering?.supports(connectionProtocol: connectionProtocol,
-                                         withCountryGroup: self.countryGroup,
-                                         smartProtocolConfig: propertiesManager.smartProtocolConfig) != false
+        guard let selectedServerOffering else {
+            return true
+        }
+
+        return selectedServerOffering.supports(
+            connectionProtocol: connectionProtocol,
+            withCountryGroup: self.countryGroup,
+            smartProtocolConfig: propertiesManager.smartProtocolConfig
+        )
     }
     
     private func serverName(forServerOffering serverOffering: ServerOffering) -> NSAttributedString {
@@ -390,7 +382,7 @@ class CreateOrEditProfileViewModel: NSObject {
     
     private func pushCountrySelectionViewController() {
         let selectionViewController = profileService.makeSelectionViewController(dataSet: countrySelectionDataSet) { [weak self] selectedObject in
-            guard let selectedCountryGroup = selectedObject as? ServerGroup else {
+            guard let selectedCountryGroup = selectedObject as? ServerGroupInfo else {
                 return
             }
             
@@ -406,11 +398,26 @@ class CreateOrEditProfileViewModel: NSObject {
         }
         
         let selectionViewController = profileService.makeSelectionViewController(dataSet: dataSet) { [weak self] selectedObject in
-            guard let `self`, let selectedServerOffering = selectedObject as? ServerOffering else {
+            guard let `self` else {
                 return
             }
-            
-            self.selectedServerOffering = selectedServerOffering
+
+            // Now that we don't load whole objects from the repository, it became
+            // not effective to pre-fill ServerOffering objects before one is selected,
+            // so we do it here, only for the selected object.
+            if let serverInfo = selectedObject as? ServerInfo,
+               let vpnServer = serverRepository.getFirstServer(
+                    filteredBy: [.logicalID(serverInfo.logical.id)],
+                    orderedBy: .fastest) {
+                let serverModel = ServerModel(server: vpnServer)
+                self.selectedServerOffering = ServerOffering.custom(ServerWrapper(server: serverModel))
+            }
+
+            // Default profiles are given as prepared ServerOffering objects
+            if let selectedServerOffering = selectedObject as? ServerOffering {
+                self.selectedServerOffering = selectedServerOffering
+            }
+
             self.resetProtocolIfNotSupportedBySelectedServerOffering()
         }
         
@@ -457,19 +464,19 @@ class CreateOrEditProfileViewModel: NSObject {
 extension CreateOrEditProfileViewModel {
     
     private var countrySelectionDataSet: SelectionDataSet {
-        let rows: [SelectionRow] = countries.map({ countryGroup in
+        let rows: [SelectionRow] = serverGroups.map({ countryGroup in
             return SelectionRow(title: countryDescriptor(for: countryGroup), object: countryGroup)
         })
                 
         let sections: [SelectionSection]
-        if rows.contains(where: { ($0.object as! ServerGroup).kind.lowestTier > userTier }) {
+        if rows.contains(where: { ($0.object as! ServerGroupInfo).minTier > userTier }) {
             sections = [
                 SelectionSection(
                     title: Localizable.countriesFree.uppercased(),
-                    cells: rows.filter { ($0.object as! ServerGroup).kind.lowestTier <= userTier }),
+                    cells: rows.filter { ($0.object as! ServerGroupInfo).minTier <= userTier }),
                 SelectionSection(
                     title: Localizable.countriesPremium.uppercased(),
-                    cells: rows.filter { ($0.object as! ServerGroup).kind.lowestTier > userTier }),
+                    cells: rows.filter { ($0.object as! ServerGroupInfo).minTier > userTier }),
             ]
         } else {
             sections = [SelectionSection(
@@ -484,7 +491,7 @@ extension CreateOrEditProfileViewModel {
             outer: for section in sections {
                 var rowIndex = 0
                 for row in section.cells {
-                    if let object = row.object as? ServerGroup, object == countryGroup {
+                    if let object = row.object as? ServerGroupInfo, object == countryGroup {
                         selectedIndex = IndexPath(row: rowIndex, section: sectionIndex)
                         break outer
                     }
@@ -500,35 +507,82 @@ extension CreateOrEditProfileViewModel {
             selectedIndex: selectedIndex
         )
     }
+
+    private func currentGroupServersOf(tier: Int) -> [ServerInfo]? {
+        guard let countryGroup = selectedCountryGroup else {
+            return nil
+        }
+        let selected = [selectedProtocol.vpnProtocol].compactMap({ $0 })
+        let supportedProtocols = selected.isEmpty
+            ? propertiesManager.smartProtocolConfig.supportedProtocols
+            : selected
+
+        return serverRepository.getServers(
+            filteredBy: [
+                .features(secureCoreServerFilter), // Secure core or not
+                .supports(protocol: ProtocolSupport(vpnProtocols: supportedProtocols)), // Only the ones supporting selected protocol
+                .kind(countryGroup.kind.serverTypeFilter), // Only from selected country/gateway
+                .tier(.exact(tier: tier))
+            ],
+            orderedBy: .nameAscending
+        )
+    }
+
+    private func orderedTiers() -> [Int] {
+        [Int.freeTier, Int.paidTier, Int.internalTier].sorted(by: { (tier1, tier2) -> Bool in
+            if userTier >= tier1 && userTier >= tier2 ||
+                userTier < tier1 && userTier < tier2 { // sort within available then non-available groups
+                return tier1 > tier2
+            } else {
+                return tier1 < tier2
+            }
+        })
+    }
     
     private var serverSelectionDataSet: SelectionDataSet? {
-        guard let countryGroup, let serversByTier else { return nil }
+        guard let countryGroup else { return nil }
 
-        var selectedIndex: IndexPath?
-
+        // Default profiles: fastest and random
         var sections: [SelectionSection] = [
             SelectionSection(title: nil, cells: [
-                SelectionRow(title: defaultServerDescriptor(forIndex: 0), object: ServerOffering.fastest(countryGroup.serverOfferingId)),
-                SelectionRow(title: defaultServerDescriptor(forIndex: 1), object: ServerOffering.random(countryGroup.serverOfferingId)),
+                SelectionRow(title: defaultServerDescriptor(forIndex: 0), object: ServerOffering.fastest(countryGroup.serverOfferingID)),
+                SelectionRow(title: defaultServerDescriptor(forIndex: 1), object: ServerOffering.random(countryGroup.serverOfferingID)),
             ])
         ]
 
-        sections.append(contentsOf: serversByTier.map { serverGroup in
-            let rows: [SelectionRow] = serverGroup.servers.map {
-                .init(title: serverDescriptor(for: $0),
-                      object: ServerOffering.custom(ServerWrapper(server: $0)))
+        // Servers grouped into sections by tiers
+        for tier in orderedTiers() {
+            guard let servers = currentGroupServersOf(tier: tier),
+                  !servers.isEmpty else {
+                continue
             }
+            sections.append(SelectionSection(
+                title: CoreAppConstants.serverTierName(forTier: tier),
+                cells: servers.map { server in
+                    SelectionRow(
+                        title: serverDescriptor(for: server),
+                        object: server
+                    )
+                })
+            )
+        }
 
-            return SelectionSection(title: CoreAppConstants.serverTierName(forTier: serverGroup.tier),
-                                    cells: rows)
-        })
-
+        // Detect selected row
+        var selectedIndex: IndexPath?
         if let selectedOffering = selectedServerOffering {
             var sectionIndex = 0
             outer: for section in sections {
                 var rowIndex = 0
                 for row in section.cells {
+                    // Object can be either `ServerInfo` or `ServerOffering`
                     if let object = row.object as? ServerOffering, object == selectedOffering {
+                        selectedIndex = IndexPath(row: rowIndex, section: sectionIndex)
+                        break outer
+                    }
+                    if let object = row.object as? ServerInfo,
+                       case let .custom(serverWrapper) = selectedOffering,
+                       object.logical.id == serverWrapper.server.id
+                    {
                         selectedIndex = IndexPath(row: rowIndex, section: sectionIndex)
                         break outer
                     }

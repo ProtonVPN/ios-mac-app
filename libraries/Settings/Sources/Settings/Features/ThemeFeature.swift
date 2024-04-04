@@ -20,6 +20,7 @@ import Foundation
 
 import ComposableArchitecture
 
+import Localization
 import Strings
 import Theme
 

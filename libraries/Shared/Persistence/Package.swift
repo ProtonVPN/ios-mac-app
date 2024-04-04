@@ -5,19 +5,43 @@ import PackageDescription
 
 let package = Package(
     name: "Persistence",
+    platforms: [.iOS(.v15), .macOS(.v11)],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
-        .library(
-            name: "Persistence",
-            targets: ["Persistence"]),
+        .library(name: "Persistence", targets: ["Persistence"]),
+        .library(name: "PersistenceTestSupport", targets: ["PersistenceTestSupport"])
+    ],
+    dependencies: [
+        .package(path: "../../Foundations/Domain"),
+        .package(path: "../../Foundations/Ergonomics"),
+        .package(path: "../../Foundations/PMLogger"),
+        .package(url: "https://github.com/apple/swift-log.git", exact: "1.4.4"),
+        .package(path: "../../Shared/Localization"), // LocaleWrapper is required for country code mappings
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.0.0")),
+        .package(url: "https://github.com/groue/GRDB.swift", exact: "6.23.0"),
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.0.0")),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "Persistence"),
+            name: "Persistence",
+            dependencies: [
+                "Domain",
+                "Ergonomics",
+                "PMLogger",
+                .product(name: "Logging", package: "swift-log"),
+                "Localization",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "GRDB", package: "GRDB.swift"),
+                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay")
+            ]
+        ),
+        .target(
+            name: "PersistenceTestSupport",
+            dependencies: ["Persistence"]
+        ),
         .testTarget(
             name: "PersistenceTests",
-            dependencies: ["Persistence"]),
+            dependencies: ["Persistence", "PersistenceTestSupport"],
+            resources: [.process("Resources")]
+        ),
     ]
 )

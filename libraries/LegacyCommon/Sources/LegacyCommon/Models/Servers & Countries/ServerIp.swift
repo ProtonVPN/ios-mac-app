@@ -85,7 +85,7 @@ public class ServerIp: NSObject, NSCoding, Codable {
 
         return protocolEntries.overrides(vpnProtocol: vpnProtocol, defaultIp: entryIp)
     }
-
+    
     public func supports(vpnProtocol: VpnProtocol) -> Bool {
         entryIp(using: vpnProtocol) != nil
     }

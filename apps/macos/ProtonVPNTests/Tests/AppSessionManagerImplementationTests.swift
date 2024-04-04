@@ -17,11 +17,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import XCTest
-import LegacyCommon
 
-import VPNShared
 import Dependencies
+
 import Ergonomics
+import LegacyCommon
+import Localization
+import Persistence
+import VPNShared
 import VPNSharedTesting
 import ProtonCoreNetworking
 @testable import ProtonVPN
@@ -43,17 +46,23 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     fileprivate var authKeychain: AuthKeychainHandleMock!
     fileprivate var unauthKeychain: UnauthKeychainMock!
     var propertiesManager: PropertiesManagerMock!
-    var serverStorage: ServerStorageMock!
     var networking: NetworkingMock!
     var networkingDelegate: FullNetworkingMockDelegate!
     var manager: AppSessionManagerImplementation!
     var vpnKeychain: VpnKeychainMock!
     var appStateManager: AppStateManagerMock!
+    var repository: ServerRepository!
 
     let asyncTimeout: TimeInterval = 5
 
-    override func setUp() {
-        super.setUp()
+    override func setUpWithError() throws {
+        try super.setUpWithError()
+        repository = withDependencies {
+            $0.databaseConfiguration = .withTestExecutor(databaseType: .ephemeral)
+        } operation: {
+            ServerRepository.liveValue
+        }
+
         propertiesManager = PropertiesManagerMock()
         networking = NetworkingMock()
         authKeychain = AuthKeychainHandleMock()
@@ -61,7 +70,6 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         vpnKeychain = VpnKeychainMock()
         alertService = AppSessionManagerAlertServiceMock()
         appStateManager = AppStateManagerMock()
-
 
         networkingDelegate = FullNetworkingMockDelegate()
         let freeCreds = VpnKeychainMock.vpnCredentials(planName: "free", maxTier: .freeTier)
@@ -77,6 +85,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
         manager = withDependencies {
             $0.date = .constant(Date())
+            $0.serverRepository = repository
         } operation: {
             let factory = ManagerFactoryMock(
                 vpnAPIService: mockAPIService,
@@ -94,7 +103,6 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         super.tearDown()
         alertService = nil
         propertiesManager = nil
-        serverStorage = nil
         networking = nil
         networkingDelegate = nil
     }
@@ -203,15 +211,15 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         manager.sessionStatus = .established
 
         let loginExpectation = XCTestExpectation(description: "Manager should not time out when attempting a login")
-        let sessionChangedNotificationExpectation = XCTNSNotificationExpectation(name: SessionChanged.name, object: manager)
-        sessionChangedNotificationExpectation.isInverted = true
 
-        manager.attemptSilentLogIn { result in
-            loginExpectation.fulfill()
-            guard case .success = result else { return XCTFail("Should succeed silently logging in when already logged in") }
+        assertNotPosted(SessionChanged.name, by: manager!) {
+            manager.attemptSilentLogIn { result in
+                loginExpectation.fulfill()
+                guard case .success = result else { return XCTFail("Should succeed silently logging in when already logged in") }
+            }
+
+            wait(for: [loginExpectation], timeout: asyncTimeout)
         }
-
-        wait(for: [loginExpectation, sessionChangedNotificationExpectation], timeout: asyncTimeout)
     }
 
     // MARK: Active VPN connection login tests
@@ -377,6 +385,26 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         wait(for: [loginExpectation, sessionChangedNotificationExpectation], timeout: asyncTimeout)
         XCTAssertTrue(manager.loggedIn)
     }
+
+    /// Invokes `XCTFail` if `notification` is posted any time during the execution of `operation`.
+    /// This helper controls the lifetime of the notification subscription token while avoiding the 'unused variable`
+    /// warning that would arise from assigning a notification token to a variable without accessing it.
+    ///
+    /// Can be moved to `ErgonomicsTestSupport` once app targets are able to link test support targets
+    private func assertNotPosted<T>(
+        _ notification: Notification.Name,
+        by object: Any?,
+        during operation: () -> T
+    ) -> T {
+        let subscribeAndReturnToken = {
+            return NotificationCenter.default.addObserver(for: notification, object: object) { notification in
+                XCTFail("Unexpected notification posted: \(notification)")
+            }
+        }
+        return withExtendedLifetime(subscribeAndReturnToken()) { _ in
+            return operation()
+        }
+    }
 }
 
 fileprivate let propertiesManagerMock = PropertiesManagerMock()
@@ -397,7 +425,6 @@ fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     let appSessionRefreshTimerMock = AppSessionRefreshTimerMock()
 
     let profileManager = ProfileManager(
-        serverStorage: ServerStorageMock(),
         propertiesManager: propertiesManagerMock,
         profileStorage: ProfileStorage(authKeychain: MockAuthKeychain())
     )
@@ -412,7 +439,6 @@ fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     func makeCoreAlertService() -> CoreAlertService { alertService }
     func makeProfileManager() -> ProfileManager { profileManager }
     func makePropertiesManager() -> PropertiesManagerProtocol { propertiesManagerMock }
-    func makeServerStorage() -> ServerStorage { ServerStorageMock() }
     func makeSystemExtensionManager() -> SystemExtensionManager { SystemExtensionManagerMock(factory: self) }
     func makeVpnAuthentication() -> VpnAuthentication { VpnAuthenticationMock() }
     func makeVpnGateway() -> VpnGatewayProtocol { VpnGatewayMock() }

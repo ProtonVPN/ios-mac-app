@@ -22,7 +22,9 @@
 import Foundation
 
 import Domain
+import Ergonomics
 import Strings
+import Localization
 import VPNShared
 import VPNAppCore
 
@@ -147,15 +149,13 @@ public class ServerModel: NSObject, NSCoding, Codable {
         ips.contains { $0.supports(vpnProtocol: vpnProtocol) }
     }
 
-    public func supports(connectionProtocol: ConnectionProtocol,
-                         smartProtocolConfig: SmartProtocolConfig) -> Bool {
+    public func supports(connectionProtocol: ConnectionProtocol, smartProtocolConfig: SmartProtocolConfig) -> Bool {
         if let vpnProtocol = connectionProtocol.vpnProtocol {
             return supports(vpnProtocol: vpnProtocol)
         }
 
         return ips.contains {
-            $0.supports(connectionProtocol: connectionProtocol,
-                        smartProtocolConfig: smartProtocolConfig)
+            $0.supports(connectionProtocol: connectionProtocol, smartProtocolConfig: smartProtocolConfig)
         }
     }
 
@@ -413,4 +413,18 @@ public class ServerModel: NSObject, NSCoding, Codable {
         }
         return lhsSeqNum < rhsSeqNum
     }
+}
+
+public struct ServerListUpdateNotification: TypedNotification {
+    public static let name = Notification.Name("ProtonVPN.ServerListUpdate")
+    public let data: ServerListUpdate
+
+    public init(data: ServerListUpdate) {
+        self.data = data
+    }
+}
+
+public enum ServerListUpdate {
+    case servers
+    case loads
 }
