@@ -71,6 +71,7 @@ extension VPNServerFilter {
             // VPNAPPL-2097 - Improve performance by matching prefixes instead of substrings, if possible
             let substringPattern = "%\(query)%" // use for filtering against columns containing diacritics
             let normalizedSubstringPattern = "%\(query.normalized)%" // filter against diacritic stripped columns
+            let prefixPattern = "\(query)%"
             return logical[Logical.Columns.exitCountryCode] == query.uppercased() // match country codes only exactly
                 || logical[Logical.Columns.entryCountryCode] == query.uppercased() // match country codes only exactly
                 || logical[Logical.Columns.city].like(normalizedSubstringPattern)
@@ -78,6 +79,7 @@ extension VPNServerFilter {
                 || logical[Logical.Columns.translatedCity].like(substringPattern) // likely to contain diacritics
                 || localizedCountryName(logical[Logical.Columns.exitCountryCode]).like(normalizedSubstringPattern)
                 || localizedCountryName(logical[Logical.Columns.entryCountryCode]).like(normalizedSubstringPattern)
+                || logical[Logical.Columns.name].like(prefixPattern)
 
         case .city(let name):
             return logical[Logical.Columns.city] == name

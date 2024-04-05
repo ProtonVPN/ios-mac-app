@@ -32,7 +32,8 @@ final class TextSearchTests: TestIsolatedDatabaseTestCase {
             "TR": "Türkiye", // extra diacritics for fun
             "LV": "Łotwa", // 'Ł' edge case (apparently is not a diacritic)
             "UK": "A Kingdom United", // ISO region API edge case (United Kingdom is represented under ISO code "GB")
-            "US": "'Merica" // code and name with disjoint character sets: testMatchesFullCountryCode
+            "US": "'Merica", // code and name with disjoint character sets: testMatchesFullCountryCode
+            "ZZ": "Zzz"
         ]
     )
 
@@ -55,7 +56,9 @@ final class TextSearchTests: TestIsolatedDatabaseTestCase {
         repository.getFirstServer(filteredBy: [.matches(query)], orderedBy: .nameAscending)
     }
 
-    func testMatchesLocalizedCountryName() throws {
+    // MARK: Country Name
+
+    func testMatchesLocalizedCountryName() {
         let server = TestData.createMockServer(withID: "UK1", countryCode: "UK") // "A Kingdom United"
         repository.upsert(servers: [server])
 
@@ -74,7 +77,7 @@ final class TextSearchTests: TestIsolatedDatabaseTestCase {
         evaluate(scenarios: scenarios)
     }
 
-    func testDiacriticInsensitiveMatches() throws {
+    func testDiacriticInsensitiveMatches() {
         let server = TestData.createMockServer(withID: "TR1", countryCode: "TR")
         repository.upsert(servers: [server])
 
@@ -82,7 +85,7 @@ final class TextSearchTests: TestIsolatedDatabaseTestCase {
         XCTAssertEqual(getServerMatching(query: "tur"), server, "Queries without explicit diacritics should match")
     }
 
-    func testExtraDiacriticMatches() throws {
+    func testExtraDiacriticMatches() {
         let server = TestData.createMockServer(withID: "LV1", countryCode: "LV")
         repository.upsert(servers: [server])
 
@@ -90,9 +93,11 @@ final class TextSearchTests: TestIsolatedDatabaseTestCase {
         XCTAssertEqual(getServerMatching(query: "lotw"), server, "Queries without explicit diacritics should match")
     }
 
-    func testMatchesFullCountryCode() throws {
+    // MARK: Country Code
+
+    func testMatchesFullCountryCode() {
         // Server for which the localized country name's character set is disjoing with the country code
-        let server = TestData.createMockServer(withID: "US1", countryCode: "US") // "'Merica"
+        let server = TestData.createMockServer(withID: "US1", name: "abcd", countryCode: "US") // "'Merica"
         repository.upsert(servers: [server])
 
 
@@ -100,6 +105,24 @@ final class TextSearchTests: TestIsolatedDatabaseTestCase {
             ("U", nil, "Partial country codes should not be matched"),
             ("US", server, "Full country codes should be matched"),
             ("uS", server, "Country code search should be case insensitive")
+        ]
+
+        evaluate(scenarios: scenarios)
+    }
+
+    // MARK: Server Name
+
+    func testMatchesServerName() {
+        let server = TestData.createMockServer(withID: "abcd", name: "US#01", countryCode: "ZZ")
+
+        repository.upsert(servers: [server])
+
+        let scenarios: [(String, VPNServer?, String)] = [
+            ("US#01", server, "Full server name should be matched"),
+            ("US#0", server, "Server name prefix with partial server number should be matched"),
+            ("US#2", nil, "Search terms with more characters following a matching server prefix, should not be matched"),
+            ("S#01", nil, "Server name suffixes should not be matched"),
+            ("S#0", nil, "Server name substrings should not be matched"),
         ]
 
         evaluate(scenarios: scenarios)
