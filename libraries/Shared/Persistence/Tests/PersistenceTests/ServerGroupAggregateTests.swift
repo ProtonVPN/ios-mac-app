@@ -27,27 +27,42 @@ final class ServerGroupAggregateTests: TestIsolatedDatabaseTestCase {
     func testMaintenanceWithMixedStatus() throws {
         let mixedStatusServers = [
             TestData.createMockServer(withID: "UK#01", status: 0),
-            TestData.createMockServer(withID: "UK#02", status: 1)
+            TestData.createMockServer(withID: "UK#02", status: 1),
+            TestData.createMockServer(withID: "UK#03", status: 0),
         ]
 
         repository.upsert(servers: mixedStatusServers)
 
         let group = try XCTUnwrap(repository.getGroups(filteredBy: []).first)
 
-        XCTAssertEqual(group.isUnderMaintenance, false)
+        XCTAssertFalse(group.isUnderMaintenance)
     }
 
-    func testMaintenanceWithMaintenanceStatus() throws {
-        let mixedStatusServers = [
+    func testMaintenanceWithAllUnderMaintenanceStatus() throws {
+        let maintenanceServers = [
             TestData.createMockServer(withID: "UK#01", status: 0),
             TestData.createMockServer(withID: "UK#02", status: 0)
         ]
 
-        repository.upsert(servers: mixedStatusServers)
+        repository.upsert(servers: maintenanceServers)
 
         let group = try XCTUnwrap(repository.getGroups(filteredBy: []).first)
 
-        XCTAssertEqual(group.isUnderMaintenance, true)
+        XCTAssertTrue(group.isUnderMaintenance)
+    }
+
+    func testMaintenanceWithAllNormalStatus() throws {
+        let normalStatusServers = [
+            TestData.createMockServer(withID: "UK#01", status: 1),
+            TestData.createMockServer(withID: "UK#02", status: 1),
+            TestData.createMockServer(withID: "UK#03", status: 1),
+        ]
+
+        repository.upsert(servers: normalStatusServers)
+
+        let group = try XCTUnwrap(repository.getGroups(filteredBy: []).first)
+
+        XCTAssertFalse(group.isUnderMaintenance)
     }
 
 }
