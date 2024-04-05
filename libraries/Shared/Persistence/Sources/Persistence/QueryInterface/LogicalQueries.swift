@@ -85,6 +85,7 @@ extension Endpoint {
         overrideAlias: TableAlias
     ) -> QueryInterfaceRequest<Endpoint> {
         Endpoint
+            .select() // select nothing - we're only interested in aggregates
             .joining(
                 required: Endpoint.logical
                     .aliased(logicalAlias).select(Logical.Columns.exitCountryCode, Logical.Columns.gatewayName)
