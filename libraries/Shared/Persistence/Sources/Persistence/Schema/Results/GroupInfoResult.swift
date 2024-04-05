@@ -36,6 +36,6 @@ struct GroupInfoResult: Decodable, FetchableRecord {
     let longitude: Double
 
     let isVirtual: Int // Union of (logical.hostCountry != nil && logical.hostCountry != logical.entryCountryCode)
-    let status: Int // Union of (server.status && logical.status)
+    let statusUnion: Int // Union of (server.status && logical.status)
     let protocolSupport: ProtocolSupport // Union of protocols supported by servers
 }

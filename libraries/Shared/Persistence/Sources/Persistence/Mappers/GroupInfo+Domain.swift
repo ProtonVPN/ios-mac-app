@@ -33,7 +33,7 @@ extension GroupInfoResult {
             latitude: latitude,
             longitude: longitude,
             supportsSmartRouting: isVirtual == 1,
-            isUnderMaintenance: status == 0,
+            isUnderMaintenance: statusUnion == 0,
             protocolSupport: protocolSupport
         )
     }
