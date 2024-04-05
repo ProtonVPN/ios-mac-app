@@ -131,6 +131,9 @@
    <FileRef
       location = "group:apps/macos/macOS.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:apps/tvos/ProtonVPN/tvOS.xcodeproj">
+   </FileRef>
    <Group
       location = "container:"
       name = "Scripts">

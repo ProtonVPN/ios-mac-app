@@ -1,0 +1,26 @@
+//
+//  Config.xcconfig
+//  tvOS
+//
+//  Created by John Biggs on 05.04.2024.
+//  Copyright © 2024 Proton Technologies AG. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+// Setup how logs are treated by os_log for different build configurations
+
+OSLOG_LEVEL_ENABLE[config=Debug] = Debug
+OSLOG_LEVEL_PERSIST[config=Debug] = Debug
+
+OSLOG_LEVEL_ENABLE[config=Staging] = Debug
+OSLOG_LEVEL_PERSIST[config=Staging] = Debug
+
+OSLOG_LEVEL_ENABLE[config=Release] = Inherit
+OSLOG_LEVEL_PERSIST[config=Release] = Inherit
+
+TVOS_DEPLOYMENT_TARGET = 17.0
+
+TVOS_APP_VERSION = 0.0.1
+PRODUCT_DISPLAY_NAME = "Proton VPN"
