@@ -19,6 +19,7 @@
 import Foundation
 import ComposableArchitecture
 
+@Reducer
 struct WhatsTheIssueFeature: Reducer {
 
     struct State: Equatable {

@@ -20,6 +20,7 @@ import Foundation
 import ComposableArchitecture
 import SwiftUI
 
+@Reducer
 struct QuickFixesFeature: Reducer {
 
     struct State: Equatable {

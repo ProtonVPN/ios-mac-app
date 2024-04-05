@@ -21,6 +21,7 @@ import Foundation
 import ComposableArchitecture
 import SwiftUI
 
+@Reducer
 struct ReportBugFeatureMacOS: Reducer {
 
     struct State: Equatable {

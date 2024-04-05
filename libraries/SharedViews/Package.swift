@@ -24,10 +24,7 @@ let package = Package(
         .package(path: "../Foundations/Strings"),
         
         // 3rd party
-        .package(
-          url: "https://github.com/pointfreeco/swift-dependencies.git",
-          from: "1.2.1"
-        ),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies.git", from: "1.2.2"),
     ],
     targets: [
         .target(

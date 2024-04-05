@@ -20,6 +20,7 @@ import Foundation
 import ComposableArchitecture
 import Dependencies
 
+@Reducer
 struct BugReportResultFeature: Reducer {
 
     struct State: Equatable {
