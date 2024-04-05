@@ -27,7 +27,7 @@ let package = Package(
         .package(path: "../NEHelper"),
         .package(path: "../Foundations/Strings"),
         .package(path: "../Foundations/Ergonomics"),
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.5.0")
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.6.0")
         ),
         .package(
             url: "https://github.com/pointfreeco/swift-case-paths",
