@@ -34,7 +34,7 @@ let package = Package(
         .package(path: "../../external/protoncore"),
 
         // 3rd party
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.0.0")),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.5.0"),
     ],
     targets: [
         .target(

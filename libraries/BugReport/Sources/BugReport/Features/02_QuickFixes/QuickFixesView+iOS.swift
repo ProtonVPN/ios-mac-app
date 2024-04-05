@@ -111,7 +111,7 @@ public struct QuickFixesView: View {
                                                     },
                                        destination: { _ in
                             IfLetStore(self.store.scope(state: \.contactFormState,
-                                                        action: { .contactFormAction($0) }),
+                                                        action: \.contactFormAction),
                                        then: { store in ContactFormView(store: store) })
                             },
                                        label: {

@@ -94,7 +94,7 @@ public struct ContactFormView: View {
                                    onNavigate: { _ in },
                                    destination: { _ in
                                         IfLetStore(self.store.scope(state: \.resultState,
-                                                    action: { .resultViewAction($0) }),
+                                                    action: \.resultViewAction),
                                                    then: { store in BugReportResultView(store: store) })
                                     },
                                    label: { EmptyView() })
