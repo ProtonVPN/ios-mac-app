@@ -157,11 +157,7 @@ public final class CoreNetworking: Networking {
             switch result {
             case .success(let data):
                 log.debug("Request finished OK", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
-                var result = [String: AnyObject]()
-                for (key, value) in data {
-                    result[key] = value as AnyObject
-                }
-                completion(.success(result))
+                completion(.success(data))
             case .failure(let error):
                 log.error("Request failed", category: .net, event: .response, metadata: ["error": "\(error)", "url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
                 completion(.failure(error))
