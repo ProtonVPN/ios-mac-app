@@ -132,7 +132,7 @@ public extension ServerType {
         case .tor:
             return .features(.standard(with: .tor))
         case .standard:
-            return .features(.standard(without: .tor))
+            return .features(.standard)
         case .p2p:
             return .features(.standard(with: .p2p))
         case .unspecified:
