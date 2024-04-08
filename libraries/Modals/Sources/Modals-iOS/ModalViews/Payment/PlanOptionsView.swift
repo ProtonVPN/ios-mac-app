@@ -128,10 +128,9 @@ struct PlansOptionsListView_Previews: PreviewProvider {
         .init(duration: .twoYears, price: .init(amount: 145, currency: "USD")),
         .init(duration: .oneYear, price: .init(amount: 85, currency: "EUR")),
         .init(duration: .threeMonths, price: .init(amount: 33, currency: "JPY")),
-        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF")),
-        .init(duration: .init(components: .init(year: 0)), price: .init(amount: 0, currency: "EUR"))
+        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
     ]
-    static let currenciesClient: PlansClient = .init(retrievePlans: { currenciesPlans })
+    static let currenciesClient: PlansClient = .init(retrievePlans: { currenciesPlans }, validate: { _ in () })
 
     static var previews: some View {
         PlanOptionsView(modalType: .subscription, viewModel: .init(client: classicClient))

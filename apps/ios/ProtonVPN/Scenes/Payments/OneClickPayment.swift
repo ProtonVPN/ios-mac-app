@@ -49,6 +49,7 @@ class OneClickPayment {
         self.payments = payments
     }
 
+    @MainActor
     func oneClickIAPViewController(completionHandler: @escaping () -> Void) -> UIViewController {
         self.completionHandler = completionHandler
         return ModalsFactory().subscriptionViewController(plansClient: plansClient())
@@ -100,6 +101,7 @@ class OneClickPayment {
 
     var inAppPurchasePlans: [(PlanOption, InAppPurchasePlan)] = []
 
+    @MainActor
     func planOptions(with plansDataSource: PlansDataSourceProtocol) async throws -> [PlanOption] {
         try await plansDataSource.fetchAvailablePlans()
         let vpn2022 = plansDataSource.availablePlans?.plans.filter { plan in
@@ -110,11 +112,17 @@ class OneClickPayment {
             .compactMap { InAppPurchasePlan(availablePlanInstance: $0) }
             .compactMap { iAP -> (PlanOption, InAppPurchasePlan)? in
                 guard let priceLabel = iAP.priceLabel(from: payments.storeKitManager),
-                      let period = iAP.period else { return nil }
-                let planOption = PlanOption(duration: .init(components: .init(month: Int(period))),
-                                            price: .init(amount: priceLabel.value.doubleValue,
-                                                         currency: iAP.currency ?? "",
-                                                         locale: priceLabel.locale))
+                      let period = iAP.period,
+                      let duration = PlanDuration(components: .init(month: Int(period)))
+                else { return nil }
+                let planOption = PlanOption(
+                    duration: duration,
+                    price: .init(
+                        amount: priceLabel.value.doubleValue,
+                        currency: iAP.currency ?? "",
+                        locale: priceLabel.locale
+                    )
+                )
                 return (planOption, iAP)
             }
         return inAppPurchasePlans.map { $0.0 }

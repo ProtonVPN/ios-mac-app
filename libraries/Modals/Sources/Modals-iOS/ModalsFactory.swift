@@ -2,7 +2,6 @@ import Modals
 import UIKit
 import SwiftUI
 
-@MainActor
 public final class ModalsFactory {
 
     public init() {}
@@ -28,6 +27,7 @@ public final class ModalsFactory {
         return upsell
     }
 
+    @MainActor
     public func subscriptionViewController(plansClient: PlansClient) -> UIViewController {
         UIHostingController(rootView: PlanOptionsView(modalType: .subscription, viewModel: .init(client: plansClient)))
     }

@@ -251,7 +251,7 @@ struct PlanOptionView_Provider: PreviewProvider {
     static let planOption1 = PlanOption(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
     static let planOption2 = PlanOption(duration: .oneYear, price: .init(amount: 85, currency: "CHF"))
     static let annoyingPlan = PlanOption(
-        duration: .init(components: DateComponents(year: 2, month: 6)),
+        duration: .init(components: DateComponents(year: 2, month: 6))!,
         price: .init(amount: 85, currency: "CHF")
     )
 

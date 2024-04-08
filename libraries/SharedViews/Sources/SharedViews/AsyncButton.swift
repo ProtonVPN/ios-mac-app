@@ -19,6 +19,7 @@
 import SwiftUI
 
 // TODO: Provide an API to be able to customize the disabled look
+@available(iOS 15.0, macOS 12.0, *)
 public struct AsyncButton<Label> : View where Label : View {
     let role: ButtonRole?
     let taskPriority: TaskPriority?

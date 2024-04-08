@@ -59,6 +59,7 @@ final class OnboardingModuleService {
     }
 }
 
+@MainActor
 extension OnboardingModuleService: OnboardingService {
     func showOnboarding() {
         log.debug("Starting onboarding", category: .app)
