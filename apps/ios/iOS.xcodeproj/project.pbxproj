@@ -32,7 +32,6 @@
 		42C37AFF2434E62C00366B79 /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
 		4C05E5682A716995009102EB /* LegacyCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 4C05E5672A716995009102EB /* LegacyCommon */; };
 		4C05E56A2A71699D009102EB /* LegacyCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 4C05E5692A71699D009102EB /* LegacyCommon */; };
-		4C05E56C2A7169A2009102EB /* LegacyCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 4C05E56B2A7169A2009102EB /* LegacyCommon */; };
 		4C3474932A93C25B008BDE78 /* ImageSubtitleImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3474922A93C25B008BDE78 /* ImageSubtitleImageTableViewCell.swift */; };
 		4C4E98352AC1C07E00B7B285 /* DictionaryCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 4C4E98342AC1C07E00B7B285 /* DictionaryCoder */; };
 		4C78F5F52A6E8C0F0099DA1A /* TunnelKitOpenVPNAppExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 4C78F5F42A6E8C0F0099DA1A /* TunnelKitOpenVPNAppExtension */; };
@@ -171,7 +170,6 @@
 		AD80107E2AC6CEAD000DB179 /* SharedDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* SharedDependencies+Live.swift */; };
 		AD80107F2AC6CEAE000DB179 /* SharedDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* SharedDependencies+Live.swift */; };
 		AD8010802AC6CEAE000DB179 /* SharedDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* SharedDependencies+Live.swift */; };
-		AD8010812AC6CEAF000DB179 /* SharedDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* SharedDependencies+Live.swift */; };
 		AD8130FD2A852E4F00729E03 /* SharedDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* SharedDependencies+Live.swift */; };
 		AD81310D2A853E2C00729E03 /* AlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A7E6F2374C150008A0DA0 /* AlertTests.swift */; };
 		ADA1A0402A95E4EB00F9A6B6 /* Verifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1A03F2A95E4EB00F9A6B6 /* Verifier.swift */; };
@@ -200,20 +198,15 @@
 		B2FCF5442940E91300EAC786 /* TokenRefreshTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FCF5432940E91300EAC786 /* TokenRefreshTests.swift */; };
 		D50B801F295DA63B00D85D29 /* LoginExternalAccountNotSupportedSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8815D27DF5F2EEB85DCFD444 /* LoginExternalAccountNotSupportedSetup.swift */; };
 		D5110851246150DF0018872A /* Date+Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5110850246150DE0018872A /* Date+Formatters.swift */; };
-		D5136C9722895C3A0002C095 /* ExtensionAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C9622895C3A0002C095 /* ExtensionAlertService.swift */; };
 		D51DA6902541A66900B4A421 /* BadgedBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51DA68F2541A66900B4A421 /* BadgedBarButtonItem.swift */; };
 		D5209C7026CBBCF900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5209C6F26CBBCF900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift */; };
 		D5209C7126CBBE1800AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5209C6F26CBBCF900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift */; };
-		D5209C7226CBBE1900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5209C6F26CBBCF900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift */; };
 		D5209C7426CBC87E00AD14EA /* OVPNiOSCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5209C7326CBC87E00AD14EA /* OVPNiOSCredentialsConfigurator.swift */; };
 		D5209C7526CBCB3D00AD14EA /* OVPNiOSCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5209C7326CBC87E00AD14EA /* OVPNiOSCredentialsConfigurator.swift */; };
-		D5209C7626CBCB3D00AD14EA /* OVPNiOSCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5209C7326CBC87E00AD14EA /* OVPNiOSCredentialsConfigurator.swift */; };
 		D5209C7826CBD67100AD14EA /* WGiOSVpnCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5209C7726CBD67100AD14EA /* WGiOSVpnCredentialsConfigurator.swift */; };
 		D5209C7926CBD7C000AD14EA /* WGiOSVpnCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5209C7726CBD67100AD14EA /* WGiOSVpnCredentialsConfigurator.swift */; };
-		D5209C7A26CBD7C100AD14EA /* WGiOSVpnCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5209C7726CBD67100AD14EA /* WGiOSVpnCredentialsConfigurator.swift */; };
 		D55455422280280B006574F9 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55455412280280B006574F9 /* IntentHandler.swift */; };
 		D55455572280280B006574F9 /* Siri Shortcut Handler.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		D554556222804DF2006574F9 /* SiriHandlerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D554556122804DF2006574F9 /* SiriHandlerViewModel.swift */; };
 		D554556422805539006574F9 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
 		D554556522805D0F006574F9 /* Client.plist in Resources */ = {isa = PBXBuildFile; fileRef = 79C5598320AAC59F00E6D3F6 /* Client.plist */; };
 		D555C488297E75E1000593EF /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D555C487297E75E1000593EF /* ObfuscatedConstants.swift */; };
@@ -241,7 +234,6 @@
 		D5A880F422C61A59009B63D1 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A880F322C61A59009B63D1 /* UIButton+Extension.swift */; };
 		D5A8CD732456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8CD722456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift */; };
 		D5A8CD742456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8CD722456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift */; };
-		D5A8CD752456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8CD722456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift */; };
 		D5A8CD782456D8AE00F9B0C9 /* TroubleshootingSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8CD762456D8AE00F9B0C9 /* TroubleshootingSwitchCell.swift */; };
 		D5A8CD792456D8AE00F9B0C9 /* TroubleshootingSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5A8CD772456D8AE00F9B0C9 /* TroubleshootingSwitchCell.xib */; };
 		D5AAA128229D23F500EA839A /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D5AAA127229D23F500EA839A /* credentials.plist */; };
@@ -254,6 +246,7 @@
 		D5C7C8AB2B0B72A100641808 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8AA2B0B72A100641808 /* main.swift */; };
 		D5C7C8AD2B0B73CA00641808 /* TestAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8AC2B0B73CA00641808 /* TestAppDelegate.swift */; };
 		D5C8901429360230009177E4 /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C8901229360230009177E4 /* ObfuscatedConstants.swift */; };
+		D5CECA052BBFEFDE00755292 /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = 34A1BEF96001257E50BD4748 /* Strings */; };
 		D5EE41312AD9619800ECC064 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = D5EE41302AD9619800ECC064 /* WireGuardKit */; };
 		D5F37635254010EF008C7207 /* UIViewController+Announcements.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F37634254010EF008C7207 /* UIViewController+Announcements.swift */; };
 		D5F3763C254028E5008C7207 /* AnnouncementButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F3763B254028E5008C7207 /* AnnouncementButtonViewModel.swift */; };
@@ -356,7 +349,6 @@
 		E5E7EFEE28B8EDA4005249D3 /* AnnouncementImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E7EFED28B8EDA4005249D3 /* AnnouncementImageViewController.swift */; };
 		E5E7EFF028B8EDEC005249D3 /* AnnouncementImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5E7EFEF28B8EDEC005249D3 /* AnnouncementImageViewController.xib */; };
 		E5FA6F2827C7E12200E781FC /* SubuserAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5FA6F2727C7E12200E781FC /* SubuserAlertViewController.storyboard */; };
-		E5FD25C82A73AD8600D9BDC0 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */ = {isa = PBXBuildFile; productRef = E5FD25C72A73AD8600D9BDC0 /* ProtonCoreCryptoVPNPatchedGoImplementation */; };
 		E5FD25CA2A73ADC500D9BDC0 /* country-names.plist in Resources */ = {isa = PBXBuildFile; fileRef = E5FD25C92A73ADC500D9BDC0 /* country-names.plist */; };
 		E5FD25CF2A73AF1C00D9BDC0 /* country-names.plist in Resources */ = {isa = PBXBuildFile; fileRef = E5FD25C92A73ADC500D9BDC0 /* country-names.plist */; };
 		E5FD25D02A73AF1D00D9BDC0 /* country-names.plist in Resources */ = {isa = PBXBuildFile; fileRef = E5FD25C92A73ADC500D9BDC0 /* country-names.plist */; };
@@ -370,7 +362,6 @@
 		E9492ED72669177D00500E7D /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCDA20908E6F0030E1EB /* AppConstants.swift */; };
 		E9492ED82669178000500E7D /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCDA20908E6F0030E1EB /* AppConstants.swift */; };
 		E9492ED92669178100500E7D /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCDA20908E6F0030E1EB /* AppConstants.swift */; };
-		E9492EDA2669178100500E7D /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCDA20908E6F0030E1EB /* AppConstants.swift */; };
 		E95F81E727B1474800A2458A /* iOSUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95F81E627B1474800A2458A /* iOSUpdateManager.swift */; };
 		E977A79F26821CA90013495A /* Client.plist in Resources */ = {isa = PBXBuildFile; fileRef = 79C5598320AAC59F00E6D3F6 /* Client.plist */; };
 		E97A67732772015A002EB33C /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E154A0C822E0A9A000283CF9 /* ObfuscatedConstants.swift */; };
@@ -389,8 +380,6 @@
 		F314141927B170FC007424E9 /* NetShieldSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141827B170FC007424E9 /* NetShieldSelectionViewModel.swift */; };
 		F314141B27B17380007424E9 /* NetShieldSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141A27B17380007424E9 /* NetShieldSelectionViewController.swift */; };
 		F316A07026DFB05E00669386 /* UserCachedStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316A06F26DFB05E00669386 /* UserCachedStatus.swift */; };
-		F316A07226DFB0D900669386 /* iOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */; };
-		F316A07326DFB0E900669386 /* UserCachedStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316A06F26DFB05E00669386 /* UserCachedStatus.swift */; };
 		F316A07526DFBCB600669386 /* PlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316A07426DFBCB600669386 /* PlanService.swift */; };
 		F31E91202758F5F900140B2E /* WGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31E911F2758F5F900140B2E /* WGLogger.swift */; };
 		F330F01C27FD752E00C3AA33 /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F330F01B27FD752E00C3AA33 /* UINavigationController+Extensions.swift */; };
@@ -401,7 +390,6 @@
 		F3607BEE25D582BF0076AE32 /* ConfirmationToggleSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */; };
 		F36AC257264BF41B008CFCD3 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36AC256264BF41B008CFCD3 /* SnapshotHelper.swift */; };
 		F3747BFB26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */; };
-		F3747C0226D4E1A900EF2F00 /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
 		F3747C0F26D4F25700EF2F00 /* EnvironmentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C0E26D4F25700EF2F00 /* EnvironmentsViewController.swift */; };
 		F377836A26E644BC00392958 /* SettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F377835F26E644BC00392958 /* SettingsTests.swift */; };
 		F377836C26E644BC00392958 /* ConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F377836226E644BC00392958 /* ConnectionTests.swift */; };
@@ -712,7 +700,6 @@
 		D55455432280280B006574F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D55455492280280B006574F9 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		D554555F2280435B006574F9 /* Siri Shortcut Handler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Siri Shortcut Handler.entitlements"; sourceTree = "<group>"; };
-		D554556122804DF2006574F9 /* SiriHandlerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiriHandlerViewModel.swift; sourceTree = "<group>"; };
 		D555C487297E75E1000593EF /* ObfuscatedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.swift; sourceTree = "<group>"; };
 		D555C489297E75ED000593EF /* OpenVPNConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenVPNConstants.swift; sourceTree = "<group>"; };
 		D555C48C297E78FF000593EF /* OVPNLogFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OVPNLogFormatter.swift; sourceTree = "<group>"; };
@@ -954,8 +941,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C05E56C2A7169A2009102EB /* LegacyCommon in Frameworks */,
-				E5FD25C82A73AD8600D9BDC0 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */,
+				D5CECA052BBFEFDE00755292 /* Strings in Frameworks */,
 				D554556422805539006574F9 /* NetworkExtension.framework in Frameworks */,
 				4C4E98352AC1C07E00B7B285 /* DictionaryCoder in Frameworks */,
 			);
@@ -1513,7 +1499,6 @@
 				4CF297FC2A7D39F700DEB23F /* Intents.intentdefinition */,
 				D554555F2280435B006574F9 /* Siri Shortcut Handler.entitlements */,
 				D55455412280280B006574F9 /* IntentHandler.swift */,
-				D554556122804DF2006574F9 /* SiriHandlerViewModel.swift */,
 				D55455432280280B006574F9 /* Info.plist */,
 			);
 			path = "Siri Shortcut Handler";
@@ -2359,9 +2344,8 @@
 			);
 			name = "Siri Shortcut Handler";
 			packageProductDependencies = (
-				4C05E56B2A7169A2009102EB /* LegacyCommon */,
-				E5FD25C72A73AD8600D9BDC0 /* ProtonCoreCryptoVPNPatchedGoImplementation */,
 				4C4E98342AC1C07E00B7B285 /* DictionaryCoder */,
+				34A1BEF96001257E50BD4748 /* Strings */,
 			);
 			productName = "Siri Shortcut Handler";
 			productReference = D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */;
@@ -3129,19 +3113,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F316A07326DFB0E900669386 /* UserCachedStatus.swift in Sources */,
-				F316A07226DFB0D900669386 /* iOSNetworkingDelegate.swift in Sources */,
-				D5136C9722895C3A0002C095 /* ExtensionAlertService.swift in Sources */,
-				F3747C0226D4E1A900EF2F00 /* URLConstants.swift in Sources */,
-				D5209C7226CBBE1900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift in Sources */,
-				AD8010812AC6CEAF000DB179 /* SharedDependencies+Live.swift in Sources */,
-				D5209C7626CBCB3D00AD14EA /* OVPNiOSCredentialsConfigurator.swift in Sources */,
 				4CF297FD2A7D39F700DEB23F /* Intents.intentdefinition in Sources */,
-				D554556222804DF2006574F9 /* SiriHandlerViewModel.swift in Sources */,
-				D5A8CD752456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */,
 				D55455422280280B006574F9 /* IntentHandler.swift in Sources */,
-				D5209C7A26CBD7C100AD14EA /* WGiOSVpnCredentialsConfigurator.swift in Sources */,
-				E9492EDA2669178100500E7D /* AppConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3261,7 +3234,6 @@
 /* Begin PBXTargetDependency section */
 		4C13B9822A742387008A04C2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			productRef = 4C13B9812A742387008A04C2 /* SwiftLintPlugin */;
 		};
 		791DE5F1208DDA3200A29EA5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -4437,6 +4409,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = NEHelper;
 		};
+		34A1BEF96001257E50BD4748 /* Strings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Strings;
+		};
 		4C05E5672A716995009102EB /* LegacyCommon */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LegacyCommon;
@@ -4444,14 +4420,6 @@
 		4C05E5692A71699D009102EB /* LegacyCommon */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LegacyCommon;
-		};
-		4C05E56B2A7169A2009102EB /* LegacyCommon */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = LegacyCommon;
-		};
-		4C13B9812A742387008A04C2 /* SwiftLintPlugin */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "plugin:SwiftLintPlugin";
 		};
 		4C4E98342AC1C07E00B7B285 /* DictionaryCoder */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -4621,10 +4589,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E5DEF05D2A7399EC006FC9DC /* XCRemoteSwiftPackageReference "DictionaryCoder" */;
 			productName = DictionaryCoder;
-		};
-		E5FD25C72A73AD8600D9BDC0 /* ProtonCoreCryptoVPNPatchedGoImplementation */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ProtonCoreCryptoVPNPatchedGoImplementation;
 		};
 		F348C9D527D8E54200622584 /* Search */ = {
 			isa = XCSwiftPackageProductDependency;
