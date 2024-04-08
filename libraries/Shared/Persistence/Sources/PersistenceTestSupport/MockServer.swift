@@ -23,6 +23,7 @@ import Domain
 public enum TestData {
     public static func createMockServer(
         withID id: String,
+        name: String? = nil,
         countryCode: String = "CH",
         tier: Int = 0,
         load: Int = 0,
@@ -32,7 +33,7 @@ public enum TestData {
         return VPNServer(
             logical: .init(
                 id: id,
-                name: id,
+                name: name ?? id,
                 domain: "a",
                 load: load,
                 entryCountryCode: countryCode,
