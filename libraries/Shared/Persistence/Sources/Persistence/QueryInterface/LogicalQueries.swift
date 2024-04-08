@@ -85,6 +85,7 @@ extension Endpoint {
         overrideAlias: TableAlias
     ) -> QueryInterfaceRequest<Endpoint> {
         Endpoint
+            .select() // select nothing - we're only interested in aggregates
             .joining(
                 required: Endpoint.logical
                     .aliased(logicalAlias).select(Logical.Columns.exitCountryCode, Logical.Columns.gatewayName)
@@ -118,7 +119,7 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
         overrideAlias: TableAlias
     ) -> QueryInterfaceRequest<Endpoint> {
         return self
-            .annotated(with: max(statusAlias[LogicalStatus.Columns.status] & Endpoint.Columns.status).forKey("status"))
+            .annotated(with: bitwiseOr(statusAlias[LogicalStatus.Columns.status & Endpoint.Columns.status]).forKey("statusUnion"))
             .annotated(with: bitwiseAnd(isVirtual(logicalAlias)).forKey("isVirtual"))
             .annotated(with: count(distinct: logicalAlias[Logical.Columns.id]).forKey("serverCount"))
             .annotated(with: count(distinct: logicalAlias[Logical.Columns.city]).forKey("cityCount"))
