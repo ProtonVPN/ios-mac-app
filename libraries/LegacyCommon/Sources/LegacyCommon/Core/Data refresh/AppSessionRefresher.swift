@@ -58,6 +58,7 @@ public protocol AppSessionRefresherFactory {
 
 open class AppSessionRefresherImplementation: AppSessionRefresher {
     @Dependency(\.serverRepository) public var serverRepository
+    @Dependency(\.serverManager) public var serverManager
     public var loggedIn = false
     public var successfulConsecutiveSessionRefreshes = CounterActor()
 

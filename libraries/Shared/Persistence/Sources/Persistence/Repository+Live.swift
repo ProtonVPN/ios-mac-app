@@ -89,11 +89,11 @@ extension ServerRepository {
                     }
                 }
             },
-            deleteServers: { minTier, ids in
+            deleteServers: { ids, maxTier in
                 return executor.write(dbWriter: dbWriter) { db in
                     return try Logical
                         .filter(!ids.contains(Logical.Columns.id))
-                        .filter(Logical.Columns.tier >= minTier)
+                        .filter(Logical.Columns.tier <= maxTier)
                         .deleteAll(db)
                 }
             },

@@ -31,23 +31,23 @@ final class ServerDeletionTests: TestIsolatedDatabaseTestCase {
         repository.upsert(
             servers: [
                 TestData.createMockServer(withID: "free1", tier: 0),
+                TestData.createMockServer(withID: "stale1", tier: 0),
                 TestData.createMockServer(withID: "paid1", tier: 1),
-                TestData.createMockServer(withID: "stale1", tier: 1),
-                TestData.createMockServer(withID: "paid2", tier: 2),
-                TestData.createMockServer(withID: "free2", tier: 0),
                 TestData.createMockServer(withID: "stale2", tier: 2)
             ]
         )
 
         let deletedServerCount = repository.delete(
-            serversWithMinTier: 1,
-            withIDsNotIn: .init(arrayLiteral: "free1", "paid1", "paid2")
+            serversWithIDsNotIn: Set(arrayLiteral: "free1", "paid1"),
+            maxTier: 0
         )
 
-        XCTAssertEqual(deletedServerCount, 2)
+        XCTAssertEqual(deletedServerCount, 1)
 
         let remainingServers = repository.getServers(filteredBy: [], orderedBy: .nameAscending)
         let remainingServerIDs = remainingServers.map { $0.logical.id }
-        XCTAssertEqual(remainingServerIDs, ["free1", "free2", "paid1", "paid2"])
+
+        // stale1 should be deleted since it matches the tier criteria and its ID is not in the list
+        XCTAssertEqual(remainingServerIDs, ["free1", "paid1", "stale2"])
     }
 }

@@ -62,13 +62,10 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
                         if let services = properties.streamingServices {
                             self.propertiesManager.streamingServices = services.streamingServices
                         }
-                        if !isFreeTier {
-                            let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
-                            let deletedServerCount = self.serverRepository.delete(serversWithMinTier: .paidTier, withIDsNotIn: updatedServerIDs)
-                            log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
-                        }
-                        self.serverRepository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
-                        NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
+                        self.serverManager.update(
+                            servers: properties.serverModels.map { VPNServer(legacyModel: $0) },
+                            freeServersOnly: isFreeTier
+                        )
                         completion(.success)
                     case let .failure(error):
                         completion(.failure(error))

@@ -530,13 +530,12 @@ public class VpnGateway: VpnGatewayProtocol {
                     if let services = properties.streamingServices {
                         self.propertiesManager.streamingServices = services.streamingServices
                     }
-                    if refreshFreeTierInfo {
-                        let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
-                        let deletedServerCount = repository.delete(serversWithMinTier: .paidTier, withIDsNotIn: updatedServerIDs)
-                        log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
-                    }
-                    repository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
-                    NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
+
+                    @Dependency(\.serverManager) var serverManager
+                    serverManager.update(
+                        servers: properties.serverModels.map { VPNServer(legacyModel: $0) },
+                        freeServersOnly: refreshFreeTierInfo
+                    )
                     self.profileManager.refreshProfiles()
                 case .failure:
                     // Ignore failures as this is a non-critical call
@@ -707,11 +706,15 @@ fileprivate extension VpnGateway {
         // If user is upgrading from a free account, the server list needs to be updated to contain the paid servers.
         // CAREFUL: refresh server info's continuation is asynchronous here.
         if oldTier.isFreeTier && newTier.isPaidTier {
-            vpnApiService.refreshServerInfo(freeTier: false) { [weak self] result in
+            vpnApiService.refreshServerInfo(freeTier: false) { result in
                 switch result {
                 case .success(let properties):
                     guard let servers = properties?.serverModels else { break }
-                    try? self?.repository.upsert(servers: servers.map { VPNServer(legacyModel: $0) })
+                    @Dependency(\.serverManager) var serverManager
+                    serverManager.update(
+                        servers: servers.map { VPNServer(legacyModel: $0) },
+                        freeServersOnly: false
+                    )
                     NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
                 case .failure(let error):
                     log.error("Encountered error refreshing server list on plan upgrade: \(error)")
