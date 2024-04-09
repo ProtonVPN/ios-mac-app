@@ -105,13 +105,13 @@
 "_vpn_protocol_not_supported_text" = "Il protocollo VPN non è disponibile per la connessione selezionata. Per connetterti, prova a cambiare il protocollo o il server.";
 
 /* iOS: button in settings screen */
-"_log_out" = "Disconnetti";
+"_log_out" = "Esci";
 
 /* iOS: Logout alert */
-"_log_out_warning" = "La disconnessione terminerà la sessione VPN.";
+"_log_out_warning" = "L'uscita terminerà la sessione VPN.";
 
 /* MacOS: Logout alert */
-"_log_out_warning_long" = "La disconnessione dall'applicazione terminerà la connessione VPN attiva. Vuoi continuare?";
+"_log_out_warning_long" = "L'uscita dall'account disconnetterà la VPN. Vuoi continuare?";
 
 /* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
 "_change_protocol_disconnect_warning" = "Il cambio del protocollo terminerà la sessione VPN attuale.";
@@ -1209,7 +1209,7 @@
 "_menu_show_all" = "Mostra tutto";
 
 /* Main mac app menu item */
-"_menu_logout" = "Disconnetti";
+"_menu_logout" = "Esci dall'account";
 
 /* Main mac app menu item */
 "_menu_quit" = "Chiudi Proton VPN";

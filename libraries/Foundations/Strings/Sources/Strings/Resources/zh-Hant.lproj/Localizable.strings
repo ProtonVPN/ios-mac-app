@@ -2066,10 +2066,10 @@
 "upsell_plans_list_validate_button" = "Get VPN Plus";
 
 /* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerMonth" = " /month";
+"upsell_plans_list_option_amountPerMonth" = " /月";
 
 /* Trailing text of the paid plan option amount indicating the amount per year. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerYear" = " /year";
+"upsell_plans_list_option_amountPerYear" = " /年";
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "適用於企業版VPN.";

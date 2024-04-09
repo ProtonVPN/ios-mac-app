@@ -5,7 +5,7 @@
     <key>welcome_screen_feature_devices</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Fino a %#@VARIABLE@ contemporaneamente</string>
+      <string>Fino a %#@VARIABLE@ nello stesso momento</string>
       <key>VARIABLE</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -356,13 +356,13 @@ fermati</string>
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d sec</string>
+        <string>%d s</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d sec</string>
+        <string>%d s</string>
       </dict>
     </dict>
     <key>_session_length_minutes</key>
@@ -388,13 +388,13 @@ fermati</string>
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d sec</string>
+        <string>%d s</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d sec</string>
+        <string>%d s</string>
       </dict>
     </dict>
     <key>_step_of</key>
