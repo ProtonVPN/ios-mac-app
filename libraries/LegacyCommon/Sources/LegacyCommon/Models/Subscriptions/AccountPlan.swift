@@ -20,6 +20,9 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
+import Persistence
+
 public enum AccountPlan {
     case plus
 
@@ -38,10 +41,8 @@ public enum AccountPlan {
     }
 
     public var serversCount: Int {
-        switch self {
-        case .plus:
-            return 4000
-        }
+        @Dependency(\.serverRepository) var repository
+        return repository.roundedServerCount
     }
 }
 

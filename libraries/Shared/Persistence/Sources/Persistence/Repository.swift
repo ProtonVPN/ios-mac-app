@@ -114,6 +114,27 @@ extension ServerRepository {
     }
 }
 
+public extension ServerRepository {
+    var roundedServerCount: Int {
+        serverCount().roundedServerCount()
+    }
+}
+
+extension BinaryInteger {
+    /// We're rounding the servers here in a "special" way. It's because we want to be exact in this non-exactness 😄
+    /// In upsells we say for example 4400+ servers. The + indicates being there more than 4400 servers.
+    /// So if we have exactly 4400, we'd be laying to say we have 4400+ servers.
+    func roundedServerCount() -> Self {
+        guard self > 100 else { return self }
+        let remainder = self % 100
+        if remainder == 0 {
+            return self - 100
+        } else {
+            return self - remainder
+        }
+    }
+}
+
 extension DependencyValues {
     public var serverRepository: ServerRepository {
         get { self[ServerRepository.self] }
