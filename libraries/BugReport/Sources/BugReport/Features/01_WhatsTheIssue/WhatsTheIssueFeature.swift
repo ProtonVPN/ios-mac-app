@@ -22,12 +22,20 @@ import ComposableArchitecture
 @Reducer
 struct WhatsTheIssueFeature: Reducer {
 
+    @ObservableState
     struct State: Equatable {
         var categories: [Category]
         var route: Route.State?
+
+        init(categories: [Category], route: Route.State? = nil) {
+            self.categories = categories
+            self.route = route
+        }
     }
 
-    enum Action: Equatable {
+    enum Action: BindableAction, Equatable {
+        case binding(BindingAction<State>)
+
         case categorySelected(Category)
         case route(Route.Action)
 
@@ -35,8 +43,10 @@ struct WhatsTheIssueFeature: Reducer {
         case contactFormDeselected
     }
 
-    struct Route: Equatable {
+    @Reducer
+    struct Route {
 
+        @ObservableState
         enum State: Equatable {
             case quickFixes(QuickFixesFeature.State)
             case contactForm(ContactFormFeature.State)
@@ -49,6 +59,7 @@ struct WhatsTheIssueFeature: Reducer {
     }
 
     var body: some ReducerOf<Self> {
+        BindingReducer()
         Reduce { state, action in
             switch action {
             case .categorySelected(let category):
@@ -74,6 +85,11 @@ struct WhatsTheIssueFeature: Reducer {
                 state.route = nil
                 return .none
 
+            // Other
+
+            case .binding(_):
+                // Everything's done in BindingReducer()
+                return .none
             }
         }
         .ifLet(\.route, action: /Action.route, then: {

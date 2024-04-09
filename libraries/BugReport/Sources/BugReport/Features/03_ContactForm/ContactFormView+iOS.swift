@@ -24,7 +24,7 @@ import Strings
 
 public struct ContactFormView: View {
 
-    let store: StoreOf<ContactFormFeature>
+    @Perception.Bindable var store: StoreOf<ContactFormFeature>
 
     @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
 
@@ -32,7 +32,7 @@ public struct ContactFormView: View {
     @Environment(\.dismiss) private var dismiss
 
     public var body: some View {
-        WithViewStore(self.store, observe: { $0 }, content: { viewStore in
+        WithPerceptionTracking {
             ZStack {
                 colors.background.ignoresSafeArea()
                 VStack(spacing: 0) {
@@ -45,28 +45,28 @@ public struct ContactFormView: View {
                     ScrollView {
                         VStack(spacing: 20) {
 
-                            ForEach(viewStore.fields) { field in
+                            ForEach(store.fields) { field in
                                 if !field.hidden {
 
                                     switch field.inputField.type {
                                     case .textSingleLine:
                                         SingleLineTextInputView(field: field.inputField,
                                                                 value: Binding(get: { field.stringValue },
-                                                                               set: { viewStore.send(.fieldStringValueChanged(field, $0)) }))
+                                                                               set: { store.send(.fieldStringValueChanged(field, $0)) }))
                                     case .textMultiLine:
                                         MultiLineTextInputView(field: field.inputField,
                                                                value: Binding(get: { field.stringValue },
-                                                                              set: { viewStore.send(.fieldStringValueChanged(field, $0)) }))
+                                                                              set: { store.send(.fieldStringValueChanged(field, $0)) }))
                                             .frame(height: 155, alignment: .top)
                                     case .switch:
                                         SwitchInputView(field: field.inputField,
                                                         value: Binding(get: { field.boolValue },
-                                                                       set: { viewStore.send(.fieldBoolValueChanged(field, $0)) }))
+                                                                       set: { store.send(.fieldBoolValueChanged(field, $0)) }))
                                     }
                                 }
                             }
 
-                            if viewStore.showLogsInfo {
+                            if store.showLogsInfo {
                                 HStack(alignment: .top, spacing: 0) {
                                     Image(Asset.icInfoCircle.name, bundle: Bundle.module)
                                         .padding(0)
@@ -81,21 +81,21 @@ public struct ContactFormView: View {
                             }
 
                             Button(action: {
-                                viewStore.send(.send)
-                            }, label: { Text(viewStore.isSending ? Localizable.br3ButtonSending : Localizable.br3ButtonSend) })
-                                .disabled(!viewStore.isSending && !viewStore.canBeSent)
+                                store.send(.send)
+                            }, label: { Text(store.isSending ? Localizable.br3ButtonSending : Localizable.br3ButtonSend) })
+                                .disabled(!store.isSending && !store.canBeSent)
                                 .buttonStyle(PrimaryButtonStyle())
                                 .padding(.horizontal)
                         }
                     }
 
-                    NavigationLink(unwrapping: viewStore.binding(get: \.resultState,
-                                                                 send: ContactFormFeature.Action.resultViewClosed),
+                    NavigationLink(unwrapping: $store.resultState,
                                    onNavigate: { _ in },
                                    destination: { _ in
                                         IfLetStore(self.store.scope(state: \.resultState,
-                                                    action: \.resultViewAction),
-                                                   then: { store in BugReportResultView(store: store) })
+                                                   action: \.resultViewAction),
+                                                   then: { store in BugReportResultView(store: store) }
+                                        )
                                     },
                                    label: { EmptyView() })
 
@@ -110,9 +110,9 @@ public struct ContactFormView: View {
                     Image(systemName: "chevron.left").foregroundColor(colors.textPrimary)
                 }))
 
-                .environment(\.isLoading, viewStore.isSending)
+                .environment(\.isLoading, store.isSending)
             }
-        })
+        }
     }
 
 }

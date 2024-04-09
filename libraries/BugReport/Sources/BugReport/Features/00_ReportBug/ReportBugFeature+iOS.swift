@@ -24,8 +24,13 @@ import SwiftUI
 @Reducer
 struct ReportBugFeatureiOS: Reducer {
 
+    @ObservableState
     struct State: Equatable {
         var whatsTheIssueState: WhatsTheIssueFeature.State
+
+        init(whatsTheIssueState: WhatsTheIssueFeature.State) {
+            self.whatsTheIssueState = whatsTheIssueState
+        }
     }
 
     enum Action: Equatable {
@@ -42,18 +47,23 @@ struct ReportBugFeatureiOS: Reducer {
 
 public struct ReportBugView: View {
 
-    let store: StoreOf<ReportBugFeatureiOS>
+    @Perception.Bindable var store: StoreOf<ReportBugFeatureiOS>
 
     @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
     @Environment(\.colors) var colors: Colors
 
     public var body: some View {
-        WithViewStore(self.store, observe: { $0 }, content: { viewStore in
+        WithPerceptionTracking {
             NavigationView {
-                WhatsTheIssueView(store: self.store.scope(state: \.whatsTheIssueState, action: ReportBugFeatureiOS.Action.whatsTheIssueAction))
+                WhatsTheIssueView(
+                    store: self.store.scope(
+                        state: \.whatsTheIssueState,
+                        action: \.whatsTheIssueAction
+                    )
+                )
             }
             .navigationViewStyle(.stack)
-        })
+        }
     }
 }
 

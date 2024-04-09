@@ -39,7 +39,7 @@ class ViewController: UIViewController {
                         if form.email == "success@email.com" {
                             result(.success(Void()))
                         } else {
-                            result(.failure(NSError(domain: "domain", code: 153, userInfo: [NSLocalizedDescriptionKey: "Just and error"])))
+                            result(.failure(NSError(domain: "domain", code: 153, userInfo: [NSLocalizedDescriptionKey: "Just an error"])))
                         }
                     }
                 }

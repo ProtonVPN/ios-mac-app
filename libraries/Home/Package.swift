@@ -27,14 +27,12 @@ let package = Package(
         .package(path: "../NEHelper"),
         .package(path: "../Foundations/Strings"),
         .package(path: "../Foundations/Ergonomics"),
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.6.0")
-        ),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.9.2"),
         .package(
             url: "https://github.com/pointfreeco/swift-case-paths",
             exact: "1.3.0"
         ),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies.git", .upToNextMajor(from: "1.2.2")
-        ),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies.git", exact: "1.2.2"),
     ],
     targets: [
         .target(

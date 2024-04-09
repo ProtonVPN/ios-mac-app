@@ -240,8 +240,8 @@
         "repositoryURL": "https://github.com/pointfreeco/swift-composable-architecture",
         "state": {
           "branch": null,
-          "revision": "ae491c9e3f66631e72d58db8bb4c27dfc3d3afd4",
-          "version": "1.6.0"
+          "revision": "115fe5af41d333b6156d4924d7c7058bc77fd580",
+          "version": "1.9.2"
         }
       },
       {
@@ -296,6 +296,15 @@
           "branch": null,
           "revision": "7977acd7597f413717058acc1e080731249a1d7e",
           "version": "0.5.0"
+        }
+      },
+      {
+        "package": "swift-perception",
+        "repositoryURL": "https://github.com/pointfreeco/swift-perception",
+        "state": {
+          "branch": null,
+          "revision": "520c458a832d1287e6b698c5f657ae848fd696ff",
+          "version": "1.1.4"
         }
       },
       {

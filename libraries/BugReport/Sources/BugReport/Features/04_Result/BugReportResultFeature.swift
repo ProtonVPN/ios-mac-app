@@ -23,6 +23,7 @@ import Dependencies
 @Reducer
 struct BugReportResultFeature: Reducer {
 
+    @ObservableState
     struct State: Equatable {
         var error: String?
     }

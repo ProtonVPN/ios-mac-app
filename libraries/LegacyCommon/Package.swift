@@ -54,7 +54,7 @@ let package = Package(
         .github("getsentry", repo: "sentry-cocoa", exact: "8.18.0"),
         .github("kishikawakatsumi", repo: "KeychainAccess", exact: "4.2.2"),
         .github("pointfreeco", repo: "swift-clocks", .upToNextMajor(from: "1.0.0")),
-        .github("pointfreeco", repo: "swift-composable-architecture", exact: "1.6.0"),
+        .github("pointfreeco", repo: "swift-composable-architecture", exact: "1.9.2"),
         .github("pointfreeco", repo: "swift-dependencies", exact: "1.2.2"),
         .github("SDWebImage", repo: "SDWebImage", .upTo("5.16.0")),
         .github("ProtonMail", repo: "TrustKit", revision: "d107d7cc825f38ae2d6dc7c54af71d58145c3506"),
