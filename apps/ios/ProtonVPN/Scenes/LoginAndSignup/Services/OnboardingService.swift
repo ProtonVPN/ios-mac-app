@@ -43,14 +43,19 @@ final class OnboardingModuleService {
 
     private let windowService: WindowService
     private let planService: PlanService
-    private let oneClickPayment: OneClickPayment
+    private let oneClickPayment: OneClickPayment?
 
     weak var delegate: OnboardingServiceDelegate?
 
     init(factory: Factory) {
         windowService = factory.makeWindowService()
         planService = factory.makePlanService()
-        oneClickPayment = OneClickPayment(factory: factory, payments: planService.payments)
+        do {
+            oneClickPayment = try OneClickPayment(factory: factory, payments: planService.payments)
+        } catch {
+            log.debug("One click payment disabled: \(error)")
+            oneClickPayment = nil
+        }
     }
 }
 
@@ -70,14 +75,13 @@ extension OnboardingModuleService: OnboardingService {
     }
 
     func welcomeToProtonPrimaryAction() {
-        var viewController: UIViewController
-        do {
-            viewController = try oneClickPayment.presentOneClickIAP { [weak self] in
-                self?.onboardingCoordinatorDidFinish()
-            }
-        } catch {
-            log.warning("Couldn't present OneClickAIAP, falling back to old, full payment flow. Error: \(error)")
-            viewController = allCountriesUpsellViewController()
+        guard let oneClickPayment else {
+            windowService.addToStack(allCountriesUpsellViewController(),
+                                     checkForDuplicates: false)
+            return
+        }
+        let viewController = oneClickPayment.oneClickIAPViewController { [weak self] in
+            self?.onboardingCoordinatorDidFinish()
         }
         windowService.addToStack(viewController, checkForDuplicates: false)
     }

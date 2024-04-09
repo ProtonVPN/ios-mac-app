@@ -34,22 +34,27 @@ class OneClickPayment {
     private let payments: Payments
     private var completionHandler: (() -> Void)?
 
-    init(factory: Factory, payments: Payments) {
+    var plansDataSource: PlansDataSourceProtocol
+
+    init?(factory: Factory, payments: Payments) throws {
+        guard FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.oneClickPayment) else {
+            throw "OneClickAIAP FF disabled!"
+        }
+        guard case .right(let plansDataSource) = payments.planService else {
+            throw "DynamicPlan FF disabled!"
+        }
+        self.plansDataSource = plansDataSource
         planService = factory.makePlanService()
         alertService = factory.makeCoreAlertService()
         self.payments = payments
     }
 
-    func presentOneClickIAP(completionHandler: @escaping () -> Void) throws -> UIViewController {
-        guard FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.oneClickPayment),
-              let plansDataSource else {
-            throw "OneClickAIAP or DynamicPlan FF disabled!"
-        }
+    func oneClickIAPViewController(completionHandler: @escaping () -> Void) -> UIViewController {
         self.completionHandler = completionHandler
-        return ModalsFactory().subscriptionViewController(plansClient: plansClient(plansDataSource))
+        return ModalsFactory().subscriptionViewController(plansClient: plansClient())
     }
 
-    private func plansClient(_ plansDataSource: PlansDataSourceProtocol) -> PlansClient {
+    private func plansClient() -> PlansClient {
         PlansClient(retrievePlans: { [weak self] in
             guard let self else { throw "Onboarding was dismissed" }
             return try await self.planOptions(with: plansDataSource)
@@ -79,7 +84,6 @@ class OneClickPayment {
             break
         case .planPurchaseProcessingInProgress(let plan):
             log.debug("Purchasing \(plan.protonName)", category: .iap)
-            alertService.push(alert: PaymentAlert(message: "Processing plan purchase in progress...", isError: false))
             break
         case let .purchaseError(error, _):
             log.error("Purchase failed", category: .iap, metadata: ["error": "\(error)"])
@@ -117,26 +121,33 @@ class OneClickPayment {
     }
 
     func buyPlan(planOption: PlanOption) async -> PurchaseResult {
-        guard !payments.storeKitManager.hasUnfinishedPurchase() else {
+        if payments.storeKitManager.hasUnfinishedPurchase() {
             log.debug("StoreKitManager is not ready to purchase", category: .userPlan)
-            return .purchaseError(error: "StoreKitManager is not ready to purchase", processingPlan: nil)
+            return .purchaseError(error: OneClickPurchaseError.unfinishedPurchaseInQueue, processingPlan: nil)
         }
         let plan = inAppPurchasePlans.first { plan, _ in
             plan.fingerprint == planOption.fingerprint
         }
         guard let iAP = plan?.1 else {
-            return .purchaseError(error: "StoreKitManager plan not found", processingPlan: nil)
+            return .purchaseError(error: OneClickPurchaseError.planNotFound, processingPlan: nil)
         }
         return await withCheckedContinuation {
             payments.purchaseManager.buyPlan(plan: iAP,
                                              finishCallback: $0.resume(returning:))
         }
     }
+}
 
-    var plansDataSource: PlansDataSourceProtocol? {
-        guard case .right(let plansDataSource) = payments.planService else {
-            return nil
+enum OneClickPurchaseError: Error, LocalizedError {
+    case planNotFound
+    case unfinishedPurchaseInQueue
+
+    var localizedDescription: String? {
+        switch self {
+        case .planNotFound:
+            return "StoreKitManager plan not found"
+        case .unfinishedPurchaseInQueue:
+            return "StoreKitManager is not ready to purchase"
         }
-        return plansDataSource
     }
 }
