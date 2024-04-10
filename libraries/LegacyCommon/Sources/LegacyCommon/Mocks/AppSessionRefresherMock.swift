@@ -62,7 +62,8 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
                         if let services = properties.streamingServices {
                             self.propertiesManager.streamingServices = services.streamingServices
                         }
-                        self.serverManager.update(
+                        @Dependency(\.serverManager) var serverManager
+                        serverManager.update(
                             servers: properties.serverModels.map { VPNServer(legacyModel: $0) },
                             freeServersOnly: isFreeTier
                         )

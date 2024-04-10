@@ -37,11 +37,11 @@ final class TextSearchTests: TestIsolatedDatabaseTestCase {
         ]
     )
 
-    override func setUpWithError() throws {
-        try withDependencies {
+    override func invokeTest() {
+        withDependencies {
             $0.countryNameProvider = mockCountryNameProvider
         } operation: {
-            try super.setUpWithError()
+            super.invokeTest()
         }
     }
 

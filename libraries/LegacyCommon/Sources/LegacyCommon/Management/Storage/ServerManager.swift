@@ -27,8 +27,8 @@ public struct ServerManager: DependencyKey {
     private var updateServers: (_ servers: [VPNServer], _ freeServersOnly: Bool) -> Void
 
     public static var liveValue: ServerManager {
-        @Dependency(\.serverRepository) var repository
         return ServerManager(updateServers: { servers, freeServersOnly in
+            @Dependency(\.serverRepository) var repository
             // If we're only fetching a subset of servers up to a certain tier, we must not purge stale servers above it
             let maxTierToPurge: Int = freeServersOnly ? .freeTier : .internalTier
             let newServerIDs = Set(servers.map(\.id))
@@ -53,6 +53,8 @@ public struct ServerManager: DependencyKey {
         })
     }
 
+    /// We don't mind using the live dependency by default in our current test suite, given that we always control
+    /// `serverRepository` (it has no default `testValue`)
     public static let testValue = liveValue
 }
 

@@ -26,11 +26,11 @@ import PersistenceTestSupport
 
 final class ServerManagerTests: XCTestCase {
 
-    var upsertCallback: (([VPNServer]) -> Void)?
-    var deleteCallback: ((Set<String>, Int) -> Void)?
+    private var upsertCallback: (([VPNServer]) -> Void)?
+    private var deleteCallback: ((Set<String>, Int) -> Void)?
 
-    var sut: ServerManager {
-        return withDependencies {
+    private func testServerUpdate(servers: [VPNServer], freeServersOnly: Bool) {
+        withDependencies {
             $0.serverRepository = .init(
                 upsertServers: { servers in self.upsertCallback?(servers) },
                 deleteServers: { ids, maxTier in
@@ -39,7 +39,7 @@ final class ServerManagerTests: XCTestCase {
                 }
             )
         } operation: {
-            ServerManager.liveValue
+            ServerManager.liveValue.update(servers: servers, freeServersOnly: freeServersOnly)
         }
     }
 
@@ -60,7 +60,7 @@ final class ServerManagerTests: XCTestCase {
             upsertInvoked.fulfill()
         }
 
-        sut.update(servers: servers, freeServersOnly: true)
+        testServerUpdate(servers: servers, freeServersOnly: true)
 
         wait(for: [deleteInvoked, upsertInvoked], timeout: 1.0)
     }
@@ -73,7 +73,7 @@ final class ServerManagerTests: XCTestCase {
             deleteInvoked.fulfill()
         }
 
-        sut.update(servers: [], freeServersOnly: false)
+        testServerUpdate(servers: [], freeServersOnly: false)
 
         wait(for: [deleteInvoked], timeout: 1.0)
     }

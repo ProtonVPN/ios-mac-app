@@ -653,35 +653,43 @@ public class VpnManager: VpnManagerProtocol {
             return
         }
 
-        vpnStateConfiguration.determineActiveVpnState(vpnProtocol: vpnProtocol) { [weak self] result in
-            guard let self = self, !self.quickReconnection else {
-                return
-            }
+        withEscapedDependencies { dependencies in
+            vpnStateConfiguration.determineActiveVpnState(vpnProtocol: vpnProtocol) { [weak self] result in
+                dependencies.yield {
+                    guard let self = self, !self.quickReconnection else {
+                        return
+                    }
 
-            switch result {
-            case let .failure(error):
-                self.setState(withError: error)
-            case let .success((vpnManager, newState)):
-                guard newState != self.state else {
-                    return
-                }
+                    switch result {
+                    case let .failure(error):
+                        self.setState(withError: error)
+                    case let .success((vpnManager, newState)):
+                        guard newState != self.state else {
+                            return
+                        }
 
-                switch newState {
-                case .disconnecting:
-                    self.quickReconnection = true
-                    self.connectionQueue.asyncAfter(deadline: .now() + CoreAppConstants.UpdateTime.quickReconnectTime) {
-                        let newState = self.vpnStateConfiguration.determineNewState(vpnManager: vpnManager)
                         switch newState {
-                        case .connecting:
-                            self.connectionQueue.asyncAfter(deadline: .now() + CoreAppConstants.UpdateTime.quickUpdateTime) {
-                                self.updateState(vpnManager)
+                        case .disconnecting:
+                            self.quickReconnection = true
+                            withEscapedDependencies { nestedDependencies in
+                                self.connectionQueue.asyncAfter(deadline: .now() + CoreAppConstants.UpdateTime.quickReconnectTime) {
+                                    nestedDependencies.yield {
+                                        let newState = self.vpnStateConfiguration.determineNewState(vpnManager: vpnManager)
+                                        switch newState {
+                                        case .connecting:
+                                            self.connectionQueue.asyncAfter(deadline: .now() + CoreAppConstants.UpdateTime.quickUpdateTime) {
+                                                self.updateState(vpnManager)
+                                            }
+                                        default:
+                                            self.updateState(vpnManager)
+                                        }
+                                    }
+                                }
                             }
                         default:
                             self.updateState(vpnManager)
                         }
                     }
-                default:
-                    self.updateState(vpnManager)
                 }
             }
         }

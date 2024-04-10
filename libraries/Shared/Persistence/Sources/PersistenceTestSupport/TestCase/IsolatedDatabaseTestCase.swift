@@ -36,6 +36,14 @@ open class CaseIsolatedDatabaseTestCase: XCTestCase, CaseIsolatedDatabaseTestDri
         super.setUp()
         setUpRepository()
     }
+
+    open override func invokeTest() {
+        withDependencies {
+            $0.serverRepository = repository
+        } operation: {
+            super.invokeTest()
+        }
+    }
 }
 
 /// Provides a repository, based on a fresh in-memory database for each test within this test case. Ideal for unit tests
@@ -46,8 +54,12 @@ open class TestIsolatedDatabaseTestCase: XCTestCase, TestIsolatedDatabaseTestDri
     public var internalRepositoryWrapper: ServerRepositoryWrapper?
     public var internalRepository: ServerRepository?
 
-    open override func setUpWithError() throws {
-        try super.setUpWithError()
-        try setUpRepository()
+    open override func invokeTest() {
+        try! setUpRepository()
+        withDependencies {
+            $0.serverRepository = repository
+        } operation: {
+            super.invokeTest()
+        }
     }
 }

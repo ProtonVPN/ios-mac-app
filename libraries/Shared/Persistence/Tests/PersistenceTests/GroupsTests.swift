@@ -31,7 +31,7 @@ final class GroupsTests: CaseIsolatedDatabaseTestCase {
     override class func setUp() {
         super.setUp()
         let servers = try! fetch([VPNServer].self, fromResourceNamed: "TestServers")
-        internalRepository.upsert(servers: servers)
+        internalRepository!.upsert(servers: servers)
     }
 
     func testStandardGroups() throws {
