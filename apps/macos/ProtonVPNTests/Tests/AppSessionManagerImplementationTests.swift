@@ -40,6 +40,7 @@ fileprivate let subuserWithoutSessionsResponseError = ResponseError(httpCode: Ht
                                                                     userFacingMessage: nil,
                                                                     underlyingError: nil)
 
+// We would like to use `TestIsolatedDatabaseTestCase` here, but Xcode fails to link `PersistenceTestSupport` correctly
 final class AppSessionManagerImplementationTests: XCTestCase {
 
     fileprivate var alertService: AppSessionManagerAlertServiceMock!
@@ -55,13 +56,22 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
     let asyncTimeout: TimeInterval = 5
 
-    override func setUpWithError() throws {
-        try super.setUpWithError()
+    override func invokeTest() {
         repository = withDependencies {
             $0.databaseConfiguration = .withTestExecutor(databaseType: .ephemeral)
         } operation: {
             ServerRepository.liveValue
         }
+
+        withDependencies {
+            $0.serverRepository = repository
+        } operation: {
+            super.invokeTest()
+        }
+    }
+
+    override func setUpWithError() throws {
+        try super.setUpWithError()
 
         propertiesManager = PropertiesManagerMock()
         networking = NetworkingMock()
@@ -85,7 +95,6 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
         manager = withDependencies {
             $0.date = .constant(Date())
-            $0.serverRepository = repository
         } operation: {
             let factory = ManagerFactoryMock(
                 vpnAPIService: mockAPIService,

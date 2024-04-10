@@ -41,7 +41,7 @@ private func generateLocalizedCountryNameDatabaseExecutable() -> DatabaseExecuta
     let additionalRegionCodes = [
         "UK" // Missing from `Locale.isoRegionCodes`. Possibly due to "GB" being the real ISO code for United Kingdom?
     ]
-    let knownRegionCodes = Locale.isoRegionCodes.appending(additionalRegionCodes)
+    let knownRegionCodes = Locale.isoRegionCodes + additionalRegionCodes
 
     // One time pre-baking of a mapping from known iso codes to country names according to the user's current locale
     let codeToNameMap: [String: String] = knownRegionCodes.reduce(into: [:]) { result, code in

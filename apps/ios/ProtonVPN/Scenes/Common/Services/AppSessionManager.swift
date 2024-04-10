@@ -150,7 +150,10 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         }
     }
 
-    private var isServerRepositoryEmpty: Bool { serverRepository.isEmpty }
+    private var isServerRepositoryEmpty: Bool {
+        @Dependency(\.serverRepository) var serverRepository
+        return serverRepository.isEmpty
+    }
 
     func loadDataWithoutFetching() -> Bool {
         if isServerRepositoryEmpty || self.propertiesManager.userLocation?.ip == nil {
