@@ -32,12 +32,23 @@ import VPNSharedTesting
 
 @testable import LegacyCommon
 
-class ConnectionSwitchingTests: BaseConnectionTestCase {
+final class ConnectionSwitchingTests: BaseConnectionTestCase {
+
     override func setUpWithError() throws {
-        #if os(macOS)
+#if os(macOS)
         throw XCTSkip("Connection switching tests are skipped on macOS, since there is no cert refresh provider.")
-        #endif
+#endif
         try super.setUpWithError()
+    }
+
+    private func dispatchToMainWithEscapedDependencies(closure: @escaping () -> Void) {
+        return withEscapedDependencies { dependencies in
+            DispatchQueue.main.async {
+                dependencies.yield {
+                    closure()
+                }
+            }
+        }
     }
 
     func testFirstTimeConnectionWithSmartProtocol() async {
@@ -157,7 +168,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
             return false
         }
 
-        try repository.upsert(servers: [VPNServer(legacyModel: testData.server2)])
+        repository.upsert(servers: [VPNServer(legacyModel: testData.server2)])
 
         let request = ConnectionRequest(serverType: .standard,
                                         connectionType: .country("CH", .fastest),
@@ -261,10 +272,10 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         }
 
         didRequestCertRefresh = { _ in
-            #if os(macOS)
+#if os(macOS)
             // MasOS should connect with IKE
             XCTFail("Should not request to refresh certificate for non-certificate-authenticated protocol")
-            #endif
+#endif
         }
 
         container.propertiesManager.hasConnected = true // check that we don't display FirstTimeConnectingAlert
@@ -276,15 +287,15 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         XCTAssert(container.appStateManager.state.isConnected)
 
         let platformManager: NEVPNManagerMock?
-        #if os(iOS)
+#if os(iOS)
         // wireguard was made unavailable above. protocol should fallback to wireguard TLS
         XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tls))
         platformManager = currentManager
-        #elseif os(macOS)
+#elseif os(macOS)
         // on macos, protocol should fallback to IKEv2
         XCTAssertEqual(container.vpnManager.currentVpnProtocol, .ike)
         platformManager = container.neVpnManager
-        #endif
+#endif
 
         // server2 has a lower score, so it should connect instead of server1
         XCTAssertNotNil(platformManager?.protocolConfiguration?.serverAddress)
@@ -296,13 +307,13 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         didRequestCertRefresh = { _ in }
 
-        #if os(iOS)
+#if os(iOS)
         // on iOS, force TLS to be unavailable to force it to fallback to TCP
         container.availabilityCheckerResolverFactory.checkers[.wireGuard(.tls)]?.availabilityCallback = unavailableCallback
-        #elseif os(macOS)
+#elseif os(macOS)
         // on macOS, force ike to be unavailable to force it to fallback to wireguard TLS
         container.availabilityCheckerResolverFactory.checkers[.ike]?.availabilityCallback = unavailableCallback
-        #endif
+#endif
 
         statusChanged = { status in
             currentStatus = status
@@ -333,20 +344,18 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         }
 
         // reconnect with netshield settings change
-        withDependencies({ $0.serverRepository = repository }, operation: {
-            container.vpnGateway.reconnect(with: NATType.strictNAT)
-        })
+        container.vpnGateway.reconnect(with: NATType.strictNAT)
 
         connectionExpectations = [expectations.reconnection, expectations.reconnectionAppStateChange]
         await fulfillment(of: connectionExpectations, timeout: expectationTimeout)
 
-        #if os(iOS)
+#if os(iOS)
         // on ios, protocol should fallback to WireGuard TCP
         XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tcp))
-        #elseif os(macOS)
+#elseif os(macOS)
         // on macos, protocol should fallback to WireGuard TLS
         XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tls))
-        #endif
+#endif
 
         XCTAssertEqual(currentManager?.protocolConfiguration?.serverAddress, testData.server2.ips.first?.entryIp)
         XCTAssert(container.appStateManager.state.isConnected)
@@ -422,7 +431,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         let expectation = XCTestExpectation(description: "Retrieves VPN properties")
 
         do {
-        let vpnProperties = try await container.vpnApiService.vpnProperties(isDisconnected: true, lastKnownLocation: nil, serversAccordingToTier: true)
+            let vpnProperties = try await container.vpnApiService.vpnProperties(isDisconnected: true, lastKnownLocation: nil, serversAccordingToTier: true)
             defer { expectation.fulfill() }
             container.propertiesManager.featureFlags = vpnProperties.clientConfig!.featureFlags
             container.propertiesManager.smartProtocolConfig = vpnProperties.clientConfig!.smartProtocolConfig
@@ -442,7 +451,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         }
 
         let unavailableCallback: AvailabilityCheckerMock.AvailabilityCallback = { _ in
-            .unavailable
+                .unavailable
         }
 
         let unavailableProtocols: [VpnProtocol] = [
@@ -581,11 +590,6 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
     /// the error of their ways and upgrades back to plus, the test will then exercise the app in the case where that
     /// same user then becomes delinquent on their plan payment.
     func testUserPlanChangingThenBecomingDelinquentWithWireGuard() throws { // swiftlint:disable:this function_body_length cyclomatic_complexity
-        // This test is skipped as it requires the `Task` in `VpnGateway.userBecameDelinquent` to be modified to
-        // propagate dependencies using `withEscapedDependencies` or capture self and use `withDependencies`.
-        // When this is done, the test passes as expected
-        throw XCTSkip("Skipped due to dependency awkwardness")
-
         let initialServers = [testData.server1, testData.server3]
         container.networkingDelegate.apiServerList = initialServers
         repository.upsert(servers: initialServers.map { VPNServer(legacyModel: $0) })
@@ -712,12 +716,11 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         container.networkingDelegate.apiCredentials = freeCreds
 
         let downgrade: VpnDowngradeInfo = (plusCreds, freeCreds)
-        DispatchQueue.main.async {
-            withDependencies({ $0.serverRepository = self.repository }, operation: {
-                NotificationCenter.default.post(name: VpnKeychainMock.vpnPlanChanged, object: downgrade)
-                self.container.vpnKeychain.credentials = freeCreds
-                NotificationCenter.default.post(name: VpnKeychainMock.vpnCredentialsChanged, object: freeCreds)
-            })
+
+        dispatchToMainWithEscapedDependencies {
+            NotificationCenter.default.post(name: VpnKeychainMock.vpnPlanChanged, object: downgrade)
+            self.container.vpnKeychain.credentials = freeCreds
+            NotificationCenter.default.post(name: VpnKeychainMock.vpnCredentialsChanged, object: freeCreds)
         }
 
         wait(for: [expectations.disconnections[0],
@@ -768,12 +771,11 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         XCTAssertEqual(currentManager?.protocolConfiguration?.serverAddress, testData.server3.ips.first?.entryIp)
 
         container.networkingDelegate.apiCredentials = freeCreds
-        DispatchQueue.main.async {
-            withDependencies({ $0.serverRepository = self.repository }, operation: {
-                NotificationCenter.default.post(name: VpnKeychainMock.vpnUserDelinquent, object: downgrade)
-                self.container.vpnKeychain.credentials = freeCreds
-                NotificationCenter.default.post(name: VpnKeychainMock.vpnCredentialsChanged, object: freeCreds)
-            })
+
+        dispatchToMainWithEscapedDependencies {
+            NotificationCenter.default.post(name: VpnKeychainMock.vpnUserDelinquent, object: downgrade)
+            self.container.vpnKeychain.credentials = freeCreds
+            NotificationCenter.default.post(name: VpnKeychainMock.vpnCredentialsChanged, object: freeCreds)
         }
 
         wait(for: [expectations.disconnections[2], expectations.delinquentAlert], timeout: expectationTimeout)
@@ -893,7 +895,6 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
             default:
                 break
             }
-
         }
 
         container.appSessionRefreshTimer.startTimers()
@@ -901,7 +902,6 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         withDependencies {
             $0.authKeychain = MockAuthKeychain()
-            $0.serverRepository = repository
         } operation: {
             container.vpnGateway.quickConnect(trigger: .newConnection)
         }
@@ -914,6 +914,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
             ],
             timeout: expectationTimeout
         )
+
         XCTAssertEqual(nConnections, 1)
         XCTAssertEqual(storedServers.count, 1) // Just the free server
         XCTAssertEqual(storedServers.first?.isFree, true)
@@ -934,7 +935,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
             expectations.refreshLogicalsAfterPlanUpgrade.fulfill()
         }
 
-        DispatchQueue.main.async {
+        dispatchToMainWithEscapedDependencies {
             let upgrade: VpnDowngradeInfo = (freeCreds, plusCreds)
             self.container.vpnKeychain.credentials = plusCreds
             NotificationCenter.default.post(name: VpnKeychainMock.vpnPlanChanged, object: upgrade)
@@ -953,9 +954,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
             timeout: expectationTimeout
         )
 
-        withDependencies({ $0.serverRepository = repository }, operation: {
-            container.vpnGateway.quickConnect(trigger: .newConnection)
-        })
+        container.vpnGateway.quickConnect(trigger: .newConnection)
         wait(
             for: [expectations.connections[1], expectations.appStateConnectedTransitions[1]],
             timeout: expectationTimeout
@@ -1058,7 +1057,6 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         await MainActor.run {
             withDependencies {
                 $0.date = .constant(Date())
-                $0.serverRepository = repository
                 $0.featureFlagProvider = .constant(flags: .allEnabled)
             } operation: {
                 container.vpnGateway.connect(
@@ -1079,7 +1077,6 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         await MainActor.run {
             withDependencies {
                 $0.date = .constant(date)
-                $0.serverRepository = repository
                 $0.featureFlagProvider = .constant(flags: .allEnabled)
             } operation: {
                 container.vpnGateway.connect(

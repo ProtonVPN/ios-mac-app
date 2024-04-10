@@ -150,7 +150,10 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         }
     }
 
-    private var isServerRepositoryEmpty: Bool { serverRepository.isEmpty }
+    private var isServerRepositoryEmpty: Bool {
+        @Dependency(\.serverRepository) var serverRepository
+        return serverRepository.isEmpty
+    }
 
     func loadDataWithoutFetching() -> Bool {
         if isServerRepositoryEmpty || self.propertiesManager.userLocation?.ip == nil {
@@ -195,14 +198,10 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
         review.update(plan: credentials.planName)
 
-        if !shouldRefreshServers || credentials.maxTier.isPaidTier {
-            let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
-            let deletedServerCount = serverRepository.delete(serversWithMinTier: .paidTier, withIDsNotIn: updatedServerIDs)
-            log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
-        }
-
-        serverRepository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
-        NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
+        serverManager.update(
+            servers: properties.serverModels.map { VPNServer(legacyModel: $0) },
+            freeServersOnly: shouldRefreshServers && properties.vpnCredentials.maxTier.isFreeTier
+        )
 
         propertiesManager.userLocation = properties.location
         await refreshPartners(ifUnknownPartnerLogicalExistsIn: properties.serverModels)
@@ -256,27 +255,24 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
     private func retrievePropertiesAndLogIn() async throws {
         let appState = await appStateManager.stateThreadSafe
-        let shouldRefreshServers = await shouldRefreshServersAccordingToUserTier
+        let shouldRefreshServersAccordingToTier = await shouldRefreshServersAccordingToUserTier
 
         // Get VPN properties from API and save them
         do {
             let properties = try await vpnApiService.vpnProperties(
                 isDisconnected: appState.isDisconnected,
                 lastKnownLocation: propertiesManager.userLocation,
-                serversAccordingToTier: shouldRefreshServers
+                serversAccordingToTier: shouldRefreshServersAccordingToTier
             )
             
             let credentials = properties.vpnCredentials
             vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
             review.update(plan: credentials.planName)
-            if !shouldRefreshServers || credentials.maxTier.isPaidTier {
-                let updatedServerIDs = properties.serverModels.reduce(into: Set<String>(), { $0.insert($1.id) })
-                let deletedServerCount = serverRepository.delete(serversWithMinTier: .paidTier, withIDsNotIn: updatedServerIDs)
-                log.info("Deleted \(deletedServerCount) stale paid servers", category: .persistence)
-            }
 
-            serverRepository.upsert(servers: properties.serverModels.map { VPNServer(legacyModel: $0) })
-            NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
+            serverManager.update(
+                servers: properties.serverModels.map { VPNServer(legacyModel: $0) },
+                freeServersOnly: shouldRefreshServersAccordingToTier && credentials.maxTier.isFreeTier
+            )
 
             propertiesManager.userRole = properties.userRole
             propertiesManager.userAccountCreationDate = properties.userCreateTime

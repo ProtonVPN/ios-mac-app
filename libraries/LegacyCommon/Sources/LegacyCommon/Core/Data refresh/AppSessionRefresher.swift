@@ -57,7 +57,7 @@ public protocol AppSessionRefresherFactory {
 }
 
 open class AppSessionRefresherImplementation: AppSessionRefresher {
-    @Dependency(\.serverRepository) public var serverRepository
+    @Dependency(\.serverManager) public var serverManager
     public var loggedIn = false
     public var successfulConsecutiveSessionRefreshes = CounterActor()
 
@@ -128,7 +128,8 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
             switch result {
             case let .success(properties):
                 let loads = properties.map { $0.value }
-                self.serverRepository.upsert(loads: loads)
+                @Dependency(\.serverRepository) var serverRepository
+                serverRepository.upsert(loads: loads)
             case let .failure(error):
                 log.error("RefreshServerLoads error", category: .app, metadata: ["error": "\(error)"])
             }

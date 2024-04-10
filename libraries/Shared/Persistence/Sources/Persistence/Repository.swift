@@ -33,7 +33,7 @@ public struct ServerRepository: DependencyKey {
     public var serverCount: () -> Int
 
     private var upsertServers: ([VPNServer]) -> Void
-    private var deleteServers: (Int, Set<String>) -> Int
+    private var deleteServers: (Set<String>, Int) -> Int
 
     private var upsertLoads: ([ContinuousServerProperties]) -> Void
 
@@ -56,7 +56,7 @@ public struct ServerRepository: DependencyKey {
         upsertServers: @escaping ([VPNServer]) -> Void = unimplemented(),
         server: @escaping ([VPNServerFilter], VPNServerOrder) -> VPNServer? = unimplemented(placeholder: nil),
         servers: @escaping ([VPNServerFilter], VPNServerOrder) -> [Domain.ServerInfo] = unimplemented(placeholder: []),
-        deleteServers: @escaping (Int, Set<String>) -> Int = unimplemented(placeholder: 0),
+        deleteServers: @escaping (Set<String>, Int) -> Int = unimplemented(placeholder: 0),
         upsertLoads: @escaping ([ContinuousServerProperties]) -> Void = unimplemented(),
         groups: @escaping ([VPNServerFilter], VPNServerGroupOrder) -> [ServerGroupInfo] = unimplemented(placeholder: []),
         closeConnection: @escaping () throws -> Void = unimplemented()
@@ -84,8 +84,8 @@ extension ServerRepository {
         upsertServers(servers)
     }
 
-    public func delete(serversWithMinTier tier: Int, withIDsNotIn ids: Set<String>) -> Int {
-        deleteServers(tier, ids)
+    public func delete(serversWithIDsNotIn ids: Set<String>, maxTier: Int) -> Int {
+        deleteServers(ids, maxTier)
     }
 
     public func upsert(loads: [ContinuousServerProperties]) -> Void {

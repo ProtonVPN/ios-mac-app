@@ -51,8 +51,8 @@ public final class ServerRepositoryWrapper {
         didStoreServers?(servers)
     }
 
-    public func deleteServers(withMinTier minTier: Int, withIDsNotIn ids: Set<String>) -> Int {
-        return repository.delete(serversWithMinTier: minTier, withIDsNotIn: ids)
+    public func deleteServers(withIDsNotIn ids: Set<String>, maxTier: Int) -> Int {
+        return repository.delete(serversWithIDsNotIn: ids, maxTier: maxTier)
     }
 
     public func upsert(loads: [ContinuousServerProperties]) {
