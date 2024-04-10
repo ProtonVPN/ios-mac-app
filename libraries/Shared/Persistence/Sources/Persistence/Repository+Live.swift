@@ -38,6 +38,13 @@ extension ServerRepository {
                     return try Logical.fetchCount(db)
                 }
             },
+            countryCount: {
+                executor.read(dbWriter: dbWriter) { db in
+                    return try Logical
+                        .select(Logical.Columns.exitCountryCode).distinct()
+                        .fetchCount(db)
+                }
+            },
             upsertServers: { vpnServers in
                 executor.write(dbWriter: dbWriter) { db in
                     try vpnServers.forEach { vpnServer in

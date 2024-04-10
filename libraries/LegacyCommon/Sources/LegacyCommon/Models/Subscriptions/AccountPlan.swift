@@ -34,10 +34,8 @@ public enum AccountPlan {
     }
 
     public var countriesCount: Int {
-        switch self {
-        case .plus:
-            return 85
-        }
+        @Dependency(\.serverRepository) var repository
+        return repository.countryCount()
     }
 
     public var serversCount: Int {

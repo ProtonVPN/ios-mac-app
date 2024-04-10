@@ -31,6 +31,7 @@ import Domain
 public struct ServerRepository: DependencyKey {
 
     public var serverCount: () -> Int
+    public var countryCount: () -> Int
 
     private var upsertServers: ([VPNServer]) -> Void
     private var deleteServers: (Set<String>, Int) -> Int
@@ -53,6 +54,7 @@ public struct ServerRepository: DependencyKey {
 
     public init(
         serverCount: @escaping () -> Int = unimplemented(placeholder: 0),
+        countryCount: @escaping () -> Int = unimplemented(placeholder: 0),
         upsertServers: @escaping ([VPNServer]) -> Void = unimplemented(),
         server: @escaping ([VPNServerFilter], VPNServerOrder) -> VPNServer? = unimplemented(placeholder: nil),
         servers: @escaping ([VPNServerFilter], VPNServerOrder) -> [Domain.ServerInfo] = unimplemented(placeholder: []),
@@ -62,6 +64,7 @@ public struct ServerRepository: DependencyKey {
         closeConnection: @escaping () throws -> Void = unimplemented()
     ) {
         self.serverCount = serverCount
+        self.countryCount = countryCount
         self.upsertServers = upsertServers
         self.server = server
         self.servers = servers
