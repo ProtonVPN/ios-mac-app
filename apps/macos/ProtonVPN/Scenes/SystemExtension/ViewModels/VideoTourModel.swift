@@ -36,7 +36,6 @@ class VideoTourModel {
     }
 
     private let videoFile: VideoFile
-    private var cancellables = Set<AnyCancellable>()
 
     private lazy var urlAsset: AVURLAsset = {
         let videoUrl = URL(string: videoFile.rawValue)!
@@ -53,9 +52,12 @@ class VideoTourModel {
 
     lazy var player = {
         let playerItem = AVPlayerItem(asset: urlAsset)
-        let player = AVPlayer(playerItem: playerItem)
+        let player = AVQueuePlayer(playerItem: playerItem)
+        videoLooper = AVPlayerLooper(player: player,
+                                     templateItem: playerItem)
         return player
     }()
+    var videoLooper: AVPlayerLooper?
 
     init(videoFile: VideoFile) {
         self.videoFile = videoFile
@@ -64,16 +66,5 @@ class VideoTourModel {
     func onAppear() {
         player.play()
         player.rate = 0.5
-        NotificationCenter.default
-            .publisher(for: .AVPlayerItemDidPlayToEndTime, object: player.currentItem)
-            .sink(receiveValue: { [weak self] _ in
-                self?.itemDidPlayToEndTime()
-            })
-            .store(in: &cancellables)
-    }
-
-    private func itemDidPlayToEndTime() {
-        player.seek(to: .zero)
-        player.play()
     }
 }
