@@ -81,6 +81,9 @@
          <TestPlanReference
             reference = "container:TestPlans/ProtonVPN-iOS-UI-Subscription.xctestplan">
          </TestPlanReference>
+         <TestPlanReference
+            reference = "container:TestPlans/ProtonVPN-iOS-SLI-All.xctestplan">
+         </TestPlanReference>
       </TestPlans>
       <Testables>
          <TestableReference
