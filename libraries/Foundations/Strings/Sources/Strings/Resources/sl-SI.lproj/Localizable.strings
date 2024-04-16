@@ -345,7 +345,7 @@
 "_start_on_boot" = "Vključi ob zagonu";
 
 /* MacOS: button in login screen */
-"_create_account" = "Ustvari račun";
+"_create_account" = "Ustvarite račun";
 
 /* MacOS: button in login screen */
 "_need_help" = "Potrebujete pomoč?";
@@ -428,7 +428,7 @@
 "_resend_success" = "Zahtevana je nova koda";
 
 /* iOS: link inside text under sign-up form */
-"_terms_and_conditions" = "Pravila in pogoji";
+"_terms_and_conditions" = "Pogoji storitve";
 
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
 "_terms_and_conditions_disclaimer" = "Z uporabo Proton VPN se strinjate z našimi\n%@ in %@";
@@ -1224,11 +1224,11 @@
 
 "_subscription_will_renew" = "Vaa naročnina se bo samodejno obnovila dne %@.";
 
-"_subscription_description" = "Kupite lahko več kreditov za samodejno podaljšanje trenutnega načrta. Ob koncu vašega trenutnega naročniškega obdobja bodo ti krediti uporabljeni za nadaljevanje vašega načrta.";
+"_subscription_description" = "You can purchase more credits to automatically extend your current plan. At the end of your current subscription period, these credits will be applied to continue your plan.";
 
 "_subscription_button" = "Podaljšaj načrt za 1 leto \n%@.";
 
-"_subscription_extended_success" = "Uspešno ste kupili kredite za podaljšanje trenutnega načrta.";
+"_subscription_extended_success" = "You have successfully bought credits to extend your current plan.";
 
 /* Button on alert after a problem with internet connection */
 "_ne_troubleshoot" = "Odpravljanje težav";
@@ -1341,7 +1341,7 @@
 
 "_quick_settings_netShield_description" = "Brskajte po internetu brez oglasov in zlonamerne programske opreme.";
 
-"_quick_settings_killSwitch_description" = "Onemogoči internet, če povezava VPN prekine, da prepreči nenamerno uhajanje IP-ja.";
+"_quick_settings_killSwitch_description" = "Če se VPN povezava prekine se onemogoči internet in prepreči nenamerno razkrivanje IP.";
 
 "_quick_settings_secureCore_note" = "Secure Core lahko zmanjša hitrost VPN.";
 

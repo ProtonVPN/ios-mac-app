@@ -1964,7 +1964,7 @@
 "upsell_profiles_feature_auto_connect" = "Atur koneksi otomatis untuk akses VPN yang lebih cepat.";
 
 /* Feature of Countries upsell modal */
-"upsell_countries_any_location" = "Pilih lokasi mana pun";
+"upsell_countries_any_location" = "Pilih lokasi server di mana pun";
 
 /* Feature of Countries upsell modal */
 "upsell_countries_even_higher_speed" = "Kecepatan VPN yang jauh lebih tinggi";
