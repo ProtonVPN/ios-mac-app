@@ -90,10 +90,11 @@ class MainRobot: CoreElements {
         return MainRobot()
     }
     
-    //temporary solution. this modal will be remove soon
+    // Temporary solution. This modal will be removed soon
     func dismissWhatsNewModal() -> MainRobot {
-        if button("Got it!").waitUntilExists(time:1).exists() {
-            button("Got it!").tap()
+        let buttonText = "Got it!"
+        if button(buttonText).waitUntilExists(time: 30).exists() {
+            button(buttonText).tap()
         } else {
             button(tabSettings).tap()
         }
