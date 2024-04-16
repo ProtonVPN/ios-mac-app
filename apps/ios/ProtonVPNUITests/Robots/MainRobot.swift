@@ -90,6 +90,16 @@ class MainRobot: CoreElements {
         return MainRobot()
     }
     
+    //temporary solution. this modal will be remove soon
+    func dismissWhatsNewModal() -> MainRobot {
+        if button("Got it!").waitUntilExists(time:1).exists() {
+            button("Got it!").tap()
+        } else {
+            button(tabSettings).tap()
+        }
+        return MainRobot()
+    }
+    
     class Verify: CoreElements {
     
         @discardableResult
