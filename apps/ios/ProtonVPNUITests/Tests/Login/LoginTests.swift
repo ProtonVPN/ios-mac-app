@@ -91,7 +91,7 @@ class LoginTests: ProtonVPNUITests {
             .signIn(robot: TwoFaRobot.self)
             .fillTwoFACode(code: generateCodeFor2FAUser(ObfuscatedConstants.twoFAandTwoPassSecurityKey))
             .confirm2FA(robot: MainRobot.self)
-            .verify.connectionStatusNotConnected()
+            .dismissWhatsNewModal()
             .goToSettingsTab()
         loginRobot
             .verify.correctUserIsLogedIn(twopasstwofausercredentials[0])
