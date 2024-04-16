@@ -140,9 +140,6 @@ extension MacAlertService: CoreAlertService {
             
         case is BugReportSentAlert:
             showDefaultSystemAlert(alert)
-            
-        case is UnknownErrortAlert:
-            showDefaultSystemAlert(alert)
 
         case is MITMAlert:
             showDefaultSystemAlert(alert)

@@ -43,4 +43,7 @@ public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
     /// If we're using a public key that was associated with a previous session UID, tell the backend that it's okay to
     /// evict the previous session UID and associate the key with the current one.
     case certificateRefreshForceRenew = "CertificateRefreshForceRenew"
+
+    /// Enable and disable the 1-click upsell
+    case oneClickPayment = "OneClickAIAP"
 }

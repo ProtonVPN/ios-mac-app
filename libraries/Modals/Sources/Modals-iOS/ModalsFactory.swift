@@ -2,26 +2,34 @@ import Modals
 import UIKit
 import SwiftUI
 
-public struct ModalsFactory {
+public final class ModalsFactory {
+
+    public init() {}
 
     // MARK: Properties
 
-    private let upsellStoryboard: UIStoryboard
-    private let discourageStoryboard: UIStoryboard
-    private let userAccountUpdateStoryboard: UIStoryboard
-    private let freeConnectionsViewStoryboard: UIStoryboard
-
-    public init() {
-        upsellStoryboard = UIStoryboard(name: "UpsellViewController", bundle: Bundle.module)
-        discourageStoryboard = UIStoryboard(name: "DiscourageSecureCoreViewController", bundle: Bundle.module)
-        userAccountUpdateStoryboard = UIStoryboard(name: "UserAccountUpdateViewController", bundle: Bundle.module)
-        freeConnectionsViewStoryboard = UIStoryboard(name: "FreeConnectionsViewController", bundle: Bundle.module)
-   }
+    private lazy var upsellStoryboard: UIStoryboard = {
+        UIStoryboard(name: "UpsellViewController", bundle: Bundle.module)
+    }()
+    private lazy var discourageStoryboard: UIStoryboard = {
+        UIStoryboard(name: "DiscourageSecureCoreViewController", bundle: Bundle.module)
+    }()
+    private lazy var userAccountUpdateStoryboard: UIStoryboard = {
+        UIStoryboard(name: "UserAccountUpdateViewController", bundle: Bundle.module)
+    }()
+    private lazy var freeConnectionsViewStoryboard: UIStoryboard = {
+        UIStoryboard(name: "FreeConnectionsViewController", bundle: Bundle.module)
+    }()
 
     public func upsellViewController(modalType: ModalType) -> UpsellViewController {
         let upsell = upsellStoryboard.instantiate(controllerType: UpsellViewController.self)
         upsell.modalType = modalType
         return upsell
+    }
+
+    @MainActor
+    public func subscriptionViewController(plansClient: PlansClient) -> UIViewController {
+        UIHostingController(rootView: PlanOptionsView(modalType: .subscription, viewModel: .init(client: plansClient)))
     }
 
     public func whatsNewViewController() -> UIViewController {

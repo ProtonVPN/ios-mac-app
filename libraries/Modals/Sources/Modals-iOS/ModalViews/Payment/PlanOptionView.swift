@@ -18,6 +18,7 @@
 
 import SwiftUI
 import Strings
+import Modals
 
 private enum Constants {
     static let planOptionViewRowHeight: CGFloat = 64
@@ -28,12 +29,22 @@ struct PlanOptionView: View {
 
     let isLoading: Bool
     let isSelected: Bool
+    private let discount: Int?
+
+    init(planOption: PlanOption, isLoading: Bool, isSelected: Bool, discount: Int? = nil) {
+        self.planOption = planOption
+        self.isLoading = isLoading
+        self.isSelected = isSelected
+        self.discount = discount
+    }
 
     var body: some View {
         if isLoading {
             PlanOptionLoadingView()
         } else {
-            PlanOptionLoadedView(planOption: planOption, isSelected: isSelected)
+            PlanOptionLoadedView(planOption: planOption, 
+                                 discount: discount,
+                                 isSelected: isSelected)
         }
     }
 }
@@ -46,6 +57,7 @@ private struct PlanOptionLoadedView: View {
     }()
 
     let planOption: PlanOption
+    let discount: Int?
 
     let isSelected: Bool
 
@@ -58,7 +70,7 @@ private struct PlanOptionLoadedView: View {
             Text(planDurationString)
                 .themeFont(.body1(.regular))
 
-            if let discount = planPrice.discount {
+            if let discount {
                 PlanDiscountBadgeView(discount: discount)
             }
 
@@ -66,9 +78,9 @@ private struct PlanOptionLoadedView: View {
 
             VStack(alignment: .trailing) {
                 HStack(alignment: .bottom, spacing: .zero) {
-                    Text(planPrice.amount, format: .currency(code: planPrice.currency))
+                    Text(PriceFormatter.formatPlanPrice(price: planPrice.amount, locale: planPrice.locale))
                         .themeFont(.body1(.bold))
-                    Text(Localizable.upsellPlansListOptionAmountPerYear)
+                    Text(planDuration.periodDescription)
                         .themeFont(.body3())
                         .foregroundColor(Color(.text, .weak))
                 }
@@ -77,7 +89,8 @@ private struct PlanOptionLoadedView: View {
                     let amountPerMonth = Double(planPrice.amount) / Double(planDuration.components.amountOfMonths)
 
                     HStack(spacing: .zero) {
-                        Text(amountPerMonth, format: .currency(code: planPrice.currency))
+                        Text(PriceFormatter.formatPlanPrice(price: amountPerMonth,
+                                                            locale: planPrice.locale))
                         Text(Localizable.upsellPlansListOptionAmountPerMonth)
                     }
                     .font(.body3())
@@ -96,6 +109,19 @@ private struct PlanOptionLoadedView: View {
                 )
         )
         .contentShape(RoundedRectangle(cornerRadius: .themeRadius8))
+    }
+}
+
+enum PriceFormatter {
+    private static var formatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        return formatter
+    }()
+
+    static func formatPlanPrice(price: Double, locale: Locale) -> String {
+        formatter.locale = locale
+        return formatter.string(from: NSNumber(value: price)) ?? ""
     }
 }
 
@@ -145,10 +171,6 @@ private struct PlanDiscountBadgeView: View {
 // MARK: - Helpers
 
 private extension DateComponents {
-    var amountOfMonths: Int {
-        (year ?? 0) * 12 + (month ?? 0)
-    }
-
     var isMoreThanOneMonth: Bool {
         amountOfMonths > 1
     }
@@ -173,34 +195,52 @@ private extension DateComponents {
     }
 }
 
+extension PlanDuration {
+    var periodDescription: String {
+        components.isMoreThanOneMonth 
+            ? Localizable.upsellPlansListOptionAmountPerYear
+            : Localizable.upsellPlansListOptionAmountPerMonth
+    }
+}
+
 #if swift(>=5.9)
 #Preview("Unselected") {
-    let planOption = PlanOption(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
-    return PlanOptionView(planOption: planOption, isLoading: false, isSelected: false)
+    let planOptionMonth = PlanOption(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
+    let planOptionYear = PlanOption(duration: .oneYear, price: .init(amount: 100, currency: "CHF"))
+    return VStack {
+        PlanOptionView(planOption: planOptionMonth,
+                       isLoading: false,
+                       isSelected: false,
+                       discount: planOptionMonth.discount(comparedTo: planOptionYear))
+        PlanOptionView(planOption: planOptionYear, 
+                       isLoading: false,
+                       isSelected: false,
+                       discount: planOptionYear.discount(comparedTo: planOptionMonth))
+    }
 }
 
 #Preview("Selected") {
-    let planOption = PlanOption(duration: .oneYear, price: .init(amount: 85, currency: "CHF", discount: 35))
-    return PlanOptionView(planOption: planOption, isLoading: false, isSelected: true)
+    let planOption = PlanOption(duration: .oneYear, price: .init(amount: 85, currency: "CHF"))
+    return PlanOptionView(planOption: planOption, isLoading: false, isSelected: true, discount: 35)
 }
 
 #Preview("RTL") {
-    let planOption = PlanOption(duration: .oneYear, price: .init(amount: 85, currency: "CHF", discount: 35))
-    return PlanOptionView(planOption: planOption, isLoading: false, isSelected: true)
+    let planOption = PlanOption(duration: .oneYear, price: .init(amount: 85, currency: "CHF"))
+    return PlanOptionView(planOption: planOption, isLoading: false, isSelected: true, discount: 35)
         .environment(\.layoutDirection, .rightToLeft)
 }
 
 #Preview("Loading") {
-    let planOption = PlanOption(duration: .oneYear, price: .init(amount: 85, currency: "CHF", discount: 35))
-    return PlanOptionView(planOption: planOption, isLoading: true, isSelected: false)
+    let planOption = PlanOption(duration: .oneYear, price: .init(amount: 85, currency: "CHF"))
+    return PlanOptionView(planOption: planOption, isLoading: true, isSelected: false, discount: 35)
 }
 
 #Preview("Annoying Duration") {
     let planOption = PlanOption(
-        duration: .init(components: DateComponents(year: 2, month: 6)),
-        price: .init(amount: 85, currency: "CHF", discount: 35)
+        duration: .init(components: DateComponents(year: 2, month: 6))!,
+        price: .init(amount: 85, currency: "CHF")
     )
-    return PlanOptionView(planOption: planOption, isLoading: false, isSelected: false)
+    return PlanOptionView(planOption: planOption, isLoading: false, isSelected: false, discount: 35)
 }
 
 #Preview("Badge") {
@@ -209,20 +249,20 @@ private extension DateComponents {
 #else
 struct PlanOptionView_Provider: PreviewProvider {
     static let planOption1 = PlanOption(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
-    static let planOption2 = PlanOption(duration: .oneYear, price: .init(amount: 85, currency: "CHF", discount: 35))
+    static let planOption2 = PlanOption(duration: .oneYear, price: .init(amount: 85, currency: "CHF"))
     static let annoyingPlan = PlanOption(
-        duration: .init(components: DateComponents(year: 2, month: 6)),
-        price: .init(amount: 85, currency: "CHF", discount: 35)
+        duration: .init(components: DateComponents(year: 2, month: 6))!,
+        price: .init(amount: 85, currency: "CHF")
     )
 
     static var previews: some View {
         PlanOptionView(planOption: planOption1, isLoading: false, isSelected: false)
             .previewDisplayName("Unselected")
-        PlanOptionView(planOption: planOption2, isLoading: false, isSelected: true)
+        PlanOptionView(planOption: planOption2, isLoading: false, isSelected: true, discount: 35)
             .previewDisplayName("Selected")
         PlanOptionView(planOption: planOption2, isLoading: true, isSelected: false)
             .previewDisplayName("Loading")
-        PlanOptionView(planOption: annoyingPlan, isLoading: false, isSelected: false)
+        PlanOptionView(planOption: annoyingPlan, isLoading: false, isSelected: false, discount: 35)
             .previewDisplayName("Annoying Duration")
         PlanDiscountBadgeView(discount: 50)
             .previewDisplayName("Badge")

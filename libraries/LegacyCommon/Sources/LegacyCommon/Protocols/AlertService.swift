@@ -100,6 +100,19 @@ public struct ReconnectInfo {
     }
 }
 
+public class PaymentAlert: SystemAlert {
+    public var title: String? = nil
+    public var message: String?
+    public var actions = [AlertAction]()
+    public let isError: Bool
+    public var dismiss: (() -> Void)?
+
+    public init(message: String, isError: Bool) {
+        self.message = message
+        self.isError = isError
+    }
+}
+
 public protocol UserAccountUpdateAlert: SystemAlert {
     var displayFeatures: Bool { get }
     var reconnectInfo: ReconnectInfo? { get set }
@@ -496,19 +509,6 @@ public class BugReportSentAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init(confirmHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: Localizable.ok, style: .confirmative, handler: confirmHandler))
-    }
-}
-
-public class UnknownErrortAlert: SystemAlert {
-    public var title: String? = Localizable.errorUnknownTitle
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-    
-    public init(error: Error, confirmHandler: (() -> Void)?) {
-        message = error.localizedDescription
         actions.append(AlertAction(title: Localizable.ok, style: .confirmative, handler: confirmHandler))
     }
 }

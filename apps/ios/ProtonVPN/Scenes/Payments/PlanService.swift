@@ -26,6 +26,7 @@ import ProtonCorePaymentsUI
 import LegacyCommon
 import UIKit
 import VPNShared
+import Modals
 
 protocol PlanServiceFactory {
     func makePlanService() -> PlanService
@@ -40,6 +41,7 @@ protocol PlanService {
     var allowUpgrade: Bool { get }
     var countriesCount: Int { get }
     var delegate: PlanServiceDelegate? { get set }
+    var payments: Payments { get }
 
     func presentPlanSelection(modalSource: UpsellEvent.ModalSource?)
     func presentSubscriptionManagement()
@@ -57,7 +59,7 @@ extension PlanService {
 
 final class CorePlanService: PlanService {
     private var paymentsUI: PaymentsUI?
-    private let payments: Payments
+    let payments: Payments
     private let alertService: CoreAlertService
     private let authKeychain: AuthKeychainHandle
     private let userCachedStatus: UserCachedStatus

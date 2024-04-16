@@ -17,23 +17,34 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Combine
+import Modals
 
-struct PlansClient {
-    var plansCount: () -> Int
-    var retrievePlans: () async -> [PlanOption]
+public struct PlansClient {
+    var retrievePlans: () async throws -> [PlanOption]
+    var validate: (PlanOption) async -> Void
+    var notNow: () -> Void
+    public init(
+        retrievePlans: @escaping () async throws -> [PlanOption],
+        validate: @escaping (PlanOption) async -> Void,
+        notNow: @escaping () -> Void = {}
+    ) {
+        self.retrievePlans = retrievePlans
+        self.validate = validate
+        self.notNow = notNow
+    }
 }
 
+@MainActor
 final class PlanOptionsListViewModel: ObservableObject {
     @Published private(set) var plans: [PlanOption] = []
     @Published var selectedPlan: PlanOption?
 
     @Published private(set) var isLoading: Bool = false
-
-    var plansCount: Int {
-        return client.plansCount()
-    }
+    @Published private(set) var isPurchaseInProgress: Bool = false // TODO: VPNAPPL-2089 Block the UI until the purchase is complete or cancelled
 
     private let client: PlansClient
+
+    private(set) var mostExpensivePlan: PlanOption?
 
     init(client: PlansClient) {
         self.client = client
@@ -41,16 +52,25 @@ final class PlanOptionsListViewModel: ObservableObject {
 
     func onAppear() async {
         isLoading = true
-        plans = await client.retrievePlans()
-        selectedPlan = plans.first
-        isLoading = false
+        do {
+            plans = try await client.retrievePlans()
+            selectedPlan = plans.first
+            mostExpensivePlan = plans.sorted { $0.pricePerMonth > $1.pricePerMonth }.first
+            isLoading = false
+        } catch {
+            // TODO: VPNAPPL-2089 handle failed attempt to `retrievePlans`. Log the error message
+            client.notNow()
+        }
     }
 
-    func validate() {
-
+    func validate() async {
+        guard let selectedPlan else { return }
+        isPurchaseInProgress = true
+        await client.validate(selectedPlan)
+        isPurchaseInProgress = false
     }
 
     func notNow() {
-
+        client.notNow()
     }
 }

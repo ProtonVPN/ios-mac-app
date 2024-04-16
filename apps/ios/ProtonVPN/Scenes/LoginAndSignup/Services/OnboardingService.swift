@@ -39,19 +39,27 @@ protocol OnboardingService: AnyObject {
 }
 
 final class OnboardingModuleService {
-    typealias Factory = WindowServiceFactory & PlanServiceFactory
+    typealias Factory = WindowServiceFactory & PlanServiceFactory & CoreAlertServiceFactory
 
     private let windowService: WindowService
     private let planService: PlanService
+    private let oneClickPayment: OneClickPayment?
 
     weak var delegate: OnboardingServiceDelegate?
 
     init(factory: Factory) {
         windowService = factory.makeWindowService()
         planService = factory.makePlanService()
+        do {
+            oneClickPayment = try OneClickPayment(factory: factory, payments: planService.payments)
+        } catch {
+            log.debug("One click payment disabled: \(error)")
+            oneClickPayment = nil
+        }
     }
 }
 
+@MainActor
 extension OnboardingModuleService: OnboardingService {
     func showOnboarding() {
         log.debug("Starting onboarding", category: .app)
@@ -61,10 +69,22 @@ extension OnboardingModuleService: OnboardingService {
     }
 
     private func welcomeToProtonViewController() -> UIViewController {
-        ModalsFactory().modalViewController(modalType: .welcomeToProton, primaryAction: {
-            self.windowService.addToStack(self.allCountriesUpsellViewController(),
-                                          checkForDuplicates: false)
+        ModalsFactory().modalViewController(modalType: .welcomeToProton,
+                                            primaryAction: { [weak self] in
+            self?.welcomeToProtonPrimaryAction()
         })
+    }
+
+    func welcomeToProtonPrimaryAction() {
+        guard let oneClickPayment else {
+            windowService.addToStack(allCountriesUpsellViewController(),
+                                     checkForDuplicates: false)
+            return
+        }
+        let viewController = oneClickPayment.oneClickIAPViewController { [weak self] in
+            self?.onboardingCoordinatorDidFinish()
+        }
+        windowService.addToStack(viewController, checkForDuplicates: false)
     }
 
     private func allCountriesUpsellViewController() -> UIViewController {
