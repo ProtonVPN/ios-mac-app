@@ -135,6 +135,25 @@ extension NetworkingMock: Networking {
         }
     }
 
+    public func request(
+        _ route: ConditionalRequest,
+        completion: @escaping (Result<IfModifiedSinceResponse<JSONDictionary>, Error>) -> Void
+    ) {
+        request(route) { (result: Result<Data, Error>) in
+            switch result {
+            case let .success(data):
+                guard let dict = data.jsonDictionary else {
+                    completion(.failure(POSIXError(.EBADMSG)))
+                    return
+                }
+
+                completion(.success(.modified(at: "", value: dict)))
+            case let .failure(error):
+                completion(.failure(error))
+            }
+        }
+    }
+
     func request(_ route: Request, completion: @escaping (Result<(), Error>) -> Void) {
         request(route) { (result: Result<Data, Error>) in
             switch result {
