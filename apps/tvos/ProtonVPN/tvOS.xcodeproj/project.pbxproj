@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4C54B01B2BC027FD00315A3B /* ProtonVPNApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B01A2BC027FD00315A3B /* ProtonVPNApp.swift */; };
-		4C54B01D2BC027FD00315A3B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B01C2BC027FD00315A3B /* ContentView.swift */; };
 		4C54B01F2BC027FE00315A3B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C54B01E2BC027FE00315A3B /* Assets.xcassets */; };
 		4C54B0222BC027FE00315A3B /* PreviewAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C54B0212BC027FE00315A3B /* PreviewAssets.xcassets */; };
 		4C54B02C2BC027FF00315A3B /* ProtonVPNTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B02B2BC027FF00315A3B /* ProtonVPNTests.swift */; };
@@ -16,6 +15,16 @@
 		4C54B0382BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B0372BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift */; };
 		4C54B04C2BC02AB200315A3B /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C54B04B2BC02AB200315A3B /* NetworkExtension.framework */; };
 		4C54B04F2BC02AB200315A3B /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B04E2BC02AB200315A3B /* PacketTunnelProvider.swift */; };
+		E5280E5C2BD9057600CDDBAF /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5280E522BD9057600CDDBAF /* AboutView.swift */; };
+		E5280E5D2BD9057600CDDBAF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5280E532BD9057600CDDBAF /* SettingsView.swift */; };
+		E5280E5E2BD9057600CDDBAF /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5280E552BD9057600CDDBAF /* WelcomeView.swift */; };
+		E5280E5F2BD9057600CDDBAF /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5280E572BD9057600CDDBAF /* QRCodeView.swift */; };
+		E5280E602BD9057600CDDBAF /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5280E592BD9057600CDDBAF /* RegisterView.swift */; };
+		E5280E612BD9057600CDDBAF /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5280E5B2BD9057600CDDBAF /* SignInView.swift */; };
+		E56C8CC22BCFC2CB0029B6AE /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = E56C8CC12BCFC2CB0029B6AE /* ComposableArchitecture */; };
+		E56C8CC62BCFCEFF0029B6AE /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E56C8CC52BCFCEFF0029B6AE /* Theme */; };
+		E5BC9DE32BD7F7C800CBF85A /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BC9DE22BD7F7C800CBF85A /* NetworkClient.swift */; };
+		E5BC9DE52BD7F7EA00CBF85A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BC9DE42BD7F7EA00CBF85A /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +47,6 @@
 /* Begin PBXFileReference section */
 		4C54B0172BC027FD00315A3B /* ProtonVPN-TV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ProtonVPN-TV.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C54B01A2BC027FD00315A3B /* ProtonVPNApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNApp.swift; sourceTree = "<group>"; };
-		4C54B01C2BC027FD00315A3B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4C54B01E2BC027FE00315A3B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4C54B0212BC027FE00315A3B /* PreviewAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PreviewAssets.xcassets; sourceTree = "<group>"; };
 		4C54B0272BC027FF00315A3B /* tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tvOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,6 +60,14 @@
 		4C54B04E2BC02AB200315A3B /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
 		4C54B0502BC02AB200315A3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C54B0512BC02AB200315A3B /* wireguard_tv.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = wireguard_tv.entitlements; sourceTree = "<group>"; };
+		E5280E522BD9057600CDDBAF /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		E5280E532BD9057600CDDBAF /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		E5280E552BD9057600CDDBAF /* WelcomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		E5280E572BD9057600CDDBAF /* QRCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
+		E5280E592BD9057600CDDBAF /* RegisterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		E5280E5B2BD9057600CDDBAF /* SignInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		E5BC9DE22BD7F7C800CBF85A /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
+		E5BC9DE42BD7F7EA00CBF85A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +75,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E56C8CC62BCFCEFF0029B6AE /* Theme in Frameworks */,
+				E56C8CC22BCFC2CB0029B6AE /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,8 +132,10 @@
 		4C54B0192BC027FD00315A3B /* ProtonVPN */ = {
 			isa = PBXGroup;
 			children = (
+				E5280E502BD9057600CDDBAF /* Views */,
 				4C54B01A2BC027FD00315A3B /* ProtonVPNApp.swift */,
-				4C54B01C2BC027FD00315A3B /* ContentView.swift */,
+				E5BC9DE22BD7F7C800CBF85A /* NetworkClient.swift */,
+				E5BC9DE42BD7F7EA00CBF85A /* User.swift */,
 				4C54B01E2BC027FE00315A3B /* Assets.xcassets */,
 				4C54B0202BC027FE00315A3B /* PreviewContent */,
 			);
@@ -165,6 +185,59 @@
 			path = "WireGuard-tvOS";
 			sourceTree = "<group>";
 		};
+		E5280E502BD9057600CDDBAF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E5280E512BD9057600CDDBAF /* Settings */,
+				E5280E542BD9057600CDDBAF /* Welcome */,
+				E5280E562BD9057600CDDBAF /* Common */,
+				E5280E582BD9057600CDDBAF /* Register */,
+				E5280E5A2BD9057600CDDBAF /* Sign In */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E5280E512BD9057600CDDBAF /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				E5280E522BD9057600CDDBAF /* AboutView.swift */,
+				E5280E532BD9057600CDDBAF /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		E5280E542BD9057600CDDBAF /* Welcome */ = {
+			isa = PBXGroup;
+			children = (
+				E5280E552BD9057600CDDBAF /* WelcomeView.swift */,
+			);
+			path = Welcome;
+			sourceTree = "<group>";
+		};
+		E5280E562BD9057600CDDBAF /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				E5280E572BD9057600CDDBAF /* QRCodeView.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		E5280E582BD9057600CDDBAF /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				E5280E592BD9057600CDDBAF /* RegisterView.swift */,
+			);
+			path = Register;
+			sourceTree = "<group>";
+		};
+		E5280E5A2BD9057600CDDBAF /* Sign In */ = {
+			isa = PBXGroup;
+			children = (
+				E5280E5B2BD9057600CDDBAF /* SignInView.swift */,
+			);
+			path = "Sign In";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -181,6 +254,10 @@
 			dependencies = (
 			);
 			name = "ProtonVPN-TV";
+			packageProductDependencies = (
+				E56C8CC12BCFC2CB0029B6AE /* ComposableArchitecture */,
+				E56C8CC52BCFCEFF0029B6AE /* Theme */,
+			);
 			productName = ProtonVPN;
 			productReference = 4C54B0172BC027FD00315A3B /* ProtonVPN-TV.app */;
 			productType = "com.apple.product-type.application";
@@ -273,6 +350,9 @@
 				Base,
 			);
 			mainGroup = 4C54B00E2BC027FD00315A3B;
+			packageReferences = (
+				E56C8CC02BCFC2CA0029B6AE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
 			productRefGroup = 4C54B0182BC027FD00315A3B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -323,8 +403,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C54B01D2BC027FD00315A3B /* ContentView.swift in Sources */,
+				E5280E612BD9057600CDDBAF /* SignInView.swift in Sources */,
+				E5280E5D2BD9057600CDDBAF /* SettingsView.swift in Sources */,
+				E5280E5E2BD9057600CDDBAF /* WelcomeView.swift in Sources */,
+				E5280E5C2BD9057600CDDBAF /* AboutView.swift in Sources */,
+				E5280E5F2BD9057600CDDBAF /* QRCodeView.swift in Sources */,
+				E5BC9DE52BD7F7EA00CBF85A /* User.swift in Sources */,
+				E5280E602BD9057600CDDBAF /* RegisterView.swift in Sources */,
 				4C54B01B2BC027FD00315A3B /* ProtonVPNApp.swift in Sources */,
+				E5BC9DE32BD7F7C800CBF85A /* NetworkClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -729,6 +816,29 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E56C8CC02BCFC2CA0029B6AE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E56C8CC12BCFC2CB0029B6AE /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E56C8CC02BCFC2CA0029B6AE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+		E56C8CC52BCFCEFF0029B6AE /* Theme */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Theme;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4C54B00F2BC027FD00315A3B /* Project object */;
 }

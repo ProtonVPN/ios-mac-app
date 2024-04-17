@@ -1,5 +1,5 @@
 //
-//  Created on 05.04.24.
+//  Created on 23/04/2024.
 //
 //  Copyright (c) 2024 Proton AG
 //
@@ -18,18 +18,12 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct AboutView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        Text("About view!")
     }
 }
 
 #Preview {
-    ContentView()
+    AboutView()
 }

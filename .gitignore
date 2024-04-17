@@ -1,5 +1,5 @@
 ProtonVPN.xcworkspace/xcuserdata
-Pods/Pods.xcodeproj/xcuserdata
+apps/tvos/ProtonVPN/tvOS.xcodeproj/xcuserdata
 
 ### OSX ###
 *.DS_Store
@@ -12,8 +12,6 @@ fastlane/README.md
 .last_build_nr
 swiftlint.xml
 .swiftpm
-
-libraries/vpncore/Source/LocalizedString.swift
 
 sampleapps/**/xcuserdata
 

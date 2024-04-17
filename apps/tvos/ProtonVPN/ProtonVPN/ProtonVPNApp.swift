@@ -16,13 +16,18 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
 import SwiftUI
 
 @main
 struct ProtonVPNApp: App {
+    
+    @State var user: User = .init()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            WelcomeView()
+                .environment(user)
         }
     }
 }

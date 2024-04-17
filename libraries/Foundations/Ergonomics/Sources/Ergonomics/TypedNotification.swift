@@ -16,8 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
+#if canImport(NotificationCenter)
 import NotificationCenter
+import Foundation
 
 import XCTestDynamicOverlay
 
@@ -162,3 +163,4 @@ extension NotificationCenter {
         }
     }
 }
+#endif
