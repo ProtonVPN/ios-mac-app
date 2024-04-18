@@ -23,6 +23,8 @@
 import Foundation
 import NetworkExtension
 
+import ProtonCoreFeatureFlags
+
 import Domain
 import VPNShared
 
@@ -167,7 +169,11 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
     }
 
     public func getInfo(completion: @escaping ((VpnStateConfigurationInfo) -> Void)) {
-        determineActiveVpnProtocol(defaultToIke: true) { [weak self] vpnProtocol in
+        // Note the double-negative: not-not defaulting to IKEv2. We want to gradually roll out noDefault as a feature.
+        let defaultToIke = !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.noDefaultToIke)
+        let defaulting = defaultToIke ? "Defaulting" : "Not defaulting"
+        log.info("Getting protocol information. \(defaulting) to IKEv2 if no provider available.")
+        determineActiveVpnProtocol(defaultToIke: defaultToIke) { [weak self] vpnProtocol in
             guard let self = self else {
                 return
             }
