@@ -104,6 +104,12 @@ public class NETunnelProviderManagerFactoryMock: NETunnelProviderManagerWrapperF
     public var tunnelProvidersInPreferences: [UUID: NETunnelProviderManagerWrapper] = [:]
     public var tunnelProviderPreferencesData: [UUID: NEVPNManagerMock.SavedPreferences] = [:]
 
+    public func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void) {
+        Self.queue.async { [unowned self] in
+            completionHandler(self.tunnelProvidersInPreferences.values.map { $0 }, nil)
+        }
+    }
+
     public func loadManagersFromPreferences() async throws -> [NETunnelProviderManagerWrapper] {
         self.tunnelProvidersInPreferences.values.map { $0 }
     }

@@ -30,6 +30,7 @@ import Ergonomics
 import LocalFeatureFlags
 import ExtensionIPC
 import VPNShared
+import ProtonCoreFeatureFlags
 
 import Home
 
@@ -50,8 +51,13 @@ public protocol VpnManagerProtocol {
     func disconnect(completion: @escaping () -> Void)
     func connectedDate() async -> Date?
     func refreshState()
+    func refreshManagers()
     func refreshManagers() async
     func removeConfigurations(completionHandler: ((Error?) -> Void)?)
+
+    /// Called when `VpnManager` is ready and has finished querying the device's VPN connection state.
+    /// - Note: Only call this function once over the course of `VpnManager`'s lifetime.
+    func whenReady(queue: DispatchQueue, completion: @escaping () -> Void)
 
     /// Task used to track when the managers are ready. Retrieve the value of the task to be sure
     /// the `VpnManager` is ready and has finished querying the device's VPN connection state.
@@ -118,6 +124,7 @@ public class VpnManager: VpnManagerProtocol {
     }
 
     public private(set) var state: VpnState = .invalid
+    public var readyGroup: DispatchGroup? = DispatchGroup()
 
     public var prepareManagersTask: Task<(), Never>?
 
@@ -232,6 +239,9 @@ public class VpnManager: VpnManagerProtocol {
         netShieldPropertyProvider: NetShieldPropertyProvider,
         safeModePropertyProvider: SafeModePropertyProvider
     ) {
+        if !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.asyncVPNManager) {
+            readyGroup?.enter()
+        }
 
         self.ikeProtocolFactory = ikeFactory
         self.openVpnProtocolFactory = openVpnFactory
@@ -249,8 +259,12 @@ public class VpnManager: VpnManagerProtocol {
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
 
-        prepareManagersTask = Task {
-            await prepareManagers(forSetup: true)
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.asyncVPNManager) {
+            prepareManagers(forSetup: true)
+        } else {
+            prepareManagersTask = Task {
+                await prepareManagers()
+            }
         }
     }
 
@@ -333,7 +347,45 @@ public class VpnManager: VpnManagerProtocol {
         }
     }
 
+    @available(*, deprecated, renamed: "connectedDate()")
+    private func connectedDate(completion: @escaping (Date?) -> Void) {
+        guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
+            completion(nil)
+            return
+        }
+        
+        currentVpnProtocolFactory.vpnProviderManager(for: .status) { [weak self] vpnManager, error in
+            guard let self = self else {
+                completion(nil)
+                return
+            }
+
+            if error != nil {
+                completion(nil)
+                return
+            }
+
+            guard let vpnManager = vpnManager else {
+                completion(nil)
+                return
+            }
+            
+            // Returns a date if currently connected
+            if case VpnState.connected(_) = self.state {
+                completion(vpnManager.vpnConnection.connectedDate)
+            } else {
+                completion(nil)
+            }
+        }
+    }
+
     public func connectedDate() async -> Date? {
+        guard FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.asyncVPNManager) else {
+            return await withCheckedContinuation { continuation in
+                connectedDate(completion: continuation.resume)
+            }
+        }
+
         guard let currentVpnProtocolFactory else {
             return nil
         }
@@ -353,10 +405,17 @@ public class VpnManager: VpnManagerProtocol {
         setState()
     }
     
-    public func refreshManagers() async {
+    public func refreshManagers() {
         // Stop recieving status updates until the manager is prepared
         notificationCenter.removeObserver(self, name: NSNotification.Name.NEVPNStatusDidChange, object: nil)
         
+        prepareManagers()
+    }
+
+    public func refreshManagers() async {
+        // Stop recieving status updates until the manager is prepared
+        notificationCenter.removeObserver(self, name: NSNotification.Name.NEVPNStatusDidChange, object: nil)
+
         await prepareManagers()
     }
 
@@ -738,8 +797,35 @@ public class VpnManager: VpnManagerProtocol {
      *  Upon initiation of VPN manager, VPN configuration from manager needs
      *  to be loaded in order for storing of further configurations to work.
      */
+    private func prepareManagers(forSetup: Bool = false) {
+        vpnStateConfiguration.determineActiveVpnProtocol(defaultToIke: true) { [weak self] vpnProtocol in
+            guard let self = self else {
+                return
+            }
+
+            self.currentVpnProtocol = vpnProtocol
+            self.setState()
+
+            notificationCenter.removeObserver(
+                self,
+                name: NSNotification.Name.NEVPNStatusDidChange,
+                object: nil
+            )
+            notificationCenter.addObserver(
+                self,
+                selector: #selector(self.vpnStatusChanged),
+                name: NSNotification.Name.NEVPNStatusDidChange,
+                object: nil
+            )
+
+            if forSetup {
+                self.readyGroup?.leave()
+            }
+        }
+    }
+
     @MainActor
-    private func prepareManagers(forSetup: Bool = false) async {
+    private func prepareManagers() async {
         let vpnProtocol = await vpnStateConfiguration.determineActiveVpnProtocol(defaultToIke: true)
 
         self.currentVpnProtocol = vpnProtocol
@@ -756,9 +842,14 @@ public class VpnManager: VpnManagerProtocol {
             name: NSNotification.Name.NEVPNStatusDidChange,
             object: nil
         )
-
     }
 
+    public func whenReady(queue: DispatchQueue, completion: @escaping () -> Void) {
+        self.readyGroup?.notify(queue: queue) {
+            completion()
+            self.readyGroup = nil
+        }
+    }
     
     @objc private func vpnStatusChanged() {
         setState()
