@@ -798,7 +798,11 @@ public class VpnManager: VpnManagerProtocol {
      *  to be loaded in order for storing of further configurations to work.
      */
     private func prepareManagers(forSetup: Bool = false) {
-        vpnStateConfiguration.determineActiveVpnProtocol(defaultToIke: true) { [weak self] vpnProtocol in
+        // Note the double-negative: not-not defaulting to IKEv2. We want to gradually roll out noDefault as a feature.
+        let defaultToIke = !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.noDefaultToIke)
+        let defaulting = defaultToIke ? "Defaulting" : "Not defaulting"
+        log.info("Preparing managers for setup. \(defaulting) to IKEv2 if no provider available.")
+        vpnStateConfiguration.determineActiveVpnProtocol(defaultToIke: defaultToIke) { [weak self] vpnProtocol in
             guard let self = self else {
                 return
             }
@@ -826,7 +830,11 @@ public class VpnManager: VpnManagerProtocol {
 
     @MainActor
     private func prepareManagers() async {
-        let vpnProtocol = await vpnStateConfiguration.determineActiveVpnProtocol(defaultToIke: true)
+        // Note the double-negative: not-not defaulting to IKEv2. We want to gradually roll out noDefault as a feature.
+        let defaultToIke = !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.noDefaultToIke)
+        let defaulting = defaultToIke ? "Defaulting" : "Not defaulting"
+        log.info("Preparing managers for setup. \(defaulting) to IKEv2 if no provider available.")
+        let vpnProtocol = await vpnStateConfiguration.determineActiveVpnProtocol(defaultToIke: defaultToIke)
 
         self.currentVpnProtocol = vpnProtocol
         self.setState()
