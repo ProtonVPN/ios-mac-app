@@ -41,6 +41,8 @@ extension PlanDuration: CustomStringConvertible {
 }
 
 public struct PlanPrice: Hashable {
+    public static let loading: Self = .init(amount: 10, currency: "CHF")
+
     public let amount: Double
     public let currency: String
     public let locale: Locale
@@ -53,6 +55,8 @@ public struct PlanPrice: Hashable {
 }
 
 public struct PlanOption: Hashable {
+    public static let loading: Self = .init(duration: .oneYear, price: .loading)
+
     private static let minimumVisibleDiscount = 5
 
     public let duration: PlanDuration
@@ -89,15 +93,3 @@ public extension DateComponents {
         (year ?? 0) * 12 + (month ?? 0)
     }
 }
-
-// MARK: - Mocks
-
-#if DEBUG
-extension PlanPrice {
-    static let loading: Self = .init(amount: 10, currency: "CHF")
-}
-
-extension PlanOption {
-    public static let loading: Self = .init(duration: .oneYear, price: .loading)
-}
-#endif
