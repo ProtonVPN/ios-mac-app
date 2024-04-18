@@ -40,8 +40,8 @@ public struct VpnStateConfigurationInfo {
 
 public protocol VpnStateConfiguration {
     func determineActiveVpnProtocol(defaultToIke: Bool, completion: @escaping ((VpnProtocol?) -> Void))
-    func determineActiveVpnState(vpnProtocol: VpnProtocol, completion: @escaping ((Result<(NEVPNManagerWrapper, VpnState), Error>) -> Void))
     func determineActiveVpnProtocol(defaultToIke: Bool) async -> VpnProtocol?
+    func determineActiveVpnState(vpnProtocol: VpnProtocol, completion: @escaping ((Result<(NEVPNManagerWrapper, VpnState), Error>) -> Void))
     func determineActiveVpnState(vpnProtocol: VpnProtocol) async throws -> (NEVPNManagerWrapper, VpnState)
     func determineNewState(vpnManager: NEVPNManagerWrapper) -> VpnState
     func getInfo(completion: @escaping ((VpnStateConfigurationInfo) -> Void))
@@ -148,7 +148,10 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
                 completion(.openVpn(.tcp))
             } else if activeProtocols.contains(.wireGuard(.udp)) {
                 completion(.wireGuard(.udp))
-            } else if defaultToIke || activeProtocols.contains(.ike) {
+            } else if activeProtocols.contains(.ike) {
+                completion(.ike)
+            } else if defaultToIke {
+                log.info("No active protocols detected. Defaulting to `.ike`", category: .connection)
                 completion(.ike)
             } else {
                 completion(nil)
@@ -184,7 +187,10 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
                 return .openVpn(.tcp)
             } else if activeProtocols.contains(.wireGuard(.udp)) {
                 return .wireGuard(.udp)
-            } else if defaultToIke || activeProtocols.contains(.ike) {
+            } else if activeProtocols.contains(.ike) {
+                return .ike
+            } else if defaultToIke {
+                log.info("No active protocols detected. Defaulting to `.ike`", category: .connection)
                 return .ike
             } else {
                 return nil

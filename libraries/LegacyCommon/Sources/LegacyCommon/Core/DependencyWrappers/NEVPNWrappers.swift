@@ -84,18 +84,6 @@ extension NETunnelProviderManagerWrapperFactory {
     }
 }
 
-extension NETunnelProviderManagerWrapperFactory {
-    func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void) {
-        Task { @MainActor in
-            do {
-                completionHandler(try await loadManagersFromPreferences(), nil)
-            } catch {
-                completionHandler(nil, error)
-            }
-        }
-    }
-}
-
 extension NETunnelProviderManager: NETunnelProviderManagerWrapperFactory {
     public func makeNewManager() -> NETunnelProviderManagerWrapper {
         NETunnelProviderManager()

@@ -260,11 +260,11 @@ public class VpnManager: VpnManagerProtocol {
         self.safeModePropertyProvider = safeModePropertyProvider
 
         if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.asyncVPNManager) {
-            prepareManagers(forSetup: true)
-        } else {
             prepareManagersTask = Task {
                 await prepareManagers()
             }
+        } else {
+            prepareManagers(forSetup: true)
         }
     }
 
