@@ -33,6 +33,9 @@ import enum Domain.VPNFeatureFlagType
 
 import ProtonCoreFeatureFlags
 import ProtonCoreAccountRecovery
+import ProtonCorePasswordChange
+import ProtonCoreDataModel
+import ProtonCoreNetworking
 
 // MARK: Country Service
 
@@ -65,6 +68,7 @@ protocol SettingsService {
     func makeLogSelectionViewController() -> LogSelectionViewController
     func makeLogsViewController(logSource: LogSource) -> LogsViewController
     func makeAccountRecoveryViewController() -> AccountRecoveryViewController
+    func makePasswordChangeViewController(mode: PasswordChangeModule.PasswordChangeMode) -> PasswordChangeViewController?
     func presentReportBug()
 }
 
@@ -387,6 +391,36 @@ extension NavigationService: SettingsService {
         AccountRecoveryModule.settingsViewController(networking.apiService) { [weak self] accountRecovery in
             self?.propertiesManager.userAccountRecovery = accountRecovery
         }
+    }
+
+    @MainActor
+    func makePasswordChangeViewController(mode: PasswordChangeModule.PasswordChangeMode) -> PasswordChangeViewController? {
+        guard let authCredentials = authKeychain.fetch(forContext: .mainApp),
+              let userInfo = propertiesManager.userInfo,
+              let userSettings = propertiesManager.userSettings else {
+            log.error("Credentials, UserInfo or UserSettings not found", category: .app)
+            return nil
+        }
+        userInfo.passwordMode = userSettings.password.mode.rawValue
+        userInfo.twoFactor = userSettings.twoFactor.type.rawValue
+        return PasswordChangeModule.makePasswordChangeViewController(
+            mode: mode,
+            apiService: networking.apiService,
+            authCredential: authCredentials.toAuthCredential(),
+            userInfo: userInfo) { [weak self] authCredential, userInfo in
+                guard let self else { return }
+                self.processPasswordChange(authCredential: authCredential, userInfo: userInfo)
+            }
+    }
+
+    private func processPasswordChange(authCredential: AuthCredential, userInfo: UserInfo) {
+        do {
+            try authKeychain.store(AuthCredentials(.init(authCredential)))
+        } catch {
+            log.error("Could not update store credentials", category: .app)
+        }
+        self.propertiesManager.userInfo = userInfo
+        self.windowService.popStackToRoot()
     }
 }
 

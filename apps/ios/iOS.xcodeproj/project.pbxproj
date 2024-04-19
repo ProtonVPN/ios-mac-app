@@ -157,6 +157,8 @@
 		80C4A4E82BCFBC4200DA1A80 /* TestsTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C4A4E72BCFBC4200DA1A80 /* TestsTimer.swift */; };
 		80C4A4EB2BCFBCDA00DA1A80 /* MainMeasurements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C4A4EA2BCFBCDA00DA1A80 /* MainMeasurements.swift */; };
 		89926E3756CED95AB662D371 /* PasswordRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */; };
+		8B7F179F2BD7A6A600C6B8D9 /* ProtonCoreNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 8B7F179E2BD7A6A600C6B8D9 /* ProtonCoreNetworking */; };
+		8BAA73B72BD131FA00187E26 /* ProtonCorePasswordChange in Frameworks */ = {isa = PBXBuildFile; productRef = 8BAA73B62BD131FA00187E26 /* ProtonCorePasswordChange */; };
 		8BC65CDA2B97645D005F2533 /* ProtonCoreTelemetry in Frameworks */ = {isa = PBXBuildFile; productRef = 8BC65CD92B97645D005F2533 /* ProtonCoreTelemetry */; };
 		A01D7C58C3C1AEBA17A6C5AF /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E128E9975D2A268D9FB56F0 /* AnnouncementDetailViewController.swift */; };
 		A264F1C92E772DA03634D8A8 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */; };
@@ -909,8 +911,10 @@
 			files = (
 				57BC698A2B1F33CB0049485C /* ProtonCoreAccountRecovery in Frameworks */,
 				4C8C314A2A73BA19006AD628 /* Home-iOS in Frameworks */,
+				8BAA73B72BD131FA00187E26 /* ProtonCorePasswordChange in Frameworks */,
 				4CCB4C602A6ED15B002D4204 /* ProtonCoreCryptoGoInterface in Frameworks */,
 				4C8C314E2A73BA1F006AD628 /* ConnectionDetails-iOS in Frameworks */,
+				8B7F179F2BD7A6A600C6B8D9 /* ProtonCoreNetworking in Frameworks */,
 				F34AC17B27F439810007FF93 /* Review in Frameworks */,
 				4C8C31522A73BA24006AD628 /* Settings-iOS in Frameworks */,
 				8BC65CDA2B97645D005F2533 /* ProtonCoreTelemetry in Frameworks */,
@@ -2322,6 +2326,8 @@
 				ADEB35D32B62832A0044ABD4 /* ProtonCorePaymentsUI */,
 				E55B1A642B922031001EF2C6 /* PMLogger */,
 				8BC65CD92B97645D005F2533 /* ProtonCoreTelemetry */,
+				8BAA73B62BD131FA00187E26 /* ProtonCorePasswordChange */,
+				8B7F179E2BD7A6A600C6B8D9 /* ProtonCoreNetworking */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -4528,6 +4534,14 @@
 		57BC69892B1F33CB0049485C /* ProtonCoreAccountRecovery */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCoreAccountRecovery;
+		};
+		8B7F179E2BD7A6A600C6B8D9 /* ProtonCoreNetworking */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCoreNetworking;
+		};
+		8BAA73B62BD131FA00187E26 /* ProtonCorePasswordChange */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCorePasswordChange;
 		};
 		8BC65CD92B97645D005F2533 /* ProtonCoreTelemetry */ = {
 			isa = XCSwiftPackageProductDependency;

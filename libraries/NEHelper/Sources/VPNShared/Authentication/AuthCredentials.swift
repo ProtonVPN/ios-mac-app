@@ -22,6 +22,7 @@
 import Foundation
 
 import Ergonomics
+import ProtonCoreNetworking
 
 public class AuthCredentials: NSObject, NSSecureCoding, Codable {
     static let VERSION: Int = 0 // Current build version.
@@ -98,5 +99,18 @@ public class AuthCredentials: NSObject, NSSecureCoding, Codable {
     
     public func encode(with aCoder: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
+    }
+}
+
+public extension AuthCredentials {
+    func toAuthCredential() -> AuthCredential {
+        .init(.init(
+            UID: sessionId,
+            accessToken: accessToken,
+            refreshToken: refreshToken,
+            userName: username,
+            userID: userId ?? "",
+            scopes: scopes
+        ))
     }
 }

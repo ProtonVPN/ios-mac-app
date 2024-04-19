@@ -23,6 +23,10 @@
 #if DEBUG
 import Foundation
 
+public enum CoreAPIServiceMockError: Error {
+    case mockNotProvided
+}
+
 public class CoreApiServiceMock: CoreApiService {
     public var callbackGetApiNotificationsCallback: ((@escaping GenericCallback<GetApiNotificationsResponse>, @escaping ErrorCallback) -> Void)?
     
@@ -32,6 +36,16 @@ public class CoreApiServiceMock: CoreApiService {
         }, { error in
             completion(.failure(error))
         })
+    }
+
+    public var getUserSettingsReturnValue: UserSettings?
+
+    public func getUserSettings() async throws -> UserSettings {
+        if let getUserSettingsReturnValue {
+            return getUserSettingsReturnValue
+        } else {
+            throw CoreAPIServiceMockError.mockNotProvided
+        }
     }
 
     public init() {}

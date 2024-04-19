@@ -25,6 +25,7 @@ import UIKit
 import ProtonCoreAccountDeletion
 import ProtonCoreFeatureFlags
 import ProtonCoreNetworking
+import ProtonCorePasswordChange
 import VPNShared
 import Strings
 
@@ -37,7 +38,8 @@ final class SettingsAccountViewModel {
                         PlanServiceFactory &
                         PropertiesManagerFactory &
                         VpnKeychainFactory &
-                        AuthKeychainHandleFactory
+                        AuthKeychainHandleFactory &
+                        NavigationServiceFactory
 
     private var factory: Factory
     
@@ -48,7 +50,8 @@ final class SettingsAccountViewModel {
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
-    
+    private lazy var navigationService: NavigationService = factory.makeNavigationService()
+
     var pushHandler: ((UIViewController) -> Void)?
     var viewControllerFetcher: (() -> UIViewController?)?
     var reloadNeeded: (() -> Void)?
@@ -64,6 +67,9 @@ final class SettingsAccountViewModel {
         var sections: [TableViewSection] = []
         
         sections.append(accountSection)
+        if canShowChangePassword {
+            sections.append(changePasswordSection)
+        }
         sections.append(deleteAccountSection)
         
         return sections
@@ -122,7 +128,50 @@ final class SettingsAccountViewModel {
     private lazy var controller = ButtonWithLoadingIndicatorControllerImplementation { [weak self] in
         self?.deleteAccount()
     }
-    
+
+    private var changePasswordSection: TableViewSection {
+        var cells: [TableViewCellModel] = [
+            .pushStandard(title: Localizable.changePassword, handler: { [weak self] in
+                guard let self, let pushHandler else { return }
+                Task { @MainActor [weak self] in
+                    guard let self else { return }
+                    var mode: PasswordChangeModule.PasswordChangeMode = .singlePassword
+                    if self.propertiesManager.userSettings?.password.mode != .singlePassword {
+                        mode = .loginPassword
+                    }
+                    if let viewController = self.navigationService.makePasswordChangeViewController(mode: mode) {
+                        pushHandler(viewController)
+                    }
+                }
+            })
+        ]
+        if canShowChangeMailboxPassword {
+            cells.append(.pushStandard(title: Localizable.changeMailboxPassword, handler: { [weak self] in
+                guard let self, let pushHandler else { return }
+                Task { @MainActor [weak self] in
+                    guard let self else { return }
+                    if let viewController = self.navigationService.makePasswordChangeViewController(mode: .mailboxPassword) {
+                        pushHandler(viewController)
+                    }
+                }
+            }))
+        }
+        return TableViewSection(title: "", cells: cells)
+    }
+
+    private var canShowChangePassword: Bool {
+        FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.changePassword, reloadValue: true)
+        && propertiesManager.userInfo != nil
+        && propertiesManager.userSettings != nil
+    }
+
+    private var canShowChangeMailboxPassword: Bool {
+        guard FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.changePassword, reloadValue: true),
+              let passwordMode = propertiesManager.userSettings?.password.mode
+        else { return false }
+        return passwordMode == .loginAndMailboxPassword
+    }
+
     private var deleteAccountSection: TableViewSection {
         let cells: [TableViewCellModel] = [
             .buttonWithLoadingIndicator(title: AccountDeletionService.defaultButtonName,

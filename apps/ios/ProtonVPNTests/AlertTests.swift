@@ -25,6 +25,7 @@ import GSMessages
 import PMLogger
 import ProtonCoreNetworking
 import ProtonCoreAccountRecovery
+import ProtonCorePasswordChange
 import SwiftUI
 import Modals_iOS
 import LegacyCommon
@@ -190,6 +191,10 @@ fileprivate class SettingsServiceMock: SettingsService {
     func makeAccountRecoveryViewController() -> AccountRecoveryViewController {
         let viewModel = AccountRecoveryView.ViewModel()
         return UIHostingController(rootView: AccountRecoveryView(viewModel: viewModel))
+    }
+
+    func makePasswordChangeViewController(mode: PasswordChangeModule.PasswordChangeMode) -> PasswordChangeViewController? {
+        return nil
     }
 }
 

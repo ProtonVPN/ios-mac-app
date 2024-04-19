@@ -75,18 +75,24 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     public var vpnKeychain: VpnKeychainProtocol
     public var propertiesManager: PropertiesManagerProtocol
     public var alertService: CoreAlertService
+    public var coreApiService: CoreApiService
 
     private var notificationCenter: NotificationCenter = .default
 
     private var observation: NotificationToken?
 
-    public typealias Factory = VpnApiServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & CoreAlertServiceFactory
-        
+    public typealias Factory = VpnApiServiceFactory & 
+    VpnKeychainFactory &
+    PropertiesManagerFactory & 
+    CoreAlertServiceFactory &
+    CoreApiServiceFactory
+
     public init(factory: Factory) {
         vpnApiService = factory.makeVpnApiService()
         vpnKeychain = factory.makeVpnKeychain()
         propertiesManager = factory.makePropertiesManager()
         alertService = factory.makeCoreAlertService()
+        coreApiService = factory.makeCoreApiService()
 
         observation = notificationCenter.addObserver(
             for: type(of: vpnKeychain).vpnPlanChanged,
@@ -103,6 +109,11 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
             case .success:
                 Task { [weak self] in
                     await self?.successfulConsecutiveSessionRefreshes.increment()
+                    do {
+                        self?.propertiesManager.userSettings = try await self?.coreApiService.getUserSettings()
+                    } catch {
+                        log.error("UserSettings error", category: .app, metadata: ["error": "\(error)"])
+                    }
                 }
                 break
             case let .failure(error):

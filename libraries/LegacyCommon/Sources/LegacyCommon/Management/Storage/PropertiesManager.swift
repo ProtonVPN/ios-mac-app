@@ -24,6 +24,7 @@ import Foundation
 import Dependencies
 
 import ProtonCoreDataModel
+import ProtonCoreLogin
 
 import Domain
 import Ergonomics
@@ -86,6 +87,9 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var userRole: UserRole { get set }
     var userAccountCreationDate: Date? { get set }
     var userAccountRecovery: AccountRecovery? { get set }
+
+    var userInfo: UserInfo? { get set }
+    var userSettings: UserSettings? { get set }
 
     var trialWelcomed: Bool { get set }
     var warnedTrialExpiring: Bool { get set }
@@ -260,6 +264,9 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public var onAlternativeRoutingChange: ((Bool) -> Void)?
 
     public var userAccountRecovery: ProtonCoreDataModel.AccountRecovery?
+
+    public var userInfo: UserInfo?
+    public var userSettings: UserSettings?
 
     public var blockOneTimeAnnouncement: Bool {
         defaults.bool(forKey: Keys.blockOneTimeAnnouncement.rawValue)

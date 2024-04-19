@@ -29,6 +29,7 @@ public protocol CoreApiServiceFactory {
 
 public protocol CoreApiService {
     func getApiNotifications(completion: @escaping (Result<GetApiNotificationsResponse, Error>) -> Void)
+    func getUserSettings() async throws -> UserSettings
 }
 
 public class CoreApiServiceImplementation: CoreApiService {
@@ -59,5 +60,10 @@ public class CoreApiServiceImplementation: CoreApiService {
                 completion(.failure(error))
             }
         }
+    }
+
+    public func getUserSettings() async throws -> UserSettings {
+        let response: UserSettingsResponse = try await networking.perform(request: UserSettingsRequest())
+        return response.userSettings
     }
 }
