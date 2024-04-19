@@ -28,7 +28,6 @@ let package = Package(
     dependencies: [
         // External packages regularly upstreamed by our project (imported as submodules)
         .package(path: "../../external/protoncore"),
-        .package(path: "../../external/tunnelkit"),
 
         // Local packages
         .package(path: "../Foundations/Domain"),
@@ -125,8 +124,6 @@ let package = Package(
                 .product(name: "SDWebImage", package: "SDWebImage"),
                 .product(name: "Sentry", package: "sentry-cocoa"),
                 .product(name: "TrustKit", package: "TrustKit"),
-                .product(name: "TunnelKit", package: "TunnelKit"),
-                .product(name: "TunnelKitOpenVPN", package: "TunnelKit"),
                 .product(name: "DictionaryCoder", package: "DictionaryCoder")
             ],
             plugins: [

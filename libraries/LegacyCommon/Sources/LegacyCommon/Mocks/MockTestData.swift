@@ -253,7 +253,6 @@ public struct MockTestData {
     )
 
     public var defaultClientConfig = ClientConfig(
-        openVPNConfig: .init(defaultTcpPorts: [1234, 5678], defaultUdpPorts: [2345, 6789]),
         featureFlags: .allEnabled,
         serverRefreshInterval: 2 * 60,
         wireGuardConfig: .init(defaultUdpPorts: [12345, 65432], defaultTcpPorts: [12346, 65433]),
@@ -268,7 +267,6 @@ public struct MockTestData {
 extension ClientConfig {
     public func with(featureFlags: FeatureFlags? = nil, smartProtocolConfig: SmartProtocolConfig? = nil) -> ClientConfig {
         return ClientConfig(
-            openVPNConfig: openVPNConfig,
             featureFlags: featureFlags ?? self.featureFlags,
             serverRefreshInterval: serverRefreshInterval,
             wireGuardConfig: wireGuardConfig,

@@ -30,7 +30,6 @@ import ProtonCorePushNotifications
 
 typealias PropertiesToOverride = NetworkingDelegateFactory &
                                 CoreAlertServiceFactory &
-                                OpenVpnProtocolFactoryCreator &
                                 WireguardProtocolFactoryCreator &
                                 VpnCredentialsConfiguratorFactoryCreator &
                                 VpnAuthenticationFactory &
@@ -163,11 +162,6 @@ open class Container: PropertiesToOverride {
 
     // MARK: CoreAlertService
     open func makeCoreAlertService() -> CoreAlertService {
-        shouldHaveOverridden()
-    }
-
-    // MARK: OpenVPNProtocolFactoryCreator
-    open func makeOpenVpnProtocolFactory() -> OpenVpnProtocolFactory {
         shouldHaveOverridden()
     }
 
@@ -327,8 +321,8 @@ extension Container: AppStateManagerFactory {
 
 // MARK: AvailabilityCheckerResolverFactory
 extension Container: AvailabilityCheckerResolverFactory {
-    public func makeAvailabilityCheckerResolver(openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig) -> AvailabilityCheckerResolver {
-        AvailabilityCheckerResolverImplementation(openVpnConfig: openVpnConfig, wireguardConfig: wireguardConfig)
+    public func makeAvailabilityCheckerResolver(wireguardConfig: WireguardConfig) -> AvailabilityCheckerResolver {
+        AvailabilityCheckerResolverImplementation(wireguardConfig: wireguardConfig)
     }
 }
 

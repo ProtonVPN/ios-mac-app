@@ -44,17 +44,12 @@ struct ClientConfigResponse {
     }
 }
 
-extension ClientConfigResponse: Codable {
+extension ClientConfigResponse: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let featureFlags = try container.decode(FeatureFlags.self, forKey: .featureFlags)
         let serverRefreshInterval = try container.decode(Int.self, forKey: .serverRefreshInterval)
         let defaultPorts = try container.decode([String: [String: [Int]]].self, forKey: .defaultPorts)
-
-        let openVpnPorts = defaultPorts[ProtocolType.OpenVPN]
-        let (openVpnUdp, openVpnTcp) = (openVpnPorts?[PortType.UDP],
-                                        openVpnPorts?[PortType.TCP])
-        let openVpnConfig = OpenVpnConfig(defaultTcpPorts: openVpnTcp, defaultUdpPorts: openVpnUdp)
 
         let wireguardPorts = defaultPorts[ProtocolType.WireGuard]
         let (wireguardUdp, wireguardTcp, wireguardTls) = (wireguardPorts?[PortType.UDP],
@@ -70,7 +65,6 @@ extension ClientConfigResponse: Codable {
         let serverChangeConfig = (try? ServerChangeConfig(from: decoder)) ?? ServerChangeConfig()
 
         clientConfig = ClientConfig(
-            openVPNConfig: openVpnConfig,
             featureFlags: featureFlags,
             serverRefreshInterval: serverRefreshInterval,
             wireGuardConfig: wireguardConfig,
@@ -78,28 +72,5 @@ extension ClientConfigResponse: Codable {
             ratingSettings: ratingSettings,
             serverChangeConfig: serverChangeConfig
         )
-    }
-
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-
-        try container.encode(clientConfig.featureFlags, forKey: .featureFlags)
-        try container.encode(clientConfig.serverRefreshInterval, forKey: .serverRefreshInterval)
-        try container.encode(clientConfig.smartProtocolConfig, forKey: .smartProtocol)
-        try container.encode(clientConfig.ratingSettings, forKey: .ratingSettings)
-        // encoded directly into the parent object without a container. See `ServerChangeConfig` docs for more info
-        try clientConfig.serverChangeConfig.encode(to: encoder)
-
-        let defaultPorts = [
-            ProtocolType.WireGuard: [
-                PortType.UDP: clientConfig.wireGuardConfig.defaultUdpPorts,
-                PortType.TCP: clientConfig.wireGuardConfig.defaultTcpPorts
-            ],
-            ProtocolType.OpenVPN: [
-                PortType.UDP: clientConfig.openVPNConfig.defaultUdpPorts,
-                PortType.TCP: clientConfig.openVPNConfig.defaultTcpPorts
-            ]
-        ]
-        try container.encode(defaultPorts, forKey: .defaultPorts)
     }
 }

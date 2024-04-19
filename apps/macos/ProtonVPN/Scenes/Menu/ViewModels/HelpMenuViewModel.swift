@@ -77,15 +77,6 @@ class HelpMenuViewModel {
         navService.openLogsFolder()
     }
     
-    func openOpenVpnLogsFolderAction() {
-        // Save log to file
-        let logData = logContentProvider.getLogData(for: .openvpn)
-        logData.loadContent { logContent in
-            self.logFileManager.dump(logs: logContent, toFile: AppConstants.Filenames.openVpnLogFilename)
-            self.navService.openLogsFolder(filename: AppConstants.Filenames.openVpnLogFilename)
-        }
-    }
-    
     func openWGVpnLogsFolderAction() {
         // Save log to file
         logContentProvider.getLogData(for: .wireguard).loadContent { logContent in

@@ -205,8 +205,6 @@
 		D51DA6902541A66900B4A421 /* BadgedBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51DA68F2541A66900B4A421 /* BadgedBarButtonItem.swift */; };
 		D5209C7026CBBCF900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5209C6F26CBBCF900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift */; };
 		D5209C7126CBBE1800AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5209C6F26CBBCF900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift */; };
-		D5209C7426CBC87E00AD14EA /* OVPNiOSCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5209C7326CBC87E00AD14EA /* OVPNiOSCredentialsConfigurator.swift */; };
-		D5209C7526CBCB3D00AD14EA /* OVPNiOSCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5209C7326CBC87E00AD14EA /* OVPNiOSCredentialsConfigurator.swift */; };
 		D5209C7826CBD67100AD14EA /* WGiOSVpnCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5209C7726CBD67100AD14EA /* WGiOSVpnCredentialsConfigurator.swift */; };
 		D5209C7926CBD7C000AD14EA /* WGiOSVpnCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5209C7726CBD67100AD14EA /* WGiOSVpnCredentialsConfigurator.swift */; };
 		D55455422280280B006574F9 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55455412280280B006574F9 /* IntentHandler.swift */; };
@@ -674,7 +672,6 @@
 		D5136C9622895C3A0002C095 /* ExtensionAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionAlertService.swift; sourceTree = "<group>"; };
 		D51DA68F2541A66900B4A421 /* BadgedBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgedBarButtonItem.swift; sourceTree = "<group>"; };
 		D5209C6F26CBBCF900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IOSVpnCredentialsConfiguratorFactory.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/VPN/IOSVpnCredentialsConfiguratorFactory.swift; sourceTree = "<group>"; };
-		D5209C7326CBC87E00AD14EA /* OVPNiOSCredentialsConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OVPNiOSCredentialsConfigurator.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/VPN/OVPNiOSCredentialsConfigurator.swift; sourceTree = "<group>"; };
 		D5209C7726CBD67100AD14EA /* WGiOSVpnCredentialsConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WGiOSVpnCredentialsConfigurator.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/VPN/WGiOSVpnCredentialsConfigurator.swift; sourceTree = "<group>"; };
 		D550A1B1256551F800FE2D54 /* ConnectionStatusServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionStatusServiceMock.swift; sourceTree = "<group>"; };
 		D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Siri Shortcut Handler.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1453,7 +1450,6 @@
 			isa = PBXGroup;
 			children = (
 				D5209C6F26CBBCF900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift */,
-				D5209C7326CBC87E00AD14EA /* OVPNiOSCredentialsConfigurator.swift */,
 				D5209C7726CBD67100AD14EA /* WGiOSVpnCredentialsConfigurator.swift */,
 			);
 			path = VPN;
@@ -2829,7 +2825,6 @@
 				D5A880F422C61A59009B63D1 /* UIButton+Extension.swift in Sources */,
 				E1EB9E7622FF096A009E704F /* LogSelectionViewController.swift in Sources */,
 				E14EE2DD217F1EE8004AF568 /* ConnectionView.swift in Sources */,
-				D5209C7426CBC87E00AD14EA /* OVPNiOSCredentialsConfigurator.swift in Sources */,
 				D594A965227C466F0041D423 /* UIView+constraints.swift in Sources */,
 				E18006ED218B12A4009E01E3 /* Compare+Extension.swift in Sources */,
 				D5F3763C254028E5008C7207 /* AnnouncementButtonViewModel.swift in Sources */,
@@ -3049,7 +3044,6 @@
 			files = (
 				E1A28FB021E8F73A00E1C33C /* WidgetFactory.swift in Sources */,
 				D5A8CD742456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */,
-				D5209C7526CBCB3D00AD14EA /* OVPNiOSCredentialsConfigurator.swift in Sources */,
 				D5209C7926CBD7C000AD14EA /* WGiOSVpnCredentialsConfigurator.swift in Sources */,
 				4CD71C612AC73B16007979C0 /* SecureDeepLinkGenerator.swift in Sources */,
 				E14C2AA521E4E72400E8578E /* ProtonButton.swift in Sources */,

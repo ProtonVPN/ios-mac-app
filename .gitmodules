@@ -2,10 +2,6 @@
 	path = external/protoncore
 	url = ../../shared/protoncore
 	tag = 24.3.0
-[submodule "tunnelkit"]
-	path = external/tunnelkit
-	url = ../tunnelkit
-	tag = v7.0.1
 [submodule "external/apple-fusion"]
 	path = external/apple-fusion
 	url = ../../../tpe/apple-fusion

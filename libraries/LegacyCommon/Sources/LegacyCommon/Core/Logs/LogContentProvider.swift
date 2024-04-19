@@ -49,10 +49,6 @@ public class IOSLogContentProvider: LogContentProvider {
         case .osLog:
             return OSLogContent()
 
-        case .openvpn:
-            let folder = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) ?? FileManager.default.temporaryDirectory
-            return FileLogContent(file: folder.appendingPathComponent(CoreAppConstants.LogFiles.openVpn))
-
         case .wireguard:
             let folder = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) ?? FileManager.default.temporaryDirectory
             return WGiOSLogContent(fileLogContent: FileLogContent(file: folder.appendingPathComponent(CoreAppConstants.LogFiles.wireGuard)), wireguardProtocolFactory: wireguardProtocolFactory)
@@ -68,12 +64,10 @@ public class MacOSLogContentProvider: LogContentProvider {
 
     private let folder: URL
     private let wireguardProtocolFactory: WireguardProtocolFactory
-    private let openVpnProtocolFactory: OpenVpnProtocolFactory
 
-    public init(appLogsFolder folder: URL, wireguardProtocolFactory: WireguardProtocolFactory, openVpnProtocolFactory: OpenVpnProtocolFactory) {
+    public init(appLogsFolder folder: URL, wireguardProtocolFactory: WireguardProtocolFactory) {
         self.folder = folder
         self.wireguardProtocolFactory = wireguardProtocolFactory
-        self.openVpnProtocolFactory = openVpnProtocolFactory
     }
 
     public func getLogData(for source: LogSource) -> LogContent {
@@ -87,9 +81,6 @@ public class MacOSLogContentProvider: LogContentProvider {
             } else {
                 return MockLogContent()
             }
-
-        case .openvpn:
-            return NELogContent(neLogProvider: openVpnProtocolFactory)
 
         case .wireguard:
             return NELogContent(neLogProvider: wireguardProtocolFactory)

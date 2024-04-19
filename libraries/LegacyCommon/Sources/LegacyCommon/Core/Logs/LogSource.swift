@@ -11,17 +11,15 @@ import Strings
 
 public enum LogSource: CaseIterable {
     case app
-    case openvpn
     case wireguard
     case osLog
 
     // osLog source is used only for bug reports
-    public static var visibleAppSources: [LogSource] = [.app, .openvpn, .wireguard]
+    public static var visibleAppSources: [LogSource] = [.app, .wireguard]
 
     public var title: String {
         switch self {
         case .app: return Localizable.applicationLogs
-        case .openvpn: return Localizable.openVpnLogs
         case .wireguard: return Localizable.wireguardLogs
         case .osLog: return "os_log" // Not used in UI
         }

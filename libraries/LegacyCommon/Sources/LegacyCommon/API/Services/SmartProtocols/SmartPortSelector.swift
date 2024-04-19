@@ -20,21 +20,15 @@ protocol SmartPortSelector {
 }
 
 final class SmartPortSelectorImplementation: SmartPortSelector {
-    private let openVpnTcpChecker: SmartProtocolAvailabilityChecker
-    private let openVpnUdpChecker: SmartProtocolAvailabilityChecker
     private let wireguardUdpChecker: SmartProtocolAvailabilityChecker
     private let wireguardTcpChecker: SmartProtocolAvailabilityChecker
 
-    init(openVpnTcpChecker: SmartProtocolAvailabilityChecker,
-         openVpnUdpChecker: SmartProtocolAvailabilityChecker,
-         wireguardUdpChecker: SmartProtocolAvailabilityChecker,
+    init(wireguardUdpChecker: SmartProtocolAvailabilityChecker,
          wireguardTcpChecker: SmartProtocolAvailabilityChecker) {
-        self.openVpnTcpChecker = openVpnTcpChecker
-        self.openVpnUdpChecker = openVpnUdpChecker
         self.wireguardUdpChecker = wireguardUdpChecker
         self.wireguardTcpChecker = wireguardTcpChecker
     }
-    
+
     func determineBestPort(for vpnProtocol: VpnProtocol, on serverIp: ServerIp, completion: @escaping SmartPortSelectorCompletion) {
         let portOverrides = serverIp.protocolEntries?.overridePorts(using: vpnProtocol)
 
@@ -76,16 +70,9 @@ final class SmartPortSelectorImplementation: SmartPortSelector {
             let ports = portOverrides ?? DefaultConstants.ikeV2Ports
             completion(ports.shuffled())
             
-        case .openVpn(let transport): // TunnelKit accepts array of ports and select appropriate port by itself
-            XCTFail("OpenVPN has been deprecated and shouldn't be used (VPNAPPL-1843)")
-            switch transport {
-            case .tcp:
-                let ports = portOverrides ?? openVpnTcpChecker.defaultPorts
-                completion(ports.shuffled())
-            case .udp:
-                let ports = portOverrides ?? openVpnUdpChecker.defaultPorts
-                completion(ports.shuffled())
-            }
+        case .openVpn:
+            assertionFailure("OpenVPN has been deprecated")
+            completion([])
         }
     }
 }

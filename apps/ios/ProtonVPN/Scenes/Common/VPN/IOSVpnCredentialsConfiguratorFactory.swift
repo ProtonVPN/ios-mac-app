@@ -29,7 +29,7 @@ final class IOSVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFact
         case .ike:
             return KeychainRefVpnCredentialsConfigurator()
         case .openVpn:
-            return OVPNiOSCredentialsConfigurator(vpnAuthentication: vpnAuthentication)
+            fatalError("OpenVPN has been deprecated")
         case .wireGuard:
             return WGiOSVpnCredentialsConfigurator(propertiesManager: propertiesManager,
                                                    vpnKeychain: vpnKeychain)

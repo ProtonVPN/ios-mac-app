@@ -29,7 +29,6 @@ class VpnConnectionPreparer {
     private let appStateManager: AppStateManager
     private let serverTierChecker: ServerTierChecker
     private let smartProtocolConfig: SmartProtocolConfig
-    private let openVpnConfig: OpenVpnConfig
     private let wireguardConfig: WireguardConfig
     private let availabilityCheckerResolver: AvailabilityCheckerResolver
 
@@ -41,14 +40,12 @@ class VpnConnectionPreparer {
         serverTierChecker: ServerTierChecker,
         availabilityCheckerResolver: AvailabilityCheckerResolver,
         smartProtocolConfig: SmartProtocolConfig,
-        openVpnConfig: OpenVpnConfig,
         wireguardConfig: WireguardConfig
     ) {
         self.appStateManager = appStateManager
         self.serverTierChecker = serverTierChecker
         self.availabilityCheckerResolver = availabilityCheckerResolver
         self.smartProtocolConfig = smartProtocolConfig
-        self.openVpnConfig = openVpnConfig
         self.wireguardConfig = wireguardConfig
     }
     
@@ -149,8 +146,6 @@ class VpnConnectionPreparer {
             
         case let .vpnProtocol(vpnProtocol):
             smartPortSelector = SmartPortSelectorImplementation(
-                openVpnTcpChecker: availabilityCheckerResolver.availabilityChecker(for: .openVpn(.tcp)),
-                openVpnUdpChecker: availabilityCheckerResolver.availabilityChecker(for: .openVpn(.udp)),
                 wireguardUdpChecker: availabilityCheckerResolver.availabilityChecker(for: .wireGuard(.udp)),
                 wireguardTcpChecker: availabilityCheckerResolver.availabilityChecker(for: .wireGuard(.tcp))
             )

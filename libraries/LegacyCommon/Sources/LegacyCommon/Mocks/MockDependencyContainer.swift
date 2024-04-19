@@ -75,12 +75,6 @@ public class MockDependencyContainer {
     public lazy var safeModeProvider = SafeModePropertyProviderMock()
 
     public lazy var ikeFactory = IkeProtocolFactory(factory: MockFactory(container: self))
-    public lazy var openVpnFactory = OpenVpnProtocolFactory(
-        bundleId: Self.openvpnProviderBundleId,
-        appGroup: Self.appGroup,
-        propertiesManager: propertiesManager,
-        vpnManagerFactory: neTunnelProviderFactory
-    )
     public lazy var wireguardFactory = WireguardProtocolFactory(
         bundleId: Self.wireguardProviderBundleId,
         appGroup: Self.appGroup,
@@ -109,7 +103,6 @@ public class MockDependencyContainer {
 
     public lazy var stateConfiguration = VpnStateConfigurationManager(
         ikeProtocolFactory: ikeFactory,
-        openVpnProtocolFactory: openVpnFactory,
         wireguardProtocolFactory: wireguardFactory,
         propertiesManager: propertiesManager,
         appGroup: Self.appGroup
@@ -121,7 +114,6 @@ public class MockDependencyContainer {
 
     public lazy var vpnManager = VpnManager(
         ikeFactory: ikeFactory,
-        openVpnFactory: openVpnFactory,
         wireguardProtocolFactory: wireguardFactory,
         appGroup: Self.appGroup,
         vpnAuthentication: vpnAuthentication,
