@@ -82,7 +82,10 @@ let package = Package(
         ),
         .target(
             name: "VPNSharedTesting",
-            dependencies: ["VPNShared", .product(name: "TimerMock", package: "Timer")]
+            dependencies: ["VPNShared",
+                           .core(module: "TestingToolkitUnitTestsCore"),
+                           .core(module: "TestingToolkitUnitTestsFeatureFlag"),
+                .product(name: "TimerMock", package: "Timer")]
         ),
         .testTarget(name: "VPNSharedTests", dependencies: ["VPNShared"]),
         .testTarget(name: "NEHelperTests", dependencies: ["NEHelper", "VPNSharedTesting"]),
