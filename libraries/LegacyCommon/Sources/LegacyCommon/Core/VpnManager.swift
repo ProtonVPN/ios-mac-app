@@ -692,11 +692,16 @@ public class VpnManager: VpnManagerProtocol {
 
     private func updateState(_ vpnManager: NEVPNManagerWrapper) {
         quickReconnection = false
+        let oldState = self.state
         let newState = vpnStateConfiguration.determineNewState(vpnManager: vpnManager)
-        guard newState != self.state else { return }
+        guard newState != oldState else { return }
         self.state = newState
-        log.info("VPN update state to \(self.state.logDescription)", category: .connection, event: .change)
-        
+        log.info("VPN update state to \(self.state.logDescription)", category: .connection, event: .change, metadata: [
+            "oldState": "\(oldState.logDescription)",
+            "state": "\(newState.logDescription)",
+            "currentProtocol": "\(optional: currentVpnProtocol)"
+        ])
+
         switch self.state {
         case .connecting:
             if !self.connectAllowed {
@@ -798,7 +803,7 @@ public class VpnManager: VpnManagerProtocol {
     private func removeConfiguration(_ protocolFactory: VpnProtocolFactory, completionHandler: ((Error?) -> Void)?) {
         protocolFactory.vpnProviderManager(for: .configuration) { vpnManager, error in
             if let error = error {
-                log.error("\(error)", category: .ui)
+                log.error("Error loading VPN Manager for removal: \(error)", category: .ui, metadata: ["factory": "\(protocolFactory)"])
                 completionHandler?(ProtonVpnError.removeVpnProfileFailed)
                 return
             }
@@ -811,12 +816,14 @@ public class VpnManager: VpnManagerProtocol {
             vpnManager.removeFromPreferences(completionHandler: completionHandler)
         }
     }
-    
+
     private func executeDisconnectionRequestWhenReady(request: @escaping () -> Void) {
-        if currentVpnProtocol == nil {
-            delayedDisconnectRequest = request
-        } else {
+        if let currentProtocol = currentVpnProtocol {
+            log.debug("Proceeding with disconnection request immediately", category: .connection, metadata: ["currentVpnProtocol": "\(currentProtocol)"])
             request()
+        } else {
+            log.debug("Delaying disconnection request", category: .connection, metadata: ["currentVpnProtocol": "nil"])
+            delayedDisconnectRequest = request
         }
     }    
 }
