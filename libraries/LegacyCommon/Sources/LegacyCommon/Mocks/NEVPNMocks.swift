@@ -110,6 +110,10 @@ public class NETunnelProviderManagerFactoryMock: NETunnelProviderManagerWrapperF
         }
     }
 
+    public func loadManagersFromPreferences() async throws -> [NETunnelProviderManagerWrapper] {
+        self.tunnelProvidersInPreferences.values.map { $0 }
+    }
+
     public func makeNewManager() -> NETunnelProviderManagerWrapper {
         let manager = NETunnelProviderManagerMock(factory: self)
         NotificationCenter.default.post(name: NEVPNManagerMock.managerCreatedNotification, object: manager)

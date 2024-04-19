@@ -29,6 +29,7 @@ import VPNShared
 import Strings
 import Dependencies
 import Modals_iOS
+import enum Domain.VPNFeatureFlagType
 
 import ProtonCoreFeatureFlags
 import ProtonCoreAccountRecovery
@@ -210,7 +211,13 @@ final class NavigationService {
     }
     
     @objc private func refreshVpnManager(_ notification: Notification) {
-        vpnManager.refreshManagers()
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.asyncVPNManager) {
+            Task { @MainActor in
+                await self.vpnManager.refreshManagers()
+            }
+        } else {
+            vpnManager.refreshManagers()
+        }
     }
     
     private func setupTabs() {

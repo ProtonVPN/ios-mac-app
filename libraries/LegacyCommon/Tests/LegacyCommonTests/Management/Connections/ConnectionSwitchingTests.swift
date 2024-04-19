@@ -25,6 +25,7 @@ import Dependencies
 import GoLibs
 import ProtonCoreServices
 import ProtonCoreNetworking
+import ProtonCoreTestingToolkitUnitTestsFeatureFlag
 
 import Domain
 import VPNShared
@@ -39,6 +40,12 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         throw XCTSkip("Connection switching tests are skipped on macOS, since there is no cert refresh provider.")
 #endif
         try super.setUpWithError()
+    }
+
+    override func invokeTest() {
+        withFeatureFlags([.asyncVPNManager]) {
+            super.invokeTest()
+        }
     }
 
     private func dispatchToMainWithEscapedDependencies(closure: @escaping () -> Void) {

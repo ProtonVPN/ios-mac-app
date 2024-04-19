@@ -30,6 +30,7 @@ import Ergonomics
 import LocalFeatureFlags
 import ExtensionIPC
 import VPNShared
+import ProtonCoreFeatureFlags
 
 import Home
 
@@ -51,11 +52,16 @@ public protocol VpnManagerProtocol {
     func connectedDate() async -> Date?
     func refreshState()
     func refreshManagers()
+    func refreshManagers() async
     func removeConfigurations(completionHandler: ((Error?) -> Void)?)
 
     /// Called when `VpnManager` is ready and has finished querying the device's VPN connection state.
     /// - Note: Only call this function once over the course of `VpnManager`'s lifetime.
     func whenReady(queue: DispatchQueue, completion: @escaping () -> Void)
+
+    /// Task used to track when the managers are ready. Retrieve the value of the task to be sure
+    /// the `VpnManager` is ready and has finished querying the device's VPN connection state.
+    var prepareManagersTask: Task<(), Never>? { get }
 
     func set(vpnAccelerator: Bool)
     func set(netShieldType: NetShieldType)
@@ -119,6 +125,8 @@ public class VpnManager: VpnManagerProtocol {
 
     public private(set) var state: VpnState = .invalid
     public var readyGroup: DispatchGroup? = DispatchGroup()
+
+    public var prepareManagersTask: Task<(), Never>?
 
     public var currentVpnProtocol: VpnProtocol? {
         didSet {
@@ -231,7 +239,9 @@ public class VpnManager: VpnManagerProtocol {
         netShieldPropertyProvider: NetShieldPropertyProvider,
         safeModePropertyProvider: SafeModePropertyProvider
     ) {
-        readyGroup?.enter()
+        if !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.asyncVPNManager) {
+            readyGroup?.enter()
+        }
 
         self.ikeProtocolFactory = ikeFactory
         self.openVpnProtocolFactory = openVpnFactory
@@ -249,7 +259,13 @@ public class VpnManager: VpnManagerProtocol {
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
 
-        prepareManagers(forSetup: true)
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.asyncVPNManager) {
+            prepareManagersTask = Task {
+                await prepareManagers()
+            }
+        } else {
+            prepareManagers(forSetup: true)
+        }
     }
 
     // App was moved to/from the background mode (iOS only)
@@ -364,9 +380,25 @@ public class VpnManager: VpnManagerProtocol {
     }
 
     public func connectedDate() async -> Date? {
-        await withCheckedContinuation { continuation in
-            connectedDate(completion: continuation.resume)
+        guard FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.asyncVPNManager) else {
+            return await withCheckedContinuation { continuation in
+                connectedDate(completion: continuation.resume)
+            }
         }
+
+        guard let currentVpnProtocolFactory else {
+            return nil
+        }
+        do {
+            let vpnManager = try await currentVpnProtocolFactory.vpnProviderManager(for: .status)
+            // Returns a date if currently connected
+            if case VpnState.connected(_) = self.state {
+                return vpnManager.vpnConnection.connectedDate
+            }
+        } catch {
+            log.debug("Couldn't retrieve vpnProviderManager \(error)", category: .connection)
+        }
+        return nil
     }
     
     public func refreshState() {
@@ -378,6 +410,13 @@ public class VpnManager: VpnManagerProtocol {
         notificationCenter.removeObserver(self, name: NSNotification.Name.NEVPNStatusDidChange, object: nil)
         
         prepareManagers()
+    }
+
+    public func refreshManagers() async {
+        // Stop recieving status updates until the manager is prepared
+        notificationCenter.removeObserver(self, name: NSNotification.Name.NEVPNStatusDidChange, object: nil)
+
+        await prepareManagers()
     }
 
     public func set(vpnAccelerator: Bool) {
@@ -787,6 +826,30 @@ public class VpnManager: VpnManagerProtocol {
                 self.readyGroup?.leave()
             }
         }
+    }
+
+    @MainActor
+    private func prepareManagers() async {
+        // Note the double-negative: not-not defaulting to IKEv2. We want to gradually roll out noDefault as a feature.
+        let defaultToIke = !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.noDefaultToIke)
+        let defaulting = defaultToIke ? "Defaulting" : "Not defaulting"
+        log.info("Preparing managers for setup. \(defaulting) to IKEv2 if no provider available.")
+        let vpnProtocol = await vpnStateConfiguration.determineActiveVpnProtocol(defaultToIke: defaultToIke)
+
+        self.currentVpnProtocol = vpnProtocol
+        self.setState()
+
+        notificationCenter.removeObserver(
+            self,
+            name: NSNotification.Name.NEVPNStatusDidChange,
+            object: nil
+        )
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(self.vpnStatusChanged),
+            name: NSNotification.Name.NEVPNStatusDidChange,
+            object: nil
+        )
     }
 
     public func whenReady(queue: DispatchQueue, completion: @escaping () -> Void) {

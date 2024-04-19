@@ -268,6 +268,10 @@ extension Container: NETunnelProviderManagerWrapperFactory {
             completionHandler(managers, error)
         }
     }
+
+    public func loadManagersFromPreferences() async throws -> [NETunnelProviderManagerWrapper] {
+        try await NETunnelProviderManager.loadAllFromPreferences()
+    }
 }
 
 // MARK: NATTypePropertyProviderFactory

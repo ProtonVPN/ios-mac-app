@@ -19,4 +19,5 @@ public enum VpnProviderManagerRequirement {
 public protocol VpnProtocolFactory: NetworkExtensionLogProvider {
     func create(_ configuration: VpnManagerConfiguration) throws -> NEVPNProtocol
     func vpnProviderManager(for requirement: VpnProviderManagerRequirement, completion: @escaping (NEVPNManagerWrapper?, Error?) -> Void)
+    func vpnProviderManager(for requirement: VpnProviderManagerRequirement) async throws -> NEVPNManagerWrapper
 }

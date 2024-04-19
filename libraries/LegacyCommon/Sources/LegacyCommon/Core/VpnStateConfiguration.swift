@@ -40,9 +40,12 @@ public struct VpnStateConfigurationInfo {
 
 public protocol VpnStateConfiguration {
     func determineActiveVpnProtocol(defaultToIke: Bool, completion: @escaping ((VpnProtocol?) -> Void))
+    func determineActiveVpnProtocol(defaultToIke: Bool) async -> VpnProtocol?
     func determineActiveVpnState(vpnProtocol: VpnProtocol, completion: @escaping ((Result<(NEVPNManagerWrapper, VpnState), Error>) -> Void))
+    func determineActiveVpnState(vpnProtocol: VpnProtocol) async throws -> (NEVPNManagerWrapper, VpnState)
     func determineNewState(vpnManager: NEVPNManagerWrapper) -> VpnState
     func getInfo(completion: @escaping ((VpnStateConfigurationInfo) -> Void))
+    func getInfo() async -> VpnStateConfigurationInfo
 }
 
 public class VpnStateConfigurationManager: VpnStateConfiguration {
@@ -145,10 +148,52 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
                 completion(.openVpn(.tcp))
             } else if activeProtocols.contains(.wireGuard(.udp)) {
                 completion(.wireGuard(.udp))
-            } else if defaultToIke || activeProtocols.contains(.ike) {
+            } else if activeProtocols.contains(.ike) {
+                completion(.ike)
+            } else if defaultToIke {
+                log.info("No active protocols detected. Defaulting to `.ike`", category: .connection)
                 completion(.ike)
             } else {
                 completion(nil)
+            }
+        }
+    }
+
+    public func determineActiveVpnProtocol(defaultToIke: Bool) async -> VpnProtocol? {
+        let protocols: [VpnProtocol] = [.ike, .openVpn(.tcp), .wireGuard(.udp)]
+
+        var activeProtocols: [VpnProtocol] = []
+
+        for vpnProtocol in protocols {
+            do {
+                let manager = try await getFactory(for: vpnProtocol).vpnProviderManager(for: .status)
+
+                let state = self.determineNewState(vpnManager: manager)
+                if state.stableConnection || state.volatileConnection {
+                    activeProtocols.append(vpnProtocol)
+                }
+            } catch {
+                log.error("Couldn't determine if protocol \"\(vpnProtocol.localizedString)\" is active: \"\(String(describing: error))\"", category: .connection)
+                continue
+            }
+        }
+        let activeDeprecatedProtocols = Set(VpnProtocol.deprecatedProtocols).intersection(activeProtocols)
+        if !activeDeprecatedProtocols.isEmpty {
+            log.assertionFailure("activeProtocols contain a deprecated protocols: \(activeDeprecatedProtocols)")
+        }
+        return await MainActor.run { [activeProtocols] in
+            // OpenVPN takes precedence but if neither are active, then it should remain unchanged
+            if activeProtocols.contains(.openVpn(.tcp)) {
+                return .openVpn(.tcp)
+            } else if activeProtocols.contains(.wireGuard(.udp)) {
+                return .wireGuard(.udp)
+            } else if activeProtocols.contains(.ike) {
+                return .ike
+            } else if defaultToIke {
+                log.info("No active protocols detected. Defaulting to `.ike`", category: .connection)
+                return .ike
+            } else {
+                return nil
             }
         }
     }
@@ -166,6 +211,11 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
             let newState = self.determineNewState(vpnManager: vpnManager)
             completion(.success((vpnManager, newState)))
         }
+    }
+
+    public func determineActiveVpnState(vpnProtocol: VpnProtocol) async throws -> (NEVPNManagerWrapper, VpnState) {
+        let vpnManager = try await getFactory(for: vpnProtocol).vpnProviderManager(for: .status)
+        return (vpnManager, determineNewState(vpnManager: vpnManager))
     }
 
     public func getInfo(completion: @escaping ((VpnStateConfigurationInfo) -> Void)) {
@@ -207,6 +257,38 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
                                                          connection: connection))
                 }
             }
+        }
+    }
+
+    public func getInfo() async -> VpnStateConfigurationInfo {
+        // Note the double-negative: not-not defaulting to IKEv2. We want to gradually roll out noDefault as a feature.
+        let defaultToIke = !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.noDefaultToIke)
+        let defaulting = defaultToIke ? "Defaulting" : "Not defaulting"
+        log.info("Getting protocol information. \(defaulting) to IKEv2 if no provider available.")
+        guard let vpnProtocol = await determineActiveVpnProtocol(defaultToIke: defaultToIke) else {
+            return VpnStateConfigurationInfo(state: .disconnected,
+                                             hasConnected: self.propertiesManager.hasConnected,
+                                             connection: nil)
+        }
+
+        let connection: ConnectionConfiguration?
+        switch vpnProtocol {
+        case .ike:
+            connection = self.propertiesManager.lastIkeConnection
+        case .openVpn:
+            connection = self.propertiesManager.lastOpenVpnConnection
+        case .wireGuard:
+            connection = self.propertiesManager.lastWireguardConnection
+        }
+        do {
+            let (_, state) = try await determineActiveVpnState(vpnProtocol: vpnProtocol)
+            return VpnStateConfigurationInfo(state: state,
+                                             hasConnected: self.propertiesManager.hasConnected,
+                                             connection: connection)
+        } catch {
+            return VpnStateConfigurationInfo(state: VpnState.error(error),
+                                             hasConnected: self.propertiesManager.hasConnected,
+                                             connection: connection)
         }
     }
 

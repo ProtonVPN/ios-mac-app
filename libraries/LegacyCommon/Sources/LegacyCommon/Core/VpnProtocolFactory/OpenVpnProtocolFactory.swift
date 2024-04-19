@@ -149,6 +149,16 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         }
     }
     
+    public func vpnProviderManager(for requirement: VpnProviderManagerRequirement) async throws -> NEVPNManagerWrapper {
+        if requirement == .status, let vpnManager {
+            return vpnManager
+        } else {
+            let vpnManager = try await vpnManagerFactory.tunnelProviderManagerWrapper(forProviderBundleIdentifier: self.bundleId)
+            self.vpnManager = vpnManager
+            return vpnManager
+        }
+    }
+
     open func logs(completion: @escaping (String?) -> Void) {
         guard let url = providerConfiguration(emptyTunnelConfiguration).urlForDebugLog else {
             completion(nil)

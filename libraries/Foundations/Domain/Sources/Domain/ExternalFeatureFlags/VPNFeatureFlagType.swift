@@ -49,4 +49,10 @@ public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
 
     /// Don't default to IKEv2 during VPN configuration when no VPN provider is available
     case noDefaultToIke = "AppleVPNNoDefaultToIKE"
+
+    /// Remove connection delay
+    case removeConnectionDelay = "RemoveConnectionDelay"
+
+    /// Async VPNManager
+    case asyncVPNManager = "AsyncVPNManager"
 }

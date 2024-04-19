@@ -53,6 +53,7 @@ extension NETunnelProviderManager: NETunnelProviderManagerWrapper {
 public protocol NETunnelProviderManagerWrapperFactory {
     func makeNewManager() -> NETunnelProviderManagerWrapper
     func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void)
+    func loadManagersFromPreferences() async throws -> [NETunnelProviderManagerWrapper]
 }
 
 extension NETunnelProviderManagerWrapperFactory {
@@ -74,6 +75,13 @@ extension NETunnelProviderManagerWrapperFactory {
             completionHandler(vpnManager, nil)
         }
     }
+
+    func tunnelProviderManagerWrapper(forProviderBundleIdentifier bundleId: String) async throws -> NETunnelProviderManagerWrapper {
+        let managers = try await loadManagersFromPreferences()
+        return managers.first(where: { (manager) -> Bool in
+            return (manager.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier == bundleId
+        }) ?? self.makeNewManager()
+    }
 }
 
 extension NETunnelProviderManager: NETunnelProviderManagerWrapperFactory {
@@ -85,6 +93,10 @@ extension NETunnelProviderManager: NETunnelProviderManagerWrapperFactory {
         Self.loadAllFromPreferences { managers, error in
             completionHandler(managers, error)
         }
+    }
+
+    public func loadManagersFromPreferences() async throws -> [NETunnelProviderManagerWrapper] {
+        try await Self.loadAllFromPreferences()
     }
 }
 

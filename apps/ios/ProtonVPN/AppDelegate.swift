@@ -126,9 +126,15 @@ extension AppDelegate: UIApplicationDelegate {
 //        }
         
         AnnouncementButtonViewModel.shared = container.makeAnnouncementButtonViewModel()
-
-        vpnManager.whenReady(queue: DispatchQueue.main) {
-            self.navigationService.launched()
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.asyncVPNManager) {
+            Task { @MainActor in
+                await vpnManager.prepareManagersTask?.value
+                self.navigationService.launched()
+            }
+        } else {
+            vpnManager.whenReady(queue: DispatchQueue.main) {
+                self.navigationService.launched()
+            }
         }
         
         container.makeMaintenanceManagerHelper().startMaintenanceManager()

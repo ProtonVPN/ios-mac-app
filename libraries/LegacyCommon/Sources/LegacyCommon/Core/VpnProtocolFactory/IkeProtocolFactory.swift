@@ -80,6 +80,18 @@ public class IkeProtocolFactory: VpnProtocolFactory {
         }
     }
     
+    public func vpnProviderManager(for requirement: VpnProviderManagerRequirement) async throws -> NEVPNManagerWrapper {
+        try await withCheckedThrowingContinuation { continuation in
+            vpnManager.loadFromPreferences { loadError in
+                if let loadError {
+                    continuation.resume(throwing: loadError)
+                } else {
+                    continuation.resume(returning: self.vpnManager)
+                }
+            }
+        }
+    }
+
     public func logs(completion: @escaping (String?) -> Void) {
         completion(nil)
     }

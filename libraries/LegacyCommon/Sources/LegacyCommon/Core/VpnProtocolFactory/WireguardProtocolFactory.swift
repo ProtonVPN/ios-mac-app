@@ -92,6 +92,16 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
         }
     }
     
+    public func vpnProviderManager(for requirement: VpnProviderManagerRequirement) async throws -> NEVPNManagerWrapper {
+        if requirement == .status, let vpnManager = vpnManager {
+            return vpnManager
+        } else {
+            let vpnManager = try await vpnManagerFactory.tunnelProviderManagerWrapper(forProviderBundleIdentifier: self.bundleId)
+            self.vpnManager = vpnManager
+            return vpnManager
+        }
+    }
+
     private func logFile() -> URL? {
         guard let sharedFolderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) else {
             log.error("Cannot obtain shared folder URL for appGroup", category: .app, metadata: ["appGroupId": "\(appGroup)", "protocol": "WireGuard"])

@@ -160,7 +160,8 @@ let package = Package(
                 .product(name: "TimerMock", package: "Timer"),
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
-                .core(module: "TestingToolkitUnitTestsCore")
+                .core(module: "TestingToolkitUnitTestsCore"),
+                .core(module: "TestingToolkitUnitTestsFeatureFlag")
             ],
             resources: [
                 .copy("Resources/test_log_1.log"),
