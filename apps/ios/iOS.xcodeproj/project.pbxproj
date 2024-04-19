@@ -34,8 +34,6 @@
 		4C05E56A2A71699D009102EB /* LegacyCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 4C05E5692A71699D009102EB /* LegacyCommon */; };
 		4C3474932A93C25B008BDE78 /* ImageSubtitleImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3474922A93C25B008BDE78 /* ImageSubtitleImageTableViewCell.swift */; };
 		4C4E98352AC1C07E00B7B285 /* DictionaryCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 4C4E98342AC1C07E00B7B285 /* DictionaryCoder */; };
-		4C78F5F52A6E8C0F0099DA1A /* TunnelKitOpenVPNAppExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 4C78F5F42A6E8C0F0099DA1A /* TunnelKitOpenVPNAppExtension */; };
-		4C78F5F72A6E8C380099DA1A /* TunnelKitOpenVPN in Frameworks */ = {isa = PBXBuildFile; productRef = 4C78F5F62A6E8C380099DA1A /* TunnelKitOpenVPN */; };
 		4C7D404E2A60244C00ACDBED /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 4C7D404D2A60244C00ACDBED /* Alamofire */; };
 		4C7D40642A60282D00ACDBED /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = 4C7D40632A60282D00ACDBED /* AlamofireImage */; };
 		4C7D40672A60289400ACDBED /* OHHTTPStubs in Frameworks */ = {isa = PBXBuildFile; productRef = 4C7D40662A60289400ACDBED /* OHHTTPStubs */; };
@@ -48,7 +46,6 @@
 		4C8C31582A73BAB9006AD628 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8C31572A73BAB9006AD628 /* ProtonCoreCryptoVPNPatchedGoImplementation */; };
 		4C9754F42A6017260035A61B /* SwiftOTP in Frameworks */ = {isa = PBXBuildFile; productRef = 4C9754F32A6017260035A61B /* SwiftOTP */; };
 		4C9754FA2A6018040035A61B /* GSMessages in Frameworks */ = {isa = PBXBuildFile; productRef = 4C9754F92A6018040035A61B /* GSMessages */; };
-		4CCB4C5C2A6ECCE1002D4204 /* ProtonCoreLog in Frameworks */ = {isa = PBXBuildFile; productRef = 4CCB4C5B2A6ECCE1002D4204 /* ProtonCoreLog */; };
 		4CCB4C602A6ED15B002D4204 /* ProtonCoreCryptoGoInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 4CCB4C5F2A6ED15B002D4204 /* ProtonCoreCryptoGoInterface */; };
 		4CD71C612AC73B16007979C0 /* SecureDeepLinkGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD71C602AC73B16007979C0 /* SecureDeepLinkGenerator.swift */; };
 		4CDC8AB62A74554B004F2537 /* WireguardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC8AB52A74554B004F2537 /* WireguardConfig.swift */; };
@@ -174,7 +171,6 @@
 		AD6099FB299B2343007E46BC /* ImageSubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6099FA299B2343007E46BC /* ImageSubtitleTableViewCell.swift */; };
 		AD609A03299B89C0007E46BC /* ImageSubtitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD609A02299B89C0007E46BC /* ImageSubtitleTableViewCell.xib */; };
 		AD70D75E2B63238400B39ABA /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = AD70D75D2B63238400B39ABA /* PMLogger */; };
-		AD80107E2AC6CEAD000DB179 /* SharedDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* SharedDependencies+Live.swift */; };
 		AD80107F2AC6CEAE000DB179 /* SharedDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* SharedDependencies+Live.swift */; };
 		AD8010802AC6CEAE000DB179 /* SharedDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* SharedDependencies+Live.swift */; };
 		AD8130FD2A852E4F00729E03 /* SharedDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8130FC2A852E4F00729E03 /* SharedDependencies+Live.swift */; };
@@ -217,13 +213,6 @@
 		D55455572280280B006574F9 /* Siri Shortcut Handler.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D554556422805539006574F9 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
 		D554556522805D0F006574F9 /* Client.plist in Resources */ = {isa = PBXBuildFile; fileRef = 79C5598320AAC59F00E6D3F6 /* Client.plist */; };
-		D555C488297E75E1000593EF /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D555C487297E75E1000593EF /* ObfuscatedConstants.swift */; };
-		D555C48A297E75ED000593EF /* OpenVPNConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D555C489297E75ED000593EF /* OpenVPNConstants.swift */; };
-		D555C48F297E78FF000593EF /* OVPNLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D555C48C297E78FF000593EF /* OVPNLogFormatter.swift */; };
-		D555C490297E78FF000593EF /* OVPNLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D555C48D297E78FF000593EF /* OVPNLogger.swift */; };
-		D555C491297E78FF000593EF /* PacketTunnelProvider+Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = D555C48E297E78FF000593EF /* PacketTunnelProvider+Logging.swift */; };
-		D555C493297E7B22000593EF /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = D555C492297E7B22000593EF /* NEHelper */; };
-		D555C499297EC9CD000593EF /* Client.plist in Resources */ = {isa = PBXBuildFile; fileRef = 79C5598320AAC59F00E6D3F6 /* Client.plist */; };
 		D572E56D2AB487C200CBD2B7 /* BannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D572E56C2AB487C200CBD2B7 /* BannerViewModel.swift */; };
 		D572E5702AB487D900CBD2B7 /* BannerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D572E56E2AB487D900CBD2B7 /* BannerViewCell.xib */; };
 		D572E5712AB487D900CBD2B7 /* BannerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D572E56F2AB487D900CBD2B7 /* BannerViewCell.swift */; };
@@ -274,9 +263,6 @@
 		E13EDF7121F0C53F00030CE7 /* InstructionStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13EDF7021F0C53F00030CE7 /* InstructionStepView.swift */; };
 		E13EDF7321F0C79A00030CE7 /* InstructionStepView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E13EDF7221F0C79A00030CE7 /* InstructionStepView.xib */; };
 		E13EDF7521F1D07700030CE7 /* WidgetSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13EDF7421F1D07700030CE7 /* WidgetSettingsViewController.swift */; };
-		E14414FA22EF38ED00894DD0 /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14414F922EF38ED00894DD0 /* PacketTunnelProvider.swift */; };
-		E14414FF22EF38ED00894DD0 /* OpenVPN Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E14414F722EF38ED00894DD0 /* OpenVPN Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		E144150422EF39F700894DD0 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
 		E148AE4021C141B0007AB65A /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE3F21C141B0007AB65A /* NotificationCenter.framework */; };
 		E148AE4621C141B0007AB65A /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E148AE4421C141B0007AB65A /* MainInterface.storyboard */; };
 		E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
@@ -354,7 +340,6 @@
 		E5BBFEDA2B33422100FA9CF8 /* XCTestExpectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BF950F23559AAF00C7D1E7 /* XCTestExpectation.swift */; };
 		E5BE14942BBE99A00093F30F /* OneClickPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BE14932BBE99A00093F30F /* OneClickPayment.swift */; };
 		E5CF14862949E68700AF6912 /* QuarkCommands+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CF14852949E68700AF6912 /* QuarkCommands+Async.swift */; };
-		E5DEF0612A739A08006FC9DC /* DictionaryCoder in Frameworks */ = {isa = PBXBuildFile; productRef = E5DEF0602A739A08006FC9DC /* DictionaryCoder */; };
 		E5E7EFEE28B8EDA4005249D3 /* AnnouncementImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E7EFED28B8EDA4005249D3 /* AnnouncementImageViewController.swift */; };
 		E5E7EFF028B8EDEC005249D3 /* AnnouncementImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5E7EFEF28B8EDEC005249D3 /* AnnouncementImageViewController.xib */; };
 		E5FA6F2827C7E12200E781FC /* SubuserAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5FA6F2727C7E12200E781FC /* SubuserAlertViewController.storyboard */; };
@@ -369,7 +354,6 @@
 		E9445D6226528A790075FD31 /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9445D6126528A790075FD31 /* PacketTunnelProvider.swift */; };
 		E9445D6726528A790075FD31 /* WireGuardiOS Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E9445D5E26528A790075FD31 /* WireGuardiOS Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E9492ED72669177D00500E7D /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCDA20908E6F0030E1EB /* AppConstants.swift */; };
-		E9492ED82669178000500E7D /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCDA20908E6F0030E1EB /* AppConstants.swift */; };
 		E9492ED92669178100500E7D /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCDA20908E6F0030E1EB /* AppConstants.swift */; };
 		E95F81E727B1474800A2458A /* iOSUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95F81E627B1474800A2458A /* iOSUpdateManager.swift */; };
 		E977A79F26821CA90013495A /* Client.plist in Resources */ = {isa = PBXBuildFile; fileRef = 79C5598320AAC59F00E6D3F6 /* Client.plist */; };
@@ -455,13 +439,6 @@
 			remoteGlobalIDString = 791DE5D8208DDA3000A29EA5;
 			remoteInfo = ProtonVPN;
 		};
-		E14414FD22EF38ED00894DD0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 791DE5D1208DDA3000A29EA5 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E14414F622EF38ED00894DD0;
-			remoteInfo = "OpenVPN Extension";
-		};
 		E9445D6526528A790075FD31 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 791DE5D1208DDA3000A29EA5 /* Project object */;
@@ -485,7 +462,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				E14414FF22EF38ED00894DD0 /* OpenVPN Extension.appex in Embed App Extensions */,
 				E10EA9CA21DA8162006D5F0E /* Quick Connect Widget.appex in Embed App Extensions */,
 				E9445D6726528A790075FD31 /* WireGuardiOS Extension.appex in Embed App Extensions */,
 				D55455572280280B006574F9 /* Siri Shortcut Handler.appex in Embed App Extensions */,
@@ -494,16 +470,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F3521E0F264A9D2C0070F177 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F3521E12264A9D300070F177 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
@@ -716,11 +682,6 @@
 		D55455432280280B006574F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D55455492280280B006574F9 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		D554555F2280435B006574F9 /* Siri Shortcut Handler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Siri Shortcut Handler.entitlements"; sourceTree = "<group>"; };
-		D555C487297E75E1000593EF /* ObfuscatedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.swift; sourceTree = "<group>"; };
-		D555C489297E75ED000593EF /* OpenVPNConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenVPNConstants.swift; sourceTree = "<group>"; };
-		D555C48C297E78FF000593EF /* OVPNLogFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OVPNLogFormatter.swift; sourceTree = "<group>"; };
-		D555C48D297E78FF000593EF /* OVPNLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OVPNLogger.swift; sourceTree = "<group>"; };
-		D555C48E297E78FF000593EF /* PacketTunnelProvider+Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PacketTunnelProvider+Logging.swift"; sourceTree = "<group>"; };
 		D55B36CF2458003100D8B0B9 /* TroubleshootCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootCoordinatorMock.swift; sourceTree = "<group>"; };
 		D572E56C2AB487C200CBD2B7 /* BannerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerViewModel.swift; sourceTree = "<group>"; };
 		D572E56E2AB487D900CBD2B7 /* BannerViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BannerViewCell.xib; sourceTree = "<group>"; };
@@ -776,10 +737,6 @@
 		E13EDF7021F0C53F00030CE7 /* InstructionStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionStepView.swift; sourceTree = "<group>"; };
 		E13EDF7221F0C79A00030CE7 /* InstructionStepView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InstructionStepView.xib; sourceTree = "<group>"; };
 		E13EDF7421F1D07700030CE7 /* WidgetSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetSettingsViewController.swift; sourceTree = "<group>"; };
-		E14414F722EF38ED00894DD0 /* OpenVPN Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "OpenVPN Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E14414F922EF38ED00894DD0 /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
-		E14414FB22EF38ED00894DD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E14414FC22EF38ED00894DD0 /* OpenVPN_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenVPN_Extension.entitlements; sourceTree = "<group>"; };
 		E148AE3E21C141B0007AB65A /* Quick Connect Widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Quick Connect Widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E148AE3F21C141B0007AB65A /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		E148AE4521C141B0007AB65A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
@@ -980,19 +937,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E14414F422EF38ED00894DD0 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4CCB4C5C2A6ECCE1002D4204 /* ProtonCoreLog in Frameworks */,
-				4C78F5F52A6E8C0F0099DA1A /* TunnelKitOpenVPNAppExtension in Frameworks */,
-				D555C493297E7B22000593EF /* NEHelper in Frameworks */,
-				E5DEF0612A739A08006FC9DC /* DictionaryCoder in Frameworks */,
-				E144150422EF39F700894DD0 /* NetworkExtension.framework in Frameworks */,
-				4C78F5F72A6E8C380099DA1A /* TunnelKitOpenVPN in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		E148AE3B21C141B0007AB65A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1136,7 +1080,6 @@
 				E9DBA50B27917C150010E3BD /* Packages */,
 				F38BB450265C0CF600329619 /* Config.xcconfig */,
 				791DE5DB208DDA3000A29EA5 /* ProtonVPN */,
-				E14414F822EF38ED00894DD0 /* OpenVPN Extension */,
 				E9445D6026528A790075FD31 /* WireGuardiOS Extension */,
 				E148AE4121C141B0007AB65A /* Quick Connect Widget */,
 				D55455402280280B006574F9 /* Siri Shortcut Handler */,
@@ -1157,7 +1100,6 @@
 				E148AE3E21C141B0007AB65A /* Quick Connect Widget.appex */,
 				D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */,
 				D5811D7D229BBD870087B63A /* ProtonVPNUITests.xctest */,
-				E14414F722EF38ED00894DD0 /* OpenVPN Extension.appex */,
 				E9445D5E26528A790075FD31 /* WireGuardiOS Extension.appex */,
 			);
 			name = Products;
@@ -1536,16 +1478,6 @@
 			path = "Siri Shortcut Handler";
 			sourceTree = "<group>";
 		};
-		D555C48B297E78FF000593EF /* Logs */ = {
-			isa = PBXGroup;
-			children = (
-				D555C48C297E78FF000593EF /* OVPNLogFormatter.swift */,
-				D555C48D297E78FF000593EF /* OVPNLogger.swift */,
-				D555C48E297E78FF000593EF /* PacketTunnelProvider+Logging.swift */,
-			);
-			path = Logs;
-			sourceTree = "<group>";
-		};
 		D55B36CE2458002000D8B0B9 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
@@ -1705,19 +1637,6 @@
 				E129C6D322A933F200D8437E /* LiveServers.json */,
 			);
 			path = Logicals;
-			sourceTree = "<group>";
-		};
-		E14414F822EF38ED00894DD0 /* OpenVPN Extension */ = {
-			isa = PBXGroup;
-			children = (
-				E14414F922EF38ED00894DD0 /* PacketTunnelProvider.swift */,
-				D555C487297E75E1000593EF /* ObfuscatedConstants.swift */,
-				D555C489297E75ED000593EF /* OpenVPNConstants.swift */,
-				D555C48B297E78FF000593EF /* Logs */,
-				E14414FB22EF38ED00894DD0 /* Info.plist */,
-				E14414FC22EF38ED00894DD0 /* OpenVPN_Extension.entitlements */,
-			);
-			path = "OpenVPN Extension";
 			sourceTree = "<group>";
 		};
 		E148AE4121C141B0007AB65A /* Quick Connect Widget */ = {
@@ -2303,7 +2222,6 @@
 			dependencies = (
 				4C13B9822A742387008A04C2 /* PBXTargetDependency */,
 				D573CFD0264A6A1F0033CE19 /* PBXTargetDependency */,
-				E14414FE22EF38ED00894DD0 /* PBXTargetDependency */,
 				D55455562280280B006574F9 /* PBXTargetDependency */,
 				E9445D6626528A790075FD31 /* PBXTargetDependency */,
 			);
@@ -2415,33 +2333,6 @@
 			productReference = D5811D7D229BBD870087B63A /* ProtonVPNUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		E14414F622EF38ED00894DD0 /* OpenVPN Extension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E144150322EF38ED00894DD0 /* Build configuration list for PBXNativeTarget "OpenVPN Extension" */;
-			buildPhases = (
-				D555C498297EC82E000593EF /* Generayte obfuscated constants */,
-				E14414F322EF38ED00894DD0 /* Sources */,
-				E14414F422EF38ED00894DD0 /* Frameworks */,
-				E14414F522EF38ED00894DD0 /* Resources */,
-				E1025D96230FD565003047B8 /* Run Swiftlint */,
-				F3521E12264A9D300070F177 /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "OpenVPN Extension";
-			packageProductDependencies = (
-				D555C492297E7B22000593EF /* NEHelper */,
-				4C78F5F42A6E8C0F0099DA1A /* TunnelKitOpenVPNAppExtension */,
-				4C78F5F62A6E8C380099DA1A /* TunnelKitOpenVPN */,
-				4CCB4C5B2A6ECCE1002D4204 /* ProtonCoreLog */,
-				E5DEF0602A739A08006FC9DC /* DictionaryCoder */,
-			);
-			productName = "OpenVPN Extension";
-			productReference = E14414F722EF38ED00894DD0 /* OpenVPN Extension.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 		E148AE3D21C141B0007AB65A /* Quick Connect Widget */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E148AE4D21C141B0007AB65A /* Build configuration list for PBXNativeTarget "Quick Connect Widget" */;
@@ -2546,17 +2437,6 @@
 						CreatedOnToolsVersion = 10.2.1;
 						TestTargetID = 791DE5D8208DDA3000A29EA5;
 					};
-					E14414F622EF38ED00894DD0 = {
-						CreatedOnToolsVersion = 10.3;
-						SystemCapabilities = {
-							com.apple.Keychain = {
-								enabled = 1;
-							};
-							com.apple.NetworkExtensions.iOS = {
-								enabled = 1;
-							};
-						};
-					};
 					E148AE3D21C141B0007AB65A = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1020;
@@ -2646,7 +2526,6 @@
 			projectRoot = "";
 			targets = (
 				791DE5D8208DDA3000A29EA5 /* ProtonVPN */,
-				E14414F622EF38ED00894DD0 /* OpenVPN Extension */,
 				E9445D5D26528A790075FD31 /* WireGuardiOS Extension */,
 				E148AE3D21C141B0007AB65A /* Quick Connect Widget */,
 				D554553E2280280B006574F9 /* Siri Shortcut Handler */,
@@ -2775,14 +2654,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E14414F522EF38ED00894DD0 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D555C499297EC9CD000593EF /* Client.plist in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		E148AE3C21C141B0007AB65A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2862,25 +2733,6 @@
 			shellPath = /bin/sh;
 			shellScript = "SWIFTLINT=${SWIFTLINT:-$(command -v swiftlint)}\n\nif [ -x \"$SWIFTLINT\" ]; then\n\"$SWIFTLINT\" --config ../../.swiftlint.yml\nelse\necho \"Swiftlint not found, skipping...\"\nfi\n";
 		};
-		D555C498297EC82E000593EF /* Generayte obfuscated constants */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Generayte obfuscated constants";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${PROJECT_DIR}/OpenVPN Extension/ObfuscatedConstants.swift",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd ${PROJECT_DIR}/OpenVPN\\ Extension/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ..\n";
-		};
 		D5C890102935EDD0009177E4 /* Generate Obfuscated Constants */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -2901,25 +2753,6 @@
 			shellPath = /bin/sh;
 			shellScript = "cd ${PROJECT_DIR}/WireGuardiOS\\ Extension/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ..\n";
 			showEnvVarsInLog = 0;
-		};
-		E1025D96230FD565003047B8 /* Run Swiftlint */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Run Swiftlint";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "SWIFTLINT=${SWIFTLINT:-$(command -v swiftlint)}\n\nif [ -x \"$SWIFTLINT\" ]; then\n\"$SWIFTLINT\" --config ../../.swiftlint.yml\nelse\necho \"Swiftlint not found, skipping...\"\nfi\n";
 		};
 		E17FBC5D22DF75160080300A /* Generate Obfuscated Constants */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3210,21 +3043,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E14414F322EF38ED00894DD0 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D555C491297E78FF000593EF /* PacketTunnelProvider+Logging.swift in Sources */,
-				E14414FA22EF38ED00894DD0 /* PacketTunnelProvider.swift in Sources */,
-				D555C488297E75E1000593EF /* ObfuscatedConstants.swift in Sources */,
-				D555C48A297E75ED000593EF /* OpenVPNConstants.swift in Sources */,
-				D555C490297E78FF000593EF /* OVPNLogger.swift in Sources */,
-				D555C48F297E78FF000593EF /* OVPNLogFormatter.swift in Sources */,
-				AD80107E2AC6CEAD000DB179 /* SharedDependencies+Live.swift in Sources */,
-				E9492ED82669178000500E7D /* AppConstants.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		E148AE3A21C141B0007AB65A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -3298,11 +3116,6 @@
 			isa = PBXTargetDependency;
 			target = 791DE5D8208DDA3000A29EA5 /* ProtonVPN */;
 			targetProxy = D5811D82229BBD870087B63A /* PBXContainerItemProxy */;
-		};
-		E14414FE22EF38ED00894DD0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E14414F622EF38ED00894DD0 /* OpenVPN Extension */;
-			targetProxy = E14414FD22EF38ED00894DD0 /* PBXContainerItemProxy */;
 		};
 		E9445D6626528A790075FD31 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3940,90 +3753,6 @@
 			};
 			name = Staging;
 		};
-		E144150022EF38ED00894DD0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "OpenVPN Extension/OpenVPN_Extension.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1085;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 2SB5Z68H26;
-				INFOPLIST_FILE = "OpenVPN Extension/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = "$(IOS_APP_VERSION)";
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.OpenVPN-Extension";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG FREQUENT_AUTH_CERT_REFRESH";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		E144150122EF38ED00894DD0 /* Staging */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "OpenVPN Extension/OpenVPN_Extension.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1085;
-				DEVELOPMENT_TEAM = 2SB5Z68H26;
-				INFOPLIST_FILE = "OpenVPN Extension/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = "$(IOS_APP_VERSION)";
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.debug.OpenVPN-Extension";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN OpenVPN Debug";
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG FREQUENT_AUTH_CERT_REFRESH";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Staging;
-		};
-		E144150222EF38ED00894DD0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "OpenVPN Extension/OpenVPN_Extension.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1085;
-				DEVELOPMENT_TEAM = 2SB5Z68H26;
-				INFOPLIST_FILE = "OpenVPN Extension/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = "$(IOS_APP_VERSION)";
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.OpenVPN-Extension";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN OpenVPN Release";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		E148AE4B21C141B0007AB65A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -4277,16 +4006,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E144150322EF38ED00894DD0 /* Build configuration list for PBXNativeTarget "OpenVPN Extension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E144150022EF38ED00894DD0 /* Debug */,
-				E144150122EF38ED00894DD0 /* Staging */,
-				E144150222EF38ED00894DD0 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		E148AE4D21C141B0007AB65A /* Build configuration list for PBXNativeTarget "Quick Connect Widget" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -4470,14 +4189,6 @@
 			package = E5DEF05D2A7399EC006FC9DC /* XCRemoteSwiftPackageReference "DictionaryCoder" */;
 			productName = DictionaryCoder;
 		};
-		4C78F5F42A6E8C0F0099DA1A /* TunnelKitOpenVPNAppExtension */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TunnelKitOpenVPNAppExtension;
-		};
-		4C78F5F62A6E8C380099DA1A /* TunnelKitOpenVPN */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TunnelKitOpenVPN;
-		};
 		4C7D404D2A60244C00ACDBED /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4C7D404C2A60244C00ACDBED /* XCRemoteSwiftPackageReference "Alamofire" */;
@@ -4526,10 +4237,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4C9754F82A6018040035A61B /* XCRemoteSwiftPackageReference "GSMessages" */;
 			productName = GSMessages;
-		};
-		4CCB4C5B2A6ECCE1002D4204 /* ProtonCoreLog */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ProtonCoreLog;
 		};
 		4CCB4C5F2A6ED15B002D4204 /* ProtonCoreCryptoGoInterface */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -4600,10 +4307,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCoreCryptoVPNPatchedGoImplementation;
 		};
-		D555C492297E7B22000593EF /* NEHelper */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = NEHelper;
-		};
 		D5EE41302AD9619800ECC064 /* WireGuardKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = WireGuardKit;
@@ -4636,11 +4339,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4C7D40652A60289400ACDBED /* XCRemoteSwiftPackageReference "OHHTTPStubs" */;
 			productName = OHHTTPStubsSwift;
-		};
-		E5DEF0602A739A08006FC9DC /* DictionaryCoder */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E5DEF05D2A7399EC006FC9DC /* XCRemoteSwiftPackageReference "DictionaryCoder" */;
-			productName = DictionaryCoder;
 		};
 		F348C9D527D8E54200622584 /* Search */ = {
 			isa = XCSwiftPackageProductDependency;
