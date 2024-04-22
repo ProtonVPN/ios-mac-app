@@ -115,10 +115,6 @@ public struct QuickFixesView: View {
                                 ) {
                                     ContactFormView(store: childStore)
                                 }
-
-//                                IfLetStore(self.store.scope(state: \.contactFormState,
-//                                                            action: \.contactFormAction),
-//                                           then: { store in ContactFormView(store: store) })
                             },
                             label: {
                                 Text(Localizable.br2ButtonNext)

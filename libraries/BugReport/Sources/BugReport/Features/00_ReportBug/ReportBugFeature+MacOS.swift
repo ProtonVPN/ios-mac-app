@@ -24,94 +24,147 @@ import SwiftUI
 @Reducer
 struct ReportBugFeatureMacOS: Reducer {
 
-    struct State: Equatable {
-        var whatsTheIssueState: WhatsTheIssueFeature.State
+    @ObservableState
+    struct State {
 
         var steps: UInt = 3
         var step: UInt {
-            switch currentPage {
-            case .whatsTheIssue:    return 1
-            case .quickFixes:       return 2
-            case .contactForm:      return 3
-            case .result:           return 0
+            if step4State != nil {
+                return 0
+            } else if step3aState != nil || step3bState != nil {
+                return 3
+            } else if step2State != nil {
+                return 2
+            }
+            return 1
+
+        }
+
+        // We have two possible paths: 1st with quick fixes view and 2nd that goes
+        // straight to contact form. Depending on the path contact form store may be
+        // saved directly in this store (path 1) or as a route inside step1 store.
+        //
+        // 1) step1 -> step2 -> step3a -> step4
+        // 2) step1 ->          step3b -> step4
+        //
+
+        var step1State: WhatsTheIssueFeature.State
+
+        var step2State: QuickFixesFeature.State? {
+            get {
+                guard let route = step1State.route else {
+                    return nil
+                }
+                switch route {
+                case .quickFixes(let state):
+                    return state
+                case .contactForm(_):
+                    return nil
+                }
+            }
+            set {
+                if let newValue {
+                    step1State.route = .quickFixes(newValue)
+                } else {
+                    step1State.route = nil
+                }
+            }
+        }
+
+        var step3aState: ContactFormFeature.State?
+
+        var step3bState: ContactFormFeature.State? {
+            get {
+                guard let route = step1State.route else {
+                    return nil
+                }
+                switch route {
+                case .quickFixes(_):
+                    return nil
+                case .contactForm(let state):
+                    return state
+                }
+            } set {
+                if let newValue {
+                    step1State.route = .contactForm(newValue)
+                } else {
+                    step1State.route = nil
+                }
+            }
+        }
+
+        private var step3State: ContactFormFeature.State? {
+            step3aState ?? step3bState
+        }
+
+        var step4State: BugReportResultFeature.State? {
+            get {
+                step3State?.resultState
+            }
+            set {
+                step3aState?.resultState = newValue
             }
         }
 
         init(whatsTheIssueState: WhatsTheIssueFeature.State) {
-            self.whatsTheIssueState = whatsTheIssueState
-            self.currentPage = .whatsTheIssue(whatsTheIssueState)
+            self.step1State = whatsTheIssueState
         }
-
-        var currentPage: Page
-
-        /// Map state to the page that should be displayed
-        fileprivate func currentPageNow() -> Page {
-            guard let route = whatsTheIssueState.route else {
-                return .whatsTheIssue(whatsTheIssueState)
-            }
-
-            switch route {
-            case .contactForm(let contactFormState):
-                if let resultState = contactFormState.resultState {
-                    return .result(resultState, .whatsTheIssue)
-                }
-                return .contactForm(contactFormState, .whatsTheIssue)
-
-            case .quickFixes(let quickFixesState):
-                if let contactFormState = quickFixesState.contactFormState {
-                    if let resultState = contactFormState.resultState {
-                        return .result(resultState, .quickFixes)
-                    }
-                    return .contactForm(contactFormState, .quickFixes)
-                }
-                return .quickFixes(quickFixesState)
-            }
-        }
-
     }
 
-    enum Action: Equatable {
+    enum Action {
         case backPressed
-        case whatsTheIssueAction(WhatsTheIssueFeature.Action)
+        case step1(WhatsTheIssueFeature.Action)
+        case step2(QuickFixesFeature.Action)
+        case step3a(ContactFormFeature.Action)
+        case step3b(ContactFormFeature.Action)
+        case step4(BugReportResultFeature.Action)
     }
 
-    enum Page: Equatable {
-        case whatsTheIssue(WhatsTheIssueFeature.State)
-        case quickFixes(QuickFixesFeature.State)
-        case contactForm(ContactFormFeature.State, ContactFormParent)
-        case result(BugReportResultFeature.State, ContactFormParent)
-
-        enum ContactFormParent {
-            case whatsTheIssue
-            case quickFixes
-        }
+    public enum ContactFormParent {
+        case whatsTheIssue
+        case quickFixes
     }
 
     var body: some ReducerOf<Self> {
-        Scope(state: \.whatsTheIssueState, action: /Action.whatsTheIssueAction) {
+        Scope(state: \.step1State, action: /Action.step1) {
             WhatsTheIssueFeature()
         }
+        .ifLet(\.step2State, action: /Action.step2, then: { QuickFixesFeature() })
+        .ifLet(\.step3aState, action: /Action.step3a, then: { ContactFormFeature() })
+        .ifLet(\.step3bState, action: /Action.step3b, then: { ContactFormFeature() })
+        .ifLet(\.step4State, action: /Action.step4, then: { BugReportResultFeature() })
+
         Reduce { state, action in
             switch action {
+            case .step2(.next):
+                if let category = state.step2State?.category {
+                    state.step3aState = ContactFormFeature.State(
+                        fields: category.inputFields,
+                        category: category.label
+                    )
+                }
+                return .none
+
             case .backPressed:
-                guard let route = state.whatsTheIssueState.route else {
+                if state.step3aState != nil {
+                    state.step3aState = nil
                     return .none
+                } else if state.step3bState != nil {
+                    return .send(.step1(.contactFormDeselected))
+                } else if state.step2State != nil {
+                    return .send(.step1(.quickFixesDeselected))
                 }
+                return .none
 
-                switch route {
-                case .quickFixes(let quickFixesState):
-                    if quickFixesState.contactFormState != nil {
-                        return .send(.whatsTheIssueAction(.route(.quickFixes(.contactFormDeselected))))
-                    } else {
-                        return .send(.whatsTheIssueAction(.quickFixesDeselected))
-                    }
-
-                case .contactForm:
-                    return .send(.whatsTheIssueAction(.contactFormDeselected))
-                }
+            case .step4(let subAction):
+                // "Redirect" action according to the path of the user towards the
+                // contact form.
+                let newAction = state.step3aState != nil
+                    ? Action.step3a(ContactFormFeature.Action.resultViewAction(subAction))
+                    : Action.step3b(ContactFormFeature.Action.resultViewAction(subAction))
+                return .send(newAction)
 
             default:
-                state.currentPage = state.currentPageNow()
                 return .none
             }
         }
@@ -121,7 +174,7 @@ struct ReportBugFeatureMacOS: Reducer {
 
 public struct ReportBugView: View {
 
-    let store: StoreOf<ReportBugFeatureMacOS>
+    @Perception.Bindable var store: StoreOf<ReportBugFeatureMacOS>
     @Environment(\.colors) var colors: Colors
     @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
 
@@ -129,29 +182,21 @@ public struct ReportBugView: View {
     private let horizontalPadding = 126.0
 
     public var body: some View {
-        WithViewStore(self.store, observe: { $0 }, content: { viewStore in
-
+        WithPerceptionTracking {
             VStack(alignment: .leading, spacing: 0) {
 
-                if case .result(let state, let parent) = viewStore.currentPage {
-                    BugReportResultView(store: self.store.scope(state: { _ in state },
-                                                                action: {
-                        switch parent {
-                        case .whatsTheIssue:
-                            return ReportBugFeatureMacOS.Action.whatsTheIssueAction(.route(.contactForm(.resultViewAction($0))))
-                        case .quickFixes:
-                            return ReportBugFeatureMacOS.Action.whatsTheIssueAction(.route(.quickFixes(.contactFormAction(.resultViewAction($0)))))
-                        }
-                    }))
+                if let childStore = store.scope(state: \.step4State, action: \.step4) {
+                    BugReportResultView(store: childStore)
+                        .padding(.horizontal, horizontalPadding)
 
                 } else {
                     VStack(alignment: .leading, spacing: 0) {
 
-                        Button("", action: { viewStore.send(.backPressed, animation: .default) })
+                        Button("", action: { store.send(.backPressed, animation: .default) })
                             .buttonStyle(BackButtonStyle())
-                            .opacity(viewStore.step > 1 ? 1 : 0)
+                            .opacity(store.step > 1 ? 1 : 0)
 
-                        StepProgress(step: viewStore.step, steps: viewStore.steps, colorMain: colors.primary, colorText: colors.textAccent, colorSecondary: colors.backgroundStrong ?? colors.backgroundWeak)
+                        StepProgress(step: store.step, steps: store.steps, colorMain: colors.primary, colorText: colors.textAccent, colorSecondary: colors.backgroundStrong ?? colors.backgroundWeak)
                             .padding(.bottom)
                             .transition(.opacity)
 
@@ -161,38 +206,27 @@ public struct ReportBugView: View {
                     .padding(.horizontal, horizontalPadding)
 
                     ScrollView {
-                        switch viewStore.currentPage {
-                        case .whatsTheIssue(let state):
-                            WhatsTheIssueView(store: self.store.scope(state: { _ in state },
-                                                                      action: ReportBugFeatureMacOS.Action.whatsTheIssueAction))
+                        if let childStore = store.scope(state: \.step3aState, action: \.step3a) {
+                            ContactFormView(store: childStore)
 
-                        case .quickFixes(let state):
-                            QuickFixesView(store: self.store.scope(state: { _ in state },
-                                                                   action: { ReportBugFeatureMacOS.Action.whatsTheIssueAction(.route(.quickFixes($0))) }))
+                        } else if let childStore = store.scope(state: \.step3bState, action: \.step1.route.contactForm) {
+                            ContactFormView(store: childStore)
 
-                        case .contactForm(let state, let parent):
-                            ContactFormView(store: self.store.scope(state: { _ in state },
-                                                                    action: {
-                                switch parent {
-                                case .whatsTheIssue:
-                                    return ReportBugFeatureMacOS.Action.whatsTheIssueAction(.route(.contactForm($0)))
-                                case .quickFixes:
-                                    return ReportBugFeatureMacOS.Action.whatsTheIssueAction(.route(.quickFixes(.contactFormAction($0))))
-                                }
-                            }))
+                        } else if let childStore = store.scope(state: \.step2State, action: \.step2) {
+                            QuickFixesView(store: childStore)
 
-                        default:
-                            EmptyView()
+                        } else {
+                            let childStore = store.scope(state: \.step1State, action: \.step1)
+                            WhatsTheIssueView(store: childStore)
                         }
                     }
                     .padding(.horizontal, horizontalPadding)
-
                 }
             }
             .padding(.top, verticalPadding)
             .background(colors.background)
 
-        })
+        }
     }
 }
 

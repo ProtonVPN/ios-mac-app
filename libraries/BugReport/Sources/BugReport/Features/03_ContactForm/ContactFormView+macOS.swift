@@ -29,30 +29,46 @@ public struct ContactFormView: View {
     @Environment(\.colors) var colors: Colors
 
     public var body: some View {
-        WithViewStore(self.store, observe: { $0 }, content: { viewStore in
+        WithPerceptionTracking {
             VStack {
                 VStack(spacing: 20) {
-                    ForEach(viewStore.fields) { field in
+                    ForEach(store.fields) { field in
                         if !field.hidden {
                             switch field.inputField.type {
                             case .textSingleLine:
-                                SingleLineTextInputView(field: field.inputField,
-                                                        value: Binding(get: { field.stringValue },
-                                                                       set: { viewStore.send(.fieldStringValueChanged(field, $0)) }))
+                                SingleLineTextInputView(
+                                    field: field.inputField,
+                                    value: Binding(
+                                        get: { field.stringValue },
+                                        set: {
+                                            guard $0 != field.stringValue else { return }
+                                            store.send(.fieldStringValueChanged(field, $0))
+                                        }
+                                    )
+                                )
                             case .textMultiLine:
-                                MultiLineTextInputView(field: field.inputField,
-                                                       value: Binding(get: { field.stringValue },
-                                                                      set: { viewStore.send(.fieldStringValueChanged(field, $0)) }))
+                                MultiLineTextInputView(
+                                    field: field.inputField,
+                                    value: Binding(
+                                        get: { field.stringValue },
+                                        set: {
+                                            guard $0 != field.stringValue else { return }
+                                            store.send(.fieldStringValueChanged(field, $0))
+                                        }))
                                 .frame(height: 155, alignment: .top)
                             case .switch:
-                                SwitchInputView(field: field.inputField,
-                                                value: Binding(get: { field.boolValue },
-                                                               set: { viewStore.send(.fieldBoolValueChanged(field, $0)) }))
+                                SwitchInputView(
+                                    field: field.inputField,
+                                    value: Binding(
+                                        get: { field.boolValue },
+                                        set: { store.send(.fieldBoolValueChanged(field, $0)) }
+                                    )
+                                )
                             }
                         }
                     }
 
-                    if viewStore.showLogsInfo {
+                    if store.showLogsInfo {
                         HStack(alignment: .top, spacing: 0) {
                             Image(Asset.icInfoCircle.name, bundle: Bundle.module)
                                 .padding(0)
@@ -67,17 +83,17 @@ public struct ContactFormView: View {
                     }
 
                     Button(action: {
-                        viewStore.send(.send, animation: .default)
+                        store.send(.send, animation: .default)
 
-                    }, label: { Text(viewStore.isSending ? Localizable.br3ButtonSending : Localizable.br3ButtonSend) })
-                    .disabled(!viewStore.isSending && !viewStore.canBeSent)
+                    }, label: { Text(store.isSending ? Localizable.br3ButtonSending : Localizable.br3ButtonSend) })
+                    .disabled(!store.isSending && !store.canBeSent)
                     .buttonStyle(PrimaryButtonStyle())
                     .padding(.horizontal)
                 }
             }
-            .environment(\.isLoading, viewStore.isSending)
+            .environment(\.isLoading, store.isSending)
             .background(colors.background)
-        })
+        }
     }
 
 }
