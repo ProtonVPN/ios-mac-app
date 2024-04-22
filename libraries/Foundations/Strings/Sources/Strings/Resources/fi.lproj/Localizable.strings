@@ -2048,7 +2048,7 @@
 "welcome_to_proton_subtitle" = "Selaa yksityisesti, pääse estettyyn sisältöön ja nauti digitaalisesta vapaudesta.";
 
 /* Welcome to Proton screen shown during onboarding. Banner title label. */
-"welcome_to_proton_banner_title" = "Sertifioitu ei-lokeja VPN";
+"welcome_to_proton_banner_title" = "Todistetusti lokivapaa VPN";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "VPN-toimintasi on suojattu Sveitsin tietosuojalaeilla. Emme koskaan seuraa sinua verkossa tai jaa tietojasi kolmansille osapuolille.";

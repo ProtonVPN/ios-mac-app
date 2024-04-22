@@ -1829,7 +1829,7 @@
 "modals_upsell_moderate_nat_subtitle" = "使用 VPN Plus 解鎖第二類 NAT";
 
 /* Bold part of the subtitle of Moderate NAT upsell screens */
-"modals_upsell_moderate_nat_subtitle_bold" = "NAT type 2";
+"modals_upsell_moderate_nat_subtitle_bold" = "NAT 類型 2";
 
 /* Feature of the Moderate NAT upsell screen */
 "modals_upsell_features_moderate_nat_gaming" = "提升線上遊戲及視訊通話效能";
@@ -2051,7 +2051,7 @@
 "welcome_to_proton_banner_title" = "驗證無紀錄的VPN";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
-"welcome_to_proton_banner_subtitle" = "Your VPN activity is protected by Swiss privacy laws. We’ll never track you online or share your information with third parties.";
+"welcome_to_proton_banner_subtitle" = "您的 VPN 活動，受瑞士隱私法律保障。我們永不追蹤您的線上活動或與第三方分享您的資訊。";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "升級您的隱私";
@@ -2063,7 +2063,7 @@
 "upsell_plans_list_section_header" = "選擇你的方案";
 
 /* Main Button of paid plans list allowing user to start payments process. */
-"upsell_plans_list_validate_button" = "Get VPN Plus";
+"upsell_plans_list_validate_button" = "取得 VPN Plus";
 
 /* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
 "upsell_plans_list_option_amountPerMonth" = " /月";
