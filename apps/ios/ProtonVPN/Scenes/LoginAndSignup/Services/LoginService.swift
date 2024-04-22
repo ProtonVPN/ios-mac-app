@@ -10,6 +10,7 @@ import Foundation
 import LegacyCommon
 import ProtonCoreDataModel
 import ProtonCoreLogin
+import ProtonCoreFeatureFlags
 import ProtonCoreLoginUI
 import ProtonCoreNetworking
 import ProtonCorePayments
@@ -146,7 +147,9 @@ final class CoreLoginService {
             // Update the session id in the networking stack after login
             let uid = loginData.getCredential.UID
             networking.apiService.setSessionUID(uid: uid)
-            pushNotificationService.didLoginWithUID(uid)
+            if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.pushNotifications) {
+                pushNotificationService.registerForRemoteNotifications()
+            }
         }
     }
 
