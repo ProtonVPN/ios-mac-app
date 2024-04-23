@@ -2414,3 +2414,8 @@
 /* Action button of the view nudging users to update before filling Bug Report */
 "_update_view_button" = "Update";
 
+/* Change mailbox password cell title */
+"_change_mailbox_password" = "Change mailbox password";
+
+/* Change password cell title */
+"_change_password" = "Change password";

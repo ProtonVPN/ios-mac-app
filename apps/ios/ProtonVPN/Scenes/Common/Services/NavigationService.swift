@@ -407,10 +407,11 @@ extension NavigationService: SettingsService {
             mode: mode,
             apiService: networking.apiService,
             authCredential: authCredentials.toAuthCredential(),
-            userInfo: userInfo) { [weak self] authCredential, userInfo in
-                guard let self else { return }
-                self.processPasswordChange(authCredential: authCredential, userInfo: userInfo)
-            }
+            userInfo: userInfo
+        ) { [weak self] authCredential, userInfo in
+            guard let self else { return }
+            self.processPasswordChange(authCredential: authCredential, userInfo: userInfo)
+        }
     }
 
     private func processPasswordChange(authCredential: AuthCredential, userInfo: UserInfo) {

@@ -134,9 +134,9 @@ final class SettingsAccountViewModel {
             .pushStandard(title: Localizable.changePassword, handler: { [weak self] in
                 guard let self, let pushHandler else { return }
                 Task { @MainActor [weak self] in
-                    guard let self else { return }
+                    guard let self, let userSettings = propertiesManager.userSettings else { return }
                     var mode: PasswordChangeModule.PasswordChangeMode = .singlePassword
-                    if self.propertiesManager.userSettings?.password.mode != .singlePassword {
+                    if userSettings.password.mode != .singlePassword {
                         mode = .loginPassword
                     }
                     if let viewController = self.navigationService.makePasswordChangeViewController(mode: mode) {
@@ -160,15 +160,15 @@ final class SettingsAccountViewModel {
     }
 
     private var canShowChangePassword: Bool {
-        FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.changePassword, reloadValue: true)
-        && propertiesManager.userInfo != nil
-        && propertiesManager.userSettings != nil
+        return FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.changePassword, reloadValue: true) && propertiesManager.userInfo != nil && propertiesManager.userSettings != nil
     }
 
     private var canShowChangeMailboxPassword: Bool {
-        guard FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.changePassword, reloadValue: true),
-              let passwordMode = propertiesManager.userSettings?.password.mode
-        else { return false }
+        guard canShowChangePassword,
+              let passwordMode = propertiesManager.userSettings?.password.mode else {
+            return false
+        }
+
         return passwordMode == .loginAndMailboxPassword
     }
 

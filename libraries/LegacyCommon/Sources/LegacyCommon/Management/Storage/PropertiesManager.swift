@@ -505,6 +505,8 @@ public class PropertiesManager: PropertiesManagerProtocol {
         alternativeRouting = true
         smartProtocol = ConnectionProtocol.smartProtocol.shouldBeEnabledByDefault
         killSwitch = false
+        userInfo = nil
+        userSettings = nil
     }
     
     func postNotificationOnUIThread(_ name: NSNotification.Name,
