@@ -24,7 +24,7 @@ fileprivate let okButton = "OK"
 fileprivate let assignVPNConnectionButton = "Enable VPN connections"
 fileprivate let loginButton = "Sign in again"
 fileprivate let invalidUsernameErrorMessage = "Invalid username"
-
+fileprivate let CaptchaNextButton = "Next"
 
 class LoginRobot: CoreElements {
     
@@ -51,6 +51,12 @@ class LoginRobot: CoreElements {
     func signIn<T: CoreElements>(robot _: T.Type) -> T {
         button(signInButtonId).tap()
         return T()
+    }
+    
+    @discardableResult
+    func verifyCaptcha() -> LoginRobot {
+        button(CaptchaNextButton).tap()
+        return LoginRobot()
     }
     
     private func typeUsername(username: String) -> LoginRobot {

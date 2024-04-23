@@ -45,6 +45,7 @@
         "ExternalAccountsTests\/testSignInWithInternalAccountWorks()",
         "ExternalAccountsTests\/testSignUpWithInternalAccountWorks()",
         "FreeRescopeTests",
+        "HumanVerificationTests",
         "InternalAndExternalSignUpTests",
         "InternalAndExternalSignUpTests\/testSignUpWithExternalAccountWorks()",
         "InternalAndExternalSignUpTests\/testSignUpWithInternalAccountWorks()",
