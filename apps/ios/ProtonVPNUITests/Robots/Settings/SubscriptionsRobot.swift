@@ -24,13 +24,13 @@ class SubscriptionsRobot: CoreElements {
 
     @discardableResult
     func checkDurationIs(_ length: String) -> Self {
-        staticText(length).waitUntilExists().checkExists()
+        staticText().containsLabel(length).waitUntilExists().checkExists()
         return self
     }
 
     @discardableResult
     func checkPriceIs(_ price: String) -> Self {
-        staticText(price).waitUntilExists().checkExists()
+        staticText().containsLabel(price).waitUntilExists().checkExists()
 
         return self
     }
