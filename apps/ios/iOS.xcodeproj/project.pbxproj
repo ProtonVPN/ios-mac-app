@@ -158,6 +158,7 @@
 		80C4A4EB2BCFBCDA00DA1A80 /* MainMeasurements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C4A4EA2BCFBCDA00DA1A80 /* MainMeasurements.swift */; };
 		89926E3756CED95AB662D371 /* PasswordRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */; };
 		8B7F179F2BD7A6A600C6B8D9 /* ProtonCoreNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 8B7F179E2BD7A6A600C6B8D9 /* ProtonCoreNetworking */; };
+		8B930CEE2BDFB3F000E81FB2 /* AuthCredentials+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B930CED2BDFB3F000E81FB2 /* AuthCredentials+Extension.swift */; };
 		8BAA73B72BD131FA00187E26 /* ProtonCorePasswordChange in Frameworks */ = {isa = PBXBuildFile; productRef = 8BAA73B62BD131FA00187E26 /* ProtonCorePasswordChange */; };
 		8BC65CDA2B97645D005F2533 /* ProtonCoreTelemetry in Frameworks */ = {isa = PBXBuildFile; productRef = 8BC65CD92B97645D005F2533 /* ProtonCoreTelemetry */; };
 		A01D7C58C3C1AEBA17A6C5AF /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E128E9975D2A268D9FB56F0 /* AnnouncementDetailViewController.swift */; };
@@ -670,6 +671,7 @@
 		80C4A4EA2BCFBCDA00DA1A80 /* MainMeasurements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMeasurements.swift; sourceTree = "<group>"; };
 		80C4A4EC2BCFBDA900DA1A80 /* ProtonVPN-IOS-SLI-All.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-IOS-SLI-All.xctestplan"; sourceTree = "<group>"; };
 		8815D27DF5F2EEB85DCFD444 /* LoginExternalAccountNotSupportedSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginExternalAccountNotSupportedSetup.swift; sourceTree = "<group>"; };
+		8B930CED2BDFB3F000E81FB2 /* AuthCredentials+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthCredentials+Extension.swift"; sourceTree = "<group>"; };
 		9E128E9975D2A268D9FB56F0 /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnouncementDetailViewController.swift; path = ../../../../ios/ProtonVPN/Scenes/Announcements/AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
 		AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetShieldStatsItemView.xib; sourceTree = "<group>"; };
 		AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldStatsItemView.swift; sourceTree = "<group>"; };
@@ -1243,6 +1245,7 @@
 		7995FCE1209092F30030E1EB /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				8B930CED2BDFB3F000E81FB2 /* AuthCredentials+Extension.swift */,
 				E18006EC218B12A4009E01E3 /* Compare+Extension.swift */,
 				E134558821889EC500FEEECE /* Data+Extension.swift */,
 				D5110850246150DE0018872A /* Date+Formatters.swift */,
@@ -3031,6 +3034,7 @@
 				E1EB9E7922FF0B30009E704F /* LogSelectionViewModel.swift in Sources */,
 				E13EDF6B21F0BF9300030CE7 /* WidgetSettingsViewModel.swift in Sources */,
 				79312B802119905D00E79D09 /* SelectionTableViewCell.swift in Sources */,
+				8B930CEE2BDFB3F000E81FB2 /* AuthCredentials+Extension.swift in Sources */,
 				E154A0C922E0A9A000283CF9 /* ObfuscatedConstants.swift in Sources */,
 				7950441B21183FBD0022ED35 /* ProfilesTableViewCell.swift in Sources */,
 				791DE612208E098300A29EA5 /* ProtonQCViewController.swift in Sources */,

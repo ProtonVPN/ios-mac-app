@@ -164,12 +164,7 @@ final class SettingsAccountViewModel {
     }
 
     private var canShowChangeMailboxPassword: Bool {
-        guard canShowChangePassword,
-              let passwordMode = propertiesManager.userSettings?.password.mode else {
-            return false
-        }
-
-        return passwordMode == .loginAndMailboxPassword
+        return canShowChangePassword && propertiesManager.userSettings?.password.mode == .loginAndMailboxPassword
     }
 
     private var deleteAccountSection: TableViewSection {

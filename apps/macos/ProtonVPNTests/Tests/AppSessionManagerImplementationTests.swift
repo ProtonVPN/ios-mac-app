@@ -53,6 +53,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     var vpnKeychain: VpnKeychainMock!
     var appStateManager: AppStateManagerMock!
     var repository: ServerRepository!
+    var coreApiService: CoreApiServiceMock!
 
     let asyncTimeout: TimeInterval = 5
 
@@ -80,6 +81,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         vpnKeychain = VpnKeychainMock()
         alertService = AppSessionManagerAlertServiceMock()
         appStateManager = AppStateManagerMock()
+        coreApiService = CoreApiServiceMock()
 
         networkingDelegate = FullNetworkingMockDelegate()
         let freeCreds = VpnKeychainMock.vpnCredentials(planName: "free", maxTier: .freeTier)
@@ -102,7 +104,8 @@ final class AppSessionManagerImplementationTests: XCTestCase {
                 unauthKeychain: unauthKeychain,
                 vpnKeychain: vpnKeychain,
                 alertService: alertService,
-                appStateManager: appStateManager
+                appStateManager: appStateManager,
+                coreApiService: coreApiService
             )
             return AppSessionManagerImplementation(factory: factory)
         }
@@ -428,6 +431,7 @@ fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     private let vpnKeychain: VpnKeychainProtocol
     private let alertService: CoreAlertService
     private let appStateManager: AppStateManager
+    private let coreApiService: CoreApiService
 
     let appCertificateRefreshManagerMock = AppCertificateRefreshManagerMock()
     let announcementRefresherMock = AnnouncementRefresherMock()
@@ -454,6 +458,7 @@ fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     func makeVpnKeychain() -> VpnKeychainProtocol { vpnKeychain }
     func makeVpnApiService() -> LegacyCommon.VpnApiService { vpnAPIService }
     func makeNetworking() -> Networking { NetworkingMock() }
+    func makeCoreApiService() -> CoreApiService { coreApiService }
 
     init(
         vpnAPIService: VpnApiService,
@@ -461,7 +466,8 @@ fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
         unauthKeychain: UnauthKeychainHandle,
         vpnKeychain: VpnKeychainProtocol,
         alertService: CoreAlertService,
-        appStateManager: AppStateManager
+        appStateManager: AppStateManager,
+        coreApiService: CoreApiService
     ) {
         self.vpnAPIService = vpnAPIService
         self.authKeychain = authKeychain
@@ -469,6 +475,7 @@ fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
         self.vpnKeychain = vpnKeychain
         self.alertService = alertService
         self.appStateManager = appStateManager
+        self.coreApiService = coreApiService
     }
 
 }

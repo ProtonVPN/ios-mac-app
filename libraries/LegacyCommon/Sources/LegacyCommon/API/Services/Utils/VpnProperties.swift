@@ -87,7 +87,7 @@ public struct VpnProperties {
             linkConfirmation: nil,
             credit: user.credit,
             currency: user.currency,
-            createTime: user.createTime == nil ? nil : Int64(user.createTime!),
+            createTime: user.createTime.map(Int64.init),
             pwdMode: nil,
             twoFA: nil,
             enableFolderColor: nil,

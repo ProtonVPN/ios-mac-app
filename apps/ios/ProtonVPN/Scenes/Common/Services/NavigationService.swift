@@ -395,10 +395,16 @@ extension NavigationService: SettingsService {
 
     @MainActor
     func makePasswordChangeViewController(mode: PasswordChangeModule.PasswordChangeMode) -> PasswordChangeViewController? {
-        guard let authCredentials = authKeychain.fetch(forContext: .mainApp),
-              let userInfo = propertiesManager.userInfo,
-              let userSettings = propertiesManager.userSettings else {
-            log.error("Credentials, UserInfo or UserSettings not found", category: .app)
+        guard let authCredentials = authKeychain.fetch(forContext: .mainApp) else {
+            log.error("AuthCredentials not found", category: .app)
+            return nil
+        }
+        guard let userInfo = propertiesManager.userInfo else {
+            log.error("UserInfo not found", category: .app)
+            return nil
+        }
+        guard let userSettings = propertiesManager.userSettings else {
+            log.error("UserSettings not found", category: .app)
             return nil
         }
         userInfo.passwordMode = userSettings.password.mode.rawValue
@@ -417,11 +423,12 @@ extension NavigationService: SettingsService {
     private func processPasswordChange(authCredential: AuthCredential, userInfo: UserInfo) {
         do {
             try authKeychain.store(AuthCredentials(.init(authCredential)))
+            self.propertiesManager.userInfo = userInfo
+            self.windowService.popStackToRoot()
         } catch {
-            log.error("Could not update store credentials", category: .app)
+            log.error("Could not update stored credentials", category: .app)
+            appSessionManager.logOut(force: true, reason: "Could not update stored credentials")
         }
-        self.propertiesManager.userInfo = userInfo
-        self.windowService.popStackToRoot()
     }
 }
 
