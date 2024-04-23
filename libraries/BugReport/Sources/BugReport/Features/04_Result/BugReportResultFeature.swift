@@ -21,7 +21,7 @@ import ComposableArchitecture
 import Dependencies
 
 @Reducer
-struct BugReportResultFeature: Reducer {
+struct BugReportResultFeature {
 
     @ObservableState
     struct State: Equatable {
