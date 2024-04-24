@@ -40,9 +40,9 @@ public struct BugReportResultView: View {
 
     @ViewBuilder func makeBody() -> some View {
         if let error = store.error {
-            AnyView(errorBody(error: error))
+            errorBody(error: error)
         } else {
-            AnyView(successBody())
+            successBody()
         }
     }
 
@@ -71,38 +71,36 @@ public struct BugReportResultView: View {
     }
 
     @ViewBuilder func errorBody(error: String) -> some View {
-        AnyView(
-            ZStack {
-                colors.background.ignoresSafeArea()
+        ZStack {
+            colors.background.ignoresSafeArea()
+
+            VStack {
+                VStack(spacing: 8) {
+                    FinalIcon(state: .failure)
+                        .padding(.bottom, 32)
+                    Text(Localizable.brFailureTitle)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                    Text(error)
+                        .font(.body)
+                }
+                .foregroundColor(colors.textPrimary)
+                .frame(maxHeight: .infinity, alignment: .center)
+
+                Spacer()
 
                 VStack {
-                    VStack(spacing: 8) {
-                        FinalIcon(state: .failure)
-                            .padding(.bottom, 32)
-                        Text(Localizable.brFailureTitle)
-                            .font(.title2)
-                            .fontWeight(.bold)
-                        Text(error)
-                            .font(.body)
-                    }
-                    .foregroundColor(colors.textPrimary)
-                    .frame(maxHeight: .infinity, alignment: .center)
+                    Button(action: { store.send(.retry) }, label: { Text(Localizable.brFailureButtonRetry) })
+                        .buttonStyle(PrimaryButtonStyle())
 
-                    Spacer()
-
-                    VStack {
-                        Button(action: { store.send(.retry) }, label: { Text(Localizable.brFailureButtonRetry) })
-                            .buttonStyle(PrimaryButtonStyle())
-
-                        Button(action: { store.send(.troubleshoot) }, label: { Text(Localizable.brFailureButtonTroubleshoot) })
-                            .buttonStyle(SecondaryButtonStyle())
-                    }
-                    .padding(.horizontal)
-                    .padding(.bottom, 32)
-
+                    Button(action: { store.send(.troubleshoot) }, label: { Text(Localizable.brFailureButtonTroubleshoot) })
+                        .buttonStyle(SecondaryButtonStyle())
                 }
+                .padding(.horizontal)
+                .padding(.bottom, 32)
+
             }
-        )
+        }
     }
 
 }
