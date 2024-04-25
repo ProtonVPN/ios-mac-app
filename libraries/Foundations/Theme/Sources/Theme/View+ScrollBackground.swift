@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if canImport(SwiftUI) && !os(tvOS)
 import SwiftUI
 
 extension View {
@@ -29,6 +28,7 @@ extension View {
     /// ```swift
     /// UITableView.appearance().backgroundColor = .clear
     /// ```
+    @available(tvOS, unavailable)
     public var hidingScrollBackground: some View {
         if #available(iOS 16, macOS 13, *) {
             return self.scrollContentBackground(.hidden)
@@ -36,4 +36,3 @@ extension View {
         return self
     }
 }
-#endif

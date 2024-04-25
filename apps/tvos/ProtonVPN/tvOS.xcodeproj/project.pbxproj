@@ -15,16 +15,22 @@
 		4C54B0382BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B0372BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift */; };
 		4C54B04C2BC02AB200315A3B /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C54B04B2BC02AB200315A3B /* NetworkExtension.framework */; };
 		4C54B04F2BC02AB200315A3B /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B04E2BC02AB200315A3B /* PacketTunnelProvider.swift */; };
-		E5280E5C2BD9057600CDDBAF /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5280E522BD9057600CDDBAF /* AboutView.swift */; };
 		E5280E5D2BD9057600CDDBAF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5280E532BD9057600CDDBAF /* SettingsView.swift */; };
 		E5280E5E2BD9057600CDDBAF /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5280E552BD9057600CDDBAF /* WelcomeView.swift */; };
 		E5280E5F2BD9057600CDDBAF /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5280E572BD9057600CDDBAF /* QRCodeView.swift */; };
 		E5280E602BD9057600CDDBAF /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5280E592BD9057600CDDBAF /* RegisterView.swift */; };
 		E5280E612BD9057600CDDBAF /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5280E5B2BD9057600CDDBAF /* SignInView.swift */; };
+		E55A29D92BDA50100006E85D /* SignInFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A29D82BDA50100006E85D /* SignInFeature.swift */; };
+		E55A29DB2BDA50B80006E85D /* WelcomeFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A29DA2BDA50B80006E85D /* WelcomeFeature.swift */; };
+		E55A29DD2BDA50D20006E85D /* SettingsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A29DC2BDA50D20006E85D /* SettingsFeature.swift */; };
+		E55A29E02BDA69F40006E85D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A29DF2BDA69F40006E85D /* MainView.swift */; };
+		E55A29E22BDA6A040006E85D /* MainFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A29E12BDA6A040006E85D /* MainFeature.swift */; };
+		E55A29E42BDA77850006E85D /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A29E32BDA77850006E85D /* AppFeature.swift */; };
+		E55A29E62BDA78460006E85D /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A29E52BDA78460006E85D /* AppView.swift */; };
 		E56C8CC22BCFC2CB0029B6AE /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = E56C8CC12BCFC2CB0029B6AE /* ComposableArchitecture */; };
 		E56C8CC62BCFCEFF0029B6AE /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E56C8CC52BCFCEFF0029B6AE /* Theme */; };
 		E5BC9DE32BD7F7C800CBF85A /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BC9DE22BD7F7C800CBF85A /* NetworkClient.swift */; };
-		E5BC9DE52BD7F7EA00CBF85A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BC9DE42BD7F7EA00CBF85A /* User.swift */; };
+		E5D846BB2BDBB93C006EEEDB /* UIImage+QRCodeGenerating.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D846BA2BDBB93C006EEEDB /* UIImage+QRCodeGenerating.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,14 +66,20 @@
 		4C54B04E2BC02AB200315A3B /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
 		4C54B0502BC02AB200315A3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C54B0512BC02AB200315A3B /* wireguard_tv.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = wireguard_tv.entitlements; sourceTree = "<group>"; };
-		E5280E522BD9057600CDDBAF /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		E5280E532BD9057600CDDBAF /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E5280E552BD9057600CDDBAF /* WelcomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		E5280E572BD9057600CDDBAF /* QRCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
 		E5280E592BD9057600CDDBAF /* RegisterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		E5280E5B2BD9057600CDDBAF /* SignInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		E55A29D82BDA50100006E85D /* SignInFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInFeature.swift; sourceTree = "<group>"; };
+		E55A29DA2BDA50B80006E85D /* WelcomeFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeFeature.swift; sourceTree = "<group>"; };
+		E55A29DC2BDA50D20006E85D /* SettingsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFeature.swift; sourceTree = "<group>"; };
+		E55A29DF2BDA69F40006E85D /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		E55A29E12BDA6A040006E85D /* MainFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeature.swift; sourceTree = "<group>"; };
+		E55A29E32BDA77850006E85D /* AppFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
+		E55A29E52BDA78460006E85D /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		E5BC9DE22BD7F7C800CBF85A /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
-		E5BC9DE42BD7F7EA00CBF85A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		E5D846BA2BDBB93C006EEEDB /* UIImage+QRCodeGenerating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+QRCodeGenerating.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,10 +144,9 @@
 		4C54B0192BC027FD00315A3B /* ProtonVPN */ = {
 			isa = PBXGroup;
 			children = (
-				E5280E502BD9057600CDDBAF /* Views */,
 				4C54B01A2BC027FD00315A3B /* ProtonVPNApp.swift */,
-				E5BC9DE22BD7F7C800CBF85A /* NetworkClient.swift */,
-				E5BC9DE42BD7F7EA00CBF85A /* User.swift */,
+				E55A29E82BDA78B10006E85D /* Services */,
+				E5280E502BD9057600CDDBAF /* Views */,
 				4C54B01E2BC027FE00315A3B /* Assets.xcassets */,
 				4C54B0202BC027FE00315A3B /* PreviewContent */,
 			);
@@ -188,6 +199,8 @@
 		E5280E502BD9057600CDDBAF /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E55A29E72BDA78800006E85D /* App */,
+				E55A29DE2BDA69E30006E85D /* Main */,
 				E5280E512BD9057600CDDBAF /* Settings */,
 				E5280E542BD9057600CDDBAF /* Welcome */,
 				E5280E562BD9057600CDDBAF /* Common */,
@@ -200,8 +213,8 @@
 		E5280E512BD9057600CDDBAF /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				E5280E522BD9057600CDDBAF /* AboutView.swift */,
 				E5280E532BD9057600CDDBAF /* SettingsView.swift */,
+				E55A29DC2BDA50D20006E85D /* SettingsFeature.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -210,6 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				E5280E552BD9057600CDDBAF /* WelcomeView.swift */,
+				E55A29DA2BDA50B80006E85D /* WelcomeFeature.swift */,
 			);
 			path = Welcome;
 			sourceTree = "<group>";
@@ -234,8 +248,36 @@
 			isa = PBXGroup;
 			children = (
 				E5280E5B2BD9057600CDDBAF /* SignInView.swift */,
+				E55A29D82BDA50100006E85D /* SignInFeature.swift */,
 			);
 			path = "Sign In";
+			sourceTree = "<group>";
+		};
+		E55A29DE2BDA69E30006E85D /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				E55A29DF2BDA69F40006E85D /* MainView.swift */,
+				E55A29E12BDA6A040006E85D /* MainFeature.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		E55A29E72BDA78800006E85D /* App */ = {
+			isa = PBXGroup;
+			children = (
+				E55A29E32BDA77850006E85D /* AppFeature.swift */,
+				E55A29E52BDA78460006E85D /* AppView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		E55A29E82BDA78B10006E85D /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E5BC9DE22BD7F7C800CBF85A /* NetworkClient.swift */,
+				E5D846BA2BDBB93C006EEEDB /* UIImage+QRCodeGenerating.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -403,12 +445,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E55A29E02BDA69F40006E85D /* MainView.swift in Sources */,
 				E5280E612BD9057600CDDBAF /* SignInView.swift in Sources */,
 				E5280E5D2BD9057600CDDBAF /* SettingsView.swift in Sources */,
+				E55A29DB2BDA50B80006E85D /* WelcomeFeature.swift in Sources */,
 				E5280E5E2BD9057600CDDBAF /* WelcomeView.swift in Sources */,
-				E5280E5C2BD9057600CDDBAF /* AboutView.swift in Sources */,
+				E55A29DD2BDA50D20006E85D /* SettingsFeature.swift in Sources */,
+				E55A29E42BDA77850006E85D /* AppFeature.swift in Sources */,
+				E55A29E22BDA6A040006E85D /* MainFeature.swift in Sources */,
 				E5280E5F2BD9057600CDDBAF /* QRCodeView.swift in Sources */,
-				E5BC9DE52BD7F7EA00CBF85A /* User.swift in Sources */,
+				E5D846BB2BDBB93C006EEEDB /* UIImage+QRCodeGenerating.swift in Sources */,
+				E55A29D92BDA50100006E85D /* SignInFeature.swift in Sources */,
+				E55A29E62BDA78460006E85D /* AppView.swift in Sources */,
 				E5280E602BD9057600CDDBAF /* RegisterView.swift in Sources */,
 				4C54B01B2BC027FD00315A3B /* ProtonVPNApp.swift in Sources */,
 				E5BC9DE32BD7F7C800CBF85A /* NetworkClient.swift in Sources */,

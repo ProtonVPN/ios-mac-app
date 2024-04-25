@@ -1,5 +1,5 @@
 //
-//  Created on 23/04/2024.
+//  Created on 26/04/2024.
 //
 //  Copyright (c) 2024 Proton AG
 //
@@ -16,9 +16,19 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
+import UIKit
+import CoreImage.CIFilterBuiltins
 
-@Observable
-class User {
-    var username: String?
+extension UIImage {
+    static func generateQRCode(from string: String) -> UIImage {
+        let context = CIContext()
+        let filter = CIFilter.qrCodeGenerator()
+        filter.message = Data(string.utf8)
+
+        guard let outputImage = filter.outputImage,
+              let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+            return UIImage(systemName: "xmark.circle") ?? UIImage()
+        }
+        return UIImage(cgImage: cgImage)
+    }
 }

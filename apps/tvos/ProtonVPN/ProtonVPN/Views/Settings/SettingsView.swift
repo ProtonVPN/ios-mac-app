@@ -17,51 +17,22 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+import ComposableArchitecture
 
 struct SettingsView: View {
-
-    @Binding var path: NavigationPath
-    @Environment(User.self) private var user: User
-
-    enum Destination: String {
-        case about
-        case supportCenter
-        case reportAnIssue
-    }
+    var store: StoreOf<SettingsFeature>
 
     var body: some View {
         VStack(spacing: .themeSpacing24) {
-            if let username = user.username {
-                Text("Welcome \(username)")
-                    .font(.title)
-            }
+            Text("Welcome \(store.userName)")
+                .font(.title)
             Text("Settings")
                 .font(.title)
 
-            NavigationLink(value: Destination.about) {
-                SettingsCellView(title: "About")
-            }
-            NavigationLink(value: Destination.supportCenter) {
-                SettingsCellView(title: "Support center")
-            }
-            NavigationLink(value: Destination.reportAnIssue) {
-                SettingsCellView(title: "Report an issue")
-            }
             Button {
-                user.username = nil
-                path = .init()
+                store.send(.signOut)
             } label: {
                 SettingsCellView(title: "Log out")
-            }
-            .navigationDestination(for: Destination.self) { destination in
-                switch destination {
-                case .about:
-                    AboutView()
-                case .supportCenter:
-                    AboutView()
-                case .reportAnIssue:
-                    AboutView()
-                }
             }
         }
         .frame(maxWidth: 800)

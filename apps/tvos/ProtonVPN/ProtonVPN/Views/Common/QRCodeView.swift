@@ -18,29 +18,15 @@
 
 import SwiftUI
 
-import CoreImage.CIFilterBuiltins
-
 struct QRCodeView: View {
     let string: String
     var body: some View {
-        Image(uiImage: generateQRCode(from: string))
+        Image(uiImage: .generateQRCode(from: string))
             .interpolation(.none)
             .resizable()
             .scaledToFit()
             .frame(.square(466))
             .clipRectangle(cornerRadius: .radius24)
-    }
-
-    private func generateQRCode(from string: String) -> UIImage {
-        let context = CIContext()
-        let filter = CIFilter.qrCodeGenerator()
-        filter.message = Data(string.utf8)
-
-        guard let outputImage = filter.outputImage,
-              let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
-            return UIImage(systemName: "xmark.circle") ?? UIImage()
-        }
-        return UIImage(cgImage: cgImage)
     }
 }
 

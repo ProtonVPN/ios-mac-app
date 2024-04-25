@@ -18,16 +18,10 @@
 
 import SwiftUI
 
+import ComposableArchitecture
+
 struct SignInView: View {
-    @Binding var path: NavigationPath
-    @Environment(User.self) private var user: User
-
-    enum Destination: String {
-        case settings
-    }
-
-    @State var code: String?
-    let networkClient = NetworkClient()
+    @Bindable var store: StoreOf<SignInFeature>
 
     var body: some View {
         VStack {
@@ -48,7 +42,7 @@ struct SignInView: View {
                 VStack(spacing: .themeSpacing32) {
                     StepView(title: "Go to protonvpn.com/tv", stepNumber: 1)
                     StepView(title: "Sign in to your Proton Account", stepNumber: 2)
-                    if let code {
+                    if let code = store.signInCode {
                         StepView(title: "Enter the code \(code)", stepNumber: 3)
                     } else {
                         StepView(title: "Enter the code (retrieving...)", stepNumber: 3)
@@ -59,20 +53,8 @@ struct SignInView: View {
             .font(.title2)
             .foregroundStyle(Color(.text, .weak))
         }
-        .navigationDestination(for: Destination.self) { destination in
-            switch destination {
-            case .settings:
-                SettingsView(path: $path)
-            }
-        }
         .task {
-            do {
-                code = try await networkClient.fetchSignInCode()
-                user.username = try await networkClient.forkSession()
-                path.append(Destination.settings)
-            } catch {
-                print("login failed")
-            }
+            store.send(.fetchSignInCode)
         }
     }
 }

@@ -18,9 +18,7 @@
 
 import SwiftUI
 
-struct RegisterView: View {
-    @Binding var path: NavigationPath
-
+struct CreateAccountView: View {
     var body: some View {
         VStack(spacing: 169) {
             Image(.vpnWordmarkNoBg)
@@ -45,8 +43,4 @@ struct RegisterView: View {
             }
         }
     }
-}
-
-#Preview {
-    RegisterView(path: .constant(.init()))
 }

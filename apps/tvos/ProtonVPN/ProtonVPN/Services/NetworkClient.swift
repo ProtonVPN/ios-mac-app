@@ -17,21 +17,31 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 
-struct NetworkClient {
-    func fetchSignInCode() async throws -> String {
-        try await Task.sleep(for: .seconds(1))
-        return "123 456"
-    }
-
+struct NetworkClient: Sendable {
+    var fetchSignInCode: @Sendable () async throws -> String
+    var forkSession: @Sendable () async throws -> String
     static var count: Int = 0
-    
-    func forkSession() async throws -> String {
-        for attempt in 1...5 {
-            print("poll API... \(attempt)")
+}
+
+extension NetworkClient: DependencyKey {
+
+    static let liveValue = NetworkClient(
+        fetchSignInCode: {
             try await Task.sleep(for: .seconds(1))
+            return "123 456"
+        }, forkSession: {
+            print("poll API... \(Self.count)")
+            try await Task.sleep(for: .seconds(0.1))
+            Self.count += 1
+            if Self.count > 5 {
+                Self.count = 0
+                return "tv user\(Self.count)"
+            } else {
+                throw "Failed to fork session"
+            }
         }
-        Self.count += 1
-        return "tv user\(Self.count)"
-    }
+    )
+
 }

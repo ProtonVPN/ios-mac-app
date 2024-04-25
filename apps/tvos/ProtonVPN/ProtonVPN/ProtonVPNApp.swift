@@ -21,13 +21,14 @@ import SwiftUI
 
 @main
 struct ProtonVPNApp: App {
-    
-    @State var user: User = .init()
+    @Bindable var store: StoreOf<AppFeature> = .init(initialState: AppFeature.State()) {
+        AppFeature()
+    }
 
     var body: some Scene {
         WindowGroup {
-            WelcomeView()
-                .environment(user)
+            AppView(store: store)
         }
     }
 }
+

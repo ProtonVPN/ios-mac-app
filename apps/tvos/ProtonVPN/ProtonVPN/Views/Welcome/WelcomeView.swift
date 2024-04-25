@@ -19,16 +19,13 @@
 import SwiftUI
 import Theme
 
-struct WelcomeView: View {
-    @State private var path: NavigationPath = .init()
+import ComposableArchitecture
 
-    enum Destination: String {
-        case signIn
-        case createAccount
-    }
+struct WelcomeView: View {
+    @Bindable var store: StoreOf<WelcomeFeature>
 
     var body: some View {
-        NavigationStack(path: $path) {
+        NavigationStack {
             VStack(spacing: .themeSpacing64) {
                 Image(.vpnWordmarkNoBg)
                 VStack(spacing: 24) {
@@ -43,13 +40,17 @@ struct WelcomeView: View {
                 }
                 .frame(maxWidth: 880)
                 HStack(spacing: .themeSpacing32) {
-                    NavigationLink(value: Destination.signIn) {
+                    Button {
+                        store.send(.showSignIn)
+                    } label: {
                         Text("Sign In")
                             .font(.callout)
                             .padding(.horizontal, .themeSpacing16)
                             .padding(.vertical, .themeSpacing12)
                     }
-                    NavigationLink(value: Destination.createAccount) {
+                    Button {
+                        store.send(.showCreateAccount)
+                    } label: {
                         Text("Create account")
                             .font(.callout)
                             .padding(.horizontal, .themeSpacing16)
@@ -57,19 +58,19 @@ struct WelcomeView: View {
                     }
                 }
             }
-            .navigationDestination(for: Destination.self) { destination in
-                switch destination {
-                case .signIn:
-                    SignInView(path: $path)
-                case .createAccount:
-                    RegisterView(path: $path)
-                }
-            }
             .background(Image(.logo))
+            .navigationDestination(
+                item: $store.scope(state: \.destination?.signIn,
+                                   action: \.destination.signIn)
+            ) { store in
+                SignInView(store: store)
+            }
+            .navigationDestination(
+                item: $store.scope(state: \.destination?.createAccount,
+                                   action: \.destination.createAccount)
+            ) { _ in
+                CreateAccountView()
+            }
         }
     }
-}
-
-#Preview {
-    WelcomeView()
 }
