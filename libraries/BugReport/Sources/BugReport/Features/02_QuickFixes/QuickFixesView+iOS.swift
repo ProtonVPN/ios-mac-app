@@ -24,7 +24,7 @@ import Strings
 
 public struct QuickFixesView: View {
 
-    let store: StoreOf<QuickFixesFeature>
+    @Perception.Bindable var store: StoreOf<QuickFixesFeature>
 
     @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
 
@@ -33,7 +33,7 @@ public struct QuickFixesView: View {
     @Environment(\.dismiss) private var dismiss
 
     public var body: some View {
-        WithViewStore(self.store, observe: { $0 }, content: { viewStore in
+        WithPerceptionTracking {
             ZStack {
                 colors.background.ignoresSafeArea()
 
@@ -55,7 +55,7 @@ public struct QuickFixesView: View {
 
                     VStack {
 
-                        if let suggestions = viewStore.category.suggestions {
+                        if let suggestions = store.category.suggestions {
                             ForEach(suggestions) { suggestion in
                                 VStack(alignment: .leading) {
                                     if let link = suggestion.link, let url = URL(string: link) {
@@ -101,27 +101,30 @@ public struct QuickFixesView: View {
                     Spacer()
 
                     VStack {
-
-                        NavigationLink(unwrapping: viewStore.binding(get: \.contactFormState,
-                                                                     send: QuickFixesFeature.Action.contactFormDeselected),
-                                       onNavigate: { active in
-                                                        if active {
-                                                            viewStore.send(.next)
-                                                        }
-                                                    },
-                                       destination: { _ in
-                            IfLetStore(self.store.scope(state: \.contactFormState,
-                                                        action: { .contactFormAction($0) }),
-                                       then: { store in ContactFormView(store: store) })
+                        NavigationLink(
+                            unwrapping: $store.contactFormState,
+                            onNavigate: { active in
+                                if active {
+                                    store.send(.next)
+                                }
                             },
-                                       label: {
+                            destination: { _ in
+                                if let childStore = store.scope(
+                                    state: \.contactFormState,
+                                    action: \.contactFormAction
+                                ) {
+                                    ContactFormView(store: childStore)
+                                }
+                            },
+                            label: {
                                 Text(Localizable.br2ButtonNext)
                                     .frame(maxWidth: .infinity, minHeight: 48, alignment: .center)
                                     .padding(.horizontal, 16)
                                     .background(colors.interactive)
                                     .foregroundColor(.white)
                                     .cornerRadius(8)
-                        })
+                            }
+                        )
 
                         Button(action: { self.dismiss() },
                                label: { Text(Localizable.br2ButtonCancel) })
@@ -140,7 +143,7 @@ public struct QuickFixesView: View {
                 }))
 
             }
-        })
+        }
     }
 
 }

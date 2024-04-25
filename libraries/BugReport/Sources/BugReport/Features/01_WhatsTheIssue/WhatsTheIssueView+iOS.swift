@@ -24,7 +24,7 @@ import Strings
 
 public struct WhatsTheIssueView: View {
 
-    let store: StoreOf<WhatsTheIssueFeature>
+    @Perception.Bindable var store: StoreOf<WhatsTheIssueFeature>
     @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
     @Environment(\.colors) var colors: Colors
 
@@ -47,10 +47,10 @@ public struct WhatsTheIssueView: View {
                         .padding(.horizontal)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 24, trailing: 0))
 
-                    WithViewStore(self.store, observe: { $0 }, content: { viewStore in
-                        List(viewStore.state.categories) { category in
+                    WithPerceptionTracking {
+                        List(store.state.categories) { category in
                             Button(action: {
-                                viewStore.send(.categorySelected(category))
+                                store.send(.categorySelected(category))
                             }, label: {
                                 Text(category.label)
                             })
@@ -59,46 +59,36 @@ public struct WhatsTheIssueView: View {
                         .listStyle(.plain)
                         .foregroundColor(colors.textPrimary)
                         // NavigationLink inside the list
-                        .background(nextView(viewStore))
-                    })
+                        .background(nextView())
+                    }
                 }
                 .navigationTitle(Text(Localizable.brWindowTitle))
                 .navigationBarTitleDisplayMode(.inline)
             }
     }
 
-    private func nextView(_ viewStore: ViewStore<WhatsTheIssueFeature.State, WhatsTheIssueFeature.Action>) -> some View {
-        IfLetStore(store.scope(state: \.route,
-                               action: WhatsTheIssueFeature.Action.route)) { routeStore in // route? -> route
+    private func nextView() -> some View {
+        NavigationLink(
+            unwrapping: $store.route,
+            onNavigate: { _ in
+                print("navigate")
+            },
+            destination: { childStore in
 
-            SwitchStore(routeStore) { state in
-                switch state {
+                let childStore = store.route
+                switch childStore {
                 case .quickFixes:
-                    CaseLet(/WhatsTheIssueFeature.Route.State.quickFixes,
-                            action: WhatsTheIssueFeature.Route.Action.quickFixes,
-                            then: { store in
+                    QuickFixesView(store: store.scope(state: \.route?.quickFixes, action: \.route.quickFixes)!)
 
-                        NavigationLink(unwrapping: viewStore.binding(get: { _ in store.scope(state: { $0 }, action: { $0 }) },
-                                                                     send: WhatsTheIssueFeature.Action.quickFixesDeselected),
-                                       onNavigate: { _ in },
-                                       destination: { _ in QuickFixesView(store: store) },
-                                       label: { EmptyView() })
-                    })
-
-                case .contactForm:
-                    CaseLet(/WhatsTheIssueFeature.Route.State.contactForm,
-                            action: WhatsTheIssueFeature.Route.Action.contactForm,
-                            then: { store in
-
-                        NavigationLink(unwrapping: viewStore.binding(get: { _ in store.scope(state: { $0 }, action: { $0 }) },
-                                                                     send: WhatsTheIssueFeature.Action.contactFormDeselected),
-                                       onNavigate: { _ in },
-                                       destination: { _ in ContactFormView(store: store) },
-                                       label: { EmptyView() })
-                    })
+                case .contactForm(_):
+                    ContactFormView(store: store.scope(state: \.route?.contactForm, action: \.route.contactForm)!)
+                    
+                case .none:
+                    EmptyView()
                 }
-            }
-        }
+            },
+            label: { EmptyView() }
+        )
     }
 
 }

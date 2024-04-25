@@ -20,22 +20,29 @@ import Foundation
 import ComposableArchitecture
 import SwiftUI
 
+@Reducer
 struct QuickFixesFeature: Reducer {
 
+    @ObservableState
     struct State: Equatable {
         var category: Category
-
         var contactFormState: ContactFormFeature.State?
+
+        init(category: Category, contactFormState: ContactFormFeature.State? = nil) {
+            self.category = category
+            self.contactFormState = contactFormState
+        }
     }
 
-    enum Action: Equatable {
+    enum Action: BindableAction, Equatable {
+        case binding(BindingAction<State>)
         case next
-
         case contactFormAction(ContactFormFeature.Action)
-        case contactFormDeselected
+        case contactFormDeselected // Used only on mac
     }
 
-    var body: some ReducerOf<Self> {
+    var body: some Reducer<State, Action> {
+        BindingReducer()
         Reduce { state, action in
             switch action {
             case .next:
@@ -49,6 +56,10 @@ struct QuickFixesFeature: Reducer {
                 return .none
 
             case .contactFormAction:
+                return .none
+
+            case .binding(_):
+                // Everything's done in BindingReducer()
                 return .none
             }
         }

@@ -30,22 +30,23 @@ public struct BugReportResultView: View {
     @Environment(\.colors) var colors: Colors
 
     public var body: some View {
-        WithViewStore(self.store, observe: { $0 }, content: { viewStore in
-
-            // Any action in `send` will do, as we are not going to write back to error state
-            IfLet(viewStore.binding(get: \.error, send: .finish), then: { error in
-                AnyView(errorBody(error: error.wrappedValue, viewStore))
-            }, else: {
-                AnyView(successBody(viewStore))
-            })
+        WithPerceptionTracking {
+            makeBody()
             #if os(iOS)
             .navigationBarBackButtonHidden(true)
             #endif
-
-        })
+        }
     }
 
-    @ViewBuilder func successBody(_ viewStore: ViewStoreOf<BugReportResultFeature>) -> some View {
+    @ViewBuilder func makeBody() -> some View {
+        if let error = store.error {
+            errorBody(error: error)
+        } else {
+            successBody()
+        }
+    }
+
+    @ViewBuilder func successBody() -> some View {
         ZStack {
             colors.background.ignoresSafeArea()
             VStack {
@@ -61,7 +62,7 @@ public struct BugReportResultView: View {
                 .foregroundColor(colors.textPrimary)
                 .frame(maxHeight: .infinity, alignment: .center)
 
-                Button(action: { viewStore.send(.finish) }, label: { Text(Localizable.brSuccessButton) })
+                Button(action: { store.send(.finish) }, label: { Text(Localizable.brSuccessButton) })
                     .buttonStyle(PrimaryButtonStyle())
                     .padding(.horizontal)
                     .padding(.bottom, 32)
@@ -69,39 +70,37 @@ public struct BugReportResultView: View {
         }
     }
 
-    @ViewBuilder func errorBody(error: String, _ viewStore: ViewStoreOf<BugReportResultFeature>) -> some View {
-        AnyView(
-            ZStack {
-                colors.background.ignoresSafeArea()
+    @ViewBuilder func errorBody(error: String) -> some View {
+        ZStack {
+            colors.background.ignoresSafeArea()
+
+            VStack {
+                VStack(spacing: 8) {
+                    FinalIcon(state: .failure)
+                        .padding(.bottom, 32)
+                    Text(Localizable.brFailureTitle)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                    Text(error)
+                        .font(.body)
+                }
+                .foregroundColor(colors.textPrimary)
+                .frame(maxHeight: .infinity, alignment: .center)
+
+                Spacer()
 
                 VStack {
-                    VStack(spacing: 8) {
-                        FinalIcon(state: .failure)
-                            .padding(.bottom, 32)
-                        Text(Localizable.brFailureTitle)
-                            .font(.title2)
-                            .fontWeight(.bold)
-                        Text(error)
-                            .font(.body)
-                    }
-                    .foregroundColor(colors.textPrimary)
-                    .frame(maxHeight: .infinity, alignment: .center)
+                    Button(action: { store.send(.retry) }, label: { Text(Localizable.brFailureButtonRetry) })
+                        .buttonStyle(PrimaryButtonStyle())
 
-                    Spacer()
-
-                    VStack {
-                        Button(action: { viewStore.send(.retry) }, label: { Text(Localizable.brFailureButtonRetry) })
-                            .buttonStyle(PrimaryButtonStyle())
-
-                        Button(action: { viewStore.send(.troubleshoot) }, label: { Text(Localizable.brFailureButtonTroubleshoot) })
-                            .buttonStyle(SecondaryButtonStyle())
-                    }
-                    .padding(.horizontal)
-                    .padding(.bottom, 32)
-
+                    Button(action: { store.send(.troubleshoot) }, label: { Text(Localizable.brFailureButtonTroubleshoot) })
+                        .buttonStyle(SecondaryButtonStyle())
                 }
+                .padding(.horizontal)
+                .padding(.bottom, 32)
+
             }
-        )
+        }
     }
 
 }

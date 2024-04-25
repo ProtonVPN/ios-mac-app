@@ -41,9 +41,9 @@ public struct WhatsTheIssueView: View {
                 .padding(.horizontal)
 
             VStack(alignment: .leading, spacing: 8) {
-                WithViewStore(self.store, observe: { $0 }, content: { viewStore in
-                    ForEach(viewStore.categories) { category in
-                        Button(category.label, action: { viewStore.send(.categorySelected(category), animation: .default) })
+                WithPerceptionTracking {
+                    ForEach(store.categories) { category in
+                        Button(category.label, action: { store.send(.categorySelected(category), animation: .default) })
                             .onHover { inside in
                                 if inside {
                                     NSCursor.pointingHand.push()
@@ -52,7 +52,7 @@ public struct WhatsTheIssueView: View {
                                 }
                             }
                     }
-                })
+                }
             }
             .buttonStyle(CategoryButtonStyle())
             .listStyle(.plain)

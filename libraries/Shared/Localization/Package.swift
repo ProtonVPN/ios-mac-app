@@ -15,7 +15,7 @@ let package = Package(
     dependencies: [
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Strings"),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.0.0"))
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", exact: "1.2.2")
     ],
     targets: [
         .target(

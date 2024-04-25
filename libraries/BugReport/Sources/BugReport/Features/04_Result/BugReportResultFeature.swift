@@ -20,8 +20,10 @@ import Foundation
 import ComposableArchitecture
 import Dependencies
 
-struct BugReportResultFeature: Reducer {
+@Reducer
+struct BugReportResultFeature {
 
+    @ObservableState
     struct State: Equatable {
         var error: String?
     }

@@ -213,8 +213,8 @@
         "repositoryURL": "https://github.com/pointfreeco/swift-case-paths",
         "state": {
           "branch": null,
-          "revision": "5da6989aae464f324eef5c5b52bdb7974725ab81",
-          "version": "1.0.0"
+          "revision": "e593aba2c6222daad7c4f2732a431eed2c09bb07",
+          "version": "1.3.0"
         }
       },
       {
@@ -240,8 +240,8 @@
         "repositoryURL": "https://github.com/pointfreeco/swift-composable-architecture",
         "state": {
           "branch": null,
-          "revision": "f62ba37cc0c51acb89f6dd1f552f6a1f9c58027c",
-          "version": "1.1.0"
+          "revision": "115fe5af41d333b6156d4924d7c7058bc77fd580",
+          "version": "1.9.2"
         }
       },
       {
@@ -249,8 +249,8 @@
         "repositoryURL": "https://github.com/pointfreeco/swift-concurrency-extras",
         "state": {
           "branch": null,
-          "revision": "ea631ce892687f5432a833312292b80db238186a",
-          "version": "1.0.0"
+          "revision": "bb5059bde9022d69ac516803f4f227d8ac967f71",
+          "version": "1.1.0"
         }
       },
       {
@@ -267,8 +267,8 @@
         "repositoryURL": "https://github.com/pointfreeco/swift-dependencies.git",
         "state": {
           "branch": null,
-          "revision": "09e49dd46932adfe80ce672b4b3772d79ee6c21a",
-          "version": "1.2.1"
+          "revision": "d3a5af3038a09add4d7682f66555d6212058a3c0",
+          "version": "1.2.2"
         }
       },
       {
@@ -296,6 +296,15 @@
           "branch": null,
           "revision": "7977acd7597f413717058acc1e080731249a1d7e",
           "version": "0.5.0"
+        }
+      },
+      {
+        "package": "swift-perception",
+        "repositoryURL": "https://github.com/pointfreeco/swift-perception",
+        "state": {
+          "branch": null,
+          "revision": "520c458a832d1287e6b698c5f657ae848fd696ff",
+          "version": "1.1.4"
         }
       },
       {
@@ -339,8 +348,8 @@
         "repositoryURL": "https://github.com/pointfreeco/swiftui-navigation",
         "state": {
           "branch": null,
-          "revision": "f5bcdac5b6bb3f826916b14705f37a3937c2fd34",
-          "version": "1.0.0"
+          "revision": "a3aa5d46e8bf174d773d23b030f1c103999398ac",
+          "version": "1.1.0"
         }
       },
       {
@@ -375,8 +384,8 @@
         "repositoryURL": "https://github.com/pointfreeco/xctest-dynamic-overlay",
         "state": {
           "branch": null,
-          "revision": "302891700c7fa3b92ebde9fe7b42933f8349f3c7",
-          "version": "1.0.0"
+          "revision": "b58e6627149808b40634c4552fcf2f44d0b3ca87",
+          "version": "1.1.0"
         }
       }
     ]

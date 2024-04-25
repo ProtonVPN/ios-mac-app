@@ -29,7 +29,7 @@ struct QuickFixesView: View {
     @Environment(\.colors) var colors: Colors
 
     var body: some View {
-        WithViewStore(self.store, observe: { $0 }, content: { viewStore in
+        WithPerceptionTracking {
         VStack(alignment: .center) {
 
             VStack(alignment: .center, spacing: 8) {
@@ -42,7 +42,7 @@ struct QuickFixesView: View {
             .padding(.horizontal)
 
             VStack {
-                    if let suggestions = viewStore.category.suggestions {
+                    if let suggestions = store.category.suggestions {
                         ForEach(suggestions) { suggestion in
                             VStack(alignment: .leading) {
                                 if let link = suggestion.link, let url = URL(string: link) {
@@ -99,7 +99,7 @@ struct QuickFixesView: View {
                 .padding(.bottom, 32)
 
             Button(action: {
-                viewStore.send(.next, animation: .default)
+                store.send(.next, animation: .default)
             }, label: {
                 Text(Localizable.br2ButtonNext)
             })
@@ -108,7 +108,7 @@ struct QuickFixesView: View {
         }
         .foregroundColor(colors.textPrimary)
         .background(colors.background)
-        })
+        }
     }
 }
 
