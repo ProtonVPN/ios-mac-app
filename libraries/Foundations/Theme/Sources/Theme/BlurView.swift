@@ -40,7 +40,9 @@ private struct BlurView: View {
 private struct MaterialsSetView: View {
     var body: some View {
         HStack {
+            #if !os(tvOS)
             MaterialView(title: "bar", material: .bar)
+            #endif
             MaterialView(title: "ultra\nThin", material: .ultraThinMaterial)
             MaterialView(title: "thin", material: .translucentLight)
             MaterialView(title: "regular", material: .regularMaterial)

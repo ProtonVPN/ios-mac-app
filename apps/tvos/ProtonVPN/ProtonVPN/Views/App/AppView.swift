@@ -1,5 +1,5 @@
 //
-//  Created on 05.04.24.
+//  Created on 25/04/2024.
 //
 //  Copyright (c) 2024 Proton AG
 //
@@ -16,20 +16,19 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
 import SwiftUI
 
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
+struct AppView: View {
+    @Bindable var store: StoreOf<AppFeature>
 
-#Preview {
-    ContentView()
+    var body: some View {
+        if let store = store.scope(state: \.main,
+                                   action: \.main) {
+            MainView(store: store)
+        } else {
+            WelcomeView(store: store.scope(state: \.welcome,
+                                           action: \.welcome))
+        }
+    }
 }

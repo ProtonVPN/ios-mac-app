@@ -18,7 +18,7 @@
 
 import Foundation
 import SwiftUI
-import ProtonCoreUIFoundations
+import var ProtonCoreUIFoundations.ColorProvider
 
 #if canImport(Cocoa)
 import Cocoa

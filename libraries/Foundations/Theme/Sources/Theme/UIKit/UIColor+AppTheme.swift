@@ -18,7 +18,7 @@
 
 import Foundation
 import SwiftUI
-import ProtonCoreUIFoundations
+import var ProtonCoreUIFoundations.ColorProvider
 import PMLogger
 #if canImport(UIKit)
 import UIKit
