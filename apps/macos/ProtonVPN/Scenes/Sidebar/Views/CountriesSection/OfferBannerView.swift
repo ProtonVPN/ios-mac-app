@@ -81,7 +81,7 @@ final class OfferBannerView: NSView {
 
     func updateTimeRemaining() {
         guard let viewModel else { return }
-        label.isHidden = !viewModel.showCountDown
+        label.isHidden = !viewModel.showCountdown
         guard let text = viewModel.timeLeftString() else {
             timer?.invalidate()
             viewModel.dismiss()
