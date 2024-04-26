@@ -30,7 +30,7 @@ import Ergonomics
 
 class OfferBannerViewCell: UITableViewCell {
 
-    @IBOutlet weak var roundedBackgroundView: UIView!
+    @IBOutlet weak var roundedBackgroundView: RoundedBackgroundView!
     @IBOutlet weak var offerImageView: UIImageView!
     @IBOutlet weak var timeRemainingLabel: UILabel!
     @IBOutlet weak var dismissButton: UIButton! {
@@ -59,9 +59,6 @@ class OfferBannerViewCell: UITableViewCell {
         timeRemainingLabel.textColor = .color(.text, .weak)
         timeRemainingLabel.font = .systemFont(ofSize: 13)
 
-        roundedBackgroundView.backgroundColor = .color(.background, .weak)
-        roundedBackgroundView.layer.cornerRadius = .themeRadius12
-
         selectionStyle = .none
     }
 
@@ -84,7 +81,7 @@ class OfferBannerViewCell: UITableViewCell {
 
     func updateTimeRemaining() {
         guard let viewModel else { return }
-        timeRemainingLabel.isHidden = !viewModel.showCountDown
+        timeRemainingLabel.isHidden = !viewModel.showCountdown
         guard let text = viewModel.timeLeftString() else {
             timer?.invalidate()
             viewModel.dismiss()
@@ -92,15 +89,24 @@ class OfferBannerViewCell: UITableViewCell {
         }
         timeRemainingLabel.text = text
     }
+}
+
+class RoundedBackgroundView: UIView {
+
+    let colors = [Theme.Asset.offerBannerGradientLeft.color,
+                  Theme.Asset.offerBannerGradientRight.color]
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        backgroundColor = .color(.background, .weak)
+        layer.cornerRadius = .themeRadius12
+    }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-
-        let colors = [Theme.Asset.offerBannerGradientLeft.color,
-                      Theme.Asset.offerBannerGradientRight.color]
-        roundedBackgroundView.layer.gradientBorder(colors: colors,
-                                                   startPoint: .CoordinateSpace.left,
-                                                   endPoint: .CoordinateSpace.right,
-                                                   andRoundCornersWithRadius: .themeRadius12)
+        layer.gradientBorder(colors: colors,
+                             startPoint: .CoordinateSpace.left,
+                             endPoint: .CoordinateSpace.right,
+                             andRoundCornersWithRadius: .themeRadius12)
     }
 }

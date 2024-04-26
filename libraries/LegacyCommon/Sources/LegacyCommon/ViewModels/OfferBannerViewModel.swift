@@ -31,19 +31,19 @@ public struct OfferBannerViewModel {
 
     public var imageURL: URL
     public var endTime: Date
-    public var showCountDown: Bool
+    public var showCountdown: Bool
     public var action: @MainActor () -> Void
     public var dismiss: () -> Void
 
     public init(imageURL: URL,
                 endTime: Date,
-                showCountDown: Bool,
+                showCountdown: Bool,
                 buttonURL: URL,
                 offerReference: String?,
                 dismiss: @escaping () -> Void) {
         self.imageURL = imageURL
         self.endTime = endTime
-        self.showCountDown = showCountDown
+        self.showCountdown = showCountdown
         self.dismiss = dismiss
         self.action = {
             SafariService.openLink(url: buttonURL)

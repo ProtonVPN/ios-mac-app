@@ -63,7 +63,7 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
         }
         return OfferBannerViewModel(imageURL: imageURL,
                                     endTime: offerBanner.endTime,
-                                    showCountDown: offerBanner.offer?.panel?.showCountDown ?? false,
+                                    showCountdown: offerBanner.offer?.panel?.showCountdown ?? false,
                                     buttonURL: buttonURL,
                                     offerReference: offerBanner.reference,
                                     dismiss: { dismiss(offerBanner) })

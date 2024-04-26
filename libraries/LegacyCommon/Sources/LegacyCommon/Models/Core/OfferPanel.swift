@@ -29,7 +29,7 @@ public struct OfferPanel: Codable {
     public let features: [OfferFeature]?
     public let featuresFooter: String?
     public let pageFooter: String?
-    public let showCountDown: Bool?
+    public let showCountdown: Bool?
 
     internal init(fullScreenImage: FullScreenImage? = nil,
                   button: OfferButton,
@@ -41,7 +41,7 @@ public struct OfferPanel: Codable {
                   features: [OfferFeature]? = nil,
                   featuresFooter: String? = nil,
                   pageFooter: String? = nil,
-                  showCountDown: Bool? = nil) {
+                  showCountdown: Bool? = nil) {
         self.fullScreenImage = fullScreenImage
         self.button = button
         self.incentive = incentive
@@ -52,6 +52,6 @@ public struct OfferPanel: Codable {
         self.features = features
         self.featuresFooter = featuresFooter
         self.pageFooter = pageFooter
-        self.showCountDown = showCountDown
+        self.showCountdown = showCountdown
     }
 }
