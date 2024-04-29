@@ -27,6 +27,11 @@ struct MainFeature {
     struct State: Equatable {
         var currentTab: Tab
         var settings: SettingsFeature.State
+        
+        init(currentTab: Tab, settings: SettingsFeature.State) {
+            self.currentTab = currentTab
+            self.settings = settings
+        }
     }
 
     enum Action {

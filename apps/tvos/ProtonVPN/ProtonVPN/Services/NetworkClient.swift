@@ -20,9 +20,9 @@ import Foundation
 import Dependencies
 
 struct NetworkClient: Sendable {
-    var fetchSignInCode: @Sendable () async throws -> String
-    var forkSession: @Sendable () async throws -> String
-    static var count: Int = 0
+    var fetchSignInCode: @Sendable () async throws -> SignInCode
+    var forkedSession: @Sendable (_ selector: String) async throws -> AuthCredentials
+    static var count: Int = 1
 }
 
 extension NetworkClient: DependencyKey {
@@ -30,18 +30,29 @@ extension NetworkClient: DependencyKey {
     static let liveValue = NetworkClient(
         fetchSignInCode: {
             try await Task.sleep(for: .seconds(1))
-            return "123 456"
-        }, forkSession: {
+            return SignInCode(selector: "40-char-random-hex-string", userCode: "1234ABCD")
+        }, forkedSession: { selector in
             print("poll API... \(Self.count)")
             try await Task.sleep(for: .seconds(0.1))
             Self.count += 1
             if Self.count > 5 {
-                Self.count = 0
-                return "tv user\(Self.count)"
+                Self.count = 1
+                return AuthCredentials(userID: "", uID: "", accessToken: "", refreshToken: "")
             } else {
                 throw "Failed to fork session"
             }
         }
     )
+}
 
+struct SignInCode {
+    let selector: String
+    let userCode: String
+}
+
+struct AuthCredentials { // temporary, we'll use the real AuthCredentials
+    let userID: String
+    let uID: String
+    let accessToken: String
+    let refreshToken: String
 }

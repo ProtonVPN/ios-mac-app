@@ -23,6 +23,9 @@ struct SettingsFeature {
     @ObservableState
     struct State: Equatable {
         var userName: String
+        init(userName: String) {
+            self.userName = userName
+        }
     }
 
     enum Action {

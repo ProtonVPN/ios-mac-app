@@ -46,8 +46,8 @@ struct AppFeature {
                 return .none
             case .main:
                 return .none
-            case .welcome(.destination(.presented(.signIn(.signInSuccess(let username))))):
-                state.main = MainFeature.State(currentTab: .home, settings: .init(userName: username))
+            case .welcome(.destination(.presented(.signIn(.signInSuccess(let credentials))))):
+                state.main = MainFeature.State(currentTab: .home, settings: .init(userName: credentials.userID))
                 return .none
             case .welcome:
                 return .none

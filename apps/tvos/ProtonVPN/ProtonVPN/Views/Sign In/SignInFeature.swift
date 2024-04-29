@@ -30,15 +30,28 @@ struct SignInFeature {
         @Presents var destination: Destination.State?
         var signInCode: String?
         var loggedIn: Bool
-        var pollAttempt: Int = 0
+        var serverPoll: ServerPoll
+        var selector: String?
+        
+        init(destination: Destination.State? = nil,
+             signInCode: String? = nil,
+             loggedIn: Bool,
+             serverPoll: ServerPoll = .init(configuration: .default),
+             selector: String? = nil) {
+            self.destination = destination
+            self.signInCode = signInCode
+            self.loggedIn = loggedIn
+            self.serverPoll = serverPoll
+            self.selector = selector
+        }
     }
 
     enum Action {
         case destination(PresentationAction<Destination.Action>)
         case pollServer
         case fetchSignInCode
-        case presentSignInCode(String)
-        case signInSuccess(String)
+        case presentSignInCode(SignInCode)
+        case signInSuccess(AuthCredentials)
     }
 
     @Dependency(NetworkClient.self) var networkClient
@@ -48,38 +61,65 @@ struct SignInFeature {
         Reduce { state, action in
             switch action {
             case .pollServer:
-                if state.pollAttempt > 6 {
+                guard let selector = state.selector, 
+                        state.serverPoll.tick() else {
                     print("failed polling")
                     return .none
                 }
-                state.pollAttempt += 1
+                let delay = state.serverPoll.configuration.periodInSeconds
                 return .run { send in
-                    do {
-                        let username = try await networkClient.forkSession()
-                        await send(.signInSuccess(username))
-                    } catch {
-                        try await Task.sleep(for: .seconds(1)) // wait a second before trying again
-                        await send(.pollServer)
-                    }
+                    let credentials = try await networkClient.forkedSession(selector)
+                    await send(.signInSuccess(credentials))
+                } catch: { error, send in
+                    try? await Task.sleep(for: .seconds(delay)) // wait before trying again
+                    await send(.pollServer)
                 }
-            case .signInSuccess(let userName):
-                state.destination = .settings(.init(userName: userName))
-                return .none
-            case .destination(_):
+            case .signInSuccess(let credentials):
+                state.destination = .settings(.init(userName: credentials.userID))
                 return .none
             case .fetchSignInCode:
                 return .run { send in
                     let code = try await networkClient.fetchSignInCode()
                     await send(.presentSignInCode(code))
+                } catch: { error, send in
+                    // TODO: Failed obtaining user code and selector, present to the user to try again later?
                 }
             case .presentSignInCode(let code):
-                state.signInCode = code
-                return .run { send in
-                    try await Task.sleep(for: .seconds(1)) // wait a second before polling starts
+                state.signInCode = code.userCode
+                state.selector = code.selector
+                let delay = state.serverPoll.configuration.delayBeforePollingStartsInSeconds
+                return .run { [delay] send in
+                    try? await Task.sleep(for: .seconds(delay))
                     await send(.pollServer)
                 }
+            case .destination(_):
+                return .none
             }
         }
         .ifLet(\.$destination, action: \.destination)
+    }
+}
+
+struct ServerPoll: Equatable {
+    struct Configuration: Equatable {
+        let delayBeforePollingStartsInSeconds: Int
+        let periodInSeconds: Int
+        let failAfterAttempts: Int
+        static var `default` = Configuration(delayBeforePollingStartsInSeconds: 5,
+                                             periodInSeconds: 1,
+                                             failAfterAttempts: 5)
+    }
+    
+    let configuration: Configuration
+
+    lazy var remainingTicks: Int = configuration.failAfterAttempts
+
+    mutating func tick() -> Bool {
+        if remainingTicks < 1 {
+            remainingTicks = configuration.failAfterAttempts
+            return false
+        }
+        remainingTicks -= 1
+        return true
     }
 }
