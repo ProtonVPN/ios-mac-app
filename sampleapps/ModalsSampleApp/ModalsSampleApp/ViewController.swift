@@ -20,7 +20,7 @@ import Modals
 import Modals_iOS
 import UIKit
 
-class ViewController: UITableViewController {
+final class ViewController: UITableViewController {
     
     let upsells: [(type: ModalType, title: String)] = [
         (.welcomePlus(numberOfServers: 1300, numberOfDevices: 10, numberOfCountries: 61), "Welcome Plus"),
@@ -54,6 +54,7 @@ class ViewController: UITableViewController {
     static let toServer = ("US-CA#78", UIImage(named: "flags_US")!)
 
     var presentationStyle = UIModalPresentationStyle.fullScreen
+    var legacyModal = false
 
     let modalsFactory = ModalsFactory()
 
@@ -63,8 +64,10 @@ class ViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
+        case 0:
+            return 2 // presentation mode + legacy modal
         case 1:
-            return 1 // presentation mode
+            return 1
         case 2:
             return upsells.count
         case 3:
@@ -80,8 +83,16 @@ class ViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ModalPresentationTableViewCell", for: indexPath) as! ModalPresentationTableViewCell
-            cell.delegate = self
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SwitchTableViewCell", for: indexPath) as! SwitchTableViewCell
+            cell.switchButton.setOn(indexPath.row == 0, animated: false)
+            cell.cellTitle.text = indexPath.row == 0 ? "Fullscreen presentation" : "Legacy presentation"
+            cell.switchValueChangedHandler = { [weak self] isOn in
+                switch indexPath.row {
+                case 0: self?.presentationStyle = isOn ? .fullScreen : .automatic
+                case 1: self?.legacyModal = isOn
+                default: assertionFailure("Cell action not handled")
+                }
+            }
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "ModalTableViewCell", for: indexPath)
@@ -115,10 +126,15 @@ class ViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard indexPath.section != 0 else {
+            return
+        }
+
         let viewController: UIViewController
-        if indexPath.section == 1 {
+        switch (indexPath.section, indexPath.row) {
+        case (1, _):
             viewController = modalsFactory.whatsNewViewController()
-        } else if indexPath.section == 2 {
+        case (2, _):
             let type = upsells[indexPath.row].type
             switch type {
             case .welcomeFallback, .welcomeUnlimited, .welcomePlus, .welcomeToProton:
@@ -126,47 +142,45 @@ class ViewController: UITableViewController {
                     self.dismiss(animated: true)
                 })
             default:
-                let modalVC = modalsFactory.upsellViewController(modalType: type)
-                modalVC.delegate = self
-                viewController = modalVC
+                if legacyModal {
+                    let modalVC = modalsFactory.upsellViewController(modalType: type)
+                    modalVC.delegate = self
+                    viewController = modalVC
+                } else {
+                    viewController = modalsFactory.upsellViewController(modalType: type, client: plansClient())
+                }
             }
-        } else if indexPath.section == 3 {
-            if indexPath.row == 0 {
-                let modalVC = modalsFactory.discourageSecureCoreViewController(
-                    onDontShowAgain: nil,
-                    onActivate: nil,
-                    onCancel: nil,
-                    onLearnMore: nil
-                )
-                viewController = modalVC
-            } else if indexPath.row == 1 {
-                viewController = modalsFactory.freeConnectionsViewController(
-                    countries: [
-                        ("Japan", UIImage(named: "flags_JP")),
-                        ("Netherlands", UIImage(named: "flags_NL")),
-                        ("Romania", UIImage(named: "flags_RO")),
-                        ("United States", UIImage(named: "flags_US")),
-                        ("Poland", UIImage(named: "flags_PL")),
-                    ],
-                    upgradeAction: {
-                        debugPrint("freeConnectionsViewController")
-                    }
-                )
-            } else {
-                fatalError()
-            }
-        } else if indexPath.section == 4 {
-            let modalVC = modalsFactory.userAccountUpdateViewController(viewModel: upgrades[indexPath.row].type,
-                                                                        onPrimaryButtonTap: nil)
-            viewController = modalVC
-        } else if indexPath.section == 5 {
+        case (3, 0):
+            viewController = modalsFactory.discourageSecureCoreViewController(
+                onDontShowAgain: nil,
+                onActivate: nil,
+                onCancel: nil,
+                onLearnMore: nil
+            )
+        case (3, 1):
+            viewController = modalsFactory.freeConnectionsViewController(
+                countries: [
+                    ("Japan", UIImage(named: "flags_JP")),
+                    ("Netherlands", UIImage(named: "flags_NL")),
+                    ("Romania", UIImage(named: "flags_RO")),
+                    ("United States", UIImage(named: "flags_US")),
+                    ("Poland", UIImage(named: "flags_PL")),
+                ],
+                upgradeAction: {
+                    debugPrint("freeConnectionsViewController")
+                }
+            )
+        case (4, _):
+            let viewModel = upgrades[indexPath.row].type
+            viewController = modalsFactory.userAccountUpdateViewController(viewModel: viewModel, onPrimaryButtonTap: nil)
+        case (5, _):
             let modalVC = modalsFactory.modalViewController(modalType: .welcomeToProton, primaryAction: {
                 self.pushAllCountries()
             })
             let navigationController = UINavigationController(rootViewController: modalVC)
             navigationController.setNavigationBarHidden(true, animated: false)
             viewController = navigationController
-        } else {
+        default:
             fatalError()
         }
         viewController.modalPresentationStyle = presentationStyle
@@ -179,12 +193,6 @@ class ViewController: UITableViewController {
                                                              dismissAction: { self.presentedViewController?.dismiss(animated: true) })
 
         (presentedViewController as? UINavigationController)?.pushViewController(allCountries, animated: true)
-    }
-}
-
-extension ViewController: PresentationModeSwitchDelegate {
-    func didTapPresentationModeSwitch(style: UIModalPresentationStyle) {
-        presentationStyle = style
     }
 }
 
@@ -207,5 +215,24 @@ extension ViewController: UpsellViewControllerDelegate {
 
     func upsellDidDisappear(upsell: UpsellViewController?) {
 
+    }
+}
+
+private extension ViewController {
+    func plansClient() -> PlansClient {
+        return PlansClient(
+            retrievePlans: {
+                [
+                    PlanOption(duration: .oneMonth, price: .init(amount: 35, currency: "CHF")),
+                    PlanOption(duration: .oneYear, price: .init(amount: 115, currency: "CHF"))
+                ]
+            },
+            validate: { _ in
+                self.dismiss(animated: true)
+            },
+            notNow: {
+                self.dismiss(animated: true)
+            }
+        )
     }
 }

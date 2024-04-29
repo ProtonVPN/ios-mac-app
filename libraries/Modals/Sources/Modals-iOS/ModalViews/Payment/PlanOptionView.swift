@@ -25,26 +25,27 @@ private enum Constants {
 }
 
 struct PlanOptionView: View {
-    let planOption: PlanOption
+    enum State {
+        case loading
+        case loaded(option: PlanOption, isSelected: Bool, discount: Int?)
+    }
 
-    let isLoading: Bool
-    let isSelected: Bool
-    private let discount: Int?
+    let state: State
 
-    init(planOption: PlanOption, isLoading: Bool, isSelected: Bool, discount: Int? = nil) {
-        self.planOption = planOption
-        self.isLoading = isLoading
-        self.isSelected = isSelected
-        self.discount = discount
+    init(state: State) {
+        self.state = state
     }
 
     var body: some View {
-        if isLoading {
+        switch state {
+        case .loading:
             PlanOptionLoadingView()
-        } else {
-            PlanOptionLoadedView(planOption: planOption, 
-                                 discount: discount,
-                                 isSelected: isSelected)
+        case .loaded(let planOption, let isSelected, let discount):
+            PlanOptionLoadedView(
+                planOption: planOption,
+                discount: discount,
+                isSelected: isSelected
+            )
         }
     }
 }
@@ -208,31 +209,28 @@ extension PlanDuration {
     let planOptionMonth = PlanOption(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
     let planOptionYear = PlanOption(duration: .oneYear, price: .init(amount: 100, currency: "CHF"))
     return VStack {
-        PlanOptionView(planOption: planOptionMonth,
-                       isLoading: false,
-                       isSelected: false,
-                       discount: planOptionMonth.discount(comparedTo: planOptionYear))
-        PlanOptionView(planOption: planOptionYear, 
-                       isLoading: false,
-                       isSelected: false,
-                       discount: planOptionYear.discount(comparedTo: planOptionMonth))
+        PlanOptionView(
+            state: .loaded(option: planOptionMonth, isSelected: false, discount: planOptionMonth.discount(comparedTo: planOptionYear))
+        )
+        PlanOptionView(
+            state: .loaded(option: planOptionYear, isSelected: false, discount: planOptionYear.discount(comparedTo: planOptionMonth))
+        )
     }
 }
 
 #Preview("Selected") {
     let planOption = PlanOption(duration: .oneYear, price: .init(amount: 85, currency: "CHF"))
-    return PlanOptionView(planOption: planOption, isLoading: false, isSelected: true, discount: 35)
+    return PlanOptionView(state: .loaded(option: planOption, isSelected: true, discount: 35))
 }
 
 #Preview("RTL") {
     let planOption = PlanOption(duration: .oneYear, price: .init(amount: 85, currency: "CHF"))
-    return PlanOptionView(planOption: planOption, isLoading: false, isSelected: true, discount: 35)
+    return PlanOptionView(state: .loaded(option: planOption, isSelected: true, discount: 35))
         .environment(\.layoutDirection, .rightToLeft)
 }
 
 #Preview("Loading") {
-    let planOption = PlanOption(duration: .oneYear, price: .init(amount: 85, currency: "CHF"))
-    return PlanOptionView(planOption: planOption, isLoading: true, isSelected: false, discount: 35)
+    return PlanOptionView(state: .loading)
 }
 
 #Preview("Annoying Duration") {
@@ -240,7 +238,7 @@ extension PlanDuration {
         duration: .init(components: DateComponents(year: 2, month: 6))!,
         price: .init(amount: 85, currency: "CHF")
     )
-    return PlanOptionView(planOption: planOption, isLoading: false, isSelected: false, discount: 35)
+    return PlanOptionView(state: .loaded(option: planOption, isSelected: false, discount: 35))
 }
 
 #Preview("Badge") {

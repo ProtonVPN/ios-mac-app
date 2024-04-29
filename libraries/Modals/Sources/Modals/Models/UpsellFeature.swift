@@ -22,7 +22,13 @@ public struct ModalModel {
     public struct Subtitle {
         public let text: String
         public let boldText: [String]
+
+        public init(text: String, boldText: [String] = []) {
+            self.text = text
+            self.boldText = boldText
+        }
     }
+
     public let title: String
     public let subtitle: Subtitle?
     public let features: [Feature]

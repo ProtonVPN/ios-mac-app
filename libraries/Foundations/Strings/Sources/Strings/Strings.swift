@@ -1699,6 +1699,40 @@ public enum Localizable {
   public static var modalsGetPlus: String { return Localizable.tr("Localizable", "modals_get_plus", fallback: "Upgrade") }
   /// Description of the first section of the "What's new" screen
   public static var modalsNewServers: String { return Localizable.tr("Localizable", "modals_new_servers", fallback: "There are now Free servers in Poland and Romania.") }
+  /// Plural format key: "Unlock %#@num_servers@+ secure servers in %#@num_countries@ countries with VPN Plus."
+  public static func modalsNewUpsellAllCountriesSubtitle(_ p1: Int, _ p2: Int) -> String {
+    return Localizable.tr("Localizable", "modals_new_upsell_all_countries_subtitle", p1, p2, fallback: "Plural format key: \"Unlock %#@num_servers@+ secure servers in %#@num_countries@ countries with VPN Plus.\"")
+  }
+  /// The bold portion of the subtitle of All Countries upsell screen
+  public static var modalsNewUpsellAllCountriesSubtitleBold: String { return Localizable.tr("Localizable", "modals_new_upsell_all_countries_subtitle_bold", fallback: "VPN Plus") }
+  /// Title of All Countries upsell screen
+  public static var modalsNewUpsellAllCountriesTitle: String { return Localizable.tr("Localizable", "modals_new_upsell_all_countries_title", fallback: "Access all countries") }
+  /// Subtitle of Country upsell screen
+  public static var modalsNewUpsellCountrySubtitle: String { return Localizable.tr("Localizable", "modals_new_upsell_country_subtitle", fallback: "Unlock country selection with VPN Plus.") }
+  /// Title of Country upsell screen
+  public static var modalsNewUpsellCountryTitle: String { return Localizable.tr("Localizable", "modals_new_upsell_country_title", fallback: "Want to connect to a specific country?") }
+  /// Subtitle of the Customization scren
+  public static var modalsNewUpsellCustomizationSubtitle: String { return Localizable.tr("Localizable", "modals_new_upsell_customization_subtitle", fallback: "Access devices on your local area network (LAN) with VPN Plus.") }
+  /// Subtitle of Moderate NAT upsell screens
+  public static var modalsNewUpsellModerateNatSubtitle: String { return Localizable.tr("Localizable", "modals_new_upsell_moderate_nat_subtitle", fallback: "Improve online gaming and video call performance with NAT type 2.") }
+  /// Subtitle of Netshield upsell screen
+  public static var modalsNewUpsellNetshieldSubtitle: String { return Localizable.tr("Localizable", "modals_new_upsell_netshield_subtitle", fallback: "Block ads, trackers and malware with NetShield.") }
+  /// The bold portion of the subtitle of the Netshield upsell screen
+  public static var modalsNewUpsellNetshieldSubtitleBold: String { return Localizable.tr("Localizable", "modals_new_upsell_netshield_subtitle_bold", fallback: "NetShield") }
+  /// Title of Netshield upsell screen
+  public static var modalsNewUpsellNetshieldTitle: String { return Localizable.tr("Localizable", "modals_new_upsell_netshield_title", fallback: "Enjoy ad-free browsing") }
+  /// Subtitle of Profiles upsell screen
+  public static var modalsNewUpsellProfilesSubtitle: String { return Localizable.tr("Localizable", "modals_new_upsell_profiles_subtitle", fallback: "Unlock profiles with VPN Plus.") }
+  /// Subtitle of Secure Core upsell screen
+  public static var modalsNewUpsellSecureCoreSubtitle: String { return Localizable.tr("Localizable", "modals_new_upsell_secure_core_subtitle", fallback: "Add another layer of encryption to your VPN connection with Secure Core.") }
+  /// The bold portion of the subtitle of the Secure Core upsell screen
+  public static var modalsNewUpsellSecureCoreSubtitleBold: String { return Localizable.tr("Localizable", "modals_new_upsell_secure_core_subtitle_bold", fallback: "Secure Core") }
+  /// Title of Secure Core upsell screen
+  public static var modalsNewUpsellSecureCoreTitle: String { return Localizable.tr("Localizable", "modals_new_upsell_secure_core_title", fallback: "Double your protection") }
+  /// Subtitle of the VPN Accelerator screen
+  public static var modalsNewUpsellVpnAcceleratorSubtitle: String { return Localizable.tr("Localizable", "modals_new_upsell_vpn_accelerator_subtitle", fallback: "Unlock faster, less crowded servers with speeds of up to 10 Gbps.") }
+  /// Title of the VPN Accelerator screen
+  public static var modalsNewUpsellVpnAcceleratorTitle: String { return Localizable.tr("Localizable", "modals_new_upsell_vpn_accelerator_title", fallback: "Browse at even higher speeds") }
   /// Description of the second section of the "What's new" screen
   public static var modalsServerCrowding: String { return Localizable.tr("Localizable", "modals_server_crowding", fallback: "To prevent server crowding and ensure that everyone has access to fast and secure browsing, we removed manual country selection and made major improvements to automatic server selection.") }
   /// Title of the second section of the "What's new" screen
@@ -1905,8 +1939,10 @@ public enum Localizable {
   public static var upsellProfilesFeatureProtocols: String { return Localizable.tr("Localizable", "upsell_profiles_feature_protocols", fallback: "Set custom protocols and premium VPN features.") }
   /// Subtitle of Profiles upsell modal
   public static var upsellProfilesSubtitle: String { return Localizable.tr("Localizable", "upsell_profiles_subtitle", fallback: "Unlock profiles with VPN Plus") }
-  /// Bold part of the subtitle of Profiles upsell modal
-  public static var upsellProfilesSubtitleBold: String { return Localizable.tr("Localizable", "upsell_profiles_subtitle_bold", fallback: "profiles") }
+  /// First bold part of the subtitle of Profiles upsell modal
+  public static var upsellProfilesSubtitleBold1: String { return Localizable.tr("Localizable", "upsell_profiles_subtitle_bold_1", fallback: "profiles") }
+  /// Second bold part of the subtitle of Profiles upsell modal
+  public static var upsellProfilesSubtitleBold2: String { return Localizable.tr("Localizable", "upsell_profiles_subtitle_bold_2", fallback: "VPN Plus") }
   /// Title of Profiles upsell modal
   public static var upsellProfilesTitle: String { return Localizable.tr("Localizable", "upsell_profiles_title", fallback: "Get quick access to your frequent connections") }
   /// The button text that will appear when the user has waited for the countdown and can proceed without upgrading.

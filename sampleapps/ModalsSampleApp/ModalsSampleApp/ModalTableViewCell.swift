@@ -18,30 +18,27 @@
 
 import UIKit
 
-protocol PresentationModeSwitchDelegate: AnyObject {
-    func didTapPresentationModeSwitch(style: UIModalPresentationStyle)
-}
-
-class ModalTableViewCell: UITableViewCell {
+final class ModalTableViewCell: UITableViewCell {
     @IBOutlet weak var modalTitle: UILabel!
 }
 
-class ModalPresentationTableViewCell: UITableViewCell {
-    @IBOutlet weak var modalTitle: UILabel! {
-        didSet {
-            modalTitle.text = "Fullscreen presentation"
+final class SwitchTableViewCell: UITableViewCell {
+    typealias ValueChangedHandler = (Bool) -> Void
+
+    var switchValueChangedHandler: ValueChangedHandler? {
+        willSet {
+            awakeFromNib()
         }
     }
+
+    @IBOutlet weak var cellTitle: UILabel!
     @IBOutlet weak var switchButton: UISwitch! {
         didSet {
-            switchButton.addTarget(self, action: #selector(didTapPresentationModeSwitch), for: .valueChanged)
+            switchButton.addTarget(self, action: #selector(didTapSwitch), for: .valueChanged)
         }
     }
 
-    weak var delegate: PresentationModeSwitchDelegate?
-
-    @objc func didTapPresentationModeSwitch() {
-        let style: UIModalPresentationStyle = switchButton.isOn ? .fullScreen : .automatic
-        delegate?.didTapPresentationModeSwitch(style: style)
+    @objc private func didTapSwitch() {
+        switchValueChangedHandler?(switchButton.isOn)
     }
 }

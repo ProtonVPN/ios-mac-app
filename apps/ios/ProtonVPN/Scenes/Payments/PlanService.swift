@@ -26,7 +26,7 @@ import ProtonCorePaymentsUI
 import LegacyCommon
 import UIKit
 import VPNShared
-import Modals
+import Modals_iOS
 
 protocol PlanServiceFactory {
     func makePlanService() -> PlanService

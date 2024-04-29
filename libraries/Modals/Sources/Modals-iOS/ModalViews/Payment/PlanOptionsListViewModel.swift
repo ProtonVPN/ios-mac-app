@@ -23,6 +23,7 @@ public struct PlansClient {
     var retrievePlans: () async throws -> [PlanOption]
     var validate: (PlanOption) async -> Void
     var notNow: () -> Void
+
     public init(
         retrievePlans: @escaping () async throws -> [PlanOption],
         validate: @escaping (PlanOption) async -> Void,
@@ -34,15 +35,16 @@ public struct PlansClient {
     }
 }
 
-@MainActor
+// TODO: Migrate to @MainActor once overall codebase is ready for it
+
 final class PlanOptionsListViewModel: ObservableObject {
+    let client: PlansClient
+
     @Published private(set) var plans: [PlanOption] = []
     @Published var selectedPlan: PlanOption?
 
     @Published private(set) var isLoading: Bool = false
-    @Published private(set) var isPurchaseInProgress: Bool = false // TODO: VPNAPPL-2089 Block the UI until the purchase is complete or cancelled
-
-    private let client: PlansClient
+    @Published private(set) var isPurchaseInProgress: Bool = false
 
     private(set) var mostExpensivePlan: PlanOption?
 
@@ -50,6 +52,7 @@ final class PlanOptionsListViewModel: ObservableObject {
         self.client = client
     }
 
+    @MainActor
     func onAppear() async {
         isLoading = true
         do {
@@ -63,6 +66,7 @@ final class PlanOptionsListViewModel: ObservableObject {
         }
     }
 
+    @MainActor
     func validate() async {
         guard let selectedPlan else { return }
         isPurchaseInProgress = true
@@ -70,7 +74,29 @@ final class PlanOptionsListViewModel: ObservableObject {
         isPurchaseInProgress = false
     }
 
+    @MainActor
     func notNow() {
         client.notNow()
     }
 }
+
+#if DEBUG
+public extension PlansClient {
+    static func mock() -> PlansClient {
+        PlansClient(
+            retrievePlans: {
+                [
+                    PlanOption(duration: .oneMonth, price: .init(amount: 35, currency: "CHF")),
+                    PlanOption(duration: .oneYear, price: .init(amount: 115, currency: "CHF"))
+                ]
+            },
+            validate: { option in
+                print("User wants to go with \(option)")
+            },
+            notNow: {
+                print("User wants to stay with free plan")
+            }
+        )
+    }
+}
+#endif

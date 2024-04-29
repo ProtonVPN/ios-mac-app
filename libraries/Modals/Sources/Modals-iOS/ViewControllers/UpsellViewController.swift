@@ -133,7 +133,7 @@ public final class UpsellViewController: UIViewController, Identifiable {
 
     func setupTitleLabels() {
         guard let modalType = modalType else { return }
-        let modalModel = modalType.modalModel()
+        let modalModel = modalType.modalModel(legacy: true)
         titleLabel.text = modalModel.title
         if let subtitle = modalModel.subtitle {
             subtitleLabel.attributedText =
@@ -147,7 +147,7 @@ public final class UpsellViewController: UIViewController, Identifiable {
 
     func setupFeatures() {
         guard let modalType = modalType else { return }
-        let modalModel = modalType.modalModel()
+        let modalModel = modalType.modalModel(legacy: true)
 
         applyArtView(upsell: modalType)
 

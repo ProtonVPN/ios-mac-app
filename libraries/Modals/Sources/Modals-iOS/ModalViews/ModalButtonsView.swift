@@ -29,17 +29,13 @@ struct ModalButtonsView: View {
     var body: some View {
         VStack {
             if let primaryAction {
-                Button {
-                    primaryAction()
-                } label: {
+                Button(action: primaryAction) {
                     Text(modalModel.primaryButtonTitle)
                 }
                 .buttonStyle(PrimaryButtonStyle())
             }
             if let dismissAction, let title = modalModel.secondaryButtonTitle {
-                Button {
-                    dismissAction()
-                } label: {
+                Button(action: dismissAction) {
                     Text(title)
                 }
                 .buttonStyle(SecondaryButtonStyle())
