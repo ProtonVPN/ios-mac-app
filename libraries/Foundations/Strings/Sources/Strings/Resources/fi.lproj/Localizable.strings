@@ -1656,10 +1656,10 @@
 "proton_website_unreachable" = "Proton VPN:n verkkosivusto saattaa olla tilapäisesti tavoittamattomissa verkkorajoitusten vuoksi. Luo uusi Proton-tili mobiilisovelluksella.";
 
 /* Title for the Two-factor authentication screen */
-"two_factor_authentication" = "Kaksivaiheinen todennus";
+"two_factor_authentication" = "Kaksivaiheinen tunnistautuminen";
 
 /* Placeholder for the Two Factor text field */
-"two_factor_code" = "Toisen vaiheen todennuskoodi";
+"two_factor_code" = "Toisen vaiheen koodi";
 
 /* Title for the button to switch to entering two-factor code */
 "use_two_factor_code" = "Käytä kaksivaiheista koodia";
@@ -2051,7 +2051,7 @@
 "welcome_to_proton_banner_title" = "Todistetusti lokivapaa VPN";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
-"welcome_to_proton_banner_subtitle" = "VPN-toimintasi on suojattu Sveitsin tietosuojalaeilla. Emme koskaan seuraa sinua verkossa tai jaa tietojasi kolmansille osapuolille.";
+"welcome_to_proton_banner_subtitle" = "VPN-käyttösi on Sveitsin tietosuojalainsäädännön suojaama. Emme koskaan seuraa sinua verkossa tai jaa tietojasi ulkopuolisille tahoille.";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "Paranna yksityisyyttäsi";

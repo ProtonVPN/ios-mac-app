@@ -33,13 +33,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d країна</string>
+        <string>%d країні</string>
         <key>few</key>
-        <string>%d країни</string>
+        <string>%d країнах</string>
         <key>many</key>
-        <string>%d країн</string>
+        <string>%d країнах</string>
         <key>other</key>
-        <string>%d країн</string>
+        <string>%d країні</string>
       </dict>
       <key>num_servers</key>
       <dict>
