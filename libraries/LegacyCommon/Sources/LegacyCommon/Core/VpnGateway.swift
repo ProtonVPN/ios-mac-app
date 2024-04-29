@@ -500,54 +500,61 @@ public class VpnGateway: VpnGatewayProtocol {
     }
     
     public func disconnect(completion: @escaping () -> Void) {
-        let completionWrapper: () -> Void = { [weak self] in
-            completion()
-            
-            guard let self = self else {
-                return
-            }
+        withEscapedDependencies { dependencies in
+            siriHelper?.donateDisconnect()
+            appStateManager.disconnect() { [weak self] in
+                // Don't yield dependencies for this completion until it's necessary (e.g. tests start to fail)
+                completion()
 
-            let refreshFreeTierInfo = (try? vpnKeychain.fetchCached().maxTier.isFreeTier) ?? false
+                guard let self else { return }
 
-            self.vpnApiService.refreshServerInfo(
-                ifIpHasChangedFrom: self.propertiesManager.userLocation?.ip,
-                freeTier: refreshFreeTierInfo
-            ) { [weak self] result in
-                guard let self else {
-                    return
-                }
+                let refreshFreeTierInfo = (try? vpnKeychain.fetchCached().maxTier.isFreeTier) ?? false
 
-                switch result {
-                case let .success(properties):
-                    guard let properties else {
-                        // IP has not changed
-                        break
+                self.vpnApiService.refreshServerInfo(
+                    ifIpHasChangedFrom: self.propertiesManager.userLocation?.ip,
+                    freeTier: refreshFreeTierInfo
+                ) { [weak self] result in
+                    dependencies.yield {
+                        // Ensure ServerManager and ServerRepository dependencies are overridden during tests
+                        self?.processServerInfoResult(result: result, refreshFreeTierInfo: refreshFreeTierInfo)
                     }
-
-                    if let userLocation = properties.location {
-                        self.propertiesManager.userLocation = userLocation
-                    }
-                    if let services = properties.streamingServices {
-                        self.propertiesManager.streamingServices = services.streamingServices
-                    }
-
-                    @Dependency(\.serverManager) var serverManager
-                    serverManager.update(
-                        servers: properties.serverModels.map { VPNServer(legacyModel: $0) },
-                        freeServersOnly: refreshFreeTierInfo
-                    )
-                    self.profileManager.refreshProfiles()
-                case .failure:
-                    // Ignore failures as this is a non-critical call
-                    break
                 }
             }
         }
-
-        siriHelper?.donateDisconnect()
-        appStateManager.disconnect(completion: completionWrapper)
     }
-    
+
+    private func processServerInfoResult(
+        result: Result<VpnApiService.ServerInfoTuple?, Error>,
+        refreshFreeTierInfo: Bool
+    ) {
+        switch result {
+        case let .success(properties):
+            guard let properties else {
+                // IP has not changed
+                break
+            }
+            if let userLocation = properties.location {
+                self.propertiesManager.userLocation = userLocation
+            }
+            if let services = properties.streamingServices {
+                self.propertiesManager.streamingServices = services.streamingServices
+            }
+
+            @Dependency(\.serverManager) var serverManager
+            serverManager.update(
+                servers: properties.serverModels.map { VPNServer(legacyModel: $0) },
+                freeServersOnly: refreshFreeTierInfo
+            )
+            self.profileManager.refreshProfiles()
+            NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
+
+        case let .failure(error):
+            // Ignore failures as this is a non-critical call
+            log.error("Failed to refresh server information", category: .api, metadata: ["error": "\(error)"])
+            break
+        }
+    }
+
     // MARK: - Private functions
     
     private func notifyResolutionUnavailable(forSpecificCountry: Bool, type: ServerType, reason: ResolutionUnavailableReason) {
@@ -706,19 +713,8 @@ fileprivate extension VpnGateway {
         // If user is upgrading from a free account, the server list needs to be updated to contain the paid servers.
         // CAREFUL: refresh server info's continuation is asynchronous here.
         if oldTier.isFreeTier && newTier.isPaidTier {
-            vpnApiService.refreshServerInfo(freeTier: false) { result in
-                switch result {
-                case .success(let properties):
-                    guard let servers = properties?.serverModels else { break }
-                    @Dependency(\.serverManager) var serverManager
-                    serverManager.update(
-                        servers: servers.map { VPNServer(legacyModel: $0) },
-                        freeServersOnly: false
-                    )
-                    NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
-                case .failure(let error):
-                    log.error("Encountered error refreshing server list on plan upgrade: \(error)")
-                }
+            vpnApiService.refreshServerInfo(freeTier: false) { [weak self] result in
+                self?.processServerInfoResult(result: result, refreshFreeTierInfo: false)
             }
         }
 
