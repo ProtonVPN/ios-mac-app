@@ -120,7 +120,7 @@
 "_loading_screen_slogan" = "Varen internet kjerkoli";
 
 /* Main mac app menu item */
-"_report_an_issue" = "Prijavite težavo...";
+"_report_an_issue" = "Prijavite težavo ...";
 
 /* Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page. */
 "_help" = "Pomoč";
@@ -499,7 +499,7 @@
 "_no_servers_to_show" = "Trenutno ni strežnikov za prikaz tukaj.";
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
-"_plan_does_not_include_secure_core" = "Vaš načrt ne vključuje funkcije Secure Core.";
+"_plan_does_not_include_secure_core" = "Vaš paket ne vključuje funkcije Secure Core.";
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
 "_learn_more_about_secure_core" = "Izvedite več o Secure Core";
@@ -1226,7 +1226,7 @@
 
 "_subscription_description" = "You can purchase more credits to automatically extend your current plan. At the end of your current subscription period, these credits will be applied to continue your plan.";
 
-"_subscription_button" = "Podaljšaj načrt za 1 leto \n%@.";
+"_subscription_button" = "Podaljšaj paket za 1 leto \n%@.";
 
 "_subscription_extended_success" = "You have successfully bought credits to extend your current plan.";
 
@@ -1554,7 +1554,7 @@
 
 "_local_agent_policy_violation_error_title" = "Kršitev pravilnika";
 
-"_local_agent_policy_violation_error_message" = "Nimate dovoljenja za povezavo s strežnikom. Izberite drug strežnik ali nadgradite svoj načrt.";
+"_local_agent_policy_violation_error_message" = "Nimate dovoljenja za povezavo s strežnikom. Izberite drug strežnik ali nadgradite svoj paket.";
 
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
 "_loading_connection_info" = "Nalaganje informacij o povezavi";
@@ -1886,7 +1886,7 @@
 "new_plans_brand_title" = "Posodobljeni Proton, poenotena zaščita";
 
 /* Subtitle of the New Brand screen */
-"new_plans_brand_subtitle" = "Predstavljamo Protonov osveženi videz. \nVeliko storitev, ena misija. Dobrodošli na internetu, kjer je zasebnost privzeta.";
+"new_plans_brand_subtitle" = "Predstavljamo Protonov osveženi videz. \nVeliko storitev, eno poslanstvo. Dobrodošli na internetu, kjer je zasebnost privzeta.";
 
 /* Title of "done" button in New Brand screen */
 "new_plans_brand_got_it" = "Razumem";

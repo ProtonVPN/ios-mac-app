@@ -2051,7 +2051,7 @@
 "welcome_to_proton_banner_title" = "VPN certificada sin registros";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
-"welcome_to_proton_banner_subtitle" = "Tu actividad VPN está protegida por las leyes de privacidad suizas. Nunca te rastrearemos en línea ni compartiremos tu información con terceros.";
+"welcome_to_proton_banner_subtitle" = "Tu actividad VPN está protegida por las leyes de privacidad suizas. Nunca te rastrearemos en línea ni compartiremos tus datos con terceros.";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "Mejora tu privacidad";
