@@ -161,7 +161,8 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
                 accountHost: "https://account.\(customDomain)",
                 defaultHost: "https://\(customDomain)",
                 apiHost: ObfuscatedConstants.blackApiHost,
-                defaultPath: ObfuscatedConstants.blackDefaultPath
+                defaultPath: ObfuscatedConstants.blackDefaultPath, 
+                apnEnvironment: .development
             )
         } else {
             return CustomServerConfigDoH(
@@ -171,7 +172,8 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
                 accountHost: ObfuscatedConstants.blackAccountHost,
                 defaultHost: ObfuscatedConstants.blackDefaultHost,
                 apiHost: ObfuscatedConstants.blackApiHost,
-                defaultPath: ObfuscatedConstants.blackDefaultPath
+                defaultPath: ObfuscatedConstants.blackDefaultPath,
+                apnEnvironment: .development
             )
         }
     }

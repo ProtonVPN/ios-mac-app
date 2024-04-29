@@ -106,6 +106,7 @@ final class CoreLoginService {
             let authCredentials = AuthCredentials(data)
             Task { @MainActor [weak self] in
                 do {
+                    self?.propertiesManager.userSettings = try await self?.coreApiService.getUserSettings()
                     try await self?.appSessionManager.finishLogin(authCredentials: authCredentials)
                     completion(.success(()))
                 } catch {
@@ -148,7 +149,7 @@ final class CoreLoginService {
             let uid = loginData.getCredential.UID
             networking.apiService.setSessionUID(uid: uid)
             if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.pushNotifications) {
-                pushNotificationService.registerForRemoteNotifications()
+                pushNotificationService.registerForRemoteNotifications(uid: uid)
             }
         }
     }

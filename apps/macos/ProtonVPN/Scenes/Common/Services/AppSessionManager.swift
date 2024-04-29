@@ -62,6 +62,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                         PropertiesManagerFactory &
                         VpnGatewayFactory &
                         CoreAlertServiceFactory &
+                        CoreApiServiceFactory &
                         NetworkingFactory &
                         AppSessionRefreshTimerFactory &
                         AnnouncementRefresherFactory &

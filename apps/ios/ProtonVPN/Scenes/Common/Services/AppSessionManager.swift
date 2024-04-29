@@ -81,7 +81,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                         SearchStorageFactory &
                         ReviewFactory &
                         AuthKeychainHandleFactory &
-                        UnauthKeychainHandleFactory
+                        UnauthKeychainHandleFactory &
+                        CoreApiServiceFactory
 
     private let factory: Factory
 
@@ -278,6 +279,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             propertiesManager.userAccountCreationDate = properties.userCreateTime
             propertiesManager.userLocation = properties.location
             propertiesManager.userAccountRecovery = properties.userAccountRecovery
+            propertiesManager.userInfo = properties.userInfo
             if let clientConfig = properties.clientConfig {
                 propertiesManager.openVpnConfig = clientConfig.openVPNConfig
                 propertiesManager.wireguardConfig = clientConfig.wireGuardConfig

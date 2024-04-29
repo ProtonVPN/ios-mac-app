@@ -159,6 +159,10 @@ public enum Localizable {
   public static var cancel: String { return Localizable.tr("Localizable", "_cancel", fallback: "Cancel") }
   /// This will cancel any re-connection attempt and leave you disconnected
   public static var cancelReconnection: String { return Localizable.tr("Localizable", "_cancel_reconnection", fallback: "This will cancel any re-connection attempt and leave you disconnected") }
+  /// Change mailbox password cell title
+  public static var changeMailboxPassword: String { return Localizable.tr("Localizable", "_change_mailbox_password", fallback: "Change mailbox password") }
+  /// Change password cell title
+  public static var changePassword: String { return Localizable.tr("Localizable", "_change_password", fallback: "Change password") }
   /// Warning text that changing the VPN protocol will require the current VPN session to be disconnected
   public static var changeProtocolDisconnectWarning: String { return Localizable.tr("Localizable", "_change_protocol_disconnect_warning", fallback: "Changing protocols will end your current VPN session.") }
   /// Title of the change server button

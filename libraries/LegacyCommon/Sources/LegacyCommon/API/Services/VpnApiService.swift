@@ -86,7 +86,8 @@ public class VpnApiService {
             vpnCredentials: asyncCredentials,
             location: asyncLocation,
             clientConfig: clientConfig,
-            user: try? userInfo()
+            user: try? userInfo(),
+            addresses: try? userAddresses()
         )
     }
 
@@ -324,6 +325,12 @@ public class VpnApiService {
     public func userInfo() async throws -> User {
         try await withCheckedThrowingContinuation { continuation in
             Authenticator(api: networking.apiService).getUserInfo(completion: continuation.resume(with:))
+        }
+    }
+
+    public func userAddresses() async throws -> [Address] {
+        try await withCheckedThrowingContinuation { continuation in
+            Authenticator(api: networking.apiService).getAddresses(completion: continuation.resume(with:))
         }
     }
 

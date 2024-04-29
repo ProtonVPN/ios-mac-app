@@ -23,6 +23,7 @@
 import Foundation
 
 import ProtonCoreDataModel
+import ProtonCoreLogin
 
 import Domain
 import VPNShared
@@ -175,6 +176,9 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
             NotificationCenter.default.post(name: Self.excludeLocalNetworksNotification, object: excludeLocalNetworks)
         }
     }
+
+    public var userInfo: UserInfo?
+    public var userSettings: UserSettings?
 
     public var _streamingResourcesUrl: String?
     public var streamingResourcesUrl: String? {
