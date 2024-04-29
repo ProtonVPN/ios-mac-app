@@ -152,6 +152,10 @@
 		79FD80E521108049003B16E2 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FD80E421108049003B16E2 /* LaunchViewController.swift */; };
 		79FF145320C41ECE00BA3623 /* ProfilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FF145220C41ECE00BA3623 /* ProfilesViewController.swift */; };
 		79FF145520C41EE200BA3623 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FF145420C41EE200BA3623 /* SettingsViewController.swift */; };
+		80C4A4E42BCFBBFC00DA1A80 /* MetricsCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C4A4E32BCFBBFC00DA1A80 /* MetricsCodable.swift */; };
+		80C4A4E62BCFBC2D00DA1A80 /* LokiApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C4A4E52BCFBC2D00DA1A80 /* LokiApiClient.swift */; };
+		80C4A4E82BCFBC4200DA1A80 /* TestsTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C4A4E72BCFBC4200DA1A80 /* TestsTimer.swift */; };
+		80C4A4EB2BCFBCDA00DA1A80 /* MainMeasurements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C4A4EA2BCFBCDA00DA1A80 /* MainMeasurements.swift */; };
 		89926E3756CED95AB662D371 /* PasswordRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */; };
 		8BC65CDA2B97645D005F2533 /* ProtonCoreTelemetry in Frameworks */ = {isa = PBXBuildFile; productRef = 8BC65CD92B97645D005F2533 /* ProtonCoreTelemetry */; };
 		A01D7C58C3C1AEBA17A6C5AF /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E128E9975D2A268D9FB56F0 /* AnnouncementDetailViewController.swift */; };
@@ -658,6 +662,11 @@
 		79FD80E421108049003B16E2 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		79FF145220C41ECE00BA3623 /* ProfilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesViewController.swift; sourceTree = "<group>"; };
 		79FF145420C41EE200BA3623 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		80C4A4E32BCFBBFC00DA1A80 /* MetricsCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsCodable.swift; sourceTree = "<group>"; };
+		80C4A4E52BCFBC2D00DA1A80 /* LokiApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LokiApiClient.swift; sourceTree = "<group>"; };
+		80C4A4E72BCFBC4200DA1A80 /* TestsTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsTimer.swift; sourceTree = "<group>"; };
+		80C4A4EA2BCFBCDA00DA1A80 /* MainMeasurements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMeasurements.swift; sourceTree = "<group>"; };
+		80C4A4EC2BCFBDA900DA1A80 /* ProtonVPN-IOS-SLI-All.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-IOS-SLI-All.xctestplan"; sourceTree = "<group>"; };
 		8815D27DF5F2EEB85DCFD444 /* LoginExternalAccountNotSupportedSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginExternalAccountNotSupportedSetup.swift; sourceTree = "<group>"; };
 		9E128E9975D2A268D9FB56F0 /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnouncementDetailViewController.swift; path = ../../../../ios/ProtonVPN/Scenes/Announcements/AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
 		AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetShieldStatsItemView.xib; sourceTree = "<group>"; };
@@ -1336,6 +1345,14 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		80C4A4E92BCFBCAD00DA1A80 /* SLIs */ = {
+			isa = PBXGroup;
+			children = (
+				80C4A4EA2BCFBCDA00DA1A80 /* MainMeasurements.swift */,
+			);
+			path = SLIs;
+			sourceTree = "<group>";
+		};
 		ADDB04A52B768CAC00211434 /* Countries */ = {
 			isa = PBXGroup;
 			children = (
@@ -1390,6 +1407,9 @@
 				D5AAA12A229D28E400EA839A /* Credentials.swift */,
 				B2BCF09828B546200041A635 /* Generate2FACode.swift */,
 				E5CF14852949E68700AF6912 /* QuarkCommands+Async.swift */,
+				80C4A4E32BCFBBFC00DA1A80 /* MetricsCodable.swift */,
+				80C4A4E52BCFBC2D00DA1A80 /* LokiApiClient.swift */,
+				80C4A4E72BCFBC4200DA1A80 /* TestsTimer.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -1401,6 +1421,7 @@
 				F377836426E644BC00392958 /* ProtonVPN-iOS-UI-Smoke.xctestplan */,
 				B2E466D3297E985E0026ED26 /* ProtonVPN-iOS-UI-All.xctestplan */,
 				FA46A20B2B271A6100929229 /* ProtonVPN-iOS-UI-Subscription.xctestplan */,
+				80C4A4EC2BCFBDA900DA1A80 /* ProtonVPN-IOS-SLI-All.xctestplan */,
 			);
 			path = TestPlans;
 			sourceTree = "<group>";
@@ -2077,6 +2098,7 @@
 		F377835D26E644BC00392958 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				80C4A4E92BCFBCAD00DA1A80 /* SLIs */,
 				F377836126E644BC00392958 /* Connection */,
 				F377836726E644BC00392958 /* Login */,
 				B28688C72ABAD54800C1BA37 /* PlanTests */,
@@ -3140,6 +3162,7 @@
 				F3B783FB26E6428C006768A8 /* ServerListRobot.swift in Sources */,
 				F3B783F626E6428C006768A8 /* SettingsRobot.swift in Sources */,
 				F3B783FF26E6428C006768A8 /* SignupRobot.swift in Sources */,
+				80C4A4E82BCFBC4200DA1A80 /* TestsTimer.swift in Sources */,
 				FA46A2072B270C8000929229 /* SubscriptionTests.swift in Sources */,
 				B29D298B2B989F47000BA715 /* HumanVerificationTests.swift in Sources */,
 				D5AAA12B229D28E400EA839A /* Credentials.swift in Sources */,
@@ -3149,11 +3172,14 @@
 				D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */,
 				B28688CE2AC1C65300C1BA37 /* LoginExternalAccountTests.swift in Sources */,
 				57E3438E28E573D60012B2DF /* PlanTests.swift in Sources */,
+				80C4A4E42BCFBBFC00DA1A80 /* MetricsCodable.swift in Sources */,
 				B29CD6AF2654109600978637 /* StringUtils.swift in Sources */,
+				80C4A4EB2BCFBCDA00DA1A80 /* MainMeasurements.swift in Sources */,
 				ADA1A0402A95E4EB00F9A6B6 /* Verifier.swift in Sources */,
 				F3B783FE26E6428C006768A8 /* NeedHelpRobot.swift in Sources */,
 				B2D4572A2771D8AD0065FEC2 /* PaymentsRobot.swift in Sources */,
 				B20C28F52799947A00157BD1 /* OnboardingRobot.swift in Sources */,
+				80C4A4E62BCFBC2D00DA1A80 /* LokiApiClient.swift in Sources */,
 				B2BCF09928B546200041A635 /* Generate2FACode.swift in Sources */,
 				F3B783FD26E6428C006768A8 /* CreateProfileRobot.swift in Sources */,
 				F3B783F926E6428C006768A8 /* MapRobot.swift in Sources */,

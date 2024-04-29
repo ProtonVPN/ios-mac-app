@@ -1,0 +1,38 @@
+{
+  "configurations" : [
+    {
+      "id" : "5C4A08B0-6A87-40C7-A8DF-F1AD86A25C7A",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "skippedTests" : [
+        "ConnectionTests",
+        "FreeRescopeTests",
+        "InternalAndExternalSignUpTests",
+        "LoginExtAccountTests",
+        "LoginExternalAccountTests",
+        "LoginTests",
+        "PlanTests",
+        "ProfilesTests",
+        "SettingsTests",
+        "SignupTests",
+        "SubscriptionTests",
+        "TokenRefreshTests"
+      ],
+      "target" : {
+        "containerPath" : "container:iOS.xcodeproj",
+        "identifier" : "D5811D7C229BBD870087B63A",
+        "name" : "ProtonVPNUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

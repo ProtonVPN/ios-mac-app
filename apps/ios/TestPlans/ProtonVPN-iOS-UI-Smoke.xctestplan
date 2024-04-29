@@ -61,6 +61,7 @@
         "LoginTests\/testLoginWithSpecialChars()",
         "LoginTests\/testLoginWithTwoPassUser()",
         "LoginTests\/testNeedHelpClosed()",
+        "MainMeasurements",
         "OldLoginTests",
         "PlanTests",
         "PlanTests\/testShowUpdatePlansForCurrentFreePlan()",
