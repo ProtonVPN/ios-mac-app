@@ -37,10 +37,10 @@ public enum ModalType {
     case cantSkip(before: Date, duration: TimeInterval, longSkip: Bool)
     case subscription
 
-    public func modalModel() -> ModalModel {
+    public func modalModel(legacy: Bool = false) -> ModalModel {
         ModalModel(
-            title: title(),
-            subtitle: subtitle(),
+            title: title(legacy: legacy),
+            subtitle: subtitle(legacy: legacy),
             features: features(),
             primaryButtonTitle: primaryButtonTitle(),
             secondaryButtonTitle: secondaryButtonTitle(),
@@ -63,22 +63,24 @@ public enum ModalType {
         return Localizable.notNow
     }
 
-    private func title() -> String {
+    private func title(legacy: Bool) -> String {
         switch self {
         case .netShield:
-            return Localizable.modalsUpsellNetShieldTitle
+            return legacy ? Localizable.modalsUpsellNetShieldTitle : Localizable.modalsNewUpsellNetshieldTitle
         case .secureCore:
-            return Localizable.modalsUpsellSecureCoreTitle
+            return legacy ? Localizable.modalsUpsellSecureCoreTitle : Localizable.modalsNewUpsellSecureCoreTitle
         case .allCountries(let numberOfServers, let numberOfCountries):
-            return Localizable.modalsUpsellAllCountriesTitle(numberOfServers, numberOfCountries)
+            return legacy ?
+                Localizable.modalsUpsellAllCountriesTitle(numberOfServers, numberOfCountries) :
+                Localizable.modalsNewUpsellAllCountriesTitle
         case .country:
-            return Localizable.upsellCountryFeatureTitle
+            return legacy ? Localizable.upsellCountryFeatureTitle : Localizable.modalsNewUpsellCountryTitle
         case .safeMode:
             return Localizable.modalsUpsellSafeModeTitle
         case .moderateNAT:
             return Localizable.modalsUpsellModerateNatTitle
         case .vpnAccelerator:
-            return Localizable.upsellVpnAcceleratorTitle
+            return legacy ? Localizable.upsellVpnAcceleratorTitle : Localizable.modalsNewUpsellVpnAcceleratorTitle
         case .customization:
             return Localizable.upsellCustomizationTitle
         case .profiles:
@@ -101,28 +103,46 @@ public enum ModalType {
         }
     }
 
-    private func subtitle() -> ModalModel.Subtitle? {
+    private func subtitle(legacy: Bool) -> ModalModel.Subtitle? {
         switch self {
         case .netShield:
-            return .init(text: Localizable.modalsUpsellFeaturesSubtitle, boldText: [])
+            return .init(
+                text: legacy ? Localizable.modalsUpsellFeaturesSubtitle : Localizable.modalsNewUpsellNetshieldSubtitle,
+                boldText: legacy ? [] : [Localizable.modalsNewUpsellNetshieldSubtitleBold]
+            )
         case .secureCore:
-            return .init(text: Localizable.modalsUpsellFeaturesSubtitle, boldText: [])
-        case .allCountries:
-            return .init(text: Localizable.modalsUpsellFeaturesSubtitle, boldText: [])
+            return .init(
+                text: legacy ? Localizable.modalsUpsellFeaturesSubtitle : Localizable.modalsNewUpsellSecureCoreSubtitle,
+                boldText: legacy ? [] : [Localizable.modalsNewUpsellSecureCoreSubtitleBold])
+        case .allCountries(let numberOfServers, let numberOfCountries):
+            let text = legacy ?
+                Localizable.modalsUpsellFeaturesSubtitle :
+                Localizable.modalsNewUpsellAllCountriesSubtitle(numberOfServers, numberOfCountries)
+            return .init(text: text, boldText: legacy ? [] : [Localizable.modalsNewUpsellAllCountriesSubtitleBold])
         case .country:
-            return .init(text: Localizable.upsellCountryFeatureSubtitle, 
-                         boldText: [Localizable.upsellCountryFeatureSubtitleBold])
+            return .init(
+                text: legacy ? Localizable.upsellCountryFeatureSubtitle : Localizable.modalsNewUpsellCountrySubtitle,
+                boldText: legacy ? [] : [Localizable.upsellCountryFeatureSubtitleBold]
+            )
         case .safeMode:
-            return .init(text: Localizable.modalsUpsellFeaturesSafeModeSubtitle, boldText: [])
+            return .init(text: Localizable.modalsUpsellFeaturesSafeModeSubtitle)
         case .moderateNAT:
-            return .init(text: Localizable.modalsUpsellModerateNatSubtitle, boldText: [])
+            return .init(
+                text: legacy ? Localizable.modalsUpsellModerateNatSubtitle : Localizable.modalsNewUpsellModerateNatSubtitle,
+                boldText: [Localizable.modalsUpsellModerateNatSubtitleBold]
+            )
         case .vpnAccelerator:
-            return nil
+            return legacy ? nil : .init(text: Localizable.modalsNewUpsellVpnAcceleratorSubtitle)
         case .customization:
-            return nil
+            return legacy ? nil : .init(
+                text: Localizable.modalsNewUpsellCustomizationSubtitle,
+                boldText: [Localizable.upsellCustomizationAccessLANBold]
+            )
         case .profiles:
-            return .init(text: Localizable.upsellProfilesSubtitle, 
-                         boldText: [Localizable.upsellProfilesSubtitleBold])
+            return .init(
+                text: legacy ? Localizable.upsellProfilesSubtitle : Localizable.modalsNewUpsellProfilesSubtitle,
+                boldText: [Localizable.upsellProfilesSubtitleBold1].appending(legacy ? [] : [Localizable.upsellProfilesSubtitleBold2])
+            )
         case let .cantSkip(before, _, _):
             if before.timeIntervalSinceNow > 0 { // hide the subtitle after timer runs out
                 return .init(text: Localizable.upsellSpecificLocationSubtitle, boldText: [])
@@ -138,11 +158,11 @@ public enum ModalType {
             return .init(text: Localizable.welcomeUpgradeSubtitleUnlimited, boldText: [])
 #endif
         case .welcomeFallback:
-            return .init(text: Localizable.welcomeUpgradeSubtitleFallback, boldText: [])
+            return .init(text: Localizable.welcomeUpgradeSubtitleFallback)
         case .welcomeToProton:
-            return .init(text: Localizable.welcomeToProtonSubtitle, boldText: [])
+            return .init(text: Localizable.welcomeToProtonSubtitle)
         case .subscription:
-            return .init(text: Localizable.upsellPlansListSubtitle, boldText: [])
+            return .init(text: Localizable.upsellPlansListSubtitle)
         }
     }
 
@@ -195,20 +215,36 @@ public enum ModalType {
         switch self {
         case .netShield:
             Asset.netshield.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
         case .secureCore:
             Asset.secureCore.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
         case .allCountries:
             Asset.plusCountries.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
         case .safeMode:
             Asset.safeMode.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
         case .moderateNAT:
             Asset.moderateNAT.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
         case .vpnAccelerator:
             Asset.speed.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
         case .customization:
             Asset.customisation.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
         case .profiles:
             Asset.profiles.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
         case let .country(country, _, _):
             ZStack {
                 Asset.flatIllustration.swiftUIImage
@@ -260,6 +296,15 @@ public enum ModalType {
         switch self {
         default:
             return true
+        }
+    }
+
+    public var hasNewUpsellScreen: Bool {
+        switch self {
+        case .profiles, .country, .netShield, .vpnAccelerator, .moderateNAT, .customization, .allCountries, .secureCore, .subscription:
+            return true
+        case .welcomePlus, .welcomeUnlimited, .welcomeFallback, .welcomeToProton, .safeMode, .cantSkip:
+            return false
         }
     }
 }

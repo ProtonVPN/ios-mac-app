@@ -17,31 +17,44 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
-import CombineSchedulers
 import Modals
 
-@MainActor
 struct PlanOptionsView: View {
+    private static let imagePadding: EdgeInsets = EdgeInsets(top: 0, leading: 52, bottom: 24, trailing: 52)
     private static let maxContentWidth: CGFloat = 480
-    private static let imagePadding: EdgeInsets = .init(top: 0, leading: 52, bottom: 24, trailing: 52)
 
-    let modalType: ModalType
+    @Environment(\.dismiss) var dismiss
 
     @ObservedObject var viewModel: PlanOptionsListViewModel
 
+    let modalType: ModalType
+    let displayBodyFeatures: Bool
+
+    init(viewModel: PlanOptionsListViewModel, modalType: ModalType, displayBodyFeatures: Bool = false) {
+        self.modalType = modalType
+        self.displayBodyFeatures = displayBodyFeatures
+        self.viewModel = viewModel
+    }
+
     var body: some View {
-        let modalModel = modalType.modalModel()
+        let modalModel = modalType.modalModel(legacy: displayBodyFeatures)
+        let showSecondaryButton = displayBodyFeatures
 
         UpsellBackgroundView(showGradient: modalModel.shouldAddGradient) {
             VStack {
-                ModalBodyView(modalType: modalType, imagePadding: Self.imagePadding)
+                ModalBodyView(modalType: modalType, displayBodyFeatures: displayBodyFeatures, imagePadding: imagePadding)
 
                 Spacer()
 
-                PlanOptionsListView(viewModel: viewModel)
+                PlanOptionsListView(viewModel: viewModel, showSecondaryButton: showSecondaryButton)
             }
             .padding(.horizontal, .themeSpacing16)
             .padding(.bottom, .themeSpacing8)
+            .safeAreaInset(edge: .top) {
+                if !showSecondaryButton {
+                    navigationBar
+                }
+            }
             .frame(maxWidth: Self.maxContentWidth)
         }
         .overlay(
@@ -50,6 +63,20 @@ struct PlanOptionsView: View {
                 .animation(.easeInOut, value: viewModel.isPurchaseInProgress)
         )
         .background(Color(.background))
+    }
+
+    private var navigationBar: some View {
+        HStack {
+            Button {
+                dismiss()
+            } label: {
+                Image(systemName: "xmark")
+            }
+
+            Spacer()
+        }
+        .tint(Color(.icon))
+        .padding()
     }
 
     @ViewBuilder
@@ -64,9 +91,15 @@ struct PlanOptionsView: View {
             .ignoresSafeArea()
         }
     }
+
+    private var imagePadding: EdgeInsets? {
+        return modalType.hasNewUpsellScreen ? Self.imagePadding : nil
+    }
 }
 
 #if swift(>=5.9)
+import CombineSchedulers
+
 #Preview("Classic") {
     let scheduler: AnySchedulerOf<DispatchQueue> = .main
     let plans: [PlanOption] = [
@@ -76,7 +109,7 @@ struct PlanOptionsView: View {
     let client: PlansClient = .init(retrievePlans: { plans }, validate: { _ in
         try? await scheduler.sleep(for: .milliseconds((2000...3000).randomElement()!))
     })
-    return PlanOptionsView(modalType: .subscription, viewModel: .init(client: client))
+    return PlanOptionsView(viewModel: .init(client: client), modalType: .subscription)
 }
 
 #Preview("Loading") {
@@ -93,7 +126,7 @@ struct PlanOptionsView: View {
         validate: { _ in
             try? await scheduler.sleep(for: .milliseconds((2000...3000).randomElement()!))
         })
-    return PlanOptionsView(modalType: .subscription, viewModel: .init(client: client))
+    return PlanOptionsView(viewModel: .init(client: client), modalType: .subscription)
 }
 
 #Preview("Currencies") {
@@ -104,7 +137,7 @@ struct PlanOptionsView: View {
         .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
     ]
     let client: PlansClient = .init(retrievePlans: { plans }, validate: { _ in () })
-    return PlanOptionsView(modalType: .subscription, viewModel: .init(client: client))
+    return PlanOptionsView(viewModel: .init(client: client), modalType: .subscription)
 }
 #else
 struct PlansOptionsListView_Previews: PreviewProvider {

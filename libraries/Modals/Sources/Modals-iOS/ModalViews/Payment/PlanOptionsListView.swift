@@ -26,7 +26,14 @@ import Modals
 struct PlanOptionsListView: View {
     @ObservedObject var viewModel: PlanOptionsListViewModel
 
+    let showSecondaryButton: Bool
+
     private var showHeader: Bool { viewModel.plans.count > 1 }
+
+    init(viewModel: PlanOptionsListViewModel, showSecondaryButton: Bool = false) {
+        self.viewModel = viewModel
+        self.showSecondaryButton = showSecondaryButton
+    }
 
     var body: some View {
         VStack(spacing: .themeSpacing16) {
@@ -57,7 +64,7 @@ struct PlanOptionsListView: View {
     }
 
     private var loadingView: some View {
-        PlanOptionView(planOption: .loading, isLoading: true, isSelected: false)
+        PlanOptionView(state: .loading)
     }
 
     private func discount(option: PlanOption) -> Int? {
@@ -66,13 +73,15 @@ struct PlanOptionsListView: View {
 
     private var contentView: some View {
         ForEach(viewModel.plans, id: \.self) { option in
-            let isSelected: Bool = viewModel.selectedPlan == option
-            PlanOptionView(planOption: option,
-                           isLoading: viewModel.isLoading,
-                           isSelected: isSelected,
-                           discount: discount(option: option))
-            .onTapGesture {
-                withAnimation { viewModel.selectedPlan = option }
+            if viewModel.isLoading {
+                loadingView
+            } else {
+                let isSelected: Bool = viewModel.selectedPlan == option
+                let discount: Int? = discount(option: option)
+                PlanOptionView(state: .loaded(option: option, isSelected: isSelected, discount: discount))
+                    .onTapGesture {
+                        withAnimation { viewModel.selectedPlan = option }
+                    }
             }
         }
     }
@@ -91,12 +100,14 @@ struct PlanOptionsListView: View {
             .buttonStyle(PrimaryButtonStyle())
             .disabled(shouldDisableValidateButton)
 
-            Button {
-                viewModel.notNow()
-            } label: {
-                Text(Localizable.modalsUpsellStayFree)
+            if showSecondaryButton {
+                Button {
+                    viewModel.notNow()
+                } label: {
+                    Text(Localizable.modalsUpsellStayFree)
+                }
+                .buttonStyle(SecondaryButtonStyle())
             }
-            .buttonStyle(SecondaryButtonStyle())
         }
     }
 }

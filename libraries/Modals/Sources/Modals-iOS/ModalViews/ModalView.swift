@@ -21,10 +21,8 @@ import SharedViews
 import Strings
 import Theme
 import Modals
-import ProtonCoreUIFoundations
 
 struct ModalView: View {
-
     private static let maxContentWidth: CGFloat = 480
 
     let modalType: ModalType

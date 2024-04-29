@@ -35,6 +35,7 @@ protocol OnboardingServiceDelegate: AnyObject {
 protocol OnboardingService: AnyObject {
     var delegate: OnboardingServiceDelegate? { get set }
 
+    @MainActor
     func showOnboarding()
 }
 
@@ -43,19 +44,18 @@ final class OnboardingModuleService {
 
     private let windowService: WindowService
     private let planService: PlanService
-    private let oneClickPayment: OneClickPayment?
+    private let alertService: CoreAlertService
+    private let modalsFactory: ModalsFactory
+
+    private var oneClickPayment: OneClickPayment?
 
     weak var delegate: OnboardingServiceDelegate?
 
     init(factory: Factory) {
-        windowService = factory.makeWindowService()
-        planService = factory.makePlanService()
-        do {
-            oneClickPayment = try OneClickPayment(factory: factory, payments: planService.payments)
-        } catch {
-            log.debug("One click payment disabled: \(error)")
-            oneClickPayment = nil
-        }
+        self.windowService = factory.makeWindowService()
+        self.planService = factory.makePlanService()
+        self.alertService = factory.makeCoreAlertService()
+        self.modalsFactory = ModalsFactory()
     }
 }
 
@@ -69,20 +69,23 @@ extension OnboardingModuleService: OnboardingService {
     }
 
     private func welcomeToProtonViewController() -> UIViewController {
-        ModalsFactory().modalViewController(modalType: .welcomeToProton,
-                                            primaryAction: { [weak self] in
-            self?.welcomeToProtonPrimaryAction()
+        modalsFactory.modalViewController(modalType: .welcomeToProton, primaryAction: {
+            self.welcomeToProtonPrimaryAction()
         })
     }
 
     func welcomeToProtonPrimaryAction() {
-        guard let oneClickPayment else {
-            windowService.addToStack(allCountriesUpsellViewController(),
-                                     checkForDuplicates: false)
-            return
-        }
-        let viewController = oneClickPayment.oneClickIAPViewController { [weak self] in
-            self?.onboardingCoordinatorDidFinish()
+        let viewController: UIViewController
+        do {
+            let oneClickPayment = try OneClickPayment(alertService: alertService, planService: planService, payments: planService.payments)
+            oneClickPayment.completionHandler = { [weak self] in
+                self?.onboardingCoordinatorDidFinish()
+            }
+            viewController = oneClickPayment.oneClickIAPViewController()
+            self.oneClickPayment = oneClickPayment
+        } catch {
+            log.debug("One click payment disabled: \(error)")
+            viewController = allCountriesUpsellViewController()
         }
         windowService.addToStack(viewController, checkForDuplicates: false)
     }
@@ -91,7 +94,7 @@ extension OnboardingModuleService: OnboardingService {
         let serversCount = AccountPlan.plus.serversCount
         let countriesCount = self.planService.countriesCount
         let allCountriesUpsell: ModalType = .allCountries(numberOfServers: serversCount, numberOfCountries: countriesCount)
-        return ModalsFactory().modalViewController(modalType: allCountriesUpsell) {
+        return modalsFactory.modalViewController(modalType: allCountriesUpsell) {
             self.planService.createPlusPlanUI {
                 self.onboardingCoordinatorDidFinish()
             }

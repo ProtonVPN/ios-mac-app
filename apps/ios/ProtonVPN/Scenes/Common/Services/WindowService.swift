@@ -29,7 +29,6 @@ protocol WindowServiceFactory {
 }
 
 protocol WindowService: AnyObject {
-
     func show(viewController: UIViewController)
     func addToStack(_ controller: UIViewController, checkForDuplicates: Bool)
     func popStackToRoot()
@@ -53,8 +52,8 @@ enum PresentedMessageType {
     }
 }
 
-class WindowServiceImplementation: WindowService {
-    
+final class WindowServiceImplementation: WindowService {
+
     private let window: UIWindow
 
     var rootViewControllerObserver: NSKeyValueObservation?

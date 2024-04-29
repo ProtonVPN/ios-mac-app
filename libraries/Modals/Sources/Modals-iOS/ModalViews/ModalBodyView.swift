@@ -20,16 +20,17 @@ import SwiftUI
 import Modals
 
 struct ModalBodyView: View {
-
     let modalType: ModalType
+    let modalModel: ModalModel
 
+    private let displayBodyFeatures: Bool
     private let imagePadding: EdgeInsets?
-    private let modalModel: ModalModel
 
-    init(modalType: ModalType, imagePadding: EdgeInsets? = nil) {
+    init(modalType: ModalType, displayBodyFeatures: Bool = true, imagePadding: EdgeInsets? = nil) {
         self.modalType = modalType
-        self.imagePadding = imagePadding
         self.modalModel = modalType.modalModel()
+        self.displayBodyFeatures = displayBodyFeatures
+        self.imagePadding = imagePadding
     }
 
     var body: some View {
@@ -45,9 +46,7 @@ struct ModalBodyView: View {
                     Text(modalModel.title)
                         .themeFont(.headline)
                         .multilineTextAlignment(.center)
-                    if let subtitle = modalModel.subtitle?.text,
-                       let subtitle = try? AttributedString(markdown: subtitle,
-                                                            options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace)) {
+                    if let subtitle = modalModel.subtitle?.attributedString {
                         Text(subtitle)
                             .themeFont(.body1(.regular))
                             .foregroundColor(Color(.text, .weak))
@@ -55,23 +54,37 @@ struct ModalBodyView: View {
                             .frame(maxWidth: .infinity)
                     }
                 }
+
                 Spacer().frame(height: .themeSpacing24)
-                let features = modalModel.features
-                if features.contains(.banner) {
-                    BannerView()
-                } else if !features.isEmpty {
-                    ModalFeaturesView(features: features)
+
+                if displayBodyFeatures {
+                    let features = modalModel.features
+                    if features.contains(.banner) {
+                        BannerView()
+                    } else if !features.isEmpty {
+                        ModalFeaturesView(features: features)
+                    }
                 }
             }
         }
     }
 }
 
+private extension ModalModel.Subtitle {
+    var attributedString: AttributedString? {
+        let markdown = boldText
+            .reduce(into: text) { partialResult, boldPart in
+                partialResult = partialResult.replacingOccurrences(of: boldPart, with: "**\(boldPart)**")
+            }
+        return try? AttributedString(markdown: markdown, options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace))
+    }
+}
+
 struct ModalBody_Previews: PreviewProvider {
     static var previews: some View {
-        ModalBodyView(modalType: .welcomePlus(numberOfServers: 1800,
-                                               numberOfDevices: 10,
-                                               numberOfCountries: 68))
-            .previewDisplayName("ModalBody")
+        ModalBodyView(
+            modalType: .welcomePlus(numberOfServers: 1800, numberOfDevices: 10, numberOfCountries: 68)
+        )
+        .previewDisplayName("ModalBody")
     }
 }

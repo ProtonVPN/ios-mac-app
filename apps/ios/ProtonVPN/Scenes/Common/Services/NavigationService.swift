@@ -446,6 +446,7 @@ extension NavigationService: LoginServiceDelegate {
         presentMainInterface()
     }
 
+    @MainActor
     func userDidSignUp() {
         onboardingService.showOnboarding()
         propertiesManager.isOnboardingInProgress = true

@@ -26,17 +26,22 @@ import LegacyCommon
 import ProtonCoreFeatureFlags
 import ProtonCorePayments
 
-class OneClickPayment {
+final class OneClickPayment {
     typealias Factory = PlanServiceFactory & CoreAlertServiceFactory
+
+    let plansDataSource: PlansDataSourceProtocol
+
+    var completionHandler: () -> Void = {
+        assertionFailure("You have to override this completionHandler!")
+    }
 
     private let alertService: CoreAlertService
     private let planService: PlanService
     private let payments: Payments
-    private var completionHandler: (() -> Void)?
 
-    var plansDataSource: PlansDataSourceProtocol
+    private var plansClientValue: PlansClient?
 
-    init?(factory: Factory, payments: Payments) throws {
+    init(alertService: CoreAlertService, planService: PlanService, payments: Payments) throws {
         guard FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.oneClickPayment) else {
             throw "OneClickAIAP FF disabled!"
         }
@@ -44,26 +49,31 @@ class OneClickPayment {
             throw "DynamicPlan FF disabled!"
         }
         self.plansDataSource = plansDataSource
-        planService = factory.makePlanService()
-        alertService = factory.makeCoreAlertService()
+        self.alertService = alertService
+        self.planService = planService
         self.payments = payments
     }
 
-    @MainActor
-    func oneClickIAPViewController(completionHandler: @escaping () -> Void) -> UIViewController {
-        self.completionHandler = completionHandler
-        return ModalsFactory().subscriptionViewController(plansClient: plansClient())
+    func plansClient(validationHandler: (() -> Void)? = nil, notNowHandler: (() -> Void)? = nil) -> PlansClient {
+        let client = PlansClient(
+            retrievePlans: { [weak self] in
+                guard let self else { throw "Presenting screen was dismissed" }
+                return try await self.planOptions(with: plansDataSource)
+            },
+            validate: { @MainActor [weak self] in
+                validationHandler?()
+                await self?.validate(selectedPlan: $0)
+            }, notNow: { [weak self] in
+                notNowHandler?()
+                self?.completionHandler()
+            })
+        plansClientValue = client
+        return client
     }
 
-    private func plansClient() -> PlansClient {
-        PlansClient(retrievePlans: { [weak self] in
-            guard let self else { throw "Onboarding was dismissed" }
-            return try await self.planOptions(with: plansDataSource)
-        }, validate: { [weak self] in
-            await self?.validate(selectedPlan: $0)
-        }, notNow: { [weak self] in
-            self?.completionHandler?()
-        })
+    @MainActor
+    func oneClickIAPViewController() -> UIViewController {
+        return ModalsFactory().upsellViewController(modalType: .subscription, client: plansClient())
     }
 
     @MainActor
@@ -77,9 +87,8 @@ class OneClickPayment {
         switch result {
         case .purchasedPlan(let plan):
             log.debug("Purchased plan: \(plan.protonName)", category: .iap)
-            await planService.delegate?.paymentTransactionDidFinish(modalSource: nil,
-                                                                    newPlanName: plan.protonName)
-            completionHandler?()
+            await planService.delegate?.paymentTransactionDidFinish(modalSource: nil, newPlanName: plan.protonName)
+            completionHandler()
         case .toppedUpCredits:
             assertionFailure("This flow only supports subscriptions, got `toppedUpCredits` result")
             break
@@ -99,7 +108,7 @@ class OneClickPayment {
         }
     }
 
-    var inAppPurchasePlans: [(PlanOption, InAppPurchasePlan)] = []
+    private var inAppPurchasePlans: [(PlanOption, InAppPurchasePlan)] = []
 
     @MainActor
     func planOptions(with plansDataSource: PlansDataSourceProtocol) async throws -> [PlanOption] {

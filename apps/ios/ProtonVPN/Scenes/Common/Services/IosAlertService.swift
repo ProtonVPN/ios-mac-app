@@ -29,7 +29,7 @@ import UIKit
 import ProtonCoreUIFoundations
 import Strings
 
-class IosAlertService {
+final class IosAlertService {
         
     typealias Factory = UIAlertServiceFactory &
         AppSessionManagerFactory &
@@ -50,6 +50,8 @@ class IosAlertService {
 
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var modalsFactory: ModalsFactory = ModalsFactory()
+
+    private var oneClickPayment: OneClickPayment?
 
     @ConcurrentlyReadable
     private var upsellAlerts: [UUID: UpsellAlert] = [:]
@@ -309,7 +311,7 @@ extension IosAlertService: CoreAlertService {
                                      numberOfDevices: numberOfDevices,
                                      numberOfCountries: numberOfCountries)
         }
-        let viewController = modalsFactory.modalViewController(modalType: modalType, primaryAction:  { [weak self] in
+        let viewController = modalsFactory.modalViewController(modalType: modalType, primaryAction: { [weak self] in
             self?.windowService.dismissModal(nil)
         })
         viewController.modalPresentationStyle = .overFullScreen
@@ -317,12 +319,32 @@ extension IosAlertService: CoreAlertService {
     }
 
     private func show(alert: UpsellAlert, modalType: Modals.ModalType) {
-        // TODO: Migrate to modalsFactory.modalViewController(modalType: modalType)
-        let upsellViewController = modalsFactory.upsellViewController(modalType: modalType)
-        upsellAlerts[upsellViewController.id] = alert
-
-        upsellViewController.delegate = self
-        windowService.present(modal: upsellViewController)
+        let viewController: UIViewController
+        do {
+            let oneClickPayment = try OneClickPayment(alertService: self, planService: planService, payments: planService.payments)
+            oneClickPayment.completionHandler = { [weak self] in
+                self?.windowService.dismissModal(nil)
+            }
+            viewController = modalsFactory.upsellViewController(
+                modalType: modalType,
+                client: oneClickPayment.plansClient(
+                    validationHandler: {
+                        NotificationCenter.default.post(name: .userEngagedWithUpsellAlert, object: alert.modalSource)
+                    },
+                    notNowHandler: { [weak self] in
+                        self?.windowService.dismissModal(nil)
+                    }
+                )
+            )
+            viewController.modalPresentationStyle = .overFullScreen
+            self.oneClickPayment = oneClickPayment
+        } catch {
+            let upsellViewController = modalsFactory.upsellViewController(modalType: modalType)
+            upsellViewController.delegate = self
+            upsellAlerts[upsellViewController.id] = alert
+            viewController = upsellViewController
+        }
+        windowService.present(modal: viewController)
         NotificationCenter.default.post(name: .upsellAlertWasDisplayed, object: alert.modalSource)
     }
 
