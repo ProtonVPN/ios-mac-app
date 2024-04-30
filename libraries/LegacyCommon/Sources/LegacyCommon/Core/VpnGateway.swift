@@ -546,7 +546,6 @@ public class VpnGateway: VpnGatewayProtocol {
                 freeServersOnly: refreshFreeTierInfo
             )
             self.profileManager.refreshProfiles()
-            NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
 
         case let .failure(error):
             // Ignore failures as this is a non-critical call
