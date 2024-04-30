@@ -49,7 +49,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d countries</string>
+			<string>%d country</string>
 			<key>other</key>
 			<string>%d countries</string>
 		</dict>
