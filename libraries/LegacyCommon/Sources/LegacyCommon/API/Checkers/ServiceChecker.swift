@@ -21,6 +21,8 @@
 
 import Foundation
 
+import CommonNetworking
+
 class ServiceChecker {
     private static let forwardedAddress = "127.0.0.3"
     

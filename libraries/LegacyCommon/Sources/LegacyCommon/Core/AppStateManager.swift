@@ -23,6 +23,7 @@ import Ergonomics
 import Foundation
 import Reachability
 import Timer
+import CommonNetworking
 import VPNShared
 #if canImport(AppKit)
 import AppKit

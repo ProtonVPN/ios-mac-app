@@ -39,6 +39,7 @@ let package = Package(
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Timer"),
 
+        .package(path: "../Shared/CommonNetworking"),
         .package(path: "../Shared/ExtensionIPC"),
         .package(path: "../Shared/Localization"),
         .package(path: "../Shared/Persistence"),
@@ -77,6 +78,7 @@ let package = Package(
                 "Localization",
 
                 "ExtensionIPC",
+                "CommonNetworking",
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNCrypto", package: "NEHelper"),

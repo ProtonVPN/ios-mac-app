@@ -15,6 +15,7 @@ import ProtonCoreFoundations
 import ProtonCoreNetworking
 import ProtonCoreServices
 
+import CommonNetworking
 import Domain
 import VPNShared
 
@@ -35,9 +36,10 @@ public final class NetworkingMock {
         PMAPIService.trustKit = tk
         PMAPIService.noTrustKit = (tk == nil)
 
-        return PMAPIService.createAPIService(doh: DoHVPN(apiHost: "", verifyHost: "", alternativeRouting: false, appState: .disconnected),
-                                      sessionUID: "UID",
-                                      challengeParametersProvider: ChallengeParametersProvider.empty
+        return PMAPIService.createAPIService(
+            doh: DoHVPN.mock,
+            sessionUID: "UID",
+            challengeParametersProvider: ChallengeParametersProvider.empty
         )
     }
 

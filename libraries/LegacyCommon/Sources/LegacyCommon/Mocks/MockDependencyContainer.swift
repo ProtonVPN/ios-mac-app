@@ -22,6 +22,7 @@ import NetworkExtension
 
 import Dependencies
 
+import CommonNetworking
 import Domain
 import Localization
 import Timer

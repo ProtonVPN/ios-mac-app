@@ -22,6 +22,7 @@
 
 import Foundation
 import UIKit
+import CommonNetworking
 import LegacyCommon
 import BugReport
 import Search
@@ -179,13 +180,15 @@ extension DoHVPN {
         let atlasSecret: String? = nil
         #endif
 
-        self.init(apiHost: ObfuscatedConstants.apiHost,
-                  verifyHost: ObfuscatedConstants.humanVerificationV3Host,
-                  alternativeRouting: alternativeRouting,
-                  customHost: customHost,
-                  atlasSecret: atlasSecret,
-                  // Will get updated once AppStateManager is initialized
-                  appState: .disconnected)
+        self.init(
+            apiHost: ObfuscatedConstants.apiHost,
+            verifyHost: ObfuscatedConstants.humanVerificationV3Host,
+            alternativeRouting: alternativeRouting,
+            customHost: customHost,
+            atlasSecret: atlasSecret,
+            isConnected: false, // Will get updated once AppStateManager is initialized
+            isAppStateNotificationConnected: DoHVPN.isAppStateChangeNotificationInConnectedState
+        )
     }
 }
 

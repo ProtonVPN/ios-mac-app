@@ -22,6 +22,7 @@ import ProtonCoreChallenge
 #endif
 import GoLibs
 
+import CommonNetworking
 import Ergonomics
 import VPNAppCore // UnauthKeychain
 import VPNShared
@@ -427,6 +428,23 @@ extension CoreNetworking: AuthSessionInvalidatedDelegate {
         authKeychain.clear()
         if isAuthenticatedSession {
             delegate.onLogout()
+        }
+    }
+}
+
+extension DoHVPN {
+    /// Default implementation of checking whether a `Notification` contains an `AppState` and whether its in the
+    /// connected state. This has been crudely extracted out of the DoH implementation to remove the dependency on
+    /// `LegacyCommon.AppState`, until we have a better place to move `AppState` to.
+    public static func isAppStateChangeNotificationInConnectedState(notification: Notification) -> Bool {
+        guard let state = notification.object as? AppState else {
+            log.error("Notification object is not an `AppState`")
+            return false
+        }
+        if case .connected(_) = state {
+            return true
+        } else {
+            return false
         }
     }
 }

@@ -17,6 +17,7 @@ import ProtonCorePayments
 import ProtonCorePushNotifications
 import ProtonCoreUIFoundations
 import UIKit
+import CommonNetworking
 import VPNShared
 import Strings
 
