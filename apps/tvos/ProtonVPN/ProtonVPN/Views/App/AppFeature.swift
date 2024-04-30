@@ -21,7 +21,7 @@ import ComposableArchitecture
 @Reducer
 struct AppFeature {
     @ObservableState
-    struct State {
+    struct State: Equatable {
         var welcome = WelcomeFeature.State()
         var main: MainFeature.State?
     }
@@ -47,6 +47,7 @@ struct AppFeature {
             case .main:
                 return .none
             case .welcome(.destination(.presented(.signIn(.signInSuccess(let credentials))))):
+                state.welcome.destination = nil
                 state.main = MainFeature.State(currentTab: .home, settings: .init(userName: credentials.userID))
                 return .none
             case .welcome:

@@ -68,8 +68,8 @@ struct WelcomeView: View {
             .navigationDestination(
                 item: $store.scope(state: \.destination?.createAccount,
                                    action: \.destination.createAccount)
-            ) { _ in
-                CreateAccountView()
+            ) { store in
+                CreateAccountView(store: store)
             }
         }
     }

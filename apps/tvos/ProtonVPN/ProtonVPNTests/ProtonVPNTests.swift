@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import XCTest
-@testable import ProtonVPN
+@testable import ProtonVPN_TV
 
 final class ProtonVPNTests: XCTestCase {
 
@@ -43,5 +43,4 @@ final class ProtonVPNTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
-
 }

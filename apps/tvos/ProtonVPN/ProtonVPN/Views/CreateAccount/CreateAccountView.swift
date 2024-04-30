@@ -17,8 +17,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+import ComposableArchitecture
 
 struct CreateAccountView: View {
+    
+    var store: StoreOf<CreateAccountFeature>
+
     var body: some View {
         VStack(spacing: 169) {
             Image(.vpnWordmarkNoBg)

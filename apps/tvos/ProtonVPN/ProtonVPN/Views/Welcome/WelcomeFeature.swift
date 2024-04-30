@@ -41,7 +41,7 @@ struct WelcomeFeature {
         Reduce { state, action in
             switch action {
             case .showSignIn:
-                state.destination = .signIn(SignInFeature.State(loggedIn: false))
+                state.destination = .signIn(SignInFeature.State())
                 return .none
             case .showCreateAccount:
                 state.destination = .createAccount(.init())
@@ -51,19 +51,5 @@ struct WelcomeFeature {
             }
         }
         .ifLet(\.$destination, action: \.destination)
-    }
-}
-
-@Reducer
-struct CreateAccountFeature {
-    @ObservableState
-    struct State: Equatable { }
-
-    enum Action { }
-
-    var body: some Reducer<State, Action> {
-        Reduce { state, action in
-            return .none
-        }
     }
 }

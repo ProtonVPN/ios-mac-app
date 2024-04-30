@@ -20,34 +20,24 @@ import ComposableArchitecture
 
 @Reducer
 struct SignInFeature {
-    @Reducer(state: .equatable)
-    enum Destination {
-        case settings(SettingsFeature)
-    }
-
     @ObservableState
     struct State: Equatable {
-        @Presents var destination: Destination.State?
         var signInCode: String?
-        var loggedIn: Bool
-        var serverPoll: ServerPoll
+        var serverPoll: ServerPollConfiguration
         var selector: String?
-        
-        init(destination: Destination.State? = nil,
-             signInCode: String? = nil,
-             loggedIn: Bool,
-             serverPoll: ServerPoll = .init(configuration: .default),
+        var remainingAttempts: Int
+
+        init(signInCode: String? = nil,
+             serverPoll: ServerPollConfiguration = .default,
              selector: String? = nil) {
-            self.destination = destination
             self.signInCode = signInCode
-            self.loggedIn = loggedIn
             self.serverPoll = serverPoll
             self.selector = selector
+            self.remainingAttempts = serverPoll.failAfterAttempts
         }
     }
 
     enum Action {
-        case destination(PresentationAction<Destination.Action>)
         case pollServer
         case fetchSignInCode
         case presentSignInCode(SignInCode)
@@ -55,28 +45,27 @@ struct SignInFeature {
     }
 
     @Dependency(NetworkClient.self) var networkClient
-    @Dependency(\.dismiss) var dismiss
+    @Dependency(\.continuousClock) var clock
+
+    private enum CancelID { case timer }
 
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .pollServer:
-                guard let selector = state.selector, 
-                        state.serverPoll.tick() else {
-                    print("failed polling")
-                    return .none
+                guard let selector = state.selector,
+                      state.remainingAttempts > 0 else {
+                    return .cancel(id: CancelID.timer)
                 }
-                let delay = state.serverPoll.configuration.periodInSeconds
+                state.remainingAttempts -= 1
                 return .run { send in
                     let credentials = try await networkClient.forkedSession(selector)
                     await send(.signInSuccess(credentials))
                 } catch: { error, send in
-                    try? await Task.sleep(for: .seconds(delay)) // wait before trying again
-                    await send(.pollServer)
+                    // failed to fork session
                 }
-            case .signInSuccess(let credentials):
-                state.destination = .settings(.init(userName: credentials.userID))
-                return .none
+            case .signInSuccess:
+                return .cancel(id: CancelID.timer)
             case .fetchSignInCode:
                 return .run { send in
                     let code = try await networkClient.fetchSignInCode()
@@ -87,39 +76,16 @@ struct SignInFeature {
             case .presentSignInCode(let code):
                 state.signInCode = code.userCode
                 state.selector = code.selector
-                let delay = state.serverPoll.configuration.delayBeforePollingStartsInSeconds
-                return .run { [delay] send in
-                    try? await Task.sleep(for: .seconds(delay))
-                    await send(.pollServer)
+                let conf = state.serverPoll
+                state.remainingAttempts = conf.failAfterAttempts
+                return .run { [conf] send in
+                    try? await clock.sleep(for: conf.delayBeforePollingStarts)
+                    for await _ in clock.timer(interval: conf.period) {
+                        await send(.pollServer)
+                    }
                 }
-            case .destination(_):
-                return .none
+                .cancellable(id: CancelID.timer, cancelInFlight: true)
             }
         }
-        .ifLet(\.$destination, action: \.destination)
-    }
-}
-
-struct ServerPoll: Equatable {
-    struct Configuration: Equatable {
-        let delayBeforePollingStartsInSeconds: Int
-        let periodInSeconds: Int
-        let failAfterAttempts: Int
-        static var `default` = Configuration(delayBeforePollingStartsInSeconds: 5,
-                                             periodInSeconds: 1,
-                                             failAfterAttempts: 5)
-    }
-    
-    let configuration: Configuration
-
-    lazy var remainingTicks: Int = configuration.failAfterAttempts
-
-    mutating func tick() -> Bool {
-        if remainingTicks < 1 {
-            remainingTicks = configuration.failAfterAttempts
-            return false
-        }
-        remainingTicks -= 1
-        return true
     }
 }

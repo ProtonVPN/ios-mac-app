@@ -22,7 +22,7 @@ import ComposableArchitecture
 struct SettingsFeature {
     @ObservableState
     struct State: Equatable {
-        var userName: String
+        let userName: String
         init(userName: String) {
             self.userName = userName
         }
