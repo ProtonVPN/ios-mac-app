@@ -21,6 +21,7 @@ import NetworkExtension
 import Timer
 import Localization
 import PMLogger
+import VPNAppCore // UnauthKeychain
 import VPNShared
 import Dependencies
 

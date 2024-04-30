@@ -24,6 +24,7 @@ import Ergonomics
 import LegacyCommon
 import Localization
 import Persistence
+import VPNAppCore // UnauthKeychain
 import VPNShared
 import VPNSharedTesting
 import ProtonCoreNetworking

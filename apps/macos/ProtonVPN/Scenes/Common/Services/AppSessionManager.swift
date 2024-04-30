@@ -30,6 +30,7 @@ import ProtonCoreUtilities
 import Domain
 import Ergonomics
 import LegacyCommon
+import VPNAppCore // UnauthKeychain
 import VPNShared
 
 enum SessionStatus {

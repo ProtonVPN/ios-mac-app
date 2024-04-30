@@ -70,6 +70,7 @@ let package = Package(
                 "Strings",
                 "Localization",
                 .product(name: "ProtonCoreUtilities", package: "protoncore"),
+                .product(name: "ProtonCoreNetworking", package: "protoncore"), // AuthCredential
                 .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay")
             ]
         ),

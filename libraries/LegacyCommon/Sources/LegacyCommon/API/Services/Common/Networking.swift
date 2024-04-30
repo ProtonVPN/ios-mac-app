@@ -23,6 +23,7 @@ import ProtonCoreChallenge
 import GoLibs
 
 import Ergonomics
+import VPNAppCore // UnauthKeychain
 import VPNShared
 
 public typealias SuccessCallback = (() -> Void)

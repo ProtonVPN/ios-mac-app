@@ -31,6 +31,7 @@ import Persistence
 import TimerMock
 
 import LegacyCommon
+import VPNAppCore // UnauthKeychain
 import VPNShared
 import VPNSharedTesting
 

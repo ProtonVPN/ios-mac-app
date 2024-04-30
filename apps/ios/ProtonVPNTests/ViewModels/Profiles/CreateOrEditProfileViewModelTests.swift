@@ -28,6 +28,7 @@ import Localization
 import LegacyCommon
 
 import TimerMock
+import VPNAppCore // UnauthKeychain
 import VPNShared
 import VPNSharedTesting
 import Dependencies

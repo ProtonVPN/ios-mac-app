@@ -32,6 +32,7 @@ import Ergonomics
 import ExtensionIPC
 import Search
 import Review
+import VPNAppCore // UnauthKeychain
 import VPNShared
 import LegacyCommon
 

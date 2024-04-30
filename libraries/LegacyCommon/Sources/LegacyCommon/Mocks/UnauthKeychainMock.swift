@@ -22,6 +22,7 @@
 #if DEBUG
 import Foundation
 import ProtonCoreNetworking
+import VPNAppCore // UnauthKeychain
 
 public class UnauthKeychainMock: UnauthKeychainHandle {
 
