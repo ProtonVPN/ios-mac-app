@@ -190,7 +190,7 @@ class VpnManagerTests: BaseConnectionTestCase {
 
             let manager = self.container.neVpnManager
 
-            XCTAssert(didDisconnectWireGuard, "Should have disconnected from openvpn first!")
+            XCTAssert(didDisconnectWireGuard, "Should have disconnected from wireguard first!")
 
             let protocolConfig = manager.protocolConfiguration
             XCTAssert(protocolConfig is NEVPNProtocolIKEv2, "Protocol configuration should be for IKEv2")
