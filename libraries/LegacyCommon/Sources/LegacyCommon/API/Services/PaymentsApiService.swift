@@ -18,6 +18,7 @@
 
 import Foundation
 import ProtonCoreNetworking
+import CommonNetworking
 
 public enum PaymentsApiServiceSuccess {
     case planUpgraded

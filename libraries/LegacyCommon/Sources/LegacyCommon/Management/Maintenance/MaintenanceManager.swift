@@ -24,6 +24,7 @@ import Foundation
 
 import Dependencies
 
+import CommonNetworking
 import Domain
 
 public protocol MaintenanceManagerFactory {

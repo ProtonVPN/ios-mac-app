@@ -18,6 +18,7 @@
 
 import Foundation
 import ProtonCoreUtilities
+import CommonNetworking
 
 public protocol TelemetryAPI {
     func flushEvent(event: [String: Any], isBusiness: Bool) async throws -> TelemetryResponse

@@ -20,6 +20,7 @@ import UIKit
 import CommonNetworking
 import VPNShared
 import Strings
+import CommonNetworking
 
 protocol LoginServiceFactory: AnyObject {
     func makeLoginService() -> LoginService

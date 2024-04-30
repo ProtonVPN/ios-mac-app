@@ -22,6 +22,7 @@
 
 #if DEBUG
 import Foundation
+import Domain
 
 // Please update as/when needed
 public class AppStateManagerMock: AppStateManager {

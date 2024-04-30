@@ -22,12 +22,14 @@
 import Ergonomics
 import Foundation
 import Reachability
+import Domain
 import Timer
 import CommonNetworking
 import VPNShared
 #if canImport(AppKit)
 import AppKit
 #endif
+import CommonNetworking
 
 public protocol AppStateManagerFactory {
     func makeAppStateManager() -> AppStateManager

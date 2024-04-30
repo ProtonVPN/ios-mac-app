@@ -1,5 +1,5 @@
 //
-//  Created on 30/04/2024.
+//  Created on 22/04/2024.
 //
 //  Copyright (c) 2024 Proton AG
 //
@@ -17,3 +17,16 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+
+public enum HttpStatusCode { // http status codes returned by the api
+
+    public static let notModified = 304
+
+    public static let badRequest = 400
+    public static let invalidAccessToken = 401
+    public static let accessForbidden = 403
+    public static let invalidRefreshToken = 422
+    public static let tooManyRequests = 429
+    public static let internalServerError = 500
+    public static let serviceUnavailable = 503
+}

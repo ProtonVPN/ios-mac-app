@@ -24,6 +24,7 @@ import XCTest
 import Localization
 import TimerMock
 import VPNSharedTesting
+import CommonNetworkingTestSupport
 
 class AppStateManagerImplementationTests: XCTestCase {
 

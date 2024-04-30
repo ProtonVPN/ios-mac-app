@@ -22,6 +22,7 @@
 import Foundation
 import ProtonCoreDataModel
 import ProtonCorePayments
+import CommonNetworking
 import LegacyCommon
 
 protocol PlanServiceFactory {

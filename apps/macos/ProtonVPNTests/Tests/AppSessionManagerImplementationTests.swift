@@ -20,6 +20,7 @@ import XCTest
 
 import Dependencies
 
+import CommonNetworking
 import Ergonomics
 import LegacyCommon
 import Localization

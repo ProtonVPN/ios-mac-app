@@ -22,6 +22,7 @@
 
 import XCTest
 
+import CommonNetworking
 import Domain
 import Strings
 import Localization

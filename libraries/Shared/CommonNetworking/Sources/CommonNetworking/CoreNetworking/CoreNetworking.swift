@@ -1,31 +1,38 @@
 //
-//  Networking.swift
-//  Core
+//  Created on 29/04/2024.
 //
-//  Created by Igor Kulman on 23.08.2021.
-//  Copyright © 2021 Proton Technologies AG. All rights reserved.
+//  Copyright (c) 2024 Proton AG
 //
+//  ProtonVPN is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  ProtonVPN is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
 
-import KeychainAccess
+// External
 import TrustKit
 
+// Accounts
+import ProtonCoreAuthentication
+import ProtonCoreEnvironment
 import ProtonCoreFoundations
 import ProtonCoreNetworking
 import ProtonCoreServices
-import ProtonCoreAuthentication
-import ProtonCoreEnvironment
 import ProtonCoreUtilities
-#if os(iOS)
-import ProtonCoreChallenge
-#endif
-import GoLibs
 
-import CommonNetworking
+// Internal
 import Ergonomics
+import VPNShared // AuthKeychain
 import VPNAppCore // UnauthKeychain
-import VPNShared
 
 public typealias SuccessCallback = (() -> Void)
 public typealias GenericCallback<T> = ((T) -> Void)
@@ -58,7 +65,7 @@ public protocol Networking: APIServiceDelegate {
 
 // MARK: CoreNetworking
 public final class CoreNetworking: Networking {
-    
+
     public func perform<R>(request route: Request) async throws -> R where R: APIDecodableResponse {
         (try await apiService.perform(request: route) as (URLSessionDataTask?, R)).1
     }
@@ -67,7 +74,7 @@ public final class CoreNetworking: Networking {
         ((try await apiService.perform(request: route)) as (URLSessionDataTask?, JSONDictionary)).1
     }
 
-    public private(set) var apiService: PMAPIService    
+    public private(set) var apiService: PMAPIService
     private let delegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
     private let appInfo: AppInfo
     private let doh: DoHVPN
@@ -112,11 +119,12 @@ public final class CoreNetworking: Networking {
             PMAPIService.trustKit = nil
         }
 
-#if os(iOS)
-        let challengeParametersProvider: ChallengeParametersProvider = .forAPIService(clientApp: .vpn, challenge: PMChallenge())
-#else
+        // #if os(iOS)
+        // TODO: lightweight dependency implemented per platform
+        // let challengeParametersProvider: ChallengeParametersProvider = .forAPIService(clientApp: .vpn, challenge: PMChallenge())
+        // #else
         let challengeParametersProvider: ChallengeParametersProvider = .empty
-#endif
+        // #endif
 
         if let sessionUID = authKeychain.fetch()?.sessionId ?? unauthKeychain.fetch()?.sessionID {
             apiService = PMAPIService.createAPIService(doh: doh,
@@ -320,7 +328,8 @@ extension CoreNetworking: APIServiceDelegate {
     }
 
     public func onUpdate(serverTime: Int64) {
-        CryptoUpdateTime(serverTime)
+        // TODO: Depend on interface here, add GoLibs-based implementation outside of this lightweight package
+        // CryptoUpdateTime(serverTime)
     }
 
     public func isReachable() -> Bool {
@@ -336,7 +345,7 @@ extension CoreNetworking: AuthDelegate {
         get { self }
         set { /* intentionally ignored */ _ = newValue }
     }
-    
+
     public func onAdditionalCredentialsInfoObtained(sessionUID: String, password: String?, salt: String?, privateKey: String?) {
         guard let authCredential = authCredential(sessionUID: sessionUID) else { return }
         if let password {
@@ -381,7 +390,7 @@ extension CoreNetworking: AuthDelegate {
             log.error("Failed to save updated credentials", category: .keychain, event: .change)
         }
     }
-    
+
     public func credential(sessionUID: String) -> Credential? {
         guard let authCredential = authCredential(sessionUID: sessionUID) else { return nil }
         return .init(authCredential)
@@ -419,7 +428,7 @@ extension CoreNetworking: AuthDelegate {
             log.error("Failed to save updated credentials", category: .keychain, event: .change)
         }
     }
-    
+
     public func onForceUpgrade() { }
 }
 
@@ -428,23 +437,6 @@ extension CoreNetworking: AuthSessionInvalidatedDelegate {
         authKeychain.clear()
         if isAuthenticatedSession {
             delegate.onLogout()
-        }
-    }
-}
-
-extension DoHVPN {
-    /// Default implementation of checking whether a `Notification` contains an `AppState` and whether its in the
-    /// connected state. This has been crudely extracted out of the DoH implementation to remove the dependency on
-    /// `LegacyCommon.AppState`, until we have a better place to move `AppState` to.
-    public static func isAppStateChangeNotificationInConnectedState(notification: Notification) -> Bool {
-        guard let state = notification.object as? AppState else {
-            log.error("Notification object is not an `AppState`")
-            return false
-        }
-        if case .connected(_) = state {
-            return true
-        } else {
-            return false
         }
     }
 }

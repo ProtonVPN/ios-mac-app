@@ -27,6 +27,7 @@ import Dependencies
 
 import ProtonCoreFeatureFlags
 
+import CommonNetworking
 import Domain
 import Ergonomics
 import ExtensionIPC

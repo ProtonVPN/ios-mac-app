@@ -27,6 +27,8 @@ import Domain
 import Localization
 import Timer
 import TimerMock
+import CommonNetworking
+import CommonNetworkingTestSupport
 import VPNShared
 import VPNSharedTesting
 

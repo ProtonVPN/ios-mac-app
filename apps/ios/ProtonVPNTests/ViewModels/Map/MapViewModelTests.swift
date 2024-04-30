@@ -30,6 +30,7 @@ import Localization
 import Persistence
 import TimerMock
 
+import CommonNetworking
 import LegacyCommon
 import VPNAppCore // UnauthKeychain
 import VPNShared

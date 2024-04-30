@@ -21,13 +21,19 @@ let package = Package(
         .package(path: "../../Foundations/PMLogger"),
 
         // External dependencies
+        .package(path: "../../Shared/NEHelper"),
+
+        // External dependencies
         .github("pointfreeco", repo: "swift-dependencies", .upToNextMajor(from: "1.2.1")),
+        .github("pointfreeco", repo: "xctest-dynamic-overlay", .upToNextMajor(from: "1.1.0")),
     ],
     targets: [
         .target(
             name: "CommonNetworking",
             dependencies: [
                 "PMLogger",
+                .product(name: "VPNAppCore", package: "NEHelper"), // UnauthKeychain
+                .product(name: "VPNShared", package: "NEHelper"), // AuthKeychain
 
                 // Core/Accounts
                 .core(module: "Networking"),
@@ -35,6 +41,7 @@ let package = Package(
 
                 // External
                 .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
             ]
         ),
         .target(

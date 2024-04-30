@@ -33,6 +33,7 @@ import Domain
 import LocalFeatureFlags
 import Strings
 
+import CommonNetworking
 import VPNShared
 import LegacyCommon
 

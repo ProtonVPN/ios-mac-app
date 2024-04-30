@@ -18,6 +18,7 @@
 
 import Foundation
 import Ergonomics
+import CommonNetworking
 
 class TelemetryUpsellReporter {
 

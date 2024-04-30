@@ -27,6 +27,8 @@ import LegacyCommon
 import UIKit
 import VPNShared
 import Modals_iOS
+import Modals
+import CommonNetworking
 
 protocol PlanServiceFactory {
     func makePlanService() -> PlanService

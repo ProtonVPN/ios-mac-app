@@ -19,6 +19,7 @@
 import Foundation
 import Strings
 import ProtonCoreNetworking
+import CommonNetworking
 
 #if DEBUG
 

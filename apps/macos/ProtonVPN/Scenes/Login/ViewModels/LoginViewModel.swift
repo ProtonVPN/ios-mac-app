@@ -29,6 +29,7 @@ import ProtonCoreAuthentication
 import ProtonCoreFeatureFlags
 import ProtonCoreServices
 import ProtonCoreObservability
+import CommonNetworking
 import VPNShared
 import Strings
 

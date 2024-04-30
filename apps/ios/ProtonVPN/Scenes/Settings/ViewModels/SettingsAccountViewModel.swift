@@ -28,6 +28,7 @@ import ProtonCoreNetworking
 import ProtonCorePasswordChange
 import VPNShared
 import Strings
+import CommonNetworking
 
 final class SettingsAccountViewModel {
     
