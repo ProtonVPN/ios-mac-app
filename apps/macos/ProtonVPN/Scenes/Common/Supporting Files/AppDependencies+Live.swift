@@ -20,6 +20,9 @@ import Foundation
 
 import Dependencies
 
+import ProtonCoreFoundations
+
+import CommonNetworking
 import LegacyCommon
 import Persistence
 
@@ -27,4 +30,50 @@ import Persistence
 
 extension DatabaseConfigurationKey: DependencyKey {
     public static let liveValue: DatabaseConfiguration = .live
+}
+
+extension ChallengeParametersProviderKey: DependencyKey {
+    public static let liveValue: ChallengeParametersProvider = .empty
+}
+
+extension DoHConfigurationKey: DependencyKey {
+    public static var liveValue: DoHVPN {
+        @Dependency(\.propertiesManager) var propertiesManager
+
+#if DEBUG || STAGING
+        let customHost = propertiesManager.apiEndpoint
+#else
+        let customHost: String? = nil
+#endif
+
+        let doh = DoHVPN(
+            alternativeRouting: propertiesManager.alternativeRouting,
+            customHost: customHost
+        )
+
+        propertiesManager.onAlternativeRoutingChange = { alternativeRouting in
+            doh.alternativeRouting = alternativeRouting
+        }
+        return doh
+    }
+}
+
+extension DoHVPN {
+    convenience init(alternativeRouting: Bool, customHost: String?) {
+#if !RELEASE
+        let atlasSecret: String? = ObfuscatedConstants.atlasSecret
+#else
+        let atlasSecret: String? = nil
+#endif
+
+        self.init(
+            apiHost: ObfuscatedConstants.apiHost,
+            verifyHost: ObfuscatedConstants.humanVerificationV3Host,
+            alternativeRouting: alternativeRouting,
+            customHost: customHost,
+            atlasSecret: atlasSecret,
+            isConnected: false, // Will get updated once AppStateManager is initialized
+            isAppStateNotificationConnected: DoHVPN.isAppStateChangeNotificationInConnectedState
+        )
+    }
 }

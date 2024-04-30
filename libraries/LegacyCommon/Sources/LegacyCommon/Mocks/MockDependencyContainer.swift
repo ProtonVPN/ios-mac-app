@@ -154,7 +154,6 @@ public class MockDependencyContainer {
         vpnKeychain: vpnKeychain,
         configurationPreparer: vpnManagerConfigurationPreparer,
         vpnAuthentication: vpnAuthentication,
-        doh: dohVpn,
         natTypePropertyProvider: natProvider,
         netShieldPropertyProvider: netShieldProvider,
         safeModePropertyProvider: safeModeProvider

@@ -21,6 +21,7 @@ import XCTest
 import Dependencies
 
 import CommonNetworking
+import CommonNetworkingTestSupport
 import Ergonomics
 import LegacyCommon
 import Localization

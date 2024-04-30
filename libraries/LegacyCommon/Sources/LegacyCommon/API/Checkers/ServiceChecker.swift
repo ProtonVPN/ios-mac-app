@@ -20,10 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import CommonNetworking
-
-import CommonNetworking
-
+import Dependencies
 import CommonNetworking
 
 class ServiceChecker {
@@ -39,7 +36,8 @@ class ServiceChecker {
     private var timer: Timer?
     private var p2pShown = false
     
-    init(networking: Networking, alertService: CoreAlertService, doh: DoHVPN, refreshInterval: TimeInterval) {
+    init(networking: Networking, alertService: CoreAlertService, refreshInterval: TimeInterval) {
+        @Dependency(\.dohConfiguration) var doh
         self.networking = networking
         self.alertService = alertService
         self.doh = doh

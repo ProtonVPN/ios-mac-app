@@ -339,7 +339,7 @@ extension AppDelegate {
     private func setupCoreIntegration(launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) {
         injectDefaultCryptoImplementation()
 
-        let doh = container.makeDoHVPN()
+        @Dependency(\.dohConfiguration) var doh
         if doh.defaultHost.contains("black") {
             PMLog.setEnvironment(environment: "black")
         } else {

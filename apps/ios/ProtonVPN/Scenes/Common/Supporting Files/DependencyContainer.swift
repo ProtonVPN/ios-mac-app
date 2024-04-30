@@ -67,25 +67,7 @@ final class DependencyContainer: Container {
 
     private lazy var networkingDelegate: NetworkingDelegate = iOSNetworkingDelegate(alertingService: makeCoreAlertService()) // swiftlint:disable:this weak_delegate
     private lazy var planService = CorePlanService(networking: makeNetworking(), alertService: makeCoreAlertService(), authKeychain: makeAuthKeychainHandle())
-    private lazy var doh: DoHVPN = {
-        let propertiesManager = makePropertiesManager()
 
-        #if DEBUG || STAGING
-        let customHost = propertiesManager.apiEndpoint
-        #else
-        let customHost: String? = nil
-        #endif
-
-        let doh = DoHVPN(
-            alternativeRouting: propertiesManager.alternativeRouting,
-            customHost: customHost
-        )
-
-        propertiesManager.onAlternativeRoutingChange = { alternativeRouting in
-            doh.alternativeRouting = alternativeRouting
-        }
-        return doh
-    }()
     private lazy var searchStorage = SearchModuleStorage()
     private lazy var review = Review(configuration: ReviewConfiguration(settings: makePropertiesManager().ratingSettings), plan: (try? makeVpnKeychain().fetchCached().planTitle), logger: { message in log.debug("\(message)", category: .review) })
 
@@ -115,10 +97,6 @@ final class DependencyContainer: Container {
     }
 
     // MARK: - Overridden factory methods
-    // MARK: DoHVPNFactory
-    override func makeDoHVPN() -> DoHVPN {
-        doh
-    }
 
     // MARK: NetworkingDelegate
     override func makeNetworkingDelegate() -> NetworkingDelegate {
@@ -170,26 +148,6 @@ final class DependencyContainer: Container {
 extension DependencyContainer: AppSessionRefreshTimerDelegate {
     func canRefreshAccount() -> Bool {
         makeAuthKeychainHandle().username != nil
-    }
-}
-
-extension DoHVPN {
-    convenience init(alternativeRouting: Bool, customHost: String?) {
-        #if !RELEASE
-        let atlasSecret: String? = ObfuscatedConstants.atlasSecret
-        #else
-        let atlasSecret: String? = nil
-        #endif
-
-        self.init(
-            apiHost: ObfuscatedConstants.apiHost,
-            verifyHost: ObfuscatedConstants.humanVerificationV3Host,
-            alternativeRouting: alternativeRouting,
-            customHost: customHost,
-            atlasSecret: atlasSecret,
-            isConnected: false, // Will get updated once AppStateManager is initialized
-            isAppStateNotificationConnected: DoHVPN.isAppStateChangeNotificationInConnectedState
-        )
     }
 }
 

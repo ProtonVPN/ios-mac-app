@@ -74,25 +74,6 @@ final class DependencyContainer: Container {
     private lazy var networkingDelegate: NetworkingDelegate = macOSNetworkingDelegate(alertService: macAlertService) // swiftlint:disable:this weak_delegate
 
     private lazy var planService = CorePlanService(networking: makeNetworking())
-    private lazy var doh: DoHVPN = {
-        let propertiesManager = makePropertiesManager()
-
-        #if DEBUG || STAGING
-        let customHost = propertiesManager.apiEndpoint
-        #else
-        let customHost: String? = nil
-        #endif
-
-        let doh = DoHVPN(
-            alternativeRouting: propertiesManager.alternativeRouting,
-            customHost: customHost
-        )
-
-        propertiesManager.onAlternativeRoutingChange = { alternativeRouting in
-            doh.alternativeRouting = alternativeRouting
-        }
-        return doh
-    }()
     private lazy var sysexManager = SystemExtensionManager(factory: self)
 
     public init() {
@@ -126,10 +107,6 @@ final class DependencyContainer: Container {
     }
 
     // MARK: - Overridden factory methods
-    // MARK: DoHVPNFactory
-    override func makeDoHVPN() -> DoHVPN {
-        doh
-    }
 
     // MARK: NetworkingDelegate
     override func makeNetworkingDelegate() -> NetworkingDelegate {
@@ -204,26 +181,6 @@ extension DependencyContainer: AppSessionRefreshTimerDelegate {
 
     func shouldRefreshStreaming() -> Bool {
         wasRecentlyActive()
-    }
-}
-
-extension DoHVPN {
-    convenience init(alternativeRouting: Bool, customHost: String?) {
-        #if !RELEASE
-        let atlasSecret: String? = ObfuscatedConstants.atlasSecret
-        #else
-        let atlasSecret: String? = nil
-        #endif
-
-        self.init(
-            apiHost: ObfuscatedConstants.apiHost,
-            verifyHost: ObfuscatedConstants.humanVerificationV3Host,
-            alternativeRouting: alternativeRouting,
-            customHost: customHost,
-            atlasSecret: atlasSecret,
-            isConnected: false, // Will get updated once AppStateManager is initialized
-            isAppStateNotificationConnected: DoHVPN.isAppStateChangeNotificationInConnectedState
-        )
     }
 }
 

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Dependencies
 import LegacyCommon
 import ProtonCoreDataModel
 import ProtonCoreLogin
@@ -53,7 +54,6 @@ final class CoreLoginService {
         & NetworkingDelegateFactory
         & PropertiesManagerFactory
         & NetworkingFactory
-        & DoHVPNFactory
         & CoreApiServiceFactory
         & SettingsServiceFactory
         & VpnApiServiceFactory
@@ -76,6 +76,8 @@ final class CoreLoginService {
     weak var delegate: LoginServiceDelegate?
 
     init(factory: Factory) {
+        @Dependency(\.dohConfiguration) var doh
+        self.doh = doh
         appSessionManager = factory.makeAppSessionManager()
         appSessionRefresher = factory.makeAppSessionRefresher()
         windowService = factory.makeWindowService()
@@ -83,7 +85,6 @@ final class CoreLoginService {
         networkingDelegate = factory.makeNetworkingDelegate()
         propertiesManager = factory.makePropertiesManager()
         networking = factory.makeNetworking()
-        doh = factory.makeDoHVPN()
         coreApiService = factory.makeCoreApiService()
         settingsService = factory.makeSettingsService()
         pushNotificationService = factory.makePushNotificationService()

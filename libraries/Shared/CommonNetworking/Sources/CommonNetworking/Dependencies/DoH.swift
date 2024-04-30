@@ -21,11 +21,8 @@
 //
 
 import Foundation
+import Dependencies
 import ProtonCoreDoh
-
-public protocol DoHVPNFactory {
-    func makeDoHVPN() -> DoHVPN
-}
 
 public class DoHVPN: DoH, ServerConfig {
     public var proxyToken: String?
@@ -151,4 +148,15 @@ public extension DoHVPN {
         isConnected: false,
         isAppStateNotificationConnected: { _ in false }
     )
+}
+
+public enum DoHConfigurationKey: TestDependencyKey {
+    public static var testValue: DoHVPN { .mock }
+}
+
+extension DependencyValues {
+    public var dohConfiguration: DoHVPN {
+        get { self[DoHConfigurationKey.self] }
+        set { self[DoHConfigurationKey.self] = newValue }
+    }
 }

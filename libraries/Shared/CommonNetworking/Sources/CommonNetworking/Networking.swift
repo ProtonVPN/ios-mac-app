@@ -19,12 +19,12 @@
 import Foundation
 
 // External
+import Dependencies
 import TrustKit
 
 // Accounts
 import ProtonCoreAuthentication
 import ProtonCoreEnvironment
-import ProtonCoreFoundations
 import ProtonCoreNetworking
 import ProtonCoreServices
 import ProtonCoreUtilities
@@ -77,13 +77,11 @@ public final class CoreNetworking: Networking {
     public private(set) var apiService: PMAPIService
     private let delegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
     private let appInfo: AppInfo
-    private let doh: DoHVPN
     private let authKeychain: AuthKeychainHandle
     private let unauthKeychain: UnauthKeychainHandle
 
     public typealias Factory = NetworkingDelegateFactory &
         AppInfoFactory &
-        DoHVPNFactory &
         AuthKeychainHandleFactory &
         UnauthKeychainHandleFactory
 
@@ -91,7 +89,6 @@ public final class CoreNetworking: Networking {
         self.init(
             delegate: factory.makeNetworkingDelegate(),
             appInfo: factory.makeAppInfo(),
-            doh: factory.makeDoHVPN(),
             authKeychain: factory.makeAuthKeychainHandle(),
             unauthKeychain: factory.makeUnauthKeychainHandle(),
             pinApiEndpoints: pinApiEndpoints
@@ -101,14 +98,12 @@ public final class CoreNetworking: Networking {
     public init(
         delegate: NetworkingDelegate,
         appInfo: AppInfo,
-        doh: DoHVPN,
         authKeychain: AuthKeychainHandle,
         unauthKeychain: UnauthKeychainHandle,
         pinApiEndpoints: Bool
     ) {
         self.delegate = delegate
         self.appInfo = appInfo
-        self.doh = doh
         self.authKeychain = authKeychain
         self.unauthKeychain = unauthKeychain
 
@@ -119,20 +114,20 @@ public final class CoreNetworking: Networking {
             PMAPIService.trustKit = nil
         }
 
-        // #if os(iOS)
-        // TODO: lightweight dependency implemented per platform
-        // let challengeParametersProvider: ChallengeParametersProvider = .forAPIService(clientApp: .vpn, challenge: PMChallenge())
-        // #else
-        let challengeParametersProvider: ChallengeParametersProvider = .empty
-        // #endif
+        @Dependency(\.dohConfiguration) var doh
+        @Dependency(\.challengeParametersProvider) var challengeParametersProvider
 
         if let sessionUID = authKeychain.fetch()?.sessionId ?? unauthKeychain.fetch()?.sessionID {
-            apiService = PMAPIService.createAPIService(doh: doh,
-                                                       sessionUID: sessionUID,
-                                                       challengeParametersProvider: challengeParametersProvider)
+            apiService = PMAPIService.createAPIService(
+                doh: doh,
+                sessionUID: sessionUID,
+                challengeParametersProvider: challengeParametersProvider
+            )
         } else {
-            apiService = PMAPIService.createAPIServiceWithoutSession(doh: doh,
-                                                                     challengeParametersProvider: challengeParametersProvider)
+            apiService = PMAPIService.createAPIServiceWithoutSession(
+                doh: doh,
+                challengeParametersProvider: challengeParametersProvider
+            )
         }
 
         apiService.authDelegate = self
@@ -302,6 +297,7 @@ public final class CoreNetworking: Networking {
 // MARK: APIServiceDelegate
 extension CoreNetworking: APIServiceDelegate {
     public var additionalHeaders: [String: String]? {
+        @Dependency(\.dohConfiguration) var doh
         if doh.isAtlasRequest, let atlasSecret = doh.atlasSecret, !atlasSecret.isEmpty {
             return ["x-atlas-secret": atlasSecret]
         }
@@ -328,8 +324,8 @@ extension CoreNetworking: APIServiceDelegate {
     }
 
     public func onUpdate(serverTime: Int64) {
-        // TODO: Depend on interface here, add GoLibs-based implementation outside of this lightweight package
-        // CryptoUpdateTime(serverTime)
+        @Dependency(\.cryptoService) var cryptoService
+        cryptoService.updateTime(serverTime)
     }
 
     public func isReachable() -> Bool {
