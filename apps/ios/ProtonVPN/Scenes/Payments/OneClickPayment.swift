@@ -72,8 +72,8 @@ final class OneClickPayment {
     }
 
     @MainActor
-    func oneClickIAPViewController() -> UIViewController {
-        return ModalsFactory().upsellViewController(modalType: .subscription, client: plansClient())
+    func oneClickIAPViewController(dismissAction: (() -> Void)? = nil) -> UIViewController {
+        return ModalsFactory().upsellViewController(modalType: .subscription, client: plansClient(), dismissAction: dismissAction)
     }
 
     @MainActor

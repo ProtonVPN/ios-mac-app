@@ -23,6 +23,8 @@ struct PlanOptionsView: View {
     private static let imagePadding: EdgeInsets = EdgeInsets(top: 0, leading: 52, bottom: 24, trailing: 52)
     private static let maxContentWidth: CGFloat = 480
 
+    typealias ActionHandler = () -> Void
+
     @Environment(\.dismiss) var dismiss
 
     @ObservedObject var viewModel: PlanOptionsListViewModel
@@ -30,10 +32,18 @@ struct PlanOptionsView: View {
     let modalType: ModalType
     let displayBodyFeatures: Bool
 
-    init(viewModel: PlanOptionsListViewModel, modalType: ModalType, displayBodyFeatures: Bool = false) {
+    let dismissAction: ActionHandler?
+
+    init(
+        viewModel: PlanOptionsListViewModel,
+        modalType: ModalType,
+        displayBodyFeatures: Bool = false,
+        dismissAction: ActionHandler? = nil
+    ) {
         self.modalType = modalType
         self.displayBodyFeatures = displayBodyFeatures
         self.viewModel = viewModel
+        self.dismissAction = dismissAction
     }
 
     var body: some View {
@@ -68,7 +78,12 @@ struct PlanOptionsView: View {
     private var navigationBar: some View {
         HStack {
             Button {
-                dismiss()
+                // Prioritizes explicit dismissAction over @Environment(\.dismiss)
+                if let dismissAction {
+                    dismissAction()
+                } else {
+                    dismiss()
+                }
             } label: {
                 Image(systemName: "xmark")
             }

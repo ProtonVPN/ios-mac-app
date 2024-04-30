@@ -32,11 +32,16 @@ public final class ModalsFactory {
         return upsell
     }
 
-    public func upsellViewController(modalType: ModalType, client: PlansClient) -> UIViewController {
+    public func upsellViewController(
+        modalType: ModalType,
+        client: PlansClient,
+        dismissAction: (() -> Void)? = nil
+    ) -> UIViewController {
         PlanOptionsView(
             viewModel: .init(client: client),
             modalType: modalType,
-            displayBodyFeatures: !modalType.hasNewUpsellScreen
+            displayBodyFeatures: !modalType.hasNewUpsellScreen,
+            dismissAction: dismissAction
         )
         .hostingController()
     }
