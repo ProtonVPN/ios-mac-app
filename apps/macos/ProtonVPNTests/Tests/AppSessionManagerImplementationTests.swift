@@ -34,7 +34,7 @@ import ProtonCoreNetworking
 
 fileprivate let testData = MockTestData()
 fileprivate func mockAuthCredentials(username: String) -> AuthCredentials {
-    return AuthCredentials(username: username, accessToken: "", refreshToken: "", sessionId: "", userId: "", scopes: [])
+    return AuthCredentials(username: username, accessToken: "", refreshToken: "", sessionId: "", userId: "", scopes: [], mailboxPassword: "")
 }
 fileprivate var testAuthCredentials: AuthCredentials = mockAuthCredentials(username: "username")
 

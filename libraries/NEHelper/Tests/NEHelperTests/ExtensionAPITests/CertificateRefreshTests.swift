@@ -811,7 +811,8 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
                             refreshToken: "refresh",
                             sessionId: "session",
                             userId: "user",
-                            scopes: [])
+                            scopes: [],
+                            mailboxPassword: "")
         ]
 
         var numCertRequests = 0
@@ -919,7 +920,8 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
                             refreshToken: "refresh",
                             sessionId: "session",
                             userId: "user",
-                            scopes: [])
+                            scopes: [],
+                            mailboxPassword: "")
         ]
 
         certRefreshCallback = mockEndpoint(CertificateRefreshRequest.self,

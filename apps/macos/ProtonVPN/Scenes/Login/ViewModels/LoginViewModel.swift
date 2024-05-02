@@ -222,7 +222,7 @@ final class LoginViewModel {
             case .ask2FA:
                 isTwoFactorStep = true
                 twoFactorRequired?()
-            case .askSecondPassword, .chooseInternalUsernameAndCreateInternalAddress:
+            case .askSecondPassword, .chooseInternalUsernameAndCreateInternalAddress, .askFIDO2:
                 log.error("Unsupported login scenario", category: .app, metadata: ["result": "\(result)"])
                 logInFailure?(Localizable.loginUnsupportedState, nil)
             }

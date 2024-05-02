@@ -18,7 +18,8 @@ extension AuthCredentials {
             refreshToken: auth.refreshToken,
             sessionId: sessionId,
             userId: userId,
-            scopes: auth.scopes
+            scopes: auth.scopes,
+            mailboxPassword: auth.mailboxPassword
         )
     }
 
@@ -29,7 +30,8 @@ extension AuthCredentials {
             refreshToken: credential.refreshToken,
             sessionId: credential.UID,
             userId: credential.userID,
-            scopes: credential.scopes
+            scopes: credential.scopes,
+            mailboxPassword: credential.mailboxPassword
         )
     }
 }
@@ -42,7 +44,8 @@ extension Credential {
             refreshToken: credentials.refreshToken,
             userName: credentials.username,
             userID: credentials.userId ?? "",
-            scopes: credentials.scopes
+            scopes: credentials.scopes,
+            mailboxPassword: credentials.mailboxPassword
         )
     }
 }

@@ -23,6 +23,7 @@ import VPNShared
 
 extension AuthCredentials {
     convenience init(_ userData: LoginData) {
-        self.init(version: 0, username: userData.credential.userName, accessToken: userData.credential.accessToken, refreshToken: userData.credential.refreshToken, sessionId: userData.credential.sessionID, userId: userData.credential.userID, scopes: userData.scopes)
+        let credential = userData.getCredential
+        self.init(version: 0, username: credential.userName, accessToken: credential.accessToken, refreshToken: credential.refreshToken, sessionId: credential.UID, userId: credential.userID, scopes: credential.scopes, mailboxPassword: credential.mailboxPassword)
     }
 }
