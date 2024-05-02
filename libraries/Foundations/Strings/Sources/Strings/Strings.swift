@@ -1703,9 +1703,9 @@ public enum Localizable {
   public static var modalsGetPlus: String { return Localizable.tr("Localizable", "modals_get_plus", fallback: "Upgrade") }
   /// Description of the first section of the "What's new" screen
   public static var modalsNewServers: String { return Localizable.tr("Localizable", "modals_new_servers", fallback: "There are now Free servers in Poland and Romania.") }
-  /// Plural format key: "Unlock %#@num_servers@+ secure servers in %#@num_countries@ countries with VPN Plus."
+  /// Plural format key: "Unlock %#@num_servers@ in %#@num_countries@ with VPN Plus."
   public static func modalsNewUpsellAllCountriesSubtitle(_ p1: Int, _ p2: Int) -> String {
-    return Localizable.tr("Localizable", "modals_new_upsell_all_countries_subtitle", p1, p2, fallback: "Plural format key: \"Unlock %#@num_servers@+ secure servers in %#@num_countries@ countries with VPN Plus.\"")
+    return Localizable.tr("Localizable", "modals_new_upsell_all_countries_subtitle", p1, p2, fallback: "Plural format key: \"Unlock %#@num_servers@ in %#@num_countries@ with VPN Plus.\"")
   }
   /// The bold portion of the subtitle of All Countries upsell screen
   public static var modalsNewUpsellAllCountriesSubtitleBold: String { return Localizable.tr("Localizable", "modals_new_upsell_all_countries_subtitle_bold", fallback: "VPN Plus") }
