@@ -81,7 +81,11 @@ extension OnboardingModuleService: OnboardingService {
             oneClickPayment.completionHandler = { [weak self] in
                 self?.onboardingCoordinatorDidFinish()
             }
-            viewController = oneClickPayment.oneClickIAPViewController()
+            viewController = oneClickPayment.oneClickIAPViewController(dismissAction: {
+                self.windowService.dismissModal {
+                    self.onboardingCoordinatorDidFinish()
+                }
+            })
             self.oneClickPayment = oneClickPayment
         } catch {
             log.debug("One click payment disabled: \(error)")
