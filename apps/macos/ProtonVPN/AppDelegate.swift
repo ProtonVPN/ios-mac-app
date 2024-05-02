@@ -111,7 +111,7 @@ extension AppDelegate: NSApplicationDelegate {
                 SentryHelper.setupSentry(
                     dsn: ObfuscatedConstants.sentryDsnmacOS,
                     isEnabled: { [weak self] in
-                        self?.container.makeTelemetrySettings().telemetryCrashReports ?? false
+                        self?.isTelemetryAllowed() ?? false
                     },
                     getUserId: { [weak self] in
                         self?.container.makeAuthKeychainHandle().userId
@@ -313,6 +313,10 @@ extension AppDelegate: NSApplicationDelegate {
 
         LoggingSystem.bootstrap { _ in return multiplexLogHandler }
     }
+
+    private func isTelemetryAllowed() -> Bool {
+        container.makeTelemetrySettings().telemetryCrashReports
+    }
 }
 
 // MARK: - Migration
@@ -366,11 +370,21 @@ extension AppDelegate {
     private func setupCoreIntegration() {
         ColorProvider.brand = .vpn
 
-        @Dependency(\.dohConfiguration) var doh
-        if doh.defaultHost.contains("black") {
-            PMLog.setEnvironment(environment: "black")
-        } else {
-            PMLog.setEnvironment(environment: "production")
+        // In case user disabled telemetry, let's not even initialise accounts sentry instance.
+        // This means that if user changes her mind, reporting will be really re-enabled only
+        // after the app restarts.
+        if isTelemetryAllowed() {
+            @Dependency(\.dohConfiguration) var doh
+            if doh.defaultHost.contains("black") {
+                PMLog.setEnvironment(environment: "black")
+            } else {
+                PMLog.setEnvironment(environment: "production")
+            }
+        }
+        // If user disables telemetry in the settings, this will prevent sending error logs
+        // to accounts sentry.
+        PMLog.isExternalLogEnabled = {
+            self.isTelemetryAllowed()
         }
 
         ProtonCoreLog.PMLog.callback = { (message, level) in
