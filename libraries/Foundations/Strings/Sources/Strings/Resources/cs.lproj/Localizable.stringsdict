@@ -112,6 +112,41 @@
         <string>%d bezpečných serverů</string>
       </dict>
     </dict>
+    <key>modals_new_upsell_all_countries_subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Odemkněte %#@num_servers@ v %#@num_countries@ s VPN Plus.</string>
+      <key>num_countries</key>
+      <dict>
+        <key>one</key>
+        <string>%d zemi</string>
+        <key>few</key>
+        <string>%d zemích</string>
+        <key>many</key>
+        <string>%d zemích</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d zemích</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>one</key>
+        <string>%d+ bezpečný server</string>
+        <key>few</key>
+        <string>%d+ bezpečné servery</string>
+        <key>many</key>
+        <string>%d+ bezpečných serverů</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d+ bezpečných serverů</string>
+      </dict>
+    </dict>
     <key>subscription_upgrade_option1</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

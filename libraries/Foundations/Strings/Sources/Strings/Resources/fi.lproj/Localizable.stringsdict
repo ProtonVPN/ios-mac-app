@@ -88,6 +88,33 @@
         <string>%d turvallista palvelinta</string>
       </dict>
     </dict>
+    <key>modals_new_upsell_all_countries_subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Avaa %#@num_servers@ %#@num_countries@ VPN Plus -tilauksella.</string>
+      <key>num_countries</key>
+      <dict>
+        <key>one</key>
+        <string>%d maasta</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d maasta</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>one</key>
+        <string>%d+ turvallisen palvelimen</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d+ turvallisen palvelimen</string>
+      </dict>
+    </dict>
     <key>subscription_upgrade_option1</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

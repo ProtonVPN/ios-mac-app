@@ -112,6 +112,41 @@
         <string>%d защищённых серверов</string>
       </dict>
     </dict>
+    <key>modals_new_upsell_all_countries_subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Разблокируйте %#@num_servers@ в %#@num_countries@ с помощью VPN Plus.</string>
+      <key>num_countries</key>
+      <dict>
+        <key>one</key>
+        <string>%d стран</string>
+        <key>few</key>
+        <string>%d страны</string>
+        <key>many</key>
+        <string>%d стран</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d стран</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>one</key>
+        <string>%d защищенных серверов</string>
+        <key>few</key>
+        <string>%d защищенных сервера</string>
+        <key>many</key>
+        <string>%d защищенных серверов</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d защищенных серверов</string>
+      </dict>
+    </dict>
     <key>subscription_upgrade_option1</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

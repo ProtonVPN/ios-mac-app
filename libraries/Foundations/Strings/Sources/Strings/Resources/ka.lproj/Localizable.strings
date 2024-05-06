@@ -1870,6 +1870,51 @@
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "დაიცავით თავი ქსელური შეტევებისგან";
 
+/* Title of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_title" = "იმუშავეთ ინტერნეტში უფრო სწრაფადაც კი";
+
+/* Subtitle of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_subtitle" = "Unlock faster, less crowded servers with speeds of up to 10 Gbps.";
+
+/* Subtitle of the Customization scren */
+"modals_new_upsell_customization_subtitle" = "იქონიეთ წვდომა თქვენს ლოკალურ ქსელში (LAN) არსებულ მოწყობილობებზე VPN Plus-ით.";
+
+/* Subtitle of Moderate NAT upsell screens */
+"modals_new_upsell_moderate_nat_subtitle" = "გააუმჯობესეთ ონლაინთამაშების და ვიდეოზარების წარმადობა NAT type 2-ით.";
+
+/* Title of Netshield upsell screen */
+"modals_new_upsell_netshield_title" = "ისიამოვნეთ ურელამო ინტერნეტით";
+
+/* Subtitle of Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle" = "დაბლოკეთ რეკლამა, ტრეკერები და არასასურველი პროგრამები NetShield-ით.";
+
+/* The bold portion of the subtitle of the Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle_bold" = "NetShield";
+
+/* Title of Secure Core upsell screen */
+"modals_new_upsell_secure_core_title" = "გაიორმაგეთ თქვენი დაცვა";
+
+/* Subtitle of Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle" = "დაამატეთ დაშიფვრის კიდევ ერთი დონე თქვენს VPN მერთებას Secure Core-სთან ერთად.";
+
+/* The bold portion of the subtitle of the Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle_bold" = "Secure Core";
+
+/* Title of All Countries upsell screen */
+"modals_new_upsell_all_countries_title" = "წვდომა ყველა ქვეყანასთან";
+
+/* The bold portion of the subtitle of All Countries upsell screen */
+"modals_new_upsell_all_countries_subtitle_bold" = "VPN Plus";
+
+/* Title of Country upsell screen */
+"modals_new_upsell_country_title" = "გნებავთ მიუერთდეთ სპეციფიკურ ქვეყანას?";
+
+/* Subtitle of Country upsell screen */
+"modals_new_upsell_country_subtitle" = "განბლოკეთ ქვეყნის არჩევანი VPN Plus-თან ერთად.";
+
+/* Subtitle of Profiles upsell screen */
+"modals_new_upsell_profiles_subtitle" = "განბლოკეთ პროფილები VPN Plus-თან ერთად.";
+
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "შენიშვნა სიჩქარის შესახებ...";
 
@@ -1951,8 +1996,11 @@
 /* Subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle" = "განბლოკეთ პროფილები VPN Plus-თან ერთად";
 
-/* Bold part of the subtitle of Profiles upsell modal */
-"upsell_profiles_subtitle_bold" = "პროფილები";
+/* First bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_1" = "პროფილები";
+
+/* Second bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_2" = "VPN Plus";
 
 /* Feature of Profiles upsell modal */
 "upsell_profiles_feature_location" = "შეინახეთ რჩეული სერვერი, ქალაქი ან ქვეყანა.";
@@ -2175,3 +2223,9 @@
 
 /* Action button of the view nudging users to update before filling Bug Report */
 "_update_view_button" = "განახლება";
+
+/* Change mailbox password cell title */
+"_change_mailbox_password" = "საფოსტო ყუთის პაროლის შეცვლა";
+
+/* Change password cell title */
+"_change_password" = "პაროლის შეცვლა";

@@ -1870,6 +1870,51 @@
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "از خودتان در برابر حملات شبکه محافظت کنید";
 
+/* Title of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_title" = "با سرعت‌های حتی بیشتر مرور کنید";
+
+/* Subtitle of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_subtitle" = "Unlock faster, less crowded servers with speeds of up to 10 Gbps.";
+
+/* Subtitle of the Customization scren */
+"modals_new_upsell_customization_subtitle" = "به دستگاه‌های موجود در شبکه محلی‌تان (LAN) با VPN Plus دسترسی پیدا کنید.";
+
+/* Subtitle of Moderate NAT upsell screens */
+"modals_new_upsell_moderate_nat_subtitle" = "Improve online gaming and video call performance with NAT type 2.";
+
+/* Title of Netshield upsell screen */
+"modals_new_upsell_netshield_title" = "از مرور بدون تبلیغات لذت ببرید";
+
+/* Subtitle of Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle" = "با NetShield تبلیغات، ردیاب‌ها و بدافزارها را مسدود کنید.";
+
+/* The bold portion of the subtitle of the Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle_bold" = "NetShield";
+
+/* Title of Secure Core upsell screen */
+"modals_new_upsell_secure_core_title" = "Double your protection";
+
+/* Subtitle of Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle" = "یک لایه اضافه رمزگذاری به اتصال VPN تان با Secure Core اضافه کنید.";
+
+/* The bold portion of the subtitle of the Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle_bold" = "Secure Core";
+
+/* Title of All Countries upsell screen */
+"modals_new_upsell_all_countries_title" = "به تمامی کشورها دسترسی پیدا کنید";
+
+/* The bold portion of the subtitle of All Countries upsell screen */
+"modals_new_upsell_all_countries_subtitle_bold" = "VPN Plus";
+
+/* Title of Country upsell screen */
+"modals_new_upsell_country_title" = "Want to connect to a specific country?";
+
+/* Subtitle of Country upsell screen */
+"modals_new_upsell_country_subtitle" = "Unlock country selection with VPN Plus.";
+
+/* Subtitle of Profiles upsell screen */
+"modals_new_upsell_profiles_subtitle" = "Unlock profiles with VPN Plus.";
+
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "نکته‌ای دربارهٔ سرعت...";
 
@@ -1951,8 +1996,11 @@
 /* Subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle" = "Unlock profiles with VPN Plus";
 
-/* Bold part of the subtitle of Profiles upsell modal */
-"upsell_profiles_subtitle_bold" = "profiles";
+/* First bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_1" = "profiles";
+
+/* Second bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_2" = "VPN Plus";
 
 /* Feature of Profiles upsell modal */
 "upsell_profiles_feature_location" = "Save your preferred server, city, or country.";
@@ -2175,3 +2223,9 @@
 
 /* Action button of the view nudging users to update before filling Bug Report */
 "_update_view_button" = "بروزرسانی";
+
+/* Change mailbox password cell title */
+"_change_mailbox_password" = "تغییر گذرواژه نامه‌دان";
+
+/* Change password cell title */
+"_change_password" = "تغییر گذرواژه";

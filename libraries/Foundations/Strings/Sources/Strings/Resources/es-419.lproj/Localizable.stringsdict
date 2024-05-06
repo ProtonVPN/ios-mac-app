@@ -88,6 +88,33 @@
         <string>%d servidores seguros</string>
       </dict>
     </dict>
+    <key>modals_new_upsell_all_countries_subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Desbloquee %#@num_servers@ en %#@num_countries@ con VPN Plus.</string>
+      <key>num_countries</key>
+      <dict>
+        <key>one</key>
+        <string>%d país</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d paises</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>one</key>
+        <string>Más de %d servidor seguro</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Más de %d servidores seguros</string>
+      </dict>
+    </dict>
     <key>subscription_upgrade_option1</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

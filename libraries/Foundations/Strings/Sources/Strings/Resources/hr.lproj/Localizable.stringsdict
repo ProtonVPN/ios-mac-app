@@ -100,6 +100,37 @@
         <string>%d secure servers</string>
       </dict>
     </dict>
+    <key>modals_new_upsell_all_countries_subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Unlock %#@num_servers@ in %#@num_countries@ with VPN Plus.</string>
+      <key>num_countries</key>
+      <dict>
+        <key>one</key>
+        <string>%d država</string>
+        <key>few</key>
+        <string>%d države</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d država</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>one</key>
+        <string>%d+ secure servers</string>
+        <key>few</key>
+        <string>%d+ secure servers</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d+ secure servers</string>
+      </dict>
+    </dict>
     <key>subscription_upgrade_option1</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

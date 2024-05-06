@@ -1155,10 +1155,10 @@
 "_report_logs" = "Registros VPN";
 
 /* iOS bug report: description of log selection switch */
-"_report_logs_description" = "Activando esta opción añadirá los registros de su VPN a este reporte";
+"_report_logs_description" = "Activando esta opción añadirá los registros de su VPN a este informe";
 
 /* iOS bug report: Title before report bug form */
-"_report_report" = "Mensaje del reporte";
+"_report_report" = "Mensaje del informe";
 
 /* iOS bug report: Placeholder for email form field */
 "_report_placeholder_email" = "Correo electrónico de contacto";
@@ -1167,10 +1167,10 @@
 "_report_placeholder_message" = "El mensaje...";
 
 /* Bug report: Send report button text */
-"_report_send" = "Enviar reporte";
+"_report_send" = "Enviar informe";
 
 /* Bug report: Success message after report was sent */
-"_report_success" = "Gracias por el reporte";
+"_report_success" = "Gracias por el informe";
 
 /* Mac bug report: description text before bug report form */
 "_report_description" = "Al proporcionar los siguientes datos, nuestro equipo podrá identificar el problema y dar una solución con más probabilidades en menos tiempo:\n• Registros de Proton VPN\n• Registros de OpenVPN\n• Registros de WireGuard";
@@ -1623,7 +1623,7 @@
 "_onboarding_mac_usage_stats" = "Compartir estadísticas de uso anónimas. Esto nos ayuda a superar los bloqueos de VPN y mejorar el rendimiento de la aplicación.";
 
 /* Telemetry label in the onboarding screen for mac next to a toggle */
-"_onboarding_mac_crash_reports" = "Compartir reportes de error anónimos. Esto nos ayuda a corregir errores, detectar firewalls y evitar bloqueos de VPN.";
+"_onboarding_mac_crash_reports" = "Compartir informes de error anónimos. Esto nos ayuda a corregir errores, detectar firewalls y evitar bloqueos de VPN.";
 
 /* Telemetry label in the settings window for mac */
 "_settings_mac_usage_stats_title" = "Compartir estadísticas de uso anónimas";
@@ -1632,10 +1632,10 @@
 "_settings_mac_usage_stats_tooltip" = "Los datos de uso nos ayudan a superar los bloqueos de VPN y mejorar el rendimiento de la aplicación.";
 
 /* Telemetry label in the settings window for mac */
-"_settings_mac_crash_reports_title" = "Compartir reportes de error anónimos";
+"_settings_mac_crash_reports_title" = "Compartir informes de error anónimos";
 
 /* Telemetry tooltip in the settings window for mac */
-"_settings_mac_crash_reports_tooltip" = "Los reportes de error nos ayuda a corregir errores, detectar firewalls y evitar bloqueos de VPN.";
+"_settings_mac_crash_reports_tooltip" = "Los informes de error nos ayuda a corregir errores, detectar firewalls y evitar bloqueos de VPN.";
 
 /* Section title in Settings */
 "_advanced" = "Avanzado";
@@ -1870,6 +1870,51 @@
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Protéjase de los ataques de red";
 
+/* Title of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_title" = "Navegue incluso a velocidades máximas.";
+
+/* Subtitle of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_subtitle" = "Desbloquee servidores rápidos y menos concurridos con velocidades de hasta 10 Gbps.";
+
+/* Subtitle of the Customization scren */
+"modals_new_upsell_customization_subtitle" = "Acceda a dispositivos en la red local (LAN) con VPN Plus.";
+
+/* Subtitle of Moderate NAT upsell screens */
+"modals_new_upsell_moderate_nat_subtitle" = "Mejore el rendimiento de las videollamadas y juegos en línea con NAT tipo 2.";
+
+/* Title of Netshield upsell screen */
+"modals_new_upsell_netshield_title" = "Disfrute de una navegación sin anuncios";
+
+/* Subtitle of Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle" = "Bloquee anuncios, rastreadores y malware con NetShield.";
+
+/* The bold portion of the subtitle of the Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle_bold" = "NetShield";
+
+/* Title of Secure Core upsell screen */
+"modals_new_upsell_secure_core_title" = "Doble su protección";
+
+/* Subtitle of Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle" = "Añada otra capa de protección a la conexión VPN con Secure Core.";
+
+/* The bold portion of the subtitle of the Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle_bold" = "Secure Core";
+
+/* Title of All Countries upsell screen */
+"modals_new_upsell_all_countries_title" = "Acceda a todos los países";
+
+/* The bold portion of the subtitle of All Countries upsell screen */
+"modals_new_upsell_all_countries_subtitle_bold" = "VPN Plus";
+
+/* Title of Country upsell screen */
+"modals_new_upsell_country_title" = "¿Desea conectarse a un país específico?";
+
+/* Subtitle of Country upsell screen */
+"modals_new_upsell_country_subtitle" = "Desbloquee la selección de países con VPN Plus.";
+
+/* Subtitle of Profiles upsell screen */
+"modals_new_upsell_profiles_subtitle" = "Desbloquee los perfiles con VPN Plus.";
+
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "Una nota acerca de la velocidad...";
 
@@ -1951,8 +1996,11 @@
 /* Subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle" = "Desbloquee perfiles con VPN Plus";
 
-/* Bold part of the subtitle of Profiles upsell modal */
-"upsell_profiles_subtitle_bold" = "perfiles";
+/* First bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_1" = "perfiles";
+
+/* Second bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_2" = "VPN Plus";
 
 /* Feature of Profiles upsell modal */
 "upsell_profiles_feature_location" = "Guarde su servidor, ciudad o país preferido.";
@@ -2078,9 +2126,9 @@
 
 "onboarding_usage_stats_description" = "Los datos de uso nos ayudan a superar los bloqueos de VPN y mejorar el rendimiento de la aplicación.";
 
-"onboarding_crash_reports_title" = "Compartir reportes de error anónimos";
+"onboarding_crash_reports_title" = "Compartir informes de error anónimos";
 
-"onboarding_crash_reports_description" = "Los reportes de error nos ayuda a corregir errores, detectar firewalls y evitar bloqueos de VPN.";
+"onboarding_crash_reports_description" = "Los informes de error nos ayuda a corregir errores, detectar firewalls y evitar bloqueos de VPN.";
 
 "onboarding_footer" = "Estas estadísticas no contienen la dirección IP y no pueden usarse para identificarle. Nunca las compartiremos con terceros.";
 
@@ -2129,7 +2177,7 @@
 "_br_2_button_cancel" = "Cancelar";
 
 /* ReportBug 3rd step (form) send button */
-"_br_3_button_send" = "Enviar reporte";
+"_br_3_button_send" = "Enviar informe";
 
 /* ReportBug 3rd step (form) send button */
 "_br_3_button_sending" = "Enviando";
@@ -2159,7 +2207,7 @@
 "_br_success_button" = "Entendido";
 
 /* ReportBug success window: title text */
-"_br_failure_title" = "El reporte no fue enviado";
+"_br_failure_title" = "El informe no fue enviado";
 
 /* ReportBug success window: retry button */
 "_br_failure_button_retry" = "Volver a intentar";
@@ -2175,3 +2223,9 @@
 
 /* Action button of the view nudging users to update before filling Bug Report */
 "_update_view_button" = "Actualizar";
+
+/* Change mailbox password cell title */
+"_change_mailbox_password" = "Cambiar la contraseña del buzón";
+
+/* Change password cell title */
+"_change_password" = "Cambiar la contraseña";

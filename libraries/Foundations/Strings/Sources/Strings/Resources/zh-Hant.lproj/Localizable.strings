@@ -1870,6 +1870,51 @@
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "保護您免受網路攻擊的威脅";
 
+/* Title of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_title" = "使用更快的速度瀏覽";
+
+/* Subtitle of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_subtitle" = "Unlock faster, less crowded servers with speeds of up to 10 Gbps.";
+
+/* Subtitle of the Customization scren */
+"modals_new_upsell_customization_subtitle" = "選用 VPN Plus 存取在您的區域網路 (LAN) 上的裝置。";
+
+/* Subtitle of Moderate NAT upsell screens */
+"modals_new_upsell_moderate_nat_subtitle" = "使用 NAT 類型 2 提升線上遊戲與視像通話效能。";
+
+/* Title of Netshield upsell screen */
+"modals_new_upsell_netshield_title" = "享受吳廣告的瀏覽體驗";
+
+/* Subtitle of Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle" = "使用 NetShield 封鎖廣告、追蹤器與惡意軟體。";
+
+/* The bold portion of the subtitle of the Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle_bold" = "NetShield";
+
+/* Title of Secure Core upsell screen */
+"modals_new_upsell_secure_core_title" = "Double your protection";
+
+/* Subtitle of Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle" = "使用 Secure Core 為您的 VPN 連線多添一層加密。";
+
+/* The bold portion of the subtitle of the Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle_bold" = "Secure Core";
+
+/* Title of All Countries upsell screen */
+"modals_new_upsell_all_countries_title" = "存取所有國家";
+
+/* The bold portion of the subtitle of All Countries upsell screen */
+"modals_new_upsell_all_countries_subtitle_bold" = "VPN Plus";
+
+/* Title of Country upsell screen */
+"modals_new_upsell_country_title" = "想要連接特定的國家嗎?";
+
+/* Subtitle of Country upsell screen */
+"modals_new_upsell_country_subtitle" = "取得 VPN Plus 來解鎖 國家選擇";
+
+/* Subtitle of Profiles upsell screen */
+"modals_new_upsell_profiles_subtitle" = "使用 VPN Plus 解鎖帳戶.";
+
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "有關速度的解釋說明...";
 
@@ -1951,8 +1996,11 @@
 /* Subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle" = "使用 VPN Plus 解鎖帳戶";
 
-/* Bold part of the subtitle of Profiles upsell modal */
-"upsell_profiles_subtitle_bold" = "設定檔";
+/* First bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_1" = "profiles";
+
+/* Second bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_2" = "VPN Plus";
 
 /* Feature of Profiles upsell modal */
 "upsell_profiles_feature_location" = "儲存您的偏好伺服器、程式或國家。";
@@ -2175,3 +2223,9 @@
 
 /* Action button of the view nudging users to update before filling Bug Report */
 "_update_view_button" = "更新";
+
+/* Change mailbox password cell title */
+"_change_mailbox_password" = "更改郵箱密碼";
+
+/* Change password cell title */
+"_change_password" = "變更密碼";

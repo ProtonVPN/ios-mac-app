@@ -1870,6 +1870,51 @@
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "네트워크 공격으로부터의 보호";
 
+/* Title of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_title" = "더욱 빠른 브라우징";
+
+/* Subtitle of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_subtitle" = "최대 10 Gbps의 속도를 제공하는 더욱 빠르고 쾌적한 서버를 이용하십시오.";
+
+/* Subtitle of the Customization scren */
+"modals_new_upsell_customization_subtitle" = "VPN Plus로 로컬 영역 네트워크 (LAN)의 디바이스에 접근하세요.";
+
+/* Subtitle of Moderate NAT upsell screens */
+"modals_new_upsell_moderate_nat_subtitle" = "NAT Type 2로 온라인 게이밍과 영상통화의 성능을 개선하세요.";
+
+/* Title of Netshield upsell screen */
+"modals_new_upsell_netshield_title" = "광고 없는 브라우징을 즐기세요";
+
+/* Subtitle of Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle" = "NetShield가 광고와 트래커, 멀웨어를 차단합니다.";
+
+/* The bold portion of the subtitle of the Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle_bold" = "NetShield";
+
+/* Title of Secure Core upsell screen */
+"modals_new_upsell_secure_core_title" = "두 배로 보호하세요";
+
+/* Subtitle of Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle" = "Secure Core가 당신의 VPN 연결에 한 겹의 암호화를 더합니다.";
+
+/* The bold portion of the subtitle of the Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle_bold" = "Secure Core";
+
+/* Title of All Countries upsell screen */
+"modals_new_upsell_all_countries_title" = "모든 국가로의 접근";
+
+/* The bold portion of the subtitle of All Countries upsell screen */
+"modals_new_upsell_all_countries_subtitle_bold" = "VPN Plus";
+
+/* Title of Country upsell screen */
+"modals_new_upsell_country_title" = "특정 국가로 연결하고 싶으세요?";
+
+/* Subtitle of Country upsell screen */
+"modals_new_upsell_country_subtitle" = "VPN Plus로 국가 선택을 잠금 해제하세요.";
+
+/* Subtitle of Profiles upsell screen */
+"modals_new_upsell_profiles_subtitle" = "VPN Plus로 프로파일 기능 잠금 해제";
+
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "속도에 대한 참고 사항...";
 
@@ -1951,8 +1996,11 @@
 /* Subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle" = "프로파일을 VPN Plus로 잠금 해제하세요.";
 
-/* Bold part of the subtitle of Profiles upsell modal */
-"upsell_profiles_subtitle_bold" = "프로파일";
+/* First bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_1" = "프로파일";
+
+/* Second bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_2" = "VPN Plus";
 
 /* Feature of Profiles upsell modal */
 "upsell_profiles_feature_location" = "선호하는 서버, 도시 및 국가를 저장하세요.";
@@ -2175,3 +2223,9 @@
 
 /* Action button of the view nudging users to update before filling Bug Report */
 "_update_view_button" = "업데이트";
+
+/* Change mailbox password cell title */
+"_change_mailbox_password" = "메일함 비밀번호 변경";
+
+/* Change password cell title */
+"_change_password" = "비밀번호 변경";

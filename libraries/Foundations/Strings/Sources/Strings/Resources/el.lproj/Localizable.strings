@@ -1870,6 +1870,51 @@
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Προστασία από δικτυακές επιθέσεις";
 
+/* Title of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_title" = "Περιηγηθείτε σε ακόμα υψηλότερες ταχύτητες";
+
+/* Subtitle of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_subtitle" = "Ξεκλειδώστε ταχύτερους, λιγότερο γεμάτους διακομιστές με ταχύτητες έως και 10 Gbps.";
+
+/* Subtitle of the Customization scren */
+"modals_new_upsell_customization_subtitle" = "Πρόσβαση σε συσκευές στο τοπικό σας δίκτυο (LAN) με το VPN Plus.";
+
+/* Subtitle of Moderate NAT upsell screens */
+"modals_new_upsell_moderate_nat_subtitle" = "Βελτιώστε την απόδοση των διαδικτυακών παιχνιδιών και βιντεοκλήσεων με το NAT τύπου 2.";
+
+/* Title of Netshield upsell screen */
+"modals_new_upsell_netshield_title" = "Απολαύστε περιήγηση χωρίς διαφημίσεις";
+
+/* Subtitle of Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle" = "Αποκλεισμός διαφημίσεων, ιχνηλατών και κακόβουλου λογισμικού με το NetShield.";
+
+/* The bold portion of the subtitle of the Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle_bold" = "NetShield";
+
+/* Title of Secure Core upsell screen */
+"modals_new_upsell_secure_core_title" = "Διπλασιάστε την προστασία σας";
+
+/* Subtitle of Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle" = "Προσθέστε άλλο ένα επίπεδο κρυπτογράφησης στη σύνδεσή σας VPN με το Secure Core.";
+
+/* The bold portion of the subtitle of the Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle_bold" = "Secure Core";
+
+/* Title of All Countries upsell screen */
+"modals_new_upsell_all_countries_title" = "Πρόσβαση σε όλες τις χώρες";
+
+/* The bold portion of the subtitle of All Countries upsell screen */
+"modals_new_upsell_all_countries_subtitle_bold" = "VPN Plus";
+
+/* Title of Country upsell screen */
+"modals_new_upsell_country_title" = "Θέλετε να συνδεθήτε σε μια συγκεκριμένη χώρα;";
+
+/* Subtitle of Country upsell screen */
+"modals_new_upsell_country_subtitle" = "Ξεκλειδώστε την επιλογή χώρας με το VPN Plus.";
+
+/* Subtitle of Profiles upsell screen */
+"modals_new_upsell_profiles_subtitle" = "Ξεκλειδώστε τα προφίλ με το VPN Plus.";
+
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "Σημείωση για την ταχύτητα...";
 
@@ -1951,8 +1996,11 @@
 /* Subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle" = "Ξεκλειδώστε τα προφίλ με το VPN Plus";
 
-/* Bold part of the subtitle of Profiles upsell modal */
-"upsell_profiles_subtitle_bold" = "προφίλ";
+/* First bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_1" = "προφίλ";
+
+/* Second bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_2" = "VPN Plus";
 
 /* Feature of Profiles upsell modal */
 "upsell_profiles_feature_location" = "Αποθηκεύστε τον διακομιστή, την πόλη ή τη χώρα που προτιμάτε.";
@@ -2175,3 +2223,9 @@
 
 /* Action button of the view nudging users to update before filling Bug Report */
 "_update_view_button" = "Ενημέρωση";
+
+/* Change mailbox password cell title */
+"_change_mailbox_password" = "Αλλαγή κωδικού θυρίδας";
+
+/* Change password cell title */
+"_change_password" = "Αλλαγή κωδικού πρόσβασης";

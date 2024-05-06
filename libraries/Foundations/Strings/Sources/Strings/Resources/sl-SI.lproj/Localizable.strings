@@ -190,13 +190,13 @@
 /* iOS: main button in tabbar during connecting to vpn phase */
 "_connecting" = "Povezovanje";
 
-"_connectingDotDotDot" = "Povezujem...";
+"_connectingDotDotDot" = "Povezujem ...";
 
 /* iOS: countries list section header */
 "_countries_free" = "Brezplačne države";
 
 /* iOS: countries list section header */
-"_countries_premium" = "Premium države";
+"_countries_premium" = "Premijske države";
 
 /* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
 "_connecting_vpn" = "Povezovanje z %@";
@@ -242,10 +242,10 @@
 "_test_servers" = "TESTNI strežniki";
 
 /* MacOS: connecting overlay */
-"_initializing_connection" = "Vzpostavljanje povezave...";
+"_initializing_connection" = "Vzpostavljanje povezave ...";
 
 /* MacOS: connecting overlay */
-"_successfully_connected" = "Uspešno vzpostavljena povezava";
+"_successfully_connected" = "Povezano";
 
 /* MacOS: connecting overlay */
 "_failed" = "neuspešno";
@@ -272,7 +272,7 @@
 "_technical_details" = "Tehnične podrobnosti";
 
 /* Main mac app menu item */
-"_open_app_to_log_in" = "Pokaži Proton VPN za prijavo...";
+"_open_app_to_log_in" = "Pokaži Proton VPN za prijavo ...";
 
 /* Main mac app menu item */
 "_upgrade_to_plus" = "Nadgradite na Plus";
@@ -360,7 +360,7 @@
 "_forgot_username" = "Pozabljeno uporabniško ime";
 
 /* MacOS: generic failure message for SSO login */
-"_sso_login_failure" = "Prijava z SSO ni uspela. Prosim poskusite ponovno.";
+"_sso_login_failure" = "Prijava s SSO ni uspela. Poskusite ponovno.";
 
 /* iOS: button in login screen */
 "_forgot_password" = "Ste pozabili geslo?";
@@ -407,7 +407,7 @@
 /* iOS: human verification option select button */
 "_use_other_email_address" = "Preverjanje po e-pošti";
 
-"_use_sms_verification" = "Preveri s SMS-om";
+"_use_sms_verification" = "Preveri s SMS";
 
 /* iOS: human verification option select button */
 "_request_invitation" = "Zahtevaj ročno aktivacijo.";
@@ -559,7 +559,7 @@
 "_delete_profile" = "Izbriši profil";
 
 /* iOS: Success message on profile deletion */
-"_profile_deleted_successfully" = "Profil je bil izbrisan";
+"_profile_deleted_successfully" = "Profil je bil izbrisan.";
 
 /* iOS: Error message if profile can't be deleted */
 "_profile_deletion_failed" = "Profila ni bilo mogoče izbrisati";
@@ -574,13 +574,13 @@
 "_profiles_overview" = "Pregled profilov";
 
 /* iOS: success message after profile is saved */
-"_profile_created_successfully" = "Nov profil je shranjen";
+"_profile_created_successfully" = "Nov profil je shranjen.";
 
 /* iOS: failure message after profile is saved */
 "_profile_creation_failed" = "Profila ni bilo mogoče ustvariti";
 
 /* iOS: success message after profile is saved */
-"_profile_edited_successfully" = "Profil je posodobljen";
+"_profile_edited_successfully" = "Profil je posodobljen.";
 
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Pregled";
@@ -653,16 +653,16 @@
 "_select_server" = "Izberi strežnik";
 
 /* Error in profile create/change form */
-"_profile_name_is_required" = "Vnesite ime";
+"_profile_name_is_required" = "Vnesite ime.";
 
 /* Error in profile create/change form */
 "_profile_name_is_too_long" = "Največja dovoljeno številko znakov v imenu je 25";
 
 /* Error when user hasn't selected profile country */
-"_country_selection_is_required" = "Izberite državo";
+"_country_selection_is_required" = "Izberite državo.";
 
 /* Error when user hasn't selected profile server */
-"_server_selection_is_required" = "Izberite strežnik";
+"_server_selection_is_required" = "Izberite strežnik.";
 
 "_profile_name_needs_to_be_unique" = "Profil z istim imenom že obstaja";
 
@@ -670,7 +670,7 @@
 "_current_selection_will_be_lost" = "Če nadaljujete, bo trenutna izbira izgubljena. Želite nadaljevati?";
 
 /* iOS: new profkle can't be created because not all required fields are filled */
-"_check_if_fields_present" = "Preverite, ali so vsa polja izpolnjena";
+"_check_if_fields_present" = "Preverite, ali so vsa polja izpolnjena.";
 
 /* MacOS: profile deletion warning */
 "_delete_profile_header" = "Izbriši profil";
@@ -699,13 +699,13 @@
 "_error_user_credentials_missing" = "Manjkajo uporabniške poverilnice. Prijava ni mogoča";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_expired" = "Uporabniške poverilnice so potekle. Prosim prijavite se";
+"_error_user_credentials_expired" = "Uporabniške poverilnice so potekle. Prijavite se.";
 
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "V obesku za ključe manjkajo poverilnice VPN";
 
 /* Human validation failed */
-"_error_user_failed_human_validation" = "Nismo mogli preveriti, ali ste človek. Poskusite znova ali kupite premium paket.";
+"_error_user_failed_human_validation" = "Nismo mogli preveriti, ali ste človek. Poskusite znova ali kupite premijski paket.";
 
 /* Error decoding an object */
 "_error_decode" = "Napaka pri razčlenjevanju arhiviranih podatkov v razredu: %@";
@@ -714,7 +714,7 @@
 "_error_email_verification_disabled" = "E-poštno preverjanje je začasno onemogočeno";
 
 /* Error writing to system keychain */
-"_error_keychain_write" = "Proton ni mogel vzpostaviti komunikacije z vašo napravo. Prosimo, poskusite znova kasneje.";
+"_error_keychain_write" = "Proton ni mogel vzpostaviti komunikacije z vašo napravo. Poskusite znova kasneje.";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Uporabnika iz seje ni mogoče najti.";
@@ -741,10 +741,10 @@
 "_delinquent_user_title" = "Neporavnani račun";
 
 /* Delinquent user alert */
-"_delinquent_user_description" = "Vaš račun trenutno ima neporavnano fakturo. Prosimo, poravnajte vse neporavnane fakture na account.protonvpn.com.";
+"_delinquent_user_description" = "Vaš račun ima trenutno neporavnano fakturo. Vabimo vas, da poravnate vse neporavnane fakture na account.protonvpn.com.";
 
 /* Generic sign in error */
-"_error_sign_in_again" = "Oprostite! Nekaj je šlo narobe. Poskusi znova.";
+"_error_sign_in_again" = "Oprostite, nekaj je šlo narobe. Poskusite znova.";
 
 "_p2p_detected_popup_title" = "Promet P2P na tem strežniku ni dovoljen";
 
@@ -785,9 +785,9 @@
 /* Under maintenance alert */
 "_all_servers_under_maintenance" = "Vsi strežniki so v vzdrževanju. To običajno pomeni, da obstajajo tehnične težave s strani Proton VPN ali da je vaše omrežje omejeno.";
 
-"_p2p_forwarded_popup_body" = "Vaša povezava je bila samodejno preusmerjena prek drugega strežnika, ker nekateri strežniki ne podpirajo prometa P2P. To lahko zmanjša hitrost vaše povezave. Prosimo, uporabite strežnike z oznako P2P, da se izognete preusmerjanju.";
+"_p2p_forwarded_popup_body" = "Vaša povezava je bila samodejno preusmerjena prek drugega strežnika, ker nekateri strežniki ne podpirajo prometa P2P. To lahko zmanjša hitrost vaše povezave. Uporabite strežnike z oznako P2P, da se izognete preusmerjanju.";
 
-"_p2p_forwarded_popup_body_p1" = "Vaša povezava je bila samodejno preusmerjena prek drugega strežnika, ker nekateri strežniki ne podpirajo prometa P2P. To lahko zmanjša hitrost vaše povezave. Prosimo, uporabite strežnike z";
+"_p2p_forwarded_popup_body_p1" = "Vaša povezava je bila samodejno preusmerjena prek drugega strežnika, ker nekateri strežniki ne podpirajo prometa P2P. To lahko zmanjša hitrost vaše povezave. Uporabite strežnike z";
 
 "_p2p_forwarded_popup_body_p2" = "ikona, da preprečite preusmeritev prometa.";
 
@@ -799,7 +799,7 @@
 
 "_update_required" = "Zahtevana je posodobitev";
 
-"_update_required_no_longer_supported" = "Ta različica aplikacije ni več podprta, če jo želite še naprej uporabljati, jo najprej posodobite.";
+"_update_required_no_longer_supported" = "Ta različica aplikacije ni več podprta. Če jo želite še naprej uporabljati, jo najprej posodobite.";
 
 /* Secondary button title in the App update required alert  */
 "_update_required_support" = "Kontakt za podporo";
@@ -807,7 +807,7 @@
 /* Primary button title in the App update required alert  */
 "_update_required_update" = "Posodobi";
 
-"_invalid_refresh_token_please_login" = "Minilo je že nekaj časa, odkar ste nazadnje uporabljali aplikacijo Proton VPN. Prosimo, prijavite se znova.";
+"_invalid_refresh_token_please_login" = "Minilo je že nekaj časa, odkar ste nazadnje uporabljali aplikacijo Proton VPN. Prijavite se znova.";
 
 "_error_mitm_title" = "Ne-varna povezava.";
 
@@ -1144,7 +1144,7 @@
 "_usage_statistics" = "Statistika uporabe";
 
 /* iOS widget: text for not-logged-in user */
-"_log_in_to_use_widget" = "Če želite začeti, se prijavite";
+"_log_in_to_use_widget" = "Če želite začeti, se prijavite.";
 
 "_vpnstatus_not_loggedin" = "Niste prijavljeni v Proton VPN. Odprite aplikacijo Proton VPN in se prijavite.";
 
@@ -1185,7 +1185,7 @@
 "_report_field_steps" = "Natančno katere korake ste izvedli?";
 
 /* Mag bug report: textfields placeholder */
-"_report_field_placeholder" = "Začnite tipkati...";
+"_report_field_placeholder" = "Začnite tipkati ...";
 
 /* Mag bug report: attach logs checkbox */
 "_report_attachments_checkbox" = "Vključite dnevnike aplikacij in podrobnosti o sistemu";
@@ -1194,7 +1194,7 @@
 "_menu_about" = "O Proton VPN";
 
 /* Main mac app menu item */
-"_menu_check_updates" = "Preveri za posodobitve…";
+"_menu_check_updates" = "Preveri za posodobitve …";
 
 /* Main mac app menu item */
 "_menu_preferences" = "Nastavitve";
@@ -1222,7 +1222,7 @@
 
 "_subscription_will_expire" = "Trenutna naročnina poteče dne %@.";
 
-"_subscription_will_renew" = "Vaa naročnina se bo samodejno obnovila dne %@.";
+"_subscription_will_renew" = "Vaš paket se bo samodejno obnovil %@.";
 
 "_subscription_description" = "You can purchase more credits to automatically extend your current plan. At the end of your current subscription period, these credits will be applied to continue your plan.";
 
@@ -1260,7 +1260,7 @@
 
 "_troubleshoot_item_antivirus_title" = "Protivirusne motnje";
 
-"_troubleshoot_item_antivirus_description" = "Začasno onemogočite ali odstranite antivirusni program.";
+"_troubleshoot_item_antivirus_description" = "Začasno onemogočite ali odstranite protivirusni program.";
 
 "_troubleshoot_item_proxy_title" = "Motnje na povezavi posredniškega strežnika ali požarnega zidu";
 
@@ -1286,7 +1286,7 @@
 "_netshield_stats_data_saved" = "Podatki\nshranjeni";
 
 /* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
-"_netshield_feature_description" = "Zaščitite se pred oglasi, zlonamerno programsko opremo in sledilci na spletnih mestih in v aplikacijah. Če se spletna mesta ne naložijo, poskusite onemogočiti NetShield.\nVeč o tem";
+"_netshield_feature_description" = "Zaščitite se pred oglasi, zlonamerno programsko opremo in sledilniki na spletnih straneh in v aplikacijah. Če se spletne strani ne naložijo, poskusite onemogočiti NetShield.\nVeč o tem";
 
 /* Link with more info in the NetShield Feature description */
 "_netshield_feature_description_alt_link" = "Več informacij";
@@ -1295,7 +1295,7 @@
 "_netshield_upsell_title" = "Brskajte brez oglasov z NetShield";
 
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
-"_netshield_upsell_subtitle" = "Blokirajte oglase, sledilce in zlonamerno programsko opremo na spletnih mestih in v aplikacijah";
+"_netshield_upsell_subtitle" = "Blokirajte oglase, sledilnike in zlonamerno programsko opremo na spletnih straneh in v aplikacijah";
 
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
 "_netshield_business_upsell_title" = "Blokirajte oglase z NetShield";
@@ -1306,10 +1306,10 @@
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
 
-"_netshield_title_tooltip" = "Blokirajte oglase, sledilce in zlonamerno programsko opremo";
+"_netshield_title_tooltip" = "Blokirajte oglase, sledilnike in zlonamerno programsko opremo";
 
 /* Settings -> Netshield, Status -> NetShield: Off */
-"_netshield_off" = "Izk";
+"_netshield_off" = "Izključeno";
 
 /* Status -> Netshield: On */
 "_netshield_on" = "Vklopljeno";
@@ -1430,11 +1430,11 @@
 
 "_vpnauth_certfail_title" = "Napaka pri preverjanju pristnosti";
 
-"_vpnauth_certfail_description" = "Potrdila VPN ni bilo mogoče osvežiti. Preverite povezavo";
+"_vpnauth_certfail_description" = "Potrdila VPN ni bilo mogoče osvežiti. Preverite povezavo.";
 
 "_vpnauth_too_many_certs_title" = "Napaka pri preverjanju pristnosti";
 
-"_vpnauth_too_many_certs_description" = "Dosegli ste največje število sprememb v nastavitvah. Poskusite znova čez nekaj minut";
+"_vpnauth_too_many_certs_description" = "Dosegli ste največje število sprememb v nastavitvah. Poskusite znova čez nekaj minut.";
 
 "_from_server_title" = "Iz strežnika:";
 
@@ -1446,20 +1446,20 @@
 
 "_delinquent_title" = "Vaš VPN račun ima neporavnane račune.";
 
-"_delinquent_description" = "Po plačilu boste lahko znova dostopali do premium funkcij.";
+"_delinquent_description" = "Po plačilu boste lahko znova dostopali do premijskih funkcij.";
 
-"_delinquent_reconnection_description" = "Po plačilu boste lahko znova dostopali do premium funkcij. Trenutno se ponovno povezujemo z najhitrejšim bezplačnim strežnikom, ki je na voljo.";
+"_delinquent_reconnection_description" = "Po plačilu boste lahko znova dostopali do premijskih funkcij. Trenutno se ponovno povezujemo z najhitrejšim brezplačnim strežnikom, ki je na voljo.";
 
 "_maximum_device_title" = "Dosegli ste največjo omejitev naprave";
 
 "_maximum_device_reached_description" = "Odklopite drugo napravo, da povežete to.";
 
 /* Description of user account update screen part 1 */
-"maximum_device_plan_limit_part_1" = "Če želite vzpostaviti povezavo s to napravo, najprej prekinite povezavo v drugi napravi ali pa nadgradite na %@";
+"maximum_device_plan_limit_part_1" = "Če želite vzpostaviti povezavo s to napravo, najprej prekinite povezavo v drugi napravi ali pa nadgradite na %@.";
 
 "_reconnect_title" = "Ponovno se povezujemo z najhitrejšim razpoložljivim strežnikom.";
 
-"_subscription_expired_title" = "Vaša izbrana naročnina VPN je potekela";
+"_subscription_expired_title" = "Vaš naročniški paket VPN je potekel";
 
 "_subscription_expired_description" = "Vaša naročnina je bila znižana.";
 
@@ -1626,7 +1626,7 @@
 "_onboarding_mac_crash_reports" = "Poročila o zrušitvah nam pomagajo odpraviti napake, zaznati požarne zidove in se izogniti blokadam VPN.";
 
 /* Telemetry label in the settings window for mac */
-"_settings_mac_usage_stats_title" = "Pošlji anonime podatke o uporabi?";
+"_settings_mac_usage_stats_title" = "Deli anonimne podatke o uporabi?";
 
 /* Telemetry tooltip in the settings window for mac */
 "_settings_mac_usage_stats_tooltip" = "Podatki o uporabi nam pomagajo premagati blokade VPN in izboljšati delovanje aplikacije.";
@@ -1677,7 +1677,7 @@
 "login_unsupported_state" = "Neveljaven način prijave. Obrnite se na podporo.";
 
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
-"vpn_feature_cannot_be_set_error" = "Nastavitev %@ ni bilo mogoče spremeniti. Poskusite znova pozneje ali se povežite z drugim strežnikom";
+"vpn_feature_cannot_be_set_error" = "Nastavitev %@ ni bilo mogoče spremeniti. Poskusite znova pozneje ali se povežite z drugim strežnikom.";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
 "netshield_stats_hint_ads" = "Oglaševalska spletna mesta uporabljajo piškotke in sledilnike, da ciljajo na vas.";
@@ -1751,25 +1751,25 @@
 "search_cities" = "Mesta";
 
 /* Sample cities the user can search for */
-"search_cities_sample" = "New York, London, Tokio...";
+"search_cities_sample" = "New York, London, Tokio ...";
 
 /* Section header in Search */
 "search_servers" = "Strežniki";
 
 /* Sample servers the user can search for */
-"search_servers_sample" = "JP#50, CA#3, IT#14...";
+"search_servers_sample" = "JP#50, CA#3, IT#14 ...";
 
 /* Section header in search */
 "search_us_regions" = "Regije ZDA";
 
 /* Sample US regions the user can search for */
-"search_us_regions_sample" = "Kalifornija, Florida, Kolorado...";
+"search_us_regions_sample" = "Kalifornija, Florida, Kolorado ...";
 
 /* Title shown when nothing is found in search */
 "search_no_results_title" = "Ni najdenih rezultatov";
 
 /* Subtitle shown when nothing is found in search */
-"search_no_results_subtitle" = "Poskusite z drugo ključno besedo";
+"search_no_results_subtitle" = "Poskusite z drugo ključno besedo.";
 
 /* Header for the recent searches section in search */
 "search_recent_header" = "Nedavno ogledano";
@@ -1787,7 +1787,7 @@
 "search_recent_clear_continue" = "Nadaljujte";
 
 /* Placeholder text showing in the search bar on the search screen */
-"search_bar_placeholder" = "Država, mesto ali server";
+"search_bar_placeholder" = "Država, mesto ali strežnik";
 
 /* Subtitle for the upsell banner shown to free users in search */
 "search_upsell_subtitle" = "Več lokacij = več neblokirane vsebine + dodatna varnost + višje hitrosti";
@@ -1817,7 +1817,7 @@
 "modals_upsell_features_subtitle" = "Ko nadgradite na Plus";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Imate napredne ali profesionalne računalniške potrebe, ki zahtevajo nestandardna vrata?\n\n Nadgradite na VPN Plus za dostop do te in drugih premium funkcij.";
+"modals_upsell_features_safe_mode_subtitle" = "Imate napredne ali profesionalne računalniške potrebe, ki zahtevajo nestandardna vrata?\n\n Nadgradite na VPN Plus za dostop do te in drugih premijskih funkcij.";
 
 /* Title of the Safe Mode upsell screen */
 "modals_upsell_safe_mode_title" = "Dovoli promet do nestandardnih vrat";
@@ -1870,8 +1870,53 @@
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Zaščitite se pred omrežnimi napadi";
 
+/* Title of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_title" = "Brskajte pri še višjih hitrostih";
+
+/* Subtitle of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_subtitle" = "Unlock faster, less crowded servers with speeds of up to 10 Gbps.";
+
+/* Subtitle of the Customization scren */
+"modals_new_upsell_customization_subtitle" = "Postopajte do naprav v vašem lokalnem omrežju (LAN) z VPN Plus.";
+
+/* Subtitle of Moderate NAT upsell screens */
+"modals_new_upsell_moderate_nat_subtitle" = "Izboljšajte delovanje spletnih iger in video klicev z NAT tip 2.";
+
+/* Title of Netshield upsell screen */
+"modals_new_upsell_netshield_title" = "Uživajte v brskanju brez oglasov";
+
+/* Subtitle of Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle" = "Blokirajte oglase, sledilnike in zlonamerno programsko opremo z NetShield.";
+
+/* The bold portion of the subtitle of the Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle_bold" = "NetShield";
+
+/* Title of Secure Core upsell screen */
+"modals_new_upsell_secure_core_title" = "Double your protection";
+
+/* Subtitle of Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle" = "Dodajte še eno plast šifriranja svoji VPN povezavi s Secure Core.";
+
+/* The bold portion of the subtitle of the Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle_bold" = "Secure Core";
+
+/* Title of All Countries upsell screen */
+"modals_new_upsell_all_countries_title" = "Dostop do vseh držav";
+
+/* The bold portion of the subtitle of All Countries upsell screen */
+"modals_new_upsell_all_countries_subtitle_bold" = "VPN Plus";
+
+/* Title of Country upsell screen */
+"modals_new_upsell_country_title" = "Se želite povezati z določeno državo?";
+
+/* Subtitle of Country upsell screen */
+"modals_new_upsell_country_subtitle" = "Odklenite izbrano državo z VPN Plus.";
+
+/* Subtitle of Profiles upsell screen */
+"modals_new_upsell_profiles_subtitle" = "Odklenite profile z VPN Plus.";
+
 /* Title of the Secure Core discouragement screen */
-"modals_discourage_secure_core_title" = "Opomba o hitrosti…";
+"modals_discourage_secure_core_title" = "Opomba o hitrosti …";
 
 /* Subtitle of the Secure Core discouragement screen */
 "modals_discourage_secure_core_subtitle" = "Secure Core ponuja najvišjo raven varnosti in zasebnosti, vendar lahko zmanjša hitrost interneta. Če potrebujete več zmogljivosti, lahko onemogočite Secure Core.";
@@ -1904,7 +1949,7 @@
 "modals_common_get_started" = "Začnite";
 
 /* Description of user account update screen part 1 */
-"maximum_device_plan_limit_part_1" = "Če želite vzpostaviti povezavo s to napravo, najprej prekinite povezavo v drugi napravi ali pa nadgradite na %@";
+"maximum_device_plan_limit_part_1" = "Če želite vzpostaviti povezavo s to napravo, najprej prekinite povezavo v drugi napravi ali pa nadgradite na %@.";
 
 /* Description of user account update screen */
 "maximum_device_limit" = "Odklopite drugo napravo, da povežete to.";
@@ -1951,8 +1996,11 @@
 /* Subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle" = "Odklenite profile z VPN Plus";
 
-/* Bold part of the subtitle of Profiles upsell modal */
-"upsell_profiles_subtitle_bold" = "profili";
+/* First bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_1" = "profiles";
+
+/* Second bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_2" = "VPN Plus";
 
 /* Feature of Profiles upsell modal */
 "upsell_profiles_feature_location" = "Shranite želeni strežnik, mesto ali državo.";
@@ -2074,7 +2122,7 @@
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Na voljo z VPN Business.";
 
-"onboarding_usage_stats_title" = "Pošlji anonime podatke o uporabi?";
+"onboarding_usage_stats_title" = "Deli anonimne podatke o uporabi?";
 
 "onboarding_usage_stats_description" = "Podatki o uporabi nam pomagajo premagati blokade VPN in izboljšati delovanje aplikacije.";
 
@@ -2175,3 +2223,9 @@
 
 /* Action button of the view nudging users to update before filling Bug Report */
 "_update_view_button" = "Posodobi";
+
+/* Change mailbox password cell title */
+"_change_mailbox_password" = "Spremeni geslo poštnega nabiralnika";
+
+/* Change password cell title */
+"_change_password" = "Spremeni geslo";
