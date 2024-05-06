@@ -33,12 +33,28 @@ final class WelcomeFeatureTests: XCTestCase {
     }
 
     @MainActor
-    func testShowSignIn() async {
+    func testSignInSuccess() async {
         let store = TestStore(initialState: WelcomeFeature.State()) {
             WelcomeFeature()
         }
         await store.send(.showSignIn) {
             $0.destination = .signIn(.init())
+        }
+        await store.send(.destination(.presented(.signIn(.signInSuccess(.emptyCredentials))))) {
+            $0.destination = nil
+        }
+    }
+
+    @MainActor
+    func testDestinationDismiss() async {
+        let store = TestStore(initialState: WelcomeFeature.State()) {
+            WelcomeFeature()
+        }
+        await store.send(.showSignIn) {
+            $0.destination = .signIn(.init())
+        }
+        await store.send(.destination(.dismiss)) {
+            $0.destination = nil
         }
     }
 }

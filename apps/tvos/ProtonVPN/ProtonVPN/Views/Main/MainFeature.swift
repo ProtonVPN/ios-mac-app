@@ -25,13 +25,9 @@ struct MainFeature {
 
     @ObservableState
     struct State: Equatable {
-        var currentTab: Tab
-        var settings: SettingsFeature.State
-        
-        init(currentTab: Tab, settings: SettingsFeature.State) {
-            self.currentTab = currentTab
-            self.settings = settings
-        }
+        var currentTab: Tab = .home
+        var settings: SettingsFeature.State = .init()
+        @Shared(.appStorage("username")) var user: String?
     }
 
     enum Action {
@@ -48,7 +44,7 @@ struct MainFeature {
             case .selectTab(let tab):
                 state.currentTab = tab
                 return .none
-            case .settings(_):
+            case .settings:
                 return .none
             }
         }

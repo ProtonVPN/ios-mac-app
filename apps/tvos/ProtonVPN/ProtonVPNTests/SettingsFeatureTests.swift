@@ -23,10 +23,53 @@ import ComposableArchitecture
 final class SettingsFeatureTests: XCTestCase {
 
     @MainActor
-    func testBasics() async {
-        let store = TestStore(initialState: SettingsFeature.State(userName: "user")) {
+    func testSignOut() async {
+        let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
         }
-        await store.send(.signOut)
+        await store.send(.signOutSelected) {
+            $0.alert = SettingsFeature.signOutAlert
+        }
+        await store.send(.alert(.presented(.signOut))) {
+            $0.alert = nil
+            $0.userName = nil
+        }
+    }
+
+    @MainActor
+    func testAlertDismiss() async {
+        let store = TestStore(initialState: SettingsFeature.State()) {
+            SettingsFeature()
+        }
+        await store.send(.signOutSelected) {
+            $0.alert = SettingsFeature.signOutAlert
+        }
+        await store.send(.alert(.dismiss)) {
+            $0.alert = nil
+        }
+    }
+
+    @MainActor
+    func testContactUsSelected() async {
+        let store = TestStore(initialState: SettingsFeature.State()) {
+            SettingsFeature()
+        }
+        await store.send(.contactUs)
+    }
+
+    @MainActor
+    func testReportAnIssueSelected() async {
+        let store = TestStore(initialState: SettingsFeature.State()) {
+            SettingsFeature()
+        }
+        await store.send(.reportAnIssue)
+    }
+
+    @MainActor
+    func testPrivacyPolicySelected() async {
+        let store = TestStore(initialState: SettingsFeature.State()) {
+            SettingsFeature()
+        }
+        await store.send(.privacyPolicy)
     }
 }

@@ -18,37 +18,62 @@
 
 import SwiftUI
 import ComposableArchitecture
+import ProtonCoreUIFoundations
 
 struct SettingsView: View {
-    var store: StoreOf<SettingsFeature>
+    @Bindable var store: StoreOf<SettingsFeature>
+    
+    let appVersion: String = {
+        if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+           let bundleVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+            return "v\(appVersion) (\(bundleVersion))"
+        }
+        return "v0.0.0 (0)"
+    }()
 
     var body: some View {
         VStack(spacing: .themeSpacing24) {
-            Text("Welcome \(store.userName)")
-                .font(.title)
-            Text("Settings")
-                .font(.title)
-
-            Button {
-                store.send(.signOut)
-            } label: {
-                SettingsCellView(title: "Log out")
+            Spacer()
+            SettingsCellView(title: "Contact us", icon: IconProvider.speechBubble) {
+                store.send(.contactUs)
             }
+            SettingsCellView(title: "Report an issue", icon: IconProvider.exclamationCircle) {
+                store.send(.reportAnIssue)
+            }
+            SettingsCellView(title: "Privacy policy", icon: IconProvider.file) {
+                store.send(.privacyPolicy)
+            }
+            SettingsCellView(title: "Sign out", icon: IconProvider.arrowOutFromRectangle) {
+                store.send(.signOutSelected)
+            }
+            Spacer()
+            if let userName = store.userName {
+                Text("user: \(userName)")
+            }
+            Text(appVersion)
         }
         .frame(maxWidth: 800)
+        .alert($store.scope(state: \.alert, action: \.alert))
     }
 }
 
 struct SettingsCellView: View {
-    
+
     let title: String
+    let icon: Image
+    let action: () -> Void
 
     var body: some View {
-        HStack {
-            Text(title)
-                .font(.callout)
-            Spacer()
+        Button(action: action) {
+            HStack(spacing: .themeSpacing32) {
+                icon
+                    .resizable()
+                    .frame(.square(48))
+                Text(title)
+                    .font(.callout)
+                Spacer()
+            }
+            .frame(height: 120)
         }
-        .frame(height: 120)
     }
 }

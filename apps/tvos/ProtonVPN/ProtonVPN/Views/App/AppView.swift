@@ -23,9 +23,9 @@ struct AppView: View {
     @Bindable var store: StoreOf<AppFeature>
 
     var body: some View {
-        if let store = store.scope(state: \.main,
-                                   action: \.main) {
-            MainView(store: store)
+        if store.state.user != nil {
+            MainView(store: store.scope(state: \.main,
+                                        action: \.main))
         } else {
             WelcomeView(store: store.scope(state: \.welcome,
                                            action: \.welcome))

@@ -24,7 +24,7 @@ final class MainFeatureTests: XCTestCase {
 
     @MainActor
     func testTabSelection() async {
-        let store = TestStore(initialState: MainFeature.State(currentTab: .home, settings: .init(userName: "user"))) {
+        let store = TestStore(initialState: MainFeature.State()) {
             MainFeature()
         }
         await store.send(.selectTab(.search)) {
@@ -39,10 +39,10 @@ final class MainFeatureTests: XCTestCase {
     }
 
     @MainActor
-    func testSignOut() async {
-        let store = TestStore(initialState: MainFeature.State(currentTab: .home, settings: .init(userName: "user"))) {
+    func testSettingsDoesNothing() async {
+        let store = TestStore(initialState: MainFeature.State()) {
             MainFeature()
         }
-        await store.send(.settings(.signOut))
+        await store.send(.settings(.contactUs))
     }
 }

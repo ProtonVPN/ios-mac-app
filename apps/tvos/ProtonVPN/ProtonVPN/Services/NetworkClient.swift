@@ -81,7 +81,7 @@ struct AuthCredentials { // temporary, we'll use the real AuthCredentials
     let accessToken: String
     let refreshToken: String
 
-    static let emptyCredentials = AuthCredentials(userID: "",
+    static let emptyCredentials = AuthCredentials(userID: "polled user",
                                                   uID: "",
                                                   accessToken: "",
                                                   refreshToken: "")

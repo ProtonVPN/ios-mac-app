@@ -21,27 +21,6 @@ import ComposableArchitecture
 @testable import ProtonVPN_TV
 
 final class AppFeatureTests: XCTestCase {
-
-    @MainActor
-    func testLoggingOut() async {
-        let state = AppFeature.State(main: MainFeature.State(currentTab: .home, settings: .init(userName: "user")))
-        let store = TestStore(initialState: state) {
-            AppFeature()
-        }
-        await store.send(.main(.settings(.signOut))) {
-            $0.main = nil
-        }
-    }
-
-    @MainActor
-    func testIgnoresActions() async {
-        let state = AppFeature.State(main: MainFeature.State(currentTab: .home, settings: .init(userName: "user")))
-        let store = TestStore(initialState: state) {
-            AppFeature()
-        }
-        await store.send(.main(.selectTab(.home)))
-    }
-
     @MainActor
     func testShowCreateAccount() async {
         let state = AppFeature.State()
@@ -54,18 +33,13 @@ final class AppFeatureTests: XCTestCase {
     }
 
     @MainActor
-    func testSigningIn() async {
-        let state = AppFeature.State(welcome: .init(destination: .signIn(.init())))
+    func testTabSelection() async {
+        let state = AppFeature.State()
         let store = TestStore(initialState: state) {
             AppFeature()
         }
-        let credentials = AuthCredentials(userID: "userID", 
-                                          uID: "",
-                                          accessToken: "",
-                                          refreshToken: "")
-        await store.send(.welcome(.destination(.presented(.signIn(.signInSuccess(credentials)))))) { state in
-            state.welcome.destination = nil
-            state.main = .init(currentTab: .home, settings: .init(userName: "userID"))
+        await store.send(.main(.selectTab(.search))) { state in
+            state.main.currentTab = .search
         }
     }
 }

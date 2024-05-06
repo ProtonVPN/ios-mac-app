@@ -26,6 +26,7 @@ struct SignInFeature {
         var serverPoll: ServerPollConfiguration
         var selector: String?
         var remainingAttempts: Int
+        @Shared(.appStorage("username")) var username: String?
 
         init(signInCode: String? = nil,
              serverPoll: ServerPollConfiguration = .default,
@@ -64,7 +65,8 @@ struct SignInFeature {
                 } catch: { error, send in
                     // failed to fork session
                 }
-            case .signInSuccess:
+            case .signInSuccess(let credentials):
+                state.username = credentials.userID // setting this causes the MainView to appear
                 return .cancel(id: CancelID.timer)
             case .fetchSignInCode:
                 return .run { send in
