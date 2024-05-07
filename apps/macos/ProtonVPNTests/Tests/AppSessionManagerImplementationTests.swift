@@ -38,7 +38,7 @@ fileprivate func mockAuthCredentials(username: String) -> AuthCredentials {
 }
 fileprivate var testAuthCredentials: AuthCredentials = mockAuthCredentials(username: "username")
 
-fileprivate let subuserWithoutSessionsResponseError = ResponseError(httpCode: HttpStatusCode.accessForbidden,
+fileprivate let subuserWithoutSessionsResponseError = ResponseError(httpCode: HttpStatusCode.accessForbidden.rawValue,
                                                                     responseCode: ApiErrorCode.subuserWithoutSessions,
                                                                     userFacingMessage: nil,
                                                                     underlyingError: nil)

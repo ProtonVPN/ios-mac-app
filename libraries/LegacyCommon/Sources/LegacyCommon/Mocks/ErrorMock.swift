@@ -25,7 +25,7 @@ import CommonNetworking
 
 public extension ResponseError {
     static let unknownError: Self = .init(
-        httpCode: HttpStatusCode.internalServerError,
+        httpCode: HttpStatusCode.internalServerError.rawValue,
         responseCode: ApiErrorCode.apiOffline,
         userFacingMessage: Localizable.errorInternalError,
         underlyingError: nil

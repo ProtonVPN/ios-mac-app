@@ -28,7 +28,6 @@ import BugReport
 import Search
 import Review
 import Timer
-import CommonNetworking
 
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 

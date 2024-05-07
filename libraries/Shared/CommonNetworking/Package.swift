@@ -7,23 +7,18 @@ let package = Package(
     name: "CommonNetworking",
     platforms: [
         .iOS(.v15),
-        .macOS(.v11)
+        .macOS(.v11),
+        .tvOS(.v17)
     ],
     products: [
         .library(name: "CommonNetworking", targets: ["CommonNetworking"]),
         .library(name: "CommonNetworkingTestSupport", targets: ["CommonNetworkingTestSupport"])
     ],
     dependencies: [
-        // External packages regularly upstreamed by our project (imported as submodules)
         .package(path: "../../../external/protoncore"),
-
-        // Local packages
         .package(path: "../../Foundations/PMLogger"),
-
-        // External dependencies
         .package(path: "../../Shared/NEHelper"),
-
-        // External dependencies
+        .github("ProtonMail", repo: "TrustKit", revision: "d107d7cc825f38ae2d6dc7c54af71d58145c3506"),
         .github("pointfreeco", repo: "swift-dependencies", .upToNextMajor(from: "1.2.1")),
         .github("pointfreeco", repo: "xctest-dynamic-overlay", .upToNextMajor(from: "1.1.0")),
     ],
@@ -40,16 +35,13 @@ let package = Package(
                 .core(module: "Doh"),
 
                 // External
+                .product(name: "TrustKit", package: "TrustKit"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
             ]
         ),
         .target(
             name: "CommonNetworkingTestSupport",
-            dependencies: ["CommonNetworking"]
-        ),
-        .testTarget(
-            name: "CommonNetworkingTests",
             dependencies: ["CommonNetworking"]
         ),
     ]

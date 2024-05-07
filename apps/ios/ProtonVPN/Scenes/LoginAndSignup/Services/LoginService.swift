@@ -21,7 +21,6 @@ import UIKit
 import CommonNetworking
 import VPNShared
 import Strings
-import CommonNetworking
 
 protocol LoginServiceFactory: AnyObject {
     func makeLoginService() -> LoginService
@@ -76,8 +75,7 @@ final class CoreLoginService {
     weak var delegate: LoginServiceDelegate?
 
     init(factory: Factory) {
-        @Dependency(\.dohConfiguration) var doh
-        self.doh = doh
+        self.doh = Dependency(\.dohConfiguration).wrappedValue
         appSessionManager = factory.makeAppSessionManager()
         appSessionRefresher = factory.makeAppSessionRefresher()
         windowService = factory.makeWindowService()

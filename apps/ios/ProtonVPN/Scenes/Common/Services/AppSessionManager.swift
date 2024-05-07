@@ -33,7 +33,8 @@ import Ergonomics
 import ExtensionIPC
 import Search
 import Review
-import VPNAppCore // UnauthKeychain
+import protocol VPNAppCore.UnauthKeychainHandleFactory
+import protocol VPNAppCore.UnauthKeychainHandle
 import VPNShared
 import LegacyCommon
 

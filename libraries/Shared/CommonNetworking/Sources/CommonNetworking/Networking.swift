@@ -205,7 +205,7 @@ public final class CoreNetworking: Networking {
                 completion(.success(.modified(at: lastModified, value: data)))
 
             case .failure(let error):
-                if let lastModified, case HttpStatusCode.notModified = statusCode {
+                if let lastModified, case HttpStatusCode.notModified.rawValue = statusCode {
                     log.debug("Request finished - not modified", category: .net, event: .response, metadata: [
                         "error": "\(error)",
                         "url": "\(url)",

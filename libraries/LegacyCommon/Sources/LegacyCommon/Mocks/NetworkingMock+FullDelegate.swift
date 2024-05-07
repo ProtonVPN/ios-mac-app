@@ -68,6 +68,8 @@ public class FullNetworkingMockDelegate: NetworkingMockDelegate {
     /// Any error returned via `Result.failure()` will be treated as a mock error, and thus part of the test.
     /// Any error thrown from this function will be treated as an unexpected error, and will thus fail the test.
     func handleMockNetworkingRequestThrowingOnUnexpectedError(_ request: URLRequest) throws -> Result<Data, Error> { // swiftlint:disable:this function_body_length cyclomatic_complexity
+        // We cannot easily use `XCTUnwrap` here, since `LegacyCommon` imports this module.
+        // Until we move mocks from `LegacyCommon` into `LegacyCommonTestSupport`, we cannot import `XCTest` here.
         guard let url = request.url else {
             throw UnexpectedError(description: "No path provided to URL request")
         }
@@ -85,7 +87,7 @@ public class FullNetworkingMockDelegate: NetworkingMockDelegate {
             // for fetching client credentials
             guard let apiCredentials = apiCredentials else {
                 return .failure(ResponseError(
-                    httpCode: HttpStatusCode.badRequest,
+                    httpCode: HttpStatusCode.badRequest.rawValue,
                     responseCode: 2000,
                     userFacingMessage: nil,
                     underlyingError: nil
@@ -178,11 +180,11 @@ public class FullNetworkingMockDelegate: NetworkingMockDelegate {
         return true
     }
 
-    private var responseEncoder: JSONEncoder {
+    private let responseEncoder: JSONEncoder = {
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .capitalizeFirstLetter
         return encoder
-    }
+    }()
 }
 
 #endif

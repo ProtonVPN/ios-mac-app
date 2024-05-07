@@ -27,7 +27,7 @@ import ProtonCoreFoundations
 import ProtonCoreNetworking
 import ProtonCoreServices
 
-import CommonNetworking
+@testable import CommonNetworking
 import Domain
 import VPNShared
 
@@ -129,11 +129,13 @@ extension NetworkingMock: Networking {
         let start = Date()
         request(route) { (result: Result<Data, Error>) in
             let elapsedTime = Date().timeIntervalSince(start)
-            // if elapsedTime > maxMockRequestTime {
-                // let elapsedMillis = (elapsedTime * 1000).rounded()
+            if elapsedTime > maxMockRequestTime {
+                let elapsedMillis = (elapsedTime * 1000).rounded()
+                log.warning("Mock network request on \(route) exceeded maximum allowed time: \(elapsedMillis)ms")
                 // VPNAPPL-2129: There is no reason for a fully mocked request to take even a fraction of this time
+                // Re-enable this assertion once we find out the root cause of long/blocked mock requests.
                 // XCTFail("Mock network request on \(route) exceeded maximum allowed time: \(elapsedMillis)ms")
-            // }
+            }
             switch result {
             case let .success(data):
                 guard let dict = data.jsonDictionary else {

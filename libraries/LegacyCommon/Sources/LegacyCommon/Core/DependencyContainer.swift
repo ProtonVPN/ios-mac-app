@@ -22,7 +22,7 @@ import Timer
 import Localization
 import PMLogger
 import CommonNetworking
-import VPNAppCore // UnauthKeychain
+import VPNAppCore
 import VPNShared
 import Dependencies
 
