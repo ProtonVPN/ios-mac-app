@@ -972,7 +972,7 @@
 "_logs" = "Lokitiedot";
 
 /* iOS Settings: applications logs row */
-"_application_logs" = "Sovelluksen lokitiedot";
+"_application_logs" = "Sovelluslokit";
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "OpenVPN-lokit";
@@ -1602,37 +1602,37 @@
 "_subuser_alert_login_button" = "Kirjaudu uudelleen";
 
 /* Moderate NAT feature title in Settings */
-"_moderate_nat_title" = "Keskitason NAT";
+"_moderate_nat_title" = "Keskitasoinen NAT";
 
 /* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "Keskitason (eli tyypin 2) NAT, poistaa paikallisten osoitteiden sekoitetun määrityksen käytöstä. Tämä voi heikentää suojaustasi hieman, mutta mahdollistaa esimerkiksi suorien yhteyksien kaltaiset tekniikat mm. verkkopeleille. \nLue lisää";
+"_moderate_nat_explanation" = "Keskitasoinen (eli tyypin 2) NAT, poistaa paikallisten osoitteiden sekoituksen käytöstä. Tämä voi heikentää suojaustasi hieman, mutta mahdollistaa esimerkiksi suorien yhteyksien kaltaiset tekniikat mm. verkkopeleille. \nLue lisää";
 
 /* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
 "_moderate_nat_explanation_link" = "Lue lisää";
 
 /* Title for alert shown when enabling Moderate NAT requires reconnection */
-"_moderate_nat_enable_title" = "Ota Keskitason NAT käyttöön";
+"_moderate_nat_enable_title" = "Ota keskitasoinen NAT käyttöön";
 
 /* Title for alert shown when enabling Moderate NAT requires reconnection */
-"_moderate_nat_change_title" = "Ota Keskitason NAT käyttöön";
+"_moderate_nat_change_title" = "Ota keskitasoinen NAT käyttöön";
 
 /* Clickable label title in the onboarding screen for mac */
 "_settings_mac_telemetry_learn_more" = "Lue lisää";
 
 /* Telemetry label in the onboarding screen for mac next to a toggle */
-"_onboarding_mac_usage_stats" = "Jaa nimettömiä käyttötilastoja. Tämä auttaa meitä kiertämään VPN-estoja ja parantamaan sovelluksen suorituskykyä.";
+"_onboarding_mac_usage_stats" = "Jaa anonyymejä käyttötilastoja. Tämä auttaa meitä kiertämään VPN-estoja ja parantamaan sovelluksen suorituskykyä.";
 
 /* Telemetry label in the onboarding screen for mac next to a toggle */
-"_onboarding_mac_crash_reports" = "Jaa nimettömiä kaatumisilmoituksia. Tämä auttaa meitä korjaaman vikoja, tunnistamaan palomuureja ja kiertämään VPN-estoja.";
+"_onboarding_mac_crash_reports" = "Jaa anonyymejä virheraportteja. Tämä auttaa meitä korjaaman vikoja, tunnistamaan palomuureja ja kiertämään VPN-estoja.";
 
 /* Telemetry label in the settings window for mac */
-"_settings_mac_usage_stats_title" = "Jaa nimettömiä käyttötilastoja";
+"_settings_mac_usage_stats_title" = "Jaa anonyymejä käyttötilastoja";
 
 /* Telemetry tooltip in the settings window for mac */
 "_settings_mac_usage_stats_tooltip" = "Käyttötilastot auttavat meitä kiertämään VPN-estoja ja parantamaan sovelluksen suorituskykyä.";
 
 /* Telemetry label in the settings window for mac */
-"_settings_mac_crash_reports_title" = "Jaa nimettömiä kaatumisilmoituksia";
+"_settings_mac_crash_reports_title" = "Jaa anonyymejä virheraportteja";
 
 /* Telemetry tooltip in the settings window for mac */
 "_settings_mac_crash_reports_tooltip" = "Kaatumisilmoitukset auttavat meitä korjaaman vikoja, tunnistamaan palomuureja ja kiertämään VPN-estoja.";
@@ -1826,10 +1826,10 @@
 "modals_upsell_moderate_nat_title" = "Paranna pelikokemustasi";
 
 /* Subtitle of Moderate NAT upsell screens */
-"modals_upsell_moderate_nat_subtitle" = "Avaa 2 tyypin NAT VPN Plus -tilauksella";
+"modals_upsell_moderate_nat_subtitle" = "Aktivoi tyypin 2 NAT VPN Plus -tilauksella";
 
 /* Bold part of the subtitle of Moderate NAT upsell screens */
-"modals_upsell_moderate_nat_subtitle_bold" = "NAT-tyyppi 2";
+"modals_upsell_moderate_nat_subtitle_bold" = "Tyypin 2 NAT";
 
 /* Feature of the Moderate NAT upsell screen */
 "modals_upsell_features_moderate_nat_gaming" = "Paranna suorituskyä verkkopeleille ja videopuheluille";
@@ -1869,6 +1869,51 @@
 
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Suojaudu verkkohyökkäyksiltä";
+
+/* Title of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_title" = "Selaa vielä korkeammilla nopeuksilla";
+
+/* Subtitle of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_subtitle" = "Avaa nopeampia ja ruuhkattomampia palvelimia, joiden nopeudet ovat jopa 10 Gbps.";
+
+/* Subtitle of the Customization scren */
+"modals_new_upsell_customization_subtitle" = "Käytä lähiverkkosi (LAN) laitteita VPN Plus -tilauksella.";
+
+/* Subtitle of Moderate NAT upsell screens */
+"modals_new_upsell_moderate_nat_subtitle" = "Paranna suorituskyä verkkopeleille ja videopuheluille tyypin 2 NAT:lla.";
+
+/* Title of Netshield upsell screen */
+"modals_new_upsell_netshield_title" = "Nauti mainosvapaasta selaamisesta";
+
+/* Subtitle of Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle" = "Estä mainoksia, seurantoja ja haittaohjelmia NetShieldin avulla.";
+
+/* The bold portion of the subtitle of the Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle_bold" = "NetShield";
+
+/* Title of Secure Core upsell screen */
+"modals_new_upsell_secure_core_title" = "Tuplaa suojauksesi";
+
+/* Subtitle of Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle" = "Lisää VPN-yhteyteesi toinen salaustaso Secure Corella.";
+
+/* The bold portion of the subtitle of the Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle_bold" = "Secure Core";
+
+/* Title of All Countries upsell screen */
+"modals_new_upsell_all_countries_title" = "Käytä kaikkia maita";
+
+/* The bold portion of the subtitle of All Countries upsell screen */
+"modals_new_upsell_all_countries_subtitle_bold" = "VPN Plus";
+
+/* Title of Country upsell screen */
+"modals_new_upsell_country_title" = "Haluatko yhdistää tiettyyn maahan?";
+
+/* Subtitle of Country upsell screen */
+"modals_new_upsell_country_subtitle" = "Avaa maavalinta VPN Plus -tilauksella.";
+
+/* Subtitle of Profiles upsell screen */
+"modals_new_upsell_profiles_subtitle" = "Avaa profiilit VPN Plus -tilauksella.";
 
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "Huomautus nopeudesta...";
@@ -1951,8 +1996,11 @@
 /* Subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle" = "Avaa profiilit VPN Plus -tilauksella";
 
-/* Bold part of the subtitle of Profiles upsell modal */
-"upsell_profiles_subtitle_bold" = "profiilit";
+/* First bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_1" = "profiileja";
+
+/* Second bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_2" = "VPN Plus";
 
 /* Feature of Profiles upsell modal */
 "upsell_profiles_feature_location" = "Tallenna mieleisesi palvelin, kaupunki tai maa.";
@@ -2074,11 +2122,11 @@
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Sisältyy VPN Business -tilaukseen.";
 
-"onboarding_usage_stats_title" = "Jaa nimettömiä käyttötilastoja";
+"onboarding_usage_stats_title" = "Jaa anonyymejä käyttötilastoja";
 
 "onboarding_usage_stats_description" = "Käyttötilastot auttavat meitä kiertämään VPN-estoja ja parantamaan sovelluksen suorituskykyä.";
 
-"onboarding_crash_reports_title" = "Jaa nimettömiä kaatumisilmoituksia";
+"onboarding_crash_reports_title" = "Jaa anonyymejä virheraportteja";
 
 "onboarding_crash_reports_description" = "Kaatumisilmoitukset auttavat meitä korjaaman vikoja, tunnistamaan palomuureja ja kiertämään VPN-estoja.";
 
@@ -2120,7 +2168,7 @@
 "_br_2_subtitle" = "Nämä vinkit voivat auttaa ratkaisemaan ongelman nopeammin.";
 
 /* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
-"_br_2_footer" = "Eikö ratkaisua löytynyt?";
+"_br_2_footer" = "Eikö ratkaisu toiminut?";
 
 /* ReportBug 2nd step (Quick fixes) button to go to the next step */
 "_br_2_button_next" = "Ota yhteyttä";
@@ -2175,3 +2223,9 @@
 
 /* Action button of the view nudging users to update before filling Bug Report */
 "_update_view_button" = "Päivitä";
+
+/* Change mailbox password cell title */
+"_change_mailbox_password" = "Vaihda postilaatikon salasana";
+
+/* Change password cell title */
+"_change_password" = "Vaihda salasana";

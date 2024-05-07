@@ -100,6 +100,37 @@
         <string>%d de servere securizate</string>
       </dict>
     </dict>
+    <key>modals_new_upsell_all_countries_subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Deblocați %#@num_servers@ în %#@num_countries@ cu VPN Plus.</string>
+      <key>num_countries</key>
+      <dict>
+        <key>one</key>
+        <string>%d de țări</string>
+        <key>few</key>
+        <string>%d țări</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d de țări</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>one</key>
+        <string>Peste %d de servere securizate</string>
+        <key>few</key>
+        <string>Peste %d servere securizate</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Peste %d de servere securizate</string>
+      </dict>
+    </dict>
     <key>subscription_upgrade_option1</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

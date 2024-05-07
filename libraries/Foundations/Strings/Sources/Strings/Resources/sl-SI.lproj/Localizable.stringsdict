@@ -112,6 +112,41 @@
         <string>%d varni strežniki</string>
       </dict>
     </dict>
+    <key>modals_new_upsell_all_countries_subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Odklenite %#@num_servers@ v %#@num_countries@ z VPN Plus.</string>
+      <key>num_countries</key>
+      <dict>
+        <key>one</key>
+        <string>%d držav</string>
+        <key>two</key>
+        <string>%d državi</string>
+        <key>few</key>
+        <string>%d države</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d držav</string>
+      </dict>
+      <key>num_servers</key>
+      <dict>
+        <key>one</key>
+        <string>%d+ secure servers</string>
+        <key>two</key>
+        <string>%d+ secure servers</string>
+        <key>few</key>
+        <string>%d+ secure servers</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d+ secure servers</string>
+      </dict>
+    </dict>
     <key>subscription_upgrade_option1</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -547,17 +582,17 @@ ustavljeni</string>
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Lokacije brezplačnih serverjev (%d)</string>
+        <string>Lokacije brezplačnih strežnikov (%d)</string>
         <key>two</key>
-        <string>Lokacije brezplačnih serverjev (%d)</string>
+        <string>Lokacije brezplačnih strežnikov (%d)</string>
         <key>few</key>
-        <string>Lokacije brezplačnih serverjev (%d)</string>
+        <string>Lokacije brezplačnih strežnikov (%d)</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Lokacije brezplačnih serverjev (%d)</string>
+        <string>Lokacije brezplačnih strežnikov (%d)</string>
       </dict>
     </dict>
     <key>plan_duration_month</key>

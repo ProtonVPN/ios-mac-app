@@ -35,9 +35,9 @@
 "_unavailable" = "Tidak tersedia";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
-"_expand_list_of_servers" = "Lebarkan daftar server";
+"_expand_list_of_servers" = "Perluas daftar server";
 
-"_collapse_list_of_servers" = "Ciutkan daftar server";
+"_collapse_list_of_servers" = "Susutkan daftar server";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Peringatan";
@@ -58,7 +58,7 @@
 "_on_maintenance" = "Dalam pemeliharaan";
 
 /* iOS & MacOS: text that requires restart connection */
-"_reconnection_required" = "Penyambungan Ulang Dibutuhkan";
+"_reconnection_required" = "Diperlukan Koneksi Ulang";
 
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "Pemeliharaan";
@@ -144,12 +144,12 @@
 "_more_info" = "Pelajari lebih lanjut";
 
 /* Display less information */
-"_less_info" = "Lebih sedikit";
+"_less_info" = "Informasi lebih sedikit";
 
 /* Text addressing to contact costumer support on several sites of the app */
 "_contact_our_support" = "Hubungi layanan pelanggan kami";
 
-"_turn_on" = "Nyalakan";
+"_turn_on" = "Aktifkan";
 
 "_not_now" = "Tidak sekarang";
 
@@ -162,7 +162,7 @@
 "_public_ip" = "IP Publik: %@";
 
 /* Several places in both iOS and Mac apps */
-"_quick_connect" = "Quick Connect";
+"_quick_connect" = "Terhubung dengan cepat";
 
 /* Title of the change server button */
 "_change_server" = "Ubah server";
@@ -372,7 +372,7 @@
 "_warning_vpn_session_is_active" = "Terdapat sesi Proton VPN milik pengguna lain yang sedang aktif pada perangkat ini. Apabila Anda masuk, sesi ini akan berakhir secara otomatis. Apakah Anda ingin melanjutkan?";
 
 /* iOS: placeholder for email field in signup and email verification screens */
-"_enter_email_address" = "Masukkan alamat email";
+"_enter_email_address" = "Masukkan alamat surel";
 
 /* iOS: placeholder in phone verification screen */
 "_phone_country_code_placeholder" = "Kode";
@@ -390,7 +390,7 @@
 "_already_have_account" = "Saya sudah memiliki akun";
 
 /* iOS: Button in email verification screen */
-"_get_verification_email" = "Dapatkan email verifikasi";
+"_get_verification_email" = "Dapatkan surel verifikasi";
 
 /* iOS: Button in SMS verification screen */
 "_get_verification_sms" = "Dapatkan SMS verifikasi";
@@ -449,13 +449,13 @@
 "_setup_complete_plus" = "Pembelian Anda berhasil. Paket Proton VPN Plus Anda kini telah aktif.";
 
 /* iOS: data disclaimer screen */
-"_data_disclaimer_title" = "Lindungi diri Anda saat online";
+"_data_disclaimer_title" = "Lindungi diri Anda saat daring";
 
 /* iOS: data disclaimer screen */
-"_data_disclaimer_text" = "Proton VPN berkomitmen untuk melindungi dan menghormati privasi Anda. Kami mengusung kebijakan dasar untuk mengumpulkan data pengguna sesedikit mungkin demi memastikan pengalaman pengguna yang pribadi dan anonim dalam penggunaan Aplikasi, khususnya:\n\n%@ – untuk masuk, membantu memulihkan kata sandi yang hilang, dan mengirimkan pembaruan layanan penting.\n\n%@ – hanya untuk pelaporan crash dan error.\n\nAplikasi Proton VPN tidak memproses informasi pengguna apa pun di luar data ini. Kami tidak mencatat aktivitas online Anda atau informasi pribadi apa pun yang dapat diidentifikasi. Seluruh data di atas disimpan dan diproses pada sistem milik Proton VPN, tanpa ada pihak ketiga mana pun yang dapat mengaksesnya.";
+"_data_disclaimer_text" = "Proton VPN berkomitmen untuk melindungi dan menghormati privasi Anda. Kami mengusung kebijakan dasar untuk mengumpulkan data pengguna sesedikit mungkin demi memastikan pengalaman pengguna yang pribadi dan anonim dalam penggunaan Aplikasi, khususnya:\n\n%@ – untuk masuk, membantu memulihkan kata sandi yang hilang, dan mengirimkan pembaruan layanan penting.\n\n%@ – hanya untuk pelaporan crash dan eror.\n\nAplikasi Proton VPN tidak memproses informasi pengguna apa pun di luar data ini. Kami tidak mencatat aktivitas daring Anda atau informasi pribadi apa pun yang dapat diidentifikasi. Seluruh data di atas disimpan dan diproses pada sistem milik Proton VPN, tanpa ada pihak ketiga mana pun yang dapat mengaksesnya.";
 
 /* iOS: data disclaimer screen */
-"_data_disclaimer_user_details" = "Nama pengguna, alamat email";
+"_data_disclaimer_user_details" = "Nama pengguna, alamat surel";
 
 /* iOS: data disclaimer screen */
 "_data_disclaimer_device_details" = "Versi Sistem Operasi dan model perangkat Anda";
@@ -633,7 +633,7 @@
 "_color" = "Warna";
 
 /* Profile create/change form */
-"_make_default_profile" = "Jadikan Profil Standar";
+"_make_default_profile" = "Jadikan Profil Bawaan";
 
 /* Profile create/change form */
 "_default_profile_tooltip" = "Tombol \"Quick Connect\" menggunakan profil default.\n";
@@ -987,7 +987,7 @@
 "_activate_widget_step_1" = "Dari layar beranda, geser ke layar paling kiri untuk mengakses widget Anda.";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_2" = "Geser sampai bawah dan sentuh tombol sunting.";
+"_activate_widget_step_2" = "Gulir sampai bawah dan sentuh tombol sunting.";
 
 /* iOS widget help screen: text */
 "_activate_widget_step_3" = "Tambahkan widget Proton VPN ke dalam daftar widget yang aktif.";
@@ -1034,7 +1034,7 @@
 "_plus_plan_features" = "Server Plus\nSecure Core\nServer Tor";
 
 /* Used instead of price for free plans. */
-"_free" = "Free";
+"_free" = "Gratis";
 
 /* Alert message during In App Purchase */
 "_do_you_want_to_activate_subscription_for" = "Apakah Anda ingin mengaktifkan paket langganan yang dibeli untuk ";
@@ -1161,7 +1161,7 @@
 "_report_report" = "Laporkan pesan";
 
 /* iOS bug report: Placeholder for email form field */
-"_report_placeholder_email" = "Email kontak";
+"_report_placeholder_email" = "Surel kontak";
 
 /* Bug report: Placeholder for text form field */
 "_report_placeholder_message" = "Pesan Anda...";
@@ -1176,7 +1176,7 @@
 "_report_description" = "Apabila Anda melampirkan berkas-berkas berikut, tim kami akan dapat mengenali dan menyelesaikan masalah yang Anda hadapi dengan lebih cepat dan akurat:\n• Berkas log Proton VPN\n• Berkas log Open VPN \n• Berkas log WireGuard";
 
 /* Mac bug report: email field label */
-"_report_field_email" = "Email:";
+"_report_field_email" = "Surel:";
 
 /* Mac bug report: feedback field label */
 "_report_field_feedback" = "Apa yang salah?";
@@ -1266,7 +1266,7 @@
 
 "_troubleshoot_item_proxy_description" = "Nonaktifkan seluruh proxy atau firewall yang aktif, atau hubungi pengelola jaringan Anda.";
 
-"_troubleshoot_item_proton_title" = "Proton sedang offline";
+"_troubleshoot_item_proton_title" = "Proton sedang bermasalah";
 
 "_troubleshoot_item_proton_description" = "Memeriksa Proton status untuk status sistem kami.";
 
@@ -1278,7 +1278,7 @@
 
 "_troubleshoot_item_other_link1" = "formulir dukungan";
 
-"_troubleshoot_item_other_link2" = "email";
+"_troubleshoot_item_other_link2" = "surel";
 
 "_troubleshoot_item_other_link3" = "Twitter";
 
@@ -1289,7 +1289,7 @@
 "_netshield_feature_description" = "Lindungi diri Anda dari iklan, malware, dan pelacak pada berbagai situs web dan aplikasi. Apabila situs web yang ingin Anda kunjungi tidak termuat, cobalah untuk menonaktifkan NetShield.\nPelajari lebih lanjut";
 
 /* Link with more info in the NetShield Feature description */
-"_netshield_feature_description_alt_link" = "Lebih lanjut";
+"_netshield_feature_description_alt_link" = "Pelajari lebih lanjut";
 
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
 "_netshield_upsell_title" = "Jelajahi internet tanpa iklan dengan NetShield";
@@ -1463,13 +1463,13 @@
 
 "_subscription_expired_description" = "Langganan anda telah diturunkan.";
 
-"_subscription_expired_reconnection_description" = "Langganan anda telah diturunkan, jadi kami menghubungkan kembali ke server paling cepat yang tersedia.";
+"_subscription_expired_reconnection_description" = "Langganan anda telah diturunkan, sehingga kami menghubungkan kembali ke server paling cepat yang masih tersedia.";
 
 "_subscription_upgrade_title" = "Tingkatkan kembali untuk menikmati semua fitur:";
 
 "_subscription_upgrade_option3" = "Fitur lanjutan: Netshield, Secure Core, Tor, P2P";
 
-"_tier_free" = "Free";
+"_tier_free" = "Gratis";
 
 "_tier_plus" = "Plus";
 
@@ -1483,7 +1483,7 @@
 
 "_smart_routing_title" = "Smart Routing";
 
-"_streaming_title" = "Tontonan";
+"_streaming_title" = "Aliran";
 
 "_p2p_title" = "P2P/BitTorrent";
 
@@ -1499,13 +1499,13 @@
 
 "_streaming_servers_extra" = "dan masih banyak lagi";
 
-"_feature_free_servers" = "Server Free";
+"_feature_free_servers" = "Server Gratis";
 
-"_feature_free_servers_description" = "Keamanan dan privasi untuk semua. Server Free kami tidak memiliki batasan data, dan kami tidak akan pernah dengan sengaja memperlambat laju penjelajahan internet Anda.";
+"_feature_free_servers_description" = "Keamanan dan privasi untuk semua. Server Gratis kami tidak memiliki batasan data, dan kami tidak akan pernah dengan sengaja memperlambat laju penjelajahan internet Anda.";
 
 "_feature_smart_routing_description" = "Teknologi ini memungkinkan Proton VPN untuk menyediakan kecepatan dan keamanan yang lebih tinggi di negara yang masih berkembang.";
 
-"_feature_streaming_description" = "Server PLUS memungkinkan Anda untuk mengakses berbagai layanan streaming (Netflix, Disney+, dll) di manapun Anda berada.";
+"_feature_streaming_description" = "Server PLUS memungkinkan Anda untuk mengakses berbagai layanan aliran video (Netflix, Disney+, dll) di manapun Anda berada.";
 
 "_feature_p2p_description" = "Server-server berikut memberikan performa terbaik dalam hal BitTorrent dan file sharing.";
 
@@ -1550,7 +1550,7 @@
 
 "_local_agent_server_error_title" = "Kesalahan server";
 
-"_local_agent_server_error_message" = "Terjadi kesalahan di server. Silakan sambungkan ke server lain.";
+"_local_agent_server_error_message" = "Terjadi kesalahan pada server. Silakan sambungkan ke server lain.";
 
 "_local_agent_policy_violation_error_title" = "Pelanggaran kebijakan";
 
@@ -1563,7 +1563,7 @@
 "_loading_connection_info_for" = "Memuat informasi koneksi untuk %@";
 
 /* Shown on the Welcome screen as the screen headline */
-"_welcome_headline" = "Lindungi diri Anda saat online";
+"_welcome_headline" = "Lindungi diri Anda saat daring";
 
 /* Shown on the Welcome screen as the longer screen text */
 "_welcome_body" = "VPN Swiss berkecepatan tinggi yang melindungi privasi Anda dengan mengenkripsi koneksi internet Anda.";
@@ -1870,6 +1870,51 @@
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Lindungi diri Anda dari serangan berbasis jaringan";
 
+/* Title of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_title" = "Jelajahi internet pada kecepatan yang jauh lebih tinggi";
+
+/* Subtitle of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_subtitle" = "Buka server yang lebih cepat dan tidak terlalu ramai dengan kecepatan hingga 10 Gbps.";
+
+/* Subtitle of the Customization scren */
+"modals_new_upsell_customization_subtitle" = "Akses perangkat melalui Local Area Network (LAN) Anda dengan VPN Plus.";
+
+/* Subtitle of Moderate NAT upsell screens */
+"modals_new_upsell_moderate_nat_subtitle" = "Tingkatkan performa game online dan panggilan video dengan NAT type 2.";
+
+/* Title of Netshield upsell screen */
+"modals_new_upsell_netshield_title" = "Nikmati penjelajahan tanpa iklan";
+
+/* Subtitle of Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle" = "Blok iklan, pelacak, dan malware dengan NetShield.";
+
+/* The bold portion of the subtitle of the Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle_bold" = "NetShield";
+
+/* Title of Secure Core upsell screen */
+"modals_new_upsell_secure_core_title" = "Gandakan perlindungan Anda";
+
+/* Subtitle of Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle" = "Tambah lapisan enkripsi lainnya pada koneksi VPN Anda dengan SecureCore.";
+
+/* The bold portion of the subtitle of the Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle_bold" = "Secure Core";
+
+/* Title of All Countries upsell screen */
+"modals_new_upsell_all_countries_title" = "Akses seluruh negara";
+
+/* The bold portion of the subtitle of All Countries upsell screen */
+"modals_new_upsell_all_countries_subtitle_bold" = "VPN Plus";
+
+/* Title of Country upsell screen */
+"modals_new_upsell_country_title" = "Ingin terhubung ke negara tertentu?";
+
+/* Subtitle of Country upsell screen */
+"modals_new_upsell_country_subtitle" = "Akses fitur pemilihan negara dengan VPN Plus.";
+
+/* Subtitle of Profiles upsell screen */
+"modals_new_upsell_profiles_subtitle" = "Akses profil dengan VPN Plus.";
+
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "Catatan mengenai kecepatan...";
 
@@ -1951,8 +1996,11 @@
 /* Subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle" = "Akses profil dengan VPN Plus";
 
-/* Bold part of the subtitle of Profiles upsell modal */
-"upsell_profiles_subtitle_bold" = "profil";
+/* First bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_1" = "profil";
+
+/* Second bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_2" = "VPN Plus";
 
 /* Feature of Profiles upsell modal */
 "upsell_profiles_feature_location" = "Simpan server, kota, atau negara yang sering Anda gunakan.";
@@ -2175,3 +2223,9 @@
 
 /* Action button of the view nudging users to update before filling Bug Report */
 "_update_view_button" = "Perbarui";
+
+/* Change mailbox password cell title */
+"_change_mailbox_password" = "Ubah kata sandi kotak surat";
+
+/* Change password cell title */
+"_change_password" = "Ubah kata sandi";
