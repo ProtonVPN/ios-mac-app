@@ -16,9 +16,9 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../Foundations/Strings"),
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.9.2"),
-        .package(url: "https://github.com/pointfreeco/swiftui-navigation", exact: "1.1.0"),
-        .package(url: "https://github.com/pointfreeco/swift-perception", exact: "1.1.4"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.10.2"),
+        .package(url: "https://github.com/pointfreeco/swiftui-navigation", from: "1.1.0"),
+        .package(url: "https://github.com/pointfreeco/swift-perception", from: "1.1.4"),
     ],
     targets: [
         .target(

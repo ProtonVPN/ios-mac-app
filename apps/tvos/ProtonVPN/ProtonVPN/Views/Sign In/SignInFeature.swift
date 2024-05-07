@@ -20,66 +20,74 @@ import ComposableArchitecture
 
 @Reducer
 struct SignInFeature {
-    @Reducer(state: .equatable)
-    enum Destination {
-        case settings(SettingsFeature)
-    }
-
     @ObservableState
     struct State: Equatable {
-        @Presents var destination: Destination.State?
         var signInCode: String?
-        var loggedIn: Bool
-        var pollAttempt: Int = 0
+        var serverPoll: ServerPollConfiguration
+        var selector: String?
+        var remainingAttempts: Int
+        @Shared(.appStorage("username")) var username: String?
+
+        init(signInCode: String? = nil,
+             serverPoll: ServerPollConfiguration = .default,
+             selector: String? = nil) {
+            self.signInCode = signInCode
+            self.serverPoll = serverPoll
+            self.selector = selector
+            self.remainingAttempts = serverPoll.failAfterAttempts
+        }
     }
 
     enum Action {
-        case destination(PresentationAction<Destination.Action>)
         case pollServer
         case fetchSignInCode
-        case presentSignInCode(String)
-        case signInSuccess(String)
+        case presentSignInCode(SignInCode)
+        case signInSuccess(AuthCredentials)
     }
 
     @Dependency(NetworkClient.self) var networkClient
-    @Dependency(\.dismiss) var dismiss
+    @Dependency(\.continuousClock) var clock
+
+    private enum CancelID { case timer }
 
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .pollServer:
-                if state.pollAttempt > 6 {
-                    print("failed polling")
-                    return .none
+                guard let selector = state.selector,
+                      state.remainingAttempts > 0 else {
+                    return .cancel(id: CancelID.timer)
                 }
-                state.pollAttempt += 1
+                state.remainingAttempts -= 1
                 return .run { send in
-                    do {
-                        let username = try await networkClient.forkSession()
-                        await send(.signInSuccess(username))
-                    } catch {
-                        try await Task.sleep(for: .seconds(1)) // wait a second before trying again
-                        await send(.pollServer)
-                    }
+                    let credentials = try await networkClient.forkedSession(selector)
+                    await send(.signInSuccess(credentials))
+                } catch: { error, send in
+                    // failed to fork session
                 }
-            case .signInSuccess(let userName):
-                state.destination = .settings(.init(userName: userName))
-                return .none
-            case .destination(_):
-                return .none
+            case .signInSuccess(let credentials):
+                state.username = credentials.userID // setting this causes the MainView to appear
+                return .cancel(id: CancelID.timer)
             case .fetchSignInCode:
                 return .run { send in
                     let code = try await networkClient.fetchSignInCode()
                     await send(.presentSignInCode(code))
+                } catch: { error, send in
+                    // TODO: Failed obtaining user code and selector, present to the user to try again later?
                 }
             case .presentSignInCode(let code):
-                state.signInCode = code
-                return .run { send in
-                    try await Task.sleep(for: .seconds(1)) // wait a second before polling starts
-                    await send(.pollServer)
+                state.signInCode = code.userCode
+                state.selector = code.selector
+                let conf = state.serverPoll
+                state.remainingAttempts = conf.failAfterAttempts
+                return .run { [conf] send in
+                    try? await clock.sleep(for: conf.delayBeforePollingStarts)
+                    for await _ in clock.timer(interval: conf.period) {
+                        await send(.pollServer)
+                    }
                 }
+                .cancellable(id: CancelID.timer, cancelInFlight: true)
             }
         }
-        .ifLet(\.$destination, action: \.destination)
     }
 }

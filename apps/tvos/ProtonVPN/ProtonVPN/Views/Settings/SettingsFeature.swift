@@ -17,24 +17,62 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import SwiftUI
 
 @Reducer
 struct SettingsFeature {
     @ObservableState
     struct State: Equatable {
-        var userName: String
+        @Shared(.appStorage("username")) var userName: String?
+
+        @Presents var alert: AlertState<Action.Alert>?
     }
 
     enum Action {
-        case signOut
+        case alert(PresentationAction<Alert>)
+        case contactUs
+        case reportAnIssue
+        case privacyPolicy
+        case signOutSelected
+
+        @CasePathable
+        enum Alert {
+          case signOut
+        }
     }
+
+    static let signOutAlert = AlertState<Action.Alert> {
+        TextState("Sign out")
+      } actions: {
+          ButtonState(action: .signOut) {
+              TextState("Sign out")
+          }
+          ButtonState(role: .cancel) {
+              TextState("Cancel")
+          }
+      } message: {
+          TextState("Are you sure you want to sign out of Proton VPN?")
+      }
 
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .signOut:
+            case .contactUs:
+                return .none
+            case .reportAnIssue:
+                return .none
+            case .privacyPolicy:
+                return .none
+            case .signOutSelected:
+                state.alert = Self.signOutAlert
+                return .none
+            case .alert(.presented(.signOut)):
+                state.userName = nil
+                return .none
+            case .alert:
                 return .none
             }
         }
+        .ifLet(\.$alert, action: \.alert)
     }
 }

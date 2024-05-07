@@ -21,7 +21,7 @@ import SwiftUI
 
 @main
 struct ProtonVPNApp: App {
-    @Bindable var store: StoreOf<AppFeature> = .init(initialState: AppFeature.State()) {
+    var store: StoreOf<AppFeature> = .init(initialState: AppFeature.State()) {
         AppFeature()
     }
 

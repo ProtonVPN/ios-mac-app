@@ -21,9 +21,11 @@ import ComposableArchitecture
 @Reducer
 struct AppFeature {
     @ObservableState
-    struct State {
+    struct State: Equatable {
         var welcome = WelcomeFeature.State()
-        var main: MainFeature.State?
+        var main = MainFeature.State()
+
+        @Shared(.appStorage("username")) var user: String?
     }
 
     enum Action {
@@ -33,21 +35,14 @@ struct AppFeature {
 
     var body: some Reducer<State, Action> {
         Scope(state: \.welcome, action: \.welcome) {
-          WelcomeFeature()
+            WelcomeFeature()
         }
-        .ifLet(\.main, action: \.main) {
+        Scope(state: \.main, action: \.main) {
             MainFeature()
         }
         Reduce { state, action in
             switch action {
-            case .main(.settings(.signOut)):
-                state.welcome.destination = nil
-                state.main = nil
-                return .none
             case .main:
-                return .none
-            case .welcome(.destination(.presented(.signIn(.signInSuccess(let username))))):
-                state.main = MainFeature.State(currentTab: .home, settings: .init(userName: username))
                 return .none
             case .welcome:
                 return .none
@@ -55,3 +50,4 @@ struct AppFeature {
         }
     }
 }
+

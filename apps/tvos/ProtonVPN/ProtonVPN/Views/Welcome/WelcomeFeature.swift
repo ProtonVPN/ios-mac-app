@@ -41,29 +41,20 @@ struct WelcomeFeature {
         Reduce { state, action in
             switch action {
             case .showSignIn:
-                state.destination = .signIn(SignInFeature.State(loggedIn: false))
+                state.destination = .signIn(SignInFeature.State())
                 return .none
             case .showCreateAccount:
                 state.destination = .createAccount(.init())
+                return .none
+            case .destination(.presented(.signIn(.signInSuccess))):
+                /// Right after logging in, we should reset the state of the welcome page, so that when the user logs out,
+                /// the welcome page will be shown, not the sign in page
+                state.destination = nil
                 return .none
             case .destination(_):
                 return .none
             }
         }
         .ifLet(\.$destination, action: \.destination)
-    }
-}
-
-@Reducer
-struct CreateAccountFeature {
-    @ObservableState
-    struct State: Equatable { }
-
-    enum Action { }
-
-    var body: some Reducer<State, Action> {
-        Reduce { state, action in
-            return .none
-        }
     }
 }
