@@ -38,19 +38,6 @@ public typealias SuccessCallback = (() -> Void)
 public typealias GenericCallback<T> = ((T) -> Void)
 public typealias ErrorCallback = GenericCallback<Error>
 
-public protocol NetworkingDelegate: ForceUpgradeDelegate, HumanVerifyDelegate {
-    func set(apiService: APIService)
-    func onLogout()
-}
-
-public protocol NetworkingDelegateFactory {
-    func makeNetworkingDelegate() -> NetworkingDelegate
-}
-
-public protocol NetworkingFactory {
-    func makeNetworking() -> Networking
-}
-
 public protocol Networking: APIServiceDelegate {
     var apiService: PMAPIService { get }
 

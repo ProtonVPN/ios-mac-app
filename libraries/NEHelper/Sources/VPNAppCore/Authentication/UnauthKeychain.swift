@@ -39,7 +39,9 @@ public final class UnauthKeychain: UnauthKeychainHandle {
 
     private let keychain = KeychainActor()
 
-    public init() { }
+    public static let `default` = UnauthKeychain()
+
+    private init() { }
 
     public func fetch() -> AuthCredential? {
         do {

@@ -175,3 +175,21 @@ public class AppInfoImplementation: AppInfo {
         bundleInfoDictionary = infoDict
     }
 }
+
+public enum AppInfoKey: TestDependencyKey {
+    public static var testValue: AppInfo {
+        AppInfoImplementation(
+            context: .default,
+            bundle: .main,
+            processInfo: .processInfo,
+            modelName: nil
+        )
+    }
+}
+
+extension DependencyValues {
+    public var appInfo: AppInfo {
+        get { self[AppInfoKey.self] }
+        set { self[AppInfoKey.self] = newValue }
+    }
+}
