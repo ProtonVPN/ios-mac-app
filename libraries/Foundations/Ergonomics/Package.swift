@@ -27,7 +27,6 @@ let package = Package(
         .target(
             name: "Ergonomics",
             dependencies: [
-                .product(name: "ProtonCoreUtilities", package: "protoncore"),
                 .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay")
             ]
         ),

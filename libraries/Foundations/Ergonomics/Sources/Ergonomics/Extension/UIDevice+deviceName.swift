@@ -6,7 +6,7 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
-#if os(iOS)
+#if canImport(UIKit)
 import Foundation
 import UIKit
 
