@@ -18,17 +18,32 @@
 
 import UIKit
 import CoreImage.CIFilterBuiltins
+import Theme
 
 extension UIImage {
-    static func generateQRCode(from string: String) -> UIImage {
-        let context = CIContext()
-        let filter = CIFilter.qrCodeGenerator()
-        filter.message = Data(string.utf8)
-
-        guard let outputImage = filter.outputImage,
-              let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+    static func generateQRCode(from string: String, foregroundColor: UIColor) -> UIImage {
+        let color0 = CIColor(color: foregroundColor)
+        guard let qrCode = qrCode(string),
+              let colored = colored(qrCode, color0: color0),
+              let cgImage = CIContext().createCGImage(colored, from: colored.extent) else {
             return UIImage(systemName: "xmark.circle") ?? UIImage()
         }
         return UIImage(cgImage: cgImage)
+    }
+
+    private static func qrCode(_ message: String) -> CIImage? {
+        let qrCodeGenerator = CIFilter.qrCodeGenerator()
+        qrCodeGenerator.message = Data(message.utf8)
+        return qrCodeGenerator.outputImage
+    }
+
+    private static func colored(_ image: CIImage?, color0: CIColor) -> CIImage? {
+        let falseColorFilter = CIFilter.falseColor()
+        falseColorFilter.color0 = color0
+        // This is done so that we can have custom margin value
+        // background color, remember to provide a background down the line
+        falseColorFilter.color1 = .clear
+        falseColorFilter.inputImage = image
+        return falseColorFilter.outputImage
     }
 }

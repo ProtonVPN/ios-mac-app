@@ -16,31 +16,19 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
 import SwiftUI
 
-import ComposableArchitecture
-
-struct MainView: View {
-    
-    @Bindable var store: StoreOf<MainFeature>
+struct AppView: View {
+    var store: StoreOf<AppFeature>
 
     var body: some View {
-        TabView(selection: $store.currentTab.sending(\.selectTab)) {
-            NavigationStack {
-                EmptyView()
-            }
-            .tag(MainFeature.Tab.home)
-            .tabItem { Text("Home") }
-            NavigationStack {
-                EmptyView()
-            }
-            .tag(MainFeature.Tab.search)
-            .tabItem { Text("Search") }
-            NavigationStack {
-                SettingsView(store: store.scope(state: \.settings, action: \.settings))
-            }
-            .tag(MainFeature.Tab.settings)
-            .tabItem { Text("Settings") }
+        if store.state.userName != nil {
+            MainView(store: store.scope(state: \.main,
+                                        action: \.main))
+        } else {
+            WelcomeView(store: store.scope(state: \.welcome,
+                                           action: \.welcome))
         }
     }
 }

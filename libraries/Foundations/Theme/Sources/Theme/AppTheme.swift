@@ -102,7 +102,9 @@ public enum AppTheme {
         case spacing16 = 16
         case spacing24 = 24
         case spacing32 = 32
+        case spacing48 = 48
         case spacing64 = 64
+        case spacing120 = 120
     }
 
     public enum FontSize: Double {

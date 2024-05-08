@@ -21,19 +21,30 @@ import SwiftUI
 
 @Reducer
 struct SettingsFeature {
+    @Reducer(state: .equatable)
+    enum Destination {
+        case settingsDrillDown(SettingsDrillDownFeature)
+    }
+
     @ObservableState
     struct State: Equatable {
         @Shared(.appStorage("username")) var userName: String?
 
+        @Presents var destination: Destination.State?
         @Presents var alert: AlertState<Action.Alert>?
+        var isLoading: Bool = false
     }
 
     enum Action {
         case alert(PresentationAction<Alert>)
-        case contactUs
-        case reportAnIssue
-        case privacyPolicy
+        case destination(PresentationAction<Destination.Action>)
+        case showContactUs
+        case showReportAnIssue
+        case showPrivacyPolicy
         case signOutSelected
+        case clearLoginDetails
+        case showProgressView
+        case hideProgressView
 
         @CasePathable
         enum Alert {
@@ -57,22 +68,45 @@ struct SettingsFeature {
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .contactUs:
+            case .showContactUs:
+                state.destination = .settingsDrillDown(.contactUs())
                 return .none
-            case .reportAnIssue:
+            case .showReportAnIssue:
+                state.destination = .settingsDrillDown(.reportAnIssue())
                 return .none
-            case .privacyPolicy:
+            case .showPrivacyPolicy:
+                state.destination = .settingsDrillDown(.privacyPolicy())
                 return .none
             case .signOutSelected:
                 state.alert = Self.signOutAlert
                 return .none
             case .alert(.presented(.signOut)):
-                state.userName = nil
-                return .none
+                return .run { send in
+                    await send(.showProgressView)
+                    @Dependency(NetworkClient.self) var networkClient
+                    try await networkClient.logout()
+                    await send(.hideProgressView)
+                } catch: { error, send in
+                    await send(.hideProgressView)
+                }
             case .alert:
                 return .none
+            case .destination:
+                return .none
+            case .clearLoginDetails:
+                state.userName = nil
+                return .none
+            case .showProgressView:
+                state.isLoading = true
+                return .none
+            case .hideProgressView:
+                state.isLoading = false
+                return .run { send in
+                    await send(.clearLoginDetails)
+                }
             }
         }
         .ifLet(\.$alert, action: \.alert)
+        .ifLet(\.$destination, action: \.destination)
     }
 }

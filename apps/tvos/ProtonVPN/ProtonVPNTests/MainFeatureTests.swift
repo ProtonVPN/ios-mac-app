@@ -39,10 +39,12 @@ final class MainFeatureTests: XCTestCase {
     }
 
     @MainActor
-    func testSettingsDoesNothing() async {
+    func testSettingsContactUs() async {
         let store = TestStore(initialState: MainFeature.State()) {
             MainFeature()
         }
-        await store.send(.settings(.contactUs))
+        await store.send(.settings(.showContactUs)) {
+            $0.settings.destination = .settingsDrillDown(.contactUs())
+        }
     }
 }

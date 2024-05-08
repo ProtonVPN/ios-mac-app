@@ -10,7 +10,6 @@
 		4C54B01B2BC027FD00315A3B /* ProtonVPNApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B01A2BC027FD00315A3B /* ProtonVPNApp.swift */; };
 		4C54B01F2BC027FE00315A3B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C54B01E2BC027FE00315A3B /* Assets.xcassets */; };
 		4C54B0222BC027FE00315A3B /* PreviewAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C54B0212BC027FE00315A3B /* PreviewAssets.xcassets */; };
-		4C54B02C2BC027FF00315A3B /* ProtonVPNTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B02B2BC027FF00315A3B /* ProtonVPNTests.swift */; };
 		4C54B0362BC027FF00315A3B /* ProtonVPNUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B0352BC027FF00315A3B /* ProtonVPNUITests.swift */; };
 		4C54B0382BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B0372BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift */; };
 		4C54B04C2BC02AB200315A3B /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C54B04B2BC02AB200315A3B /* NetworkExtension.framework */; };
@@ -29,6 +28,11 @@
 		E5280E5F2BD9057600CDDBAF /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5280E572BD9057600CDDBAF /* QRCodeView.swift */; };
 		E5280E602BD9057600CDDBAF /* CreateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5280E592BD9057600CDDBAF /* CreateAccountView.swift */; };
 		E5280E612BD9057600CDDBAF /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5280E5B2BD9057600CDDBAF /* SignInView.swift */; };
+		E554895F2BEB60AE00AD846B /* ProtonCoreUIFoundations in Frameworks */ = {isa = PBXBuildFile; productRef = E554895E2BEB60AE00AD846B /* ProtonCoreUIFoundations */; };
+		E55489612BEBAC9600AD846B /* Bundle+appVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55489602BEBAC9600AD846B /* Bundle+appVersion.swift */; };
+		E55489632BEBC7AE00AD846B /* SettingsDrillDownFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55489622BEBC7AE00AD846B /* SettingsDrillDownFeature.swift */; };
+		E55489652BEBC7CE00AD846B /* SettingsDrillDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55489642BEBC7CE00AD846B /* SettingsDrillDownView.swift */; };
+		E55489672BEBC7E500AD846B /* SettingsCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55489662BEBC7E500AD846B /* SettingsCellView.swift */; };
 		E55A29D92BDA50100006E85D /* SignInFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A29D82BDA50100006E85D /* SignInFeature.swift */; };
 		E55A29DB2BDA50B80006E85D /* WelcomeFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A29DA2BDA50B80006E85D /* WelcomeFeature.swift */; };
 		E55A29DD2BDA50D20006E85D /* SettingsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A29DC2BDA50D20006E85D /* SettingsFeature.swift */; };
@@ -65,7 +69,6 @@
 		4C54B01E2BC027FE00315A3B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4C54B0212BC027FE00315A3B /* PreviewAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PreviewAssets.xcassets; sourceTree = "<group>"; };
 		4C54B0272BC027FF00315A3B /* tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tvOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4C54B02B2BC027FF00315A3B /* ProtonVPNTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNTests.swift; sourceTree = "<group>"; };
 		4C54B0312BC027FF00315A3B /* tvOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tvOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C54B0352BC027FF00315A3B /* ProtonVPNUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNUITests.swift; sourceTree = "<group>"; };
 		4C54B0372BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -88,6 +91,10 @@
 		E5280E572BD9057600CDDBAF /* QRCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
 		E5280E592BD9057600CDDBAF /* CreateAccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAccountView.swift; sourceTree = "<group>"; };
 		E5280E5B2BD9057600CDDBAF /* SignInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		E55489602BEBAC9600AD846B /* Bundle+appVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+appVersion.swift"; sourceTree = "<group>"; };
+		E55489622BEBC7AE00AD846B /* SettingsDrillDownFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDrillDownFeature.swift; sourceTree = "<group>"; };
+		E55489642BEBC7CE00AD846B /* SettingsDrillDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDrillDownView.swift; sourceTree = "<group>"; };
+		E55489662BEBC7E500AD846B /* SettingsCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCellView.swift; sourceTree = "<group>"; };
 		E55A29D82BDA50100006E85D /* SignInFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInFeature.swift; sourceTree = "<group>"; };
 		E55A29DA2BDA50B80006E85D /* WelcomeFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeFeature.swift; sourceTree = "<group>"; };
 		E55A29DC2BDA50D20006E85D /* SettingsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFeature.swift; sourceTree = "<group>"; };
@@ -105,6 +112,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD1DB8C62BECE8B60065F67E /* Persistence in Frameworks */,
+				E554895F2BEB60AE00AD846B /* ProtonCoreUIFoundations in Frameworks */,
 				E56C8CC62BCFCEFF0029B6AE /* Theme in Frameworks */,
 				E56C8CC22BCFC2CB0029B6AE /* ComposableArchitecture in Frameworks */,
 			);
@@ -163,8 +171,9 @@
 			isa = PBXGroup;
 			children = (
 				4C54B01A2BC027FD00315A3B /* ProtonVPNApp.swift */,
+				E55489602BEBAC9600AD846B /* Bundle+appVersion.swift */,
 				E55A29E82BDA78B10006E85D /* Services */,
-				E5280E502BD9057600CDDBAF /* Views */,
+				E5280E502BD9057600CDDBAF /* Features */,
 				4C54B01E2BC027FE00315A3B /* Assets.xcassets */,
 				AD1DB8C72BECE91E0065F67E /* Persistence+tvOS.swift */,
 				4C54B0202BC027FE00315A3B /* PreviewContent */,
@@ -183,7 +192,6 @@
 		4C54B02A2BC027FF00315A3B /* ProtonVPNTests */ = {
 			isa = PBXGroup;
 			children = (
-				4C54B02B2BC027FF00315A3B /* ProtonVPNTests.swift */,
 				E515F8B92BE0CF6100EA4ABF /* SettingsFeatureTests.swift */,
 				E515F8BE2BE0D1FC00EA4ABF /* AppFeatureTests.swift */,
 				E515F8BD2BE0D1FC00EA4ABF /* MainFeatureTests.swift */,
@@ -220,7 +228,7 @@
 			path = "WireGuard-tvOS";
 			sourceTree = "<group>";
 		};
-		E5280E502BD9057600CDDBAF /* Views */ = {
+		E5280E502BD9057600CDDBAF /* Features */ = {
 			isa = PBXGroup;
 			children = (
 				E55A29E72BDA78800006E85D /* App */,
@@ -231,7 +239,7 @@
 				E5280E582BD9057600CDDBAF /* CreateAccount */,
 				E5280E5A2BD9057600CDDBAF /* Sign In */,
 			);
-			path = Views;
+			path = Features;
 			sourceTree = "<group>";
 		};
 		E5280E512BD9057600CDDBAF /* Settings */ = {
@@ -239,6 +247,8 @@
 			children = (
 				E5280E532BD9057600CDDBAF /* SettingsView.swift */,
 				E55A29DC2BDA50D20006E85D /* SettingsFeature.swift */,
+				E55489682BEBC80F00AD846B /* DrillDown */,
+				E55489662BEBC7E500AD846B /* SettingsCellView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -276,6 +286,15 @@
 				E55A29D82BDA50100006E85D /* SignInFeature.swift */,
 			);
 			path = "Sign In";
+			sourceTree = "<group>";
+		};
+		E55489682BEBC80F00AD846B /* DrillDown */ = {
+			isa = PBXGroup;
+			children = (
+				E55489622BEBC7AE00AD846B /* SettingsDrillDownFeature.swift */,
+				E55489642BEBC7CE00AD846B /* SettingsDrillDownView.swift */,
+			);
+			path = DrillDown;
 			sourceTree = "<group>";
 		};
 		E55A29DE2BDA69E30006E85D /* Main */ = {
@@ -326,6 +345,7 @@
 				E56C8CC12BCFC2CB0029B6AE /* ComposableArchitecture */,
 				E56C8CC52BCFCEFF0029B6AE /* Theme */,
 				AD1DB8C52BECE8B60065F67E /* Persistence */,
+				E554895E2BEB60AE00AD846B /* ProtonCoreUIFoundations */,
 			);
 			productName = ProtonVPN;
 			productReference = 4C54B0172BC027FD00315A3B /* ProtonVPN-TV.app */;
@@ -477,13 +497,17 @@
 				E5280E612BD9057600CDDBAF /* SignInView.swift in Sources */,
 				E515F8C52BE0D3F500EA4ABF /* CreateAccountFeature.swift in Sources */,
 				E5280E5D2BD9057600CDDBAF /* SettingsView.swift in Sources */,
+				E55489652BEBC7CE00AD846B /* SettingsDrillDownView.swift in Sources */,
 				E55A29DB2BDA50B80006E85D /* WelcomeFeature.swift in Sources */,
+				E55489612BEBAC9600AD846B /* Bundle+appVersion.swift in Sources */,
 				E5280E5E2BD9057600CDDBAF /* WelcomeView.swift in Sources */,
 				AD1DB8C82BECE91E0065F67E /* Persistence+tvOS.swift in Sources */,
+				E55489632BEBC7AE00AD846B /* SettingsDrillDownFeature.swift in Sources */,
 				E55A29DD2BDA50D20006E85D /* SettingsFeature.swift in Sources */,
 				E55A29E42BDA77850006E85D /* AppFeature.swift in Sources */,
 				E55A29E22BDA6A040006E85D /* MainFeature.swift in Sources */,
 				E5280E5F2BD9057600CDDBAF /* QRCodeView.swift in Sources */,
+				E55489672BEBC7E500AD846B /* SettingsCellView.swift in Sources */,
 				E5D846BB2BDBB93C006EEEDB /* UIImage+QRCodeGenerating.swift in Sources */,
 				E55A29D92BDA50100006E85D /* SignInFeature.swift in Sources */,
 				E55A29E62BDA78460006E85D /* AppView.swift in Sources */,
@@ -497,7 +521,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C54B02C2BC027FF00315A3B /* ProtonVPNTests.swift in Sources */,
 				E515F8BF2BE0D1FC00EA4ABF /* WelcomeFeatureTests.swift in Sources */,
 				E515F8C12BE0D1FC00EA4ABF /* MainFeatureTests.swift in Sources */,
 				E515F8C02BE0D1FC00EA4ABF /* SignInFeatureTests.swift in Sources */,
@@ -917,6 +940,10 @@
 		AD1DB8C52BECE8B60065F67E /* Persistence */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Persistence;
+		};
+		E554895E2BEB60AE00AD846B /* ProtonCoreUIFoundations */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCoreUIFoundations;
 		};
 		E56C8CC12BCFC2CB0029B6AE /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;

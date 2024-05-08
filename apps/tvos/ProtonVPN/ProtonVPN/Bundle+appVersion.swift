@@ -1,5 +1,5 @@
 //
-//  Created on 25/04/2024.
+//  Created on 08/05/2024.
 //
 //  Copyright (c) 2024 Proton AG
 //
@@ -16,19 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ComposableArchitecture
-import SwiftUI
+import Foundation
 
-struct AppView: View {
-    @Bindable var store: StoreOf<AppFeature>
-
-    var body: some View {
-        if store.state.user != nil {
-            MainView(store: store.scope(state: \.main,
-                                        action: \.main))
-        } else {
-            WelcomeView(store: store.scope(state: \.welcome,
-                                           action: \.welcome))
+extension Bundle {
+    static var appVersion: String = {
+        if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+           let bundleVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+            return "V\(appVersion) (\(bundleVersion))"
         }
-    }
+        return "V0.0.0 (0)"
+    }()
 }
