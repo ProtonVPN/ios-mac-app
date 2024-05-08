@@ -18,6 +18,14 @@
 		AD1DB8C82BECE91E0065F67E /* Persistence+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1DB8C72BECE91E0065F67E /* Persistence+tvOS.swift */; };
 		AD8FA9052BEB95AA00E751F6 /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8FA9042BEB958C00E751F6 /* ObfuscatedConstants.swift */; };
 		AD8FA9072BEB9DBB00E751F6 /* Client.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD8FA9062BEB9DBB00E751F6 /* Client.plist */; };
+		AD8FA9112BEC1DAD00E751F6 /* ChallengeParamersProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8FA90C2BEC1DAD00E751F6 /* ChallengeParamersProvider.swift */; };
+		AD8FA9122BEC1DAD00E751F6 /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8FA90D2BEC1DAD00E751F6 /* AppInfo.swift */; };
+		AD8FA9132BEC1DAD00E751F6 /* NetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8FA90E2BEC1DAD00E751F6 /* NetworkingDelegate.swift */; };
+		AD8FA9142BEC1DAD00E751F6 /* DoH.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8FA90F2BEC1DAD00E751F6 /* DoH.swift */; };
+		AD8FA9152BEC1DAD00E751F6 /* CryptoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8FA9102BEC1DAD00E751F6 /* CryptoService.swift */; };
+		AD8FA9172BEC1F3600E751F6 /* ProtonCoreServices in Frameworks */ = {isa = PBXBuildFile; productRef = AD8FA9162BEC1F3600E751F6 /* ProtonCoreServices */; };
+		AD8FA9192BEC1F4700E751F6 /* CommonNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = AD8FA9182BEC1F4700E751F6 /* CommonNetworking */; };
+		AD8FA91B2BEC1F5900E751F6 /* ProtonCoreForceUpgrade in Frameworks */ = {isa = PBXBuildFile; productRef = AD8FA91A2BEC1F5900E751F6 /* ProtonCoreForceUpgrade */; };
 		E515F8BA2BE0CF6100EA4ABF /* SettingsFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515F8B92BE0CF6100EA4ABF /* SettingsFeatureTests.swift */; };
 		E515F8BF2BE0D1FC00EA4ABF /* WelcomeFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515F8BB2BE0D1FC00EA4ABF /* WelcomeFeatureTests.swift */; };
 		E515F8C02BE0D1FC00EA4ABF /* SignInFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515F8BC2BE0D1FC00EA4ABF /* SignInFeatureTests.swift */; };
@@ -84,6 +92,11 @@
 		AD8FA9032BEB958C00E751F6 /* ObfuscatedConstants.example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.example.swift; sourceTree = "<group>"; };
 		AD8FA9042BEB958C00E751F6 /* ObfuscatedConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.swift; sourceTree = "<group>"; };
 		AD8FA9062BEB9DBB00E751F6 /* Client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Client.plist; sourceTree = "<group>"; };
+		AD8FA90C2BEC1DAD00E751F6 /* ChallengeParamersProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengeParamersProvider.swift; sourceTree = "<group>"; };
+		AD8FA90D2BEC1DAD00E751F6 /* AppInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
+		AD8FA90E2BEC1DAD00E751F6 /* NetworkingDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkingDelegate.swift; sourceTree = "<group>"; };
+		AD8FA90F2BEC1DAD00E751F6 /* DoH.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoH.swift; sourceTree = "<group>"; };
+		AD8FA9102BEC1DAD00E751F6 /* CryptoService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoService.swift; sourceTree = "<group>"; };
 		E515F8B92BE0CF6100EA4ABF /* SettingsFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFeatureTests.swift; sourceTree = "<group>"; };
 		E515F8BB2BE0D1FC00EA4ABF /* WelcomeFeatureTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeFeatureTests.swift; sourceTree = "<group>"; };
 		E515F8BC2BE0D1FC00EA4ABF /* SignInFeatureTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInFeatureTests.swift; sourceTree = "<group>"; };
@@ -119,7 +132,10 @@
 				AD1DB8C62BECE8B60065F67E /* Persistence in Frameworks */,
 				E554895F2BEB60AE00AD846B /* ProtonCoreUIFoundations in Frameworks */,
 				E56C8CC62BCFCEFF0029B6AE /* Theme in Frameworks */,
+				AD8FA9192BEC1F4700E751F6 /* CommonNetworking in Frameworks */,
+				AD8FA91B2BEC1F5900E751F6 /* ProtonCoreForceUpgrade in Frameworks */,
 				E56C8CC22BCFC2CB0029B6AE /* ComposableArchitecture in Frameworks */,
+				AD8FA9172BEC1F3600E751F6 /* ProtonCoreServices in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,6 +197,7 @@
 				E5280E502BD9057600CDDBAF /* Features */,
 				4C54B01E2BC027FE00315A3B /* Assets.xcassets */,
 				AD1DB8C72BECE91E0065F67E /* Persistence+tvOS.swift */,
+				AD8FA90A2BEC1DAD00E751F6 /* PlatformDependencies */,
 				4C54B0202BC027FE00315A3B /* PreviewContent */,
 				AD8FA9002BEB958C00E751F6 /* SupportingFiles */,
 			);
@@ -244,6 +261,26 @@
 			name = SupportingFiles;
 			path = ProtonVPN/SupportingFiles;
 			sourceTree = SOURCE_ROOT;
+		};
+		AD8FA90A2BEC1DAD00E751F6 /* PlatformDependencies */ = {
+			isa = PBXGroup;
+			children = (
+				AD8FA90B2BEC1DAD00E751F6 /* CommonNetworking */,
+			);
+			path = PlatformDependencies;
+			sourceTree = "<group>";
+		};
+		AD8FA90B2BEC1DAD00E751F6 /* CommonNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				AD8FA90C2BEC1DAD00E751F6 /* ChallengeParamersProvider.swift */,
+				AD8FA90D2BEC1DAD00E751F6 /* AppInfo.swift */,
+				AD8FA90E2BEC1DAD00E751F6 /* NetworkingDelegate.swift */,
+				AD8FA90F2BEC1DAD00E751F6 /* DoH.swift */,
+				AD8FA9102BEC1DAD00E751F6 /* CryptoService.swift */,
+			);
+			path = CommonNetworking;
+			sourceTree = "<group>";
 		};
         E5280E502BD9057600CDDBAF /* Features */ = {
 			isa = PBXGroup;
@@ -363,6 +400,9 @@
 				E56C8CC52BCFCEFF0029B6AE /* Theme */,
 				AD1DB8C52BECE8B60065F67E /* Persistence */,
 				E554895E2BEB60AE00AD846B /* ProtonCoreUIFoundations */,
+				AD8FA9162BEC1F3600E751F6 /* ProtonCoreServices */,
+				AD8FA9182BEC1F4700E751F6 /* CommonNetworking */,
+				AD8FA91A2BEC1F5900E751F6 /* ProtonCoreForceUpgrade */,
 			);
 			productName = ProtonVPN;
 			productReference = 4C54B0172BC027FD00315A3B /* ProtonVPN-TV.app */;
@@ -512,6 +552,7 @@
 			files = (
 				E55A29E02BDA69F40006E85D /* MainView.swift in Sources */,
 				E515F8C82BE0DB7E00EA4ABF /* ServerPoll.swift in Sources */,
+				AD8FA9132BEC1DAD00E751F6 /* NetworkingDelegate.swift in Sources */,
 				E5280E612BD9057600CDDBAF /* SignInView.swift in Sources */,
 				E515F8C52BE0D3F500EA4ABF /* CreateAccountFeature.swift in Sources */,
 				E5280E5D2BD9057600CDDBAF /* SettingsView.swift in Sources */,
@@ -528,11 +569,15 @@
 				E55489672BEBC7E500AD846B /* SettingsCellView.swift in Sources */,
 				E5D846BB2BDBB93C006EEEDB /* UIImage+QRCodeGenerating.swift in Sources */,
 				E55A29D92BDA50100006E85D /* SignInFeature.swift in Sources */,
+				AD8FA9142BEC1DAD00E751F6 /* DoH.swift in Sources */,
 				E55A29E62BDA78460006E85D /* AppView.swift in Sources */,
+				AD8FA9152BEC1DAD00E751F6 /* CryptoService.swift in Sources */,
 				E5280E602BD9057600CDDBAF /* CreateAccountView.swift in Sources */,
+				AD8FA9112BEC1DAD00E751F6 /* ChallengeParamersProvider.swift in Sources */,
 				AD8FA9052BEB95AA00E751F6 /* ObfuscatedConstants.swift in Sources */,
 				4C54B01B2BC027FD00315A3B /* ProtonVPNApp.swift in Sources */,
 				E5BC9DE32BD7F7C800CBF85A /* NetworkClient.swift in Sources */,
+				AD8FA9122BEC1DAD00E751F6 /* AppInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -963,6 +1008,18 @@
 		E554895E2BEB60AE00AD846B /* ProtonCoreUIFoundations */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCoreUIFoundations;
+		};
+		AD8FA9162BEC1F3600E751F6 /* ProtonCoreServices */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCoreServices;
+		};
+		AD8FA9182BEC1F4700E751F6 /* CommonNetworking */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CommonNetworking;
+		};
+		AD8FA91A2BEC1F5900E751F6 /* ProtonCoreForceUpgrade */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCoreForceUpgrade;
 		};
 		E56C8CC12BCFC2CB0029B6AE /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
