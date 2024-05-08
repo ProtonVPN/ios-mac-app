@@ -20,37 +20,52 @@ import Foundation
 import ProtonCoreAPIClient
 import ProtonCoreNetworking
 
-final class ForkSessionRequest: Request {
-    let clientId: String
-    let independent: Bool
+public struct ForkSessionRequest: Request {
+    let useCase: UseCase
     let timeout: TimeInterval
 
-    init(clientId: String, independent: Bool, timeout: TimeInterval) {
-        self.clientId = clientId
-        self.independent = independent
+    public enum UseCase {
+        case getSelector(clientId: String, independent: Bool)
+        case getUserCode
+    }
+
+    public init(useCase: UseCase, timeout: TimeInterval) {
+        self.useCase = useCase
         self.timeout = timeout
     }
 
-    var nonDefaultTimeout: TimeInterval? {
+    public var nonDefaultTimeout: TimeInterval? {
         return timeout
     }
 
-    var path: String {
+    public var path: String {
         return "/auth/v4/sessions/forks"
     }
 
-    var method: HTTPMethod {
-        return .post
+    public var method: HTTPMethod {
+        switch useCase {
+        case .getSelector:
+            return .post
+        case .getUserCode:
+            return .get
+        }
     }
 
-    var parameters: [String: Any]? {
-        return [
-            "ChildClientID": clientId,
-            "Independent": independent ? 1 : 0,
-        ]
+    public var parameters: [String: Any]? {
+        switch useCase {
+        case .getSelector(let clientId, let independent):
+            return [
+                "ChildClientID": clientId,
+                "Independent": independent ? 1 : 0,
+            ]
+        case .getUserCode:
+            return nil
+        }
     }
 
-    var retryPolicy: ProtonRetryPolicy.RetryMode {
+    #if canImport(Alamofire)
+    public var retryPolicy: ProtonRetryPolicy.RetryMode {
         .background
     }
+    #endif
 }

@@ -109,7 +109,10 @@ public final class SessionServiceImplementation: SessionService {
                             independent: Bool,
                             timeout: TimeInterval? = nil) async throws -> String {
         let timeout = timeout ?? Self.requestTimeout
-        let request = ForkSessionRequest(clientId: clientId, independent: independent, timeout: timeout)
+        let request = ForkSessionRequest(
+            useCase: .getSelector(clientId: clientId, independent: independent),
+            timeout: timeout
+        )
         return try await withCheckedThrowingContinuation { continuation in
             networking.request(request) { (result: Result<ForkSessionResponse, Error>) in
                 switch result {

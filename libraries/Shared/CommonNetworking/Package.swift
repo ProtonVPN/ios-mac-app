@@ -12,7 +12,7 @@ let package = Package(
     ],
     products: [
         .library(name: "CommonNetworking", targets: ["CommonNetworking"]),
-        .library(name: "CommonNetworkingTestSupport", targets: ["CommonNetworkingTestSupport"])
+        .library(name: "CommonNetworkingTestSupport", targets: ["CommonNetworkingTestSupport"]),
     ],
     dependencies: [
         .package(path: "../../../external/protoncore"),
@@ -31,6 +31,7 @@ let package = Package(
                 .product(name: "VPNShared", package: "NEHelper"), // AuthKeychain
 
                 // Core/Accounts
+                .core(module: "Authentication"),
                 .core(module: "Networking"),
                 .core(module: "Doh"),
 
