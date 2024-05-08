@@ -27,11 +27,14 @@ import Dependencies
 
 import ProtonCoreFeatureFlags
 
+import CommonNetworking
 import Domain
 import Ergonomics
 import ExtensionIPC
 import Search
 import Review
+import protocol VPNAppCore.UnauthKeychainHandleFactory
+import protocol VPNAppCore.UnauthKeychainHandle
 import VPNShared
 import LegacyCommon
 

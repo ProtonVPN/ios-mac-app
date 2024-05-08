@@ -434,6 +434,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C54B0222BC027FE00315A3B /* PreviewAssets.xcassets in Resources */,
+				AD1364CA2BD94E180038646B /* Client.plist in Resources */,
 				4C54B01F2BC027FE00315A3B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

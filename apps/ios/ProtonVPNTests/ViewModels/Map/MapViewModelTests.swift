@@ -30,7 +30,9 @@ import Localization
 import Persistence
 import TimerMock
 
+import CommonNetworking
 import LegacyCommon
+import VPNAppCore // UnauthKeychain
 import VPNShared
 import VPNSharedTesting
 
@@ -41,7 +43,6 @@ class MapViewModelTests: XCTestCase {
     lazy var networking = CoreNetworking(
         delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()),
         appInfo: AppInfoImplementation(),
-        doh: .mock,
         authKeychain: MockAuthKeychain(),
         unauthKeychain: UnauthKeychainMock(),
         pinApiEndpoints: false
@@ -72,8 +73,22 @@ class MapViewModelTests: XCTestCase {
         let configurationPreparer = VpnManagerConfigurationPreparer(
             vpnKeychain: VpnKeychainMock(),
             alertService: AlertServiceEmptyStub(),
-            propertiesManager: PropertiesManagerMock())
-        appStateManager = AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock(), doh: .mock, natTypePropertyProvider: NATTypePropertyProviderMock(), netShieldPropertyProvider: NetShieldPropertyProviderMock(), safeModePropertyProvider: SafeModePropertyProviderMock())
+            propertiesManager: PropertiesManagerMock()
+        )
+        appStateManager = AppStateManagerImplementation(
+            vpnApiService: vpnApiService,
+            vpnManager: VpnManagerMock(),
+            networking: networking,
+            alertService: AlertServiceEmptyStub(),
+            timerFactory: TimerFactoryMock(),
+            propertiesManager: PropertiesManagerMock(),
+            vpnKeychain: vpnKeychain,
+            configurationPreparer: configurationPreparer,
+            vpnAuthentication: VpnAuthenticationMock(),
+            natTypePropertyProvider: NATTypePropertyProviderMock(),
+            netShieldPropertyProvider: NetShieldPropertyProviderMock(),
+            safeModePropertyProvider: SafeModePropertyProviderMock()
+        )
     }
     
     func testSecureCoreAnnotationLocations() throws {

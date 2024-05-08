@@ -21,11 +21,8 @@
 //
 
 import Foundation
+import Dependencies
 import ProtonCoreDoh
-
-public protocol DoHVPNFactory {
-    func makeDoHVPN() -> DoHVPN
-}
 
 public class DoHVPN: DoH, ServerConfig {
     public var proxyToken: String?
@@ -51,6 +48,8 @@ public class DoHVPN: DoH, ServerConfig {
         return "http://protonstatus.com"
     }
 
+    public let isAppStateNotificationConnected: ((Notification) -> Bool)
+
     public var humanVerificationV3Host: String {
         if defaultHost == liveURL {
             return verifyHost
@@ -70,7 +69,7 @@ public class DoHVPN: DoH, ServerConfig {
         }
     }
 
-    private var appState: AppState {
+    private var isConnected: Bool {
         didSet {
             settingsUpdated()
         }
@@ -99,29 +98,35 @@ public class DoHVPN: DoH, ServerConfig {
         return defaultHost != liveURL
     }
 
-    public init(apiHost: String, verifyHost: String, alternativeRouting: Bool, customHost: String? = nil, atlasSecret: String? = nil, appState: AppState) {
+    public init(
+        apiHost: String,
+        verifyHost: String,
+        alternativeRouting: Bool,
+        customHost: String? = nil,
+        atlasSecret: String? = nil,
+        isConnected: Bool,
+        isAppStateNotificationConnected: @escaping (Notification) -> Bool
+    ) {
         self.customApiHost = apiHost
         self.verifyHost = verifyHost
         self.customHost = customHost
         self.atlasSecret = atlasSecret
         self.alternativeRouting = alternativeRouting
-        self.appState = appState
+        self.isConnected = isConnected
+        self.isAppStateNotificationConnected = isAppStateNotificationConnected
         super.init()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged), name: .AppStateManager.stateChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged), name: Notification.Name("AppStateManagerStateChange"), object: nil)
 
         status = alternativeRouting ? .on : .off
     }
 
     @objc private func stateChanged(notification: Notification) {
-        guard let newState = notification.object as? AppState else {
-            return
-        }
-        appState = newState
+        isConnected = isAppStateNotificationConnected(notification)
     }
 
     private func settingsUpdated() {
-        if case .connected = appState {
+        if isConnected {
             if status == .on {
                 log.debug("Disabling DoH while connected to VPN", category: .api)
             }
@@ -136,5 +141,22 @@ public class DoHVPN: DoH, ServerConfig {
 }
 
 public extension DoHVPN {
-    static let mock = DoHVPN(apiHost: "", verifyHost: "", alternativeRouting: false, appState: .disconnected)
+    static let mock = DoHVPN(
+        apiHost: "",
+        verifyHost: "",
+        alternativeRouting: false,
+        isConnected: false,
+        isAppStateNotificationConnected: { _ in false }
+    )
+}
+
+public enum DoHConfigurationKey: TestDependencyKey {
+    public static var testValue: DoHVPN { .mock }
+}
+
+extension DependencyValues {
+    public var dohConfiguration: DoHVPN {
+        get { self[DoHConfigurationKey.self] }
+        set { self[DoHConfigurationKey.self] = newValue }
+    }
 }

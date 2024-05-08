@@ -1,29 +1,38 @@
 //
-//  Networking.swift
-//  Core
+//  Created on 29/04/2024.
 //
-//  Created by Igor Kulman on 23.08.2021.
-//  Copyright © 2021 Proton Technologies AG. All rights reserved.
+//  Copyright (c) 2024 Proton AG
 //
+//  ProtonVPN is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  ProtonVPN is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
 
-import KeychainAccess
+// External
+import Dependencies
 import TrustKit
 
-import ProtonCoreFoundations
-import ProtonCoreNetworking
-import ProtonCoreServices
+// Accounts
 import ProtonCoreAuthentication
 import ProtonCoreEnvironment
+import ProtonCoreNetworking
+import ProtonCoreServices
 import ProtonCoreUtilities
-#if os(iOS)
-import ProtonCoreChallenge
-#endif
-import GoLibs
 
+// Internal
 import Ergonomics
-import VPNShared
+import VPNShared // AuthKeychain
+import VPNAppCore // UnauthKeychain
 
 public typealias SuccessCallback = (() -> Void)
 public typealias GenericCallback<T> = ((T) -> Void)
@@ -56,7 +65,7 @@ public protocol Networking: APIServiceDelegate {
 
 // MARK: CoreNetworking
 public final class CoreNetworking: Networking {
-    
+
     public func perform<R>(request route: Request) async throws -> R where R: APIDecodableResponse {
         (try await apiService.perform(request: route) as (URLSessionDataTask?, R)).1
     }
@@ -65,16 +74,14 @@ public final class CoreNetworking: Networking {
         ((try await apiService.perform(request: route)) as (URLSessionDataTask?, JSONDictionary)).1
     }
 
-    public private(set) var apiService: PMAPIService    
+    public private(set) var apiService: PMAPIService
     private let delegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
     private let appInfo: AppInfo
-    private let doh: DoHVPN
     private let authKeychain: AuthKeychainHandle
     private let unauthKeychain: UnauthKeychainHandle
 
     public typealias Factory = NetworkingDelegateFactory &
         AppInfoFactory &
-        DoHVPNFactory &
         AuthKeychainHandleFactory &
         UnauthKeychainHandleFactory
 
@@ -82,7 +89,6 @@ public final class CoreNetworking: Networking {
         self.init(
             delegate: factory.makeNetworkingDelegate(),
             appInfo: factory.makeAppInfo(),
-            doh: factory.makeDoHVPN(),
             authKeychain: factory.makeAuthKeychainHandle(),
             unauthKeychain: factory.makeUnauthKeychainHandle(),
             pinApiEndpoints: pinApiEndpoints
@@ -92,14 +98,12 @@ public final class CoreNetworking: Networking {
     public init(
         delegate: NetworkingDelegate,
         appInfo: AppInfo,
-        doh: DoHVPN,
         authKeychain: AuthKeychainHandle,
         unauthKeychain: UnauthKeychainHandle,
         pinApiEndpoints: Bool
     ) {
         self.delegate = delegate
         self.appInfo = appInfo
-        self.doh = doh
         self.authKeychain = authKeychain
         self.unauthKeychain = unauthKeychain
 
@@ -110,19 +114,20 @@ public final class CoreNetworking: Networking {
             PMAPIService.trustKit = nil
         }
 
-#if os(iOS)
-        let challengeParametersProvider: ChallengeParametersProvider = .forAPIService(clientApp: .vpn, challenge: PMChallenge())
-#else
-        let challengeParametersProvider: ChallengeParametersProvider = .empty
-#endif
+        @Dependency(\.dohConfiguration) var doh
+        @Dependency(\.challengeParametersProvider) var challengeParametersProvider
 
         if let sessionUID = authKeychain.fetch()?.sessionId ?? unauthKeychain.fetch()?.sessionID {
-            apiService = PMAPIService.createAPIService(doh: doh,
-                                                       sessionUID: sessionUID,
-                                                       challengeParametersProvider: challengeParametersProvider)
+            apiService = PMAPIService.createAPIService(
+                doh: doh,
+                sessionUID: sessionUID,
+                challengeParametersProvider: challengeParametersProvider
+            )
         } else {
-            apiService = PMAPIService.createAPIServiceWithoutSession(doh: doh,
-                                                                     challengeParametersProvider: challengeParametersProvider)
+            apiService = PMAPIService.createAPIServiceWithoutSession(
+                doh: doh,
+                challengeParametersProvider: challengeParametersProvider
+            )
         }
 
         apiService.authDelegate = self
@@ -200,7 +205,7 @@ public final class CoreNetworking: Networking {
                 completion(.success(.modified(at: lastModified, value: data)))
 
             case .failure(let error):
-                if let lastModified, case HttpStatusCode.notModified = statusCode {
+                if let lastModified, case HttpStatusCode.notModified.rawValue = statusCode {
                     log.debug("Request finished - not modified", category: .net, event: .response, metadata: [
                         "error": "\(error)",
                         "url": "\(url)",
@@ -292,6 +297,7 @@ public final class CoreNetworking: Networking {
 // MARK: APIServiceDelegate
 extension CoreNetworking: APIServiceDelegate {
     public var additionalHeaders: [String: String]? {
+        @Dependency(\.dohConfiguration) var doh
         if doh.isAtlasRequest, let atlasSecret = doh.atlasSecret, !atlasSecret.isEmpty {
             return ["x-atlas-secret": atlasSecret]
         }
@@ -318,7 +324,8 @@ extension CoreNetworking: APIServiceDelegate {
     }
 
     public func onUpdate(serverTime: Int64) {
-        CryptoUpdateTime(serverTime)
+        @Dependency(\.cryptoService) var cryptoService
+        cryptoService.updateTime(serverTime)
     }
 
     public func isReachable() -> Bool {
@@ -334,7 +341,7 @@ extension CoreNetworking: AuthDelegate {
         get { self }
         set { /* intentionally ignored */ _ = newValue }
     }
-    
+
     public func onAdditionalCredentialsInfoObtained(sessionUID: String, password: String?, salt: String?, privateKey: String?) {
         guard let authCredential = authCredential(sessionUID: sessionUID) else { return }
         if let password {
@@ -379,7 +386,7 @@ extension CoreNetworking: AuthDelegate {
             log.error("Failed to save updated credentials", category: .keychain, event: .change)
         }
     }
-    
+
     public func credential(sessionUID: String) -> Credential? {
         guard let authCredential = authCredential(sessionUID: sessionUID) else { return nil }
         return .init(authCredential)
@@ -417,7 +424,7 @@ extension CoreNetworking: AuthDelegate {
             log.error("Failed to save updated credentials", category: .keychain, event: .change)
         }
     }
-    
+
     public func onForceUpgrade() { }
 }
 

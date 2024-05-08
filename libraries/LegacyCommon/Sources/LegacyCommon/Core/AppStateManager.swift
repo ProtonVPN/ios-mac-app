@@ -22,7 +22,9 @@
 import Ergonomics
 import Foundation
 import Reachability
+import Domain
 import Timer
+import CommonNetworking
 import VPNShared
 #if canImport(AppKit)
 import AppKit
@@ -131,7 +133,6 @@ public class AppStateManagerImplementation: AppStateManager {
     private var serviceChecker: ServiceChecker?
 
     private let vpnAuthentication: VpnAuthentication
-    private let doh: DoHVPN
 
     private let natTypePropertyProvider: NATTypePropertyProvider
     private let netShieldPropertyProvider: NetShieldPropertyProvider
@@ -146,7 +147,6 @@ public class AppStateManagerImplementation: AppStateManager {
         VpnKeychainFactory &
         VpnManagerConfigurationPreparerFactory &
         VpnAuthenticationFactory &
-        DoHVPNFactory &
         NATTypePropertyProviderFactory &
         NetShieldPropertyProviderFactory &
         SafeModePropertyProviderFactory
@@ -161,7 +161,6 @@ public class AppStateManagerImplementation: AppStateManager {
                   vpnKeychain: factory.makeVpnKeychain(),
                   configurationPreparer: factory.makeVpnManagerConfigurationPreparer(),
                   vpnAuthentication: factory.makeVpnAuthentication(),
-                  doh: factory.makeDoHVPN(),
                   natTypePropertyProvider: factory.makeNATTypePropertyProvider(),
                   netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
                   safeModePropertyProvider: factory.makeSafeModePropertyProvider())
@@ -177,7 +176,6 @@ public class AppStateManagerImplementation: AppStateManager {
         vpnKeychain: VpnKeychainProtocol,
         configurationPreparer: VpnManagerConfigurationPreparer,
         vpnAuthentication: VpnAuthentication,
-        doh: DoHVPN,
         natTypePropertyProvider: NATTypePropertyProvider,
         netShieldPropertyProvider: NetShieldPropertyProvider,
         safeModePropertyProvider: SafeModePropertyProvider
@@ -191,7 +189,6 @@ public class AppStateManagerImplementation: AppStateManager {
         self.vpnKeychain = vpnKeychain
         self.configurationPreparer = configurationPreparer
         self.vpnAuthentication = vpnAuthentication
-        self.doh = doh
         self.natTypePropertyProvider = natTypePropertyProvider
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
@@ -476,7 +473,7 @@ public class AppStateManagerImplementation: AppStateManager {
 
             serviceChecker?.stop()
             if let alertService = alertService {
-                serviceChecker = ServiceChecker(networking: networking, alertService: alertService, doh: doh, refreshInterval: CoreAppConstants.UpdateTime.p2pBlockedRefreshTime)
+                serviceChecker = ServiceChecker(networking: networking, alertService: alertService, refreshInterval: CoreAppConstants.UpdateTime.p2pBlockedRefreshTime)
             }
             attemptingConnection = false
             state = .connected(descriptor)

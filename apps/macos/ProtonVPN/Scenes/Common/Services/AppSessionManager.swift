@@ -27,9 +27,11 @@ import Dependencies
 import ProtonCoreFeatureFlags
 import ProtonCoreUtilities
 
+import CommonNetworking
 import Domain
 import Ergonomics
 import LegacyCommon
+import VPNAppCore // UnauthKeychain
 import VPNShared
 
 enum SessionStatus {

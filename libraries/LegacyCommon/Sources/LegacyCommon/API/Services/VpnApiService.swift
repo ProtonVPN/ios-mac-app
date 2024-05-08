@@ -25,6 +25,7 @@ import ProtonCoreNetworking
 import ProtonCoreAuthentication
 import ProtonCoreDataModel
 
+import CommonNetworking
 import Domain
 import Ergonomics
 import LocalFeatureFlags
@@ -136,7 +137,7 @@ public class VpnApiService {
             return try VpnCredentials(dic: json)
         } catch {
             let error = error as NSError
-            if error.httpCode == HttpStatusCode.accessForbidden,
+            if error.httpCode == HttpStatusCode.accessForbidden.rawValue,
                error.responseCode == ApiErrorCode.subuserWithoutSessions {
                 throw ProtonVpnError.subuserWithoutSessions
             }

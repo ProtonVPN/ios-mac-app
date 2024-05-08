@@ -1,5 +1,5 @@
-ProtonVPN.xcworkspace/xcuserdata
-apps/tvos/ProtonVPN/tvOS.xcodeproj/xcuserdata
+# Xcode
+**/xcuserdata
 
 ### OSX ###
 *.DS_Store
@@ -12,11 +12,6 @@ fastlane/README.md
 .last_build_nr
 swiftlint.xml
 .swiftpm
-
-sampleapps/**/xcuserdata
-
-# Dynamic bug report lib and examples
-libraries/BugReport/BugReport.xcodeproj/xcuserdata
 
 # Directory created by gitlab-runner
 builds

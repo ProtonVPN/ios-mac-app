@@ -22,6 +22,7 @@
 
 import Foundation
 import VPNShared
+import CommonNetworking
 
 public protocol CoreApiServiceFactory {
     func makeCoreApiService() -> CoreApiService

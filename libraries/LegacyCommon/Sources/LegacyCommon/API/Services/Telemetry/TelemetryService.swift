@@ -22,6 +22,7 @@ import Ergonomics
 import Reachability
 import Ergonomics
 import VPNShared
+import CommonNetworking
 
 public protocol TelemetryServiceFactory {
     func makeTelemetryService() async -> TelemetryService

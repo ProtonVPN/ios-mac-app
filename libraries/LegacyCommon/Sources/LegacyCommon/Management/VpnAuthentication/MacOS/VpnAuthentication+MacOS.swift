@@ -18,6 +18,7 @@
 
 import Foundation
 
+import CommonNetworking
 import Domain
 import Ergonomics
 import VPNShared

@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-#if os(iOS)
+#if canImport(UIKit)
 import UIKit
 #endif
 
@@ -156,9 +156,9 @@ public class AppInfoImplementation: AppInfo {
         if let modelName = modelName {
             self.modelName = modelName
         } else {
-            #if os(iOS)
+            #if canImport(UIKit)
             self.modelName = UIDevice.current.modelName
-            #else
+            #elseif os(macOS)
             self.modelName = Host.current().localizedName ?? nil
             #endif
         }

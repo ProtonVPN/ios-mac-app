@@ -22,6 +22,7 @@
 
 import Cocoa
 import LegacyCommon
+import CommonNetworking
 import Theme
 import Ergonomics
 import Strings

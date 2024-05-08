@@ -26,6 +26,8 @@ import Domain
 import Localization
 import Timer
 import TimerMock
+import CommonNetworking
+import CommonNetworkingTestSupport
 import VPNShared
 import VPNSharedTesting
 
@@ -151,7 +153,6 @@ public class MockDependencyContainer {
         vpnKeychain: vpnKeychain,
         configurationPreparer: vpnManagerConfigurationPreparer,
         vpnAuthentication: vpnAuthentication,
-        doh: dohVpn,
         natTypePropertyProvider: natProvider,
         netShieldPropertyProvider: netShieldProvider,
         safeModePropertyProvider: safeModeProvider

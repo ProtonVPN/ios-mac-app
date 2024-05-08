@@ -32,6 +32,7 @@ import PersistenceTestSupport
 import Timer
 import TimerMock
 import VPNSharedTesting
+import CommonNetworkingTestSupport
 
 class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     var alertService: CoreAlertServiceDummy!

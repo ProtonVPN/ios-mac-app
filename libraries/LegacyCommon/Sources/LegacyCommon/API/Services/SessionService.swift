@@ -17,6 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
+import CommonNetworking
 import VPNShared
 
 public protocol SessionServiceFactory {
@@ -67,7 +69,7 @@ extension SessionService {
 public final class SessionServiceImplementation: SessionService {
     static let requestTimeout: TimeInterval = 3
 
-    public typealias Factory = AppInfoFactory & NetworkingFactory & DoHVPNFactory
+    public typealias Factory = AppInfoFactory & NetworkingFactory
     private let appInfoFactory: AppInfoFactory
     private let doh: DoHVPN
     private let networking: Networking
@@ -90,10 +92,10 @@ public final class SessionServiceImplementation: SessionService {
     }
 
     public init(factory: Factory) {
+        @Dependency(\.dohConfiguration) var doh
         self.appInfoFactory = factory
-
         self.networking = factory.makeNetworking()
-        self.doh = factory.makeDoHVPN()
+        self.doh = doh
     }
 
     // Exists for contexts that are allergic to factories

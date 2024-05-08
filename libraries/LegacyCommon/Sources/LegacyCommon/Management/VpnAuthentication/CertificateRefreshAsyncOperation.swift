@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import CommonNetworking
 import VPNShared
 import Logging
 

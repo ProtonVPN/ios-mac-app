@@ -22,6 +22,7 @@
 
 import Cocoa
 
+import CommonNetworking
 import Domain
 import Theme
 import Strings

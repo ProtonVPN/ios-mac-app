@@ -22,6 +22,7 @@
 
 #if DEBUG
 import Foundation
+import CommonNetworking
 
 public enum CoreAPIServiceMockError: Error {
     case mockNotProvided
@@ -29,7 +30,7 @@ public enum CoreAPIServiceMockError: Error {
 
 public class CoreApiServiceMock: CoreApiService {
     public var callbackGetApiNotificationsCallback: ((@escaping GenericCallback<GetApiNotificationsResponse>, @escaping ErrorCallback) -> Void)?
-    
+
     public func getApiNotifications(completion: @escaping (Result<GetApiNotificationsResponse, Error>) -> Void) {
         callbackGetApiNotificationsCallback?({ response in
             completion(.success(response))
@@ -50,4 +51,5 @@ public class CoreApiServiceMock: CoreApiService {
 
     public init() {}
 }
+
 #endif

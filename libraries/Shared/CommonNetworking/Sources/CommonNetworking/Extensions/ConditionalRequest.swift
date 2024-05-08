@@ -18,7 +18,7 @@
 
 import Foundation
 
-import ProtonCoreNetworking
+import protocol ProtonCoreNetworking.Request
 
 /// Inheriting from `Request` allows us to slap on `If-Modified-Since` to a `Request` without touching
 /// `ProtonCoreNetworking`.

@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import LegacyCommon
+import CommonNetworking
 
 protocol EnvironmentsViewControllerDelegate: AnyObject {
     func userDidSelectContinue()

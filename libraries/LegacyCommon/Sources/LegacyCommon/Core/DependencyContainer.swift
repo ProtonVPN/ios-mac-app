@@ -21,13 +21,14 @@ import NetworkExtension
 import Timer
 import Localization
 import PMLogger
+import CommonNetworking
+import VPNAppCore
 import VPNShared
 import Dependencies
 
 import ProtonCorePushNotifications
 
-typealias PropertiesToOverride = DoHVPNFactory &
-                                NetworkingDelegateFactory &
+typealias PropertiesToOverride = NetworkingDelegateFactory &
                                 CoreAlertServiceFactory &
                                 OpenVpnProtocolFactoryCreator &
                                 WireguardProtocolFactoryCreator &
@@ -154,10 +155,6 @@ open class Container: PropertiesToOverride {
     }
 
     // MARK: - Factories to override
-    // MARK: DoHVPNFactory
-    open func makeDoHVPN() -> DoHVPN {
-        shouldHaveOverridden()
-    }
 
     // MARK: NetworkingDelegate
     open func makeNetworkingDelegate() -> NetworkingDelegate {

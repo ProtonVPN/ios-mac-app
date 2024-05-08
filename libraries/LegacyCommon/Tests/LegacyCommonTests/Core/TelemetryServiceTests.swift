@@ -24,6 +24,8 @@ import Ergonomics
 import VPNShared
 import XCTest
 @testable import LegacyCommon
+import CommonNetworking
+import CommonNetworkingTestSupport
 
 actor TelemetryAPIImplementationMock: TelemetryAPI {
     var events = [[String: Any]]()

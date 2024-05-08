@@ -18,6 +18,7 @@
 
 import LocalFeatureFlags
 import Foundation
+import CommonNetworking
 
 class TelemetryEventScheduler {
     public typealias Factory = NetworkingFactory & PropertiesManagerFactory & TelemetryAPIFactory & TelemetrySettingsFactory

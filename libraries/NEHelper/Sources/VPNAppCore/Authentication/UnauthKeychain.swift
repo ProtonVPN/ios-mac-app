@@ -17,9 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import ProtonCoreNetworking
-import VPNShared
 import KeychainAccess
+import class ProtonCoreNetworking.AuthCredential
+import class VPNShared.KeychainActor
 
 public protocol UnauthKeychainHandleFactory {
     func makeUnauthKeychainHandle() -> UnauthKeychainHandle

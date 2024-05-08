@@ -22,12 +22,14 @@
 
 import XCTest
 
+import CommonNetworking
 import Domain
 import Strings
 import Localization
 import LegacyCommon
 
 import TimerMock
+import VPNAppCore // UnauthKeychain
 import VPNShared
 import VPNSharedTesting
 import Dependencies
@@ -59,7 +61,6 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
     lazy var networking = CoreNetworking(
         delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()),
         appInfo: appInfo,
-        doh: .mock,
         authKeychain: authKeychain,
         unauthKeychain: UnauthKeychainMock(),
         pinApiEndpoints: false
@@ -74,7 +75,20 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
         propertiesManager: propertiesManager)
 
     var appStateManager: AppStateManager {
-        return AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock(), doh: .mock, natTypePropertyProvider: NATTypePropertyProviderMock(), netShieldPropertyProvider: NetShieldPropertyProviderMock(), safeModePropertyProvider: SafeModePropertyProviderMock())
+        return AppStateManagerImplementation(
+            vpnApiService: vpnApiService,
+            vpnManager: VpnManagerMock(),
+            networking: networking,
+            alertService: AlertServiceEmptyStub(),
+            timerFactory: TimerFactoryMock(),
+            propertiesManager: propertiesManager,
+            vpnKeychain: vpnKeychain,
+            configurationPreparer: configurationPreparer,
+            vpnAuthentication: VpnAuthenticationMock(),
+            natTypePropertyProvider: NATTypePropertyProviderMock(),
+            netShieldPropertyProvider: NetShieldPropertyProviderMock(),
+            safeModePropertyProvider: SafeModePropertyProviderMock()
+        )
     }
 
     lazy var profileManager = ProfileManager(propertiesManager: propertiesManager, profileStorage: ProfileStorage(authKeychain: authKeychain))

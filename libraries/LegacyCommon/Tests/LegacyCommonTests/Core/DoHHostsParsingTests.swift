@@ -18,11 +18,19 @@
 
 import Foundation
 import XCTest
+import CommonNetworking
 @testable import LegacyCommon
 
 class DoHHostsParsingTests: XCTestCase {
     func testHostParsingForLiveEnvironment() {
-        let doh = DoHVPN(apiHost: "", verifyHost: "verify.proton", alternativeRouting: true, appState: AppState.disconnected)
+        let doh = DoHVPN(
+            apiHost: "",
+            verifyHost: "verify.proton",
+            alternativeRouting: true,
+            isConnected: false,
+            isAppStateNotificationConnected: { _ in false }
+        )
+
         XCTAssertEqual(doh.defaultHost, "https://vpn-api.proton.me")
         XCTAssertEqual(doh.accountHost, "https://account.proton.me")
         XCTAssertEqual(doh.humanVerificationV3Host, "verify.proton")
@@ -30,7 +38,15 @@ class DoHHostsParsingTests: XCTestCase {
     }
 
     func testHostParsingForAtlasEnvironment() {
-        let doh = DoHVPN(apiHost: "", verifyHost: "", alternativeRouting: true, customHost: "https://example.com", appState: AppState.disconnected)
+        let doh = DoHVPN(
+            apiHost: "",
+            verifyHost: "",
+            alternativeRouting: true,
+            customHost: "https://example.com",
+            isConnected: false,
+            isAppStateNotificationConnected: { _ in false }
+        )
+
         XCTAssertEqual(doh.defaultHost, "https://example.com")
         XCTAssertEqual(doh.accountHost, "https://account.example.com")
         XCTAssertEqual(doh.humanVerificationV3Host, "https://verify.example.com")
@@ -38,7 +54,15 @@ class DoHHostsParsingTests: XCTestCase {
     }
 
     func testHostParsingForVPNAtlasEnvironment() {
-        let doh = DoHVPN(apiHost: "", verifyHost: "", alternativeRouting: true, customHost: "https://vpn.example.com", appState: AppState.disconnected)
+        let doh = DoHVPN(
+            apiHost: "",
+            verifyHost: "",
+            alternativeRouting: true,
+            customHost: "https://vpn.example.com",
+            isConnected: false,
+            isAppStateNotificationConnected: { _ in false }
+        )
+
         XCTAssertEqual(doh.defaultHost, "https://vpn.example.com")
         XCTAssertEqual(doh.accountHost, "https://account.example.com")
         XCTAssertEqual(doh.humanVerificationV3Host, "https://verify.example.com")

@@ -14,6 +14,7 @@ import ProtonCoreNetworking
 import ProtonCoreServices
 import ProtonCoreForceUpgrade
 import ProtonCoreHumanVerification
+import CommonNetworking
 
 final class iOSNetworkingDelegate: NetworkingDelegate {
     private let forceUpgradeService: ForceUpgradeDelegate

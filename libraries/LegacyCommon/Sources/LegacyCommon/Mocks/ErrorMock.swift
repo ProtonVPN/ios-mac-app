@@ -19,12 +19,13 @@
 import Foundation
 import Strings
 import ProtonCoreNetworking
+import CommonNetworking
 
 #if DEBUG
 
 public extension ResponseError {
     static let unknownError: Self = .init(
-        httpCode: HttpStatusCode.internalServerError,
+        httpCode: HttpStatusCode.internalServerError.rawValue,
         responseCode: ApiErrorCode.apiOffline,
         userFacingMessage: Localizable.errorInternalError,
         underlyingError: nil

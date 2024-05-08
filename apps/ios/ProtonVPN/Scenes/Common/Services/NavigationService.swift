@@ -30,6 +30,7 @@ import Strings
 import Dependencies
 import Modals_iOS
 import enum Domain.VPNFeatureFlagType
+import CommonNetworking
 
 import ProtonCoreFeatureFlags
 import ProtonCoreAccountRecovery

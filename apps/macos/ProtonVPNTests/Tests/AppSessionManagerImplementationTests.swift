@@ -20,10 +20,13 @@ import XCTest
 
 import Dependencies
 
+import CommonNetworking
+import CommonNetworkingTestSupport
 import Ergonomics
 import LegacyCommon
 import Localization
 import Persistence
+import VPNAppCore // UnauthKeychain
 import VPNShared
 import VPNSharedTesting
 import ProtonCoreNetworking
@@ -35,7 +38,7 @@ fileprivate func mockAuthCredentials(username: String) -> AuthCredentials {
 }
 fileprivate var testAuthCredentials: AuthCredentials = mockAuthCredentials(username: "username")
 
-fileprivate let subuserWithoutSessionsResponseError = ResponseError(httpCode: HttpStatusCode.accessForbidden,
+fileprivate let subuserWithoutSessionsResponseError = ResponseError(httpCode: HttpStatusCode.accessForbidden.rawValue,
                                                                     responseCode: ApiErrorCode.subuserWithoutSessions,
                                                                     userFacingMessage: nil,
                                                                     underlyingError: nil)
