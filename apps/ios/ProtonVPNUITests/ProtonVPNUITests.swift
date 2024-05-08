@@ -49,6 +49,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
             "-BlockOneTimeAnnouncement", "YES",
             "-BlockUpdatePrompt", "YES",
             "-AppleLanguages", "(en)",
+            "-AppleLocale en_US",
             "enforceUnauthSessionStrictVerificationOnBackend",
             LogFileManagerImplementation.logDirLaunchArgument, logFileUrl.absoluteString
        ]
