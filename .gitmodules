@@ -1,7 +1,7 @@
 [submodule "external/protoncore"]
 	path = external/protoncore
 	url = ../../shared/protoncore
-	tag = 24.2.0
+	tag = 24.3.0
 [submodule "tunnelkit"]
 	path = external/tunnelkit
 	url = ../tunnelkit

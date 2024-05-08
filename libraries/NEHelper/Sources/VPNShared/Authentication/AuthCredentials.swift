@@ -35,7 +35,9 @@ public class AuthCredentials: NSObject, NSSecureCoding, Codable {
     public let sessionId: String
     public let userId: String? // introduced in version 1.0.1 iOS, 1.4.0 macOS
     public let scopes: [String]
-    
+
+    public var mailboxPassword: String = ""
+
     override public var description: String {
         return
             "Username: \(username)\n" +
@@ -43,10 +45,11 @@ public class AuthCredentials: NSObject, NSSecureCoding, Codable {
             "Refresh token: \(refreshToken)\n" +
             "Session ID: \(sessionId)\n" +
             "User ID: \(userId ?? "<empty>")\n" +
-            "Scopes: \(scopes)\n"
+            "Scopes: \(scopes)\n" +
+            "Mailbox Password: \(mailboxPassword)\n"
     }
     
-    public init(version: Int? = nil, username: String, accessToken: String, refreshToken: String, sessionId: String, userId: String?, scopes: [String]) {
+    public init(version: Int? = nil, username: String, accessToken: String, refreshToken: String, sessionId: String, userId: String?, scopes: [String], mailboxPassword: String?) {
         self.cacheVersion = version ?? Self.VERSION
         self.username = username
         self.accessToken = accessToken
@@ -54,6 +57,7 @@ public class AuthCredentials: NSObject, NSSecureCoding, Codable {
         self.sessionId = sessionId
         self.userId = userId
         self.scopes = scopes
+        self.mailboxPassword = mailboxPassword ?? ""
         super.init()
     }
     
@@ -68,7 +72,7 @@ public class AuthCredentials: NSObject, NSSecureCoding, Codable {
         scopes = scopeString.components(separatedBy: .whitespaces)
         super.init()
     }
-        
+
     // MARK: - NSCoding
     private struct CoderKey {
         static let authCacheVersion = "authCacheVersion"
@@ -78,6 +82,7 @@ public class AuthCredentials: NSObject, NSSecureCoding, Codable {
         static let sessionId = "userId" // misnamed, should be "sessionId", but leaving for backwards compatibility
         static let userId = "staticUserId"
         static let scopes = "scopes"
+        static let mailboxPassword = "mailboxPassword"
     }
     
     public required convenience init(coder aDecoder: NSCoder) {
@@ -93,7 +98,8 @@ public class AuthCredentials: NSObject, NSSecureCoding, Codable {
                   refreshToken: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.refreshToken)! as String,
                   sessionId: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.sessionId)! as String,
                   userId: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.userId) as String?,
-                  scopes: scopes)
+                  scopes: scopes,
+                  mailboxPassword: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.mailboxPassword) as String?)
     }
     
     public func encode(with aCoder: NSCoder) {

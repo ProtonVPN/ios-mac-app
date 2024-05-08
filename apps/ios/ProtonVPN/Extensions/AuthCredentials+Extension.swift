@@ -28,7 +28,8 @@ public extension AuthCredentials {
             refreshToken: refreshToken,
             userName: username,
             userID: userId ?? "",
-            scopes: scopes
+            scopes: scopes,
+            mailboxPassword: mailboxPassword
         ))
     }
 }

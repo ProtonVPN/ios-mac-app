@@ -105,6 +105,8 @@ final class OneClickPayment {
             break
         case .purchaseCancelled:
             break
+        case .renewalNotification:
+            log.debug("Notification of automatic renewal arrived", category: .iap)
         }
     }
 

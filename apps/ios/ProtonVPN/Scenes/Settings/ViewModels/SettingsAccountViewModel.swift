@@ -146,26 +146,11 @@ final class SettingsAccountViewModel {
                 }
             })
         ]
-        if canShowChangeMailboxPassword {
-            cells.append(.pushStandard(title: Localizable.changeMailboxPassword, handler: { [weak self] in
-                guard let self, let pushHandler else { return }
-                Task { @MainActor [weak self] in
-                    guard let self else { return }
-                    if let viewController = self.navigationService.makePasswordChangeViewController(mode: .mailboxPassword) {
-                        pushHandler(viewController)
-                    }
-                }
-            }))
-        }
         return TableViewSection(title: "", cells: cells)
     }
 
     private var canShowChangePassword: Bool {
         return FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.changePassword, reloadValue: true) && propertiesManager.userInfo != nil && propertiesManager.userSettings != nil
-    }
-
-    private var canShowChangeMailboxPassword: Bool {
-        return canShowChangePassword && propertiesManager.userSettings?.password.mode == .loginAndMailboxPassword
     }
 
     private var deleteAccountSection: TableViewSection {

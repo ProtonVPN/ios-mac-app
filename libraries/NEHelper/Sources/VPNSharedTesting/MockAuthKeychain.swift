@@ -60,6 +60,7 @@ public extension MockAuthKeychain {
                                                  refreshToken: "",
                                                  sessionId: "",
                                                  userId: "",
-                                                 scopes: [])
+                                                 scopes: [],
+                                                 mailboxPassword: "")
     }
 }

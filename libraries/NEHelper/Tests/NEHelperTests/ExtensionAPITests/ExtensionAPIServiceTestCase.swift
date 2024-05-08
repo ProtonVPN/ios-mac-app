@@ -134,7 +134,8 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
                                                   refreshToken: "54321",
                                                   sessionId: "15213",
                                                   userId: "bravo",
-                                                  scopes: []))
+                                                  scopes: [],
+                                                  mailboxPassword: ""))
         timerFactory = TimerFactoryMock()
 
         apiService = ExtensionAPIService(timerFactory: timerFactory,
