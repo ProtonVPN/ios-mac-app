@@ -16,6 +16,8 @@
 		4C54B04F2BC02AB200315A3B /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B04E2BC02AB200315A3B /* PacketTunnelProvider.swift */; };
 		AD1DB8C62BECE8B60065F67E /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = AD1DB8C52BECE8B60065F67E /* Persistence */; };
 		AD1DB8C82BECE91E0065F67E /* Persistence+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1DB8C72BECE91E0065F67E /* Persistence+tvOS.swift */; };
+		AD8FA9052BEB95AA00E751F6 /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8FA9042BEB958C00E751F6 /* ObfuscatedConstants.swift */; };
+		AD8FA9072BEB9DBB00E751F6 /* Client.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD8FA9062BEB9DBB00E751F6 /* Client.plist */; };
 		E515F8BA2BE0CF6100EA4ABF /* SettingsFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515F8B92BE0CF6100EA4ABF /* SettingsFeatureTests.swift */; };
 		E515F8BF2BE0D1FC00EA4ABF /* WelcomeFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515F8BB2BE0D1FC00EA4ABF /* WelcomeFeatureTests.swift */; };
 		E515F8C02BE0D1FC00EA4ABF /* SignInFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515F8BC2BE0D1FC00EA4ABF /* SignInFeatureTests.swift */; };
@@ -79,6 +81,9 @@
 		4C54B0502BC02AB200315A3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C54B0512BC02AB200315A3B /* wireguard_tv.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = wireguard_tv.entitlements; sourceTree = "<group>"; };
 		AD1DB8C72BECE91E0065F67E /* Persistence+tvOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Persistence+tvOS.swift"; sourceTree = "<group>"; };
+		AD8FA9032BEB958C00E751F6 /* ObfuscatedConstants.example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.example.swift; sourceTree = "<group>"; };
+		AD8FA9042BEB958C00E751F6 /* ObfuscatedConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.swift; sourceTree = "<group>"; };
+		AD8FA9062BEB9DBB00E751F6 /* Client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Client.plist; sourceTree = "<group>"; };
 		E515F8B92BE0CF6100EA4ABF /* SettingsFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFeatureTests.swift; sourceTree = "<group>"; };
 		E515F8BB2BE0D1FC00EA4ABF /* WelcomeFeatureTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeFeatureTests.swift; sourceTree = "<group>"; };
 		E515F8BC2BE0D1FC00EA4ABF /* SignInFeatureTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInFeatureTests.swift; sourceTree = "<group>"; };
@@ -177,6 +182,7 @@
 				4C54B01E2BC027FE00315A3B /* Assets.xcassets */,
 				AD1DB8C72BECE91E0065F67E /* Persistence+tvOS.swift */,
 				4C54B0202BC027FE00315A3B /* PreviewContent */,
+				AD8FA9002BEB958C00E751F6 /* SupportingFiles */,
 			);
 			path = ProtonVPN;
 			sourceTree = "<group>";
@@ -228,7 +234,18 @@
 			path = "WireGuard-tvOS";
 			sourceTree = "<group>";
 		};
-		E5280E502BD9057600CDDBAF /* Features */ = {
+		AD8FA9002BEB958C00E751F6 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				AD8FA9062BEB9DBB00E751F6 /* Client.plist */,
+				AD8FA9032BEB958C00E751F6 /* ObfuscatedConstants.example.swift */,
+				AD8FA9042BEB958C00E751F6 /* ObfuscatedConstants.swift */,
+			);
+			name = SupportingFiles;
+			path = ProtonVPN/SupportingFiles;
+			sourceTree = SOURCE_ROOT;
+		};
+        E5280E502BD9057600CDDBAF /* Features */ = {
 			isa = PBXGroup;
 			children = (
 				E55A29E72BDA78800006E85D /* App */,
@@ -460,6 +477,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C54B0222BC027FE00315A3B /* PreviewAssets.xcassets in Resources */,
+				AD8FA9072BEB9DBB00E751F6 /* Client.plist in Resources */,
 				4C54B01F2BC027FE00315A3B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -512,6 +530,7 @@
 				E55A29D92BDA50100006E85D /* SignInFeature.swift in Sources */,
 				E55A29E62BDA78460006E85D /* AppView.swift in Sources */,
 				E5280E602BD9057600CDDBAF /* CreateAccountView.swift in Sources */,
+				AD8FA9052BEB95AA00E751F6 /* ObfuscatedConstants.swift in Sources */,
 				4C54B01B2BC027FD00315A3B /* ProtonVPNApp.swift in Sources */,
 				E5BC9DE32BD7F7C800CBF85A /* NetworkClient.swift in Sources */,
 			);
