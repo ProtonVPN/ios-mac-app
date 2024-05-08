@@ -36,14 +36,14 @@ final class SignInFeatureTests: XCTestCase {
     @MainActor
     func testSignInFlowHappyPath() async {
         let clock = TestClock()
-        let store = TestStore(initialState: SignInFeature.State(serverPoll: .default)) {
+        let store = TestStore(initialState: SignInFeature.State()) {
             SignInFeature()
         } withDependencies: {
             $0.continuousClock = clock
             $0[NetworkClient.self] = .testValue
         }
 
-        let pollConf = ServerPollConfiguration.default
+        let pollConf = ServerPollConfiguration.liveValue
 
         await store.send(.fetchSignInCode)
         await store.receive(\.presentSignInCode) {
@@ -61,7 +61,7 @@ final class SignInFeatureTests: XCTestCase {
 
     @MainActor
     func testFetchSignInCodeFailure() async {
-        let store = TestStore(initialState: SignInFeature.State(serverPoll: .default)) {
+        let store = TestStore(initialState: SignInFeature.State()) {
             SignInFeature()
         } withDependencies: {
             $0[NetworkClient.self] = .failureValue
@@ -73,14 +73,14 @@ final class SignInFeatureTests: XCTestCase {
     @MainActor
     func testSessionForkFailure() async {
         let clock = TestClock()
-        let store = TestStore(initialState: SignInFeature.State(serverPoll: .default)) {
+        let store = TestStore(initialState: SignInFeature.State()) {
             SignInFeature()
         } withDependencies: {
             $0.continuousClock = clock
             $0[NetworkClient.self] = .forkedSessionFailureValue
         }
 
-        let pollConf = ServerPollConfiguration.default
+        let pollConf = ServerPollConfiguration.liveValue
 
         await store.send(.fetchSignInCode)
         await store.receive(\.presentSignInCode) {

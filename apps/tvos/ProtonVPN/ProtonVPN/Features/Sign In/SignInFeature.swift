@@ -23,17 +23,14 @@ struct SignInFeature {
     @ObservableState
     struct State: Equatable {
         var signInCode: String?
-        var serverPoll: ServerPollConfiguration
         var selector: String?
         var remainingAttempts: Int
         @Shared(.appStorage("username")) var userName: String?
 
-        init(signInCode: String? = nil,
-             serverPoll: ServerPollConfiguration = .default,
-             selector: String? = nil) {
+        init(signInCode: String? = nil, selector: String? = nil) {
             self.signInCode = signInCode
-            self.serverPoll = serverPoll
             self.selector = selector
+            @Dependency(ServerPollConfiguration.self) var serverPoll
             self.remainingAttempts = serverPoll.failAfterAttempts
         }
     }
@@ -78,11 +75,11 @@ struct SignInFeature {
             case .presentSignInCode(let code):
                 state.signInCode = code.userCode
                 state.selector = code.selector
-                let conf = state.serverPoll
-                state.remainingAttempts = conf.failAfterAttempts
-                return .run { [conf] send in
-                    try? await clock.sleep(for: conf.delayBeforePollingStarts)
-                    for await _ in clock.timer(interval: conf.period) {
+                @Dependency(ServerPollConfiguration.self) var serverPollConfig
+                state.remainingAttempts = serverPollConfig.failAfterAttempts
+                return .run { [serverPollConfig] send in
+                    try? await clock.sleep(for: serverPollConfig.delayBeforePollingStarts)
+                    for await _ in clock.timer(interval: serverPollConfig.period) {
                         await send(.pollServer)
                     }
                 }
