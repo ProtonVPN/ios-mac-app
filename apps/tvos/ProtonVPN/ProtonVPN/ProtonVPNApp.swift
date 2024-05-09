@@ -18,6 +18,8 @@
 
 import ComposableArchitecture
 import SwiftUI
+import Dependencies
+import Persistence
 
 @main
 struct ProtonVPNApp: App {
@@ -28,6 +30,10 @@ struct ProtonVPNApp: App {
     var body: some Scene {
         WindowGroup {
             AppView(store: store)
+                .onAppear {
+                    @Dependency(\.serverRepository) var repository
+                    print("Server count:", repository.serverCount())
+                }
         }
     }
 }

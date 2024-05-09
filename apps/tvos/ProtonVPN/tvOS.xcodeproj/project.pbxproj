@@ -15,6 +15,8 @@
 		4C54B0382BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B0372BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift */; };
 		4C54B04C2BC02AB200315A3B /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C54B04B2BC02AB200315A3B /* NetworkExtension.framework */; };
 		4C54B04F2BC02AB200315A3B /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B04E2BC02AB200315A3B /* PacketTunnelProvider.swift */; };
+		AD1DB8C62BECE8B60065F67E /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = AD1DB8C52BECE8B60065F67E /* Persistence */; };
+		AD1DB8C82BECE91E0065F67E /* Persistence+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1DB8C72BECE91E0065F67E /* Persistence+tvOS.swift */; };
 		E515F8BA2BE0CF6100EA4ABF /* SettingsFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515F8B92BE0CF6100EA4ABF /* SettingsFeatureTests.swift */; };
 		E515F8BF2BE0D1FC00EA4ABF /* WelcomeFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515F8BB2BE0D1FC00EA4ABF /* WelcomeFeatureTests.swift */; };
 		E515F8C02BE0D1FC00EA4ABF /* SignInFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515F8BC2BE0D1FC00EA4ABF /* SignInFeatureTests.swift */; };
@@ -73,6 +75,7 @@
 		4C54B04E2BC02AB200315A3B /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
 		4C54B0502BC02AB200315A3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C54B0512BC02AB200315A3B /* wireguard_tv.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = wireguard_tv.entitlements; sourceTree = "<group>"; };
+		AD1DB8C72BECE91E0065F67E /* Persistence+tvOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Persistence+tvOS.swift"; sourceTree = "<group>"; };
 		E515F8B92BE0CF6100EA4ABF /* SettingsFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFeatureTests.swift; sourceTree = "<group>"; };
 		E515F8BB2BE0D1FC00EA4ABF /* WelcomeFeatureTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeFeatureTests.swift; sourceTree = "<group>"; };
 		E515F8BC2BE0D1FC00EA4ABF /* SignInFeatureTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInFeatureTests.swift; sourceTree = "<group>"; };
@@ -101,6 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD1DB8C62BECE8B60065F67E /* Persistence in Frameworks */,
 				E56C8CC62BCFCEFF0029B6AE /* Theme in Frameworks */,
 				E56C8CC22BCFC2CB0029B6AE /* ComposableArchitecture in Frameworks */,
 			);
@@ -162,6 +166,7 @@
 				E55A29E82BDA78B10006E85D /* Services */,
 				E5280E502BD9057600CDDBAF /* Views */,
 				4C54B01E2BC027FE00315A3B /* Assets.xcassets */,
+				AD1DB8C72BECE91E0065F67E /* Persistence+tvOS.swift */,
 				4C54B0202BC027FE00315A3B /* PreviewContent */,
 			);
 			path = ProtonVPN;
@@ -320,6 +325,7 @@
 			packageProductDependencies = (
 				E56C8CC12BCFC2CB0029B6AE /* ComposableArchitecture */,
 				E56C8CC52BCFCEFF0029B6AE /* Theme */,
+				AD1DB8C52BECE8B60065F67E /* Persistence */,
 			);
 			productName = ProtonVPN;
 			productReference = 4C54B0172BC027FD00315A3B /* ProtonVPN-TV.app */;
@@ -434,7 +440,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C54B0222BC027FE00315A3B /* PreviewAssets.xcassets in Resources */,
-				AD1364CA2BD94E180038646B /* Client.plist in Resources */,
 				4C54B01F2BC027FE00315A3B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -474,6 +479,7 @@
 				E5280E5D2BD9057600CDDBAF /* SettingsView.swift in Sources */,
 				E55A29DB2BDA50B80006E85D /* WelcomeFeature.swift in Sources */,
 				E5280E5E2BD9057600CDDBAF /* WelcomeView.swift in Sources */,
+				AD1DB8C82BECE91E0065F67E /* Persistence+tvOS.swift in Sources */,
 				E55A29DD2BDA50D20006E85D /* SettingsFeature.swift in Sources */,
 				E55A29E42BDA77850006E85D /* AppFeature.swift in Sources */,
 				E55A29E22BDA6A040006E85D /* MainFeature.swift in Sources */,
@@ -908,6 +914,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		AD1DB8C52BECE8B60065F67E /* Persistence */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Persistence;
+		};
 		E56C8CC12BCFC2CB0029B6AE /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E56C8CC02BCFC2CA0029B6AE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;

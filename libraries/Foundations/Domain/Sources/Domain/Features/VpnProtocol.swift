@@ -38,12 +38,12 @@ public enum VpnProtocol: Equatable, Hashable, CaseIterable, Sendable, Codable {
         + OpenVpnTransport.allCases.map(Self.openVpn)
         + WireGuardTransport.allCases.map(Self.wireGuard)
 
-    #if os(iOS)
-    /// Set of protocols that are deprecated on iOS
-    public static let deprecatedProtocols: [VpnProtocol] = [.ike] + OpenVpnTransport.allCases.map(Self.openVpn)
-    #elseif os(macOS)
+    #if os(macOS)
     /// Set of protocols that are deprecated on macOS
     public static let deprecatedProtocols: [VpnProtocol] = OpenVpnTransport.allCases.map(Self.openVpn)
+    #else
+    /// Set of protocols that are deprecated on iOS and tvOS
+    public static let deprecatedProtocols: [VpnProtocol] = [.ike] + OpenVpnTransport.allCases.map(Self.openVpn)
     #endif
 
     public var isDeprecated: Bool { Self.deprecatedProtocols.contains(self) }
