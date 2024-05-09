@@ -284,7 +284,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             propertiesManager.userAccountRecovery = properties.userAccountRecovery
             propertiesManager.userInfo = properties.userInfo
             if let clientConfig = properties.clientConfig {
-                propertiesManager.openVpnConfig = clientConfig.openVPNConfig
                 propertiesManager.wireguardConfig = clientConfig.wireGuardConfig
                 propertiesManager.smartProtocolConfig = clientConfig.smartProtocolConfig
                 propertiesManager.maintenanceServerRefreshIntereval = clientConfig.serverRefreshInterval

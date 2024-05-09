@@ -29,7 +29,6 @@ public protocol SystemExtensionManagerFactory {
 }
 
 public enum SystemExtensionType: String, CaseIterable {
-    case openVPN = "ch.protonvpn.mac.OpenVPN-Extension"
     case wireGuard = "ch.protonvpn.mac.WireGuard-Extension"
 
     public var machServiceName: String {

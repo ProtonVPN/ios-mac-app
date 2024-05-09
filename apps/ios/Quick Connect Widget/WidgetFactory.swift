@@ -40,17 +40,12 @@ final class WidgetFactory {
     }
 
     func makeTodayViewModel() -> TodayViewModel {
-        let openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier,
-                                                    appGroup: appGroup,
-                                                    propertiesManager: propertiesManager,
-                                                    vpnManagerFactory: self)
         let wireguardVpnFactory = WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier,
                                                            appGroup: appGroup,
                                                            propertiesManager: propertiesManager,
                                                            vpnManagerFactory: self)
         let ikeVpnFactory = IkeProtocolFactory(factory: self)
         let vpnStateConfiguration = VpnStateConfigurationManager(ikeProtocolFactory: ikeVpnFactory,
-                                                                 openVpnProtocolFactory: openVpnFactory,
                                                                  wireguardProtocolFactory: wireguardVpnFactory,
                                                                  propertiesManager: propertiesManager,
                                                                  appGroup: appGroup)

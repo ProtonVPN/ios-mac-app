@@ -16,9 +16,6 @@
          <FileRef
             location = "group:external/apple-fusion">
          </FileRef>
-         <FileRef
-            location = "group:external/tunnelkit">
-         </FileRef>
       </Group>
       <Group
          location = "container:"

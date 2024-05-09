@@ -22,7 +22,7 @@ import Domain
 import VPNShared
 
 public protocol AvailabilityCheckerResolverFactory {
-    func makeAvailabilityCheckerResolver(openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig) -> AvailabilityCheckerResolver
+    func makeAvailabilityCheckerResolver(wireguardConfig: WireguardConfig) -> AvailabilityCheckerResolver
 }
 
 public protocol AvailabilityCheckerResolver {
@@ -30,11 +30,9 @@ public protocol AvailabilityCheckerResolver {
 }
 
 public class AvailabilityCheckerResolverImplementation: AvailabilityCheckerResolver {
-    let openVpnConfig: OpenVpnConfig
     let wireguardConfig: WireguardConfig
 
-    public init(openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig) {
-        self.openVpnConfig = openVpnConfig
+    public init(wireguardConfig: WireguardConfig) {
         self.wireguardConfig = wireguardConfig
     }
 
@@ -42,13 +40,8 @@ public class AvailabilityCheckerResolverImplementation: AvailabilityCheckerResol
         switch vpnProtocol {
         case .ike:
             return IKEv2AvailabilityChecker()
-        case .openVpn(let openVpnTransport):
-            switch openVpnTransport {
-            case .tcp:
-                return OpenVPNTCPAvailabilityChecker(config: openVpnConfig)
-            case .udp:
-                return OpenVPNUDPAvailabilityChecker(config: openVpnConfig)
-            }
+        case .openVpn:
+            fatalError("OpenVPN has been deprecated")
         case .wireGuard(let transport):
             switch transport {
             case .udp:

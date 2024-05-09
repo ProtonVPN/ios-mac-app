@@ -50,7 +50,6 @@ public protocol VpnStateConfiguration {
 
 public class VpnStateConfigurationManager: VpnStateConfiguration {
     private let ikeProtocolFactory: VpnProtocolFactory
-    private let openVpnProtocolFactory: VpnProtocolFactory
     private let wireguardProtocolFactory: VpnProtocolFactory
     private let propertiesManager: PropertiesManagerProtocol
 
@@ -58,21 +57,18 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
     private let appGroup: String
 
     public typealias Factory = IkeProtocolFactoryCreator &
-        OpenVpnProtocolFactoryCreator &
         WireguardProtocolFactoryCreator &
         PropertiesManagerFactory
 
     public convenience init(_ factory: Factory, config: Container.Config) {
         self.init(ikeProtocolFactory: factory.makeIkeProtocolFactory(),
-                  openVpnProtocolFactory: factory.makeOpenVpnProtocolFactory(),
                   wireguardProtocolFactory: factory.makeWireguardProtocolFactory(),
                   propertiesManager: factory.makePropertiesManager(),
                   appGroup: config.appGroup)
     }
 
-    public init(ikeProtocolFactory: VpnProtocolFactory, openVpnProtocolFactory: VpnProtocolFactory, wireguardProtocolFactory: VpnProtocolFactory, propertiesManager: PropertiesManagerProtocol, appGroup: String) {
+    public init(ikeProtocolFactory: VpnProtocolFactory, wireguardProtocolFactory: VpnProtocolFactory, propertiesManager: PropertiesManagerProtocol, appGroup: String) {
         self.ikeProtocolFactory = ikeProtocolFactory
-        self.openVpnProtocolFactory = openVpnProtocolFactory
         self.wireguardProtocolFactory = wireguardProtocolFactory
         self.propertiesManager = propertiesManager
         self.appGroup = appGroup
@@ -113,14 +109,14 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
         case .ike:
             return ikeProtocolFactory
         case .openVpn:
-            return openVpnProtocolFactory
+            fatalError("OpenVPN has been deprecated")
         case .wireGuard:
             return wireguardProtocolFactory
         }
     }
 
     public func determineActiveVpnProtocol(defaultToIke: Bool, completion: @escaping ((VpnProtocol?) -> Void)) {
-        let protocols: [VpnProtocol] = [.ike, .openVpn(.tcp), .wireGuard(.udp)]
+        let protocols: [VpnProtocol] = [.ike, .wireGuard(.udp)]
         var activeProtocols: [VpnProtocol] = []
 
         let dispatchGroup = DispatchGroup()
@@ -143,10 +139,8 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
         }
 
         dispatchGroup.notify(queue: .main) {
-            // OpenVPN takes precedence but if neither are active, then it should remain unchanged
-            if activeProtocols.contains(.openVpn(.tcp)) {
-                completion(.openVpn(.tcp))
-            } else if activeProtocols.contains(.wireGuard(.udp)) {
+            // WireGuard takes precedence but if neither are active, then it should remain unchanged
+            if activeProtocols.contains(.wireGuard(.udp)) {
                 completion(.wireGuard(.udp))
             } else if activeProtocols.contains(.ike) {
                 completion(.ike)
@@ -160,7 +154,7 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
     }
 
     public func determineActiveVpnProtocol(defaultToIke: Bool) async -> VpnProtocol? {
-        let protocols: [VpnProtocol] = [.ike, .openVpn(.tcp), .wireGuard(.udp)]
+        let protocols: [VpnProtocol] = [.ike, .wireGuard(.udp)]
 
         var activeProtocols: [VpnProtocol] = []
 

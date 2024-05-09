@@ -24,7 +24,6 @@ import Foundation
 import VPNShared
 
 public struct ClientConfig {
-    public let openVPNConfig: OpenVpnConfig
     public let featureFlags: FeatureFlags
     public let serverRefreshInterval: Int
     public let wireGuardConfig: WireguardConfig
@@ -33,7 +32,6 @@ public struct ClientConfig {
     public let serverChangeConfig: ServerChangeConfig
 
     public init(
-        openVPNConfig: OpenVpnConfig,
         featureFlags: FeatureFlags,
         serverRefreshInterval: Int,
         wireGuardConfig: WireguardConfig,
@@ -41,7 +39,6 @@ public struct ClientConfig {
         ratingSettings: RatingSettings,
         serverChangeConfig: ServerChangeConfig
     ) {
-        self.openVPNConfig = openVPNConfig
         self.featureFlags = featureFlags
         self.serverRefreshInterval = serverRefreshInterval
         self.wireGuardConfig = wireGuardConfig
@@ -52,7 +49,6 @@ public struct ClientConfig {
 
     public init() {
         self.init(
-            openVPNConfig: OpenVpnConfig(),
             featureFlags: FeatureFlags(),
             serverRefreshInterval: CoreAppConstants.Maintenance.defaultMaintenanceCheckTime,
             wireGuardConfig: WireguardConfig(),

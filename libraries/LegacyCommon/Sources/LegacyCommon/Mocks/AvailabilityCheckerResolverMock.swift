@@ -30,22 +30,20 @@ public class AvailabilityCheckerResolverFactoryMock: AvailabilityCheckerResolver
         self.checkers = checkers
     }
 
-    public func makeAvailabilityCheckerResolver(openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig) -> AvailabilityCheckerResolver {
+    public func makeAvailabilityCheckerResolver(wireguardConfig: WireguardConfig) -> AvailabilityCheckerResolver {
         if mockResolver == nil {
-            mockResolver = AvailabilityCheckerResolverMock(openVpnConfig: openVpnConfig, wireguardConfig: wireguardConfig, checkers: checkers)
+            mockResolver = AvailabilityCheckerResolverMock(wireguardConfig: wireguardConfig, checkers: checkers)
         }
         return mockResolver
     }
 }
 
 public class AvailabilityCheckerResolverMock: AvailabilityCheckerResolver {
-    public let openVpnConfig: OpenVpnConfig
     public let wireguardConfig: WireguardConfig
 
     public var checkers: [VpnProtocol: AvailabilityCheckerMock]
 
-    public init(openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig, checkers: [VpnProtocol: AvailabilityCheckerMock]) {
-        self.openVpnConfig = openVpnConfig
+    public init(wireguardConfig: WireguardConfig, checkers: [VpnProtocol: AvailabilityCheckerMock]) {
         self.wireguardConfig = wireguardConfig
         self.checkers = checkers
     }

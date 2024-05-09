@@ -25,7 +25,7 @@ import SystemExtensions
 import VPNSharedTesting
 
 class SystemExtensionManagerTests: XCTestCase {
-    let expectationTimeout: TimeInterval = 600
+    let expectationTimeout: TimeInterval = 10
 
     var propertiesManager: PropertiesManagerMock!
     var vpnKeychain: VpnKeychainMock!
@@ -83,11 +83,9 @@ class SystemExtensionManagerTests: XCTestCase {
             return
         }
 
-        XCTAssertEqual(sysextManager.installedExtensions.count, 2, "Should have installed two extensions")
+        XCTAssertEqual(sysextManager.installedExtensions.count, 1, "Should have installed one extension")
         XCTAssert(sysextManager.installedExtensions.contains { $0.bundleId == SystemExtensionType.wireGuard.rawValue },
                   "Should have installed WireGuard extension")
-        XCTAssert(sysextManager.installedExtensions.contains { $0.bundleId == SystemExtensionType.openVPN.rawValue },
-                  "Should have installed OpenVPN extension")
     }
 
     func testInstallingExtensionForTheFirstTimeSubmittingMultipleRequests() {
@@ -147,61 +145,14 @@ class SystemExtensionManagerTests: XCTestCase {
             return
         }
 
-        XCTAssertEqual(sysextManager.installedExtensions.count, 2, "Should have installed two extensions")
+        XCTAssertEqual(sysextManager.installedExtensions.count, 1, "Should have installed one extension")
         XCTAssert(sysextManager.installedExtensions.contains { $0.bundleId == SystemExtensionType.wireGuard.rawValue },
                   "Should have installed WireGuard extension")
-        XCTAssert(sysextManager.installedExtensions.contains { $0.bundleId == SystemExtensionType.openVPN.rawValue },
-                  "Should have installed OpenVPN extension")
-    }
-
-    func testPartialInstallationWithOneExtensionAlreadyInstalled() {
-        let myVersion = sysextManager.bundleAppVersions
-        // Simulate our version of OpenVPN already being installed on the system
-        sysextManager.installedExtensions.append(.init(version: myVersion.semanticVersion,
-                                                       build: myVersion.buildVersion,
-                                                       bundleId: SystemExtensionType.openVPN.rawValue))
-
-        let installFinished = XCTestExpectation(description: "Install finished")
-        let approvalRequired = XCTestExpectation(description: "Approval required for WireGuard")
-
-        sysextManager.requestRequiresUserApproval = { [unowned self] request in
-            self.sysextManager.approve(request: request)
-            XCTAssertEqual(request.request.identifier, SystemExtensionType.wireGuard.rawValue,
-                           "Shouldn't have presented approval required for OpenVPN, it's already installed")
-            approvalRequired.fulfill()
-        }
-
-        var result: SystemExtensionResult?
-        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: true) { installResult in
-            result = installResult
-            installFinished.fulfill()
-        }
-
-        wait(for: [approvalRequired], timeout: expectationTimeout)
-
-        guard alertService.alerts.count == 1, alertService.alerts.first is SystemExtensionTourAlert else {
-            XCTFail("Expected only alert to be SystemExtensionTourAlert: \(String(describing: alertService.alerts))")
-            return
-        }
-
-        wait(for: [installFinished], timeout: expectationTimeout)
-
-        guard case .success(.installed) = result else {
-            XCTFail("Expected system extensions to install successfully but got \(String(describing: result))")
-            return
-        }
-
-        XCTAssertEqual(sysextManager.installedExtensions.count, 2, "Should have installed two extensions")
-        XCTAssert(sysextManager.installedExtensions.contains { $0.bundleId == SystemExtensionType.wireGuard.rawValue },
-                  "Should have installed WireGuard extension")
-        XCTAssert(sysextManager.installedExtensions.contains { $0.bundleId == SystemExtensionType.openVPN.rawValue },
-                  "Should have installed OpenVPN extension")
     }
 
     func testNewVersionOfExtensionGetsUpgraded() {
         sysextManager.installedExtensions = [
             .init(version: "1.2.3", build: "1", bundleId: SystemExtensionType.wireGuard.rawValue),
-            .init(version: "1.2.3", build: "1", bundleId: SystemExtensionType.openVPN.rawValue),
         ]
         sysextManager.mockVersions = ("1.2.4", "1")
 
@@ -224,17 +175,14 @@ class SystemExtensionManagerTests: XCTestCase {
             return
         }
 
-        XCTAssertEqual(sysextManager.installedExtensions.count, 2, "Should have installed two extensions")
+        XCTAssertEqual(sysextManager.installedExtensions.count, 1, "Should have installed one extension")
         XCTAssert(sysextManager.installedExtensions.contains { $0.bundleId == SystemExtensionType.wireGuard.rawValue && $0.version == sysextManager.mockVersions?.semanticVersion },
                   "Should have installed WireGuard extension")
-        XCTAssert(sysextManager.installedExtensions.contains { $0.bundleId == SystemExtensionType.openVPN.rawValue && $0.version == sysextManager.mockVersions?.semanticVersion },
-                  "Should have installed OpenVPN extension")
     }
 
     func testUninstall() {
         sysextManager.installedExtensions = [
             .init(version: "1.2.3", build: "1", bundleId: SystemExtensionType.wireGuard.rawValue),
-            .init(version: "1.2.3", build: "1", bundleId: SystemExtensionType.openVPN.rawValue),
         ]
 
         _ = sysextManager.uninstallAll(userInitiated: true)

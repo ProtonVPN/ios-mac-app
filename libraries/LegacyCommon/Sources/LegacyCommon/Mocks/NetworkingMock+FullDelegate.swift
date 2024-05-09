@@ -187,4 +187,26 @@ public class FullNetworkingMockDelegate: NetworkingMockDelegate {
     }()
 }
 
+// MARK: API Response Encodable Conformances
+
+extension ClientConfigResponse: Encodable {
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(clientConfig.featureFlags, forKey: .featureFlags)
+        try container.encode(clientConfig.serverRefreshInterval, forKey: .serverRefreshInterval)
+        try container.encode(clientConfig.smartProtocolConfig, forKey: .smartProtocol)
+        try container.encode(clientConfig.ratingSettings, forKey: .ratingSettings)
+        // encoded directly into the parent object without a container. See `ServerChangeConfig` docs for more info
+        try clientConfig.serverChangeConfig.encode(to: encoder)
+
+        let defaultPorts = [
+            ProtocolType.WireGuard: [
+                PortType.UDP: clientConfig.wireGuardConfig.defaultUdpPorts,
+                PortType.TCP: clientConfig.wireGuardConfig.defaultTcpPorts
+            ],
+        ]
+        try container.encode(defaultPorts, forKey: .defaultPorts)
+    }
+}
 #endif

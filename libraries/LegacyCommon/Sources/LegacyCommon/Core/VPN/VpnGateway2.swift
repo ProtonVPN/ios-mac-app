@@ -64,10 +64,8 @@ public class VpnGateway2: VpnGatewayProtocol2 {
     }
     
     public func connect(withIntent intent: ConnectionSpec) async throws {
-        let openVpnConfig = self.propertiesManager.openVpnConfig
         let wireguardConfig = self.propertiesManager.wireguardConfig
         let availabilityCheckerResolver = availabilityCheckerResolverFactory.makeAvailabilityCheckerResolver(
-            openVpnConfig: openVpnConfig,
             wireguardConfig: wireguardConfig
         )
         var smartProtocolConfig = propertiesManager.smartProtocolConfig
@@ -81,7 +79,6 @@ public class VpnGateway2: VpnGatewayProtocol2 {
             serverTierChecker: self.serverTierChecker,
             availabilityCheckerResolver: availabilityCheckerResolver,
             smartProtocolConfig: smartProtocolConfig,
-            openVpnConfig: openVpnConfig,
             wireguardConfig: wireguardConfig)
         let connectionProtocol: ConnectionProtocol = propertiesManager.smartProtocol
         ? .smartProtocol

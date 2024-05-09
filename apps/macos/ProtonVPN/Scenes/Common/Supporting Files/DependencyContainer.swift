@@ -35,9 +35,6 @@ final class DependencyContainer: Container {
     private lazy var wireguardFactory = WireguardMacProtocolFactory(bundleId: config.wireguardVpnExtensionBundleIdentifier,
                                                                     appGroup: config.appGroup,
                                                                     factory: self)
-    private lazy var openVpnFactory = OpenVpnMacProtocolFactory(bundleId: config.openVpnExtensionBundleIdentifier,
-                                                                appGroup: config.appGroup,
-                                                                factory: self)
     private lazy var vpnAuthentication: VpnAuthentication = {
         return VpnAuthenticationManager(self)
     }()
@@ -118,11 +115,6 @@ final class DependencyContainer: Container {
         macAlertService
     }
 
-    // MARK: OpenVPNProtocolFactoryCreator
-    override func makeOpenVpnProtocolFactory() -> OpenVpnProtocolFactory {
-        openVpnFactory
-    }
-
     // MARK: WireguardProtocolFactoryCreator
     override func makeWireguardProtocolFactory() -> WireguardProtocolFactory {
         wireguardFactory
@@ -146,8 +138,7 @@ final class DependencyContainer: Container {
             .getFileUrl(named: AppConstants.Filenames.appLogFilename)
             .deletingLastPathComponent()
         return MacOSLogContentProvider(appLogsFolder: appLogsFolder,
-                                       wireguardProtocolFactory: makeWireguardProtocolFactory(),
-                                       openVpnProtocolFactory: makeOpenVpnProtocolFactory())
+                                       wireguardProtocolFactory: makeWireguardProtocolFactory())
     }
 
     // MARK: UpdateManagerFactory

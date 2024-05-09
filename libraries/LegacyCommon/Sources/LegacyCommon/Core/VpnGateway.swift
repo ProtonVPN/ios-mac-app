@@ -606,7 +606,6 @@ public class VpnGateway: VpnGatewayProtocol {
             self.propertiesManager.lastPreparedServer = server
             let availabilityCheckerResolver = self.availabilityCheckerResolverFactory
                 .makeAvailabilityCheckerResolver(
-                    openVpnConfig: self.propertiesManager.openVpnConfig,
                     wireguardConfig: self.propertiesManager.wireguardConfig
                 )
 
@@ -615,7 +614,6 @@ public class VpnGateway: VpnGatewayProtocol {
                 serverTierChecker: self.serverTierChecker,
                 availabilityCheckerResolver: availabilityCheckerResolver,
                 smartProtocolConfig: smartProtocolConfig,
-                openVpnConfig: self.propertiesManager.openVpnConfig,
                 wireguardConfig: self.propertiesManager.wireguardConfig
             )
 

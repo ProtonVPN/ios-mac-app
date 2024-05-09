@@ -81,7 +81,6 @@ public class VpnManager: VpnManagerProtocol {
     internal let connectionQueue = DispatchQueue(label: "ch.protonvpn.vpnmanager.connection", qos: .utility)
     
     private let ikeProtocolFactory: VpnProtocolFactory
-    private let openVpnProtocolFactory: VpnProtocolFactory
     private let wireguardProtocolFactory: VpnProtocolFactory
 
     internal let localAgentConnectionFactory: LocalAgentConnectionFactory
@@ -102,7 +101,7 @@ public class VpnManager: VpnManagerProtocol {
         case .ike:
             return ikeProtocolFactory
         case .openVpn:
-            return openVpnProtocolFactory
+            fatalError("OpenVPN has been deprecated")
         case .wireGuard:
             return wireguardProtocolFactory
         }
@@ -188,7 +187,6 @@ public class VpnManager: VpnManagerProtocol {
     private var tokens: [UUID: NotificationToken] = [:]
 
     public typealias Factory = IkeProtocolFactoryCreator
-        & OpenVpnProtocolFactoryCreator
         & WireguardProtocolFactoryCreator
         & VpnAuthenticationFactory
         & VpnAuthenticationStorageFactory
@@ -205,7 +203,6 @@ public class VpnManager: VpnManagerProtocol {
     public convenience init(_ factory: Factory, config: Container.Config) {
         self.init(
             ikeFactory: factory.makeIkeProtocolFactory(),
-            openVpnFactory: factory.makeOpenVpnProtocolFactory(),
             wireguardProtocolFactory: factory.makeWireguardProtocolFactory(),
             appGroup: config.appGroup,
             vpnAuthentication: factory.makeVpnAuthentication(),
@@ -224,7 +221,6 @@ public class VpnManager: VpnManagerProtocol {
     
     public init(
         ikeFactory: VpnProtocolFactory,
-        openVpnFactory: VpnProtocolFactory,
         wireguardProtocolFactory: VpnProtocolFactory,
         appGroup: String,
         vpnAuthentication: VpnAuthentication,
@@ -244,7 +240,6 @@ public class VpnManager: VpnManagerProtocol {
         }
 
         self.ikeProtocolFactory = ikeFactory
-        self.openVpnProtocolFactory = openVpnFactory
         self.wireguardProtocolFactory = wireguardProtocolFactory
         self.appGroup = appGroup
         self.alertService = alertService
@@ -330,7 +325,7 @@ public class VpnManager: VpnManagerProtocol {
         var error: Error?
         var successful = false // mark as success if at least one removal succeeded
 
-        for factory in [ikeProtocolFactory, openVpnProtocolFactory, wireguardProtocolFactory] {
+        for factory in [ikeProtocolFactory, wireguardProtocolFactory] {
             dispatchGroup.enter()
             removeConfiguration(factory) { e in
                 if e != nil {
@@ -548,10 +543,8 @@ public class VpnManager: VpnManagerProtocol {
         
         // Any non-personal VPN configuration with includeAllNetworks enabled, prevents IKEv2 (with includeAllNetworks) from connecting. #VPNAPPL-566
         if configuration.includeAllNetworks && configuration.isKind(of: NEVPNProtocolIKEv2.self) {
-            self.removeConfiguration(self.openVpnProtocolFactory, completionHandler: { _ in
-                self.removeConfiguration(self.wireguardProtocolFactory, completionHandler: { _ in
-                    saveToPreferences()
-                })
+            self.removeConfiguration(self.wireguardProtocolFactory, completionHandler: { _ in
+                saveToPreferences()
             })
         } else {
             saveToPreferences()

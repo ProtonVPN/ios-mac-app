@@ -95,7 +95,6 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var warnedTrialExpiring: Bool { get set }
     var warnedTrialExpired: Bool { get set }
     
-    var openVpnConfig: OpenVpnConfig { get set }
     var vpnProtocol: VpnProtocol { get set }
 
     var featureFlags: FeatureFlags { get set }
@@ -401,7 +400,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
     @StringProperty(.apiEndpoint) public var apiEndpoint: String?
 
-    @InitializedProperty(.openVpnConfig) public var openVpnConfig: OpenVpnConfig
     @InitializedProperty(.wireguardConfig) public var wireguardConfig: WireguardConfig
     @InitializedProperty(.smartProtocolConfig) public var smartProtocolConfig: SmartProtocolConfig
     @InitializedProperty(.ratingSettings) public var ratingSettings: RatingSettings
