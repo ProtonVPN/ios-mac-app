@@ -41,7 +41,7 @@ struct WelcomeFeature {
         Reduce { state, action in
             switch action {
             case .showSignIn:
-                state.destination = .signIn(SignInFeature.State())
+                state.destination = .signIn(.loadingSignInCode)
                 return .none
             case .showCreateAccount:
                 state.destination = .createAccount(.init())

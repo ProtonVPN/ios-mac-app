@@ -81,7 +81,7 @@ extension NetworkClient: DependencyKey {
     )
 }
 
-struct SignInCode {
+struct SignInCode: Equatable {
     let selector: String
     let userCode: String
 }

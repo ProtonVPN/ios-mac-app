@@ -24,19 +24,17 @@ final class SignInFeatureTests: XCTestCase {
 
     @MainActor
     func testSignInSuccess() async {
-        let store = TestStore(initialState: SignInFeature.State()) {
+        let store = TestStore(initialState: SignInFeature.State.loadingSignInCode) {
             SignInFeature()
         }
         let credentials = AuthCredentials.emptyCredentials
-        await store.send(.signInSuccess(credentials)) {
-            $0.userName = credentials.userID
-        }
+        await store.send(.signInSuccess(credentials))
     }
 
     @MainActor
     func testSignInFlowHappyPath() async {
         let clock = TestClock()
-        let store = TestStore(initialState: SignInFeature.State()) {
+        let store = TestStore(initialState: SignInFeature.State.loadingSignInCode) {
             SignInFeature()
         } withDependencies: {
             $0.continuousClock = clock
@@ -47,21 +45,25 @@ final class SignInFeatureTests: XCTestCase {
 
         await store.send(.fetchSignInCode)
         await store.receive(\.presentSignInCode) {
-            $0.signInCode = "1234ABCD"
-            $0.selector = "40-char-random-hex-string"
+            $0 = SignInFeature.State.waitingForAuthentication(
+                code: SignInCode(selector: "40-char-random-hex-string", userCode: "1234ABCD"),
+                remainingAttempts: 5
+            )
         }
         await clock.advance(by: pollConf.delayBeforePollingStarts)
         await clock.advance(by: pollConf.period)
         await store.receive(\.pollServer) {
-            $0.remainingAttempts = pollConf.failAfterAttempts - 1
-            $0.userName = AuthCredentials.emptyCredentials.userID
+            $0 = SignInFeature.State.waitingForAuthentication(
+                code: SignInCode(selector: "40-char-random-hex-string", userCode: "1234ABCD"),
+                remainingAttempts: 4
+            )
         }
         await store.receive(\.signInSuccess)
     }
 
     @MainActor
     func testFetchSignInCodeFailure() async {
-        let store = TestStore(initialState: SignInFeature.State()) {
+        let store = TestStore(initialState: SignInFeature.State.loadingSignInCode) {
             SignInFeature()
         } withDependencies: {
             $0[NetworkClient.self] = .failureValue
@@ -73,7 +75,7 @@ final class SignInFeatureTests: XCTestCase {
     @MainActor
     func testSessionForkFailure() async {
         let clock = TestClock()
-        let store = TestStore(initialState: SignInFeature.State()) {
+        let store = TestStore(initialState: SignInFeature.State.loadingSignInCode) {
             SignInFeature()
         } withDependencies: {
             $0.continuousClock = clock
@@ -84,8 +86,10 @@ final class SignInFeatureTests: XCTestCase {
 
         await store.send(.fetchSignInCode)
         await store.receive(\.presentSignInCode) {
-            $0.signInCode = "1234ABCD"
-            $0.selector = "40-char-random-hex-string"
+            $0 = SignInFeature.State.waitingForAuthentication(
+                code: SignInCode(selector: "40-char-random-hex-string", userCode: "1234ABCD"),
+                remainingAttempts: 5
+            )
         }
         await clock.advance(by: pollConf.delayBeforePollingStarts)
         var failAfterAttempts = pollConf.failAfterAttempts
@@ -94,7 +98,10 @@ final class SignInFeatureTests: XCTestCase {
             failAfterAttempts -= 1
             await clock.advance(by: pollConf.period)
             await store.receive(\.pollServer) {
-                $0.remainingAttempts = failAfterAttempts
+                $0 = SignInFeature.State.waitingForAuthentication(
+                    code: SignInCode(selector: "40-char-random-hex-string", userCode: "1234ABCD"),
+                    remainingAttempts: failAfterAttempts
+                )
             }
         }
         await clock.advance(by: pollConf.period)

@@ -21,18 +21,9 @@ import ComposableArchitecture
 @Reducer
 struct SignInFeature {
     @ObservableState
-    struct State: Equatable {
-        var signInCode: String?
-        var selector: String?
-        var remainingAttempts: Int
-        @Shared(.appStorage("username")) var userName: String?
-
-        init(signInCode: String? = nil, selector: String? = nil) {
-            self.signInCode = signInCode
-            self.selector = selector
-            @Dependency(ServerPollConfiguration.self) var serverPoll
-            self.remainingAttempts = serverPoll.failAfterAttempts
-        }
+    enum State: Equatable {
+        case loadingSignInCode
+        case waitingForAuthentication(code: SignInCode, remainingAttempts: Int)
     }
 
     enum Action {
@@ -51,20 +42,25 @@ struct SignInFeature {
         Reduce { state, action in
             switch action {
             case .pollServer:
-                guard let selector = state.selector,
-                      state.remainingAttempts > 0 else {
+                guard case .waitingForAuthentication(let code, let remainingAttempts) = state else {
                     return .cancel(id: CancelID.timer)
                 }
-                state.remainingAttempts -= 1
+                if remainingAttempts <= 0 {
+                    return .cancel(id: CancelID.timer) // return failed action to dismiss the view?
+                }
+
+                state = .waitingForAuthentication(code: code, remainingAttempts: remainingAttempts - 1)
                 return .run { send in
-                    let credentials = try await networkClient.forkedSession(selector)
+                    let credentials = try await networkClient.forkedSession(code.selector)
                     await send(.signInSuccess(credentials))
                 } catch: { error, send in
                     // failed to fork session
                 }
+
             case .signInSuccess(let credentials):
                 state.userName = credentials.userID // setting this causes the MainView to appear
                 return .cancel(id: CancelID.timer)
+
             case .fetchSignInCode:
                 return .run { send in
                     let code = try await networkClient.fetchSignInCode()
@@ -72,11 +68,10 @@ struct SignInFeature {
                 } catch: { error, send in
                     // TODO: Failed obtaining user code and selector, present to the user to try again later?
                 }
+
             case .presentSignInCode(let code):
-                state.signInCode = code.userCode
-                state.selector = code.selector
                 @Dependency(ServerPollConfiguration.self) var serverPollConfig
-                state.remainingAttempts = serverPollConfig.failAfterAttempts
+                state = .waitingForAuthentication(code: code, remainingAttempts: serverPollConfig.failAfterAttempts)
                 return .run { [serverPollConfig] send in
                     try? await clock.sleep(for: serverPollConfig.delayBeforePollingStarts)
                     for await _ in clock.timer(interval: serverPollConfig.period) {

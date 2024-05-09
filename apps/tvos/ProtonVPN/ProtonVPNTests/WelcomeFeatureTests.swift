@@ -38,7 +38,7 @@ final class WelcomeFeatureTests: XCTestCase {
             WelcomeFeature()
         }
         await store.send(.showSignIn) {
-            $0.destination = .signIn(.init())
+            $0.destination = .signIn(.loadingSignInCode)
         }
         await store.send(.destination(.presented(.signIn(.signInSuccess(.emptyCredentials))))) {
             $0.destination = nil
@@ -51,7 +51,7 @@ final class WelcomeFeatureTests: XCTestCase {
             WelcomeFeature()
         }
         await store.send(.showSignIn) {
-            $0.destination = .signIn(.init())
+            $0.destination = .signIn(.loadingSignInCode)
         }
         await store.send(.destination(.dismiss)) {
             $0.destination = nil
