@@ -46,12 +46,12 @@ struct WelcomeFeature {
             case .showCreateAccount:
                 state.destination = .createAccount(.init())
                 return .none
-            case .destination(.presented(.signIn(.signInSuccess))):
+            case .destination(.presented(.signIn(.authenticationFinished(.success(.authenticated(let auth)))))):
                 /// Right after logging in, we should reset the state of the welcome page, so that when the user logs out,
                 /// the welcome page will be shown, not the sign in page
                 state.destination = nil
                 return .none
-            case .destination(_):
+            case .destination:
                 return .none
             }
         }

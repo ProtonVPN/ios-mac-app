@@ -27,8 +27,7 @@ final class SignInFeatureTests: XCTestCase {
         let store = TestStore(initialState: SignInFeature.State.loadingSignInCode) {
             SignInFeature()
         }
-        let credentials = AuthCredentials.emptyCredentials
-        await store.send(.signInSuccess(credentials))
+        await store.send(.authenticationFinished(.success(.mockSuccess)))
     }
 
     @MainActor
@@ -42,11 +41,12 @@ final class SignInFeatureTests: XCTestCase {
         }
 
         let pollConf = ServerPollConfiguration.liveValue
+        let mockResponse = SignInCode(selector: "40-char-random-hex-string", userCode: "1234ABCD")
 
         await store.send(.fetchSignInCode)
-        await store.receive(\.presentSignInCode) {
+        await store.receive(SignInFeature.Action.codeFetchingFinished(.success(mockResponse))) {
             $0 = SignInFeature.State.waitingForAuthentication(
-                code: SignInCode(selector: "40-char-random-hex-string", userCode: "1234ABCD"),
+                code: mockResponse,
                 remainingAttempts: 5
             )
         }
@@ -58,7 +58,7 @@ final class SignInFeatureTests: XCTestCase {
                 remainingAttempts: 4
             )
         }
-        await store.receive(\.signInSuccess)
+        await store.receive(SignInFeature.Action.authenticationFinished(.success(.mockSuccess)))
     }
 
     @MainActor
@@ -70,24 +70,30 @@ final class SignInFeatureTests: XCTestCase {
         }
 
         await store.send(.fetchSignInCode)
+        await store.receive(\.codeFetchingFinished.failure)
     }
 
     @MainActor
     func testSessionForkFailure() async {
+        let mockCode = SignInCode(selector: "40-char-random-hex-string", userCode: "1234ABCD")
+
         let clock = TestClock()
         let store = TestStore(initialState: SignInFeature.State.loadingSignInCode) {
             SignInFeature()
         } withDependencies: {
             $0.continuousClock = clock
-            $0[NetworkClient.self] = .forkedSessionFailureValue
+            $0[NetworkClient.self] = .init(
+                fetchSignInCode: { mockCode },
+                forkedSession: { _ in .invalidSelector }
+            )
         }
 
         let pollConf = ServerPollConfiguration.liveValue
 
         await store.send(.fetchSignInCode)
-        await store.receive(\.presentSignInCode) {
+        await store.receive(.codeFetchingFinished(.success(mockCode))) {
             $0 = SignInFeature.State.waitingForAuthentication(
-                code: SignInCode(selector: "40-char-random-hex-string", userCode: "1234ABCD"),
+                code: mockCode,
                 remainingAttempts: 5
             )
         }
@@ -99,10 +105,11 @@ final class SignInFeatureTests: XCTestCase {
             await clock.advance(by: pollConf.period)
             await store.receive(\.pollServer) {
                 $0 = SignInFeature.State.waitingForAuthentication(
-                    code: SignInCode(selector: "40-char-random-hex-string", userCode: "1234ABCD"),
+                    code: mockCode,
                     remainingAttempts: failAfterAttempts
                 )
             }
+            await store.receive(.authenticationFinished(.success(.invalidSelector)))
         }
         await clock.advance(by: pollConf.period)
         await store.receive(\.pollServer)

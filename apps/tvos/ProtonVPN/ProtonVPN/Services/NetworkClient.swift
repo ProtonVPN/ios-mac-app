@@ -18,12 +18,21 @@
 
 import Foundation
 import Dependencies
+import CommonNetworking
 
 struct NetworkClient: Sendable {
     var fetchSignInCode: @Sendable () async throws -> SignInCode
-    var logout: @Sendable () async throws -> Void
-    var forkedSession: @Sendable (_ selector: String) async throws -> AuthCredentials
+    var forkedSession: @Sendable (_ selector: String) async throws -> SessionAuthResult
     private static var count: Int = 1
+}
+
+public enum SessionAuthResult: Equatable {
+    case authenticated(SessionAuthResponse)
+
+    /// When we receive code 422 (invalid selector), return this instead of throwing an error
+    case invalidSelector
+
+    static let mockSuccess: SessionAuthResult = .authenticated(.init(uid: "a", refreshToken: "b", accessToken: "c"))
 }
 
 extension NetworkClient: DependencyKey {
@@ -31,10 +40,8 @@ extension NetworkClient: DependencyKey {
     static let testValue = NetworkClient {
         SignInCode(selector: "40-char-random-hex-string",
                    userCode: "1234ABCD")
-    } logout: {
-        
     } forkedSession: { selector in
-            .emptyCredentials
+            .mockSuccess
     }
 
     static let forkedSessionFailureValue = NetworkClient {
@@ -73,7 +80,7 @@ extension NetworkClient: DependencyKey {
             Self.count += 1
             if Self.count > 5 {
                 Self.count = 1
-                return .emptyCredentials
+                return .authenticated(.init(uid: "a", refreshToken: "b", accessToken: "c"))
             } else {
                 throw "Failed to fork session"
             }
@@ -86,14 +93,12 @@ struct SignInCode: Equatable {
     let userCode: String
 }
 
-struct AuthCredentials { // temporary, we'll use the real AuthCredentials
-    let userID: String
+struct AuthCredentials: Equatable { // temporary, we'll use the real AuthCredentials
     let uID: String
     let accessToken: String
     let refreshToken: String
 
-    static let emptyCredentials = AuthCredentials(userID: "eric.norbert@proton.me",
-                                                  uID: "",
+    static let emptyCredentials = AuthCredentials(uID: "",
                                                   accessToken: "",
                                                   refreshToken: "")
 }

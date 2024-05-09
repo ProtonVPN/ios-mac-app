@@ -26,11 +26,11 @@ struct SignInFeature {
         case waitingForAuthentication(code: SignInCode, remainingAttempts: Int)
     }
 
-    enum Action {
+    enum Action: Equatable {
         case pollServer
         case fetchSignInCode
-        case presentSignInCode(SignInCode)
-        case signInSuccess(AuthCredentials)
+        case codeFetchingFinished(TaskResult<SignInCode>)
+        case authenticationFinished(TaskResult<SessionAuthResult>)
     }
 
     @Dependency(NetworkClient.self) var networkClient
@@ -41,6 +41,9 @@ struct SignInFeature {
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
+            case .fetchSignInCode:
+                return .run { send in await send(.codeFetchingFinished(TaskResult { try await networkClient.fetchSignInCode() })) }
+
             case .pollServer:
                 guard case .waitingForAuthentication(let code, let remainingAttempts) = state else {
                     return .cancel(id: CancelID.timer)
@@ -50,35 +53,39 @@ struct SignInFeature {
                 }
 
                 state = .waitingForAuthentication(code: code, remainingAttempts: remainingAttempts - 1)
+                return .run { send in await send(.authenticationFinished(TaskResult { try await networkClient.forkedSession(code.selector) })) }
+
+            case .codeFetchingFinished(.success(let response)):
+                @Dependency(ServerPollConfiguration.self) var pollConfiguration
+                state = .waitingForAuthentication(code: response, remainingAttempts: pollConfiguration.failAfterAttempts)
                 return .run { send in
-                    let credentials = try await networkClient.forkedSession(code.selector)
-                    await send(.signInSuccess(credentials))
-                } catch: { error, send in
-                    // failed to fork session
-                }
-
-            case .signInSuccess(let credentials):
-                state.userName = credentials.userID // setting this causes the MainView to appear
-                return .cancel(id: CancelID.timer)
-
-            case .fetchSignInCode:
-                return .run { send in
-                    let code = try await networkClient.fetchSignInCode()
-                    await send(.presentSignInCode(code))
-                } catch: { error, send in
-                    // TODO: Failed obtaining user code and selector, present to the user to try again later?
-                }
-
-            case .presentSignInCode(let code):
-                @Dependency(ServerPollConfiguration.self) var serverPollConfig
-                state = .waitingForAuthentication(code: code, remainingAttempts: serverPollConfig.failAfterAttempts)
-                return .run { [serverPollConfig] send in
-                    try? await clock.sleep(for: serverPollConfig.delayBeforePollingStarts)
-                    for await _ in clock.timer(interval: serverPollConfig.period) {
-                        await send(.pollServer)
-                    }
+                    try? await clock.sleep(for: pollConfiguration.delayBeforePollingStarts)
+                    await send(.pollServer)
                 }
                 .cancellable(id: CancelID.timer, cancelInFlight: true)
+
+            case .codeFetchingFinished(.failure(let error)):
+                // handle non-retryable error
+                return .none
+
+            case .authenticationFinished(.success(.authenticated(let auth))):
+                // session authenticated. Whose responsibility should it be:
+                // - to save auth credentials? - NetworkingReduer?
+                // - to advance state - parent of SignInFeature?
+                return .none
+
+            case .authenticationFinished(.success(.invalidSelector)):
+                // Parent session has not yet authenticated this selector
+                // a.k.a. user has not typed in code in browser
+                @Dependency(ServerPollConfiguration.self) var pollConfiguration
+                return .run { send in
+                    try? await clock.sleep(for: pollConfiguration.period)
+                    await send(.pollServer)
+                }
+
+            case .authenticationFinished(.failure(let error)):
+                // handle non-retryable error
+                return .none
             }
         }
     }

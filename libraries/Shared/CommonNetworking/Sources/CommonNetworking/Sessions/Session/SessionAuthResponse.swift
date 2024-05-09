@@ -18,8 +18,14 @@
 
 import Foundation
 
-public struct SessionAuthResponse: Codable {
+public struct SessionAuthResponse: Codable, Equatable {
     public let uid: String
     public let refreshToken: String
     public let accessToken: String
+
+    public init(uid: String, refreshToken: String, accessToken: String) {
+        self.uid = uid
+        self.refreshToken = refreshToken
+        self.accessToken = accessToken
+    }
 }

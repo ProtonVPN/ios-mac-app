@@ -40,7 +40,8 @@ final class WelcomeFeatureTests: XCTestCase {
         await store.send(.showSignIn) {
             $0.destination = .signIn(.loadingSignInCode)
         }
-        await store.send(.destination(.presented(.signIn(.signInSuccess(.emptyCredentials))))) {
+
+        await store.send(.destination(.presented(.signIn(.authenticationFinished(.success(.mockSuccess)))))) {
             $0.destination = nil
         }
     }
