@@ -50,19 +50,21 @@ struct AppFeature {
         }
         Reduce { state, action in
             switch action {
+            case .main(.settings(.alert(.presented(.signOut)))):
+                // Send an action to inform NetworkingFeature, which will clear keychains and acquire unauth session
+                return .run { send in await send(.networking(.startAcquiringSession))}
+
             case .main:
                 return .none
 
             case .welcome(.destination(.presented(.signIn(.signInFinished(.success(let credentials)))))):
-                return .none
+                state.main.currentTab = .home
+                return .run { send in await send(.networking(.forkedSessionAuthenticated(credentials))) }
 
             case .welcome(.destination(.presented(.signIn(.signInFinished(.failure))))):
                 return .none
 
             case .welcome:
-                return .none
-
-            case .networking(.sessionExpired):
                 return .none
 
             case .networking:

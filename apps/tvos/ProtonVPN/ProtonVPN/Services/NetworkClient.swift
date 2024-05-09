@@ -32,7 +32,13 @@ public enum SessionAuthResult: Equatable {
     /// When we receive code 422 (invalid selector), return this instead of throwing an error
     case invalidSelector
 
-    static let mockSuccess: SessionAuthResult = .authenticated(.init(uid: "a", refreshToken: "b", accessToken: "c"))
+    static let mockSuccess: SessionAuthResult = .authenticated(SessionAuthResponse(
+        accessToken: "c",
+        refreshToken: "b",
+        uid: "a",
+        userID: "d",
+        scopes: []
+    ))
 }
 
 extension NetworkClient: DependencyKey {
@@ -93,14 +99,4 @@ extension NetworkClient: DependencyKey {
 struct SignInCode: Equatable {
     let selector: String
     let userCode: String
-}
-
-struct AuthCredentials: Equatable { // temporary, we'll use the real AuthCredentials
-    let uID: String
-    let accessToken: String
-    let refreshToken: String
-
-    static let emptyCredentials = AuthCredentials(uID: "",
-                                                  accessToken: "",
-                                                  refreshToken: "")
 }

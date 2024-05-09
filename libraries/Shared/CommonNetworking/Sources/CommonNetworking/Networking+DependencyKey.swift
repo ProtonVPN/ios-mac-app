@@ -41,7 +41,7 @@ public struct CoreNetworkingWrapper: VPNNetworking {
     }
     
     public func set(session: Session) {
-
+        wrapped.apiService.setSessionUID(uid: session.uid)
     }
     
     let wrapped: Networking

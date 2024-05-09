@@ -18,6 +18,11 @@
 
 import ComposableArchitecture
 
+import Foundation
+import ProtonCoreNetworking
+import CommonNetworking
+import class VPNShared.AuthCredentials
+
 @Reducer
 struct SignInFeature {
     @ObservableState
@@ -73,12 +78,21 @@ struct SignInFeature {
                 }
                 .cancellable(id: CancelID.timer, cancelInFlight: true)
 
-            case .codeFetchingFinished(.failure(let error)):
+            case .codeFetchingFinished(.failure):
                 // handle non-retryable error
                 return .none
 
             case .authenticationFinished(.success(.authenticated(let response))):
-                let credentials: AuthCredentials = .init(uID: response.uid, accessToken: response.accessToken, refreshToken: response.refreshToken)
+                // HACK: Set a non-empty username mocked username for now
+                let credentials = AuthCredentials(
+                    username: "username", // Missing from response
+                    accessToken: response.accessToken,
+                    refreshToken: response.refreshToken,
+                    sessionId: response.uid,
+                    userId: response.userID,
+                    scopes: response.scopes,
+                    mailboxPassword: nil // Missing from response
+                )
                 return .run { send in await send(.signInFinished(.success(credentials))) }
 
             case .authenticationFinished(.success(.invalidSelector)):
@@ -95,7 +109,7 @@ struct SignInFeature {
                 return .none
 
             case .signInFinished:
-                // Handled by parent reducer
+                // Delegate action handled by parent reducer
                 return .none
             }
         }

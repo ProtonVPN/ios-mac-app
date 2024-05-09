@@ -19,13 +19,28 @@
 import Foundation
 
 public struct SessionAuthResponse: Codable, Equatable {
-    public let uid: String
-    public let refreshToken: String
     public let accessToken: String
+    public let refreshToken: String
+    public let uid: String
 
-    public init(uid: String, refreshToken: String, accessToken: String) {
+    public let userID: String
+    public let scopes: [String]
+
+    public init(accessToken: String, refreshToken: String, uid: String, userID: String, scopes: [String]) {
         self.uid = uid
         self.refreshToken = refreshToken
         self.accessToken = accessToken
+        self.userID = userID
+        self.scopes = scopes
+    }
+
+    /// We must provide CodingKeys to decode UID, since `JSONDecoder.decapitalisingFirstLetter` does not modify keys
+    /// that have a capital prefix length longer than 1 character.
+    public enum CodingKeys: String, CodingKey {
+        case accessToken
+        case refreshToken
+        case uid = "UID" // Special case that must be explicitly specified
+        case userID
+        case scopes
     }
 }

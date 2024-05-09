@@ -50,10 +50,21 @@ public protocol Networking: APIServiceDelegate {
     func perform(request route: Request) async throws -> JSONDictionary
 }
 
+/// This could be a `struct`, but it's nice for it to be an enum since we can then switch on it (it's the state of the
+/// `NetworkingFeature`)
 public enum Session: Equatable {
-    case forking(uid: String)
     case auth(uid: String)
     case unauth(uid: String)
+
+    public var uid: String {
+        switch self {
+        case .auth(let uid):
+            return uid
+
+        case .unauth(let uid):
+            return uid
+        }
+    }
 }
 
 // MARK: CoreNetworking

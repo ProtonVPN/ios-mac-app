@@ -34,14 +34,19 @@ import VPNAppCore
 // This could also EASILY live in the CommonNetworking (or SessionNetworking) module
 struct NetworkingFeature: Reducer {
     enum State: Equatable {
-        case unauthenticated // no session. Not to be confused with unauth session
-        case acquiringSession // acquiring session
-        case authenticated(CommonNetworking.Session) // auth or unauth session
+        /// No session. Not to be confused with authenticated using an unauth session.
+        /// Do we need this state? Can we guarantee that a `acquireSessionIfNeeded` request is in progress?
+        case unauthenticated
+        /// Session information is being fetched from the keychain, or new unauth session is being acquired.
+        case acquiringSession
+        /// Can contain auth or unauth session
+        case authenticated(CommonNetworking.Session)
     }
 
     enum Action {
         case startAcquiringSession
         case sessionFetched(SessionAcquiringResult)
+        case forkedSessionAuthenticated(AuthCredentials)
         case sessionExpired
     }
 
@@ -50,12 +55,17 @@ struct NetworkingFeature: Reducer {
         Reduce { state, action in
             switch action {
             case .startAcquiringSession:
+                clearKeychains()
+                state = .acquiringSession
                 return .run { send in await send(.sessionFetched(try networking.acquireSessionIfNeeded())) }
 
             case .sessionFetched(.sessionAlreadyPresent(let credentials)),
                 .sessionFetched(.sessionFetchedAndAvailable(let credentials)):
                 // Credentials already stored in keychain by Networking implementation in CommonNetworking
-                state = .authenticated(.auth(uid: credentials.sessionID))
+                let session: CommonNetworking.Session = credentials.isForUnauthenticatedSession
+                    ? .unauth(uid: credentials.sessionID)
+                    : .auth(uid: credentials.sessionID)
+                state = .authenticated(session)
                 return .none
 
             case .sessionFetched(.sessionUnavailableAndNotFetched):
@@ -63,14 +73,28 @@ struct NetworkingFeature: Reducer {
                 return .none
 
             case .sessionExpired:
+                state = .unauthenticated
                 // VPNAPPL-2180: `NetworkingDelegate` must send `.sessionExpired` action
-                @Dependency(\.authKeychain) var authKeychain
-                @Dependency(\.unauthKeychain) var unauthKeychain
-                authKeychain.clear()
-                unauthKeychain.clear()
+                clearKeychains()
                 return .send(.startAcquiringSession)
 
+            case .forkedSessionAuthenticated(let credentials):
+                // We forked a session ourselves, and web client just authenticated it
+                let session = Session.auth(uid: credentials.sessionId)
+                state = .authenticated(session)
+                networking.set(session: session)
+                clearKeychains()
+                @Dependency(\.authKeychain) var authKeychain
+                try! authKeychain.store(credentials)
+                return .none
             }
         }
+    }
+
+    private func clearKeychains() {
+        @Dependency(\.authKeychain) var authKeychain
+        @Dependency(\.unauthKeychain) var unauthKeychain
+        authKeychain.clear()
+        unauthKeychain.clear()
     }
 }

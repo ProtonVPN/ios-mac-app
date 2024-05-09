@@ -23,12 +23,13 @@ struct AppView: View {
     var store: StoreOf<AppFeature>
 
     var body: some View {
-        if store.state.userName != nil {
-            MainView(store: store.scope(state: \.main,
-                                        action: \.main))
-        } else {
-            WelcomeView(store: store.scope(state: \.welcome,
-                                           action: \.welcome))
+        switch store.networking {
+        case .unauthenticated, .acquiringSession:
+            ProgressView()
+        case .authenticated(.auth):
+            MainView(store: store.scope(state: \.main, action: \.main))
+        case .authenticated(.unauth):
+            WelcomeView(store: store.scope(state: \.welcome, action: \.welcome))
         }
     }
 }
