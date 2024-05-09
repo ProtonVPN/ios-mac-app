@@ -28,6 +28,7 @@ final class SignInFeatureTests: XCTestCase {
             SignInFeature()
         }
         await store.send(.authenticationFinished(.success(.mockSuccess)))
+        await store.receive(.signInFinished(.success(.init(uID: "a", accessToken: "c", refreshToken: "b"))))
     }
 
     @MainActor
@@ -59,6 +60,7 @@ final class SignInFeatureTests: XCTestCase {
             )
         }
         await store.receive(SignInFeature.Action.authenticationFinished(.success(.mockSuccess)))
+        await store.receive(.signInFinished(.success(.init(uID: "a", accessToken: "c", refreshToken: "b"))))
     }
 
     @MainActor
@@ -113,5 +115,6 @@ final class SignInFeatureTests: XCTestCase {
         }
         await clock.advance(by: pollConf.period)
         await store.receive(\.pollServer)
+        await store.receive(.signInFinished(.failure(SignInFeature.SignInFailureReason.authenticationAttemptsExhausted)))
     }
 }

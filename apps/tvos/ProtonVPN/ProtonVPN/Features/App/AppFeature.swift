@@ -40,5 +40,20 @@ struct AppFeature {
         Scope(state: \.main, action: \.main) {
             MainFeature()
         }
+        Reduce { state, action in
+            switch action {
+            case .main:
+                return .none
+
+            case .welcome(.destination(.presented(.signIn(.signInFinished(.success(let credentials)))))):
+                return .none
+
+            case .welcome(.destination(.presented(.signIn(.signInFinished(.failure))))):
+                return .none
+
+            case .welcome:
+                return .none
+            }
+        }
     }
 }

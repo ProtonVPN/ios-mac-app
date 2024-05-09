@@ -31,12 +31,18 @@ struct SignInFeature {
         case fetchSignInCode
         case codeFetchingFinished(TaskResult<SignInCode>)
         case authenticationFinished(TaskResult<SessionAuthResult>)
+        case signInFinished(TaskResult<AuthCredentials>)
     }
 
     @Dependency(NetworkClient.self) var networkClient
     @Dependency(\.continuousClock) var clock
 
     private enum CancelID { case timer }
+
+    enum SignInFailureReason: Error {
+        /// We ran out of authentication polls before the code was entered
+        case authenticationAttemptsExhausted
+    }
 
     var body: some Reducer<State, Action> {
         Reduce { state, action in
@@ -49,7 +55,10 @@ struct SignInFeature {
                     return .cancel(id: CancelID.timer)
                 }
                 if remainingAttempts <= 0 {
-                    return .cancel(id: CancelID.timer) // return failed action to dismiss the view?
+                    return .merge(
+                        .cancel(id: CancelID.timer),
+                        .run { send in await send(.signInFinished(.failure(SignInFailureReason.authenticationAttemptsExhausted)))}
+                    )
                 }
 
                 state = .waitingForAuthentication(code: code, remainingAttempts: remainingAttempts - 1)
@@ -68,11 +77,9 @@ struct SignInFeature {
                 // handle non-retryable error
                 return .none
 
-            case .authenticationFinished(.success(.authenticated(let auth))):
-                // session authenticated. Whose responsibility should it be:
-                // - to save auth credentials? - NetworkingReduer?
-                // - to advance state - parent of SignInFeature?
-                return .none
+            case .authenticationFinished(.success(.authenticated(let response))):
+                let credentials: AuthCredentials = .init(uID: response.uid, accessToken: response.accessToken, refreshToken: response.refreshToken)
+                return .run { send in await send(.signInFinished(.success(credentials))) }
 
             case .authenticationFinished(.success(.invalidSelector)):
                 // Parent session has not yet authenticated this selector
@@ -83,8 +90,12 @@ struct SignInFeature {
                     await send(.pollServer)
                 }
 
-            case .authenticationFinished(.failure(let error)):
+            case .authenticationFinished(.failure):
                 // handle non-retryable error
+                return .none
+
+            case .signInFinished:
+                // Handled by parent reducer
                 return .none
             }
         }
