@@ -26,6 +26,7 @@
 		AD8FA9172BEC1F3600E751F6 /* ProtonCoreServices in Frameworks */ = {isa = PBXBuildFile; productRef = AD8FA9162BEC1F3600E751F6 /* ProtonCoreServices */; };
 		AD8FA9192BEC1F4700E751F6 /* CommonNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = AD8FA9182BEC1F4700E751F6 /* CommonNetworking */; };
 		AD8FA91B2BEC1F5900E751F6 /* ProtonCoreForceUpgrade in Frameworks */ = {isa = PBXBuildFile; productRef = AD8FA91A2BEC1F5900E751F6 /* ProtonCoreForceUpgrade */; };
+		AD8FA91D2BEC213300E751F6 /* NetworkingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8FA91C2BEC213300E751F6 /* NetworkingFeature.swift */; };
 		E515F8BA2BE0CF6100EA4ABF /* SettingsFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515F8B92BE0CF6100EA4ABF /* SettingsFeatureTests.swift */; };
 		E515F8BF2BE0D1FC00EA4ABF /* WelcomeFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515F8BB2BE0D1FC00EA4ABF /* WelcomeFeatureTests.swift */; };
 		E515F8C02BE0D1FC00EA4ABF /* SignInFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515F8BC2BE0D1FC00EA4ABF /* SignInFeatureTests.swift */; };
@@ -97,6 +98,7 @@
 		AD8FA90E2BEC1DAD00E751F6 /* NetworkingDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkingDelegate.swift; sourceTree = "<group>"; };
 		AD8FA90F2BEC1DAD00E751F6 /* DoH.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoH.swift; sourceTree = "<group>"; };
 		AD8FA9102BEC1DAD00E751F6 /* CryptoService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoService.swift; sourceTree = "<group>"; };
+		AD8FA91C2BEC213300E751F6 /* NetworkingFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkingFeature.swift; sourceTree = "<group>"; };
 		E515F8B92BE0CF6100EA4ABF /* SettingsFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFeatureTests.swift; sourceTree = "<group>"; };
 		E515F8BB2BE0D1FC00EA4ABF /* WelcomeFeatureTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeFeatureTests.swift; sourceTree = "<group>"; };
 		E515F8BC2BE0D1FC00EA4ABF /* SignInFeatureTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInFeatureTests.swift; sourceTree = "<group>"; };
@@ -372,6 +374,7 @@
 		E55A29E82BDA78B10006E85D /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				AD8FA91C2BEC213300E751F6 /* NetworkingFeature.swift */,
 				E5BC9DE22BD7F7C800CBF85A /* NetworkClient.swift */,
 				E5D846BA2BDBB93C006EEEDB /* UIImage+QRCodeGenerating.swift */,
 				E515F8C62BE0DB5E00EA4ABF /* ServerPoll.swift */,
@@ -557,6 +560,7 @@
 				E515F8C52BE0D3F500EA4ABF /* CreateAccountFeature.swift in Sources */,
 				E5280E5D2BD9057600CDDBAF /* SettingsView.swift in Sources */,
 				E55489652BEBC7CE00AD846B /* SettingsDrillDownView.swift in Sources */,
+				AD8FA91D2BEC213300E751F6 /* NetworkingFeature.swift in Sources */,
 				E55A29DB2BDA50B80006E85D /* WelcomeFeature.swift in Sources */,
 				E55489612BEBAC9600AD846B /* Bundle+appVersion.swift in Sources */,
 				E5280E5E2BD9057600CDDBAF /* WelcomeView.swift in Sources */,

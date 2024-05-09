@@ -65,27 +65,29 @@ extension NetworkClient: DependencyKey {
     static let logoutDelay: Duration = .seconds(1)
     static let pollDelay: Duration = .seconds(0.1)
 
-    static let liveValue = NetworkClient(
-        fetchSignInCode: {
-            @Dependency(\.continuousClock) var clock
-            try await clock.sleep(for: Self.fetchSignInCodeDelay)
-            return SignInCode(selector: "40-char-random-hex-string", userCode: "1234ABCD")
-        }, logout: {
-            @Dependency(\.continuousClock) var clock
-            try await clock.sleep(for: Self.logoutDelay)
-        }, forkedSession: { selector in
-            @Dependency(\.continuousClock) var clock
-            print("poll API... \(Self.count)")
-            try await clock.sleep(for: pollDelay)
-            Self.count += 1
-            if Self.count > 5 {
-                Self.count = 1
-                return .authenticated(.init(uid: "a", refreshToken: "b", accessToken: "c"))
-            } else {
-                throw "Failed to fork session"
+    static var liveValue: NetworkClient {
+        @Dependency(\.networking) var networking
+        return NetworkClient(
+            fetchSignInCode: {
+                let request = ForkSessionRequest(useCase: .getUserCode, timeout: 5.0)
+                let response: ForkSessionUserCodeResponse = try await networking.perform(request: request)
+                return SignInCode(selector: response.selector, userCode: response.userCode)
+            }, forkedSession: { selector in
+                let request = SessionAuthRequest(selector: selector)
+                do {
+                    let response: SessionAuthResponse = try await networking.perform(request: request)
+                    return .authenticated(response)
+                } catch {
+                    if error.httpCode == HttpStatusCode.invalidRefreshToken.rawValue {
+                        // The selector has not been authenticated by the parent session
+                        // Treat this as a type of success
+                        return .invalidSelector
+                    }
+                    throw error // Rethrow generic errors
+                }
             }
-        }
-    )
+        )
+    }
 }
 
 struct SignInCode: Equatable {

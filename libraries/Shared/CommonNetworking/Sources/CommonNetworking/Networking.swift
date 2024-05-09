@@ -50,6 +50,12 @@ public protocol Networking: APIServiceDelegate {
     func perform(request route: Request) async throws -> JSONDictionary
 }
 
+public enum Session: Equatable {
+    case forking(uid: String)
+    case auth(uid: String)
+    case unauth(uid: String)
+}
+
 // MARK: CoreNetworking
 public final class CoreNetworking: Networking {
 

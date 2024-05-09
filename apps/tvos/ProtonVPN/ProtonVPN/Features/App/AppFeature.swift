@@ -18,24 +18,32 @@
 
 import ComposableArchitecture
 
+import CommonNetworking
+
 @Reducer
 struct AppFeature {
     @ObservableState
     struct State: Equatable {
+        @Shared(.appStorage("username")) var user: String?
+        var main: MainFeature.State = .init()
         var welcome = WelcomeFeature.State()
-        var main = MainFeature.State()
 
-        @Shared(.appStorage("username")) var userName: String?
+        var networking: NetworkingFeature.State = .unauthenticated
     }
 
     enum Action {
         case main(MainFeature.Action)
         case welcome(WelcomeFeature.Action)
+
+        case networking(NetworkingFeature.Action)
     }
 
     var body: some Reducer<State, Action> {
         Scope(state: \.welcome, action: \.welcome) {
             WelcomeFeature()
+        }
+        Scope(state: \.networking, action: \.networking) {
+            NetworkingFeature()
         }
         Scope(state: \.main, action: \.main) {
             MainFeature()
@@ -52,6 +60,12 @@ struct AppFeature {
                 return .none
 
             case .welcome:
+                return .none
+
+            case .networking(.sessionExpired):
+                return .none
+
+            case .networking:
                 return .none
             }
         }

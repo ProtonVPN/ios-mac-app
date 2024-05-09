@@ -19,6 +19,8 @@
 import ComposableArchitecture
 import SwiftUI
 import Dependencies
+import ProtonCoreLog
+import CommonNetworking
 import Persistence
 
 @main
@@ -30,10 +32,18 @@ struct ProtonVPNApp: App {
     var body: some Scene {
         WindowGroup {
             AppView(store: store)
-                .onAppear {
-                    @Dependency(\.serverRepository) var repository
-                    print("Server count:", repository.serverCount())
-                }
+                .onAppear { self.startup() }
         }
+    }
+
+    private func startup() {
+        @Dependency(\.dohConfiguration) var doh
+        if doh.defaultHost.contains("black") {
+            PMLog.setEnvironment(environment: "black")
+        } else {
+            PMLog.setEnvironment(environment: "production")
+        }
+
+        store.send(.networking(.startAcquiringSession))
     }
 }
