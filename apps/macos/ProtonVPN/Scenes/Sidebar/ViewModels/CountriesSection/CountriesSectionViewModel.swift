@@ -93,7 +93,6 @@ class CountriesSectionViewModel {
     var secureCoreChange: ((Bool) -> Void)?
     var displayStreamingServices: ((String, [VpnStreamingOption], PropertiesManagerProtocol) -> Void)?
     var displayPremiumServices: (() -> Void)?
-    var displayFreeServicesOverlay: (() -> Void)? // Old behaviour, before free rescope
     var displayGatewaysServices: (() -> Void)?
     let contentSwitch = Notification.Name("CountriesSectionViewModelContentSwitch")
 
@@ -134,18 +133,7 @@ class CountriesSectionViewModel {
         return FreeFeaturesOverlayViewModel(featureViewModels: [FreeServersFeatureCellViewModel()] + featuresViewModels + partnersViewModels)
     }
 
-    /// Show information about free plan.
-    /// Depending on a feature flag it's either an overlay (old) or a modal (new)
     public func displayFreeServices() {
-        @Dependency(\.featureFlagProvider) var featureFlagProvider
-        if !featureFlagProvider[\.showNewFreePlan] { // old
-            displayFreeServicesOverlay?()
-        } else { // new
-            displayFreeServicesModal()
-        }
-    }
-
-    private func displayFreeServicesModal() {
         alertService.push(alert: FreeConnectionsAlert(countries: freeCountries))
     }
 
@@ -224,7 +212,7 @@ class CountriesSectionViewModel {
         notificationCenter.addObserver(self, selector: #selector(updateSettings), name: type(of: netShieldPropertyProvider).netShieldNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: propertiesManager).smartProtocolNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
-        // Reloads data if feature flags change. Can be removed if we stop using feature flags for generating table data (currently `showNewFreePlan` is used).
+        // Reloads data if feature flags change. Can be removed if we stop using feature flags for generating table data (currently none is used).
         notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: propertiesManager).featureFlagsNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnPlanChanged, object: nil)
         notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnUserDelinquent, object: nil)
@@ -437,8 +425,7 @@ class CountriesSectionViewModel {
     private func makeSections() -> [CellModel] {
         guard let serverGroups else { return [] }
 
-        @Dependency(\.featureFlagProvider) var featureFlagProvider
-        let userType = UserType(tier: userTier, showNewFreePlan: featureFlagProvider[\.showNewFreePlan])
+        let userType = UserType(tier: userTier)
 
         return sections(for: serverGroups, userType: userType)
             .compactMap { $0 }
@@ -596,15 +583,14 @@ class CountriesSectionViewModel {
     }
 
     enum UserType {
-        case legacyFree // old free plan
-        case free // Post-free rescope
+        case free
         case paid // Anything paid (basic, plus, visionary etc)
 
-        init(tier: Int, showNewFreePlan: Bool) {
+        init(tier: Int) {
             if tier.isPaidTier {
                 self = .paid
             } else {
-                self = showNewFreePlan ? .free : .legacyFree
+                self = .free
             }
         }
     }

@@ -77,7 +77,6 @@ extension UpsellEvent.Dimensions {
         userPlan: "free",
         vpnStatus: .off,
         userCountry: "ZZ",
-        newFreePlanUi: true,
         daysSinceAccountCreation: 12,
         upgradedUserPlan: nil,
         reference: nil
@@ -88,7 +87,6 @@ extension UpsellEvent.Dimensions {
         userPlan: "free",
         vpnStatus: .off,
         userCountry: "ZZ",
-        newFreePlanUi: true,
         daysSinceAccountCreation: 12,
         upgradedUserPlan: "plus",
         reference: nil

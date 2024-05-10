@@ -293,7 +293,6 @@ extension FeatureFlags {
         promoCode: false,
         wireGuardTls: false,
         enforceDeprecatedProtocols: false,
-        showNewFreePlan: false,
         unsafeLanWarnings: false,
         mismatchedCertificateRecovery: false,
         localOverrides: nil
@@ -313,7 +312,6 @@ extension FeatureFlags {
         promoCode: true,
         wireGuardTls: true,
         enforceDeprecatedProtocols: true,
-        showNewFreePlan: true,
         unsafeLanWarnings: true,
         mismatchedCertificateRecovery: true,
         localOverrides: nil

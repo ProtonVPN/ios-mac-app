@@ -123,14 +123,7 @@ final class CountryItemViewModel {
         self.vpnGateway = vpnGateway
         self.propertiesManager = propertiesManager
         self.countriesSectionViewModel = countriesSectionViewModel
-        
-        @Dependency(\.featureFlagProvider) var featureFlagProvider
-        if featureFlagProvider[\.showNewFreePlan] {
-            self.isTierTooLow = userTier < 1 // No countries are shown as available to free users
-        } else {
-            self.isTierTooLow = userTier < serversGroup.minTier
-        }
-
+        self.isTierTooLow = userTier.isFreeTier // No countries are shown as available to free users
         self.isOpened = isOpened
         self.isServerUnderMaintenance = serversGroup.isUnderMaintenance
             || serversGroup.protocolSupport.isDisjoint(with: propertiesManager.currentProtocolSupport)

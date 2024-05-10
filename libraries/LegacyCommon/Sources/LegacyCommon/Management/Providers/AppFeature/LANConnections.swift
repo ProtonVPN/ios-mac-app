@@ -30,7 +30,7 @@ public enum ExcludeLocalNetworks: String, Codable, ToggleableFeature {
         case .off:
             return .success
         case .on:
-            if featureFlags.showNewFreePlan && userTier.isFreeTier {
+            if userTier.isFreeTier {
                 return .failure(.requiresUpgrade)
             }
             return .success
@@ -46,7 +46,7 @@ extension ExcludeLocalNetworks: ProvidableFeature {
         guard #available(iOS 14.2, *) else {
             return .failure(.featureDisabled)
         }
-        if featureFlags.showNewFreePlan && userTier.isFreeTier {
+        if userTier.isFreeTier {
             return .failure(.requiresUpgrade)
         }
         return .success
@@ -57,7 +57,7 @@ extension ExcludeLocalNetworks: ProvidableFeature {
         userTier: Int,
         featureFlags: FeatureFlags
     ) -> ExcludeLocalNetworks {
-        if featureFlags.showNewFreePlan && userTier.isFreeTier {
+        if userTier.isFreeTier {
             return .off
         }
         return .on

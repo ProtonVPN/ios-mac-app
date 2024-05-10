@@ -24,7 +24,7 @@ public struct ServerChangeAuthorizerImplementation {
         @Dependency(\.credentialsProvider) var credentials
         @Dependency(\.featureFlagProvider) var featureFlags
 
-        guard credentials.tier.isFreeTier && featureFlags[\.showNewFreePlan] else {
+        guard credentials.tier.isFreeTier else {
             return .available
         }
 

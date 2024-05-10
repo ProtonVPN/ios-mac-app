@@ -87,12 +87,7 @@ class CountryItemViewModel {
     var isUsersTierTooLow: Bool {
         switch serversGroup.kind {
         case .country:
-            @Dependency(\.featureFlagProvider) var featureFlagProvider
-            if featureFlagProvider[\.showNewFreePlan] {
-                return userTier < 1 // No countries are shown as available to free users
-            } else {
-                return userTier < serversGroup.minTier
-            }
+            return userTier < 1 // No countries are shown as available to free users
         case .gateway:
             return false // atm only users who have gateways received them from api
         }

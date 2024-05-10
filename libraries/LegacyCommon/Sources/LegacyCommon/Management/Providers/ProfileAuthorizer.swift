@@ -30,9 +30,8 @@ public struct ProfileAuthorizer {
 extension ProfileAuthorizer: DependencyKey {
     public static var liveValue: ProfileAuthorizer = {
         @Dependency(\.credentialsProvider) var credentials
-        @Dependency(\.featureFlagProvider) var featureFlags
 
-        let shouldAllowProfiles: () -> Bool = { featureFlags[\.showNewFreePlan] ? credentials.tier.isPaidTier : true }
+        let shouldAllowProfiles: () -> Bool = { credentials.tier.isPaidTier }
 
         return ProfileAuthorizer(
             shouldAllowProfiles: shouldAllowProfiles,

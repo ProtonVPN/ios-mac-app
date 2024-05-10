@@ -32,7 +32,7 @@ import VPNAppCore
 public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var isOnboardingInProgress: Bool = false
     public var isSubsequentLaunch: Bool = false
-    public var showWhatsNewModal: Bool = true
+    public var showWhatsNewModal: Bool = false
 
     private let queue = DispatchQueue(label: "ch.proton.test.mock.sync.properties")
 

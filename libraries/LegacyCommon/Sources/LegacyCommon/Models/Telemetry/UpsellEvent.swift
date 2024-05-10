@@ -70,7 +70,6 @@ public struct UpsellEvent: TelemetryEvent, Encodable {
             case userPlan = "user_plan"
             case vpnStatus = "vpn_status"
             case userCountry = "user_country"
-            case newFreePlanUi = "new_free_plan_ui"
             case daysSinceAccountCreation = "days_since_account_creation"
             case upgradedUserPlan = "upgraded_user_plan"
             case reference = "reference"
@@ -80,17 +79,12 @@ public struct UpsellEvent: TelemetryEvent, Encodable {
         public let userPlan: String
         public let vpnStatus: VPNStatus
         public let userCountry: String
-        public let newFreePlanUi: Bool
         public let daysSinceAccountCreation: Int
         public let upgradedUserPlan: String?
         public let reference: String?
 
         var daysSinceAccountCreationEncodedValue: String {
             AccountCreationRangeBucket(intValue: daysSinceAccountCreation)?.rawValue ?? "n/a"
-        }
-
-        var newFreePlanUiEncodedValue: String {
-            newFreePlanUi ? "yes" : "no"
         }
 
         public func encode(to encoder: Encoder) throws {
@@ -103,7 +97,6 @@ public struct UpsellEvent: TelemetryEvent, Encodable {
             try container.encodeIfPresent(self.reference, forKey: .reference)
 
             // Custom encoded values:
-            try container.encode(self.newFreePlanUiEncodedValue, forKey: .newFreePlanUi)
             try container.encode(self.daysSinceAccountCreationEncodedValue, forKey: .daysSinceAccountCreation)
         }
     }

@@ -85,7 +85,6 @@ class TelemetryUpsellReporter {
                 userPlan: planName,
                 vpnStatus: vpnStatus,
                 userCountry: propertiesManager.userLocation?.country ?? "",
-                newFreePlanUi: propertiesManager.featureFlags.showNewFreePlan,
                 daysSinceAccountCreation: Int(daysSinceAccountCreation),
                 upgradedUserPlan: newPlanName,
                 reference: offerReference

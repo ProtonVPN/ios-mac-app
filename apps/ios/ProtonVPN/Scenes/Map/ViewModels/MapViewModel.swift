@@ -160,9 +160,8 @@ class MapViewModel: SecureCoreToggleHandler {
     }
     
     private func exitAnnotations(type: ServerType, userTier: Int) -> [CountryAnnotationViewModel] {
-        @Dependency(\.featureFlagProvider) var featureFlags
         @Dependency(\.serverRepository) var repository
-        let isMapConnectionDisabled = featureFlags[\.showNewFreePlan] && userTier.isFreeTier
+        let isMapConnectionDisabled = userTier.isFreeTier
 
         let featureFilter = VPNServerFilter.features(type.serverTypeFilter)
         let kindFilter = VPNServerFilter.kind(.country) // Exclude gateways

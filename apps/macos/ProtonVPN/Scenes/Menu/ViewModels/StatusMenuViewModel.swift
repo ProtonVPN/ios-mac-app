@@ -52,7 +52,6 @@ final class StatusMenuViewModel {
 
     private let factory: Factory
     @Dependency(\.profileAuthorizer) private var profileAuthorizer
-    @Dependency(\.featureFlagProvider) private var featureFlags
     @Dependency(\.credentialsProvider) private var credentials
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
 
@@ -77,7 +76,7 @@ final class StatusMenuViewModel {
 
     var shouldShowProfileDropdown: Bool { profileAuthorizer.canUseProfiles }
     var shouldShowChangeServer: Bool {
-        isConnected && featureFlags[\.showNewFreePlan] && credentials.tier.isFreeTier
+        isConnected && credentials.tier.isFreeTier
     }
 
     private var serverChangeTimer: Timer?

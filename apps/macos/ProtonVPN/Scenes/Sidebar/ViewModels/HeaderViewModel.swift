@@ -58,7 +58,7 @@ final class HeaderViewModel {
     var changeServerStateUpdated: ((ServerChangeViewState) -> Void)?
 
     var shouldShowChangeServer: Bool {
-        isConnected && featureFlags[\.showNewFreePlan] && credentials.tier.isFreeTier
+        isConnected && credentials.tier.isFreeTier
     }
 
     private var serverChangeTimer: Timer?
