@@ -111,7 +111,6 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var smartProtocol: Bool { get set }
 
     var streamingServices: StreamingDictServices { get set }
-    var partnerTypes: [PartnerType] { get set }
     var streamingResourcesUrl: String? { get set }
 
     var connectionProtocol: ConnectionProtocol { get }
@@ -466,7 +465,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public var smartProtocol: Bool
 
     @InitializedProperty(.streamingServices) public var streamingServices: StreamingDictServices
-    @InitializedProperty(.partnerTypes) public var partnerTypes: [PartnerType]
     @InitializedProperty(.userRole) public var userRole: UserRole
 
     @StringProperty(.streamingResourcesUrl) public var streamingResourcesUrl: String?

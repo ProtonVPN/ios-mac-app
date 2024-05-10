@@ -1439,7 +1439,6 @@
 "_p2p_title" = "P2P/BitTorrent";
 "_tor_title" = "Tor";
 "_server_load_title" = "Server Load";
-"_dw-partner-2022_partners_title" = "Our partners";
 
 "_streaming_servers_description" = "Connect to a Plus server in this country to start streaming.";
 "_streaming_servers_note" = "Note: Turn off the Location Service and clear the cache of the streaming apps to ensure new content appears.";

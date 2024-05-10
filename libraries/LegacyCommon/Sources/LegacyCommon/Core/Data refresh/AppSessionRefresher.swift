@@ -33,23 +33,6 @@ public protocol AppSessionRefresher: AnyObject {
     func refreshServerLoads()
     func refreshAccount()
     func refreshStreamingServices()
-    func refreshPartners(ifUnknownPartnerLogicalExistsIn serverModels: [ServerModel]?) async
-}
-
-extension AppSessionRefresher {
-    public func refreshPartners() async {
-        await refreshPartners(ifUnknownPartnerLogicalExistsIn: nil)
-    }
-
-    public func refreshPartners(
-        ifUnknownPartnerLogicalExistsIn serverModels: [ServerModel]? = nil,
-        completion: @escaping (() -> Void)
-    ) {
-        Task { [weak self] in
-            await self?.refreshPartners(ifUnknownPartnerLogicalExistsIn: serverModels)
-            completion()
-        }
-    }
 }
 
 public protocol AppSessionRefresherFactory {
@@ -166,29 +149,6 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
                 log.error("RefreshStreamingInfo error", category: .app, metadata: ["error": "\(error)"])
             }
         }
-    }
-
-    public func refreshPartners(ifUnknownPartnerLogicalExistsIn serverModels: [ServerModel]?) async {
-        guard loggedIn else { return }
-
-        if let serverModels {
-            let knownPartnerLogicals = Set(propertiesManager.partnerTypes.flatMap { type in
-                type.partners.flatMap { partner in partner.logicalIDs }
-            })
-            let shouldRefreshPartners = serverModels.contains { logical in
-                logical.feature.contains(.partner) && !knownPartnerLogicals.contains(logical.id)
-            }
-
-            guard shouldRefreshPartners else { return }
-        }
-
-        do {
-            let partnerServices = try await vpnApiService.partnersServices()
-            propertiesManager.partnerTypes = partnerServices.partnerTypes
-        } catch {
-            log.error("RefreshPartners error", category: .app, metadata: ["error": "\(error)"])
-        }
-
     }
 
     /// After user plan changes, feature flags may also change, so we have to reload them

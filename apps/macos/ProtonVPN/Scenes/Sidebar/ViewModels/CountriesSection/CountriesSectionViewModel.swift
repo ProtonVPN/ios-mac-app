@@ -104,35 +104,6 @@ class CountriesSectionViewModel {
         return propertiesManager.featureFlags.netShield
     }
 
-    /// This function constructs the view model for the informative modal about the free servers features
-    /// At minimum it will include the static `FreeServersFeatureCellViewModel` and if the `v1/partners/` endpoint
-    /// returns any partners then they will be added to the list.
-    func freeFeaturesOverlayViewModel() -> FreeFeaturesOverlayViewModel {
-        /// All the types of partners listed here
-        let featuresViewModels: [ServerFeatureViewModel] = propertiesManager.partnerTypes.map {
-            .init(title: $0.type,
-                  description: $0.description,
-                  icon: .url($0.iconURL))
-        }
-        /// All the actual partners listed
-        var partnersViewModels: [ServerFeatureViewModel] = propertiesManager.partnerTypes.flatMap {
-            $0.partners.map {
-                .init(title: $0.name,
-                      description: $0.description,
-                      icon: .url($0.iconURL))
-            }
-        }
-        /// We want to add the `sectionTitle` - "Our Partners" to the first partner
-        if let firstPartner = partnersViewModels.first {
-            partnersViewModels[0] = .init(sectionTitle: Localizable.dwPartner2022PartnersTitle,
-                                          title: firstPartner.title,
-                                          description: firstPartner.description,
-                                          icon: firstPartner.icon)
-        }
-
-        return FreeFeaturesOverlayViewModel(featureViewModels: [FreeServersFeatureCellViewModel()] + featuresViewModels + partnersViewModels)
-    }
-
     public func displayFreeServices() {
         alertService.push(alert: FreeConnectionsAlert(countries: freeCountries))
     }
@@ -607,12 +578,6 @@ class CountriesSectionViewModel {
                 gatewaysSection(for: groups),
                 allLocationsSection(for: groups)
             ]
-        case .legacyFree:
-            return [
-                gatewaysSection(for: groups),
-                freeLocationsSection(for: groups),
-                plusLocationsSection(for: groups, minTier: .paidTier)
-            ]
         case .free:
             return [
                 gatewaysSection(for: groups),
@@ -665,15 +630,6 @@ class CountriesSectionViewModel {
         ))
     }
 
-    private func freeLocationsHeader(locationCount: Int) -> CellModel {
-        .header(CountryHeaderViewModel(
-            Localizable.locationsFree,
-            totalCountries: locationCount,
-            buttonType: nil,
-            countriesViewModel: self
-        ))
-    }
-
     private func plusLocationsHeader(locationCount: Int) -> CellModel {
         .header(CountryHeaderViewModel(
             Localizable.locationsPlus,
@@ -699,14 +655,6 @@ class CountriesSectionViewModel {
         return ServerSection(
             header: plusLocationsHeader(locationCount: cellModels.count),
             cells: [upsellBanner] + cellModels
-        )
-    }
-
-    private func freeLocationsSection(for groups: [ServerGroupInfo]) -> ServerSection {
-        let cellModels = cells(forCountriesInGroups: groups, minTierFilter: { $0 == .freeTier } )
-        return ServerSection(
-            header: freeLocationsHeader(locationCount: cellModels.count),
-            cells: cellModels
         )
     }
 

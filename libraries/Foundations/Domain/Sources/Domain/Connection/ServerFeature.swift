@@ -30,7 +30,6 @@ public struct ServerFeature: OptionSet, Codable {
     public static let streaming = ServerFeature(bitPosition: 3) // 8
     public static let ipv6 = ServerFeature(bitPosition: 4) // 16
     public static let restricted = ServerFeature(bitPosition: 5) // 32
-    public static let partner = ServerFeature(bitPosition: 6) // 64
 
     public static let zero = ServerFeature([])
 
@@ -59,8 +58,6 @@ extension ServerFeature: CustomStringConvertible {
             return "ipv6"
         case .restricted:
             return "restricted"
-        case .partner:
-            return "partnership"
         default:
             return ""
         }

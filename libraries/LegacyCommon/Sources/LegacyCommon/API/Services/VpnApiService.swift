@@ -319,10 +319,6 @@ public class VpnApiService {
         try await networking.perform(request: VPNStreamingRequest())
     }
 
-    public func partnersServices() async throws -> VPNPartnersResponse {
-        try await networking.perform(request: VPNPartnersRequest())
-    }
-
     public func userInfo() async throws -> User {
         try await withCheckedThrowingContinuation { continuation in
             Authenticator(api: networking.apiService).getUserInfo(completion: continuation.resume(with:))

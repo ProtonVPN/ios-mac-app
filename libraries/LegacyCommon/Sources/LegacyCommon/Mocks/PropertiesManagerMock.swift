@@ -162,12 +162,6 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
         set { queue.sync { _streamingServices = newValue } }
     }
 
-    public var _partnerTypes: [PartnerType] = []
-    public var partnerTypes: [PartnerType] {
-        get { queue.sync { _partnerTypes } }
-        set { queue.sync { _partnerTypes = newValue } }
-    }
-
     public var userAccountRecovery: ProtonCoreDataModel.AccountRecovery?
     public var userRole: UserRole = .noOrganization
     public var excludeLocalNetworks: Bool = true {

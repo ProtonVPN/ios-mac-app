@@ -153,18 +153,6 @@ public class ServerChangeAuthorizerTests: XCTestCase {
         } operation: {
             XCTAssertEqual(sut.serverChangeAvailability(), .available)
         }
-
-        withDependencies {
-            $0.date = .constant(start)
-            $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
-            $0.featureFlagProvider = .constant(flags: .allEnabled)
-            $0.serverChangeStorage = .init(
-                getConfig: { config },
-                getConnectionStack: { connectionStack }
-            )
-        } operation: {
-            XCTAssertEqual(sut.serverChangeAvailability(), .available)
-        }
     }
 
     func testReturnsLongDelayWhenStackContainsRecentServerChangeWithFlagTrue() {

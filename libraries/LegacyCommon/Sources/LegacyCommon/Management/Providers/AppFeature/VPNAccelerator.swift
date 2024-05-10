@@ -48,7 +48,7 @@ extension VPNAccelerator: ModularAppFeature, DefaultableFeature, StorableFeature
         switch self {
         case .off:
             // This feature can only be turned off by paying users post-free rescope
-            if userTier < 1 {
+            if userTier.isFreeTier {
                 return .failure(.requiresUpgrade)
             }
             return .success

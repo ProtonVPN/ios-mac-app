@@ -24,7 +24,6 @@ import UIKit
 
 public protocol ServerCellDelegate: AnyObject {
     func userDidRequestStreamingInfo()
-    func userDidRequestFreeServersInfo()
 }
 
 public final class ServerCell: UITableViewCell, ConnectTableViewCell {
@@ -43,7 +42,6 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
         case tor
         case streaming
         case p2p
-        case partner(UIImage)
 
         var imageName: String {
             switch self {
@@ -143,11 +141,6 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
         if viewModel.isStreamingAvailable {
             addFeature(feature: .streaming)
         }
-        viewModel.partnersIcon { [weak self] image in
-            // This closure may be called multiple times, once for each partner
-            guard let image else { return }
-            self?.addFeature(feature: .partner(image))
-        }
     }
 
     private func addFeature(feature: ServerFeature) {
@@ -158,11 +151,6 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
             let streamingIV = imageViewForFeature(feature: feature)
             featuresStackView.addArrangedSubview(streamingIV)
             self.streamingIV = streamingIV
-        case .partner(let image):
-            let imageView = imageViewForFeature(feature: feature, iconSize: nil)
-            imageView.image = image
-            self.partnersImageViews.append(imageView)
-            featuresStackView.insertArrangedSubview(imageView, at: 0)
         }
     }
 
@@ -190,7 +178,6 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
 
     public override func prepareForReuse() {
         super.prepareForReuse()
-        (viewModel as? ServerViewModel)?.cancelPartnersIconRequests()
         featuresStackView
             .subviews
             .filter { $0.tag == ServerCell.featureViewTag }
@@ -211,8 +198,6 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
         }
         if isViewTapped(streamingIV, touch: touch) {
             delegate?.userDidRequestStreamingInfo()
-        } else if tappedOnPartner(touch: touch) {
-            delegate?.userDidRequestFreeServersInfo()
         } else {
             connect()
         }

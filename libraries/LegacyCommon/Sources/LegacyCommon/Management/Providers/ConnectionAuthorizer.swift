@@ -37,13 +37,17 @@ public enum ConnectionAuthorizationFailureReason: Error, Equatable {
 extension ConnectionAuthorizer: DependencyKey {
     public static var liveValue: ConnectionAuthorizer = ConnectionAuthorizer(
         authorize: { request in
+            @Dependency(\.credentialsProvider) var credentials
             @Dependency(\.serverChangeAuthorizer) var serverChangeAuthorizer
 
             switch request.connectionType {
             case .fastest:
                 return .success
-
             case .random:
+                guard credentials.tier.isFreeTier else {
+                    return .success
+                }
+
                 switch serverChangeAuthorizer.serverChangeAvailability() {
                 case .available:
                     return .success
@@ -55,6 +59,10 @@ extension ConnectionAuthorizer: DependencyKey {
                     ))
                 }
             case .city(let countryCode, _), .country(let countryCode, _):
+                guard credentials.tier.isFreeTier else {
+                    return .success
+                }
+
                 return .failure(.specificCountryUnavailable(countryCode: countryCode))
             }
         }
