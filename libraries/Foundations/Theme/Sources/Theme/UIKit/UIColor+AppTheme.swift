@@ -77,6 +77,8 @@ private extension AppTheme.Style {
             return ColorProvider.BackgroundDeep
         } else if contains(.success) {
             return ColorProvider.NotificationSuccess
+        } else if contains(.hovered) {
+            return ColorProvider.TextNorm
         } else {
             return ColorProvider.BackgroundNorm
         }

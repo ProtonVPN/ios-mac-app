@@ -21,6 +21,7 @@ import Dependencies
 
 struct NetworkClient: Sendable {
     var fetchSignInCode: @Sendable () async throws -> SignInCode
+    var logout: @Sendable () async throws -> Void
     var forkedSession: @Sendable (_ selector: String) async throws -> AuthCredentials
     private static var count: Int = 1
 }
@@ -30,6 +31,8 @@ extension NetworkClient: DependencyKey {
     static let testValue = NetworkClient {
         SignInCode(selector: "40-char-random-hex-string",
                    userCode: "1234ABCD")
+    } logout: {
+        
     } forkedSession: { selector in
             .emptyCredentials
     }
@@ -37,17 +40,22 @@ extension NetworkClient: DependencyKey {
     static let forkedSessionFailureValue = NetworkClient {
         SignInCode(selector: "40-char-random-hex-string",
                    userCode: "1234ABCD")
+    } logout: {
+        throw "nope"
     } forkedSession: { selector in
         throw "nope"
     }
 
     static let failureValue = NetworkClient {
         throw "nope"
+    } logout: {
+        throw "nope"
     } forkedSession: { selector in
         throw "nope"
     }
 
     static let fetchSignInCodeDelay: Duration = .seconds(1)
+    static let logoutDelay: Duration = .seconds(1)
     static let pollDelay: Duration = .seconds(0.1)
 
     static let liveValue = NetworkClient(
@@ -55,6 +63,9 @@ extension NetworkClient: DependencyKey {
             @Dependency(\.continuousClock) var clock
             try await clock.sleep(for: Self.fetchSignInCodeDelay)
             return SignInCode(selector: "40-char-random-hex-string", userCode: "1234ABCD")
+        }, logout: {
+            @Dependency(\.continuousClock) var clock
+            try await clock.sleep(for: Self.logoutDelay)
         }, forkedSession: { selector in
             @Dependency(\.continuousClock) var clock
             print("poll API... \(Self.count)")
@@ -81,7 +92,7 @@ struct AuthCredentials { // temporary, we'll use the real AuthCredentials
     let accessToken: String
     let refreshToken: String
 
-    static let emptyCredentials = AuthCredentials(userID: "polled user",
+    static let emptyCredentials = AuthCredentials(userID: "eric.norbert@proton.me",
                                                   uID: "",
                                                   accessToken: "",
                                                   refreshToken: "")

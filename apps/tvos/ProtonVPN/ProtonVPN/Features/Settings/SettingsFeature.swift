@@ -21,19 +21,29 @@ import SwiftUI
 
 @Reducer
 struct SettingsFeature {
+    @Reducer(state: .equatable)
+    enum Destination {
+        case settingsDrillDown(SettingsDrillDownFeature)
+    }
+
     @ObservableState
     struct State: Equatable {
         @Shared(.appStorage("username")) var userName: String?
 
+        @Presents var destination: Destination.State?
         @Presents var alert: AlertState<Action.Alert>?
+        var isLoading: Bool = false
     }
 
     enum Action {
         case alert(PresentationAction<Alert>)
-        case contactUs
-        case reportAnIssue
-        case privacyPolicy
+        case destination(PresentationAction<Destination.Action>)
+        case showContactUs
+        case showReportAnIssue
+        case showPrivacyPolicy
         case signOutSelected
+        case showProgressView
+        case finishSignOut
 
         @CasePathable
         enum Alert {
@@ -57,22 +67,41 @@ struct SettingsFeature {
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .contactUs:
+            case .showContactUs:
+                state.destination = .settingsDrillDown(.contactUs())
                 return .none
-            case .reportAnIssue:
+            case .showReportAnIssue:
+                state.destination = .settingsDrillDown(.reportAnIssue())
                 return .none
-            case .privacyPolicy:
+            case .showPrivacyPolicy:
+                state.destination = .settingsDrillDown(.privacyPolicy())
                 return .none
             case .signOutSelected:
                 state.alert = Self.signOutAlert
                 return .none
             case .alert(.presented(.signOut)):
+                state.isLoading = true
+                return .run { send in
+                    @Dependency(NetworkClient.self) var networkClient
+                    try await networkClient.logout()
+                    await send(.finishSignOut)
+                } catch: { error, send in
+                    await send(.finishSignOut)
+                }
+            case .alert:
+                return .none
+            case .destination:
+                return .none
+            case .finishSignOut:
+                state.isLoading = false
                 state.userName = nil
                 return .none
-            case .alert:
+            case .showProgressView:
+                state.isLoading = true
                 return .none
             }
         }
         .ifLet(\.$alert, action: \.alert)
+        .ifLet(\.$destination, action: \.destination)
     }
 }

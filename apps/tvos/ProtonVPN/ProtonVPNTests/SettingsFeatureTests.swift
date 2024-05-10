@@ -23,15 +23,31 @@ import ComposableArchitecture
 final class SettingsFeatureTests: XCTestCase {
 
     @MainActor
-    func testSignOut() async {
-        let store = TestStore(initialState: SettingsFeature.State()) {
+    func testClearLoginDetails() async {
+        let store = TestStore(initialState: SettingsFeature.State(userName: .init("user"))) {
             SettingsFeature()
+        }
+        await store.send(.finishSignOut) {
+            $0.userName = nil
+        }
+    }
+
+    @MainActor
+    func testSignOut() async {
+        let store = TestStore(initialState: SettingsFeature.State(userName: .init("user"))) {
+            SettingsFeature()
+        } withDependencies: {
+            $0[NetworkClient.self] = .failureValue
         }
         await store.send(.signOutSelected) {
             $0.alert = SettingsFeature.signOutAlert
         }
         await store.send(.alert(.presented(.signOut))) {
             $0.alert = nil
+            $0.isLoading = true
+        }
+        await store.receive(\.finishSignOut) {
+            $0.isLoading = false
             $0.userName = nil
         }
     }
@@ -54,7 +70,12 @@ final class SettingsFeatureTests: XCTestCase {
         let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
         }
-        await store.send(.contactUs)
+        await store.send(.showContactUs) {
+            $0.destination = .settingsDrillDown(.contactUs())
+        }
+        await store.send(.destination(.dismiss)) {
+            $0.destination = nil
+        }
     }
 
     @MainActor
@@ -62,7 +83,12 @@ final class SettingsFeatureTests: XCTestCase {
         let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
         }
-        await store.send(.reportAnIssue)
+        await store.send(.showReportAnIssue) {
+            $0.destination = .settingsDrillDown(.reportAnIssue())
+        }
+        await store.send(.destination(.dismiss)) {
+            $0.destination = nil
+        }
     }
 
     @MainActor
@@ -70,6 +96,11 @@ final class SettingsFeatureTests: XCTestCase {
         let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
         }
-        await store.send(.privacyPolicy)
+        await store.send(.showPrivacyPolicy) {
+            $0.destination = .settingsDrillDown(.privacyPolicy())
+        }
+        await store.send(.destination(.dismiss)) {
+            $0.destination = nil
+        }
     }
 }

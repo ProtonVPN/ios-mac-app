@@ -21,12 +21,14 @@ import SwiftUI
 struct QRCodeView: View {
     let string: String
     var body: some View {
-        Image(uiImage: .generateQRCode(from: string))
+        Image(uiImage: .generateQRCode(from: string, foregroundColor: .color(.background, .strong)))
             .interpolation(.none)
             .resizable()
             .scaledToFit()
+            .padding()
+            .background(Color(.text))
             .frame(.square(466))
-            .clipRectangle(cornerRadius: .radius24)
+            .clipRectangle(cornerRadius: .radius32)
     }
 }
 

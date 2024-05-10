@@ -19,34 +19,27 @@
 import ComposableArchitecture
 
 @Reducer
-struct MainFeature {
-
-    enum Tab { case home, search, settings }
-
+struct AppFeature {
     @ObservableState
     struct State: Equatable {
-        var currentTab: Tab = .home
-        var settings: SettingsFeature.State = .init()
-        @Shared(.appStorage("username")) var user: String?
+        var welcome = WelcomeFeature.State()
+        var main = MainFeature.State()
+
+        @Shared(.appStorage("username")) var userName: String?
     }
 
     enum Action {
-        case selectTab(Tab)
-        case settings(SettingsFeature.Action)
+        case main(MainFeature.Action)
+        case welcome(WelcomeFeature.Action)
     }
 
     var body: some Reducer<State, Action> {
-        Scope(state: \.settings, action: \.settings) {
-            SettingsFeature()
+        Scope(state: \.welcome, action: \.welcome) {
+            WelcomeFeature()
         }
-        Reduce { state, action in
-            switch action {
-            case .selectTab(let tab):
-                state.currentTab = tab
-                return .none
-            case .settings:
-                return .none
-            }
+        Scope(state: \.main, action: \.main) {
+            MainFeature()
         }
     }
 }
+

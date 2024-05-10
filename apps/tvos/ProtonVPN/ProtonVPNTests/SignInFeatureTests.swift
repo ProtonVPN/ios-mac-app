@@ -29,7 +29,7 @@ final class SignInFeatureTests: XCTestCase {
         }
         let credentials = AuthCredentials.emptyCredentials
         await store.send(.signInSuccess(credentials)) {
-            $0.username = credentials.userID
+            $0.userName = credentials.userID
         }
     }
 
@@ -54,7 +54,7 @@ final class SignInFeatureTests: XCTestCase {
         await clock.advance(by: pollConf.period)
         await store.receive(\.pollServer) {
             $0.remainingAttempts = pollConf.failAfterAttempts - 1
-            $0.username = "polled user"
+            $0.userName = AuthCredentials.emptyCredentials.userID
         }
         await store.receive(\.signInSuccess)
     }
