@@ -24,13 +24,7 @@ struct SettingsCellView: View {
     let icon: Image
     let action: () -> Void
 
-    enum ScaleEffect: CGFloat {
-        case normal = 1
-        case focused = 1.1
-    }
-
     @FocusState var focusState: Bool
-    @State var scaleEffect: ScaleEffect = .normal
 
     var body: some View {
         Button(action: action) {
@@ -44,20 +38,13 @@ struct SettingsCellView: View {
             }
         }
         .focused($focusState, equals: true)
-        .scaleEffect(scaleEffect.rawValue)
-        .onChange(of: focusState) { oldValue, newValue in
-            scaleEffect = newValue ? .focused : .normal
-        }
-        .animation(.snappy(duration: 0.2), value: scaleEffect)
-        .buttonStyle(SettingsButtonStyle(scaleEffect: $scaleEffect))
+        .buttonStyle(SettingsButtonStyle())
     }
 }
 
 struct SettingsButtonStyle: ButtonStyle {
 
     private static let size = CGSize(width: 800, height: 120)
-
-    @Binding var scaleEffect: SettingsCellView.ScaleEffect
 
     @Environment(\.isFocused) var isFocused
 
@@ -68,8 +55,6 @@ struct SettingsButtonStyle: ButtonStyle {
             .background(isFocused ? Color(.background, .hovered) : Color(.background))
             .foregroundStyle(isFocused ? Color(.text, .inverted) : Color(.text))
             .cornerRadius(.themeRadius24)
-            .onChange(of: configuration.isPressed) { _, newValue in
-                scaleEffect = newValue ? .normal : .focused
-            }
+            .hoverEffect(.highlight)
     }
 }

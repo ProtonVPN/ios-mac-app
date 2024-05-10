@@ -27,7 +27,7 @@ final class SettingsFeatureTests: XCTestCase {
         let store = TestStore(initialState: SettingsFeature.State(userName: .init("user"))) {
             SettingsFeature()
         }
-        await store.send(.clearLoginDetails) {
+        await store.send(.finishSignOut) {
             $0.userName = nil
         }
     }
@@ -44,15 +44,12 @@ final class SettingsFeatureTests: XCTestCase {
         }
         await store.send(.alert(.presented(.signOut))) {
             $0.alert = nil
-        }
-        await store.receive(\.showProgressView) {
             $0.isLoading = true
-            $0.userName = nil // this should be done in `clearLoginDetails`, not sure why the result is updated here, maybe some TCA bug
         }
-        await store.receive(\.hideProgressView) {
+        await store.receive(\.finishSignOut) {
             $0.isLoading = false
+            $0.userName = nil
         }
-        await store.receive(\.clearLoginDetails)
     }
 
     @MainActor

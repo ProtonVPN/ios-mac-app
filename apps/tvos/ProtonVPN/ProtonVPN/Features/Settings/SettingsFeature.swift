@@ -42,9 +42,8 @@ struct SettingsFeature {
         case showReportAnIssue
         case showPrivacyPolicy
         case signOutSelected
-        case clearLoginDetails
         case showProgressView
-        case hideProgressView
+        case finishSignOut
 
         @CasePathable
         enum Alert {
@@ -81,29 +80,25 @@ struct SettingsFeature {
                 state.alert = Self.signOutAlert
                 return .none
             case .alert(.presented(.signOut)):
+                state.isLoading = true
                 return .run { send in
-                    await send(.showProgressView)
                     @Dependency(NetworkClient.self) var networkClient
                     try await networkClient.logout()
-                    await send(.hideProgressView)
+                    await send(.finishSignOut)
                 } catch: { error, send in
-                    await send(.hideProgressView)
+                    await send(.finishSignOut)
                 }
             case .alert:
                 return .none
             case .destination:
                 return .none
-            case .clearLoginDetails:
+            case .finishSignOut:
+                state.isLoading = false
                 state.userName = nil
                 return .none
             case .showProgressView:
                 state.isLoading = true
                 return .none
-            case .hideProgressView:
-                state.isLoading = false
-                return .run { send in
-                    await send(.clearLoginDetails)
-                }
             }
         }
         .ifLet(\.$alert, action: \.alert)
