@@ -446,7 +446,7 @@
 "_setup_complete_free" = "Zdaj ste prijavljeni na brezplačen paket Proton VPN. Za začetek uživajte v sedmih dneh našega paketa Proton VPN Plus brezplačno.";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_plus" = "Vaš nakup je uspel. Vaš načrt Proton VPN Plus je zdaj aktiven.";
+"_setup_complete_plus" = "Vaš nakup je uspel. Vaš paket Proton VPN Plus je zdaj aktiven.";
 
 /* iOS: data disclaimer screen */
 "_data_disclaimer_title" = "Zaščitite se na spletu";
@@ -479,7 +479,7 @@
 "_p2p_description" = "Podpira promet P2P";
 
 /* Description shown together with server info icon */
-"_premium_description" = "Premium server";
+"_premium_description" = "Premijski strežnik";
 
 /* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
 "_via_country" = "preko %@";
@@ -523,7 +523,7 @@
 "_auto_assigned" = "Samodejno dodeli";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_premium_server" = "Premium server";
+"_premium_server" = "Premijski strežnik";
 
 /* MacOS profile form: feature selection value */
 "_standard" = "Standard";
@@ -1841,7 +1841,7 @@
 "modals_upsell_all_countries_feature_streaming" = "Pretakajte svoje najljubše filme";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_highSpeed" = "Brskajte pri še višjih hitrostih (do 10 Gbps)";
+"modals_upsell_all_countries_feature_highSpeed" = "Brskajte pri še višjih hitrostih (do 10 Gb/s)";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_netshield" = "Blokiranje oglasov in zlonamerne programske opreme s pomočjo NetShield";
@@ -1874,7 +1874,7 @@
 "modals_new_upsell_vpn_accelerator_title" = "Brskajte pri še višjih hitrostih";
 
 /* Subtitle of the VPN Accelerator screen */
-"modals_new_upsell_vpn_accelerator_subtitle" = "Unlock faster, less crowded servers with speeds of up to 10 Gbps.";
+"modals_new_upsell_vpn_accelerator_subtitle" = "Odklenite hitrejše strežnike z manj gneče s hitrostjo do 10 Gb/s.";
 
 /* Subtitle of the Customization scren */
 "modals_new_upsell_customization_subtitle" = "Postopajte do naprav v vašem lokalnem omrežju (LAN) z VPN Plus.";
@@ -1892,7 +1892,7 @@
 "modals_new_upsell_netshield_subtitle_bold" = "NetShield";
 
 /* Title of Secure Core upsell screen */
-"modals_new_upsell_secure_core_title" = "Double your protection";
+"modals_new_upsell_secure_core_title" = "Podvojite svojo zaščito";
 
 /* Subtitle of Secure Core upsell screen */
 "modals_new_upsell_secure_core_subtitle" = "Dodajte še eno plast šifriranja svoji VPN povezavi s Secure Core.";
@@ -1955,7 +1955,7 @@
 "maximum_device_limit" = "Odklopite drugo napravo, da povežete to.";
 
 /* Title of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_title" = "Brskajte pri še višjih hitrostih (do 10 Gbps)";
+"upsell_vpn_accelerator_title" = "Brskajte pri še višjih hitrostih (do 10 Gb/s)";
 
 /* Feature of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_faster_servers" = "Dostopajte do hitrejših in manj natrpanih strežnikov.";
@@ -1997,7 +1997,7 @@
 "upsell_profiles_subtitle" = "Odklenite profile z VPN Plus";
 
 /* First bold part of the subtitle of Profiles upsell modal */
-"upsell_profiles_subtitle_bold_1" = "profiles";
+"upsell_profiles_subtitle_bold_1" = "profili";
 
 /* Second bold part of the subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle_bold_2" = "VPN Plus";

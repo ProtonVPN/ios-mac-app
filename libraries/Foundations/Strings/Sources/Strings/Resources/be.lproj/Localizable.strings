@@ -502,7 +502,7 @@
 "_plan_does_not_include_secure_core" = "Ваш тарыфны план не прадугледжвае функцыю Secure Core.";
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
-"_learn_more_about_secure_core" = "Даведацца больш пра Secure Core";
+"_learn_more_about_secure_core" = "Даведацца больш аб Secure Core";
 
 /* MacOS: placeholder for country search */
 "_search_for_country" = "Пошук краіны";
@@ -1191,7 +1191,7 @@
 "_report_attachments_checkbox" = "Уключыць журнал праграмы і сістэмныя падрабязнасці";
 
 /* Main mac app menu item */
-"_menu_about" = "Пра Proton VPN";
+"_menu_about" = "Аб Proton VPN";
 
 /* Main mac app menu item */
 "_menu_check_updates" = "Праверыць наяўнасць абнаўленняў...";
@@ -1683,7 +1683,7 @@
 "netshield_stats_hint_ads" = "Рэкламныя вэб-сайты выкарыстоўваюць файлы cookie і праграмы сачэння, каб паказваць вам персаналізаваную рэкламу.";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
-"netshield_stats_hint_trackers" = "Праграмы сачэння (трэкеры) - гэта праграмнае забеспячэнне старонніх вэб-сайтаў, якія збіраюць, захоўваюць і прадаюць інфармацыю пра вашу дзейнасць у інтэрнэце.";
+"netshield_stats_hint_trackers" = "Праграмы сачэння (трэкеры) - гэта праграмнае забеспячэнне старонніх вэб-сайтаў, якія збіраюць, захоўваюць і прадаюць інфармацыю аб вашай дзейнасці ў інтэрнэце.";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
 "netshield_stats_hint_data" = "Прыблізны памер рэкламы, праграм сачэння і шкодных праграм, якія заблакіраваў NetShield.";

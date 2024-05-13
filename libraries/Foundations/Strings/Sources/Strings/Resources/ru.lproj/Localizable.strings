@@ -360,7 +360,7 @@
 "_forgot_username" = "Забыл имя пользователя";
 
 /* MacOS: generic failure message for SSO login */
-"_sso_login_failure" = "Failed to log in with SSO. Please try again.";
+"_sso_login_failure" = "Не удалось войти в систему с помощью SSO. Пожалуйста, попробуйте еще раз.";
 
 /* iOS: button in login screen */
 "_forgot_password" = "Забыли пароль?";
@@ -1874,7 +1874,7 @@
 "modals_new_upsell_vpn_accelerator_title" = "Просматривайте веб-страницы на еще более высоких скоростях";
 
 /* Subtitle of the VPN Accelerator screen */
-"modals_new_upsell_vpn_accelerator_subtitle" = "Unlock faster, less crowded servers with speeds of up to 10 Gbps.";
+"modals_new_upsell_vpn_accelerator_subtitle" = "Разблокируйте более быстрые и менее загруженные серверы со скоростью до 10 Гбит/с.";
 
 /* Subtitle of the Customization scren */
 "modals_new_upsell_customization_subtitle" = "Access devices on your local area network (LAN) with VPN Plus.";
@@ -1892,7 +1892,7 @@
 "modals_new_upsell_netshield_subtitle_bold" = "NetShield";
 
 /* Title of Secure Core upsell screen */
-"modals_new_upsell_secure_core_title" = "Double your protection";
+"modals_new_upsell_secure_core_title" = "Удвойте свою защиту";
 
 /* Subtitle of Secure Core upsell screen */
 "modals_new_upsell_secure_core_subtitle" = "Добавьте еще один уровень шифрования к вашему VPN-подключению с помощью Secure Core.";
@@ -1997,7 +1997,7 @@
 "upsell_profiles_subtitle" = "Разблокировать профили с помощью VPN Plus";
 
 /* First bold part of the subtitle of Profiles upsell modal */
-"upsell_profiles_subtitle_bold_1" = "profiles";
+"upsell_profiles_subtitle_bold_1" = "профили";
 
 /* Second bold part of the subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle_bold_2" = "VPN Plus";
