@@ -24,27 +24,29 @@ struct CreateAccountView: View {
     var store: StoreOf<CreateAccountFeature>
 
     var body: some View {
-        VStack(spacing: 169) {
-            Image(.vpnWordmarkNoBg)
-                .resizable()
-                .scaledToFit()
-                .frame(maxWidth: 290)
-            HStack {
-                VStack(spacing: .themeSpacing64) {
-                    HStack {
-                        Text("Create your Proton Account")
-                            .font(.title)
-                        Spacer(minLength: 0)
-                    }
-                    HStack {
-                        Text("Scan the QR code or go to protonvpn.com/tv.")
-                            .font(.title2)
-                        Spacer(minLength: 0)
-                    }
+        HStack {
+            VStack(spacing: .themeSpacing32) {
+                HStack(spacing: 0) {
+                    Text("Create your Proton Account")
+                        .font(.title)
+                        .fontWeight(.bold)
+                    Spacer(minLength: 0)
                 }
-                .frame(maxWidth: 800)
-                QRCodeView(string: "www.protonvpn.com/tv")
+                HStack {
+                    Text("Scan the QR code or go to\n")
+                        .font(.title3)
+                        .foregroundStyle(Color(.text, .weak)) +
+                    Text("protonvpn.com/tv")
+                        .font(.title3)
+                        .fontWeight(.bold)
+                        .foregroundStyle(Color(.text, .interactive))
+                    Spacer(minLength: 0)
+                }
+                
+                
             }
+            .frame(maxWidth: 800)
+            QRCodeView(string: "www.protonvpn.com/tv")
         }
     }
 }

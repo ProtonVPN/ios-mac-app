@@ -71,4 +71,13 @@ extension DependencyValues {
 struct SignInCode: Equatable {
     let selector: String
     let userCode: String
+
+    init(selector: String, userCode: String) {
+        self.selector = selector
+        var userCode = userCode
+        if userCode.count == 8 {
+            userCode.insert(" ", at: .init(utf16Offset: 4, in: userCode))
+        }
+        self.userCode = userCode
+    }
 }

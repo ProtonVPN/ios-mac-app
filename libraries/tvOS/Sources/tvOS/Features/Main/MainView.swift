@@ -43,6 +43,5 @@ struct MainView: View {
             .tag(MainFeature.Tab.settings)
             .tabItem { Text("Settings") }
         }
-        .background(Color(.background, .strong))
     }
 }
