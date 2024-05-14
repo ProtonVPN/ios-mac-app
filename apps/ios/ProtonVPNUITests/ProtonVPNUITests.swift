@@ -154,7 +154,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
     lazy var quarkCommands = Quark().baseUrl(doh)
 
     var doh: DoH {
-        if let customDomain = dynamicDomain.map({ "\($0)" }) {
+        if let customDomain = dynamicDomain, !customDomain.isEmpty {
             return CustomServerConfigDoH(
                 signupDomain: customDomain,
                 captchaHost: "https://api.\(customDomain)",

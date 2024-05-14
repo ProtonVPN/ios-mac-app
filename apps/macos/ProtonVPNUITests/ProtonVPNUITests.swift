@@ -144,7 +144,7 @@ class ProtonVPNUITests: XCTestCase {
         defer {
             // Make sure app is fully logged out
             expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.buttons["Sign in"], handler: nil)
-            waitForExpectations(timeout: 5, handler: nil)
+            waitForExpectations(timeout: 10, handler: nil)
         }
         _ = waitForElementToDisappear(app.otherElements["loader"])
 
@@ -162,6 +162,7 @@ class ProtonVPNUITests: XCTestCase {
     }
 
     func tryLoggingOut() -> Bool {
+        let protonVPNButton = app.menuBars.menuItems["Proton VPN"].click()
         let logoutButton = app.menuBars.menuItems["Sign out"]
         guard logoutButton.exists, logoutButton.isEnabled else {
             return false

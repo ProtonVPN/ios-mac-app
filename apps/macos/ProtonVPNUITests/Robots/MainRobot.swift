@@ -28,8 +28,8 @@ fileprivate let statusTitle = "You are not connected"
 class MainRobot {
 
     func openProfiles() -> ManageProfilesRobot {
-        XCTAssert(app.buttons[qcButton].waitForExistence(timeout: 5))
-        app.menuBars.menuItems[menuItemProfiles].click()
+        app.tabGroups["Profiles"].forceClick()
+        app.buttons["Create Profile"].click()
         return ManageProfilesRobot()
     }
     

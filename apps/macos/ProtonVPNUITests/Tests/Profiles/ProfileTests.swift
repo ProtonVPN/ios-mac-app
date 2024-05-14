@@ -121,9 +121,8 @@ class ProfileTests: ProtonVPNUITests {
     }
 
     func testProfileManagementUnavailableForFreeUser() throws {
-        throw XCTSkip("Skipping until we can log in with a user for which ShowNewFreePlan feature flag is true")
         logoutIfNeeded()
-        loginAsFreeUser() // When available: login as NewFree user with ShowNewFreePlan = true
+        loginAsFreeUser()
         mainRobot
             .openProfiles()
             .verify.isShowingUpsellModal(ofType: .profiles)
