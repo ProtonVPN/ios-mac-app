@@ -373,76 +373,36 @@ class CountriesViewModel: SecureCoreToggleHandler {
 
         switch userTier {
         case 0: // Free
-            @Dependency(\.featureFlagProvider) var featureFlagProvider
-            if !featureFlagProvider[\.showNewFreePlan] { // old
-                do { // First section
-                    let rows = currentContent
-                        .filter { $0.minTier == 0 }
-                        .map {
-                            RowViewModel.serverGroup(countryCellModel(
-                                serversGroup: $0,
-                                serversFilter: defaultServersFilter,
-                                showCountryConnectButton: true,
-                                showFeatureIcons: true
-                            ))
-                        }
-                    newTableData.append(.countries(
-                        title: "\(Localizable.locationsFree) (\(rows.count))",
-                        rows: rows,
-                        serversFilter: defaultServersFilter,
-                        showFeatureIcons: true
-                    ))
-                }
-                do { // Second section
-                    let rows = [banner] + currentContent
-                        .filter { $0.minTier > 0 }
-                        .map {
-                            RowViewModel.serverGroup(countryCellModel(
-                                serversGroup: $0,
-                                serversFilter: defaultServersFilter,
-                                showCountryConnectButton: true,
-                                showFeatureIcons: true
-                            ))
-                        }
-                    newTableData.append(.countries(
-                        title: "\(Localizable.locationsPlus) (\(rows.count))",
-                        rows: rows,
-                        serversFilter: defaultServersFilter,
-                        showFeatureIcons: true
-                    ))
-                }
-            } else { // new
-                let rowsFree = [
-                    RowViewModel.profile(FastestConnectionViewModel(
-                        serverOffering: ServerOffering.fastest(nil),
-                        vpnGateway: vpnGateway,
-                        alertService: alertService,
-                        propertiesManager: propertiesManager,
-                        connectionStatusService: connectionStatusService,
-                        netShieldPropertyProvider: netShieldPropertyProvider,
-                        natTypePropertyProvider: natTypePropertyProvider,
-                        safeModePropertyProvider: safeModePropertyProvider
-                    ))
-                ]
-                newTableData.append(.profiles(
-                    title: "\(Localizable.connectionsFree) (\(rowsFree.count))",
-                    rows: rowsFree
+            let rowsFree = [
+                RowViewModel.profile(FastestConnectionViewModel(
+                    serverOffering: ServerOffering.fastest(nil),
+                    vpnGateway: vpnGateway,
+                    alertService: alertService,
+                    propertiesManager: propertiesManager,
+                    connectionStatusService: connectionStatusService,
+                    netShieldPropertyProvider: netShieldPropertyProvider,
+                    natTypePropertyProvider: natTypePropertyProvider,
+                    safeModePropertyProvider: safeModePropertyProvider
                 ))
-                let rows = [banner] + currentContent.map {
-                    RowViewModel.serverGroup(countryCellModel(
-                        serversGroup: $0,
-                        serversFilter: defaultServersFilter,
-                        showCountryConnectButton: true,
-                        showFeatureIcons: true
-                    ))
-                }
-                newTableData.append(.countries(
-                    title: "\(Localizable.locationsPlus) (\(rows.count))",
-                    rows: rows,
+            ]
+            newTableData.append(.profiles(
+                title: "\(Localizable.connectionsFree) (\(rowsFree.count))",
+                rows: rowsFree
+            ))
+            let rows = [banner] + currentContent.map {
+                RowViewModel.serverGroup(countryCellModel(
+                    serversGroup: $0,
                     serversFilter: defaultServersFilter,
+                    showCountryConnectButton: true,
                     showFeatureIcons: true
                 ))
             }
+            newTableData.append(.countries(
+                title: "\(Localizable.locationsPlus) (\(rows.count))",
+                rows: rows,
+                serversFilter: defaultServersFilter,
+                showFeatureIcons: true
+            ))
         case 1: // Basic
             let rows = currentContent
                 .filter { $0.minTier < 2 }

@@ -383,19 +383,6 @@ public class ServerModel: NSObject, NSCoding, Codable {
         // first in the ordering.
         let lhsIsFree = lhs.isFree
         let rhsIsFree = rhs.isFree
-        let lhsIsPartner = lhs.feature.contains(.partner)
-        let rhsIsPartner = rhs.feature.contains(.partner)
-        if lhsIsFree, rhsIsFree {
-            if lhsIsPartner, rhsIsPartner {
-                return lhs.name < rhs.name
-            }
-            if lhsIsPartner, !rhsIsPartner {
-                return false
-            }
-            if !lhsIsPartner, rhsIsPartner {
-                return true
-            }
-        }
         if lhsIsFree, !rhsIsFree {
             return true
         }

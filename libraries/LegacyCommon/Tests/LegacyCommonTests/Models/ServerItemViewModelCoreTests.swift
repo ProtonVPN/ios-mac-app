@@ -29,13 +29,11 @@ final class ServerItemViewModelCoreTests: XCTestCase {
         XCTAssertTrue(sut.isSmartAvailable)
         XCTAssertFalse(sut.isTorAvailable)
         XCTAssertFalse(sut.isP2PAvailable)
-        XCTAssertFalse(sut.isPartnerServer)
         XCTAssertFalse(sut.isSecureCoreEnabled)
         XCTAssertEqual(sut.load, 15)
         XCTAssertFalse(sut.underMaintenance)
         XCTAssertFalse(sut.isUsersTierTooLow)
         XCTAssertEqual(sut.alphaOfMainElements, 1.0)
-        XCTAssertEqual(sut.partners, [])
         XCTAssertEqual(sut.userTier, .freeTier)
     }
 
@@ -47,7 +45,6 @@ final class ServerItemViewModelCoreTests: XCTestCase {
         XCTAssertTrue(sut.isSmartAvailable)
         XCTAssertTrue(sut.isTorAvailable)
         XCTAssertTrue(sut.isP2PAvailable)
-        XCTAssertTrue(sut.isPartnerServer)
         XCTAssertTrue(sut.isSecureCoreEnabled)
     }
 
@@ -80,33 +77,5 @@ final class ServerItemViewModelCoreTests: XCTestCase {
                                           appStateManager: AppStateManagerMock(),
                                           propertiesManager: PropertiesManagerMock())
         XCTAssertEqual(sut.userTier, .paidTier)
-    }
-
-    func testEmptyPartners() throws {
-        let sut = ServerItemViewModelCore(serverModel: MockTestData().server1.serverInfo,
-                                          vpnGateway: VpnGatewayMock(),
-                                          appStateManager: AppStateManagerMock(),
-                                          propertiesManager: PropertiesManagerMock())
-        XCTAssertTrue(sut.partners.isEmpty)
-    }
-
-    func testPartnersWithOneMatch() throws {
-        let propertiesManager = PropertiesManagerMock()
-        propertiesManager.partnerTypes = [.onePartner(logicalIDs: ["someId"])]
-        let sut = ServerItemViewModelCore(serverModel: MockTestData().server7(id: "someId").serverInfo,
-                                          vpnGateway: VpnGatewayMock(),
-                                          appStateManager: AppStateManagerMock(),
-                                          propertiesManager: propertiesManager)
-        XCTAssertEqual(sut.partners.count, 1)
-    }
-
-    func testPartnersWithNoMatch() throws {
-        let propertiesManager = PropertiesManagerMock()
-        propertiesManager.partnerTypes = [.onePartner(logicalIDs: ["someId"])]
-        let sut = ServerItemViewModelCore(serverModel: MockTestData().server7(id: "someOtherId").serverInfo,
-                                          vpnGateway: VpnGatewayMock(),
-                                          appStateManager: AppStateManagerMock(),
-                                          propertiesManager: propertiesManager)
-        XCTAssertTrue(sut.partners.isEmpty)
     }
 }

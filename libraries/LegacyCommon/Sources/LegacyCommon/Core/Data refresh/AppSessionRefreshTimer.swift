@@ -75,7 +75,6 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
     private var timerLoadsRefresh: BackgroundTimer?
     private var timerAccountRefresh: BackgroundTimer?
     private var timerStreamingRefresh: BackgroundTimer?
-    private var timerPartnersRefresh: BackgroundTimer?
     
     private var appSessionRefresher: AppSessionRefresher {
         return factory.makeAppSessionRefresher() // Do not retain it
@@ -99,8 +98,7 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
             (\AppSessionRefreshTimerImplementation.timerAccountRefresh, refreshAccount, refreshIntervals.account),
             (\AppSessionRefreshTimerImplementation.timerFullRefresh, refreshFull, refreshIntervals.full),
             (\AppSessionRefreshTimerImplementation.timerLoadsRefresh, refreshLoads, refreshIntervals.loads),
-            (\AppSessionRefreshTimerImplementation.timerStreamingRefresh, refreshStreaming, refreshIntervals.streaming),
-            (\AppSessionRefreshTimerImplementation.timerPartnersRefresh, refreshPartners, refreshIntervals.partners)
+            (\AppSessionRefreshTimerImplementation.timerStreamingRefresh, refreshStreaming, refreshIntervals.streaming)
         ]
 
         for (timerPath, timerFunction, refreshInterval) in refreshes {
@@ -122,13 +120,11 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
         timerLoadsRefresh?.invalidate()
         timerAccountRefresh?.invalidate()
         timerStreamingRefresh?.invalidate()
-        timerPartnersRefresh?.invalidate()
 
         timerFullRefresh = nil
         timerLoadsRefresh = nil
         timerAccountRefresh = nil
         timerStreamingRefresh = nil
-        timerPartnersRefresh = nil
     }
     
     private func refreshFull() {
@@ -149,12 +145,5 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
     private func refreshStreaming() {
         guard let delegate, delegate.shouldRefreshStreaming() else { return }
         appSessionRefresher.refreshStreamingServices()
-    }
-
-    private func refreshPartners() {
-        guard let delegate, delegate.shouldRefreshPartners() else { return }
-        Task { [appSessionRefresher] in
-            await appSessionRefresher.refreshPartners()
-        }
     }
 }

@@ -87,12 +87,7 @@ class CountryItemViewModel {
     var isUsersTierTooLow: Bool {
         switch serversGroup.kind {
         case .country:
-            @Dependency(\.featureFlagProvider) var featureFlagProvider
-            if featureFlagProvider[\.showNewFreePlan] {
-                return userTier < 1 // No countries are shown as available to free users
-            } else {
-                return userTier < serversGroup.minTier
-            }
+            return userTier.isFreeTier // No countries are shown as available to free users
         case .gateway:
             return false // atm only users who have gateways received them from api
         }
@@ -191,10 +186,6 @@ class CountryItemViewModel {
         return propertiesManager.streamingServices[countryCode]?["2"] ?? []
     }
 
-    var partnerTypes: [PartnerType] {
-        return propertiesManager.partnerTypes
-    }
-    
     var textInPlaceOfConnectIcon: String? {
         return isUsersTierTooLow ? Localizable.upgrade : nil
     }
@@ -391,34 +382,6 @@ class CountryItemViewModel {
                 connectionChanged()
             }
         }
-    }
-}
-
-extension CountryItemViewModel {
-    func serversInformationViewModel() -> ServersInformationViewController.ViewModel {
-        let freeServersRow: InformationTableViewCell.ViewModel = .init(title: Localizable.featureFreeServers,
-                                                                       description: Localizable.featureFreeServersDescription,
-                                                                       icon: .image(IconProvider.servers))
-        var serverInformationViewModels: [InformationTableViewCell.ViewModel] = partnerTypes.map {
-            .init(title: $0.type,
-                  description: $0.description,
-                  icon: .url($0.iconURL))
-        }
-        serverInformationViewModels.insert(freeServersRow, at: 0)
-        let partners: [InformationTableViewCell.ViewModel] = partnerTypes.flatMap {
-            $0.partners.map {
-                .init(title: $0.name,
-                      description: $0.description,
-                      icon: .url($0.iconURL))
-            }
-        }
-        var sections: [ServersInformationViewController.Section]
-        sections = [.init(title: nil, rowViewModels: serverInformationViewModels)]
-        if !partners.isEmpty {
-            sections.append(.init(title: Localizable.dwPartner2022PartnersTitle, rowViewModels: partners))
-        }
-
-        return .init(title: Localizable.informationTitle, sections: sections)
     }
 }
 

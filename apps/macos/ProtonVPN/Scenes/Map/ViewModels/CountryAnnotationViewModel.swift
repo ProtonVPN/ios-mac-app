@@ -112,8 +112,7 @@ class CountryAnnotationViewModel: CustomStyleContext {
     init(appStateManager: AppStateManager, countryCode: String, minTier: Int, userTier: Int, coordinate: CLLocationCoordinate2D) {
         self.appStateManager = appStateManager
         self.countryCode = countryCode
-        @Dependency(\.featureFlagProvider) var featureFlags
-        if userTier == 0 && featureFlags[\.showNewFreePlan] {
+        if userTier.isFreeTier {
             self.available = false
         } else {
             self.available = minTier <= userTier

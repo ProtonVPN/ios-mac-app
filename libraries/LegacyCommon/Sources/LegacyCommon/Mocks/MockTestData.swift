@@ -205,7 +205,7 @@ public struct MockTestData {
               entryCountryCode: "IS",
               exitCountryCode: "CH",
               tier: .paidTier,
-              feature: [.ipv6, .p2p, .partner, .restricted, .secureCore, .streaming, .tor],
+              feature: [.ipv6, .p2p, .restricted, .secureCore, .streaming, .tor],
               city: "Zurich",
               ips: [.init(id: "yzab",
                           entryIp: "10.0.0.13",
@@ -293,7 +293,6 @@ extension FeatureFlags {
         promoCode: false,
         wireGuardTls: false,
         enforceDeprecatedProtocols: false,
-        showNewFreePlan: false,
         unsafeLanWarnings: false,
         mismatchedCertificateRecovery: false,
         localOverrides: nil
@@ -313,7 +312,6 @@ extension FeatureFlags {
         promoCode: true,
         wireGuardTls: true,
         enforceDeprecatedProtocols: true,
-        showNewFreePlan: true,
         unsafeLanWarnings: true,
         mismatchedCertificateRecovery: true,
         localOverrides: nil
@@ -321,24 +319,6 @@ extension FeatureFlags {
 
     public static let wireGuardTlsDisabled: Self = .allEnabled
         .disabling(\.wireGuardTls)
-}
-
-extension PartnerType {
-    static func onePartner(logicalIDs: [String] = ["abcde"]) -> PartnerType {
-        let partner = Partner(
-            name: "Deutsche Welle",
-            description: "Deutsche Welle, abbreviated to DW, is a German public, state-owned international broadcaster funded by the German federal tax budget.",
-            iconURL: URL(string: "https://proton.me/favicon.ico"),
-            logicalIDs: logicalIDs
-        )
-
-        return .init(
-            type: "News",
-            description: "descr",
-            iconURL: URL(string: "https://proton.me/favicon.ico"),
-            partners: [partner]
-        )
-    }
 }
 
 extension SmartProtocolConfig {

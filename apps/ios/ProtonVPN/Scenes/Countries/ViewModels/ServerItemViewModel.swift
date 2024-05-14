@@ -204,24 +204,6 @@ class SecureCoreServerItemViewModel: ServerItemViewModel {
 
 extension ServerItemViewModel: ServerViewModel {
 
-    func cancelPartnersIconRequests() {
-        partnersIconsReceipts.forEach {
-            $0.request.cancel()
-        }
-    }
-
-    func partnersIcon(completion: @escaping (UIImage?) -> Void) {
-        let iconURLs: [URLRequest] = partners.compactMap {
-            guard let iconURL = $0.iconURL else { return nil }
-            return URLRequest(url: iconURL)
-        }
-        guard !iconURLs.isEmpty else { return }
-
-        partnersIconsReceipts = AlamofireImage.ImageDownloader.default.download(iconURLs, completion: { response in
-            completion(response.value)
-        })
-    }
-
     var connectButtonColor: UIColor {
         if isUsersTierTooLow {
             return .clear

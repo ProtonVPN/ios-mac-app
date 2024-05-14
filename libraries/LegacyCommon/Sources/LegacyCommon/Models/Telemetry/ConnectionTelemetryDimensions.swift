@@ -121,7 +121,6 @@ public struct ConnectionDimensions: Encodable {
         case port = "port"
         case isp = "isp"
         case modalSource = "modal_source"
-        case newFreePlanUi = "new_free_plan_ui"
     }
 
     enum Outcome: String, Encodable {

@@ -38,19 +38,13 @@ extension ConnectionAuthorizer: DependencyKey {
     public static var liveValue: ConnectionAuthorizer = ConnectionAuthorizer(
         authorize: { request in
             @Dependency(\.credentialsProvider) var credentials
-            @Dependency(\.featureFlagProvider) var featureFlags
             @Dependency(\.serverChangeAuthorizer) var serverChangeAuthorizer
-
-            let isNewFreePlanActive: () -> Bool = {
-                credentials.tier.isFreeTier && featureFlags[\.showNewFreePlan]
-            }
 
             switch request.connectionType {
             case .fastest:
                 return .success
-
             case .random:
-                guard isNewFreePlanActive() else {
+                guard credentials.tier.isFreeTier else {
                     return .success
                 }
 
@@ -65,7 +59,7 @@ extension ConnectionAuthorizer: DependencyKey {
                     ))
                 }
             case .city(let countryCode, _), .country(let countryCode, _):
-                guard isNewFreePlanActive() else {
+                guard credentials.tier.isFreeTier else {
                     return .success
                 }
 

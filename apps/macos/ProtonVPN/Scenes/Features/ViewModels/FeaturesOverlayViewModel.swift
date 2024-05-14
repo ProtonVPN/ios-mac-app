@@ -36,14 +36,6 @@ struct PremiumFeaturesOverlayViewModel: FeaturesOverlayViewModelProtocol {
     }
 }
 
-struct FreeFeaturesOverlayViewModel: FeaturesOverlayViewModelProtocol {
-    let title: String = Localizable.informationTitle
-    let featureViewModels: [FeatureCellViewModel]
-    init(featureViewModels: [FeatureCellViewModel]) {
-        self.featureViewModels = featureViewModels
-    }
-}
-
 struct GatewayFeaturesOverlayViewModel: FeaturesOverlayViewModelProtocol {
     let title: String = Localizable.locationsGateways
     var featureViewModels: [FeatureCellViewModel] {

@@ -110,7 +110,6 @@ class TelemetryTests: XCTestCase {
         XCTAssertEqual(dimensions["user_plan"] as? String, "free")
         XCTAssertEqual(dimensions["vpn_status"] as? String, "off")
         XCTAssertEqual(dimensions["user_country"] as? String, "ZZ")
-        XCTAssertEqual(dimensions["new_free_plan_ui"] as? String, "yes")
         XCTAssertEqual(dimensions["days_since_account_creation"] as? String, "8-14")
         XCTAssertEqual(dimensions["upgraded_user_plan"] as? String?, upgradedUserPlan)
     }

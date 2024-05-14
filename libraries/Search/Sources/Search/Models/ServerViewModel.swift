@@ -22,7 +22,6 @@ import UIKit
 public protocol ServerViewModel: AnyObject, ConnectViewModel {
     var description: String { get }
     var isSmartAvailable: Bool { get }
-    var isPartnerServer: Bool { get }
     var isTorAvailable: Bool { get }
     var isP2PAvailable: Bool { get }
     var isStreamingAvailable: Bool { get }
@@ -38,9 +37,6 @@ public protocol ServerViewModel: AnyObject, ConnectViewModel {
     var entryCountryFlag: UIImage? { get }
     var countryName: String { get }
     var countryFlag: UIImage? { get }
-
-    func partnersIcon(completion: @escaping (UIImage?) -> Void)
-    func cancelPartnersIconRequests()
 }
 
 extension ServerViewModel {

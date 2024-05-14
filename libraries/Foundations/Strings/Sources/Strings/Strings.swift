@@ -377,8 +377,6 @@ public enum Localizable {
   public static var doYouWantToActivateSubscriptionFor: String { return Localizable.tr("Localizable", "_do_you_want_to_activate_subscription_for", fallback: "Do you want to activate the purchased subscription for ") }
   /// Common word
   public static var done: String { return Localizable.tr("Localizable", "_done", fallback: "Done") }
-  /// Our partners
-  public static var dwPartner2022PartnersTitle: String { return Localizable.tr("Localizable", "_dw-partner-2022_partners_title", fallback: "Our partners") }
   /// MacOS: Settings -> General: name of field.
   public static var earlyAccess: String { return Localizable.tr("Localizable", "_early_access", fallback: "Early Access") }
   /// MacOS: Settings -> General: description.

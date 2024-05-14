@@ -93,7 +93,6 @@ class CountriesSectionViewModel {
     var secureCoreChange: ((Bool) -> Void)?
     var displayStreamingServices: ((String, [VpnStreamingOption], PropertiesManagerProtocol) -> Void)?
     var displayPremiumServices: (() -> Void)?
-    var displayFreeServicesOverlay: (() -> Void)? // Old behaviour, before free rescope
     var displayGatewaysServices: (() -> Void)?
     let contentSwitch = Notification.Name("CountriesSectionViewModelContentSwitch")
 
@@ -105,47 +104,7 @@ class CountriesSectionViewModel {
         return propertiesManager.featureFlags.netShield
     }
 
-    /// This function constructs the view model for the informative modal about the free servers features
-    /// At minimum it will include the static `FreeServersFeatureCellViewModel` and if the `v1/partners/` endpoint
-    /// returns any partners then they will be added to the list.
-    func freeFeaturesOverlayViewModel() -> FreeFeaturesOverlayViewModel {
-        /// All the types of partners listed here
-        let featuresViewModels: [ServerFeatureViewModel] = propertiesManager.partnerTypes.map {
-            .init(title: $0.type,
-                  description: $0.description,
-                  icon: .url($0.iconURL))
-        }
-        /// All the actual partners listed
-        var partnersViewModels: [ServerFeatureViewModel] = propertiesManager.partnerTypes.flatMap {
-            $0.partners.map {
-                .init(title: $0.name,
-                      description: $0.description,
-                      icon: .url($0.iconURL))
-            }
-        }
-        /// We want to add the `sectionTitle` - "Our Partners" to the first partner
-        if let firstPartner = partnersViewModels.first {
-            partnersViewModels[0] = .init(sectionTitle: Localizable.dwPartner2022PartnersTitle,
-                                          title: firstPartner.title,
-                                          description: firstPartner.description,
-                                          icon: firstPartner.icon)
-        }
-
-        return FreeFeaturesOverlayViewModel(featureViewModels: [FreeServersFeatureCellViewModel()] + featuresViewModels + partnersViewModels)
-    }
-
-    /// Show information about free plan.
-    /// Depending on a feature flag it's either an overlay (old) or a modal (new)
     public func displayFreeServices() {
-        @Dependency(\.featureFlagProvider) var featureFlagProvider
-        if !featureFlagProvider[\.showNewFreePlan] { // old
-            displayFreeServicesOverlay?()
-        } else { // new
-            displayFreeServicesModal()
-        }
-    }
-
-    private func displayFreeServicesModal() {
         alertService.push(alert: FreeConnectionsAlert(countries: freeCountries))
     }
 
@@ -224,7 +183,7 @@ class CountriesSectionViewModel {
         notificationCenter.addObserver(self, selector: #selector(updateSettings), name: type(of: netShieldPropertyProvider).netShieldNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: propertiesManager).smartProtocolNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
-        // Reloads data if feature flags change. Can be removed if we stop using feature flags for generating table data (currently `showNewFreePlan` is used).
+        // Reloads data if feature flags change. Can be removed if we stop using feature flags for generating table data (currently none is used).
         notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: propertiesManager).featureFlagsNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnPlanChanged, object: nil)
         notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnUserDelinquent, object: nil)
@@ -437,8 +396,7 @@ class CountriesSectionViewModel {
     private func makeSections() -> [CellModel] {
         guard let serverGroups else { return [] }
 
-        @Dependency(\.featureFlagProvider) var featureFlagProvider
-        let userType = UserType(tier: userTier, showNewFreePlan: featureFlagProvider[\.showNewFreePlan])
+        let userType = UserType(tier: userTier)
 
         return sections(for: serverGroups, userType: userType)
             .compactMap { $0 }
@@ -596,15 +554,14 @@ class CountriesSectionViewModel {
     }
 
     enum UserType {
-        case legacyFree // old free plan
-        case free // Post-free rescope
+        case free
         case paid // Anything paid (basic, plus, visionary etc)
 
-        init(tier: Int, showNewFreePlan: Bool) {
+        init(tier: Int) {
             if tier.isPaidTier {
                 self = .paid
             } else {
-                self = showNewFreePlan ? .free : .legacyFree
+                self = .free
             }
         }
     }
@@ -620,12 +577,6 @@ class CountriesSectionViewModel {
             return [
                 gatewaysSection(for: groups),
                 allLocationsSection(for: groups)
-            ]
-        case .legacyFree:
-            return [
-                gatewaysSection(for: groups),
-                freeLocationsSection(for: groups),
-                plusLocationsSection(for: groups, minTier: .paidTier)
             ]
         case .free:
             return [
@@ -679,15 +630,6 @@ class CountriesSectionViewModel {
         ))
     }
 
-    private func freeLocationsHeader(locationCount: Int) -> CellModel {
-        .header(CountryHeaderViewModel(
-            Localizable.locationsFree,
-            totalCountries: locationCount,
-            buttonType: nil,
-            countriesViewModel: self
-        ))
-    }
-
     private func plusLocationsHeader(locationCount: Int) -> CellModel {
         .header(CountryHeaderViewModel(
             Localizable.locationsPlus,
@@ -713,14 +655,6 @@ class CountriesSectionViewModel {
         return ServerSection(
             header: plusLocationsHeader(locationCount: cellModels.count),
             cells: [upsellBanner] + cellModels
-        )
-    }
-
-    private func freeLocationsSection(for groups: [ServerGroupInfo]) -> ServerSection {
-        let cellModels = cells(forCountriesInGroups: groups, minTierFilter: { $0 == .freeTier } )
-        return ServerSection(
-            header: freeLocationsHeader(locationCount: cellModels.count),
-            cells: cellModels
         )
     }
 

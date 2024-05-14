@@ -44,12 +44,9 @@ public enum ProfileConstants {
 
     // WARNING: consuming client must contain "fastest" and "random" image assets
     public static func defaultProfiles(connectionProtocol: ConnectionProtocol) -> [Profile] {
-        // Post Free-Rescope, default profiles should not be accessible to free users
-        @Dependency(\.featureFlagProvider) var featureFlagProvider
-        let defaultProfileAccessTier = featureFlagProvider[\.showNewFreePlan] ? 1 : 0
-        return [
-            fastestProfile(connectionProtocol: connectionProtocol, defaultProfileAccessTier: defaultProfileAccessTier),
-            randomProfile(connectionProtocol: connectionProtocol, defaultProfileAccessTier: defaultProfileAccessTier),
+        [
+            fastestProfile(connectionProtocol: connectionProtocol, defaultProfileAccessTier: .paidTier),
+            randomProfile(connectionProtocol: connectionProtocol, defaultProfileAccessTier: .paidTier),
         ]
     }
 

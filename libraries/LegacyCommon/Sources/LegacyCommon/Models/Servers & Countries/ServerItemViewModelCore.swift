@@ -29,7 +29,6 @@ open class ServerItemViewModelCore {
     public var isSmartAvailable: Bool { serverModel.logical.isVirtual }
     public var isTorAvailable: Bool { serverModel.logical.feature.contains(.tor) }
     public var isP2PAvailable: Bool { serverModel.logical.feature.contains(.p2p) }
-    public var isPartnerServer: Bool { serverModel.logical.feature.contains(.partner) }
 
     public var isSecureCoreEnabled: Bool {
         return serverModel.logical.feature.contains(.secureCore)
@@ -78,19 +77,6 @@ open class ServerItemViewModelCore {
         self.vpnGateway = vpnGateway
         self.appStateManager = appStateManager
         self.propertiesManager = propertiesManager
-    }
-
-    public var partners: [Partner] {
-        guard isPartnerServer else {
-            return []
-        }
-        return propertiesManager.partnerTypes
-            .flatMap {
-                $0.partners
-            }
-            .filter {
-                $0.logicalIDs.contains(serverModel.logical.id)
-            }
     }
 
     var userTier: Int {

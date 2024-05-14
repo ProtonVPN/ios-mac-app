@@ -70,14 +70,6 @@ final class CountryViewController: UIViewController {
         let vc = ServersStreamingFeaturesVC(streamingFeaturesViewModel)
         present(vc, animated: true, completion: nil)
     }
-
-    private func displayFreeServersInfo() {
-        guard let viewModel = viewModel else { return }
-        let serversInformationStoryboard = UIStoryboard(name: ServersInformationViewController.identifier, bundle: nil)
-        let vc = serversInformationStoryboard.instantiateViewController(withIdentifier: ServersInformationViewController.identifier) as! ServersInformationViewController
-        vc.viewModel = viewModel.serversInformationViewModel()
-        present(vc, animated: true, completion: nil)
-    }
 }
 
 extension CountryViewController: UITableViewDataSource, UITableViewDelegate {
@@ -99,10 +91,6 @@ extension CountryViewController: UITableViewDataSource, UITableViewDelegate {
         if viewModel.streamingAvailable, viewModel.isServerPlusOrAbove(for: section) {
             headerView.callback = { [weak self] in
                 self?.displayStreamingServices()
-            }
-        } else if viewModel.isServerFree(for: section) {
-            headerView.callback = { [weak self] in
-                self?.displayFreeServersInfo()
             }
         }
         return headerView
@@ -139,9 +127,5 @@ extension CountryViewController: UITableViewDataSource, UITableViewDelegate {
 extension CountryViewController: ServerCellDelegate {
     func userDidRequestStreamingInfo() {
         displayStreamingServices()
-    }
-    
-    func userDidRequestFreeServersInfo() {
-        displayFreeServersInfo()
     }
 }

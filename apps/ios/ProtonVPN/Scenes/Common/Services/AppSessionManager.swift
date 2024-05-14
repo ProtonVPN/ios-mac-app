@@ -208,7 +208,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         )
 
         propertiesManager.userLocation = properties.location
-        await refreshPartners(ifUnknownPartnerLogicalExistsIn: properties.serverModels)
         do {
             try await resolveActiveSession()
         } catch {

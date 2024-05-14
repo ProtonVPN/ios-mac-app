@@ -28,10 +28,7 @@ extension VPNAccelerator: PaidAppFeature {
     public static let featureFlag: KeyPath<FeatureFlags, Bool>? = \.vpnAccelerator
 
     public static func minTier(featureFlags: FeatureFlags) -> Int {
-        if featureFlags.showNewFreePlan {
-            return .paidTier
-        }
-        return .freeTier
+        return .paidTier
     }
 }
 
@@ -51,7 +48,7 @@ extension VPNAccelerator: ModularAppFeature, DefaultableFeature, StorableFeature
         switch self {
         case .off:
             // This feature can only be turned off by paying users post-free rescope
-            if featureFlags.showNewFreePlan && userTier < 1 {
+            if userTier.isFreeTier {
                 return .failure(.requiresUpgrade)
             }
             return .success

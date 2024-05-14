@@ -270,11 +270,6 @@ final class CountriesSectionViewController: NSViewController {
         viewModel.displayPremiumServices = { [weak self] in
             self?.presentAsSheet(FeaturesOverlayViewController(viewModel: PremiumFeaturesOverlayViewModel()))
         }
-        viewModel.displayFreeServicesOverlay = { [weak self] in
-            guard let self else { return }
-            let freeFeaturesOverlayViewModel = self.viewModel.freeFeaturesOverlayViewModel()
-            self.presentAsSheet(FeaturesOverlayViewController(viewModel: freeFeaturesOverlayViewModel))
-        }
         viewModel.displayStreamingServices = { [weak self] in
             self?.presentAsSheet(StreamingServicesOverlayViewController(viewModel: StreamingServicesOverlayViewModel(country: $0, streamServices: $1, propertiesManager: $2)))
         }
@@ -496,10 +491,6 @@ extension CountriesSectionViewController: CountriesSettingsDelegate {
 }
 
 extension CountriesSectionViewController: ServerItemCellViewDelegate {
-    func userDidClickOnPartnerIcon() {
-        viewModel.displayFreeServices()
-    }
-
     func userDidRequestStreamingInfo(server: ServerItemViewModel) {
         viewModel.showStreamingServices(server: server)
     }

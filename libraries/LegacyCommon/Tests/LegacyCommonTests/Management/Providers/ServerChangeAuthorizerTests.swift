@@ -36,7 +36,7 @@ public class ServerChangeAuthorizerTests: XCTestCase {
         withDependencies {
             $0.date = .constant(now)
             $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
-            $0.featureFlagProvider = .constant(flags: .allDisabled.enabling(\.showNewFreePlan))
+            $0.featureFlagProvider = .constant(flags: .allDisabled)
             $0.serverChangeStorage = .init(
                 getConfig: { config },
                 getConnectionStack: { [] }
@@ -61,7 +61,7 @@ public class ServerChangeAuthorizerTests: XCTestCase {
         withDependencies {
             $0.date = .constant(start)
             $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
-            $0.featureFlagProvider = .constant(flags: .allDisabled.enabling(\.showNewFreePlan))
+            $0.featureFlagProvider = .constant(flags: .allDisabled)
             $0.serverChangeStorage = .init(
                 getConfig: { config },
                 getConnectionStack: { connectionStack }
@@ -97,7 +97,7 @@ public class ServerChangeAuthorizerTests: XCTestCase {
         withDependencies {
             $0.date = .constant(start)
             $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
-            $0.featureFlagProvider = .constant(flags: .allDisabled.enabling(\.showNewFreePlan))
+            $0.featureFlagProvider = .constant(flags: .allDisabled)
             $0.serverChangeStorage = .init(
                 getConfig: { config },
                 getConnectionStack: { connectionStack }
@@ -133,7 +133,7 @@ public class ServerChangeAuthorizerTests: XCTestCase {
             withDependencies {
                 $0.date = .constant(start)
                 $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
-                $0.featureFlagProvider = .constant(flags: .allDisabled.enabling(\.showNewFreePlan))
+                $0.featureFlagProvider = .constant(flags: .allDisabled)
                 $0.serverChangeStorage = .init(
                     getConfig: { config },
                     getConnectionStack: { connectionStack }
@@ -145,19 +145,7 @@ public class ServerChangeAuthorizerTests: XCTestCase {
         withDependencies {
             $0.date = .constant(start)
             $0.credentialsProvider = .constant(credentials: .tier(.paidTier))
-            $0.featureFlagProvider = .constant(flags: .allDisabled.enabling(\.showNewFreePlan))
-            $0.serverChangeStorage = .init(
-                getConfig: { config },
-                getConnectionStack: { connectionStack }
-            )
-        } operation: {
-            XCTAssertEqual(sut.serverChangeAvailability(), .available)
-        }
-
-        withDependencies {
-            $0.date = .constant(start)
-            $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
-            $0.featureFlagProvider = .constant(flags: .allEnabled.disabling(\.showNewFreePlan))
+            $0.featureFlagProvider = .constant(flags: .allDisabled)
             $0.serverChangeStorage = .init(
                 getConfig: { config },
                 getConnectionStack: { connectionStack }
@@ -183,7 +171,7 @@ public class ServerChangeAuthorizerTests: XCTestCase {
         withDependencies {
             $0.date = .constant(start)
             $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
-            $0.featureFlagProvider = .constant(flags: .allDisabled.enabling(\.showNewFreePlan))
+            $0.featureFlagProvider = .constant(flags: .allDisabled)
             $0.serverChangeStorage = .init(
                 getConfig: { config },
                 getConnectionStack: { connectionStack }
@@ -195,7 +183,7 @@ public class ServerChangeAuthorizerTests: XCTestCase {
         withDependencies {
             $0.date = .constant(midDelay)
             $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
-            $0.featureFlagProvider = .constant(flags: .allDisabled.enabling(\.showNewFreePlan))
+            $0.featureFlagProvider = .constant(flags: .allDisabled)
             $0.serverChangeStorage = .init(
                 getConfig: { config },
                 getConnectionStack: { connectionStack }
@@ -207,7 +195,7 @@ public class ServerChangeAuthorizerTests: XCTestCase {
         withDependencies {
             $0.date = .constant(delayExpiryDate)
             $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
-            $0.featureFlagProvider = .constant(flags: .allDisabled.enabling(\.showNewFreePlan))
+            $0.featureFlagProvider = .constant(flags: .allDisabled)
             $0.serverChangeStorage = .init(
                 getConfig: { config },
                 getConnectionStack: { connectionStack }
@@ -232,7 +220,7 @@ public class ServerChangeAuthorizerTests: XCTestCase {
 
         withDependencies {
             $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
-            $0.featureFlagProvider = .constant(flags: .allDisabled.enabling(\.showNewFreePlan))
+            $0.featureFlagProvider = .constant(flags: .allDisabled)
             $0.serverChangeStorage = .init(
                 getConfig: { config },
                 getConnectionStack: { connectionStack },

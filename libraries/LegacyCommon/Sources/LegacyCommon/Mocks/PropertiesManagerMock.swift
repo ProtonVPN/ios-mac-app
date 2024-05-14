@@ -32,7 +32,7 @@ import VPNAppCore
 public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var isOnboardingInProgress: Bool = false
     public var isSubsequentLaunch: Bool = false
-    public var showWhatsNewModal: Bool = true
+    public var showWhatsNewModal: Bool = false
 
     private let queue = DispatchQueue(label: "ch.proton.test.mock.sync.properties")
 
@@ -160,12 +160,6 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var streamingServices: StreamingDictServices {
         get { queue.sync { _streamingServices } }
         set { queue.sync { _streamingServices = newValue } }
-    }
-
-    public var _partnerTypes: [PartnerType] = []
-    public var partnerTypes: [PartnerType] {
-        get { queue.sync { _partnerTypes } }
-        set { queue.sync { _partnerTypes = newValue } }
     }
 
     public var userAccountRecovery: ProtonCoreDataModel.AccountRecovery?

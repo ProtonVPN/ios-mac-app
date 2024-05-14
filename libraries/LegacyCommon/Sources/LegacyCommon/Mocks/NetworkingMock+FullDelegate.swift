@@ -33,7 +33,6 @@ public class FullNetworkingMockDelegate: NetworkingMockDelegate {
         case location = "/vpn/v1/location"
         case logicals = "/vpn/v1/logicals"
         case streamingServices = "/vpn/v1/streamingservices"
-        case partners = "/vpn/v1/partners"
         case clientConfig = "/vpn/v2/clientconfig"
         case loads = "/vpn/v1/loads"
         case certificate = "/vpn/v1/certificate"
@@ -127,11 +126,6 @@ public class FullNetworkingMockDelegate: NetworkingMockDelegate {
                                                     "1": [.init(name: "Rai", icon: "rai.jpg")],
                                                     "2": [.init(name: "Netflix", icon: "netflix.jpg")]
                                                 ]])
-            let data = try responseEncoder.encode(response)
-            return .success(data)
-        case .partners:
-            // for fetching list of partners
-            let response = VPNPartnersResponse(code: 1000, partnerTypes: [.onePartner()])
             let data = try responseEncoder.encode(response)
             return .success(data)
         case .clientConfig:

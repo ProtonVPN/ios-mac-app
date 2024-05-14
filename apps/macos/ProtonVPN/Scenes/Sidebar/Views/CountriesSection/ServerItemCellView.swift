@@ -28,7 +28,6 @@ import Strings
 
 protocol ServerItemCellViewDelegate: AnyObject {
     func userDidRequestStreamingInfo(server: ServerItemViewModel)
-    func userDidClickOnPartnerIcon()
 }
 
 final class ServerItemCellView: NSView {
@@ -118,13 +117,6 @@ final class ServerItemCellView: NSView {
             button.isBordered = false
             addViewToFeaturesStack(button)
         }
-
-        viewModel.partners.forEach {
-            let button = NSButton(image: .init(), target: self, action: #selector(didTapPartner))
-            button.isBordered = false
-            button.sd_setImage(with: $0.iconURL)
-            addViewToFeaturesStack(button, width: .UI.oneAndHalfMargin)
-        }
     }
 
     func addViewToFeaturesStack(_ view: NSView, width: CGFloat = .UI.margin) {
@@ -206,10 +198,6 @@ final class ServerItemCellView: NSView {
 
     @objc private func didTapStreaming(_ sender: Any) {
         delegate?.userDidRequestStreamingInfo(server: viewModel)
-    }
-
-    @objc private func didTapPartner(_ sender: Any) {
-        delegate?.userDidClickOnPartnerIcon()
     }
 
     // MARK: - Accessibility
