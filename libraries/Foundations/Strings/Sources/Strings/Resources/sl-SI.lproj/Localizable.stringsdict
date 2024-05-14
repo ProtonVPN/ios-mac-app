@@ -134,17 +134,17 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d+ secure servers</string>
+        <string>%d varen strežnik</string>
         <key>two</key>
-        <string>%d+ secure servers</string>
+        <string>%d+ varna strežnika</string>
         <key>few</key>
-        <string>%d+ secure servers</string>
+        <string>%d+ varni strežniki</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d+ secure servers</string>
+        <string>%d+ varni strežniki</string>
       </dict>
     </dict>
     <key>subscription_upgrade_option1</key>

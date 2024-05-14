@@ -1895,7 +1895,7 @@
 "modals_new_upsell_secure_core_title" = "Dobre sua proteção";
 
 /* Subtitle of Secure Core upsell screen */
-"modals_new_upsell_secure_core_subtitle" = "Adicione outra camada de criptografia à sua conexão VPN com o Secure Core.";
+"modals_new_upsell_secure_core_subtitle" = "Adicione outra camada de criptografia à sua conexão VPN com Secure Core.";
 
 /* The bold portion of the subtitle of the Secure Core upsell screen */
 "modals_new_upsell_secure_core_subtitle_bold" = "Secure Core";
@@ -2099,7 +2099,7 @@
 "welcome_to_proton_banner_title" = "VPN sem registros certificada";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
-"welcome_to_proton_banner_subtitle" = "Sua atividade de VPN é protegida pelas leis de privacidade suiças. Nunca rastreamos você on-line nem compartilhamos seus dados com terceiros.";
+"welcome_to_proton_banner_subtitle" = "Sua atividade VPN é protegida pelas leis de privacidade suíças. Nunca rastrearemos você online nem compartilharemos suas informações com terceiros.";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "Atualize sua privacidade";

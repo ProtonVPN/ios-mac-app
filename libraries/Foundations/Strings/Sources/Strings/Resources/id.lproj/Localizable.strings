@@ -233,7 +233,7 @@
 "_retry" = "Coba Lagi";
 
 /* iOS: section header in countries list */
-"_free_servers" = "Server Gratis";
+"_free_servers" = "Server Free";
 
 /* iOS: section header in countries list */
 "_plus_servers" = "Server Plus";
@@ -372,7 +372,7 @@
 "_warning_vpn_session_is_active" = "Terdapat sesi Proton VPN milik pengguna lain yang sedang aktif pada perangkat ini. Apabila Anda masuk, sesi ini akan berakhir secara otomatis. Apakah Anda ingin melanjutkan?";
 
 /* iOS: placeholder for email field in signup and email verification screens */
-"_enter_email_address" = "Masukkan alamat surel";
+"_enter_email_address" = "Masukkan alamat email";
 
 /* iOS: placeholder in phone verification screen */
 "_phone_country_code_placeholder" = "Kode";
@@ -390,7 +390,7 @@
 "_already_have_account" = "Saya sudah memiliki akun";
 
 /* iOS: Button in email verification screen */
-"_get_verification_email" = "Dapatkan surel verifikasi";
+"_get_verification_email" = "Dapatkan email verifikasi";
 
 /* iOS: Button in SMS verification screen */
 "_get_verification_sms" = "Dapatkan SMS verifikasi";
@@ -1802,7 +1802,7 @@
 "search_results_cities" = "Kota";
 
 /* Section header in search */
-"_free_servers" = "Server Gratis";
+"_free_servers" = "Server Free";
 
 /* Section header in search */
 "_plus_servers" = "Server Plus";
