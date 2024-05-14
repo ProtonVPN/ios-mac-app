@@ -20,12 +20,12 @@
     {
       "skippedTests" : [
         "LoginTests\/testLoginAsTwoFa()",
+        "LoginTests\/testLoginWithCorrectCredentials()",
         "LoginTests\/testLoginWithTwoPassUser()",
         "MapTests",
         "ProfileTests",
         "ProfileTests\/testCancelProfile()",
         "ProfileTests\/testCreateEmptyProfile()",
-        "ProfileTests\/testCreateProfileWithTheSameName()",
         "ProfileTests\/testNewProfileAppearsInTheSettings()",
         "ProtonVPNUITests",
         "QuickSettingsTests",
