@@ -140,7 +140,7 @@ struct ContactFormFeature: Reducer {
             let text = fields.filter({ ![emailFieldName, logsFieldName, usernameFieldName].contains($0.inputField.submitLabel) }).reduce("") { prev, field in
                 switch field.inputField.type {
                 case .textSingleLine, .textMultiLine:
-                    return prev + "\(field.inputField.submitLabel)\n\(field.stringValue)\n---\n"
+                    return prev + "\(field.inputField.submitLabel): \(field.stringValue)\n---\n"
                 case .switch:
                     return prev + "\(field.inputField.submitLabel): \(field.boolValue ? "YES" : "NO")\n---\n"
                 }
