@@ -18,6 +18,7 @@
 
 import XCTest
 import ComposableArchitecture
+import XCTestDynamicOverlay
 @testable import ProtonVPN_TV
 
 final class SignInFeatureTests: XCTestCase {
@@ -27,40 +28,56 @@ final class SignInFeatureTests: XCTestCase {
         let store = TestStore(initialState: SignInFeature.State.loadingSignInCode) {
             SignInFeature()
         }
-        await store.send(.authenticationFinished(.success(.mockSuccess)))
-        await store.receive(.signInFinished(.success(.init(uID: "a", accessToken: "c", refreshToken: "b"))))
+        await store.send(\.authenticationFinished.success.authenticated, .mock)
+        await store.receive(\.signInFinished.success)
     }
 
     @MainActor
     func testSignInFlowHappyPath() async {
         let clock = TestClock()
+        let pollConf = ServerPollConfiguration.liveValue
+        let mockSignInResponse = SignInCode(selector: "40-char-random-hex-string", userCode: "1234ABCD")
+
         let store = TestStore(initialState: SignInFeature.State.loadingSignInCode) {
             SignInFeature()
         } withDependencies: {
             $0.continuousClock = clock
-            $0[NetworkClient.self] = .testValue
-        }
-
-        let pollConf = ServerPollConfiguration.liveValue
-        let mockResponse = SignInCode(selector: "40-char-random-hex-string", userCode: "1234ABCD")
-
-        await store.send(.fetchSignInCode)
-        await store.receive(SignInFeature.Action.codeFetchingFinished(.success(mockResponse))) {
-            $0 = SignInFeature.State.waitingForAuthentication(
-                code: mockResponse,
-                remainingAttempts: 5
+            $0.networkClient = .init(
+                fetchSignInCode: { mockSignInResponse },
+                forkedSession: { selector in
+                    XCTAssertEqual(selector, mockSignInResponse.selector)
+                    return .invalidSelector
+                }
             )
         }
+
+        await store.send(\.fetchSignInCode)
+        await store.receive(\.codeFetchingFinished.success) {
+            $0 = SignInFeature.State.waitingForAuthentication(
+                code: mockSignInResponse,
+                remainingAttempts: pollConf.failAfterAttempts
+            )
+        }
+
+        store.dependencies.networkClient = .init(
+            fetchSignInCode: { .init(selector: "", userCode: "")},
+            forkedSession: { selector in
+                XCTAssertEqual(selector, mockSignInResponse.selector)
+                return .authenticated(.mock)
+            }
+        )
+
         await clock.advance(by: pollConf.delayBeforePollingStarts)
         await clock.advance(by: pollConf.period)
+
         await store.receive(\.pollServer) {
             $0 = SignInFeature.State.waitingForAuthentication(
-                code: SignInCode(selector: "40-char-random-hex-string", userCode: "1234ABCD"),
-                remainingAttempts: 4
+                code: mockSignInResponse,
+                remainingAttempts: pollConf.failAfterAttempts - 1
             )
         }
-        await store.receive(SignInFeature.Action.authenticationFinished(.success(.mockSuccess)))
-        await store.receive(.signInFinished(.success(.init(uID: "a", accessToken: "c", refreshToken: "b"))))
+        await store.receive(\.authenticationFinished.success.authenticated)
+        await store.receive(\.signInFinished.success)
     }
 
     @MainActor
@@ -68,7 +85,10 @@ final class SignInFeatureTests: XCTestCase {
         let store = TestStore(initialState: SignInFeature.State.loadingSignInCode) {
             SignInFeature()
         } withDependencies: {
-            $0[NetworkClient.self] = .failureValue
+            $0[NetworkClient.self] = .init(
+                fetchSignInCode: { throw "error" },
+                forkedSession: { _ in throw "error" }
+            )
         }
 
         await store.send(.fetchSignInCode)
@@ -93,10 +113,10 @@ final class SignInFeatureTests: XCTestCase {
         let pollConf = ServerPollConfiguration.liveValue
 
         await store.send(.fetchSignInCode)
-        await store.receive(.codeFetchingFinished(.success(mockCode))) {
+        await store.receive(\.codeFetchingFinished.success) {
             $0 = SignInFeature.State.waitingForAuthentication(
                 code: mockCode,
-                remainingAttempts: 5
+                remainingAttempts: pollConf.failAfterAttempts
             )
         }
         await clock.advance(by: pollConf.delayBeforePollingStarts)
@@ -111,10 +131,10 @@ final class SignInFeatureTests: XCTestCase {
                     remainingAttempts: failAfterAttempts
                 )
             }
-            await store.receive(.authenticationFinished(.success(.invalidSelector)))
+            await store.receive(\.authenticationFinished.success.invalidSelector)
         }
         await clock.advance(by: pollConf.period)
         await store.receive(\.pollServer)
-        await store.receive(.signInFinished(.failure(SignInFeature.SignInFailureReason.authenticationAttemptsExhausted)))
+        await store.receive(\.signInFinished.failure)
     }
 }

@@ -105,4 +105,14 @@ public class AuthCredentials: NSObject, NSSecureCoding, Codable {
     public func encode(with aCoder: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
+
+    public static func == (lhs: AuthCredentials, rhs: AuthCredentials) -> Bool {
+        return lhs.username == rhs.username
+            && lhs.accessToken == rhs.accessToken
+            && lhs.refreshToken == rhs.refreshToken
+            && lhs.sessionId == rhs.sessionId
+            && lhs.userId == rhs.userId
+            && lhs.mailboxPassword == rhs.mailboxPassword
+            && Set(lhs.scopes) == Set(rhs.scopes)
+    }
 }

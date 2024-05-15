@@ -18,6 +18,8 @@
 
 import XCTest
 import ComposableArchitecture
+import struct CommonNetworking.SessionAuthResponse
+import class VPNShared.AuthCredentials
 @testable import ProtonVPN_TV
 
 final class WelcomeFeatureTests: XCTestCase {
@@ -41,7 +43,7 @@ final class WelcomeFeatureTests: XCTestCase {
             $0.destination = .signIn(.loadingSignInCode)
         }
 
-        await store.send(.destination(.presented(.signIn(.signInFinished(.success(.emptyCredentials)))))) {
+        await store.send(.destination(.presented(.signIn(.signInFinished(.success(.mock)))))) {
             $0.destination = nil
         }
     }
@@ -58,4 +60,27 @@ final class WelcomeFeatureTests: XCTestCase {
             $0.destination = nil
         }
     }
+}
+
+extension AuthCredentials {
+
+    static let mock = AuthCredentials(
+        username: "username",
+        accessToken: "access_token",
+        refreshToken: "refresh_token",
+        sessionId: "session_id",
+        userId: "user_id",
+        scopes: ["scope"],
+        mailboxPassword: nil
+    )
+}
+
+extension SessionAuthResponse {
+    static let mock = SessionAuthResponse(
+        accessToken: "access_token",
+        refreshToken: "refresh_token",
+        uid: "session_id",
+        userID: "user_id",
+        scopes: ["scope"]
+    )
 }

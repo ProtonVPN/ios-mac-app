@@ -26,8 +26,9 @@ struct ServerPollConfiguration: DependencyKey {
 
     static let liveValue: ServerPollConfiguration = ServerPollConfiguration(
         delayBeforePollingStarts: .seconds(5),
-        period: .seconds(1),
-        failAfterAttempts: 5
+        period: .seconds(5),
+        failAfterAttempts: 60 // ~5 minutes of polling every 5s (disregarding time to complete each request)
     )
+
     static let testValue = liveValue
 }

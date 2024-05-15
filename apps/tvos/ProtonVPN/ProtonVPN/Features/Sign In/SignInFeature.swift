@@ -31,15 +31,15 @@ struct SignInFeature {
         case waitingForAuthentication(code: SignInCode, remainingAttempts: Int)
     }
 
-    enum Action: Equatable {
+    enum Action {
         case pollServer
         case fetchSignInCode
-        case codeFetchingFinished(TaskResult<SignInCode>)
-        case authenticationFinished(TaskResult<SessionAuthResult>)
-        case signInFinished(TaskResult<AuthCredentials>)
+        case codeFetchingFinished(Result<SignInCode, Error>)
+        case authenticationFinished(Result<SessionAuthResult, Error>)
+        case signInFinished(Result<AuthCredentials, Error>)
     }
 
-    @Dependency(NetworkClient.self) var networkClient
+    @Dependency(\.networkClient) var networkClient
     @Dependency(\.continuousClock) var clock
 
     private enum CancelID { case timer }
@@ -53,7 +53,7 @@ struct SignInFeature {
         Reduce { state, action in
             switch action {
             case .fetchSignInCode:
-                return .run { send in await send(.codeFetchingFinished(TaskResult { try await networkClient.fetchSignInCode() })) }
+                return .run { send in await send(.codeFetchingFinished(Result { try await networkClient.fetchSignInCode() })) }
 
             case .pollServer:
                 guard case .waitingForAuthentication(let code, let remainingAttempts) = state else {
@@ -67,7 +67,7 @@ struct SignInFeature {
                 }
 
                 state = .waitingForAuthentication(code: code, remainingAttempts: remainingAttempts - 1)
-                return .run { send in await send(.authenticationFinished(TaskResult { try await networkClient.forkedSession(code.selector) })) }
+                return .run { send in await send(.authenticationFinished(Result { try await networkClient.forkedSession(code.selector) })) }
 
             case .codeFetchingFinished(.success(let response)):
                 @Dependency(ServerPollConfiguration.self) var pollConfiguration

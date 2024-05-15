@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import CasePaths
 import Dependencies
 import CommonNetworking
 
@@ -26,51 +27,16 @@ struct NetworkClient: Sendable {
     private static var count: Int = 1
 }
 
+@CasePathable
 public enum SessionAuthResult: Equatable {
+
     case authenticated(SessionAuthResponse)
 
     /// When we receive code 422 (invalid selector), return this instead of throwing an error
     case invalidSelector
-
-    static let mockSuccess: SessionAuthResult = .authenticated(SessionAuthResponse(
-        accessToken: "c",
-        refreshToken: "b",
-        uid: "a",
-        userID: "d",
-        scopes: []
-    ))
 }
 
 extension NetworkClient: DependencyKey {
-
-    static let testValue = NetworkClient {
-        SignInCode(selector: "40-char-random-hex-string",
-                   userCode: "1234ABCD")
-    } forkedSession: { selector in
-            .mockSuccess
-    }
-
-    static let forkedSessionFailureValue = NetworkClient {
-        SignInCode(selector: "40-char-random-hex-string",
-                   userCode: "1234ABCD")
-    } logout: {
-        throw "nope"
-    } forkedSession: { selector in
-        throw "nope"
-    }
-
-    static let failureValue = NetworkClient {
-        throw "nope"
-    } logout: {
-        throw "nope"
-    } forkedSession: { selector in
-        throw "nope"
-    }
-
-    static let fetchSignInCodeDelay: Duration = .seconds(1)
-    static let logoutDelay: Duration = .seconds(1)
-    static let pollDelay: Duration = .seconds(0.1)
-
     static var liveValue: NetworkClient {
         @Dependency(\.networking) var networking
         return NetworkClient(
@@ -93,6 +59,13 @@ extension NetworkClient: DependencyKey {
                 }
             }
         )
+    }
+}
+
+extension DependencyValues {
+    var networkClient: NetworkClient {
+      get { self[NetworkClient.self] }
+      set { self[NetworkClient.self] = newValue }
     }
 }
 
