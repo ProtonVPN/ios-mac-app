@@ -36,7 +36,7 @@ public protocol NetworkingFactory {
     func makeNetworking() -> Networking
 }
 
-class CoreNetworkingDelegateMock: NetworkingDelegate {
+final class CoreNetworkingDelegateMock: NetworkingDelegate {
     func set(apiService: APIService) { }
     func onLogout() { }
 

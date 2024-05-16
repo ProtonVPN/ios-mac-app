@@ -20,10 +20,7 @@ import Foundation
 import Dependencies
 
 public struct UnauthKeychainHandleDependencyKey: DependencyKey {
-    public static var liveValue: UnauthKeychainHandle {
-        UnauthKeychain.default
-    }
-
+    public static let liveValue: UnauthKeychainHandle = UnauthKeychain.default
     public static let testValue = liveValue
 }
 

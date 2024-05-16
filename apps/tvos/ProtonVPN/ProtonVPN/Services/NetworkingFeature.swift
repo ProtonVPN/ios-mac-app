@@ -29,9 +29,12 @@ import CommonNetworking
 import VPNShared
 import VPNAppCore
 
-// Should this be a different type of Reducer, e.g. higher order reducer?
-// Should this also deal with forking child session, user codes authenticating selector, etc? maybe a child should do it?
-// This could also EASILY live in the CommonNetworking (or SessionNetworking) module
+/// Platform independent reducer without UI, responsible for session management.
+/// This reducer is meant to be composed with main app features, at the top level of the app. Children of the top level
+/// app feature can pass delegate actions like logout, at which point the top level feature send the appropriate
+/// `NetworkingFeature.Action`.
+///
+/// See `AppFeature` for more information.
 struct NetworkingFeature: Reducer {
     enum State: Equatable {
         /// No session. Not to be confused with authenticated using an unauth session.
@@ -44,18 +47,25 @@ struct NetworkingFeature: Reducer {
     }
 
     enum Action {
+        case startLogOut
         case startAcquiringSession
         case sessionFetched(Result<SessionAcquiringResult, Error>)
         case forkedSessionAuthenticated(Result<AuthCredentials, Error>)
         case sessionExpired
     }
 
+    @Dependency(\.networking) var networking
+    @Dependency(\.authKeychain) var authKeychain
+    @Dependency(\.unauthKeychain) var unauthKeychain
+
     var body: some Reducer<State, Action> {
-        @Dependency(\.networking) var networking
         Reduce { state, action in
             switch action {
+            case .startLogOut:
+                authKeychain.clear()
+                return .run { send in await send(.startAcquiringSession) }
+
             case .startAcquiringSession:
-                clearKeychains()
                 state = .acquiringSession
                 return .run { send in
                     await send(.sessionFetched(Result { try await networking.acquireSessionIfNeeded() }))
@@ -80,7 +90,6 @@ struct NetworkingFeature: Reducer {
             case .sessionExpired:
                 state = .unauthenticated
                 // VPNAPPL-2180: `NetworkingDelegate` must send `.sessionExpired` action
-                clearKeychains()
                 return .send(.startAcquiringSession)
 
             case .forkedSessionAuthenticated(.success(let credentials)):
@@ -88,21 +97,13 @@ struct NetworkingFeature: Reducer {
                 let session = Session.auth(uid: credentials.sessionId)
                 state = .authenticated(session)
                 networking.set(session: session)
-                clearKeychains()
-                @Dependency(\.authKeychain) var authKeychain
-                try! authKeychain.store(credentials)
+                unauthKeychain.clear()
+                try? authKeychain.store(credentials)
                 return .none
 
             case .forkedSessionAuthenticated(.failure):
                 return .none
             }
         }
-    }
-
-    private func clearKeychains() {
-        @Dependency(\.authKeychain) var authKeychain
-        @Dependency(\.unauthKeychain) var unauthKeychain
-        authKeychain.clear()
-        unauthKeychain.clear()
     }
 }

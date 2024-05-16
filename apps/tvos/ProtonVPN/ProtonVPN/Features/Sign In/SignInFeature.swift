@@ -41,6 +41,7 @@ struct SignInFeature {
 
     @Dependency(\.networkClient) var networkClient
     @Dependency(\.continuousClock) var clock
+    @Dependency(ServerPollConfiguration.self) var pollConfiguration
 
     private enum CancelID { case timer }
 
@@ -70,7 +71,6 @@ struct SignInFeature {
                 return .run { send in await send(.authenticationFinished(Result { try await networkClient.forkedSession(code.selector) })) }
 
             case .codeFetchingFinished(.success(let response)):
-                @Dependency(ServerPollConfiguration.self) var pollConfiguration
                 state = .waitingForAuthentication(code: response, remainingAttempts: pollConfiguration.failAfterAttempts)
                 return .run { send in
                     try? await clock.sleep(for: pollConfiguration.delayBeforePollingStarts)
@@ -83,22 +83,12 @@ struct SignInFeature {
                 return .none
 
             case .authenticationFinished(.success(.authenticated(let response))):
-                // HACK: Set a non-empty username mocked username for now
-                let credentials = AuthCredentials(
-                    username: "username", // Missing from response
-                    accessToken: response.accessToken,
-                    refreshToken: response.refreshToken,
-                    sessionId: response.uid,
-                    userId: response.userID,
-                    scopes: response.scopes,
-                    mailboxPassword: nil // Missing from response
-                )
+                let credentials = AuthCredentials(from: response)
                 return .run { send in await send(.signInFinished(.success(credentials))) }
 
             case .authenticationFinished(.success(.invalidSelector)):
                 // Parent session has not yet authenticated this selector
                 // a.k.a. user has not typed in code in browser
-                @Dependency(ServerPollConfiguration.self) var pollConfiguration
                 return .run { send in
                     try? await clock.sleep(for: pollConfiguration.period)
                     await send(.pollServer)
@@ -113,5 +103,20 @@ struct SignInFeature {
                 return .none
             }
         }
+    }
+}
+
+extension AuthCredentials {
+    public convenience init(from sessionAuthResponse: SessionAuthResponse) {
+        // HACK: Set a non-empty username mocked username for now
+        self.init(
+            username: "username", // Missing from response
+            accessToken: sessionAuthResponse.accessToken,
+            refreshToken: sessionAuthResponse.refreshToken,
+            sessionId: sessionAuthResponse.uid,
+            userId: sessionAuthResponse.userID,
+            scopes: sessionAuthResponse.scopes,
+            mailboxPassword: nil // Missing from response
+        )
     }
 }

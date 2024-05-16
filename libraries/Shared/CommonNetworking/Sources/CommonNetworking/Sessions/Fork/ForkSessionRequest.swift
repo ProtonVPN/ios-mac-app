@@ -34,7 +34,7 @@ public struct ForkSessionRequest: Request {
         self.timeout = timeout
     }
 
-    public var nonDefaultTimeout: TimeInterval? {
+    public var nonDefaultTimeout: TimeInterval {
         return timeout
     }
 

@@ -20,14 +20,34 @@ import ComposableArchitecture
 
 import CommonNetworking
 
-@Reducer
-struct AppFeature {
+/// Some business logic requires communication between reducers. This is facilitated by the parent feautre, which
+/// listens to actions coming from one child, and sends the relevant action to the other child. This allows features to
+/// function independently in completely separate modules.
+///
+/// For example, for the sign-in flow:
+///
+/// ```
+/// AppFeature {
+///     NetworkingFeature,
+///     SignInFeature,
+///     MainFeature { ... }
+/// }
+/// ```
+///
+/// If `SignInFeature` is responsible for logging in the user. Once the user has been signed in, it can send an action
+/// such as `signInFinished(credentials: AuthCredentials)`. This is a delegate action that isn't handled by the
+/// `SignInFeature`, but is instead handled by the `AppFeature`, which passes  a `NetworkingFeature` action.
+///
+/// The reverse of this flow is used for logging out, where a user action from the `MainFeature` is observed by the
+/// `AppFeature`, at which it sends a `NetworkingFeature.Action` which is handled by the `NetworkingFeature`
+@Reducer struct AppFeature {
     @ObservableState
     struct State: Equatable {
         @Shared(.appStorage("username")) var user: String?
         var main: MainFeature.State = .init()
         var welcome = WelcomeFeature.State()
 
+        /// Determines whether we show the `MainFeature` or `WelcomeFeature` (sign in flow)
         var networking: NetworkingFeature.State = .unauthenticated
     }
 
@@ -39,11 +59,11 @@ struct AppFeature {
     }
 
     var body: some Reducer<State, Action> {
-        Scope(state: \.welcome, action: \.welcome) {
-            WelcomeFeature()
-        }
         Scope(state: \.networking, action: \.networking) {
             NetworkingFeature()
+        }
+        Scope(state: \.welcome, action: \.welcome) {
+            WelcomeFeature()
         }
         Scope(state: \.main, action: \.main) {
             MainFeature()
