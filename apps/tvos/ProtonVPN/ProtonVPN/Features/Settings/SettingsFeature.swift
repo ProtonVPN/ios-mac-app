@@ -81,13 +81,7 @@ struct SettingsFeature {
                 return .none
             case .alert(.presented(.signOut)):
                 state.isLoading = true
-                return .run { send in
-                    @Dependency(NetworkClient.self) var networkClient
-                    try await networkClient.logout()
-                    await send(.finishSignOut)
-                } catch: { error, send in
-                    await send(.finishSignOut)
-                }
+                return .run { send in await send(.finishSignOut) }
             case .alert:
                 return .none
             case .destination:
