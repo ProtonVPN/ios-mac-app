@@ -45,8 +45,8 @@ struct NetworkingFeature: Reducer {
 
     enum Action {
         case startAcquiringSession
-        case sessionFetched(SessionAcquiringResult)
-        case forkedSessionAuthenticated(AuthCredentials)
+        case sessionFetched(Result<SessionAcquiringResult, Error>)
+        case forkedSessionAuthenticated(Result<AuthCredentials, Error>)
         case sessionExpired
     }
 
@@ -57,10 +57,13 @@ struct NetworkingFeature: Reducer {
             case .startAcquiringSession:
                 clearKeychains()
                 state = .acquiringSession
-                return .run { send in await send(.sessionFetched(try networking.acquireSessionIfNeeded())) }
+                return .run { send in
+                    await send(.sessionFetched(Result { try await networking.acquireSessionIfNeeded() }))
+                }
 
-            case .sessionFetched(.sessionAlreadyPresent(let credentials)),
-                .sessionFetched(.sessionFetchedAndAvailable(let credentials)):
+            case .sessionFetched(.success(.sessionAlreadyPresent(let credentials))):
+                fallthrough
+            case .sessionFetched(.success(.sessionFetchedAndAvailable(let credentials))):
                 // Credentials already stored in keychain by Networking implementation in CommonNetworking
                 let session: CommonNetworking.Session = credentials.isForUnauthenticatedSession
                     ? .unauth(uid: credentials.sessionID)
@@ -68,7 +71,9 @@ struct NetworkingFeature: Reducer {
                 state = .authenticated(session)
                 return .none
 
-            case .sessionFetched(.sessionUnavailableAndNotFetched):
+            case .sessionFetched(.success(.sessionUnavailableAndNotFetched)):
+                fallthrough
+            case .sessionFetched(.failure):
                 state = .unauthenticated
                 return .none
 
@@ -78,7 +83,7 @@ struct NetworkingFeature: Reducer {
                 clearKeychains()
                 return .send(.startAcquiringSession)
 
-            case .forkedSessionAuthenticated(let credentials):
+            case .forkedSessionAuthenticated(.success(let credentials)):
                 // We forked a session ourselves, and web client just authenticated it
                 let session = Session.auth(uid: credentials.sessionId)
                 state = .authenticated(session)
@@ -86,6 +91,9 @@ struct NetworkingFeature: Reducer {
                 clearKeychains()
                 @Dependency(\.authKeychain) var authKeychain
                 try! authKeychain.store(credentials)
+                return .none
+
+            case .forkedSessionAuthenticated(.failure):
                 return .none
             }
         }

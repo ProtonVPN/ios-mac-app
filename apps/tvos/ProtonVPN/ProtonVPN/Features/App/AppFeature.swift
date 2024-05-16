@@ -59,7 +59,7 @@ struct AppFeature {
 
             case .welcome(.destination(.presented(.signIn(.signInFinished(.success(let credentials)))))):
                 state.main.currentTab = .home
-                return .run { send in await send(.networking(.forkedSessionAuthenticated(credentials))) }
+                return .run { send in await send(.networking(.forkedSessionAuthenticated(.success(credentials)))) }
 
             case .welcome(.destination(.presented(.signIn(.signInFinished(.failure))))):
                 return .none
