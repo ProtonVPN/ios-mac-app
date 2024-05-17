@@ -880,6 +880,8 @@ public enum Localizable {
   public static var p2pTitle: String { return Localizable.tr("Localizable", "_p2p_title", fallback: "P2P/BitTorrent") }
   /// Used in sign-in, sign-up
   public static var password: String { return Localizable.tr("Localizable", "_password", fallback: "Password") }
+  /// Change password alert message
+  public static var passwordChangedSuccessfully: String { return Localizable.tr("Localizable", "_password_changed_successfully", fallback: "Password changed successfully") }
   /// Sign-up form
   public static var passwordConfirm: String { return Localizable.tr("Localizable", "_password_confirm", fallback: "Confirm password") }
   /// Per year. Appended to plan price.

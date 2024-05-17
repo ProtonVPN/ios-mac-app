@@ -2418,3 +2418,6 @@
 
 /* Change password cell title */
 "_change_password" = "Change password";
+
+/* Change password alert message */
+"_password_changed_successfully" = "Password changed successfully";
