@@ -208,7 +208,7 @@ final class LoginViewModel {
                         break
                     }
                 }
-            case .ask2FA:
+            case .askTOTP, .askAny2FA:
                 isTwoFactorStep = true
                 twoFactorRequired?()
             case .askSecondPassword, .chooseInternalUsernameAndCreateInternalAddress, .askFIDO2:
