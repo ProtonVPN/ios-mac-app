@@ -51,7 +51,7 @@ public protocol Networking: APIServiceDelegate {
 }
 
 /// This could be a `struct`, but it's nice for it to be an enum since we can then switch on it (it's the state of the
-/// `NetworkingFeature`)
+/// `SessionNetworkingFeature`)
 public enum Session: Equatable {
     case auth(uid: String)
     case unauth(uid: String)

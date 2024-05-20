@@ -22,19 +22,19 @@ import ProtonCoreNetworking
 
 public struct ForkSessionRequest: Request {
     let useCase: UseCase
-    let timeout: TimeInterval
+    let timeout: TimeInterval?
 
     public enum UseCase {
         case getSelector(clientId: String, independent: Bool)
         case getUserCode
     }
 
-    public init(useCase: UseCase, timeout: TimeInterval) {
+    public init(useCase: UseCase, timeout: TimeInterval? = nil) {
         self.useCase = useCase
         self.timeout = timeout
     }
 
-    public var nonDefaultTimeout: TimeInterval {
+    public var nonDefaultTimeout: TimeInterval? {
         return timeout
     }
 

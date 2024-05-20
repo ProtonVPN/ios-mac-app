@@ -34,9 +34,7 @@ public struct CoreNetworkingWrapper: VPNNetworking {
     
     public func acquireSessionIfNeeded() async throws -> SessionAcquiringResult {
         try await withCheckedThrowingContinuation { continuation in
-            wrapped.apiService.acquireSessionIfNeeded { result in
-                continuation.resume(with: result)
-            }
+            wrapped.apiService.acquireSessionIfNeeded(completion: continuation.resume(with:))
         }
     }
     

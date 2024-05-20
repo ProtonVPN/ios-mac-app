@@ -24,7 +24,6 @@ import CommonNetworking
 struct NetworkClient: Sendable {
     var fetchSignInCode: @Sendable () async throws -> SignInCode
     var forkedSession: @Sendable (_ selector: String) async throws -> SessionAuthResult
-    private static var count: Int = 1
 }
 
 @CasePathable
@@ -41,7 +40,7 @@ extension NetworkClient: DependencyKey {
         @Dependency(\.networking) var networking
         return NetworkClient(
             fetchSignInCode: {
-                let request = ForkSessionRequest(useCase: .getUserCode, timeout: 5.0)
+                let request = ForkSessionRequest(useCase: .getUserCode)
                 let response: ForkSessionUserCodeResponse = try await networking.perform(request: request)
                 return SignInCode(selector: response.selector, userCode: response.userCode)
             }, forkedSession: { selector in

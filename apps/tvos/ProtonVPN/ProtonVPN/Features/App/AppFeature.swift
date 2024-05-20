@@ -20,7 +20,7 @@ import ComposableArchitecture
 
 import CommonNetworking
 
-/// Some business logic requires communication between reducers. This is facilitated by the parent feautre, which
+/// Some business logic requires communication between reducers. This is facilitated by the parent feature, which
 /// listens to actions coming from one child, and sends the relevant action to the other child. This allows features to
 /// function independently in completely separate modules.
 ///
@@ -28,7 +28,7 @@ import CommonNetworking
 ///
 /// ```
 /// AppFeature {
-///     NetworkingFeature,
+///     SessionNetworkingFeature,
 ///     SignInFeature,
 ///     MainFeature { ... }
 /// }
@@ -36,10 +36,10 @@ import CommonNetworking
 ///
 /// If `SignInFeature` is responsible for logging in the user. Once the user has been signed in, it can send an action
 /// such as `signInFinished(credentials: AuthCredentials)`. This is a delegate action that isn't handled by the
-/// `SignInFeature`, but is instead handled by the `AppFeature`, which passes  a `NetworkingFeature` action.
+/// `SignInFeature`, but is instead handled by the `AppFeature`, which passes  a `SessionNetworkingFeature` action.
 ///
 /// The reverse of this flow is used for logging out, where a user action from the `MainFeature` is observed by the
-/// `AppFeature`, at which it sends a `NetworkingFeature.Action` which is handled by the `NetworkingFeature`
+/// `AppFeature`, at which it sends a `SessionNetworkingFeature.Action` which is handled by the `SessionNetworkingFeature`
 @Reducer struct AppFeature {
     @ObservableState
     struct State: Equatable {
@@ -48,19 +48,19 @@ import CommonNetworking
         var welcome = WelcomeFeature.State()
 
         /// Determines whether we show the `MainFeature` or `WelcomeFeature` (sign in flow)
-        var networking: NetworkingFeature.State = .unauthenticated
+        var networking: SessionNetworkingFeature.State = .unauthenticated(nil)
     }
 
     enum Action {
         case main(MainFeature.Action)
         case welcome(WelcomeFeature.Action)
 
-        case networking(NetworkingFeature.Action)
+        case networking(SessionNetworkingFeature.Action)
     }
 
     var body: some Reducer<State, Action> {
         Scope(state: \.networking, action: \.networking) {
-            NetworkingFeature()
+            SessionNetworkingFeature()
         }
         Scope(state: \.welcome, action: \.welcome) {
             WelcomeFeature()
@@ -71,8 +71,8 @@ import CommonNetworking
         Reduce { state, action in
             switch action {
             case .main(.settings(.alert(.presented(.signOut)))):
-                // Send an action to inform NetworkingFeature, which will clear keychains and acquire unauth session
-                return .run { send in await send(.networking(.startAcquiringSession))}
+                // Send an action to inform SessionNetworkingFeature, which will clear keychains and acquire unauth session
+                return .run { send in await send(.networking(.startLogout)) }
 
             case .main:
                 return .none
