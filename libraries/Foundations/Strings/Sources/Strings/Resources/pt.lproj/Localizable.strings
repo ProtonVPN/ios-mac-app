@@ -470,7 +470,7 @@
 "_map_show" = "Mostrar mapa";
 
 /* MacOS: Map view toggle button accessibility label (used by screen readers */
-"_map_hide" = "Hide map";
+"_map_hide" = "Ocultar o mapa";
 
 /* Description shown together with server info icon */
 "_tor_description" = "Liga-se à rede TOR";
@@ -687,7 +687,7 @@
 /* Plan speed */
 "_plan_speed_high" = "Velocidade alta";
 
-"_plan_speed_fastest" = "Fastest speed";
+"_plan_speed_fastest" = "Velocidade mais rápida";
 
 /* Unknown error that has no better description */
 "_error_internal_error" = "Erro interno da API";
@@ -735,7 +735,7 @@
 "_ne_couldnt_reach_server" = "Não é possível aceder aos servidores Proton";
 
 /* General title for several error alerts */
-"_error_unknown_title" = "Unknown error";
+"_error_unknown_title" = "Erro desconhecido";
 
 /* Delinquent user alert */
 "_delinquent_user_title" = "Fatura em dívida";
@@ -1335,7 +1335,7 @@
 /* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
 "_offer_ending_" = "Ending %@";
 
-"_quick_settings_title" = "Quick Settings";
+"_quick_settings_title" = "Definições rápidas";
 
 "_quick_settings_secureCore_description" = "Desvie os seus dados confidenciais pelos nossos servidores seguros em países amigos da privacidade.";
 
@@ -1491,8 +1491,6 @@
 
 "_server_load_title" = "Carga do servidor";
 
-"_dw-partner-2022_partners_title" = "Os nossos parceiros";
-
 "_streaming_servers_description" = "Ligue a um servidor PLUS neste país para iniciar a transmissão.";
 
 "_streaming_servers_note" = "Nota: desative o serviço de localização e limpe a memória das aplicações de transmissão para garantir que o novo conteúdo aparece.";
@@ -1599,7 +1597,7 @@
 
 "_subuser_alert_enable_connections_button" = "Ativar as ligações VPN";
 
-"_subuser_alert_login_button" = "Sign in again";
+"_subuser_alert_login_button" = "Iniciar sessão novamente";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "NAT moderado";
@@ -1901,7 +1899,7 @@
 "modals_new_upsell_secure_core_subtitle_bold" = "Secure Core";
 
 /* Title of All Countries upsell screen */
-"modals_new_upsell_all_countries_title" = "Access all countries";
+"modals_new_upsell_all_countries_title" = "Aceda a todos os países";
 
 /* The bold portion of the subtitle of All Countries upsell screen */
 "modals_new_upsell_all_countries_subtitle_bold" = "VPN Plus";
@@ -1946,7 +1944,7 @@
 "modals_common_next" = "Seguinte";
 
 /* Common button title */
-"modals_common_get_started" = "Get started";
+"modals_common_get_started" = "Começar";
 
 /* Description of user account update screen part 1 */
 "maximum_device_plan_limit_part_1" = "Desligue outro dispositivo para ligar a este ou actualize para %@";
@@ -1997,7 +1995,7 @@
 "upsell_profiles_subtitle" = "Desbloqueie perfis com a VPN Plus";
 
 /* First bold part of the subtitle of Profiles upsell modal */
-"upsell_profiles_subtitle_bold_1" = "profiles";
+"upsell_profiles_subtitle_bold_1" = "perfis";
 
 /* Second bold part of the subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle_bold_2" = "VPN Plus";
@@ -2213,7 +2211,7 @@
 "_br_failure_button_retry" = "Tente de novo";
 
 /* ReportBug success window: troubleshoot button */
-"_br_failure_button_troubleshoot" = "Troubleshoot";
+"_br_failure_button_troubleshoot" = "Resolução de problemas";
 
 /* Title of the view nudging users to update before filling Bug Report */
 "_update_view_title" = "Actualizar o Proton VPN";

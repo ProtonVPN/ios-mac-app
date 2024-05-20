@@ -1491,8 +1491,6 @@
 
 "_server_load_title" = "Навантаження сервера";
 
-"_dw-partner-2022_partners_title" = "Наші партнери";
-
 "_streaming_servers_description" = "З'єднайтеся з сервером Plus у цій країні, щоб розпочати потокову трансляцію.";
 
 "_streaming_servers_note" = "Примітка: вимкніть службу розташування та очистьте кеш програм потокової трансляції, щоб упевнитися, що з'являються нові матеріали.";
@@ -1874,7 +1872,7 @@
 "modals_new_upsell_vpn_accelerator_title" = "Користуйтеся інтернетом зі ще вищою швидкістю";
 
 /* Subtitle of the VPN Accelerator screen */
-"modals_new_upsell_vpn_accelerator_subtitle" = "Розблокуйте швидші, менш перевантажені сервери зі швидкістю до 10 Гбіт/с.";
+"modals_new_upsell_vpn_accelerator_subtitle" = "Розблокуйте швидші, менш навантажені сервери зі швидкістю до 10 Гбіт/с.";
 
 /* Subtitle of the Customization scren */
 "modals_new_upsell_customization_subtitle" = "Отримайте доступ до пристроїв у своїй локальній мережі (LAN) з VPN Plus.";

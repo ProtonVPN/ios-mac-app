@@ -1491,8 +1491,6 @@
 
 "_server_load_title" = "Palvelimen kuormitus";
 
-"_dw-partner-2022_partners_title" = "Kumppanimme";
-
 "_streaming_servers_description" = "Yhdistä Plus-palvelimeen tässä maassa aloittaaksesi suoratoiston.";
 
 "_streaming_servers_note" = "Huomioi: Poista sijaintipalvelu käytöstä ja tyhjennä suoratoistosovellusten välimuistit varmistaaksesi uuden sisällön näkymisen.";
@@ -2018,7 +2016,7 @@
 "upsell_countries_even_higher_speed" = "Entistä parempi VPN-nopeus";
 
 /* Feature of Countries upsell modal */
-"upsell_countries_geoblocked_content" = "Käytä estettyä sisältöä";
+"upsell_countries_geoblocked_content" = "Käytä alueellisesti estettyä sisältöä";
 
 /* Feature of Country upsell modal */
 "upsell_countries_connect_to" = "Yhdistä %d maahan";

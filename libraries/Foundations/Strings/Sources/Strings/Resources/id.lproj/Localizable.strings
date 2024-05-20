@@ -785,9 +785,9 @@
 /* Under maintenance alert */
 "_all_servers_under_maintenance" = "Seluruh server sedang berada dalam pemeliharaan. Pada umumnya, hal ini menandakan bahwa Proton VPN sedang mengalami kesalahan teknis atau Anda sedang berada pada jaringan yang terbatas.";
 
-"_p2p_forwarded_popup_body" = "Koneksi jaringan Anda secara otomatis dialihkan ke server lain karena beberapa server tidak mendukung lalu lintas P2P. Ini akan mengurangi kecepatan konesi Anda. Mohon gunakan server dengan label P2P untuk menghindari pengalihan.";
+"_p2p_forwarded_popup_body" = "Koneksi Anda telah secara otomatis dialihkan melalui server lain karena server tertentu tidak mendukung lalu lintas P2P. Hal ini dapat mengurangi kecepatan koneksi Anda. Silakan gunakan server dengan label P2P untuk menghindari pengalihan.";
 
-"_p2p_forwarded_popup_body_p1" = "Koneksi jaringan Anda secara otomatis dialihkan ke server lain karena beberapa server tidak mendukung lalu lintas P2P. Ini akan mengurangi kecepatan konesi Anda. Mohon gunakan server dengan";
+"_p2p_forwarded_popup_body_p1" = "Koneksi Anda telah secara otomatis dialihkan melalui server lain karena server tertentu tidak mendukung lalu lintas P2P. Hal ini dapat mengurangi kecepatan koneksi Anda. Silakan gunakan server dengan";
 
 "_p2p_forwarded_popup_body_p2" = "ikon untuk menghindari pengalihan lalu lintas.";
 
@@ -1001,7 +1001,7 @@
 
 "_allow_lan_description" = "Untuk mengizinkan akses LAN, kill switch harus dinonaktifkan.\n\nLanjut?";
 
-"_allow_lan_note" = "Harap diperhatikan bahwa koneksi VPN Anda harus terlebih dahulu disambungkan ulang agar perubahan ini dapat berlaku";
+"_allow_lan_note" = "Mohon diperhatikan bahwa koneksi Anda harus dimulai ulang untuk menerapkan perubahan ini";
 
 /* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
 "_turn_ks_on_title" = "Aktifkan kill switch?";
@@ -1283,7 +1283,7 @@
 "_troubleshoot_item_other_link3" = "Twitter";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
-"_netshield_stats_data_saved" = "Data\ndisimpan";
+"_netshield_stats_data_saved" = "Data yang\ntersimpan";
 
 /* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
 "_netshield_feature_description" = "Lindungi diri Anda dari iklan, malware, dan pelacak pada berbagai situs web dan aplikasi. Apabila situs web yang ingin Anda kunjungi tidak termuat, cobalah untuk menonaktifkan NetShield.\nPelajari lebih lanjut";
@@ -1491,8 +1491,6 @@
 
 "_server_load_title" = "Beban Server";
 
-"_dw-partner-2022_partners_title" = "Mitra kami";
-
 "_streaming_servers_description" = "Hubungkan diri Anda ke server Plus di negara ini untuk mulai menonton tayangan streaming.";
 
 "_streaming_servers_note" = "Perhatian: Matikan Layanan Lokasi dan bersihkan tembolok aplikasi pengaliran untuk memastikan konten baru muncul.";
@@ -1688,7 +1686,7 @@
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
 "netshield_stats_hint_data" = "Perkiraan ukuran iklan, pelacak, dan malware yang telah diblokir oleh NetShield.";
 
-"_netshield_stats_data_saved" = "Data\ndisimpan";
+"_netshield_stats_data_saved" = "Data yang\ntersimpan";
 
 /* The count of trackers/ads blocked in thousands */
 "_netshield_stats_blocked_K" = "%@ rb";
@@ -1826,7 +1824,7 @@
 "modals_upsell_moderate_nat_title" = "Bawa pengalaman gaming Anda ke level selanjutnya";
 
 /* Subtitle of Moderate NAT upsell screens */
-"modals_upsell_moderate_nat_subtitle" = "Akses NAT Type 2 dengan VPN Plus";
+"modals_upsell_moderate_nat_subtitle" = "Akses NAT tipe 2 dengan VPN Plus";
 
 /* Bold part of the subtitle of Moderate NAT upsell screens */
 "modals_upsell_moderate_nat_subtitle_bold" = "NAT tipe 2";
@@ -1835,7 +1833,7 @@
 "modals_upsell_features_moderate_nat_gaming" = "Tingkatkan performa game online dan panggilan video Anda";
 
 /* Feature of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_direct_connections" = "NAT Type 2 (moderat) mengoptimalkan kecepatan dan stabilitas koneksi Anda dengan mengukuhkan koneksi langsung antar perangkat";
+"modals_upsell_features_moderate_nat_direct_connections" = "NAT tipe 2 (moderat) mengoptimalkan kecepatan dan stabilitas koneksi Anda dengan mengukuhkan koneksi langsung antar perangkat";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_streaming" = "Tonton film streaming kesayangan Anda";
@@ -1880,7 +1878,7 @@
 "modals_new_upsell_customization_subtitle" = "Akses perangkat melalui Local Area Network (LAN) Anda dengan VPN Plus.";
 
 /* Subtitle of Moderate NAT upsell screens */
-"modals_new_upsell_moderate_nat_subtitle" = "Tingkatkan performa game online dan panggilan video dengan NAT type 2.";
+"modals_new_upsell_moderate_nat_subtitle" = "Tingkatkan performa game online dan panggilan video dengan NAT tipe 2.";
 
 /* Title of Netshield upsell screen */
 "modals_new_upsell_netshield_title" = "Nikmati penjelajahan tanpa iklan";

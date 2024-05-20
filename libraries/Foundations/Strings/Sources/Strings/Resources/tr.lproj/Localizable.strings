@@ -120,7 +120,7 @@
 "_loading_screen_slogan" = "Her yerde güvenli İnternet";
 
 /* Main mac app menu item */
-"_report_an_issue" = "Bir sorun bildirin...";
+"_report_an_issue" = "Sorun bildireceğim...";
 
 /* Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page. */
 "_help" = "Yardım";
@@ -993,7 +993,7 @@
 "_activate_widget_step_3" = "Proton VPN ekran bileşenini etkin ekran bileşenleri listesine ekleyin.";
 
 /* Report bug screen title; iOS settings screen: item; */
-"_report_bug" = "Bir sorun bildirin";
+"_report_bug" = "Sorun bildireceğim";
 
 "_allow_lan_title" = "Yerel ağ bağlantılarına izin verilsin";
 
@@ -1283,10 +1283,10 @@
 "_troubleshoot_item_other_link3" = "Twitter";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
-"_netshield_stats_data_saved" = "Kazanılan\nveri";
+"_netshield_stats_data_saved" = "Veri\nkazanıldı";
 
 /* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
-"_netshield_feature_description" = "Kendinizi siteler ile uygulamalarda bulunabilecek reklam, kötü amaçlı yazılım ve izleyicilerden koruyun. Siteler yüklenmezse NetShield özelliğini kapatmayı deneyin.\nAyrıntılı bilgi alın";
+"_netshield_feature_description" = "Siteler ile uygulnmalarda bulunabilecek reklam, kötü amaçlı yazılım ve izleyicilerden koruyun. Siteler yüklenmiyorsa NetShield özelliğini kapatmayı deneyin.\nAyrıntılı bilgi alın";
 
 /* Link with more info in the NetShield Feature description */
 "_netshield_feature_description_alt_link" = "Ayrıntılı bilgi alın";
@@ -1491,8 +1491,6 @@
 
 "_server_load_title" = "Sunucu yükü";
 
-"_dw-partner-2022_partners_title" = "İş ortaklarımız";
-
 "_streaming_servers_description" = "Yayın akışını başlatmak için bu ülkedeki bir Plus sunucusuna bağlanın.";
 
 "_streaming_servers_note" = "Not: Yeni içeriğin görüntülenmesini sağlamak için konum hizmetini kapatın ve yayın akışı uygulamalarının ön belleğini temizleyin.";
@@ -1688,7 +1686,7 @@
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
 "netshield_stats_hint_data" = "NetShield tarafından engellenen reklamların, izleyicilerin ve kötü amaçlı yazılımların öngörülen boyutu.";
 
-"_netshield_stats_data_saved" = "Kazanılan\nveri";
+"_netshield_stats_data_saved" = "Veri\nkazanıldı";
 
 /* The count of trackers/ads blocked in thousands */
 "_netshield_stats_blocked_K" = "%@ Bin";
@@ -2156,7 +2154,7 @@
 "_wrong_country_banner_text" = "İstediğiniz ülke yok mu? İstediğiniz sunucuyu seçebilmek için tarifenizi yükseltin";
 
 /* ReportBugwindow title */
-"_br_window_title" = "Bir sorun bildirin";
+"_br_window_title" = "Sorun bildireceğim";
 
 /* ReportBug 1st step title */
 "_br_1_title" = "Sorun neydi?";
