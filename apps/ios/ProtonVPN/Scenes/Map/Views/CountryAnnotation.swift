@@ -48,11 +48,7 @@ class CountryAnnotation: AnnotationView {
     var maxHeight: CGFloat {
         return viewModel.maxPinHeight + viewModel.labelHeight
     }
-    
-    var labelHeight: CGFloat {
-        return viewModel.labelHeight
-    }
-    
+
     var width: CGFloat {
         return viewModel.labelWidth
     }

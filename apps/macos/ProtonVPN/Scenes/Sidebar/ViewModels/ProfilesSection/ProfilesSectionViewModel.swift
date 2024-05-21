@@ -75,7 +75,7 @@ class ProfilesSectionViewModel {
     
     func cellModel(forRow index: Int) -> ProfilesSectionListCell {
         if index < cellCount - 1 {
-            return .profile(ProfileItemViewModel(profile: profileManager.allProfiles[index], vpnGateway: vpnGateway, userTier: userTier, alertService: alertService, sysexManager: sysexManager))
+            return .profile(ProfileItemViewModel(profile: profileManager.allProfiles[index], vpnGateway: vpnGateway, alertService: alertService, sysexManager: sysexManager))
         } else {
             return .footer(self)
         }

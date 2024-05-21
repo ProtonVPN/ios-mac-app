@@ -37,7 +37,6 @@ final class AccountViewController: NSViewController {
     @IBOutlet private weak var accountPlanSeparator: NSBox!
     
     @IBOutlet private weak var manageSubscriptionButton: InteractiveActionButton!
-    private var banner: BannerView?
     
     private let viewModel: AccountViewModel
     

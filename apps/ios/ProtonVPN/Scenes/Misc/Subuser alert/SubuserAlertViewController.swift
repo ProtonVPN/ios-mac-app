@@ -33,7 +33,7 @@ class SubuserAlertViewController: UIViewController {
 
     var role: UserRole = .noOrganization
     
-    public var safariServiceFactory: SafariServiceFactory?
+    var safariServiceFactory: SafariServiceFactory?
     
     override func viewDidLoad() {
         super.viewDidLoad()

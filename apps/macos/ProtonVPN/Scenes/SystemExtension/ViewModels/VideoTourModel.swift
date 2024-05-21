@@ -19,7 +19,7 @@
 import AVFoundation
 import Combine
 
-class VideoTourModel {
+final class VideoTourModel {
     enum VideoFile {
         case systemExtension
 
@@ -35,21 +35,6 @@ class VideoTourModel {
         }
     }
 
-    private let videoFile: VideoFile
-
-    private lazy var urlAsset: AVURLAsset = {
-        let videoUrl = URL(string: videoFile.rawValue)!
-        return AVURLAsset(url: videoUrl)
-    }()
-
-    lazy var size: CGSize = {
-        guard let track = urlAsset.tracks(withMediaType: .video).first else {
-            return .zero
-        }
-        let size = track.naturalSize.applying(track.preferredTransform)
-        return CGSize(width: abs(size.width), height: abs(size.height))
-    }()
-
     lazy var player = {
         let playerItem = AVPlayerItem(asset: urlAsset)
         let player = AVQueuePlayer(playerItem: playerItem)
@@ -57,7 +42,15 @@ class VideoTourModel {
                                      templateItem: playerItem)
         return player
     }()
-    var videoLooper: AVPlayerLooper?
+
+    private let videoFile: VideoFile
+
+    private lazy var urlAsset: AVURLAsset = {
+        let videoUrl = URL(string: videoFile.rawValue)!
+        return AVURLAsset(url: videoUrl)
+    }()
+
+    private var videoLooper: AVPlayerLooper?
 
     init(videoFile: VideoFile) {
         self.videoFile = videoFile

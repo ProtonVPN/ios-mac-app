@@ -24,12 +24,12 @@ import Cocoa
 import LegacyCommon
 import Ergonomics
 
-class StreamOptionCVItem: NSCollectionViewItem {
+final class StreamOptionCVItem: NSCollectionViewItem {
 
     @IBOutlet private weak var serviceIV: NSImageView!
     @IBOutlet private weak var serviceLbl: NSTextField!
         
-    public var viewModel: StreamOptionCVItemViewModelProtocol? {
+    var viewModel: StreamOptionCVItemViewModelProtocol? {
         didSet {
             guard let viewModel = self.viewModel else { return }
             

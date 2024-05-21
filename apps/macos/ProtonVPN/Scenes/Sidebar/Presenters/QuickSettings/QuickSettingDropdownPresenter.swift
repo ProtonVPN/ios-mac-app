@@ -24,15 +24,11 @@ import Cocoa
 import LegacyCommon
 
 protocol QuickSettingDropdownPresenterProtocol: AnyObject {
-    
-    var title: String! { get }
-    
     var viewController: QuickSettingsDetailViewControllerProtocol? { get set }
     var options: [QuickSettingsDropdownOptionPresenter] { get }
     var dismiss: (() -> Void)? { get set }
 
     func viewDidLoad()
-    func displayReconnectionFeedback()
 }
 
 class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProtocol {

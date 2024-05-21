@@ -30,7 +30,7 @@ enum ExpandMapButtonState {
 
 class ExpandMapButton: HoverDetectionButton {
     
-    public var transform: NSAffineTransform = NSAffineTransform()
+    var transform: NSAffineTransform = NSAffineTransform()
 
     var expandState: ExpandMapButtonState = .compact {
         didSet {

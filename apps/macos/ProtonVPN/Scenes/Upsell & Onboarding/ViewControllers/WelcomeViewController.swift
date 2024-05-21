@@ -27,7 +27,7 @@ import Theme
 import Ergonomics
 import Strings
 
-class WelcomeViewController: NSViewController {
+final class WelcomeViewController: NSViewController {
 
     fileprivate enum Switch: Int {
         case usageData
@@ -45,15 +45,13 @@ class WelcomeViewController: NSViewController {
     @IBOutlet weak var telemetryStackView: NSStackView!
     @IBOutlet weak var learnMore: InteractiveActionButton!
 
-    let windowService: WindowService
     let telemetrySettings: TelemetrySettings
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(windowService: WindowService, telemetrySettings: TelemetrySettings) {
-        self.windowService = windowService
+    init(telemetrySettings: TelemetrySettings) {
         self.telemetrySettings = telemetrySettings
         super.init(nibName: NSNib.Name("Welcome"), bundle: nil)
     }

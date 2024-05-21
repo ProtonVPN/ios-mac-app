@@ -34,15 +34,15 @@ class TroubleshootViewController: UIViewController {
     @IBOutlet weak var headerView: UIView!
     
     // Data
-    public var viewModel: TroubleshootViewModel!
-    
+    let viewModel: TroubleshootViewModel
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     init(_ viewModel: TroubleshootViewModel) {
-        super.init(nibName: "TroubleshootViewController", bundle: nil)
         self.viewModel = viewModel
+        super.init(nibName: "TroubleshootViewController", bundle: nil)
     }
     
     override func viewDidLoad() {

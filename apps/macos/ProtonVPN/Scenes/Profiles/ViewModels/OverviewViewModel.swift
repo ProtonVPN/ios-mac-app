@@ -66,7 +66,6 @@ final class OverviewViewModel {
                                      editProfile: editProfile,
                                      profileManager: profileManager,
                                      vpnGateway: vpnGateway,
-                                     userTier: userTier,
                                      sessionService: sessionService
         )
     }

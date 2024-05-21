@@ -22,10 +22,8 @@
 
 import Foundation
 
-struct URLConstants {
-    
-    private init () { }
-    
+enum URLConstants {
+
     // MARK: - DeepLinking
 
     static let deepLinkScheme = "protonvpn"

@@ -28,7 +28,7 @@ protocol UIAlertServiceFactory {
     func makeUIAlertService() -> UIAlertService
 }
 
-class OsxUiAlertService: UIAlertService {
+final class OsxUiAlertService: UIAlertService {
     
     typealias Factory = WindowServiceFactory & NavigationServiceFactory & SessionServiceFactory
     
@@ -39,7 +39,7 @@ class OsxUiAlertService: UIAlertService {
     private var windowService: WindowService
     private var currentAlerts = [SystemAlert]()
     
-    public init(factory: Factory) {
+    init(factory: Factory) {
         self.factory = factory
         windowService = factory.makeWindowService()
     }

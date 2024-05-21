@@ -41,13 +41,12 @@ final class HeaderViewModel {
     @Dependency(\.featureFlagProvider) var featureFlags
     @Dependency(\.credentialsProvider) var credentials
     
-    public typealias Factory = AnnouncementManagerFactory & AppStateManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & ProfileManagerFactory & NavigationServiceFactory & VpnGatewayFactory & AnnouncementsViewModelFactory
+    typealias Factory = AnnouncementManagerFactory & AppStateManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & ProfileManagerFactory & VpnGatewayFactory & AnnouncementsViewModelFactory
     private let factory: Factory
     
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
-    private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var announcementManager: AnnouncementManager = factory.makeAnnouncementManager()
     private lazy var announcementsViewModel: AnnouncementsViewModel = factory.makeAnnouncementsViewModel()
@@ -90,7 +89,7 @@ final class HeaderViewModel {
         }
     }
     
-    init(factory: Factory, appStateManager: AppStateManager, navService: NavigationService) {
+    init(factory: Factory) {
         self.factory = factory
         startObserving()
     }

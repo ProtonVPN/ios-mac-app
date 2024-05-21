@@ -68,10 +68,9 @@ private enum Section {
 protocol CountriesVMDelegate: AnyObject {
     func onContentChange()
     func displayGatewayInfo()
-    func displayFastestConnectionInfo()
 }
 
-class CountriesViewModel: SecureCoreToggleHandler {
+final class CountriesViewModel: SecureCoreToggleHandler {
 
     private var tableData = [Section]()
     
@@ -115,7 +114,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         return (try? keychain.fetchCached().maxTier) ?? .freeTier
     }
 
-    public typealias Factory = AppStateManagerFactory
+    typealias Factory = AppStateManagerFactory
         & PropertiesManagerFactory
         & CoreAlertServiceFactory
         & ConnectionStatusServiceFactory
@@ -255,7 +254,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
             connectionStatusService: connectionStatusService,
             propertiesManager: propertiesManager,
             planService: planService,
-            serversFilter: serversFilter,
             showCountryConnectButton: showCountryConnectButton,
             showFeatureIcons: showFeatureIcons
         )

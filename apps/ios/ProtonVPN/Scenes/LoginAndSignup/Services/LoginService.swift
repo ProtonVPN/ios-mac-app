@@ -50,7 +50,6 @@ final class CoreLoginService {
         & AppSessionRefresherFactory
         & WindowServiceFactory
         & CoreAlertServiceFactory
-        & NetworkingDelegateFactory
         & PropertiesManagerFactory
         & NetworkingFactory
         & CoreApiServiceFactory
@@ -62,7 +61,6 @@ final class CoreLoginService {
     private let appSessionRefresher: AppSessionRefresher
     private let windowService: WindowService
     private let alertService: AlertService
-    private let networkingDelegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
     private let networking: Networking
     private let propertiesManager: PropertiesManagerProtocol
     private let doh: DoHVPN
@@ -80,7 +78,6 @@ final class CoreLoginService {
         appSessionRefresher = factory.makeAppSessionRefresher()
         windowService = factory.makeWindowService()
         alertService = factory.makeCoreAlertService()
-        networkingDelegate = factory.makeNetworkingDelegate()
         propertiesManager = factory.makePropertiesManager()
         networking = factory.makeNetworking()
         coreApiService = factory.makeCoreApiService()

@@ -41,13 +41,12 @@ extension DependencyContainer: CreateNewProfileViewModelFactory {
     }
 }
 
-class CreateNewProfileViewModel {
-    
+final class CreateNewProfileViewModel {
+
     typealias Factory = CoreAlertServiceFactory &
         VpnKeychainFactory &
         PropertiesManagerFactory &
         AppStateManagerFactory &
-        VpnGatewayFactory &
         ProfileManagerFactory &
         SystemExtensionManagerFactory &
         SessionServiceFactory
@@ -70,7 +69,6 @@ class CreateNewProfileViewModel {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
     private let propertiesManager: PropertiesManagerProtocol
@@ -273,10 +271,6 @@ class CreateNewProfileViewModel {
 
     func userTierSupports(group: ServerGroupInfo) -> Bool {
         group.minTier <= userTier
-    }
-
-    func userTierSupports(server: ServerModel) -> Bool {
-        userTierSupports(serverWithTier: server.tier)
     }
 
     func userTierSupports(serverWithTier tier: Int) -> Bool {

@@ -42,7 +42,7 @@ class FlagView: NSView {
         
         if let image = backgroundImage {
             image.draw(in: bounds)
-            addGradient(context: context)
+            addGradient()
         }
     }
     
@@ -55,7 +55,7 @@ class FlagView: NSView {
         context.drawPath(using: .fill)
     }
     
-    private func addGradient(context: CGContext) {
+    private func addGradient() {
         let diagonal = NSGradient(starting: .transparent, ending: .normal)
         diagonal?.draw(in: bounds, angle: 0)
         

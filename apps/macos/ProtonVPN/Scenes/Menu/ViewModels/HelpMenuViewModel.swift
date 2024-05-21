@@ -36,21 +36,20 @@ extension DependencyContainer: HelpMenuViewModelFactory {
     }
 }
 
-class HelpMenuViewModel {
-    
+final class HelpMenuViewModel {
+
     typealias Factory = VpnManagerFactory
                         & NavigationServiceFactory
                         & VpnKeychainFactory
                         & CoreAlertServiceFactory
                         & SystemExtensionManagerFactory
-                        & PropertiesManagerFactory
                         & LogFileManagerFactory
                         & LogContentProviderFactory
                         & AuthKeychainHandleFactory
                         & AppInfoFactory
                         & WindowServiceFactory
                         & VpnAuthenticationStorageFactory
-    private var factory: Factory
+    private let factory: Factory
     
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var windowService: WindowService = factory.makeWindowService()
@@ -58,7 +57,6 @@ class HelpMenuViewModel {
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var systemExtensionManager: SystemExtensionManager = factory.makeSystemExtensionManager()
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var logFileManager: LogFileManager = factory.makeLogFileManager()
     private lazy var logContentProvider: LogContentProvider = factory.makeLogContentProvider()
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()

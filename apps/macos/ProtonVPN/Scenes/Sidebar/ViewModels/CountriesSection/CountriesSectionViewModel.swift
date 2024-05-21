@@ -74,7 +74,7 @@ protocol CountriesSettingsDelegate: AnyObject {
     func updateQuickSettings(secureCore: Bool, netshield: NetShieldType, killSwitch: Bool)
 }
 
-class CountriesSectionViewModel {
+final class CountriesSectionViewModel {
     @Dependency(\.serverRepository) var repository
 
     private let vpnGateway: VpnGatewayProtocol
@@ -104,7 +104,7 @@ class CountriesSectionViewModel {
         return propertiesManager.featureFlags.netShield
     }
 
-    public func displayFreeServices() {
+    func displayFreeServices() {
         alertService.push(alert: FreeConnectionsAlert(countries: freeCountries))
     }
 
@@ -191,7 +191,7 @@ class CountriesSectionViewModel {
         updateState()
     }
 
-    func displayUpgradeMessage( _ serverModel: ServerModel? ) {
+    func displayUpgradeMessage() {
         alertService.push(alert: AllCountriesUpsellAlert())
     }
 
@@ -375,12 +375,6 @@ class CountriesSectionViewModel {
         return serverCells.count
     }
 
-    private func insertServers(_ index: Int, countryCode: String, serversFilter: ((ServerModel) -> Bool)?) -> Int {
-        guard let cells = self.servers[countryCode] else { return 0 }
-        data.insert(contentsOf: cells, at: index)
-        return cells.count
-    }
-
     private func removeServers(_ index: Int) -> Int {
         let secondIndex = data[(index + 1)...].firstIndex(where: {
             if case .country = $0 { return true }
@@ -453,7 +447,7 @@ class CountriesSectionViewModel {
     // MARK: - Wrong country banner
 
     /// Called when HeaderViewModel update its `ServerChangeViewState` and changes free user banner accordingly
-    public func changeServerStateUpdated(to state: ServerChangeViewState) {
+    func changeServerStateUpdated(to state: ServerChangeViewState) {
         switch state {
         case .unavailable:
             showWrongCountryBanner = isConnected // Don't show if not connected
@@ -489,7 +483,7 @@ class CountriesSectionViewModel {
                 leftIcon: Theme.Asset.wrongCountry.image,
                 text: Localizable.wrongCountryBannerText,
                 action: { [weak self] in
-                    self?.displayUpgradeMessage(nil)
+                    self?.displayUpgradeMessage()
                 },
                 separatorTop: false,
                 separatorBottom: true
@@ -499,7 +493,7 @@ class CountriesSectionViewModel {
             leftIcon: Modals.Asset.worldwideCoverage.image,
             text: Localizable.freeBannerText,
             action: { [weak self] in
-                self?.displayUpgradeMessage(nil)
+                self?.displayUpgradeMessage()
             },
             separatorTop: false,
             separatorBottom: true
@@ -547,7 +541,6 @@ class CountriesSectionViewModel {
         return FastestConnectionViewModel(
             profile: profile,
             vpnGateway: vpnGateway,
-            userTier: userTier,
             alertService: alertService,
             sysexManager: sysexManager
         )
