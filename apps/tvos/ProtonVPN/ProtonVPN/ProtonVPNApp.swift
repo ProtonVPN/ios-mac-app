@@ -37,4 +37,3 @@ struct ProtonVPNApp: App {
         }
     }
 }
-
