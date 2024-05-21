@@ -21,54 +21,79 @@ import Logging
 // Only levels that we actually use are added here
 public extension Logging.Logger {
     
-    func debug(_ message: @autoclosure () -> Message,
-                      category: Logger.Category? = nil,
-                      event: Logger.Event? = nil,
-                      metadata: @autoclosure @escaping () -> Metadata? = nil,
-                      source: @autoclosure () -> String? = nil,
-                      file: String = #file, function: String = #function, line: UInt = #line) {
-        
-        self.log(level: .debug, message(), metadata: getMeta(metadata, category: category, event: event)(), source: source(), file: file, function: function, line: line)
+    func debug(
+        _ message: @autoclosure () -> Message,
+        category: Logger.Category? = nil,
+        event: Logger.Event? = nil,
+        metadata: @autoclosure () -> Metadata? = nil,
+        source: @autoclosure () -> String? = nil,
+        file: String = #file,
+        function: String = #function,
+        line: UInt = #line
+    ) {
+        withoutActuallyEscaping(metadata) { escapingMetadata in
+            self.log(level: .debug, message(), metadata: getMeta(escapingMetadata, category: category, event: event)(), source: source(), file: file, function: function, line: line)
+        }
     }
     
-    func info(_ message: @autoclosure () -> Message,
-                     category: Logger.Category? = nil,
-                     event: Logger.Event? = nil,
-                     metadata: @autoclosure @escaping () -> Metadata? = nil,
-                     source: @autoclosure () -> String? = nil,
-                     file: String = #file, function: String = #function, line: UInt = #line) {
-        
-        self.log(level: .info, message(), metadata: getMeta(metadata, category: category, event: event)(), source: source(), file: file, function: function, line: line)
+    func info(
+        _ message: @autoclosure () -> Message,
+        category: Logger.Category? = nil,
+        event: Logger.Event? = nil,
+        metadata: @autoclosure () -> Metadata? = nil,
+        source: @autoclosure () -> String? = nil,
+        file: String = #file,
+        function: String = #function,
+        line: UInt = #line
+    ) {
+        withoutActuallyEscaping(metadata) { escapingMetadata in
+            self.log(level: .info, message(), metadata: getMeta(escapingMetadata, category: category, event: event)(), source: source(), file: file, function: function, line: line)
+        }
     }
     
-    func warning(_ message: @autoclosure () -> Message,
-                        category: Logger.Category? = nil,
-                        event: Logger.Event? = nil,
-                        metadata: @autoclosure @escaping () -> Metadata? = nil,
-                        source: @autoclosure () -> String? = nil,
-                        file: String = #file, function: String = #function, line: UInt = #line) {
-        
-        self.log(level: .warning, message(), metadata: getMeta(metadata, category: category, event: event)(), source: source(), file: file, function: function, line: line)
+    func warning(
+        _ message: @autoclosure () -> Message,
+        category: Logger.Category? = nil,
+        event: Logger.Event? = nil,
+        metadata: @autoclosure () -> Metadata? = nil,
+        source: @autoclosure () -> String? = nil,
+        file: String = #file,
+        function: String = #function,
+        line: UInt = #line
+    ) {
+        withoutActuallyEscaping(metadata) { escapingMetadata in
+            self.log(level: .warning, message(), metadata: getMeta(escapingMetadata, category: category, event: event)(), source: source(), file: file, function: function, line: line)
+        }
     }
     
-    func error(_ message: @autoclosure () -> Message,
-                      category: Logger.Category? = nil,
-                      event: Logger.Event? = nil,
-                      metadata: @autoclosure @escaping () -> Metadata? = nil,
-                      source: @autoclosure () -> String? = nil,
-                      file: String = #file, function: String = #function, line: UInt = #line) {
-        
-        self.log(level: .error, message(), metadata: getMeta(metadata, category: category, event: event)(), source: source(), file: file, function: function, line: line)
+    func error(
+        _ message: @autoclosure () -> Message,
+        category: Logger.Category? = nil,
+        event: Logger.Event? = nil,
+        metadata: @autoclosure () -> Metadata? = nil,
+        source: @autoclosure () -> String? = nil,
+        file: String = #file,
+        function: String = #function,
+        line: UInt = #line
+    ) {
+        withoutActuallyEscaping(metadata) { escapingMetadata in
+            self.log(level: .error, message(), metadata: getMeta(escapingMetadata, category: category, event: event)(), source: source(), file: file, function: function, line: line)
+        }
     }
 
-    func assertionFailure(_ message: String,
-                          category: Logger.Category? = nil,
-                          event: Logger.Event? = nil,
-                          metadata: @autoclosure @escaping () -> Metadata? = nil,
-                          source: @autoclosure () -> String? = nil,
-                          file: String = #file, function: String = #function, line: UInt = #line) {
-        
-        self.log(level: .critical, .init(stringLiteral: message), metadata: getMeta(metadata, category: category, event: event)(), source: source(), file: file, function: function, line: line)
+    func assertionFailure(
+        _ message: String,
+        category: Logger.Category? = nil,
+        event: Logger.Event? = nil,
+        metadata: @autoclosure () -> Metadata? = nil,
+        source: @autoclosure () -> String? = nil,
+        file: String = #file,
+        function: String = #function,
+        line: UInt = #line
+    ) {
+        withoutActuallyEscaping(metadata) { escapingMetadata in
+            self.log(level: .critical, .init(stringLiteral: message), metadata: getMeta(escapingMetadata, category: category, event: event)(), source: source(), file: file, function: function, line: line)
+        }
 #if DEBUG
         Swift.assertionFailure(message)
 #endif
