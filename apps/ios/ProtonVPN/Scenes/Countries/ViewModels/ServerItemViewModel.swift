@@ -81,7 +81,6 @@ class ServerItemViewModel: ServerItemViewModelCore {
     }
 
     var connectionChanged: (() -> Void)?
-    var countryConnectionChanged: Notification.Name?
     
     // MARK: First line in the TableCell
     

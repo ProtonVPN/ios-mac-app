@@ -39,8 +39,7 @@ final class ProfileItemViewModel {
     private let natTypePropertyProvider: NATTypePropertyProvider
     private let safeModePropertyProvider: SafeModePropertyProvider
     private let connectionStatusService: ConnectionStatusService
-    private let planService: PlanService
-    
+
     private let userTier: Int
     private let lowestServerTier: Int
     private let underMaintenance: Bool
@@ -61,10 +60,6 @@ final class ProfileItemViewModel {
     
     private var connectedUiState: Bool {
         return isConnected || isConnecting
-    }
-    
-    private var canConnect: Bool {
-        return !underMaintenance
     }
 
     private var isUsersTierTooLow: Bool {
@@ -111,7 +106,7 @@ final class ProfileItemViewModel {
         return isUsersTierTooLow ? 0.5 : 1.0
     }
 
-    init(profile: Profile, vpnGateway: VpnGatewayProtocol, alertService: AlertService, userTier: Int, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, connectionStatusService: ConnectionStatusService, planService: PlanService) {
+    init(profile: Profile, vpnGateway: VpnGatewayProtocol, alertService: AlertService, userTier: Int, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, connectionStatusService: ConnectionStatusService) {
         self.profile = profile
         self.vpnGateway = vpnGateway
         self.alertService = alertService
@@ -120,7 +115,6 @@ final class ProfileItemViewModel {
         self.natTypePropertyProvider = natTypePropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
         self.connectionStatusService = connectionStatusService
-        self.planService = planService
 
         switch profile.serverOffering {
         case .custom(let serverWrapper):

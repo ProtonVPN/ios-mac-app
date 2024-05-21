@@ -38,7 +38,7 @@ import VPNShared
 import VPNAppCore
 import LegacyCommon
 
-class CountryItemViewModel {
+final class CountryItemViewModel {
     /// Contains information about the region such as the country code, the tier the
     /// country is available for, and what features are available OR a Gateway instead of
     /// a country.
@@ -55,16 +55,14 @@ class CountryItemViewModel {
         return repository.getServers(filteredBy: filters, orderedBy: .nameAscending)
     }()
 
-    /// If not nil, will filter servers to only the ones that contain given feature
-    private let serversFilter: ((ServerModel) -> Bool)?
     /// In gateways countries there is no connect button
-    public let showCountryConnectButton: Bool
+    let showCountryConnectButton: Bool
     /// Hide feature icons in Gateway countries
-    public let showFeatureIcons: Bool
+    let showFeatureIcons: Bool
     /// Hide headers in server list for Gateway countries.
     /// - Note: Atm it's used only for gateways, we can use `showFeatureIcons`. If there is a need
     /// to make it work separately, feel free to ask for this info in `init`
-    public var showServerHeaders: Bool { showFeatureIcons }
+    var showServerHeaders: Bool { showFeatureIcons }
 
     // MARK: Dependencies
     private let appStateManager: AppStateManager
@@ -114,11 +112,7 @@ class CountryItemViewModel {
         }
         return false
     }
-    
-    private var connectedUiState: Bool {
-        return isConnected || isConnecting
-    }
-    
+
     var connectionChanged: (() -> Void)?
     
     var countryCode: String {
@@ -146,10 +140,6 @@ class CountryItemViewModel {
         case .gateway(let name):
             return name
         }
-    }
-    
-    var backgroundColor: UIColor {
-        return .backgroundColor()
     }
 
     var torAvailable: Bool {
@@ -291,7 +281,6 @@ class CountryItemViewModel {
         connectionStatusService: ConnectionStatusService,
         propertiesManager: PropertiesManagerProtocol,
         planService: PlanService,
-        serversFilter: ((ServerModel) -> Bool)?,
         showCountryConnectButton: Bool,
         showFeatureIcons: Bool
     ) {
@@ -303,7 +292,6 @@ class CountryItemViewModel {
         self.connectionStatusService = connectionStatusService
         self.propertiesManager = propertiesManager
         self.planService = planService
-        self.serversFilter = serversFilter
         self.showCountryConnectButton = showCountryConnectButton
         self.showFeatureIcons = showFeatureIcons
         startObserving()

@@ -113,7 +113,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         tableView.register(NetShieldStatsTableViewCell.nib, forCellReuseIdentifier: NetShieldStatsTableViewCell.identifier)
     }
     
-    public func update(rows: [IndexPath: TableViewCellModel]) {
+    func update(rows: [IndexPath: TableViewCellModel]) {
         for (index, row) in rows {
             sections[index.section].cells[index.row] = row
         }

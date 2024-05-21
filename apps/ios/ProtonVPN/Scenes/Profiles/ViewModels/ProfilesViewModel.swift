@@ -127,8 +127,7 @@ class ProfilesViewModel {
                                         netShieldPropertyProvider: netShieldPropertyProvider,
                                         natTypePropertyProvider: natTypePropertyProvider,
                                         safeModePropertyProvider: safeModePropertyProvider,
-                                        connectionStatusService: connectionStatusService,
-                                        planService: planService)
+                                        connectionStatusService: connectionStatusService)
         }
         return nil
     }

@@ -24,14 +24,13 @@ import Foundation
 import UIKit
 import LegacyCommon
 
-class IosUiAlertService: UIAlertService {
+final class IosUiAlertService: UIAlertService {
     
     private let windowService: WindowService
     private var currentAlerts = [SystemAlert]()
     
-    public init(windowService: WindowService) {
+    init(windowService: WindowService) {
         self.windowService = windowService
-
     }
     
     func displayAlert(_ alert: SystemAlert) {

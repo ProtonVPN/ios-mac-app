@@ -11,15 +11,13 @@ import LegacyCommon
 
 // Overriden to make use of XPC connection, available only on macOS.
 class WireguardMacProtocolFactory: WireguardProtocolFactory {
-    public typealias Factory = PropertiesManagerFactory &
+    typealias Factory = PropertiesManagerFactory &
                                 XPCConnectionsRepositoryFactory &
                                 NETunnelProviderManagerWrapperFactory
     
     private let xpcConnectionsRepository: XPCConnectionsRepository
     
-    public init(bundleId: String,
-                appGroup: String,
-                factory: Factory) {
+    init(bundleId: String, appGroup: String, factory: Factory) {
         self.xpcConnectionsRepository = factory.makeXPCConnectionsRepository()
         super.init(bundleId: bundleId,
                    appGroup: appGroup,

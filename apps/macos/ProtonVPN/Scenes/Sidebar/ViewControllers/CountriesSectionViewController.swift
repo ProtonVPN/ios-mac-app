@@ -99,11 +99,8 @@ final class CountriesSectionViewController: NSViewController {
 
     fileprivate let viewModel: CountriesSectionViewModel
     
-    private var infoButtonRowSelected: Int?
     private var quickSettingDetailDisplayed = false
     
-    weak var sidebarView: NSView?
-
     private var notificationTokens: [NotificationToken] = []
     
     required init?(coder: NSCoder) {
@@ -203,7 +200,7 @@ final class CountriesSectionViewController: NSViewController {
         view.wantsLayer = true
     }
 
-    var observer: Any?
+    private var observer: Any?
 
     /// Appearance change doesn't get propagated normally, so we have to manually update the colors when user changes appearance
     func observeAppearance() {

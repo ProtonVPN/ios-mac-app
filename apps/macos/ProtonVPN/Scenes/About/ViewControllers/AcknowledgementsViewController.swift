@@ -24,12 +24,10 @@ import Cocoa
 import LegacyCommon
 import WebKit
 
-class AcknowledgementsViewController: NSViewController {
+final class AcknowledgementsViewController: NSViewController {
 
     @IBOutlet weak var webView: WKWebView!
-    
-    private lazy var bundle: Bundle = Bundle.main
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }

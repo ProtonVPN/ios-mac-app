@@ -15,13 +15,9 @@ import VPNShared
 final class MacVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory {
     
     private let propertiesManager: PropertiesManagerProtocol
-    private let vpnAuthentication: VpnAuthentication
-    private let appGroup: String
-    
-    init(propertiesManager: PropertiesManagerProtocol, vpnAuthentication: VpnAuthentication, appGroup: String) {
+
+    init(propertiesManager: PropertiesManagerProtocol) {
         self.propertiesManager = propertiesManager
-        self.vpnAuthentication = vpnAuthentication
-        self.appGroup = appGroup
     }
     
     func getCredentialsConfigurator(for vpnProtocol: VpnProtocol) -> VpnCredentialsConfigurator {
@@ -34,7 +30,6 @@ final class MacVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFact
             return WGVpnCredentialsConfigurator(xpcServiceUser: XPCServiceUser(withExtension: SystemExtensionType.wireGuard.machServiceName, logger: { log.debug("\($0)", category: .protocol) }),
                                                 propertiesManager: propertiesManager)
         }
-        
     }
     
 }

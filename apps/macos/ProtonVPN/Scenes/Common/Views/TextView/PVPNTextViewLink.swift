@@ -22,7 +22,7 @@
 
 import Cocoa
 
-class PVPNTextViewLink: NSTextView {
+final class PVPNTextViewLink: NSTextView {
 
     var lineSpacing: CGFloat = 14
     var textViewFont = NSFont.themeFont()
@@ -40,7 +40,7 @@ class PVPNTextViewLink: NSTextView {
         setup()
     }
 
-    public func hyperLink(originalText: String, hyperLink: String, urlString: String) {
+    func hyperLink(originalText: String, hyperLink: String, urlString: String) {
         let attributedOriginalText = NSMutableAttributedString(string: originalText)
         let linkRange = attributedOriginalText.mutableString.range(of: hyperLink)
         let fullRange = NSRange(location: 0, length: attributedOriginalText.length)

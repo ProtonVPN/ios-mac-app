@@ -29,8 +29,6 @@ struct SystemExtensionTutorialView: View {
     static let securityPreferencesUrlString = "x-apple.systempreferences:com.apple.preference.security"
     let videoTourModel = VideoTourModel(videoFile: .systemExtension)
 
-    @State private var isFullScreen = false
-
     var body: some View {
         ZStack {
             videoView

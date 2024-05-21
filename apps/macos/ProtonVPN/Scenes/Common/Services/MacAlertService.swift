@@ -33,7 +33,7 @@ import Strings
 
 final class MacAlertService {
     
-    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & NotificationManagerFactory & UpdateManagerFactory & PropertiesManagerFactory & TroubleshootViewModelFactory & PlanServiceFactory & SessionServiceFactory & NavigationServiceFactory & TelemetrySettingsFactory & VpnKeychainFactory
+    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & NotificationManagerFactory & UpdateManagerFactory & TroubleshootViewModelFactory & PlanServiceFactory & SessionServiceFactory & TelemetrySettingsFactory & VpnKeychainFactory
     private let factory: Factory
     
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
@@ -41,10 +41,8 @@ final class MacAlertService {
     private lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var notificationManager: NotificationManagerProtocol = factory.makeNotificationManager()
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var sessionService: SessionService = factory.makeSessionService()
-    private lazy var navigationService: NavigationService = factory.makeNavigationService()
     private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     
@@ -272,7 +270,7 @@ extension MacAlertService: CoreAlertService {
             return
         }
 
-        let welcomeViewController = WelcomeViewController(windowService: windowService, telemetrySettings: telemetrySettings)
+        let welcomeViewController = WelcomeViewController(telemetrySettings: telemetrySettings)
         windowService.presentKeyModal(viewController: welcomeViewController)
 
         provider.getDefaults().set(true, forKey: AppConstants.UserDefaults.welcomed)

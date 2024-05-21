@@ -43,7 +43,7 @@ class TroubleshootCoordinatorImplementation: TroubleshootCoordinator {
     
     private lazy var windowService: WindowService = factory.makeWindowService()
     
-    public init(_ factory: Factory) {
+    init(_ factory: Factory) {
         self.factory = factory
     }
     

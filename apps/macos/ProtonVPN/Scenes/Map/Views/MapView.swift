@@ -25,7 +25,7 @@ import MapKit
 import Theme
 import Ergonomics
 
-class MapView: NSView {
+final class MapView: NSView {
     
     private let imageScale: CGFloat = 8
     private let minMapScale: CGFloat = 0.8
@@ -54,10 +54,8 @@ class MapView: NSView {
     var minZoom: CGFloat = 1 {
         didSet {
             didZoom?()
-            halfZoom = (maxZoom - minZoom) * 0.6
         }
     }
-    var halfZoom: CGFloat = (8 - 1) * 0.6
     var zoom: CGFloat = 1 {
         didSet {
             didZoom?()

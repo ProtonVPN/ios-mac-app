@@ -53,7 +53,6 @@ final class StatusMenuViewModel {
     private let factory: Factory
     @Dependency(\.profileAuthorizer) private var profileAuthorizer
     @Dependency(\.credentialsProvider) private var credentials
-    @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
 
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
@@ -119,11 +118,7 @@ final class StatusMenuViewModel {
     var isConnected: Bool {
         return vpnGateway.connection == .connected
     }
-    
-    var isStateStable: Bool {
-        return vpnGateway.connection == .connected || vpnGateway.connection == .disconnected
-    }
-    
+
     var profileListViewModel: StatusMenuProfilesListViewModel {
         return StatusMenuProfilesListViewModel(vpnGateway: vpnGateway, profileManager: factory.makeProfileManager())
     }
@@ -132,11 +127,7 @@ final class StatusMenuViewModel {
     var isConnecting: Bool {
         return vpnGateway.connection == .connecting
     }
-    
-    private var isReconnecting: Bool {
-        return isConnecting && !propertiesManager.intentionallyDisconnected
-    }
-    
+
     var connectingText: NSAttributedString {
         return NSAttributedString()
     }
@@ -177,16 +168,7 @@ final class StatusMenuViewModel {
     var upgradeToPlusTitle: NSAttributedString {
         return Localizable.upgradeToPlus.styled([.interactive, .active])
     }
-    
-    // MARK: - Quick action section - Outputs
-    var killSwitchDescription: String? {
-        return formKillSwitchDescription()
-    }
-    
-    var quickActionDescription: String? {
-        return formQuickActionDescription()
-    }
-    
+
     // MARK: - Quick action section - Inputs
     func quickConnectAction() {
         if isConnected {
@@ -485,30 +467,6 @@ final class StatusMenuViewModel {
             )
             return NSAttributedString.concatenate(flag, country, serverName)
         }
-    }
-    
-    private func formKillSwitchDescription() -> String? {
-        guard isSessionEstablished else {
-            return nil
-        }
-        
-        let description = propertiesManager.hasConnected ? Localizable.enabled.lowercased() : Localizable.disabled.lowercased()
-        return Localizable.killSwitch + " " + description
-    }
-    
-    private func formQuickActionDescription() -> String? {
-        guard isSessionEstablished else {
-            return nil
-        }
-        
-        let description: String
-        switch vpnGateway.connection {
-        case .connected:
-            description = Localizable.disconnect
-        case .disconnecting, .disconnected, .connecting:
-            description = Localizable.quickConnect
-        }
-        return description
     }
 }
 

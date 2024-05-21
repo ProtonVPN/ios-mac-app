@@ -30,9 +30,9 @@ class StreamingServiceCell: UICollectionViewCell {
     @IBOutlet private weak var serviceIV: UIImageView!
     @IBOutlet private weak var serviceLbl: UILabel!
     
-    public var propertiesManager: PropertiesManagerProtocol!
+    var propertiesManager: PropertiesManagerProtocol!
     
-    public var service: VpnStreamingOption? {
+    var service: VpnStreamingOption? {
         didSet {
             serviceLbl.text = service?.name
             serviceIV.isHidden = true

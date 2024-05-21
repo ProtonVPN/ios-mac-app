@@ -63,7 +63,6 @@ protocol AppSessionManager {
     
     func loadDataWithoutFetching() -> Bool
     func loadDataWithoutLogin() async throws
-    func canPreviewApp() -> Bool
 }
 
 class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
@@ -90,9 +89,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     private let factory: Factory
 
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    private var navService: NavigationService? {
-        return factory.makeNavigationService()
-    }
 
     private lazy var networking: Networking = factory.makeNetworking()
     private lazy var refreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
@@ -170,10 +166,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             setAndNotify(for: .notEstablished, reason: nil)
         }
         return true
-    }
-
-    func canPreviewApp() -> Bool {
-        return !isServerRepositoryEmpty && self.propertiesManager.userLocation?.ip != nil
     }
 
     func loadDataWithoutLogin() async throws {

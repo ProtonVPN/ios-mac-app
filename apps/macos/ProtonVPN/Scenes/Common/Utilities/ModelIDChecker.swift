@@ -36,7 +36,7 @@ extension ModelIdCheckerProtocol {
     }
 }
 
-public struct ModelIdChecker {
+struct ModelIdChecker {
     /// All of the Mac models that use the T2 coprocessor chip.
     static let macT2ModelNames = [
         "iMac20,1",

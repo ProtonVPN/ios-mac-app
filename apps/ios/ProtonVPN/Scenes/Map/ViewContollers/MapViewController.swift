@@ -44,7 +44,7 @@ final class MapViewController: UIViewController {
     private var initialMoveAndZoomFrame = CGRect(x: 1040, y: 500, width: 500, height: 500)
     
     @IBOutlet weak var connectionBarContainerView: UIView!
-    public var connectionBarViewController: ConnectionBarViewController?
+    var connectionBarViewController: ConnectionBarViewController?
 
     override func awakeFromNib() {
         super.awakeFromNib()

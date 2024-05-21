@@ -26,7 +26,7 @@ protocol TickboxViewDelegate: AnyObject {
     func upsellTapped(_ tickboxView: SettingsTickboxView)
 }
 
-class SettingsTickboxView: NSView, SwitchButtonDelegate {
+final class SettingsTickboxView: NSView, SwitchButtonDelegate {
 
     struct ViewModel {
         let labelText: String
@@ -42,11 +42,6 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
         init(labelText: String, buttonState: Bool, buttonEnabled: Bool = true, toolTip: String? = nil) {
             let state: PaidFeatureDisplayState = .available(enabled: buttonState, interactive: buttonEnabled)
             self.init(labelText: labelText, state: state, toolTip: toolTip)
-        }
-
-        enum State {
-            case toggle(isInteractive: Bool, isOn: ButtonState)
-            case upsell
         }
     }
 

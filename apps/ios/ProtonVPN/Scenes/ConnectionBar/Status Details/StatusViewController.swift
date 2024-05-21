@@ -42,9 +42,6 @@ final class StatusViewController: UIViewController {
                 genericDataSource.update(rows: rows)
                 self?.tableView?.reloadRows(at: Array(rows.keys), with: .none)
             }
-            viewModel?.dismissStatusView = { [weak self] in
-                self?.navigationController?.popViewController(animated: true)
-            }
             viewModel?.pushHandler = { [weak self] viewController in
                 self?.pushViewController(viewController)
             }

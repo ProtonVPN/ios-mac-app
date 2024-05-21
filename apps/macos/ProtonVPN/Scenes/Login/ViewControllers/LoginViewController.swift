@@ -178,10 +178,6 @@ final class LoginViewController: NSViewController {
     }
     
     // MARK: - Private functions
-    private func setupLoadingView() {
-        loadingView.isHidden = true
-        reachabilityCheckIndicator.set(tintColor: .color(.icon, .interactive))
-    }
 
     private func setupTwoFactorView() {
         twoFactorView.isHidden = true

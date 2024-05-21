@@ -48,21 +48,16 @@ extension DependencyContainer: MapSectionViewModelFactory {
         return MapSectionViewModel(appStateManager: makeAppStateManager(),
                                    propertiesManager: makePropertiesManager(),
                                    vpnGateway: makeVpnGateway(),
-                                   navService: makeNavigationService(),
                                    vpnKeychain: makeVpnKeychain(),
                                    viewToggle: viewToggle,
                                    alertService: makeCoreAlertService())
     }
 }
 
-class MapSectionViewModel {
-    
-    private let countrySelected = Notification.Name("MapSectionViewModelCountrySelected")
-    private let scEntryCountrySelected = Notification.Name("MapSectionViewModelScEntryCountrySelected")
-    private let scExitCountrySelected = Notification.Name("MapSectionViewModelScExitCountrySelected")
+final class MapSectionViewModel {
+
     private let appStateManager: AppStateManager
     private let vpnGateway: VpnGatewayProtocol
-    private let navService: NavigationService
     private let vpnKeychain: VpnKeychainProtocol
     private let propertiesManager: PropertiesManagerProtocol
     private let alertService: CoreAlertService
@@ -76,13 +71,12 @@ class MapSectionViewModel {
     var connections: [ConnectionViewModel] = []
 
     init(appStateManager: AppStateManager, propertiesManager: PropertiesManagerProtocol,
-         vpnGateway: VpnGatewayProtocol, navService: NavigationService, vpnKeychain: VpnKeychainProtocol,
+         vpnGateway: VpnGatewayProtocol, vpnKeychain: VpnKeychainProtocol,
          viewToggle: Notification.Name, alertService: CoreAlertService) {
         
         self.appStateManager = appStateManager
         self.propertiesManager = propertiesManager
         self.vpnGateway = vpnGateway
-        self.navService = navService
         self.vpnKeychain = vpnKeychain
         self.alertService = alertService
 

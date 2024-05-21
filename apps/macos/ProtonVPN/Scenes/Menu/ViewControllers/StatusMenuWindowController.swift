@@ -36,7 +36,6 @@ final class StatusMenuWindowController: WindowController {
     private var windowModel: StatusMenuWindowModel?
     
     private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-    private let statusMenu = NSMenu()
     
     private let iconManager: StatusBarIconBlinker
 
@@ -45,8 +44,6 @@ final class StatusMenuWindowController: WindowController {
     var windowIsVisible: Bool {
         return window?.isVisible == true
     }
-
-    var lastOpenApplication: NSRunningApplication?
 
     weak var windowService: WindowService?
     
@@ -237,16 +234,16 @@ extension AppIcon {
     }
 }
 
-class StatusBarIconBlinker {
-    
-    private var statusItem: NSStatusItem
+final class StatusBarIconBlinker {
+
+    private let statusItem: NSStatusItem
     private var statusIcon: StatusIcon
-    
+
     private var emptyImage: NSImage = StatusIcon.unknown.image
     private var interval: TimeInterval = AppConstants.Time.statusIconBlink
     private var timer: Timer?
     
-    public var isBlinking: Bool = false {
+    var isBlinking: Bool = false {
         didSet {
             if isBlinking && timer == nil {
                 start()
@@ -259,12 +256,12 @@ class StatusBarIconBlinker {
         }
     }
     
-    public init(statusItem: NSStatusItem, statusIcon: StatusIcon) {
+    init(statusItem: NSStatusItem, statusIcon: StatusIcon) {
         self.statusItem = statusItem
         self.statusIcon = statusIcon
     }
     
-    public func setImage(_ statusIcon: StatusIcon) {
+    func setImage(_ statusIcon: StatusIcon) {
         if statusIcon != self.statusIcon {
             self.statusIcon = statusIcon
             if statusItem.button?.image != emptyImage {

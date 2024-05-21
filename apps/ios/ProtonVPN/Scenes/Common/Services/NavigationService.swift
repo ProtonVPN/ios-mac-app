@@ -41,7 +41,6 @@ import ProtonCoreNetworking
 // MARK: Country Service
 
 protocol CountryService {
-    func makeCountriesViewController() -> CountriesViewController
     func makeCountryViewController(country: CountryItemViewModel) -> CountryViewController
 }
 
@@ -54,7 +53,6 @@ protocol MapService {
 // MARK: Profile Service
 
 protocol ProfileService {
-    func makeProfilesViewController() -> ProfilesViewController
     func makeCreateProfileViewController(for profile: Profile?) -> CreateProfileViewController?
     func makeSelectionViewController(dataSet: SelectionDataSet, dataSelected: @escaping (Any) -> Void) -> SelectionViewController
 }
@@ -62,7 +60,6 @@ protocol ProfileService {
 // MARK: Settings Service
 
 protocol SettingsService {
-    func makeSettingsViewController() -> SettingsViewController?
     func makeSettingsAccountViewController() -> SettingsAccountViewController?
     func makeExtensionsSettingsViewController() -> WidgetSettingsViewController
     func makeTelemetrySettingsViewController() -> TelemetrySettingsViewController
@@ -120,14 +117,11 @@ final class NavigationService {
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
-    private lazy var vpnApiService: VpnApiService = factory.makeVpnApiService()
     lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
-    private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
-    private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var loginService: LoginService = {
         let loginService = factory.makeLoginService()
         loginService.delegate = self
@@ -146,10 +140,6 @@ final class NavigationService {
     private lazy var bugReportCreator: BugReportCreator = factory.makeBugReportCreator()
 
     private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
-
-    private lazy var connectionBarViewController = { 
-        return makeConnectionBarViewController()
-    }()
 
     private lazy var tabBarController = {
         return makeTabBarController()
@@ -310,7 +300,6 @@ extension NavigationService: ProfileService {
                                                                              alertService: alertService,
                                                                              vpnKeychain: vpnKeychain,
                                                                              appStateManager: appStateManager,
-                                                                             vpnGateway: vpnGateway,
                                                                              profileManager: profileManager,
                                                                              propertiesManager: propertiesManager)
         return createProfileViewController

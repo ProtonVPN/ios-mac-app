@@ -66,15 +66,6 @@ class PopUpViewController: NSViewController {
         view.window?.applyWarningAppearance(withTitle: viewModel.title)
     }
     
-    override func viewDidAppear() {
-        super.viewDidAppear()
-        
-        viewModel.updateInterface = { [weak self] in
-            self?.setupBodySection()
-            self?.setupFooterSection()
-        }
-    }
-    
     override func viewWillDisappear() {
         super.viewWillDisappear()
         

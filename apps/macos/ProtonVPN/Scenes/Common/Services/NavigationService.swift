@@ -36,13 +36,12 @@ protocol NavigationServiceFactory {
     func makeNavigationService() -> NavigationService
 }
 
-class NavigationService {
-    
+final class NavigationService {
+
     typealias Factory = HelpMenuViewModelFactory
         & PropertiesManagerFactory
         & WindowServiceFactory
         & VpnKeychainFactory
-        & VpnApiServiceFactory
         & AppStateManagerFactory
         & AppSessionManagerFactory
         & CoreAlertServiceFactory
@@ -69,7 +68,6 @@ class NavigationService {
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
-    private lazy var vpnApiService: VpnApiService = factory.makeVpnApiService()
     lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
@@ -222,7 +220,6 @@ extension NavigationService {
         windowService.openSettingsWindow(viewModel: SettingsContainerViewModel(factory: factory),
                                          tabBarViewModel: SettingsTabBarViewModel(initialTab: tab),
                                          accountViewModel: AccountViewModel(vpnKeychain: factory.makeVpnKeychain(),
-                                                                            propertiesManager: factory.makePropertiesManager(),
                                                                             sessionService: factory.makeSessionService(),
                                                                             authKeychain: factory.makeAuthKeychainHandle()))
     }
@@ -239,7 +236,7 @@ extension NavigationService {
     func openProfiles(_ initialTab: ProfilesTab) {
         guard !windowService.showIfPresent(windowController: ProfilesWindowController.self) else { return }
 
-        windowService.openProfilesWindow(viewModel: ProfilesContainerViewModel(initialTab: initialTab, vpnGateway: vpnGateway, alertService: alertService, vpnKeychain: vpnKeychain))
+        windowService.openProfilesWindow(viewModel: ProfilesContainerViewModel(initialTab: initialTab, vpnGateway: vpnGateway))
     }
     
     @objc private func powerOff(_ notification: Notification) {
@@ -271,7 +268,7 @@ extension NavigationService {
 
 extension NavigationService {
     
-    func handleApplicationReopen(hasVisibleWindows: Bool) -> Bool {
+    func handleApplicationReopen() -> Bool {
         appHasPresented = true
 
         windowService.closeActiveWindows()

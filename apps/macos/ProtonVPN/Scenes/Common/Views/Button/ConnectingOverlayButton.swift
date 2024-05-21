@@ -31,7 +31,7 @@ class ConnectingOverlayButton: HoverDetectionButton {
         case interactive
     }
     
-    public var style: Style = .normal {
+    var style: Style = .normal {
         didSet {
             needsDisplay = true
         }

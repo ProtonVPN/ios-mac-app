@@ -27,10 +27,10 @@ import Theme
 import Ergonomics
 import Strings
 
-class AboutViewController: NSViewController {
-    
+final class AboutViewController: NSViewController {
+
     typealias Factory = NavigationServiceFactory & UpdateManagerFactory
-    public var factory: Factory!
+    var factory: Factory!
 
     @IBOutlet weak var imageHeader: NSImageView!
     @IBOutlet weak var backgroundView: NSView!
@@ -43,7 +43,6 @@ class AboutViewController: NSViewController {
     @IBOutlet weak var webView: WKWebView!
     
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
-    private lazy var bundle: Bundle = Bundle.main
     private lazy var navigationService = factory.makeNavigationService()
     
     required init?(coder: NSCoder) {

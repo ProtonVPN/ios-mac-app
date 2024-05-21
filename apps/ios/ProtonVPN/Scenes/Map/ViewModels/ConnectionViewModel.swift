@@ -24,19 +24,11 @@ import Foundation
 import MapKit
 
 struct ConnectionViewModel {
-    
-    enum State {
-        case connected
-        case proposed
-    }
-    
     let lineWidth: CGFloat = 2
     
-    let state: State
     let connection: (entry: AnnotationViewModel, exit: AnnotationViewModel)
     
-    init(_ state: State, between entry: AnnotationViewModel, and exit: AnnotationViewModel) {
-        self.state = state
+    init(between entry: AnnotationViewModel, and exit: AnnotationViewModel) {
         self.connection = (entry, exit)
     }
 }

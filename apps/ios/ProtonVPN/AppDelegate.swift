@@ -49,11 +49,10 @@ import PMLogger
 import VPNShared
 import VPNAppCore
 
-
-public let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
+let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 
 #if !REDESIGN
-class AppDelegate: UIResponder {
+final class AppDelegate: UIResponder {
     private static let acceptedDeepLinkChallengeInterval: TimeInterval = 10
 
     @Dependency(\.defaultsProvider) var defaultsProvider
@@ -76,7 +75,7 @@ class AppDelegate: UIResponder {
     }
 }
 #else
-class AppDelegate: UIResponder {
+final class AppDelegate: UIResponder {
     private static let acceptedDeepLinkChallengeInterval: TimeInterval = 10
 
     @Dependency(\.defaultsProvider) var defaultsProvider
@@ -97,7 +96,7 @@ class AppDelegate: UIResponder {
 extension AppDelegate: UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        setupCoreIntegration(launchOptions: launchOptions)
+        setupCoreIntegration()
         setupLogsForApp()
         setupDebugHelpers()
 
@@ -336,7 +335,7 @@ fileprivate extension AppDelegate {
 }
 
 extension AppDelegate {
-    private func setupCoreIntegration(launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) {
+    private func setupCoreIntegration() {
         injectDefaultCryptoImplementation()
 
         @Dependency(\.dohConfiguration) var doh

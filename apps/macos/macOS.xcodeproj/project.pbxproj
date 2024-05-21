@@ -44,7 +44,6 @@
 		42C1F2A22553083300793A49 /* NetshieldDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1F2A12553083300793A49 /* NetshieldDropdownPresenter.swift */; };
 		42C1F2A92553084900793A49 /* SecureCoreDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1F2A82553084900793A49 /* SecureCoreDropdownPresenter.swift */; };
 		42C1F2B02553086000793A49 /* KillSwitchDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1F2AF2553086000793A49 /* KillSwitchDropdownPresenter.swift */; };
-		42F63FE92566B66000DE60B2 /* ReconnectingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */; };
 		4C0930EC2A3863AD0069323E /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = 4C0930EB2A3863AD0069323E /* Theme */; };
 		4C0930F42A3868340069323E /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = 4C0930F32A3868340069323E /* Ergonomics */; };
 		4C25999C2A7AA29800A31895 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 4C25999B2A7AA29800A31895 /* Dependencies */; };
@@ -581,7 +580,6 @@
 		42C1F2A12553083300793A49 /* NetshieldDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetshieldDropdownPresenter.swift; sourceTree = "<group>"; };
 		42C1F2A82553084900793A49 /* SecureCoreDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureCoreDropdownPresenter.swift; sourceTree = "<group>"; };
 		42C1F2AF2553086000793A49 /* KillSwitchDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillSwitchDropdownPresenter.swift; sourceTree = "<group>"; };
-		42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectingOverlayViewModel.swift; sourceTree = "<group>"; };
 		437269ACE0C19C03AA703A72 /* SubuserMacAlertViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SubuserMacAlertViewController.xib; path = "../../../../../macos/ProtonVPN/Scenes/Misc/Subuser alert/SubuserMacAlertViewController.xib"; sourceTree = "<group>"; };
 		470ECBEC78B00733301D477F /* UpgradeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeButton.swift; sourceTree = "<group>"; };
 		4C54383227C3DC0600D7A88D /* ModelIDChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ModelIDChecker.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/Utilities/ModelIDChecker.swift; sourceTree = "<group>"; };
@@ -2145,7 +2143,6 @@
 				F36ECE1F2611DECF0089B898 /* ProfilesSection */,
 				F36ECE1E2611DEC30089B898 /* CountriesSection */,
 				E1B9A7D1203ECE9E009677BC /* ConnectingOverlayViewModel.swift */,
-				42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */,
 				EE5B17441F39CDF700879BE0 /* HeaderViewModel.swift */,
 				27AA91B78C375F475C3F8608 /* BannerViewModel.swift */,
 			);
@@ -3245,7 +3242,6 @@
 				421E42622639788000AE6AF9 /* CountriesServersHeaderViewModel.swift in Sources */,
 				42314C6A255AC2FD00B7BDCC /* QuickSettingsDropdownOptionPresenter.swift in Sources */,
 				EE27DB4B1F470EF700D2FF2B /* AccountViewModel.swift in Sources */,
-				42F63FE92566B66000DE60B2 /* ReconnectingOverlayViewModel.swift in Sources */,
 				EE74FCB01F5DD71400E266BC /* PopUpViewModel.swift in Sources */,
 				EE7874A51F3B6569001E261E /* WarningPopupViewController.swift in Sources */,
 				AD8130FF2A85360800729E03 /* SharedDependencies+Live.swift in Sources */,

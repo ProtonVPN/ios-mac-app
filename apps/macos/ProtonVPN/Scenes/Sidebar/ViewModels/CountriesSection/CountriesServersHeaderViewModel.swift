@@ -33,7 +33,7 @@ protocol CountriesServersHeaderViewModelProtocol: AnyObject {
     var didTapInfoBtn: ( () -> Void )? { get }
 }
 
-class CountryHeaderViewModel: CountriesServersHeaderViewModelProtocol {
+final class CountryHeaderViewModel: CountriesServersHeaderViewModelProtocol {
     let title: String
     var didTapInfoBtn: (() -> Void)?
     
@@ -67,41 +67,5 @@ class CountryHeaderViewModel: CountriesServersHeaderViewModelProtocol {
         case premium
         case gateway
         case freeConnections
-    }
-}
-
-class ServerHeaderViewModel: CountriesServersHeaderViewModelProtocol {
-    let title: String
-    var didTapInfoBtn: (() -> Void)?
-    
-    init(
-        _ sectionHeader: String,
-        totalServers: Int,
-        kind: ServerGroupInfo.Kind,
-        tier: Int,
-        propertiesManager: PropertiesManagerProtocol,
-        countriesViewModel: CountriesSectionViewModel
-    ) {
-        title = sectionHeader + " (\(totalServers))"
-        guard tier.isPaidTier else {
-            didTapInfoBtn = { [weak countriesViewModel] in
-                countriesViewModel?.displayFreeServices()
-            }
-            return
-        }
-
-        guard case .country(let code) = kind,
-              !propertiesManager.secureCoreToggle,
-              tier.isPaidTier,
-              let streamServicesDict = propertiesManager.streamingServices[code],
-              let key = streamServicesDict.keys.first,
-              let streamServices = streamServicesDict[key] else {
-            return
-        }
-
-        didTapInfoBtn = { [weak countriesViewModel] in
-            let countryName = LocalizationUtility().countryName(forCode: code) ?? ""
-            countriesViewModel?.displayStreamingServices?(countryName, streamServices, propertiesManager)
-        }
     }
 }

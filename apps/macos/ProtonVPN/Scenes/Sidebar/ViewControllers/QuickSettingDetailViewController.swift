@@ -45,7 +45,7 @@ protocol QuickSettingsDetailViewControllerProtocol: AnyObject {
     func updateNetshieldStats()
 }
 
-class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailViewControllerProtocol {
+final class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailViewControllerProtocol {
     
     @IBOutlet weak var arrowIV: NSImageView!
     @IBOutlet weak var arrowHorizontalConstraint: NSLayoutConstraint!
@@ -72,7 +72,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
                 netShieldStatsContainer?.removeFromSuperview()
                 return
             }
-            setupNetShieldStatsContainer(presenter: netShieldPresenter)
+            setupNetShieldStatsContainer()
         }
     }
     
@@ -90,7 +90,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setupNetShieldStatsContainer(presenter: NetshieldDropdownPresenter) {
+    func setupNetShieldStatsContainer() {
         netShieldStatsView.translatesAutoresizingMaskIntoConstraints = false
         netShieldStatsContainer.addSubview(netShieldStatsView)
         netShieldStatsContainer.topAnchor.constraint(equalTo: netShieldStatsView.topAnchor).isActive = true

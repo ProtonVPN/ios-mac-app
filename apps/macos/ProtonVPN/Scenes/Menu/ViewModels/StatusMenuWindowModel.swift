@@ -35,7 +35,7 @@ extension DependencyContainer: StatusMenuWindowModelFactory {
     }
 }
 
-class StatusMenuWindowModel {
+final class StatusMenuWindowModel {
     
     typealias Factory = AppSessionManagerFactory & StatusMenuViewModelFactory & AppSessionRefresherFactory & AppSessionRefreshTimerFactory & VpnGatewayFactory
     private let factory: Factory
@@ -55,11 +55,7 @@ class StatusMenuWindowModel {
     var isSessionEstablished: Bool {
         return appSessionManager.sessionStatus == .established
     }
-    
-    var isConnected: Bool {
-        return vpnGateway.connection == .connected
-    }
-    
+
     var statusMenuViewController: StatusMenuViewController {
         let viewModel = factory.makeStatusMenuViewModel()
         return StatusMenuViewController(with: viewModel)

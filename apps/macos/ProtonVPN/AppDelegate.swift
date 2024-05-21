@@ -52,9 +52,9 @@ import AppKit
 
 let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 
-class AppDelegate: NSObject {
+final class AppDelegate: NSObject {
     @Dependency(\.defaultsProvider) var provider
-    public private(set) static var wasRecentlyActive = false
+    private(set) static var wasRecentlyActive = false
     @IBOutlet weak var protonVpnMenu: ProtonVpnMenuController!
     @IBOutlet weak var profilesMenu: ProfilesMenuController!
     @IBOutlet weak var helpMenu: HelpMenuController!
@@ -68,9 +68,9 @@ class AppDelegate: NSObject {
     private var notificationManager: NotificationManagerProtocol!
 }
 #else
-class AppDelegate: NSObject {
+final class AppDelegate: NSObject {
     @Dependency(\.defaultsProvider) var provider
-    public private(set) static var wasRecentlyActive = false
+    private(set) static var wasRecentlyActive = false
     let container = DependencyContainer()
     lazy var navigationService = container.makeNavigationService()
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
@@ -181,7 +181,7 @@ extension AppDelegate: NSApplicationDelegate {
     }
 
     func applicationShouldHandleReopen(_ theApplication: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
-        return navigationService.handleApplicationReopen(hasVisibleWindows: flag)
+        return navigationService.handleApplicationReopen()
     }
 
     func applicationDidBecomeActive(_ notification: Notification) {

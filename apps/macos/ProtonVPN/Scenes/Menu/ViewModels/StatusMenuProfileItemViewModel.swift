@@ -25,7 +25,7 @@ import LegacyCommon
 import Theme
 import Strings
 
-class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
+final class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
     
     private let vpnGateway: VpnGatewayProtocol
     
@@ -46,9 +46,9 @@ class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
         return formSecondaryDescription()
     }
         
-    init(profile: Profile, vpnGateway: VpnGatewayProtocol, userTier: Int) {
+    init(profile: Profile, vpnGateway: VpnGatewayProtocol) {
         self.vpnGateway = vpnGateway
-        super.init(profile: profile, userTier: userTier)
+        super.init(profile: profile)
     }
     
     func connectAction() {

@@ -42,7 +42,6 @@ final class CountryItemCellView: NSView {
     @IBOutlet private weak var maintenanceBtn: NSButton!
     
     private var viewModel: CountryItemViewModel!
-    private var isHovered = false
     
     var disabled: Bool = false
         
