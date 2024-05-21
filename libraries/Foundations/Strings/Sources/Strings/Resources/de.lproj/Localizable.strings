@@ -1491,8 +1491,6 @@
 
 "_server_load_title" = "Serverauslastung";
 
-"_dw-partner-2022_partners_title" = "Unsere Partner";
-
 "_streaming_servers_description" = "Stelle eine Verbindung zu einem Plus-Server in diesem Land her, um das Streaming zu starten.";
 
 "_streaming_servers_note" = "Hinweis: Deaktiviere den Ortungsdienst und lösche den Cache der Streaming-Apps, damit neue Inhalte angezeigt werden.";
@@ -1874,7 +1872,7 @@
 "modals_new_upsell_vpn_accelerator_title" = "Surfe mit noch höherer Geschwindigkeit";
 
 /* Subtitle of the VPN Accelerator screen */
-"modals_new_upsell_vpn_accelerator_subtitle" = "Unlock faster, less crowded servers with speeds of up to 10 Gbps.";
+"modals_new_upsell_vpn_accelerator_subtitle" = "Schalte schnellere, weniger überlastete Server mit Geschwindigkeiten von bis zu 10 Gbit/s frei.";
 
 /* Subtitle of the Customization scren */
 "modals_new_upsell_customization_subtitle" = "Greife auf Geräte in deinem lokalen Netzwerk (LAN) mit VPN Plus zu.";

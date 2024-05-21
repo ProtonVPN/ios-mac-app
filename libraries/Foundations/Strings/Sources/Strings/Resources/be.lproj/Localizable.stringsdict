@@ -136,15 +136,15 @@
         <key>one</key>
         <string>больш за %d бяспечны сервер</string>
         <key>few</key>
-        <string>больш за %d бяспечных серверы</string>
+        <string>больш за %d бяспечныя серверы</string>
         <key>many</key>
-        <string>больш за %d бяспечных сервер</string>
+        <string>больш за %d бяспечных сервераў</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>больш за %d бяспечных сервер</string>
+        <string>%d бяспечных сервераў</string>
       </dict>
     </dict>
     <key>subscription_upgrade_option1</key>

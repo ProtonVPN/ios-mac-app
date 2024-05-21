@@ -1491,8 +1491,6 @@
 
 "_server_load_title" = "サーバー負荷";
 
-"_dw-partner-2022_partners_title" = "パートナー";
-
 "_streaming_servers_description" = "この国の Plus サーバーに接続してストリーミングを開始します。";
 
 "_streaming_servers_note" = "注意: 新しいコンテンツを表示するために、位置情報サービスをオフにした上でストリーミングアプリのキャッシュを削除してください。";

@@ -1491,8 +1491,6 @@
 
 "_server_load_title" = "Serverbelasting";
 
-"_dw-partner-2022_partners_title" = "Onze partners";
-
 "_streaming_servers_description" = "Maak verbinding met een Plus server in dit land om te beginnen met streamen.";
 
 "_streaming_servers_note" = "Opmerking: Schakel de Locatieservice uit en wis de cache van de streaming apps om ervoor te zorgen dat nieuwe inhoud wordt weergegeven.";
@@ -1880,7 +1878,7 @@
 "modals_new_upsell_customization_subtitle" = "Toegang tot apparaten op uw lokaal netwerk (LAN) met VPN Plus.";
 
 /* Subtitle of Moderate NAT upsell screens */
-"modals_new_upsell_moderate_nat_subtitle" = "Verbeter online gaming en video oproep prestaties met NAT type 2.";
+"modals_new_upsell_moderate_nat_subtitle" = "Verbeter online gaming en video-oproep prestaties met NAT type 2.";
 
 /* Title of Netshield upsell screen */
 "modals_new_upsell_netshield_title" = "Geniet van advertentievrij browsen";

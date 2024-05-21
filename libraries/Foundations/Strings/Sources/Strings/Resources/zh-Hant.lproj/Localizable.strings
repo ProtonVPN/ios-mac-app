@@ -1491,8 +1491,6 @@
 
 "_server_load_title" = "伺服器負載";
 
-"_dw-partner-2022_partners_title" = "我們的夥伴";
-
 "_streaming_servers_description" = "連線到在此國家的 Plus 伺服器以開始串流。";
 
 "_streaming_servers_note" = "注意：請關閉定位服務並清除串流應用程式的快取，以確保新內容出現。";
@@ -1997,7 +1995,7 @@
 "upsell_profiles_subtitle" = "使用 VPN Plus 解鎖帳戶";
 
 /* First bold part of the subtitle of Profiles upsell modal */
-"upsell_profiles_subtitle_bold_1" = "profiles";
+"upsell_profiles_subtitle_bold_1" = "設定檔";
 
 /* Second bold part of the subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle_bold_2" = "VPN Plus";

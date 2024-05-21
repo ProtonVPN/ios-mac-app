@@ -1491,8 +1491,6 @@
 
 "_server_load_title" = "Serverbelastning";
 
-"_dw-partner-2022_partners_title" = "Våra partners";
-
 "_streaming_servers_description" = "Anslut till en Plus-server i detta land för att börja streama.";
 
 "_streaming_servers_note" = "Obs: Stäng av platstjänsten och rensa cache för streamingapparna för att säkerställa att nytt innehåll visas.";
