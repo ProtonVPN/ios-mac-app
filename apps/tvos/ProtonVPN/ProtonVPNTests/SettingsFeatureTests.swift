@@ -36,8 +36,6 @@ final class SettingsFeatureTests: XCTestCase {
     func testSignOut() async {
         let store = TestStore(initialState: SettingsFeature.State(userName: .init("user"))) {
             SettingsFeature()
-        } withDependencies: {
-            $0[NetworkClient.self] = .failureValue
         }
         await store.send(.signOutSelected) {
             $0.alert = SettingsFeature.signOutAlert

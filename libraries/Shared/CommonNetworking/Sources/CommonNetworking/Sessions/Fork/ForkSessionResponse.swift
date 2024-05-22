@@ -18,7 +18,12 @@
 
 import Foundation
 
-struct ForkSessionResponse: Codable {
-    let code: Int
-    let selector: String
+public struct ForkSessionResponse: Codable {
+    public let code: Int
+    public let selector: String
+}
+
+public struct ForkSessionUserCodeResponse: Codable, Equatable {
+    public let selector: String
+    public let userCode: String
 }

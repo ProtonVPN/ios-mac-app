@@ -18,76 +18,105 @@
 
 import ComposableArchitecture
 
+import Foundation
+import ProtonCoreNetworking
+import CommonNetworking
+import class VPNShared.AuthCredentials
+
 @Reducer
 struct SignInFeature {
     @ObservableState
-    struct State: Equatable {
-        var signInCode: String?
-        var serverPoll: ServerPollConfiguration
-        var selector: String?
-        var remainingAttempts: Int
-        @Shared(.appStorage("username")) var userName: String?
-
-        init(signInCode: String? = nil,
-             serverPoll: ServerPollConfiguration = .default,
-             selector: String? = nil) {
-            self.signInCode = signInCode
-            self.serverPoll = serverPoll
-            self.selector = selector
-            self.remainingAttempts = serverPoll.failAfterAttempts
-        }
+    enum State: Equatable {
+        case loadingSignInCode
+        case waitingForAuthentication(code: SignInCode, remainingAttempts: Int)
     }
 
     enum Action {
         case pollServer
         case fetchSignInCode
-        case presentSignInCode(SignInCode)
-        case signInSuccess(AuthCredentials)
+        case codeFetchingFinished(Result<SignInCode, Error>)
+        case authenticationFinished(Result<SessionAuthResult, Error>)
+        case signInFinished(Result<AuthCredentials, Error>)
     }
 
-    @Dependency(NetworkClient.self) var networkClient
+    @Dependency(\.networkClient) var networkClient
     @Dependency(\.continuousClock) var clock
+    @Dependency(ServerPollConfiguration.self) var pollConfiguration
 
     private enum CancelID { case timer }
+
+    enum SignInFailureReason: Error {
+        /// We ran out of authentication polls before the code was entered
+        case authenticationAttemptsExhausted
+    }
 
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
+            case .fetchSignInCode:
+                return .run { send in await send(.codeFetchingFinished(Result { try await networkClient.fetchSignInCode() })) }
+
             case .pollServer:
-                guard let selector = state.selector,
-                      state.remainingAttempts > 0 else {
+                guard case .waitingForAuthentication(let code, let remainingAttempts) = state else {
                     return .cancel(id: CancelID.timer)
                 }
-                state.remainingAttempts -= 1
-                return .run { send in
-                    let credentials = try await networkClient.forkedSession(selector)
-                    await send(.signInSuccess(credentials))
-                } catch: { error, send in
-                    // failed to fork session
+                if remainingAttempts <= 0 {
+                    return .merge(
+                        .cancel(id: CancelID.timer),
+                        .run { send in await send(.signInFinished(.failure(SignInFailureReason.authenticationAttemptsExhausted)))}
+                    )
                 }
-            case .signInSuccess(let credentials):
-                state.userName = credentials.userID // setting this causes the MainView to appear
-                return .cancel(id: CancelID.timer)
-            case .fetchSignInCode:
+
+                state = .waitingForAuthentication(code: code, remainingAttempts: remainingAttempts - 1)
+                return .run { send in await send(.authenticationFinished(Result { try await networkClient.forkedSession(code.selector) })) }
+
+            case .codeFetchingFinished(.success(let response)):
+                state = .waitingForAuthentication(code: response, remainingAttempts: pollConfiguration.failAfterAttempts)
                 return .run { send in
-                    let code = try await networkClient.fetchSignInCode()
-                    await send(.presentSignInCode(code))
-                } catch: { error, send in
-                    // TODO: Failed obtaining user code and selector, present to the user to try again later?
-                }
-            case .presentSignInCode(let code):
-                state.signInCode = code.userCode
-                state.selector = code.selector
-                let conf = state.serverPoll
-                state.remainingAttempts = conf.failAfterAttempts
-                return .run { [conf] send in
-                    try? await clock.sleep(for: conf.delayBeforePollingStarts)
-                    for await _ in clock.timer(interval: conf.period) {
-                        await send(.pollServer)
-                    }
+                    try? await clock.sleep(for: pollConfiguration.delayBeforePollingStarts)
+                    await send(.pollServer)
                 }
                 .cancellable(id: CancelID.timer, cancelInFlight: true)
+
+            case .codeFetchingFinished(.failure):
+                // handle non-retryable error
+                return .none
+
+            case .authenticationFinished(.success(.authenticated(let response))):
+                let credentials = AuthCredentials(from: response)
+                return .run { send in await send(.signInFinished(.success(credentials))) }
+
+            case .authenticationFinished(.success(.invalidSelector)):
+                // Parent session has not yet authenticated this selector
+                // a.k.a. user has not typed in code in browser
+                return .run { send in
+                    try? await clock.sleep(for: pollConfiguration.period)
+                    await send(.pollServer)
+                }
+
+            case .authenticationFinished(.failure):
+                // handle non-retryable error
+                return .none
+
+            case .signInFinished:
+                // Delegate action handled by parent reducer
+                return .none
             }
         }
+    }
+}
+
+extension AuthCredentials {
+    public convenience init(from sessionAuthResponse: SessionAuthResponse) {
+        // HACK: Set a non-empty username mocked username for now
+        self.init(
+            username: "username", // Missing from response
+            accessToken: sessionAuthResponse.accessToken,
+            refreshToken: sessionAuthResponse.refreshToken,
+            sessionId: sessionAuthResponse.uid,
+            userId: sessionAuthResponse.userID,
+            scopes: sessionAuthResponse.scopes,
+            mailboxPassword: nil // Missing from response
+        )
     }
 }

@@ -23,6 +23,12 @@ let package = Package(
             name: "LegacyCommonTestSupport",
             targets: ["LegacyCommonTestSupport"]
         ),
+         Notes:
+          - You may encounter additional problems linking TrustKit (Undefined symbols
+            ___llvm_profile_runtime)
+          - Moving @Dependency based mocks to a separate module means each of these dependencies
+            will have to be overridden in every test where its used (you cannot provide testValue
+            in a separate module)
         */
     ],
     dependencies: [
@@ -137,6 +143,7 @@ let package = Package(
                 "LegacyCommon",
                 "Strings",
                 "Home",
+                .product(name: "CommonNetworkingTestSupport", package: "CommonNetworking"),
                 .product(name: "TimerMock", package: "Timer"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),

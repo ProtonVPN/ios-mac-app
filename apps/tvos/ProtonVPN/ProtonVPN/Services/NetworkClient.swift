@@ -17,83 +17,58 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import CasePaths
 import Dependencies
+import CommonNetworking
 
 struct NetworkClient: Sendable {
     var fetchSignInCode: @Sendable () async throws -> SignInCode
-    var logout: @Sendable () async throws -> Void
-    var forkedSession: @Sendable (_ selector: String) async throws -> AuthCredentials
-    private static var count: Int = 1
+    var forkedSession: @Sendable (_ selector: String) async throws -> SessionAuthResult
+}
+
+@CasePathable
+public enum SessionAuthResult: Equatable {
+
+    case authenticated(SessionAuthResponse)
+
+    /// When we receive code 422 (invalid selector), return this instead of throwing an error
+    case invalidSelector
 }
 
 extension NetworkClient: DependencyKey {
-
-    static let testValue = NetworkClient {
-        SignInCode(selector: "40-char-random-hex-string",
-                   userCode: "1234ABCD")
-    } logout: {
-        
-    } forkedSession: { selector in
-            .emptyCredentials
-    }
-
-    static let forkedSessionFailureValue = NetworkClient {
-        SignInCode(selector: "40-char-random-hex-string",
-                   userCode: "1234ABCD")
-    } logout: {
-        throw "nope"
-    } forkedSession: { selector in
-        throw "nope"
-    }
-
-    static let failureValue = NetworkClient {
-        throw "nope"
-    } logout: {
-        throw "nope"
-    } forkedSession: { selector in
-        throw "nope"
-    }
-
-    static let fetchSignInCodeDelay: Duration = .seconds(1)
-    static let logoutDelay: Duration = .seconds(1)
-    static let pollDelay: Duration = .seconds(0.1)
-
-    static let liveValue = NetworkClient(
-        fetchSignInCode: {
-            @Dependency(\.continuousClock) var clock
-            try await clock.sleep(for: Self.fetchSignInCodeDelay)
-            return SignInCode(selector: "40-char-random-hex-string", userCode: "1234ABCD")
-        }, logout: {
-            @Dependency(\.continuousClock) var clock
-            try await clock.sleep(for: Self.logoutDelay)
-        }, forkedSession: { selector in
-            @Dependency(\.continuousClock) var clock
-            print("poll API... \(Self.count)")
-            try await clock.sleep(for: pollDelay)
-            Self.count += 1
-            if Self.count > 5 {
-                Self.count = 1
-                return .emptyCredentials
-            } else {
-                throw "Failed to fork session"
+    static var liveValue: NetworkClient {
+        @Dependency(\.networking) var networking
+        return NetworkClient(
+            fetchSignInCode: {
+                let request = ForkSessionRequest(useCase: .getUserCode)
+                let response: ForkSessionUserCodeResponse = try await networking.perform(request: request)
+                return SignInCode(selector: response.selector, userCode: response.userCode)
+            }, forkedSession: { selector in
+                let request = SessionAuthRequest(selector: selector)
+                do {
+                    let response: SessionAuthResponse = try await networking.perform(request: request)
+                    return .authenticated(response)
+                } catch {
+                    if error.httpCode == HttpStatusCode.invalidRefreshToken.rawValue {
+                        // The selector has not been authenticated by the parent session
+                        // Treat this as a type of success
+                        return .invalidSelector
+                    }
+                    throw error // Rethrow generic errors
+                }
             }
-        }
-    )
+        )
+    }
 }
 
-struct SignInCode {
+extension DependencyValues {
+    var networkClient: NetworkClient {
+      get { self[NetworkClient.self] }
+      set { self[NetworkClient.self] = newValue }
+    }
+}
+
+struct SignInCode: Equatable {
     let selector: String
     let userCode: String
-}
-
-struct AuthCredentials { // temporary, we'll use the real AuthCredentials
-    let userID: String
-    let uID: String
-    let accessToken: String
-    let refreshToken: String
-
-    static let emptyCredentials = AuthCredentials(userID: "eric.norbert@proton.me",
-                                                  uID: "",
-                                                  accessToken: "",
-                                                  refreshToken: "")
 }

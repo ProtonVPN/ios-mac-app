@@ -42,10 +42,11 @@ struct SignInView: View {
                 VStack(spacing: .themeSpacing32) {
                     StepView(title: "Go to protonvpn.com/tv", stepNumber: 1)
                     StepView(title: "Sign in to your Proton Account", stepNumber: 2)
-                    if let code = store.signInCode {
-                        StepView(title: "Enter the code \(code)", stepNumber: 3)
-                    } else {
+                    switch store.state {
+                    case .loadingSignInCode:
                         StepView(title: "Enter the code (retrieving...)", stepNumber: 3)
+                    case .waitingForAuthentication(let code, _):
+                        StepView(title: "Enter the code \(code.userCode)", stepNumber: 3)
                     }
                 }
                 .frame(maxWidth: 800)

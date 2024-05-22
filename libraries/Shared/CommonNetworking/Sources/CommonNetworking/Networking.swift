@@ -38,19 +38,6 @@ public typealias SuccessCallback = (() -> Void)
 public typealias GenericCallback<T> = ((T) -> Void)
 public typealias ErrorCallback = GenericCallback<Error>
 
-public protocol NetworkingDelegate: ForceUpgradeDelegate, HumanVerifyDelegate {
-    func set(apiService: APIService)
-    func onLogout()
-}
-
-public protocol NetworkingDelegateFactory {
-    func makeNetworkingDelegate() -> NetworkingDelegate
-}
-
-public protocol NetworkingFactory {
-    func makeNetworking() -> Networking
-}
-
 public protocol Networking: APIServiceDelegate {
     var apiService: PMAPIService { get }
 
@@ -61,6 +48,23 @@ public protocol Networking: APIServiceDelegate {
     func request<T>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable
     func perform<R>(request route: Request) async throws -> R where R: APIDecodableResponse
     func perform(request route: Request) async throws -> JSONDictionary
+}
+
+/// This could be a `struct`, but it's nice for it to be an enum since we can then switch on it (it's the state of the
+/// `SessionNetworkingFeature`)
+public enum Session: Equatable {
+    case auth(uid: String)
+    case unauth(uid: String)
+
+    public var uid: String {
+        switch self {
+        case .auth(let uid):
+            return uid
+
+        case .unauth(let uid):
+            return uid
+        }
+    }
 }
 
 // MARK: CoreNetworking

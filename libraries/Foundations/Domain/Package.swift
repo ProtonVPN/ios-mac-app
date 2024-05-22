@@ -30,7 +30,6 @@ let package = Package(
             dependencies: [
                 "Strings",
                 "Ergonomics",
-                .product(name: "ProtonCoreUtilities", package: "protoncore"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
             ]
         ),

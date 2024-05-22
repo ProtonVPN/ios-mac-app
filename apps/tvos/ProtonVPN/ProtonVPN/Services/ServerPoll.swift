@@ -17,18 +17,18 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 
-struct ServerPollConfiguration: Equatable {
+struct ServerPollConfiguration: DependencyKey {
     let delayBeforePollingStarts: Duration
     let period: Duration
     let failAfterAttempts: Int
 
-    static let `default` = ServerPollConfiguration(delayBeforePollingStarts: .seconds(5),
-                                                   period: .seconds(1),
-                                                   failAfterAttempts: 5)
-    init(delayBeforePollingStarts: Duration, period: Duration, failAfterAttempts: Int) {
-        self.delayBeforePollingStarts = delayBeforePollingStarts
-        self.period = period
-        self.failAfterAttempts = failAfterAttempts
-    }
+    static let liveValue: ServerPollConfiguration = ServerPollConfiguration(
+        delayBeforePollingStarts: .seconds(5),
+        period: .seconds(5),
+        failAfterAttempts: 60 // ~5 minutes of polling every 5s (disregarding time to complete each request)
+    )
+
+    static let testValue = liveValue
 }
