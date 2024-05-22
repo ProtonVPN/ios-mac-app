@@ -20,6 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Ergonomics
 
 public class CoreAlertServiceDummy: CoreAlertService {
     
@@ -29,7 +30,9 @@ public class CoreAlertServiceDummy: CoreAlertService {
     public init() {}
     
     public func push(alert: SystemAlert) {
-        alerts.append(alert)
-        alertAdded?(alert)
+        executeOnUIThread {
+            self.alerts.append(alert)
+            self.alertAdded?(alert)
+        }
     }
 }

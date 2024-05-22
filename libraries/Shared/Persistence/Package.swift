@@ -7,8 +7,7 @@ let package = Package(
     name: "Persistence",
     platforms: [
         .iOS(.v15),
-        .macOS(.v11),
-        .tvOS(.v17)
+        .macOS(.v11)
     ],
     products: [
         .library(name: "Persistence", targets: ["Persistence"]),
