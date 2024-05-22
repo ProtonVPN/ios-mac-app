@@ -101,8 +101,22 @@ public class AuthCredentials: NSObject, NSSecureCoding, Codable {
                   scopes: scopes,
                   mailboxPassword: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.mailboxPassword) as String?)
     }
-    
+
     public func encode(with aCoder: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
+    }
+
+    // MARK: - Decodable
+
+    required public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.cacheVersion = try container.decode(Int.self, forKey: .cacheVersion)
+        self.username = try container.decode(String.self, forKey: .username)
+        self.accessToken = try container.decode(String.self, forKey: .accessToken)
+        self.refreshToken = try container.decode(String.self, forKey: .refreshToken)
+        self.sessionId = try container.decode(String.self, forKey: .sessionId)
+        self.userId = try container.decodeIfPresent(String.self, forKey: .userId)
+        self.scopes = try container.decode([String].self, forKey: .scopes)
+        self.mailboxPassword = try container.decodeIfPresent(String.self, forKey: .mailboxPassword) ?? ""
     }
 }
