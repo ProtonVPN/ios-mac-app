@@ -19,6 +19,7 @@
 import Foundation
 import NetworkExtension
 
+@available(tvOS 17.0, *)
 extension NETunnelProviderProtocol {
 
     fileprivate enum CustomKeys: String, CaseIterable {
@@ -122,6 +123,7 @@ extension NETunnelProviderProtocol {
     }
 }
 
+@available(tvOS 17.0, *)
 fileprivate extension Dictionary<String, Any> {
     subscript(_ customKey: NETunnelProviderProtocol.CustomKeys) -> Any? {
         get {

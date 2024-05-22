@@ -7,8 +7,7 @@ let package = Package(
     name: "Ergonomics",
     platforms: [
         .iOS(.v15),
-        .macOS(.v11),
-        .tvOS(.v17)
+        .macOS(.v11)
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.

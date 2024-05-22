@@ -7,8 +7,7 @@ let package = Package(
     name: "ExtensionIPC",
     platforms: [
         .iOS(.v15),
-        .macOS(.v11),
-        .tvOS(.v17)
+        .macOS(.v11)
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.

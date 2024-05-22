@@ -57,7 +57,13 @@ class SystemExtensionManagerTests: XCTestCase {
     func testInstallingExtensionForTheFirstTimeSimply() {
         let approvalRequired = SystemExtensionType.allCases.map { XCTestExpectation(description: "Approval required for \($0.rawValue)") }
         let installFinished = XCTestExpectation(description: "Finish install")
+        let alertShown = XCTestExpectation(description: "alertShown")
+        alertShown.expectedFulfillmentCount = 2
         var result: SystemExtensionResult?
+
+        alertService.alertAdded = { _ in
+            alertShown.fulfill()
+        }
 
         sysextManager.requestRequiresUserApproval = { [unowned self] request in
             self.sysextManager.approve(request: request)
@@ -69,10 +75,12 @@ class SystemExtensionManagerTests: XCTestCase {
             installFinished.fulfill()
         }
 
-        wait(for: approvalRequired, timeout: expectationTimeout)
+        wait(for: approvalRequired.appending(alertShown), timeout: expectationTimeout)
 
-        guard alertService.alerts.count == 1, alertService.alerts.first is SystemExtensionTourAlert else {
-            XCTFail("Expected only alert to be SystemExtensionTourAlert: \(String(describing: alertService.alerts))")
+        guard alertService.alerts.count == 2,
+              alertService.alerts.contains(where: { $0 is SystemExtensionTourAlert }),
+              alertService.alerts.contains(where: { $0 is SysexEnabledAlert }) else {
+            XCTFail("Expected alerts to be SystemExtensionTourAlert and SysexEnabledAlert: \(String(describing: alertService.alerts))")
             return
         }
 
