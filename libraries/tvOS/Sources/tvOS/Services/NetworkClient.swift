@@ -76,6 +76,8 @@ struct SignInCode: Equatable {
         self.selector = selector
         var userCode = userCode
         if userCode.count == 8 {
+            // We want to present the 8 character code with a space in the middle in the UI
+            // We get the string from API without a space
             userCode.insert(" ", at: .init(utf16Offset: 4, in: userCode))
         }
         self.userCode = userCode

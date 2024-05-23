@@ -29,7 +29,7 @@ struct CreateAccountView: View {
                 HStack(spacing: 0) {
                     Text("Create your Proton Account")
                         .font(.title)
-                        .fontWeight(.bold)
+                        .bold()
                     Spacer(minLength: 0)
                 }
                 HStack {
@@ -38,12 +38,10 @@ struct CreateAccountView: View {
                         .foregroundStyle(Color(.text, .weak)) +
                     Text("protonvpn.com/tv")
                         .font(.title3)
-                        .fontWeight(.bold)
+                        .bold()
                         .foregroundStyle(Color(.text, .interactive))
                     Spacer(minLength: 0)
                 }
-                
-                
             }
             .frame(maxWidth: 800)
             QRCodeView(string: "www.protonvpn.com/tv")

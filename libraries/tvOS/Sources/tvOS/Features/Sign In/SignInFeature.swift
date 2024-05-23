@@ -26,9 +26,19 @@ import class VPNShared.AuthCredentials
 @Reducer
 struct SignInFeature {
     @ObservableState
-    enum State: Equatable {
-        case loadingSignInCode
-        case waitingForAuthentication(code: SignInCode, remainingAttempts: Int)
+    struct State: Equatable {
+        var authentication: Authentication
+        @Presents var destination: Destination.State?
+
+        enum Authentication: Equatable {
+            case loadingSignInCode
+            case waitingForAuthentication(code: SignInCode, remainingAttempts: Int)
+        }
+    }
+
+    @Reducer(state: .equatable)
+    enum Destination {
+        case codeExpired(CodeExpiredFeature)
     }
 
     enum Action {
@@ -36,7 +46,8 @@ struct SignInFeature {
         case fetchSignInCode
         case codeFetchingFinished(Result<SignInCode, Error>)
         case authenticationFinished(Result<SessionAuthResult, Error>)
-        case signInFinished(Result<AuthCredentials, Error>)
+        case signInFinished(Result<AuthCredentials, SignInFailureReason>)
+        case destination(PresentationAction<Destination.Action>)
     }
 
     @Dependency(\.networkClient) var networkClient
@@ -48,6 +59,7 @@ struct SignInFeature {
     enum SignInFailureReason: Error {
         /// We ran out of authentication polls before the code was entered
         case authenticationAttemptsExhausted
+        case userCancelled
     }
 
     var body: some Reducer<State, Action> {
@@ -57,21 +69,21 @@ struct SignInFeature {
                 return .run { send in await send(.codeFetchingFinished(Result { try await networkClient.fetchSignInCode() })) }
 
             case .pollServer:
-                guard case .waitingForAuthentication(let code, let remainingAttempts) = state else {
+                guard case .waitingForAuthentication(let code, let remainingAttempts) = state.authentication else {
                     return .cancel(id: CancelID.timer)
                 }
                 if remainingAttempts <= 0 {
                     return .merge(
                         .cancel(id: CancelID.timer),
-                        .run { send in await send(.signInFinished(.failure(SignInFailureReason.authenticationAttemptsExhausted)))}
+                        .run { send in await send(.signInFinished(.failure(.authenticationAttemptsExhausted)))}
                     )
                 }
 
-                state = .waitingForAuthentication(code: code, remainingAttempts: remainingAttempts - 1)
+                state.authentication = .waitingForAuthentication(code: code, remainingAttempts: remainingAttempts - 1)
                 return .run { send in await send(.authenticationFinished(Result { try await networkClient.forkedSession(code.selector) })) }
 
             case .codeFetchingFinished(.success(let response)):
-                state = .waitingForAuthentication(code: response, remainingAttempts: pollConfiguration.failAfterAttempts)
+                state.authentication = .waitingForAuthentication(code: response, remainingAttempts: pollConfiguration.failAfterAttempts)
                 return .run { send in
                     try? await clock.sleep(for: pollConfiguration.delayBeforePollingStarts)
                     await send(.pollServer)
@@ -98,11 +110,24 @@ struct SignInFeature {
                 // handle non-retryable error
                 return .none
 
+            case .signInFinished(.failure(let error)):
+                if error == .authenticationAttemptsExhausted {
+                    state.destination = .codeExpired(.init())
+                }
+                return .none
             case .signInFinished:
                 // Delegate action handled by parent reducer
                 return .none
+            case .destination(.presented(.codeExpired(.generateNewCode))):
+                state.destination = nil
+                return .run { send in
+                    await send(.fetchSignInCode)
+                }
+            case .destination(.dismiss):
+                return .run { send in await send(.signInFinished(.failure(.userCancelled)))}
             }
         }
+        .ifLet(\.$destination, action: \.destination)
     }
 }
 

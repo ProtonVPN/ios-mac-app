@@ -41,14 +41,17 @@ struct WelcomeFeature {
         Reduce { state, action in
             switch action {
             case .showSignIn:
-                state.destination = .signIn(.loadingSignInCode)
+                state.destination = .signIn(.init(authentication: .loadingSignInCode))
                 return .none
             case .showCreateAccount:
                 state.destination = .createAccount(.init())
                 return .none
-            case .destination(.presented(.signIn(.signInFinished))):
+            case .destination(.presented(.signIn(.signInFinished(.success(_))))):
                 /// Right after logging in, we should reset the state of the welcome page, so that when the user logs out,
                 /// the welcome page will be shown, not the sign in page
+                state.destination = nil
+                return .none
+            case .destination(.presented(.signIn(.signInFinished(.failure(.userCancelled))))):
                 state.destination = nil
                 return .none
             case .destination:

@@ -37,7 +37,7 @@ struct SignInView: View {
             StepView(title: "Sign in to your account.",
                      accent: nil,
                      stepNumber: 2)
-            switch store.state {
+            switch store.state.authentication {
             case .loadingSignInCode:
                 StepView(title: "When asked for your verification code, enter (retrieving...)",
                          accent: nil,
@@ -50,7 +50,13 @@ struct SignInView: View {
         }
         .frame(maxWidth: Self.maxElementsWidth)
         .task {
-            store.send(.fetchSignInCode)
+            if case .loadingSignInCode = store.state.authentication {
+                store.send(.fetchSignInCode)
+            }
+        }
+        .navigationDestination(item: $store.scope(state: \.destination?.codeExpired,
+                                                  action: \.destination.codeExpired)) {
+            CodeExpiredView(store: $0)
         }
     }
 }
