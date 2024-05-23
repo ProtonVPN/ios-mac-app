@@ -75,6 +75,9 @@
          location = "container:"
          name = "Features">
          <FileRef
+            location = "group:libraries/tvOS">
+         </FileRef>
+         <FileRef
             location = "group:libraries/BugReport">
          </FileRef>
          <FileRef

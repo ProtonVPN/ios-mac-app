@@ -13,67 +13,16 @@
 		4C54B0382BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B0372BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift */; };
 		4C54B04C2BC02AB200315A3B /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C54B04B2BC02AB200315A3B /* NetworkExtension.framework */; };
 		4C54B04F2BC02AB200315A3B /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B04E2BC02AB200315A3B /* PacketTunnelProvider.swift */; };
-		AD1DB8C62BECE8B60065F67E /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = AD1DB8C52BECE8B60065F67E /* Persistence */; };
-		AD1DB8C82BECE91E0065F67E /* Persistence+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1DB8C72BECE91E0065F67E /* Persistence+tvOS.swift */; };
 		AD20FCDD2BF60E1F00F966DF /* CommonNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = AD20FCDC2BF60E1F00F966DF /* CommonNetworking */; };
 		AD20FCDF2BF60E3700F966DF /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = AD20FCDE2BF60E3700F966DF /* Persistence */; };
 		AD20FCE12BF60E3700F966DF /* PersistenceTestSupport in Frameworks */ = {isa = PBXBuildFile; productRef = AD20FCE02BF60E3700F966DF /* PersistenceTestSupport */; };
-		AD20FCE32BF60E8400F966DF /* Bundle+appVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55489602BEBAC9600AD846B /* Bundle+appVersion.swift */; };
-		AD20FCE42BF60E8900F966DF /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BC9DE22BD7F7C800CBF85A /* NetworkClient.swift */; };
-		AD20FCE52BF60E8900F966DF /* ServerPoll.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515F8C62BE0DB5E00EA4ABF /* ServerPoll.swift */; };
-		AD20FCE62BF60E8900F966DF /* SessionNetworkingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8FA91C2BEC213300E751F6 /* SessionNetworkingFeature.swift */; };
-		AD20FCE72BF60E8900F966DF /* UIImage+QRCodeGenerating.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D846BA2BDBB93C006EEEDB /* UIImage+QRCodeGenerating.swift */; };
-		AD20FCE82BF60E9300F966DF /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A29E32BDA77850006E85D /* AppFeature.swift */; };
-		AD20FCEA2BF60E9700F966DF /* MainFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A29E12BDA6A040006E85D /* MainFeature.swift */; };
-		AD20FCEC2BF60E9B00F966DF /* SettingsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A29DC2BDA50D20006E85D /* SettingsFeature.swift */; };
-		AD20FCF02BF60EA000F966DF /* SettingsDrillDownFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55489622BEBC7AE00AD846B /* SettingsDrillDownFeature.swift */; };
-		AD20FCF22BF60EA700F966DF /* WelcomeFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A29DA2BDA50B80006E85D /* WelcomeFeature.swift */; };
-		AD20FCF52BF60EB100F966DF /* CreateAccountFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515F8C32BE0D3B600EA4ABF /* CreateAccountFeature.swift */; };
-		AD20FCF62BF60EB700F966DF /* SignInFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A29D82BDA50100006E85D /* SignInFeature.swift */; };
-		AD20FD002BF60ECA00F966DF /* ObfuscatedConstants.example.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8FA9032BEB958C00E751F6 /* ObfuscatedConstants.example.swift */; };
-		AD20FD012BF60F4900F966DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C54B01E2BC027FE00315A3B /* Assets.xcassets */; };
-		AD20FD022BF60F4A00F966DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C54B01E2BC027FE00315A3B /* Assets.xcassets */; };
 		AD20FD042BF60FCE00F966DF /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = AD20FD032BF60FCE00F966DF /* ComposableArchitecture */; };
-		AD20FD0A2BFC961F00F966DF /* AuthCredentials+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD20FD062BFC953500F966DF /* AuthCredentials+Mock.swift */; };
-		AD8FA9052BEB95AA00E751F6 /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8FA9042BEB958C00E751F6 /* ObfuscatedConstants.swift */; };
 		AD8FA9072BEB9DBB00E751F6 /* Client.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD8FA9062BEB9DBB00E751F6 /* Client.plist */; };
-		AD8FA9112BEC1DAD00E751F6 /* ChallengeParamersProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8FA90C2BEC1DAD00E751F6 /* ChallengeParamersProvider.swift */; };
-		AD8FA9122BEC1DAD00E751F6 /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8FA90D2BEC1DAD00E751F6 /* AppInfo.swift */; };
-		AD8FA9132BEC1DAD00E751F6 /* NetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8FA90E2BEC1DAD00E751F6 /* NetworkingDelegate.swift */; };
-		AD8FA9142BEC1DAD00E751F6 /* DoH.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8FA90F2BEC1DAD00E751F6 /* DoH.swift */; };
-		AD8FA9152BEC1DAD00E751F6 /* CryptoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8FA9102BEC1DAD00E751F6 /* CryptoService.swift */; };
-		AD8FA9172BEC1F3600E751F6 /* ProtonCoreServices in Frameworks */ = {isa = PBXBuildFile; productRef = AD8FA9162BEC1F3600E751F6 /* ProtonCoreServices */; };
-		AD8FA9192BEC1F4700E751F6 /* CommonNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = AD8FA9182BEC1F4700E751F6 /* CommonNetworking */; };
-		AD8FA91B2BEC1F5900E751F6 /* ProtonCoreForceUpgrade in Frameworks */ = {isa = PBXBuildFile; productRef = AD8FA91A2BEC1F5900E751F6 /* ProtonCoreForceUpgrade */; };
-		AD8FA91D2BEC213300E751F6 /* SessionNetworkingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8FA91C2BEC213300E751F6 /* SessionNetworkingFeature.swift */; };
-		E515F8BA2BE0CF6100EA4ABF /* SettingsFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515F8B92BE0CF6100EA4ABF /* SettingsFeatureTests.swift */; };
-		E515F8BF2BE0D1FC00EA4ABF /* WelcomeFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515F8BB2BE0D1FC00EA4ABF /* WelcomeFeatureTests.swift */; };
-		E515F8C02BE0D1FC00EA4ABF /* SignInFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515F8BC2BE0D1FC00EA4ABF /* SignInFeatureTests.swift */; };
-		E515F8C12BE0D1FC00EA4ABF /* MainFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515F8BD2BE0D1FC00EA4ABF /* MainFeatureTests.swift */; };
-		E515F8C22BE0D1FC00EA4ABF /* AppFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515F8BE2BE0D1FC00EA4ABF /* AppFeatureTests.swift */; };
-		E515F8C52BE0D3F500EA4ABF /* CreateAccountFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515F8C32BE0D3B600EA4ABF /* CreateAccountFeature.swift */; };
-		E515F8C82BE0DB7E00EA4ABF /* ServerPoll.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515F8C62BE0DB5E00EA4ABF /* ServerPoll.swift */; };
-		E5280E5D2BD9057600CDDBAF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5280E532BD9057600CDDBAF /* SettingsView.swift */; };
-		E5280E5E2BD9057600CDDBAF /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5280E552BD9057600CDDBAF /* WelcomeView.swift */; };
-		E5280E5F2BD9057600CDDBAF /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5280E572BD9057600CDDBAF /* QRCodeView.swift */; };
-		E5280E602BD9057600CDDBAF /* CreateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5280E592BD9057600CDDBAF /* CreateAccountView.swift */; };
-		E5280E612BD9057600CDDBAF /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5280E5B2BD9057600CDDBAF /* SignInView.swift */; };
-		E554895F2BEB60AE00AD846B /* ProtonCoreUIFoundations in Frameworks */ = {isa = PBXBuildFile; productRef = E554895E2BEB60AE00AD846B /* ProtonCoreUIFoundations */; };
-		E55489612BEBAC9600AD846B /* Bundle+appVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55489602BEBAC9600AD846B /* Bundle+appVersion.swift */; };
-		E55489632BEBC7AE00AD846B /* SettingsDrillDownFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55489622BEBC7AE00AD846B /* SettingsDrillDownFeature.swift */; };
-		E55489652BEBC7CE00AD846B /* SettingsDrillDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55489642BEBC7CE00AD846B /* SettingsDrillDownView.swift */; };
-		E55489672BEBC7E500AD846B /* SettingsCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55489662BEBC7E500AD846B /* SettingsCellView.swift */; };
-		E55A29D92BDA50100006E85D /* SignInFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A29D82BDA50100006E85D /* SignInFeature.swift */; };
-		E55A29DB2BDA50B80006E85D /* WelcomeFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A29DA2BDA50B80006E85D /* WelcomeFeature.swift */; };
-		E55A29DD2BDA50D20006E85D /* SettingsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A29DC2BDA50D20006E85D /* SettingsFeature.swift */; };
-		E55A29E02BDA69F40006E85D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A29DF2BDA69F40006E85D /* MainView.swift */; };
-		E55A29E22BDA6A040006E85D /* MainFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A29E12BDA6A040006E85D /* MainFeature.swift */; };
-		E55A29E42BDA77850006E85D /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A29E32BDA77850006E85D /* AppFeature.swift */; };
-		E55A29E62BDA78460006E85D /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A29E52BDA78460006E85D /* AppView.swift */; };
-		E56C8CC22BCFC2CB0029B6AE /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = E56C8CC12BCFC2CB0029B6AE /* ComposableArchitecture */; };
-		E56C8CC62BCFCEFF0029B6AE /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E56C8CC52BCFCEFF0029B6AE /* Theme */; };
-		E5BC9DE32BD7F7C800CBF85A /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BC9DE22BD7F7C800CBF85A /* NetworkClient.swift */; };
-		E5D846BB2BDBB93C006EEEDB /* UIImage+QRCodeGenerating.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D846BA2BDBB93C006EEEDB /* UIImage+QRCodeGenerating.swift */; };
+		E53729F72BFDF777003D7409 /* tvOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53729F62BFDF777003D7409 /* tvOS */; };
+		E53729F92BFDF7AE003D7409 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E53729F82BFDF7AE003D7409 /* Assets.xcassets */; };
+		E53729FB2BFDFBE9003D7409 /* ProtonCoreLog in Frameworks */ = {isa = PBXBuildFile; productRef = E53729FA2BFDFBE9003D7409 /* ProtonCoreLog */; };
+		E53729FD2BFDFBF4003D7409 /* CommonNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = E53729FC2BFDFBF4003D7409 /* CommonNetworking */; };
+		E53729FF2BFDFBFD003D7409 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = E53729FE2BFDFBFD003D7409 /* ComposableArchitecture */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,7 +45,6 @@
 /* Begin PBXFileReference section */
 		4C54B0172BC027FD00315A3B /* ProtonVPN-TV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ProtonVPN-TV.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C54B01A2BC027FD00315A3B /* ProtonVPNApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNApp.swift; sourceTree = "<group>"; };
-		4C54B01E2BC027FE00315A3B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4C54B0212BC027FE00315A3B /* PreviewAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PreviewAssets.xcassets; sourceTree = "<group>"; };
 		4C54B0272BC027FF00315A3B /* tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tvOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C54B0312BC027FF00315A3B /* tvOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tvOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,42 +56,9 @@
 		4C54B04E2BC02AB200315A3B /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
 		4C54B0502BC02AB200315A3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C54B0512BC02AB200315A3B /* wireguard_tv.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = wireguard_tv.entitlements; sourceTree = "<group>"; };
-		AD1DB8C72BECE91E0065F67E /* Persistence+tvOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Persistence+tvOS.swift"; sourceTree = "<group>"; };
-		AD20FD062BFC953500F966DF /* AuthCredentials+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthCredentials+Mock.swift"; sourceTree = "<group>"; };
-		AD8FA9032BEB958C00E751F6 /* ObfuscatedConstants.example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.example.swift; sourceTree = "<group>"; };
-		AD8FA9042BEB958C00E751F6 /* ObfuscatedConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.swift; sourceTree = "<group>"; };
 		AD8FA9062BEB9DBB00E751F6 /* Client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Client.plist; sourceTree = "<group>"; };
-		AD8FA90C2BEC1DAD00E751F6 /* ChallengeParamersProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengeParamersProvider.swift; sourceTree = "<group>"; };
-		AD8FA90D2BEC1DAD00E751F6 /* AppInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
-		AD8FA90E2BEC1DAD00E751F6 /* NetworkingDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkingDelegate.swift; sourceTree = "<group>"; };
-		AD8FA90F2BEC1DAD00E751F6 /* DoH.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoH.swift; sourceTree = "<group>"; };
-		AD8FA9102BEC1DAD00E751F6 /* CryptoService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoService.swift; sourceTree = "<group>"; };
-		AD8FA91C2BEC213300E751F6 /* SessionNetworkingFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionNetworkingFeature.swift; sourceTree = "<group>"; };
-		E515F8B92BE0CF6100EA4ABF /* SettingsFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFeatureTests.swift; sourceTree = "<group>"; };
-		E515F8BB2BE0D1FC00EA4ABF /* WelcomeFeatureTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeFeatureTests.swift; sourceTree = "<group>"; };
-		E515F8BC2BE0D1FC00EA4ABF /* SignInFeatureTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInFeatureTests.swift; sourceTree = "<group>"; };
-		E515F8BD2BE0D1FC00EA4ABF /* MainFeatureTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFeatureTests.swift; sourceTree = "<group>"; };
-		E515F8BE2BE0D1FC00EA4ABF /* AppFeatureTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppFeatureTests.swift; sourceTree = "<group>"; };
-		E515F8C32BE0D3B600EA4ABF /* CreateAccountFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountFeature.swift; sourceTree = "<group>"; };
-		E515F8C62BE0DB5E00EA4ABF /* ServerPoll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerPoll.swift; sourceTree = "<group>"; };
-		E5280E532BD9057600CDDBAF /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		E5280E552BD9057600CDDBAF /* WelcomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
-		E5280E572BD9057600CDDBAF /* QRCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
-		E5280E592BD9057600CDDBAF /* CreateAccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAccountView.swift; sourceTree = "<group>"; };
-		E5280E5B2BD9057600CDDBAF /* SignInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
-		E55489602BEBAC9600AD846B /* Bundle+appVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+appVersion.swift"; sourceTree = "<group>"; };
-		E55489622BEBC7AE00AD846B /* SettingsDrillDownFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDrillDownFeature.swift; sourceTree = "<group>"; };
-		E55489642BEBC7CE00AD846B /* SettingsDrillDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDrillDownView.swift; sourceTree = "<group>"; };
-		E55489662BEBC7E500AD846B /* SettingsCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCellView.swift; sourceTree = "<group>"; };
-		E55A29D82BDA50100006E85D /* SignInFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInFeature.swift; sourceTree = "<group>"; };
-		E55A29DA2BDA50B80006E85D /* WelcomeFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeFeature.swift; sourceTree = "<group>"; };
-		E55A29DC2BDA50D20006E85D /* SettingsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFeature.swift; sourceTree = "<group>"; };
-		E55A29DF2BDA69F40006E85D /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		E55A29E12BDA6A040006E85D /* MainFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeature.swift; sourceTree = "<group>"; };
-		E55A29E32BDA77850006E85D /* AppFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
-		E55A29E52BDA78460006E85D /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
-		E5BC9DE22BD7F7C800CBF85A /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
-		E5D846BA2BDBB93C006EEEDB /* UIImage+QRCodeGenerating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+QRCodeGenerating.swift"; sourceTree = "<group>"; };
+		E53729F82BFDF7AE003D7409 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E53CF66C2BFF232C00458430 /* ObfuscatedConstants.example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.example.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,13 +66,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD1DB8C62BECE8B60065F67E /* Persistence in Frameworks */,
-				E554895F2BEB60AE00AD846B /* ProtonCoreUIFoundations in Frameworks */,
-				E56C8CC62BCFCEFF0029B6AE /* Theme in Frameworks */,
-				AD8FA9192BEC1F4700E751F6 /* CommonNetworking in Frameworks */,
-				AD8FA91B2BEC1F5900E751F6 /* ProtonCoreForceUpgrade in Frameworks */,
-				E56C8CC22BCFC2CB0029B6AE /* ComposableArchitecture in Frameworks */,
-				AD8FA9172BEC1F3600E751F6 /* ProtonCoreServices in Frameworks */,
+				E53729FB2BFDFBE9003D7409 /* ProtonCoreLog in Frameworks */,
+				E53729F72BFDF777003D7409 /* tvOS in Frameworks */,
+				E53729FF2BFDFBFD003D7409 /* ComposableArchitecture in Frameworks */,
+				E53729FD2BFDFBF4003D7409 /* CommonNetworking in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,7 +107,6 @@
 			children = (
 				4C54B0442BC0288F00315A3B /* Config.xcconfig */,
 				4C54B0192BC027FD00315A3B /* ProtonVPN */,
-				4C54B02A2BC027FF00315A3B /* ProtonVPNTests */,
 				4C54B0342BC027FF00315A3B /* ProtonVPNUITests */,
 				4C54B04D2BC02AB200315A3B /* WireGuard-tvOS */,
 				4C54B04A2BC02AB200315A3B /* Frameworks */,
@@ -218,11 +129,6 @@
 			isa = PBXGroup;
 			children = (
 				4C54B01A2BC027FD00315A3B /* ProtonVPNApp.swift */,
-				E55489602BEBAC9600AD846B /* Bundle+appVersion.swift */,
-				E55A29E82BDA78B10006E85D /* Services */,
-				E5280E502BD9057600CDDBAF /* Features */,
-				4C54B01E2BC027FE00315A3B /* Assets.xcassets */,
-				AD8FA90A2BEC1DAD00E751F6 /* PlatformDependencies */,
 				4C54B0202BC027FE00315A3B /* PreviewContent */,
 				AD8FA9002BEB958C00E751F6 /* SupportingFiles */,
 			);
@@ -235,19 +141,6 @@
 				4C54B0212BC027FE00315A3B /* PreviewAssets.xcassets */,
 			);
 			path = PreviewContent;
-			sourceTree = "<group>";
-		};
-		4C54B02A2BC027FF00315A3B /* ProtonVPNTests */ = {
-			isa = PBXGroup;
-			children = (
-				AD20FD052BFC952600F966DF /* Mocks */,
-				E515F8B92BE0CF6100EA4ABF /* SettingsFeatureTests.swift */,
-				E515F8BE2BE0D1FC00EA4ABF /* AppFeatureTests.swift */,
-				E515F8BD2BE0D1FC00EA4ABF /* MainFeatureTests.swift */,
-				E515F8BC2BE0D1FC00EA4ABF /* SignInFeatureTests.swift */,
-				E515F8BB2BE0D1FC00EA4ABF /* WelcomeFeatureTests.swift */,
-			);
-			path = ProtonVPNTests;
 			sourceTree = "<group>";
 		};
 		4C54B0342BC027FF00315A3B /* ProtonVPNUITests */ = {
@@ -277,143 +170,16 @@
 			path = "WireGuard-tvOS";
 			sourceTree = "<group>";
 		};
-		AD20FD052BFC952600F966DF /* Mocks */ = {
-			isa = PBXGroup;
-			children = (
-				AD20FD062BFC953500F966DF /* AuthCredentials+Mock.swift */,
-			);
-			path = Mocks;
-			sourceTree = "<group>";
-		};
 		AD8FA9002BEB958C00E751F6 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				E53CF66C2BFF232C00458430 /* ObfuscatedConstants.example.swift */,
 				AD8FA9062BEB9DBB00E751F6 /* Client.plist */,
-				AD8FA9032BEB958C00E751F6 /* ObfuscatedConstants.example.swift */,
-				AD8FA9042BEB958C00E751F6 /* ObfuscatedConstants.swift */,
+				E53729F82BFDF7AE003D7409 /* Assets.xcassets */,
 			);
 			name = SupportingFiles;
 			path = ProtonVPN/SupportingFiles;
 			sourceTree = SOURCE_ROOT;
-		};
-		AD8FA90A2BEC1DAD00E751F6 /* PlatformDependencies */ = {
-			isa = PBXGroup;
-			children = (
-				AD1DB8C72BECE91E0065F67E /* Persistence+tvOS.swift */,
-				AD8FA90B2BEC1DAD00E751F6 /* CommonNetworking */,
-			);
-			path = PlatformDependencies;
-			sourceTree = "<group>";
-		};
-		AD8FA90B2BEC1DAD00E751F6 /* CommonNetworking */ = {
-			isa = PBXGroup;
-			children = (
-				AD8FA90C2BEC1DAD00E751F6 /* ChallengeParamersProvider.swift */,
-				AD8FA90D2BEC1DAD00E751F6 /* AppInfo.swift */,
-				AD8FA90E2BEC1DAD00E751F6 /* NetworkingDelegate.swift */,
-				AD8FA90F2BEC1DAD00E751F6 /* DoH.swift */,
-				AD8FA9102BEC1DAD00E751F6 /* CryptoService.swift */,
-			);
-			path = CommonNetworking;
-			sourceTree = "<group>";
-		};
-		E5280E502BD9057600CDDBAF /* Features */ = {
-			isa = PBXGroup;
-			children = (
-				E55A29E72BDA78800006E85D /* App */,
-				E55A29DE2BDA69E30006E85D /* Main */,
-				E5280E512BD9057600CDDBAF /* Settings */,
-				E5280E542BD9057600CDDBAF /* Welcome */,
-				E5280E562BD9057600CDDBAF /* Common */,
-				E5280E582BD9057600CDDBAF /* CreateAccount */,
-				E5280E5A2BD9057600CDDBAF /* Sign In */,
-			);
-			path = Features;
-			sourceTree = "<group>";
-		};
-		E5280E512BD9057600CDDBAF /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				E5280E532BD9057600CDDBAF /* SettingsView.swift */,
-				E55A29DC2BDA50D20006E85D /* SettingsFeature.swift */,
-				E55489682BEBC80F00AD846B /* DrillDown */,
-				E55489662BEBC7E500AD846B /* SettingsCellView.swift */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
-		E5280E542BD9057600CDDBAF /* Welcome */ = {
-			isa = PBXGroup;
-			children = (
-				E5280E552BD9057600CDDBAF /* WelcomeView.swift */,
-				E55A29DA2BDA50B80006E85D /* WelcomeFeature.swift */,
-			);
-			path = Welcome;
-			sourceTree = "<group>";
-		};
-		E5280E562BD9057600CDDBAF /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				E5280E572BD9057600CDDBAF /* QRCodeView.swift */,
-			);
-			path = Common;
-			sourceTree = "<group>";
-		};
-		E5280E582BD9057600CDDBAF /* CreateAccount */ = {
-			isa = PBXGroup;
-			children = (
-				E5280E592BD9057600CDDBAF /* CreateAccountView.swift */,
-				E515F8C32BE0D3B600EA4ABF /* CreateAccountFeature.swift */,
-			);
-			path = CreateAccount;
-			sourceTree = "<group>";
-		};
-		E5280E5A2BD9057600CDDBAF /* Sign In */ = {
-			isa = PBXGroup;
-			children = (
-				E5280E5B2BD9057600CDDBAF /* SignInView.swift */,
-				E55A29D82BDA50100006E85D /* SignInFeature.swift */,
-			);
-			path = "Sign In";
-			sourceTree = "<group>";
-		};
-		E55489682BEBC80F00AD846B /* DrillDown */ = {
-			isa = PBXGroup;
-			children = (
-				E55489622BEBC7AE00AD846B /* SettingsDrillDownFeature.swift */,
-				E55489642BEBC7CE00AD846B /* SettingsDrillDownView.swift */,
-			);
-			path = DrillDown;
-			sourceTree = "<group>";
-		};
-		E55A29DE2BDA69E30006E85D /* Main */ = {
-			isa = PBXGroup;
-			children = (
-				E55A29DF2BDA69F40006E85D /* MainView.swift */,
-				E55A29E12BDA6A040006E85D /* MainFeature.swift */,
-			);
-			path = Main;
-			sourceTree = "<group>";
-		};
-		E55A29E72BDA78800006E85D /* App */ = {
-			isa = PBXGroup;
-			children = (
-				E55A29E32BDA77850006E85D /* AppFeature.swift */,
-				E55A29E52BDA78460006E85D /* AppView.swift */,
-			);
-			path = App;
-			sourceTree = "<group>";
-		};
-		E55A29E82BDA78B10006E85D /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				AD8FA91C2BEC213300E751F6 /* SessionNetworkingFeature.swift */,
-				E5BC9DE22BD7F7C800CBF85A /* NetworkClient.swift */,
-				E5D846BA2BDBB93C006EEEDB /* UIImage+QRCodeGenerating.swift */,
-				E515F8C62BE0DB5E00EA4ABF /* ServerPoll.swift */,
-			);
-			path = Services;
-			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -432,13 +198,10 @@
 			);
 			name = "ProtonVPN-TV";
 			packageProductDependencies = (
-				E56C8CC12BCFC2CB0029B6AE /* ComposableArchitecture */,
-				E56C8CC52BCFCEFF0029B6AE /* Theme */,
-				AD1DB8C52BECE8B60065F67E /* Persistence */,
-				E554895E2BEB60AE00AD846B /* ProtonCoreUIFoundations */,
-				AD8FA9162BEC1F3600E751F6 /* ProtonCoreServices */,
-				AD8FA9182BEC1F4700E751F6 /* CommonNetworking */,
-				AD8FA91A2BEC1F5900E751F6 /* ProtonCoreForceUpgrade */,
+				E53729F62BFDF777003D7409 /* tvOS */,
+				E53729FA2BFDFBE9003D7409 /* ProtonCoreLog */,
+				E53729FC2BFDFBF4003D7409 /* CommonNetworking */,
+				E53729FE2BFDFBFD003D7409 /* ComposableArchitecture */,
 			);
 			productName = ProtonVPN;
 			productReference = 4C54B0172BC027FD00315A3B /* ProtonVPN-TV.app */;
@@ -558,7 +321,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C54B0222BC027FE00315A3B /* PreviewAssets.xcassets in Resources */,
-				AD20FD022BF60F4A00F966DF /* Assets.xcassets in Resources */,
+				E53729F92BFDF7AE003D7409 /* Assets.xcassets in Resources */,
 				AD8FA9072BEB9DBB00E751F6 /* Client.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -567,7 +330,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD20FD012BF60F4900F966DF /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,35 +354,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E55A29E02BDA69F40006E85D /* MainView.swift in Sources */,
-				E515F8C82BE0DB7E00EA4ABF /* ServerPoll.swift in Sources */,
-				AD8FA9132BEC1DAD00E751F6 /* NetworkingDelegate.swift in Sources */,
-				E5280E612BD9057600CDDBAF /* SignInView.swift in Sources */,
-				E515F8C52BE0D3F500EA4ABF /* CreateAccountFeature.swift in Sources */,
-				E5280E5D2BD9057600CDDBAF /* SettingsView.swift in Sources */,
-				E55489652BEBC7CE00AD846B /* SettingsDrillDownView.swift in Sources */,
-				AD8FA91D2BEC213300E751F6 /* SessionNetworkingFeature.swift in Sources */,
-				E55A29DB2BDA50B80006E85D /* WelcomeFeature.swift in Sources */,
-				E55489612BEBAC9600AD846B /* Bundle+appVersion.swift in Sources */,
-				E5280E5E2BD9057600CDDBAF /* WelcomeView.swift in Sources */,
-				AD1DB8C82BECE91E0065F67E /* Persistence+tvOS.swift in Sources */,
-				E55489632BEBC7AE00AD846B /* SettingsDrillDownFeature.swift in Sources */,
-				E55A29DD2BDA50D20006E85D /* SettingsFeature.swift in Sources */,
-				E55A29E42BDA77850006E85D /* AppFeature.swift in Sources */,
-				E55A29E22BDA6A040006E85D /* MainFeature.swift in Sources */,
-				E5280E5F2BD9057600CDDBAF /* QRCodeView.swift in Sources */,
-				E55489672BEBC7E500AD846B /* SettingsCellView.swift in Sources */,
-				E5D846BB2BDBB93C006EEEDB /* UIImage+QRCodeGenerating.swift in Sources */,
-				E55A29D92BDA50100006E85D /* SignInFeature.swift in Sources */,
-				AD8FA9142BEC1DAD00E751F6 /* DoH.swift in Sources */,
-				E55A29E62BDA78460006E85D /* AppView.swift in Sources */,
-				AD8FA9152BEC1DAD00E751F6 /* CryptoService.swift in Sources */,
-				E5280E602BD9057600CDDBAF /* CreateAccountView.swift in Sources */,
-				AD8FA9112BEC1DAD00E751F6 /* ChallengeParamersProvider.swift in Sources */,
-				AD8FA9052BEB95AA00E751F6 /* ObfuscatedConstants.swift in Sources */,
 				4C54B01B2BC027FD00315A3B /* ProtonVPNApp.swift in Sources */,
-				E5BC9DE32BD7F7C800CBF85A /* NetworkClient.swift in Sources */,
-				AD8FA9122BEC1DAD00E751F6 /* AppInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -628,25 +362,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD20FCF52BF60EB100F966DF /* CreateAccountFeature.swift in Sources */,
-				AD20FCE82BF60E9300F966DF /* AppFeature.swift in Sources */,
-				E515F8BF2BE0D1FC00EA4ABF /* WelcomeFeatureTests.swift in Sources */,
-				E515F8C12BE0D1FC00EA4ABF /* MainFeatureTests.swift in Sources */,
-				AD20FD002BF60ECA00F966DF /* ObfuscatedConstants.example.swift in Sources */,
-				AD20FCF22BF60EA700F966DF /* WelcomeFeature.swift in Sources */,
-				AD20FCF62BF60EB700F966DF /* SignInFeature.swift in Sources */,
-				E515F8C02BE0D1FC00EA4ABF /* SignInFeatureTests.swift in Sources */,
-				AD20FCE52BF60E8900F966DF /* ServerPoll.swift in Sources */,
-				AD20FCE72BF60E8900F966DF /* UIImage+QRCodeGenerating.swift in Sources */,
-				AD20FCE32BF60E8400F966DF /* Bundle+appVersion.swift in Sources */,
-				AD20FCEA2BF60E9700F966DF /* MainFeature.swift in Sources */,
-				AD20FCE62BF60E8900F966DF /* SessionNetworkingFeature.swift in Sources */,
-				AD20FD0A2BFC961F00F966DF /* AuthCredentials+Mock.swift in Sources */,
-				E515F8C22BE0D1FC00EA4ABF /* AppFeatureTests.swift in Sources */,
-				E515F8BA2BE0CF6100EA4ABF /* SettingsFeatureTests.swift in Sources */,
-				AD20FCEC2BF60E9B00F966DF /* SettingsFeature.swift in Sources */,
-				AD20FCF02BF60EA000F966DF /* SettingsDrillDownFeature.swift in Sources */,
-				AD20FCE42BF60E8900F966DF /* NetworkClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1054,10 +769,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		AD1DB8C52BECE8B60065F67E /* Persistence */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Persistence;
-		};
 		AD20FCDC2BF60E1F00F966DF /* CommonNetworking */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CommonNetworking;
@@ -1075,30 +786,22 @@
 			package = E56C8CC02BCFC2CA0029B6AE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
 		};
-		AD8FA9162BEC1F3600E751F6 /* ProtonCoreServices */ = {
+		E53729F62BFDF777003D7409 /* tvOS */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = ProtonCoreServices;
+			productName = tvOS;
 		};
-		AD8FA9182BEC1F4700E751F6 /* CommonNetworking */ = {
+		E53729FA2BFDFBE9003D7409 /* ProtonCoreLog */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCoreLog;
+		};
+		E53729FC2BFDFBF4003D7409 /* CommonNetworking */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CommonNetworking;
 		};
-		AD8FA91A2BEC1F5900E751F6 /* ProtonCoreForceUpgrade */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ProtonCoreForceUpgrade;
-		};
-		E554895E2BEB60AE00AD846B /* ProtonCoreUIFoundations */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ProtonCoreUIFoundations;
-		};
-		E56C8CC12BCFC2CB0029B6AE /* ComposableArchitecture */ = {
+		E53729FE2BFDFBFD003D7409 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E56C8CC02BCFC2CA0029B6AE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
-		};
-		E56C8CC52BCFCEFF0029B6AE /* Theme */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Theme;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

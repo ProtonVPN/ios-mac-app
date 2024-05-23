@@ -18,7 +18,7 @@
 
 import XCTest
 import ComposableArchitecture
-@testable import ProtonVPN_TV
+@testable import tvOS
 
 final class SettingsFeatureTests: XCTestCase {
 

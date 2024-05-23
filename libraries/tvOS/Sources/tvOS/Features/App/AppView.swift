@@ -19,10 +19,22 @@
 import ComposableArchitecture
 import SwiftUI
 
-struct AppView: View {
-    var store: StoreOf<AppFeature>
+public struct AppView: View {
+    var store: StoreOf<AppFeature> = .init(initialState: AppFeature.State()) {
+        AppFeature()
+    }
 
-    var body: some View {
+    public init() { } 
+
+    public var body: some View {
+        viewBody
+            .onAppear {
+                self.startup()
+            }
+    }
+
+    @ViewBuilder
+    var viewBody: some View {
         switch store.networking {
         case .unauthenticated, .acquiringSession:
             ProgressView()
@@ -31,5 +43,9 @@ struct AppView: View {
         case .authenticated(.unauth):
             WelcomeView(store: store.scope(state: \.welcome, action: \.welcome))
         }
+    }
+
+    private func startup() {
+        store.send(.networking(.startAcquiringSession))
     }
 }

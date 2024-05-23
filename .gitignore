@@ -34,3 +34,6 @@ output_directory/
 fastlane/coverage.json
 fastlane/ios/metadata
 fastlane/ios/screenshots
+
+# Obfuscated constants
+**/ObfuscatedConstants.swift

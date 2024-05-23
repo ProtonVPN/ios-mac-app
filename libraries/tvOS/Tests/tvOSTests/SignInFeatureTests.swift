@@ -19,7 +19,7 @@
 import XCTest
 import ComposableArchitecture
 import XCTestDynamicOverlay
-@testable import ProtonVPN_TV
+@testable import tvOS
 
 final class SignInFeatureTests: XCTestCase {
 

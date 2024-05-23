@@ -16,22 +16,18 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ComposableArchitecture
 import SwiftUI
 import Dependencies
 import ProtonCoreLog
 import CommonNetworking
-import Persistence
+
+import tvOS
 
 @main
 struct ProtonVPNApp: App {
-    var store: StoreOf<AppFeature> = .init(initialState: AppFeature.State()) {
-        AppFeature()
-    }
-
     var body: some Scene {
         WindowGroup {
-            AppView(store: store)
+            AppView()
                 .onAppear { self.startup() }
         }
     }
@@ -43,7 +39,5 @@ struct ProtonVPNApp: App {
         } else {
             PMLog.setEnvironment(environment: "production")
         }
-
-        store.send(.networking(.startAcquiringSession))
     }
 }
