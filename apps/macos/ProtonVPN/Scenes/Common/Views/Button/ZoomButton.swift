@@ -32,6 +32,7 @@ enum ZoomType {
 
 class ZoomButton: HoverDetectionButton {
     
+    let zoomType: ZoomType
     let imageView = NSImageView()
     
     override var frame: NSRect {
@@ -41,6 +42,8 @@ class ZoomButton: HoverDetectionButton {
     }
     
     init(type zoomType: ZoomType) {
+        self.zoomType = zoomType
+
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
 
         let image = zoomType == .in ? AppTheme.Icon.plus : AppTheme.Icon.minus

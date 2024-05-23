@@ -22,12 +22,14 @@ import Strings
 
 final class SettingsAccountViewController: UIViewController {
     
+    private let viewModel: SettingsAccountViewModel
     private let tableView: UITableView
     private let genericDataSource: GenericTableViewDataSource
     private let connectionBarContainerView: UIView
     private let connectionBar: ConnectionBarViewController
     
     init(viewModel: SettingsAccountViewModel, connectionBar: ConnectionBarViewController) {
+        self.viewModel = viewModel
         self.tableView = UITableView()
         self.genericDataSource = GenericTableViewDataSource(for: tableView, with: viewModel.tableViewData)
         self.connectionBarContainerView = UIView()
@@ -35,6 +37,9 @@ final class SettingsAccountViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         viewModel.viewControllerFetcher = { [weak self] in self }
+        viewModel.pushHandler = { [weak self] viewController in
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        }
         viewModel.reloadNeeded = { [weak self] in
             guard let self = self, self.isViewLoaded else {
                 return

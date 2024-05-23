@@ -29,7 +29,7 @@ import Strings
 
 import LegacyCommon
 
-final class ServerItemViewModel: ServerItemViewModelCore {
+class ServerItemViewModel: ServerItemViewModelCore {
 
     private weak var countriesSectionViewModel: CountriesSectionViewModel! // weak to prevent retain cycle
 
@@ -45,6 +45,10 @@ final class ServerItemViewModel: ServerItemViewModelCore {
         return ServerModel(server: server)
     }
 
+    fileprivate var canConnect: Bool {
+        return !isUsersTierTooLow && !underMaintenance
+    }
+    
     var serverName: String {
         guard isSecureCoreEnabled else {
             return serverModel.logical.name
@@ -106,8 +110,8 @@ final class ServerItemViewModel: ServerItemViewModelCore {
     }
     
     func upgradeAction() {
-        if legacyServerModel != nil {
-            countriesSectionViewModel.displayUpgradeMessage()
+        if let legacyServerModel {
+            countriesSectionViewModel.displayUpgradeMessage(legacyServerModel)
         }
     }
 

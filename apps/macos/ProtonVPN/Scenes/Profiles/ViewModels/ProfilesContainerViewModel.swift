@@ -23,12 +23,17 @@
 import Foundation
 import LegacyCommon
 
-final class ProfilesContainerViewModel {
+class ProfilesContainerViewModel {
+    
+    let alertService: CoreAlertService
     let vpnGateway: VpnGatewayProtocol
     let initialTab: ProfilesTab
-
-    init(initialTab: ProfilesTab, vpnGateway: VpnGatewayProtocol) {
+    let vpnKeychain: VpnKeychainProtocol
+    
+    init(initialTab: ProfilesTab, vpnGateway: VpnGatewayProtocol, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol) {
         self.initialTab = initialTab
         self.vpnGateway = vpnGateway
+        self.alertService = alertService
+        self.vpnKeychain = vpnKeychain
     }
 }

@@ -23,7 +23,7 @@
 import Cocoa
 import LegacyCommon
 
-final class ColorPickerViewModel {
+class ColorPickerViewModel {
     private let colors: [NSColor]
     
     var colorSelected: (() -> Void)?
@@ -50,7 +50,11 @@ final class ColorPickerViewModel {
         colors = ProfileConstants.profileColors
         selectedColorIndex = colors.randomIndex
     }
-
+    
+    func selectRandom() {
+        selectedColorIndex = colors.randomIndex
+    }
+    
     func select(rgbHex: Int) {
         if let newIndex = colors.firstIndex(where: { $0.hexRepresentation == rgbHex }) {
             selectedColorIndex = newIndex

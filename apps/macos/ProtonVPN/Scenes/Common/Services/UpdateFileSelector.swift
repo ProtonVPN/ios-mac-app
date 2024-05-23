@@ -31,16 +31,16 @@ protocol UpdateFileSelectorFactory {
     func makeUpdateFileSelector() -> UpdateFileSelector
 }
 
-final class UpdateFileSelectorImplementation: UpdateFileSelector {
+public class UpdateFileSelectorImplementation: UpdateFileSelector {
 
-    typealias Factory = PropertiesManagerFactory
+    public typealias Factory = PropertiesManagerFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     
-    var forceNECapableOS: Bool? // `true` will force new file despite the OS version. `false` will force old file. `nil` - decide depending on OS.
+    public var forceNECapableOS: Bool? // `true` will force new file despite the OS version. `false` will force old file. `nil` - decide depending on OS.
     
-    init(_ factory: Factory) {
+    public init(_ factory: Factory) {
         self.factory = factory
     }
     

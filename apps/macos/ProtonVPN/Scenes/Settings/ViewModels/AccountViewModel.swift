@@ -31,14 +31,20 @@ final class AccountViewModel {
     private(set) var planTitle: String?
     private(set) var maxTier: Int
 
-    var reloadNeeded: (() -> Void)?
 
     private let vpnKeychain: VpnKeychainProtocol
+    private let propertiesManager: PropertiesManagerProtocol
     private let sessionService: SessionService
     private let authKeychain: AuthKeychainHandle
 
-    init(vpnKeychain: VpnKeychainProtocol, sessionService: SessionService, authKeychain: AuthKeychainHandle) {
+    var reloadNeeded: (() -> Void)?
+    
+    init(vpnKeychain: VpnKeychainProtocol,
+         propertiesManager: PropertiesManagerProtocol,
+         sessionService: SessionService,
+         authKeychain: AuthKeychainHandle) {
         self.vpnKeychain = vpnKeychain
+        self.propertiesManager = propertiesManager
         self.sessionService = sessionService
         self.authKeychain = authKeychain
 

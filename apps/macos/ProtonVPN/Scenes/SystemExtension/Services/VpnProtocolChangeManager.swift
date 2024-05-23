@@ -40,7 +40,7 @@ extension DependencyContainer: VpnProtocolChangeManagerFactory {
 /// Class to request VPN protocol change.
 /// Takes care of checking if user is currently connected, if sysex is installed, etc.
 protocol VpnProtocolChangeManager {
-    func change(toProtocol: VpnProtocol, completion: @escaping (Result<(), Error>) -> Void)
+    func change(toProtocol: VpnProtocol, userInitiated: Bool, completion: @escaping (Result<(), Error>) -> Void)
 }
 
 final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
@@ -72,15 +72,21 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
         self.factory = factory
     }
     
-    func change(toProtocol vpnProtocol: VpnProtocol, completion: @escaping (Result<(), Error>) -> Void) {
+    func change(toProtocol vpnProtocol: VpnProtocol, userInitiated: Bool, completion: @escaping (Result<(), Error>) -> Void) {
         guard vpnGateway.connection == .connected || vpnGateway.connection == .connecting else {
-            set(vpnProtocol: vpnProtocol, and: .doNothing, completion: completion)
+            set(vpnProtocol: vpnProtocol,
+                userInitiated: userInitiated,
+                and: .doNothing,
+                completion: completion)
             return
         }
 
         guard appStateManager.activeConnection()?.server.supports(vpnProtocol: vpnProtocol) != false else {
             let alert = ProtocolNotAvailableForServerAlert(confirmHandler: { [weak self] in
-                self?.set(vpnProtocol: vpnProtocol, and: .disconnect, completion: completion)
+                self?.set(vpnProtocol: vpnProtocol,
+                          userInitiated: true,
+                          and: .disconnect,
+                          completion: completion)
             }, cancelHandler: {
                 completion(.failure(ReconnectOnSmartProtocolChangeAlert.userCancelled))
             })
@@ -89,13 +95,17 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
         }
 
         alertService.push(alert: ReconnectOnSettingsChangeAlert(confirmHandler: { [weak self] in
-            self?.set(vpnProtocol: vpnProtocol, and: .reconnect, completion: completion)
+            self?.set(vpnProtocol: vpnProtocol,
+                      userInitiated: userInitiated,
+                      and: .reconnect,
+                      completion: completion)
         }, cancelHandler: {
             completion(.failure(ReconnectOnSettingsChangeAlert.userCancelled))
         }))
     }
     
     private func set(vpnProtocol: VpnProtocol,
+                     userInitiated: Bool,
                      and then: ProtocolSwitchAction,
                      completion: @escaping (Result<(), Error>) -> Void) {
         let performSwitchAction = { [weak self] in

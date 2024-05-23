@@ -29,11 +29,13 @@ class AbstractProfileViewModel {
     @Dependency(\.profileAuthorizer) var authorizer
     let profile: Profile
     let lowestServerTier: Int
+    let userTier: Int
     let underMaintenance: Bool
     
-    init(profile: Profile) {
+    init(profile: Profile, userTier: Int) {
         self.profile = profile
-
+        self.userTier = userTier
+        
         switch profile.serverOffering {
         case .custom(let serverWrapper):
             self.lowestServerTier = serverWrapper.server.tier

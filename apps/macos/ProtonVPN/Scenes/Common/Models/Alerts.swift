@@ -24,53 +24,53 @@ import Foundation
 import LegacyCommon
 import Strings
 
-final class ClearApplicationDataAlert: SystemAlert {
-    var title: String? = Localizable.deleteApplicationDataPopupTitle
-    var message: String? = Localizable.deleteApplicationDataPopupBody
-    var actions = [AlertAction]()
-    let isError: Bool = false
-    var dismiss: (() -> Void)?
+public class ClearApplicationDataAlert: SystemAlert {
+    public var title: String? = Localizable.deleteApplicationDataPopupTitle
+    public var message: String? = Localizable.deleteApplicationDataPopupBody
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
     
-    init(confirmHandler: @escaping () -> Void) {
+    public init(confirmHandler: @escaping () -> Void) {
         actions.append(AlertAction(title: Localizable.delete, style: .destructive, handler: confirmHandler))
         actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: nil))
     }
 }
 
-final class ActiveSessionWarningAlert: SystemAlert {
-    var title: String? = Localizable.vpnConnectionActive
-    var message: String? = Localizable.warningVpnSessionIsActive
-    var actions = [AlertAction]()
-    let isError: Bool = false
-    var dismiss: (() -> Void)?
+public class ActiveSessionWarningAlert: SystemAlert {
+    public var title: String? = Localizable.vpnConnectionActive
+    public var message: String? = Localizable.warningVpnSessionIsActive
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
     
-    init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
+    public init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
         actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: confirmHandler))
         actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: cancelHandler))
     }
 }
 
-final class QuitWarningAlert: SystemAlert {
-    var title: String? = Localizable.vpnConnectionActive
-    var message: String? = Localizable.quitWarning
-    var actions = [AlertAction]()
-    let isError: Bool = false
-    var dismiss: (() -> Void)?
+public class QuitWarningAlert: SystemAlert {
+    public var title: String? = Localizable.vpnConnectionActive
+    public var message: String? = Localizable.quitWarning
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
     
-    init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
+    public init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
         actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: confirmHandler))
         actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: cancelHandler))
     }
 }
 
-final class ForceUpgradeAlert: SystemAlert {
-    var title: String? = Localizable.vpnConnectionActive
-    var message: String? = Localizable.quitWarning
-    var actions = [AlertAction]()
-    let isError: Bool = false
-    var dismiss: (() -> Void)?
+public class ForceUpgradeAlert: SystemAlert {
+    public var title: String? = Localizable.vpnConnectionActive
+    public var message: String? = Localizable.quitWarning
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
 
-    init() {
+    public init() {
         actions.append(AlertAction(title: Localizable.ok, style: .confirmative, handler: nil))
     }
 }

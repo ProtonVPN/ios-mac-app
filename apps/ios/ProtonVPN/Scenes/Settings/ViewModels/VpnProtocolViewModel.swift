@@ -29,12 +29,16 @@ final class VpnProtocolViewModel {
     var selectionFinished: (() -> Void)?
 
     private var selectedProtocol: ConnectionProtocol
+    private var smartProtocolConfig: SmartProtocolConfig
     private let availableProtocols: [ConnectionProtocol]
 
     init(connectionProtocol: ConnectionProtocol,
+         smartProtocolConfig: SmartProtocolConfig,
          supportedProtocols: [ConnectionProtocol] = ConnectionProtocol.allCases,
+         displaySmartProtocol: Bool = true,
          featureFlags: FeatureFlags) {
         self.selectedProtocol = connectionProtocol
+        self.smartProtocolConfig = smartProtocolConfig
 
         let wireguardTLSProtocols = [.tcp, .udp].map { ConnectionProtocol.vpnProtocol(.wireGuard($0)) }
         self.availableProtocols = supportedProtocols

@@ -178,8 +178,9 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
     }
 
     private func triggerDataSetCreation(secureCore: Bool, dataSetType: DataSetType) throws {
+
         let serverRepository: ServerRepository = .liveValue
-        serverRepository.upsert(servers: servers)
+        try serverRepository.upsert(servers: servers)
 
         let viewModel = withDependencies {
             $0.serverRepository = serverRepository
@@ -192,6 +193,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
                 alertService: AlertServiceEmptyStub(),
                 vpnKeychain: vpnKeychain,
                 appStateManager: appStateManager,
+                vpnGateway: VpnGatewayMock(propertiesManager: propertiesManager, activeServerType: .unspecified, connection: .disconnected),
                 profileManager: profileManager,
                 propertiesManager: propertiesManager)
         }

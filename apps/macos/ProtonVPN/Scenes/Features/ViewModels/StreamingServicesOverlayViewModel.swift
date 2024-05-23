@@ -24,6 +24,7 @@ import Foundation
 import LegacyCommon
 
 protocol StreamingServicesOverlayViewModelProtocol {
+    var propertiesManager: PropertiesManagerProtocol { get }
     var countryName: String { get }
     var columnsAmount: Int { get }
     var totalRows: Int { get }
@@ -31,7 +32,7 @@ protocol StreamingServicesOverlayViewModelProtocol {
     func streamOptionViewModelFor(index: Int) -> StreamOptionCVItemViewModelProtocol
 }
 
-final class StreamingServicesOverlayViewModel: StreamingServicesOverlayViewModelProtocol {
+class StreamingServicesOverlayViewModel: StreamingServicesOverlayViewModelProtocol {
 
     private let streamingServices: [VpnStreamingOption]
     

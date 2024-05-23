@@ -23,7 +23,7 @@
 import UIKit
 import LegacyCommon
 
-final class ColorPickerViewModel: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+class ColorPickerViewModel: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     var colorChanged: (() -> Void)?
     
@@ -118,7 +118,13 @@ final class ColorPickerViewModel: NSObject, UICollectionViewDelegateFlowLayout, 
             selectedColorIndex = 0
         }
     }
-
+    
+    func select(color index: Int) {
+        if index >= 0 && index < colors.count {
+            selectedColorIndex = index
+        }
+    }
+    
     func colorAt(index: Int) -> UIColor {
         return colors[index]
     }

@@ -75,6 +75,10 @@ final class ConnectionSettingsViewModel {
         }
     }
 
+    private var featureFlags: FeatureFlags {
+        return propertiesManager.featureFlags
+    }
+
     var reloadNeeded: (() -> Void)?
     var protocolPendingChanged: ((Bool) -> Void)?
     
@@ -89,7 +93,7 @@ final class ConnectionSettingsViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: VPNAccelerator.notificationName, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tourCancelled), name: SystemExtensionManager.userCancelledTour, object: nil)
 
-        checkSysexOrResetProtocol()
+        checkSysexOrResetProtocol(selectedProtocol)
     }
     
     deinit {
@@ -240,6 +244,10 @@ final class ConnectionSettingsViewModel {
         return availableConnectionProtocols[index]
     }
 
+    func refreshSysexPending(for connectionProtocol: ConnectionProtocol) {
+        sysexPending = connectionProtocol.requiresSystemExtension
+    }
+
     func shouldShowSysexProgress(for protocolIndex: Int) -> Bool {
         protocolItem(for: protocolIndex)?.requiresSystemExtension == true && sysexPending
     }
@@ -250,7 +258,7 @@ final class ConnectionSettingsViewModel {
         case .smartProtocol:
             self.confirmEnableSmartProtocol(completion)
         case .vpnProtocol(let transportProtocol):
-            vpnProtocolChangeManager.change(toProtocol: transportProtocol) { [weak self] result in
+            vpnProtocolChangeManager.change(toProtocol: transportProtocol, userInitiated: true) { [weak self] result in
                 self?.sysexPending = false
                 if case .success = result {
                     self?.propertiesManager.smartProtocol = false
@@ -337,7 +345,7 @@ final class ConnectionSettingsViewModel {
         }
     }
 
-    private func checkSysexOrResetProtocol() {
+    private func checkSysexOrResetProtocol(_ protocol: ConnectionProtocol) {
         self.sysexPending = true
         sysexManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: false) { [weak self] result in
             guard let self else { return }

@@ -35,10 +35,10 @@ extension DependencyContainer: ProtonVpnMenuViewModelFactory {
     }
 }
 
-final class ProtonVpnMenuViewModel {
+class ProtonVpnMenuViewModel {
     
     typealias Factory = AppSessionManagerFactory & NavigationServiceFactory & UpdateManagerFactory
-    let factory: Factory
+    public let factory: Factory
     
     private let appSessionManager: AppSessionManager
     private let navService: NavigationService

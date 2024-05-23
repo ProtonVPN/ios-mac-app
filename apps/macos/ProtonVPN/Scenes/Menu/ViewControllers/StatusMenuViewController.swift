@@ -77,8 +77,8 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
             self?.contentChanged()
         }
 
-        viewModel.changeServerStateChanged = { [weak self] _ in
-            self?.setupHeaderButtons()
+        viewModel.changeServerStateChanged = { [weak self] state in
+            self?.setupHeaderButtons(with: state)
         }
         
         viewModel.disconnectWarning = { [weak self] viewModel in
@@ -257,7 +257,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
             self.ipLabel.attributedStringValue = self.viewModel.ipAddress
 
             self.updateViewLayout()
-            setupHeaderButtons()
+            setupHeaderButtons(with: .from(state: viewModel.canChangeServer))
 
             self.secureCoreSwitch.setState(self.viewModel.serverType == .secureCore ? .on : .off)
             
@@ -265,7 +265,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
         }
     }
 
-    private func setupHeaderButtons() {
+    private func setupHeaderButtons(with state: ServerChangeViewState? = nil) {
         profileDropDown.isHidden = !self.viewModel.shouldShowProfileDropdown
         changeServerView.isHidden = !self.viewModel.shouldShowChangeServer
 

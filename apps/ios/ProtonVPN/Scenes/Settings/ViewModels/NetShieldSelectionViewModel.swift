@@ -29,11 +29,12 @@ import LegacyCommon
 import VPNShared
 
 final class NetShieldSelectionViewModel {
-    typealias Factory = AppSessionManagerFactory & CoreAlertServiceFactory
+    typealias Factory = PlanServiceFactory & AppSessionManagerFactory & CoreAlertServiceFactory & NetShieldPropertyProviderFactory
+    private var factory: Factory
 
-    private let factory: Factory
-
+    private lazy var planService: PlanService = factory.makePlanService()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
 
     private var selectedFeature: NetShieldType
 
@@ -57,7 +58,7 @@ final class NetShieldSelectionViewModel {
         NetShieldType.allCases.allSatisfy { !netShieldTypeAuthorizer($0).requiresUpgrade }
     }
 
-    init(
+    public init(
         title: String,
         allFeatures: [NetShieldType],
         selectedFeature: NetShieldType,

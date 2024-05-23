@@ -23,13 +23,17 @@
 import Foundation
 import LegacyCommon
 
+protocol TabBarViewModelModelDelegate: AnyObject {
+    func removeLoginBox()
+}
+
 protocol TabBarViewModelDelegate: AnyObject {
     func connectedQuickConnect()
     func connectingQuickConnect()
     func disconnectedQuickConnect()
 }
 
-final class TabBarViewModel {
+class TabBarViewModel {
     // MARK: Properties
     let navigationService: NavigationService
     let sessionManager: AppSessionManager
@@ -37,7 +41,11 @@ final class TabBarViewModel {
     let vpnGateway: VpnGatewayProtocol
     let connectionStatusService: ConnectionStatusService
     weak var delegate: TabBarViewModelDelegate?
-
+    
+    var showLoginAnimated: Bool {
+        return true
+    }
+    
     // MARK: Initializers
     init(navigationService: NavigationService, sessionManager: AppSessionManager, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol) {
         self.navigationService = navigationService

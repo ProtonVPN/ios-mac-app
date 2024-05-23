@@ -33,7 +33,7 @@ import Modals_macOS
 import LegacyCommon
 import VPNShared
 
-final class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
+class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     
     typealias Factory = VpnGatewayFactory & NetShieldPropertyProviderFactory & AppStateManagerFactory & VpnManagerFactory & VpnStateConfigurationFactory & CoreAlertServiceFactory & PropertiesManagerFactory
     
@@ -43,7 +43,7 @@ final class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
 
-    private (set) lazy var isNetShieldStatsEnabled = { factory.makePropertiesManager().featureFlags.netShieldStats }()
+    public private (set) lazy var isNetShieldStatsEnabled = { factory.makePropertiesManager().featureFlags.netShieldStats }()
     var netShieldStats: NetShieldModel = .init(trackers: 0, ads: 0, data: 0, enabled: false)
     private var notificationTokens: [NotificationToken] = []
     

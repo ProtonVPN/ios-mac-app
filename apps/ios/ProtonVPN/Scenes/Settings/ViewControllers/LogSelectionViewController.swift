@@ -31,9 +31,7 @@ class LogSelectionViewController: UIViewController {
         super.init(nibName: "LogSelection", bundle: nil)
         
         viewModel.pushHandler = { [weak self] logSource in
-            if let logsViewController = self?.settingsService.makeLogsViewController(logSource: logSource) {
-                self?.pushViewController(logsViewController)
-            }
+            self?.pushViewController(settingsService.makeLogsViewController(logSource: logSource))
         }
     }
     

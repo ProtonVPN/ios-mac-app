@@ -59,7 +59,7 @@ class StatusMenuProfilesListViewModel {
     }
     
     func cellModel(forIndex index: Int) -> StatusMenuProfileItemViewModel {
-        return StatusMenuProfileItemViewModel(profile: profileManager.allProfiles[index], vpnGateway: vpnGateway)
+        return StatusMenuProfileItemViewModel(profile: profileManager.allProfiles[index], vpnGateway: vpnGateway, userTier: userTier)
     }
     
     @objc private func profilesChanged() {
