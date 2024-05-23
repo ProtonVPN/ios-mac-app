@@ -155,7 +155,7 @@ class MapViewModel: SecureCoreToggleHandler {
         case .standard, .p2p, .tor, .unspecified:
             secureCoreEntryAnnotations = []
         case .secureCore:
-            secureCoreEntryAnnotations = retrieveSecureCoreEntryAnnotations()
+            secureCoreEntryAnnotations = secureCoreEntryAnnotations(userTier)
         }
     }
     
@@ -224,7 +224,7 @@ class MapViewModel: SecureCoreToggleHandler {
         return annotationViewModel
     }
 
-    private func retrieveSecureCoreEntryAnnotations() -> Set<SecureCoreEntryCountryModel> {
+    private func secureCoreEntryAnnotations(_ userTier: Int) -> Set<SecureCoreEntryCountryModel> {
         var entryCountries = Set<SecureCoreEntryCountryModel>()
 
         let isSecureCore = VPNServerFilter.features(.secureCore)
@@ -248,7 +248,7 @@ class MapViewModel: SecureCoreToggleHandler {
 
         let entriesArray = [SecureCoreEntryCountryModel](entryCountries)
         secureCoreConnections = entriesArray.enumerated().map({ (offset: Int, element: SecureCoreEntryCountryModel) -> ConnectionViewModel in
-            return ConnectionViewModel(between: element, and: entriesArray[(offset + 1) % entriesArray.count])
+            return ConnectionViewModel(.connected, between: element, and: entriesArray[(offset + 1) % entriesArray.count])
         })
 
         return entryCountries
@@ -279,7 +279,7 @@ class MapViewModel: SecureCoreToggleHandler {
             // draw connection line
             if let entryCountry = secureCoreEntryAnnotations.first(where: { (element) -> Bool in element.countryCode == activeServer.entryCountryCode }),
                 let exitCountry = countryExitAnnotations.first(where: { (element) -> Bool in element.countryCode == activeServer.exitCountryCode }) {
-                activeConnection = ConnectionViewModel(between: entryCountry, and: exitCountry)
+                activeConnection = ConnectionViewModel(.connected, between: entryCountry, and: exitCountry)
                 if exitCountry.viewState == .selected {
                     entryCountry.highlight(true)
                 }

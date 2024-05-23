@@ -173,7 +173,11 @@ class ConnectableAnnotationViewModel: CountryAnnotationViewModel {
     }
 }
 
-final class StandardCountryAnnotationViewModel: ConnectableAnnotationViewModel {
+class StandardCountryAnnotationViewModel: ConnectableAnnotationViewModel {
+
+    var attributedConnectTitle: NSAttributedString {
+        return isConnected ? attributedDisconnect : attributedConnect
+    }
 
     override var isConnected: Bool {
         return appStateManager.state.isConnected
@@ -194,12 +198,17 @@ final class StandardCountryAnnotationViewModel: ConnectableAnnotationViewModel {
 }
 
 struct SCExitCountrySelection {
+
     let selected: Bool
+    let connected: Bool
     let countryCode: String
 }
 
 struct SCEntryCountrySelection {
+    
+    let selected: Bool
     let countryCode: String
+    let exitCountryCodes: [String]
 }
 
 class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
@@ -265,18 +274,19 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
     
     override func uiStateUpdate(_ state: CountryAnnotationViewModel.ViewState) {
         super.uiStateUpdate(state)
-        let selection = SCExitCountrySelection(selected: state == .hovered, countryCode: countryCode)
+        let selection = SCExitCountrySelection(selected: state == .hovered, connected: isConnected, countryCode: countryCode)
         externalViewStateChange?(selection)
     }
 }
 
-final class SCEntryCountryAnnotationViewModel: CountryAnnotationViewModel {
-
+class SCEntryCountryAnnotationViewModel: CountryAnnotationViewModel {
+    
     // triggered by ui-based views' state changes
     var externalViewStateChange: ((SCEntryCountrySelection) -> Void)?
     
     let exitCountryCodes: [String]
-
+    let country: String
+    
     override var isConnected: Bool {
         return appStateManager.state.isConnected
             && appStateManager.activeConnection()?.server.hasSecureCore == true
@@ -293,18 +303,19 @@ final class SCEntryCountryAnnotationViewModel: CountryAnnotationViewModel {
     
     init(appStateManager: AppStateManager, countryCode: String, exitCountryCodes: [String], coordinate: CLLocationCoordinate2D) {
         self.exitCountryCodes = exitCountryCodes
+        self.country = LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable
         super.init(appStateManager: appStateManager, countryCode: countryCode, coordinate: coordinate)
     }
     
     func toggleState() {
         state = (state == .idle) ? .hovered : .idle
-        let selection = SCEntryCountrySelection(countryCode: countryCode)
+        let selection = SCEntryCountrySelection(selected: state == .hovered, countryCode: countryCode, exitCountryCodes: exitCountryCodes)
         externalViewStateChange?(selection)
     }
     
     override func uiStateUpdate(_ state: CountryAnnotationViewModel.ViewState) {
         super.uiStateUpdate(state)
-        let selection = SCEntryCountrySelection(countryCode: countryCode)
+        let selection = SCEntryCountrySelection(selected: state == .hovered, countryCode: countryCode, exitCountryCodes: exitCountryCodes)
         externalViewStateChange?(selection)
     }
     

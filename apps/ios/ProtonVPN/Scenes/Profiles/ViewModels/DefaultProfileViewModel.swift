@@ -95,6 +95,10 @@ class DefaultProfileViewModel {
         return false
     }
     
+    private var connectedUiState: Bool {
+        return isConnected || isConnecting
+    }
+
     fileprivate var isUsersTierTooLow: Bool {
         return !authorizer.canUseProfile(ofTier: defaultAccessTier)
     }

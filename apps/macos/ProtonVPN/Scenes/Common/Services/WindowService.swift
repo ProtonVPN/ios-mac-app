@@ -86,6 +86,7 @@ class WindowServiceImplementation: WindowService {
         & ConnectingOverlayViewModelFactory
         & NetShieldPropertyProviderFactory
         & ProfileManagerFactory
+        & VpnManagerFactory
         & SafariServiceFactory
         & LogFileManagerFactory
         & BugReportCreatorFactory
@@ -97,6 +98,7 @@ class WindowServiceImplementation: WindowService {
     private let factory: Factory
     
     private lazy var navService: NavigationService = factory.makeNavigationService()
+    private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var bugReportCreator: BugReportCreator = factory.makeBugReportCreator()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     

@@ -52,4 +52,12 @@ final class ImageSubtitleImageTableViewCell: UITableViewCell {
         subtitleLabel.textColor = .weakTextColor()
         subtitleLabel.numberOfLines = 0
     }
+
+    func setup(title: NSAttributedString, subtitle: NSAttributedString, leadingImage: UIImage, trailingImage: UIImage, handler: @escaping () -> Void) {
+        titleLabel.attributedText = title
+        subtitleLabel.attributedText = subtitle
+        leadingImageView?.image = leadingImage
+        trailingImageView?.image = trailingImage
+        selectionHandler = handler
+    }
 }

@@ -55,7 +55,7 @@ class KeyValueTableViewCell: UITableViewCell {
         completionHandler?()
     }
     
-    func showDisclosure(_ show: Bool) {
+    public func showDisclosure(_ show: Bool) {
         if show {
             accessoryType = .disclosureIndicator
             stackView.spacing = 30 // Makes right label start at the middle of the view

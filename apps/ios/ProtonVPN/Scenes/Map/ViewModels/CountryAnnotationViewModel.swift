@@ -29,8 +29,13 @@ import Strings
 import LegacyCommon
 import Localization
 
-final class CountryAnnotationViewModel: AnnotationViewModel {
-
+class CountryAnnotationViewModel: AnnotationViewModel {
+    
+    enum ViewState {
+        case idle
+        case selected
+    }
+    
     let countryCode: String
     let coordinate: CLLocationCoordinate2D
     private let groupInfo: ServerGroupInfo

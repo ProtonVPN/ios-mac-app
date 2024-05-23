@@ -75,6 +75,7 @@ final class SettingsViewModel {
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var appInfo: AppInfo = factory.makeAppInfo()
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
+    private lazy var networking: Networking = factory.makeNetworking()
     private let protocolService: ProtocolService
     
     var reloadNeeded: (() -> Void)?
@@ -633,7 +634,22 @@ final class SettingsViewModel {
         
         return TableViewSection(title: "", cells: cells)
     }
-
+    
+    private func formQuickActionDescription() -> String? {
+        guard isSessionEstablished else {
+            return nil
+        }
+        
+        let description: String
+        switch vpnGateway.connection {
+        case .connected, .disconnecting:
+            description = Localizable.disconnect
+        case .disconnected, .connecting:
+            description = Localizable.quickConnect
+        }
+        return description
+    }
+    
     private func pushSettingsAccountViewController() {
         guard let pushHandler = pushHandler, let accountViewController = settingsService.makeSettingsAccountViewController() else {
             return
@@ -650,6 +666,7 @@ final class SettingsViewModel {
 
     private func pushProtocolViewController() {
         let vpnProtocolViewModel = VpnProtocolViewModel(connectionProtocol: propertiesManager.connectionProtocol,
+                                                        smartProtocolConfig: propertiesManager.smartProtocolConfig,
                                                         featureFlags: propertiesManager.featureFlags)
         vpnProtocolViewModel.protocolChangeConfirmation = { [unowned self] newProtocol, completion in
             guard !self.appStateManager.state.isSafeToEnd,
@@ -752,6 +769,15 @@ final class SettingsViewModel {
                 self?.netShieldPropertyProvider.netShieldType = type
                 completion(true)
             }
+        }
+    }
+
+    private var userTier: Int {
+        do {
+            return try vpnKeychain.fetchCached().maxTier
+        } catch {
+            log.warning("Failed to retrieve user tier, defaulting to free tier.", category: .keychain)
+            return .freeTier
         }
     }
 

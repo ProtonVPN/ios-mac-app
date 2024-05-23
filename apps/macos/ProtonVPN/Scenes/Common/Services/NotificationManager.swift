@@ -26,7 +26,7 @@ import LegacyCommon
 import VPNShared
 import Strings
 
-final class NotificationManager: NSObject, NotificationManagerProtocol {
+class NotificationManager: NSObject, NotificationManagerProtocol {
     
     private let delayBeforeDismissing: TimeInterval = 5
     private let appStateManager: AppStateManager
@@ -76,7 +76,7 @@ final class NotificationManager: NSObject, NotificationManagerProtocol {
         let notification = NSUserNotification()
         notification.title = "Proton VPN " + Localizable.connected
         notification.subtitle = connectSubtitle(forServer: server)
-        notification.informativeText = connectInformativeText()
+        notification.informativeText = connectInformativeText(forServer: server)
         notification.hasActionButton = false
         return notification
     }
@@ -89,7 +89,7 @@ final class NotificationManager: NSObject, NotificationManagerProtocol {
         }
     }
     
-    private func connectInformativeText() -> String {
+    private func connectInformativeText(forServer server: ServerModel) -> String {
         return Localizable.ipValue(appStateManager.activeConnection()?.serverIp.exitIp ?? Localizable.unavailable)
     }
     

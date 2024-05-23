@@ -31,7 +31,7 @@ final class SubuserMacAlertViewController: NSViewController {
     @IBOutlet private weak var assignConnectionsButton: PrimaryActionButton!
     @IBOutlet private weak var loginButton: CancellationButton!
     
-    var safariServiceFactory: SafariServiceFactory?
+    public var safariServiceFactory: SafariServiceFactory?
     private lazy var safariService = safariServiceFactory?.makeSafariService()
     var role: UserRole = .noOrganization
     

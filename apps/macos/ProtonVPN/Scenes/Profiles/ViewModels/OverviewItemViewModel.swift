@@ -56,13 +56,17 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
     var isSystemProfile: Bool {
         return profile.profileType == .system
     }
-
-    init(profile: Profile, editProfile: ((Profile) -> Void)?, profileManager: ProfileManager, vpnGateway: VpnGatewayProtocol, sessionService: SessionService) {
+    
+    var connectButtonTitle: String {
+        return formConnectButtonTitle()
+    }
+    
+    init(profile: Profile, editProfile: ((Profile) -> Void)?, profileManager: ProfileManager, vpnGateway: VpnGatewayProtocol, userTier: Int, sessionService: SessionService) {
         self.editProfile = editProfile
         self.profileManager = profileManager
         self.vpnGateway = vpnGateway
         self.sessionService = sessionService
-        super.init(profile: profile)
+        super.init(profile: profile, userTier: userTier)
     }
     
     func connectAction(completion: () -> Void) {
@@ -98,5 +102,13 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
             self.profileManager.deleteProfile(self.profile)
         }
         delegate.showDeleteWarning(warningViewModel)
+    }
+    
+    private func formConnectButtonTitle() -> String {
+        if underMaintenance {
+            return Localizable.maintenance
+        } else {
+            return Localizable.connect
+        }
     }
 }

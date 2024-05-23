@@ -39,7 +39,7 @@ import LegacyCommon
 
 private let connectionDurationRefreshInterval: TimeInterval = 1.0
 
-final class StatusViewModel {
+class StatusViewModel {
     typealias Factory = AppSessionManagerFactory &
         PropertiesManagerFactory &
         ProfileManagerFactory &
@@ -50,11 +50,13 @@ final class StatusViewModel {
         NetShieldPropertyProviderFactory &
         VpnManagerFactory &
         VpnStateConfigurationFactory &
+        PlanServiceFactory &
         NATTypePropertyProviderFactory &
         SafeModePropertyProviderFactory
 
     private let factory: Factory
     
+    private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -65,13 +67,19 @@ final class StatusViewModel {
     private lazy var natTypePropertyProvider: NATTypePropertyProvider = factory.makeNATTypePropertyProvider()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
+    private lazy var planService: PlanService = factory.makePlanService()
     private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
     
     // Used to send GSMessages to a view controller
     var messageHandler: ((String, GSMessageType, [GSMessageOption]) -> Void)?
     var contentChanged: (() -> Void)?
     var rowsUpdated: (([IndexPath: TableViewCellModel]) -> Void)?
+    var dismissStatusView: (() -> Void)?
     var pushHandler: ((UIViewController) -> Void)?
+    
+    var isSessionEstablished: Bool {
+        return appSessionManager.sessionStatus == .established
+    }
 
     private var shouldShowNetShieldV1: Bool { isNetShieldEnabled && !isNetShieldStatsEnabled }
     private var shouldShowNetShieldV2: Bool { isNetShieldEnabled && isNetShieldStatsEnabled }
@@ -435,9 +443,9 @@ final class StatusViewModel {
             type(of: natTypePropertyProvider).natTypeNotification,
             type(of: vpnKeychain).vpnPlanChanged
         ]
-        let connectionChangedTokens = NotificationCenter.default.addObservers(for: notificationNames, object: nil) { [weak self] _ in
-            self?.stateChanged()
-            self?.connectionChanged()
+        let connectionChangedTokens = NotificationCenter.default.addObservers(for: notificationNames, object: nil) { [weak self] notification in
+            self?.stateChanged(notification: notification)
+            self?.connectionChanged(notification: notification)
         }
 
         let netShieldToken = NotificationCenter.default.addObserver(for: NetShieldStatsNotification.self, object: nil) { [weak self] stats in
@@ -454,11 +462,11 @@ final class StatusViewModel {
         notificationTokens = []
     }
     
-    private func connectionChanged() {
+    private func connectionChanged(notification: Notification) {
         contentChanged?()
     }
     
-    private func stateChanged() {
+    private func stateChanged(notification: Notification) {
         Task {
             await updateConnectionDate()
         }

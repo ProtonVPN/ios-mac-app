@@ -122,3 +122,27 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
         )
     }
 }
+
+extension NetShieldType {
+    var quickSettingsText: String {
+        switch self {
+        case .level1:
+            return Localizable.quickSettingsNetshieldOptionLevel1
+        case .level2:
+            return Localizable.quickSettingsNetshieldOptionLevel2
+        case .off:
+            return Localizable.quickSettingsNetshieldOptionOff
+        }
+    }
+
+    var quickSettingsIcon: NSImage {
+        switch self {
+        case .level1:
+            return AppTheme.Icon.shieldHalfFilled
+        case .level2:
+            return AppTheme.Icon.shieldFilled
+        case .off:
+            return AppTheme.Icon.shield
+        }
+    }
+}

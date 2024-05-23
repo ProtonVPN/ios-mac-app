@@ -33,7 +33,7 @@ import Timer
 
 final class DependencyContainer: Container {
     
-    static let shared: DependencyContainer = DependencyContainer()
+    public static var shared: DependencyContainer = DependencyContainer()
     
     // Singletons
     private lazy var navigationService = NavigationService(self)

@@ -31,8 +31,8 @@ import LegacyCommon
 import Persistence
 import Dependencies
 
-final class CreateOrEditProfileViewModel: NSObject {
-
+class CreateOrEditProfileViewModel: NSObject {
+    
     private let username: String?
     private let profileService: ProfileService
     private let protocolService: ProtocolService
@@ -40,7 +40,9 @@ final class CreateOrEditProfileViewModel: NSObject {
     private let propertiesManager: PropertiesManagerProtocol
     private let alertService: AlertService
     private let editedProfile: Profile?
+    private let vpnKeychain: VpnKeychainProtocol
     private let appStateManager: AppStateManager
+    private var vpnGateway: VpnGatewayProtocol
     @Dependency(\.serverRepository) private var serverRepository
     
     private var state: ServerType = .standard {
@@ -80,13 +82,15 @@ final class CreateOrEditProfileViewModel: NSObject {
         return editedProfile != nil
     }
 
-    init(username: String?, for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, vpnKeychain: VpnKeychainProtocol, appStateManager: AppStateManager, profileManager: ProfileManager, propertiesManager: PropertiesManagerProtocol) {
+    init(username: String?, for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, vpnKeychain: VpnKeychainProtocol, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager, propertiesManager: PropertiesManagerProtocol) {
         self.username = username
         self.editedProfile = profile
         self.profileService = profileService
         self.protocolService = protocolSelectionService
         self.alertService = alertService
+        self.vpnKeychain = vpnKeychain
         self.appStateManager = appStateManager
+        self.vpnGateway = vpnGateway
         self.profileManager = profileManager
         self.propertiesManager = propertiesManager
         self.selectedProtocol = propertiesManager.connectionProtocol
@@ -113,16 +117,17 @@ final class CreateOrEditProfileViewModel: NSObject {
     }
     
     var tableViewData: [TableViewSection] {
-        return [TableViewSection(title: Localizable.selectProfileColor, cells: [
-            colorCell,
-            nameCell,
-            secureCoreCell,
-            countryCell,
-            serverCell,
-            protocolCell,
-            quickConnectCell,
-            footerCell
-        ])]
+        var cells = [TableViewCellModel]()
+        cells.append(colorCell)
+        cells.append(nameCell)
+        cells.append(secureCoreCell)
+        cells.append(countryCell)
+        cells.append(serverCell)
+        cells.append(protocolCell)
+        cells.append(quickConnectCell)
+        cells.append(footerCell)
+                
+        return [TableViewSection(title: Localizable.selectProfileColor, cells: cells)]
     }
     
     func saveProfile(completion: @escaping (Bool) -> Void) {
@@ -443,6 +448,7 @@ final class CreateOrEditProfileViewModel: NSObject {
             .filter { !$0.isDeprecated && selectedServerOfferingSupports(connectionProtocol: $0)}
 
         let vpnProtocolViewModel = VpnProtocolViewModel(connectionProtocol: selectedProtocol,
+                                                        smartProtocolConfig: propertiesManager.smartProtocolConfig,
                                                         supportedProtocols: supportedProtocols,
                                                         featureFlags: propertiesManager.featureFlags)
 

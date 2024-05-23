@@ -28,6 +28,8 @@ import Strings
 
 final class SidebarViewController: NSViewController, NSWindowDelegate {
 
+    static let reconnectionNotificationName = Notification.Name("SidebarViewControllerReconnect")
+
     private let sidebarWidth = AppConstants.Windows.sidebarWidth
     private let expandButtonWidth: CGFloat = 28
     
@@ -68,7 +70,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         & CoreAlertServiceFactory
         & AnnouncementsViewModelFactory
         & ProfileManagerFactory
-    var factory: Factory!
+    public var factory: Factory!
     
     private lazy var tabBarViewController: SidebarTabBarViewController = {
         return SidebarTabBarViewController()
@@ -78,6 +80,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         let viewModel = factory.makeCountriesSectionViewModel()
         self.viewToggle = viewModel.contentSwitch
         let countriesViewController = CountriesSectionViewController(viewModel: viewModel)
+        countriesViewController.sidebarView = sidebarContainerView
         // Header view model decides when to show a timer for the next free user reconnection. Not to
         // repeat the same logic we have to pass the change to the country list, where we have a banner
         // that changes if server change is not allowed atm.
@@ -98,7 +101,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     }()
     
     private lazy var mapHeaderViewModel: MapHeaderViewModel = { [unowned self] in
-        return MapHeaderViewModel(vpnGateway: self.vpnGateway)
+        return MapHeaderViewModel(vpnGateway: self.vpnGateway, appStateManager: self.appStateManager)
     }()
     
     private lazy var mapSectionViewModel: MapSectionViewModel = {
@@ -241,7 +244,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         overlayWindowController!.window!.makeKey()
     }
     
-    private func loading(show: Bool) {
+    private func loading(show: Bool, animateClose: Bool = false) {
         guard let window = view.window else { return }
         
         loading = show

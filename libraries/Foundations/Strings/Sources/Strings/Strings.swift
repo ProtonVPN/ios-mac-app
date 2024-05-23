@@ -103,6 +103,8 @@ public enum Localizable {
   public static var alwaysOnWillReconnect: String { return Localizable.tr("Localizable", "_always_on_will_reconnect", fallback: "Always-on VPN will reconnect you automatically") }
   /// iOS Settings: applications logs row
   public static var applicationLogs: String { return Localizable.tr("Localizable", "_application_logs", fallback: "Application Logs") }
+  /// Applying settings
+  public static var applyingSettings: String { return Localizable.tr("Localizable", "_applying_settings_", fallback: "Applying settings") }
   /// MacOS: label in server info view (shown after click on Info icon in countries list
   public static var autoAssigned: String { return Localizable.tr("Localizable", "_auto_assigned", fallback: "Auto assigned") }
   /// MacOS: Settings -> Connection: name of field.
@@ -564,6 +566,8 @@ public enum Localizable {
   public static func ipValue(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_ip_value", String(describing: p1), fallback: "IP: %@")
   }
+  /// Your IP will not be exposed.
+  public static var ipWillNotBeExposed: String { return Localizable.tr("Localizable", "_ip_will_not_be_exposed", fallback: "Your IP will not be exposed.") }
   /// MacOS: Settings -> Connection: name of field.
   public static var killSwitch: String { return Localizable.tr("Localizable", "_kill_switch", fallback: "Kill switch") }
   /// Disconnect notification
@@ -1012,6 +1016,8 @@ public enum Localizable {
   }
   /// iOS & MacOS: text that requires restart connection
   public static var reconnectionRequired: String { return Localizable.tr("Localizable", "_reconnection_required", fallback: "Reconnection Required") }
+  /// Re-establishing VPN connection.
+  public static var reestablishVpnConnection: String { return Localizable.tr("Localizable", "_reestablish_vpn_connection_", fallback: "Re-establishing VPN connection.") }
   /// MacOS: About window
   public static var releaseDate: String { return Localizable.tr("Localizable", "_release_date", fallback: "Release date:") }
   /// MacOS: label in login and settings screens

@@ -246,6 +246,10 @@ extension CountriesViewController: CountriesVMDelegate {
         reloadSearch()
     }
 
+    func displayFastestConnectionInfo() {
+
+    }
+
     func displayGatewayInfo() {
         let viewModel = ServersFeaturesInformationViewModelImplementation.gatewaysInfo
         let vc = ServersFeaturesInformationVC(viewModel)

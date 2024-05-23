@@ -73,7 +73,7 @@ final class DependencyContainer: Container {
     private lazy var planService = CorePlanService(networking: makeNetworking())
     private lazy var sysexManager = SystemExtensionManager(factory: self)
 
-    init() {
+    public init() {
         let prefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
 
         #if TLS_PIN_DISABLE
@@ -122,7 +122,9 @@ final class DependencyContainer: Container {
 
     // MARK: VpnCredentialsConfiguratorFactoryCreator
     override func makeVpnCredentialsConfiguratorFactory() -> VpnCredentialsConfiguratorFactory {
-        MacVpnCredentialsConfiguratorFactory(propertiesManager: makePropertiesManager())
+        MacVpnCredentialsConfiguratorFactory(propertiesManager: makePropertiesManager(),
+                                             vpnAuthentication: makeVpnAuthentication(),
+                                             appGroup: config.appGroup)
     }
 
     // MARK: VpnAuthentication
@@ -242,7 +244,7 @@ extension DependencyContainer: AppSessionRefresherFactory {
 // MARK: - HeaderViewModelFactory
 extension DependencyContainer: HeaderViewModelFactory {
     func makeHeaderViewModel() -> HeaderViewModel {
-        return HeaderViewModel(factory: self)
+        return HeaderViewModel(factory: self, appStateManager: makeAppStateManager(), navService: navigationService)
     }
 }
 

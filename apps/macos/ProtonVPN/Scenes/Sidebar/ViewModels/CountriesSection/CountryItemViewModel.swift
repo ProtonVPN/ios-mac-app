@@ -39,11 +39,11 @@ final class CountryItemViewModel {
     private let serversGroup: ServerGroupInfo
 
     /// Country may be present more than once in the list, hence we need a better ID
-    let id: String
+    public let id: String
     /// In gateways countries there is no connect button
-    let showCountryConnectButton: Bool
+    public let showCountryConnectButton: Bool
     /// Hide feature icons in Gateway countries
-    let showFeatureIcons: Bool
+    public let showFeatureIcons: Bool
 
     fileprivate let vpnGateway: VpnGatewayProtocol
     fileprivate let appStateManager: AppStateManager
@@ -56,6 +56,10 @@ final class CountryItemViewModel {
     var isTorAvailable: Bool { serversGroup.featureUnion.contains(.tor) }
     var isP2PAvailable: Bool { serversGroup.featureUnion.contains(.p2p) }
 
+    var isStreamingAvailable: Bool {
+        !propertiesManager.secureCoreToggle && propertiesManager.streamingServices[countryCode] != nil
+    }
+    
     let isTierTooLow: Bool
     let isServerUnderMaintenance: Bool
     private(set) var isOpened: Bool

@@ -26,7 +26,7 @@ import AppKit
 import Ergonomics
 import Strings
 
-protocol ReloadableViewController: AnyObject {
+public protocol ReloadableViewController: AnyObject {
     func reloadView()
 }
 

@@ -59,12 +59,13 @@ class ProfileItemViewModel: AbstractProfileViewModel {
     
     init(profile: Profile,
          vpnGateway: VpnGatewayProtocol,
+         userTier: Int,
          alertService: CoreAlertService,
          sysexManager: SystemExtensionManager) {
         self.vpnGateway = vpnGateway
         self.alertService = alertService
         self.sysexManager = sysexManager
-        super.init(profile: profile)
+        super.init(profile: profile, userTier: userTier)
     }
     
     func connectAction() {
@@ -102,7 +103,12 @@ class ProfileItemViewModel: AbstractProfileViewModel {
     }
     
     private func formSecondaryDescription() -> NSAttributedString {
-        let description: String = underMaintenance ? Localizable.maintenance : ""
+        let description: String
+        if underMaintenance {
+            description = Localizable.maintenance
+        } else {
+            description = ""
+        }
         return description.styled(.weak, font: .themeFont(bold: true), alignment: .right)
     }
 }

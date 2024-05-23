@@ -27,6 +27,10 @@ import Strings
 import LegacyCommon
 
 final class ConnectionSettingsViewController: NSViewController, ReloadableViewController {
+    
+    fileprivate enum SwitchButtonOption: Int {
+        case killSwitch
+    }
 
     @IBOutlet private weak var autoConnectView: SettingsDropDownView!
     @IBOutlet private weak var quickConnectView: SettingsDropDownView!

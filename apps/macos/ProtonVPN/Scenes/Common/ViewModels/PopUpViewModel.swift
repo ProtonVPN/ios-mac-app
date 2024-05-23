@@ -52,6 +52,7 @@ class PopUpViewModel: NSObject {
     
     var attributedDescription: NSAttributedString
     var showIcon = true
+    var updateInterface: (() -> Void)?
     var dismissViewController: (() -> Void)?
     var dismissCompletion: (() -> Void)?
     

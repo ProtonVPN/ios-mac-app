@@ -42,6 +42,7 @@ class AppSessionManagerMock: AppSessionManager {
     public var callbackLoadDataWithoutLogin: (() -> Void)?
     public var callbackRefreshData: (() -> Void)?
     public var callbackRefreshServerLoads: (() -> Void)?
+    public var callbackCanPreviewApp: (() -> Bool)?
     
     // MARK: AppSessionManager implementation
     
@@ -84,6 +85,10 @@ class AppSessionManagerMock: AppSessionManager {
     
     func refreshServerLoads() {
         callbackRefreshServerLoads?()
+    }
+    
+    func canPreviewApp() -> Bool {
+        return callbackCanPreviewApp?() ?? true
     }
 
     func refreshVpnAuthCertificate() async throws {

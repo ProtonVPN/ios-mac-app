@@ -167,6 +167,17 @@ final class LoginViewModel {
         
         return .init(token: token, uid: uid)
     }
+    
+    func isProtonPage(url: URL?) -> Bool {
+        guard let url else { return false }
+        let hosts = [
+            apiService.dohInterface.getAccountHost(),
+            apiService.dohInterface.getCurrentlyUsedHostUrl(),
+            apiService.dohInterface.getHumanVerificationV3Host(),
+            apiService.dohInterface.getCaptchaHostUrl()
+        ]
+        return hosts.contains(where: url.absoluteString.contains)
+    }
 
     func provide2FACode(code: String) {
         logInInProgress?()

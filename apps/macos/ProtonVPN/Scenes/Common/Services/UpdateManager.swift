@@ -29,9 +29,9 @@ protocol UpdateManagerFactory {
     func makeUpdateManager() -> UpdateManager
 }
 
-final class UpdateManager: NSObject {
-
-    typealias Factory = UpdateFileSelectorFactory & PropertiesManagerFactory
+class UpdateManager: NSObject {
+    
+    public typealias Factory = UpdateFileSelectorFactory & PropertiesManagerFactory
     private let factory: Factory
     
     private lazy var updateFileSelector: UpdateFileSelector = factory.makeUpdateFileSelector()
@@ -45,29 +45,29 @@ final class UpdateManager: NSObject {
     private var updater: SPUStandardUpdaterController?
     private var appcast: SUAppcast?
 
-    var currentVersion: String? {
+    public var currentVersion: String? {
         return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
     }
     
-    var currentBuild: String? {
+    public var currentBuild: String? {
         return Bundle.main.infoDictionary?["CFBundleVersion"] as? String
     }
     
-    var currentVersionReleaseDate: Date? {
+    public var currentVersionReleaseDate: Date? {
         guard let item = currentAppCastItem, let dateString = item.dateString else {
             return nil
         }
         return suDateFormatter.date(from: dateString)
     }
     
-    var releaseNotes: [String]? {
+    public var releaseNotes: [String]? {
         guard let items = appcast?.items else {
             return nil
         }
         return items.map { ($0 as SUAppcastItem).itemDescription ?? "" }
     }
     
-    init(_ factory: Factory) {
+    public init(_ factory: Factory) {
         self.factory = factory
         super.init()
         
