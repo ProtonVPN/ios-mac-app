@@ -24,7 +24,7 @@ struct CodeExpiredView: View {
     var store: StoreOf<CodeExpiredFeature>
 
     var body: some View {
-        VStack(spacing: .themeSpacing32) {
+        VStack(spacing: .themeSpacing64) {
             Text("Your verification code expired")
                 .font(.title)
                 .fontWeight(.bold)
@@ -34,5 +34,6 @@ struct CodeExpiredView: View {
                 Text("Generate new code")
             }
         }
+        .background(Image(.backgroundStage))
     }
 }

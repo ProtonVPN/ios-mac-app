@@ -43,7 +43,6 @@ public struct AppView: View {
                 .background(Color(.background, .strong))
         case .authenticated(.unauth):
             WelcomeView(store: store.scope(state: \.welcome, action: \.welcome))
-                .background(Color(.background, .strong))
         }
     }
 

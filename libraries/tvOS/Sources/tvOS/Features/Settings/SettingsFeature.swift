@@ -53,28 +53,34 @@ struct SettingsFeature {
 
     static let signOutAlert = AlertState<Action.Alert> {
         TextState("Sign out")
-      } actions: {
-          ButtonState(action: .signOut) {
-              TextState("Sign out")
-          }
-          ButtonState(role: .cancel) {
-              TextState("Cancel")
-          }
-      } message: {
-          TextState("Are you sure you want to sign out of Proton VPN?")
-      }
+    } actions: {
+        ButtonState(action: .signOut) {
+            TextState("Sign out")
+        }
+        ButtonState(role: .cancel) {
+            TextState("Cancel")
+        }
+    } message: {
+        TextState("Are you sure you want to sign out of Proton VPN?")
+    }
 
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .showContactUs:
-                state.destination = .settingsDrillDown(.contactUs())
+                withAnimation {
+                    state.destination = .settingsDrillDown(.contactUs())
+                }
                 return .none
             case .showReportAnIssue:
-                state.destination = .settingsDrillDown(.reportAnIssue())
+                withAnimation {
+                    state.destination = .settingsDrillDown(.reportAnIssue())
+                }
                 return .none
             case .showPrivacyPolicy:
-                state.destination = .settingsDrillDown(.privacyPolicy())
+                withAnimation {
+                    state.destination = .settingsDrillDown(.privacyPolicy())
+                }
                 return .none
             case .signOutSelected:
                 state.alert = Self.signOutAlert

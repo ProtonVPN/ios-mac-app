@@ -48,6 +48,7 @@ struct SignInView: View {
                          stepNumber: 3)
             }
         }
+        .background(Image(.backgroundStage))
         .frame(maxWidth: Self.maxElementsWidth)
         .task {
             if case .loadingSignInCode = store.state.authentication {

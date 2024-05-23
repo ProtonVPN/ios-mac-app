@@ -46,5 +46,6 @@ struct CreateAccountView: View {
             .frame(maxWidth: 800)
             QRCodeView(string: "www.protonvpn.com/tv")
         }
+        .background(Image(.backgroundStage))
     }
 }

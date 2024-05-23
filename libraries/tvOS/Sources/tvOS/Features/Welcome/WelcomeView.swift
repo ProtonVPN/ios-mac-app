@@ -35,7 +35,7 @@ struct WelcomeView: View {
                 Spacer()
                 availableView
             }
-            .background(Image(.logo))
+            .background(Image(.backgroundBrand))
             .navigationDestination(item: $store.scope(state: \.destination?.signIn,
                                                       action: \.destination.signIn)) {
                 SignInView(store: $0)
