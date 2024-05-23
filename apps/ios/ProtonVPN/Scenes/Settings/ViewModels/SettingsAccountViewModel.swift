@@ -150,6 +150,10 @@ final class SettingsAccountViewModel {
     }
 
     private var canShowChangePassword: Bool {
+        guard let mailboxPassword = authKeychain.fetch(forContext: .mainApp)?.mailboxPassword,
+              !mailboxPassword.isEmpty else {
+            return false
+        }
         return FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.changePassword, reloadValue: true) && propertiesManager.userInfo != nil && propertiesManager.userSettings != nil
     }
 
