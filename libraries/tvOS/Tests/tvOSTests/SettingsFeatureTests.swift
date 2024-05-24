@@ -68,7 +68,7 @@ final class SettingsFeatureTests: XCTestCase {
         let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
         }
-        await store.send(.showContactUs) {
+        await store.send(.showDrillDown(.contactUs)) {
             $0.destination = .settingsDrillDown(.contactUs())
         }
         await store.send(.destination(.dismiss)) {
@@ -81,7 +81,7 @@ final class SettingsFeatureTests: XCTestCase {
         let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
         }
-        await store.send(.showReportAnIssue) {
+        await store.send(.showDrillDown(.reportAnIssue)) {
             $0.destination = .settingsDrillDown(.reportAnIssue())
         }
         await store.send(.destination(.dismiss)) {
@@ -94,11 +94,21 @@ final class SettingsFeatureTests: XCTestCase {
         let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
         }
-        await store.send(.showPrivacyPolicy) {
+            await store.send(.showDrillDown(.privacyPolicy)) {
             $0.destination = .settingsDrillDown(.privacyPolicy())
         }
         await store.send(.destination(.dismiss)) {
             $0.destination = nil
+        }
+    }
+
+    @MainActor
+    func testShowProgressView() async {
+        let store = TestStore(initialState: SettingsFeature.State()) {
+            SettingsFeature()
+        }
+        await store.send(.showProgressView) {
+            $0.isLoading = true
         }
     }
 }

@@ -24,6 +24,7 @@ struct WelcomeFeature {
     enum Destination {
         case signIn(SignInFeature)
         case createAccount(CreateAccountFeature)
+        case codeExpired(CodeExpiredFeature)
     }
 
     @ObservableState
@@ -51,8 +52,11 @@ struct WelcomeFeature {
                 /// the welcome page will be shown, not the sign in page
                 state.destination = nil
                 return .none
-            case .destination(.presented(.signIn(.signInFinished(.failure(.userCancelled))))):
-                state.destination = nil
+            case .destination(.presented(.signIn(.signInFinished(.failure(.authenticationAttemptsExhausted))))):
+                state.destination = .codeExpired(.init())
+                return .none
+            case .destination(.presented(.codeExpired(.generateNewCode))):
+                state.destination = .signIn(.init(authentication: .loadingSignInCode))
                 return .none
             case .destination:
                 return .none

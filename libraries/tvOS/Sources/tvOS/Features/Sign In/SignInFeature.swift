@@ -28,17 +28,11 @@ struct SignInFeature {
     @ObservableState
     struct State: Equatable {
         var authentication: Authentication
-        @Presents var destination: Destination.State?
 
         enum Authentication: Equatable {
             case loadingSignInCode
             case waitingForAuthentication(code: SignInCode, remainingAttempts: Int)
         }
-    }
-
-    @Reducer(state: .equatable)
-    enum Destination {
-        case codeExpired(CodeExpiredFeature)
     }
 
     enum Action {
@@ -47,7 +41,6 @@ struct SignInFeature {
         case codeFetchingFinished(Result<SignInCode, Error>)
         case authenticationFinished(Result<SessionAuthResult, Error>)
         case signInFinished(Result<AuthCredentials, SignInFailureReason>)
-        case destination(PresentationAction<Destination.Action>)
     }
 
     @Dependency(\.networkClient) var networkClient
@@ -59,7 +52,6 @@ struct SignInFeature {
     enum SignInFailureReason: Error {
         /// We ran out of authentication polls before the code was entered
         case authenticationAttemptsExhausted
-        case userCancelled
     }
 
     var body: some Reducer<State, Action> {
@@ -110,24 +102,11 @@ struct SignInFeature {
                 // handle non-retryable error
                 return .none
 
-            case .signInFinished(.failure(let error)):
-                if error == .authenticationAttemptsExhausted {
-                    state.destination = .codeExpired(.init())
-                }
-                return .none
             case .signInFinished:
                 // Delegate action handled by parent reducer
                 return .none
-            case .destination(.presented(.codeExpired(.generateNewCode))):
-                state.destination = nil
-                return .run { send in
-                    await send(.fetchSignInCode)
-                }
-            case .destination(.dismiss):
-                return .run { send in await send(.signInFinished(.failure(.userCancelled)))}
             }
         }
-        .ifLet(\.$destination, action: \.destination)
     }
 }
 

@@ -47,7 +47,7 @@ struct MainView: View {
     }
 
     @ViewBuilder
-    var background: some View {
+    private var background: some View {
         // Only show the stage background for the drill down settings views
         if store.settings.destination != nil {
             Image(.backgroundStage)

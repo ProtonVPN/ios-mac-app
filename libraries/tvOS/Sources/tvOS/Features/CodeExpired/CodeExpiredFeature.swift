@@ -27,11 +27,15 @@ struct CodeExpiredFeature {
         case generateNewCode
     }
 
+    @Dependency(\.dismiss) var dismiss
+
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .generateNewCode:
-                return .none
+                return .run { send in
+                    await dismiss()
+                }
             }
         }
     }

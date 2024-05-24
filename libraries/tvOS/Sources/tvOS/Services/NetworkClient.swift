@@ -70,16 +70,23 @@ extension DependencyValues {
 
 struct SignInCode: Equatable {
     let selector: String
-    let userCode: String
+    private let userCode: String
 
     init(selector: String, userCode: String) {
         self.selector = selector
-        var userCode = userCode
-        if userCode.count == 8 {
-            // We want to present the 8 character code with a space in the middle in the UI
-            // We get the string from API without a space
-            userCode.insert(" ", at: .init(utf16Offset: 4, in: userCode))
-        }
         self.userCode = userCode
+    }
+}
+
+extension SignInCode {
+    /// We want to present the 8 character code with a space in the middle in the UI
+    /// We get the string from API without a space
+    var userFacingUserCode: String {
+        guard userCode.count == 8 else {
+            return userCode
+        }
+        var userCode = userCode
+        userCode.insert(" ", at: .init(utf16Offset: 4, in: userCode))
+        return userCode
     }
 }

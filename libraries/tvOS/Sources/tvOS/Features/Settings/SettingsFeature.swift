@@ -38,9 +38,7 @@ struct SettingsFeature {
     enum Action {
         case alert(PresentationAction<Alert>)
         case destination(PresentationAction<Destination.Action>)
-        case showContactUs
-        case showReportAnIssue
-        case showPrivacyPolicy
+        case showDrillDown(DrillDown)
         case signOutSelected
         case showProgressView
         case finishSignOut
@@ -48,6 +46,12 @@ struct SettingsFeature {
         @CasePathable
         enum Alert {
           case signOut
+        }
+
+        enum DrillDown {
+            case contactUs
+            case reportAnIssue
+            case privacyPolicy
         }
     }
 
@@ -67,19 +71,18 @@ struct SettingsFeature {
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .showContactUs:
-                withAnimation {
-                    state.destination = .settingsDrillDown(.contactUs())
+            case .showDrillDown(let type):
+                let destination: Destination.State
+                switch type {
+                case .contactUs:
+                    destination = .settingsDrillDown(.contactUs())
+                case .reportAnIssue:
+                    destination = .settingsDrillDown(.reportAnIssue())
+                case .privacyPolicy:
+                    destination = .settingsDrillDown(.privacyPolicy())
                 }
-                return .none
-            case .showReportAnIssue:
                 withAnimation {
-                    state.destination = .settingsDrillDown(.reportAnIssue())
-                }
-                return .none
-            case .showPrivacyPolicy:
-                withAnimation {
-                    state.destination = .settingsDrillDown(.privacyPolicy())
+                    state.destination = destination
                 }
                 return .none
             case .signOutSelected:

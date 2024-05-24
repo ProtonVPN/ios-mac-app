@@ -38,7 +38,7 @@ final class WelcomeFeatureTests: XCTestCase {
             WelcomeFeature()
         }
         await store.send(.showSignIn) {
-            $0.destination = .signIn(.loadingSignInCode)
+            $0.destination = .signIn(.init(authentication: .loadingSignInCode))
         }
 
         await store.send(.destination(.presented(.signIn(.signInFinished(.success(.mock)))))) {
@@ -52,10 +52,30 @@ final class WelcomeFeatureTests: XCTestCase {
             WelcomeFeature()
         }
         await store.send(.showSignIn) {
-            $0.destination = .signIn(.loadingSignInCode)
+            $0.destination = .signIn(.init(authentication: .loadingSignInCode))
         }
         await store.send(.destination(.dismiss)) {
             $0.destination = nil
+        }
+    }
+
+    @MainActor
+    func testCodeExpired() async {
+        let store = TestStore(initialState: WelcomeFeature.State(destination: .signIn(.init(authentication: .loadingSignInCode)))) {
+            WelcomeFeature()
+        }
+        await store.send(.destination(.presented(.signIn(.signInFinished(.failure(.authenticationAttemptsExhausted)))))) {
+            $0.destination = .codeExpired(.init())
+        }
+    }
+
+    @MainActor
+    func testGenerateNewCode() async {
+        let store = TestStore(initialState: WelcomeFeature.State(destination: .codeExpired(.init()))) {
+            WelcomeFeature()
+        }
+        await store.send(.destination(.presented(.codeExpired(.generateNewCode)))) {
+            $0.destination = .signIn(.init(authentication: .loadingSignInCode))
         }
     }
 }

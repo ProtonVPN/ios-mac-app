@@ -23,7 +23,7 @@ import ComposableArchitecture
 struct SignInView: View {
     @Bindable var store: StoreOf<SignInFeature>
 
-    static let maxElementsWidth: CGFloat = 1247
+    private static let maxElementsWidth: CGFloat = 1247
 
     var body: some View {
         VStack(spacing: .themeSpacing64) {
@@ -32,7 +32,7 @@ struct SignInView: View {
                 .bold()
 
             StepView(title: "Using another device, go to",
-                     accent: " protonvpn.com/appletv",
+                     accent: "protonvpn.com/appletv",
                      stepNumber: 1)
             StepView(title: "Sign in to your account.",
                      accent: nil,
@@ -44,7 +44,7 @@ struct SignInView: View {
                          stepNumber: 3)
             case .waitingForAuthentication(let code, _):
                 StepView(title: "When asked for your verification code, enter",
-                         accent: " \(code.userCode)",
+                         accent: "\(code.userFacingUserCode)",
                          stepNumber: 3)
             }
         }
@@ -55,19 +55,26 @@ struct SignInView: View {
                 store.send(.fetchSignInCode)
             }
         }
-        .navigationDestination(item: $store.scope(state: \.destination?.codeExpired,
-                                                  action: \.destination.codeExpired)) {
-            CodeExpiredView(store: $0)
-        }
     }
 }
 
 struct StepView: View {
-    static let bulletPointSize: CGFloat = 56
+    private static let bulletPointSize: CGFloat = 56
 
     let title: String
-    let accent: String?
+    let accent: String
     let stepNumber: Int
+
+    init(title: String, accent: String?, stepNumber: Int) {
+        self.title = title
+        if let accent {
+            self.accent = " " + accent
+        } else {
+            self.accent = ""
+        }
+        self.stepNumber = stepNumber
+    }
+
     var body: some View {
         HStack(alignment: .top) {
             Text("\(stepNumber)")
@@ -76,8 +83,8 @@ struct StepView: View {
                 .background(Color(.background, .weak))
                 .clipShape(Circle())
             Text(title)
-                .font(.title3)  +
-            Text(accent ?? "")
+                .font(.title3) +
+            Text(accent)
                 .font(.title3)
                 .bold()
                 .foregroundStyle(Color(.text, .interactive))
