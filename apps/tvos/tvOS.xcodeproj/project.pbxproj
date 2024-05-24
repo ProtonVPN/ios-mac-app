@@ -13,16 +13,15 @@
 		4C54B0382BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B0372BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift */; };
 		4C54B04C2BC02AB200315A3B /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C54B04B2BC02AB200315A3B /* NetworkExtension.framework */; };
 		4C54B04F2BC02AB200315A3B /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B04E2BC02AB200315A3B /* PacketTunnelProvider.swift */; };
+		66465B782BFF9112002232B3 /* WireGuard-tvOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4C54B0492BC02AB200315A3B /* WireGuard-tvOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AD20FCDD2BF60E1F00F966DF /* CommonNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = AD20FCDC2BF60E1F00F966DF /* CommonNetworking */; };
 		AD20FCDF2BF60E3700F966DF /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = AD20FCDE2BF60E3700F966DF /* Persistence */; };
 		AD20FCE12BF60E3700F966DF /* PersistenceTestSupport in Frameworks */ = {isa = PBXBuildFile; productRef = AD20FCE02BF60E3700F966DF /* PersistenceTestSupport */; };
-		AD20FD042BF60FCE00F966DF /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = AD20FD032BF60FCE00F966DF /* ComposableArchitecture */; };
 		AD8FA9072BEB9DBB00E751F6 /* Client.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD8FA9062BEB9DBB00E751F6 /* Client.plist */; };
 		E53729F72BFDF777003D7409 /* tvOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53729F62BFDF777003D7409 /* tvOS */; };
 		E53729F92BFDF7AE003D7409 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E53729F82BFDF7AE003D7409 /* Assets.xcassets */; };
 		E53729FB2BFDFBE9003D7409 /* ProtonCoreLog in Frameworks */ = {isa = PBXBuildFile; productRef = E53729FA2BFDFBE9003D7409 /* ProtonCoreLog */; };
 		E53729FD2BFDFBF4003D7409 /* CommonNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = E53729FC2BFDFBF4003D7409 /* CommonNetworking */; };
-		E53729FF2BFDFBFD003D7409 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = E53729FE2BFDFBFD003D7409 /* ComposableArchitecture */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +39,28 @@
 			remoteGlobalIDString = 4C54B0162BC027FD00315A3B;
 			remoteInfo = ProtonVPN;
 		};
+		66465B792BFF9112002232B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4C54B00F2BC027FD00315A3B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4C54B0482BC02AB200315A3B;
+			remoteInfo = "WireGuard-tvOS";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		66465B7B2BFF9112002232B3 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				66465B782BFF9112002232B3 /* WireGuard-tvOS.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4C54B0172BC027FD00315A3B /* ProtonVPN-TV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ProtonVPN-TV.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,7 +70,7 @@
 		4C54B0312BC027FF00315A3B /* tvOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tvOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C54B0352BC027FF00315A3B /* ProtonVPNUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNUITests.swift; sourceTree = "<group>"; };
 		4C54B0372BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		4C54B0442BC0288F00315A3B /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../Config.xcconfig; sourceTree = "<group>"; };
+		4C54B0442BC0288F00315A3B /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		4C54B0492BC02AB200315A3B /* WireGuard-tvOS.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WireGuard-tvOS.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C54B04B2BC02AB200315A3B /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		4C54B04E2BC02AB200315A3B /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
@@ -68,7 +88,6 @@
 			files = (
 				E53729FB2BFDFBE9003D7409 /* ProtonCoreLog in Frameworks */,
 				E53729F72BFDF777003D7409 /* tvOS in Frameworks */,
-				E53729FF2BFDFBFD003D7409 /* ComposableArchitecture in Frameworks */,
 				E53729FD2BFDFBF4003D7409 /* CommonNetworking in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -79,7 +98,6 @@
 			files = (
 				AD20FCDF2BF60E3700F966DF /* Persistence in Frameworks */,
 				AD20FCE12BF60E3700F966DF /* PersistenceTestSupport in Frameworks */,
-				AD20FD042BF60FCE00F966DF /* ComposableArchitecture in Frameworks */,
 				AD20FCDD2BF60E1F00F966DF /* CommonNetworking in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -191,17 +209,18 @@
 				4C54B0132BC027FD00315A3B /* Sources */,
 				4C54B0142BC027FD00315A3B /* Frameworks */,
 				4C54B0152BC027FD00315A3B /* Resources */,
+				66465B7B2BFF9112002232B3 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				66465B7A2BFF9112002232B3 /* PBXTargetDependency */,
 			);
 			name = "ProtonVPN-TV";
 			packageProductDependencies = (
 				E53729F62BFDF777003D7409 /* tvOS */,
 				E53729FA2BFDFBE9003D7409 /* ProtonCoreLog */,
 				E53729FC2BFDFBF4003D7409 /* CommonNetworking */,
-				E53729FE2BFDFBFD003D7409 /* ComposableArchitecture */,
 			);
 			productName = ProtonVPN;
 			productReference = 4C54B0172BC027FD00315A3B /* ProtonVPN-TV.app */;
@@ -225,7 +244,6 @@
 				AD20FCDC2BF60E1F00F966DF /* CommonNetworking */,
 				AD20FCDE2BF60E3700F966DF /* Persistence */,
 				AD20FCE02BF60E3700F966DF /* PersistenceTestSupport */,
-				AD20FD032BF60FCE00F966DF /* ComposableArchitecture */,
 			);
 			productName = ProtonVPNTests;
 			productReference = 4C54B0272BC027FF00315A3B /* tvOSTests.xctest */;
@@ -262,7 +280,7 @@
 			dependencies = (
 			);
 			name = "WireGuard-tvOS";
-			productName = "wireguard-tv";
+			productName = "WireGuard-tvOS";
 			productReference = 4C54B0492BC02AB200315A3B /* WireGuard-tvOS.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
@@ -301,7 +319,6 @@
 			);
 			mainGroup = 4C54B00E2BC027FD00315A3B;
 			packageReferences = (
-				E56C8CC02BCFC2CA0029B6AE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			productRefGroup = 4C54B0182BC027FD00315A3B /* Products */;
 			projectDirPath = "";
@@ -394,6 +411,11 @@
 			isa = PBXTargetDependency;
 			target = 4C54B0162BC027FD00315A3B /* ProtonVPN-TV */;
 			targetProxy = 4C54B0322BC027FF00315A3B /* PBXContainerItemProxy */;
+		};
+		66465B7A2BFF9112002232B3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4C54B0482BC02AB200315A3B /* WireGuard-tvOS */;
+			targetProxy = 66465B792BFF9112002232B3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -654,56 +676,60 @@
 		4C54B0532BC02AB200315A3B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "wireguard-tv/wireguard_tv.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "WireGuard-tvOS/WireGuard_tvOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
-				ENABLE_HARDENED_RUNTIME = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "wireguard-tv/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "wireguard-tv";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				ENABLE_HARDENED_RUNTIME = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "WireGuard-tvOS/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Proton Technologies AG. All rights reserved.";
+				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.6;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.wireguard-tv";
+				MARKETING_VERSION = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.WireGuard-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
+				PROVISIONING_PROFILE_SPECIFIER = "match Development ch.protonmail.vpn.WireGuard-tvOS tvos";
+				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
 			};
 			name = Debug;
 		};
 		4C54B0542BC02AB200315A3B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "wireguard-tv/wireguard_tv.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "WireGuard-tvOS/WireGuard_tvOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
-				ENABLE_HARDENED_RUNTIME = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "wireguard-tv/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "wireguard-tv";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				ENABLE_HARDENED_RUNTIME = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "WireGuard-tvOS/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Proton Technologies AG. All rights reserved.";
+				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.6;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.wireguard-tv";
+				MARKETING_VERSION = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.WireGuard-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore ch.protonmail.vpn.WireGuard-tvOS tvos";
+				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
 			};
 			name = Release;
 		};
@@ -757,17 +783,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		E56C8CC02BCFC2CA0029B6AE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
-			requirement = {
-				kind = exactVersion;
-				version = 1.10.2;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
 		AD20FCDC2BF60E1F00F966DF /* CommonNetworking */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -781,11 +796,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = PersistenceTestSupport;
 		};
-		AD20FD032BF60FCE00F966DF /* ComposableArchitecture */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E56C8CC02BCFC2CA0029B6AE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
-			productName = ComposableArchitecture;
-		};
 		E53729F62BFDF777003D7409 /* tvOS */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = tvOS;
@@ -797,11 +807,6 @@
 		E53729FC2BFDFBF4003D7409 /* CommonNetworking */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CommonNetworking;
-		};
-		E53729FE2BFDFBFD003D7409 /* ComposableArchitecture */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E56C8CC02BCFC2CA0029B6AE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
-			productName = ComposableArchitecture;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
