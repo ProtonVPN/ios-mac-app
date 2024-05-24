@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "Status_gradient.png",
+      "idiom" : "tv"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "template-rendering-intent" : "template"
+  }
+}

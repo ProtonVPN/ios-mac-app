@@ -52,6 +52,8 @@ struct MainView: View {
         // Only show the stage background for the drill down settings views
         if store.settings.destination != nil {
             Image(.backgroundStage)
+        } else if  store.currentTab == .home {
+            CountriesListBackgroundGradient()
         } else {
             Color.clear
         }
