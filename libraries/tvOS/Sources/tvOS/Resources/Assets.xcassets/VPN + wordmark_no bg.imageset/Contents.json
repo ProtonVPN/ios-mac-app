@@ -1,18 +1,25 @@
 {
   "images" : [
     {
-      "filename" : "VPN + wordmark_no bg.png",
-      "idiom" : "tv",
-      "scale" : "1x"
+      "filename" : "Product logos light.pdf",
+      "idiom" : "tv"
     },
     {
-      "filename" : "VPN + wordmark_no bg@2x.png",
-      "idiom" : "tv",
-      "scale" : "2x"
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "Product logos.pdf",
+      "idiom" : "tv"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
   }
 }

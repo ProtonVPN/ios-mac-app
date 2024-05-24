@@ -38,9 +38,7 @@ struct SettingsFeature {
     enum Action {
         case alert(PresentationAction<Alert>)
         case destination(PresentationAction<Destination.Action>)
-        case showContactUs
-        case showReportAnIssue
-        case showPrivacyPolicy
+        case showDrillDown(DrillDown)
         case signOutSelected
         case showProgressView
         case finishSignOut
@@ -49,32 +47,43 @@ struct SettingsFeature {
         enum Alert {
           case signOut
         }
+
+        enum DrillDown {
+            case contactUs
+            case reportAnIssue
+            case privacyPolicy
+        }
     }
 
     static let signOutAlert = AlertState<Action.Alert> {
         TextState("Sign out")
-      } actions: {
-          ButtonState(action: .signOut) {
-              TextState("Sign out")
-          }
-          ButtonState(role: .cancel) {
-              TextState("Cancel")
-          }
-      } message: {
-          TextState("Are you sure you want to sign out of Proton VPN?")
-      }
+    } actions: {
+        ButtonState(action: .signOut) {
+            TextState("Sign out")
+        }
+        ButtonState(role: .cancel) {
+            TextState("Cancel")
+        }
+    } message: {
+        TextState("Are you sure you want to sign out of Proton VPN?")
+    }
 
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .showContactUs:
-                state.destination = .settingsDrillDown(.contactUs())
-                return .none
-            case .showReportAnIssue:
-                state.destination = .settingsDrillDown(.reportAnIssue())
-                return .none
-            case .showPrivacyPolicy:
-                state.destination = .settingsDrillDown(.privacyPolicy())
+            case .showDrillDown(let type):
+                let destination: Destination.State
+                switch type {
+                case .contactUs:
+                    destination = .settingsDrillDown(.contactUs())
+                case .reportAnIssue:
+                    destination = .settingsDrillDown(.reportAnIssue())
+                case .privacyPolicy:
+                    destination = .settingsDrillDown(.privacyPolicy())
+                }
+                withAnimation {
+                    state.destination = destination
+                }
                 return .none
             case .signOutSelected:
                 state.alert = Self.signOutAlert

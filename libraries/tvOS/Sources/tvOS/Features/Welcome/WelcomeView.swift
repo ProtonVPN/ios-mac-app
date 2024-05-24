@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Ergonomics
 import SwiftUI
 import Theme
 
@@ -27,50 +28,64 @@ struct WelcomeView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: .themeSpacing64) {
+                Spacer()
                 Image(.vpnWordmarkNoBg)
-                VStack(spacing: 24) {
-                    Text("Watch without being watched.")
-                        .fontWeight(.bold)
-                        .font(.largeTitle)
+                titleView
+                buttonsView
+                Spacer()
+                availableView
+            }
+            .background(Image(.backgroundBrand))
+            .navigationDestination(item: $store.scope(state: \.destination?.signIn,
+                                                      action: \.destination.signIn)) {
+                SignInView(store: $0)
+            }
+            .navigationDestination(item: $store.scope(state: \.destination?.createAccount, action: \.destination.createAccount)) { CreateAccountView(store: $0) }
+            .navigationDestination(item: $store.scope(state: \.destination?.codeExpired, action: \.destination.codeExpired)) { CodeExpiredView(store: $0) }
 
-                    Text("Connect to high-speed VPN servers in %n countries and stream your favorite shows with Swiss protection.")
-                        .foregroundStyle(Color(.text, .weak))
-                        .multilineTextAlignment(.center)
-                        .frame(maxWidth: 679)
-                }
-                .frame(maxWidth: 880)
-                HStack(spacing: .themeSpacing32) {
-                    Button {
-                        store.send(.showSignIn)
-                    } label: {
-                        Text("Sign In")
-                            .font(.callout)
-                            .padding(.horizontal, .themeSpacing16)
-                            .padding(.vertical, .themeSpacing12)
-                    }
-                    Button {
-                        store.send(.showCreateAccount)
-                    } label: {
-                        Text("Create account")
-                            .font(.callout)
-                            .padding(.horizontal, .themeSpacing16)
-                            .padding(.vertical, .themeSpacing12)
-                    }
-                }
-            }
-            .background(Image(.logo))
-            .navigationDestination(
-                item: $store.scope(state: \.destination?.signIn,
-                                   action: \.destination.signIn)
-            ) { store in
-                SignInView(store: store)
-            }
-            .navigationDestination(
-                item: $store.scope(state: \.destination?.createAccount,
-                                   action: \.destination.createAccount)
-            ) { store in
-                CreateAccountView(store: store)
-            }
+        }
+    }
+
+    var availableView: some View = {
+        Text("Available with Proton VPN Plus")
+            .font(.caption)
+            .foregroundColor(Color(.text))
+            .background(Color(.background, .strong))
+            .padding(.vertical, .themeSpacing8)
+            .padding(.horizontal, .themeSpacing16)
+            .overlay(
+                RoundedRectangle(cornerRadius: .themeRadius12)
+                    .stroke(LinearGradient(colors: [Color(hex: 0x6E4BFF), // custom colors just for this
+                                                    Color(hex: 0x547AEC),
+                                                    Color(hex: 0x2FCCCF)],
+                                           startPoint: .topLeading,
+                                           endPoint: .bottomTrailing),
+                            lineWidth: 1.5)
+            )
+    }()
+
+    var titleView: some View = {
+        VStack(spacing: 24) {
+            Text("Watch without being watched.")
+                .fontWeight(.bold)
+                .font(.title2)
+
+            Text("Connect to high-speed servers in %n countries and stream your favorite shows with VPN protection.")
+                .font(.body)
+                .foregroundStyle(Color(.text, .weak))
+                .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: 880)
+    }()
+
+    var buttonsView: some View {
+        HStack(spacing: .themeSpacing32) {
+            WelcomeButtonView(title: "Sign In", action: {
+                store.send(.showSignIn)
+            })
+            WelcomeButtonView(title: "Create account", action: {
+                store.send(.showCreateAccount)
+            })
         }
     }
 }

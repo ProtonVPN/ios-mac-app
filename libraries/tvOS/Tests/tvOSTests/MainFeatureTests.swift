@@ -43,7 +43,7 @@ final class MainFeatureTests: XCTestCase {
         let store = TestStore(initialState: MainFeature.State()) {
             MainFeature()
         }
-        await store.send(.settings(.showContactUs)) {
+        await store.send(.settings(.showDrillDown(.contactUs))) {
             $0.settings.destination = .settingsDrillDown(.contactUs())
         }
     }

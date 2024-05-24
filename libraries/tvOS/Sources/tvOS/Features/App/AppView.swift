@@ -40,6 +40,7 @@ public struct AppView: View {
             ProgressView()
         case .authenticated(.auth):
             MainView(store: store.scope(state: \.main, action: \.main))
+                .background(Color(.background, .strong))
         case .authenticated(.unauth):
             WelcomeView(store: store.scope(state: \.welcome, action: \.welcome))
         }

@@ -23,50 +23,71 @@ import ComposableArchitecture
 struct SignInView: View {
     @Bindable var store: StoreOf<SignInFeature>
 
+    private static let maxElementsWidth: CGFloat = 1247
+
     var body: some View {
-        VStack {
-            Image(.vpnWordmarkNoBg)
-                .resizable()
-                .scaledToFit()
-                .frame(maxWidth: 290)
+        VStack(spacing: .themeSpacing64) {
             Text("Sign in")
                 .font(.title)
-            HStack {
-                VStack {
-                    Text("Scan the QR code")
-                    QRCodeView(string: "www.protonvpn.com/tv")
-                }
-                Spacer()
-                Text("Or")
-                Spacer()
-                VStack(spacing: .themeSpacing32) {
-                    StepView(title: "Go to protonvpn.com/tv", stepNumber: 1)
-                    StepView(title: "Sign in to your Proton Account", stepNumber: 2)
-                    switch store.state {
-                    case .loadingSignInCode:
-                        StepView(title: "Enter the code (retrieving...)", stepNumber: 3)
-                    case .waitingForAuthentication(let code, _):
-                        StepView(title: "Enter the code \(code.userCode)", stepNumber: 3)
-                    }
-                }
-                .frame(maxWidth: 800)
+                .bold()
+
+            StepView(title: "Using another device, go to",
+                     accent: "protonvpn.com/appletv",
+                     stepNumber: 1)
+            StepView(title: "Sign in to your account.",
+                     accent: nil,
+                     stepNumber: 2)
+            switch store.state.authentication {
+            case .loadingSignInCode:
+                StepView(title: "When asked for your verification code, enter (retrieving...)",
+                         accent: nil,
+                         stepNumber: 3)
+            case .waitingForAuthentication(let code, _):
+                StepView(title: "When asked for your verification code, enter",
+                         accent: "\(code.userFacingUserCode)",
+                         stepNumber: 3)
             }
-            .font(.title2)
-            .foregroundStyle(Color(.text, .weak))
         }
+        .background(Image(.backgroundStage))
+        .frame(maxWidth: Self.maxElementsWidth)
         .task {
-            store.send(.fetchSignInCode)
+            if case .loadingSignInCode = store.state.authentication {
+                store.send(.fetchSignInCode)
+            }
         }
     }
 }
 
 struct StepView: View {
+    private static let bulletPointSize: CGFloat = 56
+
     let title: String
+    let accent: String
     let stepNumber: Int
+
+    init(title: String, accent: String?, stepNumber: Int) {
+        self.title = title
+        if let accent {
+            self.accent = " " + accent
+        } else {
+            self.accent = ""
+        }
+        self.stepNumber = stepNumber
+    }
+
     var body: some View {
         HStack(alignment: .top) {
-            Text("\(stepNumber).")
+            Text("\(stepNumber)")
+                .font(.body)
+                .frame(.square(Self.bulletPointSize))
+                .background(Color(.background, .weak))
+                .clipShape(Circle())
             Text(title)
+                .font(.title3) +
+            Text(accent)
+                .font(.title3)
+                .bold()
+                .foregroundStyle(Color(.text, .interactive))
             Spacer(minLength: 0)
         }
     }

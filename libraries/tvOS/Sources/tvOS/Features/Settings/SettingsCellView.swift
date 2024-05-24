@@ -42,7 +42,7 @@ struct SettingsCellView: View {
     }
 }
 
-struct SettingsButtonStyle: ButtonStyle {
+private struct SettingsButtonStyle: ButtonStyle {
 
     private static let size = CGSize(width: 800, height: 120)
 

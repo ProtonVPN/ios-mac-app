@@ -28,13 +28,13 @@ struct SettingsView: View {
             VStack(spacing: .themeSpacing24) {
                 Spacer()
                 SettingsCellView(title: "Contact us", icon: IconProvider.speechBubble) {
-                    store.send(.showContactUs)
+                    store.send(.showDrillDown(.contactUs))
                 }
                 SettingsCellView(title: "Report an issue", icon: IconProvider.exclamationCircle) {
-                    store.send(.showReportAnIssue)
+                    store.send(.showDrillDown(.reportAnIssue))
                 }
                 SettingsCellView(title: "Privacy policy", icon: IconProvider.fileEmpty) {
-                    store.send(.showPrivacyPolicy)
+                    store.send(.showDrillDown(.privacyPolicy))
                 }
                 SettingsCellView(title: "Sign out", icon: IconProvider.arrowOutFromRectangle) {
                     store.send(.signOutSelected)
