@@ -2227,3 +2227,6 @@
 
 /* Change password cell title */
 "_change_password" = "비밀번호 변경";
+
+/* Change password alert message */
+"_password_changed_successfully" = "비밀번호 변경에 성공했습니다";

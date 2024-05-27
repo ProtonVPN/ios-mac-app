@@ -2227,3 +2227,6 @@
 
 /* Change password cell title */
 "_change_password" = "Vaihda salasana";
+
+/* Change password alert message */
+"_password_changed_successfully" = "Salasanan vaihto onnistui";

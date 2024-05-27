@@ -1878,7 +1878,7 @@
 "modals_new_upsell_customization_subtitle" = "Accédez aux appareils de votre réseau local (LAN) en passant à VPN Plus.";
 
 /* Subtitle of Moderate NAT upsell screens */
-"modals_new_upsell_moderate_nat_subtitle" = "Améliorez les performances des jeux et des appels vidéo en ligne grâce au NAT de type 2.";
+"modals_new_upsell_moderate_nat_subtitle" = "Améliorez les performances des jeux vidéo en ligne et des appels vidéo grâce au NAT de type 2.";
 
 /* Title of Netshield upsell screen */
 "modals_new_upsell_netshield_title" = "Profitez d'une navigation sans publicité";
@@ -2226,4 +2226,7 @@
 "_change_mailbox_password" = "Modifier le mot de passe de la messagerie";
 
 /* Change password cell title */
-"_change_password" = "Changer le mot de passe";
+"_change_password" = "Modifier le mot de passe";
+
+/* Change password alert message */
+"_password_changed_successfully" = "Le mot de passe a été modifié.";

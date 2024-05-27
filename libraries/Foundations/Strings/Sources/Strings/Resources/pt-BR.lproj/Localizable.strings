@@ -2067,7 +2067,7 @@
 "welcome_upgrade_title_plus" = "Boas-vindas ao VPN Plus";
 
 /* The title of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_title_unlimited" = "Bem-vindo a Proton Unlimited";
+"welcome_upgrade_title_unlimited" = "Boas-vindas à Proton Unlimited";
 
 /* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
 "welcome_upgrade_title_fallback" = "Parabéns!";
@@ -2227,3 +2227,6 @@
 
 /* Change password cell title */
 "_change_password" = "Alterar senha";
+
+/* Change password alert message */
+"_password_changed_successfully" = "Senha alterada com sucesso";

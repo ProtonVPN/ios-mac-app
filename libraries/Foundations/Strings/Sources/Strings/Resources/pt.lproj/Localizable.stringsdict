@@ -40,9 +40,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d+ new server</string>
+        <string>%d novo servidor</string>
         <key>other</key>
-        <string>%d+ novos servidores</string>
+        <string>Mais de %d novos servidores</string>
       </dict>
     </dict>
     <key>modals_upsell_all_countries_feature_multipleDevices</key>
