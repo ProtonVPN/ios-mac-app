@@ -360,7 +360,7 @@
 "_forgot_username" = "ユーザー名を忘れた";
 
 /* MacOS: generic failure message for SSO login */
-"_sso_login_failure" = "Failed to log in with SSO. Please try again.";
+"_sso_login_failure" = "SSOでのログインに失敗しました。もう一度試してください。";
 
 /* iOS: button in login screen */
 "_forgot_password" = "パスワードをお忘れですか？";
@@ -1055,7 +1055,7 @@
 "_plans_footer" = "有料プランの購入を確定すると、あなたの iTunes アカウントにご希望のサービスプランおよびアプリ内購入にかかる手数料(これらの手数料は弊社より直接請求されません)が請求されます。購入後、自動的に選択したプランに1年間アップグレードされます。サービスプランは私たちの iOS アプリもしくはオンラインで更新やキャンセルが可能です。";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/ yr";
+"_per_year_short" = "/ 年";
 
 /* iOS plan feature */
 "_feature_server_count" = "のサーバーへ接続";
@@ -1080,7 +1080,7 @@
 
 "_no_thanks" = "いいえ";
 
-"_welcome_description" = "Thanks for using Proton VPN.";
+"_welcome_description" = "Proton VPN をご利用いただきありがとうございます。";
 
 /* Plus word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "Plus";
@@ -1872,7 +1872,7 @@
 "modals_new_upsell_vpn_accelerator_title" = "さらに高速なブラウジング";
 
 /* Subtitle of the VPN Accelerator screen */
-"modals_new_upsell_vpn_accelerator_subtitle" = "Unlock faster, less crowded servers with speeds of up to 10 Gbps.";
+"modals_new_upsell_vpn_accelerator_subtitle" = "最大 10 Gbps の速度で、より高速で混雑の少ないサーバーのロックを解除します。";
 
 /* Subtitle of the Customization scren */
 "modals_new_upsell_customization_subtitle" = "VPN Plus を使用してローカル エリア ネットワーク (LAN) 上のデバイスにアクセスします。";
@@ -1890,7 +1890,7 @@
 "modals_new_upsell_netshield_subtitle_bold" = "NetShield";
 
 /* Title of Secure Core upsell screen */
-"modals_new_upsell_secure_core_title" = "Double your protection";
+"modals_new_upsell_secure_core_title" = "保護を2倍にする";
 
 /* Subtitle of Secure Core upsell screen */
 "modals_new_upsell_secure_core_subtitle" = "Secure Core を使用して、VPN 接続に別の暗号化層を追加します。";
@@ -1995,7 +1995,7 @@
 "upsell_profiles_subtitle" = "VPN Plusでプロファイルをアンロック";
 
 /* First bold part of the subtitle of Profiles upsell modal */
-"upsell_profiles_subtitle_bold_1" = "profiles";
+"upsell_profiles_subtitle_bold_1" = "プロファイル";
 
 /* Second bold part of the subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle_bold_2" = "VPN Plus";
@@ -2091,13 +2091,13 @@
 "welcome_to_proton_title" = "Proton VPNへようこそ";
 
 /* Welcome to Proton screen shown during onboarding. Subtitle label. */
-"welcome_to_proton_subtitle" = "Browse privately, access blocked content, and enjoy digital freedom.";
+"welcome_to_proton_subtitle" = "プライベートにブラウジングし、ブロックされたコンテンツにアクセスし、デジタルの自由を楽しみましょう。";
 
 /* Welcome to Proton screen shown during onboarding. Banner title label. */
-"welcome_to_proton_banner_title" = "Certified no-logs VPN";
+"welcome_to_proton_banner_title" = "認定済みのログなし VPN";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
-"welcome_to_proton_banner_subtitle" = "Your VPN activity is protected by Swiss privacy laws. We’ll never track you online or share your information with third parties.";
+"welcome_to_proton_banner_subtitle" = "あなたの VPN アクティビティはスイスのプライバシー法によって保護されています。オンラインであなたを追跡したり、あなたの情報を第三者と共有したりすることはありません。";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "プライバシーをアップグレードする";
@@ -2112,10 +2112,10 @@
 "upsell_plans_list_validate_button" = "VPN Plus を入手";
 
 /* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerMonth" = " /month";
+"upsell_plans_list_option_amountPerMonth" = " /月";
 
 /* Trailing text of the paid plan option amount indicating the amount per year. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerYear" = " /year";
+"upsell_plans_list_option_amountPerYear" = " /年";
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "VPN ビジネスでご利用いただけます。";
@@ -2227,3 +2227,6 @@
 
 /* Change password cell title */
 "_change_password" = "パスワードを変更する";
+
+/* Change password alert message */
+"_password_changed_successfully" = "パスワードは正常に変更されました";

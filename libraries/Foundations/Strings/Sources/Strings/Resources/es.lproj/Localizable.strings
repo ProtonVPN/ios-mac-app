@@ -2227,3 +2227,6 @@
 
 /* Change password cell title */
 "_change_password" = "Cambiar la contraseña";
+
+/* Change password alert message */
+"_password_changed_successfully" = "Se ha cambiado la contraseña.";

@@ -633,10 +633,10 @@
 "_color" = "Cor";
 
 /* Profile create/change form */
-"_make_default_profile" = "Tornar perfil predefinido";
+"_make_default_profile" = "Tornar perfil padrão";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "O botão \"Ligação rápida\" usa o perfil predefinido.\n";
+"_default_profile_tooltip" = "O botão \"Ligação rápida\" usa o perfil padrão.\n";
 
 "_feature" = "Funcionalidade";
 
@@ -761,11 +761,11 @@
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Todos os servidores neste país estão em manutenção. Ligue-se a outro país.";
 
-"_unsecure_wifi" = "Ligação WiFi insegura detectada";
+"_unsecure_wifi" = "Ligação WiFi insegura detetada";
 
 "_unsecure_wifi_learn_more" = "Saiba mais";
 
-"_unsecure_wifi_title" = "WiFi inseguro detectado";
+"_unsecure_wifi_title" = "WiFi inseguro detetado";
 
 "_maintenance_on_server_detected_title" = "O servidor VPN está em manutenção";
 
@@ -923,7 +923,7 @@
 "_unprotected_network" = "Notificar redes desprotegidas";
 
 /* MacOS: Settings -> General: description */
-"_unprotected_network_tooltip" = "Receber uma notificação quando o Proton VPN detectar que está ligado a uma rede desprotegida.";
+"_unprotected_network_tooltip" = "Receber uma notificação quando o Proton VPN detetar que está ligado a uma rede desprotegida.";
 
 /* MacOS: Settings -> Connection: name of field. */
 "_dns_leak_protection" = "Prevenção de fugas de DNS";
@@ -1333,7 +1333,7 @@
 "_news_title" = "Novidades";
 
 /* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
-"_offer_ending_" = "Ending %@";
+"_offer_ending_" = "A terminar em %@";
 
 "_quick_settings_title" = "Definições rápidas";
 
@@ -1881,7 +1881,7 @@
 "modals_new_upsell_moderate_nat_subtitle" = "Improve online gaming and video call performance with NAT type 2.";
 
 /* Title of Netshield upsell screen */
-"modals_new_upsell_netshield_title" = "Enjoy ad-free browsing";
+"modals_new_upsell_netshield_title" = "Desfrute de uma navegação sem anúncios";
 
 /* Subtitle of Netshield upsell screen */
 "modals_new_upsell_netshield_subtitle" = "Block ads, trackers and malware with NetShield.";
@@ -2067,7 +2067,7 @@
 "welcome_upgrade_title_plus" = "Boas-vindas ao VPN Plus";
 
 /* The title of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_title_unlimited" = "Welcome to Proton Unlimited";
+"welcome_upgrade_title_unlimited" = "Boas-vindas ao Proton Unlimited";
 
 /* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
 "welcome_upgrade_title_fallback" = "Parabéns!";
@@ -2100,7 +2100,7 @@
 "welcome_to_proton_banner_subtitle" = "Your VPN activity is protected by Swiss privacy laws. We’ll never track you online or share your information with third parties.";
 
 /* Title of paid plans list. */
-"upsell_plans_list_title" = "Upgrade your privacy";
+"upsell_plans_list_title" = "Melhorar a sua privacidade";
 
 /* Subtitle of paid plans list. */
 "upsell_plans_list_subtitle" = "Get advanced privacy features and higher speed with VPN Plus.";
@@ -2109,7 +2109,7 @@
 "upsell_plans_list_section_header" = "Selecione o seu plano";
 
 /* Main Button of paid plans list allowing user to start payments process. */
-"upsell_plans_list_validate_button" = "Get VPN Plus";
+"upsell_plans_list_validate_button" = "Obter VPN Plus";
 
 /* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
 "upsell_plans_list_option_amountPerMonth" = " /mês";
@@ -2227,3 +2227,6 @@
 
 /* Change password cell title */
 "_change_password" = "Alterar a palavra-passe";
+
+/* Change password alert message */
+"_password_changed_successfully" = "Password changed successfully";
