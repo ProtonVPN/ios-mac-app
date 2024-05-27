@@ -19,6 +19,9 @@
 import ProtonCoreUIFoundations
 import Theme
 import Cocoa
+#if canImport(SwiftUI)
+import SwiftUI
+#endif
 
 extension AppTheme {
     @dynamicMemberLookup
@@ -33,5 +36,14 @@ extension AppTheme {
             }
             return NSImage(named: style.imageName(countryCode: countryCode))
         }
+
+#if canImport(SwiftUI)
+        static func flag(countryCode: String, style: AppTheme.FlagStyle = .plain) -> Image? {
+            if style == .plain {
+                return IconProvider.flag(forCountryCode: countryCode)
+            }
+            return Image(style.imageName(countryCode: countryCode))
+        }
+#endif
     }
 }

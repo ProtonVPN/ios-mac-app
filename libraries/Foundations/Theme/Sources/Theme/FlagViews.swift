@@ -30,12 +30,19 @@ public struct FlagSizes {
     let scTopFlag: CGSize
     let scBottomFlag: CGSize
 
+    // Main view corner radius
+    let cornerRadius: CGFloat
+
+    let folder: String
+
     public static var defaultSize: Self {
         Self(
             frame: CGSize(width: 30, height: 24),
             simpleFlag: CGSize(width: 30, height: 20),
             scTopFlag: CGSize(width: 24, height: 16),
-            scBottomFlag: CGSize(width: 18, height: 12)
+            scBottomFlag: CGSize(width: 18, height: 12), 
+            cornerRadius: .themeRadius4,
+            folder: "Flags/"
         )
     }
 
@@ -44,7 +51,20 @@ public struct FlagSizes {
             frame: CGSize(width: 24, height: 16),
             simpleFlag: CGSize(width: 24, height: 16),
             scTopFlag: CGSize(width: 18, height: 12),
-            scBottomFlag: CGSize(width: 15, height: 10)
+            scBottomFlag: CGSize(width: 15, height: 10),
+            cornerRadius: .themeRadius4,
+            folder: "Flags/"
+        )
+    }
+
+    public static var tvListSize: Self {
+        Self(
+            frame: CGSize(width: 210, height: 140),
+            simpleFlag: CGSize(width: 210, height: 140),
+            scTopFlag: CGSize(width: 20, height: 40),
+            scBottomFlag: CGSize(width: 20, height: 40),
+            cornerRadius: .themeRadius24,
+            folder: ""
         )
     }
 }
@@ -53,25 +73,32 @@ public struct SimpleFlagView: View {
     public let regionCode: String
 
     public let startSize: CGSize
+    public let cornerRadius: CGFloat
     @ScaledMetric var scale: CGFloat = 1
 
+    let folder: String
+
     public var body: some View {
-        ImageAsset(name: "Flags/\(regionCode)")
+        ImageAsset(name: "\(folder)\(regionCode)")
             .swiftUIImage
             .resizable()
-            .cornerRadius(.themeRadius4 * scale)
+            .cornerRadius(cornerRadius * scale)
             .frame(width: startSize.width * scale,
                    height: startSize.height * scale)
     }
 
-    fileprivate init(regionCode: String, size: CGSize) {
+    fileprivate init(regionCode: String, size: CGSize, cornerRadius: CGFloat = .themeRadius4) {
         self.regionCode = regionCode
         self.startSize = size
+        self.cornerRadius = cornerRadius
+        self.folder = "Flags/"
     }
 
     public init(regionCode: String, flagSize: FlagSizes) {
         self.regionCode = regionCode
         self.startSize = flagSize.simpleFlag
+        self.cornerRadius = flagSize.cornerRadius
+        self.folder = flagSize.folder
     }
 }
 

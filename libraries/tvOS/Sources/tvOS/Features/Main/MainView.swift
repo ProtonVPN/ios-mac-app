@@ -27,7 +27,8 @@ struct MainView: View {
     var body: some View {
         TabView(selection: $store.currentTab.sending(\.selectTab)) {
             NavigationStack {
-                EmptyView()
+                CountryListView(store: store.scope(state: \.countryList,
+                                                   action: \.countryList))
             }
             .tag(MainFeature.Tab.home)
             .tabItem { Text("Home") }

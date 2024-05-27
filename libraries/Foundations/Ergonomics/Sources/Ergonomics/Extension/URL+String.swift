@@ -33,7 +33,7 @@ extension Optional where Wrapped == URL {
 
 extension URL {
     public func appendingQueryItems(_ queryItems: [URLQueryItem]) -> URL {
-        guard #available(macOS 13.0, iOS 16.0, *) else {
+        guard #available(macOS 13.0, iOS 16.0, tvOS 16.0, *) else {
             return appendingQueryItemsLegacy(queryItems)
         }
 
