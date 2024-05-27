@@ -44,7 +44,7 @@ struct SettingsCellView: View {
 
 private struct SettingsButtonStyle: ButtonStyle {
 
-    private static let size = CGSize(width: 800, height: 120)
+    private static let size = CGSize(width: Constants.maxViewWidth, height: 120)
 
     @Environment(\.isFocused) var isFocused
 

@@ -22,7 +22,7 @@ import CommonNetworking
 import Domain
 import Localization
 
-struct HomeListSection: Equatable {
+struct HomeListSection: Equatable, Hashable {
     let name: String
     let items: [HomeListItem]
 }
@@ -31,8 +31,8 @@ extension HomeListSection: Identifiable {
     var id: String { name }
 }
 
-struct HomeListItem: Identifiable, Equatable {
-    var id: String = UUID().uuidString
+struct HomeListItem: Identifiable, Equatable, Hashable {
+    let id: String = UUID().uuidString
 
     let code: String
     let name: String
@@ -100,7 +100,7 @@ struct CountryListFeature {
         HomeListItem(
             code: "Fastest",
             name: "Fastest",
-            isConnected: false // TODO:
+            isConnected: false // TODO: Put real value when we have vpn connection working
         )
     }
 }
@@ -144,10 +144,10 @@ extension ServerGroupInfo {
         switch kind {
         case .country(let code):
             return HomeListItem(
-            code: code,
-            name: LocalizationUtility.default.countryName(forCode: code) ?? "",
-            isConnected: false // TODO:
-        )
+                code: code,
+                name: LocalizationUtility.default.countryName(forCode: code) ?? "",
+                isConnected: false // TODO: Put real value when we have vpn connection working
+            )
         default:
             return nil
         }

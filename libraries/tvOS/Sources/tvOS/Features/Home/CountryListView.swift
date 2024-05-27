@@ -27,6 +27,12 @@ struct CountryListView: View {
 
     @Bindable var store: StoreOf<CountryListFeature>
 
+    // Watch which item is focused to highlight selected row
+    @FocusState private var focusedIndex: ItemCoordinate?
+
+    // "Unfocused" items are half transparent
+    private let unfocusedOpacity: Double = 0.5
+
     let columns = [
         GridItem(.fixed(250), spacing: 20),
         GridItem(.fixed(250), spacing: 20),
@@ -42,17 +48,19 @@ struct CountryListView: View {
 
             ScrollView {
                 LazyVGrid(columns: columns) {
-                    ForEach(store.sections) { section in
+                    ForEach(Array(store.sections.enumerated()), id: \.element) { sectionIndex, section in
                         Section(section.name) {
-                            ForEach(section.items) { item in
+                            ForEach(Array(section.items.enumerated()), id: \.element) { index, item in
 
                                 Button(action: {
                                     print(item)
                                 }, label: {
                                     HomeListItemView(item: item)
+                                        .opacity(calculateOpacity(forCoordinate: ItemCoordinate(section: sectionIndex, item: index)))
                                 })
                                 .buttonStyle(CountryListButtonStyle())
-                                .padding([.top], 20)
+                                .padding([.top], .themeSpacing24)
+                                .focused($focusedIndex, equals: ItemCoordinate(section: sectionIndex, item: index))
 
                             }
                         }
@@ -60,11 +68,42 @@ struct CountryListView: View {
                 }
             }
             .scrollClipDisabled()
-            .frame(maxWidth: 800)
+            .frame(maxWidth: Constants.maxViewWidth)
             .task {
                 store.send(.updateList)
                 store.send(.loadLogicals)
             }
+        }
+    }
+
+    /// We "highlight" current row by making it fully opaque, while other rows and
+    /// sections are half transparent.
+    private func calculateOpacity(forCoordinate coordinate: ItemCoordinate) -> Double {
+        // Nothing is focused, so everything is opaque
+        guard let focused = focusedIndex else {
+            return 1
+        }
+        // We are not in the same section, so half transparent
+        guard focused.section == coordinate.section else {
+            return unfocusedOpacity
+        }
+
+        // Only show current row in full opacity
+        if focused.row == coordinate.row {
+            return 1
+        }
+
+        return unfocusedOpacity
+    }
+
+    private struct ItemCoordinate: Hashable {
+        let section: Int
+        let item: Int
+
+        let columnCount = 6
+
+        var row: Int {
+            return (item - (item % columnCount)) / columnCount
         }
     }
 }
@@ -100,9 +139,4 @@ struct CountryListButtonStyle: ButtonStyle {
     configuration.label
       .hoverEffect(.highlight)
   }
-
 }
-
-//#Preview {
-//    CountryListView()
-//}

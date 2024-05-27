@@ -26,49 +26,7 @@ struct MainFeature {
     @ObservableState
     struct State: Equatable {
         var currentTab: Tab = .home
-        var countryList = CountryListFeature.State(sections: [
-            HomeListSection(
-                name: "Recommended",
-                items: [
-                    HomeListItem(code: "Fastest", name: "Fastest", isConnected: false),
-                    HomeListItem(code: "US", name: "United States", isConnected: false),
-                    HomeListItem(code: "GB", name: "Great Britain", isConnected: false),
-                    HomeListItem(code: "DE", name: "Germany", isConnected: true),
-                    HomeListItem(code: "JP", name: "Japan", isConnected: false),
-                    HomeListItem(code: "FR", name: "France", isConnected: false),
-                ]),
-            HomeListSection(
-                name: "All countries",
-                items: [
-                    HomeListItem(code: "Fastest", name: "Fastest", isConnected: false),
-                    HomeListItem(code: "LT", name: "Lithuania", isConnected: false),
-                    HomeListItem(code: "PL", name: "Poland", isConnected: false),
-                    HomeListItem(code: "CH", name: "Switzerland", isConnected: false),
-                    HomeListItem(code: "US", name: "United States", isConnected: false),
-                    HomeListItem(code: "CA", name: "Canada", isConnected: false),
-                    HomeListItem(code: "FR", name: "France", isConnected: false),
-                    HomeListItem(code: "BE", name: "Belgium", isConnected: false),
-                    HomeListItem(code: "DE", name: "Germany", isConnected: true),
-                    HomeListItem(code: "NL", name: "Netherlands", isConnected: false),
-                    HomeListItem(code: "GB", name: "Great Britain", isConnected: false),
-                    HomeListItem(code: "CZ", name: "Czechia", isConnected: false),
-                    HomeListItem(code: "CR", name: "Croatia", isConnected: false),
-                    HomeListItem(code: "IT", name: "Italy", isConnected: false),
-                    HomeListItem(code: "GR", name: "Greece", isConnected: false),
-                    HomeListItem(code: "AR", name: "Argentina", isConnected: false),
-                    HomeListItem(code: "AU", name: "Australia", isConnected: false),
-                    HomeListItem(code: "NZ", name: "New Zealand", isConnected: false),
-                    HomeListItem(code: "BG", name: "Bulgaria", isConnected: false),
-                    HomeListItem(code: "CO", name: "Colombia", isConnected: false),
-                    HomeListItem(code: "DK", name: "Denmark", isConnected: false),
-                    HomeListItem(code: "SE", name: "Sweden", isConnected: false),
-                    HomeListItem(code: "FI", name: "Finland", isConnected: false),
-                    HomeListItem(code: "NO", name: "Norway", isConnected: false),
-                    HomeListItem(code: "IS", name: "Island", isConnected: false),
-                    HomeListItem(code: "LV", name: "Latvia", isConnected: false),
-                    HomeListItem(code: "EE", name: "Estonia", isConnected: false),
-                ]),
-        ])
+        var countryList = CountryListFeature.State()
         var settings: SettingsFeature.State = .init()
     }
 
