@@ -17,13 +17,21 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+import ComposableArchitecture
 
 struct CountriesListBackgroundGradient: View {
 
+    @Bindable var store: StoreOf<MainFeature>
+
     var color: Color {
-        [Color(.connectedGradient), 
-         Color(.connectingGradient),
-         Color(.disconnectedGradient)].randomElement()!
+        switch store.connect.connectionState {
+        case .connected:
+            return Color(.connectedGradient)
+        case .disconnected:
+            return Color(.disconnectedGradient)
+        case .connecting, .disconnecting:
+            return Color(.connectingGradient)
+        }
     }
 
     var body: some View {

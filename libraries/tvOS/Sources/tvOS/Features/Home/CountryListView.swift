@@ -36,7 +36,9 @@ struct CountryListView: View {
     static private let cellSpacing: Double = 20
 
     static private let columnCount = 6
-    let columns = Array.init(repeating: GridItem(.fixed(250), spacing: cellSpacing), count: columnCount)
+
+    static private let gridItem = GridItem(.fixed(250), spacing: cellSpacing)
+    private let columns = Array(repeating: gridItem, count: columnCount)
 
     var body: some View {
         VStack(spacing: .themeSpacing24) {
@@ -49,6 +51,7 @@ struct CountryListView: View {
                             ForEach(Array(section.items.enumerated()), id: \.element) { index, item in
 
                                 Button(action: {
+                                    store.send(.selectItem(item))
                                     print(item)
                                 }, label: {
                                     HomeListItemView(
@@ -84,13 +87,16 @@ struct CountryListView: View {
         }
     }
 
+    /// By default we highlight the first row
+    static private var lastFocusedIndex = ItemCoordinate(section: 0, item: 0)
+
     /// We "highlight" current row by making it fully opaque, while other rows and
     /// sections are half transparent.
     private func calculateOpacity(forCoordinate coordinate: ItemCoordinate) -> Double {
-        // Nothing is focused, so everything is opaque
-        guard let focused = focusedIndex else {
-            return 1
-        }
+        // Always highlight as least one row
+        let focused = focusedIndex ?? Self.lastFocusedIndex
+        Self.lastFocusedIndex = focused
+
         // We are not in the same section, so half transparent
         guard focused.section == coordinate.section else {
             return unfocusedOpacity

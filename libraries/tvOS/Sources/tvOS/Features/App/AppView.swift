@@ -24,10 +24,13 @@ public struct AppView: View {
         AppFeature()
     }
 
+    @Environment(\.scenePhase) var scenePhase
+
     public init() { } 
 
     public var body: some View {
         viewBody
+            .onChange(of: scenePhase, scenePhaseChanged)
             .onAppear {
                 self.startup()
             }
@@ -48,5 +51,18 @@ public struct AppView: View {
 
     private func startup() {
         store.send(.networking(.startAcquiringSession))
+    }
+
+    func scenePhaseChanged(oldScenePhase: ScenePhase, newScenePhase: ScenePhase) {
+        switch newScenePhase {
+        case .active:
+            print("App is active")
+        case .inactive:
+            print("App is inactive")
+        case .background:
+            print("App is in background")
+        @unknown default:
+            print("App Received an unexpected new value.")
+        }
     }
 }
