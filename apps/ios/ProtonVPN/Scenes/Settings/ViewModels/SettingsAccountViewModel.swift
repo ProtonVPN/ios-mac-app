@@ -71,6 +71,9 @@ final class SettingsAccountViewModel {
         if canShowChangePassword {
             sections.append(changePasswordSection)
         }
+        if canShowSecurityKeys {
+            sections.append(securityKeysSection)
+        }
         sections.append(deleteAccountSection)
         
         return sections
@@ -149,12 +152,30 @@ final class SettingsAccountViewModel {
         return TableViewSection(title: "", cells: cells)
     }
 
+    private var securityKeysSection: TableViewSection {
+        var cells: [TableViewCellModel] = [
+            .pushStandard(title: Localizable.securityKeys) { [weak self] in
+                guard let self, let pushHandler else { return }
+                Task { @MainActor [weak self] in
+                    if let viewController = self?.navigationService.makeSecurityKeysViewController() {
+                        pushHandler(viewController)
+                    }
+                }
+            }
+        ]
+        return TableViewSection(title: "", cells: cells)
+    }
+
     private var canShowChangePassword: Bool {
         guard let mailboxPassword = authKeychain.fetch(forContext: .mainApp)?.mailboxPassword,
               !mailboxPassword.isEmpty else {
             return false
         }
         return FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.changePassword, reloadValue: true) && propertiesManager.userInfo != nil && propertiesManager.userSettings != nil
+    }
+
+    private var canShowSecurityKeys: Bool {
+        FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.fidoKeys, reloadValue: true)
     }
 
     private var deleteAccountSection: TableViewSection {
@@ -220,7 +241,7 @@ final class SettingsAccountViewModel {
                 case .success: self?.handleAccountDeletionSuccess()
                 case .failure(let error): self?.handleAccountDeletionFailure(error)
             }
-        })
+            })
     }
     
     private func handleAccountDeletionSuccess() {
