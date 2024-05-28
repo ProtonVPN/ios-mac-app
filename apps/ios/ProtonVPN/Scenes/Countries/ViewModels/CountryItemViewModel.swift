@@ -153,11 +153,11 @@ class CountryItemViewModel {
     }
 
     var torAvailable: Bool {
-        serversGroup.featureIntersection.contains(.tor)
+        serversGroup.featureUnion.contains(.tor)
     }
     
     var p2pAvailable: Bool {
-        serversGroup.featureIntersection.contains(.p2p)
+        serversGroup.featureUnion.contains(.p2p)
     }
     
     var isSmartAvailable: Bool {
