@@ -24,6 +24,8 @@ import UIKit
 import LegacyCommon
 import ProtonCoreUIFoundations
 import Strings
+import ProtonCoreFeatureFlags
+import Domain
 
 final class SettingsViewController: UIViewController {
 
@@ -51,7 +53,11 @@ final class SettingsViewController: UIViewController {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        tabBarItem = UITabBarItem(title: Localizable.settings, image: IconProvider.cogWheel, tag: 4)
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS) {
+            tabBarItem = UITabBarItem(title: Localizable.settings, image: IconProvider.cogWheel, tag: 3)
+        } else {
+            tabBarItem = UITabBarItem(title: Localizable.settings, image: IconProvider.cogWheel, tag: 4)
+        }
         tabBarItem.accessibilityIdentifier = "Settings back btn"
     }
     

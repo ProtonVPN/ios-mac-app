@@ -233,6 +233,8 @@
 		E5772AE429B0B9A90076D824 /* SystemExtensionTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5772AE329B0B9A90076D824 /* SystemExtensionTutorialView.swift */; };
 		E57B263229C3188D00533B7C /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E57B263129C3188D00533B7C /* AVKit.framework */; };
 		E582BF3D2BB16FE800C95CD7 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E582BF3C2BB16FE300C95CD7 /* InfoPlist.xcstrings */; };
+		E5867D7D2C4E7D55009FB802 /* NetShield in Frameworks */ = {isa = PBXBuildFile; productRef = E5867D7C2C4E7D55009FB802 /* NetShield */; };
+		E5867D7F2C4E7D55009FB802 /* NetShield-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E5867D7E2C4E7D55009FB802 /* NetShield-macOS */; };
 		E59447542A86217A00E1E241 /* ProtonCoreLoginUI in Frameworks */ = {isa = PBXBuildFile; productRef = E59447532A86217A00E1E241 /* ProtonCoreLoginUI */; };
 		E5C00F0B2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F0A2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift */; };
 		E5C00F0D2A15FC6E0030076F /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -242,11 +244,9 @@
 		E5C4EF3F29B882C10013ACB2 /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3E29B882C10013ACB2 /* PrimaryButtonStyle.swift */; };
 		E5CCA11829B2057700BDE32B /* VideoTourModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CCA11729B2057700BDE32B /* VideoTourModel.swift */; };
 		E5CFAACE29E92E8300C36735 /* AppTheme+Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CFAACD29E92E8300C36735 /* AppTheme+Icons.swift */; };
-		E5E48CF52A4C362300B09111 /* Home-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48CF42A4C362300B09111 /* Home-macOS */; };
 		E5E48CF72A4C363700B09111 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48CF62A4C363700B09111 /* ComposableArchitecture */; };
 		E5E48CF92A4C365000B09111 /* ConnectionDetails in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48CF82A4C365000B09111 /* ConnectionDetails */; };
 		E5E48CFB2A4C365000B09111 /* ConnectionDetails-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48CFA2A4C365000B09111 /* ConnectionDetails-macOS */; };
-		E5E48CFD2A4C36A900B09111 /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48CFC2A4C36A900B09111 /* Home */; };
 		E5E48CFF2A4C37A900B09111 /* LocalFeatureFlags in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48CFE2A4C37A900B09111 /* LocalFeatureFlags */; };
 		E5E48D012A4C37F000B09111 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48D002A4C37F000B09111 /* PMLogger */; };
 		E5E48D032A4C3D7100B09111 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48D022A4C3D7100B09111 /* Logging */; };
@@ -1039,7 +1039,6 @@
 				EEFA87661F6170F200DE880D /* MapKit.framework in Frameworks */,
 				E5E48CFB2A4C365000B09111 /* ConnectionDetails-macOS in Frameworks */,
 				E57B263229C3188D00533B7C /* AVKit.framework in Frameworks */,
-				E5E48CF52A4C362300B09111 /* Home-macOS in Frameworks */,
 				7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */,
 				E53D64C3281169880060C463 /* Modals-macOS in Frameworks */,
 				EE182C561F617C0000F3BA4C /* NetworkExtension.framework in Frameworks */,
@@ -1052,13 +1051,14 @@
 				4C7D40592A60251700ACDBED /* SDWebImage in Frameworks */,
 				4CD1F78B2A72BF0100E8AB01 /* LegacyCommon in Frameworks */,
 				4C8571DC2A7CEC5B0057FED6 /* TrustKit in Frameworks */,
+				E5867D7D2C4E7D55009FB802 /* NetShield in Frameworks */,
 				E5E48D012A4C37F000B09111 /* PMLogger in Frameworks */,
 				4CD1F7932A72DCAD00E8AB01 /* GoLibsCryptoVPNPatchedGo in Frameworks */,
 				D5F65F9E28A14E190062CF85 /* Timer in Frameworks */,
 				E5E48D032A4C3D7100B09111 /* Logging in Frameworks */,
 				4CD1F7952A72DE0400E8AB01 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */,
-				E5E48CFD2A4C36A900B09111 /* Home in Frameworks */,
 				E5E48CF72A4C363700B09111 /* ComposableArchitecture in Frameworks */,
+				E5867D7F2C4E7D55009FB802 /* NetShield-macOS in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2691,11 +2691,9 @@
 				E53D64C2281169880060C463 /* Modals-macOS */,
 				D5F65F9D28A14E190062CF85 /* Timer */,
 				E93533DA29CAEE2C005E3A59 /* Sparkle */,
-				E5E48CF42A4C362300B09111 /* Home-macOS */,
 				E5E48CF62A4C363700B09111 /* ComposableArchitecture */,
 				E5E48CF82A4C365000B09111 /* ConnectionDetails */,
 				E5E48CFA2A4C365000B09111 /* ConnectionDetails-macOS */,
-				E5E48CFC2A4C36A900B09111 /* Home */,
 				E5E48CFE2A4C37A900B09111 /* LocalFeatureFlags */,
 				E5E48D002A4C37F000B09111 /* PMLogger */,
 				E5E48D022A4C3D7100B09111 /* Logging */,
@@ -2711,6 +2709,8 @@
 				4C8571DB2A7CEC5B0057FED6 /* TrustKit */,
 				E59447532A86217A00E1E241 /* ProtonCoreLoginUI */,
 				AD9F194F2B55D6770034F329 /* Persistence */,
+				E5867D7C2C4E7D55009FB802 /* NetShield */,
+				E5867D7E2C4E7D55009FB802 /* NetShield-macOS */,
 			);
 			productName = ProtonVPN;
 			productReference = EED534811EEC112000013607 /* ProtonVPN.app */;
@@ -4539,13 +4539,17 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = "Modals-macOS";
 		};
+		E5867D7C2C4E7D55009FB802 /* NetShield */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NetShield;
+		};
+		E5867D7E2C4E7D55009FB802 /* NetShield-macOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "NetShield-macOS";
+		};
 		E59447532A86217A00E1E241 /* ProtonCoreLoginUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCoreLoginUI;
-		};
-		E5E48CF42A4C362300B09111 /* Home-macOS */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "Home-macOS";
 		};
 		E5E48CF62A4C363700B09111 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -4559,10 +4563,6 @@
 		E5E48CFA2A4C365000B09111 /* ConnectionDetails-macOS */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "ConnectionDetails-macOS";
-		};
-		E5E48CFC2A4C36A900B09111 /* Home */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Home;
 		};
 		E5E48CFE2A4C37A900B09111 /* LocalFeatureFlags */ = {
 			isa = XCSwiftPackageProductDependency;

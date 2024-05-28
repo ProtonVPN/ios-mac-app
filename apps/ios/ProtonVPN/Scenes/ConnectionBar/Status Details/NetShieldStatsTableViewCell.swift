@@ -18,7 +18,7 @@
 
 import UIKit
 import LegacyCommon
-import Home
+import NetShield
 
 class NetShieldStatsTableViewCell: UITableViewCell {
     @IBOutlet private var adsStatView: NetShieldStatsItemView!

@@ -24,6 +24,7 @@ import SwiftUI
 import Strings
 import VPNShared
 import ProtonCoreUIFoundations
+import NetShield_iOS
 
 import Dependencies
 

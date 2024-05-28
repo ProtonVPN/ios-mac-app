@@ -58,4 +58,8 @@ public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
 
     /// Authorize payments on TestFlight builds.
     case paymentsEnabledOnTestFlight = "PaymentsEnabledOnTestFlight"
+
+    /// Redesign flag for iOS
+    case redesigniOS = "IOSRedesignedUI"
+
 }

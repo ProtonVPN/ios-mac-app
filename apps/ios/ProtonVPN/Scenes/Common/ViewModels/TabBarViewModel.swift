@@ -22,6 +22,8 @@
 
 import Foundation
 import LegacyCommon
+import Domain
+import ProtonCoreFeatureFlags
 
 protocol TabBarViewModelModelDelegate: AnyObject {
     func removeLoginBox()
@@ -89,6 +91,7 @@ class TabBarViewModel {
     }
     
     @objc func stateChanged() {
+        guard !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS) else { return }
         DispatchQueue.main.async { [weak self] in
             switch self?.appStateManager.displayState {
             case .connected:

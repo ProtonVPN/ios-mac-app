@@ -29,7 +29,7 @@ import Domain
 import Ergonomics
 import Strings
 import Theme
-import Home
+import NetShield
 import VPNShared
 import LegacyCommon
 

@@ -38,6 +38,12 @@ import ProtonCorePasswordChange
 import ProtonCoreDataModel
 import ProtonCoreLoginUI
 import ProtonCoreNetworking
+import ProtonCoreUIFoundations
+
+import Home
+import Home_iOS
+import Settings_iOS
+import ComposableArchitecture
 
 // MARK: Country Service
 
@@ -228,19 +234,38 @@ final class NavigationService {
         
         var tabViewControllers = [UIViewController]()
         
+        let isRedesign = FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS)
+
+        if isRedesign {
+            let hostingController = UIHostingController(rootView: HomeView())
+            hostingController.tabBarItem = UITabBarItem(title: Localizable.homeTab,
+                                                        image: IconProvider.houseFilled,
+                                                        tag: 0)
+            tabViewControllers.append(hostingController)
+        }
+
         tabViewControllers.append(UINavigationController(rootViewController: makeCountriesViewController()))
-        tabViewControllers.append(UINavigationController(rootViewController: makeMapViewController()))
         
-        if let protonQCViewController = mainStoryboard.instantiateViewController(withIdentifier: "ProtonQCViewController") as? ProtonQCViewController {
-            tabViewControllers.append(protonQCViewController)
+        if !isRedesign {
+            tabViewControllers.append(UINavigationController(rootViewController: makeMapViewController()))
+
+            if let protonQCViewController = mainStoryboard.instantiateViewController(withIdentifier: "ProtonQCViewController") as? ProtonQCViewController {
+                tabViewControllers.append(protonQCViewController)
+            }
         }
         
         tabViewControllers.append(UINavigationController(rootViewController: makeProfilesViewController()))
         
-        if let settingsViewController = makeSettingsViewController() {
+        if isRedesign {
+            let hostingController = UIHostingController(rootView: SettingsView())
+            hostingController.tabBarItem = UITabBarItem(title: Localizable.settingsTab,
+                                                        image: IconProvider.cogWheel,
+                                                        tag: 0)
+            tabViewControllers.append(hostingController)
+        } else if let settingsViewController = makeSettingsViewController() {
             tabViewControllers.append(UINavigationController(rootViewController: settingsViewController))
         }
-        
+
         tabBarController.setViewControllers(tabViewControllers, animated: false)
         tabBarController.setupView()
         

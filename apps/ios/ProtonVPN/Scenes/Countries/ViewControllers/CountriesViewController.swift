@@ -25,6 +25,8 @@ import LegacyCommon
 import Search
 import ProtonCoreUIFoundations
 import Strings
+import ProtonCoreFeatureFlags
+import Domain
 
 final class CountriesViewController: UIViewController {
     
@@ -44,8 +46,12 @@ final class CountriesViewController: UIViewController {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS) {
+            tabBarItem = UITabBarItem(title: Localizable.countries, image: IconProvider.earth, tag: 1)
+        } else {
+            tabBarItem = UITabBarItem(title: Localizable.countries, image: IconProvider.earth, tag: 0)
+        }
 
-        tabBarItem = UITabBarItem(title: Localizable.countries, image: IconProvider.earth, tag: 0)
         tabBarItem.accessibilityIdentifier = "Countries"
     }
     
@@ -53,7 +59,11 @@ final class CountriesViewController: UIViewController {
         super.viewDidLoad()
         viewModel.delegate = self
         setupView()
-        setupConnectionBar()
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS) {
+            connectionBarContainerView.removeFromSuperview()
+        } else {
+            setupConnectionBar()
+        }
         setupSecureCoreBar()
         setupTableView()
         setupNavigationBar()

@@ -43,6 +43,12 @@ public struct ProtocolSettingsFeature: Reducer {
             self.vpnConnectionStatus = vpnConnectionStatus
             self.reconnectionAlert = reconnectionAlert
         }
+
+        public init() {
+            self.protocol = .smartProtocol
+            self.vpnConnectionStatus = .disconnected
+            self.reconnectionAlert = nil
+        }
     }
 
     public enum Action: Equatable {

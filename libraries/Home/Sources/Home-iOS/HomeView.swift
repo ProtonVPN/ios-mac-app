@@ -73,6 +73,12 @@ public struct HomeView: View {
     public init(store: StoreOf<HomeFeature>) {
         self.store = store
     }
+
+    public init() {
+        self.store = .init(initialState: .init()) {
+            HomeFeature()
+        }
+    }
 }
 
 internal extension GeometryProxy {

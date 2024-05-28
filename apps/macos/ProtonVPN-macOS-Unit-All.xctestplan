@@ -136,6 +136,13 @@
         "identifier" : "LocalizationTests",
         "name" : "LocalizationTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/NetShield",
+        "identifier" : "NetShieldTests",
+        "name" : "NetShieldTests"
+      }
     }
   ],
   "version" : 1
