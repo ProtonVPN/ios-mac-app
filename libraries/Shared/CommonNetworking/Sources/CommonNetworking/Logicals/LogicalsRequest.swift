@@ -47,8 +47,7 @@ public struct LogicalsRequest: Request {
         let path = URL(string: "/vpn/v1/logicals")!
 
         let queryItems: [URLQueryItem] = Array(
-            ("WithTranslations", nil),
-            ("WithPartnerLogicals", "1")
+            ("WithTranslations", nil)
         )
         .appending(Array(("WithEntriesForProtocols", Self.protocolDescriptions)), if: shouldUseProtocolEntries)
         .appending(Array(("Tier", "0")), if: freeTier)
