@@ -158,7 +158,7 @@ public class VpnApiService {
         let countryCodes = countryCodeProvider.countryCodes
 
         networking.request(
-            VPNLogicalServicesRequest(
+            LogicalsRequest(
                 ip: shortenedIp,
                 countryCodes: countryCodes,
                 freeTier: freeTier
