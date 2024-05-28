@@ -77,10 +77,17 @@ struct CountryListFeature {
                     .getGroups(filteredBy: [.isNotUnderMaintenance])
                     .compactMap { $0.item }
 
+                let recommendedCountryCodes = ["US", "UK", "CA", "FR", "DE"]
+
                 state.sections = [
                     HomeListSection(
                         name: "Recommended",
-                        items: [fastest] // TODO: add recommended
+                        items: [fastest] + recommendedCountryCodes
+                            .map { HomeListItem(
+                                code: $0,
+                                name: LocalizationUtility.default.countryName(forCode: $0) ?? "",
+                                isConnected: false // TODO: Put real value when we have vpn connection working
+                            ) }
                     ),
                     HomeListSection(
                         name: "All countries",
