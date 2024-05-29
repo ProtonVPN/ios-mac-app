@@ -19,5 +19,5 @@
 import Foundation
 
 enum Constants {
-    static let maxViewWidth: CGFloat = 800
+    static let maxPreferredContentViewWidth: CGFloat = 800
 }

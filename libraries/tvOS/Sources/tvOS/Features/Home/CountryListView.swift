@@ -33,14 +33,10 @@ struct CountryListView: View {
     // "Unfocused" items are half transparent
     private let unfocusedOpacity: Double = 0.5
 
-    let columns = [
-        GridItem(.fixed(250), spacing: 20),
-        GridItem(.fixed(250), spacing: 20),
-        GridItem(.fixed(250), spacing: 20),
-        GridItem(.fixed(250), spacing: 20),
-        GridItem(.fixed(250), spacing: 20),
-        GridItem(.fixed(250), spacing: 20),
-    ]
+    static private let cellSpacing: Double = 20
+
+    static private let columnCount = 6
+    let columns = Array.init(repeating: GridItem(.fixed(250), spacing: cellSpacing), count: columnCount)
 
     var body: some View {
         VStack(spacing: .themeSpacing24) {
@@ -49,7 +45,7 @@ struct CountryListView: View {
             ScrollView {
                 LazyVGrid(columns: columns) {
                     ForEach(Array(store.sections.enumerated()), id: \.element) { sectionIndex, section in
-                        Section(section.name) {
+                        Section(content: {
                             ForEach(Array(section.items.enumerated()), id: \.element) { index, item in
 
                                 Button(action: {
@@ -66,12 +62,21 @@ struct CountryListView: View {
                                 .focused($focusedIndex, equals: ItemCoordinate(section: sectionIndex, item: index))
 
                             }
+                        }, header: {
+                            VStack(alignment: .leading) {
+                                Text(section.name)
+                                    .font(.subheadline)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding([.leading], CountryListView.cellSpacing)
+
+                            }
                         }
+                        )
                     }
                 }
             }
             .scrollClipDisabled()
-            .frame(maxWidth: Constants.maxViewWidth)
+            .frame(maxWidth: Constants.maxPreferredContentViewWidth)
             .task {
                 store.send(.updateList)
                 store.send(.loadLogicals)
