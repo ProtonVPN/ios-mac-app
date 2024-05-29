@@ -77,6 +77,8 @@ struct CountryListFeature {
                     .getGroups(filteredBy: [.isNotUnderMaintenance])
                     .compactMap { $0.item }
 
+                // More info about recommended countries selection:
+                // https://confluence.protontech.ch/pages/viewpage.action?pageId=128215858#Productmetricsforbusiness-Streaming
                 let recommendedCountryCodes = ["US", "UK", "CA", "FR", "DE"]
 
                 state.sections = [
