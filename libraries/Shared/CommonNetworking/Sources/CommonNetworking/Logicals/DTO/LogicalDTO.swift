@@ -19,7 +19,7 @@
 import Foundation
 import Domain
 
-public struct LogicalDTO: Codable {
+struct LogicalDTO: Codable {
     public let id: String
     public let name: String
     public let domain: String

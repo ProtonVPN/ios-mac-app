@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct ServerIpDTO: Codable {
+struct ServerIpDTO: Codable {
     public let id: String // "ID": "l8vWAXHBQNSQjPrxAr-D_BCxj1X0nW70HQRmAa-rIvzmKUA=="
     public let entryIp: String? // "EntryIP": "95.215.61.163"
     public let exitIp: String // "ExitIP": "95.215.61.164"

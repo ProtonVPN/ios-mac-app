@@ -24,7 +24,6 @@ import LocalFeatureFlags
 import VPNShared
 import Ergonomics
 
-/// Almost exact copy of VPNLogicalServicesRequest
 public struct LogicalsRequest: Request {
     private static let protocolDescriptions = VpnProtocol.allCases.map(\.apiDescription).joined(separator: ",")
 

@@ -18,6 +18,6 @@
 
 import Foundation
 
-public struct LogicalsResponse: Codable {
-    public let logicalServers: [LogicalDTO]
+struct LogicalsResponse: Codable {
+    let logicalServers: [LogicalDTO]
 }

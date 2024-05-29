@@ -62,7 +62,7 @@ struct CountryListFeature {
                     let logicalsResponse = try await client.fetchLogicals()
 
                     @Dependency(\.serverRepository) var repository
-                    repository.upsert(servers: logicalsResponse.logicalServers.map { $0.persistanceServer })
+                    repository.upsert(servers: logicalsResponse)
 
                     await send(.updateList) // Refresh UI from DB
 
@@ -112,39 +112,7 @@ struct CountryListFeature {
     }
 }
 
-extension LogicalDTO {
-    var persistanceServer: VPNServer {
-        VPNServer(
-            logical: Logical(
-                id: id,
-                name: name,
-                domain: domain,
-                load: load,
-                entryCountryCode: entryCountry,
-                exitCountryCode: exitCountry,
-                tier: tier,
-                score: score,
-                status: status,
-                feature: features,
-                city: city,
-                hostCountry: hostCountry,
-                translatedCity: translatedCity,
-                latitude: location.lat,
-                longitude: location.long,
-                gatewayName: gatewayName
-            ),
-            endpoints: servers.map {
-                ServerEndpoint(
-                    id: $0.id,
-                    exitIp: $0.exitIp,
-                    domain: $0.domain,
-                    status: $0.status,
-                    protocolEntries: nil // TODO: pass actual value, when we'll have it
-                )
-            }
-        )
-    }
-}
+
 
 extension ServerGroupInfo {
     var item: HomeListItem? {

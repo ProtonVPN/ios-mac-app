@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct LogicalLocationDTO: Codable {
+struct LogicalLocationDTO: Codable {
     public let lat: Double
     public let long: Double
 }
