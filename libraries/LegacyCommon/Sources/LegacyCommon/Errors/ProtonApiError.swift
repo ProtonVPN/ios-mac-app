@@ -30,7 +30,6 @@ public enum ParseError: LocalizedError {
     case modulusParse
     case refreshTokenParse
     case vpnCredentialsParse
-    case userIpParse
     case serverParse
     case loadsParse
     case clientConfigParse
