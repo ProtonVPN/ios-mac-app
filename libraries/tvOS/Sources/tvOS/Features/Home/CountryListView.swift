@@ -55,8 +55,11 @@ struct CountryListView: View {
                                 Button(action: {
                                     print(item)
                                 }, label: {
-                                    HomeListItemView(item: item)
-                                        .opacity(calculateOpacity(forCoordinate: ItemCoordinate(section: sectionIndex, item: index)))
+                                    HomeListItemView(
+                                        item: item,
+                                        isFocused: focusedIndex == ItemCoordinate(section: sectionIndex, item: index)
+                                    )
+                                    .opacity(calculateOpacity(forCoordinate: ItemCoordinate(section: sectionIndex, item: index)))
                                 })
                                 .buttonStyle(CountryListButtonStyle())
                                 .padding([.top], .themeSpacing24)
@@ -110,14 +113,24 @@ struct CountryListView: View {
 
 struct HomeListItemView: View {
     let item: HomeListItem
+    let isFocused: Bool
+
+    private let normalScale = CGSize(width: 1, height: 1)
+    private let focusedScale = CGSize(width: 1.3, height: 1.3)
 
     var body: some View {
         VStack {
             SimpleFlagView(regionCode: item.code, flagSize: .tvListSize)
-            Text(item.name)
-                .font(.body)
-                .padding([.top], 34)
-                .padding([.bottom], 0)
+                .hoverEffect(.highlight)
+
+                Text(item.name)
+                    .font(.body)
+                    .padding([.top], 34)
+                    .padding([.bottom], 0)
+                    .scaleEffect(isFocused ? focusedScale : normalScale)
+                    // This is not ideally 1:1 the same as ".hoverEffect(.highlight)",
+                    // but the best I could find.
+                    .animation(.easeInOut(duration: 0.1), value: isFocused)
 
             HStack(spacing: 14.4) {
                 Text(item.isConnected ? "Connected" : "")
@@ -134,9 +147,8 @@ struct HomeListItemView: View {
 }
 
 struct CountryListButtonStyle: ButtonStyle {
-
-  func makeBody(configuration: Self.Configuration) -> some View {
-    configuration.label
-      .hoverEffect(.highlight)
-  }
+    // Without this style `hoverEffect` adds colored background which we don't need
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+    }
 }
