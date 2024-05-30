@@ -641,11 +641,12 @@ class CountriesSectionViewModel {
 
     // MARK: Sections
 
+    /// Includes upsell banner
     private func allLocationsSection(for groups: [ServerGroupInfo]) -> ServerSection {
         let cellModels = cells(forCountriesInGroups: groups, minTierFilter: { _ in true } )
         return ServerSection(
             header: allLocationsHeader(locationCount: cellModels.count),
-            cells: cellModels
+            cells: [upsellBanner] + cellModels
         )
     }
 

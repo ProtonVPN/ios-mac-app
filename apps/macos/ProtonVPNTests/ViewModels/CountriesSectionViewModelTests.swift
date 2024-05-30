@@ -24,6 +24,7 @@ import Dependencies
 import Domain
 import Persistence
 import LegacyCommon
+import Strings
 
 @testable import ProtonVPN
 
@@ -78,8 +79,9 @@ final class CountriesViewModelTests: XCTestCase {
         assert(sut.cellModel(forRow: 1)!, isServerGroupOfKind: .gateway(name: "Dev"), isUnderMaintenance: false)
 
         assert(sut.cellModel(forRow: 2)!, isHeaderWithTitle: "All locations (2)")
-        assert(sut.cellModel(forRow: 3)!, isServerGroupOfKind: .country(code: "SE"), isUnderMaintenance: false)
-        assert(sut.cellModel(forRow: 4)!, isServerGroupOfKind: .country(code: "CH"), isUnderMaintenance: false)
+        assertIsBanner(sut.cellModel(forRow: 3)!)
+        assert(sut.cellModel(forRow: 4)!, isServerGroupOfKind: .country(code: "SE"), isUnderMaintenance: false)
+        assert(sut.cellModel(forRow: 5)!, isServerGroupOfKind: .country(code: "CH"), isUnderMaintenance: false)
 
         // Now let's update our protocol to WireGuard UDP
         mockPropertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.udp))
@@ -88,7 +90,7 @@ final class CountriesViewModelTests: XCTestCase {
         }
 
         // Switzerland should now be placed under maintenance (it's only supports ike)
-        assert(sut.cellModel(forRow: 4)!, isServerGroupOfKind: .country(code: "CH"), isUnderMaintenance: true)
+        assert(sut.cellModel(forRow: 5)!, isServerGroupOfKind: .country(code: "CH"), isUnderMaintenance: true)
 
         // Finally, let's try changing our protocol to Stealth
         mockPropertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.tls))
@@ -98,6 +100,14 @@ final class CountriesViewModelTests: XCTestCase {
 
         // Dev gateway should now also be under maintenance
         assert(sut.cellModel(forRow: 1)!, isServerGroupOfKind: .gateway(name: "Dev"), isUnderMaintenance: true)
+    }
+
+    private func assertIsBanner(_ cellVM: CellModel) {
+        guard case .banner(let banner) = cellVM else {
+            XCTFail("Expected row view model to be a banner, but found: \(cellVM)")
+            return
+        }
+        XCTAssertEqual(banner.text, Localizable.freeBannerText)
     }
 
     private func assert(_ cellVM: CellModel, isHeaderWithTitle title: String) {
