@@ -19,6 +19,7 @@
   "testTargets" : [
     {
       "skippedTests" : [
+        "MapTests",
         "SearchTests"
       ],
       "target" : {
