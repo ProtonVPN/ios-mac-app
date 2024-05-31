@@ -14,6 +14,7 @@
 		4C54B04C2BC02AB200315A3B /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C54B04B2BC02AB200315A3B /* NetworkExtension.framework */; };
 		4C54B04F2BC02AB200315A3B /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B04E2BC02AB200315A3B /* PacketTunnelProvider.swift */; };
 		66465B782BFF9112002232B3 /* WireGuard-tvOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4C54B0492BC02AB200315A3B /* WireGuard-tvOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		667C97BE2C08848F001AB9D6 /* WireGuardExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 667C97BD2C08848F001AB9D6 /* WireGuardExtension */; };
 		AD20FCDD2BF60E1F00F966DF /* CommonNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = AD20FCDC2BF60E1F00F966DF /* CommonNetworking */; };
 		AD20FCDF2BF60E3700F966DF /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = AD20FCDE2BF60E3700F966DF /* Persistence */; };
 		AD20FCE12BF60E3700F966DF /* PersistenceTestSupport in Frameworks */ = {isa = PBXBuildFile; productRef = AD20FCE02BF60E3700F966DF /* PersistenceTestSupport */; };
@@ -38,6 +39,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 4C54B0162BC027FD00315A3B;
 			remoteInfo = ProtonVPN;
+		};
+		66302D482C00E92600C220A3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4C54B00F2BC027FD00315A3B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 66302D442C00E8EB00C220A3;
+			remoteInfo = WireGuardGoBridgetvOS;
 		};
 		66465B792BFF9112002232B3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -75,7 +83,8 @@
 		4C54B04B2BC02AB200315A3B /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		4C54B04E2BC02AB200315A3B /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
 		4C54B0502BC02AB200315A3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4C54B0512BC02AB200315A3B /* wireguard_tv.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = wireguard_tv.entitlements; sourceTree = "<group>"; };
+		66E03DB42C088C010063E453 /* ProtonVPN-TV.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ProtonVPN-TV.entitlements"; sourceTree = "<group>"; };
+		66EB74B02C08D8760025A115 /* WireGuard_tvOS.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = WireGuard_tvOS.entitlements; sourceTree = "<group>"; };
 		AD8FA9062BEB9DBB00E751F6 /* Client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Client.plist; sourceTree = "<group>"; };
 		E53729F82BFDF7AE003D7409 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E53CF66C2BFF232C00458430 /* ObfuscatedConstants.example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.example.swift; sourceTree = "<group>"; };
@@ -114,6 +123,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C54B04C2BC02AB200315A3B /* NetworkExtension.framework in Frameworks */,
+				667C97BE2C08848F001AB9D6 /* WireGuardExtension in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,6 +133,7 @@
 		4C54B00E2BC027FD00315A3B = {
 			isa = PBXGroup;
 			children = (
+				66E03DB42C088C010063E453 /* ProtonVPN-TV.entitlements */,
 				4C54B0442BC0288F00315A3B /* Config.xcconfig */,
 				4C54B0192BC027FD00315A3B /* ProtonVPN */,
 				4C54B0342BC027FF00315A3B /* ProtonVPNUITests */,
@@ -181,9 +192,9 @@
 		4C54B04D2BC02AB200315A3B /* WireGuard-tvOS */ = {
 			isa = PBXGroup;
 			children = (
+				66EB74B02C08D8760025A115 /* WireGuard_tvOS.entitlements */,
 				4C54B04E2BC02AB200315A3B /* PacketTunnelProvider.swift */,
 				4C54B0502BC02AB200315A3B /* Info.plist */,
-				4C54B0512BC02AB200315A3B /* wireguard_tv.entitlements */,
 			);
 			path = "WireGuard-tvOS";
 			sourceTree = "<group>";
@@ -200,6 +211,23 @@
 			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		66302D442C00E8EB00C220A3 /* WireGuardGoBridgetvOS */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = 66302D472C00E8EB00C220A3 /* Build configuration list for PBXLegacyTarget "WireGuardGoBridgetvOS" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "$(PROJECT_DIR)/../../external/wireguard-apple/Sources/WireGuardKitGo";
+			dependencies = (
+			);
+			name = WireGuardGoBridgetvOS;
+			passBuildSettingsInEnvironment = 1;
+			productName = WireGuardGoBridgetvOS;
+		};
+/* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
 		4C54B0162BC027FD00315A3B /* ProtonVPN-TV */ = {
@@ -278,8 +306,12 @@
 			buildRules = (
 			);
 			dependencies = (
+				66302D492C00E92600C220A3 /* PBXTargetDependency */,
 			);
 			name = "WireGuard-tvOS";
+			packageProductDependencies = (
+				667C97BD2C08848F001AB9D6 /* WireGuardExtension */,
+			);
 			productName = "WireGuard-tvOS";
 			productReference = 4C54B0492BC02AB200315A3B /* WireGuard-tvOS.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -307,6 +339,9 @@
 					4C54B0482BC02AB200315A3B = {
 						CreatedOnToolsVersion = 15.2;
 					};
+					66302D442C00E8EB00C220A3 = {
+						CreatedOnToolsVersion = 15.3;
+					};
 				};
 			};
 			buildConfigurationList = 4C54B0122BC027FD00315A3B /* Build configuration list for PBXProject "tvOS" */;
@@ -328,6 +363,7 @@
 				4C54B0262BC027FF00315A3B /* tvOSTests */,
 				4C54B0302BC027FF00315A3B /* tvOSUITests */,
 				4C54B0482BC02AB200315A3B /* WireGuard-tvOS */,
+				66302D442C00E8EB00C220A3 /* WireGuardGoBridgetvOS */,
 			);
 		};
 /* End PBXProject section */
@@ -411,6 +447,11 @@
 			isa = PBXTargetDependency;
 			target = 4C54B0162BC027FD00315A3B /* ProtonVPN-TV */;
 			targetProxy = 4C54B0322BC027FF00315A3B /* PBXContainerItemProxy */;
+		};
+		66302D492C00E92600C220A3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 66302D442C00E8EB00C220A3 /* WireGuardGoBridgetvOS */;
+			targetProxy = 66302D482C00E92600C220A3 /* PBXContainerItemProxy */;
 		};
 		66465B7A2BFF9112002232B3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -546,6 +587,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "ProtonVPN-TV.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ProtonVPN/PreviewContent\"";
@@ -575,6 +617,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "ProtonVPN-TV.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ProtonVPN/PreviewContent\"";
@@ -681,7 +724,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				ENABLE_HARDENED_RUNTIME = "";
-				GENERATE_INFOPLIST_FILE = NO;
+				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "WireGuard-tvOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Proton Technologies AG. All rights reserved.";
@@ -711,7 +754,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				ENABLE_HARDENED_RUNTIME = "";
-				GENERATE_INFOPLIST_FILE = NO;
+				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "WireGuard-tvOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Proton Technologies AG. All rights reserved.";
@@ -730,6 +773,35 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
+			};
+			name = Release;
+		};
+		66302D452C00E8EB00C220A3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUGGING_SYMBOLS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 2SB5Z68H26;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin:/opt/homebrew/bin";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		66302D462C00E8EB00C220A3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 2SB5Z68H26;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin:/opt/homebrew/bin";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -781,9 +853,22 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		66302D472C00E8EB00C220A3 /* Build configuration list for PBXLegacyTarget "WireGuardGoBridgetvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				66302D452C00E8EB00C220A3 /* Debug */,
+				66302D462C00E8EB00C220A3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		667C97BD2C08848F001AB9D6 /* WireGuardExtension */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WireGuardExtension;
+		};
 		AD20FCDC2BF60E1F00F966DF /* CommonNetworking */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CommonNetworking;
