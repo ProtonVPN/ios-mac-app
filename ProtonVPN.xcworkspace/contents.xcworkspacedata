@@ -62,6 +62,9 @@
          location = "container:"
          name = "Core">
          <FileRef
+            location = "group:libraries/WireGuardExtension">
+         </FileRef>
+         <FileRef
             location = "group:libraries/LegacyCommon">
          </FileRef>
          <FileRef

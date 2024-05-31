@@ -1514,7 +1514,7 @@
 				E997998E26A6FAA00083D61E /* WGConstants.swift */,
 			);
 			name = WireguardExtension;
-			path = ../../../libraries/WireguardExtension;
+			path = ../../../libraries/WireguardExtensionSupport;
 			sourceTree = "<group>";
 		};
 		E997998C26A6FAA00083D61E /* vpncore */ = {
@@ -3932,7 +3932,7 @@
 				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN WireGuard Development PP";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "../../libraries/WireguardExtension/WG/WireGuardNetworkExtension-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "../../libraries/WireguardExtensionSupport/WG/WireGuardNetworkExtension-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
@@ -3965,7 +3965,7 @@
 				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN WireGuard Application Developer ID PP";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "../../libraries/WireguardExtension/WG/WireGuardNetworkExtension-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "../../libraries/WireguardExtensionSupport/WG/WireGuardNetworkExtension-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
@@ -3998,7 +3998,7 @@
 				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN WireGuard Application Developer ID PP";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "../../libraries/WireguardExtension/WG/WireGuardNetworkExtension-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "../../libraries/WireguardExtensionSupport/WG/WireGuardNetworkExtension-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 			};
 			name = Staging;

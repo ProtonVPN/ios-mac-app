@@ -1706,7 +1706,7 @@
 				D5C8901129360230009177E4 /* ObfuscatedConstants.example.swift */,
 				E9445D6326528A790075FD31 /* Info.plist */,
 				E9445D6426528A790075FD31 /* WireGuardiOS_Extension.entitlements */,
-				E997997A26A6FA870083D61E /* WireguardExtension */,
+				E997997A26A6FA870083D61E /* WireguardExtensionSupport */,
 			);
 			path = "WireGuardiOS Extension";
 			sourceTree = "<group>";
@@ -1719,15 +1719,15 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
-		E997997A26A6FA870083D61E /* WireguardExtension */ = {
+		E997997A26A6FA870083D61E /* WireguardExtensionSupport */ = {
 			isa = PBXGroup;
 			children = (
 				F31E911E2758F5F900140B2E /* vpncore */,
 				E997999426A6FE0C0083D61E /* WG */,
 				E997998126A6FA870083D61E /* WGConstants.swift */,
 			);
-			name = WireguardExtension;
-			path = ../../../libraries/WireguardExtension;
+			name = WireguardExtensionSupport;
+			path = ../../../libraries/WireguardExtensionSupport;
 			sourceTree = "<group>";
 		};
 		E997999426A6FE0C0083D61E /* WG */ = {
@@ -3881,7 +3881,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "WG_EXTENSION DEBUG FREQUENT_AUTH_CERT_REFRESH CHECK_CONNECTIVITY";
-				SWIFT_OBJC_BRIDGING_HEADER = "../../libraries/WireguardExtension/WG/WireGuardNetworkExtension-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "../../libraries/WireguardExtensionSupport/WG/WireGuardNetworkExtension-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -3911,7 +3911,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN WireGuard Extension Debug";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "WG_EXTENSION DEBUG FREQUENT_AUTH_CERT_REFRESH CHECK_CONNECTIVITY";
-				SWIFT_OBJC_BRIDGING_HEADER = "../../libraries/WireguardExtension/WG/WireGuardNetworkExtension-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "../../libraries/WireguardExtensionSupport/WG/WireGuardNetworkExtension-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -3941,7 +3941,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN Wireguard extension Release";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = WG_EXTENSION;
-				SWIFT_OBJC_BRIDGING_HEADER = "../../libraries/WireguardExtension/WG/WireGuardNetworkExtension-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "../../libraries/WireguardExtensionSupport/WG/WireGuardNetworkExtension-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
