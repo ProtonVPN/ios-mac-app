@@ -607,10 +607,6 @@ class CountriesSectionViewModel {
         return cells(for: matchingGroups, showConnectButton: true)
     }
 
-    private var upsellBanner: CellModel {
-        offerBannerCellModel ?? freeUserBannerCellModel
-    }
-
     // MARK: Section Headers
 
     private var gatewaysSectionHeader: CellModel {
@@ -641,12 +637,16 @@ class CountriesSectionViewModel {
 
     // MARK: Sections
 
+    private var upsellBanner: CellModel {
+        offerBannerCellModel ?? freeUserBannerCellModel
+    }
+
     /// Includes upsell banner
     private func allLocationsSection(for groups: [ServerGroupInfo]) -> ServerSection {
         let cellModels = cells(forCountriesInGroups: groups, minTierFilter: { _ in true } )
         return ServerSection(
             header: allLocationsHeader(locationCount: cellModels.count),
-            cells: [upsellBanner] + cellModels
+            cells: [offerBannerCellModel].compactMap { $0 } + cellModels
         )
     }
 
