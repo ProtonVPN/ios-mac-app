@@ -45,6 +45,7 @@ struct CountryListFeature {
     @ObservableState
     struct State: Equatable {
         var sections: [HomeListSection] = []
+        @Shared(.inMemory("connectionState")) var connectionState: String?
     }
 
     enum Action {
@@ -85,7 +86,7 @@ struct CountryListFeature {
                             .map { HomeListItem(
                                 code: $0,
                                 name: LocalizationUtility.default.countryName(forCode: $0) ?? "",
-                                isConnected: false // TODO: Put real value when we have vpn connection working
+                                isConnected: isConnected(countryCode: $0, state: state) // TODO: Put real value when we have vpn connection working
                             ) }
                     ),
                     HomeListSection(
@@ -102,11 +103,17 @@ struct CountryListFeature {
         }
     }
 
+    func isConnected(countryCode: String, state: State) -> Bool {
+        return Bool.random()
+//        guard case .connected(let code) = state.connectionState else { return false}
+//        return countryCode == code
+    }
+
     private var fastest: HomeListItem {
         HomeListItem(
             code: "Fastest",
             name: "Fastest",
-            isConnected: false // TODO: Put real value when we have vpn connection working
+            isConnected: Bool.random() // TODO: Put real value when we have vpn connection working
         )
     }
 }
@@ -118,7 +125,7 @@ extension ServerGroupInfo {
             return HomeListItem(
                 code: code,
                 name: LocalizationUtility.default.countryName(forCode: code) ?? "",
-                isConnected: false // TODO: Put real value when we have vpn connection working
+                isConnected: Bool.random() // TODO: Put real value when we have vpn connection working
             )
         default:
             return nil

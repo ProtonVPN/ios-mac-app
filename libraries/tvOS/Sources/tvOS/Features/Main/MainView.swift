@@ -32,6 +32,7 @@ struct MainView: View {
             }
             .tag(MainFeature.Tab.home)
             .tabItem { Text("Home") }
+
             NavigationStack {
                 EmptyView()
             }

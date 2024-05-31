@@ -27,8 +27,8 @@ struct MainFeature {
     struct State: Equatable {
         var currentTab: Tab = .home
         var countryList = CountryListFeature.State()
-        var settings: SettingsFeature.State = .init()
-        var connect: ConnectFeature.State = .init(connectionState: .disconnected)
+        var settings = SettingsFeature.State()
+        var connect = ConnectFeature.State()
     }
 
     enum Action {

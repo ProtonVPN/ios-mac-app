@@ -29,7 +29,7 @@ struct CountriesListBackgroundGradient: View {
             return Color(.connectedGradient)
         case .disconnected:
             return Color(.disconnectedGradient)
-        case .connecting, .disconnecting:
+        case .connecting, .disconnecting, .none:
             return Color(.connectingGradient)
         }
     }

@@ -23,20 +23,20 @@ import SwiftUI
 @Reducer struct ConnectFeature {
     @ObservableState
     struct State: Equatable {
-        var connectionState: ConnectionState = .disconnected
+        @Shared(.inMemory("connectionState")) var connectionState: ConnectionState?
+    }
 
-        enum ConnectionState {
-            case connected
-            case connecting
-            case disconnected
-            case disconnecting
-        }
+    enum ConnectionState: Codable, Equatable {
+        case connected(String) // country code
+        case connecting
+        case disconnected
+        case disconnecting
     }
 
     enum Action {
         case userClickedConnect(HomeListItem)
         case userClickedDisconnect
-        case connectionEstablished
+        case connectionEstablished(countryCode: String)
         case connectionFailed
         case connectionTerminated
     }
@@ -52,7 +52,7 @@ import SwiftUI
                 }
                 return .run { send in
                     try await client.connect(item.name)
-                    await send(.connectionEstablished)
+                    await send(.connectionEstablished(countryCode: item.code))
                 } catch: { error, send in
                     await send(.connectionFailed)
                 }
@@ -64,9 +64,9 @@ import SwiftUI
                     try await client.disconnect()
                     await send(.connectionTerminated)
                 }
-            case .connectionEstablished:
+            case .connectionEstablished(let countryCode):
                 withAnimation {
-                    state.connectionState = .connected
+                    state.connectionState = .connected(countryCode)
                 }
                 return .none
             case .connectionTerminated, .connectionFailed:
