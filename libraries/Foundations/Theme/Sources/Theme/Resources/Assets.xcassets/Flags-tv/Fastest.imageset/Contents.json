@@ -1,0 +1,22 @@
+{
+  "images": [
+    {
+      "filename": "flag_fastest_light.pdf",
+      "idiom": "tv"
+    },
+    {
+      "appearances": [
+        {
+          "appearance": "luminosity",
+          "value": "dark"
+        }
+      ],
+      "filename": "flag_fastest_dark.pdf",
+      "idiom": "tv"
+    }
+  ],
+  "info": {
+    "author": "xcode",
+    "version": 1
+  }
+}
