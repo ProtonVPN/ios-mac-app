@@ -58,11 +58,8 @@ struct CountryListFeature {
             switch action {
             case .loadLogicals:
                 return .run(operation: { (send) in
-                    @Dependency(\.logicalsClient) var client
-                    let logicalsResponse = try await client.fetchLogicals()
-
-                    @Dependency(\.serverRepository) var repository
-                    repository.upsert(servers: logicalsResponse)
+                    @Dependency(\.logicalsRefresher) var refresher
+                    try await refresher.refreshLogicalsIfNeeded()
 
                     await send(.updateList) // Refresh UI from DB
 
@@ -113,8 +110,6 @@ struct CountryListFeature {
         )
     }
 }
-
-
 
 extension ServerGroupInfo {
     var item: HomeListItem? {

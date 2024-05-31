@@ -81,7 +81,7 @@ public class VpnApiService {
 
         return await VpnProperties(
             serverModels: try serverInfo(
-                ip: asyncLocation?.ip,
+                ip: TruncatedIp(ip: asyncLocation?.ip),
                 freeTier: asyncCredentials.maxTier.isFreeTier && serversAccordingToTier
             ),
             vpnCredentials: asyncCredentials,
@@ -101,7 +101,7 @@ public class VpnApiService {
 
         return await (
             serverModels: try serverInfo(
-                ip: location?.ip,
+                ip: TruncatedIp(ip: location?.ip),
                 freeTier: freeTier
             ),
             location: location,
@@ -153,8 +153,8 @@ public class VpnApiService {
     }
 
     // The following route is used to retrieve VPN server information, including scores for the best server to connect to depending on a user's proximity to a server and its load. To provide relevant scores even when connected to VPN, we send a truncated version of the user's public IP address. In keeping with our no-logs policy, this partial IP address is not stored on the server and is only used to fulfill this one-off API request.
-    public func serverInfo(ip: String?, freeTier: Bool, completion: @escaping (Result<[ServerModel], Error>) -> Void) {
-        let shortenedIp = truncatedIp(ip)
+    public func serverInfo(ip: TruncatedIp?, freeTier: Bool, completion: @escaping (Result<[ServerModel], Error>) -> Void) {
+        let shortenedIp = ip?.value
         let countryCodes = countryCodeProvider.countryCodes
 
         networking.request(
@@ -188,10 +188,9 @@ public class VpnApiService {
         }
     }
 
-    public func serverInfo(ip: String?, freeTier: Bool) async throws -> [ServerModel] {
-        let shortenedIp = truncatedIp(ip)
+    public func serverInfo(ip: TruncatedIp, freeTier: Bool) async throws -> [ServerModel] {
         return try await withCheckedThrowingContinuation { continuation in
-            serverInfo(ip: shortenedIp, freeTier: freeTier, completion: continuation.resume(with:))
+            serverInfo(ip: ip, freeTier: freeTier, completion: continuation.resume(with:))
         }
     }
 
@@ -226,7 +225,7 @@ public class VpnApiService {
     }
 
     private func userLocation(completion: @escaping (Result<UserLocation, Error>) -> Void) {
-        networking.request(VPNLocationRequest()) { (result: Result<JSONDictionary, Error>) in
+        networking.request(LocationRequest()) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(response):
                 guard let userLocation = try? UserLocation(dic: response) else {
@@ -246,11 +245,8 @@ public class VpnApiService {
         try await networking.perform(request: VPNSessionsCountRequest())
     }
     
-    public func loads(lastKnownIp: String?, completion: @escaping (Result<ContinuousServerPropertiesDictionary, Error>) -> Void) {
-        var shortenedIp: String?
-        if let ip = lastKnownIp {
-            shortenedIp = truncatedIp(ip)
-        }
+    public func loads(lastKnownIp: TruncatedIp, completion: @escaping (Result<ContinuousServerPropertiesDictionary, Error>) -> Void) {
+        var shortenedIp = lastKnownIp.value
         networking.request(VPNLoadsRequest(shortenedIp)) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(response):
@@ -331,17 +327,4 @@ public class VpnApiService {
         }
     }
 
-    // MARK: - Private
-
-    private func truncatedIp(_ ip: String?) -> String? {
-        guard let ip else { return nil }
-        // Remove the last octet
-        if let index = ip.lastIndex(of: ".") { // IPv4
-            return ip.replacingCharacters(in: index..<ip.endIndex, with: ".0")
-        } else if let index = ip.lastIndex(of: ":") { // IPv6
-            return ip.replacingCharacters(in: index..<ip.endIndex, with: "::")
-        } else {
-            return ip
-        }
-    }
 }

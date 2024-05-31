@@ -19,18 +19,20 @@
 import Foundation
 import Dependencies
 import Domain
+import Ergonomics
 
 public struct LogicalsClient: Sendable {
-    public var fetchLogicals: @Sendable () async throws -> [VPNServer]
+    public var fetchLogicals: @Sendable (TruncatedIp) async throws -> [VPNServer]
 }
 
 extension LogicalsClient: DependencyKey {
     public static var liveValue: LogicalsClient {
         @Dependency(\.networking) var networking
         return LogicalsClient(
-            fetchLogicals: {
+            fetchLogicals: { ip in
+                print("logicals ip: \(ip.value)")
                 let request = LogicalsRequest(
-                    ip: nil, // TODO: use proper ip address
+                    ip: ip.value,
                     countryCodes: [],
                     freeTier: false
                 )

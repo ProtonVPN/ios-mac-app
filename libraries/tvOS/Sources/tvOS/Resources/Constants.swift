@@ -20,4 +20,9 @@ import Foundation
 
 enum Constants {
     static let maxPreferredContentViewWidth: CGFloat = 800
+
+    enum Time {
+        /// Servers list refresh
+        static let fullServerRefresh: TimeInterval = .hours(3)
+    }
 }
