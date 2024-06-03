@@ -22,8 +22,10 @@ import Theme
 struct CountryListItemView: View {
     let item: HomeListItem
     let isFocused: Bool
-    @State var duration = 0.1
+    @State var duration = inFocusDuration
 
+    private static var outFocusDuration = 0.4
+    private static var inFocusDuration = 0.1
     private let normalScale = CGSize(width: 1, height: 1)
     private let focusedScale = CGSize(width: 1.3, height: 1.3)
 
@@ -37,7 +39,7 @@ struct CountryListItemView: View {
                 Text(item.name)
                     .font(.body)
                 Spacer()
-                    .frame(height: 16)
+                    .frame(height: .themeSpacing16)
                 HStack(spacing: .themeSpacing12) {
                     Text("Connected")
                         .font(.caption)
@@ -50,7 +52,7 @@ struct CountryListItemView: View {
             .scaleEffect(isFocused ? focusedScale : normalScale)
             .animation(.easeOut(duration: duration), value: isFocused)
             .onChange(of: isFocused) { _, newValue in
-                duration = newValue ? 0.4 : 0.1
+                duration = newValue ? Self.outFocusDuration : Self.inFocusDuration
             }
         }
     }

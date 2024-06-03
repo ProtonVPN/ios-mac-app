@@ -30,29 +30,24 @@ struct CountryListView: View {
     // Watch which item is focused to highlight selected row
     @FocusState private var focusedIndex: ItemCoordinate?
 
-    // "Unfocused" items are half transparent
-    private let unfocusedOpacity: Double = 0.5
-
     static let cellSpacing: Double = 20
-
     static private let columnCount = 6
-
     static private let gridItem = GridItem(.fixed(250), spacing: cellSpacing)
-    private let columns = Array(repeating: gridItem, count: columnCount)
+    static private let columns = Array(repeating: gridItem, count: columnCount)
+    static private let unfocusedOpacity: Double = 0.5 // "Unfocused" items are half transparent
 
     var body: some View {
         VStack(spacing: .themeSpacing24) {
             Spacer()
 
             ScrollView {
-                LazyVGrid(columns: columns) {
+                LazyVGrid(columns: Self.columns) {
                     ForEach(Array(store.sections.enumerated()), id: \.element) { sectionIndex, section in
                         Section(content: {
                             ForEach(Array(section.items.enumerated()), id: \.element) { index, item in
 
                                 Button(action: {
                                     store.send(.selectItem(item))
-                                    print(item)
                                 }, label: {
                                     CountryListItemView(
                                         item: item,
@@ -93,7 +88,7 @@ struct CountryListView: View {
 
         // We are not in the same section, so half transparent
         guard focused.section == coordinate.section else {
-            return unfocusedOpacity
+            return Self.unfocusedOpacity
         }
 
         // Only show current row in full opacity
@@ -101,7 +96,7 @@ struct CountryListView: View {
             return 1
         }
 
-        return unfocusedOpacity
+        return Self.unfocusedOpacity
     }
 
     private struct ItemCoordinate: Hashable {

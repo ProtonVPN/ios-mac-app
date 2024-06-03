@@ -243,8 +243,8 @@ public class VpnApiService {
         try await networking.perform(request: VPNSessionsCountRequest())
     }
     
-    public func loads(lastKnownIp: TruncatedIp, completion: @escaping (Result<ContinuousServerPropertiesDictionary, Error>) -> Void) {
-        var shortenedIp = lastKnownIp.value
+    public func loads(lastKnownIp: TruncatedIp?, completion: @escaping (Result<ContinuousServerPropertiesDictionary, Error>) -> Void) {
+        let shortenedIp = lastKnownIp?.value
         networking.request(VPNLoadsRequest(shortenedIp)) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(response):

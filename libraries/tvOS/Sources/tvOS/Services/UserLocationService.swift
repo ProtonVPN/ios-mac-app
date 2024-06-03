@@ -34,7 +34,7 @@ public class UserLocationService {
         return userLocation
     }
 
-    public func refresh() async throws {
+    private func refresh() async throws {
         @Dependency(\.locationClient) var client
         userLocation = try await client.fetchLocation()
     }

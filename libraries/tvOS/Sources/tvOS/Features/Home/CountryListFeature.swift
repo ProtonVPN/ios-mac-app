@@ -52,30 +52,40 @@ struct CountryListFeature {
         case onAppear
         case selectItem(HomeListItem)
         case updateList
+        case connectionStateUpdated(ConnectFeature.ConnectionState?)
     }
 
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .onAppear:
-                return .run { [noSections = state.sections.isEmpty] send in
-                    @Dependency(\.serverRepository) var repository
-                    @Dependency(\.logicalsRefresher) var refresher
-                    if repository.isEmpty || refresher.shouldRefreshLogicals() {
-                        try await refresher.refreshLogicalsIfNeeded()
-                        await send(.updateList)
-                    } else if noSections {
+            case .connectionStateUpdated(let newState):
+                return .run { send in
+                    if case .connected = newState {
                         await send(.updateList)
                     }
-                } catch: { error, action in
-                    print("loadLogicals error: \(error)")
-                    // TODO: error handling
                 }
+            case .onAppear:
+                return .concatenate(
+                    .run { [noSections = state.sections.isEmpty] send in
+                        @Dependency(\.serverRepository) var repository
+                        @Dependency(\.logicalsRefresher) var refresher
+                        if repository.isEmpty || refresher.shouldRefreshLogicals() {
+                            try await refresher.refreshLogicalsIfNeeded()
+                            await send(.updateList)
+                        } else if noSections {
+                            await send(.updateList)
+                        }
+                    } catch: { error, action in
+                        print("loadLogicals error: \(error)")
+                        // TODO: error handling
+                    },
+                    .publisher { state.$connectionState.publisher.map(Action.connectionStateUpdated) }
+                )
             case .updateList:
                 @Dependency(\.serverRepository) var repository
                 let allCountries = repository
                     .getGroups(filteredBy: [.isNotUnderMaintenance])
-                    .compactMap { $0.item }
+                    .compactMap { group in group.item(connectedCountryCode: state.connectionState?.connectedCountryCode) }
 
                 // More info about recommended countries selection:
                 // https://confluence.protontech.ch/pages/viewpage.action?pageId=128215858#Productmetricsforbusiness-Streaming
@@ -106,7 +116,9 @@ struct CountryListFeature {
     }
 
     func isConnected(countryCode: String, state: State) -> Bool {
-        guard case .connected(let code) = state.connectionState else { return false}
+        guard case .connected(let code) = state.connectionState else {
+            return false
+        }
         return countryCode == code
     }
 
@@ -114,19 +126,28 @@ struct CountryListFeature {
         HomeListItem(
             code: "Fastest",
             name: "Fastest",
-            isConnected: Bool.random() // TODO: Put real value when we have vpn connection working
+            isConnected: false // TODO: Put real value when we have vpn connection working
         )
     }
 }
 
+extension ConnectFeature.ConnectionState {
+    var connectedCountryCode: String? {
+        if case .connected(let code) = self {
+            return code
+        }
+        return nil
+    }
+}
+
 extension ServerGroupInfo {
-    var item: HomeListItem? {
+    func item(connectedCountryCode: String?) -> HomeListItem? {
         switch kind {
         case .country(let code):
             return HomeListItem(
                 code: code,
                 name: LocalizationUtility.default.countryName(forCode: code) ?? "",
-                isConnected: Bool.random() // TODO: Put real value when we have vpn connection working
+                isConnected: code == connectedCountryCode // TODO: Put real value when we have vpn connection working
             )
         default:
             return nil
