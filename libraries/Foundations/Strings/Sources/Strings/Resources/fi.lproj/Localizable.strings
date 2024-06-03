@@ -1371,7 +1371,7 @@
 "_kill_switch_reconnection_header" = "Tappokytkin suojaa IP-osoitettasi";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Internet-yhteytesi palautuu Proton VPN:n muodostettua yhteyden palvelimeen.\nJatkaaksesi ilman VPN-yhteyttä ja tappokytkimen suojausta, peru uudelleenyhdistys.";
+"_kill_switch_reconnection" = "Internet-yhteytesi palautuu Proton VPN:n yhditettyä palvelimeen uudelleen.\nJatkaaksesi ilman VPN-yhteyttä ja tappokytkimen suojausta, peru uudelleenyhdistys.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "ilman";
@@ -2160,7 +2160,7 @@
 "_br_1_title" = "Mikä on ongelmana?";
 
 /* ReportBug 2nd step (Quick fixes) title */
-"_br_2_title" = "Nopeita korjauksia";
+"_br_2_title" = "Pikaratkaisut";
 
 /* ReportBug 2nd step (Quick fixes) subtitle */
 "_br_2_subtitle" = "Nämä vinkit voivat auttaa ratkaisemaan ongelman nopeammin.";

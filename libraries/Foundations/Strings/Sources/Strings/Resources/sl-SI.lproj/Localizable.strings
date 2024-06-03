@@ -11,10 +11,10 @@
 "_delete" = "Izbriši";
 
 /* Common word */
-"_disconnect" = "Prekini";
+"_disconnect" = "Prekini povezavo";
 
 /* Common word */
-"_disconnected" = "Prekinjeno";
+"_disconnected" = "Povezava je prekinjena";
 
 /* Status of VPN connection reported by Siri */
 "_disconnecting" = "Prekinjanje povezave";
@@ -1224,11 +1224,11 @@
 
 "_subscription_will_renew" = "Vaš paket se bo samodejno obnovil %@.";
 
-"_subscription_description" = "You can purchase more credits to automatically extend your current plan. At the end of your current subscription period, these credits will be applied to continue your plan.";
+"_subscription_description" = "Kupite lahko več kreditov za samodejno podaljšanje trenutnega načrta. Ob koncu vašega trenutnega naročniškega obdobja bodo ti krediti uporabljeni za nadaljevanje vašega načrta.";
 
 "_subscription_button" = "Podaljšaj paket za 1 leto \n%@.";
 
-"_subscription_extended_success" = "You have successfully bought credits to extend your current plan.";
+"_subscription_extended_success" = "Uspešno ste kupili kredite za podaljšanje trenutnega načrta.";
 
 /* Button on alert after a problem with internet connection */
 "_ne_troubleshoot" = "Odpravljanje težav";
@@ -1743,7 +1743,7 @@
 "search_countries" = "Države";
 
 /* Sample countries the user can search for */
-"search_countries_sample" = "Switzerland, United States, Italy...";
+"search_countries_sample" = "Švica, ZDA, Italija ...";
 
 /* Section header in search */
 "search_cities" = "Mesta";
@@ -2229,4 +2229,4 @@
 "_change_password" = "Spremeni geslo";
 
 /* Change password alert message */
-"_password_changed_successfully" = "Password changed successfully";
+"_password_changed_successfully" = "Geslo je bilo uspešno spremenjeno";

@@ -711,7 +711,7 @@
 "_error_decode" = "Gagal mendekode data yang diarsipkan di kelas: %@";
 
 /* Internal application error */
-"_error_email_verification_disabled" = "Verifikasi email dinonaktifkan sementara";
+"_error_email_verification_disabled" = "Verifikasi email untuk sementara dinonaktifkan";
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton tidak dapat berkomunikasi dengan perangkat Anda. Coba lagi nanti.";

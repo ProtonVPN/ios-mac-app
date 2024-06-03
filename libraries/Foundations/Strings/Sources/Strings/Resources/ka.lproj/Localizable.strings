@@ -2229,4 +2229,4 @@
 "_change_password" = "პაროლის შეცვლა";
 
 /* Change password alert message */
-"_password_changed_successfully" = "Password changed successfully";
+"_password_changed_successfully" = "პაროლი წარმატებით შეიცვალა";
