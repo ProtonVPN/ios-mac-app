@@ -30,9 +30,8 @@ extension LogicalsClient: DependencyKey {
         @Dependency(\.networking) var networking
         return LogicalsClient(
             fetchLogicals: { ip in
-                print("logicals ip: \(ip.value)")
                 let request = LogicalsRequest(
-                    ip: ip.value,
+                    ip: ip,
                     countryCodes: [],
                     freeTier: false
                 )

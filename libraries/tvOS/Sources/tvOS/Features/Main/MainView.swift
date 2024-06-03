@@ -54,7 +54,7 @@ struct MainView: View {
         if store.settings.destination != nil {
             Image(.backgroundStage)
         } else if store.currentTab == .home {
-            CountriesListBackgroundGradient(store: store)
+            CountryListBackgroundGradient(store: store)
         } else {
             Color.clear
         }

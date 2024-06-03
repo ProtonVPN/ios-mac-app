@@ -19,7 +19,7 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct CountriesListBackgroundGradient: View {
+struct CountryListBackgroundGradient: View {
 
     @Bindable var store: StoreOf<MainFeature>
 

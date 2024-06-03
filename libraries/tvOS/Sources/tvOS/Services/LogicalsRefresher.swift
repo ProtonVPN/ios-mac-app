@@ -20,18 +20,17 @@ import Foundation
 import Dependencies
 import Domain
 import Ergonomics
+import SwiftUI
 
 /// Use `refreshLogicalsIfNeeded()` to refresh logicals, but not more often than
 /// predefined in `Constants.Time.fullServerRefresh`.
 public class LogicalsRefresher {
 
     var refreshInterval = Constants.Time.fullServerRefresh
-    var lastLogicalsRefresh: Date?
+    @AppStorage("lastLogicalsRefresh") private var lastLogicalsRefresh: TimeInterval = 0
 
     public func refreshLogicalsIfNeeded() async throws {
-        if let lastLogicalsRefresh, -lastLogicalsRefresh.timeIntervalSinceNow < refreshInterval {
-            return
-        }
+        guard shouldRefreshLogicals() else { return }
 
         @Dependency(\.userLocationService) var userLocationService
         let location = try? await userLocationService.getUserLocation()
@@ -42,7 +41,16 @@ public class LogicalsRefresher {
         @Dependency(\.serverRepository) var repository
         repository.upsert(servers: logicalsResponse)
 
-        lastLogicalsRefresh = Date()
+        let now = Dependency(\.date).wrappedValue.now
+        lastLogicalsRefresh = now.timeIntervalSince1970
+    }
+
+    public func shouldRefreshLogicals() -> Bool {
+        let now = Dependency(\.date).wrappedValue.now
+        if now.timeIntervalSince1970 - lastLogicalsRefresh < refreshInterval {
+            return false
+        }
+        return true
     }
 }
 
@@ -56,4 +64,3 @@ extension DependencyValues {
       set { self[LogicalsRefresher.self] = newValue }
     }
 }
-

@@ -45,11 +45,11 @@ struct CountryListFeature {
     @ObservableState
     struct State: Equatable {
         var sections: [HomeListSection] = []
-        @Shared(.inMemory("connectionState")) var connectionState: String?
+        @Shared(.inMemory("connectionState")) var connectionState: ConnectFeature.ConnectionState?
     }
 
     enum Action {
-        case loadLogicals
+        case onAppear
         case selectItem(HomeListItem)
         case updateList
     }
@@ -57,18 +57,20 @@ struct CountryListFeature {
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .loadLogicals:
-                return .run(operation: { (send) in
+            case .onAppear:
+                return .run { [noSections = state.sections.isEmpty] send in
+                    @Dependency(\.serverRepository) var repository
                     @Dependency(\.logicalsRefresher) var refresher
-                    try await refresher.refreshLogicalsIfNeeded()
-
-                    await send(.updateList) // Refresh UI from DB
-
-                }, catch: { error, action in
+                    if repository.isEmpty || refresher.shouldRefreshLogicals() {
+                        try await refresher.refreshLogicalsIfNeeded()
+                        await send(.updateList)
+                    } else if noSections {
+                        await send(.updateList)
+                    }
+                } catch: { error, action in
                     print("loadLogicals error: \(error)")
                     // TODO: error handling
-                })
-                
+                }
             case .updateList:
                 @Dependency(\.serverRepository) var repository
                 let allCountries = repository
@@ -104,9 +106,8 @@ struct CountryListFeature {
     }
 
     func isConnected(countryCode: String, state: State) -> Bool {
-        return Bool.random()
-//        guard case .connected(let code) = state.connectionState else { return false}
-//        return countryCode == code
+        guard case .connected(let code) = state.connectionState else { return false}
+        return countryCode == code
     }
 
     private var fastest: HomeListItem {

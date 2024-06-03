@@ -29,7 +29,7 @@ public struct LogicalsRequest: Request {
     private static let protocolDescriptions = VpnProtocol.allCases.map(\.apiDescription).joined(separator: ",")
 
     /// Truncated ip as seen from VPN API
-    let ip: String?
+    let ip: TruncatedIp
 
     /// Country codes, if available, to show relay IPs for specific countries
     let countryCodes: [String]
@@ -37,7 +37,7 @@ public struct LogicalsRequest: Request {
     /// Whether or not this request is just for the free logicals.
     let freeTier: Bool
 
-    public init(ip: String?, countryCodes: [String], freeTier: Bool) {
+    public init(ip: TruncatedIp, countryCodes: [String], freeTier: Bool) {
         self.ip = ip
         self.countryCodes = countryCodes
         self.freeTier = freeTier
@@ -66,7 +66,7 @@ public struct LogicalsRequest: Request {
     public var header: [String: Any] {
         var result: [String: Any] = [:]
 
-        if let ip = ip {
+        if let ip = ip.value {
             result["x-pm-netzone"] = ip
         }
 

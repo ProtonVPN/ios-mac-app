@@ -33,7 +33,7 @@ struct CountryListView: View {
     // "Unfocused" items are half transparent
     private let unfocusedOpacity: Double = 0.5
 
-    static private let cellSpacing: Double = 20
+    static let cellSpacing: Double = 20
 
     static private let columnCount = 6
 
@@ -54,25 +54,20 @@ struct CountryListView: View {
                                     store.send(.selectItem(item))
                                     print(item)
                                 }, label: {
-                                    HomeListItemView(
+                                    CountryListItemView(
                                         item: item,
                                         isFocused: focusedIndex == ItemCoordinate(section: sectionIndex, item: index)
                                     )
                                     .opacity(calculateOpacity(forCoordinate: ItemCoordinate(section: sectionIndex, item: index)))
                                 })
                                 .buttonStyle(CountryListButtonStyle())
-                                .padding([.top], .themeSpacing24)
+                                .padding(.top, .themeSpacing8)
+                                .padding(.bottom, .themeSpacing32)
                                 .focused($focusedIndex, equals: ItemCoordinate(section: sectionIndex, item: index))
 
                             }
                         }, header: {
-                            VStack(alignment: .leading) {
-                                Text(section.name)
-                                    .font(.subheadline)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding([.leading], CountryListView.cellSpacing)
-
-                            }
+                            CountryListSectionHeaderView(name: section.name)
                         }
                         )
                     }
@@ -80,9 +75,8 @@ struct CountryListView: View {
             }
             .scrollClipDisabled()
             .frame(maxWidth: Constants.maxPreferredContentViewWidth)
-            .task {
-                store.send(.updateList)
-                store.send(.loadLogicals)
+            .onAppear {
+                store.send(.onAppear)
             }
         }
     }
@@ -118,41 +112,6 @@ struct CountryListView: View {
 
         var row: Int {
             return (item - (item % columnCount)) / columnCount
-        }
-    }
-}
-
-struct HomeListItemView: View {
-    let item: HomeListItem
-    let isFocused: Bool
-
-    private let normalScale = CGSize(width: 1, height: 1)
-    private let focusedScale = CGSize(width: 1.3, height: 1.3)
-
-    var body: some View {
-        VStack {
-            SimpleFlagView(regionCode: item.code, flagSize: .tvListSize)
-                .hoverEffect(.highlight)
-
-                Text(item.name)
-                    .font(.body)
-                    .padding([.top], 34)
-                    .padding([.bottom], 0)
-                    .scaleEffect(isFocused ? focusedScale : normalScale)
-                    // This is not ideally 1:1 the same as ".hoverEffect(.highlight)",
-                    // but the best I could find.
-                    .animation(.easeInOut(duration: 0.1), value: isFocused)
-
-            HStack(spacing: 14.4) {
-                Text(item.isConnected ? "Connected" : "")
-                    .font(.caption)
-                    .foregroundStyle(Asset.vpnGreen.swiftUIColor)
-                if item.isConnected {
-                    ConnectedCircleView()
-                }
-            }
-            .padding([.top], 16)
-            .padding([.bottom], 49)
         }
     }
 }
