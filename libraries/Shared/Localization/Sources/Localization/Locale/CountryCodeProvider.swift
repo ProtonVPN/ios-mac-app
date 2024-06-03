@@ -18,6 +18,7 @@
 
 import Foundation
 import Strings
+import ProtonCoreUtilities // Array and Dictionary extensions
 
 #if canImport(CoreTelephony)
 import CoreTelephony
@@ -50,12 +51,14 @@ public class CountryCodeProviderImplementation: CountryCodeProvider {
         for language in Self.localeResolver.preferredLanguages {
             let languageLocale = Self.localeResolver.locale(withIdentifier: language)
 
-            if let tag = languageLocale.ietfRegionTag.lowercased(), !result.contains(tag) {
+            if let tag = languageLocale.ietfRegionTag?.lowercased() {
                 result.append(tag)
             }
         }
 
-        self.countryCodes = Array(result.union(Self.carrierIsoCountryCodes))
+        self.countryCodes = result
+            .appending(Array(Self.carrierIsoCountryCodes))
+            .uniqued
     }
 
     /// Only available on iOS devices before iOS 16, where this functionality was senselessly deprecated.

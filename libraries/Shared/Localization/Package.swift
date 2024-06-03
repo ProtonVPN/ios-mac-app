@@ -18,7 +18,8 @@ let package = Package(
     dependencies: [
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Strings"),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", exact: "1.2.2")
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", exact: "1.2.2"),
+        .package(path: "../../../external/protoncore"),
     ],
     targets: [
         .target(
@@ -26,7 +27,8 @@ let package = Package(
             dependencies: [
                 "Domain",
                 "Strings",
-                .product(name: "Dependencies", package: "swift-dependencies")
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "ProtonCoreUtilities", package: "protoncore"),
             ]
         ),
         .testTarget(
