@@ -20,10 +20,12 @@ import Foundation
 
 /// Just a wrapper around a string, to make sure nobody passes open IP when it's not appropriate
 public struct TruncatedIp {
-    public let value: String?
+    public let value: String
 
-    public init(ip: String?) {
-        self.value = TruncatedIp.truncatedIp(ip)
+    public init?(ip: String?) {
+        guard let ip,
+              let value = TruncatedIp.truncatedIp(ip) else { return nil }
+        self.value = value
     }
 
     // MARK: -

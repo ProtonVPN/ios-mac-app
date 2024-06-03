@@ -22,7 +22,7 @@ import Domain
 import Ergonomics
 
 public struct LogicalsClient: Sendable {
-    public var fetchLogicals: @Sendable (TruncatedIp) async throws -> [VPNServer]
+    public var fetchLogicals: @Sendable (TruncatedIp?) async throws -> [VPNServer]
 }
 
 extension LogicalsClient: DependencyKey {

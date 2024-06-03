@@ -154,12 +154,10 @@ public class VpnApiService {
 
     // The following route is used to retrieve VPN server information, including scores for the best server to connect to depending on a user's proximity to a server and its load. To provide relevant scores even when connected to VPN, we send a truncated version of the user's public IP address. In keeping with our no-logs policy, this partial IP address is not stored on the server and is only used to fulfill this one-off API request.
     public func serverInfo(ip: TruncatedIp?, freeTier: Bool, completion: @escaping (Result<[ServerModel], Error>) -> Void) {
-        let shortenedIp = ip?.value
         let countryCodes = countryCodeProvider.countryCodes
-
         networking.request(
             LogicalsRequest(
-                ip: shortenedIp,
+                ip: ip,
                 countryCodes: countryCodes,
                 freeTier: freeTier
             )
@@ -188,7 +186,7 @@ public class VpnApiService {
         }
     }
 
-    public func serverInfo(ip: TruncatedIp, freeTier: Bool) async throws -> [ServerModel] {
+    public func serverInfo(ip: TruncatedIp?, freeTier: Bool) async throws -> [ServerModel] {
         return try await withCheckedThrowingContinuation { continuation in
             serverInfo(ip: ip, freeTier: freeTier, completion: continuation.resume(with:))
         }
